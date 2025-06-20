@@ -2114,14 +2114,14 @@ Public Class Frm_Demonio_DTEMonitor
     Private Sub Btn_Pruebas_Click(sender As Object, e As EventArgs) Handles Btn_Pruebas.Click
 
 
-        'Dim _Cl_SIIRegCV As New Cl_SIIRegCV
-        ''_Cl_SIIRegCV.f
+        ''Dim _Cl_SIIRegCV As New Cl_SIIRegCV
+        '''_Cl_SIIRegCV.f
 
-        'Await _Cl_SIIRegCV.RecuperarRegistrosCompras_Certificado(RutEmpresa, pathCert, passCert, periodo)
+        ''Await _Cl_SIIRegCV.RecuperarRegistrosCompras_Certificado(RutEmpresa, pathCert, passCert, periodo)
 
-        '    MessageBox.Show("¡Fin del proceso!")
+        ''    MessageBox.Show("¡Fin del proceso!")
 
-        Return
+        'Return
 
         Chk_ConsultarTrackid.Checked = False
         Chk_EnviarCorreos.Checked = False
@@ -2139,12 +2139,12 @@ Public Class Frm_Demonio_DTEMonitor
 
         'Dim _DTE_AnoMes As New List(Of DTE_AnoMes.DTE_AnoMes)
 
-        _Periodo1 = "2024"
-        _Mes1 = "1"
+        _Periodo1 = "2025"
+        _Mes1 = "4"
 
         Sb_Revisar_Reclamo_DTE(_Periodo1, _Mes1)
 
-        _Mes2 = "2"
+        _Mes2 = "5"
 
         If _Mes1 <> _Mes2 Then
             Sb_Revisar_Reclamo_DTE(_Periodo2, _Mes2)
@@ -2186,12 +2186,11 @@ Public Class Frm_Demonio_DTEMonitor
         Dim _Periodo2 = _FechaDelServidor.Year
         Dim _Mes2 = FechaDelServidor.Month
 
-        '_Periodo1 = "2024"
-        '_Mes1 = "1"
+        'Sb_Revisar_Reclamo_DTE(_Periodo1, 4)
+        'Sb_Revisar_Reclamo_DTE(_Periodo1, 5)
+        'Sb_Revisar_Reclamo_DTE(_Periodo1, 6)
 
         Sb_Revisar_Reclamo_DTE(_Periodo1, _Mes1)
-
-        '_Mes2 = "2"
 
         If _Mes1 <> _Mes2 Then
             Sb_Revisar_Reclamo_DTE(_Periodo2, _Mes2)
@@ -2224,32 +2223,65 @@ Public Class Frm_Demonio_DTEMonitor
             Dim _Fichero1 As String = File.ReadAllText(_RecuperarVentasRegistro.Directorio)
 
 
-            ' Suponiendo que tienes un objeto JSON en una cadena llamada jsonString
-            Dim jsonString As String = "{""RegistrosVentas"": []}"
+            '' Suponiendo que tienes un objeto JSON en una cadena llamada jsonString
+            'Dim jsonString As String = "{""RegistrosVentas"": []}"
 
-            ' Convertir la cadena JSON en un objeto utilizable en VB.NET
-            Dim jsonObject As JObject = JObject.Parse(_Fichero1)
+            '' Convertir la cadena JSON en un objeto utilizable en VB.NET
+            'Dim jsonObject As JObject = JObject.Parse(_Fichero1)
 
-            ' Verificar si la matriz RegistrosVentas está vacía
-            If jsonObject("RegistrosVentas").Count = 0 Then
-                Throw New System.Exception("El arreglo RegistrosVentas está vacío para el periodo: " & _Periodo & " Mes: " & MonthName(_Mes))
+            '' Verificar si la matriz RegistrosVentas está vacía
+            'If jsonObject("RegistrosVentas").Count = 0 Then
+            '    Throw New System.Exception("El arreglo RegistrosVentas está vacío para el periodo: " & _Periodo & " Mes: " & MonthName(_Mes))
+            'End If
+
+
+            Dim _Tbl_Registro_Ventas As DataTable '= Fx_TblFromJson(_Fichero1, "RegistrosVentas")
+
+            If File.Exists(_RecuperarVentasRegistro.Directorio) Then
+                'Dim _Fichero1 As String = File.ReadAllText(_Dir_ComprasRegistro)
+                ' Convierte el contenido JSON de _Fichero1 a un DataSet usando Newtonsoft.Json
+                Dim _DataSet As New DataSet()
+                _DataSet = JsonConvert.DeserializeObject(Of DataSet)(_Fichero1)
+                _Tbl_Registro_Ventas = _DataSet.Tables("RegistroVentas")
+            Else
+                _Tbl_Registro_Ventas = Nothing
             End If
 
-            Dim _Tbl_Registro_Ventas As DataTable = Fx_TblFromJson(_Fichero1, "RegistrosVentas")
 
             Dim filtro As String = "FechaReclamo <> ''"
             Dim filasEncontradas As DataRow() = _Tbl_Registro_Ventas.Select(filtro)
 
-            ' Ahora puedes iterar sobre el arreglo de filas encontradas
-            For Each fila As DataRow In filasEncontradas
+            ' Extraer solo las filas que cumplen con el filtro y dejarlas en una pequeña DataTable
+            'Dim filtro As String = "FechaReclamo <> ''"
+            'Dim filasEncontradas As DataRow() = _Tbl_Registro_Ventas.Select(filtro)
 
-                Dim _TipoDTE = fila.Item("TipoDTE")
+            ' Crear una nueva DataTable con la misma estructura
+            Dim dtFiltrada As DataTable = _Tbl_Registro_Ventas.Clone()
+
+            ' Importar las filas encontradas a la nueva DataTable
+            For Each fila As DataRow In filasEncontradas
+                dtFiltrada.ImportRow(fila)
+            Next
+
+            ' Ahora puedes recorrer dtFiltrada para acceder a los valores filtrados
+            For Each fila As DataRow In dtFiltrada.Rows
+                Dim _TipoDTE = fila.Item("TipoDoc")
                 Dim _Folio = fila.Item("Folio")
                 Dim _FechaReclamo = fila.Item("FechaReclamo")
 
                 Fx_Revisar_ListaEventosDoc(_TipoDTE, _Folio)
-
             Next
+
+            '' Ahora puedes iterar sobre el arreglo de filas encontradas
+            'For Each fila As DataRow In filasEncontradas
+
+            '    Dim _TipoDTE = fila.Item("TipoDTE")
+            '    Dim _Folio = fila.Item("Folio")
+            '    Dim _FechaReclamo = fila.Item("FechaReclamo")
+
+            '    Fx_Revisar_ListaEventosDoc(_TipoDTE, _Folio)
+
+            'Next
 
         Catch ex As Exception
             Sb_AddToLog("Rev. Reclamos DTE", ex.Message, Txt_Log)

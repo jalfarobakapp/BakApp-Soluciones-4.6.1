@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports DevComponents.DotNetBar
 Imports HEFSIIREGCOMPRAVENTAS.LIB
+Imports Microsoft.Win32
 Imports Newtonsoft.Json
 
 
@@ -376,7 +377,10 @@ Public Class Frm_Importar_Compras_SII
     Private Sub Btn_Importar_Desde_XML_Click(sender As Object, e As EventArgs) Handles Btn_Importar_Desde_XML.Click
 
         'Sb_Importar_Archivos_Json()
+
+        Btn_Importar_Desde_XML.Enabled = False
         Sb_Importar_Archivos_Json_SIIRegCV()
+        Btn_Importar_Desde_XML.Enabled = True
 
     End Sub
     Sub Sb_Importar_Archivos_Json()
@@ -386,31 +390,8 @@ Public Class Frm_Importar_Compras_SII
         _Clas_Hefesto_Dte_Libro.Circular_Progres_Porc = Circular_Progres_Porc
         _Clas_Hefesto_Dte_Libro.Circular_Progres_Val = Circular_Progres_Val
 
-        '_Clas_Hefesto_Dte_Libro.Estatus = Lbl_Procesando
-        '_Clas_Hefesto_Dte_Libro.Sb_Importar_Archivos_Json(_Periodo, _Mes)
-
-        Dim _RecuperarResumenVentasRegistro As HefRespuesta
-        Dim _RecuperarVentasRegistro As HefRespuesta
-        Dim _RecuperarResumenCompras As HefRespuesta
         Dim _RecuperarComprasRegistro As HefRespuesta
         Dim _RecuperarComprasPendientes As HefRespuesta
-        Dim _RecuperarComprasNoIncluir As HefRespuesta
-        Dim _RecuperarComprasReclamadas As HefRespuesta
-
-        '_RecuperarResumenVentasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarResumenVentasRegistro(_Periodo, _Mes)
-        'If _RecuperarResumenVentasRegistro.EsCorrecto Then
-        '    Dim _Nombre_Archivo1 = _RecuperarResumenVentasRegistro.Directorio
-        'End If
-
-        '_RecuperarVentasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarVentasRegistro(_Periodo, _Mes)
-        'If _RecuperarVentasRegistro.EsCorrecto Then
-        '    Dim _Nombre_Archivo2 = _RecuperarVentasRegistro.Directorio
-        'End If
-
-        'Return
-
-        '_RecuperarResumenCompras = _Clas_Hefesto_Dte_Libro.Fx_RecuperarResumenCompras(_Periodo, _Mes)
-        'If _RecuperarResumenCompras.EsCorrecto Then Txt_Nombre_Archivo.Text = _RecuperarResumenCompras.Directorio
 
         _RecuperarComprasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarComprasRegistro(_Periodo, _Mes)
 
@@ -473,7 +454,7 @@ Public Class Frm_Importar_Compras_SII
         Dim _periodo2 As String = _Periodo & "-" & Fx_Rellena_ceros(_Mes, 2)
 
         Dim _Directorio_SIIRegCV = Application.StartupPath & "\SIIRegCV\SIIRegCV.exe"
-        Dim _Ejecutar As String = _Directorio_SIIRegCV & Space(1) & "" & _periodo2 & " True"
+        Dim _Ejecutar As String = _Directorio_SIIRegCV & Space(1) & "" & _periodo2 & " " & RutEmpresa & " True"
 
         Try
             Shell(_Ejecutar, AppWinStyle.NormalFocus, True)
@@ -482,6 +463,24 @@ Public Class Frm_Importar_Compras_SII
                         ex.Message, "SIIRegCV", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End Try
+
+        Dim _Directorio_Error = Application.StartupPath & "\SIIRegCV\Empresas\Errores.txt"
+
+        ' Verificar si existe el archivo de error y mostrar alerta
+        If File.Exists(_Directorio_Error) Then
+            Dim mensajeError As String = File.ReadAllText(_Directorio_Error)
+            Sb_AddToLog("Importar SII", mensajeError, Txt_Log)
+            'MessageBoxEx.Show(Me, "Se detectó un error al ejecutar SIIRegCV:" & vbCrLf & mensajeError, "Error SIIRegCV", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            ' Abrir la carpeta donde está el archivo de error
+            Dim carpetaError As String = Path.GetDirectoryName(_Directorio_Error)
+            If Directory.Exists(carpetaError) Then
+                Process.Start("explorer.exe", carpetaError)
+            End If
+            'Shell(_Directorio_Error, AppWinStyle.NormalFocus, True)
+            Return
+        End If
+
 
         Dim _Dir_ComprasRegistro As String = Application.StartupPath & "\SIIRegCV\Empresas\" & RutEmpresa & "\Resultados\Compras\" & _periodo2 & "\RegistrosCompras.json"
         Dim _Dir_ComprasRegistroPendientes As String = Application.StartupPath & "\SIIRegCV\Empresas\" & RutEmpresa & "\Resultados\Compras\" & _periodo2 & "\RegistrosComprasPendientes.json"

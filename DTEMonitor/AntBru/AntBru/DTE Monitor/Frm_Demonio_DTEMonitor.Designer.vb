@@ -337,7 +337,6 @@ Partial Class Frm_Demonio_DTEMonitor
         Me.Chk_RevisarReclamoDTE.Checked = True
         Me.Chk_RevisarReclamoDTE.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_RevisarReclamoDTE.CheckValue = "Y"
-        Me.Chk_RevisarReclamoDTE.Enabled = False
         Me.Chk_RevisarReclamoDTE.FocusCuesEnabled = False
         Me.Chk_RevisarReclamoDTE.Location = New System.Drawing.Point(266, 64)
         Me.Chk_RevisarReclamoDTE.Name = "Chk_RevisarReclamoDTE"
