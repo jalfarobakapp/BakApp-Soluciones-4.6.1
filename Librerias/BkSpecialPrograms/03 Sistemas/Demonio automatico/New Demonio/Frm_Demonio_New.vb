@@ -898,7 +898,7 @@ Public Class Frm_Demonio_New
         Lbl_Monitoreo.Text = "MONITOREO EN PAUSA"
 
         _Timer_Archivador = Nothing
-        _Timer_ImprimirDocumentos = Nothing
+        '_Timer_ImprimirDocumentos = Nothing
         _Timer_ImprimirPicking = Nothing
         _Timer_ListasProgramadas = Nothing
         _Timer_Prestashop_Orders = Nothing
@@ -920,7 +920,19 @@ Public Class Frm_Demonio_New
 
     Private Sub Btn_Configurar_Click(sender As Object, e As EventArgs) Handles Btn_Configurar.Click
 
-        Sb_Limpirar_Timers()
+        'Sb_Limpirar_Timers()
+
+        Circular_Monitoreo.IsRunning = False
+        Lbl_Monitoreo.Text = "MONITOREO EN PAUSA"
+
+        _Timer_Archivador = Nothing
+        '_Timer_ImprimirDocumentos = Nothing
+        _Timer_ImprimirPicking = Nothing
+        _Timer_ListasProgramadas = Nothing
+        _Timer_Prestashop_Orders = Nothing
+        _Timer_Prestashop_Prod = Nothing
+        _Timer_SolicitudProductosBodega = Nothing
+
 
         ' Pausar timers activos y guardar su estado
         Dim timersActivos As New Dictionary(Of Object, Boolean) From {
@@ -937,6 +949,7 @@ Public Class Frm_Demonio_New
                 {Timer_NVVAutoExterna, Timer_NVVAutoExterna.Enabled},
                 {Timer_ImprimirDocumentos, Timer_ImprimirDocumentos.Enabled}
             }
+
 
         For Each kvp In timersActivos
             If kvp.Value Then kvp.Key.Enabled = False
@@ -969,6 +982,30 @@ Public Class Frm_Demonio_New
             For Each kvp In timersActivos
                 If kvp.Value Then kvp.Key.Enabled = True
             Next
+
+            If _DProgramaciones.Sp_ArchivarDoc.Activo Then
+                Sb_Timer_IntervaloCada(_Timer_Archivador, _DProgramaciones.Sp_ArchivarDoc, AddressOf Sb_Archivador)
+            End If
+            If _DProgramaciones.Sp_ColaImpPick.Activo Then
+                Sb_Timer_IntervaloCada(_Timer_ImprimirPicking, _DProgramaciones.Sp_ColaImpPick, AddressOf Sb_Imprimir_Picking)
+            End If
+
+            If _DProgramaciones.Sp_ListasProgramadas.Activo Then
+                Sb_Timer_IntervaloCada(_Timer_ListasProgramadas, _DProgramaciones.Sp_ListasProgramadas, AddressOf Sb_ListasProgramadas)
+            End If
+
+            If _DProgramaciones.Sp_Prestashop_Order.Activo Then
+                Sb_Timer_IntervaloCada(_Timer_Prestashop_Orders, _DProgramaciones.Sp_Prestashop_Order, AddressOf Sb_Prestashop_Orders)
+            End If
+
+            If _DProgramaciones.Sp_Prestashop_Prod.Activo Then
+                Sb_Activar_ObjetosTimer(Timer_PrestaShopWeb, _DProgramaciones.Sp_Prestashop_Prod)
+            End If
+
+            If _DProgramaciones.Sp_SolProdBod.Activo Then
+                Sb_Timer_IntervaloCada(_Timer_SolicitudProductosBodega, _DProgramaciones.Sp_ColaImpPick, AddressOf Sb_Solicitud_Productos_Bodega)
+            End If
+
 
             Me.Refresh()
 
@@ -1349,7 +1386,7 @@ Public Class Frm_Demonio_New
 
                 Dim _Directorio_SIIRegCV = Application.StartupPath & "\SIIRegCV\SIIRegCV.exe"
                 Dim _Directorio_Error = Application.StartupPath & "\SIIRegCV\Empresas\Errores.txt"
-                Dim _Ejecutar As String = _Directorio_SIIRegCV & Space(1) & "" & _periodo2 & " True"
+                Dim _Ejecutar As String = _Directorio_SIIRegCV & Space(1) & "" & _periodo2 & " " & RutEmpresa
                 Dim _Registro As String = String.Empty
 
                 Dim _Ejecutar_SIIRegCv As Boolean = True

@@ -38,6 +38,8 @@ Partial Class Frm_Recalculo_PPPxProd
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Progreso_XProducto = New DevComponents.DotNetBar.Controls.ProgressBarX()
+        Me.MetroStatusBar1 = New DevComponents.DotNetBar.Metro.MetroStatusBar()
+        Me.Lbl_StatusBar = New DevComponents.DotNetBar.LabelItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaTope, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
@@ -66,7 +68,7 @@ Partial Class Frm_Recalculo_PPPxProd
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Procesar, Me.Btn_TraerProductos, Me.Btn_Cancelar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 535)
+        Me.Bar1.Location = New System.Drawing.Point(0, 533)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(977, 41)
         Me.Bar1.Stretch = True
@@ -267,17 +269,42 @@ Partial Class Frm_Recalculo_PPPxProd
         Me.Progreso_XProducto.TextVisible = True
         Me.Progreso_XProducto.Visible = False
         '
+        'MetroStatusBar1
+        '
+        Me.MetroStatusBar1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.MetroStatusBar1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.MetroStatusBar1.ContainerControlProcessDialogKey = True
+        Me.MetroStatusBar1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.MetroStatusBar1.DragDropSupport = True
+        Me.MetroStatusBar1.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MetroStatusBar1.ForeColor = System.Drawing.Color.Black
+        Me.MetroStatusBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_StatusBar})
+        Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 574)
+        Me.MetroStatusBar1.Name = "MetroStatusBar1"
+        Me.MetroStatusBar1.Size = New System.Drawing.Size(977, 22)
+        Me.MetroStatusBar1.TabIndex = 170
+        '
+        'Lbl_StatusBar
+        '
+        Me.Lbl_StatusBar.Name = "Lbl_StatusBar"
+        Me.Lbl_StatusBar.Text = "Bakapp Soluciones"
+        '
         'Frm_Recalculo_PPPxProd
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(977, 576)
+        Me.ClientSize = New System.Drawing.Size(977, 596)
         Me.Controls.Add(Me.Progreso_XProducto)
         Me.Controls.Add(Me.GroupPanel4)
         Me.Controls.Add(Me.Dtp_FechaTope)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Progreso_XDetalle)
         Me.Controls.Add(Me.Bar1)
+        Me.Controls.Add(Me.MetroStatusBar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -307,4 +334,6 @@ Partial Class Frm_Recalculo_PPPxProd
     Friend WithEvents Btn_Procesar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_TraerProductos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Progreso_XProducto As DevComponents.DotNetBar.Controls.ProgressBarX
+    Friend WithEvents MetroStatusBar1 As DevComponents.DotNetBar.Metro.MetroStatusBar
+    Friend WithEvents Lbl_StatusBar As DevComponents.DotNetBar.LabelItem
 End Class

@@ -17,6 +17,7 @@ Public Class Frm_Recalculo_PPPxProd
 
     Private _ProductosTodos As Boolean
     Private _Tbl_Productos As DataTable
+    Private _ProcesoCanceladoPorUsuario As Boolean
 
     Public Sub New()
 
@@ -35,7 +36,7 @@ Public Class Frm_Recalculo_PPPxProd
 
         'Txt_Producto.Text = _Row_Producto.Item("KOPR").ToString.Trim & " - " & _Row_Producto.Item("NOKOPR").ToString.Trim
         Dtp_FechaTope.Value = _FechaTope
-        Btn_Cancelar.Enabled = False
+        Btn_Cancelar.Visible = False
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Vertical, True, True, False)
 
@@ -202,9 +203,13 @@ Public Class Frm_Recalculo_PPPxProd
     End Sub
 
     Private Sub Btn_Cancelar_Click(sender As Object, e As EventArgs) Handles Btn_Cancelar.Click
-        Cl_Pm.Cancelar = True
-        MessageBoxEx.Show(Me, "Acción cancelada por el usuario", "Cancelar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        Me.Close()
+
+        If MessageBoxEx.Show(Me, "¿Desea cancelar el proceso de recalculo?", "Cancelar proceso", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Cl_Pm.Cancelar = True
+            _ProcesoCanceladoPorUsuario = True
+            MessageBoxEx.Show(Me, "Acción cancelada por el usuario", "Cancelar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
     End Sub
 
     Private Sub Btn_TraerProductos_Click(sender As Object, e As EventArgs) Handles Btn_TraerProductos.Click
@@ -260,7 +265,23 @@ Public Class Frm_Recalculo_PPPxProd
 
         Dim _UltTabla As DataTable
 
+        ' Variables para medir el tiempo
+        Dim sw As New Stopwatch()
+        sw.Start()
+
+        Btn_Procesar.Enabled = False
+        Btn_TraerProductos.Enabled = False
+        Btn_Cancelar.Visible = True
+
+        MetroStatusBar1.Refresh()
+        Me.Refresh()
+
         For i As Integer = 0 To productosSeleccionados.Count - 1
+
+            If _ProcesoCanceladoPorUsuario OrElse Cl_Pm.Cancelar Then
+                Exit For
+            End If
+
             Dim fila As DataGridViewRow = productosSeleccionados(i)
 
             ' Establecer el foco en la fila actual
@@ -287,12 +308,33 @@ Public Class Frm_Recalculo_PPPxProd
             ' Actualizar barra de progreso y mostrar estado
             Progreso_XProducto.Value = i + 1
             Dim porcentaje As Integer = CInt(((i + 1) / productosSeleccionados.Count) * 100)
+
+            ' Si aún no es la última iteración y el porcentaje es 100, mostrar 99%
+            If i + 1 < productosSeleccionados.Count AndAlso porcentaje = 100 Then
+                porcentaje = 99
+            End If
+            ' Actualizar el texto de la barra de progreso
             Progreso_XProducto.Text = "Procesando producto " & FormatNumber(i + 1, 0) & " de " & FormatNumber(productosSeleccionados.Count, 0) & "  (" & porcentaje & "%)"
+
+            ' Calcular tiempo transcurrido y estimado
+            Dim tiempoTranscurrido As TimeSpan = sw.Elapsed
+            Dim tiempoPorProducto As Double = 0
+            Dim tiempoRestante As TimeSpan = TimeSpan.Zero
+
+            If i + 1 > 0 Then
+                tiempoPorProducto = tiempoTranscurrido.TotalSeconds / (i + 1)
+                Dim productosRestantes As Integer = productosSeleccionados.Count - (i + 1)
+                Dim segundosRestantes As Double = tiempoPorProducto * productosRestantes
+                tiempoRestante = TimeSpan.FromSeconds(segundosRestantes)
+            End If
+
+            Lbl_StatusBar.Text = String.Format("Tiempo transcurrido: {0:mm\:ss} | Estimado restante: {1:mm\:ss}", tiempoTranscurrido, tiempoRestante)
+
             Application.DoEvents()
 
         Next
 
-        Progreso_XProducto.Visible = False
+        Progreso_XProducto.Text = "100%"
 
         If productosSeleccionados.Count = 1 AndAlso Not IsNothing(_UltTabla) Then
             Dim fila As DataGridViewRow = productosSeleccionados(0)
@@ -300,41 +342,52 @@ Public Class Frm_Recalculo_PPPxProd
             ExportarTabla_JetExcel_Tabla(_UltTabla, Me, _Codigo & " Revisar PPP producto detalle")
         End If
 
-        '' Ejemplo de procesamiento de los productos seleccionados
-        'For Each fila As DataGridViewRow In productosSeleccionados
+        Dim mensajeFinal As String
+        If _ProcesoCanceladoPorUsuario OrElse Cl_Pm.Cancelar Then
+            mensajeFinal = String.Format("El proceso fue cancelado por el usuario. Total de productos procesados: {0}, Tiempo total: {1:mm\:ss}", Progreso_XProducto.Value, sw.Elapsed)
+        Else
+            mensajeFinal = String.Format("Proceso finalizado. Total de productos: {0}, Tiempo total: {1:mm\:ss}", productosSeleccionados.Count, sw.Elapsed)
+        End If
 
-        '    ' Establecer el foco en la fila actual
-        '    Grilla.ClearSelection()
-        '    fila.Selected = True
-        '    Grilla.CurrentCell = fila.Cells("Chk")
-        '    'Grilla.FirstDisplayedScrollingRowIndex = fila.Index
+        Lbl_StatusBar.Text = mensajeFinal
 
-        '    Dim _Codigo As String = fila.Cells("KOPR").Value.ToString()
-        '    Dim _Descripcion As String = fila.Cells("NOKOPR").Value.ToString()
+        MessageBoxEx.Show(Me, mensajeFinal, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-        '    Dim _Mensaje As LsValiciones.Mensajes
+        ' Exportar los registros procesados
+        If Progreso_XProducto.Value > 0 Then
+            Dim tablaProcesados As DataTable = _Dv.Table.Clone()
+            For Each fila As DataGridViewRow In Grilla.Rows
+                If Not fila.IsNewRow AndAlso Not String.IsNullOrEmpty(fila.Cells("Estado").Value?.ToString()) Then
+                    If fila.Cells("Estado").Value.ToString() = "Procesado" OrElse fila.Cells("Estado").Value.ToString() = "Error" Then
+                        Dim dr As DataRow = tablaProcesados.NewRow()
+                        For Each col As DataGridViewColumn In Grilla.Columns
+                            dr(col.Name) = fila.Cells(col.Name).Value
+                        Next
+                        tablaProcesados.Rows.Add(dr)
+                    End If
+                End If
+            Next
+            ExportarTabla_JetExcel_Tabla(tablaProcesados, Me, "Resultados Recalculo PPP")
+        End If
 
-        '    _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR2(_Codigo, _Descripcion, _FechaTope, Progreso_XDetalle)
+        'Lbl_StatusBar.Text = String.Format("Proceso finalizado. Total de productos:{1}, Tiempo total: {0:mm\:ss}", sw.Elapsed, productosSeleccionados.Count)
 
-        '    _LsMensajes.Add(_Mensaje)
+        'MessageBoxEx.Show(Me, Lbl_StatusBar.Text, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-        '    fila.Cells("Estado").Value = If(_Mensaje.EsCorrecto, "Procesado", "Error")
-        '    fila.Cells("NewPM").Value = If(_Mensaje.EsCorrecto, Cl_Pm.Pm, 0.0)
-        '    fila.Cells("Stexistini").Value = Cl_Pm.Stexistini
-        '    fila.Cells("Sum_Stock").Value = Cl_Pm.Sum_Stock
+        ''Dim Fmv As New Frm_Validaciones
+        ''Fmv.ListaMensajes = _LsMensajes
+        ''Fmv.ShowDialog(Me)
+        ''Fmv.Dispose()
+        'Progreso_XProducto.Text = String.Empty
 
-        '    'Stexistini Sum_Stock
+        'ExportarTabla_JetExcel_Tabla(_Dv.Table, Me, "Resultados Recalculo PPP")
 
-        'Next
+        Btn_Procesar.Enabled = True
+        Btn_TraerProductos.Enabled = True
+        Btn_Cancelar.Visible = False
 
-        MessageBoxEx.Show(Me, "Procesamiento finalizado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-        'Dim Fmv As New Frm_Validaciones
-        'Fmv.ListaMensajes = _LsMensajes
-        'Fmv.ShowDialog(Me)
-        'Fmv.Dispose()
-
-        ExportarTabla_JetExcel_Tabla(_Dv.Table, Me, "Resultados Recalculo PPP")
+        Lbl_StatusBar.Text = "Bakapp Soluciones"
+        Me.Refresh()
 
     End Sub
 

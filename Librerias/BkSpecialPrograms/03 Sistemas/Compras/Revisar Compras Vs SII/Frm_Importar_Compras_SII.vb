@@ -454,7 +454,7 @@ Public Class Frm_Importar_Compras_SII
         Dim _periodo2 As String = _Periodo & "-" & Fx_Rellena_ceros(_Mes, 2)
 
         Dim _Directorio_SIIRegCV = Application.StartupPath & "\SIIRegCV\SIIRegCV.exe"
-        Dim _Ejecutar As String = _Directorio_SIIRegCV & Space(1) & "" & _periodo2 & " " & RutEmpresa & " True"
+        Dim _Ejecutar As String = _Directorio_SIIRegCV & Space(1) & "" & _periodo2 & " " & RutEmpresa '& " True"
 
         Try
             Shell(_Ejecutar, AppWinStyle.NormalFocus, True)

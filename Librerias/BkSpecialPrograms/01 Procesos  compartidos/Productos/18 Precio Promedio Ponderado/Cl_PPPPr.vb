@@ -405,11 +405,11 @@ Public Class Cl_PPPPr
             If _Msj.EsCorrecto Then
                 _Pppini = CType(_Msj.Tag, DataRow).Item("PPPINI")
                 _Stexistini = Math.Round(CType(_Msj.Tag, DataRow).Item("STEXISTINI"), 5)
-                If _Stexistini < 0 Then
-                    _Stexistini = 0
-                Else
-                    _Stexistini = _Stexistini
-                End If
+                'If _Stexistini < 0 Then
+                '_Stexistini = 0
+                'Else
+                _Stexistini = _Stexistini
+                'End If
             Else
                 _Pppini = 0
                 _Stexistini = 0
@@ -527,11 +527,11 @@ Public Class Cl_PPPPr
             Dim _Saldo_Valor As Double = Math.Round(_Total_Stfi_x_Pm, 5)
             Dim _Pr_Pr_P As Double = _Pm
 
-            If _Stexistini < 0 Then
-                _Saldo_Stock = 0
-            Else
-                _Saldo_Stock = Math.Round(_Stexistini, 2)
-            End If
+            'If _Stexistini < 0 Then
+            '_Saldo_Stock = 0
+            'Else
+            _Saldo_Stock = Math.Round(_Stexistini, 2)
+            'End If
 
             If _EsBarraProgreso Then
                 Try
@@ -588,7 +588,7 @@ Public Class Cl_PPPPr
                     _UltSaldoNegativo = True
                 End If
 
-                If _Nudo = "0000014830" Then
+                If _Nudo = "0000049984" Then
                     Dim _Aqui = 0
                 End If
 
@@ -676,9 +676,15 @@ Public Class Cl_PPPPr
                     End If
 
                     _PrecioCompra = Math.Round(_Costotrib / _Cantidad, 3)
-                    Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(Math.Round(_Saldo_Stock, 2), Pm, _Cantidad, _PrecioCompra)
 
-                    _Pm = _PPP
+                    Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(Math.Round(_Saldo_Stock, 2), Pm, _Cantidad, _PrecioCompra)
+                    Dim _PPP2 As Double = CalcularPPP(Saldo_Stock, Pm, _Cantidad, _PrecioCompra)
+
+                    If _PPP > 0 Then
+                        _Pm = _PPP
+                    Else
+                        _Pm = _PrecioCompra
+                    End If
 
                     _Costotrib = Math.Round(_Costotrib)
                     _V_Entrada = _Costotrib
@@ -817,6 +823,24 @@ Public Class Cl_PPPPr
 
         Return Math.Round(precioPromedioRd, 5) ' Redondeo a 2 decimales
         'Return Math.Round(precioPromedio, 5) ' Redondeo a 2 decimales
+
+    End Function
+
+    Function CalcularPPP(stockAnterior As Decimal,
+                         pppAnterior As Decimal,
+                         ingreso As Decimal,
+                         precioIngreso As Decimal) As Decimal
+
+        If stockAnterior + ingreso = 0 Then
+            Return 0 ' Evita división por cero
+        End If
+
+        Dim totalCostoAnterior As Decimal = stockAnterior * pppAnterior
+        Dim totalCostoIngreso As Decimal = ingreso * precioIngreso
+        Dim nuevoPPP As Decimal = (totalCostoAnterior + totalCostoIngreso) / (stockAnterior + ingreso)
+
+        ' Retorna con hasta 5 decimales, si deseas exactitud como 10337.22016
+        Return Math.Round(nuevoPPP, 5, MidpointRounding.AwayFromZero)
 
     End Function
 

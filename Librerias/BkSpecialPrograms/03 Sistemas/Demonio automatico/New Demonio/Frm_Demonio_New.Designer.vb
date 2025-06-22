@@ -394,6 +394,7 @@ Partial Class Frm_Demonio_New
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.MaximizeBox = False
         Me.Name = "Frm_Demonio_New"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
