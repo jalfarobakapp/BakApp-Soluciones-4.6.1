@@ -1344,34 +1344,17 @@ Public Class Menu
 
     Private Sub Btn_PPP_Click(sender As Object, e As EventArgs) Handles Btn_PPP.Click
 
+        Dim _EjecutarProcesoTodosLosProductos As Boolean = False
+
+        If MessageBoxEx.Show(Me, "¿Desea recalcular todo automáticamente el PPP?", "Recalcular PPP por producto",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            _EjecutarProcesoTodosLosProductos = True
+        End If
+
         Dim Fm As New Frm_Recalculo_PPPxProd
+        Fm.EjecutarProcesoTodosLosProductos = _EjecutarProcesoTodosLosProductos
         Fm.ShowDialog(Me)
         Fm.Dispose()
-        Return
-
-        Dim _Codigo As String = "PMPMSH2X75LEV"
-        Dim _FechaTope As Date = FechaDelServidor()
-
-        'Dim Fm As New Frm_Recalculo_PPPxProd(_Codigo, Nothing)
-        'Fm.ShowDialog(Me)
-        'Fm.Dispose()
-
-        Dim _Aceptar As Boolean = InputBox_Bk(_Fm_Menu_Padre, "Ingrese el código a revisar", "Calcula PPP", _Codigo, False,, 13, True)
-
-        If Not _Aceptar Then
-            Return
-        End If
-
-        '_Codigo = "LOVENFPA20VIC"
-
-        Dim Cl_Pm As New Cl_PPPPr
-        Dim _Mensaje As LsValiciones.Mensajes
-
-        _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR(_Codigo, _FechaTope)
-
-        If _Mensaje.EsCorrecto Then
-            ExportarTabla_JetExcel_Tabla(Cl_Pm.TblDetalleDocs, _Fm_Menu_Padre, "Historia PPP " & _Codigo)
-        End If
 
     End Sub
 
