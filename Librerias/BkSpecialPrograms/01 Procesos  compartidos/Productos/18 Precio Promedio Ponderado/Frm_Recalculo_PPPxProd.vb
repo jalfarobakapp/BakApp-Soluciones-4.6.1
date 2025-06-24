@@ -353,7 +353,7 @@ Public Class Frm_Recalculo_PPPxProd
             Cl_Pm.Pm_Maeprem = fila.Cells("PM2").Value
             Cl_Pm.Fepm_Maeprem = fila.Cells("FEPM2").Value
 
-            _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR2(_Codigo, _Descripcion, _FechaTope, Progreso_XDetalle)
+            _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR2(_Codigo, _Descripcion, _FechaTope, Progreso_XDetalle, True)
 
             _LsMensajes.Add(_Mensaje)
 
@@ -400,6 +400,12 @@ Public Class Frm_Recalculo_PPPxProd
         Next
 
         Progreso_XProducto.Text = "100%"
+
+        If productosSeleccionados.Count = 1 AndAlso Not IsNothing(_UltTabla) Then
+            Dim fila As DataGridViewRow = productosSeleccionados(0)
+            Dim _Codigo As String = fila.Cells("KOPR").Value.ToString()
+            ExportarTabla_JetExcel_Tabla(_UltTabla, Me, _Codigo & " Revisar PPP producto detalle")
+        End If
 
         Dim mensajeFinal As String
         If _ProcesoCanceladoPorUsuario OrElse Cl_Pm.Cancelar Then

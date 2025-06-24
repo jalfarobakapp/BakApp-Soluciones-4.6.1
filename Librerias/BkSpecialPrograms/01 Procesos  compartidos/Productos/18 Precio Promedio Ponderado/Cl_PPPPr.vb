@@ -56,7 +56,8 @@
     Function Fx_RecalcularPPPxPR2(_Codigo As String,
                                   _Descripcion As String,
                                   _FechaTope As DateTime,
-                                  _Progreso As Object) As LsValiciones.Mensajes
+                                  _Progreso As Object,
+                                  _ActualizarPPP As Boolean) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Fechinippp As DateTime
@@ -325,6 +326,7 @@
 
                         _V_Entrada = Math.Round(_Vaneli, 0)
                         _Saldo_Valor += _V_Entrada
+                        _Costotrib = _V_Entrada
                         _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
                         _Pm = Math.Round(_Pr_Pr_P, 3)
 
@@ -380,17 +382,19 @@
             End If
 
             _SqlQuery += "Update MAEPREM Set PM = " & De_Num_a_Tx_01(_Pm, False, 5) & ",FEPM = '" & Format(Fepm, "yyyyMMdd") & "' Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'" & vbCrLf &
-                             "Update MAEPR Set PM = " & De_Num_a_Tx_01(_Pm, False, 5) & ",FEPM = '" & Format(Fepm, "yyyyMMdd") & "' Where KOPR = '" & _Codigo & "'" & vbCrLf &
-                             "Update MAEDDO Set PPPRPM = " &
-                             "(Select Top 1 PPPRPM From MAEDDO As CRIAS " &
-                             "Where CRIAS.IDMAEEDO = MAEDDO.IDMAEEDO And CRIAS.LILG = 'CR' And CRIAS.NULILG = MAEDDO.NULIDO Order By CRIAS.NULIDO DESC) " &
-                             "Where MAEDDO.KOPRCT = '" & _Codigo & "' And MAEDDO.LILG = 'GR'"
+                         "Update MAEPR Set PM = " & De_Num_a_Tx_01(_Pm, False, 5) & ",FEPM = '" & Format(Fepm, "yyyyMMdd") & "' Where KOPR = '" & _Codigo & "'" & vbCrLf &
+                         "Update MAEDDO Set PPPRPM = " &
+                         "(Select Top 1 PPPRPM From MAEDDO As CRIAS " &
+                         "Where CRIAS.IDMAEEDO = MAEDDO.IDMAEEDO And CRIAS.LILG = 'CR' And CRIAS.NULILG = MAEDDO.NULIDO Order By CRIAS.NULIDO DESC) " &
+                         "Where MAEDDO.KOPRCT = '" & _Codigo & "' And MAEDDO.LILG = 'GR'"
 
-            _SqlQuery = "CODIGO: " & _Codigo & " - " & _Descripcion & vbCrLf & _SqlQuery
+            _SqlQuery = "--CODIGO: " & _Codigo & " - " & _Descripcion & vbCrLf & _SqlQuery
 
-            'If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery, False) Then
-            '    Throw New Exception(_Sql.Pro_Error)
-            'End If
+            If _ActualizarPPP Then
+                If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery, False) Then
+                    Throw New Exception(_Sql.Pro_Error)
+                End If
+            End If
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Mensaje = "Código: " & _Codigo & ", Descripción: " & _Descripcion
