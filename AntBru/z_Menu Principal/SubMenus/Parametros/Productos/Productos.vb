@@ -286,4 +286,14 @@ Public Class Productos
         Fm.Dispose()
 
     End Sub
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod079") Then
+            Return
+        End If
+
+        Dim Fm As New Frm_Recalculo_PPPxProd
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class
