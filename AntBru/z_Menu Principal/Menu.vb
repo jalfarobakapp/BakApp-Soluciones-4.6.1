@@ -1353,6 +1353,7 @@ Public Class Menu
 
         Dim Fm As New Frm_Recalculo_PPPxProd
         Fm.EjecutarProcesoTodosLosProductos = _EjecutarProcesoTodosLosProductos
+        Fm.ModoPruebas = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

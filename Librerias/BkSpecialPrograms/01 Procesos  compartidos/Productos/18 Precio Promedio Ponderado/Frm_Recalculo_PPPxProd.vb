@@ -24,7 +24,7 @@ Public Class Frm_Recalculo_PPPxProd
     Private _RutaLogAutomatico As String '= IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LogsPPP")
     Private _NombreArchivoLog As String = String.Format("LogPPP_{0:yyyyMMdd_HHmmss}.txt", Now)
     Public Property EjecutarProcesoTodosLosProductos As Boolean
-
+    Public Property ModoPruebas As Boolean = False
 
     Public Sub New()
 
@@ -64,6 +64,7 @@ Public Class Frm_Recalculo_PPPxProd
         Btn_Cancelar.Visible = False
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.White, ScrollBars.Both, True, True, False)
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -73,6 +74,8 @@ Public Class Frm_Recalculo_PPPxProd
             _ProductosTodos = True
             _EsEjecucionAutomatica = True
         End If
+
+        Chk_ModoPruebas.Checked = ModoPruebas
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
@@ -326,12 +329,15 @@ Public Class Frm_Recalculo_PPPxProd
         Btn_Procesar.Enabled = False
         Btn_TraerProductos.Enabled = False
         Btn_Cancelar.Visible = True
+        Chk_ModoPruebas.Enabled = False
 
         MetroStatusBar1.Refresh()
         Me.Refresh()
 
         Cl_Pm.Cancelar = False
         _ProcesoCanceladoPorUsuario = False
+
+        Dim _ActualizarPPP As Boolean = Not Chk_ModoPruebas.Checked
 
         For i As Integer = 0 To productosSeleccionados.Count - 1
 
@@ -353,7 +359,7 @@ Public Class Frm_Recalculo_PPPxProd
             Cl_Pm.Pm_Maeprem = fila.Cells("PM2").Value
             Cl_Pm.Fepm_Maeprem = fila.Cells("FEPM2").Value
 
-            _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR2(_Codigo, _Descripcion, _FechaTope, Progreso_XDetalle, True)
+            _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR2(_Codigo, _Descripcion, _FechaTope, Progreso_XDetalle, _ActualizarPPP)
 
             _LsMensajes.Add(_Mensaje)
 
@@ -445,6 +451,7 @@ Public Class Frm_Recalculo_PPPxProd
         Btn_Procesar.Enabled = True
         Btn_TraerProductos.Enabled = True
         Btn_Cancelar.Visible = False
+        Chk_ModoPruebas.Enabled = True
 
         Lbl_StatusBar.Text = "Bakapp Soluciones"
         Me.Refresh()
@@ -639,4 +646,6 @@ Public Class Frm_Recalculo_PPPxProd
         ' Refrescar controles
         Me.Refresh()
     End Sub
+
+
 End Class

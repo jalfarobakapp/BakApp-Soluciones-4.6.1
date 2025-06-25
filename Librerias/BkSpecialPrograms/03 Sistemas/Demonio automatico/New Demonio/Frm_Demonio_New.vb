@@ -1157,7 +1157,6 @@ Public Class Frm_Demonio_New
 
         Sb_Actualizar_Fecha()
 
-
 #Region "IMPRIMIR DOCUMENTOS"
 
         If _Cl_Imprimir_Documentos.Ejecutar Then

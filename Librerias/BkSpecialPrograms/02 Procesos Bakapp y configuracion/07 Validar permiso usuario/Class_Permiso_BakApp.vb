@@ -896,6 +896,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Prod076", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Prod077", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Prod078", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Prod079", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("NO00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("NO00002", _Objeto, _Formulario)
@@ -3965,6 +3966,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod078"
                 _DescripcionPermiso = "INGRESAR AL MODULO DE PRODUCTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
+            Case "Prod079"
+                _DescripcionPermiso = "PROCESAR RECALCULO DEL PRECIO PROMEDIO PONDERADO NORMA TRIBUTARIA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
 
