@@ -976,6 +976,8 @@ Drop Table #Paso_Tabim"
 
             Next
 
+            _SqlQuery += "Update TABPRE Set KOPRRA = '" & _koprra & "',KOPRTE = '" & _koprte & "' Where KOPR = '" & _kopr & "'" & vbCrLf & vbCrLf
+
 
             'INGRESO DE PRODUCTOS A LA BODEGA
 
@@ -1234,6 +1236,12 @@ Drop Table #Paso_Tabim"
                            De_Num_a_Tx_01(_largo, False, 5) & "," &
                            De_Num_a_Tx_01(_ancho, False, 5) & ")" & vbCrLf
 
+            _SqlQuery += "Update MAEPR Set KOPRTE = '" & _koprte & "' Where KOPR = '" & _kopr & "'" & vbCrLf
+
+            _SqlQuery += "Update TABPRE Set KOPRRA = Mp.KOPRRA,KOPRTE = Mp.KOPRTE " & vbCrLf &
+                         "From MAEPR Mp" & vbCrLf &
+                         "Inner Join TABPRE Tp On Mp.KOPR = Tp.KOPR" & vbCrLf &
+                         "Where Mp.KOPR = '" & _kopr & "'" & vbCrLf
 
             'Insertar datos en TABACTUS
 

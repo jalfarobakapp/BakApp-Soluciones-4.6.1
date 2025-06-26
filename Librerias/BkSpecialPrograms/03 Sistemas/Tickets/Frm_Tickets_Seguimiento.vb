@@ -21,6 +21,7 @@ Public Class Frm_Tickets_Seguimiento
     Public Property GestionRealizada As Boolean
     Public Property Aprobado As Boolean
     Public Property Rechazado As Boolean
+    Public Property Anulado As Boolean
     Public Property vTop As Integer
     Public Property vLeft As Integer
 
@@ -188,7 +189,7 @@ Public Class Frm_Tickets_Seguimiento
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets Tkc On Tkc.Id = Acc.Id_Ticket_Cierra " & vbCrLf &
                        "Where" & vbCrLf &
                        "Id_Ticket In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id_Raiz = " & _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz & ")" & vbCrLf &
-                       "Order By Id_Ticket,Fecha"
+                       "Order By Fecha --,Id_Ticket"
 
         _Tbl_Acciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -696,7 +697,15 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Return
         End If
 
-        Fx_Cerrar_Ticket(False, False, False, True, 0, False, False, True, True)
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = Fx_Cerrar_Ticket(False, False, False, True, 0, False, False, True, True)
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Alerta", MessageBoxButtons.OK, _Mensaje.Icono)
+        End If
+
+        Anulado = True
 
         Me.Close()
 
@@ -806,13 +815,14 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             MessageBoxEx.Show(Me, _Mensaje_Ticket.Mensaje, _Caption, MessageBoxButtons.OK, MessageBoxIcon.Information)
             GestionRealizada = True
 
-
             _Mensaje.EsCorrecto = True
             _Mensaje.Mensaje = _Mensaje_Ticket.Mensaje
+            _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
             _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
         Return _Mensaje

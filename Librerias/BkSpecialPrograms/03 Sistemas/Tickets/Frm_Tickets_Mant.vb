@@ -250,25 +250,34 @@ Public Class Frm_Tickets_Mant
             .AsignadoGrupo = Rdb_AsignadoGrupo.Checked
             .AsignadoAgente = Rdb_AsignadoAgente.Checked
 
-            Consulta_sql = "Select Top 1 Prod.Codigo,Prod.Descripcion,Prod.Numero,Prod.Ubicacion,Tks.CodFuncionario_Crea,NOKOFU" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Prod" & vbCrLf &
-                           "Inner Join " & _Global_BaseBk & "Zw_Stk_Tickets Tks On Tks.Id_Raiz = Prod.Id_Raiz" & vbCrLf &
-                           "Inner Join TABFU On KOFU = Tks.CodFuncionario_Crea" & vbCrLf &
-                           "Where Tks.Id <> " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id &
-                           " And Id_Tipo = " & .Id_Tipo &
-                           " And Prod.Empresa = '" & _TkProducto.Empresa & "' And Prod.Sucursal = '" & _TkProducto.Sucursal & "' And Prod.Bodega = '" & _TkProducto.Bodega & "' And Prod.Ubicacion = '" & _TkProducto.Ubicacion & "' And Codigo = '" & _TkProducto.Codigo & "' And Estado = 'ABIE'"
-            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            If .Id_Padre = 0 Then
 
-            If Not IsNothing(_Row) Then
+                Consulta_sql = "Select Top 1 Prod.Codigo,Prod.Descripcion,Prod.Numero,Prod.Ubicacion,Tks.CodFuncionario_Crea,NOKOFU" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Prod" & vbCrLf &
+                               "Inner Join " & _Global_BaseBk & "Zw_Stk_Tickets Tks On Tks.Id_Raiz = Prod.Id_Raiz" & vbCrLf &
+                               "Inner Join TABFU On KOFU = Tks.CodFuncionario_Crea" & vbCrLf &
+                               "Where Tks.Id <> " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id &
+                               " And Id_Tipo = " & .Id_Tipo &
+                               " And Prod.Empresa = '" & _TkProducto.Empresa & "'" &
+                               " And Prod.Sucursal = '" & _TkProducto.Sucursal & "'" &
+                               " And Prod.Bodega = '" & _TkProducto.Bodega & "'" &
+                               " And Prod.Ubicacion = '" & _TkProducto.Ubicacion & "'" &
+                               " And Codigo = '" & _TkProducto.Codigo & "'" &
+                               " And Estado = 'ABIE'"
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                MessageBoxEx.Show(Me, "Ticket " & _Row.Item("Numero") & vbCrLf &
-                                      "De: " & _Row.Item("CodFuncionario_Crea") & "-" & _Row.Item("NOKOFU").ToString.Trim() & vbCrLf &
-                                      "Producto: " & _TkProducto.Codigo.Trim & " - " & _Row.Item("Descripcion") & vbCrLf &
-                                      "Asunto: " & Txt_AreaTipo.Text.Trim & vbCrLf &
-                                      "Ubicación: " & _Row.Item("Ubicacion").ToString.Trim,
-                                      "Ya hay un ticket abierto por esta misma solución", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                If Not IsNothing(_Row) Then
 
-                Return
+                    MessageBoxEx.Show(Me, "Ticket " & _Row.Item("Numero") & vbCrLf &
+                                          "De: " & _Row.Item("CodFuncionario_Crea") & "-" & _Row.Item("NOKOFU").ToString.Trim() & vbCrLf &
+                                          "Producto: " & _TkProducto.Codigo.Trim & " - " & _Row.Item("Descripcion") & vbCrLf &
+                                          "Asunto: " & Txt_AreaTipo.Text.Trim & vbCrLf &
+                                          "Ubicación: " & _Row.Item("Ubicacion").ToString.Trim,
+                                          "Ya hay un ticket abierto por esta misma solución", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                    Return
+
+                End If
 
             End If
 

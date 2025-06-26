@@ -302,7 +302,7 @@ Public Class Frm_Tickets_Lista
 
         Consulta_sql = "Select Distinct Tks.*,NOKOFU As 'NomFuncCrea',TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega," & vbCrLf &
                        "TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
-                       "Case UdMedida When 1 Then Ud1 Else Ud2 End As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
+                       "TkPrd.Um As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
                        ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
                        ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
                        ",Case Estado 
@@ -716,18 +716,20 @@ Public Class Frm_Tickets_Lista
                 _SoloLectura = True
             End If
 
-            Dim _GestinRealizada As Boolean
+            Dim _GestionRealizada As Boolean
+            Dim _Anulado As Boolean
 
             Dim Fm As New Frm_Tickets_Seguimiento(_Id_Ticket)
             Fm.SoloLectura = _SoloLectura
-            'Fm.Mis_Ticket = (_Tipo_Tickets = Enum_Tickets.MisTicket)
             Fm.ShowDialog(Me)
-            _GestinRealizada = Fm.GestionRealizada
+            _Anulado = Fm.Anulado
+            _GestionRealizada = Fm.GestionRealizada
             Fm.Dispose()
 
-            If _GestinRealizada Then
+            ' Obtén el nodo seleccionado (con foco):
+            Dim nodoSeleccionado As TreeNode = Tree_Bandeja.SelectedNode
 
-                Dim nodoSeleccionado As TreeNode = Tree_Bandeja.SelectedNode
+            If _GestionRealizada Then
 
                 If nodoSeleccionado IsNot Nothing Then
                     ' El nodo seleccionado tiene el foco
@@ -740,6 +742,16 @@ Public Class Frm_Tickets_Lista
 
                 BuscarDatoEnGrilla(_Numero, "Numero", Grilla)
 
+            End If
+
+            If _Anulado Then
+
+                If nodoSeleccionado Is Nothing AndAlso Tree_Bandeja.Nodes.Count > 0 Then
+                    nodoSeleccionado = Tree_Bandeja.Nodes(0)
+                    Tree_Bandeja.SelectedNode = nodoSeleccionado
+                End If
+
+                Call Btn_Actualizar_Click(Nothing, Nothing)
             End If
 
         Catch ex As Exception
@@ -1254,7 +1266,7 @@ Public Class Frm_Tickets_Lista
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets Tkc On Tkc.Id = Acc.Id_Ticket_Cierra " & vbCrLf &
                        "Where" & vbCrLf &
                        "Id_Ticket In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id_Raiz = " & _Id_Raiz & ")" & vbCrLf &
-                       "Order By Id_Ticket,Fecha"
+                       "Order By Fecha -- Id_Ticket,Fecha"
 
         Dim _Tbl_Acciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 

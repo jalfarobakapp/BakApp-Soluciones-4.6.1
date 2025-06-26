@@ -655,7 +655,7 @@ Public Class Cl_Tickets
 
             Dim _FechaCierre As String
 
-            If _Cierra_Ticket Then
+            If _Cierra_Ticket Or _AnulaTicket Then
                 _FechaCierre = ",FechaCierre = Getdate()"
             End If
 
