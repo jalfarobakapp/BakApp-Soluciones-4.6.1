@@ -357,7 +357,11 @@ Public Class Frm_Recalculo_PPPxProd
             Dim _Mensaje As LsValiciones.Mensajes
 
             Cl_Pm.Pm_Maeprem = fila.Cells("PM2").Value
-            Cl_Pm.Fepm_Maeprem = fila.Cells("FEPM2").Value
+            If IsDBNull(fila.Cells("FEPM2").Value) OrElse fila.Cells("FEPM2").Value Is Nothing Then
+                Cl_Pm.Fepm_Maeprem = New DateTime(1900, 1, 1)
+            Else
+                Cl_Pm.Fepm_Maeprem = fila.Cells("FEPM2").Value
+            End If
 
             _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR2(_Codigo, _Descripcion, _FechaTope, Progreso_XDetalle, _ActualizarPPP)
 
