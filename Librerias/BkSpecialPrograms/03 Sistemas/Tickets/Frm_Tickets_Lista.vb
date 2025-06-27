@@ -230,6 +230,10 @@ Public Class Frm_Tickets_Lista
             'End If
         End If
 
+        Me.Cursor = Cursors.WaitCursor
+
+        GroupPanel1.Text = _Carpeta.FullPath
+
         Dim _Condicion As String = String.Empty
         Dim _Condicion2 As String = String.Empty
 
@@ -325,7 +329,6 @@ Public Class Frm_Tickets_Lista
         _Dv = New DataView
         _Dv.Table = _New_Ds.Tables("Table")
         _Tbl_Tickets = _Dv.Table
-
 
         With Grilla
 
@@ -518,121 +521,6 @@ Public Class Frm_Tickets_Lista
 
         Lbl_Estatus.Text = "Registros: " & _Tbl_Tickets.Rows.Count
 
-        'For Each _Fila As DataGridViewRow In Grilla.Rows
-
-        '    Dim _Mesn_Pdte_Ver = _Fila.Cells("Mesn_Pdte_Ver").Value
-        '    Dim _Resp_Pdte_Ver = _Fila.Cells("Resp_Pdte_Ver").Value
-        '    Dim _Estado As String = _Fila.Cells("Estado").Value
-        '    Dim _Aceptado As Boolean = _Fila.Cells("Aceptado").Value
-        '    Dim _Rechazado As Boolean = _Fila.Cells("Rechazado").Value
-        '    Dim _Prioridad As String = _Fila.Cells("Prioridad").Value
-
-        '    Dim _Icono As Image
-        '    Dim _Nombre_Image As String
-        '    Dim _Num
-
-        '    Dim nodoPadre As TreeNode = _Carpeta.Parent
-
-        '    If nodoPadre.Tag = "ASIGNADOS" Then
-        '        _Num = _Mesn_Pdte_Ver
-        '    End If
-
-        '    If nodoPadre.Tag = "ENVIADOS" Then
-        '        _Num = _Resp_Pdte_Ver
-        '    End If
-
-        '    Dim _Imagenes_List As ImageList
-
-        '    If Global_Thema = Enum_Themas.Oscuro Then
-        '        _Imagenes_List = Imagenes_16x16_Dark
-        '    Else
-        '        _Imagenes_List = Imagenes_16x16
-        '    End If
-
-        '    ' Dim estiloFuente As New DataGridViewCellStyle(_Fila.Cells("Asunto").Style)
-        '    ' Establece la fuente en negrita
-
-        '    Dim fuentePersonalizada As Font = Grilla.DefaultCellStyle.Font
-
-        '    If _Estado = "NULO" Then
-        '        _Icono = _Imagenes_List.Images.Item("cancel.png")
-        '    Else
-
-        '        If CBool(_Num) Then
-
-        '            _Nombre_Image = "comment.png" '"comment-number-" & _Num & ".png"
-
-        '            'If _Mesn_Pdte_Ver > 9 Then
-        '            '    _Nombre_Image = "comment-number-9-plus.png"
-        '            'End If
-
-        '            _Icono = _Imagenes_List.Images.Item(_Nombre_Image)
-
-        '            'If Global_Thema = Enum_Themas.Oscuro Then
-        '            '    _Fila.DefaultCellStyle.ForeColor = Amarillo
-        '            'Else
-        '            '    _Fila.DefaultCellStyle.BackColor = Color.LightYellow
-        '            'End If
-
-        '            'fuentePersonalizada = New Font(fuentePersonalizada, FontStyle.Bold)
-
-        '        Else
-        '            _Icono = _Imagenes_List.Images.Item("menu-more.png")
-        '            'estiloFuente.Font = New Font(_Fila.Cells(0).Style.Font, FontStyle.Regular)
-        '        End If
-
-        '    End If
-
-        '    _Fila.Cells("BtnImagen_Estado").Value = _Icono
-        '    '_Fila.Cells("BtnImagen_Estado2").Value = _Icono
-
-        '    '' Aplica la fuente personalizada a la fila específica:
-        '    'For Each celda As DataGridViewCell In _Fila.Cells
-        '    '    celda.Style.Font = fuentePersonalizada
-        '    'Next
-
-        '    'If False Then
-
-
-        '    ' Aplica el nuevo estilo de fuente a la celda
-        '    '_Fila.Cells(0).Style.Font = estiloFuente.Font
-
-
-
-        '    'If _Aceptado Then _Fila.Cells("NomEstado").Style.ForeColor = Verde
-        '    'If _Rechazado Then _Fila.Cells("NomEstado").Style.ForeColor = Rojo
-
-        '    '_Fila.Cells("NomPrioridad").Style.ForeColor = Color.White
-
-        '    If _Prioridad = "AL" Then
-        '        _Icono = _Imagenes_List.Images.Item("tag-green.png")
-        '        '_Fila.Cells("NomPrioridad").Style.BackColor = Verde 'Color.Orange
-        '    End If
-
-        '    If _Prioridad = "BJ" Then
-        '        _Icono = _Imagenes_List.Images.Item("tag-gray.png")
-        '        '_Fila.Cells("NomPrioridad").Style.ForeColor = Color.Black
-        '        '_Fila.Cells("NomPrioridad").Style.BackColor = Color.LightGray
-        '    End If
-
-        '    If _Prioridad = "NR" Then
-        '        _Icono = _Imagenes_List.Images.Item("tag-blue.png")
-        '        '_Fila.Cells("NomPrioridad").Style.BackColor = Azul
-        '    End If
-
-        '    If _Prioridad = "UR" Then
-        '        _Icono = _Imagenes_List.Images.Item("tag-red.png")
-        '        '_Fila.Cells("NomPrioridad").Style.BackColor = Rojo
-        '    End If
-
-        '    _Fila.Cells("BtnImagen_Estado2").Value = _Icono
-
-        '    'End If
-
-        'Next
-
-        'Sb_Actualizar_Grilla_Acciones(0)
-
         ' Posicionarse en la primera fila de la grilla si tiene datos
         If Grilla.Rows.Count > 0 Then
             Grilla.CurrentCell = Grilla.Rows(0).Cells("Numero")
@@ -645,6 +533,12 @@ Public Class Frm_Tickets_Lista
         Txt_Descripcion.Text = String.Empty
 
         Grilla.Refresh()
+
+        If Not String.IsNullOrWhiteSpace(Txt_Filtrar.Text.Trim) Then
+            Sb_Filtrar2()
+        End If
+
+        Me.Cursor = Cursors.Default
 
     End Sub
 
@@ -1136,7 +1030,7 @@ Public Class Frm_Tickets_Lista
                     ElseIf filtro.ToLower = "dif+" Then
                         filtroFinal &= String.Format("Diferencia >0")
                     Else
-                        filtroFinal &= String.Format("(Numero+Asunto+CONVERT(FechaCreacion, 
+                        filtroFinal &= String.Format("(Numero+Asunto+NomEstado+CONVERT(FechaCreacion, 
                         'System.String')+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad Like '%{0}%')", filtro)
                     End If
 
@@ -1239,7 +1133,7 @@ Public Class Frm_Tickets_Lista
 
         Consulta_sql = "Select Tk.Id As 'Id_Ticket',Tk.Id_Padre,Tk.Id_Raiz,Acc.Id As 'Id_Accion'," & vbCrLf &
                        "(Select Numero From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = Tk.Id_Raiz) As 'Ticket_Origen'," & vbCrLf &
-                       "Tk.Numero,Acc.Asunto,Acc.CodFunGestiona,Cf.NOKOFU As 'NombreFunGestiona',Acc.Accion,Acc.Fecha,Acc.CodFuncionario," & vbCrLf &
+                       "Tk.Numero,Tk.SubNro,Acc.Asunto,Acc.CodFunGestiona,Cf.NOKOFU As 'NombreFunGestiona',Acc.Accion,Acc.Fecha,Acc.CodFuncionario," & vbCrLf &
                        "Case Acc.CodFunGestiona When Acc.CodFuncionario Then 'FunCrea' When Acc.CodAgente Then 'FunAge' End As 'FunAccion',Acc.Aceptado,Acc.Rechazado," & vbCrLf &
                        "Case Acc.Accion " & vbCrLf &
                        "When 'CREA' Then 'Crea Ticket' " & vbCrLf &
@@ -1283,6 +1177,13 @@ Public Class Frm_Tickets_Lista
             .Columns("Btn_ImagenUser").Visible = True
             '.Columns("Btn_ImagenUser").Frozen = True
             .Columns("Btn_ImagenUser").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("SubNro").Visible = True
+            .Columns("SubNro").HeaderText = "Sub"
+            .Columns("SubNro").Width = 30
+            .Columns("SubNro").Frozen = True
+            .Columns("SubNro").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("StrAccion").Visible = True

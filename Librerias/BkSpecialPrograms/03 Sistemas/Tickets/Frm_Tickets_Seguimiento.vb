@@ -162,7 +162,7 @@ Public Class Frm_Tickets_Seguimiento
 
         Consulta_sql = "Select Tk.Id As 'Id_Ticket',Tk.Id_Padre,Tk.Id_Raiz,Acc.Id As 'Id_Accion'," & vbCrLf &
                        "(Select Numero From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = Tk.Id_Raiz) As 'Ticket_Origen'," & vbCrLf &
-                       "Tk.Numero,Acc.Asunto,Acc.CodFunGestiona,Cf.NOKOFU As 'NombreFunGestiona',Acc.Accion,Acc.Fecha,Acc.CodFuncionario," & vbCrLf &
+                       "Tk.Numero,Tk.SubNro,Acc.Asunto,Acc.CodFunGestiona,Cf.NOKOFU As 'NombreFunGestiona',Acc.Accion,Acc.Fecha,Acc.CodFuncionario," & vbCrLf &
                        "Case Acc.CodFunGestiona When Acc.CodFuncionario Then 'FunCrea' When Acc.CodAgente Then 'FunAge' End As 'FunAccion',Acc.Aceptado,Acc.Rechazado," & vbCrLf &
                        "Case Acc.Accion " & vbCrLf &
                        "When 'CREA' Then 'Crea Ticket' " & vbCrLf &
@@ -207,6 +207,12 @@ Public Class Frm_Tickets_Seguimiento
             .Columns("Btn_ImagenUser").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("SubNro").Visible = True
+            .Columns("SubNro").HeaderText = "Sub"
+            .Columns("SubNro").Width = 30
+            .Columns("SubNro").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("StrAccion").Visible = True
             .Columns("StrAccion").HeaderText = "Acción"
             .Columns("StrAccion").Width = 150
@@ -227,7 +233,7 @@ Public Class Frm_Tickets_Seguimiento
 
             .Columns("Asunto").Visible = True
             .Columns("Asunto").HeaderText = "Asunto"
-            .Columns("Asunto").Width = 240
+            .Columns("Asunto").Width = 220
             .Columns("Asunto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 

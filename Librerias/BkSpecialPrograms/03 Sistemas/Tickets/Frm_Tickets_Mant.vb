@@ -418,10 +418,10 @@ Public Class Frm_Tickets_Mant
             Txt_TidoNudoCierra.Visible = .ExigeDocCerrar
             Chk_ExigeDocCerrar.Visible = .ExigeDocCerrar
 
-            If String.IsNullOrWhiteSpace(Txt_Asunto.Text) Then
-                Txt_Asunto.Text = .Tipo.ToString.Trim
-                Txt_Asunto.ReadOnly = True
-            End If
+            'If String.IsNullOrWhiteSpace(Txt_Asunto.Text) Then
+            Txt_Asunto.Text = .Tipo.ToString.Trim
+            Txt_Asunto.ReadOnly = True
+            'End If
 
             Txt_Descripcion.Text = .RespuestaXDefecto
 
