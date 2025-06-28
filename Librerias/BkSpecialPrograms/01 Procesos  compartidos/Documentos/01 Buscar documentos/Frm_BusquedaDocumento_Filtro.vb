@@ -47,6 +47,8 @@ Public Class Frm_BusquedaDocumento_Filtro
     Private _VerSoloEntidadesDelVendedor As Boolean
     Private _Ls_DocumentosPermitidos As New List(Of Ls_DocumentosPermitidos)
 
+    Public Property OcultarWarnig As Boolean
+
 #Region "PROPIEDADES"
 
     Public Property Pro_TipoDoc_Seleccionado() As _TipoDoc_Sel
@@ -328,6 +330,10 @@ Public Class Frm_BusquedaDocumento_Filtro
         Catch ex As Exception
             Wrn_MostrarSoloDocClientesDelVendedor.Visible = False
         End Try
+
+        If OcultarWarnig Then
+            Wrn_MostrarSoloDocClientesDelVendedor.Visible = False
+        End If
 
     End Sub
 

@@ -7,7 +7,7 @@ Set @Idmaeedo = #Idmaeedo#
 SELECT 
        -- MAEEDO 
        Edo.IDMAEEDO, Edo.EMPRESA, Edo.TIDO, Edo.NUDO, Edo.TIDO+Edo.NUDO As 'Bk_Tido_Nudo', Edo.ENDO, Edo.SUENDO, Edo.ENDOFI, Edo.TIGEDO, Edo.SUDO,Sucedo.NOKOSU As 'NOMSUDO',
-	   Edo.LUVTDO, Edo.FEEMDO, Edo.KOFUDO, Resp.NOKOFU As 'Resp_NOKOFU', Edo.ESDO, Edo.ESPGDO, 
+	   Edo.LUVTDO, Edo.FEEMDO, Edo.KOFUDO, Edo.ESDO, Edo.ESPGDO, 
        Edo.CAPRCO, Edo.CAPRAD, Edo.CAPREX, Edo.CAPRNC, Edo.MEARDO, Edo.MODO, Edo.TIMODO, Edo.TAMODO, Edo.NUCTAP, Edo.VACTDTNEDO, Edo.VACTDTBRDO, Edo.NUIVDO, Edo.POIVDO, 
        Edo.VAIVDO, Edo.NUIMDO, Edo.VAIMDO, Edo.VANEDO, Edo.VABRDO, Edo.POPIDO, Edo.VAPIDO, Edo.FE01VEDO, Edo.FEULVEDO, Edo.NUVEDO, Edo.VAABDO, Edo.MARCA, Edo.FEER, 
        Edo.NUTRANSMI, Edo.NUCOCO, Edo.KOTU, Edo.LIBRO, Edo.LCLV, Edo.ESFADO, Edo.KOTRPCVH, Edo.NULICO, Edo.PERIODO, Edo.NUDONODEFI, Edo.TRANSMASI, Edo.POIVARET, Edo.VAIVARET, 
@@ -32,10 +32,17 @@ SELECT
        Obs.TEXTO33, Obs.TEXTO34, Obs.TEXTO35, Obs.PLACAPAT, 
         
        -- DATOS RESPONSABLE
-       Ven.NOKOFU As 'NOMVENDEDOR',
-       Ven.NOKOFU As 'RESP_NOMBRE',
-       Ven.FOFU   As 'RESP_TELEFONO',
-       Ven.EMAIL  As 'RESP_EMAIL',
+       Resp.NOKOFU As 'NOMVENDEDOR',
+       Resp.NOKOFU As 'Resp_NOKOFU',
+       Resp.NOKOFU As 'RESP_NOMBRE',
+       Resp.FOFU   As 'RESP_TELEFONO',
+       Resp.EMAIL  As 'RESP_EMAIL',
+
+       -- DATOS VENDEDOR ENTIDAD
+       Ven.KOFU   As 'VEND_CODIGO',
+       Ven.NOKOFU As 'VEND_NOMBRE',
+       Ven.FOFU   As 'VEND_TELEFONO',
+       Ven.EMAIL  As 'VEND_EMAIL',
 
        -- MAEENCON
        Isnull(Cont.KOEN,'')       AS 'KOEN_Obs', 
@@ -158,12 +165,12 @@ FROM  dbo.MAEEDO AS Edo
 			LEFT JOIN dbo.MAEEDOOB AS Obs ON Edo.IDMAEEDO = Obs.IDMAEEDO 
 				LEFT JOIN dbo.MAEEN AS Een ON Edo.ENDO = Een.KOEN AND Edo.SUENDO = Een.SUEN
 					LEFT JOIN dbo.TABFU As Ven On Een.KOFUEN = Ven.KOFU
-						LEFT JOIN dbo.TABSU Sucedo On Edo.EMPRESA = Sucedo.EMPRESA And Edo.SUDO = Sucedo.KOSU
-							LEFT JOIN dbo.TABRETI Ret On Ret.KORETI = Obs.DIENDESP 
-								LEFT JOIN dbo.TABPLACA Placa On Placa.PLACA = Obs.PLACAPAT 
-									LEFT JOIN dbo.MAEEN Placa2 On Placa.KOENRESP = Placa2.KOEN AND Placa.SUENRESP = Placa2.SUEN
-										LEFT JOIN dbo.TABFU Resp On Resp.KOFU = Edo.KOFUDO
-											LEFT JOIN dbo.TABCARAC Motncv On Motncv.KOTABLA='MOTIVOSNCV' And Motncv.KOCARAC = Obs.MOTIVO
+					    LEFT JOIN dbo.TABFU As Resp On Edo.KOFUDO = Resp.KOFU
+						    LEFT JOIN dbo.TABSU Sucedo On Edo.EMPRESA = Sucedo.EMPRESA And Edo.SUDO = Sucedo.KOSU
+							    LEFT JOIN dbo.TABRETI Ret On Ret.KORETI = Obs.DIENDESP 
+								    LEFT JOIN dbo.TABPLACA Placa On Placa.PLACA = Obs.PLACAPAT 
+									    LEFT JOIN dbo.MAEEN Placa2 On Placa.KOENRESP = Placa2.KOEN AND Placa.SUENRESP = Placa2.SUEN
+										    LEFT JOIN dbo.TABCARAC Motncv On Motncv.KOTABLA='MOTIVOSNCV' And Motncv.KOCARAC = Obs.MOTIVO
 
 Where Edo.IDMAEEDO = @Idmaeedo       
 

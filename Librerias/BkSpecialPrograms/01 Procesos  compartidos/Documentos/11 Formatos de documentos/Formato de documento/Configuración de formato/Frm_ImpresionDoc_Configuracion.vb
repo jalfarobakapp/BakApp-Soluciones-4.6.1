@@ -517,6 +517,7 @@ Public Class Frm_ImpresionDoc_Configuracion
 
                 _Fm.Rdb_Tipo_Documento_Algunos.Checked = False
                 _Fm.Rdb_Tipo_Documento_Uno.Checked = True
+                _Fm.OcultarWarnig = True
 
                 _Fm.ShowDialog(Me)
                 _RowDocumento_Pruebas = _Fm.Pro_Row_Documento_Seleccionado
