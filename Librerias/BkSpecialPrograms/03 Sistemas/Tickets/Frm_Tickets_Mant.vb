@@ -316,6 +316,7 @@ Public Class Frm_Tickets_Mant
                     .CreaNewTicket = True
                     .Cierra_Ticket = True
                     .Id_Ticket_Cierra = _Cl_Tickets_Padre.Zw_Stk_Tickets.Id
+                    .Id_Ticket_Crea = _Cl_Tickets_Padre.Zw_Stk_Tickets.Id
                 End If
 
                 .Aceptado = Aceptado

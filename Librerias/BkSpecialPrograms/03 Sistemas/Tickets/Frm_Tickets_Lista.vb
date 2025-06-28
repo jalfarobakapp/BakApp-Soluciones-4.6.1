@@ -232,7 +232,11 @@ Public Class Frm_Tickets_Lista
 
         Me.Cursor = Cursors.WaitCursor
 
-        GroupPanel1.Text = _Carpeta.FullPath
+        If IsNothing(_Carpeta) Then
+            GroupPanel1.Text = "Tickets"
+        Else
+            GroupPanel1.Text = "Tickets: " & _Carpeta.FullPath
+        End If
 
         Dim _Condicion As String = String.Empty
         Dim _Condicion2 As String = String.Empty
@@ -250,38 +254,38 @@ Public Class Frm_Tickets_Lista
             If nodoPadre.Tag = "ASIGNADOS" Then
                 _Condicion = "And (Tks.Id In (Select Id_Ticket From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado " &
                                  "Where CodAgente = '" & FUNCIONARIO & "') " & _Condicion2 & ")" & vbCrLf &
-                                 "And CodFuncionario_Crea <> '" & FUNCIONARIO & "'"
+                                 "And Tks.CodFuncionario_Crea <> '" & FUNCIONARIO & "'"
             End If
 
             If nodoPadre.Tag = "ENVIADOS" Then
-                _Condicion = "And CodFuncionario_Crea = '" & _Funcionario & "'"
+                _Condicion = "And Tks.CodFuncionario_Crea = '" & _Funcionario & "'"
             End If
 
             If _Carpeta.Tag = "Pendientes" Then
-                _Condicion += vbCrLf & "And Estado = 'ABIE' And Rechazado = 0 And Aceptado = 0"
+                _Condicion += vbCrLf & "And Tks.Estado = 'ABIE' And Tks.Rechazado = 0 And Tks.Aceptado = 0"
             End If
 
             If _Carpeta.Tag = "EnProceso" Then
-                _Condicion += vbCrLf & "And Estado = 'PROC' And Aceptado = 0 And Rechazado = 0"
+                _Condicion += vbCrLf & "And Tks.Estado = 'PROC' And Tks.Aceptado = 0 And Tks.Rechazado = 0"
             End If
 
             Dim _FechaLimite As DateTime = DateAdd(DateInterval.Month, -1, Now.Date)
             Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
 
             If _Carpeta.Tag = "Aceptados" Then
-                _Condicion += vbCrLf & "And Aceptado = 1 And Rechazado = 0 And Estado <> 'PROC' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
+                _Condicion += vbCrLf & "And Tks.Aceptado = 1 And Tks.Rechazado = 0 And Tks.Estado <> 'PROC' And CONVERT(varchar, Tks.FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             If _Carpeta.Tag = "Rechazados" Then
-                _Condicion += vbCrLf & "And Rechazado = 1 And Aceptado = 0 And Estado <> 'PROC' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
+                _Condicion += vbCrLf & "And Tks.Rechazado = 1 And Tks.Aceptado = 0 And Tks.Estado <> 'PROC' And CONVERT(varchar, Tks.FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             If _Carpeta.Tag = "Cerradas" Then
-                _Condicion += vbCrLf & "And Estado = 'CERR' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
+                _Condicion += vbCrLf & "And Tks.Estado = 'CERR' And CONVERT(varchar, Tks.FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             If _Carpeta.Tag = "Nulos" Then
-                _Condicion += vbCrLf & "And Estado = 'NULO' And CONVERT(varchar, FechaCierre, 112) > '" & _FechaLimiteStr & "'"
+                _Condicion += vbCrLf & "And Tks.Estado = 'NULO' And CONVERT(varchar, Tks.FechaCierre, 112) > '" & _FechaLimiteStr & "'"
             End If
 
             _NodoSeleccionado = _Carpeta
@@ -295,7 +299,7 @@ Public Class Frm_Tickets_Lista
                 End If
 
                 If _Carpeta.Tag = "ENVIADOS" Then
-                    _Condicion = "And CodFuncionario_Crea = '" & _Funcionario & "'"
+                    _Condicion = "And Tks.CodFuncionario_Crea = '" & _Funcionario & "'"
                 End If
             Catch ex As Exception
                 _Condicion = "And 1 = 0"
@@ -304,24 +308,66 @@ Public Class Frm_Tickets_Lista
 
         End If
 
-        Consulta_sql = "Select Distinct Tks.*,NOKOFU As 'NomFuncCrea',TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega," & vbCrLf &
-                       "TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
-                       "TkPrd.Um As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
-                       ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
-                       ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
-                       ",Case Estado 
+        'Consulta_sql = "Select Distinct Tks.*,NOKOFU As 'NomFuncCrea',TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega," & vbCrLf &
+        '               "TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
+        '               "TkPrd.Um As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
+        '               ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
+        '               ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
+        '               ",Case Estado 
+        '               When 'ABIE' Then 
+        '                    Case When Rechazado = 1 Then 'Abierto (Rechazado)' Else 'Abierto' End 
+        '               When 'PROC' Then 'En proceso'
+        '               When 'CERR' Then 
+        '                    Case When Rechazado = 1 Then 'Cerrado (Rechazado)' When Aceptado = 1 Then 'Cerrado (Aceptado)' Else 'Cerrado' End 
+        '               When 'NULO' then 'Nulo' When 'SOLC' then 'Sol. Cierre' End As NomEstado," & vbCrLf &
+        '               "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Raiz = Tks.Id_Raiz And AcMs.Accion In ('MENS','CREA') And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
+        '               "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Raiz = Tks.Id_Raiz And AcRs.Accion In ('RESP','CREA') And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
+        '               "From " & _Global_BaseBk & "Zw_Stk_Tickets Tks" & vbCrLf &
+        '               "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz And TkPrd.Id_Raiz = TkPrd.Id_Ticket" & vbCrLf &
+        '               "Left Join TABFU Fu On Fu.KOFU = CodFuncionario_Crea" & vbCrLf &
+        '               "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
+        '               "Order By Tks.FechaCreacion"
+
+        Consulta_sql = $"Select Distinct Tks.*,
+Isnull(TksDeri.Numero,'') As 'NroDerivado',Isnull(TksDeri.SubNro,'') As 'SubDerivado',
+Isnull(TksAhilo.Numero,'') As 'NroHilo',Isnull(TksAhilo.SubNro,'') As 'SubHilo',
+NOKOFU As 'NomFuncCrea',TkPrd.Empresa As 'Empresa_Pr',TkPrd.Sucursal As 'Sucursal_Pr',TkPrd.Bodega As 'Bodega_Pr',
+TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr,
+TkPrd.Um As 'Udm',StfiEnBodega,Cantidad,Diferencia
+,Case Tks.Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad
+,Case Tks.UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion
+,Case Tks.Estado 
                        When 'ABIE' Then 
-                            Case When Rechazado = 1 Then 'Abierto (Rechazado)' Else 'Abierto' End 
+                            Case When Tks.Rechazado = 1 Then 'ABIERTO (Rechazado)' Else 'ABIERTO' End 
+					   When 'PROC' Then 'EN PROCESO'
                        When 'CERR' Then 
-                            Case When Rechazado = 1 Then 'Cerrado (Rechazado)' When Aceptado = 1 Then 'Cerrado (Aceptado)' Else 'Cerrado' End 
-                       When 'NULO' then 'Nulo' When 'SOLC' then 'Sol. Cierre' End As NomEstado," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Raiz = Tks.Id_Raiz And AcMs.Accion In ('MENS','CREA') And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
-                       "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Raiz = Tks.Id_Raiz And AcRs.Accion In ('RESP','CREA') And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Stk_Tickets Tks" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz And TkPrd.Id_Raiz = TkPrd.Id_Ticket" & vbCrLf &
-                       "Left Join TABFU Fu On Fu.KOFU = CodFuncionario_Crea" & vbCrLf &
+                            Case When Tks.Rechazado = 1 Then 'CERRADO (Rechazado)' When Tks.Aceptado = 1 Then 'CERRADO (Aceptado)' Else 'CERRADO' End 
+                       When 'NULO' then 'NULO' When 'SOLC' then 'Sol. Cierre' End As NomEstado,Cast('' As Varchar(100)) As 'NomEstadoExt',
+(Select COUNT(*) From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Raiz = Tks.Id_Raiz And AcMs.Accion In ('MENS','CREA') And AcMs.Visto = 0) As Mesn_Pdte_Ver,
+(Select COUNT(*) From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Raiz = Tks.Id_Raiz And AcRs.Accion In ('RESP','CREA') And AcRs.Visto = 0) As Resp_Pdte_Ver
+Into #Paso
+From {_Global_BaseBk}Zw_Stk_Tickets Tks
+Left Join {_Global_BaseBk}Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz And TkPrd.Id_Raiz = TkPrd.Id_Ticket
+Left Join TABFU Fu On Fu.KOFU = Tks.CodFuncionario_Crea
+Left Join {_Global_BaseBk}Zw_Stk_Tickets TksDeri On TksDeri.Id = Tks.Id_Padre
+Left Join {_Global_BaseBk}Zw_Stk_Tickets_Acciones TksADeri On Tks.Id = TksADeri.Id_Ticket_Cierra And TksADeri.Accion = 'CECR'
+Left Join {_Global_BaseBk}Zw_Stk_Tickets TksAhilo On TksAhilo.Id = TksADeri.Id_Ticket" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
-                       "Order By Tks.FechaCreacion"
+                       "Order By Tks.FechaCreacion
+
+Update #Paso Set NomEstadoExt = NomEstado+'... (derivado de '+NroDerivado+'-'+SubDerivado+')' 
+Where Id_Padre <> 0 and NroDerivado <> '' And Estado in ('ABIE')
+
+Update #Paso Set NomEstadoExt = NomEstado+'... (hilo continuado en '+NroHilo+'-'+SubHilo+')' 
+Where Id_Padre = 0 And NroHilo <> '' And Estado = 'PROC'
+
+Update #Paso Set NomEstadoExt = NomEstado
+Where NomEstadoExt = ''
+
+Select * From #Paso
+Drop Table #Paso
+"
+
 
         _Tbl_Tickets = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -386,12 +432,18 @@ Public Class Frm_Tickets_Lista
             .Columns("Asunto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NomEstado").Visible = True
-            .Columns("NomEstado").HeaderText = "Estado"
-            .Columns("NomEstado").ToolTipText = "Estado del Ticket"
-            '.Columns("NomEstado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("NomEstado").Width = 110
-            .Columns("NomEstado").DisplayIndex = _DisplayIndex
+            '.Columns("NomEstado").Visible = True
+            '.Columns("NomEstado").HeaderText = "Estado"
+            '.Columns("NomEstado").ToolTipText = "Estado del Ticket"
+            '.Columns("NomEstado").Width = 110
+            '.Columns("NomEstado").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("NomEstadoExt").Visible = True
+            .Columns("NomEstadoExt").HeaderText = "Estado"
+            .Columns("NomEstadoExt").ToolTipText = "Estado del Ticket"
+            .Columns("NomEstadoExt").Width = 110
+            .Columns("NomEstadoExt").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NomPrioridad").Visible = True
@@ -431,16 +483,16 @@ Public Class Frm_Tickets_Lista
 
             End If
 
-            .Columns("Sucursal").Visible = True
-            .Columns("Sucursal").HeaderText = "Suc"
-            .Columns("Sucursal").Width = 30
-            .Columns("Sucursal").DisplayIndex = _DisplayIndex
+            .Columns("Sucursal_Pr").Visible = True
+            .Columns("Sucursal_Pr").HeaderText = "Suc"
+            .Columns("Sucursal_Pr").Width = 30
+            .Columns("Sucursal_Pr").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Bodega").Visible = True
-            .Columns("Bodega").HeaderText = "Bod"
-            .Columns("Bodega").Width = 30
-            .Columns("Bodega").DisplayIndex = _DisplayIndex
+            .Columns("Bodega_Pr").Visible = True
+            .Columns("Bodega_Pr").HeaderText = "Bod"
+            .Columns("Bodega_Pr").Width = 30
+            .Columns("Bodega_Pr").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Codigo").Visible = True
@@ -535,7 +587,7 @@ Public Class Frm_Tickets_Lista
         Grilla.Refresh()
 
         If Not String.IsNullOrWhiteSpace(Txt_Filtrar.Text.Trim) Then
-            Sb_Filtrar2()
+            Sb_Filtrar()
         End If
 
         Me.Cursor = Cursors.Default
@@ -943,73 +995,73 @@ Public Class Frm_Tickets_Lista
 
     End Sub
 
+    'Sub Sb_Filtrar()
+
+    '    Sb_Filtrar2()
+    '    Return
+
+    '    Try
+    '        If IsNothing(_Dv) Then Return
+
+    '        Sb_Actualizar_Grilla_Acciones(0)
+    '        Txt_Descripcion.Text = String.Empty
+
+    '        If Txt_Filtrar.Text.Contains(" ") Then
+    '            Sb_Filtrar2()
+    '            Return
+    '        End If
+
+    '        If Txt_Filtrar.Text.Contains("#") Then
+    '            Txt_Filtrar.Text = Replace(Txt_Filtrar.Text, "#", "")
+    '            Txt_Filtrar.Text = "#Tk" & numero_(Txt_Filtrar.Text, 7)
+    '        End If
+
+    '        If Chk_Filtro_Fcreacion.Checked Then
+
+    '            If Txt_Filtrar.Text.ToLower = "dif-" Or Txt_Filtrar.Text = "-" Then
+    '                _Dv.RowFilter = String.Format("Diferencia < 0 And (CONVERT(FechaCreacion, 'System.String') Like '{1}%' Or CONVERT(FechaCreacion, " &
+    '                                              "'System.String') Like '{2}%')",
+    '                                              Txt_Filtrar.Text.Trim,
+    '                                              Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"),
+    '                                              Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+    '            ElseIf Txt_Filtrar.Text.ToLower = "dif+" Or Txt_Filtrar.Text = "+" Then
+    '                _Dv.RowFilter = String.Format("Diferencia > 0 And (CONVERT(FechaCreacion, 'System.String') Like '{1}%' Or CONVERT(FechaCreacion, " &
+    '                                              "'System.String') Like '{2}%')",
+    '                                              Txt_Filtrar.Text.Trim,
+    '                                              Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"),
+    '                                              Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+    '            Else
+    '                _Dv.RowFilter = String.Format("Numero+Asunto+CONVERT(FechaCreacion, 'System.String')+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad " &
+    '                                              "Like '%{0}%' And (CONVERT(FechaCreacion, 'System.String') Like '{1}%' Or CONVERT(FechaCreacion, 'System.String') Like '{2}%')",
+    '                                              Txt_Filtrar.Text.Trim, Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"), Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+    '            End If
+
+    '        Else
+
+    '            If Txt_Filtrar.Text.ToLower = "dif-" Or Txt_Filtrar.Text = "-" Then
+    '                _Dv.RowFilter = String.Format("Diferencia < 0", Txt_Filtrar.Text.Trim)
+    '            ElseIf Txt_Filtrar.Text.ToLower = "dif+" Or Txt_Filtrar.Text = "+" Then
+    '                _Dv.RowFilter = String.Format("Diferencia > 0", Txt_Filtrar.Text.Trim)
+    '            Else
+    '                _Dv.RowFilter = String.Format("Numero+Asunto+FechaCreacion+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad " &
+    '                                              "Like '%{0}%'", Txt_Filtrar.Text.Trim)
+    '            End If
+
+    '        End If
+
+    '        If Grilla.RowCount = 0 Then
+
+    '            ToastNotification.Show(Me, "NO SE ENCONTRARON REGISTROS", My.Resources.delete,
+    '                      2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+
+    '        End If
+
+    '    Catch ex As Exception
+    '        MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '    End Try
+    'End Sub
+
     Sub Sb_Filtrar()
-
-        Sb_Filtrar2()
-        Return
-
-        Try
-            If IsNothing(_Dv) Then Return
-
-            Sb_Actualizar_Grilla_Acciones(0)
-            Txt_Descripcion.Text = String.Empty
-
-            If Txt_Filtrar.Text.Contains(" ") Then
-                Sb_Filtrar2()
-                Return
-            End If
-
-            If Txt_Filtrar.Text.Contains("#") Then
-                Txt_Filtrar.Text = Replace(Txt_Filtrar.Text, "#", "")
-                Txt_Filtrar.Text = "#Tk" & numero_(Txt_Filtrar.Text, 7)
-            End If
-
-            If Chk_Filtro_Fcreacion.Checked Then
-
-                If Txt_Filtrar.Text.ToLower = "dif-" Or Txt_Filtrar.Text = "-" Then
-                    _Dv.RowFilter = String.Format("Diferencia < 0 And (CONVERT(FechaCreacion, 'System.String') Like '{1}%' Or CONVERT(FechaCreacion, " &
-                                                  "'System.String') Like '{2}%')",
-                                                  Txt_Filtrar.Text.Trim,
-                                                  Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"),
-                                                  Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
-                ElseIf Txt_Filtrar.Text.ToLower = "dif+" Or Txt_Filtrar.Text = "+" Then
-                    _Dv.RowFilter = String.Format("Diferencia > 0 And (CONVERT(FechaCreacion, 'System.String') Like '{1}%' Or CONVERT(FechaCreacion, " &
-                                                  "'System.String') Like '{2}%')",
-                                                  Txt_Filtrar.Text.Trim,
-                                                  Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"),
-                                                  Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
-                Else
-                    _Dv.RowFilter = String.Format("Numero+Asunto+CONVERT(FechaCreacion, 'System.String')+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad " &
-                                                  "Like '%{0}%' And (CONVERT(FechaCreacion, 'System.String') Like '{1}%' Or CONVERT(FechaCreacion, 'System.String') Like '{2}%')",
-                                                  Txt_Filtrar.Text.Trim, Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"), Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
-                End If
-
-            Else
-
-                If Txt_Filtrar.Text.ToLower = "dif-" Or Txt_Filtrar.Text = "-" Then
-                    _Dv.RowFilter = String.Format("Diferencia < 0", Txt_Filtrar.Text.Trim)
-                ElseIf Txt_Filtrar.Text.ToLower = "dif+" Or Txt_Filtrar.Text = "+" Then
-                    _Dv.RowFilter = String.Format("Diferencia > 0", Txt_Filtrar.Text.Trim)
-                Else
-                    _Dv.RowFilter = String.Format("Numero+Asunto+FechaCreacion+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad " &
-                                                  "Like '%{0}%'", Txt_Filtrar.Text.Trim)
-                End If
-
-            End If
-
-            If Grilla.RowCount = 0 Then
-
-                ToastNotification.Show(Me, "NO SE ENCONTRARON REGISTROS", My.Resources.delete,
-                          2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
-
-            End If
-
-        Catch ex As Exception
-            MessageBoxEx.Show(Me, ex.Message, "Cuek!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End Try
-    End Sub
-
-    Sub Sb_Filtrar2()
         Try
             If IsNothing(_Dv) Then Return
 
@@ -1031,7 +1083,7 @@ Public Class Frm_Tickets_Lista
                         filtroFinal &= String.Format("Diferencia >0")
                     Else
                         filtroFinal &= String.Format("(Numero+Asunto+NomEstado+CONVERT(FechaCreacion, 
-                        'System.String')+NomFuncCrea+Codigo+DescripcionPr+Sucursal+Bodega+NomPrioridad Like '%{0}%')", filtro)
+                        'System.String')+NomFuncCrea+Codigo+DescripcionPr+Sucursal_Pr+Bodega_Pr+NomPrioridad Like '%{0}%')", filtro)
                     End If
 
                 End If
