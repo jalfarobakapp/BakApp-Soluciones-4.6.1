@@ -97,6 +97,7 @@
             If _Msj.EsCorrecto Then
                 _Pppini = CType(_Msj.Tag, DataRow).Item("PPPINI")
                 _Stexistini = Math.Round(CType(_Msj.Tag, DataRow).Item("STEXISTINI"), 5)
+                Fepm = CType(_Msj.Tag, DataRow).Item("ULT_FEDOCU")
                 'If _Stexistini < 0 Then
                 '_Stexistini = 0
                 'Else
