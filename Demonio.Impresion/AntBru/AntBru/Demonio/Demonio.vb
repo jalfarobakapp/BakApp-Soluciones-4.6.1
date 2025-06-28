@@ -5,7 +5,6 @@ Imports System.IO
 Public Class Demonio
 
     Dim _Fm_Demonio As Frm_Demonio_01
-    Dim _Fm_Demonio_DTEMonitor As Frm_Demonio_DTEMonitor
     Dim _Class_BaseBk As Class_Conectar_Base_BakApp
     Dim _Contador_Tiempo_Remotas As Integer = 0
 
@@ -18,14 +17,6 @@ Public Class Demonio
         End Set
     End Property
 
-    Public Property Pro_Frm_Demonio_DTEMonitor() As Frm_Demonio_DTEMonitor
-        Get
-            Return _Fm_Demonio_DTEMonitor
-        End Get
-        Set(ByVal value As Frm_Demonio_DTEMonitor)
-            _Fm_Demonio_DTEMonitor = value
-        End Set
-    End Property
 
     Public Sub New()
 
@@ -246,5 +237,7 @@ Public Class Demonio
 
     End Sub
 
+    Private Sub Tiempo_Diablito_Tick(sender As Object, e As EventArgs) Handles Tiempo_Diablito.Tick
 
+    End Sub
 End Class

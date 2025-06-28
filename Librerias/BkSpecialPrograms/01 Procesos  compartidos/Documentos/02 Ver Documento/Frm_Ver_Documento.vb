@@ -562,7 +562,7 @@ Public Class Frm_Ver_Documento
             End If
 
             Chk_Pickear.Visible = _Tido = "NVV"
-            Chk_Pickear.Checked = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Pickear", "Idmaeedo = " & _Idmaeedo)
+            Chk_Pickear.Checked = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Pickear", "Idmaeedo = " & _Idmaeedo, True, False)
 
             _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
 
@@ -666,10 +666,11 @@ Public Class Frm_Ver_Documento
         LblTotalAbonado.Text = FormatNumber(_Vaabdo, _Decimales)
         LblTotalSaldo.Text = FormatNumber(_Saldo, _Decimales)
 
-        Lbl_Nombre_Entidad.Text = Space(1) & _TblEncabezado.Rows(0).Item("RAZON").ToString.Trim
+        Txt_Nombre_Entidad.Text = Space(1) & _TblEncabezado.Rows(0).Item("RAZON").ToString.Trim
         Lbl_Nombre_Entidad_Fisica.Text = Space(1) & _TblEncabezado.Rows(0).Item("RAZON_FISICA").ToString.Trim
-        Lbl_Responsable.Text = Space(1) & _TblEncabezado.Rows(0).Item("FUNCIONARIO")
+        Txt_Responsable.Text = Space(1) & _TblEncabezado.Rows(0).Item("FUNCIONARIO")
 
+        Txt_Contacto.Text = Space(1) & NuloPorNro(_TblEncabezado.Rows(0).Item("NOKOCON").ToString.Trim, "")
 
         Dim _Hora As String = _TblEncabezado.Rows(0).Item("HORA")
 
@@ -1023,7 +1024,7 @@ Public Class Frm_Ver_Documento
 
             Lbl_Nombre_Entidad_Fisica.Text = Trim(_TblEncabezado.Rows(0).Item("ENT_FISICA")) & " - " &
                                     Trim(_TblEncabezado.Rows(0).Item("RAZON_FISICA"))
-            Lbl_Responsable.Text = _TblEncabezado.Rows(0).Item("FUNCIONARIO")
+            Txt_Responsable.Text = _TblEncabezado.Rows(0).Item("FUNCIONARIO")
 
 
             Dim _Hora As String = _TblEncabezado.Rows(0).Item("HORA")
@@ -1145,9 +1146,9 @@ Public Class Frm_Ver_Documento
         LblTotalAbonado.Text = FormatNumber(_Vaabdo, _Decimales)
         LblTotalSaldo.Text = FormatNumber(_Saldo, _Decimales)
 
-        Lbl_Nombre_Entidad.Text = Space(1) & _TblEncabezado.Rows(0).Item("Nombre_Entidad").ToString.Trim
+        Txt_Nombre_Entidad.Text = Space(1) & _TblEncabezado.Rows(0).Item("Nombre_Entidad").ToString.Trim
         Lbl_Nombre_Entidad_Fisica.Text = Space(1) & _TblEncabezado.Rows(0).Item("Nombre_Entidad_Fisica").ToString.Trim
-        Lbl_Responsable.Text = Space(1) & _TblEncabezado.Rows(0).Item("NomFuncionario")
+        Txt_Responsable.Text = Space(1) & _TblEncabezado.Rows(0).Item("NomFuncionario")
 
 
         'Dim _Hora As String = _TblEncabezado.Rows(0).Item("HORA")
@@ -2819,6 +2820,7 @@ Public Class Frm_Ver_Documento
         Dim _Pregunta = MessageBoxEx.Show(Me, "¿Desea adjuntar archivo PDF?", "Adjuntar archivo PDF", vbYesNoCancel, MessageBoxIcon.Question)
 
         Dim _Archivo_PDF_Adjunto As String
+        Dim _CrearHtml = True
 
         If _Pregunta = DialogResult.Yes Then
 
@@ -2865,38 +2867,40 @@ Public Class Frm_Ver_Documento
 
             If _Existe_File Then
                 _Archivo_PDF_Adjunto = _Pdf_Adjunto.Pro_Full_Path_Archivo_PDF & "\" & _Pdf_Adjunto.Pro_Nombre_Archivo & ".pdf"
+                _CrearHtml = False
+            Else
+                MessageBoxEx.Show(Me, _Error_Pdf, "Problema al crear PDF", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
 
         End If
 
-        'ElseIf _Pregunta = DialogResult.No Then
-        '    Sb_Enviar_Doc_Por_Mail(_Idmaeedo, _Email_Para, "", "", Me)
-        'Else
-        '    Return
+        If _CrearHtml Then
 
-        Dim Crea_Htm As New Clase_Crear_Documento_Htm
-        Dim _Ruta As String = AppPath() & "\Data\" & RutEmpresa & "\Tmp"
+            Dim Crea_Htm As New Clase_Crear_Documento_Htm
+            Dim _Ruta As String = AppPath() & "\Data\" & RutEmpresa & "\Tmp"
 
-        Dim fic As String = _Ruta & "\Documento.Htm"
+            Dim fic As String = _Ruta & "\Documento.Htm"
 
-        Dim _Mostrar_Precios As Boolean
+            Dim _Mostrar_Precios As Boolean
 
-        If MessageBoxEx.Show(Me, "¿Desea mostrar los precios?", "Enviar documento", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            _Mostrar_Precios = True
-        End If
+            If MessageBoxEx.Show(Me, "¿Desea mostrar los precios?", "Enviar documento", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                _Mostrar_Precios = True
+            End If
 
-        If Crea_Htm.Fx_Crear_Documento_Htm(_Idmaeedo, _Ruta, _Mostrar_Precios) Then
+            If Crea_Htm.Fx_Crear_Documento_Htm(_Idmaeedo, _Ruta, _Mostrar_Precios) Then
 
-            Dim _Cuerpo_Html = LeeArchivo(fic)
+                Dim _Cuerpo_Html = LeeArchivo(fic)
 
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&aacute", "á")
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&eacute", "é")
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&iacute", "í")
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&oacute", "ó")
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&uacute", "ú")
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&ntilde", "ñ")
-            _Cuerpo_Html = Replace(_Cuerpo_Html, "&Ntilde", "Ñ")
-            _Cuerpo = _Cuerpo_Html
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&aacute", "á")
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&eacute", "é")
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&iacute", "í")
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&oacute", "ó")
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&uacute", "ú")
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&ntilde", "ñ")
+                _Cuerpo_Html = Replace(_Cuerpo_Html, "&Ntilde", "Ñ")
+                _Cuerpo = _Cuerpo_Html
+
+            End If
 
         End If
 
@@ -4023,6 +4027,10 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Consolidar_Stock_Click(sender As Object, e As EventArgs) Handles Btn_Consolidar_Stock.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Prod055") Then
+            Return
+        End If
+
         Dim _Codigo As String
 
         If _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Bakapp_Kasi Then
@@ -4162,12 +4170,6 @@ Public Class Frm_Ver_Documento
             Sb_Ver_Deuda_Pendiente(_Koen, _Suen, True)
 
         End If
-
-    End Sub
-
-    Private Sub Btn_VerEntidad_Click(sender As Object, e As EventArgs) Handles Btn_VerEntidad.Click
-
-        ShowContextMenu(Menu_Contextual_Info_Entidad)
 
     End Sub
 
@@ -5100,6 +5102,10 @@ Public Class Frm_Ver_Documento
         End If
         Fm.Dispose()
 
+    End Sub
+
+    Private Sub Txt_Nombre_Entidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Nombre_Entidad.ButtonCustomClick
+        ShowContextMenu(Menu_Contextual_Info_Entidad)
     End Sub
 
     Private Sub Btn_Contenedor_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Quitar.Click

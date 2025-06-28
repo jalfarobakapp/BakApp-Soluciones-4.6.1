@@ -11,12 +11,12 @@ Public Class Modulo_Documentos_Venta
         Get
             Return _Menu_Extra
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Menu_Extra = value
         End Set
     End Property
 
-    Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm)
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -26,13 +26,13 @@ Public Class Modulo_Documentos_Venta
 
     End Sub
 
-    Private Sub Btn_Pago_Proveedores_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub Btn_Pago_Proveedores_Click(sender As System.Object, e As System.EventArgs)
         Dim Fm_Post As New Frm_Formulario_Documento("NCV", csGlobales.Enum_Tipo_Documento.Nota_De_Credito, False)
         Fm_Post.ShowDialog(Me)
         Fm_Post.Dispose()
     End Sub
 
-    Private Sub BtnSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSalir.Click
+    Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs) Handles BtnSalir.Click
         _Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 

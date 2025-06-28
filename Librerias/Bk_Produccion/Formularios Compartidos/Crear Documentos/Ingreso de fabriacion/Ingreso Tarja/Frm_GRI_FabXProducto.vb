@@ -237,7 +237,7 @@ Public Class Frm_GRI_FabXProducto
 
     End Sub
 
-    Sub Sb_TipoIngreso(_Codigo As String, _Rtu As Double, _TipoFab As Enum_TipoFab)
+    Sub Sb_TipoIngreso(_Codigo As String, _Rtu As Double, _TipoFab As Enum_TipoFab, Optional _EnabledMaxiSaco As Boolean = True)
 
         Dim _Row_Tabcodal As DataRow
 
@@ -255,6 +255,7 @@ Public Class Frm_GRI_FabXProducto
         Rdb_Maxi.Checked = False
         Rdb_Maxi.Name = "Rdb_Maxi"
         Rdb_Maxi.Text = "SACO (MAXI)"
+        Rdb_Maxi.Enabled = _EnabledMaxiSaco
 
         If Not IsNothing(_TipoFab) Then
             Select Case _TipoFab
@@ -304,6 +305,13 @@ Public Class Frm_GRI_FabXProducto
         Dim _Cantidad_Fab As Double
 
         If Rdb_Maxi.Checked Then
+
+            If _Rtu <> 1 Then
+                MessageBoxEx.Show(Me, "La R.T.U. debe ser igual a 1 para poder fabricar MAXI-SACO",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Sb_TipoIngreso(_Codigo, _Rtu, Nothing, False)
+                Return
+            End If
 
             _Tipo = "MAXI-SACO"
             _Tipo_Str = _Row_Maepr.Item("UD01PR")
@@ -1370,4 +1378,11 @@ Public Class Frm_GRI_FabXProducto
 
     End Sub
 
+    Private Sub Btn_ModificarChk_Click(sender As Object, e As EventArgs) Handles Btn_ModificarChk.Click
+        If Not Fx_Tiene_Permiso(Me, "Pdc00014") Then
+            Return
+        End If
+        MessageBoxEx.Show(Me, "Ahora es posible modificar el check de GDI Consumo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        Chk_GDI_Consumo.Enabled = True
+    End Sub
 End Class

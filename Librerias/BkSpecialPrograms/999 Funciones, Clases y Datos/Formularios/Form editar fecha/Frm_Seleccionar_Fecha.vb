@@ -29,11 +29,11 @@ Public Class Frm_Seleccionar_Fecha
 
     Public Property SeleccionarHora As Boolean
         Get
-            Return Dtp_Hora.Visible
+            Return Dtp_Hora.Enabled
         End Get
         Set(value As Boolean)
-            LabelX2.Visible = value
-            Dtp_Hora.Visible = value
+            LabelX2.Enabled = value
+            Dtp_Hora.Enabled = value
         End Set
     End Property
 
@@ -120,14 +120,16 @@ Public Class Frm_Seleccionar_Fecha
                 FechaSeleccionada = FechaSeleccionada.AddHours(HoraSeleccionada.Hour).AddMinutes(HoraSeleccionada.Minute)
 
                 If MessageBoxEx.Show(Me, "¿Confirma la fecha " & FechaSeleccionada.ToLongDateString & " y hora " & FechaSeleccionada.ToShortTimeString & "?", "Confirmar selección",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                             MessageBoxButtons.YesNo,
+                             MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, True) <> DialogResult.Yes Then
                     Return
                 End If
 
             Else
 
                 If MessageBoxEx.Show(Me, "¿Confirma la fecha " & FechaSeleccionada.ToShortDateString & "?", "Confirmar selección",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                             MessageBoxButtons.YesNo,
+                             MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, True) <> DialogResult.Yes Then
                     Return
                 End If
 

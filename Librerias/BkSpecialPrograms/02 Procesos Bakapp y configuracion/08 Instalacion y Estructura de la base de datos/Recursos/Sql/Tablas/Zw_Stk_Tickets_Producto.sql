@@ -14,6 +14,7 @@ CREATE TABLE [dbo].[Zw_Stk_Tickets_Producto](
 	[UdMedida]			[int]			NOT NULL DEFAULT (0),
 	[Ud1]				[varchar](2)	NOT NULL DEFAULT (''),
 	[Ud2]				[varchar](2)	NOT NULL DEFAULT (''),
+	[Um]                [varchar](2)	NOT NULL DEFAULT (''),
 	[StfiEnBodega]      [float]			NOT NULL DEFAULT (0),
     [Cantidad]			[float]			NOT NULL DEFAULT (0),
     [Diferencia]        [float]			NOT NULL DEFAULT (0),

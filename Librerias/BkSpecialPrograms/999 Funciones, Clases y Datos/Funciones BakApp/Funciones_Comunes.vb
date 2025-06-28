@@ -2591,19 +2591,26 @@ Error_Numero:
         Dim _Resultado As String     ' Una variable para almacenar el resultado
 
         texto = texto.Replace("  ", "")
-        texto = texto.Replace(Str(13), "")
+        texto = texto.Replace(Str(13), " ")
+        ' texto = texto.Replace(vbCrLf, " ")  ' Reemplazar saltos de línea por espacios
 
         _Palabras = Split(texto, " ") ' Separar el texto por espacios
 
         For Each palabra In _Palabras ' Recorrer cada palabra
+            If palabra.Contains(vbCrLf) Then ' Si la palabra contiene un "Enter"
+                _Resultado = _Resultado & _Linea & vbCrLf ' Agregar la línea al resultado con un salto de línea
+                _Linea = "" ' Vaciar la línea
+            End If
+
             If Len(_Linea & palabra) > maximo Then ' Si la línea actual más la palabra supera el máximo
                 _Resultado = _Resultado & _Linea & vbCrLf ' Agregar la línea al resultado con un salto de línea
                 _Linea = "" ' Vaciar la línea
             End If
+
             _Linea = _Linea & palabra & " " ' Agregar la palabra a la línea con un espacio
         Next
 
-        _Resultado = _Resultado & _Linea ' Agregar la última línea al resultado
+        _Resultado = (_Resultado & _Linea).ToString.Trim ' Agregar la última línea al resultado
         Fx_AjustarTexto = _Resultado ' Devolver el resultado
 
     End Function

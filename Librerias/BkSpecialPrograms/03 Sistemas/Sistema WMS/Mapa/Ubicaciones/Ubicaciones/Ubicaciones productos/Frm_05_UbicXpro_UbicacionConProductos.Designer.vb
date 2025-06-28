@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_05_UbicXpro_UbicacionConProductos
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -233,7 +233,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Btn_Seleccion_Multiple.Image = CType(resources.GetObject("Btn_Seleccion_Multiple.Image"), System.Drawing.Image)
         Me.Btn_Seleccion_Multiple.ImageAlt = CType(resources.GetObject("Btn_Seleccion_Multiple.ImageAlt"), System.Drawing.Image)
         Me.Btn_Seleccion_Multiple.Name = "Btn_Seleccion_Multiple"
-        Me.Btn_Seleccion_Multiple.Tooltip = "Agregar productos con selección múltiple (F3)"
+        Me.Btn_Seleccion_Multiple.Tooltip = "Agregar productos con selecciÃ³n mÃºltiple (F3)"
         '
         'Btn_Seleccion_MultipleQuitar
         '
@@ -242,7 +242,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Btn_Seleccion_MultipleQuitar.Image = CType(resources.GetObject("Btn_Seleccion_MultipleQuitar.Image"), System.Drawing.Image)
         Me.Btn_Seleccion_MultipleQuitar.ImageAlt = CType(resources.GetObject("Btn_Seleccion_MultipleQuitar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Seleccion_MultipleQuitar.Name = "Btn_Seleccion_MultipleQuitar"
-        Me.Btn_Seleccion_MultipleQuitar.Tooltip = "Quitar productos con selección múltiple (F4)"
+        Me.Btn_Seleccion_MultipleQuitar.Tooltip = "Quitar productos con selecciÃ³n mÃºltiple (F4)"
         '
         'Btn_Imprimir_Etiquetas
         '
@@ -270,7 +270,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(58, 13)
         Me.Label3.TabIndex = 43
-        Me.Label3.Text = "Ubicación"
+        Me.Label3.Text = "UbicaciÃ³n"
         '
         'GroupPanel1
         '
@@ -345,14 +345,14 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.LabelItem1.PaddingLeft = 10
         Me.LabelItem1.PaddingTop = 1
         Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "Opciones de la ubicación"
+        Me.LabelItem1.Text = "Opciones de la ubicaciÃ³n"
         '
         'Mnu_Btn_Ver_Informacion_de_producto
         '
         Me.Mnu_Btn_Ver_Informacion_de_producto.Image = CType(resources.GetObject("Mnu_Btn_Ver_Informacion_de_producto.Image"), System.Drawing.Image)
         Me.Mnu_Btn_Ver_Informacion_de_producto.ImageAlt = CType(resources.GetObject("Mnu_Btn_Ver_Informacion_de_producto.ImageAlt"), System.Drawing.Image)
         Me.Mnu_Btn_Ver_Informacion_de_producto.Name = "Mnu_Btn_Ver_Informacion_de_producto"
-        Me.Mnu_Btn_Ver_Informacion_de_producto.Text = "Ver información adicional del producto"
+        Me.Mnu_Btn_Ver_Informacion_de_producto.Text = "Ver informaciÃ³n adicional del producto"
         '
         'Btn_Mnu_Ver_Ubicaciones_Del_Producto
         '
@@ -365,7 +365,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Btn_Mnu_Eliminar_Ubicacion.ForeColor = System.Drawing.Color.Red
         Me.Btn_Mnu_Eliminar_Ubicacion.Image = CType(resources.GetObject("Btn_Mnu_Eliminar_Ubicacion.Image"), System.Drawing.Image)
         Me.Btn_Mnu_Eliminar_Ubicacion.Name = "Btn_Mnu_Eliminar_Ubicacion"
-        Me.Btn_Mnu_Eliminar_Ubicacion.Text = "Quitar producto de esta ubicación"
+        Me.Btn_Mnu_Eliminar_Ubicacion.Text = "Quitar producto de esta ubicaciÃ³n"
         '
         'Rdb_Ud1
         '
@@ -432,7 +432,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Lbl_InfoFechaIngUbic.Name = "Lbl_InfoFechaIngUbic"
         Me.Lbl_InfoFechaIngUbic.Size = New System.Drawing.Size(589, 23)
         Me.Lbl_InfoFechaIngUbic.TabIndex = 48
-        Me.Lbl_InfoFechaIngUbic.Text = "Fecha de ingreso en la ubicación: 05-10-2024"
+        Me.Lbl_InfoFechaIngUbic.Text = "Fecha de ingreso en la ubicaciÃ³n: 05-10-2024"
         '
         'Frm_05_UbicXpro_UbicacionConProductos
         '
@@ -457,7 +457,7 @@ Partial Class Frm_05_UbicXpro_UbicacionConProductos
         Me.Name = "Frm_05_UbicXpro_UbicacionConProductos"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Productos en la ubicación"
+        Me.Text = "Productos en la ubicaciÃ³n"
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.TableLayoutPanel1.PerformLayout()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()

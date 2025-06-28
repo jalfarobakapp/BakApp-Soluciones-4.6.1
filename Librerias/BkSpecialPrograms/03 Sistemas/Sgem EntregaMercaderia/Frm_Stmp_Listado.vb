@@ -845,114 +845,114 @@ Public Class Frm_Stmp_Listado
 
                     If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
 
-                            Dim _Empresa As String = ModEmpresa
-                            Dim _Sucursal As String = ModSucursal
-                            Dim _Bodega As String = ModBodega
+                        Dim _Empresa As String = ModEmpresa
+                        Dim _Sucursal As String = ModSucursal
+                        Dim _Bodega As String = ModBodega
 
-                            Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
+                        Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
 
-                            If Not Fx_Tiene_Permiso(_Formulario, _Permiso, , True) Then
+                        If Not Fx_Tiene_Permiso(_Formulario, _Permiso, , True) Then
 
-                                Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
-                                'MessageBoxEx.Show(_Formulario, "NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
-                                '                  "BODEGA: " & _Bodega & " - " & _Bod,
-                                '                  "VALIDACION",
-                                '                  MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, _Formulario.TopMost)
+                            Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
+                            'MessageBoxEx.Show(_Formulario, "NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
+                            '                  "BODEGA: " & _Bodega & " - " & _Bod,
+                            '                  "VALIDACION",
+                            '                  MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, _Formulario.TopMost)
 
-                                _Mensaje.Mensaje = "VALIDACION"
-                                Throw New System.Exception("NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
-                                                  "BODEGA: " & _Bodega & " - " & _Bod)
-
-                            End If
-
-                            If Fx_Tiene_Permiso(_Formulario, _Permiso) Then
-
-                                Dim _CampoPrecio As String
-
-                                If _Meardo = "N" Then ' Neto
-                                    _CampoPrecio = "PPPRNE"
-                                Else ' Bruto
-                                    _CampoPrecio = "PPPRBR"
-                                End If
-
-                                Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
-                                               vbCrLf &
-                                               "Select Ddo.*,Det.Cantidad As 'Cantidad'," & vbCrLf &
-                                               "Det.Caprco1_Real As 'CantUd1_Pickea',Det.Caprco2_Real As 'CantUd2_Pickea'," & vbCrLf &
-                                               "Cast(1 As Bit) As DesdePickeo," & vbCrLf &
-                                               "CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori'," & vbCrLf &
-                                               "Case WHEN UDTRPR = 1 Then PPPRNE Else PPPRNE*RLUDPR End AS 'Precio'," & vbCrLf &
-                                               "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta," & vbCrLf &
-                                               "Det.RtuVariable" & vbCrLf &
-                                               "From MAEDDO Ddo With ( NOLOCK )" & vbCrLf &
-                                               "Inner Join " & _Global_BaseBk & "Zw_Stmp_Det Det On Ddo.IDMAEDDO = Det.Idmaeddo" & vbCrLf &
-                                               "Where IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''" & vbCrLf &
-                                               "Order by IDMAEEDO,IDMAEDDO " & vbCrLf &
-                                               vbCrLf &
-                                               "Select * From MAEIMLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
-                                               vbCrLf &
-                                               "Select * From MAEDTLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
-                                               vbCrLf &
-                                               "Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
-
-                                'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
-                                'Falta campo FECHATRIB = Fecha de ingreso
-
-                                ' SUBTIDO
-                                '-- 001 Sin derecho a credito fiscal y Sin documento contiene activo fijo
-                                '-- 000 Documento contiene activo fijo y Sin derecho a credito fiscal
-                                '-- 101 Conderecho a credito fiscal y documento contiene activo fijo
-                                '-- 100 Con derecho a credito fiscal y sin documento contiene activo fijo
-                                '-- '' -- No incluye este documento en el libro de compras 
-
-                                Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
-
-                                Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir, csGlobales.Enum_Tipo_Documento.Venta, False)
-                                Fm_Post.Sb_Limpiar(_Modalidad)
-                                Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
-                                Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
-                                _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
-
-                                If CBool(_New_Idmaeedo) Then
-                                    Fm_Post.Sb_Activar_Orden_De_Despacho(_New_Idmaeedo)
-                                End If
-
-                                Fm_Post.Dispose()
-
-                                If Not CBool(_New_Idmaeedo) Then
-                                    _Mensaje.Detalle = "Error al grabar documento"
-                                    Throw New System.Exception("No fue posible realizar la grabación de la Factura.")
-                                End If
-
-                                Dim Cerrar_Doc As New Clas_Cerrar_Documento
-
-                                Consulta_sql = Replace(My.Resources.Recursos_Ver_Documento.Traer_Documento_Random, "#Idmaeedo#", _Idmaeedo_Origen)
-
-                                Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
-
-                                Dim _Tbl_Maeddo = _Ds.Tables(1)
-
-                                If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Maeddo) Then
-
-                                End If
-
-                                Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
-                                Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-                                _Mensaje.EsCorrecto = True
-                                _Mensaje.Id = _New_Idmaeedo
-                                _Mensaje.Fecha = FechaDelServidor()
-                                _Mensaje.Mensaje = "Documento creado correctamente"
-                                _Mensaje.Detalle = "Se crea el documento: " & _Row_Maeedo.Item("TIDO") & "-" & _Row_Maeedo.Item("NUDO")
-
-                            End If
-
-                        Else
-
-                            _Mensaje.Mensaje = "Documento cerrado"
-                            Throw New System.Exception("Nota de venta Nro: " & _Nudo & " se encuentra cerrado completamente")
+                            _Mensaje.Mensaje = "VALIDACION"
+                            Throw New System.Exception("NO ESTA AUTORIZADO PARA EFECTUAR DOCUMENTOS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
+                                              "BODEGA: " & _Bodega & " - " & _Bod)
 
                         End If
+
+                        If Fx_Tiene_Permiso(_Formulario, _Permiso) Then
+
+                            Dim _CampoPrecio As String
+
+                            If _Meardo = "N" Then ' Neto
+                                _CampoPrecio = "PPPRNE"
+                            Else ' Bruto
+                                _CampoPrecio = "PPPRBR"
+                            End If
+
+                            Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                           vbCrLf &
+                                           "Select Ddo.*,Det.Cantidad As 'Cantidad'," & vbCrLf &
+                                           "Det.Caprco1_Real As 'CantUd1_Pickea',Det.Caprco2_Real As 'CantUd2_Pickea'," & vbCrLf &
+                                           "Cast(1 As Bit) As DesdePickeo," & vbCrLf &
+                                           "CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori'," & vbCrLf &
+                                           "Case WHEN UDTRPR = 1 Then PPPRNE Else PPPRNE*RLUDPR End AS 'Precio'," & vbCrLf &
+                                           "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta," & vbCrLf &
+                                           "Det.RtuVariable" & vbCrLf &
+                                           "From MAEDDO Ddo With ( NOLOCK )" & vbCrLf &
+                                           "Inner Join " & _Global_BaseBk & "Zw_Stmp_Det Det On Ddo.IDMAEDDO = Det.Idmaeddo" & vbCrLf &
+                                           "Where IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''" & vbCrLf &
+                                           "Order by IDMAEEDO,IDMAEDDO " & vbCrLf &
+                                           vbCrLf &
+                                           "Select * From MAEIMLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                           vbCrLf &
+                                           "Select * From MAEDTLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                           vbCrLf &
+                                           "Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
+
+                            'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
+                            'Falta campo FECHATRIB = Fecha de ingreso
+
+                            ' SUBTIDO
+                            '-- 001 Sin derecho a credito fiscal y Sin documento contiene activo fijo
+                            '-- 000 Documento contiene activo fijo y Sin derecho a credito fiscal
+                            '-- 101 Conderecho a credito fiscal y documento contiene activo fijo
+                            '-- 100 Con derecho a credito fiscal y sin documento contiene activo fijo
+                            '-- '' -- No incluye este documento en el libro de compras 
+
+                            Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+                            Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir, csGlobales.Enum_Tipo_Documento.Venta, False)
+                            Fm_Post.Sb_Limpiar(_Modalidad)
+                            Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
+                            Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
+                            _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
+
+                            If CBool(_New_Idmaeedo) Then
+                                Fm_Post.Sb_Activar_Orden_De_Despacho(_New_Idmaeedo)
+                            End If
+
+                            Fm_Post.Dispose()
+
+                            If Not CBool(_New_Idmaeedo) Then
+                                _Mensaje.Detalle = "Error al grabar documento"
+                                Throw New System.Exception("No fue posible realizar la grabación de la Factura.")
+                            End If
+
+                            Dim Cerrar_Doc As New Clas_Cerrar_Documento
+
+                            Consulta_sql = Replace(My.Resources.Recursos_Ver_Documento.Traer_Documento_Random, "#Idmaeedo#", _Idmaeedo_Origen)
+
+                            Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+                            Dim _Tbl_Maeddo = _Ds.Tables(1)
+
+                            If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo_Origen, _Tbl_Maeddo) Then
+
+                            End If
+
+                            Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _New_Idmaeedo
+                            Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                            _Mensaje.EsCorrecto = True
+                            _Mensaje.Id = _New_Idmaeedo
+                            _Mensaje.Fecha = FechaDelServidor()
+                            _Mensaje.Mensaje = "Documento creado correctamente"
+                            _Mensaje.Detalle = "Se crea el documento: " & _Row_Maeedo.Item("TIDO") & "-" & _Row_Maeedo.Item("NUDO")
+
+                        End If
+
+                    Else
+
+                        _Mensaje.Mensaje = "Documento cerrado"
+                        Throw New System.Exception("Nota de venta Nro: " & _Nudo & " se encuentra cerrado completamente")
+
+                    End If
 
                     'End If
                     ''
@@ -1118,7 +1118,7 @@ Public Class Frm_Stmp_Listado
 
             _Nudo = Fx_Rellena_ceros(_Nudo, 10)
 
-            Consulta_sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where TIDO = 'NVV' And NUDO = '" & _Nudo & "'"
+            Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,SUENDO From MAEEDO Where TIDO = 'NVV' And NUDO = '" & _Nudo & "'"
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row) Then
@@ -1166,7 +1166,6 @@ Public Class Frm_Stmp_Listado
                 Return
             End If
 
-
             Dim _RowEntidad As DataRow = Fx_Traer_Datos_Entidad(_Row.Item("ENDO"), _Row.Item("SUENDO"))
 
             If Not IsNothing(_RowEntidad) Then
@@ -1193,6 +1192,35 @@ Public Class Frm_Stmp_Listado
                            "Informe de esta situación a la administración."
 
                     If Not Fx_RevisarPermiso(_Row.Item("Id"), "Bkp00019", _Msg, _Row.Item("Idmaeedo")) Then
+                        Return
+                    End If
+
+                End If
+
+                Dim _Koen As String = _RowEntidad.Item("KOEN")
+                Dim _Suen As String = _RowEntidad.Item("SUEN")
+
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                _Mensaje = Fx_Entidad_Revisar_Protestos(_Koen)
+
+                If Not _Mensaje.EsCorrecto Then
+
+                    _Msg = _Mensaje.Mensaje
+
+                    If MessageBoxEx.Show(Me, _Mensaje.Mensaje & Environment.NewLine &
+                                          "Informe de esta situación a la administración." & vbCrLf & vbCrLf &
+                                          "¿Desea ver el detalle?",
+                                          "Validación",
+                                          MessageBoxButtons.YesNo, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost) = DialogResult.Yes Then
+
+                        Dim Fm As New Frm_InfoEnt_Protestos(_Mensaje.Tag)
+                        Fm.ShowDialog(Me)
+                        Fm.Dispose()
+
+                    End If
+
+                    If Not Fx_RevisarPermiso(_Row.Item("Id"), "Doc00103", _Msg, _Row.Item("Idmaeedo")) Then
                         Return
                     End If
 
@@ -1473,12 +1501,12 @@ Public Class Frm_Stmp_Listado
             _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado,
                                      "NVV",
                                      "Where TIDO = 'NVV'")
-                _Fm.Rdb_Estado_Todos.Enabled = True
+            _Fm.Rdb_Estado_Todas.Enabled = True
             _Fm.Rdb_Estado_Vigente.Checked = True
-            _Fm.Rdb_Estado_Cerradas.Enabled = False
+            _Fm.Rdb_Estado_Cerrado.Enabled = False
             '_Fm.HabilitarNVVParaFacturar = True
             '_Fm.Rdb_Funcionarios_Uno.Checked = True
-            _Fm.Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+            _Fm.Rdb_FEmision_EmitidosEntre.Checked = True
             _Fm.Chk_Mostrar_Vales_Transitorios.Checked = False
             _Fm.Chk_Mostrar_Vales_Transitorios.Enabled = False
             _Fm.Pro_Sql_Filtro_Otro_Filtro = "And IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc)"

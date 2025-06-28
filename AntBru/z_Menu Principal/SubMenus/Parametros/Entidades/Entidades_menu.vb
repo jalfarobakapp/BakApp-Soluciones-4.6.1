@@ -20,8 +20,7 @@ Public Class Entidades_menu
     End Sub
 
     Private Sub Btn_MantEntidades_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_MantEntidades.Click
-        Dim Nro = "CfEnt001"
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, Nro) Then
+        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "CfEnt001") Then
             Dim Fm As New Frm_BuscarEntidad_Mt(False)
             Fm.Pro_Crear_Entidad = True
             Fm.ShowDialog(Me)

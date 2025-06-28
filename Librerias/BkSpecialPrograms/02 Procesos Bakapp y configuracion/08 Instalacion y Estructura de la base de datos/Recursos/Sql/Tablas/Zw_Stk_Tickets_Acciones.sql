@@ -20,6 +20,7 @@ CREATE TABLE [dbo].[Zw_Stk_Tickets_Acciones](
     [Aceptado]			[bit]               NOT NULL DEFAULT (0),
     [Id_Raiz]			[int]               NOT NULL DEFAULT (0),
     [Id_Ticket_Cierra]  [int]               NOT NULL DEFAULT (0),
+    [Id_Ticket_Crea]    [int]               NOT NULL DEFAULT (0),
     [Asunto]			[varchar](50)       NOT NULL DEFAULT (''),
     [Tido_Cierra]		[varchar](3)        NOT NULL DEFAULT (''),
     [Nudo_Cierra]		[varchar](10)       NOT NULL DEFAULT (''),

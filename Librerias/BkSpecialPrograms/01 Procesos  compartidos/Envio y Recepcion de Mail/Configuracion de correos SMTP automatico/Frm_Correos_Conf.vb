@@ -518,6 +518,7 @@ Public Class Frm_Correos_Conf
         End If
 
     End Function
+
     Private Function Fx_Test_envio_correo(Fm As Form,
                                           _Host_SMT As String,
                                           _Usuario As String,
@@ -528,20 +529,31 @@ Public Class Frm_Correos_Conf
                                           _Cuerpo As String,
                                           _StrAttach() As String,
                                           Optional _Puerto As String = "25",
-                                          Optional _EnableSsl As Boolean = True)
+                                          Optional _EnableSsl As Boolean = True) As LsValiciones.Mensajes
 
-        _Asunto = "Mesaje de prueba BakApp"
+        Dim _Mensaje As New LsValiciones.Mensajes
+
         If String.IsNullOrEmpty(Trim(_Cuerpo)) Then _Cuerpo = "Mensaje de correo electrónico enviado para comprobar la configuración de su cuenta. "
         Dim _Aceptar As Boolean
 
         If String.IsNullOrEmpty(_Para) Then
+
             _Aceptar = InputBox_Bk(Fm, "Ingrese correo de respuesta", "Prueba de envio de correo (SMTP)", _Para,
-                            False, _Tipo_Mayus_Minus.Normal, 0, True, _Tipo_Imagen.Texto, False)
+                                   False, _Tipo_Mayus_Minus.Normal, 0, True, _Tipo_Imagen.Texto, False)
 
             If Not _Aceptar Then
-                Return False
+
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Mensaje = "El correo de respuesta no puede estar vacio"
+                _Mensaje.Detalle = "Test envío de correo"
+
+                Return _Mensaje
+
             End If
+
         End If
+
+        _Asunto = "Mesaje de prueba BakApp (" & Now & ")"
 
         _Cuerpo = Replace(_Cuerpo, "&lt;", "<")
         _Cuerpo = Replace(_Cuerpo, "&gt;", ">")
@@ -558,8 +570,6 @@ Public Class Frm_Correos_Conf
         '                                                        _Puerto,
         '                                                        _EnableSsl)
 
-        Dim _Mensaje As New LsValiciones.Mensajes
-
         _Mensaje = Fx_Enviar_Mail3IMail(_Host_SMT,
                                         _Usuario,
                                         _Contrasena,
@@ -571,11 +581,13 @@ Public Class Frm_Correos_Conf
                                         _Puerto,
                                         _EnableSsl)
 
-        If _Mensaje.EsCorrecto = 0 Then 'Fx_Enviar_Mail3IMail(_Host_SMT, _Usuario, _Contrasena, _Para, _CC, _Asunto, _Cuerpo, _StrAttach, _Puerto, _EnableSsl, True) Then
-            Return True
-        Else
-            Return False
-        End If
+        Return _Mensaje
+
+        'If _Mensaje.EsCorrecto = 0 Then 'Fx_Enviar_Mail3IMail(_Host_SMT, _Usuario, _Contrasena, _Para, _CC, _Asunto, _Cuerpo, _StrAttach, _Puerto, _EnableSsl, True) Then
+        '    Return True
+        'Else
+        '    Return False
+        'End If
 
         'If Fx_Enviar_Mail2(_Host_SMT, _Usuario, _Contrasena, _Para, _CC, _Asunto, _Cuerpo, _StrAttach, _Puerto, _EnableSsl, True) Then
         '    Return True
@@ -583,11 +595,11 @@ Public Class Frm_Correos_Conf
         '    Return False
         'End If
 
-        ''If Fx_Enviar_Mail(_Host_SMT, _Usuario, _Contrasena, _Para, _CC, _Asunto, _Cuerpo, _StrAttach, _Puerto, _EnableSsl) Then
-        ''    Return True
-        ''Else
-        ''    Return False
-        ''End If
+        'If Fx_Enviar_Mail(_Host_SMT, _Usuario, _Contrasena, _Para, _CC, _Asunto, _Cuerpo, _StrAttach, _Puerto, _EnableSsl) Then
+        '    Return True
+        'Else
+        '    Return False
+        'End If
 
     End Function
     Sub Sb_Enviar_Correo_EASendMail_SSL()
@@ -705,18 +717,28 @@ Public Class Frm_Correos_Conf
 
         If Rdb_Envio_Automatico.Checked Then
 
-            If Fx_Test_envio_correo(Me, Txt_Host_SMTP.Text,
-                                 Txt_Remitente.Text, Txt_Contrasena.Text, "", Txt_CC.Text, "", Txt_Cuerpo.Text,
-                                 Nothing, Txt_Puerto.Text, Chk_SSL.Checked) Then
+            Dim _Mensaje As New LsValiciones.Mensajes
 
-                'csNotificaciones.Notificacion.mostrarVentana("Prueba correo",
-                '                                             "Correo enviado sin problemas, revise su bandeja de entrada",
-                '                                             csNotificaciones.Notificacion.Imagen.Internet, 5, True)
+            _Mensaje = Fx_Test_envio_correo(Me, Txt_Host_SMTP.Text,
+                                            Txt_Remitente.Text, Txt_Contrasena.Text, "", Txt_CC.Text, "", Txt_Cuerpo.Text,
+                                            Nothing, Txt_Puerto.Text, Chk_SSL.Checked)
 
-                MessageBoxEx.Show(Me, "Correo enviado sin problemas, revise su bandeja de entrada", "Correo de pruebas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+            'If _Mensaje.EsCorrecto Then
+
+            '    MessageBoxEx.Show(Me, "Correo enviado sin problemas, revise su bandeja de entrada",
+            '                      "Correo de pruebas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            'Else
+
+            '    MessageBoxEx.Show(Me, "Error al enviar el correo" & vbCrLf & vbCrLf &
+            '                      "Error: " & _Mensaje.Mensaje & vbCrLf & vbCrLf &
+            '                      "Detalle: " & _Mensaje.Detalle,
+            '                      "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
 
-            End If
+            'End If
 
         Else
             Dim Envio_Occ_Mail As New Class_Outlook
@@ -1228,12 +1250,15 @@ Public Class Frm_Correos_Conf
 
                 If result.Status = SendMessageStatus.Success Then
                     _Mensaje.EsCorrecto = True
+                    _Mensaje.Icono = MessageBoxIcon.Information
                 End If
 
             End Using
 
         Catch ex As Exception
             _Mensaje.Mensaje = ex.Message
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
         Return _Mensaje

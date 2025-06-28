@@ -332,17 +332,17 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                             If Fm_b.Pro_Seleccionado Then
 
-                                ' Verificar si ya existe la misma empresa, sucursal y bodega en la lista
-                                For Each producto As Zw_Stk_Tickets_Producto In listaProductos
-                                    If producto.Empresa = Fm_b.Pro_RowBodega.Item("EMPRESA") AndAlso
-                                        producto.Sucursal = Fm_b.Pro_RowBodega.Item("KOSU") AndAlso
-                                        producto.Bodega = Fm_b.Pro_RowBodega.Item("KOBO") AndAlso producto.Id <> currentId AndAlso producto.Id_TicketAc = 0 Then
-                                        MessageBoxEx.Show(Me, "Ya existe un registro con la misma empresa, sucursal y bodega", "Validación",
-                                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                        Grilla_Detalle.CurrentCell = _Fila.Cells("Bodega")
-                                        Return
-                                    End If
-                                Next
+                                '' Verificar si ya existe la misma empresa, sucursal y bodega en la lista
+                                'For Each producto As Zw_Stk_Tickets_Producto In listaProductos
+                                '    If producto.Empresa = Fm_b.Pro_RowBodega.Item("EMPRESA") AndAlso
+                                '        producto.Sucursal = Fm_b.Pro_RowBodega.Item("KOSU") AndAlso
+                                '        producto.Bodega = Fm_b.Pro_RowBodega.Item("KOBO") AndAlso producto.Id <> currentId AndAlso producto.Id_TicketAc = 0 Then
+                                '        MessageBoxEx.Show(Me, "Ya existe un registro con la misma empresa, sucursal y bodega", "Validación",
+                                '                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                '        Grilla_Detalle.CurrentCell = _Fila.Cells("Bodega")
+                                '        Return
+                                '    End If
+                                'Next
 
                                 _Fila.Cells("Empresa").Value = Fm_b.Pro_RowBodega.Item("EMPRESA")
                                 _Fila.Cells("Sucursal").Value = Fm_b.Pro_RowBodega.Item("KOSU")
@@ -464,6 +464,21 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                                         Return
 
                                     End If
+
+                                Else
+
+                                    ' Verificar si ya existe la misma empresa, sucursal y bodega en la lista
+                                    For Each producto As Zw_Stk_Tickets_Producto In listaProductos
+                                        If producto.Empresa = _Empresa AndAlso
+                                            producto.Sucursal = _Sucursal AndAlso
+                                            producto.Bodega = _Bodega AndAlso producto.Ubicacion = _Row.Item("Codigo") AndAlso producto.Id <> currentId AndAlso producto.Id_TicketAc = 0 Then
+                                            MessageBoxEx.Show(Me, "Ya existe un registro con la misma empresa (" & _Empresa & "), sucursal (" & _Sucursal & "), bodega (" & _Bodega & ") y ubicación (" & _Row.Item("Codigo") & ")", "Validación",
+                                                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                            _Fila.Cells("Ubicacion").Value = String.Empty
+                                            Grilla_Detalle.CurrentCell = _Fila.Cells("Ubicacion")
+                                            Return
+                                        End If
+                                    Next
 
                                 End If
 
@@ -695,8 +710,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
             Dim _Msg1 = "CONFIRMAR CANTIDADES"
             Dim _Msg2 = vbCrLf &
-                        "Cantidad Stock físico: " & listaProductos.Item(0).StfiEnBodega & vbCrLf &
-                        "Cantidad inventariada: " & listaProductos.Item(0).Cantidad & vbCrLf &
+                        "Stock sistema: " & listaProductos.Item(0).StfiEnBodega & vbCrLf &
+                        "Stock físico: " & listaProductos.Item(0).Cantidad & vbCrLf &
                         "Diferencia: " & listaProductos.Item(0).Diferencia & vbCrLf
 
             If Not Fx_Confirmar_Lectura(_Msg1, _Msg2, eTaskDialogIcon.Exclamation) Then

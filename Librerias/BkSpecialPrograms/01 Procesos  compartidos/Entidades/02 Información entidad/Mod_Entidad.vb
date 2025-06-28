@@ -64,4 +64,39 @@ Public Module Mod_Entidad
 
     End Function
 
+    Public Function Fx_Entidad_Revisar_Protestos(_CodEntidad As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim Consulta_sql As String
+
+        Try
+
+            Consulta_sql = "Select TIDO,NUDO,NUCUDO,MODO,VABRDO,FEEMDO" & vbCrLf &
+                           "From CDOCCOE With(Nolock)" & vbCrLf &
+                           "Where ENDO = '" & _CodEntidad & "' And TIDO IN ('chv','ltv','pav') And ESPGDO <> 'C' And VABRDO <> 0 "
+            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            If Not IsNothing(_Tbl) Then
+                If _Tbl.Rows.Count > 0 Then
+                    _Mensaje.Tag = _Tbl
+                    Throw New System.Exception("Entidad presenta " & _Tbl.Rows.Count & " protestos vigentes.")
+                End If
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Entidad no presenta protestos vigentes."
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
 End Module

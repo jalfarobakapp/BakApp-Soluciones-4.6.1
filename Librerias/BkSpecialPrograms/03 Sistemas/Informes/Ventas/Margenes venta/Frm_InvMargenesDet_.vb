@@ -46,88 +46,97 @@ Public Class Frm_InvMargenesDet_
 
             OcultarEncabezadoGrilla(GrillaDetalle)
 
+            Dim _DisplayIndex = 0
+
             .Columns("Tido").Width = 30
             .Columns("Tido").HeaderText = "TD"
             .Columns("Tido").Visible = True
-
-            .Columns("Funcionario").Width = 30
-            .Columns("Funcionario").HeaderText = "Func"
-            .Columns("Funcionario").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("Funcionario").Visible = True
+            .Columns("Tido").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Nudo").Width = 70
             .Columns("Nudo").HeaderText = "Número"
             .Columns("Nudo").Visible = True
+            .Columns("Nudo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Feemli").Width = 70
             .Columns("Feemli").HeaderText = "Fecha"
             .Columns("Feemli").Visible = True
+            .Columns("Feemli").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("CantidadUd1").Width = 50
             .Columns("CantidadUd1").HeaderText = "Cant. Ud1"
             .Columns("CantidadUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("CantidadUd1").DefaultCellStyle.Format = "###,##"
             .Columns("CantidadUd1").Visible = True
+            .Columns("CantidadUd1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            .Columns("PNetoUnit").Width = 60
+            .Columns("PNetoUnit").Width = 65
             .Columns("PNetoUnit").HeaderText = "Precio Unitario"
             .Columns("PNetoUnit").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PNetoUnit").DefaultCellStyle.Format = "$ ###,##"
             .Columns("PNetoUnit").Visible = True
+            .Columns("PNetoUnit").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            .Columns("CostoUnitIm").Width = 60
+            .Columns("CostoUnitIm").Width = 65
             .Columns("CostoUnitIm").HeaderText = "Costo Unitario"
             .Columns("CostoUnitIm").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("CostoUnitIm").DefaultCellStyle.Format = "$ ###,##"
             .Columns("CostoUnitIm").Visible = True
+            .Columns("CostoUnitIm").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("TotalCosto").Width = 80
             .Columns("TotalCosto").HeaderText = "Total Costo"
             .Columns("TotalCosto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("TotalCosto").DefaultCellStyle.Format = "$ ###,##"
             .Columns("TotalCosto").Visible = True
+            .Columns("TotalCosto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("TotalPrecio").Width = 80
             .Columns("TotalPrecio").HeaderText = "Total Precio"
             .Columns("TotalPrecio").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("TotalPrecio").DefaultCellStyle.Format = "$ ###,##"
             .Columns("TotalPrecio").Visible = True
+            .Columns("TotalPrecio").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Total_Mrg").Width = 80
             .Columns("Total_Mrg").HeaderText = "Total Margen"
             .Columns("Total_Mrg").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Total_Mrg").DefaultCellStyle.Format = "$ ###,##"
             .Columns("Total_Mrg").Visible = True
+            .Columns("Total_Mrg").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Porc_Markup").Width = 80
             .Columns("Porc_Markup").HeaderText = "Margen %"
             .Columns("Porc_Markup").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Porc_Markup").DefaultCellStyle.Format = "% ##0.##"
             .Columns("Porc_Markup").Visible = True
+            .Columns("Porc_Markup").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Funcionario").Width = 40
+            .Columns("Funcionario").HeaderText = "Func"
+            .Columns("Funcionario").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Funcionario").Visible = True
+            .Columns("Funcionario").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Precio_Cambiado").Width = 30
             .Columns("Precio_Cambiado").HeaderText = "P/C"
             .Columns("Precio_Cambiado").ToolTipText = "Precio cambiado"
             .Columns("Precio_Cambiado").Visible = True
-
-            '.Columns("Porc_Margen").Width = 65
-            '.Columns("Porc_Margen").HeaderText = "Margen Costo %"
-            '.Columns("Porc_Margen").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("Porc_Margen").DefaultCellStyle.Format = "###,##.##"
-            '.Columns("Porc_Margen").Visible = True
-
-            'CantInventariada
-
+            .Columns("Precio_Cambiado").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
-
-        'For Each _Fila As DataGridViewRow In GrillaDetalle.Rows
-
-        '    If _Fila.Cells("").Value Then
-        '        _Fila.DefaultCellStyle.
-        '    End If
-
-        'Next
 
     End Sub
 

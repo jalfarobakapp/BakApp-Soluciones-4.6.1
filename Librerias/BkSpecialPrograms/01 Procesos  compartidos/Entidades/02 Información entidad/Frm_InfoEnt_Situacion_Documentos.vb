@@ -1,6 +1,4 @@
-﻿Imports DevComponents.DotNetBar
-'Imports Lib_Bakapp_VarClassFunc
-
+﻿
 Public Class Frm_InfoEnt_Situacion_Documentos
 
     Dim _Tabla As DataTable
@@ -37,7 +35,11 @@ Public Class Frm_InfoEnt_Situacion_Documentos
         Sb_Formato_Generico_Grilla(Grilla_Documentos, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         AddHandler Grilla_Documentos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
+
+
     Private Sub Frm_InfoEnt_Situacion_Documentos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         If _TipoDocumentos = _TipoDoc.Doc_Pago Then
@@ -49,7 +51,6 @@ Public Class Frm_InfoEnt_Situacion_Documentos
 
     End Sub
     Sub Sb_Actualizar_Grilla_Documentos_Venta()
-
 
         With Grilla_Documentos
 
@@ -111,7 +112,6 @@ Public Class Frm_InfoEnt_Situacion_Documentos
 
     Sub Sb_Actualizar_Grilla_Documentos_Pago()
 
-
         With Grilla_Documentos
 
             .DataSource = _Tabla
@@ -151,10 +151,7 @@ Public Class Frm_InfoEnt_Situacion_Documentos
             .Columns("VADP").Visible = True
             .Columns("VADP").DisplayIndex = 5
 
-
-
         End With
-
 
     End Sub
 
@@ -189,4 +186,7 @@ Public Class Frm_InfoEnt_Situacion_Documentos
         End If
     End Sub
 
+    Private Sub Btn_Salir_Click(sender As Object, e As EventArgs) Handles Btn_Salir.Click
+        Me.Close()
+    End Sub
 End Class

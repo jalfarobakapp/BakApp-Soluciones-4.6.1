@@ -854,7 +854,7 @@ Public Module Funciones_Especiales_BakApp
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Consulta_sql = "select getdate() As Fecha"
+        Consulta_sql = "Select Getdate() As Fecha"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
         If IsNothing(_Row) Then
@@ -904,6 +904,14 @@ Public Module Funciones_Especiales_BakApp
         _Row_Entidad = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
         If Not (_Row_Entidad Is Nothing) Then
+
+            If _Row_Entidad.Item("LCEN").ToString.ToUpper.Trim = "TABPP" Or String.IsNullOrWhiteSpace(_Row_Entidad.Item("LCEN")) Then
+                _Row_Entidad.Item("LCEN") = "TABPP" & ModListaPrecioCosto
+            End If
+
+            If _Row_Entidad.Item("LVEN").ToString.ToUpper.Trim = "TABPP" Or String.IsNullOrWhiteSpace(_Row_Entidad.Item("LVEN")) Then
+                _Row_Entidad.Item("LVEN") = "TABPP" & ModListaPrecioVenta
+            End If
 
             Dim _Rut As String = _Row_Entidad.Item("RTEN").ToString.Trim
             Dim _RutSP As String = String.Empty
@@ -1976,6 +1984,7 @@ Public Module Modulo_Precios_Costos
                 Dim _Ecuacion_Copy = Replace(_Ecuacion, "]", "")
                 Dim _Ecuacion_1 = Split(_Ecuacion_Copy, "#")
                 Dim _Ecuacion_2 = Split(_Ecuacion_1(0).ToString.Trim, "[")
+                Dim _PrecioR1 As Double
 
                 For i = 1 To _Ecuacion_2.Length
 
@@ -1987,8 +1996,8 @@ Public Module Modulo_Precios_Costos
                         Exit For
                     End Try
 
-                    Dim _Cant1_Ecu As Double = _Ecuacion_3(0)
-                    Dim _Cant2_Ecu As Double = _Ecuacion_3(1)
+                    Dim _Cant1_Ecu As Double = De_Txt_a_Num_01(_Ecuacion_3(0), 5)
+                    Dim _Cant2_Ecu As Double = De_Txt_a_Num_01(_Ecuacion_3(1), 5)
                     Dim _Campo_Ecu As String = _Ecuacion_3(2)
 
                     _Ecuacion = Replace(_Ecuacion, " ", "")
@@ -2055,6 +2064,10 @@ Public Module Modulo_Precios_Costos
                         _Ecuacion = _Ecuacion_3(3)
                     End Try
 
+                    If i = 1 Then
+                        _PrecioR1 = Fx_Precio_Formula_Random_Ecuacion(_RowPrecios, _Campo_Precio, _Ecuacion, Nothing, True, _Koen, _Caprco1, _Caprco2, _MostrarError)
+                    End If
+
                     If _Ejecutar_Consulta Then
 
                         _PrecioLinea = Fx_Precio_Formula_Random_Ecuacion(_RowPrecios,
@@ -2071,6 +2084,10 @@ Public Module Modulo_Precios_Costos
                     End If
 
                 Next
+
+                If _PrecioLinea = 0 Then
+                    _PrecioLinea = _PrecioR1
+                End If
 
             Else
 
@@ -6315,7 +6332,7 @@ Public Module Crear_Documentos_Desde_Otro
         Dim Chk_Confirmar_Lectura As New Command
         Chk_Confirmar_Lectura.Checked = False
         Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
-        Chk_Confirmar_Lectura.Text = "CONFIRMAR TIPO DE ENVIO Y LECTURA DE LA ALERTA"
+        Chk_Confirmar_Lectura.Text = "CONFIRMAR LECTURA DE LA ALERTA"
 
         Dim _Opciones As Command = Chk_Confirmar_Lectura
 
@@ -6433,10 +6450,7 @@ Public Module Crear_Documentos_Desde_Otro
                                _vNum_telefono As String) As Fincred_API.Respuesta
 
         Dim _Respuesta As New Fincred_API.Respuesta
-
-        '_Row_Encabezado_Doc = _TblEncabezado.Rows(0)
-
-        Dim _Rut_girador As String = _vRut_girador '_RowEntidad.Item("Rut")
+        Dim _Rut_girador As String = _vRut_girador
 
         _Rut_girador = Replace(_Rut_girador, "-", "")
         _Rut_girador = Replace(_Rut_girador, ".", "")
@@ -6448,11 +6462,11 @@ Public Module Crear_Documentos_Desde_Otro
         Dim _Numero_documento_transaccion As String = "XXXXXXXXX"
         Dim _Producto As Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto = Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto.Facturas
         Dim _Banco As Integer = 0
-        Dim _Monto_total_venta As Double = _vMonto_total_venta '_Row_Encabezado_Doc.Item("TotalBrutoDoc")
+        Dim _Monto_total_venta As Double = _vMonto_total_venta
         Dim _Cantidad_documentos_venta As Integer = 1
         Dim _Num_primer_doc As Integer = _Numero_transaccion_cliente
         Dim _Fec_primer_venc As String = Format(_vFec_primer_venc, "ddMMyyyy")
-        Dim _Num_telefono As String = _vNum_telefono '_RowEntidad.Item("FOEN").ToString.Trim
+        Dim _Num_telefono As String = _vNum_telefono
 
         Dim _ProductoV = _Producto + 1
 
@@ -6840,5 +6854,225 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
+    Function Fx_CreaNroRandom() As String
+
+        Dim letras As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        Dim numeros As String = "0123456789"
+        Dim random As New Random()
+        Dim resultado As New System.Text.StringBuilder()
+
+        ' Generar 3 letras al azar
+        For i As Integer = 1 To 3
+            Dim indiceLetra As Integer = random.Next(0, letras.Length)
+            resultado.Append(letras(indiceLetra))
+        Next
+
+        ' Generar 7 números al azar
+        For i As Integer = 1 To 7
+            Dim indiceNumero As Integer = random.Next(0, numeros.Length)
+            resultado.Append(numeros(indiceNumero))
+        Next
+
+        Return resultado.ToString
+
+    End Function
+
+    Function Fx_PermisoRegistroDoc(_Tido As String)
+
+        Dim _Permiso As String
+
+        Select Case _Tido
+
+            Case "BLC"
+                _Permiso = "Doc00104" ' BOLETA DE COMPRA"
+            Case "BLV"
+                _Permiso = "Doc00105" ' BOLETA DE VENTA"
+            Case "BLX"
+                _Permiso = "Doc00106" ' BOLETA DE VENTA EXENTA"
+            Case "BSV"
+                _Permiso = "Doc00107" ' BOLETA DE VENTA SIMPLE"
+            Case "COV"
+                _Permiso = "Doc00108" ' COTIZACION DE VENTA"
+            Case "DIN"
+                _Permiso = "Doc00109" ' DECLARACION DE INTERNACION"
+            Case "ESC"
+                _Permiso = "Doc00110" ' ESCRITURA"
+            Case "FCC"
+                _Permiso = "Doc00111" ' FACTURA DE COMPRA"
+            Case "FCL"
+                _Permiso = "Doc00112" ' LIQUIDACION DE FACTURA"
+            Case "FCT"
+                _Permiso = "Doc00113" ' FACTURA COMPRA TERCEROS"
+            Case "FCV"
+                _Permiso = "Doc00114" ' FACTURA DE VENTA"
+            Case "FCZ"
+                _Permiso = "Doc00115" ' FACTURA VENTA MóDULO ZF"
+            Case "FDB"
+                _Permiso = "Doc00116" ' FACTURA DEBITO TIPO B"
+            Case "FDC"
+                _Permiso = "Doc00117" ' FACTURA DE DEBITO DE COMPRA"
+            Case "FDE"
+                _Permiso = "Doc00118" ' FACTURA DEBITO EXPORTACION"
+            Case "FDV"
+                _Permiso = "Doc00119" ' FACTURA DEBITO DE VENTA"
+            Case "FDX"
+                _Permiso = "Doc00120" ' FACTURA DEBITO EXENTA"
+            Case "FDZ"
+                _Permiso = "Doc00121" ' FACTURA DEBITO ZONA FRANCA"
+            Case "FEE"
+                _Permiso = "Doc00122" ' FACTURA VTA.MERCAD.EXTRANJERO"
+            Case "FEV"
+                _Permiso = "Doc00123" ' FACTURA DE EXPORTACION"
+            Case "FVL"
+                _Permiso = "Doc00124" ' FACTURA LIQUIDACION VENTAS"
+            Case "FVT"
+                _Permiso = "Doc00125" ' FACTURA VENTA TERCEROS"
+            Case "FVX"
+                _Permiso = "Doc00126" ' FACTURA DE VENTA EXENTA"
+            Case "FVZ"
+                _Permiso = "Doc00127" ' FACTURA VENTA ZONA FRANCA"
+            Case "FXV"
+                _Permiso = "Doc00128" ' FACTURA DE VENTA EXENTA LEY:18392"
+            Case "FYV"
+                _Permiso = "Doc00129" ' FACTURA DE VENTA EXENTA LEY:19149"
+            Case "GAR"
+                _Permiso = "Doc00130" ' GUIA DE ARMADO PRODUCTO"
+            Case "GCL"
+                _Permiso = "Doc00131" ' GUIA DE CLASIFICACION"
+            Case "GDD"
+                _Permiso = "Doc00132" ' GUIA DESPACHO POR DEVOLUCION"
+            Case "GDI"
+                _Permiso = "Doc00133" ' GUIA SALIDA DE BODEGA"
+            Case "GDP"
+                _Permiso = "Doc00134" ' GUIA DESPACHO PRESTAMO"
+            Case "GDV"
+                _Permiso = "Doc00135" ' GUIA DESPACHO VENTA"
+            Case "GRC"
+                _Permiso = "Doc00136" ' GUIA DE RECEPCION DE COMPRA"
+            Case "GRD"
+                _Permiso = "Doc00137" ' GUIA RECEPCION DE DEVOLUCION"
+            Case "GRI"
+                _Permiso = "Doc00138" ' GUIA DE RECEPCION INTERNA"
+            Case "GRP"
+                _Permiso = "Doc00139" ' GUIA DE RECEPCION PRESTAMOS"
+            Case "GTI"
+                _Permiso = "Doc00140" ' GUIA DE TRASLADO SUCURSALES"
+            Case "NCB"
+                _Permiso = "Doc00141" ' NOTA DE CREDITO TIPO B"
+            Case "NCC"
+                _Permiso = "Doc00142" ' NOTA DE CREDITO DE COMPRA"
+            Case "NCE"
+                _Permiso = "Doc00143" ' RESCILIACION DE CONTRATO"
+            Case "NCV"
+                _Permiso = "Doc00144" ' NOTA DE CREDITO VENTA"
+            Case "NCX"
+                _Permiso = "Doc00145" ' NOTA DE CREDITO EXENTA"
+            Case "NCZ"
+                _Permiso = "Doc00146" ' NOTA CREDITO ZONA FRANCA"
+            Case "NEV"
+                _Permiso = "Doc00147" ' NOTA DE CREDITO EXPORTACION"
+            Case "NVC"
+                _Permiso = "Doc00148" ' CONTRATO COBRO PERIODICO"
+            Case "NVI"
+                _Permiso = "Doc00149" ' COMPROMISO DE ENTREGA INTERNO"
+            Case "NVV"
+                _Permiso = "Doc00150" ' NOTA DE VENTA"
+            Case "OCC"
+                _Permiso = "Doc00151" ' ORDEN DE COMPRA"
+            Case "OCI"
+                _Permiso = "Doc00152" ' ORDEN DE PEDIDO INTERNO"
+            Case "PRO"
+                _Permiso = "Doc00153" ' PROMESA"
+            Case "RES"
+                _Permiso = "Doc00154" ' RESERVA"
+            Case "RGA"
+                _Permiso = "Doc00155" ' RECIBO DE GASTOS"
+            Case "RIN"
+                _Permiso = "Doc00156" ' RECIBO DE INGRESOS"
+            Case "SRF"
+                _Permiso = "Doc00157" ' SOLICITUD REGISTRO FACTURA"
+        End Select
+
+        Return _Permiso
+
+    End Function
+    Function Fx_Listar_Documentos_Permitidos(_Kofu As String) As List(Of Ls_DocumentosPermitidos)
+        ' Paso 1: Definir listado de TIDO y descripciones
+        Dim documentos As New List(Of Ls_DocumentosPermitidos) From {
+            New Ls_DocumentosPermitidos With {.Tido = "BLC", .Descripcion = "BOLETA DE COMPRA"},
+            New Ls_DocumentosPermitidos With {.Tido = "BLV", .Descripcion = "BOLETA DE VENTA"},
+            New Ls_DocumentosPermitidos With {.Tido = "BLX", .Descripcion = "BOLETA DE VENTA EXENTA"},
+            New Ls_DocumentosPermitidos With {.Tido = "BSV", .Descripcion = "BOLETA DE VENTA SIMPLE"},
+            New Ls_DocumentosPermitidos With {.Tido = "COV", .Descripcion = "COTIZACION DE VENTA"},
+            New Ls_DocumentosPermitidos With {.Tido = "DIN", .Descripcion = "DECLARACION DE INTERNACION"},
+            New Ls_DocumentosPermitidos With {.Tido = "ESC", .Descripcion = "ESCRITURA"},
+            New Ls_DocumentosPermitidos With {.Tido = "FCC", .Descripcion = "FACTURA DE COMPRA"},
+            New Ls_DocumentosPermitidos With {.Tido = "FCL", .Descripcion = "LIQUIDACION DE FACTURA"},
+            New Ls_DocumentosPermitidos With {.Tido = "FCT", .Descripcion = "FACTURA COMPRA TERCEROS"},
+            New Ls_DocumentosPermitidos With {.Tido = "FCV", .Descripcion = "FACTURA DE VENTA"},
+            New Ls_DocumentosPermitidos With {.Tido = "FCZ", .Descripcion = "FACTURA VENTA MóDULO ZF"},
+            New Ls_DocumentosPermitidos With {.Tido = "FDB", .Descripcion = "FACTURA DEBITO TIPO B"},
+            New Ls_DocumentosPermitidos With {.Tido = "FDC", .Descripcion = "FACTURA DE DEBITO DE COMPRA"},
+            New Ls_DocumentosPermitidos With {.Tido = "FDE", .Descripcion = "FACTURA DEBITO EXPORTACION"},
+            New Ls_DocumentosPermitidos With {.Tido = "FDV", .Descripcion = "FACTURA DEBITO DE VENTA"},
+            New Ls_DocumentosPermitidos With {.Tido = "FDX", .Descripcion = "FACTURA DEBITO EXENTA"},
+            New Ls_DocumentosPermitidos With {.Tido = "FDZ", .Descripcion = "FACTURA DEBITO ZONA FRANCA"},
+            New Ls_DocumentosPermitidos With {.Tido = "FEE", .Descripcion = "FACTURA VTA.MERCAD.EXTRANJERO"},
+            New Ls_DocumentosPermitidos With {.Tido = "FEV", .Descripcion = "FACTURA DE EXPORTACION"},
+            New Ls_DocumentosPermitidos With {.Tido = "FVL", .Descripcion = "FACTURA LIQUIDACION VENTAS"},
+            New Ls_DocumentosPermitidos With {.Tido = "FVT", .Descripcion = "FACTURA VENTA TERCEROS"},
+            New Ls_DocumentosPermitidos With {.Tido = "FVX", .Descripcion = "FACTURA DE VENTA EXENTA"},
+            New Ls_DocumentosPermitidos With {.Tido = "FVZ", .Descripcion = "FACTURA VENTA ZONA FRANCA"},
+            New Ls_DocumentosPermitidos With {.Tido = "FXV", .Descripcion = "FACTURA DE VENTA EXENTA LEY:18392"},
+            New Ls_DocumentosPermitidos With {.Tido = "FYV", .Descripcion = "FACTURA DE VENTA EXENTA LEY:19149"},
+            New Ls_DocumentosPermitidos With {.Tido = "GAR", .Descripcion = "GUIA DE ARMADO PRODUCTO"},
+            New Ls_DocumentosPermitidos With {.Tido = "GCL", .Descripcion = "GUIA DE CLASIFICACION"},
+            New Ls_DocumentosPermitidos With {.Tido = "GDD", .Descripcion = "GUIA DESPACHO POR DEVOLUCION"},
+            New Ls_DocumentosPermitidos With {.Tido = "GDI", .Descripcion = "GUIA SALIDA DE BODEGA"},
+            New Ls_DocumentosPermitidos With {.Tido = "GDP", .Descripcion = "GUIA DESPACHO PRESTAMO"},
+            New Ls_DocumentosPermitidos With {.Tido = "GDV", .Descripcion = "GUIA DESPACHO VENTA"},
+            New Ls_DocumentosPermitidos With {.Tido = "GRC", .Descripcion = "GUIA DE RECEPCION DE COMPRA"},
+            New Ls_DocumentosPermitidos With {.Tido = "GRD", .Descripcion = "GUIA RECEPCION DE DEVOLUCION"},
+            New Ls_DocumentosPermitidos With {.Tido = "GRI", .Descripcion = "GUIA DE RECEPCION INTERNA"},
+            New Ls_DocumentosPermitidos With {.Tido = "GRP", .Descripcion = "GUIA DE RECEPCION PRESTAMOS"},
+            New Ls_DocumentosPermitidos With {.Tido = "GTI", .Descripcion = "GUIA DE TRASLADO SUCURSALES"},
+            New Ls_DocumentosPermitidos With {.Tido = "NCB", .Descripcion = "NOTA DE CREDITO TIPO B"},
+            New Ls_DocumentosPermitidos With {.Tido = "NCC", .Descripcion = "NOTA DE CREDITO DE COMPRA"},
+            New Ls_DocumentosPermitidos With {.Tido = "NCE", .Descripcion = "RESCILIACION DE CONTRATO"},
+            New Ls_DocumentosPermitidos With {.Tido = "NCV", .Descripcion = "NOTA DE CREDITO VENTA"},
+            New Ls_DocumentosPermitidos With {.Tido = "NCX", .Descripcion = "NOTA DE CREDITO EXENTA"},
+            New Ls_DocumentosPermitidos With {.Tido = "NCZ", .Descripcion = "NOTA CREDITO ZONA FRANCA"},
+            New Ls_DocumentosPermitidos With {.Tido = "NEV", .Descripcion = "NOTA DE CREDITO EXPORTACION"},
+            New Ls_DocumentosPermitidos With {.Tido = "NVC", .Descripcion = "CONTRATO COBRO PERIODICO"},
+            New Ls_DocumentosPermitidos With {.Tido = "NVI", .Descripcion = "COMPROMISO DE ENTREGA INTERNO"},
+            New Ls_DocumentosPermitidos With {.Tido = "NVV", .Descripcion = "NOTA DE VENTA"},
+            New Ls_DocumentosPermitidos With {.Tido = "OCC", .Descripcion = "ORDEN DE COMPRA"},
+            New Ls_DocumentosPermitidos With {.Tido = "OCI", .Descripcion = "ORDEN DE PEDIDO INTERNO"},
+            New Ls_DocumentosPermitidos With {.Tido = "PRO", .Descripcion = "PROMESA"},
+            New Ls_DocumentosPermitidos With {.Tido = "RES", .Descripcion = "RESERVA"},
+            New Ls_DocumentosPermitidos With {.Tido = "RGA", .Descripcion = "RECIBO DE GASTOS"},
+            New Ls_DocumentosPermitidos With {.Tido = "RIN", .Descripcion = "RECIBO DE INGRESOS"},
+            New Ls_DocumentosPermitidos With {.Tido = "SRF", .Descripcion = "SOLICITUD REGISTRO FACTURA"}
+        }
+
+        ' Paso 2: Filtrar por permisos
+        Dim documentosPermitidos As New List(Of Ls_DocumentosPermitidos)
+        For Each doc In documentos
+            Dim permiso As String = Fx_PermisoRegistroDoc(doc.Tido)
+            If Not String.IsNullOrEmpty(permiso) AndAlso Fx_Tiene_Permiso(permiso, _Kofu) Then
+                documentosPermitidos.Add(doc)
+            End If
+        Next
+
+        Return documentosPermitidos
+
+    End Function
+
 End Module
+
+Public Class Ls_DocumentosPermitidos
+    Property Tido As String
+    Property Descripcion As String
+
+End Class
 

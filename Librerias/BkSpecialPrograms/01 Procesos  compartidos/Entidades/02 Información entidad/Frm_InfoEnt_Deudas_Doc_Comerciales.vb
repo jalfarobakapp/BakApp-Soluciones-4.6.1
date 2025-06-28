@@ -914,7 +914,7 @@ AND DPCE.EMPRESA='" & ModEmpresa & "'  AND DPCE.ESASDP='P'
     End Function
 
     Private Sub Sb_Grilla_Credito_CellDoubleClick(sender As System.Object,
-                                               e As System.Windows.Forms.DataGridViewCellEventArgs)
+                                                  e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla_Credito.Rows(Grilla_Credito.CurrentRow.Index)
         Dim _Cabeza = Grilla_Credito.Columns(Grilla_Credito.CurrentCell.ColumnIndex).Name

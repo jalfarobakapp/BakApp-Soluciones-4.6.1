@@ -224,58 +224,61 @@ Public Class Productos
 
     Private Sub BtnRankingProductos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnRankingProductos.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00004") Then
-            Dim Fm As New Frm_Ranking_Menu
-            Fm.ShowDialog(_Fm_Menu_Padre)
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Inf00004") Then
+            Return
         End If
+
+        Dim Fm As New Frm_Ranking_Menu
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
 
     End Sub
 
     Private Sub Btn_Kardex_Inventario_Click(sender As Object, e As EventArgs) Handles Btn_Kardex_Inventario.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod002") Then
-
-            Dim Fm As New Frm_Kardex_X_Producto_Lista
-            Fm.ShowDialog(_Fm_Menu_Padre)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod002") Then
+            Return
         End If
+
+        Dim Fm As New Frm_Kardex_X_Producto_Lista
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
 
     End Sub
 
     Private Sub Btn_ImagenesXProductos_Click(sender As Object, e As EventArgs) Handles Btn_ImagenesXProductos.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod067") Then
-
-            Dim Fm As New Frm_Imagenes_X_Producto_Lista
-            Fm.ShowDialog(_Fm_Menu_Padre)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod067") Then
+            Return
         End If
+
+        Dim Fm As New Frm_Imagenes_X_Producto_Lista
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
 
     End Sub
 
     Private Sub Btn_ImpAdicionalXProd_Click(sender As Object, e As EventArgs) Handles Btn_ImpAdicionalXProd.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod072") Then
-
-            Dim Fm As New Frm_ImpAdicXProd_Lista
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod072") Then
+            Return
         End If
+
+        Dim Fm As New Frm_ImpAdicXProd_Lista
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
     Private Sub Btn_Ofertas_Click(sender As Object, e As EventArgs) Handles Btn_Ofertas.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ofer0001") Then
-
-            Dim Fm As New Frm_OfDinamLista
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ofer0001") Then
+            Return
         End If
+
+        Dim Fm As New Frm_OfDinamLista
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
@@ -286,4 +289,17 @@ Public Class Productos
         Fm.Dispose()
 
     End Sub
+
+    Private Sub Btn_RecalculoPPPNTrib_Click(sender As Object, e As EventArgs) Handles Btn_RecalculoPPPNTrib.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod079") Then
+            Return
+        End If
+
+        Dim Fm As New Frm_Recalculo_PPPxProd
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class

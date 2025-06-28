@@ -78,7 +78,7 @@ Public Class Frm_Correos_Conf_SMTP
 
     Private Sub Btn_Probar_Envio_Click(sender As Object, e As EventArgs) Handles Btn_Probar_Envio.Click
 
-        Dim _Asunto = "Mesaje de prueba BakApp"
+        Dim _Asunto = "Mesaje de prueba BakApp (" & Now & ")"
         Dim _Cuerpo = "Mensaje de correo electrónico enviado para comprobar la configuración de su cuenta. "
         Dim _Para = String.Empty
 
@@ -138,20 +138,20 @@ Public Class Frm_Correos_Conf_SMTP
     End Function
 
     Private Function Fx_Test_envio_correo_Mail3(Fm As Form,
-                                          _Host_SMT As String,
-                                          _Usuario As String,
-                                          _Contrasena As String,
-                                          _Para As String,
-                                          _CC As String,
-                                          _Asunto As String,
-                                          _Cuerpo As String,
-                                          _StrAttach() As String,
-                                          Optional _Puerto As String = "25",
-                                          Optional _EnableSsl As Boolean = True) As LsValiciones.Mensajes
+                                                _Host_SMT As String,
+                                                _Usuario As String,
+                                                _Contrasena As String,
+                                                _Para As String,
+                                                _CC As String,
+                                                _Asunto As String,
+                                                _Cuerpo As String,
+                                                _StrAttach() As String,
+                                                Optional _Puerto As String = "25",
+                                                Optional _EnableSsl As Boolean = True) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Asunto = "Mesaje de prueba BakApp"
+        '_Asunto = "Mesaje de prueba BakApp (" & Now & ")"
         If String.IsNullOrEmpty(Trim(_Cuerpo)) Then _Cuerpo = "Mensaje de correo electrónico enviado para comprobar la configuración de su cuenta. "
         Dim _Aceptar As Boolean
 

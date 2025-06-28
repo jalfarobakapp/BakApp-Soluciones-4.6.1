@@ -84,7 +84,7 @@
                            "Isnull(Cantidad_Oferta,0) As Cantidad_Oferta," & vbCrLf &
                            "Isnull(Porcdesc_Oferta,0) As Porcdesc_Oferta" & vbCrLf &
                            "From MAEDDO WITH ( NOLOCK )" & vbCrLf &
-                           "Left Join BAKAPP_CISTERNASR.dbo.Zw_Linea_Oferta Ofer On Ofer.Idmaeddo = IDMAEDDO" & vbCrLf &
+                           "Left Join " & _Global_BaseBk & "Zw_Linea_Oferta Ofer On Ofer.Idmaeddo = IDMAEDDO" & vbCrLf &
                            "Where IDMAEEDO In (" & _Idmaeedo_Ori & ")  And (ESLIDO <> 'C' OR ESFALI = 'I')" & vbCrLf &
                            "Order by IDMAEEDO,IDMAEDDO" & vbCrLf &
                            "Select * From MAEIMLI" & vbCrLf &

@@ -496,14 +496,9 @@ Public Class Frm_Stmp_ListadoXRutas
 
     Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
         Sb_Actualizar_Grilla()
-    End Sub
-
-    Private Sub BtnIrAptincipio_Click(sender As Object, e As EventArgs) Handles BtnIrAptincipio.Click
-
-    End Sub
-
-    Private Sub BtnIrAlFin_Click(sender As Object, e As EventArgs) Handles BtnIrAlFin.Click
-
+        If Not String.IsNullOrEmpty(Txt_Filtrar.Text) Then
+            Sb_Filtrar()
+        End If
     End Sub
 
     Private Sub Txt_Filtrar_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustom2Click
@@ -754,4 +749,7 @@ Public Class Frm_Stmp_ListadoXRutas
 
     End Sub
 
+    Private Sub Txt_Filtrar_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustomClick
+        Sb_Filtrar()
+    End Sub
 End Class

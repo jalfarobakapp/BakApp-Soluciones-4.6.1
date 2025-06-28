@@ -1,4 +1,7 @@
-﻿Public Class Class_Imprimir_Barras
+﻿Imports System.Net.Sockets
+Imports System.Text
+
+Public Class Class_Imprimir_Barras
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -85,7 +88,8 @@
                              _Imprimir_Todas_Las_Ubicaciones As Boolean,
                              _ImprimirDesdePrecioFuturo As Boolean,
                              _Id_PrecioFuturo As Integer,
-                             _CodAlternativo As String)
+                             _CodAlternativo As String,
+                             _ImprimirAIP As Boolean)
 
         If _Imprimir_Todas_Las_Ubicaciones Then
 
@@ -137,7 +141,7 @@
 
                 Dim _Texto = _RowEtiqueta.Item("FUNCION")
 
-                Sb_Imprimir_PRN(_Texto, _Puerto)
+                Sb_Imprimir_PRN(_Texto, _Puerto, _ImprimirAIP)
 
             Next
 
@@ -231,7 +235,7 @@
 
             Dim _Texto = _RowEtiqueta.Item("FUNCION")
 
-            Sb_Imprimir_PRN(_Texto, _Puerto)
+            Sb_Imprimir_PRN(_Texto, _Puerto, _ImprimirAIP)
 
         End If
 
@@ -269,6 +273,50 @@
         Fx_Producto_Ubicaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Function
+
+    Public Sub EnviarEtiqueta(ZPL As String)
+
+        Dim bmp1 As Bitmap = Nothing
+        Dim fechaActual As String = DateTime.Now.ToString("dd/MM/yyyy") ' Formato de fecha como en B4A
+        Dim printerIP As String = "192.168.1.166" ' IP de tu impresora Ferreteria
+        Dim printerPort As Integer = 9100         ' Puerto típico para Zebra
+        Dim cliente As TcpClient = Nothing
+
+        printerIP = "192.168.1.178" ' Supermercado
+
+        Try
+            ' Crear ZPL dinámicamente
+
+            ' Conectar a la impresora
+            cliente = New TcpClient()
+            cliente.Connect(printerIP, printerPort)
+
+            If cliente.Connected Then
+                Using stream As NetworkStream = cliente.GetStream()
+                    ' Limpiar memoria de la impresora (opcional)
+                    Dim limpiarMemoria As String = "^XA^IDR:*.*^XZ"
+                    Dim bytesLimpiar As Byte() = Encoding.UTF8.GetBytes(limpiarMemoria)
+                    stream.Write(bytesLimpiar, 0, bytesLimpiar.Length)
+
+                    ' Enviar ZPL
+                    Dim bytesZPL As Byte() = Encoding.UTF8.GetBytes(ZPL)
+                    stream.Write(bytesZPL, 0, bytesZPL.Length)
+
+                    'MessageBox.Show("Se ha impreso la etiqueta correctamente", "Impresión exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                End Using
+            Else
+                MessageBox.Show("No se pudo conectar con la impresora", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End If
+
+        Catch ex As Exception
+            MessageBox.Show("Error al imprimir: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            ' Cerrar conexión
+            If cliente IsNot Nothing AndAlso cliente.Connected Then
+                cliente.Close()
+            End If
+        End Try
+    End Sub
 
 #End Region
 
@@ -1128,7 +1176,9 @@
 #End Region
 
 #Region "IMPRIMIR EL ARCHIVO"
-    Private Sub Sb_Imprimir_PRN(_Texto As String, _Puerto As String)
+    Private Sub Sb_Imprimir_PRN(_Texto As String,
+                                _Puerto As String,
+                                Optional _ImprimirAIP As Boolean = False)
 
         Dim _TextoOri As String = _Texto
         Dim _Fecha_impresion As Date = Now
@@ -1334,6 +1384,17 @@
         _Texto = Replace(_Texto, "<TIDOPA>", _Tidopa)
         _Texto = Replace(_Texto, "<NUDOPA>", _Nudopa)
 
+        _Texto = Replace(_Texto, "<NOMBRE_EMPRESA>", RazonEmpresa.ToString.Trim)
+
+        Dim _PU01_BrutoCtdo As String
+        Dim _PU02_BrutoCtdo As String
+
+        _PU01_BrutoCtdo = Fx_FormatearValorCentrado(_PU01_Bruto, 12)
+        _PU02_BrutoCtdo = Fx_FormatearValorCentrado(_PU02_Bruto, 12)
+
+        _Texto = Replace(_Texto, "<PBRUTO_UD1_CENT>", _PU01_BrutoCtdo)
+        _Texto = Replace(_Texto, "<PBRUTO_UD2_CENT>", _PU02_BrutoCtdo)
+
         Dim _Nudopa_Sc As String
 
         Try
@@ -1344,26 +1405,47 @@
 
         _Texto = Replace(_Texto, "<NUDOPA_SC>", _Nudopa_Sc.Trim)
 
+        If _ImprimirAIP Then
+            EnviarEtiqueta(_Texto)
+        Else
 
-        Dim fic As String = AppPath(True) & "Barra.prn"
+            Dim fic As String = AppPath(True) & "Barra.prn"
 
-        Dim sw As New System.IO.StreamWriter(fic)
-        sw.WriteLine(_Texto)
-        sw.Close()
+            Dim sw As New System.IO.StreamWriter(fic)
+            sw.WriteLine(_Texto)
+            sw.Close()
 
-        'MsgBox("Aca" & vbCrLf & fic)
+            System.IO.File.Copy(fic, _Puerto)
 
-        'System.IO.File.Copy("Barra.prn", _Puerto)
-        System.IO.File.Copy(fic, _Puerto)
-
-        'Catch ex As Exception
-        '    _Error = ex.Message
-        'End Try
+        End If
 
     End Sub
+
+    Function Fx_FormatearValorCentrado(valor As String, Optional largo As Integer = 12) As String
+        ' Intenta convertir a número y dar formato con puntos como separador de miles
+        Dim valorNumerico As Decimal
+        If Decimal.TryParse(valor, valorNumerico) Then
+            valor = valorNumerico.ToString("#,##0") ' Ej: 9.999.999
+        End If
+
+        ' Agrega el símbolo $
+        Dim valorFormateado As String = "$ " & valor
+
+        ' Si el resultado es mayor que el largo, recorta
+        If valorFormateado.Length > largo Then
+            valorFormateado = valorFormateado.Substring(0, largo)
+        End If
+
+        ' Centrado visual: calcula espacios a la izquierda y derecha
+        Dim espaciosTotales As Integer = largo - valorFormateado.Length
+        Dim espaciosIzquierda As Integer = espaciosTotales \ 2
+        Dim espaciosDerecha As Integer = espaciosTotales - espaciosIzquierda
+
+        ' Devuelve el valor con espacios a ambos lados
+        Return New String(" "c, espaciosIzquierda) & valorFormateado & New String(" "c, espaciosDerecha)
+    End Function
+
 #End Region
-
-
 
 #Region "TRAER DATOS DEL PRODUCTO"
 
@@ -1457,8 +1539,9 @@
         Dim _Impuestos As Double = 1 + (_Iva + _Ila)
 
 
-        Consulta_sql = "Select Top 1 *,(Select top 1 MELT From TABPP Where KOLT = '" & _CodLista & "') As MELT From TABPRE
-                            Where KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'"
+        Consulta_sql = "Select Top 1 *,(Select top 1 MELT From TABPP Where KOLT = '" & _CodLista & "') As MELT" & vbCrLf &
+                       "From TABPRE" & vbCrLf &
+                       "Where KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'"
         Dim _RowPrecios As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Ecuacion As String
@@ -1478,7 +1561,7 @@
             _PrecioListaUd2 = Fx_Funcion_Ecuacion_Random(Nothing, _CodEntidad, _Ecuacionu2, _Codigo, 2, _RowPrecios, 0, 0, 0)
 
             If _PrecioListaUd1 = 0 Then _PrecioListaUd1 = NuloPorNro(_RowPrecios.Item("PP01UD"), 0)
-            If _PrecioListaUd2 = 0 Then _PrecioListaUd1 = NuloPorNro(_RowPrecios.Item("PP02UD"), 0)
+            If _PrecioListaUd2 = 0 Then _PrecioListaUd2 = NuloPorNro(_RowPrecios.Item("PP02UD"), 0)
 
         End If
 
@@ -1486,14 +1569,14 @@
 
             If CBool(_Id_PrecioFuturo) Then
                 Consulta_sql = "Select Top 1 LEnc.Codigo, NombreProgramacion, FechaCreacion, FechaProgramada, Funcionario, Activo,LDet.*" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_ListaLC_Programadas LEnc" & vbCrLf &
-                           "Inner Join " & _Global_BaseBk & "Zw_ListaLC_Programadas_Detalles LDet On LEnc.Id = LDet.Id_Enc" & vbCrLf &
-                           "Where LDet.Id = " & _Id_PrecioFuturo
+                               "From " & _Global_BaseBk & "Zw_ListaLC_Programadas LEnc" & vbCrLf &
+                               "Inner Join " & _Global_BaseBk & "Zw_ListaLC_Programadas_Detalles LDet On LEnc.Id = LDet.Id_Enc" & vbCrLf &
+                               "Where LDet.Id = " & _Id_PrecioFuturo
             Else
                 Consulta_sql = "Select Top 1 LEnc.Codigo, NombreProgramacion, FechaCreacion, FechaProgramada, Funcionario, Activo,LDet.*" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_ListaLC_Programadas LEnc" & vbCrLf &
-                           "Inner Join " & _Global_BaseBk & "Zw_ListaLC_Programadas_Detalles LDet On LEnc.Id = LDet.Id_Enc" & vbCrLf &
-                           "Where LEnc.Codigo = '" & _Codigo & "' And LDet.Lista = '" & _CodLista & "' Order by LEnc.Id"
+                               "From " & _Global_BaseBk & "Zw_ListaLC_Programadas LEnc" & vbCrLf &
+                               "Inner Join " & _Global_BaseBk & "Zw_ListaLC_Programadas_Detalles LDet On LEnc.Id = LDet.Id_Enc" & vbCrLf &
+                               "Where LEnc.Codigo = '" & _Codigo & "' And LDet.Lista = '" & _CodLista & "' Order by LEnc.Id"
             End If
 
 

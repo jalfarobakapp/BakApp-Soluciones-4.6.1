@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Impor_Prod_Masivamente
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -119,6 +119,7 @@ Partial Class Frm_Impor_Prod_Masivamente
         '
         Me.Rdb_Bodega_Documento.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Bodega_Documento.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Bodega_Documento.FocusCuesEnabled = False
         Me.Rdb_Bodega_Documento.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Bodega_Documento.Location = New System.Drawing.Point(290, 4)
         Me.Rdb_Bodega_Documento.Name = "Rdb_Bodega_Documento"
@@ -138,6 +139,7 @@ Partial Class Frm_Impor_Prod_Masivamente
         Me.Rdb_Bodega_Excel.Checked = True
         Me.Rdb_Bodega_Excel.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Bodega_Excel.CheckValue = "Y"
+        Me.Rdb_Bodega_Excel.FocusCuesEnabled = False
         Me.Rdb_Bodega_Excel.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Bodega_Excel.Location = New System.Drawing.Point(4, 4)
         Me.Rdb_Bodega_Excel.Name = "Rdb_Bodega_Excel"
@@ -171,6 +173,7 @@ Partial Class Frm_Impor_Prod_Masivamente
         '
         Me.Rdb_Precio_Excel.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Precio_Excel.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Precio_Excel.FocusCuesEnabled = False
         Me.Rdb_Precio_Excel.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Precio_Excel.Location = New System.Drawing.Point(290, 4)
         Me.Rdb_Precio_Excel.Name = "Rdb_Precio_Excel"
@@ -190,6 +193,7 @@ Partial Class Frm_Impor_Prod_Masivamente
         Me.Rdb_Precio_Lista.Checked = True
         Me.Rdb_Precio_Lista.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Precio_Lista.CheckValue = "Y"
+        Me.Rdb_Precio_Lista.FocusCuesEnabled = False
         Me.Rdb_Precio_Lista.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Precio_Lista.Location = New System.Drawing.Point(4, 4)
         Me.Rdb_Precio_Lista.Name = "Rdb_Precio_Lista"
@@ -208,6 +212,7 @@ Partial Class Frm_Impor_Prod_Masivamente
         Me.Chk_Primera_Fila_Es_encabezado.Checked = True
         Me.Chk_Primera_Fila_Es_encabezado.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Chk_Primera_Fila_Es_encabezado.CheckValue = "Y"
+        Me.Chk_Primera_Fila_Es_encabezado.FocusCuesEnabled = False
         Me.Chk_Primera_Fila_Es_encabezado.ForeColor = System.Drawing.Color.Black
         Me.Chk_Primera_Fila_Es_encabezado.Location = New System.Drawing.Point(3, 89)
         Me.Chk_Primera_Fila_Es_encabezado.Name = "Chk_Primera_Fila_Es_encabezado"

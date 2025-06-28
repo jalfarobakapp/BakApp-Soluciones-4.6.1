@@ -287,7 +287,7 @@ Public Class Frm_BuscarDocumento_Mt
             _DisplayIndex += 1
 
             .Columns("RAZON").HeaderText = "Razón Social"
-            .Columns("RAZON").Width = 280
+            .Columns("RAZON").Width = IIf(.Columns("Chk").Visible, 300, 330)
             .Columns("RAZON").Visible = True
             .Columns("RAZON").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -300,18 +300,26 @@ Public Class Frm_BuscarDocumento_Mt
             .Columns("VABRDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FEEMDO").HeaderText = "Emisión"
+            .Columns("FEEMDO").HeaderText = "F.Emisión"
             .Columns("FEEMDO").Width = 70
             .Columns("FEEMDO").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("FEEMDO").Visible = True
             .Columns("FEEMDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FEULVEDO").HeaderText = "Vencim."
+            .Columns("FEULVEDO").HeaderText = "F.Vencim."
             .Columns("FEULVEDO").Width = 70
             .Columns("FEULVEDO").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("FEULVEDO").Visible = True
             .Columns("FEULVEDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FEER").HeaderText = "F.Entrega"
+            .Columns("FEER").ToolTipText = "Fecha de entrega/recepción"
+            .Columns("FEER").Width = 70
+            .Columns("FEER").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FEER").Visible = True
+            .Columns("FEER").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("KOFUDO").HeaderText = "Resp"
@@ -1620,8 +1628,6 @@ Public Class Frm_BuscarDocumento_Mt
                              "RevFincred",
                              "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'",,,, True)
 
-            '_Revisar_Fincred = _TblEncabezado.Rows(0).Item("RevFincred")
-            '_RevFincredEnt = _TblEncabezado.Rows(0).Item("RevFincredEnt")
         End If
 
         If Not _RevFincredEnt Then
@@ -1629,9 +1635,9 @@ Public Class Frm_BuscarDocumento_Mt
         End If
 
         Consulta_Sql = "Select Top 1 FResp.*,Isnull(FDoc.Autorizacion,'RECHAZADO') As CodAutorizacion" & vbCrLf &
-                        "From " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta FResp" & vbCrLf &
-                        "Left Join " & _Global_BaseBk & "Zw_Fincred_Documentos FDoc On FResp.Id = FDoc.Id_TR" & vbCrLf &
-                        "Where Idmaeedo = " & _Idmaeedo & " And Eliminada = 0"
+                       "From " & _Global_BaseBk & "Zw_Fincred_TramaRespuesta FResp" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Fincred_Documentos FDoc On FResp.Id = FDoc.Id_TR" & vbCrLf &
+                       "Where Idmaeedo = " & _Idmaeedo & " And Eliminada = 0"
         Dim _RowFincred As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
         Dim _Codigo_negacion_transaccion = 0
@@ -1656,15 +1662,11 @@ Public Class Frm_BuscarDocumento_Mt
                 Return True
             Else
 
-                'MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf & vbCrLf &
-                '                  "Documento: " & _RowMaeedo.Item("NUDO") & "-" & _RowMaeedo.Item("NUDO") & vbCrLf & vbCrLf &
-                '                  "Respuesta Fincred: " & _Descripcion_negacion, "Información FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
                 If MessageBoxEx.Show(Me, "Revisión de parte de FINCRED RECHAZADA" & vbCrLf &
-                                  "Documento: " & _RowMaeedo.Item("TIDO") & "-" & _RowMaeedo.Item("NUDO") & vbCrLf &
-                                  "Respuesta Fincred: " & _Descripcion_negacion & vbCrLf & vbCrLf &
-                                  "¿Desea volver a consultar a FINCRED este documento?", "Información FINCRED",
-                                  MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+                                     "Documento: " & _RowMaeedo.Item("TIDO") & "-" & _RowMaeedo.Item("NUDO") & vbCrLf &
+                                     "Respuesta Fincred: " & _Descripcion_negacion & vbCrLf & vbCrLf &
+                                     "¿Desea volver a consultar a FINCRED este documento?", "Información FINCRED",
+                                     MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
                     Return False
 
                 End If
@@ -1676,6 +1678,7 @@ Public Class Frm_BuscarDocumento_Mt
         End If
 
         Dim _Fincred_Respuesta As New Fincred_API.Respuesta
+
         _Fincred_Respuesta = Fx_Vaidar_Fincred(_Idmaeedo,
                                                _RowMaeedo.Item("TIDO"),
                                                _RowMaeedo.Item("NUDO"),
@@ -1709,8 +1712,11 @@ Public Class Frm_BuscarDocumento_Mt
                                                                   "Validación FINCRED", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Consulta_Sql = "Update MAEEDO Set FE01VEDO = FEEMDO,FEULVEDO = FEEMDO,NUVEDO = 1 Where IDMAEEDO = " & _Idmaeedo
             _Sql.Ej_consulta_IDU(Consulta_Sql)
+
             Return False
+
         End If
+
         Return True
 
     End Function

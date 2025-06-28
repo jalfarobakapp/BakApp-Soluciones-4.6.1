@@ -20,6 +20,7 @@ SELECT  Codigo,
         Descripcion_Madre As Producto,
         UD#Ud#,Rtu, 
         SUM(StockUd#Ud#_Prod) As StockUd#Ud#, 
+        SUM(StockEnTransitoUd1_Prod) As StockEnTransitoUd#Ud#, 
         SUM(StockPedidoUd#Ud#_Prod) As StockPedidoUd#Ud#, 
         SUM(StockFacSinRecepUd#Ud#_Prod) As StockFacSinRecepUd#Ud#,
 		Stock_CriticoUd#Ud#_Rd,
@@ -97,7 +98,7 @@ FROM   #Tbl_Paso_Proyecto Zp INNER JOIN
 
 
 Update #Tbl_Paso_Proyecto Set Cant_Comprar = ROUND((RotCalculo*@Porc_Creciminto)*@Dias_Abastecer,0)
-Update #Tbl_Paso_Proyecto Set Cant_Comprar_Sug = ROUND(Cant_Comprar - (StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#),0)
+Update #Tbl_Paso_Proyecto Set Cant_Comprar_Sug = ROUND(Cant_Comprar - (StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#),0)
 Update #Tbl_Paso_Proyecto Set Cant_Comprar_Sug_Red = Cant_Comprar_Sug 
 
                               
@@ -109,6 +110,7 @@ SELECT  Codigo_Nodo,
 		Codigo_Nodo_Madre,
         Producto,
         Sum(StockUd#Ud#) As StockUd#Ud#, 
+        SUM(StockEnTransitoUd#Ud#) As StockEnTransitoUd#Ud#, 
         Sum(StockPedidoUd#Ud#) As StockPedidoUd#Ud#, 
         RotDiariaUd#Ud#, 
         RotMensualUd#Ud#, 
@@ -173,7 +175,7 @@ End
 Set @Dias_Proyeccion = 30
 
 Update #Tbl_Paso_Proyecto_01 Set Cant_Comprar = ROUND((RotCalculo*@Porc_Creciminto)*@Dias_Abastecer,0)
-Update #Tbl_Paso_Proyecto_01 Set Cant_Comprar_Sug = ROUND(Cant_Comprar - (StockUd1+StockPedidoUd1+StockFacSinRecepUd1),0)
+Update #Tbl_Paso_Proyecto_01 Set Cant_Comprar_Sug = ROUND(Cant_Comprar - (StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#),0)
 Update #Tbl_Paso_Proyecto_01 Set Cant_Comprar_Sug_Red = Cant_Comprar_Sug 
 
 
@@ -193,20 +195,19 @@ Update #Tbl_Paso_Proyecto_01 Set Tendencia = -1 Where SumTotalQtyUd#Ud#_Ult_3Cio
 
 --Update #Tbl_Paso_Proyecto_01 Set Tendencia = 0 Where Round(Tendencia,0) = 1
 
-Update #Tbl_Paso_Proyecto_01 Set Stock_Asegurado_Dias = ROUND(StockUd#Ud#/ RotCalculo,0)
+Update #Tbl_Paso_Proyecto_01 Set Stock_Asegurado_Dias = ROUND((StockUd#Ud#+StockEnTransitoUd#Ud#)/ RotCalculo,0)
 Where RotCalculo > 0 													
 
 Update #Tbl_Paso_Proyecto_01 Set Stock_Asegurado_Proyeccion = ROUND(((StockUd#Ud#/ RotCalculo)* @Porc_Creciminto)/@Dias_Proyeccion,0)
 Where RotCalculo > 0 
 
-Update #Tbl_Paso_Proyecto_01 Set Duracion_Dias = 
-		ROUND((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#)/RotCalculo,0)
+Update #Tbl_Paso_Proyecto_01 Set Duracion_Dias = ROUND((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#)/RotCalculo,0)
 Where RotCalculo > 0 													
 						
 --SELECT 57600/350.5													
 
 Update #Tbl_Paso_Proyecto_01 Set Duracion_Proyeccion = 
-		ROUND((((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#)/RotCalculo) * @Porc_Creciminto)/@Dias_Proyeccion,0)
+		ROUND((((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#)/RotCalculo) * @Porc_Creciminto)/@Dias_Proyeccion,0)
 Where RotCalculo > 0 
 
 Update #Tbl_Paso_Proyecto_01 Set Duracion_Proyeccion_Recepcion = 
@@ -215,22 +216,22 @@ Where RotCalculo > 0
 
 --
 
-Update #Tbl_Paso_Proyecto_01 Set Stock_Asegurado_Dias = ROUND(StockUd#Ud#/1,0)
+Update #Tbl_Paso_Proyecto_01 Set Stock_Asegurado_Dias = ROUND((StockUd#Ud#+StockEnTransitoUd#Ud#)/1,0)
 Where RotCalculo = 0 													
 
-Update #Tbl_Paso_Proyecto_01 Set Stock_Asegurado_Proyeccion = ROUND(((StockUd#Ud#/1)* @Porc_Creciminto)/@Dias_Proyeccion,0)
+Update #Tbl_Paso_Proyecto_01 Set Stock_Asegurado_Proyeccion = ROUND((((StockUd#Ud#+StockEnTransitoUd#Ud#)/1)* @Porc_Creciminto)/@Dias_Proyeccion,0)
 Where RotCalculo = 0
 
 Update #Tbl_Paso_Proyecto_01 Set Duracion_Dias = 
-		ROUND((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#)/1,0)
+		ROUND((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#)/1,0)
 Where RotCalculo = 0
 
 Update #Tbl_Paso_Proyecto_01 Set Duracion_Proyeccion = 
-		ROUND((((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#)/1) * @Porc_Creciminto)/@Dias_Proyeccion,0)
+		ROUND((((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#)/1) * @Porc_Creciminto)/@Dias_Proyeccion,0)
 Where RotCalculo = 0
 
 Update #Tbl_Paso_Proyecto_01 Set Duracion_Proyeccion_Recepcion = 
-		ROUND(((StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#)/1 * @Porc_Creciminto)/@Dias_Proyeccion,0)
+		ROUND(((StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#)/1 * @Porc_Creciminto)/@Dias_Proyeccion,0)
 Where RotCalculo = 0
 
 --

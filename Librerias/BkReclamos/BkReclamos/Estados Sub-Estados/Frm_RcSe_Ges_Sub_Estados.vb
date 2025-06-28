@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 Imports BkSpecialPrograms
 
 Public Class Frm_RcSe_Ges_Sub_Estados
@@ -52,10 +52,10 @@ Public Class Frm_RcSe_Ges_Sub_Estados
 
     Public Sub New(Estado As String, Sub_Estado As String, Accion As Cl_Reclamo.Enum_Accion)
 
-        ' Esta llamada es exigida por el diseñador.
+        ' Esta llamada es exigida por el diseÃ±ador.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         _Estado = Estado
         _Sub_Estado = Sub_Estado
@@ -81,7 +81,7 @@ Public Class Frm_RcSe_Ges_Sub_Estados
             Case "REM" 'RECEPCION MERCADERIA
 
                 _Tido_Adj = "GRD" : _Notido_Adj = "GUIA DE RECEPCION DE DEVOLUCION"
-                Btn_Fijar_Estado.Text = "Enviar a revisión de devolución"
+                Btn_Fijar_Estado.Text = "Enviar a revisiÃ³n de devoluciÃ³n"
                 Btn_Archivos_Adjuntos.Visible = False
 
                 _Arc_Adjunto_Obligatorio = False
@@ -114,7 +114,7 @@ Public Class Frm_RcSe_Ges_Sub_Estados
 
             Case "RVD" 'REVISION DE DEVOLUCION
 
-                Btn_Fijar_Estado.Text = "Confirmar revisión de devolución"
+                Btn_Fijar_Estado.Text = "Confirmar revisiÃ³n de devoluciÃ³n"
 
                 Sb_Cargar_Sub_Estado("REM")
 
@@ -174,7 +174,7 @@ Public Class Frm_RcSe_Ges_Sub_Estados
                 End Select
 
 
-                Btn_Fijar_Estado.Text = "Confirmar acción"
+                Btn_Fijar_Estado.Text = "Confirmar acciÃ³n"
 
                 AddHandler Btn_Fijar_Estado.Click, AddressOf Sb_Aceptar_Cerrar_Reclamo
 
@@ -220,7 +220,7 @@ Public Class Frm_RcSe_Ges_Sub_Estados
 
         Txt_Observacion.Text = _Row_Estado.Item("Observacion")
         Lbl_Receptor.Text = "Receptor: " & NuloPorNro(_Row_Estado.Item("NOKOFU"), "")
-        Lbl_Fecha_recepcion.Text = "Fecha recepción: " & FormatDateTime(_Row_Estado.Item("Fecha_recepcion"), DateFormat.ShortDate)
+        Lbl_Fecha_recepcion.Text = "Fecha recepciÃ³n: " & FormatDateTime(_Row_Estado.Item("Fecha_recepcion"), DateFormat.ShortDate)
 
         Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Row_Estado.Item("Idmaeedo")
         _Row_Documento = _Sql.Fx_Get_DataRow(Consulta_Sql)
@@ -231,7 +231,7 @@ Public Class Frm_RcSe_Ges_Sub_Estados
         If IsNothing(_Row_Documento) Then
             Lbl_Documento.Text = "No se encontro el documento: " & _Tido & "-" & _Nudo & " ???"
         Else
-            Lbl_Documento.Text = "Documento Número: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            Lbl_Documento.Text = "Documento NÃºmero: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
         End If
 
     End Sub
@@ -274,7 +274,7 @@ Public Class Frm_RcSe_Ges_Sub_Estados
                 .Rdb_Estado_Vigente.Checked = True
                 .Rdb_Funcionarios_Todos.Checked = True
                 .Grupo_Funcionario.Enabled = True
-                .Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+                .Rdb_FEmision_EmitidosEntre.Checked = True
                 .ShowDialog(Me)
 
                 If Not (.Pro_Row_Documento_Seleccionado Is Nothing) Then
@@ -293,10 +293,10 @@ Public Class Frm_RcSe_Ges_Sub_Estados
                                 Where IDMAEEDO = " & _IdMaeedo
                 _Row_Documento = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
-                Lbl_Documento.Text = "Documento Número: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+                Lbl_Documento.Text = "Documento NÃºmero: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
                 Lbl_Receptor.Tag = _Row_Documento.Item("KOFU")
                 Lbl_Receptor.Text = "Receptor: " & _Row_Documento.Item("NOKOFU")
-                Lbl_Fecha_recepcion.Text = "Fecha recepción: " & FormatDateTime(_Row_Documento.Item("FEEMDO"), DateFormat.ShortDate)
+                Lbl_Fecha_recepcion.Text = "Fecha recepciÃ³n: " & FormatDateTime(_Row_Documento.Item("FEEMDO"), DateFormat.ShortDate)
 
                 Sb_Habilitar_Btn_Archivo_Adjunto(False)
 
@@ -329,7 +329,7 @@ Public Class Frm_RcSe_Ges_Sub_Estados
 
     Private Sub Btn_Quitar_Documento_Click(sender As Object, e As EventArgs) Handles Btn_Quitar_Documento.Click
 
-        If MessageBoxEx.Show(Me, "¿Está seguro de querer quitar este documento?", "Quitar documento",
+        If MessageBoxEx.Show(Me, "Â¿EstÃ¡ seguro de querer quitar este documento?", "Quitar documento",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
             _Row_Documento = Nothing
@@ -484,10 +484,10 @@ Public Class Frm_RcSe_Ges_Sub_Estados
 
             Dim _Opciones() As Command = {Chk_Destruccion_Mercaderia, Chk_Reproceso_Mercaderia, Chk_Envio_Bodega_Ventas}
 
-            Dim _Info As New TaskDialogInfo("Validación de reclamo",
+            Dim _Info As New TaskDialogInfo("ValidaciÃ³n de reclamo",
                                   eTaskDialogIcon.Shield,
-                                  "Indique su opción",
-                                  "Debe indicar la opción que corresponde a la gestión que se hara posterior a la validación de este reclamo",
+                                  "Indique su opciÃ³n",
+                                  "Debe indicar la opciÃ³n que corresponde a la gestiÃ³n que se hara posterior a la validaciÃ³n de este reclamo",
                                   eTaskDialogButton.Ok + eTaskDialogButton.Cancel _
                                   , eTaskDialogBackgroundColor.Red, _Opciones, Nothing, Nothing, Nothing, Nothing)
 
@@ -521,7 +521,7 @@ Public Class Frm_RcSe_Ges_Sub_Estados
 
                 Else
 
-                    MessageBoxEx.Show(Me, "Debe indicar una opción para la gestión posterior a la validación de reclamo", "Validación",
+                    MessageBoxEx.Show(Me, "Debe indicar una opciÃ³n para la gestiÃ³n posterior a la validaciÃ³n de reclamo", "ValidaciÃ³n",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                 End If
@@ -568,7 +568,7 @@ Public Class Frm_RcSe_Ges_Sub_Estados
 
             If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
 
-                MessageBoxEx.Show(Me, "Acción incorporada correctamente", "Aceptar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                MessageBoxEx.Show(Me, "AcciÃ³n incorporada correctamente", "Aceptar", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 _Cl_Reclamo.Sb_Cargar_Reclamo(_Id_Reclamo)
                 _Fijar_Estado = True

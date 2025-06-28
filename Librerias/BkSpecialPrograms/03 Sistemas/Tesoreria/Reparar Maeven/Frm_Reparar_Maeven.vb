@@ -1,5 +1,4 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Reparar_Maeven
 

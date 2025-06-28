@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+Ôªø<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Filtro_Especial_Informes
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -23,15 +23,16 @@ Partial Class Frm_Filtro_Especial_Informes
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Filtro_Especial_Informes))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.BtnAceptar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_MarcarMasiva_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Btn_Ayuda_Asistente_Busqueda = New DevComponents.DotNetBar.ButtonX()
@@ -47,6 +48,7 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.Rdb_Mostrar_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Mostrar_Solo_Tickeados = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Seleccionar_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Mnu_Btn_Ver_Informacion_de_producto = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
@@ -59,10 +61,10 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAceptar, Me.Btn_Exportar_Excel, Me.Btn_Crear, Me.Btn_Editar, Me.Btn_Eliminar})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAceptar, Me.Btn_Exportar_Excel, Me.Btn_Crear, Me.Btn_Editar, Me.Btn_Eliminar, Me.Btn_MarcarMasiva_Excel})
         Me.Bar1.Location = New System.Drawing.Point(0, 520)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(611, 41)
+        Me.Bar1.Size = New System.Drawing.Size(632, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 6
@@ -115,6 +117,15 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.Btn_Eliminar.Text = "Eliminar"
         Me.Btn_Eliminar.Visible = False
         '
+        'Btn_MarcarMasiva_Excel
+        '
+        Me.Btn_MarcarMasiva_Excel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_MarcarMasiva_Excel.ForeColor = System.Drawing.Color.Black
+        Me.Btn_MarcarMasiva_Excel.Image = CType(resources.GetObject("Btn_MarcarMasiva_Excel.Image"), System.Drawing.Image)
+        Me.Btn_MarcarMasiva_Excel.ImageAlt = CType(resources.GetObject("Btn_MarcarMasiva_Excel.ImageAlt"), System.Drawing.Image)
+        Me.Btn_MarcarMasiva_Excel.Name = "Btn_MarcarMasiva_Excel"
+        Me.Btn_MarcarMasiva_Excel.Tooltip = "Marcar productos masivamente desde una lista en Excel"
+        '
         'Txt_Descripcion
         '
         Me.Txt_Descripcion.BackColor = System.Drawing.Color.White
@@ -130,7 +141,7 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.Txt_Descripcion.MaxLength = 6500
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.PreventEnterBeep = True
-        Me.Txt_Descripcion.Size = New System.Drawing.Size(508, 22)
+        Me.Txt_Descripcion.Size = New System.Drawing.Size(525, 22)
         Me.Txt_Descripcion.TabIndex = 2
         '
         'GroupPanel1
@@ -146,7 +157,7 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(8, 4)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(595, 91)
+        Me.GroupPanel1.Size = New System.Drawing.Size(612, 91)
         '
         '
         '
@@ -176,7 +187,7 @@ Partial Class Frm_Filtro_Especial_Informes
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 9
-        Me.GroupPanel1.Text = "Buscar categoria por descripciÛn"
+        Me.GroupPanel1.Text = "Buscar categoria por descripci√≥n"
         '
         'Btn_Ayuda_Asistente_Busqueda
         '
@@ -214,7 +225,7 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(68, 23)
         Me.LabelX2.TabIndex = 13
-        Me.LabelX2.Text = "DescripciÛn"
+        Me.LabelX2.Text = "Descripci√≥n"
         '
         'LabelX1
         '
@@ -228,7 +239,7 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(41, 23)
         Me.LabelX1.TabIndex = 12
-        Me.LabelX1.Text = "CÛdigo"
+        Me.LabelX1.Text = "C√≥digo"
         '
         'Txt_Codigo
         '
@@ -256,7 +267,7 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(8, 101)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(595, 384)
+        Me.GroupPanel2.Size = New System.Drawing.Size(612, 384)
         '
         '
         '
@@ -306,12 +317,13 @@ Partial Class Frm_Filtro_Especial_Informes
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Ver_documento_origen})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Mnu_Btn_Ver_Informacion_de_producto, Me.Btn_Ver_documento_origen})
         Me.Menu_Contextual_01.Text = "Opciones"
         '
         'Btn_Ver_documento_origen
         '
         Me.Btn_Ver_documento_origen.Image = CType(resources.GetObject("Btn_Ver_documento_origen.Image"), System.Drawing.Image)
+        Me.Btn_Ver_documento_origen.ImageAlt = CType(resources.GetObject("Btn_Ver_documento_origen.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ver_documento_origen.Name = "Btn_Ver_documento_origen"
         Me.Btn_Ver_documento_origen.Text = "Copiar"
         '
@@ -320,37 +332,37 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla.Size = New System.Drawing.Size(589, 361)
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grilla.Size = New System.Drawing.Size(606, 361)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 29
         '
@@ -403,18 +415,25 @@ Partial Class Frm_Filtro_Especial_Informes
         Me.Chk_Seleccionar_Todos.CheckBoxImageChecked = CType(resources.GetObject("Chk_Seleccionar_Todos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Seleccionar_Todos.FocusCuesEnabled = False
         Me.Chk_Seleccionar_Todos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Seleccionar_Todos.Location = New System.Drawing.Point(430, 491)
+        Me.Chk_Seleccionar_Todos.Location = New System.Drawing.Point(450, 491)
         Me.Chk_Seleccionar_Todos.Name = "Chk_Seleccionar_Todos"
         Me.Chk_Seleccionar_Todos.Size = New System.Drawing.Size(170, 23)
         Me.Chk_Seleccionar_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Seleccionar_Todos.TabIndex = 13
         Me.Chk_Seleccionar_Todos.Text = "Seleccionar todos los registros"
         '
+        'Mnu_Btn_Ver_Informacion_de_producto
+        '
+        Me.Mnu_Btn_Ver_Informacion_de_producto.Image = CType(resources.GetObject("Mnu_Btn_Ver_Informacion_de_producto.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_Ver_Informacion_de_producto.ImageAlt = CType(resources.GetObject("Mnu_Btn_Ver_Informacion_de_producto.ImageAlt"), System.Drawing.Image)
+        Me.Mnu_Btn_Ver_Informacion_de_producto.Name = "Mnu_Btn_Ver_Informacion_de_producto"
+        Me.Mnu_Btn_Ver_Informacion_de_producto.Text = "Ver informaci√≥n adicional del producto"
+        '
         'Frm_Filtro_Especial_Informes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(611, 561)
+        Me.ClientSize = New System.Drawing.Size(632, 561)
         Me.Controls.Add(Me.Chk_Seleccionar_Todos)
         Me.Controls.Add(Me.Rdb_Mostrar_Solo_Tickeados)
         Me.Controls.Add(Me.Rdb_Mostrar_Todos)
@@ -461,4 +480,6 @@ Partial Class Frm_Filtro_Especial_Informes
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Rdb_Mostrar_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Chk_Seleccionar_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_MarcarMasiva_Excel As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Mnu_Btn_Ver_Informacion_de_producto As DevComponents.DotNetBar.ButtonItem
 End Class

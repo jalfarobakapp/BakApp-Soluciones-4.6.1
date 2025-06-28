@@ -164,7 +164,7 @@ Left Join #Global_Bakapp#Zw_Prod_Asociacion PrAsoc On Koprct = PrAsoc.Codigo
                                       Else ROUND(dbo.MAEPREM.PM,2)
                                      End                                
       From         #Zw_TblDetalle_Venta LEFT OUTER JOIN
-                      dbo.MAEPREM ON Koprct  = dbo.MAEPREM.KOPR
+                      dbo.MAEPREM ON Koprct  = dbo.MAEPREM.KOPR And dbo.MAEPREM.EMPRESA = @Empresa
     End                  
 ----------------------------------------------------------------------------------------------------------
     IF @Opcion = 2 Begin-- Ultima compra, Sistema 			
@@ -182,7 +182,7 @@ Left Join #Global_Bakapp#Zw_Prod_Asociacion PrAsoc On Koprct = PrAsoc.Codigo
                                       Else ROUND(dbo.MAEPREM.PPUL01,2)
                                      End                                
         From         #Zw_TblDetalle_Venta LEFT OUTER JOIN
-                      dbo.MAEPREM ON Koprct  = dbo.MAEPREM.KOPR   
+                      dbo.MAEPREM ON Koprct  = dbo.MAEPREM.KOPR And dbo.MAEPREM.EMPRESA = @Empresa   
      End                                    
 
 ---------------------------------------------------------------------------------------------------------

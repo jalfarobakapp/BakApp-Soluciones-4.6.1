@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Sectores_Lista_UbicOblig
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -41,6 +41,14 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Btn_ConfProdUbicSoloUna = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ConfProdUbicSoloUna_Masivo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ConfProdUltUbic_Masivo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_03 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ExportarExcel_FechaActual = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ExportarExcel_MesActual = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ExportarExcel_Ult3Meses = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ExportarExcel_Ult6Meses = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_ConfProdUbic = New DevComponents.DotNetBar.ButtonItem()
@@ -60,6 +68,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Chk_Seleccionar_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_MostrarSesctoresEnMapa = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_MostrarTodosSectores = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_ImprimirProdXCabecera = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -108,13 +117,13 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 34
-        Me.GroupPanel1.Text = "Sectores"
+        Me.GroupPanel1.Text = "Sectores Cabeceras"
         '
         'Menu_Contextual
         '
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_02, Me.Menu_Contextual_03})
         Me.Menu_Contextual.Location = New System.Drawing.Point(46, 37)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(412, 25)
@@ -142,21 +151,21 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.LabelItem1.PaddingLeft = 10
         Me.LabelItem1.PaddingTop = 1
         Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "Ver productos en la ubicacion"
+        Me.LabelItem1.Text = "Ver productos en la Cabecera"
         '
         'Btn_VerProdUbicacion
         '
         Me.Btn_VerProdUbicacion.Image = CType(resources.GetObject("Btn_VerProdUbicacion.Image"), System.Drawing.Image)
         Me.Btn_VerProdUbicacion.ImageAlt = CType(resources.GetObject("Btn_VerProdUbicacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_VerProdUbicacion.Name = "Btn_VerProdUbicacion"
-        Me.Btn_VerProdUbicacion.Text = "Ver productos en la ubicación"
+        Me.Btn_VerProdUbicacion.Text = "Ver productos en la cabecera"
         '
         'Btn_VerProdUbicacionMensual
         '
         Me.Btn_VerProdUbicacionMensual.Image = CType(resources.GetObject("Btn_VerProdUbicacionMensual.Image"), System.Drawing.Image)
         Me.Btn_VerProdUbicacionMensual.ImageAlt = CType(resources.GetObject("Btn_VerProdUbicacionMensual.ImageAlt"), System.Drawing.Image)
         Me.Btn_VerProdUbicacionMensual.Name = "Btn_VerProdUbicacionMensual"
-        Me.Btn_VerProdUbicacionMensual.Text = "Ver productos en esta ubicación mensualmente"
+        Me.Btn_VerProdUbicacionMensual.Text = "Ver productos en la cabecera mensualmente"
         '
         'LabelItem2
         '
@@ -176,7 +185,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Btn_AgregarProductosUbic.Image = CType(resources.GetObject("Btn_AgregarProductosUbic.Image"), System.Drawing.Image)
         Me.Btn_AgregarProductosUbic.ImageAlt = CType(resources.GetObject("Btn_AgregarProductosUbic.ImageAlt"), System.Drawing.Image)
         Me.Btn_AgregarProductosUbic.Name = "Btn_AgregarProductosUbic"
-        Me.Btn_AgregarProductosUbic.Text = "Ingresar productos a la ubicación "
+        Me.Btn_AgregarProductosUbic.Text = "Ingresar productos en la cabecera"
         '
         'Btn_QuitarProductosUbic
         '
@@ -184,7 +193,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Btn_QuitarProductosUbic.Image = CType(resources.GetObject("Btn_QuitarProductosUbic.Image"), System.Drawing.Image)
         Me.Btn_QuitarProductosUbic.ImageAlt = CType(resources.GetObject("Btn_QuitarProductosUbic.ImageAlt"), System.Drawing.Image)
         Me.Btn_QuitarProductosUbic.Name = "Btn_QuitarProductosUbic"
-        Me.Btn_QuitarProductosUbic.Text = "Quitar producto de esta ubicación"
+        Me.Btn_QuitarProductosUbic.Text = "Quitar producto de la cabecera"
         '
         'LabelItem4
         '
@@ -204,14 +213,16 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Btn_ConfProdUltUbic.Image = CType(resources.GetObject("Btn_ConfProdUltUbic.Image"), System.Drawing.Image)
         Me.Btn_ConfProdUltUbic.ImageAlt = CType(resources.GetObject("Btn_ConfProdUltUbic.ImageAlt"), System.Drawing.Image)
         Me.Btn_ConfProdUltUbic.Name = "Btn_ConfProdUltUbic"
-        Me.Btn_ConfProdUltUbic.Text = "Confirmar nuevamente los productos de este sector con la ultima ubicación"
+        Me.Btn_ConfProdUltUbic.Text = "Confirmar nuevamente los productos que estuvieron en esta cabecera por Ãºltima vez" &
+    "."
         '
         'Btn_ConfProdUbicSoloUna
         '
         Me.Btn_ConfProdUbicSoloUna.Image = CType(resources.GetObject("Btn_ConfProdUbicSoloUna.Image"), System.Drawing.Image)
         Me.Btn_ConfProdUbicSoloUna.ImageAlt = CType(resources.GetObject("Btn_ConfProdUbicSoloUna.ImageAlt"), System.Drawing.Image)
         Me.Btn_ConfProdUbicSoloUna.Name = "Btn_ConfProdUbicSoloUna"
-        Me.Btn_ConfProdUbicSoloUna.Text = "Confirmar productos cargados en la ubicación"
+        Me.Btn_ConfProdUbicSoloUna.Text = "Cargar productos desde todas las ubicaciones del sector hacia esta cabecera." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Dir" &
+    "ectamente desde las ubicaciones mostradas en el mapa."
         '
         'LabelItem3
         '
@@ -232,6 +243,66 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Btn_Copiar.ImageAlt = CType(resources.GetObject("Btn_Copiar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Copiar.Name = "Btn_Copiar"
         Me.Btn_Copiar.Text = "Copiar (portapapeles)"
+        '
+        'Menu_Contextual_02
+        '
+        Me.Menu_Contextual_02.AutoExpandOnClick = True
+        Me.Menu_Contextual_02.Name = "Menu_Contextual_02"
+        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ConfProdUbicSoloUna_Masivo, Me.Btn_ConfProdUltUbic_Masivo})
+        Me.Menu_Contextual_02.Text = "Opciones 2"
+        '
+        'Btn_ConfProdUbicSoloUna_Masivo
+        '
+        Me.Btn_ConfProdUbicSoloUna_Masivo.Image = CType(resources.GetObject("Btn_ConfProdUbicSoloUna_Masivo.Image"), System.Drawing.Image)
+        Me.Btn_ConfProdUbicSoloUna_Masivo.ImageAlt = CType(resources.GetObject("Btn_ConfProdUbicSoloUna_Masivo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ConfProdUbicSoloUna_Masivo.Name = "Btn_ConfProdUbicSoloUna_Masivo"
+        Me.Btn_ConfProdUbicSoloUna_Masivo.Text = "Confirmar nuevamente los productos que estuvieron en esta cabecera por Ãºltima vez" &
+    "."
+        '
+        'Btn_ConfProdUltUbic_Masivo
+        '
+        Me.Btn_ConfProdUltUbic_Masivo.Image = CType(resources.GetObject("Btn_ConfProdUltUbic_Masivo.Image"), System.Drawing.Image)
+        Me.Btn_ConfProdUltUbic_Masivo.ImageAlt = CType(resources.GetObject("Btn_ConfProdUltUbic_Masivo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ConfProdUltUbic_Masivo.Name = "Btn_ConfProdUltUbic_Masivo"
+        Me.Btn_ConfProdUltUbic_Masivo.Text = "Cargar productos desde todas las ubicaciones del sector hacia esta cabecera." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Dir" &
+    "ectamente desde las ubicaciones mostradas en el mapa."
+        '
+        'Menu_Contextual_03
+        '
+        Me.Menu_Contextual_03.AutoExpandOnClick = True
+        Me.Menu_Contextual_03.Name = "Menu_Contextual_03"
+        Me.Menu_Contextual_03.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ExportarExcel_FechaActual, Me.Btn_ExportarExcel_MesActual, Me.Btn_ExportarExcel_Ult3Meses, Me.Btn_ExportarExcel_Ult6Meses})
+        Me.Menu_Contextual_03.Text = "Opciones 3"
+        '
+        'Btn_ExportarExcel_FechaActual
+        '
+        Me.Btn_ExportarExcel_FechaActual.Image = CType(resources.GetObject("Btn_ExportarExcel_FechaActual.Image"), System.Drawing.Image)
+        Me.Btn_ExportarExcel_FechaActual.ImageAlt = CType(resources.GetObject("Btn_ExportarExcel_FechaActual.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ExportarExcel_FechaActual.Name = "Btn_ExportarExcel_FechaActual"
+        Me.Btn_ExportarExcel_FechaActual.Text = "Exportar productos de la fecha actual" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Btn_ExportarExcel_MesActual
+        '
+        Me.Btn_ExportarExcel_MesActual.Image = CType(resources.GetObject("Btn_ExportarExcel_MesActual.Image"), System.Drawing.Image)
+        Me.Btn_ExportarExcel_MesActual.ImageAlt = CType(resources.GetObject("Btn_ExportarExcel_MesActual.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ExportarExcel_MesActual.Name = "Btn_ExportarExcel_MesActual"
+        Me.Btn_ExportarExcel_MesActual.Text = "Exportar productos del mes actual" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Btn_ExportarExcel_Ult3Meses
+        '
+        Me.Btn_ExportarExcel_Ult3Meses.Image = CType(resources.GetObject("Btn_ExportarExcel_Ult3Meses.Image"), System.Drawing.Image)
+        Me.Btn_ExportarExcel_Ult3Meses.ImageAlt = CType(resources.GetObject("Btn_ExportarExcel_Ult3Meses.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ExportarExcel_Ult3Meses.Name = "Btn_ExportarExcel_Ult3Meses"
+        Me.Btn_ExportarExcel_Ult3Meses.Text = "Exportar productos de los ultimos 3 meses"
+        Me.Btn_ExportarExcel_Ult3Meses.Visible = False
+        '
+        'Btn_ExportarExcel_Ult6Meses
+        '
+        Me.Btn_ExportarExcel_Ult6Meses.Image = CType(resources.GetObject("Btn_ExportarExcel_Ult6Meses.Image"), System.Drawing.Image)
+        Me.Btn_ExportarExcel_Ult6Meses.ImageAlt = CType(resources.GetObject("Btn_ExportarExcel_Ult6Meses.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ExportarExcel_Ult6Meses.Name = "Btn_ExportarExcel_Ult6Meses"
+        Me.Btn_ExportarExcel_Ult6Meses.Text = "Exportar productos de los ultimos 6 meses"
+        Me.Btn_ExportarExcel_Ult6Meses.Visible = False
         '
         'Grilla
         '
@@ -276,7 +347,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ConfProdUbic, Me.Btn_ExportarExcelProductos})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ConfProdUbic, Me.Btn_ExportarExcelProductos, Me.Btn_ImprimirProdXCabecera})
         Me.Bar1.Location = New System.Drawing.Point(0, 583)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(740, 41)
@@ -358,7 +429,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(75, 22)
         Me.LabelX1.TabIndex = 93
-        Me.LabelX1.Text = "Fecha revisión"
+        Me.LabelX1.Text = "Fecha revisiÃ³n"
         '
         'Dtp_FechaRevision
         '
@@ -611,7 +682,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Rdb_MostrarSesctoresEnMapa.Size = New System.Drawing.Size(232, 23)
         Me.Rdb_MostrarSesctoresEnMapa.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_MostrarSesctoresEnMapa.TabIndex = 95
-        Me.Rdb_MostrarSesctoresEnMapa.Text = "Mostrar sectores que solo estan en el Mapa"
+        Me.Rdb_MostrarSesctoresEnMapa.Text = "Mostrar Sectores/Cabeceras que solo estan en el Mapa"
         '
         'Rdb_MostrarTodosSectores
         '
@@ -629,7 +700,16 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Rdb_MostrarTodosSectores.Size = New System.Drawing.Size(156, 23)
         Me.Rdb_MostrarTodosSectores.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_MostrarTodosSectores.TabIndex = 96
-        Me.Rdb_MostrarTodosSectores.Text = "Mostrar todos los sectores"
+        Me.Rdb_MostrarTodosSectores.Text = "Mostrar todos los Sectores/Cabeceras"
+        '
+        'Btn_ImprimirProdXCabecera
+        '
+        Me.Btn_ImprimirProdXCabecera.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ImprimirProdXCabecera.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ImprimirProdXCabecera.Image = CType(resources.GetObject("Btn_ImprimirProdXCabecera.Image"), System.Drawing.Image)
+        Me.Btn_ImprimirProdXCabecera.ImageAlt = CType(resources.GetObject("Btn_ImprimirProdXCabecera.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ImprimirProdXCabecera.Name = "Btn_ImprimirProdXCabecera"
+        Me.Btn_ImprimirProdXCabecera.Tooltip = "Imprimir productos por cabeceras"
         '
         'Frm_Sectores_Lista_UbicOblig
         '
@@ -644,6 +724,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -651,7 +732,7 @@ Partial Class Frm_Sectores_Lista_UbicOblig
         Me.Name = "Frm_Sectores_Lista_UbicOblig"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "SECTORES DEL MAPA:"
+        Me.Text = "CABECERAS DEL MAPA:"
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
@@ -696,4 +777,13 @@ Partial Class Frm_Sectores_Lista_UbicOblig
     Public WithEvents Chk_Seleccionar_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_MostrarSesctoresEnMapa As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_MostrarTodosSectores As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Menu_Contextual_02 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ConfProdUltUbic_Masivo As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ConfProdUbicSoloUna_Masivo As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_03 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ExportarExcel_FechaActual As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ExportarExcel_MesActual As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ExportarExcel_Ult3Meses As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ExportarExcel_Ult6Meses As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ImprimirProdXCabecera As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -316,7 +316,7 @@ Public Class Frm_PrecioLCFuturo2
                                                   False,
                                                   True,
                                                   _Id,
-                                                  "")
+                                                  "", False)
 
                                 If Not String.IsNullOrEmpty(_Imp.Error) Then
                                     If MessageBoxEx.Show(Me, _Imp.Error, "Error al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then

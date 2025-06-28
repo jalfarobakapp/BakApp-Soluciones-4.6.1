@@ -25,6 +25,9 @@ CREATE TABLE [dbo].[Zw_Stk_Tipos](
 	[RespuestaXDefecto]         [varchar](200)  NOT NULL DEFAULT (''),
 	[RespuestaXDefectoCerrar]   [varchar](200)  NOT NULL DEFAULT (''),
     [EsTicketUnico]             [bit]           NOT NULL DEFAULT (0),    
+    [CierraRaiz]                [bit]           NOT NULL DEFAULT (0),    
+    [ExigeDocCerrar]            [bit]           NOT NULL DEFAULT (0),    
+    [TidoDocCerrar]             [varchar](200)  NOT NULL DEFAULT (0),    
  CONSTRAINT [PK_Zw_Stk_Tipos] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

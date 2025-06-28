@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_BuscarDocumento_Mt
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -152,7 +152,7 @@ Partial Class Frm_BuscarDocumento_Mt
         Me.Btn_Firmar_Documento.Image = CType(resources.GetObject("Btn_Firmar_Documento.Image"), System.Drawing.Image)
         Me.Btn_Firmar_Documento.ImageAlt = CType(resources.GetObject("Btn_Firmar_Documento.ImageAlt"), System.Drawing.Image)
         Me.Btn_Firmar_Documento.Name = "Btn_Firmar_Documento"
-        Me.Btn_Firmar_Documento.Text = "Firmar documento Electrónicamente"
+        Me.Btn_Firmar_Documento.Text = "Firmar documento ElectrÃ³nicamente"
         '
         'Btn_Facturar
         '
@@ -223,7 +223,7 @@ Partial Class Frm_BuscarDocumento_Mt
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(964, 313)
+        Me.Grilla.Size = New System.Drawing.Size(1052, 313)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 28
         '
@@ -235,7 +235,7 @@ Partial Class Frm_BuscarDocumento_Mt
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAceptar, Me.BtnActualizarLista, Me.Btn_Enviar_Correos_Masivos, Me.Btn_Enviar_Los_Correos, Me.Btn_Cerrar_Documentos, Me.Btn_Abrir_Documentos, Me.Btn_Cancelar, Me.Btn_GrabarHabilitarFacturar})
         Me.Bar1.Location = New System.Drawing.Point(0, 556)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(994, 41)
+        Me.Bar1.Size = New System.Drawing.Size(1082, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 11
@@ -356,7 +356,7 @@ Partial Class Frm_BuscarDocumento_Mt
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Detalle.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla_Detalle.Size = New System.Drawing.Size(964, 126)
+        Me.Grilla_Detalle.Size = New System.Drawing.Size(1052, 126)
         Me.Grilla_Detalle.StandardTab = True
         Me.Grilla_Detalle.TabIndex = 28
         '
@@ -372,7 +372,7 @@ Partial Class Frm_BuscarDocumento_Mt
         Me.LblEntFisica.Name = "LblEntFisica"
         Me.LblEntFisica.Size = New System.Drawing.Size(485, 22)
         Me.LblEntFisica.TabIndex = 13
-        Me.LblEntFisica.Text = "Entidad física:"
+        Me.LblEntFisica.Text = "Entidad fÃ­sica:"
         '
         'CmbCantFilas
         '
@@ -380,7 +380,7 @@ Partial Class Frm_BuscarDocumento_Mt
         Me.CmbCantFilas.ForeColor = System.Drawing.Color.Black
         Me.CmbCantFilas.FormattingEnabled = True
         Me.CmbCantFilas.Items.AddRange(New Object() {"10", "20", "30", "40", "50", "100", "200", "1000", "10000", "100000"})
-        Me.CmbCantFilas.Location = New System.Drawing.Point(890, 351)
+        Me.CmbCantFilas.Location = New System.Drawing.Point(978, 351)
         Me.CmbCantFilas.Name = "CmbCantFilas"
         Me.CmbCantFilas.Size = New System.Drawing.Size(92, 21)
         Me.CmbCantFilas.TabIndex = 27
@@ -394,7 +394,7 @@ Partial Class Frm_BuscarDocumento_Mt
         '
         Me.Lbl_Ver.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Ver.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Ver.Location = New System.Drawing.Point(795, 349)
+        Me.Lbl_Ver.Location = New System.Drawing.Point(883, 349)
         Me.Lbl_Ver.Name = "Lbl_Ver"
         Me.Lbl_Ver.Size = New System.Drawing.Size(89, 23)
         Me.Lbl_Ver.TabIndex = 28
@@ -410,7 +410,7 @@ Partial Class Frm_BuscarDocumento_Mt
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 7)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(970, 336)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1058, 336)
         '
         '
         '
@@ -450,7 +450,7 @@ Partial Class Frm_BuscarDocumento_Mt
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(12, 375)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(970, 149)
+        Me.GroupPanel2.Size = New System.Drawing.Size(1058, 149)
         '
         '
         '
@@ -515,7 +515,7 @@ Partial Class Frm_BuscarDocumento_Mt
         Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 597)
         Me.MetroStatusBar1.Name = "MetroStatusBar1"
-        Me.MetroStatusBar1.Size = New System.Drawing.Size(994, 22)
+        Me.MetroStatusBar1.Size = New System.Drawing.Size(1082, 22)
         Me.MetroStatusBar1.TabIndex = 48
         Me.MetroStatusBar1.Text = "MetroStatusBar1"
         '
@@ -545,7 +545,7 @@ Partial Class Frm_BuscarDocumento_Mt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(994, 619)
+        Me.ClientSize = New System.Drawing.Size(1082, 619)
         Me.Controls.Add(Me.Chk_Marcar_Todas)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.GroupPanel1)
@@ -556,6 +556,7 @@ Partial Class Frm_BuscarDocumento_Mt
         Me.Controls.Add(Me.MetroStatusBar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True

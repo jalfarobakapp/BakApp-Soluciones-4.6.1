@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_GRI_FabXProducto
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -66,6 +66,8 @@ Partial Class Frm_GRI_FabXProducto
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_GDI_Consumo = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Btn_ModificarChk = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Tipo = New DevComponents.DotNetBar.LabelX()
@@ -79,7 +81,6 @@ Partial Class Frm_GRI_FabXProducto
         Me.Txt_Turno = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Analista = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_GDI_Consumo = New DevComponents.DotNetBar.CheckBoxItem()
         Me.Grupo_Producto.SuspendLayout()
         Me.Panel_SC.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -673,7 +674,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Chk_FechaEmiFiot.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_FechaEmiFiot.TabIndex = 100
         Me.Chk_FechaEmiFiot.TabStop = False
-        Me.Chk_FechaEmiFiot.Text = "Fecha de emisión fecha de la OT"
+        Me.Chk_FechaEmiFiot.Text = "Fecha de emisiÃ³n fecha de la OT"
         '
         'LabelX18
         '
@@ -895,7 +896,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Limpiar, Me.ButtonItem1, Me.Chk_GDI_Consumo})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Limpiar, Me.ButtonItem1, Me.Chk_GDI_Consumo, Me.Btn_ModificarChk})
         Me.Bar1.Location = New System.Drawing.Point(0, 527)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(855, 41)
@@ -912,7 +913,7 @@ Partial Class Frm_GRI_FabXProducto
         Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
         Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.Name = "Btn_Grabar"
-        Me.Btn_Grabar.Text = "Grabar GRI Ingreso de fabriación"
+        Me.Btn_Grabar.Text = "Grabar GRI Ingreso de fabriaciÃ³n"
         Me.Btn_Grabar.Tooltip = "Seleccionar registro marcado"
         '
         'Btn_Limpiar
@@ -935,6 +936,23 @@ Partial Class Frm_GRI_FabXProducto
         Me.ButtonItem1.Text = "Prueba GDI"
         Me.ButtonItem1.Tooltip = "Seleccionar registro marcado"
         Me.ButtonItem1.Visible = False
+        '
+        'Chk_GDI_Consumo
+        '
+        Me.Chk_GDI_Consumo.CheckBoxImageChecked = CType(resources.GetObject("Chk_GDI_Consumo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_GDI_Consumo.Checked = True
+        Me.Chk_GDI_Consumo.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_GDI_Consumo.Enabled = False
+        Me.Chk_GDI_Consumo.Name = "Chk_GDI_Consumo"
+        Me.Chk_GDI_Consumo.Text = "Crear GDI de consumo"
+        '
+        'Btn_ModificarChk
+        '
+        Me.Btn_ModificarChk.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ModificarChk.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ModificarChk.Name = "Btn_ModificarChk"
+        Me.Btn_ModificarChk.Text = "<-Modificar"
+        Me.Btn_ModificarChk.Tooltip = "Seleccionar registro marcado"
         '
         'LabelX7
         '
@@ -1216,14 +1234,6 @@ Partial Class Frm_GRI_FabXProducto
         Me.LabelX17.TabIndex = 101
         Me.LabelX17.Text = "ANALISTA"
         '
-        'Chk_GDI_Consumo
-        '
-        Me.Chk_GDI_Consumo.CheckBoxImageChecked = CType(resources.GetObject("Chk_GDI_Consumo.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_GDI_Consumo.Checked = True
-        Me.Chk_GDI_Consumo.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Chk_GDI_Consumo.Name = "Chk_GDI_Consumo"
-        Me.Chk_GDI_Consumo.Text = "Crear GDI de consumo"
-        '
         'Frm_GRI_FabXProducto
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1312,4 +1322,5 @@ Partial Class Frm_GRI_FabXProducto
     Friend WithEvents Btn_EditFechaGRI As DevComponents.DotNetBar.ButtonX
     Public WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_GDI_Consumo As DevComponents.DotNetBar.CheckBoxItem
+    Public WithEvents Btn_ModificarChk As DevComponents.DotNetBar.ButtonItem
 End Class

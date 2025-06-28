@@ -77,10 +77,11 @@
         Dim _Esucursal As String = _Sql.Fx_Trae_Dato("CONFIEST", "ESUCURSAL", "MODALIDAD = '" & Modalidad_Fac & "'",, False)
 
         Dim _CondicionSuc = String.Empty
-        Dim _CondicionFunFac = "CodFuncionario_Factura <> ''"
+        Dim _CondicionFunFac = " And CodFuncionario_Factura <> ''"
 
         If SoloDeSucModalidad Then
-            _CondicionSuc = "And ((Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "') Or (ModalidadFactura = '" & Modalidad_Fac & "'))" & vbCrLf
+            _CondicionSuc = " And ((Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "')" & vbCrLf
+            '_CondicionSuc = "And ((Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "') Or (ModalidadFactura = '" & Modalidad_Fac & "'))" & vbCrLf
         End If
 
         If Not String.IsNullOrWhiteSpace(CodFunFactura) Then
@@ -959,8 +960,13 @@
                         Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
                                        vbCrLf &
                                        "Select Ddo.*," & vbCrLf &
-                                       "Case TIPR When 'SSN' Then Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End Else " & vbCrLf &
-                                       "Case PRCT When 0 Then Case When UDTRPR = 1 Then Det.Caprco1_Real Else Det.Caprco2_Real End End End As 'Cantidad'," & vbCrLf &
+                                       "Case TIPR" & vbCrLf &
+                                       "When 'SSN' Then Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End" & vbCrLf &
+                                       "Else Case PRCT" & vbCrLf &
+                                       "When 0 Then Case When UDTRPR = 1 Then Det.Caprco1_Real Else Det.Caprco2_Real End" & vbCrLf &
+                                       "Else Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End" & vbCrLf &
+                                       "End" & vbCrLf &
+                                       "End As 'Cantidad'," & vbCrLf &
                                        "Case PRCT When 0 Then Det.Caprco1_Real Else CAPRCO1-CAPREX1 End As 'CantUd1_Pickea'," & vbCrLf &
                                        "Case PRCT When 0 Then Det.Caprco2_Real Else CAPRCO1-CAPREX1 End As 'CantUd2_Pickea'," & vbCrLf &
                                        "Cast(1 As Bit) As DesdePickeo," & vbCrLf &

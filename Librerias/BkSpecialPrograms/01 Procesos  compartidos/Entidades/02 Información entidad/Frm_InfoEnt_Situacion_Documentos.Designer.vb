@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_InfoEnt_Situacion_Documentos
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -27,11 +27,12 @@ Partial Class Frm_InfoEnt_Situacion_Documentos
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_InfoEnt_Situacion_Documentos))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Grilla_Documentos = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_Salir = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
-        CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Documentos, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupPanel1
@@ -72,20 +73,6 @@ Partial Class Frm_InfoEnt_Situacion_Documentos
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 0
-        '
-        'Bar2
-        '
-        Me.Bar2.AntiAlias = True
-        Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Location = New System.Drawing.Point(0, 411)
-        Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(655, 25)
-        Me.Bar2.Stretch = True
-        Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.Bar2.TabIndex = 12
-        Me.Bar2.TabStop = False
-        Me.Bar2.Text = "Bar2"
         '
         'Grilla_Documentos
         '
@@ -128,6 +115,29 @@ Partial Class Frm_InfoEnt_Situacion_Documentos
         Me.Grilla_Documentos.StandardTab = True
         Me.Grilla_Documentos.TabIndex = 56
         '
+        'Bar2
+        '
+        Me.Bar2.AntiAlias = True
+        Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Salir})
+        Me.Bar2.Location = New System.Drawing.Point(0, 395)
+        Me.Bar2.Name = "Bar2"
+        Me.Bar2.Size = New System.Drawing.Size(655, 41)
+        Me.Bar2.Stretch = True
+        Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.Bar2.TabIndex = 12
+        Me.Bar2.TabStop = False
+        Me.Bar2.Text = "Bar2"
+        '
+        'Btn_Salir
+        '
+        Me.Btn_Salir.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Salir.Image = CType(resources.GetObject("Btn_Salir.Image"), System.Drawing.Image)
+        Me.Btn_Salir.ImageAlt = CType(resources.GetObject("Btn_Salir.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Salir.Name = "Btn_Salir"
+        Me.Btn_Salir.Text = "ButtonItem1"
+        '
         'Frm_InfoEnt_Situacion_Documentos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -147,12 +157,13 @@ Partial Class Frm_InfoEnt_Situacion_Documentos
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
         Me.GroupPanel1.ResumeLayout(False)
-        CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla_Documentos, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Grilla_Documentos As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents Btn_Salir As DevComponents.DotNetBar.ButtonItem
 End Class

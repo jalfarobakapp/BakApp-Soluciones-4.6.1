@@ -21,6 +21,7 @@ Public Class Frm_Tickets_Seguimiento
     Public Property GestionRealizada As Boolean
     Public Property Aprobado As Boolean
     Public Property Rechazado As Boolean
+    Public Property Anulado As Boolean
     Public Property vTop As Integer
     Public Property vLeft As Integer
 
@@ -161,7 +162,7 @@ Public Class Frm_Tickets_Seguimiento
 
         Consulta_sql = "Select Tk.Id As 'Id_Ticket',Tk.Id_Padre,Tk.Id_Raiz,Acc.Id As 'Id_Accion'," & vbCrLf &
                        "(Select Numero From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id = Tk.Id_Raiz) As 'Ticket_Origen'," & vbCrLf &
-                       "Tk.Numero,Acc.Asunto,Acc.CodFunGestiona,Cf.NOKOFU As 'NombreFunGestiona',Acc.Accion,Acc.Fecha,Acc.CodFuncionario," & vbCrLf &
+                       "Tk.Numero,Tk.SubNro,Acc.Asunto,Acc.CodFunGestiona,Cf.NOKOFU As 'NombreFunGestiona',Acc.Accion,Acc.Fecha,Acc.CodFuncionario," & vbCrLf &
                        "Case Acc.CodFunGestiona When Acc.CodFuncionario Then 'FunCrea' When Acc.CodAgente Then 'FunAge' End As 'FunAccion',Acc.Aceptado,Acc.Rechazado," & vbCrLf &
                        "Case Acc.Accion " & vbCrLf &
                        "When 'CREA' Then 'Crea Ticket' " & vbCrLf &
@@ -188,7 +189,7 @@ Public Class Frm_Tickets_Seguimiento
                        "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets Tkc On Tkc.Id = Acc.Id_Ticket_Cierra " & vbCrLf &
                        "Where" & vbCrLf &
                        "Id_Ticket In (Select Id From " & _Global_BaseBk & "Zw_Stk_Tickets Where Id_Raiz = " & _Cl_Tickets.Zw_Stk_Tickets.Id_Raiz & ")" & vbCrLf &
-                       "Order By Id_Ticket,Fecha"
+                       "Order By Fecha --,Id_Ticket"
 
         _Tbl_Acciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -204,6 +205,12 @@ Public Class Frm_Tickets_Seguimiento
             .Columns("Btn_ImagenUser").HeaderText = "User"
             .Columns("Btn_ImagenUser").Visible = True
             .Columns("Btn_ImagenUser").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("SubNro").Visible = True
+            .Columns("SubNro").HeaderText = "Sub"
+            .Columns("SubNro").Width = 30
+            .Columns("SubNro").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("StrAccion").Visible = True
@@ -226,7 +233,7 @@ Public Class Frm_Tickets_Seguimiento
 
             .Columns("Asunto").Visible = True
             .Columns("Asunto").HeaderText = "Asunto"
-            .Columns("Asunto").Width = 240
+            .Columns("Asunto").Width = 220
             .Columns("Asunto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -696,7 +703,15 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Return
         End If
 
-        Fx_Cerrar_Ticket(False, False, False, True, 0, False, False, True, True)
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = Fx_Cerrar_Ticket(False, False, False, True, 0, False, False, True, True)
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Alerta", MessageBoxButtons.OK, _Mensaje.Icono)
+        End If
+
+        Anulado = True
 
         Me.Close()
 
@@ -806,13 +821,14 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             MessageBoxEx.Show(Me, _Mensaje_Ticket.Mensaje, _Caption, MessageBoxButtons.OK, MessageBoxIcon.Information)
             GestionRealizada = True
 
-
             _Mensaje.EsCorrecto = True
             _Mensaje.Mensaje = _Mensaje_Ticket.Mensaje
+            _Mensaje.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
             _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
 
         Return _Mensaje
@@ -1095,10 +1111,10 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
         Dim _Imagenes_List As ImageList
 
         Dim Fmv As New Frm_Validaciones
-        Fmv.Columan1 = _Columan1
-        Fmv.Columan2 = _Columan2
-        Fmv.Columan3 = _Columan3
-        Fmv.Columan4 = _Columan4
+        Fmv.Col1_Mensaje = _Columan1
+        Fmv.Col2_Descripcion = _Columan2
+        Fmv.Col3_Resultado = _Columan3
+        Fmv.Col4_Fecha = _Columan4
         Fmv.ListaMensajes = _Lista
         Fmv.UsarImagenesExternas = True
 

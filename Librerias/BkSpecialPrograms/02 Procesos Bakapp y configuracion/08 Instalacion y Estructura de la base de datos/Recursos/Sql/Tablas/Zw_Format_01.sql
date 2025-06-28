@@ -21,6 +21,7 @@ CREATE TABLE [dbo].[Zw_Format_01](
 	[Detalle_Doc_Incluye]	    [varchar](50)	NOT NULL DEFAULT (''),	
     [Agrupar_CodDescripcion]	[bit]			NOT NULL DEFAULT (0),
     [IncluyePickWms]        	[bit]			NOT NULL DEFAULT (0),
+    [ImprimirDocAdjuntos]       [bit]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Format_01] PRIMARY KEY CLUSTERED 
 (
 	[TipoDoc] ASC,

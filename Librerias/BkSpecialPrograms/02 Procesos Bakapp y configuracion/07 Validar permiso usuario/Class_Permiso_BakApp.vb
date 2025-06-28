@@ -352,6 +352,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Comp0099", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Comp0100", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Comp0101", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Comp0102", _Objeto, _Formulario)
 
 
         _SqlQuery += Fx_Insertar_Permiso("CfEnt001", _Objeto, _Formulario)
@@ -384,6 +385,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("CfEnt034", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt035", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt036", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt037", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Crv0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Crv0002", _Objeto, _Formulario)
@@ -590,6 +592,65 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00100", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00101", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00102", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00103", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00104", _Objeto, _Formulario) ' Registrar BLC - BOLETA DE COMPRA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00105", _Objeto, _Formulario) ' Registrar BLV - BOLETA DE VENTA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00106", _Objeto, _Formulario) ' Registrar BLX - BOLETA DE VENTA EXENTA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00107", _Objeto, _Formulario) ' Registrar BSV - BOLETA DE VENTA SIMPLE
+        _SqlQuery += Fx_Insertar_Permiso("Doc00108", _Objeto, _Formulario) ' Registrar COV - COTIZACION DE VENTA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00109", _Objeto, _Formulario) ' Registrar DIN - DECLARACION DE INTERNACION
+        _SqlQuery += Fx_Insertar_Permiso("Doc00110", _Objeto, _Formulario) ' Registrar ESC - ESCRITURA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00111", _Objeto, _Formulario) ' Registrar FCC - FACTURA DE COMPRA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00112", _Objeto, _Formulario) ' Registrar FCL - LIQUIDACION DE FACTURA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00113", _Objeto, _Formulario) ' Registrar FCT - FACTURA COMPRA TERCEROS
+        _SqlQuery += Fx_Insertar_Permiso("Doc00114", _Objeto, _Formulario) ' Registrar FCV - FACTURA DE VENTA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00115", _Objeto, _Formulario) ' Registrar FCZ - FACTURA VENTA MóDULO ZF
+        _SqlQuery += Fx_Insertar_Permiso("Doc00116", _Objeto, _Formulario) ' Registrar FDB - FACTURA DEBITO TIPO B
+        _SqlQuery += Fx_Insertar_Permiso("Doc00117", _Objeto, _Formulario) ' Registrar FDC - FACTURA DE DEBITO DE COMPRA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00118", _Objeto, _Formulario) ' Registrar FDE - FACTURA DEBITO EXPORTACION
+        _SqlQuery += Fx_Insertar_Permiso("Doc00119", _Objeto, _Formulario) ' Registrar FDV - FACTURA DEBITO DE VENTA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00120", _Objeto, _Formulario) ' Registrar FDX - FACTURA DEBITO EXENTA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00121", _Objeto, _Formulario) ' Registrar FDZ - FACTURA DEBITO ZONA FRANCA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00122", _Objeto, _Formulario) ' Registrar FEE - FACTURA VTA.MERCAD.EXTRANJERO
+        _SqlQuery += Fx_Insertar_Permiso("Doc00123", _Objeto, _Formulario) ' Registrar FEV - FACTURA DE EXPORTACION
+        _SqlQuery += Fx_Insertar_Permiso("Doc00124", _Objeto, _Formulario) ' Registrar FVL - FACTURA LIQUIDACION VENTAS
+        _SqlQuery += Fx_Insertar_Permiso("Doc00125", _Objeto, _Formulario) ' Registrar FVT - FACTURA VENTA TERCEROS
+        _SqlQuery += Fx_Insertar_Permiso("Doc00126", _Objeto, _Formulario) ' Registrar FVX - FACTURA DE VENTA EXENTA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00127", _Objeto, _Formulario) ' Registrar FVZ - FACTURA VENTA ZONA FRANCA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00128", _Objeto, _Formulario) ' Registrar FXV - FACTURA DE VENTA EXENTA LEY:18392
+        _SqlQuery += Fx_Insertar_Permiso("Doc00129", _Objeto, _Formulario) ' Registrar FYV - FACTURA DE VENTA EXENTA LEY:19149
+        _SqlQuery += Fx_Insertar_Permiso("Doc00130", _Objeto, _Formulario) ' Registrar GAR - GUIA DE ARMADO PRODUCTO
+        _SqlQuery += Fx_Insertar_Permiso("Doc00131", _Objeto, _Formulario) ' Registrar GCL - GUIA DE CLASIFICACION
+        _SqlQuery += Fx_Insertar_Permiso("Doc00132", _Objeto, _Formulario) ' Registrar GDD - GUIA DESPACHO POR DEVOLUCION
+        _SqlQuery += Fx_Insertar_Permiso("Doc00133", _Objeto, _Formulario) ' Registrar GDI - GUIA SALIDA DE BODEGA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00134", _Objeto, _Formulario) ' Registrar GDP - GUIA DESPACHO PRESTAMO
+        _SqlQuery += Fx_Insertar_Permiso("Doc00135", _Objeto, _Formulario) ' Registrar GDV - GUIA DESPACHO VENTA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00136", _Objeto, _Formulario) ' Registrar GRC - GUIA DE RECEPCION DE COMPRA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00137", _Objeto, _Formulario) ' Registrar GRD - GUIA RECEPCION DE DEVOLUCION
+        _SqlQuery += Fx_Insertar_Permiso("Doc00138", _Objeto, _Formulario) ' Registrar GRI - GUIA DE RECEPCION INTERNA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00139", _Objeto, _Formulario) ' Registrar GRP - GUIA DE RECEPCION PRESTAMOS
+        _SqlQuery += Fx_Insertar_Permiso("Doc00140", _Objeto, _Formulario) ' Registrar GTI - GUIA DE TRASLADO SUCURSALES
+        _SqlQuery += Fx_Insertar_Permiso("Doc00141", _Objeto, _Formulario) ' Registrar NCB - NOTA DE CREDITO TIPO B
+        _SqlQuery += Fx_Insertar_Permiso("Doc00142", _Objeto, _Formulario) ' Registrar NCC - NOTA DE CREDITO DE COMPRA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00143", _Objeto, _Formulario) ' Registrar NCE - RESCILIACION DE CONTRATO
+        _SqlQuery += Fx_Insertar_Permiso("Doc00144", _Objeto, _Formulario) ' Registrar NCV - NOTA DE CREDITO VENTA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00145", _Objeto, _Formulario) ' Registrar NCX - NOTA DE CREDITO EXENTA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00146", _Objeto, _Formulario) ' Registrar NCZ - NOTA CREDITO ZONA FRANCA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00147", _Objeto, _Formulario) ' Registrar NEV - NOTA DE CREDITO EXPORTACION
+        _SqlQuery += Fx_Insertar_Permiso("Doc00148", _Objeto, _Formulario) ' Registrar NVC - CONTRATO COBRO PERIODICO
+        _SqlQuery += Fx_Insertar_Permiso("Doc00149", _Objeto, _Formulario) ' Registrar NVI - COMPROMISO DE ENTREGA INTERNO
+        _SqlQuery += Fx_Insertar_Permiso("Doc00150", _Objeto, _Formulario) ' Registrar NVV - NOTA DE VENTA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00151", _Objeto, _Formulario) ' Registrar OCC - ORDEN DE COMPRA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00152", _Objeto, _Formulario) ' Registrar OCI - ORDEN DE PEDIDO INTERNO
+        _SqlQuery += Fx_Insertar_Permiso("Doc00153", _Objeto, _Formulario) ' Registrar PRO - PROMESA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00154", _Objeto, _Formulario) ' Registrar RES - RESERVA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00155", _Objeto, _Formulario) ' Registrar RGA - RECIBO DE GASTOS
+        _SqlQuery += Fx_Insertar_Permiso("Doc00156", _Objeto, _Formulario) ' Registrar RIN - RECIBO DE INGRESOS
+        _SqlQuery += Fx_Insertar_Permiso("Doc00157", _Objeto, _Formulario) ' Registrar SRF - SOLICITUD REGISTRO FACTURA
+        _SqlQuery += Fx_Insertar_Permiso("Doc00158", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00159", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00160", _Objeto, _Formulario)
+
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -685,6 +746,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Inf00047", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00048", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Inf00049", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Inf00050", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Invp0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invp0002", _Objeto, _Formulario)
@@ -701,6 +763,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Invg0006", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invg0007", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Invg0008", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Invg0009", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Pre0008", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pre0009", _Objeto, _Formulario)
@@ -729,6 +792,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Cdro0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Cdro0002", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Cdro0003", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Cdro0004", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ppro0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ppro0002", _Objeto, _Formulario)
@@ -831,6 +895,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Prod075", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Prod076", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Prod077", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Prod078", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Prod079", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("NO00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("NO00002", _Objeto, _Formulario)
@@ -1005,6 +1071,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Pdc00011", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00012", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00013", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pdc00014", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Rcl00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Rcl00002", _Objeto, _Formulario)
@@ -1062,6 +1129,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Tkts0005", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Tkts0006", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Tkts0007", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Tkts0008", _Objeto, _Formulario)
 
 
         _SqlQuery += vbCrLf
@@ -1599,6 +1667,10 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "MOSTRAR SUGERENCIAS DE CAMBIO DE PRECIOS (ASISTENTE DE COMPRAS)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.COMPRAS, 6)
                 _NombreFamiliaPermiso = _Fml.COMPRAS.ToString
+            Case "Comp0102"
+                _DescripcionPermiso = "INGRESAR AL MODULO DE COMPRAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.COMPRAS, 6)
+                _NombreFamiliaPermiso = _Fml.COMPRAS.ToString
         End Select
 
 #End Region
@@ -1727,7 +1799,10 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "PERMITIR LA EDICION DE DATOS PARA LA EXENCION DE IMPUESTOS ESPECÍFICOS EN DOCUMENTOS DE VENTA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
-
+            Case "CfEnt037"
+                _DescripcionPermiso = "INGRESAR AL MODULO DE ENTIDADES "
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
         End Select
 
 #End Region
@@ -1951,7 +2026,6 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "PERMITIR GRABAR DOCUMENTO SIN EXIGIR EL PAGO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
 
             Case "Bkp00001"
                 _DescripcionPermiso = "INGRESAR AL MODULO DE VENTAS"
@@ -2578,7 +2652,241 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00102"
-                _DescripcionPermiso = "PERMITIR GRABAR DOCUMENTO CON PRODUCTOS DE PESO VARIABLE Y RAZON DE TRANSFORMACION DASACTIVADA"
+                _DescripcionPermiso = "DESACTIVAR RAZON DE TRANSFORMACION"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00103"
+                _DescripcionPermiso = "PERMITIR CREAR DOCUMENTOS COMERCIALES A ENTIDADES CON CHEQUES PROTESTADOS E IMPAGOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+
+            Case "Doc00104"
+                _DescripcionPermiso = "REGISTRAR BLC - BOLETA DE COMPRA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00105"
+                _DescripcionPermiso = "REGISTRAR BLV - BOLETA DE VENTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00106"
+                _DescripcionPermiso = "REGISTRAR BLX - BOLETA DE VENTA EXENTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00107"
+                _DescripcionPermiso = "REGISTRAR BSV - BOLETA DE VENTA SIMPLE"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00108"
+                _DescripcionPermiso = "REGISTRAR COV - COTIZACION DE VENTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00109"
+                _DescripcionPermiso = "REGISTRAR DIN - DECLARACION DE INTERNACION"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00110"
+                _DescripcionPermiso = "REGISTRAR ESC - ESCRITURA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00111"
+                _DescripcionPermiso = "REGISTRAR FCC - FACTURA DE COMPRA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00112"
+                _DescripcionPermiso = "REGISTRAR FCL - LIQUIDACION DE FACTURA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00113"
+                _DescripcionPermiso = "REGISTRAR FCT - FACTURA COMPRA TERCEROS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00114"
+                _DescripcionPermiso = "REGISTRAR FCV - FACTURA DE VENTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00115"
+                _DescripcionPermiso = "REGISTRAR FCZ - FACTURA VENTA MóDULO ZF"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00116"
+                _DescripcionPermiso = "REGISTRAR FDB - FACTURA DEBITO TIPO B"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00117"
+                _DescripcionPermiso = "REGISTRAR FDC - FACTURA DE DEBITO DE COMPRA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00118"
+                _DescripcionPermiso = "REGISTRAR FDE - FACTURA DEBITO EXPORTACION"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00119"
+                _DescripcionPermiso = "REGISTRAR FDV - FACTURA DEBITO DE VENTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00120"
+                _DescripcionPermiso = "REGISTRAR FDX - FACTURA DEBITO EXENTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00121"
+                _DescripcionPermiso = "REGISTRAR FDZ - FACTURA DEBITO ZONA FRANCA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00122"
+                _DescripcionPermiso = "REGISTRAR FEE - FACTURA VTA.MERCAD.EXTRANJERO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00123"
+                _DescripcionPermiso = "REGISTRAR FEV - FACTURA DE EXPORTACION"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00124"
+                _DescripcionPermiso = "REGISTRAR FVL - FACTURA LIQUIDACION VENTAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00125"
+                _DescripcionPermiso = "REGISTRAR FVT - FACTURA VENTA TERCEROS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00126"
+                _DescripcionPermiso = "REGISTRAR FVX - FACTURA DE VENTA EXENTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00127"
+                _DescripcionPermiso = "REGISTRAR FVZ - FACTURA VENTA ZONA FRANCA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00128"
+                _DescripcionPermiso = "REGISTRAR FXV - FACTURA DE VENTA EXENTA LEY18392"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00129"
+                _DescripcionPermiso = "REGISTRAR FYV - FACTURA DE VENTA EXENTA LEY19149"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00130"
+                _DescripcionPermiso = "REGISTRAR GAR - GUIA DE ARMADO PRODUCTO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00131"
+                _DescripcionPermiso = "REGISTRAR GCL - GUIA DE CLASIFICACION"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00132"
+                _DescripcionPermiso = "REGISTRAR GDD - GUIA DESPACHO POR DEVOLUCION"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00133"
+                _DescripcionPermiso = "REGISTRAR GDI - GUIA SALIDA DE BODEGA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00134"
+                _DescripcionPermiso = "REGISTRAR GDP - GUIA DESPACHO PRESTAMO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00135"
+                _DescripcionPermiso = "REGISTRAR GDV - GUIA DESPACHO VENTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00136"
+                _DescripcionPermiso = "REGISTRAR GRC - GUIA DE RECEPCION DE COMPRA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00137"
+                _DescripcionPermiso = "REGISTRAR GRD - GUIA RECEPCION DE DEVOLUCION"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00138"
+                _DescripcionPermiso = "REGISTRAR GRI - GUIA DE RECEPCION INTERNA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00139"
+                _DescripcionPermiso = "REGISTRAR GRP - GUIA DE RECEPCION PRESTAMOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00140"
+                _DescripcionPermiso = "REGISTRAR GTI - GUIA DE TRASLADO SUCURSALES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00141"
+                _DescripcionPermiso = "REGISTRAR NCB - NOTA DE CREDITO TIPO B"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00142"
+                _DescripcionPermiso = "REGISTRAR NCC - NOTA DE CREDITO DE COMPRA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00143"
+                _DescripcionPermiso = "REGISTRAR NCE - RESCILIACION DE CONTRATO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00144"
+                _DescripcionPermiso = "REGISTRAR NCV - NOTA DE CREDITO VENTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00145"
+                _DescripcionPermiso = "REGISTRAR NCX - NOTA DE CREDITO EXENTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00146"
+                _DescripcionPermiso = "REGISTRAR NCZ - NOTA CREDITO ZONA FRANCA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00147"
+                _DescripcionPermiso = "REGISTRAR NEV - NOTA DE CREDITO EXPORTACION"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00148"
+                _DescripcionPermiso = "REGISTRAR NVC - CONTRATO COBRO PERIODICO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00149"
+                _DescripcionPermiso = "REGISTRAR NVI - COMPROMISO DE ENTREGA INTERNO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00150"
+                _DescripcionPermiso = "REGISTRAR NVV - NOTA DE VENTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00151"
+                _DescripcionPermiso = "REGISTRAR OCC - ORDEN DE COMPRA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00152"
+                _DescripcionPermiso = "REGISTRAR OCI - ORDEN DE PEDIDO INTERNO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00153"
+                _DescripcionPermiso = "REGISTRAR PRO - PROMESA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00154"
+                _DescripcionPermiso = "REGISTRAR RES - RESERVA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00155"
+                _DescripcionPermiso = "REGISTRAR RGA - RECIBO DE GASTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00156"
+                _DescripcionPermiso = "REGISTRAR RIN - RECIBO DE INGRESOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00157"
+                _DescripcionPermiso = "REGISTRAR SRF - SOLICITUD REGISTRO FACTURA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00158"
+                _DescripcionPermiso = "CAMBIAR MONEDA DEL DOCUMENTO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00159"
+                _DescripcionPermiso = "CONFIGURAR SALIDA DE IMPRESION HACIA DIABLITO (CONFIGURACION DE IMPRESIONES)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00160"
+                _DescripcionPermiso = "VER PROXIMAS RECEPCIONES DE PRODUCTOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
@@ -2647,7 +2955,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
                 _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
             Case "Espr0018"
-                _DescripcionPermiso = "INGRESAR AL MENU DE PARAMETROS"
+                _DescripcionPermiso = "INGRESAR AL MODULO DE PARAMETROS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.ESPECIALES, 6)
                 _NombreFamiliaPermiso = _Fml.ESPECIALES.ToString
             Case "Espr0019"
@@ -2984,6 +3292,10 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "INFORME DE MARGENES Y PROYECCION"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
                 _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
+            Case "Inf00050"
+                _DescripcionPermiso = "INGRESAR AL MODULO DE INFORMES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INFORMES_DE_VENTA, 6)
+                _NombreFamiliaPermiso = _Fml.INFORMES_DE_VENTA.ToString
 
         End Select
 
@@ -3025,7 +3337,10 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "ELIMINAR FOTO STOCK"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
                 _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
-
+            Case "Invg0009"
+                _DescripcionPermiso = "INGRESAR AL MODULO DE INVENTARIO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.INVENTARIO, 6)
+                _NombreFamiliaPermiso = _Fml.INVENTARIO.ToString
 
         End Select
 
@@ -3215,14 +3530,16 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "INICIAR CASHDRO (CAJA AUTOSERVICIO)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CASHDRO, 6)
                 _NombreFamiliaPermiso = _Fml.CASHDRO.ToString
-
             Case "Cdro0002"
                 _DescripcionPermiso = "CONFIGURAR CASHDRO (CAJA AUTOSERVICIO)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CASHDRO, 6)
                 _NombreFamiliaPermiso = _Fml.CASHDRO.ToString
-
             Case "Cdro0003"
                 _DescripcionPermiso = "CERRAR INGRESO DE DOCUMENTOS (CAJA AUTOSERVICIO)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CASHDRO, 6)
+                _NombreFamiliaPermiso = _Fml.CASHDRO.ToString
+            Case "Cdro0004"
+                _DescripcionPermiso = "INGRESAR AL MODULO DE CASHDRO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CASHDRO, 6)
                 _NombreFamiliaPermiso = _Fml.CASHDRO.ToString
 
@@ -3645,6 +3962,14 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
             Case "Prod077"
                 _DescripcionPermiso = "AGREGAR UNA IMAGEN A UN PRODUCTO CON DESDE EL FTP"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
+            Case "Prod078"
+                _DescripcionPermiso = "INGRESAR AL MODULO DE PRODUCTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
+            Case "Prod079"
+                _DescripcionPermiso = "PROCESAR RECALCULO DEL PRECIO PROMEDIO PONDERADO NORMA TRIBUTARIA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCTOS, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCTOS.ToString
 
@@ -4391,6 +4716,10 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "INGRESAR MAXI-SACO CON UNA CANTIDAD FUERA DEL RANGO DE 400 A 1500 KILOS."
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
+            Case "Pdc00014"
+                _DescripcionPermiso = "PODER MODIFICAR EL CHECK DE GDI DE CONSUMO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
+                _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
         End Select
 
 #End Region
@@ -4679,34 +5008,32 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "INGRESAR AL SISTEMA DE TICKET"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
-
             Case "Tkts0002"
                 _DescripcionPermiso = "INGRESAR A CONFIGURACION DE TICKET"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
-
             Case "Tkts0003"
                 _DescripcionPermiso = "MANTENCION DE AGENTES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
-
             Case "Tkts0004"
                 _DescripcionPermiso = "MANTENCION DE GRUPOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
-
             Case "Tkts0005"
                 _DescripcionPermiso = "MANTENCION DE AREAS/TIPOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
-
             Case "Tkts0006"
                 _DescripcionPermiso = "CERRAR TICKETS DE OTROS USUARIOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
-
             Case "Tkts0007"
                 _DescripcionPermiso = "PODER VER TODOS LOS TICKETS (MODO ADMINISTRADOR)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
+                _NombreFamiliaPermiso = _Fml.TICKET.ToString
+            Case "Tkts0008"
+                _DescripcionPermiso = "PODER GRABAR TICKET SIN ASIGNAR EL REQUERIMIENTO A ALGUN GRUPO O AGENTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
 

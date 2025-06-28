@@ -3079,11 +3079,11 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim _Id As Integer
 
-        If _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id) Then
+        If _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id, False) Then
 
             For i = 0 To 10
 
-                _Id_Dte = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Firmar", "Id_Dte", "Id = " & _Id)
+                _Id_Dte = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Firmar", "Id_Dte", "Id = " & _Id,, False)
                 If CBool(_Id_Dte) Then
                     Return _Id_Dte
                 End If

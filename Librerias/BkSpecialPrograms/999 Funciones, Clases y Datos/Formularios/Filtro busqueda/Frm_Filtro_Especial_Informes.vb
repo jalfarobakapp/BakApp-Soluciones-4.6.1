@@ -197,6 +197,7 @@ Public Class Frm_Filtro_Especial_Informes
     End Property
 
     Public Property MostrarNumeracionDeRegistros As Boolean
+    Public Property SonProductos As Boolean
 
     Public Sub New(Tabla_filtro As _Tabla_Fl,
                    Optional Incorporar_Campo_Vacias As Boolean = False,
@@ -253,6 +254,8 @@ Public Class Frm_Filtro_Especial_Informes
         Btn_Crear.Visible = Activar_Crear_Editar_Eliminar
         Btn_Editar.Visible = Activar_Crear_Editar_Eliminar
         Btn_Eliminar.Visible = Activar_Crear_Editar_Eliminar
+
+        Mnu_Btn_Ver_Informacion_de_producto.Visible = SonProductos
 
         Rdb_Mostrar_Solo_Tickeados.Visible = _Requiere_Seleccion
         Rdb_Mostrar_Todos.Visible = _Requiere_Seleccion
@@ -451,7 +454,6 @@ Public Class Frm_Filtro_Especial_Informes
                              Chk As Boolean,
                              TipoFiltro As String)
 
-
         For Each _Fila As DataGridViewRow In Grilla.Rows
             _Fila.Cells("Chk").Value = Chk
         Next
@@ -628,7 +630,7 @@ Public Class Frm_Filtro_Especial_Informes
         Select Case _Key
             Case Keys.Enter, Keys.Space
 
-                Sb_Buscar_En_Grilla_Dataview(Txt_Descripcion.Text)
+                Sb_Buscar_En_Grilla_Dataview(Txt_Descripcion.Text.Trim)
 
                 If _Seleccionar_Solo_Uno And _Key = Keys.Enter Then
                     If CBool(Grilla.Rows.Count) Then
@@ -707,7 +709,7 @@ Public Class Frm_Filtro_Especial_Informes
                 _Lista_Descripciones = Split(_Descripcion, ";")
 
                 For i = 0 To _Lista_Descripciones.Length - 1
-                    If i = 0 Then
+                    If String.IsNullOrWhiteSpace(_Lista_productos_A_Buscar) Then
                         _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i))
                     Else
                         _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i), " Or ")
@@ -721,7 +723,12 @@ Public Class Frm_Filtro_Especial_Informes
                 _Lista_Descripciones = Split(_Descripcion, " ")
 
                 For i = 0 To _Lista_Descripciones.Length - 1
-                    If i = 0 Then
+                    'If i = 0 Then
+                    '    _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i))
+                    'Else
+                    '    _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i), " And ")
+                    'End If
+                    If String.IsNullOrWhiteSpace(_Lista_productos_A_Buscar) Then
                         _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i))
                     Else
                         _Lista_productos_A_Buscar += Fx_Descripcion(_Lista_Descripciones(i), " And ")
@@ -850,6 +857,43 @@ Public Class Frm_Filtro_Especial_Informes
         If Activar_Crear_Editar_Eliminar Then
             Btn_Editar.Enabled = True
         End If
+
+    End Sub
+
+    Private Sub Btn_MarcarMasiva_Excel_Click(sender As Object, e As EventArgs) Handles Btn_MarcarMasiva_Excel.Click
+
+        Dim _Lista As New List(Of String)
+
+        Dim Fm As New Frm_Filtro_Especial_MarcarMasivoExcel
+        Fm.ShowDialog(Me)
+        _Lista = Fm.ListaCodigos
+        Fm.Dispose()
+
+        If Not CBool(_Lista.Count) Then
+            Return
+        End If
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+            Dim _Codigo As String = _Fila.Cells("Codigo").Value.ToString().Trim
+            If _Lista.Contains(_Codigo) Then
+                _Fila.Cells("Chk").Value = True
+            End If
+            If _Codigo.Contains("041333000985") Then
+                Dim aca = 0
+            End If
+        Next
+
+        Rdb_Mostrar_Solo_Tickeados.Checked = True
+        Me.Refresh()
+
+    End Sub
+
+    Private Sub Mnu_Btn_Ver_Informacion_de_producto_Click(sender As Object, e As EventArgs) Handles Mnu_Btn_Ver_Informacion_de_producto.Click
+
+        Dim _Producto_Op As New Frm_BkpPostBusquedaEspecial_Mt
+
+        Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
+        _Producto_Op.Sb_Ver_Informacion_Adicional_producto(Me, _Codigo)
 
     End Sub
 

@@ -234,10 +234,10 @@ Public Class Frm_RecargosXProd
         _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, _vTido,
                                  "Where TIDO In ('BLV','BLX','FCC','FCV','GDP','GDV','GRC','GRD','GRI','GTI','OCC','GDD')")
         _Fm.Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado
-        _Fm.Rdb_Fecha_Emision_Cualquiera.Enabled = False
-        _Fm.Rdb_Fecha_Emision_Desde_Hasta.Checked = True
-        _Fm.DtpFechaInicio.Value = _Fecha_Inicio
-        _Fm.DtpFechaFin.Value = _Fecha_Fin
+        _Fm.Rdb_FEmision_Todas.Enabled = False
+        _Fm.Rdb_FEmision_EmitidosEntre.Checked = True
+        _Fm.Dtp_FEmision_Desde.Value = _Fecha_Inicio
+        _Fm.Dtp_FEmision_Hasta.Value = _Fecha_Fin
         _Fm.Seleccion_Multiple = True
         _Fm.Ocultar_Envio_Correos_Masivamente = True
         _Fm.Filtrar_Doc_No_Asociados_Recargo = True
@@ -245,8 +245,8 @@ Public Class Frm_RecargosXProd
         _Fm.Rdb_Ver_Primeros.Checked = True
         _Fm.ShowDialog(Me)
         _vTido = _Fm.CmbTipoDeDocumentos.SelectedValue
-        _Fecha_Inicio = _Fm.DtpFechaInicio.Value
-        _Fecha_Fin = _Fm.DtpFechaFin.Value
+        _Fecha_Inicio = _Fm.Dtp_FEmision_Desde.Value
+        _Fecha_Fin = _Fm.Dtp_FEmision_Hasta.Value
 
         'If _FechaServidor.ToShortDateString = _Fecha_Inicio.ToShortDateString And _Fecha_Inicio.CompareTo(_Fecha_Fin) = 0 Then
         '    _vFechaHoy = True
@@ -260,8 +260,8 @@ Public Class Frm_RecargosXProd
 
         Dim _Tbl_DocSeleccionados As DataTable = _Fm.Tbl_DocSeleccionados
 
-        _Fecha_Inicio = _Fm.DtpFechaInicio.Value
-        _Fecha_Fin = _Fm.DtpFechaFin.Value
+        _Fecha_Inicio = _Fm.Dtp_FEmision_Desde.Value
+        _Fecha_Fin = _Fm.Dtp_FEmision_Hasta.Value
 
         _Fm.Dispose()
 

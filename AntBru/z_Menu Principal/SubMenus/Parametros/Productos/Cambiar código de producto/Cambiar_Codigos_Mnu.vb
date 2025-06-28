@@ -25,22 +25,27 @@ Public Class Cambiar_Codigos_Mnu
     End Sub
 
     Private Sub Btn_Cambio_Masivo_Click(sender As Object, e As EventArgs) Handles Btn_Cambio_Masivo.Click
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod042") Then
 
-            Dim Fm As New Frm_Cambio_Codigos
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod042") Then
+            Return
         End If
+
+        Dim Fm As New Frm_Cambio_Codigos
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Cambio_UnoxUno_Click(sender As Object, e As EventArgs) Handles Btn_Cambio_UnoxUno.Click
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod003") Then
 
-            Dim Fm As New Frm_Cambio_Codigos_UnoxUno
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Prod003") Then
+            Return
         End If
+
+        Dim Fm As New Frm_Cambio_Codigos_UnoxUno
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
+
 End Class

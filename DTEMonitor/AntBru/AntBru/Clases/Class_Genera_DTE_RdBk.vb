@@ -11,7 +11,9 @@ Imports DevComponents.DotNetBar
 Imports HEFESTO.FIRMA.DOC.FORM
 Imports HEFESTO.FIRMA.DOCUMENTO
 Imports HefestoCesionV12
-Imports Ionic.Zip
+'Imports Ionic.Zip
+Imports System.IO.Compression
+
 
 Public Class Class_Genera_DTE_RdBk
 
@@ -323,9 +325,31 @@ Public Class Class_Genera_DTE_RdBk
 
             Try
 
-                Using Zip As ZipFile = ZipFile.Read(_AppPath & "\Dte.zip")
-                    Zip.ExtractAll(AppPath())
-                End Using
+                ' Pseudocódigo:
+                ' 1. Identificar el bloque de código que utiliza la referencia ZipFile de Ionic.Zip.
+                ' 2. Reemplazar el uso de Ionic.Zip por otra librería de compresión/descompresión, por ejemplo System.IO.Compression.ZipFile (nativa de .NET Framework 4.5+).
+                ' 3. Cambiar la sintaxis para leer y extraer el archivo zip usando la nueva referencia.
+                ' 4. Asegurarse de que la nueva referencia esté importada y disponible en el proyecto.
+
+                ' Ejemplo usando System.IO.Compression.ZipFile (requiere .NET Framework 4.5 o superior):
+                ' Si tu proyecto es .NET Framework 4.6.1, puedes usar System.IO.Compression.ZipFile.
+                ' Asegúrate de agregar la referencia a System.IO.Compression y System.IO.Compression.FileSystem.
+
+
+
+                ' ...
+
+                ' Reemplaza este bloque:
+                ' Using Zip As ZipFile = ZipFile.Read(_AppPath & "\Dte.zip")
+                '     Zip.ExtractAll(AppPath())
+                ' End Using
+
+                ' Por este bloque usando System.IO.Compression.ZipFile:
+                Dim zipPath As String = _AppPath & "\Dte.zip"
+                Dim extractPath As String = AppPath()
+                If File.Exists(zipPath) Then
+                    ZipFile.ExtractToDirectory(zipPath, extractPath)
+                End If
 
                 'RarArchive.WriteToDirectory(_AppPath & "\Dte.Rar", AppPath() & "\Dte", ExtractOptions.Overwrite)
 

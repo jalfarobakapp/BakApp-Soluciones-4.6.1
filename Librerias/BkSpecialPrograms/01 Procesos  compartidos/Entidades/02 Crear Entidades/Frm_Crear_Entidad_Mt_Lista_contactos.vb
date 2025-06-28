@@ -10,19 +10,13 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
     Dim _SucEntidad As String
 
     Dim _Tbl_ListaContactos As DataTable
-    Dim _Tbl_DatosContacto As DataTable
+    'Dim _Tbl_DatosContacto As DataTable
 
     Dim _ContactoSeleccionado As Boolean
     Dim _Seleccionar_Contacto As Boolean
 
-    'Public Property Pro_Crear_Editar_Eliminar As Boolean
-    '    Get
-    '        Return _Crear_Editar_Eliminar
-    '    End Get
-    '    Set(value As Boolean)
-    '        _Crear_Editar_Eliminar = value
-    '    End Set
-    'End Property
+    Public Property Row_Contacto As DataRow
+
     Public Property Pro_CodEntidad As String
         Get
             Return _CodEntidad
@@ -48,14 +42,14 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
             _Tbl_ListaContactos = value
         End Set
     End Property
-    Public Property Pro_Tbl_DatosContacto As DataTable
-        Get
-            Return _Tbl_DatosContacto
-        End Get
-        Set(value As DataTable)
-            _Tbl_DatosContacto = value
-        End Set
-    End Property
+    'Public Property Pro_Tbl_DatosContacto As DataTable
+    '    Get
+    '        Return _Tbl_DatosContacto
+    '    End Get
+    '    Set(value As DataTable)
+    '        _Tbl_DatosContacto = value
+    '    End Set
+    'End Property
 
     Public Property Pro_ContactoSeleccionado As Boolean
         Get
@@ -125,7 +119,7 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
             .Columns("RUTCONTACT").Visible = True
 
             .Columns("NOKOCON").HeaderText = "Contacto"
-            .Columns("NOKOCON").Width = 400
+            .Columns("NOKOCON").Width = 380
             .Columns("NOKOCON").Visible = True
 
         End With
@@ -202,18 +196,6 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
         End Try
     End Sub
 
-    Public Function Fx_Buscar_Contacto(ByVal _CodEntidad As String) As DataTable
-
-        Dim _RutContacto As String = GrillaContactos.Rows(GrillaContactos.CurrentRow.Index).Cells("RUTCONTACT").Value
-
-        Consulta_Sql = "Select * From MAEENCON Where KOEN = '" & _CodEntidad &
-                       "' AND RUTCONTACT = '" & _RutContacto & "'"
-        _Tbl_DatosContacto = _Sql.Fx_Get_DataTable(Consulta_Sql)
-
-        Return _Tbl_DatosContacto
-
-    End Function
-
     Private Sub Frm_Crear_Entidad_Mt_Lista_contactos_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
@@ -229,13 +211,23 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
     End Sub
 
     Private Sub GrillaContactos_CellDoubleClick_1(sender As Object, e As DataGridViewCellEventArgs) Handles GrillaContactos.CellDoubleClick
+
         If _Seleccionar_Contacto Then
-            _Tbl_DatosContacto = Fx_Buscar_Contacto(_CodEntidad)
+
+            Dim _Fila As DataGridViewRow = GrillaContactos.CurrentRow
+            Dim _RutContacto As String = _Fila.Cells("RUTCONTACT").Value
+
+            Consulta_Sql = "Select * From MAEENCON Where KOEN = '" & _CodEntidad & "' And RUTCONTACT = '" & _RutContacto & "'"
+            Row_Contacto = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
             _ContactoSeleccionado = True
             Me.Close()
             Return
+
         End If
 
         Sb_Editar_Contacto()
+
     End Sub
+
 End Class

@@ -24,9 +24,9 @@ Partial Class Frm_Stmp_ListadoXRutas
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Stmp_ListadoXRutas))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Btn_Mnu_Preparacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CerrarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ReenviaFacturar = New DevComponents.DotNetBar.ButtonItem()
@@ -56,8 +56,6 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Btn_ImpFacMasiva = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnIrAptincipio = New DevComponents.DotNetBar.ButtonItem()
-        Me.BtnIrAlFin = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfLocal = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -160,37 +158,37 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.Size = New System.Drawing.Size(1176, 433)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
@@ -267,7 +265,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 533)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 574)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
         Me.Metro_Bar_Color.Size = New System.Drawing.Size(1201, 22)
         Me.Metro_Bar_Color.TabIndex = 183
@@ -304,6 +302,8 @@ Partial Class Frm_Stmp_ListadoXRutas
         '
         Me.Txt_Filtrar.Border.Class = "TextBoxBorder"
         Me.Txt_Filtrar.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Filtrar.ButtonCustom.Image = CType(resources.GetObject("Txt_Filtrar.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Filtrar.ButtonCustom.Visible = True
         Me.Txt_Filtrar.ButtonCustom2.Image = CType(resources.GetObject("Txt_Filtrar.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Filtrar.ButtonCustom2.Visible = True
         Me.Txt_Filtrar.DisabledBackColor = System.Drawing.Color.White
@@ -412,8 +412,8 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ImpFacMasiva, Me.Btn_Exportar_Excel, Me.Btn_Actualizar, Me.BtnIrAptincipio, Me.BtnIrAlFin, Me.Btn_ConfLocal})
-        Me.Bar2.Location = New System.Drawing.Point(0, 555)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ImpFacMasiva, Me.Btn_Exportar_Excel, Me.Btn_Actualizar, Me.Btn_ConfLocal})
+        Me.Bar2.Location = New System.Drawing.Point(0, 533)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1201, 41)
         Me.Bar2.Stretch = True
@@ -449,26 +449,6 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Btn_Actualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Actualizar.Name = "Btn_Actualizar"
         Me.Btn_Actualizar.Tooltip = "Refrescar datos"
-        '
-        'BtnIrAptincipio
-        '
-        Me.BtnIrAptincipio.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnIrAptincipio.ForeColor = System.Drawing.Color.Black
-        Me.BtnIrAptincipio.Image = CType(resources.GetObject("BtnIrAptincipio.Image"), System.Drawing.Image)
-        Me.BtnIrAptincipio.ImageAlt = CType(resources.GetObject("BtnIrAptincipio.ImageAlt"), System.Drawing.Image)
-        Me.BtnIrAptincipio.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.BtnIrAptincipio.Name = "BtnIrAptincipio"
-        Me.BtnIrAptincipio.Tooltip = "Ir al primer registro"
-        '
-        'BtnIrAlFin
-        '
-        Me.BtnIrAlFin.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnIrAlFin.ForeColor = System.Drawing.Color.Black
-        Me.BtnIrAlFin.Image = CType(resources.GetObject("BtnIrAlFin.Image"), System.Drawing.Image)
-        Me.BtnIrAlFin.ImageAlt = CType(resources.GetObject("BtnIrAlFin.ImageAlt"), System.Drawing.Image)
-        Me.BtnIrAlFin.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.BtnIrAlFin.Name = "BtnIrAlFin"
-        Me.BtnIrAlFin.Tooltip = "Ir al último registro"
         '
         'Btn_ConfLocal
         '
@@ -696,10 +676,12 @@ Partial Class Frm_Stmp_ListadoXRutas
         '
         'LabelX3
         '
+        Me.LabelX3.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
         Me.LabelX3.Location = New System.Drawing.Point(642, 8)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(34, 23)
@@ -708,10 +690,12 @@ Partial Class Frm_Stmp_ListadoXRutas
         '
         'LabelX4
         '
+        Me.LabelX4.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
         Me.LabelX4.Location = New System.Drawing.Point(764, 10)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(34, 23)
@@ -728,7 +712,6 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Controls.Add(Me.LabelX3)
         Me.Controls.Add(Me.Cmb_FiltroFecha)
         Me.Controls.Add(Me.Dtp_FechaDesde)
-        Me.Controls.Add(Me.Metro_Bar_Color)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Txt_Filtrar)
         Me.Controls.Add(Me.Lbl_Informacion)
@@ -736,6 +719,7 @@ Partial Class Frm_Stmp_ListadoXRutas
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.LabelX2)
         Me.Controls.Add(Me.GroupPanel1)
+        Me.Controls.Add(Me.Metro_Bar_Color)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -785,8 +769,6 @@ Partial Class Frm_Stmp_ListadoXRutas
     Public WithEvents Btn_ImpFacMasiva As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Exportar_Excel As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents BtnIrAptincipio As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents BtnIrAlFin As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_ConfLocal As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel

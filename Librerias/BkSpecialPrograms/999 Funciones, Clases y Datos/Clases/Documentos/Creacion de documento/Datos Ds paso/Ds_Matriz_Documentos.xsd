@@ -175,7 +175,8 @@
               <xs:element name="PreVenta" msprop:Generator_ColumnPropNameInTable="PreVentaColumn" msprop:Generator_ColumnPropNameInRow="PreVenta" msprop:Generator_UserColumnName="PreVenta" msprop:Generator_ColumnVarNameInTable="columnPreVenta" type="xs:boolean" minOccurs="0" />
               <xs:element name="IdCont" msprop:Generator_ColumnPropNameInTable="IdContColumn" msprop:Generator_ColumnPropNameInRow="IdCont" msprop:Generator_UserColumnName="IdCont" msprop:Generator_ColumnVarNameInTable="columnIdCont" type="xs:int" minOccurs="0" />
               <xs:element name="Contenedor" msprop:Generator_ColumnPropNameInTable="ContenedorColumn" msprop:Generator_ColumnPropNameInRow="Contenedor" msprop:Generator_UserColumnName="Contenedor" msprop:Generator_ColumnVarNameInTable="columnContenedor" type="xs:string" minOccurs="0" />
-              <xs:element name="Pickear" msprop:Generator_UserColumnName="Pickear" msprop:Generator_ColumnPropNameInTable="PickearColumn" msprop:Generator_ColumnPropNameInRow="Pickear" msprop:Generator_ColumnVarNameInTable="columnPickear" type="xs:boolean" minOccurs="0" />
+              <xs:element name="Pickear" msprop:Generator_ColumnPropNameInTable="PickearColumn" msprop:Generator_ColumnPropNameInRow="Pickear" msprop:Generator_UserColumnName="Pickear" msprop:Generator_ColumnVarNameInTable="columnPickear" type="xs:boolean" minOccurs="0" />
+              <xs:element name="NomContacto_Ent" msprop:Generator_ColumnPropNameInRow="NomContacto_Ent" msprop:Generator_ColumnPropNameInTable="NomContacto_EntColumn" msprop:Generator_ColumnVarNameInTable="columnNomContacto_Ent" msprop:Generator_UserColumnName="NomContacto_Ent" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -314,7 +315,7 @@
               <xs:element name="ModFechVto" msprop:Generator_ColumnPropNameInTable="ModFechVtoColumn" msprop:Generator_ColumnPropNameInRow="ModFechVto" msprop:Generator_UserColumnName="ModFechVto" msprop:Generator_ColumnVarNameInTable="columnModFechVto" type="xs:boolean" minOccurs="0" />
               <xs:element name="Condicionado" msprop:Generator_ColumnPropNameInTable="CondicionadoColumn" msprop:Generator_ColumnPropNameInRow="Condicionado" msprop:Generator_UserColumnName="Condicionado" msprop:Generator_ColumnVarNameInTable="columnCondicionado" type="xs:boolean" minOccurs="0" />
               <xs:element name="EsPallet" msprop:Generator_ColumnPropNameInTable="EsPalletColumn" msprop:Generator_ColumnPropNameInRow="EsPallet" msprop:Generator_UserColumnName="EsPallet" msprop:Generator_ColumnVarNameInTable="columnEsPallet" type="xs:boolean" minOccurs="0" />
-              <xs:element name="DesacRazTransf" msprop:Generator_ColumnPropNameInRow="DesacRazTransf" msprop:Generator_ColumnPropNameInTable="DesacRazTransfColumn" msprop:Generator_ColumnVarNameInTable="columnDesacRazTransf" msprop:Generator_UserColumnName="DesacRazTransf" type="xs:boolean" minOccurs="0" />
+              <xs:element name="DesacRazTransf" msprop:Generator_UserColumnName="DesacRazTransf" msprop:Generator_ColumnPropNameInTable="DesacRazTransfColumn" msprop:Generator_ColumnPropNameInRow="DesacRazTransf" msprop:Generator_ColumnVarNameInTable="columnDesacRazTransf" type="xs:boolean" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

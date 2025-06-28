@@ -455,7 +455,7 @@ Public Class Frm_Buscar_Orden_Despacho
             .Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "", _Condicion)
             .Rdb_Funcionarios_Uno.Checked = True
             .Grupo_Funcionario.Enabled = False
-            .Rdb_Fecha_Emision_Desde_Hasta.Checked = True
+            .Rdb_FEmision_EmitidosEntre.Checked = True
             .Pro_Pago_a_Documento = True
             .Rdb_Funcionarios_Todos.Checked = True
 

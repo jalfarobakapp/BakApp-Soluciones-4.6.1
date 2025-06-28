@@ -1080,6 +1080,16 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns(_Campo).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            _Campo = "StockEnTransitoUd" & _Ud
+            .Columns(_Campo).Width = 80
+            .Columns(_Campo).HeaderText = "Stock" & vbCrLf & "transito"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
+            .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
+            '.Columns(_Campo).ToolTipText = "Stock consolidado según bodegas seleccionadas"
+            .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             _Campo = "StockPedidoUd" & _Ud
             .Columns(_Campo).Width = 80
             .Columns(_Campo).HeaderText = "Stock" & vbCrLf & "pedido"
@@ -1363,6 +1373,13 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             _Campo = "StockUd" & _Ud
             .Columns(_Campo).Width = 70
             .Columns(_Campo).HeaderText = "Stock"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
+            .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns(_Campo).Visible = True
+
+            _Campo = "StockEnTransitoUd" & _Ud
+            .Columns(_Campo).Width = 70
+            .Columns(_Campo).HeaderText = "Stock" & vbCrLf & "transito"
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True

@@ -1,5 +1,6 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
+Imports DevComponents.DotNetBar
 
 Public Class Class_SQL
 
@@ -168,17 +169,18 @@ Public Class Class_SQL
             _SqlDa = New SqlDataAdapter(_Consulta_sql, _Cn)
             _SqlDa.SelectCommand.CommandTimeout = 8000
 
-            'If _Traer_Schema Then _SqlDa.MissingSchemaAction = MissingSchemaAction.AddWithKey
-
+            ' Llenamos el DataTable
             _SqlDa.Fill(_Tbl)
 
+            ' Hacemos que las columnas no sean de solo lectura
             For Each col As DataColumn In _Tbl.Columns
                 col.[ReadOnly] = False
             Next
 
+            ' Cerramos la conexión
             Sb_Cerrar_Conexion(_Cn)
 
-            ' retornar el dataTable
+            ' Retornamos el DataTable
             Return _Tbl
 
             ' errores
@@ -189,6 +191,72 @@ Public Class Class_SQL
 
         Return Nothing
 
+    End Function
+
+    Function Fx_Get_DataTable_Progreso(_Consulta_sql As String,
+                                      Optional _Mostrar_Error As Boolean = True,
+                                      Optional _Progreso As Object = Nothing) As DataTable
+
+        If _Global_EsDiablito Then _Mostrar_Error = False
+
+        Dim _Tbl As New DataTable
+
+        Try
+            ' Abrimos la conexión con la base de datos
+            Sb_Abrir_Conexion(_Cn, _Mostrar_Error)
+
+            If Not String.IsNullOrEmpty(_Error) Then
+                _Mostrar_Error = False
+                Throw New System.Exception(_Error)
+            End If
+
+            ' Configuración inicial del progreso
+            If _Progreso IsNot Nothing Then
+                _Progreso.Value = 0
+                _Progreso.Maximum = 100
+            End If
+
+            Dim _SqlDa As New SqlDataAdapter(_Consulta_sql, _Cn)
+            _SqlDa.SelectCommand.CommandTimeout = 8000
+
+            ' Simulación de progreso
+            If _Progreso IsNot Nothing Then
+                For i As Integer = 1 To 10
+                    Threading.Thread.Sleep(100) ' Simula un paso
+                    _Progreso.Value = i * 10
+                Next
+            End If
+
+            ' Llenamos el DataTable
+            _SqlDa.Fill(_Tbl)
+
+            ' Finalizamos el progreso
+            If _Progreso IsNot Nothing Then
+                _Progreso.Value = 100
+            End If
+
+            ' Hacemos que las columnas no sean de solo lectura
+            For Each col As DataColumn In _Tbl.Columns
+                col.[ReadOnly] = False
+            Next
+
+            ' Cerramos la conexión
+            Sb_Cerrar_Conexion(_Cn)
+
+            ' Retornamos el DataTable
+            Return _Tbl
+
+        Catch ex As Exception
+            If _Mostrar_Error Then MsgBox(ex.Message.ToString)
+            _Error = ex.Message
+        Finally
+            ' Aseguramos que el progreso se complete
+            If _Progreso IsNot Nothing Then
+                _Progreso.Value = 100
+            End If
+        End Try
+
+        Return Nothing
     End Function
 
     Function Fx_Get_DataRow(_Consulta_sql As String,

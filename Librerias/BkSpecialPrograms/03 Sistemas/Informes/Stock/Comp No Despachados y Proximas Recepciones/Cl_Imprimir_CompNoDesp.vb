@@ -511,7 +511,7 @@ Public Class Cl_Imprimir_CompNoDesp
 
     End Sub
 
-    Private Function Fx_Codigo_Barras(ByVal _Codigo As String) As PictureBox
+    Private Function Fx_Codigo_Barras(_Codigo As String) As PictureBox
 
         'Código de barras 
         Dim _Bmp As Bitmap = Nothing

@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Drawing.Printing
 Imports System.IO
 Imports DevComponents.DotNetBar
 
@@ -621,7 +622,9 @@ Public Class Frm_Adjuntar_Archivos
                 Try
 
                     Me.Enabled = False
+
                     System.Diagnostics.Process.Start(_Archivo)
+
 
                 Catch ex As Exception
                     MessageBoxEx.Show(ex.Message, "Problema al abrir el archivo", MessageBoxButtons.OK, MessageBoxIcon.Warning)

@@ -8482,7 +8482,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     End Sub
 
-    Private Sub Btn_Ver_Cardex_De_Inventario_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Cardex_De_Inventario.Click
+    Private Sub Btn_Ver_Cardex_De_Inventario_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Stock_Del_Producto.Click
 
         Dim _Cabeza = Fm_Hijo.Grilla.Columns(Fm_Hijo.Grilla.CurrentCell.ColumnIndex).Name
         Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
@@ -9734,6 +9734,22 @@ Drop Table #Paso"
 
         MessageBoxEx.Show(Me, "Cantidades actualizadas", "Poner cantidades originales",
                           MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
+    Private Sub Btn_Ver_Kardex_Inventario_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Kardex_Inventario.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Prod002") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+        Dim Fm As New Frm_Kardex_X_Producto_Lista
+        Fm.Pro_Codigo = _Codigo
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 

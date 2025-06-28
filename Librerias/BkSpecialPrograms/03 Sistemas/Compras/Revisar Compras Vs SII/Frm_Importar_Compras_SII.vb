@@ -1,7 +1,9 @@
 ﻿Imports System.IO
 Imports DevComponents.DotNetBar
 Imports HEFSIIREGCOMPRAVENTAS.LIB
+Imports Microsoft.Win32
 Imports Newtonsoft.Json
+
 
 Public Class Frm_Importar_Compras_SII
 
@@ -374,7 +376,11 @@ Public Class Frm_Importar_Compras_SII
 
     Private Sub Btn_Importar_Desde_XML_Click(sender As Object, e As EventArgs) Handles Btn_Importar_Desde_XML.Click
 
-        Sb_Importar_Archivos_Json()
+        'Sb_Importar_Archivos_Json()
+
+        Btn_Importar_Desde_XML.Enabled = False
+        Sb_Importar_Archivos_Json_SIIRegCV()
+        Btn_Importar_Desde_XML.Enabled = True
 
     End Sub
     Sub Sb_Importar_Archivos_Json()
@@ -384,31 +390,8 @@ Public Class Frm_Importar_Compras_SII
         _Clas_Hefesto_Dte_Libro.Circular_Progres_Porc = Circular_Progres_Porc
         _Clas_Hefesto_Dte_Libro.Circular_Progres_Val = Circular_Progres_Val
 
-        '_Clas_Hefesto_Dte_Libro.Estatus = Lbl_Procesando
-        '_Clas_Hefesto_Dte_Libro.Sb_Importar_Archivos_Json(_Periodo, _Mes)
-
-        Dim _RecuperarResumenVentasRegistro As HefRespuesta
-        Dim _RecuperarVentasRegistro As HefRespuesta
-        Dim _RecuperarResumenCompras As HefRespuesta
         Dim _RecuperarComprasRegistro As HefRespuesta
         Dim _RecuperarComprasPendientes As HefRespuesta
-        Dim _RecuperarComprasNoIncluir As HefRespuesta
-        Dim _RecuperarComprasReclamadas As HefRespuesta
-
-        '_RecuperarResumenVentasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarResumenVentasRegistro(_Periodo, _Mes)
-        'If _RecuperarResumenVentasRegistro.EsCorrecto Then
-        '    Dim _Nombre_Archivo1 = _RecuperarResumenVentasRegistro.Directorio
-        'End If
-
-        '_RecuperarVentasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarVentasRegistro(_Periodo, _Mes)
-        'If _RecuperarVentasRegistro.EsCorrecto Then
-        '    Dim _Nombre_Archivo2 = _RecuperarVentasRegistro.Directorio
-        'End If
-
-        'Return
-
-        '_RecuperarResumenCompras = _Clas_Hefesto_Dte_Libro.Fx_RecuperarResumenCompras(_Periodo, _Mes)
-        'If _RecuperarResumenCompras.EsCorrecto Then Txt_Nombre_Archivo.Text = _RecuperarResumenCompras.Directorio
 
         _RecuperarComprasRegistro = _Clas_Hefesto_Dte_Libro.Fx_RecuperarComprasRegistro(_Periodo, _Mes)
 
@@ -441,8 +424,89 @@ Public Class Frm_Importar_Compras_SII
         Dim _Fichero1 As String = File.ReadAllText(_RecuperarComprasRegistro.Directorio)
         Dim _Fichero2 As String = File.ReadAllText(_RecuperarComprasPendientes.Directorio)
 
-        Dim _Tbl_Registro_Compras As DataTable = Fx_TblFromJson(_Fichero1, "RegistroCompras")
+
+        ' Convierte el contenido JSON de _Fichero1 a un DataSet usando Newtonsoft.Json
+        Dim _DataSet As New DataSet()
+        _DataSet = JsonConvert.DeserializeObject(Of DataSet)(_Fichero1)
+
+        Dim _Tbl_Registro_Compras As DataTable '= Fx_TblFromJson(_Fichero1, "RegistroCompras")
         Dim _Tbl_Registro_Compras_Pendientes As DataTable = Fx_TblFromJson(_Fichero2, "RegistroComprasPendientes")
+
+        _Tbl_Registro_Compras = _DataSet.Tables("RegistroCompras")
+
+        If _Clas_Hefesto_Dte_Libro.Fx_Importar_Archivo_SII_Compras_Desde_Json(_Tbl_Registro_Compras,
+                                                                              _Tbl_Registro_Compras_Pendientes,
+                                                                              _Periodo, _Mes) Then
+            Me.Close()
+        End If
+
+    End Sub
+
+    Sub Sb_Importar_Archivos_Json_SIIRegCV()
+
+        Dim _Clas_Hefesto_Dte_Libro As New Clas_Hefesto_Dte_Libro
+
+        _Clas_Hefesto_Dte_Libro.Circular_Progres_Porc = Circular_Progres_Porc
+        _Clas_Hefesto_Dte_Libro.Circular_Progres_Val = Circular_Progres_Val
+
+        Sb_AddToLog("Importar SII", "Rescatando datos desde archivos Json...", Txt_Log)
+
+        Dim _periodo2 As String = _Periodo & "-" & Fx_Rellena_ceros(_Mes, 2)
+
+        Dim _Directorio_SIIRegCV = Application.StartupPath & "\SIIRegCV\SIIRegCV.exe"
+        Dim _Ejecutar As String = _Directorio_SIIRegCV & Space(1) & "" & _periodo2 & " " & RutEmpresa '& " True"
+
+        Try
+            Shell(_Ejecutar, AppWinStyle.NormalFocus, True)
+        Catch ex As Exception
+            MessageBoxEx.Show(Me,
+                        ex.Message, "SIIRegCV", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End Try
+
+        Dim _Directorio_Error = Application.StartupPath & "\SIIRegCV\Empresas\Errores.txt"
+
+        ' Verificar si existe el archivo de error y mostrar alerta
+        If File.Exists(_Directorio_Error) Then
+            Dim mensajeError As String = File.ReadAllText(_Directorio_Error)
+            Sb_AddToLog("Importar SII", mensajeError, Txt_Log)
+            'MessageBoxEx.Show(Me, "Se detectó un error al ejecutar SIIRegCV:" & vbCrLf & mensajeError, "Error SIIRegCV", MessageBoxButtons.OK, MessageBoxIcon.Error)
+
+            ' Abrir la carpeta donde está el archivo de error
+            Dim carpetaError As String = Path.GetDirectoryName(_Directorio_Error)
+            If Directory.Exists(carpetaError) Then
+                Process.Start("explorer.exe", carpetaError)
+            End If
+            'Shell(_Directorio_Error, AppWinStyle.NormalFocus, True)
+            Return
+        End If
+
+
+        Dim _Dir_ComprasRegistro As String = Application.StartupPath & "\SIIRegCV\Empresas\" & RutEmpresa & "\Resultados\Compras\" & _periodo2 & "\RegistrosCompras.json"
+        Dim _Dir_ComprasRegistroPendientes As String = Application.StartupPath & "\SIIRegCV\Empresas\" & RutEmpresa & "\Resultados\Compras\" & _periodo2 & "\RegistrosComprasPendientes.json"
+
+        Dim _Tbl_Registro_Compras As DataTable
+        Dim _Tbl_Registro_Compras_Pendientes As DataTable
+
+        If File.Exists(_Dir_ComprasRegistro) Then
+            Dim _Fichero1 As String = File.ReadAllText(_Dir_ComprasRegistro)
+            ' Convierte el contenido JSON de _Fichero1 a un DataSet usando Newtonsoft.Json
+            Dim _DataSet As New DataSet()
+            _DataSet = JsonConvert.DeserializeObject(Of DataSet)(_Fichero1)
+            _Tbl_Registro_Compras = _DataSet.Tables("RegistroCompras")
+        Else
+            _Tbl_Registro_Compras = Nothing
+        End If
+
+        If File.Exists(_Dir_ComprasRegistroPendientes) Then
+            Dim _Fichero1 As String = File.ReadAllText(_Dir_ComprasRegistroPendientes)
+            ' Convierte el contenido JSON de _Fichero1 a un DataSet usando Newtonsoft.Json
+            Dim _DataSet As New DataSet()
+            _DataSet = JsonConvert.DeserializeObject(Of DataSet)(_Fichero1)
+            _Tbl_Registro_Compras_Pendientes = _DataSet.Tables("RegistroCompras")
+        Else
+            _Tbl_Registro_Compras_Pendientes = Nothing
+        End If
 
         If _Clas_Hefesto_Dte_Libro.Fx_Importar_Archivo_SII_Compras_Desde_Json(_Tbl_Registro_Compras,
                                                                               _Tbl_Registro_Compras_Pendientes,

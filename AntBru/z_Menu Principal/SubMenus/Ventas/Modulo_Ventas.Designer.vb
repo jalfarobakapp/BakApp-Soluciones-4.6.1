@@ -71,6 +71,7 @@ Partial Class Modulo_Ventas
         Me.BtnCambiarDeUsuario.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.BtnCambiarDeUsuario.Name = "BtnCambiarDeUsuario"
         Me.BtnCambiarDeUsuario.Tooltip = "Cambiar de usuario"
+        Me.BtnCambiarDeUsuario.Visible = False
         '
         'MetroTilePanel1
         '

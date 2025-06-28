@@ -1233,11 +1233,9 @@ Public Class Frm_Menu
     End Sub
 
     Private Sub Btn_Conexion_Base_Datos_Externa_Click(sender As Object, e As EventArgs) Handles Btn_Conexion_Base_Datos_Externa.Click
-
         Dim Fm As New Frm_ConexOtrasBases
         Fm.ShowDialog(Me)
         Fm.Dispose()
-
     End Sub
 
     Private Sub BtnConfTipoEstacionNormal_Click(sender As Object, e As EventArgs) Handles BtnConfTipoEstacionNormal.Click
@@ -1256,5 +1254,33 @@ Public Class Frm_Menu
         Fx_Ejecutar_Demonio2(Me, True)
     End Sub
 
+    Private Sub Frm_Menu_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        Dim _Path = AppPath() & "\Data\" & RutEmpresa & "\Tmp\Print_Borrar"
+        If Not Directory.Exists(_Path) Then
+            System.IO.Directory.CreateDirectory(_Path)
+        End If
+        Sb_BorrarArchivosEnDirectorio(_Path)
+    End Sub
+
+    Sub Sb_BorrarArchivosEnDirectorio(_Path As String)
+        Try
+            If Directory.Exists(_Path) Then
+                Dim archivos As String() = Directory.GetFiles(_Path)
+                For Each archivo As String In archivos
+                    Try
+                        File.Delete(archivo)
+                    Catch ex As Exception
+                        ' Manejar errores al intentar eliminar un archivo
+                        'Console.WriteLine($"Error al eliminar el archivo: {archivo} - {ex.Message}")
+                    End Try
+                Next
+            Else
+                'Console.WriteLine($"El directorio especificado no existe: {_Path}")
+            End If
+        Catch ex As Exception
+            ' Manejar errores generales
+            'Console.WriteLine($"Error al procesar el directorio: {_Path} - {ex.Message}")
+        End Try
+    End Sub
 
 End Class

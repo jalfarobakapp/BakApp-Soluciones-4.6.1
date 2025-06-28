@@ -208,6 +208,16 @@ Public Class Frm_Tickets_Mant
                 Return
             End If
 
+        Else
+
+            If Not _Cl_Tickets.Zw_Stk_Tipos.EsTicketUnico Then
+
+                If Not Fx_Tiene_Permiso(Me, "Tkts0008") Then
+                    Return
+                End If
+
+            End If
+
         End If
 
 
@@ -240,25 +250,34 @@ Public Class Frm_Tickets_Mant
             .AsignadoGrupo = Rdb_AsignadoGrupo.Checked
             .AsignadoAgente = Rdb_AsignadoAgente.Checked
 
-            Consulta_sql = "Select Top 1 Prod.Codigo,Prod.Descripcion,Prod.Numero,Prod.Ubicacion,Tks.CodFuncionario_Crea,NOKOFU" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Prod" & vbCrLf &
-                           "Inner Join " & _Global_BaseBk & "Zw_Stk_Tickets Tks On Tks.Id_Raiz = Prod.Id_Raiz" & vbCrLf &
-                           "Inner Join TABFU On KOFU = Tks.CodFuncionario_Crea" & vbCrLf &
-                           "Where Tks.Id <> " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id &
-                           " And Id_Tipo = " & .Id_Tipo &
-                           " And Prod.Empresa = '" & _TkProducto.Empresa & "' And Prod.Sucursal = '" & _TkProducto.Sucursal & "' And Prod.Bodega = '" & _TkProducto.Bodega & "' And Prod.Ubicacion = '" & _TkProducto.Ubicacion & "' And Codigo = '" & _TkProducto.Codigo & "' And Estado = 'ABIE'"
-            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            If .Id_Padre = 0 Then
 
-            If Not IsNothing(_Row) Then
+                Consulta_sql = "Select Top 1 Prod.Codigo,Prod.Descripcion,Prod.Numero,Prod.Ubicacion,Tks.CodFuncionario_Crea,NOKOFU" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Stk_Tickets_Producto Prod" & vbCrLf &
+                               "Inner Join " & _Global_BaseBk & "Zw_Stk_Tickets Tks On Tks.Id_Raiz = Prod.Id_Raiz" & vbCrLf &
+                               "Inner Join TABFU On KOFU = Tks.CodFuncionario_Crea" & vbCrLf &
+                               "Where Tks.Id <> " & _Cl_Tickets_Padre.Zw_Stk_Tickets.Id &
+                               " And Id_Tipo = " & .Id_Tipo &
+                               " And Prod.Empresa = '" & _TkProducto.Empresa & "'" &
+                               " And Prod.Sucursal = '" & _TkProducto.Sucursal & "'" &
+                               " And Prod.Bodega = '" & _TkProducto.Bodega & "'" &
+                               " And Prod.Ubicacion = '" & _TkProducto.Ubicacion & "'" &
+                               " And Codigo = '" & _TkProducto.Codigo & "'" &
+                               " And Estado = 'ABIE'"
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                MessageBoxEx.Show(Me, "Ticket " & _Row.Item("Numero") & vbCrLf &
-                                      "De: " & _Row.Item("CodFuncionario_Crea") & "-" & _Row.Item("NOKOFU").ToString.Trim() & vbCrLf &
-                                      "Producto: " & _TkProducto.Codigo.Trim & " - " & _Row.Item("Descripcion") & vbCrLf &
-                                      "Asunto: " & Txt_AreaTipo.Text.Trim & vbCrLf &
-                                      "Ubicación: " & _Row.Item("Ubicacion").ToString.Trim,
-                                      "Ya hay un ticket abierto por esta misma solución", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                If Not IsNothing(_Row) Then
 
-                Return
+                    MessageBoxEx.Show(Me, "Ticket " & _Row.Item("Numero") & vbCrLf &
+                                          "De: " & _Row.Item("CodFuncionario_Crea") & "-" & _Row.Item("NOKOFU").ToString.Trim() & vbCrLf &
+                                          "Producto: " & _TkProducto.Codigo.Trim & " - " & _Row.Item("Descripcion") & vbCrLf &
+                                          "Asunto: " & Txt_AreaTipo.Text.Trim & vbCrLf &
+                                          "Ubicación: " & _Row.Item("Ubicacion").ToString.Trim,
+                                          "Ya hay un ticket abierto por esta misma solución", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                    Return
+
+                End If
 
             End If
 
@@ -399,9 +418,10 @@ Public Class Frm_Tickets_Mant
             Txt_TidoNudoCierra.Visible = .ExigeDocCerrar
             Chk_ExigeDocCerrar.Visible = .ExigeDocCerrar
 
-            If String.IsNullOrWhiteSpace(Txt_Asunto.Text) Then
-                Txt_Asunto.Text = .Tipo.ToString.Trim
-            End If
+            'If String.IsNullOrWhiteSpace(Txt_Asunto.Text) Then
+            Txt_Asunto.Text = .Tipo.ToString.Trim
+            Txt_Asunto.ReadOnly = True
+            'End If
 
             Txt_Descripcion.Text = .RespuestaXDefecto
 
@@ -1018,7 +1038,7 @@ Public Class Frm_Tickets_Mant
         _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "",
                                  $"Where TIDO In({_TidosFormatted})")
         _Fm.Pro_Row_Producto = _Row_Producto
-        _Fm.Rdb_Estado_Todos.Checked = True
+        _Fm.Rdb_Estado_Todas.Checked = True
         _Fm.ShowDialog(Me)
         Dim _Row_Documento As DataRow = _Fm.Pro_Row_Documento_Seleccionado
         _Fm.Dispose()

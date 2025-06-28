@@ -105,6 +105,8 @@
         End Set
     End Property
 
+    Public Property SonProductos As Boolean
+
     Public Sub New(Formulario As Form)
         _Formulario = Formulario
         _Nombre_Encabezado_Informe = "FILTRO INFORME"
@@ -140,6 +142,7 @@
         Fm.Ver_Codigo = Ver_Codigo
         Fm.Chk_Seleccionar_Todos.Visible = _Seleccionar_Todos_Visible
         Fm.MostrarNumeracionDeRegistros = _MostrarNumeracionDeRegistros
+        Fm.SonProductos = SonProductos
         Fm.ShowDialog(_Formulario)
 
         If Fm.Pro_Filtrar Then

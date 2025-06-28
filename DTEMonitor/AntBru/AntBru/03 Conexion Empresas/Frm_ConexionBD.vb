@@ -19,7 +19,7 @@ Public Class Frm_ConexionBD
         End Get
     End Property
 
-    Private Sub BtnxSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnxSalir.Click
+    Private Sub BtnxSalir_Click(sender As System.Object, e As System.EventArgs) Handles BtnxSalir.Click
         RutEmpresaActiva = ""
         Me.Close()
     End Sub
@@ -43,7 +43,7 @@ Public Class Frm_ConexionBD
 
     End Sub
 
-    Private Sub Frm_ConexionesBD_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_ConexionesBD_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Directorio = Application.StartupPath
         Dim infoDirectorio As New DirectoryInfo(Directorio)
@@ -109,15 +109,15 @@ Public Class Frm_ConexionBD
         End With
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
         SeleccionarEmpresa()
     End Sub
 
-    Private Sub Grilla_CellEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
+    Private Sub Grilla_CellEnter(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
         TxtRazon.Text = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Razon").Value
     End Sub
 
-    Private Sub BtnAgregar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAgregar.Click
+    Private Sub BtnAgregar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAgregar.Click
         'Dim FM As New Frm_ConexionBD_02
         'FM.DsConexion = DatosConex
         'FM.Directorio = Directorio
@@ -125,7 +125,7 @@ Public Class Frm_ConexionBD
         'ActualizarGrilla()
     End Sub
 
-    Private Sub Grilla_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Grilla.KeyDown
+    Private Sub Grilla_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Grilla.KeyDown
 
         If e.KeyValue = Keys.Enter Then
 
@@ -203,7 +203,7 @@ Public Class Frm_ConexionBD
 
     'End Sub
 
-    Sub SeleccionarEmpresa(Optional ByVal _Mostrar_Info As Boolean = False)
+    Sub SeleccionarEmpresa(Optional _Mostrar_Info As Boolean = False)
 
         RutEmpresaActiva = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Rut").Value
         NombreConexionActiva = Grilla.Rows(Grilla.CurrentRow.Index).Cells("NombreConexion").Value
@@ -261,7 +261,7 @@ Public Class Frm_ConexionBD
 
 
 
-    Private Sub TxtRazon_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles TxtRazon.KeyDown
+    Private Sub TxtRazon_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles TxtRazon.KeyDown
 
         If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.Down Or e.KeyValue = Keys.Up Then
             Grilla.Focus()
@@ -271,7 +271,7 @@ Public Class Frm_ConexionBD
 
 
 
-    Private Sub BtnGenerateKey_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnGenerateKey.Click
+    Private Sub BtnGenerateKey_Click(sender As System.Object, e As System.EventArgs) Handles BtnGenerateKey.Click
 
         'Dim _NombreConexion As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("NombreConexion").Value
 
@@ -282,7 +282,7 @@ Public Class Frm_ConexionBD
 
     End Sub
 
-    Private Sub Frm_ConexionBD_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_ConexionBD_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             RutEmpresaActiva = ""
             Me.Close()

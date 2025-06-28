@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 
 Public Class Frm_InfoEnt_Ficha_Aseguradora
 
@@ -16,10 +16,10 @@ Public Class Frm_InfoEnt_Ficha_Aseguradora
 
     Public Sub New(ByVal Rten As String)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         Consulta_sql = "Select Top 1 RTEN As _Rut,NOKOEN As Razon," & _
                             "CAST(0 As Float) as Monto_Asignado,CAST('' As Varchar(3)) As Moneda," & _

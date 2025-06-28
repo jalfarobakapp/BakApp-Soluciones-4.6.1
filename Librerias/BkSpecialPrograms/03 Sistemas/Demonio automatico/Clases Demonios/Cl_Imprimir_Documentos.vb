@@ -94,6 +94,8 @@ Public Class Cl_Imprimir_Documentos
     Public Property ColaImpImprmirTodoNodejarCola As Boolean
 
     Public Property Log_Registro As String
+    Public Property Ejecutar As Boolean
+
     Public Sub New()
 
         _BackgroundWorker.WorkerReportsProgress = True
@@ -255,7 +257,7 @@ Public Class Cl_Imprimir_Documentos
 
                         If _Tido = "BLV" Or _Tido = "FCV" Then
                             Dim _Tipo_Definitivo_Vale As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Demonio_Cof_Estacion", "Tipo_Definitivo_Vale",
-                                                                  "NombreEquipo = '" & _Nombre_Equipo & "' And TipoDoc = '" & _Tido & "'")
+                                                                  "NombreEquipo = '" & _Nombre_Equipo & "' And TipoDoc = '" & _Tido & "'",, False)
 
                             Select Case _Tipo_Definitivo_Vale
                                 Case "D"
@@ -296,7 +298,7 @@ Public Class Cl_Imprimir_Documentos
                             "Fecha Between Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
                             "And Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102) And Picking = 0"
 
-            Dim _Tbl_Firmar As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
+            Dim _Tbl_Firmar As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql, False)
 
             For Each _Fl As DataRow In _Tbl_Firmar.Rows
 
@@ -316,7 +318,7 @@ Public Class Cl_Imprimir_Documentos
                     _Msg = "Firmado OK."
                 Else
                     _Msg = "El documento no fue firmado, pero quedo a la espera de ser firmado por el DTEMonitor " &
-                       "Informe de esta situación al administrador del sistema para que revise que el DTEMonitor este corriendo en algún equipo"
+                           "Informe de esta situación al administrador del sistema para que revise que el DTEMonitor este corriendo en algún equipo"
                 End If
                 Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion Set " &
                            "FirmarDTE = 0,Log_Firma = '" & _Msg & "', Id_Dte = " & _Id_Dte & vbCrLf &
@@ -412,8 +414,7 @@ Public Class Cl_Imprimir_Documentos
 
                     Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion" & vbCrLf &
                                    "Where NombreEquipo = '" & _Nombre_Equipo & "' And TipoDoc = '" & _Tido & "'"
-
-                    Dim _Row_Demonio_Cof_Estacion As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                    Dim _Row_Demonio_Cof_Estacion As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
                     Dim _IdPadre As Integer
 
@@ -426,7 +427,7 @@ Public Class Cl_Imprimir_Documentos
                     Consulta_Sql = "Select Top 1 * " &
                                    "From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion " &
                                    "Where IdPadre = " & _IdPadre & " And TipoDoc = '" & _Tido & "' And Codigo = '" & _Funcionario & "' And Picking = 0 " & _Vale_TransitorioStr & " And Impresora <> ''"
-                    Dim _Row_Demonio_Filtros_X_Estacion As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                    Dim _Row_Demonio_Filtros_X_Estacion As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
                     Dim _NombreFormato_Est = String.Empty
                     Dim _Nro_Copias_Impresion_Est = 0
@@ -452,10 +453,6 @@ Public Class Cl_Imprimir_Documentos
                         _Imprimir_Voucher_TJV = _Imprimir_Voucher_TJV_Est
                         _Imprimir_Voucher_TJV_Original_Transbak = _Imprimir_Voucher_TJV_Original_Transbak_Est
                     End If
-
-                    'If String.IsNullOrWhiteSpace(_IdMaeedo) Then
-                    '    _IdMaeedo = 0
-                    'End If
 
                     If Fx_Validar_Impresora(_Impresora) Then
 

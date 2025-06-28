@@ -2638,6 +2638,8 @@ Partial Public Class Ds_Matriz_Documentos
         
         Private columnPickear As Global.System.Data.DataColumn
         
+        Private columnNomContacto_Ent As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub New()
@@ -3298,6 +3300,14 @@ Partial Public Class Ds_Matriz_Documentos
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property NomContacto_EntColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnNomContacto_Ent
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -3412,9 +3422,10 @@ Partial Public Class Ds_Matriz_Documentos
                     ByVal PreVenta As Boolean,  _
                     ByVal IdCont As Integer,  _
                     ByVal Contenedor As String,  _
-                    ByVal Pickear As Boolean) As Encabezado_DocRow
+                    ByVal Pickear As Boolean,  _
+                    ByVal NomContacto_Ent As String) As Encabezado_DocRow
             Dim rowEncabezado_DocRow As Encabezado_DocRow = CType(Me.NewRow,Encabezado_DocRow)
-            Dim columnValuesArray() As Object = New Object() {Id_DocEnc, Post_Venta, Tipo_Documento, Modalidad, Empresa, Sucursal, TipoDoc, NroDocumento, CodEntidad, CodSucEntidad, Nombre_Entidad, FechaEmision, Fecha_1er_Vencimiento, FechaUltVencimiento, FechaRecepcion, FechaMaxRecepcion, Cuotas, Dias_1er_Vencimiento, Dias_Vencimiento, ListaPrecios, CodEntidadFisica, CodSucEntidadFisica, Nombre_Entidad_Fisica, Contacto_Ent, CodFuncionario, NomFuncionario, Centro_Costo, Moneda_Doc, Valor_Dolar, TotalNetoDoc, TotalIvaDoc, TotalIlaDoc, TotalBrutoDoc, Valor_Abonado, CantTotal, CantDesp, DocEn_Neto_Bruto, Es_ValeTransitorio, Es_Electronico, TipoMoneda, Vizado, TotalDsctoReal_Porc, CodUsuario_Permiso_Dscto, Idmaeedo_Origen, Fun_Auto_Deuda_Ven, Total_costo, Total_Porc_Margen, Total_Valor_Margen, Total_Porc_Dscto, Total_Sub_Total_Neto, Id_DocEnc_Padre, Bloquea_Doc, Fun_Auto_Stock_Ins, Fun_Auto_Cupo_Exe, SubTido, Fun_Auto_Fecha_Des, Stand_by, Fun_Auto_Sol_Compra, Tasadorig_Doc, Reserva_NroOCC, Reserva_Idmaeedo, Bodega_Destino, Libro, Fecha_Tributaria, TotalKilos, MinKgDesp, MinNetoDesp, RevFincred, IdFincred, MontoFincred, RevFincredEnt, TblTipoVenta, CodTipoVenta, Customizable, PreVenta, IdCont, Contenedor, Pickear}
+            Dim columnValuesArray() As Object = New Object() {Id_DocEnc, Post_Venta, Tipo_Documento, Modalidad, Empresa, Sucursal, TipoDoc, NroDocumento, CodEntidad, CodSucEntidad, Nombre_Entidad, FechaEmision, Fecha_1er_Vencimiento, FechaUltVencimiento, FechaRecepcion, FechaMaxRecepcion, Cuotas, Dias_1er_Vencimiento, Dias_Vencimiento, ListaPrecios, CodEntidadFisica, CodSucEntidadFisica, Nombre_Entidad_Fisica, Contacto_Ent, CodFuncionario, NomFuncionario, Centro_Costo, Moneda_Doc, Valor_Dolar, TotalNetoDoc, TotalIvaDoc, TotalIlaDoc, TotalBrutoDoc, Valor_Abonado, CantTotal, CantDesp, DocEn_Neto_Bruto, Es_ValeTransitorio, Es_Electronico, TipoMoneda, Vizado, TotalDsctoReal_Porc, CodUsuario_Permiso_Dscto, Idmaeedo_Origen, Fun_Auto_Deuda_Ven, Total_costo, Total_Porc_Margen, Total_Valor_Margen, Total_Porc_Dscto, Total_Sub_Total_Neto, Id_DocEnc_Padre, Bloquea_Doc, Fun_Auto_Stock_Ins, Fun_Auto_Cupo_Exe, SubTido, Fun_Auto_Fecha_Des, Stand_by, Fun_Auto_Sol_Compra, Tasadorig_Doc, Reserva_NroOCC, Reserva_Idmaeedo, Bodega_Destino, Libro, Fecha_Tributaria, TotalKilos, MinKgDesp, MinNetoDesp, RevFincred, IdFincred, MontoFincred, RevFincredEnt, TblTipoVenta, CodTipoVenta, Customizable, PreVenta, IdCont, Contenedor, Pickear, NomContacto_Ent}
             rowEncabezado_DocRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowEncabezado_DocRow)
             Return rowEncabezado_DocRow
@@ -3515,6 +3526,7 @@ Partial Public Class Ds_Matriz_Documentos
             Me.columnIdCont = MyBase.Columns("IdCont")
             Me.columnContenedor = MyBase.Columns("Contenedor")
             Me.columnPickear = MyBase.Columns("Pickear")
+            Me.columnNomContacto_Ent = MyBase.Columns("NomContacto_Ent")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -3676,6 +3688,8 @@ Partial Public Class Ds_Matriz_Documentos
             MyBase.Columns.Add(Me.columnContenedor)
             Me.columnPickear = New Global.System.Data.DataColumn("Pickear", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnPickear)
+            Me.columnNomContacto_Ent = New Global.System.Data.DataColumn("NomContacto_Ent", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnNomContacto_Ent)
             Me.columnEmpresa.Caption = "DataColumn1"
             Me.columnListaPrecios.Caption = "DataColumn1"
             Me.columnTotalNetoDoc.DefaultValue = CType(0R,Double)
@@ -10133,6 +10147,21 @@ Partial Public Class Ds_Matriz_Documentos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property NomContacto_Ent() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableEncabezado_Doc.NomContacto_EntColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'NomContacto_Ent' de la tabla 'Encabezado_Doc' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableEncabezado_Doc.NomContacto_EntColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Function IsId_DocEncNull() As Boolean
             Return Me.IsNull(Me.tableEncabezado_Doc.Id_DocEncColumn)
         End Function
@@ -11065,6 +11094,18 @@ Partial Public Class Ds_Matriz_Documentos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetPickearNull()
             Me(Me.tableEncabezado_Doc.PickearColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsNomContacto_EntNull() As Boolean
+            Return Me.IsNull(Me.tableEncabezado_Doc.NomContacto_EntColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetNomContacto_EntNull()
+            Me(Me.tableEncabezado_Doc.NomContacto_EntColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

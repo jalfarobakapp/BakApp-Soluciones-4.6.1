@@ -1063,19 +1063,42 @@ Public Class Clas_Hefesto_Dte_Libro
 
             Dim _Periodo As String = _Year & "-" & Fx_Rellena_ceros(_Month, 2)
             Dim _HefConsultas As New HefConsultas(_RutEmpresa, _Cn)
-            _Respuestas = _HefConsultas.RecuperarVentasRegistro(_Periodo)
+            '_Respuestas = _HefConsultas.RecuperarVentasRegistro(_Periodo)
 
             Dim _Ubic_Archivo As String = _Directorio_Hefesto & "\CONFIGURACION\Salida\" & RutEmpresa & "\" & _Periodo
 
-            If Not Directory.Exists(_Ubic_Archivo) Then
-                System.IO.Directory.CreateDirectory(_Ubic_Archivo)
+            Dim _Directorio As String = AppPath()
+            Try
+                Dim _ParentDir As String = Directory.GetParent(_Directorio)?.FullName
+                If String.IsNullOrEmpty(_ParentDir) Then
+                    Throw New Exception("No se puede retroceder una carpeta desde el directorio actual: " & _Directorio)
+                End If
+                _Directorio = _ParentDir
+                _Respuestas.EsCorrecto = True
+            Catch ex As Exception
+                _Respuestas.Mensaje = "Error al retroceder una carpeta: " & ex.Message
+                Return _Respuestas
+            End Try
+
+            _Ubic_Archivo = _Directorio & "\SIIRegCV\Empresas\" & RutEmpresa & "\Resultados\Ventas\" & _Periodo & "\RegistrosVentas.json"
+
+            ' Revisar si el archivo existe
+            If Not File.Exists(_Ubic_Archivo) Then
+                _Respuestas.Mensaje = "No se encontró el archivo: " & _Ubic_Archivo
+                _Respuestas.EsCorrecto = False
+                Return _Respuestas
             End If
+            '_Ubic_Archivo = _Directorio_Hefesto & "\CONFIGURACION\Salida\" & RutEmpresa & "\" & _Periodo
+
+            'If Not Directory.Exists(_Ubic_Archivo) Then
+            '    System.IO.Directory.CreateDirectory(_Ubic_Archivo)
+            'End If
 
             If _Respuestas.EsCorrecto Then
-                _Respuestas.Directorio = _Ubic_Archivo & "\RegistrosVentas.json"
-                File.WriteAllText(_Respuestas.Directorio,
-                                  _Respuestas.Resultado.ToString(),
-                                  Encoding.GetEncoding("ISO-8859-1"))
+                _Respuestas.Directorio = _Ubic_Archivo '& "\RegistrosVentas.json"
+                'File.WriteAllText(_Respuestas.Directorio,
+                '                  _Respuestas.Resultado.ToString(),
+                '                  Encoding.GetEncoding("ISO-8859-1"))
             End If
 
         Catch ex As Exception

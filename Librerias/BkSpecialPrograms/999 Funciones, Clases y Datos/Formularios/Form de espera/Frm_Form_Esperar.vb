@@ -11,6 +11,8 @@ Public Class Frm_Form_Esperar
         End Set
     End Property
 
+    Public Property Whait_Cursor As Boolean
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -27,10 +29,14 @@ Public Class Frm_Form_Esperar
     End Sub
 
     Private Sub Frm_Form_Esperar_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If Whait_Cursor Then
+            Me.Cursor = Cursors.WaitCursor
+        End If
         Timer1.Start()
         If BackgroundWorker1.IsBusy <> True Then
             BackgroundWorker1.RunWorkerAsync()
         End If
+        Me.Refresh()
     End Sub
 
     Private Sub BackgroundWorker1_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles BackgroundWorker1.DoWork
@@ -81,6 +87,10 @@ Public Class Frm_Form_Esperar
 
     Private Sub Frm_Form_Esperar_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
         Sb_Detener()
+        Timer1.Stop()
+        If Whait_Cursor Then
+            Me.Cursor = Cursors.Default
+        End If
     End Sub
 
 End Class

@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_BusquedaDocumento_Filtro
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -36,13 +36,13 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.CmbTipoDeDocumentos = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Btn_Documentos = New DevComponents.DotNetBar.ButtonX()
         Me.LblNroDocumento = New DevComponents.DotNetBar.LabelX()
-        Me.Rdb_Fecha_Emision_Cualquiera = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_Fecha_Emision_Desde_Hasta = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LblFecha1 = New DevComponents.DotNetBar.LabelX()
-        Me.LblFecha2 = New DevComponents.DotNetBar.LabelX()
-        Me.Rdb_Estado_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_FEmision_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_FEmision_EmitidosEntre = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Lbl_FEmision_Desde = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_FEmision_Hasta = New DevComponents.DotNetBar.LabelX()
+        Me.Rdb_Estado_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Estado_Vigente = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_Estado_Cerradas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_Estado_Cerrado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Funcionarios_Uno = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.CmbFuncionarios = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Btn_Funcionarios = New DevComponents.DotNetBar.ButtonX()
@@ -58,9 +58,9 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.Rdb_Ver_Primeros = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Ver_Ultimos = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Grupo_Fecha = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.DtpFechaFin = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
-        Me.DtpFechaInicio = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Grupo_FEmision = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Dtp_FEmision_Hasta = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Dtp_FEmision_Desde = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Grupo_Estado_Documento = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Grupo_Entidad = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -81,19 +81,29 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Chk_MostrarSoloDocClientesDelVendedor = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Wrn_MostrarSoloDocClientesDelVendedor = New DevComponents.DotNetBar.Controls.WarningBox()
+        Me.Grupo_FEntrega = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Dtp_FEntrega_Hasta = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Dtp_FEntrega_Desde = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Rdb_FEntrega_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_FEntrega_EmitidosEntre = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Lbl_FEntrega_Hasta = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_FEntrega_Desde = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_documento.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
-        Me.Grupo_Fecha.SuspendLayout()
-        CType(Me.DtpFechaFin, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DtpFechaInicio, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Grupo_FEmision.SuspendLayout()
+        CType(Me.Dtp_FEmision_Hasta, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_FEmision_Desde, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_Estado_Documento.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.Grupo_Entidad.SuspendLayout()
         Me.Grupo_Funcionario.SuspendLayout()
         Me.Grupo_Producto.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
+        Me.Grupo_FEntrega.SuspendLayout()
+        CType(Me.Dtp_FEntrega_Hasta, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_FEntrega_Desde, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Btn_Entidad_Una
@@ -106,7 +116,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Btn_Entidad_Una.Size = New System.Drawing.Size(31, 23)
         Me.Btn_Entidad_Una.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Entidad_Una.TabIndex = 28
-        Me.Btn_Entidad_Una.Tooltip = "Ver selección"
+        Me.Btn_Entidad_Una.Tooltip = "Ver selecciÃ³n"
         '
         'Rdb_Entidad_Una
         '
@@ -141,7 +151,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Txt_Entidad.Name = "Txt_Entidad"
         Me.Txt_Entidad.PreventEnterBeep = True
         Me.Txt_Entidad.ReadOnly = True
-        Me.Txt_Entidad.Size = New System.Drawing.Size(487, 22)
+        Me.Txt_Entidad.Size = New System.Drawing.Size(590, 22)
         Me.Txt_Entidad.TabIndex = 9
         '
         'ChkBuscarEntidadFisica
@@ -154,12 +164,12 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.ChkBuscarEntidadFisica.CheckBoxImageChecked = CType(resources.GetObject("ChkBuscarEntidadFisica.CheckBoxImageChecked"), System.Drawing.Image)
         Me.ChkBuscarEntidadFisica.FocusCuesEnabled = False
         Me.ChkBuscarEntidadFisica.ForeColor = System.Drawing.Color.Black
-        Me.ChkBuscarEntidadFisica.Location = New System.Drawing.Point(559, 15)
+        Me.ChkBuscarEntidadFisica.Location = New System.Drawing.Point(662, 17)
         Me.ChkBuscarEntidadFisica.Name = "ChkBuscarEntidadFisica"
         Me.ChkBuscarEntidadFisica.Size = New System.Drawing.Size(100, 23)
         Me.ChkBuscarEntidadFisica.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ChkBuscarEntidadFisica.TabIndex = 18
-        Me.ChkBuscarEntidadFisica.Text = "Es entidad física"
+        Me.ChkBuscarEntidadFisica.Text = "Es entidad fÃ­sica"
         '
         'Rdb_Entidad_Todas
         '
@@ -207,7 +217,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAceptar})
         Me.Bar1.Location = New System.Drawing.Point(0, 559)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(700, 41)
+        Me.Bar1.Size = New System.Drawing.Size(793, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 12
@@ -233,7 +243,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Tipo_Documento_Algunos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Rdb_Tipo_Documento_Algunos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Tipo_Documento_Algunos.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Tipo_Documento_Algunos.Location = New System.Drawing.Point(737, 87)
+        Me.Rdb_Tipo_Documento_Algunos.Location = New System.Drawing.Point(862, 270)
         Me.Rdb_Tipo_Documento_Algunos.Name = "Rdb_Tipo_Documento_Algunos"
         Me.Rdb_Tipo_Documento_Algunos.Size = New System.Drawing.Size(65, 23)
         Me.Rdb_Tipo_Documento_Algunos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -276,12 +286,12 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Btn_Documentos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Documentos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Documentos.Image = CType(resources.GetObject("Btn_Documentos.Image"), System.Drawing.Image)
-        Me.Btn_Documentos.Location = New System.Drawing.Point(808, 87)
+        Me.Btn_Documentos.Location = New System.Drawing.Point(933, 270)
         Me.Btn_Documentos.Name = "Btn_Documentos"
         Me.Btn_Documentos.Size = New System.Drawing.Size(31, 23)
         Me.Btn_Documentos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Documentos.TabIndex = 22
-        Me.Btn_Documentos.Tooltip = "Ver selección"
+        Me.Btn_Documentos.Tooltip = "Ver selecciÃ³n"
         '
         'LblNroDocumento
         '
@@ -295,95 +305,95 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.LblNroDocumento.Name = "LblNroDocumento"
         Me.LblNroDocumento.Size = New System.Drawing.Size(75, 23)
         Me.LblNroDocumento.TabIndex = 21
-        Me.LblNroDocumento.Text = "N° documento"
+        Me.LblNroDocumento.Text = "NÂ° documento"
         '
-        'Rdb_Fecha_Emision_Cualquiera
+        'Rdb_FEmision_Todas
         '
-        Me.Rdb_Fecha_Emision_Cualquiera.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_Fecha_Emision_Cualquiera.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Fecha_Emision_Cualquiera.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Fecha_Emision_Cualquiera.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_Fecha_Emision_Cualquiera.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Fecha_Emision_Cualquiera.Checked = True
-        Me.Rdb_Fecha_Emision_Cualquiera.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_Fecha_Emision_Cualquiera.CheckValue = "Y"
-        Me.Rdb_Fecha_Emision_Cualquiera.FocusCuesEnabled = False
-        Me.Rdb_Fecha_Emision_Cualquiera.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Fecha_Emision_Cualquiera.Location = New System.Drawing.Point(3, 3)
-        Me.Rdb_Fecha_Emision_Cualquiera.Name = "Rdb_Fecha_Emision_Cualquiera"
-        Me.Rdb_Fecha_Emision_Cualquiera.Size = New System.Drawing.Size(97, 23)
-        Me.Rdb_Fecha_Emision_Cualquiera.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Fecha_Emision_Cualquiera.TabIndex = 25
-        Me.Rdb_Fecha_Emision_Cualquiera.Text = "Todas"
-        '
-        'Rdb_Fecha_Emision_Desde_Hasta
-        '
-        Me.Rdb_Fecha_Emision_Desde_Hasta.BackColor = System.Drawing.Color.Transparent
+        Me.Rdb_FEmision_Todas.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.Rdb_Fecha_Emision_Desde_Hasta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Fecha_Emision_Desde_Hasta.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Fecha_Emision_Desde_Hasta.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_Fecha_Emision_Desde_Hasta.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Fecha_Emision_Desde_Hasta.FocusCuesEnabled = False
-        Me.Rdb_Fecha_Emision_Desde_Hasta.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Fecha_Emision_Desde_Hasta.Location = New System.Drawing.Point(3, 23)
-        Me.Rdb_Fecha_Emision_Desde_Hasta.Name = "Rdb_Fecha_Emision_Desde_Hasta"
-        Me.Rdb_Fecha_Emision_Desde_Hasta.Size = New System.Drawing.Size(97, 26)
-        Me.Rdb_Fecha_Emision_Desde_Hasta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Fecha_Emision_Desde_Hasta.TabIndex = 24
-        Me.Rdb_Fecha_Emision_Desde_Hasta.Text = "Emitidos entre"
+        Me.Rdb_FEmision_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_FEmision_Todas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_FEmision_Todas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_FEmision_Todas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_FEmision_Todas.Checked = True
+        Me.Rdb_FEmision_Todas.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_FEmision_Todas.CheckValue = "Y"
+        Me.Rdb_FEmision_Todas.FocusCuesEnabled = False
+        Me.Rdb_FEmision_Todas.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_FEmision_Todas.Location = New System.Drawing.Point(3, 3)
+        Me.Rdb_FEmision_Todas.Name = "Rdb_FEmision_Todas"
+        Me.Rdb_FEmision_Todas.Size = New System.Drawing.Size(97, 23)
+        Me.Rdb_FEmision_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_FEmision_Todas.TabIndex = 25
+        Me.Rdb_FEmision_Todas.Text = "Todas"
         '
-        'LblFecha1
+        'Rdb_FEmision_EmitidosEntre
         '
-        Me.LblFecha1.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LblFecha1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LblFecha1.ForeColor = System.Drawing.Color.Black
-        Me.LblFecha1.Location = New System.Drawing.Point(3, 57)
-        Me.LblFecha1.Name = "LblFecha1"
-        Me.LblFecha1.Size = New System.Drawing.Size(46, 23)
-        Me.LblFecha1.TabIndex = 22
-        Me.LblFecha1.Text = "Desde"
-        '
-        'LblFecha2
-        '
-        Me.LblFecha2.BackColor = System.Drawing.Color.Transparent
+        Me.Rdb_FEmision_EmitidosEntre.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.LblFecha2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LblFecha2.ForeColor = System.Drawing.Color.Black
-        Me.LblFecha2.Location = New System.Drawing.Point(3, 93)
-        Me.LblFecha2.Name = "LblFecha2"
-        Me.LblFecha2.Size = New System.Drawing.Size(36, 23)
-        Me.LblFecha2.TabIndex = 23
-        Me.LblFecha2.Text = "Hasta"
+        Me.Rdb_FEmision_EmitidosEntre.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_FEmision_EmitidosEntre.CheckBoxImageChecked = CType(resources.GetObject("Rdb_FEmision_EmitidosEntre.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_FEmision_EmitidosEntre.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_FEmision_EmitidosEntre.FocusCuesEnabled = False
+        Me.Rdb_FEmision_EmitidosEntre.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_FEmision_EmitidosEntre.Location = New System.Drawing.Point(3, 23)
+        Me.Rdb_FEmision_EmitidosEntre.Name = "Rdb_FEmision_EmitidosEntre"
+        Me.Rdb_FEmision_EmitidosEntre.Size = New System.Drawing.Size(97, 26)
+        Me.Rdb_FEmision_EmitidosEntre.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_FEmision_EmitidosEntre.TabIndex = 24
+        Me.Rdb_FEmision_EmitidosEntre.Text = "Rango de fechas"
         '
-        'Rdb_Estado_Todos
+        'Lbl_FEmision_Desde
         '
-        Me.Rdb_Estado_Todos.BackColor = System.Drawing.Color.Transparent
+        Me.Lbl_FEmision_Desde.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.Rdb_Estado_Todos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Estado_Todos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Estado_Todos.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_Estado_Todos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Estado_Todos.Checked = True
-        Me.Rdb_Estado_Todos.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_Estado_Todos.CheckValue = "Y"
-        Me.Rdb_Estado_Todos.FocusCuesEnabled = False
-        Me.Rdb_Estado_Todos.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Estado_Todos.Location = New System.Drawing.Point(3, 3)
-        Me.Rdb_Estado_Todos.Name = "Rdb_Estado_Todos"
-        Me.Rdb_Estado_Todos.Size = New System.Drawing.Size(74, 23)
-        Me.Rdb_Estado_Todos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Estado_Todos.TabIndex = 23
-        Me.Rdb_Estado_Todos.Text = "Todas"
+        Me.Lbl_FEmision_Desde.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_FEmision_Desde.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_FEmision_Desde.Location = New System.Drawing.Point(3, 57)
+        Me.Lbl_FEmision_Desde.Name = "Lbl_FEmision_Desde"
+        Me.Lbl_FEmision_Desde.Size = New System.Drawing.Size(46, 23)
+        Me.Lbl_FEmision_Desde.TabIndex = 22
+        Me.Lbl_FEmision_Desde.Text = "Desde"
+        '
+        'Lbl_FEmision_Hasta
+        '
+        Me.Lbl_FEmision_Hasta.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_FEmision_Hasta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_FEmision_Hasta.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_FEmision_Hasta.Location = New System.Drawing.Point(3, 93)
+        Me.Lbl_FEmision_Hasta.Name = "Lbl_FEmision_Hasta"
+        Me.Lbl_FEmision_Hasta.Size = New System.Drawing.Size(36, 23)
+        Me.Lbl_FEmision_Hasta.TabIndex = 23
+        Me.Lbl_FEmision_Hasta.Text = "Hasta"
+        '
+        'Rdb_Estado_Todas
+        '
+        Me.Rdb_Estado_Todas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Estado_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Estado_Todas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Estado_Todas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Estado_Todas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Estado_Todas.Checked = True
+        Me.Rdb_Estado_Todas.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_Estado_Todas.CheckValue = "Y"
+        Me.Rdb_Estado_Todas.FocusCuesEnabled = False
+        Me.Rdb_Estado_Todas.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Estado_Todas.Location = New System.Drawing.Point(3, 3)
+        Me.Rdb_Estado_Todas.Name = "Rdb_Estado_Todas"
+        Me.Rdb_Estado_Todas.Size = New System.Drawing.Size(58, 23)
+        Me.Rdb_Estado_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Estado_Todas.TabIndex = 23
+        Me.Rdb_Estado_Todas.Text = "Todas"
         '
         'Rdb_Estado_Vigente
         '
@@ -398,28 +408,28 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Estado_Vigente.ForeColor = System.Drawing.Color.Black
         Me.Rdb_Estado_Vigente.Location = New System.Drawing.Point(3, 32)
         Me.Rdb_Estado_Vigente.Name = "Rdb_Estado_Vigente"
-        Me.Rdb_Estado_Vigente.Size = New System.Drawing.Size(74, 31)
+        Me.Rdb_Estado_Vigente.Size = New System.Drawing.Size(58, 31)
         Me.Rdb_Estado_Vigente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Estado_Vigente.TabIndex = 22
         Me.Rdb_Estado_Vigente.Text = "Vigente"
         '
-        'Rdb_Estado_Cerradas
+        'Rdb_Estado_Cerrado
         '
-        Me.Rdb_Estado_Cerradas.BackColor = System.Drawing.Color.Transparent
+        Me.Rdb_Estado_Cerrado.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.Rdb_Estado_Cerradas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Estado_Cerradas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Estado_Cerradas.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_Estado_Cerradas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_Estado_Cerradas.FocusCuesEnabled = False
-        Me.Rdb_Estado_Cerradas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Estado_Cerradas.Location = New System.Drawing.Point(3, 69)
-        Me.Rdb_Estado_Cerradas.Name = "Rdb_Estado_Cerradas"
-        Me.Rdb_Estado_Cerradas.Size = New System.Drawing.Size(74, 23)
-        Me.Rdb_Estado_Cerradas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Estado_Cerradas.TabIndex = 21
-        Me.Rdb_Estado_Cerradas.Text = "Cerrado"
+        Me.Rdb_Estado_Cerrado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Estado_Cerrado.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Estado_Cerrado.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Estado_Cerrado.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Estado_Cerrado.FocusCuesEnabled = False
+        Me.Rdb_Estado_Cerrado.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Estado_Cerrado.Location = New System.Drawing.Point(3, 69)
+        Me.Rdb_Estado_Cerrado.Name = "Rdb_Estado_Cerrado"
+        Me.Rdb_Estado_Cerrado.Size = New System.Drawing.Size(58, 23)
+        Me.Rdb_Estado_Cerrado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Estado_Cerrado.TabIndex = 21
+        Me.Rdb_Estado_Cerrado.Text = "Cerrado"
         '
         'Rdb_Funcionarios_Uno
         '
@@ -448,7 +458,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.CmbFuncionarios.ItemHeight = 16
         Me.CmbFuncionarios.Location = New System.Drawing.Point(293, 13)
         Me.CmbFuncionarios.Name = "CmbFuncionarios"
-        Me.CmbFuncionarios.Size = New System.Drawing.Size(366, 22)
+        Me.CmbFuncionarios.Size = New System.Drawing.Size(469, 22)
         Me.CmbFuncionarios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.CmbFuncionarios.TabIndex = 25
         '
@@ -462,7 +472,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Btn_Funcionarios.Size = New System.Drawing.Size(31, 23)
         Me.Btn_Funcionarios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Funcionarios.TabIndex = 23
-        Me.Btn_Funcionarios.Tooltip = "Ver selección"
+        Me.Btn_Funcionarios.Tooltip = "Ver selecciÃ³n"
         '
         'Rdb_Funcionarios_Todos
         '
@@ -570,7 +580,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.TableLayoutPanel3.ColumnCount = 3
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 129.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Algunas, 2, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Todas, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.LabelX2, 0, 0)
@@ -592,7 +602,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Sucursal_Doc_Algunas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(255, 4)
+        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(252, 4)
         Me.Rdb_Sucursal_Doc_Algunas.Name = "Rdb_Sucursal_Doc_Algunas"
         Me.Rdb_Sucursal_Doc_Algunas.Size = New System.Drawing.Size(94, 17)
         Me.Rdb_Sucursal_Doc_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -612,7 +622,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Sucursal_Doc_Todas.CheckValue = "Y"
         Me.Rdb_Sucursal_Doc_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(163, 4)
+        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(160, 4)
         Me.Rdb_Sucursal_Doc_Todas.Name = "Rdb_Sucursal_Doc_Todas"
         Me.Rdb_Sucursal_Doc_Todas.Size = New System.Drawing.Size(85, 17)
         Me.Rdb_Sucursal_Doc_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -701,154 +711,154 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Ver_Ultimos.TabIndex = 22
         Me.Rdb_Ver_Ultimos.Text = "Ultimos"
         '
-        'Grupo_Fecha
+        'Grupo_FEmision
         '
-        Me.Grupo_Fecha.BackColor = System.Drawing.Color.White
-        Me.Grupo_Fecha.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.Grupo_Fecha.Controls.Add(Me.DtpFechaFin)
-        Me.Grupo_Fecha.Controls.Add(Me.DtpFechaInicio)
-        Me.Grupo_Fecha.Controls.Add(Me.Rdb_Fecha_Emision_Cualquiera)
-        Me.Grupo_Fecha.Controls.Add(Me.Rdb_Fecha_Emision_Desde_Hasta)
-        Me.Grupo_Fecha.Controls.Add(Me.LblFecha2)
-        Me.Grupo_Fecha.Controls.Add(Me.LblFecha1)
-        Me.Grupo_Fecha.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Fecha.Location = New System.Drawing.Point(413, 12)
-        Me.Grupo_Fecha.Name = "Grupo_Fecha"
-        Me.Grupo_Fecha.Size = New System.Drawing.Size(155, 155)
-        '
-        '
-        '
-        Me.Grupo_Fecha.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Grupo_Fecha.Style.BackColorGradientAngle = 90
-        Me.Grupo_Fecha.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Grupo_Fecha.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Grupo_Fecha.Style.BorderBottomWidth = 1
-        Me.Grupo_Fecha.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.Grupo_Fecha.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Grupo_Fecha.Style.BorderLeftWidth = 1
-        Me.Grupo_Fecha.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Grupo_Fecha.Style.BorderRightWidth = 1
-        Me.Grupo_Fecha.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Grupo_Fecha.Style.BorderTopWidth = 1
-        Me.Grupo_Fecha.Style.CornerDiameter = 4
-        Me.Grupo_Fecha.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Grupo_Fecha.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.Grupo_Fecha.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.Grupo_Fecha.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        Me.Grupo_FEmision.BackColor = System.Drawing.Color.White
+        Me.Grupo_FEmision.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_FEmision.Controls.Add(Me.Dtp_FEmision_Hasta)
+        Me.Grupo_FEmision.Controls.Add(Me.Dtp_FEmision_Desde)
+        Me.Grupo_FEmision.Controls.Add(Me.Rdb_FEmision_Todas)
+        Me.Grupo_FEmision.Controls.Add(Me.Rdb_FEmision_EmitidosEntre)
+        Me.Grupo_FEmision.Controls.Add(Me.Lbl_FEmision_Hasta)
+        Me.Grupo_FEmision.Controls.Add(Me.Lbl_FEmision_Desde)
+        Me.Grupo_FEmision.DisabledBackColor = System.Drawing.Color.Empty
+        Me.Grupo_FEmision.Location = New System.Drawing.Point(413, 12)
+        Me.Grupo_FEmision.Name = "Grupo_FEmision"
+        Me.Grupo_FEmision.Size = New System.Drawing.Size(141, 155)
         '
         '
         '
-        Me.Grupo_Fecha.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Grupo_FEmision.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Grupo_FEmision.Style.BackColorGradientAngle = 90
+        Me.Grupo_FEmision.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Grupo_FEmision.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_FEmision.Style.BorderBottomWidth = 1
+        Me.Grupo_FEmision.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.Grupo_FEmision.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_FEmision.Style.BorderLeftWidth = 1
+        Me.Grupo_FEmision.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_FEmision.Style.BorderRightWidth = 1
+        Me.Grupo_FEmision.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_FEmision.Style.BorderTopWidth = 1
+        Me.Grupo_FEmision.Style.CornerDiameter = 4
+        Me.Grupo_FEmision.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Grupo_FEmision.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.Grupo_FEmision.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.Grupo_FEmision.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
         '
         '
         '
-        Me.Grupo_Fecha.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Grupo_Fecha.TabIndex = 30
-        Me.Grupo_Fecha.Text = "Fecha de emisión"
-        '
-        'DtpFechaFin
-        '
-        Me.DtpFechaFin.BackColor = System.Drawing.Color.White
+        Me.Grupo_FEmision.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
         '
         '
         '
-        Me.DtpFechaFin.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.DtpFechaFin.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DtpFechaFin.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.DtpFechaFin.ButtonDropDown.Visible = True
-        Me.DtpFechaFin.ForeColor = System.Drawing.Color.Black
-        Me.DtpFechaFin.IsPopupCalendarOpen = False
-        Me.DtpFechaFin.Location = New System.Drawing.Point(56, 95)
+        Me.Grupo_FEmision.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Grupo_FEmision.TabIndex = 30
+        Me.Grupo_FEmision.Text = "Fecha de emisiÃ³n"
+        '
+        'Dtp_FEmision_Hasta
+        '
+        Me.Dtp_FEmision_Hasta.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.DtpFechaFin.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        Me.Dtp_FEmision_Hasta.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FEmision_Hasta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEmision_Hasta.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FEmision_Hasta.ButtonDropDown.Visible = True
+        Me.Dtp_FEmision_Hasta.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FEmision_Hasta.IsPopupCalendarOpen = False
+        Me.Dtp_FEmision_Hasta.Location = New System.Drawing.Point(42, 95)
         '
         '
         '
-        Me.DtpFechaFin.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DtpFechaFin.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.DtpFechaFin.MonthCalendar.ClearButtonVisible = True
+        Me.Dtp_FEmision_Hasta.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
         '
         '
         '
-        Me.DtpFechaFin.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.DtpFechaFin.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.DtpFechaFin.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.DtpFechaFin.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.DtpFechaFin.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.DtpFechaFin.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.DtpFechaFin.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DtpFechaFin.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
-        Me.DtpFechaFin.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.DtpFechaFin.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.DtpFechaFin.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        Me.Dtp_FEmision_Hasta.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEmision_Hasta.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FEmision_Hasta.MonthCalendar.ClearButtonVisible = True
         '
         '
         '
-        Me.DtpFechaFin.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.DtpFechaFin.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.DtpFechaFin.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.DtpFechaFin.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DtpFechaFin.MonthCalendar.TodayButtonVisible = True
-        Me.DtpFechaFin.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.DtpFechaFin.Name = "DtpFechaFin"
-        Me.DtpFechaFin.Size = New System.Drawing.Size(83, 22)
-        Me.DtpFechaFin.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.DtpFechaFin.TabIndex = 36
-        Me.DtpFechaFin.Value = New Date(2016, 7, 8, 16, 33, 0, 0)
-        '
-        'DtpFechaInicio
-        '
-        Me.DtpFechaInicio.BackColor = System.Drawing.Color.White
+        Me.Dtp_FEmision_Hasta.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FEmision_Hasta.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FEmision_Hasta.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FEmision_Hasta.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FEmision_Hasta.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FEmision_Hasta.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FEmision_Hasta.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEmision_Hasta.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
+        Me.Dtp_FEmision_Hasta.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FEmision_Hasta.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FEmision_Hasta.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
         '
         '
         '
-        Me.DtpFechaInicio.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.DtpFechaInicio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DtpFechaInicio.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.DtpFechaInicio.ButtonDropDown.Visible = True
-        Me.DtpFechaInicio.ForeColor = System.Drawing.Color.Black
-        Me.DtpFechaInicio.IsPopupCalendarOpen = False
-        Me.DtpFechaInicio.Location = New System.Drawing.Point(56, 58)
+        Me.Dtp_FEmision_Hasta.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FEmision_Hasta.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FEmision_Hasta.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FEmision_Hasta.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEmision_Hasta.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FEmision_Hasta.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FEmision_Hasta.Name = "Dtp_FEmision_Hasta"
+        Me.Dtp_FEmision_Hasta.Size = New System.Drawing.Size(83, 22)
+        Me.Dtp_FEmision_Hasta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FEmision_Hasta.TabIndex = 36
+        Me.Dtp_FEmision_Hasta.Value = New Date(2016, 7, 8, 16, 33, 0, 0)
+        '
+        'Dtp_FEmision_Desde
+        '
+        Me.Dtp_FEmision_Desde.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.DtpFechaInicio.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        Me.Dtp_FEmision_Desde.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FEmision_Desde.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEmision_Desde.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FEmision_Desde.ButtonDropDown.Visible = True
+        Me.Dtp_FEmision_Desde.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FEmision_Desde.IsPopupCalendarOpen = False
+        Me.Dtp_FEmision_Desde.Location = New System.Drawing.Point(41, 58)
         '
         '
         '
-        Me.DtpFechaInicio.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DtpFechaInicio.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.DtpFechaInicio.MonthCalendar.ClearButtonVisible = True
+        Me.Dtp_FEmision_Desde.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
         '
         '
         '
-        Me.DtpFechaInicio.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.DtpFechaInicio.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.DtpFechaInicio.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.DtpFechaInicio.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.DtpFechaInicio.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.DtpFechaInicio.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.DtpFechaInicio.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DtpFechaInicio.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
-        Me.DtpFechaInicio.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.DtpFechaInicio.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.DtpFechaInicio.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        Me.Dtp_FEmision_Desde.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEmision_Desde.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FEmision_Desde.MonthCalendar.ClearButtonVisible = True
         '
         '
         '
-        Me.DtpFechaInicio.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.DtpFechaInicio.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.DtpFechaInicio.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.DtpFechaInicio.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.DtpFechaInicio.MonthCalendar.TodayButtonVisible = True
-        Me.DtpFechaInicio.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.DtpFechaInicio.Name = "DtpFechaInicio"
-        Me.DtpFechaInicio.Size = New System.Drawing.Size(83, 22)
-        Me.DtpFechaInicio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.DtpFechaInicio.TabIndex = 35
-        Me.DtpFechaInicio.Value = New Date(2016, 7, 8, 16, 33, 0, 0)
+        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEmision_Desde.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
+        Me.Dtp_FEmision_Desde.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FEmision_Desde.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FEmision_Desde.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FEmision_Desde.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FEmision_Desde.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FEmision_Desde.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FEmision_Desde.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEmision_Desde.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FEmision_Desde.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FEmision_Desde.Name = "Dtp_FEmision_Desde"
+        Me.Dtp_FEmision_Desde.Size = New System.Drawing.Size(83, 22)
+        Me.Dtp_FEmision_Desde.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FEmision_Desde.TabIndex = 35
+        Me.Dtp_FEmision_Desde.Value = New Date(2016, 7, 8, 16, 33, 0, 0)
         '
         'Grupo_Estado_Documento
         '
@@ -856,9 +866,9 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Grupo_Estado_Documento.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Estado_Documento.Controls.Add(Me.TableLayoutPanel1)
         Me.Grupo_Estado_Documento.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Estado_Documento.Location = New System.Drawing.Point(574, 12)
+        Me.Grupo_Estado_Documento.Location = New System.Drawing.Point(707, 12)
         Me.Grupo_Estado_Documento.Name = "Grupo_Estado_Documento"
-        Me.Grupo_Estado_Documento.Size = New System.Drawing.Size(118, 155)
+        Me.Grupo_Estado_Documento.Size = New System.Drawing.Size(76, 155)
         '
         '
         '
@@ -888,7 +898,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         Me.Grupo_Estado_Documento.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_Estado_Documento.TabIndex = 31
-        Me.Grupo_Estado_Documento.Text = "Estado documento"
+        Me.Grupo_Estado_Documento.Text = "Estado"
         '
         'TableLayoutPanel1
         '
@@ -896,16 +906,16 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.TableLayoutPanel1.ColumnCount = 1
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Estado_Vigente, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Estado_Todos, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Estado_Cerradas, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Estado_Todas, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Estado_Cerrado, 0, 2)
         Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(17, 23)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 23)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 3
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(80, 89)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(64, 97)
         Me.TableLayoutPanel1.TabIndex = 33
         '
         'Grupo_Entidad
@@ -921,7 +931,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Grupo_Entidad.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Entidad.Location = New System.Drawing.Point(12, 173)
         Me.Grupo_Entidad.Name = "Grupo_Entidad"
-        Me.Grupo_Entidad.Size = New System.Drawing.Size(680, 100)
+        Me.Grupo_Entidad.Size = New System.Drawing.Size(771, 100)
         '
         '
         '
@@ -963,7 +973,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Chk_Todas_Sucursales.CheckBoxImageChecked = CType(resources.GetObject("Chk_Todas_Sucursales.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Todas_Sucursales.FocusCuesEnabled = False
         Me.Chk_Todas_Sucursales.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Todas_Sucursales.Location = New System.Drawing.Point(398, 15)
+        Me.Chk_Todas_Sucursales.Location = New System.Drawing.Point(501, 17)
         Me.Chk_Todas_Sucursales.Name = "Chk_Todas_Sucursales"
         Me.Chk_Todas_Sucursales.Size = New System.Drawing.Size(151, 23)
         Me.Chk_Todas_Sucursales.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -982,7 +992,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Grupo_Funcionario.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Funcionario.Location = New System.Drawing.Point(12, 279)
         Me.Grupo_Funcionario.Name = "Grupo_Funcionario"
-        Me.Grupo_Funcionario.Size = New System.Drawing.Size(680, 68)
+        Me.Grupo_Funcionario.Size = New System.Drawing.Size(771, 68)
         '
         '
         '
@@ -1025,7 +1035,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Grupo_Producto.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Producto.Location = New System.Drawing.Point(12, 353)
         Me.Grupo_Producto.Name = "Grupo_Producto"
-        Me.Grupo_Producto.Size = New System.Drawing.Size(680, 88)
+        Me.Grupo_Producto.Size = New System.Drawing.Size(771, 88)
         '
         '
         '
@@ -1067,7 +1077,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Btn_Producto_Uno.Size = New System.Drawing.Size(31, 23)
         Me.Btn_Producto_Uno.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Producto_Uno.TabIndex = 28
-        Me.Btn_Producto_Uno.Tooltip = "Ver selección"
+        Me.Btn_Producto_Uno.Tooltip = "Ver selecciÃ³n"
         '
         'Rdb_Producto_Todos
         '
@@ -1123,7 +1133,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Txt_Producto.Name = "Txt_Producto"
         Me.Txt_Producto.PreventEnterBeep = True
         Me.Txt_Producto.ReadOnly = True
-        Me.Txt_Producto.Size = New System.Drawing.Size(487, 22)
+        Me.Txt_Producto.Size = New System.Drawing.Size(590, 22)
         Me.Txt_Producto.TabIndex = 9
         '
         'Chk_Mostrar_Vales_Transitorios
@@ -1160,7 +1170,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 447)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(680, 74)
+        Me.GroupPanel1.Size = New System.Drawing.Size(771, 74)
         '
         '
         '
@@ -1190,7 +1200,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 36
-        Me.GroupPanel1.Text = "Ordenes de compra / Retiradores de mercadería / Patente asociada"
+        Me.GroupPanel1.Text = "Ordenes de compra / Retiradores de mercaderÃ­a / Patente asociada"
         '
         'Txt_Placapat
         '
@@ -1206,7 +1216,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Txt_Placapat.ButtonCustom2.Visible = True
         Me.Txt_Placapat.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Placapat.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Placapat.Location = New System.Drawing.Point(537, 23)
+        Me.Txt_Placapat.Location = New System.Drawing.Point(640, 23)
         Me.Txt_Placapat.MaxLength = 20
         Me.Txt_Placapat.Name = "Txt_Placapat"
         Me.Txt_Placapat.PreventEnterBeep = True
@@ -1222,7 +1232,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(537, 3)
+        Me.LabelX5.Location = New System.Drawing.Point(640, 3)
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.Size = New System.Drawing.Size(89, 23)
         Me.LabelX5.TabIndex = 6
@@ -1245,7 +1255,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Txt_CodRetirador.Name = "Txt_CodRetirador"
         Me.Txt_CodRetirador.PreventEnterBeep = True
         Me.Txt_CodRetirador.ReadOnly = True
-        Me.Txt_CodRetirador.Size = New System.Drawing.Size(391, 22)
+        Me.Txt_CodRetirador.Size = New System.Drawing.Size(496, 22)
         Me.Txt_CodRetirador.TabIndex = 9
         '
         'LabelX4
@@ -1260,7 +1270,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(161, 23)
         Me.LabelX4.TabIndex = 8
-        Me.LabelX4.Text = "Retirador de mercaderías"
+        Me.LabelX4.Text = "Retirador de mercaderÃ­as"
         '
         'Txt_Ocdo
         '
@@ -1309,7 +1319,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Chk_MostrarSoloDocClientesDelVendedor.CheckValue = "Y"
         Me.Chk_MostrarSoloDocClientesDelVendedor.FocusCuesEnabled = False
         Me.Chk_MostrarSoloDocClientesDelVendedor.ForeColor = System.Drawing.Color.Black
-        Me.Chk_MostrarSoloDocClientesDelVendedor.Location = New System.Drawing.Point(532, 527)
+        Me.Chk_MostrarSoloDocClientesDelVendedor.Location = New System.Drawing.Point(623, 527)
         Me.Chk_MostrarSoloDocClientesDelVendedor.Name = "Chk_MostrarSoloDocClientesDelVendedor"
         Me.Chk_MostrarSoloDocClientesDelVendedor.Size = New System.Drawing.Size(160, 33)
         Me.Chk_MostrarSoloDocClientesDelVendedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1322,18 +1332,235 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Wrn_MostrarSoloDocClientesDelVendedor.CloseButtonVisible = False
         Me.Wrn_MostrarSoloDocClientesDelVendedor.ForeColor = System.Drawing.Color.Black
         Me.Wrn_MostrarSoloDocClientesDelVendedor.Image = CType(resources.GetObject("Wrn_MostrarSoloDocClientesDelVendedor.Image"), System.Drawing.Image)
-        Me.Wrn_MostrarSoloDocClientesDelVendedor.Location = New System.Drawing.Point(250, 527)
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.Location = New System.Drawing.Point(341, 527)
         Me.Wrn_MostrarSoloDocClientesDelVendedor.Name = "Wrn_MostrarSoloDocClientesDelVendedor"
-        Me.Wrn_MostrarSoloDocClientesDelVendedor.OptionsText = "¿Que es esto?"
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.OptionsText = "Â¿Que es esto?"
         Me.Wrn_MostrarSoloDocClientesDelVendedor.Size = New System.Drawing.Size(276, 33)
         Me.Wrn_MostrarSoloDocClientesDelVendedor.TabIndex = 38
-        Me.Wrn_MostrarSoloDocClientesDelVendedor.Text = "<b>Alerta</b> Restricción de sistema"
+        Me.Wrn_MostrarSoloDocClientesDelVendedor.Text = "<b>Alerta</b> RestricciÃ³n de sistema"
+        '
+        'Grupo_FEntrega
+        '
+        Me.Grupo_FEntrega.BackColor = System.Drawing.Color.White
+        Me.Grupo_FEntrega.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_FEntrega.Controls.Add(Me.Dtp_FEntrega_Hasta)
+        Me.Grupo_FEntrega.Controls.Add(Me.Dtp_FEntrega_Desde)
+        Me.Grupo_FEntrega.Controls.Add(Me.Rdb_FEntrega_Todas)
+        Me.Grupo_FEntrega.Controls.Add(Me.Rdb_FEntrega_EmitidosEntre)
+        Me.Grupo_FEntrega.Controls.Add(Me.Lbl_FEntrega_Hasta)
+        Me.Grupo_FEntrega.Controls.Add(Me.Lbl_FEntrega_Desde)
+        Me.Grupo_FEntrega.DisabledBackColor = System.Drawing.Color.Empty
+        Me.Grupo_FEntrega.Location = New System.Drawing.Point(560, 12)
+        Me.Grupo_FEntrega.Name = "Grupo_FEntrega"
+        Me.Grupo_FEntrega.Size = New System.Drawing.Size(141, 155)
+        '
+        '
+        '
+        Me.Grupo_FEntrega.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Grupo_FEntrega.Style.BackColorGradientAngle = 90
+        Me.Grupo_FEntrega.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Grupo_FEntrega.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_FEntrega.Style.BorderBottomWidth = 1
+        Me.Grupo_FEntrega.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.Grupo_FEntrega.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_FEntrega.Style.BorderLeftWidth = 1
+        Me.Grupo_FEntrega.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_FEntrega.Style.BorderRightWidth = 1
+        Me.Grupo_FEntrega.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Grupo_FEntrega.Style.BorderTopWidth = 1
+        Me.Grupo_FEntrega.Style.CornerDiameter = 4
+        Me.Grupo_FEntrega.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Grupo_FEntrega.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.Grupo_FEntrega.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.Grupo_FEntrega.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.Grupo_FEntrega.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.Grupo_FEntrega.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Grupo_FEntrega.TabIndex = 39
+        Me.Grupo_FEntrega.Text = "Fecha de entrega/retiro"
+        '
+        'Dtp_FEntrega_Hasta
+        '
+        Me.Dtp_FEntrega_Hasta.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_FEntrega_Hasta.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FEntrega_Hasta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEntrega_Hasta.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FEntrega_Hasta.ButtonDropDown.Visible = True
+        Me.Dtp_FEntrega_Hasta.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FEntrega_Hasta.IsPopupCalendarOpen = False
+        Me.Dtp_FEntrega_Hasta.Location = New System.Drawing.Point(42, 95)
+        '
+        '
+        '
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FEntrega_Hasta.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FEntrega_Hasta.Name = "Dtp_FEntrega_Hasta"
+        Me.Dtp_FEntrega_Hasta.Size = New System.Drawing.Size(83, 22)
+        Me.Dtp_FEntrega_Hasta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FEntrega_Hasta.TabIndex = 36
+        Me.Dtp_FEntrega_Hasta.Value = New Date(2016, 7, 8, 16, 33, 0, 0)
+        '
+        'Dtp_FEntrega_Desde
+        '
+        Me.Dtp_FEntrega_Desde.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_FEntrega_Desde.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FEntrega_Desde.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEntrega_Desde.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FEntrega_Desde.ButtonDropDown.Visible = True
+        Me.Dtp_FEntrega_Desde.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FEntrega_Desde.IsPopupCalendarOpen = False
+        Me.Dtp_FEntrega_Desde.Location = New System.Drawing.Point(41, 58)
+        '
+        '
+        '
+        Me.Dtp_FEntrega_Desde.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FEntrega_Desde.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEntrega_Desde.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FEntrega_Desde.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_FEntrega_Desde.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FEntrega_Desde.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FEntrega_Desde.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FEntrega_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FEntrega_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FEntrega_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FEntrega_Desde.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEntrega_Desde.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
+        Me.Dtp_FEntrega_Desde.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FEntrega_Desde.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FEntrega_Desde.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FEntrega_Desde.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FEntrega_Desde.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FEntrega_Desde.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FEntrega_Desde.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FEntrega_Desde.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FEntrega_Desde.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FEntrega_Desde.Name = "Dtp_FEntrega_Desde"
+        Me.Dtp_FEntrega_Desde.Size = New System.Drawing.Size(83, 22)
+        Me.Dtp_FEntrega_Desde.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FEntrega_Desde.TabIndex = 35
+        Me.Dtp_FEntrega_Desde.Value = New Date(2016, 7, 8, 16, 33, 0, 0)
+        '
+        'Rdb_FEntrega_Todas
+        '
+        Me.Rdb_FEntrega_Todas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_FEntrega_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_FEntrega_Todas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_FEntrega_Todas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_FEntrega_Todas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_FEntrega_Todas.Checked = True
+        Me.Rdb_FEntrega_Todas.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_FEntrega_Todas.CheckValue = "Y"
+        Me.Rdb_FEntrega_Todas.FocusCuesEnabled = False
+        Me.Rdb_FEntrega_Todas.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_FEntrega_Todas.Location = New System.Drawing.Point(3, 3)
+        Me.Rdb_FEntrega_Todas.Name = "Rdb_FEntrega_Todas"
+        Me.Rdb_FEntrega_Todas.Size = New System.Drawing.Size(97, 23)
+        Me.Rdb_FEntrega_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_FEntrega_Todas.TabIndex = 25
+        Me.Rdb_FEntrega_Todas.Text = "Todas"
+        '
+        'Rdb_FEntrega_EmitidosEntre
+        '
+        Me.Rdb_FEntrega_EmitidosEntre.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_FEntrega_EmitidosEntre.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_FEntrega_EmitidosEntre.CheckBoxImageChecked = CType(resources.GetObject("Rdb_FEntrega_EmitidosEntre.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_FEntrega_EmitidosEntre.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_FEntrega_EmitidosEntre.FocusCuesEnabled = False
+        Me.Rdb_FEntrega_EmitidosEntre.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_FEntrega_EmitidosEntre.Location = New System.Drawing.Point(3, 23)
+        Me.Rdb_FEntrega_EmitidosEntre.Name = "Rdb_FEntrega_EmitidosEntre"
+        Me.Rdb_FEntrega_EmitidosEntre.Size = New System.Drawing.Size(97, 26)
+        Me.Rdb_FEntrega_EmitidosEntre.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_FEntrega_EmitidosEntre.TabIndex = 24
+        Me.Rdb_FEntrega_EmitidosEntre.Text = "Rango de fechas"
+        '
+        'Lbl_FEntrega_Hasta
+        '
+        Me.Lbl_FEntrega_Hasta.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_FEntrega_Hasta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_FEntrega_Hasta.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_FEntrega_Hasta.Location = New System.Drawing.Point(3, 93)
+        Me.Lbl_FEntrega_Hasta.Name = "Lbl_FEntrega_Hasta"
+        Me.Lbl_FEntrega_Hasta.Size = New System.Drawing.Size(36, 23)
+        Me.Lbl_FEntrega_Hasta.TabIndex = 23
+        Me.Lbl_FEntrega_Hasta.Text = "Hasta"
+        '
+        'Lbl_FEntrega_Desde
+        '
+        Me.Lbl_FEntrega_Desde.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_FEntrega_Desde.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_FEntrega_Desde.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_FEntrega_Desde.Location = New System.Drawing.Point(3, 57)
+        Me.Lbl_FEntrega_Desde.Name = "Lbl_FEntrega_Desde"
+        Me.Lbl_FEntrega_Desde.Size = New System.Drawing.Size(46, 23)
+        Me.Lbl_FEntrega_Desde.TabIndex = 22
+        Me.Lbl_FEntrega_Desde.Text = "Desde"
         '
         'Frm_BusquedaDocumento_Filtro
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(700, 600)
+        Me.ClientSize = New System.Drawing.Size(793, 600)
+        Me.Controls.Add(Me.Grupo_FEntrega)
         Me.Controls.Add(Me.Wrn_MostrarSoloDocClientesDelVendedor)
         Me.Controls.Add(Me.Chk_MostrarSoloDocClientesDelVendedor)
         Me.Controls.Add(Me.GroupPanel1)
@@ -1342,7 +1569,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Controls.Add(Me.Grupo_Funcionario)
         Me.Controls.Add(Me.Grupo_Entidad)
         Me.Controls.Add(Me.Grupo_Estado_Documento)
-        Me.Controls.Add(Me.Grupo_Fecha)
+        Me.Controls.Add(Me.Grupo_FEmision)
         Me.Controls.Add(Me.Grupo_documento)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Btn_Documentos)
@@ -1362,15 +1589,18 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Grupo_documento.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.Grupo_Fecha.ResumeLayout(False)
-        CType(Me.DtpFechaFin, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DtpFechaInicio, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Grupo_FEmision.ResumeLayout(False)
+        CType(Me.Dtp_FEmision_Hasta, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_FEmision_Desde, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Grupo_Estado_Documento.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.Grupo_Entidad.ResumeLayout(False)
         Me.Grupo_Funcionario.ResumeLayout(False)
         Me.Grupo_Producto.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
+        Me.Grupo_FEntrega.ResumeLayout(False)
+        CType(Me.Dtp_FEntrega_Hasta, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_FEntrega_Desde, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -1381,13 +1611,13 @@ Partial Class Frm_BusquedaDocumento_Filtro
     Friend WithEvents BtnAceptar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Rdb_Tipo_Documento_Algunos As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents LblNroDocumento As DevComponents.DotNetBar.LabelX
-    Public WithEvents Rdb_Fecha_Emision_Cualquiera As DevComponents.DotNetBar.Controls.CheckBoxX
-    Public WithEvents Rdb_Fecha_Emision_Desde_Hasta As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents LblFecha1 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents LblFecha2 As DevComponents.DotNetBar.LabelX
+    Public WithEvents Rdb_FEmision_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_FEmision_EmitidosEntre As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Lbl_FEmision_Desde As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_FEmision_Hasta As DevComponents.DotNetBar.LabelX
     Public WithEvents Rdb_Entidad_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_Estado_Vigente As DevComponents.DotNetBar.Controls.CheckBoxX
-    Public WithEvents Rdb_Estado_Cerradas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_Estado_Cerrado As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_Funcionarios_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_Funcionarios_Algunos As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_Tipo_Documento_Uno As DevComponents.DotNetBar.Controls.CheckBoxX
@@ -1399,8 +1629,8 @@ Partial Class Frm_BusquedaDocumento_Filtro
     Public WithEvents CmbFuncionarios As DevComponents.DotNetBar.Controls.ComboBoxEx
     Public WithEvents Btn_Entidad_Una As DevComponents.DotNetBar.ButtonX
     Public WithEvents Rdb_Entidad_Una As DevComponents.DotNetBar.Controls.CheckBoxX
-    Public WithEvents Rdb_Estado_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents Grupo_Fecha As DevComponents.DotNetBar.Controls.GroupPanel
+    Public WithEvents Rdb_Estado_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Grupo_FEmision As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grupo_Estado_Documento As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
     Public WithEvents Grupo_Funcionario As DevComponents.DotNetBar.Controls.GroupPanel
@@ -1419,8 +1649,8 @@ Partial Class Frm_BusquedaDocumento_Filtro
     Friend WithEvents Rdb_Sucursal_Doc_Algunas As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_Sucursal_Doc_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents DtpFechaFin As DevComponents.Editors.DateTimeAdv.DateTimeInput
-    Friend WithEvents DtpFechaInicio As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Dtp_FEmision_Hasta As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Dtp_FEmision_Desde As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Public WithEvents Chk_Todas_Sucursales As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Txt_Placapat As DevComponents.DotNetBar.Controls.TextBoxX
@@ -1432,4 +1662,11 @@ Partial Class Frm_BusquedaDocumento_Filtro
     Public WithEvents Chk_Mostrar_Vales_Transitorios As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Chk_MostrarSoloDocClientesDelVendedor As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Wrn_MostrarSoloDocClientesDelVendedor As DevComponents.DotNetBar.Controls.WarningBox
+    Friend WithEvents Grupo_FEntrega As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Dtp_FEntrega_Hasta As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Dtp_FEntrega_Desde As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Public WithEvents Rdb_FEntrega_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_FEntrega_EmitidosEntre As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Lbl_FEntrega_Hasta As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_FEntrega_Desde As DevComponents.DotNetBar.LabelX
 End Class

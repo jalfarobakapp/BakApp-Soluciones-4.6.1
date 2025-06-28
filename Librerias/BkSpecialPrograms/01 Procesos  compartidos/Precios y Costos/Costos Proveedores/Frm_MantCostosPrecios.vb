@@ -1119,7 +1119,7 @@ Public Class Frm_MantCostosPrecios
 
         Consulta_sql = "Insert Into TABRECPR (KOPR,RECARGO,KOEN,ECUARECAR,EMPRESA)
                         Select Codigo,Flete,Proveedor,'','" & ModEmpresa & "' From " & _Nombre_Tbl_Paso_Costos & " 
-                        Where Codigo Not In (Select KOPR From TABRECPR Where KOEN = '" & _CodProveedor & "') And Flete > 0 
+                        Where Codigo Not In (Select KOPR From TABRECPR Where KOEN = '" & _CodProveedor & "' And EMPRESA = '" & ModEmpresa & "') And Flete > 0 
 
                         Update TABRECPR Set EMPRESA = '" & ModEmpresa & "' 
                         Where KOEN = '" & _CodProveedor & "' And KOPR In (Select Codigo From " & _Nombre_Tbl_Paso_Costos & ") And EMPRESA = ''"
