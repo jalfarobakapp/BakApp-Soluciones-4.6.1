@@ -1,4 +1,6 @@
-﻿Public Class Cl_PPPPr
+﻿Imports System.Security.Claims
+
+Public Class Cl_PPPPr
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -97,12 +99,15 @@
             If _Msj.EsCorrecto Then
                 _Pppini = CType(_Msj.Tag, DataRow).Item("PPPINI")
                 _Stexistini = Math.Round(CType(_Msj.Tag, DataRow).Item("STEXISTINI"), 5)
-                Fepm = CType(_Msj.Tag, DataRow).Item("ULT_FEDOCU")
-                'If _Stexistini < 0 Then
-                '_Stexistini = 0
-                'Else
                 _Stexistini = _Stexistini
-                'End If
+
+                If IsDBNull(CType(_Msj.Tag, DataRow).Item("ULT_FEDOCU")) OrElse CType(_Msj.Tag, DataRow).Item("ULT_FEDOCU") Is Nothing Then
+                    Fepm = New DateTime(1900, 1, 1)
+                Else
+                    Fepm = CType(_Msj.Tag, DataRow).Item("ULT_FEDOCU")
+                End If
+
+
             Else
                 _Pppini = 0
                 _Stexistini = 0
