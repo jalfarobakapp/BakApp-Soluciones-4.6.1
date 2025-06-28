@@ -329,6 +329,7 @@
                         _Costotrib = _V_Entrada
                         _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
                         _Pm = Math.Round(_Pr_Pr_P, 3)
+                        Fepm = _Feemli
 
                         'Dim _PrecioCompra2 As Double = Math.Round(_Vaneli, 0) / _Cantidad
                         'Dim _DifStock As Double = _Saldo_Stock - _Cantidad
