@@ -943,6 +943,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_ListaMayoristaMinorista.vb" />
+    <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_RecalculoPPP.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Cl_ConfCorreoAviso.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfCorreoAviso.Designer.vb">
       <DependentUpon>Frm_Demonio_ConfCorreoAviso.vb</DependentUpon>

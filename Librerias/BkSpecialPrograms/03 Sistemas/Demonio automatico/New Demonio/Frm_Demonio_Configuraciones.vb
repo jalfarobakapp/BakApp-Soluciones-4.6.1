@@ -59,6 +59,7 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Chk_EnvDocSinRecep.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_ListasProgramadas.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_NVVAuto.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
+        AddHandler Chk_RecalculoPPP.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
 
         AddHandler Sp_EnvioCorreo.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_ColaImpDoc.Click, AddressOf Sp_SuperTabItem_Click
@@ -78,6 +79,7 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Sp_AsistenteCompras.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_ListasProgramadas.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_NVVAuto.Click, AddressOf Sp_SuperTabItem_Click
+        AddHandler Sp_RecalculoPPP.Click, AddressOf Sp_SuperTabItem_Click
 
         Input_DiasCOV.Enabled = Chk_COVCerrar.Checked
         Rdb_COV_FEmision.Enabled = Chk_COVCerrar.Checked
@@ -470,7 +472,7 @@ Public Class Frm_Demonio_Configuraciones
                 _Diariamente = True : _SucedeCada = True : _MinIntervalo = 2 : _MaxIntevalo = 2 : _TISegundos = True : _TIValorDefecto = "SS"
             Case "ArchivarDoc"
                 _Diariamente = True : _SucedeCada = True : _MinIntervalo = 30 : _MaxIntevalo = 30 : _TISegundos = True : _TIValorDefecto = "SS"
-            Case "ConsStock", "CierreDoc", "Prestashop_Total"
+            Case "ConsStock", "CierreDoc", "Prestashop_Total", "RecalculoPPP"
                 _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = True : _SucedeCada = False
                 _MinIntervalo = 5 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
             Case "FacAuto", "NVVAuto"
@@ -792,53 +794,6 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_CierreDoc.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_CierreDoc.Checked, _Actualizar, "CierreDoc",, False)
 
-        '_Sql.Sb_Parametro_Informe_Sql(Chk_COVCerrar, "Demonio",
-        '                              Chk_COVCerrar.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Chk_COVCerrar.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasCOV, "Demonio",
-        '                              Input_DiasCOV.Name, Class_SQLite.Enum_Type._Double,
-        '                              Input_DiasCOV.Value, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Chk_NVICerrar, "Demonio",
-        '                              Chk_NVICerrar.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Chk_NVICerrar.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasNVI, "Demonio",
-        '                              Input_DiasNVI.Name, Class_SQLite.Enum_Type._Double,
-        '                              Input_DiasNVI.Value, _Actualizar, "CierreDoc",, False)
-
-        '_Sql.Sb_Parametro_Informe_Sql(Chk_NVVCerrar, "Demonio",
-        '                              Chk_NVVCerrar.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Chk_NVVCerrar.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasNVV, "Demonio",
-        '                              Input_DiasNVV.Name, Class_SQLite.Enum_Type._Double,
-        '                              Input_DiasNVV.Value, _Actualizar, "CierreDoc",, False)
-
-        '_Sql.Sb_Parametro_Informe_Sql(Rdb_NVV_FEmision, "Demonio",
-        '                              Rdb_NVV_FEmision.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Rdb_NVV_FEmision.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Rdb_NVV_FDespacho, "Demonio",
-        '                              Rdb_NVV_FDespacho.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Rdb_NVV_FDespacho.Checked, _Actualizar, "CierreDoc",, False)
-
-        '_Sql.Sb_Parametro_Informe_Sql(Chk_NVV_EnviaCorreo, "Demonio",
-        '                              Chk_NVV_EnviaCorreo.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Chk_NVV_EnviaCorreo.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasNVV_EnviaCorreo, "Demonio",
-        '                              Input_DiasNVV_EnviaCorreo.Name, Class_SQLite.Enum_Type._Double,
-        '                              Input_DiasNVV_EnviaCorreo.Value, _Actualizar, "CierreDoc",, False)
-
-
-        '_Sql.Sb_Parametro_Informe_Sql(Chk_OCICerrar, "Demonio",
-        '                              Chk_OCICerrar.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Chk_OCICerrar.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasOCI, "Demonio",
-        '                              Input_DiasOCI.Name, Class_SQLite.Enum_Type._Double,
-        '                              Input_DiasOCI.Value, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Chk_OCCCerrar, "Demonio",
-        '                              Chk_OCCCerrar.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Chk_OCCCerrar.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasOCC, "Demonio",
-        '                              Input_DiasOCC.Name, Class_SQLite.Enum_Type._Double,
-        '                              Input_DiasOCC.Value, _Actualizar, "CierreDoc",, False)
 
         'Facturación automatica
         _Sql.Sb_Parametro_Informe_Sql(Chk_FacAuto, "Demonio",
@@ -967,6 +922,11 @@ Public Class Frm_Demonio_Configuraciones
         _Sql.Sb_Parametro_Informe_Sql(Txt_NvvAuto_Modalidad, "Demonio",
                                       Txt_NvvAuto_Modalidad.Name, Class_SQLite.Enum_Type._Text,
                                       Txt_NvvAuto_Modalidad.Text, _Actualizar, "NVVAuto",, False)
+
+        'Recalculo del Precio Promedio Ponderado
+        _Sql.Sb_Parametro_Informe_Sql(Chk_RecalculoPPP, "Demonio",
+                                      Chk_RecalculoPPP.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_RecalculoPPP.Checked, _Actualizar, "RecalculoPPP",, False)
 
     End Sub
 

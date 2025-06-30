@@ -28,6 +28,7 @@ Public Class Frm_Demonio_New
     Dim _Cl_Asistente_Compras As New Cl_Asistente_Compras
     Dim _Cl_Enviar_Doc_SinRecepcion As New Cl_Enviar_Doc_SinRecepcion
     Dim _Cl_NVVAutoExterna As New Cl_NVVAutoExterna
+    Dim _Cl_RecalculoPPP As New Cl_RecalculoPPP
 
     'Private _Timer_ImprimirDocumentos As Timer
     Private _Timer_ImprimirPicking As Timer
@@ -157,6 +158,10 @@ Public Class Frm_Demonio_New
             _DProgramaciones.Sp_NVVExterna.Activo = True
         End If
 
+        If Fx_InsertarRegistroDeProgramacion("RecalculoPPP", _DProgramaciones.Sp_RecalculoPPP, "Recalculo Precio Promedio Ponderado") Then
+            _DProgramaciones.Sp_RecalculoPPP.Activo = True
+        End If
+
         Dim _CantidadFilas As Integer = Listv_Programaciones.Items.Count
 
         If _CantidadFilas = 1 Then Me.Icon = My.Resources.Recursos_NewDemonio.emoticon_wink_number_1
@@ -242,6 +247,10 @@ Public Class Frm_Demonio_New
 
         If _DProgramaciones.Sp_NVVExterna.Activo Then
             Sb_Activar_ObjetosTimer(Timer_NVVAutoExterna, _DProgramaciones.Sp_NVVExterna)
+        End If
+
+        If _DProgramaciones.Sp_RecalculoPPP.Activo Then
+            Sb_Activar_ObjetosTimer(Timer_RecalculoPPP, _DProgramaciones.Sp_RecalculoPPP)
         End If
 
         Me.Refresh()
@@ -511,6 +520,11 @@ Public Class Frm_Demonio_New
 
                     _Descripcion = _CI_Programacion.Resumen
                     _IndexImagen = 15
+
+                Case "RecalculoPPP"
+
+                    _Descripcion = _CI_Programacion.Resumen
+                    _IndexImagen = 16
 
             End Select
 
@@ -947,7 +961,8 @@ Public Class Frm_Demonio_New
                 {Timer_Minimizar, Timer_Minimizar.Enabled},
                 {Timer_PrestaShopWeb, Timer_PrestaShopWeb.Enabled},
                 {Timer_NVVAutoExterna, Timer_NVVAutoExterna.Enabled},
-                {Timer_ImprimirDocumentos, Timer_ImprimirDocumentos.Enabled}
+                {Timer_ImprimirDocumentos, Timer_ImprimirDocumentos.Enabled},
+                {Timer_RecalculoPPP, Timer_RecalculoPPP.Enabled}
             }
 
 
@@ -1757,6 +1772,39 @@ Public Class Frm_Demonio_New
 
 #End Region
 
+
+#Region "RECALCULO DEL PRECIO PROMEDIO PONDERADO"
+
+        If _Cl_RecalculoPPP.Ejecutar Then
+
+            If Not _Cl_RecalculoPPP.Procesando Then
+
+                _Cl_RecalculoPPP.Procesando = True
+
+                Dim registro As String = "Ejecutando tarea recalculo de PPP a las: " & DateTime.Now.ToString()
+
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                _Cl_RecalculoPPP.Log_Registro = String.Empty
+                _Cl_RecalculoPPP.Sb_RecalcularPPP(Me)
+
+                registro = "Tarea ejecutada (Recalculo del PPP) a las: " & DateTime.Now.ToString()
+                registro += _Cl_RecalculoPPP.Log_Registro & vbCrLf
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                _Cl_RecalculoPPP.Procesando = False
+                _Cl_RecalculoPPP.Ejecutar = False
+
+                Sb_Activar_ObjetosTimer(Timer_RecalculoPPP, _DProgramaciones.Sp_RecalculoPPP)
+
+            End If
+
+        End If
+
+#End Region
+
         Timer_Ejecuciones.Start()
 
     End Sub
@@ -1812,6 +1860,12 @@ Public Class Frm_Demonio_New
     Private Sub Timer_ImprimirDocumentos_Tick(sender As Object, e As EventArgs) Handles Timer_ImprimirDocumentos.Tick
         If Fx_CumpleDiaSemana(_DProgramaciones.Sp_ColaImpDoc) Then
             _Cl_Imprimir_Documentos.Ejecutar = True
+        End If
+    End Sub
+
+    Private Sub Timer_RecalculoPPP_Tick(sender As Object, e As EventArgs) Handles Timer_RecalculoPPP.Tick
+        If Fx_CumpleDiaSemana(_DProgramaciones.Sp_RecalculoPPP) Then
+            _Cl_RecalculoPPP.Ejecutar = True
         End If
     End Sub
 End Class

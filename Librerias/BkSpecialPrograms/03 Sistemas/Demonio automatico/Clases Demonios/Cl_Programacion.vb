@@ -42,19 +42,19 @@ Public Class Grb_Programacion
     Sub Sb_Actualizar_programacion(Cl_Programacion As Cl_NewProgramacion)
 
         Dim _Nombre As String = Cl_Programacion.Nombre
-        Dim _FrecuDiaria As Integer = Cl_Programacion.FrecuDiaria
-        Dim _FrecuSemanal As Integer = Cl_Programacion.FrecuSemanal
-        Dim _Lunes As Integer = Cl_Programacion.Lunes
-        Dim _Martes As Integer = Cl_Programacion.Martes
-        Dim _Miercoles As Integer = Cl_Programacion.Miercoles
-        Dim _Jueves As Integer = Cl_Programacion.Jueves
-        Dim _Viernes As Integer = Cl_Programacion.Viernes
-        Dim _Sabado As Integer = Cl_Programacion.Sabado
-        Dim _Domingo As Integer = Cl_Programacion.Domingo
-        Dim _SucedeUnaVez As Integer = Cl_Programacion.SucedeUnaVez
+        Dim _FrecuDiaria As Integer = Convert.ToInt32(Cl_Programacion.FrecuDiaria)
+        Dim _FrecuSemanal As Integer = Convert.ToInt32(Cl_Programacion.FrecuSemanal)
+        Dim _Lunes As Integer = Convert.ToInt32(Cl_Programacion.Lunes)
+        Dim _Martes As Integer = Convert.ToInt32(Cl_Programacion.Martes)
+        Dim _Miercoles As Integer = Convert.ToInt32(Cl_Programacion.Miercoles)
+        Dim _Jueves As Integer = Convert.ToInt32(Cl_Programacion.Jueves)
+        Dim _Viernes As Integer = Convert.ToInt32(Cl_Programacion.Viernes)
+        Dim _Sabado As Integer = Convert.ToInt32(Cl_Programacion.Sabado)
+        Dim _Domingo As Integer = Convert.ToInt32(Cl_Programacion.Domingo)
+        Dim _SucedeUnaVez As Integer = Convert.ToInt32(Cl_Programacion.SucedeUnaVez)
         Dim _HoraUnaVez As String = Cl_Programacion.HoraUnaVez
-        Dim _SucedeCada As Integer = Cl_Programacion.SucedeCada
-        Dim _IntervaloCada As Integer = Cl_Programacion.IntervaloCada
+        Dim _SucedeCada As Integer = Convert.ToInt32(Cl_Programacion.SucedeCada)
+        Dim _IntervaloCada As Integer = Convert.ToInt32(Cl_Programacion.IntervaloCada)
         Dim _TipoIntervaloCada As String = Cl_Programacion.TipoIntervaloCada
         Dim _ApartirDeCada As String = Cl_Programacion.ApartirDeCada
         Dim _FinalizaCada As String = Cl_Programacion.FinalizaCada
@@ -149,5 +149,6 @@ Public Class DProgramaciones
     Public Property Sp_ListasProgramadas As New Cl_NewProgramacion
     Public Property Sp_EnviarDocSinRecepcion As New Cl_NewProgramacion
     Public Property Sp_NVVExterna As New Cl_NewProgramacion
+    Public Property Sp_RecalculoPPP As New Cl_NewProgramacion
 
 End Class

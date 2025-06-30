@@ -1,5 +1,4 @@
-﻿Imports DevComponents.DotNetBar
-
+﻿
 
 Public Class Cl_NVVAutoExterna
 
