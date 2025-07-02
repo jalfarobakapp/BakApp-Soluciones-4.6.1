@@ -29,6 +29,7 @@ CREATE TABLE [dbo].[Zw_Entidades](
     [NoCobrarPallet]                [bit]           NOT NULL DEFAULT(0),
     [ImpNoCobraVta]                 [bit]           NOT NULL DEFAULT(0),
     [ImpNoCobraVtaStr]              [varchar](13)   NOT NULL DEFAULT(''),
+    [NoUsaListasModalidad]          [bit]           NOT NULL DEFAULT(0),
  CONSTRAINT [PK_Zw_Entidades] PRIMARY KEY CLUSTERED 
 (
 	[CodEntidad] ASC,

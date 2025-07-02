@@ -19344,7 +19344,12 @@ Public Class Frm_Formulario_Documento
 
             _TblObservaciones.Rows(0).Item("Forma_pago") = _Forma_pago
 
-            _TblEncabezado.Rows(0).Item("Contacto_Ent") = _RowMaeedo_Origen.Item("RUTCONTACT")
+            Try
+                _TblEncabezado.Rows(0).Item("Contacto_Ent") = _RowMaeedo_Origen.Item("RUTCONTACT")
+            Catch ex As Exception
+                _TblEncabezado.Rows(0).Item("Contacto_Ent") = String.Empty
+            End Try
+
             Txt_Contacto.Text = _Sql.Fx_Trae_Dato("MAEENCON", "NOKOCON", "KOEN = '" & _RowEntidad.Item("KOEN") & "' And RUTCONTACT = '" & _TblEncabezado.Rows(0).Item("Contacto_Ent") & "'")
 
             Dim _CodEntidadFisica As String

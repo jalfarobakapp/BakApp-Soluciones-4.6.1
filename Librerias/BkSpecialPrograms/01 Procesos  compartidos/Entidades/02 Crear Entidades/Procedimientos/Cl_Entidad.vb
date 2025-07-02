@@ -182,6 +182,7 @@ Public Class Cl_Entidades
             .NoCobrarPallet = _Row.Item("NoCobrarPallet")
             .ImpNoCobraVta = _Row.Item("ImpNoCobraVta")
             .ImpNoCobraVtaStr = _Row.Item("ImpNoCobraVtaStr")
+            .NoUsaListasModalidad = _Row.Item("NoUsaListasModalidad")
 
         End With
 
