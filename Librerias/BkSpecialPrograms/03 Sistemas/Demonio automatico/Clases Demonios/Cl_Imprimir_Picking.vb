@@ -324,10 +324,17 @@ Public Class Cl_Imprimir_Picking
 
                         If Fx_Validar_Impresora(_Impresora) Then
 
-                            _Log_Error += Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
+                            '_Log_Error += Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
+                            '                                            _IdMaeedo, False, False, _Impresora, False, _Nro_Copias_Impresion, False, "")
+
+                            Dim _Mensaje As LsValiciones.Mensajes
+
+                            _Mensaje = Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
                                                                         _IdMaeedo, False, False, _Impresora, False, _Nro_Copias_Impresion, False, "")
 
-                            If String.IsNullOrEmpty(_Log_Error) Then
+                            _Log_Error += _Mensaje.Mensaje
+
+                            If _Mensaje.EsCorrecto Then
 
                                 _Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion" & Space(1) &
                                                 "Set Revizado_Demonio = 1,Impreso = 1,Error_Al_Imprimir = 0," & vbCrLf &
@@ -345,17 +352,17 @@ Public Class Cl_Imprimir_Picking
                                                 "Set Revizado_Demonio = 1,Impreso = 0,Error_Al_Imprimir = 1," &
                                                 "Log_Error = '" & _Log_Error & "'" & vbCrLf &
                                                 "Where Id = " & _Id
-                                If _Sql.Ej_consulta_IDU(_Consulta_sql, False) Then
-                                    Log_Registro += _Log_Error & vbCrLf
-                                Else
-                                    Log_Registro += _Sql.Pro_Error & vbCrLf
+                                    If _Sql.Ej_consulta_IDU(_Consulta_sql, False) Then
+                                        Log_Registro += _Log_Error & vbCrLf
+                                    Else
+                                        Log_Registro += _Sql.Pro_Error & vbCrLf
+                                    End If
+
                                 End If
 
-                            End If
+                            Else
 
-                        Else
-
-                            _Log_Error += "No existe impresora seleccionada (" & _Impresora & "). Revise la configuración de los funcionarios en cola de impresión"
+                                _Log_Error += "No existe impresora seleccionada (" & _Impresora & "). Revise la configuración de los funcionarios en cola de impresión"
 
                             _Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion" & Space(1) &
                                             "Set Revizado_Demonio = 1,Impreso = 0,Error_Al_Imprimir = 1,Log_Error = '" & _Log_Error & "'" & vbCrLf &

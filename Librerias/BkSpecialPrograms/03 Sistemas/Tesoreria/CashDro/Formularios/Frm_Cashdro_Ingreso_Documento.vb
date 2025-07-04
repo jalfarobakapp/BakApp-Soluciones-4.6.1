@@ -3014,14 +3014,27 @@ Public Class Frm_Cashdro_Ingreso_Documento
         Dim _RowNombreFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
         Dim _NombreFormato = _RowNombreFormato.Item("NombreFormato")
 
-        Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+        'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+        '                                                        False, False, _Impresora, False, 0, False, "")
+
+        'If String.IsNullOrEmpty(Trim(_Imprime)) Then
+        '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_CashDro_Operaciones Set Impreso = 1" & vbCrLf &
+        '                   "Where Idmaeedo = " & _Idmaeedo
+        'Else
+        '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_CashDro_Operaciones Set Impreso = 0,Log_Error = '" & _Imprime & "'" & vbCrLf &
+        '                   "Where Idmaeedo = " & _Idmaeedo
+        'End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
                                                                 False, False, _Impresora, False, 0, False, "")
 
-        If String.IsNullOrEmpty(Trim(_Imprime)) Then
+        If _Mensaje.EsCorrecto Then
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_CashDro_Operaciones Set Impreso = 1" & vbCrLf &
                            "Where Idmaeedo = " & _Idmaeedo
         Else
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_CashDro_Operaciones Set Impreso = 0,Log_Error = '" & _Imprime & "'" & vbCrLf &
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_CashDro_Operaciones Set Impreso = 0,Log_Error = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                            "Where Idmaeedo = " & _Idmaeedo
         End If
 

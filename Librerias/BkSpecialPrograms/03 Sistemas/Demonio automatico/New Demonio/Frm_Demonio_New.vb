@@ -1772,7 +1772,6 @@ Public Class Frm_Demonio_New
 
 #End Region
 
-
 #Region "RECALCULO DEL PRECIO PROMEDIO PONDERADO"
 
         If _Cl_RecalculoPPP.Ejecutar Then

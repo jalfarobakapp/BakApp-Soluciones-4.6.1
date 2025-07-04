@@ -497,11 +497,22 @@ Public Class Frm_St_EncIngreso
 
                 If Fm.Formato_Seleccionado Then
                     _NombreFormato = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
-                    Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
-                                                                       False, True, "", False, 0, False, "")
 
-                    If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                        MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                    'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+                    '                                                   False, True, "", False, 0, False, "")
+
+                    'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                    '    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                    '                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    'End If
+
+                    Dim _Mensaje As LsValiciones.Mensajes
+
+                    _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+                                                              False, True, "", False, 0, False, "")
+
+                    If Not _Mensaje.EsCorrecto Then
+                        MessageBox.Show(Me, _Mensaje.Mensaje, "Problemas al Imprimir",
                                        MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     End If
 

@@ -4235,10 +4235,20 @@ Public Module Crear_Documentos_Desde_Otro
 
                     If Not String.IsNullOrEmpty(_Impresora) Then
 
-                        Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(_Formulario, _NombreFormato, _Idmaeedo,
+                        'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(_Formulario, _NombreFormato, _Idmaeedo,
+                        '                                                    False, False, _Impresora, False, 0, False, _Subtido)
+                        'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                        '    MessageBox.Show(_Formulario, _Imprime, "Problemas al Imprimir",
+                        '               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        'End If
+
+                        Dim _Mensaje As LsValiciones.Mensajes
+
+                        _Mensaje = Fx_Enviar_A_Imprimir_Documento(_Formulario, _NombreFormato, _Idmaeedo,
                                                                             False, False, _Impresora, False, 0, False, _Subtido)
-                        If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                            MessageBox.Show(_Formulario, _Imprime, "Problemas al Imprimir",
+
+                        If Not _Mensaje.EsCorrecto Then
+                            MessageBox.Show(_Formulario, _Mensaje.Mensaje, "Problemas al Imprimir",
                                        MessageBoxButtons.OK, MessageBoxIcon.Stop)
                         End If
 
@@ -4317,9 +4327,25 @@ Public Module Crear_Documentos_Desde_Otro
 
                         Dim _Impresora As String = _DtsImp.Tables("Conf_Impresora_Local").Rows(0).Item("Impresora").ToString
 
-                        Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(_Formulario, _NombreFormato, _Idmaeedo,
+                        'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(_Formulario, _NombreFormato, _Idmaeedo,
+                        '                                                    False, False, _Impresora, False, 0, False, _Subtido)
+                        'If String.IsNullOrEmpty(Trim(_Imprime)) Then
+                        '    Return
+                        'Else
+
+                        '    If System.IO.File.Exists(_Archivo) Then Kill(_Archivo)
+
+                        '    MessageBoxEx.Show(_Formulario, "Problemas al Imprimir en impresora seleccionada: " & _Impresora, "Imprimir",
+                        '                      MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, _Formulario.TopMost)
+
+                        'End If
+
+                        Dim _Mensaje As LsValiciones.Mensajes
+
+                        _Mensaje = Fx_Enviar_A_Imprimir_Documento(_Formulario, _NombreFormato, _Idmaeedo,
                                                                             False, False, _Impresora, False, 0, False, _Subtido)
-                        If String.IsNullOrEmpty(Trim(_Imprime)) Then
+
+                        If _Mensaje.EsCorrecto Then
                             Return
                         Else
 
@@ -4329,6 +4355,7 @@ Public Module Crear_Documentos_Desde_Otro
                                               MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, _Formulario.TopMost)
 
                         End If
+
 
                     End If
 
@@ -4372,12 +4399,23 @@ Public Module Crear_Documentos_Desde_Otro
 
                         _Seleccionar_Impresora = Chk_Imprimir_Cambiar.Checked
 
-                        Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(_Formulario, _NombreFormato, _Idmaeedo,
+                        'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(_Formulario, _NombreFormato, _Idmaeedo,
+                        '                                                False, _Seleccionar_Impresora, _ImpresosaPredt, False,
+                        '                                                0, False, _Subtido)
+
+                        'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                        '    MessageBoxEx.Show(_Formulario, _Imprime, "Problemas al Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop,
+                        '              MessageBoxDefaultButton.Button1, _Formulario.TopMost)
+                        'End If
+
+                        Dim _Mensaje As LsValiciones.Mensajes
+
+                        _Mensaje = Fx_Enviar_A_Imprimir_Documento(_Formulario, _NombreFormato, _Idmaeedo,
                                                                         False, _Seleccionar_Impresora, _ImpresosaPredt, False,
                                                                         0, False, _Subtido)
 
-                        If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                            MessageBoxEx.Show(_Formulario, _Imprime, "Problemas al Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop,
+                        If Not _Mensaje.EsCorrecto Then
+                            MessageBoxEx.Show(_Formulario, _Mensaje.Mensaje, "Problemas al Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop,
                                       MessageBoxDefaultButton.Button1, _Formulario.TopMost)
                         End If
 
@@ -7095,6 +7133,31 @@ Public Module Crear_Documentos_Desde_Otro
         Next
 
         Return documentosPermitidos
+
+    End Function
+
+    Public Function Fx_Escribir_LogErrores(ex As Exception)
+
+        Dim st As New System.Diagnostics.StackTrace(ex, True)
+        Dim frame As System.Diagnostics.StackFrame = st.GetFrame(0)
+        'Dim line As Integer = If(frame IsNot Nothing, frame.GetFileLineNumber(), 0)
+        'Dim fileName As String = If(frame IsNot Nothing, frame.GetFileName(), "")
+        Dim methodName As String = If(frame IsNot Nothing, frame.GetMethod().Name, "")
+        'Dim className As String = Me.GetType().Name
+        Dim errorMsg As String = String.Format("Mensaje: {0}", st)
+
+        ' Guardar el error en un archivo de log
+        Try
+            Dim logDir As String = IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LOG_ERRORES")
+            If Not IO.Directory.Exists(logDir) Then
+                IO.Directory.CreateDirectory(logDir)
+            End If
+            Dim logFileName As String = String.Format("Log_Error_Bakapp_{0:ddMMyyyy_HHmmss}.txt", Now)
+            Dim logFilePath As String = IO.Path.Combine(logDir, logFileName)
+            IO.File.WriteAllText(logFilePath, errorMsg & vbCrLf & ex.ToString())
+        Catch logEx As Exception
+            ' Si falla el log, no hacer nada para no interrumpir el flujo
+        End Try
 
     End Function
 

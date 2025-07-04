@@ -301,10 +301,17 @@ Public Class Cl_Dem_Imprimir
 
                     If Fx_Validar_Impresora(_Impresora) Then
 
-                        _Log_Error += Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
+                        '_Log_Error += Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
+                        '                                            _IdMaeedo, False, False, _Impresora, False, _Nro_Copias_Impresion, False, "")
+
+                        Dim _Mensaje As LsValiciones.Mensajes
+
+                        _Mensaje = Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
                                                                     _IdMaeedo, False, False, _Impresora, False, _Nro_Copias_Impresion, False, "")
 
-                        If String.IsNullOrEmpty(_Log_Error) Then
+                        _Log_Error += _Mensaje.Mensaje
+
+                        If _Mensaje.Mensaje Then
 
                             If _Imprimir_Voucher_TJV Or _Imprimir_Voucher_TJV_Original_Transbak Then
                                 Sb_Imprimir_Voucher_Tarjeta(_IdMaeedo, _Log_Error, _Impresora, _Imprimir_Voucher_TJV_Original_Transbak)
@@ -629,10 +636,17 @@ Public Class Cl_Dem_Imprimir
 
                         If Fx_Validar_Impresora(_Impresora) Then
 
-                            _Log_Error += Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
+                            '_Log_Error += Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
+                            '                                            _IdMaeedo, False, False, _Impresora, False, _Nro_Copias_Impresion, False, "")
+
+                            Dim _Mensaje As LsValiciones.Mensajes
+
+                            _Mensaje = Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
                                                                         _IdMaeedo, False, False, _Impresora, False, _Nro_Copias_Impresion, False, "")
 
-                            If String.IsNullOrEmpty(_Log_Error) Then
+                            _Log_Error += _Mensaje.Mensaje
+
+                            If _Mensaje.EsCorrecto Then
 
                                 _Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion" & Space(1) &
                                                 "Set Revizado_Demonio = 1,Impreso = 1,Error_Al_Imprimir = 0," & vbCrLf &

@@ -216,110 +216,122 @@ Public Class Clas_Imprimir_Documento
 
     Sub Sb_Traer_Datos_Para_Impresion_De_Documentos_Venta_Compra()
 
-        If _Imprimir_Cedible Then
-            printDoc.DocumentName = _NombreDocumento & " Cedible"
-        Else
-            printDoc.DocumentName = _NombreDocumento
-        End If
+        Try
 
-        ' Llena Formato del Encabezado
-        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
-                       "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'"
-        _TblEncForm = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+            If _Imprimir_Cedible Then
+                printDoc.DocumentName = _NombreDocumento & " Cedible"
+            Else
+                printDoc.DocumentName = _NombreDocumento
+            End If
 
-        _Es_Picking = _TblEncForm.Rows(0).Item("Es_Picking")
+            ' Llena Formato del Encabezado
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Format_01 With (Nolock)" & vbCrLf &
+                           "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'"
+            _TblEncForm = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
-        Dim _Condicion_Extra_Maeddo As String
-        Dim _Filtro_Productos As String
-        Dim _Orden_Detalle As String
+            _Es_Picking = _TblEncForm.Rows(0).Item("Es_Picking")
 
-        If _Es_Picking Then
-            _Condicion_Extra_Maeddo = "And SULIDO = '" & ModSucursal & "' And BOSULIDO = '" & ModBodega & "' Order By UBICACION"
-            _Orden_Detalle = "Order By UBICACION"
-        Else
-            _Condicion_Extra_Maeddo = "Order By IDMAEDDO"
-            _Orden_Detalle = "Order By NULIDO"
-        End If
+            Dim _Condicion_Extra_Maeddo As String
+            Dim _Filtro_Productos As String
+            Dim _Orden_Detalle As String
 
-        Dim _Reg As Boolean = CInt(_Sql.Fx_Cuenta_Registros("MAEEDOOB", "IDMAEEDO = " & _IdDoc))
+            If _Es_Picking Then
+                _Condicion_Extra_Maeddo = "And SULIDO = '" & ModSucursal & "' And BOSULIDO = '" & ModBodega & "' Order By UBICACION"
+                _Orden_Detalle = "Order By UBICACION"
+            Else
+                _Condicion_Extra_Maeddo = "Order By IDMAEDDO"
+                _Orden_Detalle = "Order By NULIDO"
+            End If
 
-        If Not _Reg Then
-            Consulta_sql = "Insert Into MAEEDOOB (IDMAEEDO,OBDO,CPDO,OCDO) VALUES (" & _IdDoc & ",'','','')"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-        End If
+            Dim _Reg As Boolean = CInt(_Sql.Fx_Cuenta_Registros("MAEEDOOB", "IDMAEEDO = " & _IdDoc))
 
-        Dim _Detalle_Doc_Incluye = _TblEncForm.Rows(0).Item("Detalle_Doc_Incluye")
+            If Not _Reg Then
+                Consulta_sql = "Insert Into MAEEDOOB (IDMAEEDO,OBDO,CPDO,OCDO) VALUES (" & _IdDoc & ",'','','')"
+                _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
-        If _Detalle_Doc_Incluye = "SP" Then _Filtro_Productos = "Where TICT = ''" '_Imprimir_Fila = (_Tict = "")
-        If _Detalle_Doc_Incluye = "SP2" Then _Filtro_Productos = "Where TIPR <> 'SSN'" '_Imprimir_Fila = (_Tict = "")
-        If _Detalle_Doc_Incluye = "PD" Then _Filtro_Productos = "Where TICT In ('','D')" '_Imprimir_Fila = (_Tict = "D")
-        If _Detalle_Doc_Incluye = "PR" Then _Filtro_Productos = "Where TICT In ('','R')" '_Imprimir_Fila = (_Tict = "R")
-        If _Detalle_Doc_Incluye = "TD" Then _Filtro_Productos = String.Empty ' _Imprimir_Fila = True
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New Exception(_Sql.Pro_Error)
+                End If
+            End If
 
-        Consulta_sql = My.Resources.Recursos_Formato_Documento.SQLQuery_Traer_Documento_Para_Imprimir
-        Consulta_sql = Replace(Consulta_sql, "#Idmaeedo#", _IdDoc)
-        Consulta_sql = Replace(Consulta_sql, "#Condicion_Extra_Maeddo#", _Condicion_Extra_Maeddo)
-        Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", _Filtro_Productos)
-        Consulta_sql = Replace(Consulta_sql, "#Orden_Detalle#", _Orden_Detalle)
+            Dim _Detalle_Doc_Incluye = _TblEncForm.Rows(0).Item("Detalle_Doc_Incluye")
 
-        Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+            If _Detalle_Doc_Incluye = "SP" Then _Filtro_Productos = "Where TICT = ''" '_Imprimir_Fila = (_Tict = "")
+            If _Detalle_Doc_Incluye = "SP2" Then _Filtro_Productos = "Where TIPR <> 'SSN'" '_Imprimir_Fila = (_Tict = "")
+            If _Detalle_Doc_Incluye = "PD" Then _Filtro_Productos = "Where TICT In ('','D')" '_Imprimir_Fila = (_Tict = "D")
+            If _Detalle_Doc_Incluye = "PR" Then _Filtro_Productos = "Where TICT In ('','R')" '_Imprimir_Fila = (_Tict = "R")
+            If _Detalle_Doc_Incluye = "TD" Then _Filtro_Productos = String.Empty ' _Imprimir_Fila = True
 
-        _Row_Encabezado = _Ds.Tables(0).Rows(0)
+            Consulta_sql = My.Resources.Recursos_Formato_Documento.SQLQuery_Traer_Documento_Para_Imprimir
+            Consulta_sql = Replace(Consulta_sql, "#Idmaeedo#", _IdDoc)
+            Consulta_sql = Replace(Consulta_sql, "#Condicion_Extra_Maeddo#", _Condicion_Extra_Maeddo)
+            Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", _Filtro_Productos)
+            Consulta_sql = Replace(Consulta_sql, "#Orden_Detalle#", _Orden_Detalle)
 
-        _Tbl_Encabezado = _Ds.Tables(0)
-        _Tbl_Detalle = _Ds.Tables(1)
-        _Tbl_Referencias = _Ds.Tables(2)
-        _Tbl_Detalle_Agrupado = _Ds.Tables(3)
-        _Tbl_Doc_Asociados_Recargos = _Ds.Tables(4)
+            Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
-        If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Format_01", "IncluyePickWms") Then
+            _Row_Encabezado = _Ds.Tables(0).Rows(0)
+            _Tbl_Encabezado = _Ds.Tables(0)
+            _Tbl_Detalle = _Ds.Tables(1)
+            _Tbl_Referencias = _Ds.Tables(2)
+            _Tbl_Detalle_Agrupado = _Ds.Tables(3)
+            _Tbl_Doc_Asociados_Recargos = _Ds.Tables(4)
 
-            Dim _IncluyePickWms As Boolean = _TblEncForm.Rows(0).Item("IncluyePickWms")
+            If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Format_01", "IncluyePickWms") Then
 
-            If _IncluyePickWms Then
+                Dim _IncluyePickWms As Boolean = _TblEncForm.Rows(0).Item("IncluyePickWms")
 
-                Consulta_sql = "Select Idmaeedo As 'IDMAEEDO','' As 'MOPPPR',Idmaeddo As 'IDMAEDDO',0 As 'PRCT'," &
-                               "Tido,Nudo,Sku,Sku_desc,Tag,Udtrpr,Qty,Loc,Cont," & vbCrLf &
-                               "RIGHT('00000' + CAST(ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS VARCHAR( 5)), 5) AS NULIDO" & vbCrLf &
-                               "From " & _Global_BaseBk & "Zw_Stmp_DetPick Where Idmaeedo = " & _IdDoc
+                If _IncluyePickWms Then
 
-                _Tbl_Detalle = _Sql.Fx_Get_DataTable(Consulta_sql)
+                    Consulta_sql = "Select Idmaeedo As 'IDMAEEDO','' As 'MOPPPR',Idmaeddo As 'IDMAEDDO',0 As 'PRCT'," &
+                                   "Tido,Nudo,Sku,Sku_desc,Tag,Udtrpr,Qty,Loc,Cont," & vbCrLf &
+                                   "RIGHT('00000' + CAST(ROW_NUMBER() OVER (ORDER BY (SELECT NULL)) AS VARCHAR( 5)), 5) AS NULIDO" & vbCrLf &
+                                   "From " & _Global_BaseBk & "Zw_Stmp_DetPick With (Nolock) Where Idmaeedo = " & _IdDoc
+
+                    _Tbl_Detalle = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+
+                    If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                        Throw New Exception(_Sql.Pro_Error)
+                    End If
+
+                End If
+
+            Else
+
+                For Each _Fl As DataRow In _Tbl_Detalle.Rows
+
+                    Dim _Ficha As String = String.Empty
+                    Consulta_sql = "Select * From MAEFICHD With (Nolock) Where KOPR = '" & _Fl.Item("KOPR") & "'"
+
+                    Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+
+                    If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                        Throw New Exception(_Sql.Pro_Error)
+                    End If
+
+                    For Each _Fichas As DataRow In _Tbl_Maefichd.Rows
+                        _Ficha += _Fichas.Item("FICHA")
+                    Next
+
+                    _Ficha = NuloPorNro(_Ficha, "")
+                    _Ficha = Replace(_Ficha, Chr(13), " ")
+                    _Ficha = Replace(_Ficha, vbLf, " ")
+                    _Ficha = Replace(_Ficha, vbCrLf, " ")
+
+                    Try
+                        _Fl.Item("MAEFICHD") = _Ficha.Trim
+                    Catch ex As Exception
+                        _Fl.Item("MAEFICHD") = String.Empty
+                    End Try
+
+                Next
 
             End If
 
-        Else
 
-            For Each _Fl As DataRow In _Tbl_Detalle.Rows
+            _Row_Encabezado = Fx_New_Inserta_Funciones_Bk_En_Encabezado(_Row_Encabezado)
 
-                Dim _Ficha As String = String.Empty
-                Consulta_sql = "Select * From MAEFICHD Where KOPR = '" & _Fl.Item("KOPR") & "'"
-
-                Dim _Tbl_Maefichd As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-                For Each _Fichas As DataRow In _Tbl_Maefichd.Rows
-                    _Ficha += _Fichas.Item("FICHA")
-                Next
-
-                _Ficha = NuloPorNro(_Ficha, "")
-                _Ficha = Replace(_Ficha, Chr(13), " ")
-                _Ficha = Replace(_Ficha, vbLf, " ")
-                _Ficha = Replace(_Ficha, vbCrLf, " ")
-
-                Try
-                    _Fl.Item("MAEFICHD") = _Ficha.Trim
-                Catch ex As Exception
-                    _Fl.Item("MAEFICHD") = String.Empty
-                End Try
-
-            Next
-
-        End If
-
-
-
-        _Row_Encabezado = Fx_New_Inserta_Funciones_Bk_En_Encabezado(_Row_Encabezado)
-
-        Consulta_sql = "Select Fdt.*,
+            Consulta_sql = "Select Fdt.*,
 	                       Isnull(Fx.Funcion_Bk,'') As Funcion_Bk,
 	                       Isnull(Fx.Formato,'') As Formato_Fx,
 	                       Isnull(Fx.Campo,'') As Campo,
@@ -328,14 +340,18 @@ Public Class Clas_Imprimir_Documento
 	                       Isnull(Fx.Es_Descuento,0) As Es_Descuento,
 	                       Isnull(Fx.SqlQuery,'') As SqlQuery, 
 	                       Isnull(Fx.SQL_Personalizada,0) As SQL_Personalizada
-                    From " & _Global_BaseBk & "Zw_Format_02 Fdt
-                    Left Join " & _Global_BaseBk & "Zw_Format_Fx Fx On Fdt.Funcion = Fx.Nombre_Funcion
+                    From " & _Global_BaseBk & "Zw_Format_02 Fdt With (Nolock)
+                    Left Join " & _Global_BaseBk & "Zw_Format_Fx Fx With (Nolock) On Fdt.Funcion = Fx.Nombre_Funcion
                     Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Fdt.Seccion In ('E','P')"
 
-        _Tbl_Fx_Encabezado = _Sql.Fx_Get_DataTable(Consulta_sql)
+            _Tbl_Fx_Encabezado = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
-        ' Llena formato del detalle
-        Consulta_sql = "Select Fdt.*,
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New Exception(_Sql.Pro_Error)
+            End If
+
+            ' Llena formato del detalle
+            Consulta_sql = "Select Fdt.*,
 	                       Isnull(Fx.Funcion_Bk,'') As Funcion_Bk,
 	                       Isnull(Fx.Formato,'') As Formato_Fx,
 	                       Isnull(Fx.Campo,'') As Campo,
@@ -344,18 +360,22 @@ Public Class Clas_Imprimir_Documento
 	                       Isnull(Fx.Es_Descuento,0) As Es_Descuento,
 	                       Isnull(Fx.SqlQuery,'') As SqlQuery, 
 	                       Isnull(Fx.SQL_Personalizada,0) As SQL_Personalizada
-                    From " & _Global_BaseBk & "Zw_Format_02 Fdt
-                    Left Join " & _Global_BaseBk & "Zw_Format_Fx Fx On Fdt.Funcion = Fx.Nombre_Funcion
+                    From " & _Global_BaseBk & "Zw_Format_02 Fdt With (Nolock)
+                    Left Join " & _Global_BaseBk & "Zw_Format_Fx Fx With (Nolock) On Fdt.Funcion = Fx.Nombre_Funcion
                     Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Fdt.Seccion = 'D'" & vbCrLf &
-                    "Order by Fdt.Orden_Detalle"
+                        "Order by Fdt.Orden_Detalle"
 
-        _Tbl_Fx_Detalle = _Sql.Fx_Get_DataTable(Consulta_sql)
+            _Tbl_Fx_Detalle = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
-        If _TipoDoc.Contains("GRP") Or _TipoDoc.Contains("GDP") Then
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New Exception(_Sql.Pro_Error)
+            End If
 
-            Consulta_sql = "Declare @Id_Ot Int 
+            If _TipoDoc.Contains("GRP") Or _TipoDoc.Contains("GDP") Then
 
-                            Set @Id_Ot = (Select Distinct Id_Ot_Padre From " & _Global_BaseBk & "Zw_St_OT_Encabezado Where Idmaeedo_" & _TipoDoc & "_PRE = " & _IdDoc & ")
+                Consulta_sql = "Declare @Id_Ot Int 
+
+                            Set @Id_Ot = (Select Distinct Id_Ot_Padre From " & _Global_BaseBk & "Zw_St_OT_Encabezado With (Nolock) Where Idmaeedo_" & _TipoDoc & "_PRE = " & _IdDoc & ")
 
                             Select ZEnc.Id_Ot, ZEnc.Nro_Ot,ZEnc.Empresa,ZEnc.Sucursal,ZEnc.Bodega,ZEnc.CodEntidad,ZEnc.SucEntidad,ZEnc.Rten,ZEnc.Rut, 
                             NOKOEN As Cliente,ZEnc.Fecha_Ingreso,ZEnc.Fecha_Compromiso,ZEnc.Fecha_Entrega,ZEnc.Fecha_Cierre,ZEnc.CodEstado, 
@@ -367,18 +387,49 @@ Public Class Clas_Imprimir_Documento
                             Chk_Equipo_Abandonado_Por_El_Cliente,Chk_No_Existe_COV_Ni_NVV,Codigo,Descripcion,Idmaeedo_GRP_PRE,Idmaeedo_GDP_PRE,
 	                        Defecto_segun_cliente, Reparacion_a_realizar, Defecto_encontrado, Reparacion_Realizada, Chk_no_se_pudo_reparar, 
                             Motivo_no_reparo,Nota_Etapa_01,Nota_Etapa_02,Nota_Etapa_03,Nota_Etapa_04,Nota_Etapa_05,Nota_Etapa_06,Nota_Etapa_07,Nota_Etapa_08
-                            From " & _Global_BaseBk & "Zw_St_OT_Encabezado ZEnc
-	                            Inner Join " & _Global_BaseBk & "Zw_St_OT_Notas ZNotas On ZEnc.Id_Ot = ZNotas.Id_Ot
-		                            Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones ZCarac1 On ZCarac1.Tabla = 'ESTADOS_ST' And ZCarac1.CodigoTabla = CodEstado
-			                            Left Join " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller ZTecAsig On ZTecAsig.CodFuncionario = ZEnc.CodTecnico_Asignado
-				                            Left Join " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller ZTecRep On ZTecRep.CodFuncionario = ZEnc.CodTecnico_Asignado
+                            From " & _Global_BaseBk & "Zw_St_OT_Encabezado ZEnc With (Nolock)
+	                            Inner Join " & _Global_BaseBk & "Zw_St_OT_Notas ZNotas With (Nolock) On ZEnc.Id_Ot = ZNotas.Id_Ot
+		                            Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones ZCarac1 With (Nolock) On ZCarac1.Tabla = 'ESTADOS_ST' And ZCarac1.CodigoTabla = CodEstado
+			                            Left Join " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller ZTecAsig With (Nolock) On ZTecAsig.CodFuncionario = ZEnc.CodTecnico_Asignado
+				                            Left Join " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller ZTecRep With (Nolock) On ZTecRep.CodFuncionario = ZEnc.CodTecnico_Asignado
 					                            Left Join MAEEN On KOEN = ZEnc.CodEntidad And SUEN = ZEnc.SucEntidad
-						                                Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones ZCarac2 On ZCarac2.Tabla = 'ES_ENTREGA_ST' And ZCarac2.CodigoTabla =  Cod_Estado_Entrega
+						                                Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones ZCarac2 With (Nolock) On ZCarac2.Tabla = 'ES_ENTREGA_ST' And ZCarac2.CodigoTabla =  Cod_Estado_Entrega
                             Where ZEnc.Id_Ot = @Id_Ot"
 
-            _Row_Servicio_Tecnico_Enc = _Sql.Fx_Get_DataRow(Consulta_sql)
+                _Row_Servicio_Tecnico_Enc = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
-        End If
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New Exception(_Sql.Pro_Error)
+                End If
+
+            End If
+
+        Catch ex As Exception
+            'Dim st As New System.Diagnostics.StackTrace(ex, True)
+            'Dim frame As System.Diagnostics.StackFrame = st.GetFrame(0)
+            ''Dim line As Integer = If(frame IsNot Nothing, frame.GetFileLineNumber(), 0)
+            ''Dim fileName As String = If(frame IsNot Nothing, frame.GetFileName(), "")
+            'Dim methodName As String = If(frame IsNot Nothing, frame.GetMethod().Name, "")
+            'Dim className As String = Me.GetType().Name
+            'Dim errorMsg As String = String.Format("Clase: {0}" & vbCrLf &
+            '                                       "Método: {1}" & vbCrLf &
+            '                                       "Mensaje: {2}", className, methodName, st)
+
+            '' Guardar el error en un archivo de log
+            'Try
+            '    Dim logDir As String = IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LOG_ERRORES")
+            '    If Not IO.Directory.Exists(logDir) Then
+            '        IO.Directory.CreateDirectory(logDir)
+            '    End If
+            '    Dim logFileName As String = String.Format("Log_Error_Bakapp_{0:ddMMyyyy_HHmmss}.txt", Now)
+            '    Dim logFilePath As String = IO.Path.Combine(logDir, logFileName)
+            '    IO.File.WriteAllText(logFilePath, errorMsg & vbCrLf & ex.ToString())
+            'Catch logEx As Exception
+            '    ' Si falla el log, no hacer nada para no interrumpir el flujo
+            'End Try
+            Fx_Escribir_LogErrores(ex)
+            Throw New Exception(ex.Message, ex)
+        End Try
 
     End Sub
 
@@ -529,8 +580,6 @@ Public Class Clas_Imprimir_Documento
 
             _NombreFormato = Trim(_NombreFormato)
 
-
-
             If CBool(_TblEncForm.Rows.Count) Then
 
                 Dim FilaEnc = _TblEncForm.Rows(0)
@@ -562,7 +611,11 @@ Public Class Clas_Imprimir_Documento
                                    "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Seccion = 'D'" & vbCrLf &
                                    "Group By Orden_Detalle"
 
-                    Dim _Ds_Format_02 As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+                    Dim _Ds_Format_02 As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql, False)
+
+                    If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                        Throw New Exception(_Sql.Pro_Error)
+                    End If
 
                     Dim _RowUltimaFila As DataRow = _Ds_Format_02.Tables(0).Rows(0) '_Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -2309,28 +2362,29 @@ Public Class Clas_Imprimir_Documento
     Private Sub Sb_Imprimir_Documento(sender As Object,
                                       e As PrintPageEventArgs)
 
-        Dim _Hora_Pc = FormatDateTime(Date.Now, DateFormat.ShortTime).ToString
-        Dim _Fecha_Pc = FormatDateTime(Date.Now, DateFormat.ShortDate).ToString
-
-        Dim _NroLineasXpag = _TblEncForm.Rows(0).Item("NroLineasXpag")
-
-        Dim _FteCourier_New As New Font("Courier New", 6, FontStyle.Bold) ' Crea la fuente
-
-        _Fila_Y = 0
-        _Columna_X = 0
-
-        Dim _Tido As String = _Row_Encabezado.Item("TIDO")
-        Dim _Nudo As String = _Row_Encabezado.Item("NUDO")
-
         Try
 
-            Consulta_sql = "SELECT * FROM " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
-                           "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Seccion In ('E','P')"
+            Dim _Hora_Pc = FormatDateTime(Date.Now, DateFormat.ShortTime).ToString
+            Dim _Fecha_Pc = FormatDateTime(Date.Now, DateFormat.ShortDate).ToString
 
-            Consulta_sql = "SELECT *," &
-                           "Isnull((Select Funcion_Bk From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
-                           "Where Nombre_Funcion = Funcion),0) As Funcion_Bk FROM " & _Global_BaseBk & "Zw_Format_02" & vbCrLf &
-                           "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Seccion  In ('E','P')"
+            Dim _NroLineasXpag = _TblEncForm.Rows(0).Item("NroLineasXpag")
+
+            Dim _FteCourier_New As New Font("Courier New", 6, FontStyle.Bold) ' Crea la fuente
+
+            _Fila_Y = 0
+            _Columna_X = 0
+
+            Dim _Tido As String = _Row_Encabezado.Item("TIDO")
+            Dim _Nudo As String = _Row_Encabezado.Item("NUDO")
+
+
+            'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Format_02 With (Nolock)" & vbCrLf &
+            '               "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Seccion In ('E','P')"
+
+            'Consulta_sql = "Select *," &
+            '               "Isnull((Select Funcion_Bk From " & _Global_BaseBk & "Zw_Format_Fx" & Space(1) &
+            '               "Where Nombre_Funcion = Funcion),0) As Funcion_Bk From " & _Global_BaseBk & "Zw_Format_02 With (Nolock)" & vbCrLf &
+            '               "Where TipoDoc = '" & _TipoDoc & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "' And Seccion  In ('E','P')"
 
 
             Dim _NombreObjeto As String
@@ -2460,7 +2514,7 @@ Public Class Clas_Imprimir_Documento
 
                                 _Row = Fx_Funcion_SQL_Personalizada_Enc_Pie(_SqlQuery, _IdDoc, _Error)
 
-                                    If String.IsNullOrEmpty(_Error) Then
+                                If String.IsNullOrEmpty(_Error) Then
                                     _Campo = "CAMPO"
                                 Else
                                     _Campo = "_Error"
@@ -3357,11 +3411,16 @@ Public Class Clas_Imprimir_Documento
 
             _Documento_Impreso = True
 
+            'Throw New Exception("ERROR A PROPOSITO PARA REVISION")
+
         Catch ex As Exception
             _Ultimo_Error = ex.Message
-            My.Computer.FileSystem.WriteAllText("Log_Errores.log", ex.Message & vbCrLf & ex.StackTrace, False)
-            MsgBox(ex.Message)
-            MsgBox("Error lo puesde ver en archivo Log de errores")
+            'My.Computer.FileSystem.WriteAllText("Log_Errores.log", ex.Message & vbCrLf & ex.StackTrace, False)
+            'MsgBox(ex.Message)
+            'MsgBox("Error lo puesde ver en archivo Log de errores")
+
+            Fx_Escribir_LogErrores(ex)
+
         End Try
 
     End Sub

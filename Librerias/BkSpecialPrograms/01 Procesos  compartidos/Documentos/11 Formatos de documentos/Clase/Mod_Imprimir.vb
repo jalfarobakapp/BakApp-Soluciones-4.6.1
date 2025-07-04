@@ -25,6 +25,154 @@ Module Mod_Imprimir
         End Get
     End Property
 
+    'Function Fx_Enviar_A_Imprimir_Documento(_Formulario As Form,
+    '                                        _NombreFormato As String,
+    '                                        _Idmaeedo As Integer,
+    '                                        _Preguntar_Si_Imprime_Cedible As Boolean,
+    '                                        _Seleccionar_Impresora As Boolean,
+    '                                        _Impresora As String,
+    '                                        _Vista_Previa As Boolean,
+    '                                        _Nro_Copias As Integer,
+    '                                        _Reimprimir As Boolean,
+    '                                        _Subtido As String) As String
+    '    _RowMaeedo = Nothing
+    '    Dim _LogError As String
+
+    '    Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+    '    Consulta_sql = "Select Top 1 * From MAEEDO With (Nolock) Where IDMAEEDO = " & _Idmaeedo
+    '    _RowMaeedo = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+    '    If _RowMaeedo Is Nothing Then
+    '        Return "No se encontro documento IDMAEEDO:" & _Idmaeedo
+    '    End If
+
+    '    Dim _Tido = _RowMaeedo.Item("TIDO")
+    '    Dim _Nudo = _RowMaeedo.Item("NUDO")
+
+    '    If _Tido = "GDI" Then
+    '        _Subtido = String.Empty
+    '    End If
+
+    '    Consulta_sql = "Select Top 1 NombreFormato_Destino From " & _Global_BaseBk & "Zw_Prod_ImpAdicional" & vbCrLf &
+    '                   "Where Tido = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato_Origen = '" & _NombreFormato & "' " &
+    '                   "And Codigo In (Select KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ") And Reemplazar_Formato_Origen = 1"
+    '    Dim _Row_FormatoAdicional As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+    '    If Not IsNothing(_Row_FormatoAdicional) Then
+    '        _NombreFormato = _Row_FormatoAdicional.Item("NombreFormato_Destino")
+    '    End If
+
+    '    Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
+    '                   "Where TipoDoc = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "'"
+    '    Dim _RowEncFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+    '    If Not (_RowEncFormato Is Nothing) Then
+    '        Dim _Copias = _RowEncFormato.Item("Copias")
+    '        If _Nro_Copias = 0 Then
+    '            _Nro_Copias = _Copias
+    '        End If
+    '    Else
+    '        Return "No existe el formato (''" & _NombreFormato & "'') para el documento: " & _Tido & ", Subtido = '" & _Subtido & "'"
+    '    End If
+
+    '    Dim _Doc_Electronico As Boolean = _RowEncFormato.Item("Doc_Electronico")
+    '    Dim _ImprimirDocAdjuntos As Boolean = _RowEncFormato.Item("ImprimirDocAdjuntos")
+
+    '    If _Reimprimir Then
+    '        _Nro_Copias = 1
+    '    End If
+
+    '    Dim _Imprimir_Cedible As Boolean
+
+    '    If _Doc_Electronico Then
+
+    '        If _Preguntar_Si_Imprime_Cedible Then
+
+    '            If IsNothing(_Formulario) Then
+
+    '                _Imprimir_Cedible = True
+
+    '            Else
+
+    '                If MessageBoxEx.Show(_Formulario, "¿Desea imprimir la copia CEDIBLE?", "Imprimir CEDIBLE",
+    '                                     MessageBoxButtons.YesNo,
+    '                                     MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+    '                    _Imprimir_Cedible = True
+    '                End If
+
+    '            End If
+
+    '        Else
+
+    '            _Imprimir_Cedible = True
+
+    '        End If
+
+    '    End If
+
+    '    Dim _Nro_Impreso = 1
+
+    '    For _i = 1 To _Nro_Copias
+
+    '        If _Nro_Copias > 1 Then
+
+    '            If _i > 1 Then
+
+    '                _Nudo = _Nudo & "_Copia_" & numero_(_i - 1, 2)
+
+    '            End If
+
+    '        End If
+
+    '        _LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, False,
+    '                                          _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
+
+    '        Dim _Imp = _Impresora
+
+    '        If String.IsNullOrEmpty(_LogError) Then
+
+    '            If _Seleccionar_Impresora Then
+    '                _Imp = _Impresora_Seleccionada
+    '            End If
+
+    '            If _Imprimir_Cedible And _Nro_Impreso = 1 And _Tido <> "BLV" Then
+
+    '                If _Doc_Electronico Then
+
+    '                    _LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, True,
+    '                                                  False, _Vista_Previa,
+    '                                                  _Imp, _Subtido)
+    '                End If
+
+    '            End If
+
+    '            Consulta_sql = "Select Distinct NombreFormato_Destino From " & _Global_BaseBk & "Zw_Prod_ImpAdicional With (Nolock)" & vbCrLf &
+    '                           "Where Tido = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato_Origen = '" & _NombreFormato & "' " &
+    '                           "And Codigo In (Select KOPRCT From MAEDDO With (Nolock) Where IDMAEEDO = " & _Idmaeedo & ") And Reemplazar_Formato_Origen = 0"
+    '            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+    '            For Each _Fila As DataRow In _Tbl.Rows
+    '                _LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _Fila.Item("NombreFormato_Destino"), False,
+    '                              _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
+    '            Next
+
+    '            Fx_ImprimirArchivoAdjunto(_ImprimirDocAdjuntos, _Idmaeedo, _Imp)
+
+    '        Else
+
+    '            Return _LogError
+
+    '        End If
+
+    '        _Nro_Impreso += 1
+
+    '    Next
+
+    '    Return _LogError
+
+    'End Function
+
     Function Fx_Enviar_A_Imprimir_Documento(_Formulario As Form,
                                             _NombreFormato As String,
                                             _Idmaeedo As Integer,
@@ -34,142 +182,178 @@ Module Mod_Imprimir
                                             _Vista_Previa As Boolean,
                                             _Nro_Copias As Integer,
                                             _Reimprimir As Boolean,
-                                            _Subtido As String) As String
-        _RowMaeedo = Nothing
-        Dim _LogError As String
+                                            _Subtido As String) As LsValiciones.Mensajes
 
-        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim _Mensaje As New LsValiciones.Mensajes
 
-        Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
-        _RowMaeedo = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+        Try
 
-        If _RowMaeedo Is Nothing Then
-            Return "No se encontro documento IDMAEEDO:" & _Idmaeedo
-        End If
+            _RowMaeedo = Nothing
+            Dim _LogError As String
 
-        Dim _Tido = _RowMaeedo.Item("TIDO")
-        Dim _Nudo = _RowMaeedo.Item("NUDO")
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        If _Tido = "GDI" Then
-            _Subtido = String.Empty
-        End If
+            Consulta_sql = "Select Top 1 * From MAEEDO With (Nolock) Where IDMAEEDO = " & _Idmaeedo
+            _RowMaeedo = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
-        Consulta_sql = "Select Top 1 NombreFormato_Destino From " & _Global_BaseBk & "Zw_Prod_ImpAdicional" & vbCrLf &
-                       "Where Tido = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato_Origen = '" & _NombreFormato & "' " &
-                       "And Codigo In (Select KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ") And Reemplazar_Formato_Origen = 1"
-        Dim _Row_FormatoAdicional As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
-
-        If Not IsNothing(_Row_FormatoAdicional) Then
-            _NombreFormato = _Row_FormatoAdicional.Item("NombreFormato_Destino")
-        End If
-
-        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
-                       "Where TipoDoc = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "'"
-        Dim _RowEncFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
-
-        If Not (_RowEncFormato Is Nothing) Then
-            Dim _Copias = _RowEncFormato.Item("Copias")
-            If _Nro_Copias = 0 Then
-                _Nro_Copias = _Copias
+            If _RowMaeedo Is Nothing Then
+                Throw New Exception("No se encontro documento IDMAEEDO:" & _Idmaeedo)
+                'Return "No se encontro documento IDMAEEDO:" & _Idmaeedo
             End If
-        Else
-            Return "No existe el formato (''" & _NombreFormato & "'') para el documento: " & _Tido & ", Subtido = '" & _Subtido & "'"
-        End If
 
-        Dim _Doc_Electronico As Boolean = _RowEncFormato.Item("Doc_Electronico")
-        Dim _ImprimirDocAdjuntos As Boolean = _RowEncFormato.Item("ImprimirDocAdjuntos")
+            Dim _Tido = _RowMaeedo.Item("TIDO")
+            Dim _Nudo = _RowMaeedo.Item("NUDO")
 
-        If _Reimprimir Then
-            _Nro_Copias = 1
-        End If
+            If _Tido = "GDI" Then
+                _Subtido = String.Empty
+            End If
 
-        Dim _Imprimir_Cedible As Boolean
+            Consulta_sql = "Select Top 1 NombreFormato_Destino From " & _Global_BaseBk & "Zw_Prod_ImpAdicional" & vbCrLf &
+                           "Where Tido = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato_Origen = '" & _NombreFormato & "' " &
+                           "And Codigo In (Select KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ") And Reemplazar_Formato_Origen = 1"
+            Dim _Row_FormatoAdicional As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
-        If _Doc_Electronico Then
+            If Not IsNothing(_Row_FormatoAdicional) Then
+                _NombreFormato = _Row_FormatoAdicional.Item("NombreFormato_Destino")
+            End If
 
-            If _Preguntar_Si_Imprime_Cedible Then
+            Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
+                           "Where TipoDoc = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato = '" & _NombreFormato & "'"
+            Dim _RowEncFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
-                If IsNothing(_Formulario) Then
+            If Not (_RowEncFormato Is Nothing) Then
+                Dim _Copias = _RowEncFormato.Item("Copias")
+                If _Nro_Copias = 0 Then
+                    _Nro_Copias = _Copias
+                End If
+            Else
+                Throw New Exception("No existe el formato (''" & _NombreFormato & "'') para el documento: " & _Tido & ", Subtido = '" & _Subtido & "'")
+                'Return "No existe el formato (''" & _NombreFormato & "'') para el documento: " & _Tido & ", Subtido = '" & _Subtido & "'"
+            End If
 
-                    _Imprimir_Cedible = True
+            Dim _Doc_Electronico As Boolean = _RowEncFormato.Item("Doc_Electronico")
+            Dim _ImprimirDocAdjuntos As Boolean = _RowEncFormato.Item("ImprimirDocAdjuntos")
+
+            If _Reimprimir Then
+                _Nro_Copias = 1
+            End If
+
+            Dim _Imprimir_Cedible As Boolean
+
+            If _Doc_Electronico Then
+
+                If _Preguntar_Si_Imprime_Cedible Then
+
+                    If IsNothing(_Formulario) Then
+
+                        _Imprimir_Cedible = True
+
+                    Else
+
+                        If MessageBoxEx.Show(_Formulario, "¿Desea imprimir la copia CEDIBLE?", "Imprimir CEDIBLE",
+                                             MessageBoxButtons.YesNo,
+                                             MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+                            _Imprimir_Cedible = True
+                        End If
+
+                    End If
 
                 Else
 
-                    If MessageBoxEx.Show(_Formulario, "¿Desea imprimir la copia CEDIBLE?", "Imprimir CEDIBLE",
-                                         MessageBoxButtons.YesNo,
-                                         MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
-                        _Imprimir_Cedible = True
+                    _Imprimir_Cedible = True
+
+                End If
+
+            End If
+
+            Dim _Nro_Impreso = 1
+
+            For _i = 1 To _Nro_Copias
+
+                If _Nro_Copias > 1 Then
+
+                    If _i > 1 Then
+
+                        _Nudo = _Nudo & "_Copia_" & numero_(_i - 1, 2)
+
                     End If
 
                 End If
 
-            Else
+                Dim _Msj_Imprimir As New LsValiciones.Mensajes
 
-                _Imprimir_Cedible = True
+                '_LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, False,
+                '                                  _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
 
-            End If
+                _Msj_Imprimir = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, False,
+                                                  _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
 
-        End If
+                Dim _Imp = _Impresora
 
-        Dim _Nro_Impreso = 1
+                _LogError = _Msj_Imprimir.Mensaje
 
-        For _i = 1 To _Nro_Copias
+                If _Msj_Imprimir.EsCorrecto Then
 
-            If _Nro_Copias > 1 Then
-
-                If _i > 1 Then
-
-                    _Nudo = _Nudo & "_Copia_" & numero_(_i - 1, 2)
-
-                End If
-
-            End If
-
-            _LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, False,
-                                              _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
-
-            Dim _Imp = _Impresora
-
-            If String.IsNullOrEmpty(_LogError) Then
-
-                If _Seleccionar_Impresora Then
-                    _Imp = _Impresora_Seleccionada
-                End If
-
-                If _Imprimir_Cedible And _Nro_Impreso = 1 And _Tido <> "BLV" Then
-
-                    If _Doc_Electronico Then
-
-                        _LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, True,
-                                                      False, _Vista_Previa,
-                                                      _Imp, _Subtido)
+                    If _Seleccionar_Impresora Then
+                        _Imp = _Impresora_Seleccionada
                     End If
 
+                    If _Imprimir_Cedible And _Nro_Impreso = 1 And _Tido <> "BLV" Then
+
+                        If _Doc_Electronico Then
+
+                            '_LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, True,
+                            '                              False, _Vista_Previa,
+                            '                              _Imp, _Subtido)
+
+                            _Msj_Imprimir = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, True,
+                                                                  False, _Vista_Previa,
+                                                                  _Imp, _Subtido)
+
+                        End If
+
+                    End If
+
+                    Consulta_sql = "Select Distinct NombreFormato_Destino From " & _Global_BaseBk & "Zw_Prod_ImpAdicional With (Nolock)" & vbCrLf &
+                                   "Where Tido = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato_Origen = '" & _NombreFormato & "' " &
+                                   "And Codigo In (Select KOPRCT From MAEDDO With (Nolock) Where IDMAEEDO = " & _Idmaeedo & ") And Reemplazar_Formato_Origen = 0"
+                    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                    For Each _Fila As DataRow In _Tbl.Rows
+
+                        '_LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _Fila.Item("NombreFormato_Destino"), False,
+                        '              _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
+
+                        _Msj_Imprimir = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _Fila.Item("NombreFormato_Destino"), False,
+                                      _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
+
+                    Next
+
+                    Fx_ImprimirArchivoAdjunto(_ImprimirDocAdjuntos, _Idmaeedo, _Imp)
+
+                Else
+
+                    Throw New Exception(_LogError)
+
                 End If
 
-                Consulta_sql = "Select Distinct NombreFormato_Destino From " & _Global_BaseBk & "Zw_Prod_ImpAdicional" & vbCrLf &
-                               "Where Tido = '" & _Tido & "' And Subtido = '" & _Subtido & "' And NombreFormato_Origen = '" & _NombreFormato & "' " &
-                               "And Codigo In (Select KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ") And Reemplazar_Formato_Origen = 0"
-                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                _Nro_Impreso += 1
 
-                For Each _Fila As DataRow In _Tbl.Rows
-                    _LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _Fila.Item("NombreFormato_Destino"), False,
-                                  _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
-                Next
+            Next
 
-                Fx_ImprimirArchivoAdjunto(_ImprimirDocAdjuntos, _Idmaeedo, _Imp)
+            _Mensaje.Detalle = "Imprimir documento: " & _Tido & "-" & _Nudo
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Documento impreso correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
 
-            Else
+        Catch ex As Exception
+            _Mensaje.Detalle = "Imprimir documento IDMAEEDO = " & _Idmaeedo
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
 
-                Return _LogError
-
-            End If
-
-            _Nro_Impreso += 1
-
-        Next
-
-        Return _LogError
+        Return _Mensaje
 
     End Function
 
@@ -410,42 +594,62 @@ Module Mod_Imprimir
                                    _Seleccionar_Impresora As Boolean,
                                    _Vista_Previa As Boolean,
                                    _Impresora As String,
-                                   _Subtido As String) As String
+                                   _Subtido As String) As LsValiciones.Mensajes
 
-        Dim _Imprimir As New Clas_Imprimir_Documento(_Id,
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _Imprimir As New Clas_Imprimir_Documento(_Id,
                                                      _Tido,
                                                      _NombreFormato,
                                                      _Tido & "-" & _Nudo, _Imprimir_Cedible, "", _Subtido)
-        Dim _Documento_Impreso As Boolean
+            Dim _Documento_Impreso As Boolean
 
 
-        If Not String.IsNullOrEmpty(_Impresora) Then
-            _Imprimir.Pro_Impresora = _Impresora
-        End If
-
-        If _Seleccionar_Impresora Then
-            If _Imprimir.Fx_seleccionar_Impresora(_Seleccionar_Impresora) Then
-                _Impresora_Seleccionada = _Imprimir.Pro_Impresora
-            Else
-                Return "No se selecciona impresora"
+            If Not String.IsNullOrEmpty(_Impresora) Then
+                _Imprimir.Pro_Impresora = _Impresora
             End If
-        End If
 
-        _Imprimir.Fx_Imprimir_Documento(Nothing, _Vista_Previa, False)
+            If _Seleccionar_Impresora Then
+                If _Imprimir.Fx_seleccionar_Impresora(_Seleccionar_Impresora) Then
+                    _Impresora_Seleccionada = _Imprimir.Pro_Impresora
+                Else
+                    Throw New Exception("No se selecciona impresora")
+                End If
+            End If
 
-        Dim _LogError = _Imprimir.Pro_Ultimo_Error
+            _Imprimir.Fx_Imprimir_Documento(Nothing, _Vista_Previa, False)
 
-        _Documento_Impreso = _Imprimir.Pro_Documento_Impreso
+            Dim _LogError = _Imprimir.Pro_Ultimo_Error
 
-        _Imprimir.PrintDoc1 = Nothing
+            _Documento_Impreso = _Imprimir.Pro_Documento_Impreso
 
-        _Imprimir = Nothing
+            _Imprimir.PrintDoc1 = Nothing
 
-        If _Documento_Impreso Then
-            Return ""
-        Else
-            Return _LogError
-        End If
+            _Imprimir = Nothing
+
+            If Not _Documento_Impreso Then
+                Throw New Exception(_LogError)
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Documento impreso correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Detalle = "Imprimir documento: " & _Tido & "-" & _Nudo
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            _Mensaje.Detalle = "Imprimir documento IDMAEEDO = " & _Id
+        Finally
+            If _Impresora_Seleccionada IsNot Nothing Then
+                _Impresora_Seleccionada = String.Empty
+            End If
+        End Try
+
+        Return _Mensaje
 
     End Function
 

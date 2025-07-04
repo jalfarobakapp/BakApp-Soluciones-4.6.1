@@ -2897,9 +2897,16 @@ Public Class Frm_Demonio_01
 
                     If Fx_Validar_Impresora(_Imp) Then
 
-                        _Log_Error = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato,
+                        '_Log_Error = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato,
+                        '                                            _IdMaeedo, False, False, _Imp, False, _Nro_Copias_Impresion, False, "")
+
+
+                        Dim _Mensaje As LsValiciones.Mensajes
+
+                        _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato,
                                                                     _IdMaeedo, False, False, _Imp, False, _Nro_Copias_Impresion, False, "")
 
+                        _Log_Error = _Mensaje.Mensaje
 
                         If String.IsNullOrEmpty(_Log_Error) Then
 
@@ -3082,9 +3089,15 @@ Public Class Frm_Demonio_01
 
                     If Fx_Validar_Impresora(_Imp) Then
 
-                        _Log_Error = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato,
+                        '_Log_Error = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato,
+                        '                                            _IdMaeedo, False, False, _Imp, False, _Nro_Copias_Impresion, False, "")
+
+                        Dim _Mensaje As LsValiciones.Mensajes
+
+                        _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato,
                                                                     _IdMaeedo, False, False, _Imp, False, _Nro_Copias_Impresion, False, "")
 
+                        _Log_Error = _Mensaje.Mensaje
 
                         If String.IsNullOrEmpty(_Log_Error) Then
 
@@ -3231,10 +3244,15 @@ Public Class Frm_Demonio_01
 
                     Dim _NombreFormato = "Solicitud_PrBd"
 
-                    Dim _Log_Error As String = Fx_Imprimir_Documento(_Id, "SPB", "", _NombreFormato, False, False,
-                                                                     False, _Impresora_Prod_Sol_Bodega, "")
+                    Dim _Mensaje As LsValiciones.Mensajes
 
-                    If String.IsNullOrEmpty(_Log_Error) Then
+                    _Mensaje = Fx_Imprimir_Documento(_Id, "SPB", "", _NombreFormato, False, False,
+                                                     False, _Impresora_Prod_Sol_Bodega, "")
+
+                    'Dim _Log_Error As String = Fx_Imprimir_Documento(_Id, "SPB", "", _NombreFormato, False, False,
+                    '                                                 False, _Impresora_Prod_Sol_Bodega, "")
+
+                    If _Mensaje.EsCorrecto Then
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SolBodega set Impreso = 1 where Id = " & _Id
                         _Sql.Ej_consulta_IDU(Consulta_sql)
                     End If

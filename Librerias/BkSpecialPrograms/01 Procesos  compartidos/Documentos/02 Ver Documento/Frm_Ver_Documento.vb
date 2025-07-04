@@ -3075,13 +3075,23 @@ Public Class Frm_Ver_Documento
 
                     _Vista_Previa = (_Tipo_Impresion = Enum_Tipo_Impresion.Vista_Previa)
 
-                    Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+                    'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+                    '                                       True, _Seleccionar_Impresora, _ImpresosaPredt, _Vista_Previa, 1, True, _Subtido)
+
+                    Dim _Mensaje As LsValiciones.Mensajes
+
+                    _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
                                                            True, _Seleccionar_Impresora, _ImpresosaPredt, _Vista_Previa, 1, True, _Subtido)
 
-                    If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                        MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
-                           MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    If Not _Mensaje.EsCorrecto Then
+                        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Problemas al Imprimir",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     End If
+
+                    'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                    '    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                    '       MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    'End If
 
 
                 Case Enum_Tipo_Impresion.PDF

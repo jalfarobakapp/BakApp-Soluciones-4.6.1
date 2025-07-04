@@ -220,9 +220,24 @@ Public Class Cl_Solicitud_Productos_Bodega
 
                     Dim _NombreFormato = "Solicitud_PrBd"
 
-                    Dim _Log_Error As String = Fx_Imprimir_Documento(_Id, "SPB", "", _NombreFormato, False, False, False, _Impresora_Prod_Sol_Bodega, "")
+                    'Dim _Log_Error As String = Fx_Imprimir_Documento(_Id, "SPB", "", _NombreFormato, False, False, False, _Impresora_Prod_Sol_Bodega, "")
 
-                    If String.IsNullOrEmpty(_Log_Error) Then
+                    'If String.IsNullOrEmpty(_Log_Error) Then
+                    '    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Prod_SolBodega set Impreso = 1 where Id = " & _Id
+                    '    If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                    '        Log_Registro = vbTab & "Solicutud de producto a bodega Id: " & _Id & " Impreso correctamente" & vbCrLf
+                    '    Else
+                    '        Log_Registro += _Sql.Pro_Error
+                    '    End If
+                    'Else
+                    '    Log_Registro += _Log_Error
+                    'End If
+
+                    Dim _Mensaje As LsValiciones.Mensajes
+
+                    _Mensaje = Fx_Imprimir_Documento(_Id, "SPB", "", _NombreFormato, False, False, False, _Impresora_Prod_Sol_Bodega, "")
+
+                    If _Mensaje.EsCorrecto Then
                         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Prod_SolBodega set Impreso = 1 where Id = " & _Id
                         If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                             Log_Registro = vbTab & "Solicutud de producto a bodega Id: " & _Id & " Impreso correctamente" & vbCrLf
@@ -230,7 +245,7 @@ Public Class Cl_Solicitud_Productos_Bodega
                             Log_Registro += _Sql.Pro_Error
                         End If
                     Else
-                        Log_Registro += _Log_Error
+                        Log_Registro += _Mensaje.Mensaje
                     End If
 
                 End If

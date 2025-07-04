@@ -1003,13 +1003,24 @@ Public Class Frm_BuscarDocumento_Mt
                         _NombreFormato = String.Empty
                     End If
 
-                    Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo,
+                    'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo,
+                    '                                         False, True, "", False, 0, False, _Subtido)
+
+                    Dim _Mensaje As LsValiciones.Mensajes
+
+                    _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo,
                                                              False, True, "", False, 0, False, _Subtido)
 
-                    If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                        MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
-                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    If Not _Mensaje.EsCorrecto Then
+                        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Problemas al Imprimir",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
                     End If
+
+                    'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                    '    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                    '               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    'End If
 
                 End If
 
