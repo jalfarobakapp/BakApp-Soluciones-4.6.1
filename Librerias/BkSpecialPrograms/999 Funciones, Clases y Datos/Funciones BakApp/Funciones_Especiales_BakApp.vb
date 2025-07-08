@@ -180,7 +180,7 @@ Public Module Funciones_Especiales_BakApp
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Configuracion (Empresa,Modalidad)" & vbCrLf &
                            "Select EMPRESA,MODALIDAD From CONFIEST WITH (NOLOCK)" & vbCrLf &
-                           "Where MODALIDAD NOT IN (Select Modalidad From " & _Global_BaseBk & "Zw_Configuracion) And EMPRESA <> ''"
+                           "Where MODALIDAD+EMPRESA NOT IN (Select Modalidad+Empresa From " & _Global_BaseBk & "Zw_Configuracion) And EMPRESA <> ''"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Else
@@ -905,23 +905,12 @@ Public Module Funciones_Especiales_BakApp
 
         If Not (_Row_Entidad Is Nothing) Then
 
-            Dim _NoUsaListasModalidad As Boolean
+            If _Row_Entidad.Item("LCEN").ToString.ToUpper.Trim = "TABPP" Or String.IsNullOrWhiteSpace(_Row_Entidad.Item("LCEN")) Then
+                _Row_Entidad.Item("LCEN") = "TABPP" & ModListaPrecioCosto
+            End If
 
-            Try
-                _NoUsaListasModalidad = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "NoUsaListasModalidad",
-                                                                     "CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidad & "'")
-            Catch ex As Exception
-                _NoUsaListasModalidad = False
-            End Try
-
-            If Not _NoUsaListasModalidad Then
-                If _Row_Entidad.Item("LCEN").ToString.ToUpper.Trim = "TABPP" Or String.IsNullOrWhiteSpace(_Row_Entidad.Item("LCEN")) Then
-                    _Row_Entidad.Item("LCEN") = "TABPP" & ModListaPrecioCosto
-                End If
-
-                If _Row_Entidad.Item("LVEN").ToString.ToUpper.Trim = "TABPP" Or String.IsNullOrWhiteSpace(_Row_Entidad.Item("LVEN")) Then
-                    _Row_Entidad.Item("LVEN") = "TABPP" & ModListaPrecioVenta
-                End If
+            If _Row_Entidad.Item("LVEN").ToString.ToUpper.Trim = "TABPP" Or String.IsNullOrWhiteSpace(_Row_Entidad.Item("LVEN")) Then
+                _Row_Entidad.Item("LVEN") = "TABPP" & ModListaPrecioVenta
             End If
 
             Dim _Rut As String = _Row_Entidad.Item("RTEN").ToString.Trim
@@ -951,7 +940,8 @@ Public Module Funciones_Especiales_BakApp
 
     End Function
 
-    Function Fx_Traer_Datos_Entidad_Tabla(_CodEntidad As String, _SucEntidad As String) As DataTable
+    Function Fx_Traer_Datos_Entidad_Tabla(_CodEntidad As String,
+                                          _SucEntidad As String) As DataTable
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -971,29 +961,13 @@ Public Module Funciones_Especiales_BakApp
 
             If Not (_Row_entidad Is Nothing) Then
 
-                Dim _NoUsaListasModalidad As Boolean
-
-                Try
-                    _NoUsaListasModalidad = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "NoUsaListasModalidad",
-                                                                     "CodEntidad = '" & _CodEntidad & "' And CodSucEntidad = '" & _SucEntidad & "'")
-                Catch ex As Exception
-                    _NoUsaListasModalidad = False
-                End Try
-
-                If Not _NoUsaListasModalidad Then
-                    If _Row_entidad.Item("LCEN").ToString.ToUpper.Trim = "TABPP" Or String.IsNullOrWhiteSpace(_Row_entidad.Item("LCEN")) Then
-                        _Row_entidad.Item("LCEN") = "TABPP" & ModListaPrecioCosto
-                    End If
-
-                    If _Row_entidad.Item("LVEN").ToString.ToUpper.Trim = "TABPP" Or String.IsNullOrWhiteSpace(_Row_entidad.Item("LVEN")) Then
-                        _Row_entidad.Item("LVEN") = "TABPP" & ModListaPrecioVenta
-                    End If
+                If _Row_entidad.Item("LCEN").ToString.ToUpper.Trim = "TABPP" Or String.IsNullOrWhiteSpace(_Row_entidad.Item("LCEN")) Then
+                    _Row_entidad.Item("LCEN") = "TABPP" & ModListaPrecioCosto
                 End If
 
-                'Dim _Rut As String = _Row_entidad.Item("RTEN")
-
-                '_Rut = FormatNumber(_Rut, 0) & "-" & RutDigito(_Rut)
-                '_Row_entidad.Item("Rut") = _Rut
+                If _Row_entidad.Item("LVEN").ToString.ToUpper.Trim = "TABPP" Or String.IsNullOrWhiteSpace(_Row_entidad.Item("LVEN")) Then
+                    _Row_entidad.Item("LVEN") = "TABPP" & ModListaPrecioVenta
+                End If
 
                 Dim _Rut As String = _Row_entidad.Item("RTEN").ToString.Trim
                 Dim _RutSP As String = String.Empty

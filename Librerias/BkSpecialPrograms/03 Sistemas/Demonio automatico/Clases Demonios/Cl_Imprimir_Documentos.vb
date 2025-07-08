@@ -182,7 +182,6 @@ Public Class Cl_Imprimir_Documentos
                       "FEEMDO BETWEEN CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
                       "AND CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102)"
 
-
         Dim _FechasAnteriores As Date = DateAdd(DateInterval.Day, -5, _Fecha_Revision)
 
         'Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion Set Fecha = Getdate(),Log_Error = 'Documento no impreso desde el día anterior' 
@@ -224,7 +223,6 @@ Public Class Cl_Imprimir_Documentos
 
         _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion With (Nolock)" & vbCrLf &
                         "Where NombreEquipo = '" & _Nombre_Equipo & "' And Traer_Doc_Auto_Imprimir = 1"
-
         Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql, False)
 
         Dim _SqlQuery_Cola = String.Empty

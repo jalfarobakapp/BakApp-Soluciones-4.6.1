@@ -74,6 +74,7 @@ Public Class Frm_ConfTidoXModal
         Txt_NombreFormato_Correo.Text = _RowFormato.Item("NombreFormato_Correo")
 
         Rdb_TimbrarXRandom.Value = _RowFormato.Item("TimbrarXRandom")
+        Txt_ListaPrecioDoc.Text = _RowFormato.Item("ListaPrecioDoc")
 
         If Modalidad_General Then
             Input_AvisoSaldoFolios.Value = NuloPorNro(_RowFormato.Item("AvisoSaldoFolios"), 10)
@@ -121,6 +122,9 @@ Public Class Frm_ConfTidoXModal
 
         End If
 
+        Lbl_ListaPrecioDoc.Visible = (_Tido = "BLV")
+        Txt_ListaPrecioDoc.Visible = (_Tido = "BLV")
+
     End Sub
 
     Private Sub Btn_BuscarFormatoImpNormal_Click(sender As Object, e As EventArgs) Handles Btn_BuscarFormatoImpNormal.Click
@@ -162,6 +166,7 @@ Public Class Frm_ConfTidoXModal
         Dim _TimbrarXRandom = Convert.ToInt32(Rdb_TimbrarXRandom.Value)
         Dim _DiasAvisoExpiraFolio = Input_DiasAvisoExpiraFolio.Value
         Dim _AvisoSaldoFolios = Input_AvisoSaldoFolios.Value
+        Dim _ListaPrecioDoc = Txt_ListaPrecioDoc.Text.Trim
 
         If Not String.IsNullOrEmpty(_Numero) Then
 
@@ -240,7 +245,8 @@ Public Class Frm_ConfTidoXModal
                    ",TimbrarXRandom = '" & _TimbrarXRandom & "'" & vbCrLf &
                    ",DiasAvisoExpiraFolio = " & _DiasAvisoExpiraFolio & vbCrLf &
                    ",AvisoSaldoFolios = " & _AvisoSaldoFolios & vbCrLf &
-                   "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'" 'In " & _Filtro_Tido
+                   ",ListaPrecioDoc = '" & _ListaPrecioDoc & "'" & vbCrLf &
+                   "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'"
 
         If _Filtro_Tido = "('GDV','GTI','GDP','GDD')" Then
             Consulta_sql += vbCrLf & vbCrLf & "Update " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Set" & vbCrLf &
@@ -344,4 +350,31 @@ Public Class Frm_ConfTidoXModal
         End If
     End Sub
 
+    Private Sub Txt_ListaPrecioDoc_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_ListaPrecioDoc.ButtonCustomClick
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "LISTAS DE PRECIOS Y COSTOS"
+
+        _Filtrar.Tabla = "TABPP"
+        _Filtrar.Campo = "KOLT"
+        _Filtrar.Descripcion = "NOKOLT"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "",
+                               Nothing, False, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+            Dim _Codigo As String = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion As String = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_ListaPrecioDoc.Tag = _Codigo
+            Txt_ListaPrecioDoc.Text = _Codigo ' & " - " & _Descripcion
+
+        End If
+    End Sub
+
+    Private Sub Txt_ListaPrecioDoc_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_ListaPrecioDoc.ButtonCustom2Click
+        Txt_ListaPrecioDoc.Text = String.Empty
+    End Sub
 End Class

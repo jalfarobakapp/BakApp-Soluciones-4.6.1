@@ -28,6 +28,8 @@ Public Class Frm_Formulario_Documento
     Dim _TblPermisos As DataTable
     Dim _TblEmpaque As DataTable
 
+    Dim _Row_Formato_Modalidad As DataRow
+
     Dim _Tbl_Mevento_Edo As DataTable
     Dim _Tbl_Mevento_Edd As DataTable
     Dim _Tbl_Maedpce As DataTable
@@ -1226,11 +1228,11 @@ Public Class Frm_Formulario_Documento
         End If
 
 
-        Consulta_sql = "Select Modalidad, TipoDoc, NombreFormato, Grabar_Con_Huella
-                        From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
-        Dim _RowFormato_Mod As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
+                       "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+        _Row_Formato_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _Grabar_Con_Huella As Boolean = _RowFormato_Mod.Item("Grabar_Con_Huella")
+        Dim _Grabar_Con_Huella As Boolean = _Row_Formato_Modalidad.Item("Grabar_Con_Huella")
 
         Btn_Huella.Visible = _Grabar_Con_Huella
 
@@ -4123,7 +4125,6 @@ Public Class Frm_Formulario_Documento
         Dim _Permiso As String
 
         Dim _ListaPrecios = _TblEncabezado.Rows(0).Item("ListaPrecios")
-        _Lista = _ListaPrecios
 
         If Not (_RowEntidad Is Nothing) Then
 
@@ -4173,6 +4174,29 @@ Public Class Frm_Formulario_Documento
         If String.IsNullOrEmpty(_Kofuen) Then
             _Kofuen = FUNCIONARIO
         End If
+
+        Dim _ListaPrecioDoc As String = _Row_Formato_Modalidad.Item("ListaPrecioDoc")
+
+        If _Tido = "BLV" And Not String.IsNullOrWhiteSpace(_ListaPrecioDoc) AndAlso Not (_RowEntidad_X_Defecto Is Nothing) AndAlso Not IsDBNull(_RowEntidad_X_Defecto) Then
+
+            Dim _ListaVtaEntidad As String = _Sql.Fx_Trae_Dato("MAEEN", "LVEN",
+                                                               "KOEN = '" & _RowEntidad.Item("KOEN") & "' And SUEN = '" & _RowEntidad.Item("SUEN") & "'")
+
+            _ListaVtaEntidad = _ListaVtaEntidad.ToString.Trim.Replace("TABPP", "")
+
+            If String.IsNullOrWhiteSpace(_ListaVtaEntidad) Then
+
+                Dim _Cod1 As String = _RowEntidad_X_Defecto.Item("KOEN").ToString.Trim & _RowEntidad_X_Defecto.Item("SUEN").ToString.Trim
+                Dim _Cod2 As String = _RowEntidad.Item("KOEN").ToString.Trim & _RowEntidad.Item("SUEN").ToString.Trim
+
+                If _Cod1 <> _Cod2 Then
+                    _Lista = _ListaPrecioDoc
+                End If
+
+            End If
+
+        End If
+
 
         Dim _Es_Usuario_Xdefecto As Boolean = (Trim(_RowEntidad.Item("KOEN")) = Trim(_Koen_Xdefecto) And Trim(_RowEntidad.Item("SUEN")) = Trim(_Suen_Xdefecto))
         Dim _Conservar_Vendedor_No_Preguntar As Boolean = _Global_Row_Configuracion_Estacion.Item("Conservar_Vendedor_No_Preguntar")
@@ -6327,8 +6351,8 @@ Public Class Frm_Formulario_Documento
                 _PrecioBrutoUd = _PrecioBruto
                 _PrecioNetoUdLinea = _PrecioNetoUd
                 _PrecioBrutoUdLinea = _PrecioBruto
-                If _Rtu < 1 Then
-                    _PrecioNetoUdLista = _PrecioLinea / _Rtu
+                If _Rtu <1 Then
+                    _PrecioNetoUdLista= _PrecioLinea / _Rtu
                     _PrecioBrutoUdLista = _PrecioBruto / _Rtu
                 Else
                     _PrecioNetoUdLista = _PrecioNeto
@@ -16288,9 +16312,9 @@ Public Class Frm_Formulario_Documento
 
 #End Region
 
-                    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad 
-                                    Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
-                    Dim _Row_Formato_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                    'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad 
+                    '                Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+                    'Dim _Row_Formato_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                     If Not IsNothing(_Row_Formato_Modalidad) Then
 

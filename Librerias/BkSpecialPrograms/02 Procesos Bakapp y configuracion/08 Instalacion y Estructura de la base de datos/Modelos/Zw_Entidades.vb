@@ -27,6 +27,5 @@
     Public Property NoCobrarPallet As Boolean
     Public Property ImpNoCobraVta As Boolean
     Public Property ImpNoCobraVtaStr As String
-    Public Property NoUsaListasModalidad As Boolean
 
 End Class

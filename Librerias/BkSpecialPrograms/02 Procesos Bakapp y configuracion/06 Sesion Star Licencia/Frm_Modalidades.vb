@@ -107,7 +107,7 @@ Public Class Frm_Modalidades
         Cmb_Modalidades.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Modalidad = _Sql.Fx_Trae_Dato("TABFU", "MODALIDAD", "KOFU = '" & FUNCIONARIO & "'")
-        Dim _Emp As String = _Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Modalidad & "'")
+        Dim _Emp As String = ModEmpresa '_Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Modalidad & "'")
 
         Cmb_Modalidades.SelectedValue = _Emp
 
@@ -279,9 +279,11 @@ Public Class Frm_Modalidades
 
             If _Cambiar_Modalidad Then
 
-                Consulta_Sql = "Select top 1 Cest.*,Cfgp.RAZON  
-                                From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
-                                Where MODALIDAD = '" & Modalidad & "'"
+                ModEmpresa = _Fila.Cells("EMPRESA").Value
+
+                Consulta_Sql = "Select top 1 Cest.*,Cfgp.RAZON" & vbCrLf &
+                               "From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA" & vbCrLf &
+                               "Where MODALIDAD = '" & Modalidad & "'  And Cest.EMPRESA = '" & ModEmpresa & "'"
                 _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                 ModEmpresa = _Global_Row_Modalidad.Item("EMPRESA")
