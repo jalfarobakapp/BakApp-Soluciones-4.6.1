@@ -1,6 +1,5 @@
-﻿Imports DevComponents.DotNetBar
-Imports BkSpecialPrograms
-Imports BkSpecialPrograms.LsValiciones
+﻿Imports BkSpecialPrograms
+Imports DevComponents.DotNetBar
 
 Public Class Login
 
@@ -158,9 +157,13 @@ Public Class Login
                 _Mod.Sb_Actualiza_Formatos_X_Modalidad()
                 _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
 
+                If Not IsNothing(FormMenu) Then
+                    CType(FormMenu, Menu).Sb_Load()
+                End If
+
                 If _Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion") Then
                     MessageBoxEx.Show(Me, "ESTA MODALIDAD ESTA EN AMBIENTE CERTIFICACION", "FACTURA ELECTRONICA SII",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                  MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
 
                 Dim TipoEstacion = Trim(_Global_Row_EstacionBk.Item("TipoEstacion"))

@@ -7,6 +7,15 @@ Public Module Funciones_Especiales_BakApp
 
     Dim Consulta_sql As String
 
+    ' Clase para la configuración de estilo en formato JSON
+    Public Class EstiloConfiguracionJson
+        Public Property Cod_Estilo As Integer
+        Public Property Color As Integer
+        Public Property Nombre_Estilo As String
+        Public Property Global_Thema As Integer
+        'Public Property Empresa As String
+    End Class
+
     Function Fx_Formato_Modalidad(_Formulario As Form,
                                   _Modalidad As String,
                                   _TipoDoc As String, _Mostrar_Mensaje As Boolean) As DataRow
@@ -3535,7 +3544,117 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Sub
 
+#Region "Estilo Json"
 
+    Sub Sb_Revisar_Estilo_Json(Optional _Estilo As eStyle = eStyle.Metro,
+                               Optional _Color As Integer = -16748352)
+
+        Dim _Dir_Local As String = Application.StartupPath & "\Data\" & RutEmpresaActiva & "\Configuracion_Local"
+        Dim _JsonFile As String = _Dir_Local & "\Estilo.json"
+
+        If Not Directory.Exists(_Dir_Local) Then
+            Directory.CreateDirectory(_Dir_Local)
+        End If
+
+        Dim _Existe As Boolean = File.Exists(_JsonFile)
+        Dim _EstiloConfig As EstiloConfiguracionJson
+
+        If Not _Existe Then
+            Dim _Dir_Local2 As String = Application.StartupPath & "\Data\Configuracion_Local"
+            Dim _JsonFile2 As String = _Dir_Local2 & "\Estilo.json"
+
+            If File.Exists(_JsonFile2) Then
+                File.Copy(_JsonFile2, _JsonFile)
+            Else
+                _EstiloConfig = New EstiloConfiguracionJson With {
+                        .Cod_Estilo = Enum_Themas.Claro,
+                        .Nombre_Estilo = Enum_Themas.Claro.ToString,
+                        .Color = -16748352,
+                        .Global_Thema = Enum_Themas.Claro
+                    }
+                Dim _json As String = JsonConvert.SerializeObject(_EstiloConfig, Formatting.Indented)
+                File.WriteAllText(_JsonFile, _json)
+            End If
+        End If
+
+        Try
+            Dim _jsonContent As String = File.ReadAllText(_JsonFile)
+            _EstiloConfig = JsonConvert.DeserializeObject(Of EstiloConfiguracionJson)(_jsonContent)
+        Catch ex As Exception
+            My.Computer.FileSystem.DeleteFile(_JsonFile)
+            Sb_Revisar_Estilo_Json()
+            Exit Sub
+        End Try
+
+        _Color = _EstiloConfig.Color
+        Dim _baseColor As Color = Color.FromArgb(_Color)
+        Dim _camvasColor As Color
+
+        Global_Thema = _EstiloConfig.Global_Thema
+
+        Select Case Global_Thema
+            Case Enum_Themas.Claro
+                _camvasColor = Color.White
+            Case Enum_Themas.Gris
+                _camvasColor = Color.FromArgb(216, 216, 216)
+            Case Enum_Themas.Oscuro
+                _camvasColor = Color.FromArgb(32, 32, 32)
+            Case Enum_Themas.Azul
+                _camvasColor = Color.FromArgb(217, 224, 248)
+            Case Enum_Themas.Oscuro_Ligth
+                _camvasColor = Color.FromArgb(45, 45, 45)
+        End Select
+
+        Global_baseColor = _baseColor.ToArgb
+        Global_camvasColor = _camvasColor.ToArgb
+
+        StyleManager.Style = _Estilo
+        StyleManager.MetroColorGeneratorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(_camvasColor, _baseColor)
+
+    End Sub
+
+    Sub Sb_Actualizar_Estilo_Json(_Directorio As String,
+                                  _Cod_Estilo As Integer,
+                                  _Nombre_Estilo As String,
+                                  _Color As Integer,
+                                  _Global_Thema As Integer,
+                                  _Empresa As String)
+
+        Dim estilo As New EstiloConfiguracionJson With {
+            .Cod_Estilo = _Cod_Estilo,
+            .Color = _Color,
+            .Nombre_Estilo = _Nombre_Estilo,
+            .Global_Thema = _Global_Thema
+        }
+
+        Dim json As String = JsonConvert.SerializeObject(estilo, Formatting.Indented)
+        Dim ruta As String = Path.Combine(_Directorio, "Estilo.json")
+        File.WriteAllText(ruta, json)
+
+    End Sub
+
+    ' Función para guardar la configuración en un archivo JSON
+    Public Sub Sb_Guardar_Estilo_Json(_Dir_Local As String, _Estilo As Integer, _NombreEstilo As String, _Color As Integer, _Global_Thema As Integer, _Empresa As String)
+        ' Crear el objeto de configuración
+        Dim config As New EstiloConfiguracionJson With {
+                .Cod_Estilo = _Estilo,
+                .Color = _Color,
+                .Nombre_Estilo = _NombreEstilo,
+                .Global_Thema = _Global_Thema
+            }
+
+        ' Serializar a JSON
+        Dim json As String = JsonConvert.SerializeObject(config, Formatting.Indented)
+
+        ' Asegurar que el directorio existe
+        If Not Directory.Exists(_Dir_Local) Then
+            Directory.CreateDirectory(_Dir_Local)
+        End If
+
+        ' Guardar el archivo JSON
+        File.WriteAllText(Path.Combine(_Dir_Local, "Estilo.json"), json)
+    End Sub
+#End Region
     Function Fx_Eliminar_Kasidoc_BakApp(_Id_DocEnc As Integer,
                                         _NombreEquipo As String,
                                         _Stand_by As Boolean)

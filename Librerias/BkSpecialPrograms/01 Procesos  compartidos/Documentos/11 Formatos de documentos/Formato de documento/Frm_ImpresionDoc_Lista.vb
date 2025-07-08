@@ -131,13 +131,13 @@ Public Class Frm_ImpresionDoc_Lista
             _DisplayIndex += 1
 
             .Columns("NombreDocumento").Visible = True
-            .Columns("NombreDocumento").Width = 190
+            .Columns("NombreDocumento").Width = 150
             .Columns("NombreDocumento").HeaderText = "Documento"
             .Columns("NombreDocumento").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NombreFormato").Visible = True
-            .Columns("NombreFormato").Width = 240
+            .Columns("NombreFormato").Width = 280
             .Columns("NombreFormato").HeaderText = "Nombre formato"
             .Columns("NombreFormato").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1

@@ -34,14 +34,17 @@ Public Class Menu
     End Sub
 
     Private Sub Menu_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-
         AddHandler Btn_Cambio_Empresa.Click, AddressOf Sb_Cambiar_De_Base_De_Datos
+        Sb_Load()
+    End Sub
+
+    Sub Sb_Load()
 
         Sb_Revisar_Estilo("")
 
         Try
             Lbl_Estatus.Text = "Fun: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim &
-                          ", Mod: " & Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
+                          ",Emp: " & ModEmpresa & ", Mod: " & Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
                           "(Base BakApp: " & _Global_BaseBk & "). Estación: " & _Global_Row_EstacionBk.Item("NombreEquipo")
         Catch ex As Exception
             Lbl_Estatus.Text = String.Empty
@@ -73,7 +76,6 @@ Public Class Menu
 
         Btn_Facturacion_Electronica.Visible = True
 
-        'ButtonX1.Visible = True
         Try
             If _Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion") Then
                 Dim _BackColor_Tido As Color = Color.FromArgb(235, 81, 13)
@@ -91,11 +93,6 @@ Public Class Menu
         DatosConex.Clear()
         DatosConex.ReadXml(Directorio & "Conexiones.xml")
         _Tbl = DatosConex.Tables("CnBakApp")
-
-        'If _Tbl.Rows.Count = 1 Then
-        '    MessageBoxEx.Show(_Fm_Menu_Padre, "No hay mas empresas conectadas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '    Return
-        'End If
 
         Btn_CambioDeEmpresa.Visible = (_Tbl.Rows.Count > 1)
 

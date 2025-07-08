@@ -96,10 +96,10 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
         Lbl_Empresa.Text = ModEmpresa & " " & RazonEmpresa
 
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Remotas_Notif
-                        Where NroRemota In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas Where Eliminada = 1) Or 
-                              NroRemota In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas Where CodFuncionario_Autoriza <> '') Or 
-	                          NroRemota Not In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas)"
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Remotas_Notif" & vbCrLf &
+                       "Where NroRemota In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas Where Eliminada = 1) Or" & vbCrLf &
+                       "NroRemota In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas Where CodFuncionario_Autoriza <> '') Or" & vbCrLf &
+                       "NroRemota Not In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas)"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
         If Chk_Mis_Permisos.Checked Then
@@ -107,7 +107,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
             Dim _Monto_Aprobacion As Double = _Sql.Fx_Trae_Dato(_Global_BaseBk & "ZW_PermisosVsUsuarios", "Valor_Max_Compra",
                                                                 "CodUsuario = '" & FUNCIONARIO & "' And CodPermiso = 'Comp0092'", True)
 
-            Consulta_sql = "SELECT Empresa,NroRemota,CodFuncionario_Solicita," &
+            Consulta_sql = "Select Empresa,NroRemota,CodFuncionario_Solicita," &
                            "Isnull((Select top 1 NOKOFU From TABFU Where KOFU = CodFuncionario_Solicita),'') As Nombre_Funcionario," &
                            "CodFuncionario_Autoriza,CodPermiso," &
                            "(Select top 1 DescripcionPermiso From " & _Global_BaseBk & "ZW_Permisos Zp " &
@@ -135,7 +135,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 							)))
                             Or NroRemota In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas_Notif Where CodFuncionario_Destino = '" & FUNCIONARIO & "')
                           
-                            Select * From #Paso
+                            Select * From #Paso Where Empresa = '" & ModEmpresa & "'
                             Drop Table #Paso"
 
             _TblRemotas = _Sql.Fx_Get_DataTable(Consulta_sql)

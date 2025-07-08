@@ -611,11 +611,6 @@ Public Class Frm_Menu
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
-        'Dim NewPanel As Cntrl_Modalidad_Conf = Nothing
-        'NewPanel = New Cntrl_Modalidad_Conf()
-        'NewPanel.FmPrincipal = Me
-        'Me.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
-
     End Sub
 
     Private Sub Notify_BakApp_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Notify_BakApp.Click

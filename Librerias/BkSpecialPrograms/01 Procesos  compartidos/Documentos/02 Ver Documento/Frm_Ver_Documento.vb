@@ -1593,7 +1593,7 @@ Public Class Frm_Ver_Documento
             .Columns(_Campo).HeaderText = "Descripción"
             .Columns(_Campo).Visible = True
             .Columns(_Campo).Frozen = True
-            .Columns(_Campo).Width = 200
+            .Columns(_Campo).Width = 190
             .Columns(_Campo).DisplayIndex = _Displayindex
             _Displayindex += 1
 
@@ -1607,7 +1607,7 @@ Public Class Frm_Ver_Documento
             _Campo = "CANTIDAD"
             .Columns(_Campo).HeaderText = "Cant."
             .Columns(_Campo).Visible = True
-            .Columns(_Campo).Width = 50
+            .Columns(_Campo).Width = 60
             .Columns(_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns(_Campo).DefaultCellStyle.Format = "###,##0.##"
             .Columns(_Campo).DisplayIndex = _Displayindex

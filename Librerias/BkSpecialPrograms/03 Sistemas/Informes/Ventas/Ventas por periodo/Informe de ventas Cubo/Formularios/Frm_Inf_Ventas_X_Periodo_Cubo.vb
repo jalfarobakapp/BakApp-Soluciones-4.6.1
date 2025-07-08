@@ -1029,7 +1029,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                "CAST(0 as Float) As Porc,CAST(0 as Float) As TOTAL" & vbCrLf &
                                "Into #Paso1" & vbCrLf &
                                "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
-                               "Where 1 > 0" & vbCrLf &
+                               "Where 1 > 0 And EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
                                "And Clas_Unica_X_Producto = 1 And Identificacdor_NodoPadre = " & _Codigo & vbCrLf &
                                "Order By DESCRIPCION" &
                                vbCrLf &
@@ -1082,7 +1082,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                "CAST('' As Varchar(3)) As VND,CAST(0 as Float) As Porc," & _Campo_Mostrar & " As TOTAL" & vbCrLf &
                                "Into #Paso1" & vbCrLf &
                                "From " & _Nombre_Tabla_Paso & " WITH (NOLOCK)" & vbCrLf &
-                               "Where 1 > 0" & vbCrLf &
+                               "Where 1 > 0 And EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
                                _SqlFiltro &
                                vbCrLf &
                                _SqlFiltro_Detalle &
