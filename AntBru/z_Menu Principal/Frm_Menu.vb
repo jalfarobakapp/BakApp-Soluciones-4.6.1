@@ -607,6 +607,7 @@ Public Class Frm_Menu
 
         Dim Fm As New Frm_Modalidades(False)
         Fm.Configuracion_Modalidad = True
+        Fm.Cmb_Modalidades.Enabled = False
         Fm.ControlBox = True
         Fm.ShowDialog(Me)
         Fm.Dispose()

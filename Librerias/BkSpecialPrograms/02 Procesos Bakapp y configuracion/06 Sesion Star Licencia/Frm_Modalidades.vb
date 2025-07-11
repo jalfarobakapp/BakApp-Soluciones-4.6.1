@@ -110,7 +110,13 @@ Public Class Frm_Modalidades
         Dim _Emp As String = ModEmpresa '_Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Modalidad & "'")
 
         Cmb_Modalidades.SelectedValue = _Emp
-        Cmb_Modalidades.Enabled = Not Configuracion_Modalidad
+
+        If IsNothing(Cmb_Modalidades.SelectedValue) Then
+            _Emp = _Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Modalidad & "'")
+            Cmb_Modalidades.SelectedValue = _Emp
+        End If
+
+        'Cmb_Modalidades.Enabled = Not Configuracion_Modalidad
 
         Sb_Actualizar_Grilla()
 

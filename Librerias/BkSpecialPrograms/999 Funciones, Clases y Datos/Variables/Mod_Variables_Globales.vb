@@ -147,6 +147,8 @@ Public Module Mod_Variables_Globales
         Oscuro
         Azul
         Oscuro_Ligth
+        Rojo
+        Verde
     End Enum
 
 

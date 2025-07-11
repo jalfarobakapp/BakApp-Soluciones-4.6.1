@@ -1633,13 +1633,17 @@ Public Class Frm_BuscarDocumento_Mt
 
         Dim _RevFincredEnt As Boolean
 
-        If _Global_Row_Configuracion_General.Item("Fincred_Usar") Or _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
-
-            _RevFincredEnt = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
-                             "RevFincred",
-                             "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'",,,, True)
-
+        If Not _Global_Row_Configuracion_General.Item("Fincred_Usar") And Not _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
+            Return True
         End If
+
+        'If _Global_Row_Configuracion_General.Item("Fincred_Usar") Or _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
+
+        _RevFincredEnt = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
+                         "RevFincred",
+                         "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'",,,, True)
+
+        'End If
 
         If Not _RevFincredEnt Then
             Return True

@@ -79,15 +79,17 @@ Partial Class Menu
         Me.Btn_PagarDocumento = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_GDI2GRI = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Rutas = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_PPP = New DevComponents.DotNetBar.ButtonItem()
         Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Lbl_Thema_Claro = New DevComponents.DotNetBar.LabelItem()
         Me.Lbl_Thema_Gris = New DevComponents.DotNetBar.LabelItem()
-        Me.Lbl_Thema_Oscuro_Ligth = New DevComponents.DotNetBar.LabelItem()
         Me.Lbl_Thema_Oscuro = New DevComponents.DotNetBar.LabelItem()
         Me.Lbl_Thema_Azul = New DevComponents.DotNetBar.LabelItem()
+        Me.Lbl_Thema_Rojo = New DevComponents.DotNetBar.LabelItem()
+        Me.Lbl_Thema_Verde = New DevComponents.DotNetBar.LabelItem()
         Me.buttonStyleCustom = New DevComponents.DotNetBar.ColorPickerDropDown()
         Me.Btn_DesacNotif_15 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_DesacNotif_30 = New DevComponents.DotNetBar.ButtonItem()
@@ -100,7 +102,6 @@ Partial Class Menu
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
-        Me.Btn_PPP = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -922,6 +923,12 @@ Partial Class Menu
         Me.Btn_Rutas.Name = "Btn_Rutas"
         Me.Btn_Rutas.Text = "Rutas"
         '
+        'Btn_PPP
+        '
+        Me.Btn_PPP.GlobalItem = False
+        Me.Btn_PPP.Name = "Btn_PPP"
+        Me.Btn_PPP.Text = "Recalcular PPP por producto"
+        '
         'Tiempo_Actualizar_BakApp
         '
         Me.Tiempo_Actualizar_BakApp.Interval = 2000
@@ -944,7 +951,7 @@ Partial Class Menu
         '
         Me.Menu_Contextual_Menu_Extra.AutoExpandOnClick = True
         Me.Menu_Contextual_Menu_Extra.Name = "Menu_Contextual_Menu_Extra"
-        Me.Menu_Contextual_Menu_Extra.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Lbl_Thema_Claro, Me.Lbl_Thema_Gris, Me.Lbl_Thema_Oscuro_Ligth, Me.Lbl_Thema_Oscuro, Me.Lbl_Thema_Azul, Me.buttonStyleCustom})
+        Me.Menu_Contextual_Menu_Extra.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Lbl_Thema_Claro, Me.Lbl_Thema_Gris, Me.Lbl_Thema_Oscuro, Me.Lbl_Thema_Azul, Me.Lbl_Thema_Rojo, Me.Lbl_Thema_Verde, Me.buttonStyleCustom})
         Me.Menu_Contextual_Menu_Extra.Text = "Opciones"
         '
         'LabelItem1
@@ -952,6 +959,7 @@ Partial Class Menu
         Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
         Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
         Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
         Me.LabelItem1.Name = "LabelItem1"
         Me.LabelItem1.PaddingBottom = 1
@@ -990,22 +998,6 @@ Partial Class Menu
         Me.Lbl_Thema_Gris.Tag = "1"
         Me.Lbl_Thema_Gris.Text = "Gris"
         '
-        'Lbl_Thema_Oscuro_Ligth
-        '
-        Me.Lbl_Thema_Oscuro_Ligth.BackColor = System.Drawing.Color.FromArgb(CType(CType(75, Byte), Integer), CType(CType(75, Byte), Integer), CType(CType(75, Byte), Integer))
-        Me.Lbl_Thema_Oscuro_Ligth.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.Lbl_Thema_Oscuro_Ligth.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.Lbl_Thema_Oscuro_Ligth.ForeColor = System.Drawing.Color.White
-        Me.Lbl_Thema_Oscuro_Ligth.Image = CType(resources.GetObject("Lbl_Thema_Oscuro_Ligth.Image"), System.Drawing.Image)
-        Me.Lbl_Thema_Oscuro_Ligth.Name = "Lbl_Thema_Oscuro_Ligth"
-        Me.Lbl_Thema_Oscuro_Ligth.PaddingBottom = 1
-        Me.Lbl_Thema_Oscuro_Ligth.PaddingLeft = 10
-        Me.Lbl_Thema_Oscuro_Ligth.PaddingTop = 1
-        Me.Lbl_Thema_Oscuro_Ligth.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.Lbl_Thema_Oscuro_Ligth.Tag = "4"
-        Me.Lbl_Thema_Oscuro_Ligth.Text = "Oscuro light"
-        Me.Lbl_Thema_Oscuro_Ligth.Visible = False
-        '
         'Lbl_Thema_Oscuro
         '
         Me.Lbl_Thema_Oscuro.BackColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer), CType(CType(32, Byte), Integer))
@@ -1035,6 +1027,36 @@ Partial Class Menu
         Me.Lbl_Thema_Azul.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.Lbl_Thema_Azul.Tag = "3"
         Me.Lbl_Thema_Azul.Text = "Azul"
+        '
+        'Lbl_Thema_Rojo
+        '
+        Me.Lbl_Thema_Rojo.BackColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(221, Byte), Integer))
+        Me.Lbl_Thema_Rojo.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.Lbl_Thema_Rojo.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.Lbl_Thema_Rojo.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Thema_Rojo.Image = CType(resources.GetObject("Lbl_Thema_Rojo.Image"), System.Drawing.Image)
+        Me.Lbl_Thema_Rojo.Name = "Lbl_Thema_Rojo"
+        Me.Lbl_Thema_Rojo.PaddingBottom = 1
+        Me.Lbl_Thema_Rojo.PaddingLeft = 10
+        Me.Lbl_Thema_Rojo.PaddingTop = 1
+        Me.Lbl_Thema_Rojo.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(242, Byte), Integer), CType(CType(222, Byte), Integer), CType(CType(221, Byte), Integer))
+        Me.Lbl_Thema_Rojo.Tag = "5"
+        Me.Lbl_Thema_Rojo.Text = "Rojo"
+        '
+        'Lbl_Thema_Verde
+        '
+        Me.Lbl_Thema_Verde.BackColor = System.Drawing.Color.FromArgb(CType(CType(196, Byte), Integer), CType(CType(220, Byte), Integer), CType(CType(203, Byte), Integer))
+        Me.Lbl_Thema_Verde.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.Lbl_Thema_Verde.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.Lbl_Thema_Verde.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Thema_Verde.Image = CType(resources.GetObject("Lbl_Thema_Verde.Image"), System.Drawing.Image)
+        Me.Lbl_Thema_Verde.Name = "Lbl_Thema_Verde"
+        Me.Lbl_Thema_Verde.PaddingBottom = 1
+        Me.Lbl_Thema_Verde.PaddingLeft = 10
+        Me.Lbl_Thema_Verde.PaddingTop = 1
+        Me.Lbl_Thema_Verde.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(196, Byte), Integer), CType(CType(220, Byte), Integer), CType(CType(203, Byte), Integer))
+        Me.Lbl_Thema_Verde.Tag = "6"
+        Me.Lbl_Thema_Verde.Text = "Verde"
         '
         'buttonStyleCustom
         '
@@ -1147,12 +1169,6 @@ Partial Class Menu
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
         '
-        'Btn_PPP
-        '
-        Me.Btn_PPP.GlobalItem = False
-        Me.Btn_PPP.Name = "Btn_PPP"
-        Me.Btn_PPP.Text = "Recalcular PPP por producto"
-        '
         'Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1221,7 +1237,6 @@ Partial Class Menu
     Friend WithEvents Btn_Themas As DevComponents.DotNetBar.ButtonX
     Friend WithEvents ReflectionLabel1 As DevComponents.DotNetBar.Controls.ReflectionLabel
     Friend WithEvents Metro_Bar_Color As DevComponents.DotNetBar.Metro.MetroStatusBar
-    Friend WithEvents Lbl_Thema_Oscuro_Ligth As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Conf_ConfGeneral As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Conf_ConfEstacion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Conf_ConfImpDiablito As DevComponents.DotNetBar.ButtonItem
@@ -1248,4 +1263,6 @@ Partial Class Menu
     Friend WithEvents Btn_GDI2GRI As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Rutas As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_PPP As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Lbl_Thema_Rojo As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Lbl_Thema_Verde As DevComponents.DotNetBar.LabelItem
 End Class

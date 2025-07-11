@@ -989,18 +989,44 @@ Module Mod_Imprimir
             Return ""
         End If
 
+        'Try
+        '    _Valor = _RowEncabezado.Item(Trim(_Campo))
+        'Catch ex As Exception
+
+        '    Try
+        '        _Valor = NuloPorNro(_RowEncabezado.Item(Trim(_Campo)), "")
+        '    Catch ex2 As Exception
+        '        _Valor = "Error_"
+        '        _Tipo_de_dato = "C"
+        '    End Try
+
+        'End Try
+
         Try
             _Valor = _RowEncabezado.Item(Trim(_Campo))
+            If Not String.IsNullOrEmpty(_Valor) Then
+                _Valor = Replace(_Valor, vbCrLf, " ")
+                _Valor = Replace(_Valor, vbCr, " ")
+                _Valor = Replace(_Valor, vbLf, " ")
+            End If
         Catch ex As Exception
 
             Try
                 _Valor = NuloPorNro(_RowEncabezado.Item(Trim(_Campo)), "")
+                If Not String.IsNullOrEmpty(_Valor) Then
+                    _Valor = Replace(_Valor, vbCrLf, " ")
+                    _Valor = Replace(_Valor, vbCr, " ")
+                    _Valor = Replace(_Valor, vbLf, " ")
+                End If
             Catch ex2 As Exception
                 _Valor = "Error_"
                 _Tipo_de_dato = "C"
             End Try
-
         End Try
+
+        ' Eliminar espacios múltiples intermedios en _Valor
+        _Valor = System.Text.RegularExpressions.Regex.Replace(_Valor, "\s{2,}", " ")
+        _Valor = _Valor.Trim
 
         Dim _Cant_Caracteres As Integer = Len(_Formato)
 

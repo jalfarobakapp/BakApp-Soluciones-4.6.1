@@ -1,7 +1,7 @@
-﻿Imports System.Security.Claims
-Imports Bk_Produccion
+﻿Imports Bk_Produccion
 Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
+Imports DevComponents.DotNetBar.Keyboard
 
 Public Class Menu
 
@@ -21,10 +21,35 @@ Public Class Menu
         _Fm_Menu_Padre = Fm_Menu_Padre
         _Menu_Extra = Menu_Extra
 
+        Lbl_Thema_Claro.Tag = Enum_Themas.Claro
+        Lbl_Thema_Gris.Tag = Enum_Themas.Gris
+        Lbl_Thema_Oscuro.Tag = Enum_Themas.Oscuro
+        Lbl_Thema_Azul.Tag = Enum_Themas.Azul
+        Lbl_Thema_Rojo.Tag = Enum_Themas.Rojo
+        Lbl_Thema_Verde.Tag = Enum_Themas.Verde
+
         AddHandler Lbl_Thema_Claro.Click, AddressOf Thema_Click
         AddHandler Lbl_Thema_Gris.Click, AddressOf Thema_Click
         AddHandler Lbl_Thema_Oscuro.Click, AddressOf Thema_Click
         AddHandler Lbl_Thema_Azul.Click, AddressOf Thema_Click
+        AddHandler Lbl_Thema_Rojo.Click, AddressOf Thema_Click
+        AddHandler Lbl_Thema_Verde.Click, AddressOf Thema_Click
+
+        ' 3. En el constructor o en InitializeComponent, agregar los handlers:
+        ' (Esto puede ir después de InitializeComponent en el constructor)
+        AddHandler Lbl_Thema_Claro.MouseEnter, AddressOf Lbl_Thema_MouseEnter
+        AddHandler Lbl_Thema_Gris.MouseEnter, AddressOf Lbl_Thema_MouseEnter
+        AddHandler Lbl_Thema_Oscuro.MouseEnter, AddressOf Lbl_Thema_MouseEnter
+        AddHandler Lbl_Thema_Azul.MouseEnter, AddressOf Lbl_Thema_MouseEnter
+        AddHandler Lbl_Thema_Rojo.MouseEnter, AddressOf Lbl_Thema_MouseEnter
+        AddHandler Lbl_Thema_Verde.MouseEnter, AddressOf Lbl_Thema_MouseEnter
+
+        AddHandler Lbl_Thema_Claro.MouseLeave, AddressOf Lbl_Thema_MouseLeave
+        AddHandler Lbl_Thema_Gris.MouseLeave, AddressOf Lbl_Thema_MouseLeave
+        AddHandler Lbl_Thema_Oscuro.MouseLeave, AddressOf Lbl_Thema_MouseLeave
+        AddHandler Lbl_Thema_Azul.MouseLeave, AddressOf Lbl_Thema_MouseLeave
+        AddHandler Lbl_Thema_Rojo.MouseLeave, AddressOf Lbl_Thema_MouseLeave
+        AddHandler Lbl_Thema_Verde.MouseLeave, AddressOf Lbl_Thema_MouseLeave
 
         If Global_Thema = Enum_Themas.Oscuro Then
             BtnTeamviewer.ForeColor = Color.White
@@ -582,13 +607,16 @@ Public Class Menu
         If (Global_Thema = Lbl_Thema_Claro.Tag) Then _Lbl = Lbl_Thema_Claro
         If (Global_Thema = Lbl_Thema_Gris.Tag) Then _Lbl = Lbl_Thema_Gris
         If (Global_Thema = Lbl_Thema_Oscuro.Tag) Then _Lbl = Lbl_Thema_Oscuro
-        If (Global_Thema = Lbl_Thema_Oscuro_Ligth.Tag) Then _Lbl = Lbl_Thema_Oscuro_Ligth
         If (Global_Thema = Lbl_Thema_Azul.Tag) Then _Lbl = Lbl_Thema_Azul
+        If (Global_Thema = Lbl_Thema_Rojo.Tag) Then _Lbl = Lbl_Thema_Rojo
+        If (Global_Thema = Lbl_Thema_Verde.Tag) Then _Lbl = Lbl_Thema_Verde
 
         Lbl_Thema_Claro.Image = Nothing
         Lbl_Thema_Gris.Image = Nothing
         Lbl_Thema_Oscuro.Image = Nothing
         Lbl_Thema_Azul.Image = Nothing
+        Lbl_Thema_Rojo.Image = Nothing
+        Lbl_Thema_Verde.Image = Nothing
 
         CType(_Lbl, LabelItem).Image = ImageList1.Images.Item(0)
 
@@ -600,31 +628,18 @@ Public Class Menu
 
         If StyleManager.IsMetro(StyleManager.Style) Then
 
-            'Metro_Bar_Color.Visible = True
-
-            Dim _baseColor As Color = e.Color
+            ' Obtener el canvas color actual
+            Dim currentParams As DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters = StyleManager.MetroColorGeneratorParameters
             Dim _camvasColor As Color
 
-            Select Case Global_Thema
+            If Not currentParams.Equals(Nothing) Then
+                _camvasColor = currentParams.CanvasColor
+            Else
+                ' Valor por defecto si no hay parámetros previos
+                _camvasColor = Color.White
+            End If
 
-                Case Enum_Themas.Claro
-
-                    _camvasColor = Color.White
-
-                Case Enum_Themas.Gris
-
-                    _camvasColor = Color.FromArgb(216, 216, 216)
-
-                Case Enum_Themas.Oscuro
-
-                    _camvasColor = Color.FromArgb(32, 32, 32) '  Color.Black
-
-                Case Enum_Themas.Azul
-
-                    _camvasColor = Color.FromArgb(217, 224, 248)
-
-            End Select
-
+            Dim _baseColor As Color = e.Color
 
             StyleManager.MetroColorGeneratorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(_camvasColor, _baseColor)
 
@@ -633,6 +648,42 @@ Public Class Menu
             StyleManager.ColorTint = e.Color
 
         End If
+
+        'If StyleManager.IsMetro(StyleManager.Style) Then
+
+        '    'Metro_Bar_Color.Visible = True
+
+        '    Dim _baseColor As Color = e.Color
+        '    Dim _camvasColor As Color
+
+        '    Select Case Global_Thema
+
+        '        Case Enum_Themas.Claro
+
+        '            _camvasColor = Color.White
+
+        '        Case Enum_Themas.Gris
+
+        '            _camvasColor = Color.FromArgb(216, 216, 216)
+
+        '        Case Enum_Themas.Oscuro
+
+        '            _camvasColor = Color.FromArgb(32, 32, 32) '  Color.Black
+
+        '        Case Enum_Themas.Azul
+
+        '            _camvasColor = Color.FromArgb(217, 224, 248)
+
+        '    End Select
+
+
+        '    StyleManager.MetroColorGeneratorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(_camvasColor, _baseColor)
+
+        'Else
+
+        '    StyleManager.ColorTint = e.Color
+
+        'End If
 
     End Sub
 
@@ -649,40 +700,57 @@ Public Class Menu
 
     End Sub
 
-    Private Sub Lbl_Thema_Claro_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Claro.Click
-        Fx_Cambiar_Thema(Enum_Themas.Claro, Color.FromArgb(0, 112, 192))
-        Sb_Revisar_Estilo("")
-        Sb_Color_Botones_Barra(Barra)
-    End Sub
+    'Private Sub Lbl_Thema_Claro_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Claro.Click
+    '    Fx_Cambiar_Thema(Enum_Themas.Claro, Color.FromArgb(0, 112, 192))
+    '    Sb_Revisar_Estilo("")
+    '    Sb_Color_Botones_Barra(Barra)
+    'End Sub
 
-    Private Sub Lbl_Thema_Gris_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Gris.Click
-        Fx_Cambiar_Thema(Enum_Themas.Gris, Color.FromArgb(0, 112, 192))
-        Sb_Revisar_Estilo("")
-        Sb_Color_Botones_Barra(Barra)
-    End Sub
+    'Private Sub Lbl_Thema_Gris_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Gris.Click
+    '    Fx_Cambiar_Thema(Enum_Themas.Gris, Color.FromArgb(0, 112, 192))
+    '    Sb_Revisar_Estilo("")
+    '    Sb_Color_Botones_Barra(Barra)
+    'End Sub
 
-    Private Sub Lbl_Thema_Oscuro_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Oscuro.Click
-        Fx_Cambiar_Thema(Enum_Themas.Oscuro, Color.FromArgb(0, 112, 192))
-        Sb_Revisar_Estilo("")
-        Sb_Color_Botones_Barra(Barra)
-    End Sub
+    'Private Sub Lbl_Thema_Oscuro_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Oscuro.Click
+    '    Fx_Cambiar_Thema(Enum_Themas.Oscuro, Color.FromArgb(0, 112, 192))
+    '    Sb_Revisar_Estilo("")
+    '    Sb_Color_Botones_Barra(Barra)
+    'End Sub
 
-    Private Sub Lbl_Thema_Azul_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Azul.Click
-        Fx_Cambiar_Thema(Enum_Themas.Azul, Color.FromArgb(64, 80, 141))
-        Sb_Revisar_Estilo("")
-        Sb_Color_Botones_Barra(Barra)
-    End Sub
+    'Private Sub Lbl_Thema_Azul_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Azul.Click
+    '    Fx_Cambiar_Thema(Enum_Themas.Azul, Color.FromArgb(64, 80, 141))
+    '    Sb_Revisar_Estilo("")
+    '    Sb_Color_Botones_Barra(Barra)
+    'End Sub
 
+    'Private Sub Lbl_Thema_Rojo_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Rojo.Click
+    '    Fx_Cambiar_Thema(Enum_Themas.Rojo, Color.FromArgb(175, 0, 0))
+    '    Sb_Revisar_Estilo("")
+    '    Sb_Color_Botones_Barra(Barra)
+    'End Sub
+
+    'Private Sub Lbl_Thema_Verde_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Verde.Click
+    '    Fx_Cambiar_Thema(Enum_Themas.Verde, Color.FromArgb(16, 124, 65))
+    '    Sb_Revisar_Estilo("")
+    '    Sb_Color_Botones_Barra(Barra)
+    'End Sub
+    'Private Sub Lbl_Thema_Oscuro_Ligth_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Oscuro_Ligth.Click
+    '    Fx_Cambiar_Thema(Enum_Themas.Oscuro_Ligth, Color.FromArgb(0, 112, 192))
+    '    Sb_Revisar_Estilo("")
+    '    BtnTeamviewer.ForeColor = Color.White
+    '    Btn_Actualizar_BakApp.ForeColor = Color.White
+    'End Sub
+
+    ' Ejemplo de uso: obtener los colores asociados al tag de un label
+    ' Dim colores As List(Of Color) = DiccionarioColoresThemas(Lbl_Thema_Verde.Tag)
+    ' Dim colorOscuro As Color = colores(0)
+    ' Dim colorClaro As Color = colores(1)
     Private Sub buttonStyleCustom_MouseLeave(sender As Object, e As EventArgs) Handles buttonStyleCustom.MouseLeave
         Sb_Revisar_Estilo("")
     End Sub
 
-    Private Sub Lbl_Thema_Oscuro_Ligth_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Oscuro_Ligth.Click
-        Fx_Cambiar_Thema(Enum_Themas.Oscuro_Ligth, Color.FromArgb(0, 112, 192))
-        Sb_Revisar_Estilo("")
-        BtnTeamviewer.ForeColor = Color.White
-        Btn_Actualizar_BakApp.ForeColor = Color.White
-    End Sub
+
 
     Private Sub Btn_Conf_ConfGeneral_Click(sender As Object, e As EventArgs) Handles Btn_Conf_ConfGeneral.Click
         Call BtnConfiguracion_Click(Nothing, Nothing)
@@ -1355,5 +1423,131 @@ Public Class Menu
         Fm.Dispose()
 
     End Sub
+
+
+    ' Pseudocódigo detallado:
+    ' 1. Crear un método para manejar el evento MouseEnter de todos los LabelX de themas.
+    '    - Al entrar, obtener el Tag del label y buscar en DiccionarioColoresThemas.
+    '    - Cambiar los colores de la aplicación usando el color correspondiente (oscuro o claro según preferencia).
+    ' 2. Crear un método para manejar el evento MouseLeave de todos los LabelX de themas.
+    '    - No hacer nada, para que el color no vuelva al original (el color solo cambia si se hace clic).
+    ' 3. Modificar los handlers para que todos los LabelX de themas usen estos eventos.
+    ' 4. Al hacer clic, guardar el thema seleccionado y aplicar el color de forma definitiva.
+
+    ' Implementación:
+    ' 1. Agregar los handlers MouseEnter y MouseLeave a los LabelX de themas en el constructor o en el diseñador.
+    ' 2. Implementar los métodos de eventos.
+    ' 3. Modificar los métodos Click para que solo apliquen el color y guarden el thema.
+
+    ' Código a agregar/modificar:
+
+
+
+    ' Métodos para MouseEnter y MouseLeave:
+
+    'Private Sub Lbl_Thema_MouseEnter(sender As Object, e As EventArgs)
+    '    Dim lbl As LabelItem = CType(sender, LabelItem)
+    '    Dim tag = lbl.Tag
+    '    If DiccionarioColoresThemas.ContainsKey(tag) Then
+    '        Dim colores = DiccionarioColoresThemas(tag)
+    '        Dim colorOscuro As Color = colores(0)
+    '        Dim colorClaro As Color = colores(1)
+    '        ' Usar colorOscuro como base para el thema
+    '        If StyleManager.IsMetro(StyleManager.Style) Then
+    '            Dim _camvasColor As Color
+    '            Select Case tag
+    '                Case Enum_Themas.Claro : _camvasColor = Color.White
+    '                Case Enum_Themas.Gris : _camvasColor = Color.FromArgb(216, 216, 216)
+    '                Case Enum_Themas.Oscuro : _camvasColor = Color.FromArgb(32, 32, 32)
+    '                Case Enum_Themas.Azul : _camvasColor = Color.FromArgb(217, 224, 248)
+    '                Case Enum_Themas.Verde : _camvasColor = Color.FromArgb(230, 255, 230)
+    '                Case Enum_Themas.Rojo : _camvasColor = Color.FromArgb(255, 230, 230)
+    '                Case Enum_Themas.Oscuro_Ligth : _camvasColor = Color.FromArgb(80, 80, 80)
+    '                Case Else : _camvasColor = Color.White
+    '            End Select
+    '            StyleManager.MetroColorGeneratorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(_camvasColor, colorOscuro)
+    '        Else
+    '            StyleManager.ColorTint = colorOscuro
+    '        End If
+    '    End If
+    'End Sub
+
+    'Private Sub Lbl_Thema_MouseLeave(sender As Object, e As EventArgs)
+    '    ' No hacer nada para que el color no vuelva al original.
+    '    ' El color solo cambiará si se hace clic en el thema.
+    'End Sub
+
+    ' Modificar los métodos Click de los LabelX de themas para que apliquen el thema de forma definitiva:
+
+    Private Sub Lbl_Thema_Claro_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Claro.Click
+        Fx_Cambiar_Thema(Enum_Themas.Claro, DiccionarioColoresThemas(Enum_Themas.Claro)(1))
+        Sb_Revisar_Estilo("")
+        Sb_Color_Botones_Barra(Barra)
+    End Sub
+
+    Private Sub Lbl_Thema_Gris_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Gris.Click
+        Fx_Cambiar_Thema(Enum_Themas.Gris, DiccionarioColoresThemas(Enum_Themas.Gris)(1))
+        Sb_Revisar_Estilo("")
+        Sb_Color_Botones_Barra(Barra)
+    End Sub
+
+    Private Sub Lbl_Thema_Oscuro_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Oscuro.Click
+        Fx_Cambiar_Thema(Enum_Themas.Oscuro, DiccionarioColoresThemas(Enum_Themas.Oscuro)(1))
+        Sb_Revisar_Estilo("")
+        Sb_Color_Botones_Barra(Barra)
+    End Sub
+
+    Private Sub Lbl_Thema_Azul_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Azul.Click
+        Fx_Cambiar_Thema(Enum_Themas.Azul, DiccionarioColoresThemas(Enum_Themas.Azul)(1))
+        Sb_Revisar_Estilo("")
+        Sb_Color_Botones_Barra(Barra)
+    End Sub
+
+    Private Sub Lbl_Thema_Rojo_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Rojo.Click
+        Fx_Cambiar_Thema(Enum_Themas.Rojo, DiccionarioColoresThemas(Enum_Themas.Rojo)(1))
+        Sb_Revisar_Estilo("")
+        Sb_Color_Botones_Barra(Barra)
+    End Sub
+
+    Private Sub Lbl_Thema_Verde_Click(sender As Object, e As EventArgs) Handles Lbl_Thema_Verde.Click
+        Fx_Cambiar_Thema(Enum_Themas.Verde, DiccionarioColoresThemas(Enum_Themas.Verde)(1))
+        Sb_Revisar_Estilo("")
+        Sb_Color_Botones_Barra(Barra)
+    End Sub
+
+    ' Pseudocódigo detallado:
+    ' 1. Crear un solo método Lbl_Thema_MouseEnter que funcione para todos los LabelItem de themas.
+    ' 2. En el constructor o en el método InitializeComponent, agregar el handler MouseEnter a todos los LabelItem de themas.
+    ' 3. Eliminar los handlers MouseEnter individuales (como Lbl_Thema_Verde_MouseEnter).
+    ' 4. El método Lbl_Thema_MouseEnter debe detectar el thema por el Tag y aplicar el color correspondiente.
+
+    ' Implementación:
+
+    ' 1. Método único para MouseEnter:
+    Private Sub Lbl_Thema_MouseEnter(sender As Object, e As EventArgs)
+        Dim lbl As LabelItem = TryCast(sender, LabelItem)
+        If lbl Is Nothing Then Return
+        Dim tag = lbl.Tag
+        If DiccionarioColoresThemas.ContainsKey(tag) Then
+            Dim colores = DiccionarioColoresThemas(tag)
+            Dim _canvasColor As Color = colores(0)
+            Dim baseColor As Color = colores(1)
+            If StyleManager.IsMetro(StyleManager.Style) Then
+                StyleManager.MetroColorGeneratorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(_canvasColor, baseColor)
+            Else
+                StyleManager.ColorTint = baseColor
+            End If
+        End If
+    End Sub
+
+    ' 2. Método único para MouseLeave:
+    Private Sub Lbl_Thema_MouseLeave(sender As Object, e As EventArgs)
+        Sb_Revisar_Estilo("")
+    End Sub
+
+    ' 4. Eliminar el método específico Lbl_Thema_Verde_MouseEnter y su handler Handles Lbl_Thema_Verde.MouseEnter.
+    ' 5. Eliminar el método específico Lbl_Thema_Verde_MouseLeave y su handler Handles Lbl_Thema_Verde.MouseLeave.
+
+    ' Así, todos los botones de themas usan el mismo evento y lógica.
 
 End Class

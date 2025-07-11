@@ -3440,6 +3440,19 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
+    ' Paso 1: Definir el diccionario a nivel de clase para asociar los tags de los Lbl de themas con listas de colores (oscuro y claro)
+    '(0) = Color de fondo Camvas
+    '(1) = Color de fondo base, contono de formularios, botones, etc.
+    Public ReadOnly DiccionarioColoresThemas As New Dictionary(Of Object, List(Of Color)) From {
+        {Enum_Themas.Verde, New List(Of Color) From {Color.FromArgb(196, 220, 203), Color.FromArgb(16, 124, 65)}},
+        {Enum_Themas.Azul, New List(Of Color) From {Color.FromArgb(217, 224, 248), Color.FromArgb(43, 87, 154)}},
+        {Enum_Themas.Oscuro, New List(Of Color) From {Color.FromArgb(32, 32, 32), Color.FromArgb(255, 255, 255)}},
+        {Enum_Themas.Claro, New List(Of Color) From {Color.FromArgb(255, 255, 255), Color.FromArgb(43, 87, 154)}},
+        {Enum_Themas.Gris, New List(Of Color) From {Color.FromArgb(216, 216, 216), Color.FromArgb(43, 87, 154)}},
+        {Enum_Themas.Rojo, New List(Of Color) From {Color.FromArgb(242, 222, 221), Color.FromArgb(175, 0, 0)}},
+        {Enum_Themas.Oscuro_Ligth, New List(Of Color) From {Color.FromArgb(60, 60, 60), Color.FromArgb(255, 255, 255)}}
+    }
+
     Sub Sb_Revisar_Estilo(_Tido As String,
                           Optional _Estilo As eStyle = eStyle.Metro,
                           Optional _Color As Integer = -16748352)
@@ -3490,30 +3503,43 @@ Public Module Crear_Documentos_Desde_Otro
             Exit Sub
         End Try
 
+        _camvasColor = DiccionarioColoresThemas(Global_Thema)(0)
+        '_baseColor = DiccionarioColoresThemas(Global_Thema)(1)
 
-        Select Case Global_Thema
+        'Select Case Global_Thema
 
-            Case Enum_Themas.Claro
+        '    Case Enum_Themas.Claro
 
-                _camvasColor = Color.White
+        '        _camvasColor = Color.White
 
-            Case Enum_Themas.Gris
+        '        _camvasColor = DiccionarioColoresThemas(Global_Thema)(0)
+        '        _baseColor = DiccionarioColoresThemas(Global_Thema)(1)
 
-                _camvasColor = Color.FromArgb(216, 216, 216)
+        '    Case Enum_Themas.Gris
 
-            Case Enum_Themas.Oscuro
+        '        _camvasColor = Color.FromArgb(216, 216, 216)
 
-                _camvasColor = Color.FromArgb(32, 32, 32)
+        '    Case Enum_Themas.Oscuro
 
-            Case Enum_Themas.Azul
+        '        _camvasColor = Color.FromArgb(32, 32, 32)
 
-                _camvasColor = Color.FromArgb(217, 224, 248)
+        '    Case Enum_Themas.Azul
 
-            Case Enum_Themas.Oscuro_Ligth
+        '        _camvasColor = Color.FromArgb(217, 224, 248)
 
-                _camvasColor = Color.FromArgb(45, 45, 45)
+        '    Case Enum_Themas.Oscuro_Ligth
 
-        End Select
+        '        _camvasColor = Color.FromArgb(45, 45, 45)
+
+        '    Case Enum_Themas.Rojo
+
+        '        _camvasColor = Color.FromArgb(229, 185, 183)
+
+        '    Case Enum_Themas.Verde
+
+        '        _camvasColor = Color.FromArgb(218, 243, 223)
+
+        'End Select
 
         Global_baseColor = _baseColor.ToArgb
         Global_camvasColor = _camvasColor.ToArgb

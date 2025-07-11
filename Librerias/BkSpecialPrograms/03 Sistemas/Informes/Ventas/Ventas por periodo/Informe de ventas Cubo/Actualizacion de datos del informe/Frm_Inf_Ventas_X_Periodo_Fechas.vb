@@ -521,7 +521,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
 
             Consulta_Sql = "Select Distinct FEEMLI From MAEDDO With (Nolock) Where IDMAEDDO Not In (Select IDMAEDDO From " & _Nombre_Tabla_Paso & " With (Nolock))
                             And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "' 
-                            And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN')
+                            And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')
 						    Order by FEEMLI"
 
             Dim _TblFechas As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
@@ -547,7 +547,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                    "Where IDMAEDDO Not In (Select IDMAEDDO FROM MAEDDO With (Nolock)" & vbCrLf &
                                    "Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & Space(1) &
                                    "'And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL'," &
-                                   "'FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN')) And FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'"
+                                   "'FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')) And FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'"
                     _Sql.Ej_consulta_IDU(Consulta_Sql)
 
                     'Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & vbCrLf & "Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'"
@@ -588,7 +588,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                    "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
                                    "Where Ddo.FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "'" & vbCrLf &
                                    "And Ddo.TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE'," &
-                                   "'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV','RIN')" & vbCrLf &
+                                   "'FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')" & vbCrLf &
                                    "And Ddo.IDMAEDDO Not IN (Select IDMAEDDO From " & _Nombre_Tabla_Paso & " With (Nolock) Where FEEMLI = '" & Format(_Fecha, "yyyyMMdd") & "')"
 
                     Dim _Tbl_Idmaeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)

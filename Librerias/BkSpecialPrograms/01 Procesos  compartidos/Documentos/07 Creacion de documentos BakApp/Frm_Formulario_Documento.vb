@@ -3099,6 +3099,11 @@ Public Class Frm_Formulario_Documento
                     Lbl_Version.Text = "Versión: " & _Global_Version_BakApp & " (*** Ambiente Certificación SII ***)"
                 End If
 
+                If Global_Thema = Enum_Themas.Oscuro Then
+                    Lbl_Version.ForeColor = Color.White
+                    Lbl_DocActual.ForeColor = Color.White
+                End If
+
                 MStb_Barra.BackgroundStyle.BackColor = _BackColor_Tido
                 Panel_Documento.BackColor = _BackColor_Tido
 
@@ -4516,11 +4521,11 @@ Public Class Frm_Formulario_Documento
 
     Sub Sb_Mostrar_Datos_Producto_Activo(_Mostrar_Stock As Boolean, Optional _Muestra_NewRow As Boolean = False)
 
-        Dim _Moneda As String = _TblEncabezado.Rows(0).Item("Moneda_Doc").ToString.Trim
-
         If Grilla_Detalle.RowCount > 0 Then
 
             Try
+
+                Dim _Moneda As String = _TblEncabezado.Rows(0).Item("Moneda_Doc").ToString.Trim
                 Dim __DD = Grilla_Detalle.CurrentCell
                 Dim _Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index)
 
@@ -14421,6 +14426,9 @@ Public Class Frm_Formulario_Documento
 
         Dim _Tabular As Boolean
 
+        Barra.Enabled = True
+        Barra_Herramientas_Producto.Enabled = True
+
         Try
             Grilla_Encabezado.Enabled = False
             Grilla_Detalle.Enabled = False
@@ -15305,6 +15313,7 @@ Public Class Frm_Formulario_Documento
         Finally
             Grilla_Detalle.Enabled = True
             Grilla_Encabezado.Enabled = True
+            Me.Cursor = Cursors.Default
             'For i = 0 To 3
             '    SendKeys.Send("Right")
             'Next
@@ -15713,8 +15722,9 @@ Public Class Frm_Formulario_Documento
 
             Dim _Modalidad As String = Modalidad
 
-            Dim Frm_Modalidad As New Frm_Modalidades(True) 'Frm_Modalidad_Mt
+            Dim Frm_Modalidad As New Frm_Modalidades(True)
             Frm_Modalidad.ControlBox = True
+            Frm_Modalidad.Cmb_Modalidades.Enabled = False
             Frm_Modalidad.ShowDialog(Me)
             Frm_Modalidad.Dispose()
 
@@ -28835,7 +28845,7 @@ Public Class Frm_Formulario_Documento
                                Clas_Filtros_Random.Enum_Tabla_Fl._Tabla_Tabcarac, _Sql_Filtro_Condicion_Extra, False, False, True) Then
 
                 Dim _Codigo = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
-                Dim _Descripcion = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+                Dim _Descripcion = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion").ToString.Trim
 
                 _TblEncabezado.Rows(0).Item("TblTipoVenta") = "CLALIBPR"
                 _TblEncabezado.Rows(0).Item("CodTipoVenta") = _Codigo
@@ -29714,6 +29724,10 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
+    Private Sub Lbl_TipoVenta_Click(sender As Object, e As EventArgs) Handles Lbl_TipoVenta.Click
+
+    End Sub
+
     Function Fx_ProdConInfo(_Tipr As String) As Boolean
 
         Select Case _Tipr
@@ -29724,6 +29738,11 @@ Public Class Frm_Formulario_Documento
         Return False
 
     End Function
+
+    Private Sub Grilla_Encabezado_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles Grilla_Encabezado.CellBeginEdit
+        Barra.Enabled = False
+        Barra_Herramientas_Producto.Enabled = False
+    End Sub
 
 End Class
 

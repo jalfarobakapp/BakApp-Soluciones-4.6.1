@@ -562,10 +562,10 @@ Public Class Frm_Demonio_Configuraciones
 
         _Filtrar.Tabla = "CONFIEST"
         _Filtrar.Campo = "MODALIDAD"
-        _Filtrar.Descripcion = "MODALIDAD"
+        _Filtrar.Descripcion = "EMPRESA+'-'+MODALIDAD"
 
         If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And MODALIDAD <> '  '",
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & ModEmpresa & "' And MODALIDAD <> '  '",
                                Nothing, False, True) Then
 
             Dim _Tbl_Transportista As DataTable = _Filtrar.Pro_Tbl_Filtro
