@@ -135,8 +135,8 @@ Public Class Frm_Stmp_Listado
         End Select
 
         Consulta_sql = My.Resources.Recursos_WmsSgem.SQLQuery_Listado_Stmp
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", Mod_Sucursal)
         Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)
         Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_Enc", _Global_BaseBk & "Zw_Stmp_Enc")
         Consulta_sql = Replace(Consulta_sql, "Zw_Demonio_FacAuto", _Global_BaseBk & "Zw_Demonio_FacAuto")
@@ -387,8 +387,8 @@ Public Class Frm_Stmp_Listado
                                      FechaDelServidor,
                                      "R",
                                      True,
-                                     ModEmpresa,
-                                     ModSucursal,
+                                     Mod_Empresa,
+                                     Mod_Sucursal,
                                      FUNCIONARIO,
                                      False,
                                      0,
@@ -741,8 +741,8 @@ Public Class Frm_Stmp_Listado
 
         With _Cl_Stem.Zw_Stmp_Enc
 
-            .Empresa = ModEmpresa
-            .Sucursal = ModSucursal
+            .Empresa = Mod_Empresa
+            .Sucursal = Mod_Sucursal
             .Idmaeedo = _Row_Documento.Item("IDMAEEDO")
             .Tido = _Row_Documento.Item("TIDO")
             .Nudo = _Row_Documento.Item("NUDO")
@@ -818,7 +818,7 @@ Public Class Frm_Stmp_Listado
 
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Modalidad, _TidoDocEmitir, True)
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, Mod_Empresa, _Modalidad, _TidoDocEmitir, True)
 
             If Not IsNothing(_RowFormato) Then
 
@@ -845,9 +845,9 @@ Public Class Frm_Stmp_Listado
 
                     If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
 
-                        Dim _Empresa As String = ModEmpresa
-                        Dim _Sucursal As String = ModSucursal
-                        Dim _Bodega As String = ModBodega
+                        Dim _Empresa As String = Mod_Empresa
+                        Dim _Sucursal As String = Mod_Sucursal
+                        Dim _Bodega As String = Mod_Bodega
 
                         Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
 
@@ -1278,7 +1278,7 @@ Public Class Frm_Stmp_Listado
             With ConfLocal
 
                 Dim ImprimirTicket As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
-                                                      "Valor", "Campo = 'Chk_ImprimirTicket' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Informe = 'ConfLocal_Sgem'")
+                                                      "Valor", "Campo = 'Chk_ImprimirTicket' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Mod_Modalidad & "' And Informe = 'ConfLocal_Sgem'")
 
 
                 Boolean.TryParse(ImprimirTicket, .ImprimirTicket)
@@ -1292,11 +1292,11 @@ Public Class Frm_Stmp_Listado
                 End If
 
                 .NombreEquipoImprime_Ticket = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
-                                                   "Valor", "Campo = 'Txt_NombreEquipoImprime_Ticket' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Informe = 'ConfLocal_Sgem'")
+                                                   "Valor", "Campo = 'Txt_NombreEquipoImprime_Ticket' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Mod_Modalidad & "' And Informe = 'ConfLocal_Sgem'")
                 .Impresora_Ticket = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
-                                                      "Valor", "Campo = 'Txt_Impresora_Ticket' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Informe = 'ConfLocal_Sgem'")
+                                                      "Valor", "Campo = 'Txt_Impresora_Ticket' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Mod_Modalidad & "' And Informe = 'ConfLocal_Sgem'")
                 .NombreFormato_Ticket = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
-                                                          "Valor", "Campo = 'Txt_NombreFormato_Ticket' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Informe = 'ConfLocal_Sgem'")
+                                                          "Valor", "Campo = 'Txt_NombreFormato_Ticket' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Mod_Modalidad & "' And Informe = 'ConfLocal_Sgem'")
 
                 If String.IsNullOrWhiteSpace(.NombreEquipoImprime_Ticket) Or
                    String.IsNullOrWhiteSpace(.Impresora_Ticket) Or
@@ -1528,9 +1528,9 @@ Public Class Frm_Stmp_Listado
                 Return
             End If
 
-            If _Row_Documento.Item("SUDO") <> ModSucursal Then
+            If _Row_Documento.Item("SUDO") <> Mod_Sucursal Then
                 Dim _Sucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU",
-                                                            "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Row_Documento.Item("SUDO") & "'")
+                                                            "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & _Row_Documento.Item("SUDO") & "'")
 
                 MessageBoxEx.Show(Me, "Documento corresponde a la sucursal " & _Row_Documento.Item("SUDO") & " - " & _Sucursal, "Validación",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)

@@ -54,7 +54,7 @@ Public Class Frm_BuscarOT
         If Rdb_Todas.Checked Then _Condicion = String.Empty
 
         Consulta_sql = "Select *,Case ESTADO When 'V' Then 'Vigente' When 'C' Then 'Cerrada' End As ESTADO_OT From POTE" & vbCrLf &
-                       "Where POTE.ESODD = ' ' And EMPRESA = '" & ModEmpresa & "' And NUMOT+REFERENCIA LIKE '%" & _Filtro & "%'" & vbCrLf &
+                       "Where POTE.ESODD = ' ' And EMPRESA = '" & Mod_Empresa & "' And NUMOT+REFERENCIA LIKE '%" & _Filtro & "%'" & vbCrLf &
                        _Condicion & FiltroExternoSql &
                        "ORDER BY NUMOT"
 

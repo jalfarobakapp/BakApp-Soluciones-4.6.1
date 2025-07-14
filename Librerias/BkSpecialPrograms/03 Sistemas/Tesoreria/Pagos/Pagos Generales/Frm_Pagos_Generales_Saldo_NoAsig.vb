@@ -178,7 +178,7 @@ Public Class Frm_Pagos_Generales_Saldo_NoAsig
         _Filtrar.Campo = "IDMAEEDO"
         _Filtrar.Descripcion = "TIDO+'-'+NUDO+'    '+Rtrim(LTrim(MODO))+'      '+PARSENAME(CONVERT(VARCHAR,CAST(VABRDO AS MONEY),1),2)"
 
-        Dim _Condicion = "And EMPRESA='" & ModEmpresa & "'  AND ENDO='" & _Endo & "'  AND TIDO IN ('NVV','RES','PRO') AND ESDO Not In ('C','N') AND   
+        Dim _Condicion = "And EMPRESA='" & Mod_Empresa & "'  AND ENDO='" & _Endo & "'  AND TIDO IN ('NVV','RES','PRO') AND ESDO Not In ('C','N') AND   
                           NOT EXISTS (SELECT * FROM MAEDPCE WHERE MAEDPCE.ARCHIRSD = 'MAEEDO' AND MAEDPCE.IDRSD = MAEEDO.IDMAEEDO)"
 
         _Filtrar.Ver_Codigo = False

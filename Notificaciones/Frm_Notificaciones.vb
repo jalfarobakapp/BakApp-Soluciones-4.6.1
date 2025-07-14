@@ -99,8 +99,8 @@ Public Class Frm_Notificaciones
                 Dim _Mod As New Clas_Modalidades
                 _Mod.Sb_Actualiza_Formatos_X_Modalidad()
                 _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-                _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-                _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+                _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
                 Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
                 Dim _Mos_Notif_X_CdPermiso As Boolean = _Global_Row_EstacionBk.Item("Mos_Notif_X_CdPermiso")

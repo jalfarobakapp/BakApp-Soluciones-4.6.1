@@ -144,14 +144,14 @@ Public Class Frm_ImpBarras_PorProducto
         Consulta_sql = "SELECT EMPRESA+';'+KOSU+';'+KOBO AS Padre,NOKOBO AS Hijo FROM TABBO" ' WHERE SEMILLA = " & Actividad
         CmbBodega.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-        CmbBodega.SelectedValue = ModEmpresa & ";" & ModSucursal & ";" & ModBodega
+        CmbBodega.SelectedValue = Mod_Empresa & ";" & Mod_Sucursal & ";" & Mod_Bodega
 
         caract_combo(CmbLista)
         Consulta_sql = "Select 'PM' As Padre,'PM' As Hijo Union" & vbCrLf &
                        "Select 'UC' As Padre,'ULTIMA COMPRA' As Hijo Union" & vbCrLf &
                        "SELECT KOLT As Padre,KOLT+'-'+NOKOLT AS Hijo FROM TABPP"
         CmbLista.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
-        CmbLista.SelectedValue = ModListaPrecioVenta
+        CmbLista.SelectedValue = Mod_ListaPrecioVenta
 
     End Sub
 
@@ -481,9 +481,9 @@ Public Class Frm_ImpBarras_PorProducto
             Fm.Pro_CodEntidad = String.Empty
             Fm.Pro_CodSucEntidad = String.Empty
             Fm.Pro_Tipo_Lista = "P"
-            Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
-            Fm.Pro_Sucursal_Busqueda = ModSucursal
-            Fm.Pro_Bodega_Busqueda = ModBodega
+            Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
+            Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+            Fm.Pro_Bodega_Busqueda = Mod_Bodega
             Fm.Txtdescripcion.Text = _Codigo
             Fm.Pro_Mostrar_Info = True
             Fm.Pro_Actualizar_Precios = True
@@ -678,7 +678,7 @@ Public Class Frm_ImpBarras_PorProducto
             Dim _Mod As New Clas_Modalidades
 
             _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+            _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
             Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 

@@ -22,36 +22,36 @@ Public Class Frm_Dte_Configuracion
 
         _AmbienteCertificacion = Convert.ToInt32(_Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion"))
 
-        Txt_Empresa.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'Empresa' And AmbienteCertificacion = " & _AmbienteCertificacion)
-        Txt_RutEmisor.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'RutEmisor' And AmbienteCertificacion = " & _AmbienteCertificacion)
-        Txt_RutEnvia.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'RutEnvia' And AmbienteCertificacion = " & _AmbienteCertificacion)
-        Txt_RutReceptor.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'RutReceptor' And AmbienteCertificacion = " & _AmbienteCertificacion)
+        Txt_Empresa.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'Empresa' And AmbienteCertificacion = " & _AmbienteCertificacion)
+        Txt_RutEmisor.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'RutEmisor' And AmbienteCertificacion = " & _AmbienteCertificacion)
+        Txt_RutEnvia.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'RutEnvia' And AmbienteCertificacion = " & _AmbienteCertificacion)
+        Txt_RutReceptor.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'RutReceptor' And AmbienteCertificacion = " & _AmbienteCertificacion)
 
         If CBool(_AmbienteCertificacion) Then
             Txt_NroResol.Enabled = False
             Txt_NroResol.Text = 0
         Else
-            Txt_NroResol.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'NroResol' And AmbienteCertificacion = " & _AmbienteCertificacion)
+            Txt_NroResol.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'NroResol' And AmbienteCertificacion = " & _AmbienteCertificacion)
         End If
 
         Txt_FchResol.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                              "Empresa = '" & ModEmpresa & "' And Campo = 'FchResol' And AmbienteCertificacion = " & _AmbienteCertificacion)
-        Txt_Cn.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'Cn' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                                              "Empresa = '" & Mod_Empresa & "' And Campo = 'FchResol' And AmbienteCertificacion = " & _AmbienteCertificacion)
+        Txt_Cn.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'Cn' And AmbienteCertificacion = " & _AmbienteCertificacion)
 
         _Id_Correo = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion",
-                                       "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'Id_Correo' And AmbienteCertificacion = " & _AmbienteCertificacion, True,, 0)
+                                       "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'Id_Correo' And AmbienteCertificacion = " & _AmbienteCertificacion, True,, 0)
         Txt_Id_Correo.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Nombre_Correo", "Id = " & _Id_Correo)
 
-        Txt_NombreFormato_PDF_BLV.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'NombreFormato_PDF_BLV' And AmbienteCertificacion = " & _AmbienteCertificacion)
-        Txt_NombreFormato_PDF_FCV.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'NombreFormato_PDF_FCV' And AmbienteCertificacion = " & _AmbienteCertificacion)
-        Txt_NombreFormato_PDF_NCV.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'NombreFormato_PDF_NCV' And AmbienteCertificacion = " & _AmbienteCertificacion)
-        Txt_MailContactoSIIPruebas.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'MailContactoSIIPruebas' And AmbienteCertificacion = " & _AmbienteCertificacion)
+        Txt_NombreFormato_PDF_BLV.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'NombreFormato_PDF_BLV' And AmbienteCertificacion = " & _AmbienteCertificacion)
+        Txt_NombreFormato_PDF_FCV.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'NombreFormato_PDF_FCV' And AmbienteCertificacion = " & _AmbienteCertificacion)
+        Txt_NombreFormato_PDF_NCV.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'NombreFormato_PDF_NCV' And AmbienteCertificacion = " & _AmbienteCertificacion)
+        Txt_MailContactoSIIPruebas.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'MailContactoSIIPruebas' And AmbienteCertificacion = " & _AmbienteCertificacion)
 
-        Input_siimesesexpiranfolios.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'siimesesexpiranfolios' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
-        Input_siimesesexpiranfolios_GUIAS.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'siimesesexpiranfolios_GUIAS' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
-        Input_siimesesexpiranfolios_BOLETAS.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'Input_siimesesexpiranfolios_BOLETAS' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
-        Input_siimesesexpiranfolios_NOTASDEBITO.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'Input_siimesesexpiranfolios_NOTASDEBITO' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
-        Input_siimesesexpiranfolios_NOTASCREDITO.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'Input_siimesesexpiranfolios_NOTASCREDITO' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
+        Input_siimesesexpiranfolios.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'siimesesexpiranfolios' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
+        Input_siimesesexpiranfolios_GUIAS.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'siimesesexpiranfolios_GUIAS' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
+        Input_siimesesexpiranfolios_BOLETAS.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'Input_siimesesexpiranfolios_BOLETAS' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
+        Input_siimesesexpiranfolios_NOTASDEBITO.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'Input_siimesesexpiranfolios_NOTASDEBITO' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
+        Input_siimesesexpiranfolios_NOTASCREDITO.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'Input_siimesesexpiranfolios_NOTASCREDITO' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
 
         'If String.IsNullOrEmpty(Txt_Empresa.Text) Then Txt_Empresa.Text = _Global_Row_Configp.Item("EMPRESA")
         'If String.IsNullOrEmpty(Txt_RutEnvia.Text) Then Txt_RutEnvia.Text = _Global_Row_Configp.Item("FIRMAELEC")
@@ -186,7 +186,7 @@ Public Class Frm_Dte_Configuracion
         'End If
 
         Consulta_sql = "Delete " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion " &
+                       "Where Empresa = '" & Mod_Empresa & "' And TipoConfiguracion " &
                        "In ('ConfEmpresa','ConfCorreoSalida','ConfFormatoDoc','ConfGeneral') And AmbienteCertificacion = " & _AmbienteCertificacion & vbCrLf & vbCrLf
 
         Consulta_sql += Fx_Llenar_Input_Configuracion("Empresa", Txt_Empresa.Text, "String", "ConfEmpresa", _AmbienteCertificacion)
@@ -231,7 +231,7 @@ Public Class Frm_Dte_Configuracion
                                            _AmbienteCertificacion As Integer) As String
 
         Dim _Insert = "Insert Into " & _Global_BaseBk & "Zw_DTE_Configuracion (Empresa, Campo, Valor, FechaMod, TipoCampo, TipoConfiguracion,AmbienteCertificacion) Values " &
-                        "('" & ModEmpresa & "','" & _Campo & "','" & _Valor.Trim & "',Getdate(),'" & _TipoCampo & "','" & _TipoConfiguracion & "'," & _AmbienteCertificacion & ")" & vbCrLf
+                        "('" & Mod_Empresa & "','" & _Campo & "','" & _Valor.Trim & "',Getdate(),'" & _TipoCampo & "','" & _TipoConfiguracion & "'," & _AmbienteCertificacion & ")" & vbCrLf
 
         Return _Insert
 

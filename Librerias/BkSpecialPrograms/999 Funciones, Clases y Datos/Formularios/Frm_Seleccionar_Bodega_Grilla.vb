@@ -78,12 +78,12 @@ Public Class Frm_Seleccionar_Bodega_Grilla
         Dim _Filtro_Sucursal As String
 
         If _Solo_Bodegas_Sucursal Then
-            _Filtro_Sucursal = " And KOSU = '" & ModSucursal & "'"
+            _Filtro_Sucursal = " And KOSU = '" & Mod_Sucursal & "'"
         End If
 
         Consulta_sql = "Select EMPRESA,KOSU,KOBO,NOKOBO" & vbCrLf &
                        "From TABBO" & vbCrLf &
-                       "Where EMPRESA = '" & ModEmpresa & "'" & _Filtro_Sucursal
+                       "Where EMPRESA = '" & Mod_Empresa & "'" & _Filtro_Sucursal
 
         Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 

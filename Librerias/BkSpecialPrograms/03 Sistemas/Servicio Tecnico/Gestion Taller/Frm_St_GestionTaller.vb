@@ -72,7 +72,7 @@
 
         End Select
 
-        _Condicion += "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "' And CodTecnico_Asignado = '" & _CodFuncionario_Activo & "'" & vbCrLf
+        _Condicion += "And Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & "' And CodTecnico_Asignado = '" & _CodFuncionario_Activo & "'" & vbCrLf
 
         Consulta_Sql = My.Resources.Recursos_Locales.SqlQuery_Lista_OT
         Consulta_Sql = Replace(Consulta_Sql, "#Db_BakApp#", _Global_BaseBk)

@@ -132,7 +132,7 @@ Public Class Frm_Stmp_IncNVVPicking
                         "Left Join " & _Global_BaseBk & "Zw_Despachos_Doc Ddd On Ddd.Idrst = Edo.IDMAEEDO And Ddd.Archidrst = 'MAEEDO'" & vbCrLf &
                         "Left Join " & _Global_BaseBk & "Zw_Despachos Den On Den.Id_Despacho = Ddd.Id_Despacho" & vbCrLf &
                         "Where 1 > 0" & vbCrLf &
-                        "And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado Not In ('NULO','NULA') And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "')" & vbCrLf &
+                        "And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado Not In ('NULO','NULA') And Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & "')" & vbCrLf &
                         _FiltroFechaEmision &
                         _FiltroFechaDespacho &
                         _FiltroEntidad &
@@ -577,12 +577,19 @@ Public Class Frm_Stmp_IncNVVPicking
                                                          Dtp_FechaParaFacturacion.Value,
                                                          "R",
                                                          False,
-                                                         ModEmpresa,
-                                                         ModSucursal,
+                                                         Mod_Empresa,
+                                                         Mod_Sucursal,
                                                          FUNCIONARIO,
                                                          _PagarAuto,
                                                          _Idmaedpce_Paga,
                                                          _CodFuncionario_Paga)
+
+                If _Mensaje_Stem.EsCorrecto Then
+                    If RutEmpresa = "77988832-0" Then
+                        Fx_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo)
+                    End If
+                End If
+
                 _Lista.Add(_Mensaje_Stem)
 
             End If
@@ -590,6 +597,73 @@ Public Class Frm_Stmp_IncNVVPicking
         Next
 
         Return _Lista
+
+    End Function
+
+    Function Fx_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Consulta_sql = "Select Top 1 EMPRESA As Empresa,SULIDO As Sucursal,BOSULIDO As Bodega From MAEDDO Where IDMAEEDO = " & _Idmaeedo
+            Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Empresa As String
+            Dim _Sucursal As String
+            Dim _Bodega As String
+
+            If Not IsNothing(_Row_Maeddo) Then
+
+                _Empresa = _Row_Maeddo.Item("Empresa")
+                _Sucursal = _Row_Maeddo.Item("Sucursal")
+                _Bodega = _Row_Maeddo.Item("Bodega")
+
+                If String.IsNullOrEmpty(_Empresa) Or String.IsNullOrEmpty(_Sucursal) Or String.IsNullOrEmpty(_Bodega) Then
+                    _Mensaje.EsCorrecto = False
+                    _Mensaje.Mensaje = "No se pudo obtener la empresa, sucursal o bodega de la nota de venta"
+                    Return _Mensaje
+                End If
+
+            Else
+
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Mensaje = "No se encontró información de la nota de venta"
+                Return _Mensaje
+
+            End If
+
+            Dim EmpSucBod As String = _Empresa & ";" & _Sucursal & ";" & _Bodega
+
+            Consulta_sql = "Select Tabla, DescripcionTabla, CodigoTabla, NombreTabla" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                           "Where Tabla = 'SEA2MEATGARDEN' And NombreTabla = '" & EmpSucBod & "'"
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row) Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Mensaje = "No se encontró la caracterización para la empresa, sucursal y bodega: " & EmpSucBod
+                Return _Mensaje
+            End If
+
+            Dim _ESB = _Row.Item("CodigoTabla").ToString.Split(";"c)
+
+            _Empresa = _ESB(0).Trim
+            _Sucursal = _ESB(1).Trim
+            _Bodega = _ESB(2).Trim
+
+            Consulta_sql = "Declare @Idmaeedo Int = " & _Idmaeedo & vbCrLf &
+                           "Update MAEEDO Set EMPRESA = '" & _Empresa & "',SUDO = '" & _Sucursal & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
+                           "Update MAEDDO Set EMPRESA = '" & _Empresa & "',SULIDO = '" & _Sucursal & "',BOSULIDO = '" & _Bodega & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Despachos Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "',Bodega = '" & _Bodega &
+                                "' Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa = '" & _Empresa & "' Where Idmaeedo = @Idmaeedo"
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False)
+
+        Catch ex As Exception
+
+        End Try
 
     End Function
 

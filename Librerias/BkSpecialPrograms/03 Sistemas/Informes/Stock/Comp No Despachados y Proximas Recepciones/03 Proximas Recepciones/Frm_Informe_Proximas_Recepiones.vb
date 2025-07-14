@@ -277,7 +277,7 @@ Public Class Frm_Informe_Proximas_Recepiones
         Consulta_sql = My.Resources.Recursos_Proximas_Recepciones.SQLQuery_Proximas_Recepciones
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Detalle#", _Filtro_Detalle)
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", _Filtro_Productos)
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Ud#", _Ud)
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Documentos#", _Filtro_Documentos)
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Emision_Desde#", _Fecha_Emision_Desde)

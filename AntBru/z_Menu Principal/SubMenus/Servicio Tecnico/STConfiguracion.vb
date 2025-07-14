@@ -81,8 +81,8 @@ Public Class STConfiguracion
         Dim _ServTecnico_Bodega As String = _Global_Row_Configuracion_Estacion.Item("ServTecnico_Bodega").ToString.Trim
 
         If String.IsNullOrWhiteSpace(_ServTecnico_Empresa) Then
-            _ServTecnico_Empresa = ModEmpresa
-            _ServTecnico_Sucursal = ModSucursal
+            _ServTecnico_Empresa = Mod_Empresa
+            _ServTecnico_Sucursal = Mod_Sucursal
         End If
 
         Dim Fm As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
@@ -103,7 +103,7 @@ Public Class STConfiguracion
                            "ServTecnico_Empresa = '" & _ServTecnico_Empresa & "'" &
                            ",ServTecnico_Sucursal = '" & _ServTecnico_Sucursal & "'" &
                            ",ServTecnico_Bodega = '" & _ServTecnico_Bodega & "'" & vbCrLf &
-                           "Where Modalidad = '" & Modalidad & "'"
+                           "Where Modalidad = '" & Mod_Modalidad & "'"
             If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
                 MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Bodega de servicio técnico para la modalidad",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)

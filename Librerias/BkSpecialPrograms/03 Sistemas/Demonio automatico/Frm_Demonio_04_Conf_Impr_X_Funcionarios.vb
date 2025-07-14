@@ -694,7 +694,7 @@ Public Class Frm_Demonio_04_Conf_Impr_X_Funcionarios
         End If
 
 
-        Dim _Sql_Filtro_Condicion_Extra = "And INACTIVO = 0 And KOFU IN (Select KOFU From TABFUEM Where EMPRESA = '" & ModEmpresa & "')"
+        Dim _Sql_Filtro_Condicion_Extra = "And INACTIVO = 0 And KOFU IN (Select KOFU From TABFUEM Where EMPRESA = '" & Mod_Empresa & "')"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 

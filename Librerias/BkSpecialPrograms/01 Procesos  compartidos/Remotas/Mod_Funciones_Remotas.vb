@@ -67,7 +67,7 @@ Public Module Mod_Funciones_Remotas
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Remotas " &
                        "(Empresa,NroRemota,CodFuncionario_Solicita,CodFuncionario_Autoriza,CodPermiso,Descripcion_Adicional,Permiso_Otorgado,Otorga," &
                        "Id_Casi_DocEnc,Fecha_Solicita,CodEntidad,CodSucEntidad,NomEntidad,TotalBruto,Espera_En_Linea,Permiso_Presencial,Idmaeedo,Observaciones,Padre_NroRemota) Values " &
-                       "('" & ModEmpresa & "','" & _NroRemota & "','" & _CodFuncionario_Solicita & "','" & _CodFuncionario_Autoriza & "','" & _CodPermiso &
+                       "('" & Mod_Empresa & "','" & _NroRemota & "','" & _CodFuncionario_Solicita & "','" & _CodFuncionario_Autoriza & "','" & _CodPermiso &
                        "','" & _Descripcion_Adicional & "'," & _Permiso_Otorgado & ",'" & _Otorga & "'," & _Id_Casi_DocEnc & ",GetDate(),'" & _CodEntidad &
                        "','" & _CodSucEntidad & "','" & _NomEntidad &
                        "'," & De_Num_a_Tx_01(_TotalBruto, False, 0) & "," & Convert.ToInt32(_Espera_En_Liena) & "," & Convert.ToInt32(_Permiso_Presencial) & "

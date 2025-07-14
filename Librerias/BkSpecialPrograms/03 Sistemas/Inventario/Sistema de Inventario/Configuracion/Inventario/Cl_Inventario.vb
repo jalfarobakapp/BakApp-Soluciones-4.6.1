@@ -293,7 +293,7 @@ Public Class Cl_Inventario
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Log_Gestiones (NombreEquipo,Funcionario,Modalidad,Archirst,Idrst,Fecha_Hora," &
                                "CodAccion,Accion,CodPermiso) Values " &
-                               "('" & _NombreEquipo & "','" & _CodFuncionario & "','" & Modalidad & "','Zw_Inv_Inventario'" &
+                               "('" & _NombreEquipo & "','" & _CodFuncionario & "','" & Mod_Modalidad & "','Zw_Inv_Inventario'" &
                                "," & .Id & ",Getdate(),'','Cierra inventario','Invg0006')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
@@ -362,7 +362,7 @@ Public Class Cl_Inventario
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Log_Gestiones (NombreEquipo,Funcionario,Modalidad,Archirst,Idrst,Fecha_Hora," &
                                "CodAccion,Accion,CodPermiso) Values " &
-                               "('" & _NombreEquipo & "','" & _CodFuncionario & "','" & Modalidad & "','Zw_Inv_Inventario'" &
+                               "('" & _NombreEquipo & "','" & _CodFuncionario & "','" & Mod_Modalidad & "','Zw_Inv_Inventario'" &
                                "," & .Id & ",Getdate(),'','Abre inventario','Invg0005')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)

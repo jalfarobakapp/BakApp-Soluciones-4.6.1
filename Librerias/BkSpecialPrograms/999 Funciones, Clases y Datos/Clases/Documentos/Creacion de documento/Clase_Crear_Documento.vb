@@ -288,6 +288,7 @@ Public Class Clase_Crear_Documento
             With _Row_Encabezado
 
                 Dim _Modalidad As String = .Item("Modalidad")
+
                 _Tido = .Item("TipoDoc")
                 _Subtido = .Item("Subtido")
 
@@ -300,7 +301,7 @@ Public Class Clase_Crear_Documento
                         Numero_de_documento = "TLV0000001"
                     Else
                         Numero_de_documento = _Sql.Fx_Trae_Dato("MAEEDO", "COALESCE(MAX(NUDO),'0000000000')",
-                                                                "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO Like 'TLV%'")
+                                                                "EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO Like 'TLV%'")
                         Numero_de_documento = Fx_Proximo_NroDocumento(Numero_de_documento, 10)
                     End If
 
@@ -310,7 +311,7 @@ Public Class Clase_Crear_Documento
                 Else
 
                     If _Cambiar_NroDocumento And Not _Reserva_NroOCC Then
-                        Numero_de_documento = Traer_Numero_Documento(_Tido, .Item("NroDocumento"), _Modalidad)
+                        Numero_de_documento = Traer_Numero_Documento(_Tido, .Item("NroDocumento"), _Modalidad,,,, _Empresa)
                     Else
                         Numero_de_documento = .Item("NroDocumento")
                     End If
@@ -325,7 +326,7 @@ Public Class Clase_Crear_Documento
 
                             Dim _Msj As New LsValiciones.Mensajes
 
-                            _Msj = Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, Numero_de_documento, False)
+                            _Msj = Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, Numero_de_documento, False, _Empresa, _Modalidad)
 
                             If Not _Msj.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, True) Then
                                 Throw New System.Exception("El folio del documento electrónico (" & Numero_de_documento & ") ya expiró en el SII." & vbCrLf &
@@ -469,7 +470,7 @@ Public Class Clase_Crear_Documento
 
                 Dim _Modalidad = _Row_Encabezado.Item("Modalidad")
 
-                Consulta_sql = Fx_Cambiar_Numeracion_Modalidad(_Tido, _Nudo, _Modalidad)
+                Consulta_sql = Fx_Cambiar_Numeracion_Modalidad(_Tido, _Nudo, _Empresa, _Modalidad)
 
                 If Not String.IsNullOrEmpty(Consulta_sql) Then
 
@@ -700,7 +701,7 @@ Public Class Clase_Crear_Documento
                             If _Tido = "FCC" Then
 
                                 Consulta_sql = "Update MAEPR Set PPUL01 = " & _Ppprnere1 & ",PPUL02 = " & _Ppprnere2 & " Where KOPR = '" & _Koprct & "'" & vbCrLf &
-                                               "Update MAEPREM Set PPUL01 = " & _Ppprnere1 & ",PPUL02 = " & _Ppprnere2 & " Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Koprct & "'"
+                                               "Update MAEPREM Set PPUL01 = " & _Ppprnere1 & ",PPUL02 = " & _Ppprnere2 & " Where EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Koprct & "'"
                                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                 Comando.Transaction = myTrans
                                 Comando.ExecuteNonQuery()
@@ -744,7 +745,7 @@ Public Class Clase_Crear_Documento
                                                 Mp.STFI1,Mp.STTR1,Isnull(Ms.STFI1,0) As STFI1_Suc
                                                 From MAEPREM Mp
                                                 Left Join MAEPMSUC Ms On Mp.EMPRESA = Ms.EMPRESA And Ms.KOSU = '" & _Sulido & "' And Mp.KOPR = Ms.KOPR
-                                                Where Mp.EMPRESA = '" & ModEmpresa & "' And Mp.KOPR = '" & _Koprct & "'"
+                                                Where Mp.EMPRESA = '" & Mod_Empresa & "' And Mp.KOPR = '" & _Koprct & "'"
 
                                 Comando = New SqlCommand(Consulta_sql, cn2)
                                 Comando.Transaction = myTrans
@@ -1279,8 +1280,10 @@ Public Class Clase_Crear_Documento
 
                         If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Det") Then
 
-                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable) Values " &
-                                           "(" & _Idmaeddo & "," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _Koprct & "','" & _Nokopr & "'," & Convert.ToInt32(_RtuVariable) & ")"
+                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable," &
+                                           "Empresa,Sucursal,Bodega) Values " &
+                                           "(" & _Idmaeddo & "," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _Koprct & "','" & _Nokopr & "'" &
+                                           "," & Convert.ToInt32(_RtuVariable) & ",'" & _Empresa & "','" & _Sulido & "','" & _Bosulido & "')"
                             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
@@ -1982,7 +1985,7 @@ Public Class Clase_Crear_Documento
             If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "BLV" Or _Tido = "FCV" Or
                _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "NCV" Or _Tido = "GRI" Or _Tido = "GDI" Then
 
-                Consulta_sql = "Select * From MAEEDO Where EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                Consulta_sql = "Select * From MAEEDO Where EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
                 Comando = New SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
                 dfd1 = Comando.ExecuteReader()
@@ -2316,12 +2319,13 @@ Public Class Clase_Crear_Documento
 
     Private Function Fx_Cambiar_Numeracion_Modalidad(_Tido As String,
                                                      _Nudo As String,
+                                                     _Empresa As String,
                                                      _Modalidad As String) As String
 
 
         ' _Modalidad = "  "
 
-        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST WITH (NOLOCK) Where MODALIDAD = '" & _Modalidad & "' And EMPRESA = '" & ModEmpresa & "'"
+        Dim _Consulta_sql = "Select Top 1 " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql)
 
         Dim _Nudo_Modalidad As String
@@ -2333,7 +2337,7 @@ Public Class Clase_Crear_Documento
             _Nudo_Modalidad = _Tbl.Rows(0).Item(_Tido).ToString.Trim
 
             If String.IsNullOrEmpty(_Nudo_Modalidad) Then
-                _Consulta_sql = Fx_Cambiar_Numeracion_Modalidad(_Tido, _Nudo, "  ")
+                _Consulta_sql = Fx_Cambiar_Numeracion_Modalidad(_Tido, _Nudo, _Empresa, "  ")
             ElseIf _Nudo_Modalidad = "0000000000" Then
                 _Consulta_sql = String.Empty
             Else
@@ -2346,15 +2350,15 @@ Public Class Clase_Crear_Documento
 
                     If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
 
-                        _Consulta_sql = "UPDATE CONFIEST SET " &
+                        _Consulta_sql = "Update CONFIEST Set " &
                                         "GDV = '" & _ProxNumero & "'," & vbCrLf &
                                         "GTI = '" & _ProxNumero & "'," & vbCrLf &
                                         "GDP = '" & _ProxNumero & "'," & vbCrLf &
                                         "GDD = '" & _ProxNumero & "'" & vbCrLf &
-                                        "WHERE EMPRESA = '" & ModEmpresa & "' AND  MODALIDAD = '" & _Modalidad & "'"
+                                        "Where EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
                     Else
-                        _Consulta_sql = "UPDATE CONFIEST SET " & _Tido & " = '" & _ProxNumero & "'" & vbCrLf &
-                                    "WHERE EMPRESA = '" & ModEmpresa & "' AND  MODALIDAD = '" & _Modalidad & "'"
+                        _Consulta_sql = "Update CONFIEST Set " & _Tido & " = '" & _ProxNumero & "'" & vbCrLf &
+                                        "Where EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
                     End If
 
                 End If

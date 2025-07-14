@@ -1494,9 +1494,9 @@ Public Class Class_Imprimir_Barras
                        "Isnull((Select Top 1 PP01UD From TABPRE Where KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'),0) As Precio_ud1," & vbCrLf &
                        "Isnull((Select Top 1 PP02UD From TABPRE Where KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'),0) As Precio_ud2," & vbCrLf &
                        "Cast(0 As Float) As 'PrecioNetoXRtu',Cast(0 As Float) As 'PrecioBrutoXRtu'," & vbCrLf &
-                       "Isnull((Select top 1 PM From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'),0) As 'PM'," & vbCrLf &
-                       "Isnull((Select top 1 PPUL01 From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'),0) As 'PU01'," & vbCrLf &
-                       "Isnull((Select top 1 PPUL02 From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'),0) As 'PU02'," & vbCrLf &
+                       "Isnull((Select top 1 PM From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Codigo & "'),0) As 'PM'," & vbCrLf &
+                       "Isnull((Select top 1 PPUL01 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Codigo & "'),0) As 'PU01'," & vbCrLf &
+                       "Isnull((Select top 1 PPUL02 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Codigo & "'),0) As 'PU02'," & vbCrLf &
                        "Isnull((Select top 1 KOPRAL From TABCODAL Where KOEN = '" & _CodEntidad & "' And KOPR = '" & _Codigo & "'),'') As Codigo_Alternativo," & vbCrLf &
                        "Isnull((Select Top 1 NOKOMR From TABMR Where KOMR = MRPR),'') As Marca," & vbCrLf &
                        "Cast(0 As Float) As PU01_Neto,Cast(0 As Float) As PU02_Neto,Cast(0 As Float) As PU01_Bruto,Cast(0 As Float) As PU02_Bruto,Getdate() As FechaProgramada" & vbCrLf &

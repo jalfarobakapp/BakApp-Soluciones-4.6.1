@@ -225,14 +225,14 @@ Public Class Frm_Libro_Compras_Ventas
             Dim _Filtro As String = "AND EDO.LIBRO LIKE '" & _Cadena_Random & "%' AND LIBRO NOT IN (Select Libro From " & _Global_BaseBk & "Zw_Compras_en_SII" & ")" & vbCrLf
 
             Consulta_sql = My.Resources.Recursos_Libros_Compra_Venta.SqlQuery_Libro_Compras
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
             Consulta_sql = Replace(Consulta_sql, "#Libro#", _Libro)
             Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro & _Filtro_Random)
 
             _Inf_05_Solo_Random = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Consulta_sql = My.Resources.Recursos_Libros_Compra_Venta.SqlQuery_Libro_Compras
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
             Consulta_sql = Replace(Consulta_sql, "#Libro#", _Libro)
             Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro_Random)
 
@@ -1618,7 +1618,7 @@ Public Class Frm_Libro_Compras_Ventas
 
                 Dim Fm_Post As New Frm_Formulario_Documento(_Tido, csGlobales.Enum_Tipo_Documento.Compra, False)
                 Fm_Post.Pro_SubTido = "100"
-                Fm_Post.Sb_Limpiar(Modalidad)
+                Fm_Post.Sb_Limpiar(Mod_Modalidad)
                 Fm_Post.Pro_Nudo = _Nudo
                 Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, False)
                 Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, False)

@@ -660,7 +660,7 @@ Public Class Cl_Permisos_Asociados
         Dim _Tbl_Validadores As DataTable
 
         Consulta_sql = "Select Distinct CodFuncionario From " & _Global_BaseBk & "Zw_Prod_Usuario_Validador 
-                        Where Empresa = '" & ModEmpresa & "' And Codigo In " & _Filtro_Productos & _Filtro_Jefes & " Order By CodFuncionario"
+                        Where Empresa = '" & Mod_Empresa & "' And Codigo In " & _Filtro_Productos & _Filtro_Jefes & " Order By CodFuncionario"
         _Tbl_Validadores = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "ZW_Permisos Where CodPermiso = 'Comp0095'"

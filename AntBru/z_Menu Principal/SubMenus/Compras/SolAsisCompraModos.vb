@@ -28,7 +28,7 @@ Public Class SolAsisCompraModos
     End Sub
 
     Private Sub Btn_Modo_OCC_Click(sender As Object, e As EventArgs) Handles Btn_Modo_OCC.Click
-        Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
+        Dim Fm As New Frm_00_Asis_Compra_Menu(Mod_Modalidad)
         Fm.Tipo_Informe = "Asistente de compras"
         Fm.Modo_OCC = True
         Fm.ShowDialog(Me)
@@ -36,7 +36,7 @@ Public Class SolAsisCompraModos
     End Sub
 
     Private Sub Btn_Modo_NVI_Click(sender As Object, e As EventArgs) Handles Btn_Modo_NVI.Click
-        Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
+        Dim Fm As New Frm_00_Asis_Compra_Menu(Mod_Modalidad)
         Fm.Tipo_Informe = "Asistente de compras"
         Fm.Modo_NVI = True
         Fm.Modo_OCC = False
@@ -49,7 +49,7 @@ Public Class SolAsisCompraModos
     End Sub
 
     Private Sub ButtonItem2_Click(sender As Object, e As EventArgs) Handles ButtonItem2.Click
-        Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
+        Dim Fm As New Frm_00_Asis_Compra_Menu(Mod_Modalidad)
         Fm.Tipo_Informe = "Asistente de compras Configuración de OCC automatizadas"
         Fm.Modo_OCC = True
         Fm.Modo_ConfAuto = True

@@ -565,7 +565,7 @@ Public Class Frm_Demonio_Configuraciones
         _Filtrar.Descripcion = "EMPRESA+'-'+MODALIDAD"
 
         If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & ModEmpresa & "' And MODALIDAD <> '  '",
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & Mod_Empresa & "' And MODALIDAD <> '  '",
                                Nothing, False, True) Then
 
             Dim _Tbl_Transportista As DataTable = _Filtrar.Pro_Tbl_Filtro
@@ -574,7 +574,7 @@ Public Class Frm_Demonio_Configuraciones
 
             Dim _Modalidad = _Row.Item("Codigo").ToString.Trim
 
-            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad, "FCV", True)
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Mod_Empresa, _Modalidad, "FCV", True)
 
             If IsNothing(_RowFormato) Then
                 _Modalidad = String.Empty
@@ -949,11 +949,11 @@ Public Class Frm_Demonio_Configuraciones
             Frm_Modalidad.Dispose()
 
             If MessageBoxEx.Show(Me, "¿Desea dejar a este funcionario permanentemente como usuario por defecto para la estación de trabajo?" & vbCrLf & vbCrLf &
-                                         "Usuario: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim & " Modalidad: " & Modalidad,
+                                         "Usuario: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim & " Modalidad: " & Mod_Modalidad,
                                          "Usuario por defecto", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set " &
-                               "Usuario_X_Defecto = '" & FUNCIONARIO & "', Modalidad_X_Defecto = '" & Modalidad & "'" & vbCrLf &
+                               "Usuario_X_Defecto = '" & FUNCIONARIO & "', Modalidad_X_Defecto = '" & Mod_Modalidad & "'" & vbCrLf &
                                "Where NombreEquipo = '" & _NombreEquipo & "'"
                 If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
@@ -1024,7 +1024,7 @@ Public Class Frm_Demonio_Configuraciones
 
             Dim _Modalidad = _Row.Item("Codigo").ToString.Trim
 
-            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad, "NVV", True)
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Mod_Empresa, _Modalidad, "NVV", True)
 
             If IsNothing(_RowFormato) Then
                 _Modalidad = String.Empty
@@ -1094,15 +1094,15 @@ Public Class Frm_Demonio_Configuraciones
     End Sub
 
     Private Sub Btn_Rutas_PDF_Facturas_Click(sender As Object, e As EventArgs) Handles Btn_Rutas_PDF_Facturas.Click
-        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Txt_FacAuto_Modalidad.Text, "FCV")
+        Sb_Configuracion_Salida_PDF(Me, Mod_Empresa, Txt_FacAuto_Modalidad.Text, "FCV")
     End Sub
 
     Private Sub Btn_Rutas_PDF_Boletas_Click(sender As Object, e As EventArgs) Handles Btn_Rutas_PDF_Boletas.Click
-        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Txt_FacAuto_Modalidad.Text, "BLV")
+        Sb_Configuracion_Salida_PDF(Me, Mod_Empresa, Txt_FacAuto_Modalidad.Text, "BLV")
     End Sub
 
     Private Sub Btn_Rutas_PDF_Guias_Click(sender As Object, e As EventArgs) Handles Btn_Rutas_PDF_Guias.Click
-        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Txt_FacAuto_Modalidad.Text, "GDV")
+        Sb_Configuracion_Salida_PDF(Me, Mod_Empresa, Txt_FacAuto_Modalidad.Text, "GDV")
     End Sub
 
     Private Sub Btn_ConfCorreo_CierreNVV_Click(sender As Object, e As EventArgs) Handles Btn_ConfCorreo_CierreNVV.Click

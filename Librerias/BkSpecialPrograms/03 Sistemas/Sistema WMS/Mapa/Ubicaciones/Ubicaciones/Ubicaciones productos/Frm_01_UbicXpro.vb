@@ -51,7 +51,7 @@ Public Class Frm_01_UbicXpro
         If (_RowBodega Is Nothing) Then
 
             Consulta_sql = "Select top 1 * From TABBO" & vbCrLf &
-                           "Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' and KOBO = '" & ModBodega & "'"
+                           "Where EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' and KOBO = '" & Mod_Bodega & "'"
 
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 

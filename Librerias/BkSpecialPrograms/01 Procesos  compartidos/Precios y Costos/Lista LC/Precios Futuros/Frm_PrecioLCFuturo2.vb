@@ -190,7 +190,7 @@ Public Class Frm_PrecioLCFuturo2
                        "Select 'UC' As Padre,'ULTIMA COMPRA' As Hijo Union" & vbCrLf &
                        "SELECT KOLT As Padre,KOLT+'-'+NOKOLT AS Hijo FROM TABPP"
         CmbLista.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
-        CmbLista.SelectedValue = ModListaPrecioVenta
+        CmbLista.SelectedValue = Mod_ListaPrecioVenta
 
     End Sub
 
@@ -309,9 +309,9 @@ Public Class Frm_PrecioLCFuturo2
                                                   _Puerto,
                                                   _Codigo,
                                                   _Lista,
-                                                  ModEmpresa,
-                                                  ModSucursal,
-                                                  ModBodega,
+                                                  Mod_Empresa,
+                                                  Mod_Sucursal,
+                                                  Mod_Bodega,
                                                   "",
                                                   False,
                                                   True,

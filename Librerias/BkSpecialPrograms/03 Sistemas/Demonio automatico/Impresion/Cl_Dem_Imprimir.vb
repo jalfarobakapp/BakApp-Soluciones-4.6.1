@@ -152,7 +152,7 @@ Public Class Cl_Dem_Imprimir
                 Dim _AmbienteCertificacion As Boolean = _Fl.Item("AmbienteCertificacion")
                 Dim _Msg As String = String.Empty
 
-                Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+                Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
                 _Class_DTE.AmbienteCertificacion = _AmbienteCertificacion
 
                 Dim _Id_Dte As Integer = _Class_DTE.Fx_FirmarXHefesto()
@@ -451,7 +451,7 @@ Public Class Cl_Dem_Imprimir
         Dim _Filtro_Sucursal = String.Empty
 
         If _Imp_Suc_Modal Then
-            _Filtro_Sucursal = "And SUDO = '" & ModSucursal & "'"
+            _Filtro_Sucursal = "And SUDO = '" & Mod_Sucursal & "'"
         End If
 
         Fx_Insertar_Documento_Para_Imprimir =
@@ -712,7 +712,7 @@ Public Class Cl_Dem_Imprimir
         Dim _Filtro_Sucursal = String.Empty
 
         If _Imp_Suc_Modal Then
-            _Filtro_Sucursal = "And SULIDO = '" & ModSucursal & "' And BOSULIDO = '" & ModBodega & "'"
+            _Filtro_Sucursal = "And SULIDO = '" & Mod_Sucursal & "' And BOSULIDO = '" & Mod_Bodega & "'"
         End If
 
         Fx_Insertar_Documento_Para_Imprimir_Picking =

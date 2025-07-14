@@ -878,7 +878,7 @@ Public Class Frm_Crear_Guias_De_Ajuste_De_Stock
 
         Try
 
-            Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+            Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
             Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Koen = _Row_Configp.Item("RUT")

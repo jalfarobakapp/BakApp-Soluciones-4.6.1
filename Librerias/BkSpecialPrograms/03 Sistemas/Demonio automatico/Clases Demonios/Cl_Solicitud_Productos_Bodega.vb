@@ -182,7 +182,7 @@ Public Class Cl_Solicitud_Productos_Bodega
         Dim _Id As Integer
 
         Consulta_Sql = "Select Id From " & _Global_BaseBk & "Zw_Prod_SolBodega " &
-                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'  And Bodega = '" & ModBodega & "' And Impreso = 0"
+                       "Where Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & "'  And Bodega = '" & Mod_Bodega & "' And Impreso = 0"
 
         Dim _TblProd_SolBodega = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 

@@ -87,9 +87,9 @@ Public Class Frm_Demonio_New
 
         Me.Text = "Demonio para acciones automatizadas, V: [" & _Version_BkSpecialPrograms & "]"
         Lbl_Nombre_Equipo.Text = "Nombre equipo: " & _NombreEquipo
-        Lbl_Modalidad.Text = "Modalidad: " & Modalidad & ", Sucursal: " & ModSucursal & ", Bodega: " & ModBodega
+        Lbl_Modalidad.Text = "Modalidad: " & Mod_Modalidad & ", Sucursal: " & Mod_Sucursal & ", Bodega: " & Mod_Bodega
 
-        Lbl_Estatus.Text = "Empresa: " & ModEmpresa & ", Modalidad: " & Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _NombreEquipo & ", diablito = " & _Global_EsDiablito.ToString
+        Lbl_Estatus.Text = "Empresa: " & Mod_Empresa & ", Modalidad: " & Mod_Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _NombreEquipo & ", diablito = " & _Global_EsDiablito.ToString
 
 
         Dim _Grb_Programacion As New Grb_Programacion
@@ -1300,6 +1300,13 @@ Public Class Frm_Demonio_New
                 _Cl_FacturacionAuto.Nombre_Equipo = _NombreEquipo
                 _Cl_FacturacionAuto.Log_Registro = String.Empty
 
+                Dim _Empresa_Ori = Mod_Empresa
+                Dim _Modalidad_Ori = Mod_Modalidad
+
+                If RutEmpresa = "76095906-5" Then
+                    _Cl_FacturacionAuto.Sb_Cambiar_EmpSucBod()
+                End If
+
                 _Cl_FacturacionAuto.Sb_Traer_NVV_De_NVVAuto_A_Facturar()
                 _Cl_FacturacionAuto.Sb_Traer_NVV_A_Facturar()
                 _Cl_FacturacionAuto.Sb_Traer_NVV_De_Picking_A_Facturar()
@@ -1311,6 +1318,16 @@ Public Class Frm_Demonio_New
 
                 If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
                     registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
+                End If
+
+
+                If RutEmpresa = "76095906-5" Then
+                    Dim _Mod As New Clas_Modalidades
+
+                    _Mod.Sb_Actualiza_Formatos_X_Modalidad(False)
+                    _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "", False, _Empresa_Ori)
+                    _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, _Modalidad_Ori, False, _Empresa_Ori)
+                    _Mod.Sb_Actualizar_Variables_Modalidad(_Modalidad_Ori, False)
                 End If
 
                 RegistrarLog(registro)
@@ -1670,26 +1687,26 @@ Public Class Frm_Demonio_New
                         Dim _OCC_Star As Boolean = _Fila.Item("OCC_Star")
                         Dim _OCC_Prov As Boolean = _Fila.Item("OCC_Prov")
 
-                        Dim _ModalidadOld As String = Modalidad
+                        Dim _ModalidadOld As String = Mod_Modalidad
                         Dim _Mod As New Clas_Modalidades
 
-                        Modalidad = _Fila.Item("Modalidad")
+                        Mod_Modalidad = _Fila.Item("Modalidad")
 
                         _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-                        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+                        _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
                         _Mod.Sb_Actualiza_Formatos_X_Modalidad()
 
-                        If _NVI Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, False, True, False, False, True)
-                        If _OCC_Star Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, False, True, False)
-                        If _OCC_Prov Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, True, False, False)
+                        If _NVI Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Mod_Modalidad, False, True, False, False, True)
+                        If _OCC_Star Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Mod_Modalidad, True, False, False, True, False)
+                        If _OCC_Prov Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Mod_Modalidad, True, False, True, False, False)
 
-                        Modalidad = _ModalidadOld
+                        Mod_Modalidad = _ModalidadOld
 
                         _Mod = New Clas_Modalidades
                         _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-                        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+                        _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
                         _Mod.Sb_Actualiza_Formatos_X_Modalidad()
 
                     End If

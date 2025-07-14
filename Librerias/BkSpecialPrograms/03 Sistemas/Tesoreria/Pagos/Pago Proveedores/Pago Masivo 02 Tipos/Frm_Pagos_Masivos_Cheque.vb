@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Pagos_Masivos_Cheque
@@ -61,10 +61,10 @@ Public Class Frm_Pagos_Masivos_Cheque
 
     Public Sub New(ByVal DsDocumentos As DataSet)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         _DsDocumentos = DsDocumentos
 
@@ -129,7 +129,7 @@ Public Class Frm_Pagos_Masivos_Cheque
         Dim _Nucudp As String = Trim(Txt_Nro_Cheque.Text)
         
         Consulta_sql = "Select Top 1 * From TABENDP" & vbCrLf & _
-                       "Where EMPRESA = '" & ModEmpresa & "' And KOENDP = '" & _Emdp & "'"
+                       "Where EMPRESA = '" & Mod_Empresa & "' And KOENDP = '" & _Emdp & "'"
         Dim _Row_Endp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
 
@@ -152,11 +152,11 @@ Public Class Frm_Pagos_Masivos_Cheque
                              "TIDP = 'CHC' And EMDP = '" & _Emdp & "' And CUDP = '" & _Cudp & "' And NUCUDP = '" & Trim(_Nucudp) & "'")
 
         If CBool(_Reg) Then
-            If MessageBoxEx.Show(Me, "El número del cheque ya existe el sistema" & vbCrLf & vbCrLf & _
+            If MessageBoxEx.Show(Me, "El nÃºmero del cheque ya existe el sistema" & vbCrLf & vbCrLf & _
                                  "Banco: " & _Nokoendp & vbCrLf & _
                                  "Cta. Cte.: " & _Cudp & vbCrLf & _
                                  "Cheque Nro: " & _Nucudp & vbCrLf & vbCrLf & _
-                                 "¿Desea seguir con la grabación?", "Pago con cheque", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) <> Windows.Forms.DialogResult.Yes Then
+                                 "Â¿Desea seguir con la grabaciÃ³n?", "Pago con cheque", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) <> Windows.Forms.DialogResult.Yes Then
                 Txt_Nro_Cheque.SelectAll()
                 Txt_Nro_Cheque.Focus()
                 Return
@@ -164,7 +164,7 @@ Public Class Frm_Pagos_Masivos_Cheque
         End If
 
         Dim _Pagar As New Clas_Pagar
-        _Pagado = _Pagar.Fx_Crear_Pago_y_Pagar("CHC", _Endp, "", ModEmpresa, ModSucursal, ModCaja, _Emdp,
+        _Pagado = _Pagar.Fx_Crear_Pago_y_Pagar("CHC", _Endp, "", Mod_Empresa, Mod_Sucursal, Mod_Caja, _Emdp,
                                                _Cudp, _Nucudp,
                                                FormatDateTime(Dtp_Fecha_Emision.Value, DateFormat.ShortDate),
                                                FormatDateTime(Dtp_Fecha_Vencimiento.Value, DateFormat.ShortDate), "$", "N",
@@ -180,8 +180,8 @@ Public Class Frm_Pagos_Masivos_Cheque
             Dim _Nudp = _Row_New_Maedpce.Item("NUDP")
             Dim _DocPagados = _Pagar.Pro_DocPagados
 
-            MessageBoxEx.Show(Me, "Transacción realizada correctamente" & vbCrLf & vbCrLf & _
-                              "Número interno: " & _Tidp & "-" & _Nudp & vbCrLf & " Documentos pagados: " & _DocPagados, _
+            MessageBoxEx.Show(Me, "TransacciÃ³n realizada correctamente" & vbCrLf & vbCrLf & _
+                              "NÃºmero interno: " & _Tidp & "-" & _Nudp & vbCrLf & " Documentos pagados: " & _DocPagados, _
                               "Proceso terminado", _
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -208,7 +208,7 @@ Public Class Frm_Pagos_Masivos_Cheque
 
     Private Sub Sb_Dtp_Fecha_Emision_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
         If FormatDateTime(_Fecha_Vencimiento, DateFormat.ShortDate) > FormatDateTime(FechaDelServidor, DateFormat.ShortDate) Then
-            MessageBoxEx.Show(Me, "La fecha de emisión no puede ser mayor a la fecha de hoy", "Validación", _
+            MessageBoxEx.Show(Me, "La fecha de emisiÃ³n no puede ser mayor a la fecha de hoy", "ValidaciÃ³n", _
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Dtp_Fecha_Emision.Value = FechaDelServidor()
         End If
@@ -218,7 +218,7 @@ Public Class Frm_Pagos_Masivos_Cheque
 
         Dim _Emdp As String = Trim(Cmb_Emdp.SelectedValue)
         Consulta_sql = "Select Top 1 * From TABENDP" & vbCrLf & _
-                       "Where EMPRESA = '" & ModEmpresa & "' And KOENDP = '" & _Emdp & "'"
+                       "Where EMPRESA = '" & Mod_Empresa & "' And KOENDP = '" & _Emdp & "'"
         Dim _Row_Endp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Cudp As String = Trim(_Row_Endp.Item("CTACTE"))

@@ -19,8 +19,8 @@ Public Class Frm_GDI2GRI
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        _Empresa = ModEmpresa
-        _Sucursal = ModSucursal
+        _Empresa = Mod_Empresa
+        _Sucursal = Mod_Sucursal
 
     End Sub
     Private Sub Frm_GDI2GRI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -80,7 +80,7 @@ Public Class Frm_GDI2GRI
             Return
         End If
 
-        Dim _Stock_Disponible = Fx_Stock_Disponible("GDI", ModEmpresa,
+        Dim _Stock_Disponible = Fx_Stock_Disponible("GDI", Mod_Empresa,
                                                     _Sucursal,
                                                     _Bodega_GDI,
                                                     _Codigo,
@@ -106,7 +106,7 @@ Public Class Frm_GDI2GRI
         Fm_Espera.BarraCircular.IsRunning = True
         Fm_Espera.Show()
 
-        _Mensaje = _Cl_GDI2GRI.Fx_Crear_GDI2GRI(Me, Modalidad, _Sucursal, _Bodega_GDI, _FechaEmision, _RowProducto.Item("KOPR"), DInput_Cantidad.Value)
+        _Mensaje = _Cl_GDI2GRI.Fx_Crear_GDI2GRI(Me, Mod_Modalidad, _Sucursal, _Bodega_GDI, _FechaEmision, _RowProducto.Item("KOPR"), DInput_Cantidad.Value)
 
         If Not _Mensaje.EsCorrecto Then
             Fm_Espera.Close()
@@ -167,7 +167,7 @@ Public Class Frm_GDI2GRI
 
             Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
             Fm.Pro_Tipo_Lista = "P"
-            Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+            Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             Fm.Pro_CodEntidad = String.Empty
             Fm.Pro_Mostrar_Info = True
             Fm.BtnCrearProductos.Visible = False
@@ -232,10 +232,10 @@ Public Class Frm_GDI2GRI
 
         Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
 
-        Fm_b.Pro_Empresa = ModEmpresa
+        Fm_b.Pro_Empresa = Mod_Empresa
         Fm_b.Cmbsucursal.Enabled = False
-        Fm_b.Pro_Sucursal = NuloPorNro(_Sucursal, ModSucursal)
-        Fm_b.Pro_Bodega = NuloPorNro(_Bodega_GDI, ModBodega)
+        Fm_b.Pro_Sucursal = NuloPorNro(_Sucursal, Mod_Sucursal)
+        Fm_b.Pro_Bodega = NuloPorNro(_Bodega_GDI, Mod_Bodega)
         Fm_b.RevisarPermisosBodega = False
         Fm_b.Pedir_Permiso = False
         Fm_b.Empresa_NoSeleccionable = _Empresa
@@ -273,10 +273,10 @@ Public Class Frm_GDI2GRI
 
         Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
 
-        Fm_b.Pro_Empresa = ModEmpresa
+        Fm_b.Pro_Empresa = Mod_Empresa
         Fm_b.Cmbsucursal.Enabled = False
-        Fm_b.Pro_Sucursal = NuloPorNro(_Sucursal, ModSucursal)
-        Fm_b.Pro_Bodega = NuloPorNro(_Bodega_GRI, ModBodega)
+        Fm_b.Pro_Sucursal = NuloPorNro(_Sucursal, Mod_Sucursal)
+        Fm_b.Pro_Bodega = NuloPorNro(_Bodega_GRI, Mod_Bodega)
         Fm_b.RevisarPermisosBodega = False
         Fm_b.Pedir_Permiso = False
         Fm_b.Empresa_NoSeleccionable = _Empresa
@@ -299,8 +299,8 @@ Public Class Frm_GDI2GRI
 
     Private Sub Btn_Limpiar_Click(sender As Object, e As EventArgs) Handles Btn_Limpiar.Click
 
-        _Empresa = ModEmpresa
-        _Sucursal = ModSucursal
+        _Empresa = Mod_Empresa
+        _Sucursal = Mod_Sucursal
         Txt_Producto.Enabled = True
         Txt_Producto.Text = String.Empty
         Txt_Producto.Tag = Nothing

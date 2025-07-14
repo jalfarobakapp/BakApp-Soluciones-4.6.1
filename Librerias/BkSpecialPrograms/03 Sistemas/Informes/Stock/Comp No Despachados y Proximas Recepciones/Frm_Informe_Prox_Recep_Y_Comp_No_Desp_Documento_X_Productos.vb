@@ -438,7 +438,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
         Dim _Filtro_Doc As String '= Generar_Filtro_IN(_Tbl_Productos, "", "IDMAEEDO", False, False, "")
 
         _Filtro_Doc = Generar_Filtro_IN_Arreglo(_Lista_Idmaeedo, True)
-        _Filtro_Doc = "And Edo.IDMAEEDO In " & _Filtro_Doc
+        _Filtro_Doc = "And Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.IDMAEEDO In " & _Filtro_Doc
 
 
         Dim Fm As New Frm_Stmp_IncNVVPicking

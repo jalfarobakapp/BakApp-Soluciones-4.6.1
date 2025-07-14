@@ -280,7 +280,7 @@ Public Class Frm_RecargosXProd
                         Left Join TABTIDO Tdo WITH (NOLOCK) On Ddo.TIDO = Tdo.TIDO
                         Inner Join MAEEDO Edo WITH (NOLOCK) On Edo.IDMAEEDO = Ddo.IDMAEEDO
                         Where 
-	                        Ddo.EMPRESA = '" & ModEmpresa & "' 
+	                        Ddo.EMPRESA = '" & Mod_Empresa & "' 
                         And Edo.TIDO = 'FCV'
                         And LILG In ('SI','CR') 
                         And PRCT = 0
@@ -303,7 +303,7 @@ Public Class Frm_RecargosXProd
 								        Left Join MAEEN On MAEEDO.ENDO = MAEEN.KOEN And MAEEN.TIPOSUC = 'P' 
 									Where 
 									    
-									    MAEEDO.EMPRESA = '" & ModEmpresa & "'  And 
+									    MAEEDO.EMPRESA = '" & Mod_Empresa & "'  And 
 									    MAEDDO.LILG IN ('SI','CR')  And 
 									    MAEDDO.PRCT = 0 And 
 									    

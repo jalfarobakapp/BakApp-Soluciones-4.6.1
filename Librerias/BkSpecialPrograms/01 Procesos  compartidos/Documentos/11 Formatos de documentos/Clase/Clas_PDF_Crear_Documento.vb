@@ -96,7 +96,7 @@ Public Class Clas_PDF_Crear_Documento
             Dim _Orden_Detalle As String
 
             If _Es_Picking Then
-                _Condicion_Extra_Maeddo = "And SULIDO = '" & ModSucursal & "' And BOSULIDO = '" & ModBodega & "' Order By UBICACION"
+                _Condicion_Extra_Maeddo = "And SULIDO = '" & Mod_Sucursal & "' And BOSULIDO = '" & Mod_Bodega & "' Order By UBICACION"
                 _Orden_Detalle = "Order By UBICACION"
             Else
                 _Condicion_Extra_Maeddo = "Order By IDMAEDDO"
@@ -1398,7 +1398,7 @@ Public Class Clas_PDF_Crear_Documento
 
         If String.IsNullOrEmpty(_Archivo_Xml) Then
             _Timbre_Falso = True
-            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo) ', _Dir)
+            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
             _Timbre = _Class_DTE.Fx_Crear_Timbre_Electronico
         Else
 
@@ -1474,7 +1474,7 @@ Public Class Clas_PDF_Crear_Documento
 
         If String.IsNullOrEmpty(_Archivo_Xml) Then
 
-            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
             _Timbre = _Class_DTE.Fx_Crear_Timbre_Electronico
             _Timbre_Falso = True
 
@@ -1513,7 +1513,7 @@ Public Class Clas_PDF_Crear_Documento
                     Try
                         _Nodo_Firma = _Dte.XPathSelectElement("DTE/Documento/TED")
                     Catch ex As Exception
-                        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+                        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
                         _Timbre = _Class_DTE.Fx_Crear_Timbre_Electronico
                         _Timbre_Falso = True
                     End Try

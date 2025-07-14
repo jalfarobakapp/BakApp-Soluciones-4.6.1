@@ -82,7 +82,7 @@ Public Class Frm_Formulario_Stand_By
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Casi_DocEnc" & vbCrLf &
                                "Where Id_DocEnc Not In (Select Id_Casi_DocEnc From " & _Global_BaseBk & "Zw_Remotas)" & Environment.NewLine &
-                               "And Empresa = '" & ModEmpresa & "' And Stand_by = 1" & Environment.NewLine &
+                               "And Empresa = '" & Mod_Empresa & "' And Stand_by = 1" & Environment.NewLine &
                                 _Condicion & vbCrLf &
                                 "Order by FechaEmision"
 
@@ -94,7 +94,7 @@ Public Class Frm_Formulario_Stand_By
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Casi_DocEnc" & vbCrLf &
                                "Where Id_DocEnc Not In (Select Id_Casi_DocEnc From " & _Global_BaseBk & "Zw_Remotas)" & Environment.NewLine &
-                               "And Empresa = '" & ModEmpresa & "' And Reserva_NroOCC = 1" & Environment.NewLine &
+                               "And Empresa = '" & Mod_Empresa & "' And Reserva_NroOCC = 1" & Environment.NewLine &
                                 _Condicion & vbCrLf &
                                 "Order by FechaEmision"
 

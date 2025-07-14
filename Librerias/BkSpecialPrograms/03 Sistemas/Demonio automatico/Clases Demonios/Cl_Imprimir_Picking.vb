@@ -408,7 +408,7 @@ Public Class Cl_Imprimir_Picking
         Dim _Filtro_Sucursal = String.Empty
 
         If _Imp_Suc_Modal Then
-            _Filtro_Sucursal = "And SULIDO = '" & ModSucursal & "' And BOSULIDO = '" & ModBodega & "'"
+            _Filtro_Sucursal = "And SULIDO = '" & Mod_Sucursal & "' And BOSULIDO = '" & Mod_Bodega & "'"
         End If
 
         Fx_Insertar_Documento_Para_Imprimir_Picking =

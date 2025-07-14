@@ -236,7 +236,7 @@ Public Class Clas_Imprimir_Documento
             Dim _Orden_Detalle As String
 
             If _Es_Picking Then
-                _Condicion_Extra_Maeddo = "And SULIDO = '" & ModSucursal & "' And BOSULIDO = '" & ModBodega & "' Order By UBICACION"
+                _Condicion_Extra_Maeddo = "And SULIDO = '" & Mod_Sucursal & "' And BOSULIDO = '" & Mod_Bodega & "' Order By UBICACION"
                 _Orden_Detalle = "Order By UBICACION"
             Else
                 _Condicion_Extra_Maeddo = "Order By IDMAEDDO"
@@ -493,8 +493,8 @@ Public Class Clas_Imprimir_Documento
 
         printDoc.DocumentName = _NombreDocumento
 
-        Dim _Nokosu = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "'")
-        Dim _Nokobo = _Sql.Fx_Trae_Dato("TABBO", "NOKOBO", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "'")
+        Dim _Nokosu = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "'")
+        Dim _Nokobo = _Sql.Fx_Trae_Dato("TABBO", "NOKOBO", "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "'")
 
         Dim _numAleatorio As New Random()
         Dim valorAleatorio As Integer = _numAleatorio.Next(1000, 100000)
@@ -510,7 +510,7 @@ Public Class Clas_Imprimir_Documento
                                    "'" & FUNCIONARIO & "' As Funcionario,'" & Nombre_funcionario_activo & "' As Nokofu," &
                                    "'CODIGOXXXXXYZ' As Codigo," &
                                    "'DESCRIPCION DEL PRODUCTO CINCUENTA CARACTERES..XYZ' As Descripcion," &
-                                   "'" & ModEmpresa & "' As Empresa,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega," &
+                                   "'" & Mod_Empresa & "' As Empresa,'" & Mod_Sucursal & "' As Sucursal,'" & Mod_Bodega & "' As Bodega," &
                                    "'" & RazonEmpresa & "' As Razon,'" & _Nokosu & "' As Nokosu,'" & _Nokobo & "' As Nokobo," &
                                    "'UBICACION Z-1' As Ubicacion," &
                                    "FLOOR(RAND()*(999-1)+1) As StockUd1," &
@@ -655,7 +655,7 @@ Public Class Clas_Imprimir_Documento
 
                                 Dim _Sudo As String = _Row_Encabezado.Item("SUDO").ToString.Trim
 
-                                If _Sudo <> ModSucursal.Trim Then
+                                If _Sudo <> Mod_Sucursal.Trim Then
 
                                     _Suma += 30
                                     _Texto_Prod_Otras_Bodegas = "*** DOCUMENTO DESDE OTRA SUC: " & _Sudo
@@ -4525,7 +4525,7 @@ Public Class Clas_Imprimir_Documento
 
         If String.IsNullOrEmpty(_Archivo_Xml) Then
             _Timbre_Falso = True
-            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo) ', _Dir)
+            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad) ', _Dir)
             _Timbre = _Class_DTE.Fx_Crear_Timbre_Electronico
         Else
 
@@ -4648,7 +4648,7 @@ Public Class Clas_Imprimir_Documento
 
         If String.IsNullOrEmpty(_Archivo_Xml) Then
 
-            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
             _Timbre = _Class_DTE.Fx_Crear_Timbre_Electronico
             _Timbre_Falso = True
 
@@ -4687,7 +4687,7 @@ Public Class Clas_Imprimir_Documento
                     Try
                         _Nodo_Firma = _Dte.XPathSelectElement("DTE/Documento/TED")
                     Catch ex As Exception
-                        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+                        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
                         _Timbre = _Class_DTE.Fx_Crear_Timbre_Electronico
                         _Timbre_Falso = True
                     End Try

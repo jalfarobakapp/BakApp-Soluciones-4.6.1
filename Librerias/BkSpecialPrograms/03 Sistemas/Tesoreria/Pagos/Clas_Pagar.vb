@@ -134,7 +134,7 @@ Public Class Clas_Pagar
         Dim _Sql1, _Sql2 As String
         Dim _Idmaedpce As Integer
 
-        Dim _Nudp As String = Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, _Tidp)
+        Dim _Nudp As String = Fx_Nro_NUDP(Mod_Empresa, _Endp, _Cjredp, _Tidp)
 
         Dim _Kotndp As String = RutEmpresa 'Codigo tenedor documento de pago, por defecto el rut de la empresa 
         Dim _Sutndp As String = _Cjredp 'Sucursal tenerdo documento de pago, generalmente se pone el código de la caja
@@ -308,7 +308,7 @@ Public Class Clas_Pagar
         Dim _Sql1 As String
         Dim _Idmaedpce As Integer
 
-        Dim _Nudp As String = Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, _Tidp)
+        Dim _Nudp As String = Fx_Nro_NUDP(Mod_Empresa, _Endp, _Cjredp, _Tidp)
 
         Dim _Kotndp As String = RutEmpresa 'Codigo tenedor documento de pago, por defecto el rut de la empresa 
         Dim _Sutndp As String = _Cjredp 'Sucursal tenerdo documento de pago, generalmente se pone el código de la caja
@@ -422,7 +422,7 @@ Public Class Clas_Pagar
         Dim _Idrsd As Integer = _Row_Maedpce.Item("IDRSD")
         Dim _Referencia As Integer
 
-        Dim _Nudp As String = Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, _Tidp)
+        Dim _Nudp As String = Fx_Nro_NUDP(Mod_Empresa, _Endp, _Cjredp, _Tidp)
 
         Dim _Kotndp As String = RutEmpresa  'Codigo tenedor documento de pago, por defecto el rut de la empresa 
         Dim _Sutndp As String = _Cjredp     'Sucursal tenerdo documento de pago, generalmente se pone el código de la caja
@@ -617,7 +617,7 @@ Public Class Clas_Pagar
         Dim _Cjredp As String
         Dim _Tidp As String
 
-        Dim _Nudp As String '= Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, _Tidp)
+        Dim _Nudp As String '= Fx_Nro_NUDP(Mod_Empresa, _Endp, _Cjredp, _Tidp)
 
         Dim _Kotndp As String = RutEmpresa 'Codigo tenedor documento de pago, por defecto el rut de la empresa 
         Dim _Sutndp As String  'Sucursal tenerdo documento de pago, generalmente se pone el código de la caja "_Cjredp"
@@ -797,7 +797,7 @@ Public Class Clas_Pagar
 
                         End If
 
-                        _Nudp = Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, _Tidp)
+                        _Nudp = Fx_Nro_NUDP(Mod_Empresa, _Endp, _Cjredp, _Tidp)
 
                         Dim _Valor_Cuota As Double
                         Dim _Valor_Vadp As Double = _Vadp
@@ -1028,7 +1028,7 @@ Public Class Clas_Pagar
         Dim _Cjredp As String
         Dim _Tidp As String
 
-        Dim _Nudp As String '= Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, _Tidp)
+        Dim _Nudp As String '= Fx_Nro_NUDP(Mod_Empresa, _Endp, _Cjredp, _Tidp)
 
         Dim _Kotndp As String = RutEmpresa 'Codigo tenedor documento de pago, por defecto el rut de la empresa 
         Dim _Sutndp As String  'Sucursal tenerdo documento de pago, generalmente se pone el código de la caja "_Cjredp"
@@ -1211,7 +1211,7 @@ Public Class Clas_Pagar
 
                         End If
 
-                        _Nudp = Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, _Tidp)
+                        _Nudp = Fx_Nro_NUDP(Mod_Empresa, _Endp, _Cjredp, _Tidp)
 
                         Dim _Valor_Cuota As Double
                         Dim _Valor_Vadp As Double = _Vadp
@@ -1856,7 +1856,7 @@ Public Class Clas_Pagar
         Dim _Cjredp As String
         Dim _Tidp As String
 
-        Dim _Nudp As String '= Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, _Tidp)
+        Dim _Nudp As String '= Fx_Nro_NUDP(Mod_Empresa, _Endp, _Cjredp, _Tidp)
 
         Dim _Kotndp As String = RutEmpresa 'Codigo tenedor documento de pago, por defecto el rut de la empresa 
         Dim _Sutndp As String  'Sucursal tenerdo documento de pago, generalmente se pone el código de la caja "_Cjredp"
@@ -2016,7 +2016,7 @@ Public Class Clas_Pagar
 
                             '_Ley20956 = _Fila.Item("LEY20956")
 
-                            _Nudp = Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, _Tidp)
+                            _Nudp = Fx_Nro_NUDP(Mod_Empresa, _Endp, _Cjredp, _Tidp)
 
                             If _Tidp = "ncv" Then
                                 _Vadp = _Vaasdp
@@ -2352,9 +2352,9 @@ Public Class Clas_Pagar
                 With NewFila
 
                     .Item("IDMAEDPCE") = 0
-                    .Item("EMPRESA") = ModEmpresa
-                    .Item("SUREDP") = ModSucursal
-                    .Item("CJREDP") = ModCaja
+                    .Item("EMPRESA") = Mod_Empresa
+                    .Item("SUREDP") = Mod_Sucursal
+                    .Item("CJREDP") = Mod_Caja
 
                     .Item("TIDP") = String.Empty
                     .Item("NUDP") = String.Empty
@@ -2380,7 +2380,7 @@ Public Class Clas_Pagar
                     .Item("KOTU") = 1
                     .Item("KOFUDP") = FUNCIONARIO
                     .Item("KOTNDP") = RutEmpresa
-                    .Item("SUTNDP") = ModCaja
+                    .Item("SUTNDP") = Mod_Caja
 
                     .Item("NUTRANSMI") = ""
                     .Item("DOCUENANTI") = ""
@@ -2651,7 +2651,7 @@ Public Class Clas_Pagar
         Dim _Kofudp As String
         Dim _Cjredp As String
         Dim _Tidp As String
-        Dim _Nudp As String '= Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, _Tidp)
+        Dim _Nudp As String '= Fx_Nro_NUDP(Mod_Empresa, _Endp, _Cjredp, _Tidp)
         Dim _Kotndp As String = RutEmpresa 'Codigo tenedor documento de pago, por defecto el rut de la empresa 
         Dim _Sutndp As String  'Sucursal tenerdo documento de pago, generalmente se pone el código de la caja "_Cjredp"
         Dim _Tuvoprotes = 0 'Tuvo protestos True o False
@@ -2709,8 +2709,8 @@ Public Class Clas_Pagar
         _Vaabdp = _Row_ATB.Item("VAABDP")
         _Vaasdp = _Row_ATB.Item("VAASDP")
 
-        Dim _Nudp_ATB = Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, "ATB")
-        Dim _Nudp_PTB = Fx_Nro_NUDP(ModEmpresa, _Endp, _Cjredp, "PTB")
+        Dim _Nudp_ATB = Fx_Nro_NUDP(Mod_Empresa, _Endp, _Cjredp, "ATB")
+        Dim _Nudp_PTB = Fx_Nro_NUDP(Mod_Empresa, _Endp, _Cjredp, "PTB")
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand

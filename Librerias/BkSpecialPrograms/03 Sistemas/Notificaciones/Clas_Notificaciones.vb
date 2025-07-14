@@ -434,7 +434,7 @@ Namespace csNotificaciones
 
             Dim _Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Notificaciones (Empresa,Usuario_Solicita,Usuario_Destino,Titulo,Texto,Accion," &
                                 "NroRemota,Solicita_Confirmacion,IdRespuesta,Fecha,Hora,Mostrar,RCadena_Id_Enc) Values " & vbCrLf &
-                                "('" & ModEmpresa & "','" & _Usuario_Solicita & "','" & _Usuario_Destino & "','" & _Titulo & "','" & _Texto & "'," &
+                                "('" & Mod_Empresa & "','" & _Usuario_Solicita & "','" & _Usuario_Destino & "','" & _Titulo & "','" & _Texto & "'," &
                                 "'" & _Accion.ToString & "','" & _NroRemota & "'," & Convert.ToInt32(_Solicita_Confirmacion) &
                                 "," & _Id_Respuesta & ",Getdate(),Getdate()," & Convert.ToInt32(_Mostrar) & "," & _RCadena_Id_Enc & ")"
 
@@ -483,7 +483,7 @@ Namespace csNotificaciones
 
             Dim _Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Notificaciones (Empresa,Usuario_Solicita,Usuario_Destino,Titulo,Texto,Accion," &
                                 "Fecha,Hora,Mostrar,Id_SCom) Values " & vbCrLf &
-                                "('" & ModEmpresa & "','" & _Usuario_Solicita & "','" & _Usuario_Destino & "','" & _Titulo & "','" & _Texto & "'," &
+                                "('" & Mod_Empresa & "','" & _Usuario_Solicita & "','" & _Usuario_Destino & "','" & _Titulo & "','" & _Texto & "'," &
                                 "'" & _Accion.ToString & "',Getdate(),Getdate()," & Convert.ToInt32(_Mostrar) & "," & _Id_SCom & ")"
 
             Return _Sql.Ej_consulta_IDU(_Consulta_sql)

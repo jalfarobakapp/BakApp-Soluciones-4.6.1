@@ -275,7 +275,7 @@ Public Class Frm_Tenerduria_Buscar_Documento_Pago
             Me.Cursor = Cursors.WaitCursor
 
             Consulta_sql = My.Resources.Recursos_Teneduria_Pagos.SQLQuery_Buscar_documentos_de_pago
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
             Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro)
             Consulta_sql = Replace(Consulta_sql, "#Top#", _Top)
 

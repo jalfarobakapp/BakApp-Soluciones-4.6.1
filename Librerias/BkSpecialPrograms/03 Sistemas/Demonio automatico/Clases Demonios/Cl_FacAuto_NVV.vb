@@ -175,6 +175,47 @@
 
     End Sub
 
+    ''' <summary>
+    ''' Este método cambia la empresa, sucursal y bodega de los documentos que se encuentran en el demonio de facturación automática
+    ''' Se utiliza para corregir documentos que se encuentran con la empresa, sucursal y bodega equivocada
+    ''' 
+    ''' Se debe ejecutar una vez que se hayan corregido los datos de las tablas MAEEDO y MAEDDO
+    ''' Por el momento solo es para la empresa 02 MeatGarden de SeaGarden
+    ''' </summary>
+    Sub Sb_Cambiar_EmpSucBod()
+
+        Consulta_Sql = "Select Distinct Idmaeedo,Tido,Nudo,Empresa,Sucursal,Bodega From " & _Global_BaseBk & "Zw_Docu_Det" & vbCrLf &
+                       "Where Idmaeedo In (Select Zenc.Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Zenc" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_Docu_Det Zd On Zenc.Idmaeedo = Zd.Idmaeedo" & vbCrLf &
+                       "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And Zd.Empresa = '02' And Zenc.Empresa = '01')"
+        Dim _Tbl_Det As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
+
+        For Each _Fila As DataRow In _Tbl_Det.Rows
+
+            Dim _Idmaeedo As Integer = _Fila.Item("Idmaeedo")
+            Dim _Tido As String = _Fila.Item("Tido").ToString.Trim
+            Dim _Nudo As String = _Fila.Item("Nudo").ToString.Trim
+            Dim _Empresa As String = _Fila.Item("Empresa").ToString.Trim
+            Dim _Sucursal As String = _Fila.Item("Sucursal").ToString.Trim
+            Dim _Bodega As String = _Fila.Item("Bodega").ToString.Trim
+
+            Consulta_Sql = "Declare @Idmaeedo Int = " & _Idmaeedo & vbCrLf &
+                           "Update MAEEDO Set EMPRESA = '" & _Empresa & "',SUDO = '" & _Sucursal & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
+                           "Update MAEDDO Set EMPRESA = '" & _Empresa & "',SULIDO = '" & _Sucursal & "',BOSULIDO = '" & _Bodega & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Despachos Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "',Bodega = '" & _Bodega &
+                                "' Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa = '" & _Empresa & "' Where Idmaeedo = @Idmaeedo"
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Log_Registro += _Sql.Pro_Error & vbCrLf
+            End If
+
+        Next
+
+    End Sub
+
     Sub Sb_Facturar_Automaticamente_NVV(_Formulario As Form, ByRef Lbl_FacAuto As Object)
 
         Dim _FechaEmision As Date = FechaDelServidor()
@@ -228,7 +269,7 @@
                     End If
 
                     Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                    _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Idmaeedo_Fcv)
+                    _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Modalidad, _Idmaeedo_Fcv)
 
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
                                    " NombreEquipo = '" & _Nombre_Equipo & "'" &
@@ -327,6 +368,7 @@
                 Dim _Modalidad_Fac As String = _Fila.Item("Modalidad_Fac")
 
                 Dim _Nudo_Nvv As String = _Fila.Item("Nudo_Nvv")
+                Dim _Empresa As String = _Sql.Fx_Trae_Dato("MAEEDO", "EMPRESA", "IDMAEEDO = " & _Idmaeedo,, False)
 
                 If Not IsNothing(Lbl_FacAuto) Then
                     Lbl_FacAuto.Text = "Facturando Nota de venta Nro: " & _Nudo_Nvv
@@ -345,9 +387,9 @@
                 Dim _Mensaje As LsValiciones.Mensajes
 
                 If _DesdePickeo Then
-                    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente_Pickeo(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Modalidad_Fac, _CerrarDespFact, _Id_Pickeo)
+                    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente_Pickeo(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Empresa, _Modalidad_Fac, _CerrarDespFact, _Id_Pickeo)
                 Else
-                    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente2(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Modalidad_Fac, _CerrarDespFact)
+                    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente2(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Empresa, _Modalidad_Fac, _CerrarDespFact)
                 End If
 
                 If _Mensaje.EsCorrecto Then
@@ -387,7 +429,7 @@
                         _Cl_Imprimir.CodFuncionario = _CodFuncionario_Factura
                     End If
 
-                    _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Idmaeedo_Fcv)
+                    _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Modalidad, _Idmaeedo_Fcv)
 
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
                                    " NombreEquipo = '" & _Nombre_Equipo & "'" &
@@ -406,7 +448,7 @@
                         Log_Registro += _Sql.Pro_Error
                     End If
 
-                    Dim _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Row_Factura.Item("IDMAEEDO"), ModEmpresa, Modalidad_Fac)
+                    Dim _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Row_Factura.Item("IDMAEEDO"), Mod_Empresa, Modalidad_Fac)
 
                     If Not String.IsNullOrEmpty(_Error_PDF) Then
                         Log_Registro += _Error_PDF
@@ -629,13 +671,13 @@
 
         Dim _New_Idmaeedo As Integer
         Dim _Mensaje As New LsValiciones.Mensajes
-        Dim _Modalidad_Old = Modalidad
+        Dim _Modalidad_Old = Mod_Modalidad
 
         Try
 
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Modalidad, _Tido_Destino, _Mostrar_Mensaje)
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, Mod_Empresa, _Modalidad, _Tido_Destino, _Mostrar_Mensaje)
 
             If IsNothing(_RowFormato) Then
                 Throw New System.Exception("No existe formato de documento para la modalidad")
@@ -699,7 +741,7 @@
                 'x
                 Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql)
 
-                Modalidad = _Modalidad
+                Mod_Modalidad = _Modalidad
 
                 Dim Fm_Post As New Frm_Formulario_Documento("FCV", csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
                 Fm_Post.Sb_Limpiar(_Modalidad)
@@ -723,7 +765,7 @@
             _Mensaje.Detalle = "Error al grabar"
             _Mensaje.Mensaje = ex.Message
         Finally
-            Modalidad = _Modalidad_Old
+            Mod_Modalidad = _Modalidad_Old
         End Try
 
         Return _Mensaje
@@ -734,11 +776,12 @@
                                                            _Tido_Destino As String,
                                                            _Idmaeedo_Origen As Integer,
                                                            _Fecha_Emision As DateTime,
+                                                           _Empresa As String,
                                                            _Modalidad As String,
                                                            _CerrarDespFact As Boolean) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
-        Dim _Modalidad_Old = Modalidad
+        Dim _Modalidad_Old = Mod_Modalidad
 
         Try
 
@@ -750,7 +793,7 @@
                 Throw New System.Exception("No existe la modalidad " & _Modalidad)
             End If
 
-            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Modalidad, _Tido_Destino, False)
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Empresa, _Modalidad, _Tido_Destino, False)
 
             If IsNothing(_RowFormato) Then
                 Throw New System.Exception("No existe formato de documento para la modalidad")
@@ -816,7 +859,7 @@
                 'x
                 Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql)
 
-                Modalidad = _Modalidad
+                Mod_Modalidad = _Modalidad
 
                 Dim Fm_Post As New Frm_Formulario_Documento(_Tido_Destino, csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
                 Fm_Post.Sb_Limpiar(_Modalidad)
@@ -872,7 +915,7 @@
             _Mensaje.Detalle = "Error al grabar documento"
             _Mensaje.Mensaje = ex.Message
         Finally
-            Modalidad = _Modalidad_Old
+            Mod_Modalidad = _Modalidad_Old
         End Try
 
         Return _Mensaje
@@ -883,6 +926,7 @@
                                                                   _TidoDocEmitir As String,
                                                                   _Idmaeedo_Origen As Integer,
                                                                   _Fecha_Emision As DateTime,
+                                                                  _Empresa As String,
                                                                   _Modalidad As String,
                                                                   _CerrarDespFact As Boolean,
                                                                   _Id_Pickeo As Integer) As LsValiciones.Mensajes
@@ -898,13 +942,13 @@
 
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("CONFIEST", "MODALIDAD = '" & _Modalidad & "'", False)
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("CONFIEST", "EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'", False)
 
             If _Reg = 0 Then
                 Throw New System.Exception(_Sql.Pro_Error)
             End If
 
-            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Modalidad, _TidoDocEmitir, False)
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Empresa, _Modalidad, _TidoDocEmitir, False)
 
             If Not IsNothing(_RowFormato) Then
 
@@ -945,9 +989,9 @@
 
                     If CBool(_Tbl_Saldo_Facturar.Rows.Count) Then
 
-                        Dim _Empresa As String = ModEmpresa
-                        Dim _Sucursal As String = ModSucursal
-                        Dim _Bodega As String = ModBodega
+                        'Dim _Empresa As String = Mod_Empresa
+                        'Dim _Sucursal As String = Mod_Sucursal
+                        'Dim _Bodega As String = Mod_Bodega
 
                         Dim _CampoPrecio As String
 
@@ -959,7 +1003,7 @@
 
                         Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
                                        vbCrLf &
-                                       "Select Ddo.*," & vbCrLf &
+                                       "Select Distinct Ddo.*," & vbCrLf &
                                        "Case TIPR" & vbCrLf &
                                        "When 'SSN' Then Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End" & vbCrLf &
                                        "Else Case PRCT" & vbCrLf &
@@ -1008,6 +1052,9 @@
                         Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
                                                                     csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
 
+
+                        Fm_Post.ModEmpresa_Doc = _Empresa
+                        Fm_Post.ModModalidad_Doc = _Modalidad
                         'If Fm_Post.MensajeRevFolio.EsCorrecto Then
                         Dim _Msj_Limpiar As LsValiciones.Mensajes
 
@@ -1127,6 +1174,7 @@
                                                                         _TidoDocEmitir As String,
                                                                         _Idmaeedo_Origen As Integer,
                                                                         _Fecha_Emision As DateTime,
+                                                                        _Empresa As String,
                                                                         _Modalidad As String,
                                                                         _CerrarDespFact As Boolean) As LsValiciones.Mensajes
 
@@ -1141,7 +1189,7 @@
 
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Modalidad, _TidoDocEmitir, False)
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Empresa, _Modalidad, _TidoDocEmitir, False)
 
             If Not IsNothing(_RowFormato) Then
 
@@ -1181,9 +1229,9 @@
 
                     If CBool(_Tbl_Saldo_Facturar.Rows.Count) Then
 
-                        Dim _Empresa As String = ModEmpresa
-                        Dim _Sucursal As String = ModSucursal
-                        Dim _Bodega As String = ModBodega
+                        'Dim _Empresa As String = Mod_Empresa
+                        Dim _Sucursal As String = Mod_Sucursal
+                        Dim _Bodega As String = Mod_Bodega
 
                         Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
 

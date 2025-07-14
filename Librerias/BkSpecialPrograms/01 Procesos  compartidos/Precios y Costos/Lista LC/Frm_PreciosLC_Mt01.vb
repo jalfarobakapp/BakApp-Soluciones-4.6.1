@@ -104,7 +104,7 @@ Public Class Frm_PreciosLC_Mt01
         Consulta_sql = My.Resources.DetalleMcostoPm_eImpuestos.ToString
         Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", TblPaso)
         Consulta_sql = Replace(Consulta_sql, "#Codigo#", Codigo)
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -146,7 +146,7 @@ Public Class Frm_PreciosLC_Mt01
         Consulta_sql = "CASE WHEN ISNULL(PPUL01, 0) > ISNULL(PM, 0) THEN ISNULL(PPUL01, 0) " & vbCrLf &
                        "ELSE ISNULL(PM, 0) END "
 
-        Mcosto = _Sql.Fx_Trae_Dato("MAEPREM", Consulta_sql, "KOPR = '" & Codigo & "' And EMPRESA = '" & ModEmpresa & "'")
+        Mcosto = _Sql.Fx_Trae_Dato("MAEPREM", Consulta_sql, "KOPR = '" & Codigo & "' And EMPRESA = '" & Mod_Empresa & "'")
 
         Dim RegValPro As Long
         RegValPro = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaLC_ValPro", "Codigo = '" & Codigo & "'")
@@ -290,7 +290,7 @@ Public Class Frm_PreciosLC_Mt01
 
             '' PONER ESTA FILA EN NUEVA VERSIÓN
             Consulta_sql = Replace(Consulta_sql, "Zw_ListaLC_Listas", _Global_BaseBk & "Zw_ListaLC_Listas")
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
 
             _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -631,7 +631,7 @@ Public Class Frm_PreciosLC_Mt01
                 Fm.Txtdescripcion.Text = Txtcodigo.Text
                 Fm.Pro_CodEntidad = String.Empty
                 Fm.Pro_Tipo_Lista = "C"
-                Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+                Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
                 Fm.Pro_Mostrar_Info = False
                 Fm.BtnCrearProductos.Visible = False
 
@@ -749,16 +749,16 @@ Public Class Frm_PreciosLC_Mt01
                            ",(SELECT replace(convert(varchar, getdate(), 111), '/','')),(SELECT convert(varchar, getdate(), 108)))"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("PDIMEN", "CODIGO = '" & Txtcodigo.Text & "' And EMPRESA = '" & ModEmpresa & "'"))
+            Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("PDIMEN", "CODIGO = '" & Txtcodigo.Text & "' And EMPRESA = '" & Mod_Empresa & "'"))
 
             If Not _Reg Then
 
                 _Reg = CBool(_Sql.Fx_Cuenta_Registros("PDIMEN", "CODIGO = '" & Txtcodigo.Text & "' And EMPRESA = ''"))
 
                 If Not _Reg Then
-                    Consulta_sql = "Insert Into PDIMEN (EMPRESA,CODIGO) Values ('" & ModEmpresa & "','" & Txtcodigo.Text & "')"
+                    Consulta_sql = "Insert Into PDIMEN (EMPRESA,CODIGO) Values ('" & Mod_Empresa & "','" & Txtcodigo.Text & "')"
                 Else
-                    Consulta_sql = "Update PDIMEN Set EMPRESA = '" & ModEmpresa & "' Where CODIGO = '" & Txtcodigo.Text & "'"
+                    Consulta_sql = "Update PDIMEN Set EMPRESA = '" & Mod_Empresa & "' Where CODIGO = '" & Txtcodigo.Text & "'"
                 End If
 
                 _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -827,7 +827,7 @@ Public Class Frm_PreciosLC_Mt01
         '_FechaTope = _Global_Row_Configp.Item("FECHINIPPP")
 
         'Dim _Recalculado As Boolean
-        'Dim _OldPpp As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "EMPRESA = '" & ModEmpresa & "' And KOPR = '" & Txtcodigo.Text & "'")
+        'Dim _OldPpp As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & Txtcodigo.Text & "'")
         'Dim _NewPpp As Double
 
         'Dim Fm As New Frm_Recalculo_PPPxProd(Txtcodigo.Text, _FechaTope)
@@ -898,7 +898,7 @@ Public Class Frm_PreciosLC_Mt01
 
             Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
             Fm.Pro_Tipo_Lista = "P"
-            Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+            Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             Fm.Pro_CodEntidad = String.Empty
             Fm.Pro_Mostrar_Info = True
             Fm.BtnCrearProductos.Visible = False
@@ -1223,23 +1223,23 @@ Public Class Frm_PreciosLC_Mt01
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
 
-        Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("PDIMEN", "CODIGO = '" & Txtcodigo.Text & "' And EMPRESA = '" & ModEmpresa & "'"))
+        Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("PDIMEN", "CODIGO = '" & Txtcodigo.Text & "' And EMPRESA = '" & Mod_Empresa & "'"))
 
         If Not _Reg Then
 
             _Reg = CBool(_Sql.Fx_Cuenta_Registros("PDIMEN", "CODIGO = '" & Txtcodigo.Text & "' And EMPRESA = ''"))
 
             If Not _Reg Then
-                Consulta_sql = "Insert Into PDIMEN (EMPRESA,CODIGO) Values ('" & ModEmpresa & "','" & Txtcodigo.Text & "')"
+                Consulta_sql = "Insert Into PDIMEN (EMPRESA,CODIGO) Values ('" & Mod_Empresa & "','" & Txtcodigo.Text & "')"
             Else
-                Consulta_sql = "Update PDIMEN Set EMPRESA = '" & ModEmpresa & "' Where CODIGO = '" & Txtcodigo.Text & "'"
+                Consulta_sql = "Update PDIMEN Set EMPRESA = '" & Mod_Empresa & "' Where CODIGO = '" & Txtcodigo.Text & "'"
             End If
 
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
         End If
 
-        Consulta_sql = "Update PDIMEN Set FLETE_PROD = " & De_Num_a_Tx_01(Flete, False, 5) & " Where EMPRESA = '" & ModEmpresa & "' And CODIGO = '" & Txtcodigo.Text & "'"
+        Consulta_sql = "Update PDIMEN Set FLETE_PROD = " & De_Num_a_Tx_01(Flete, False, 5) & " Where EMPRESA = '" & Mod_Empresa & "' And CODIGO = '" & Txtcodigo.Text & "'"
         _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
         MsgBox("Flete actualizado correctamente", MsgBoxStyle.Information, "Grabar Flete")

@@ -562,7 +562,7 @@ Public Class Frm_Impor_Prod_Masivamente
                 _Bodega = _CodBodega
             End If
 
-            Dim _Existe As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABBO", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Codsucursal & "' And KOBO = '" & _CodBodega & "'"))
+            Dim _Existe As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABBO", "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & _Codsucursal & "' And KOBO = '" & _CodBodega & "'"))
 
             If Not _Existe Then
                 Throw New System.Exception("No existe la bodega: " & _CodBodega)

@@ -748,7 +748,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         If Not _Reg Then
 
             Consulta_sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
             Consulta_sql = Replace(Consulta_sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
             Consulta_sql = Replace(Consulta_sql, "#Filtro_Externo#", "")
             Consulta_sql = Replace(Consulta_sql, "#Fecha_Inicio#", Format(Dtp_Fecha_Desde.Value, "yyyyMMdd"))
@@ -770,7 +770,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
 
         Consulta_sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Inicio#", Format(Dtp_Fecha_Desde.Value, "yyyyMMdd"))
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Fin#", Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd"))
@@ -1029,7 +1029,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                "CAST(0 as Float) As Porc,CAST(0 as Float) As TOTAL" & vbCrLf &
                                "Into #Paso1" & vbCrLf &
                                "FROM " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
-                               "Where 1 > 0 And EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
+                               "Where 1 > 0 And EMPRESA = '" & Mod_Empresa & "'" & vbCrLf &
                                "And Clas_Unica_X_Producto = 1 And Identificacdor_NodoPadre = " & _Codigo & vbCrLf &
                                "Order By DESCRIPCION" &
                                vbCrLf &
@@ -1082,7 +1082,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                "CAST('' As Varchar(3)) As VND,CAST(0 as Float) As Porc," & _Campo_Mostrar & " As TOTAL" & vbCrLf &
                                "Into #Paso1" & vbCrLf &
                                "From " & _Nombre_Tabla_Paso & " WITH (NOLOCK)" & vbCrLf &
-                               "Where 1 > 0 And EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
+                               "Where 1 > 0 And EMPRESA = '" & Mod_Empresa & "'" & vbCrLf &
                                _SqlFiltro &
                                vbCrLf &
                                _SqlFiltro_Detalle &

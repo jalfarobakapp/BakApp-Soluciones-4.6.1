@@ -403,7 +403,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
                         "Drop Table #INFVEN" & vbCrLf &
                         "Drop Table #INFVENR"
 
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
         Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 

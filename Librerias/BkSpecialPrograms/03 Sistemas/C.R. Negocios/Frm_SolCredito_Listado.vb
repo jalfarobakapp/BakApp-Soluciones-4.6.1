@@ -625,8 +625,8 @@ Public Class Frm_SolCredito_Listado
                 If Not (_TblEntidad Is Nothing) Then
 
                     Dim Fm_s As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Sucursal)
-                    Fm_s.Pro_Empresa = ModEmpresa
-                    Fm_s.Pro_Sucursal = ModSucursal
+                    Fm_s.Pro_Empresa = Mod_Empresa
+                    Fm_s.Pro_Sucursal = Mod_Sucursal
                     Fm_s.Text = "Seleccione la Sucursal"
                     Fm_s.ShowDialog(Me)
 

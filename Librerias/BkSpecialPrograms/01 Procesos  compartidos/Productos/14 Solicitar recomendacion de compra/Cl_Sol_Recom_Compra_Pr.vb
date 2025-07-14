@@ -85,9 +85,9 @@ Public Class Cl_Sol_Recom_Compra_Pr
 
                 .Item("Id_SCom") = 0
                 .Item("Estado") = Fx_Estado(Estado)
-                .Item("Empresa") = ModEmpresa
-                .Item("Sucursal") = ModSucursal
-                .Item("Bodega") = ModBodega
+                .Item("Empresa") = Mod_Empresa
+                .Item("Sucursal") = Mod_Sucursal
+                .Item("Bodega") = Mod_Bodega
                 .Item("Existe_Producto") = False
                 .Item("Codigo") = String.Empty
                 .Item("Descripcion") = String.Empty

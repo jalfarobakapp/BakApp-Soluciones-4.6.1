@@ -821,7 +821,7 @@ Public Class Cl_Correos
 
                             End If
 
-                            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _IdMaeedo, "Diablito",
+                            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEEDO", _IdMaeedo, "Diablito",
                                                "Envio: Ok: " & _Destinatarios, "", "", _Koen, _Suen, False, "")
 
                         Else
@@ -860,7 +860,7 @@ Public Class Cl_Correos
 
                             If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
 
-                                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _IdMaeedo, "Diablito",
+                                Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEEDO", _IdMaeedo, "Diablito",
                                                _Problema & " - " & _Destinatarios, "", "", _Koen, _Suen, False, "")
 
                             End If
@@ -1168,7 +1168,7 @@ Public Class Cl_Correos
                                                     "Accion = 'Correo no enviado. Motivo: La entidad no tiene correos asociados en tabla MAEENMAIL' And" & Space(1) &
                                                     "Fecha_Hora >= '" & Format(_Fecha_Revision, "yyyyMMdd") & "'")
                 If _Reg = 0 Then
-                    Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _IdMaeedo, "Diablito",
+                    Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEEDO", _IdMaeedo, "Diablito",
                                    "Correo no enviado. Motivo: La entidad no tiene correos asociados en tabla MAEENMAIL", "", "", _Koen, _Suen, False, "")
                 End If
 

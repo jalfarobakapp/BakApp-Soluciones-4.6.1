@@ -153,7 +153,7 @@ Public Class Clase_Cambiar_Empresa
 
                 _Formulario.Text = "Sistema BakApp. Empresa :" & RazonEmpresa &
                            ", Funcionario Activo: " & Trim(Nombre_funcionario_activo) &
-                           ", Modalidad: " & Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
+                           ", Modalidad: " & Mod_Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
                            "(Base BakApp: " & _Global_BaseBk & ")"
                 Return True
 

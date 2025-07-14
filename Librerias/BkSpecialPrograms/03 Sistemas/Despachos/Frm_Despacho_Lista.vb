@@ -42,7 +42,7 @@ Public Class Frm_Despacho_Lista
         If _Ver = Enum_Ver.Ingresadas Then
             Cmb_Sucursal.SelectedValue = "Todas"
         Else
-            Cmb_Sucursal.SelectedValue = ModEmpresa & ModSucursal
+            Cmb_Sucursal.SelectedValue = Mod_Empresa & Mod_Sucursal
         End If
 
         Consulta_sql = "Select '' As Padre,'Todas...' As 'Hijo'" & vbCrLf &
@@ -55,7 +55,7 @@ Public Class Frm_Despacho_Lista
         If _Ver = Enum_Ver.Ingresadas Then
             Cmb_Sucursal.SelectedValue = "Todas"
         Else
-            Cmb_Sucursal.SelectedValue = ModEmpresa & ModSucursal
+            Cmb_Sucursal.SelectedValue = Mod_Empresa & Mod_Sucursal
         End If
 
         Consulta_sql = "Select '' As Padre,'Todos...' As Hijo
@@ -896,8 +896,8 @@ Public Class Frm_Despacho_Lista
             Dim _Cl_Despacho As New Clas_Despacho(False)
             _Cl_Despacho.Sb_Nuevo_Despacho()
 
-            _Cl_Despacho.Tbl_Despacho.Rows(0).Item("Empresa") = ModEmpresa
-            _Cl_Despacho.Tbl_Despacho.Rows(0).Item("Sucursal") = ModSucursal
+            _Cl_Despacho.Tbl_Despacho.Rows(0).Item("Empresa") = Mod_Empresa
+            _Cl_Despacho.Tbl_Despacho.Rows(0).Item("Sucursal") = Mod_Sucursal
 
             _Cl_Despacho.Row_Entidad = _RowEntidad
 
@@ -1067,7 +1067,7 @@ Public Class Frm_Despacho_Lista
 
     Private Sub Btn_Accion_Preparar_Click(sender As Object, e As EventArgs) Handles Btn_Accion_Preparar.Click
 
-        If Cmb_Sucursal.SelectedValue <> ModEmpresa & ModSucursal Then
+        If Cmb_Sucursal.SelectedValue <> Mod_Empresa & Mod_Sucursal Then
 
             MessageBoxEx.Show(Me, "Esta acción solo esta permitidad con la modalidad de la sucursal", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
@@ -1153,7 +1153,7 @@ Public Class Frm_Despacho_Lista
 
     Private Sub Btn_Accion_Despachar_Click(sender As Object, e As EventArgs) Handles Btn_Accion_Despachar.Click
 
-        If Cmb_Sucursal.SelectedValue <> ModEmpresa & ModSucursal Then
+        If Cmb_Sucursal.SelectedValue <> Mod_Empresa & Mod_Sucursal Then
 
             MessageBoxEx.Show(Me, "Esta acción solo esta permitidad con la modalidad de la sucursal", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
@@ -1203,7 +1203,7 @@ Public Class Frm_Despacho_Lista
 
     Private Sub Btn_Accion_Cerrar_Click(sender As Object, e As EventArgs) Handles Btn_Accion_Cerrar.Click
 
-        If Cmb_Sucursal.SelectedValue <> ModEmpresa & ModSucursal Then
+        If Cmb_Sucursal.SelectedValue <> Mod_Empresa & Mod_Sucursal Then
 
             If Not Fx_Tiene_Permiso(Me, "ODp00015") Then
                 Return
@@ -1230,8 +1230,8 @@ Public Class Frm_Despacho_Lista
                     Dim Fm As New Frm_Desp_05_Cerrar
                     Fm.Despachos = _Cl_Despacho
 
-                    If Cmb_Sucursal.SelectedValue <> ModEmpresa & ModSucursal Then
-                        Fm.Txt_Observaciones.Text = "CERRADO DESDE MODALIDAD " & Modalidad
+                    If Cmb_Sucursal.SelectedValue <> Mod_Empresa & Mod_Sucursal Then
+                        Fm.Txt_Observaciones.Text = "CERRADO DESDE MODALIDAD " & Mod_Modalidad
                     End If
 
                     Fm.ShowDialog(Me)

@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 'Imports BkSpecialPrograms
 'Imports Lib_Bakapp_VarClassFunc
 
@@ -14,10 +14,10 @@ Public Class Frm_Ranking_Menu
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         caract_combo(CmbListaDeCostos)
         Consulta_sql = "SELECT KOLT AS Padre,KOLT+'-'+NOKOLT AS Hijo FROM TABPP WHERE TILT = 'C'"
@@ -34,7 +34,7 @@ Public Class Frm_Ranking_Menu
 
         If Not exists Then
             Ds_Rk.WriteXml(AppPath() & "\Data\" & RutEmpresa & "\DsRanking.xml")
-            'MessageBoxEx.Show("Arvhico XML creado correctamente", "Crear XML de Conexión", _
+            'MessageBoxEx.Show("Arvhico XML creado correctamente", "Crear XML de ConexiÃ³n", _
             '                  MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Fecha_Estudio_desde.Value = Primerdiadelmes(Now.Date)
@@ -162,7 +162,7 @@ Public Class Frm_Ranking_Menu
             System.Windows.Forms.Application.DoEvents()
             Consulta_sql = My.Resources.Consultas.Ranking_productos_02
 
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
             Consulta_sql = Replace(Consulta_sql, "#FechaDesde#", Format(Fecha_Estudio_desde.Value, "yyyyMMdd"))
             Consulta_sql = Replace(Consulta_sql, "#FechaHasta#", Format(Fecha_Estudio_hasta.Value, "yyyyMMdd"))
             Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
@@ -174,7 +174,7 @@ Public Class Frm_Ranking_Menu
 
 
             Consulta_sql = My.Resources.Consultas.Ranking_productos_03
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
             Consulta_sql = Replace(Consulta_sql, "#FechaDesde#", Format(Fecha_Estudio_desde.Value, "yyyyMMdd"))
             Consulta_sql = Replace(Consulta_sql, "#FechaHasta#", Format(Fecha_Estudio_hasta.Value, "yyyyMMdd"))
             Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
@@ -247,7 +247,7 @@ Public Class Frm_Ranking_Menu
             Suma += Porcentaje
 
             Estado.text = "Analizando " & ColAnalizando & vbCrLf &
-                          "Fila N° " & NroFila & vbCrLf &
+                          "Fila NÂ° " & NroFila & vbCrLf &
                           "Porcentaje acumulado " & Suma & "%"
 
             Consulta_sql = "Update Zw_Prod_Ranking Set " & CampoTop & " = 'X' Where Codigo = '" & Codigo & "'"

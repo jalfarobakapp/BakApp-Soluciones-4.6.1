@@ -238,7 +238,7 @@ Public Class Frm_RcSe_Ges_Sub_Estados
 
     Private Sub Btn_Buscar_Vendedor_Click(sender As Object, e As EventArgs)
 
-        Dim _Sql_Filtro_Condicion_Extra = "And INACTIVO = 0 And KOFU IN (Select KOFU From TABFUEM Where EMPRESA = '" & ModEmpresa & "')"
+        Dim _Sql_Filtro_Condicion_Extra = "And INACTIVO = 0 And KOFU IN (Select KOFU From TABFUEM Where EMPRESA = '" & Mod_Empresa & "')"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 

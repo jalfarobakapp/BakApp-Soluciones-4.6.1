@@ -1661,14 +1661,14 @@ Public Class Frm_Desp_01_Ingreso
         _Filtrar.Pro_Nombre_Encabezado_Informe = "SUCURSAL DE RETIRO"
 
         If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Sucursales, "And EMPRESA = '" & ModEmpresa & "'",
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Sucursales, "And EMPRESA = '" & Mod_Empresa & "'",
                                Nothing, False, True) Then
 
             Dim _Tbl_Transportista As DataTable = _Filtrar.Pro_Tbl_Filtro
 
             Dim _Row As DataRow = _Tbl_Transportista.Rows(0)
 
-            _Codigo = ModEmpresa & _Row.Item("Codigo").ToString.Trim
+            _Codigo = Mod_Empresa & _Row.Item("Codigo").ToString.Trim
             Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
 
         End If

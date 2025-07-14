@@ -2096,9 +2096,9 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm.Pro_CodEntidad = String.Empty
         Fm.Pro_CodSucEntidad = String.Empty
         Fm.Pro_Tipo_Lista = "C"
-        Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
-        Fm.Pro_Sucursal_Busqueda = ModSucursal
-        Fm.Pro_Bodega_Busqueda = ModBodega
+        Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
+        Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+        Fm.Pro_Bodega_Busqueda = Mod_Bodega
         Fm.Pro_Mostrar_Info = False
         Fm.Pro_Actualizar_Precios = False
 
@@ -2277,7 +2277,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad_Estudio, "OCC", True)
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Mod_Empresa, _Modalidad_Estudio, "OCC", True)
         Dim _NroLineasXpag As Integer = _RowFormato.Item("NroLineasXpag")
 
         Dim _Largo_Variable As Boolean = _RowFormato.Item("Largo_Variable")
@@ -2361,7 +2361,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                            "0 As CostoUd1,0 As CostoUd2,0 As Precio, Tb.Rtu,CantComprar As Cantidad," & vbCrLf &
                            "0 As Desc1,0 As Desc2,0 As Desc3,0 As Desc4,0 As Desc5,0 As DescSuma,0 As PRCT,'' As TICT,TIPR,0 As PODTGLLI," & Ud & " as UDTRPR," & vbCrLf &
                            "Isnull(Trc.RECARGO,0) As POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO," & vbCrLf &
-                           "0 As IDMAEEDO,0 As IDMAEDDO,'" & ModEmpresa & "' As EMPRESA,'" & ModSucursal & "' As SULIDO,'" & ModBodega & "' As BOSULIDO,'' As ENDO,'' As SUENDO,GetDate() As FEEMLI," & vbCrLf &
+                           "0 As IDMAEEDO,0 As IDMAEDDO,'" & Mod_Empresa & "' As EMPRESA,'" & Mod_Sucursal & "' As SULIDO,'" & Mod_Bodega & "' As BOSULIDO,'' As ENDO,'' As SUENDO,GetDate() As FEEMLI," & vbCrLf &
                            "'' As TIDO,'' As NUDO,'' As NULIDO,0 As CantUd1_Dori,0 As CantUd2_Dori,'' As OBSERVA," & vbCrLf &
                            "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta," & vbCrLf &
                            "0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta" & _CpoCodOrden & vbCrLf &
@@ -2394,11 +2394,11 @@ Public Class Frm_01_Asis_Compra_Resultados
             Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO" &
                             vbCrLf &
                            "Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Codigo As KOPRCT,
-                            Descripcion,Descripcion As NOKOPR,CodAlternativo,'" & ModListaPrecioCosto & "' As KOLTPR,RLUD As RLUDPR,UD1,UD2,
+                            Descripcion,Descripcion As NOKOPR,CodAlternativo,'" & Mod_ListaPrecioCosto & "' As KOLTPR,RLUD As RLUDPR,UD1,UD2,
                             Costo_Ult_Compra as CostoUd1," & _Costo_Ult_Compra & " as CostoUd2,
                             " & _Costo_Ult_Compra & " As Precio,Rtu,CantComprar As Cantidad,Dscto_Ult_Compra As Desc1,
                             0 as Desc2,0 as Desc3,0 as Desc4,0 as Desc5,0 As PRCT,'' As TICT,TIPR," & Ud & " As UDTRPR,0 as POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
-                            0 As IDMAEEDO,0 As IDMAEDDO,'" & ModEmpresa & "' As EMPRESA,'" & ModSucursal & "' As SULIDO,'" & ModBodega & "' As BOSULIDO,
+                            0 As IDMAEEDO,0 As IDMAEDDO,'" & Mod_Empresa & "' As EMPRESA,'" & Mod_Sucursal & "' As SULIDO,'" & Mod_Bodega & "' As BOSULIDO,
                             '' As ENDO,'' As SUENDO,
                             GetDate() As FEEMLI,'' As TIDO,'' As NUDO,'' As NULIDO,0 As CantUd1_Dori,0 As CantUd2_Dori,'' As OBSERVA,
                             0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,
@@ -4312,9 +4312,9 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set Iva = (Select POIVPR From MAEPR Where KOPR = Codigo)
                         Update " & _Nombre_Tbl_Paso_Informe & " Set Ila = Isnull((Select Sum(POIM) From TABIM Where KOIM In (Select KOIM From TABIMPR Where KOPR = Codigo)),0)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_PPP = (Select PM From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = Codigo)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_UltComUd1 = (Select PPUL01 From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = Codigo)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_UltComUd2 = (Select PPUL02 From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = Codigo)                        
+                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_PPP = (Select PM From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)
+                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_UltComUd1 = (Select PPUL01 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)
+                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_UltComUd2 = (Select PPUL02 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)                        
                         Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = (Select PP01UD From TABPRE Where KOLT = '" & _Lista & "' And KOPR = Codigo)
                         Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Neto = (Select PP02UD From TABPRE Where KOLT = '" & _Lista & "' And KOPR = Codigo)
 
@@ -5668,7 +5668,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     Private Sub Btn_Crear_Orden_Asistente_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Crear_Orden_Asistente.Click
 
-        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad_Estudio, "OCC", True)
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Mod_Empresa, _Modalidad_Estudio, "OCC", True)
 
         If Not (_RowFormato Is Nothing) Then
 
@@ -6745,7 +6745,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
 
         Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Filtro_Productos)
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
         Consulta_sql = Replace(Consulta_sql, "#FechaInicio#", Format(_Fecha_Inicio, "yyyyMMdd"))
         Consulta_sql = Replace(Consulta_sql, "#FechaTermino#", Format(_Fecha_Fin, "yyyyMMdd"))
@@ -7044,9 +7044,9 @@ Public Class Frm_01_Asis_Compra_Resultados
                        "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                        "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
                        "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega'))" & vbCrLf &
-                       "Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
+                       "Or (EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')"
 
-        Consulta_sql = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* From TABBO Where EMPRESA = '" & ModEmpresa & "'"
+        Consulta_sql = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* From TABBO Where EMPRESA = '" & Mod_Empresa & "'"
 
         Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -7054,13 +7054,13 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         _Filtro = "And Empresa+Sucursal+Bodega In " & _Filtro
 
-        Dim _Orden_Bod = "ORDEN_BOD_" & ModEmpresa.Trim & ModSucursal.Trim
+        Dim _Orden_Bod = "ORDEN_BOD_" & Mod_Empresa.Trim & Mod_Sucursal.Trim
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Stock Where Codigo = '" & _Codigo & "' And StfiBodExt" & Ud & " <> 0"
         Dim _TblStExt As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = My.Resources.Recursos_Alerta_Stock.Stock_productos_por_emp_suc_bod
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Codigo)
         Consulta_sql = Replace(Consulta_sql, "#Codigos#", _Filtro_Productos)
         Consulta_sql = Replace(Consulta_sql, "#Ud#", Ud)
@@ -7194,7 +7194,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             Dim _Bodega As String = _Fila.Cells("Bodega").Value
 
             If Not String.IsNullOrEmpty("FCV") Then
-                _St_Disponible = Fx_Stock_Disponible("FCV", ModEmpresa, _Sucursal, _Bodega, _Codigo, _Ud, "STFI" & _Ud)
+                _St_Disponible = Fx_Stock_Disponible("FCV", Mod_Empresa, _Sucursal, _Bodega, _Codigo, _Ud, "STFI" & _Ud)
                 If _St_Disponible < 0 Then _St_Disponible = 0
                 _Fila.Cells("ST_DISPONIBLE").Value = _St_Disponible
             End If
@@ -7484,7 +7484,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                         Dim _Codigo_Nodo As Integer = _Fila.Item("Codigo_Nodo")
                         Dim _Stock_Fisico_Madre As Double = _Fila.Item("Stock_Fisico_Madre")
                         Dim _Stock_Fisico_Prod As Double = _Fila.Item("Stock_Fisico_Prod")
-                        Dim _Stock_Disponible As Double = Fx_Stock_Disponible("FCV", ModEmpresa, _Suc_Reab, _Bod_Reab, _Codigo, _Ud, "STFI" & Ud)
+                        Dim _Stock_Disponible As Double = Fx_Stock_Disponible("FCV", Mod_Empresa, _Suc_Reab, _Bod_Reab, _Codigo, _Ud, "STFI" & Ud)
 
                         Dim _Solicitar As Double = _Fila.Item("Solicitar")
                         Dim _Pedir As Double = _Fila.Item("Pedir")
@@ -7514,7 +7514,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                                 Dim _Kopr As String = _Fila_H.Item("KOPR")
                                 Dim _Nokopr As String = _Fila_H.Item("NOKOPR").ToString.Trim
                                 Dim _Stfi As Double = _Fila_H.Item("STFI" & Ud)
-                                _Stock_Disponible = Fx_Stock_Disponible("FCV", ModEmpresa, _Suc_Reab, _Bod_Reab, _Kopr, _Ud, "STFI" & Ud)
+                                _Stock_Disponible = Fx_Stock_Disponible("FCV", Mod_Empresa, _Suc_Reab, _Bod_Reab, _Kopr, _Ud, "STFI" & Ud)
                                 Dim _Costo As Double = _Fila_H.Item("PM")
                                 Dim _Salir = False
 
@@ -7930,7 +7930,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                                      _Bod_Destino As String,
                                      _Fecha_Emision As Date) As DataRow
 
-        Consulta_sql = "Select * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Consulta_sql = "Select * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Koen = _Row_Configp.Item("RUT")
@@ -7970,7 +7970,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                                  _Ud As Integer,
                                  _TblPaso As String) As DataRow
 
-        Consulta_sql = "Select * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Consulta_sql = "Select * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Koen = _Row_Configp.Item("RUT")
@@ -7978,7 +7978,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "' And SUEN = '" & _Suc_Destino & "'"
         Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _Lista = ModListaPrecioCosto
+        Dim _Lista = Mod_ListaPrecioCosto
 
         Dim _Tido = "NVI"
 
@@ -8073,7 +8073,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Dim _Nvi_Auto As New GeneraOccAuto.Doc_Auto
 
-        Consulta_sql = "Select * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Consulta_sql = "Select * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Koen = _Row_Configp.Item("RUT")
@@ -8081,7 +8081,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "' And SUEN = '" & _Suc_Destino & "'"
         Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _Lista = ModListaPrecioCosto
+        Dim _Lista = Mod_ListaPrecioCosto
 
         Dim _Tido = "NVI"
 
@@ -8304,7 +8304,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         End If
 
         Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Sacar_la_velocidad_de_venta_mensual_Media
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
         Consulta_sql = Replace(Consulta_sql, "#FechaInicio#", Format(_Fecha_Desde_Rot_Vta, "yyyyMMdd"))
         Consulta_sql = Replace(Consulta_sql, "#FechaTermino#", Format(_Fecha_Hasta_Rot_vta, "yyyyMMdd"))
@@ -9431,7 +9431,7 @@ Drop Table #Paso"
             Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER" &
                             vbCrLf &
                            "Select Distinct " & _Top & " '" & FUNCIONARIO & "' As KOFULIDO,Codigo As KOPRCT,Rtu As 'RLUDPR',
-                            Descripcion,Descripcion As NOKOPR,CodAlternativo,'" & ModListaPrecioCosto & "' As KOLTPR,UD1,UD2,
+                            Descripcion,Descripcion As NOKOPR,CodAlternativo,'" & Mod_ListaPrecioCosto & "' As KOLTPR,UD1,UD2,
                             Costo_Ult_Compra as CostoUd1,Costo_Ult_Compra as CostoUd2,
                             Costo_Ult_Compra As Precio,Rtu,CantComprar As Cantidad,Dscto_Ult_Compra as Desc1,
                             0 as Desc2,0 as Desc3,0 as Desc4,0 as Desc5,0 As PRCT,'' As TICT,TIPR," & Ud & " as UDTRPR,0 as POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
@@ -9927,7 +9927,7 @@ Drop Table #Paso"
                         Dim _Codigo_Nodo As Integer = _Fila.Item("Codigo_Nodo")
                         Dim _Stock_Fisico_Madre As Double = _Fila.Item("Stock_Fisico_Madre")
                         Dim _Stock_Fisico_Prod As Double = _Fila.Item("Stock_Fisico_Prod")
-                        Dim _Stock_Disponible As Double = Fx_Stock_Disponible("FCV", ModEmpresa, _Suc_Reab, _Bod_Reab, _Codigo, _Ud, "STFI" & Ud)
+                        Dim _Stock_Disponible As Double = Fx_Stock_Disponible("FCV", Mod_Empresa, _Suc_Reab, _Bod_Reab, _Codigo, _Ud, "STFI" & Ud)
 
                         Dim _Solicitar As Double = _Fila.Item("Solicitar")
                         Dim _Pedir As Double = _Fila.Item("Pedir")
@@ -9957,7 +9957,7 @@ Drop Table #Paso"
                                 Dim _Kopr As String = _Fila_H.Item("KOPR")
                                 Dim _Nokopr As String = _Fila_H.Item("NOKOPR").ToString.Trim
                                 Dim _Stfi As Double = _Fila_H.Item("STFI" & Ud)
-                                _Stock_Disponible = Fx_Stock_Disponible("FCV", ModEmpresa, _Suc_Reab, _Bod_Reab, _Kopr, _Ud, "STFI" & Ud)
+                                _Stock_Disponible = Fx_Stock_Disponible("FCV", Mod_Empresa, _Suc_Reab, _Bod_Reab, _Kopr, _Ud, "STFI" & Ud)
                                 Dim _Costo As Double = _Fila_H.Item("PM")
                                 Dim _Salir = False
 

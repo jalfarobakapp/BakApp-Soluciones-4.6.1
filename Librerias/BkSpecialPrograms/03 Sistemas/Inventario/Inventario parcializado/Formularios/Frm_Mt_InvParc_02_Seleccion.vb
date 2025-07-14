@@ -886,9 +886,9 @@ Public Class Frm_Mt_InvParc_02_Seleccion
             .BtnExportaExcel.Visible = True
             .Pro_Tipo_Lista = "C"
             .Pro_Maestro_Productos = False
-            .Pro_Sucursal_Busqueda = ModSucursal
-            .Pro_Bodega_Busqueda = ModBodega
-            .Pro_Lista_Busqueda = ModListaPrecioVenta
+            .Pro_Sucursal_Busqueda = Mod_Sucursal
+            .Pro_Bodega_Busqueda = Mod_Bodega
+            .Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             '.CambiarCodigoToolStripMenuItem.Visible = True
             .Txtdescripcion.Text = _Codigo
             .Pro_Mostrar_Info = True
@@ -1089,7 +1089,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
 
             Consulta_sql = "Select * From MAEST" & vbCrLf &
-                           "Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Fila.Item("CodigoPr") & "' And STFI1 > 0"
+                           "Where EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Fila.Item("CodigoPr") & "' And STFI1 > 0"
             Dim _TblBodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Flb As DataRow In _TblBodegas.Rows
@@ -1764,7 +1764,7 @@ Public Class Frm_Mt_InvParc_02_Seleccion
 
                 _Idmaeedo = _Sql.Fx_Trae_Dato("MAEEDO",
                                               "IDMAEEDO",
-                                              "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'")
+                                              "EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'")
 
                 MessageBoxEx.Show(Me,
                                     "El documento " & _Nudo & " No fue encontrado, puede haber sido anulado o eliminado",

@@ -391,9 +391,9 @@ Public Class Frm_ListaMezclas
 
                 With _Zw_Pdp_CPT_MzDet
 
-                    .Empresa = ModEmpresa
-                    .SucursalDef = ModSucursal
-                    .BodegaDef = ModBodega
+                    .Empresa = Mod_Empresa
+                    .SucursalDef = Mod_Sucursal
+                    .BodegaDef = Mod_Bodega
                     .FechaCreacion = FechaDelServidor()
                     .Idpote_Otm = _Cl_Mezcla.Zw_Pdp_CPT_MzEnc.Idpote_Otm
                     .Idpotl_Otm = _Cl_Mezcla.Zw_Pdp_CPT_MzEnc.Idpotl_Otm

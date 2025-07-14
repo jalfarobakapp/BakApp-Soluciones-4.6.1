@@ -376,16 +376,16 @@ Public Class Frm_Formulario_Permisos_Asociados_New
 
                             End If
 
-                            Dim _Stock_Disponible As Double '= Fx_Stock_Disponible(_Tido, ModEmpresa, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
+                            Dim _Stock_Disponible As Double '= Fx_Stock_Disponible(_Tido, Mod_Empresa, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
 
                             If _Revisar_Stock_Disponible Then
-                                _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
+                                _Stock_Disponible = Fx_Stock_Disponible(_Tido, Mod_Empresa, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
                             Else
                                 _Stock_Disponible = 1 + _Cantidad
                             End If
 
 
-                            Dim _Stock As Double = _Sql.Fx_Trae_Dato("MAEST", "STFI" & _UnTrans, "EMPRESA = '" & ModEmpresa &
+                            Dim _Stock As Double = _Sql.Fx_Trae_Dato("MAEST", "STFI" & _UnTrans, "EMPRESA = '" & Mod_Empresa &
                                                                      "' AND KOSU = '" & _Sucursal &
                                                                      "' AND KOBO = '" & _Bodega &
                                                                      "' AND KOPR = '" & _Codigo & "'", True)
@@ -567,7 +567,7 @@ Public Class Frm_Formulario_Permisos_Asociados_New
 
     Function Fx_Insertar_Jefe(_Hijo As String, ByRef _Jefes As List(Of String)) As Boolean
 
-        Consulta_sql = "Select CodJefe From " & _Global_BaseBk & "Zw_Usuarios_VS_Jefes Where CodFuncionario = '" & _Hijo & "' And Empresa = '" & ModEmpresa & "'"
+        Consulta_sql = "Select CodJefe From " & _Global_BaseBk & "Zw_Usuarios_VS_Jefes Where CodFuncionario = '" & _Hijo & "' And Empresa = '" & Mod_Empresa & "'"
         Dim _Row_Jefe As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Not IsNothing(_Row_Jefe) Then

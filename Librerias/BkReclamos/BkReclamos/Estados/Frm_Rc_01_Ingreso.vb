@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+锘縄mports DevComponents.DotNetBar
 Imports BkSpecialPrograms
 Imports BkReclamos
 Imports System.Data.SqlClient
@@ -31,10 +31,10 @@ Public Class Frm_Rc_01_Ingreso
 
     Public Sub New(Accion As Cl_Reclamo.Enum_Accion)
 
-        ' Esta llamada es exigida por el dise馻dor.
+        ' Esta llamada es exigida por el dise帽ador.
         InitializeComponent()
 
-        ' Agregue cualquier inicializaci髇 despu閟 de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaci贸n despu茅s de la llamada a InitializeComponent().
 
         _Cl_Reclamo.Pro_Accion = Accion
 
@@ -50,7 +50,7 @@ Public Class Frm_Rc_01_Ingreso
         Consulta_Sql = "Select '' As Padre,'' As Hijo,0 As Orden Union
                         SELECT CodigoTabla AS Padre,NombreTabla AS Hijo,Orden
                         FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones
-                        WHERE Tabla = 'SIS_RECLAMOS_SUCREC' And Padre_CodigoTabla = '" & ModEmpresa & "' ORDER BY Orden"
+                        WHERE Tabla = 'SIS_RECLAMOS_SUCREC' And Padre_CodigoTabla = '" & Mod_Empresa & "' ORDER BY Orden"
         Cmb_Suc_Elaboracion.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Cmb_Suc_Elaboracion.SelectedValue = String.Empty
 
@@ -187,7 +187,7 @@ Public Class Frm_Rc_01_Ingreso
 
     Sub Sb_Llenar_Grilla_Preguntas(_Id_Reclamo As Integer, _Tipo_Reclamo As String)
 
-        Consulta_Sql = "Select Cod_Pregunta,Isnull(NombreTabla,'...????...(no se encontro c骴. pregunta ['+Cod_Pregunta+'])') As Pregunta, Respuesta
+        Consulta_Sql = "Select Cod_Pregunta,Isnull(NombreTabla,'...????...(no se encontro c贸d. pregunta ['+Cod_Pregunta+'])') As Pregunta, Respuesta
                         From " & _Global_BaseBk & "Zw_Reclamo_Preguntas Recl
                         Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Carac On Recl.Cod_Pregunta = Carac.CodigoTabla
                         And Recl.Tipo_Reclamo = Carac.Padre_CodigoTabla
@@ -301,7 +301,7 @@ Public Class Frm_Rc_01_Ingreso
 
         Dim _Kogru = "VENDEDOR"
 
-        Dim _Sql_Filtro_Condicion_Extra = "And INACTIVO = 0 And (KOFU IN (Select KOFU From TABFUEM Where EMPRESA = '" & ModEmpresa & "')" & vbCrLf &
+        Dim _Sql_Filtro_Condicion_Extra = "And INACTIVO = 0 And (KOFU IN (Select KOFU From TABFUEM Where EMPRESA = '" & Mod_Empresa & "')" & vbCrLf &
                  "And KOFU In (Select KOFU From TABFUGD Where KOGRU = '" & _Kogru & "'))"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
@@ -335,7 +335,7 @@ Public Class Frm_Rc_01_Ingreso
 
         If IsNothing(_Cl_Reclamo.Pro_Row_Entidad) Then
 
-            MessageBoxEx.Show(Me, "Debe ingresar primero al cliente", "Validaci髇", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "Debe ingresar primero al cliente", "Validaci贸n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
 
         End If
@@ -356,9 +356,9 @@ Public Class Frm_Rc_01_Ingreso
             .BtnExportaExcel.Visible = True
             .Pro_Tipo_Lista = "C"
             .Pro_Maestro_Productos = False
-            .Pro_Sucursal_Busqueda = ModSucursal
-            .Pro_Bodega_Busqueda = ModBodega
-            .Pro_Lista_Busqueda = ModListaPrecioVenta
+            .Pro_Sucursal_Busqueda = Mod_Sucursal
+            .Pro_Bodega_Busqueda = Mod_Bodega
+            .Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             .Pro_Mostrar_Info = True
             .Pro_Filtro_Sql_Extra = _Filtro_Sql_Extra
             .ShowDialog(Me)
@@ -486,7 +486,7 @@ Public Class Frm_Rc_01_Ingreso
                            "(Empresa,Sucursal,Numero,Estado,Tipo_Reclamo,Sub_Tipo_Reclamo,Nombre_Contacto,Email_Contacto,Telefono_Contacto,
                             CodEntidad,SucEntidad,Rut_Entidad, 
                             Cod_Vendedor,Codigo,Descripcion,Fecha_Elab,Cantidad,Descripcion_Reclamo,Suc_Elaboracion) Values" & vbCrLf &
-                            "('" & ModEmpresa & "','" & ModSucursal & "','" & _Numero & "','" & _Estado & "'" &
+                            "('" & Mod_Empresa & "','" & Mod_Sucursal & "','" & _Numero & "','" & _Estado & "'" &
                             ",'" & _Tipo_Reclamo & "','" & _Sub_Tipo_Reclamo & "','" & _Nombre_Contacto & "','" & _Email_Contacto & "'" &
                             ",'" & _Telefono_Contacto & "'" &
                             ",'" & _CodEntidad & "','" & _SucEntidad & "'" &
@@ -983,8 +983,8 @@ Public Class Frm_Rc_01_Ingreso
 
                 If MessageBoxEx.Show(Me, "Tiene datos en las respuesta de las preguntas." & vbCrLf &
                                      "Si cambia el tipo de reclamo las respuesta se perderan." & vbCrLf &
-                                     "緿esea cambiar el tipo de reclamo de todas formas?",
-                                     "Validaci髇", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                                     "驴Desea cambiar el tipo de reclamo de todas formas?",
+                                     "Validaci贸n", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
 
                     Cmb_Tipo_Reclamo.SelectedValue = _Tipo_Reclamo
                     Return

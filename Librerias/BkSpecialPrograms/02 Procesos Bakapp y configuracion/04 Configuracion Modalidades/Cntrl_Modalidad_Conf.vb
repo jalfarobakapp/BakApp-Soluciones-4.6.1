@@ -20,7 +20,7 @@ Public Class Cntrl_Modalidad_Conf
         Consulta_sql = "Select MODALIDAD,(Select NOKOSU FROM TABSU Z2 " &
                        "WHERE Z2.EMPRESA = Z1.EMPRESA AND Z2.KOSU = Z1.ESUCURSAL) AS Sucursal," &
                        "EBODEGA as Bodega" & vbCrLf &
-                       "From CONFIEST Z1 WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
+                       "From CONFIEST Z1 WITH (NOLOCK) Where EMPRESA = '" & Mod_Empresa & "'" & vbCrLf &
                        "And MODALIDAD <> '  '"
 
         With Grilla

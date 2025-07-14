@@ -56,7 +56,7 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
         LblBodega.Text = _Row_Bodega.Item("NOKOBO")
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_WMS_Ubicaciones_Bodega" & vbCrLf &
-                       "Where Codigo_Ubic = '" & _Codigo_Ubic & "' And Empresa = '" & ModEmpresa & "' And Codigo_Sector = '" & _Codigo_Sector & "'"
+                       "Where Codigo_Ubic = '" & _Codigo_Ubic & "' And Empresa = '" & Mod_Empresa & "' And Codigo_Sector = '" & _Codigo_Sector & "'"
         _Row_Ubicacion = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Sb_Actualizar_Grilla_Ubic()
@@ -367,9 +367,9 @@ Public Class Frm_05_UbicXpro_UbicacionConProductos
             .Pro_Mostrar_Imagenes = True
             .BtnExportaExcel.Visible = True
             .Pro_Tipo_Lista = "P"
-            .Pro_Sucursal_Busqueda = ModSucursal
-            .Pro_Bodega_Busqueda = ModBodega
-            .Pro_Lista_Busqueda = ModListaPrecioVenta
+            .Pro_Sucursal_Busqueda = Mod_Sucursal
+            .Pro_Bodega_Busqueda = Mod_Bodega
+            .Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             '.CambiarCodigoToolStripMenuItem.Visible = True
             .ShowDialog(Me)
 

@@ -53,7 +53,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
         Chk_Mis_Permisos.Visible = True
 
-        _Modalidad_Origen = Modalidad
+        _Modalidad_Origen = Mod_Modalidad
 
         If Global_Thema = Enum_Themas.Oscuro Then
             Btn_Refresh.ForeColor = Color.White
@@ -94,7 +94,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     Sub Sb_Actualizar_Grilla()
 
-        Lbl_Empresa.Text = ModEmpresa & " " & RazonEmpresa
+        Lbl_Empresa.Text = Mod_Empresa & " " & RazonEmpresa
 
         Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Remotas_Notif" & vbCrLf &
                        "Where NroRemota In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas Where Eliminada = 1) Or" & vbCrLf &
@@ -122,7 +122,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
                            "(Permiso_Otorgado = 0 And CodFuncionario_Autoriza = '' And Eliminada = 0) And " & vbCrLf &
                            "(" & vbCrLf &
                            "NroRemota In (Select NroRemota From " & _Global_BaseBk & "Zw_Notificaciones" & Space(1) &
-                           "Where Empresa = '" & ModEmpresa & "' And Usuario_Destino = '" & FUNCIONARIO & "' And Mostrar = 1 And Accion = 'Remota')" & vbCrLf &
+                           "Where Empresa = '" & Mod_Empresa & "' And Usuario_Destino = '" & FUNCIONARIO & "' And Mostrar = 1 And Accion = 'Remota')" & vbCrLf &
                            "Or 
                            NroRemota In (
                            Select NroRemota From " & _Global_BaseBk & "Zw_Remotas Where NroRemota In 
@@ -135,7 +135,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 							)))
                             Or NroRemota In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas_Notif Where CodFuncionario_Destino = '" & FUNCIONARIO & "')
                           
-                            Select * From #Paso Where Empresa = '" & ModEmpresa & "'
+                            Select * From #Paso Where Empresa = '" & Mod_Empresa & "'
                             Drop Table #Paso"
 
             _TblRemotas = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -152,7 +152,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
                            "CONVERT(VARCHAR, Fecha_Solicita, 103) Fecha,CONVERT(VARCHAR, Fecha_Solicita, 108) Hora," &
                            "CodEntidad,CodSucEntidad,NomEntidad,TotalBruto,Espera_En_Linea" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_Remotas Zr" & vbCrLf &
-                           "Where Empresa = '" & ModEmpresa & "' And CodFuncionario_Autoriza = '' And Eliminada = 0 
+                           "Where Empresa = '" & Mod_Empresa & "' And CodFuncionario_Autoriza = '' And Eliminada = 0 
                            Order by Fecha,Hora"
 
             _TblRemotas = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -565,7 +565,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
                             If _CodPermiso = "Comp0095" Then
 
                                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Usuario_Validador 
-                                                Where Empresa = '" & ModEmpresa & "' And CodFuncionario = '" & FUNCIONARIO &
+                                                Where Empresa = '" & Mod_Empresa & "' And CodFuncionario = '" & FUNCIONARIO &
                                                 "' And Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Casi_DocDet " &
                                                 "Where Id_DocEnc = " & _Id_DocEnc & " And FunValida_Compra = '')"
 
@@ -679,7 +679,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
         Else
 
-            If Not _Revisar_Automaticamente_X_Notificacion And Modalidad <> _Modalidad_Origen Then
+            If Not _Revisar_Automaticamente_X_Notificacion And Mod_Modalidad <> _Modalidad_Origen Then
 
                 Dim _Mod As New Clas_Modalidades
 
@@ -1131,10 +1131,10 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
     Private Sub Btn_Cambiar_Modalidad_Click(sender As Object, e As EventArgs) Handles Btn_Cambiar_Modalidad.Click
 
-        Dim _Modalidad As String = Modalidad
+        Dim _Modalidad As String = Mod_Modalidad
 
-        Dim _ModEmpresa = ModEmpresa
-        Dim _ModSucursal = ModSucursal
+        Dim _Mod_Empresa = Mod_Empresa
+        Dim _Mod_Sucursal = Mod_Sucursal
 
         Dim Frm_Modalidad As New Frm_Modalidades(False)
         Frm_Modalidad.ControlBox = True
@@ -1143,7 +1143,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
         _Global_Frm_Menu.Refresh()
 
-        If _ModSucursal <> ModSucursal Then
+        If _Mod_Sucursal <> Mod_Sucursal Then
 
             Sb_Actualizar_Grilla()
 

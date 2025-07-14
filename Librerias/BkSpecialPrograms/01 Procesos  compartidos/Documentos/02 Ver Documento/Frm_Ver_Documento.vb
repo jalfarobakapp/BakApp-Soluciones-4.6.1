@@ -252,7 +252,7 @@ Public Class Frm_Ver_Documento
                         Dim _Suendo As String = _Row_Eliedo.Item("SUENDO")
 
                         _Idmaeedo = _Sql.Fx_Trae_Dato("MAEEDO", "IDMAEEDO",
-                                                      "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido &
+                                                      "EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido &
                                                       "' and NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "'  And SUENDO = '" & _Suendo & "'",,, 0)
 
                     End If
@@ -779,26 +779,26 @@ Public Class Frm_Ver_Documento
         End If
 
         _NombreFormato_Modalidad = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
-                                                      "NombreFormato", "Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'")
+                                                      "NombreFormato", "Empresa = '" & Mod_Empresa & "' And Modalidad = '" & Mod_Modalidad & "' And TipoDoc = '" & _Tido & "'")
 
         If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad", "NombreFormato_PDF") Then
 
             _NombreFormato_PDF_Modalidad = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
-                                                      "NombreFormato_PDF", "Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'")
+                                                      "NombreFormato_PDF", "Empresa = '" & Mod_Empresa & "' And Modalidad = '" & Mod_Modalidad & "' And TipoDoc = '" & _Tido & "'")
 
 
         End If
 
         If String.IsNullOrEmpty(_NombreFormato_Modalidad) Then
-            Btn_Mnu_Imprimir_Formato_Modalidad.Text = "No existe formato para esta modalidad (" & Modalidad & ")"
-            Btn_Mnu_Vista_Previa_Formato_Modalidad.Text = "No existe formato para esta modalidad (" & Modalidad & ")"
+            Btn_Mnu_Imprimir_Formato_Modalidad.Text = "No existe formato para esta modalidad (" & Mod_Modalidad & ")"
+            Btn_Mnu_Vista_Previa_Formato_Modalidad.Text = "No existe formato para esta modalidad (" & Mod_Modalidad & ")"
         Else
             Btn_Mnu_Imprimir_Formato_Modalidad.Text = "Imprimir en formato de la modalidad (" & _NombreFormato_Modalidad.Trim & ")"
             Btn_Mnu_Vista_Previa_Formato_Modalidad.Text = "Vista previa en formato de la modalidad (" & _NombreFormato_Modalidad.Trim & ")"
         End If
 
         If String.IsNullOrEmpty(_NombreFormato_PDF_Modalidad) Then
-            Btn_Mnu_Imprimir_PDF_Formato_Modalidad.Text = "No existe formato para esta modalidad (" & Modalidad & ")"
+            Btn_Mnu_Imprimir_PDF_Formato_Modalidad.Text = "No existe formato para esta modalidad (" & Mod_Modalidad & ")"
         Else
             Btn_Mnu_Imprimir_PDF_Formato_Modalidad.Text = "Imprimir en formato de la modalidad (" & _NombreFormato_PDF_Modalidad.Trim & ")"
         End If
@@ -858,7 +858,7 @@ Public Class Frm_Ver_Documento
         End If
 
         Dim _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
-                                              "NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'")
+                                              "NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Mod_Modalidad & "' And Tido = '" & _Tido & "'")
 
         If Not String.IsNullOrEmpty(_Ruta_PDF) Then
             Btn_GuardarRutaPDFAutomatica.Tooltip = _Ruta_PDF
@@ -2559,7 +2559,7 @@ Public Class Frm_Ver_Documento
 
                 Fm.Sb_Actualizar_Tbl_Productos_Hermanos()
                 Fm.Sb_Actualizar_Estadisticas_Un_Solo_Producto(_Row_Producto) '(_Codigo)
-                Fm.Sb_Actualizar_Grafico_Movimiento_Stock(ModEmpresa)
+                Fm.Sb_Actualizar_Grafico_Movimiento_Stock(Mod_Empresa)
 
                 Dim _Tbl_Productos_Hermanos As DataTable = Fm.Pro_Tbl_Productos_Hermanos
 
@@ -2744,7 +2744,7 @@ Public Class Frm_Ver_Documento
         Dim _Tido As String = Pro_Row_Maeedo.Item("TIDO")
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad 
-                        Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+                        Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & Mod_Modalidad & "' And TipoDoc = '" & _Tido & "'"
         Dim _Row_Formato_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _RevisarFacElec_Bakapp_Hefesto = False
@@ -3171,7 +3171,7 @@ Public Class Frm_Ver_Documento
             End If
 
             'FIRMA ELECTRONICA 
-            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
             Dim _Iddt As Integer = _Class_DTE.Fx_Dte_Genera_Documento(Me, True)
             Dim _Idpet As Integer
 
@@ -3239,7 +3239,7 @@ Public Class Frm_Ver_Documento
 
                 If _Row_Fmaedte IsNot Nothing Then
 
-                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo) ', "C:\Random.dteSIERRALTA")
+                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad) ', "C:\Random.dteSIERRALTA")
                     Dim _Iddt As Integer = _Row_Fmaedte.Item("IDDT")
                     Dim _Idpet As Integer = _Class_DTE.Fx_Dte_Enviar_Correo_Cliente(Me, _Iddt)
 
@@ -3274,7 +3274,7 @@ Public Class Frm_Ver_Documento
         Dim _Archivo_Xml As String
         Dim _Errores As New List(Of String)
 
-        Dim _Xml As New Class_Genera_DTE_RdBk(_Idmaeedo)
+        Dim _Xml As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
         _Archivo_Xml = _Xml.Fx_Crear_Archivo_XML(Me)
         _Errores = _Xml.Pro_Errores
 
@@ -3371,7 +3371,7 @@ Public Class Frm_Ver_Documento
         If _Aceptado Then
 
             Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO",
-                                 "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'" & Space(1) &
+                                 "EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'" & Space(1) &
                                  "And ENDO = '" & _Endo & "' And SUENDO = '" & _Suendo & "' And TIDOELEC = " & _Tidoelec)
 
             If Not CBool(_Reg) Then
@@ -4186,7 +4186,7 @@ Public Class Frm_Ver_Documento
     Private Sub Btn_Imprimir_Diablito_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir_Diablito.Click
 
         Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-        If _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Idmaeedo) Then
+        If _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Modalidad, _Idmaeedo) Then
             MessageBoxEx.Show(Me, "Documento enviado correctamente a la cola de impresión del diablito", "Imprimir en diablito", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
             MessageBoxEx.Show(Me, _Cl_Imprimir.Error, "Imprimir en diablito", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -4441,7 +4441,7 @@ Public Class Frm_Ver_Documento
 
                 If _Firmar Then
 
-                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
 
                     If CBool(_Class_DTE.Fx_FirmarXHefesto()) Then
                         MessageBoxEx.Show(Me, "DOCUMENTO FIRMADO, QUEDARA A LA ESPERA DE SER ENVIADO AL SII ...", "Firmar documento",
@@ -4738,7 +4738,7 @@ Public Class Frm_Ver_Documento
             Me.Cursor = Cursors.WaitCursor
 
             Dim _Cl_ExportarDoc As New Bk_ExpotarDoc.Cl_ExpotarDoc
-            _Respuesta = _Cl_ExportarDoc.Fx_Importar_Documento(_New_Idmaeedo, _Id_Conexion, True, Modalidad)
+            _Respuesta = _Cl_ExportarDoc.Fx_Importar_Documento(_New_Idmaeedo, _Id_Conexion, True, Mod_Modalidad)
 
             Me.Cursor = Cursors.Default
 

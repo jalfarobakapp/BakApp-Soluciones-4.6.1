@@ -126,7 +126,7 @@ Public Class Frm_Imp_Diablito_X_Est
                         From " & _Global_BaseBk & "Zw_Usuarios_Impresion EImp
                         Left Join TABTIDO Tt On Tt.TIDO = EImp.Tido
                         Left Join " & _Global_BaseBk & "Zw_EstacionesBkp Zes On Zes.NombreEquipo = EImp.NombreEquipo_Imprime
-                        Where EImp.CodFuncionario = '" & _CodFuncionario & "' And EImp.Empresa = '" & ModEmpresa & "'" & vbCrLf &
+                        Where EImp.CodFuncionario = '" & _CodFuncionario & "' And EImp.Empresa = '" & Mod_Empresa & "'" & vbCrLf &
                         _Condicion_Modalidad & vbCrLf &
                         _Condicion_Tido & vbCrLf &
                         "Order By Alias,Tido,SubTido,Tipo"
@@ -391,7 +391,7 @@ Public Class Frm_Imp_Diablito_X_Est
         Dim _Sql = "And MODALIDAD In (Select SUBSTRING(KOOP,4,5) As Modalidad From MAEUS Where KOUS = '" & _CodFuncionario & "' And KOOP Like 'MO-%')"
 
         If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & ModEmpresa & "' " & _Sql,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & Mod_Empresa & "' " & _Sql,
                                Nothing, False, True) Then
 
             Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
@@ -513,7 +513,7 @@ Public Class Frm_Imp_Diablito_X_Est
 
         Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Usuarios_Impresion",
                                                 "CodFuncionario = '" & _CodFuncionario_Destino & "' And " &
-                                                "Empresa = '" & ModEmpresa & "' And " &
+                                                "Empresa = '" & Mod_Empresa & "' And " &
                                                 "Modalidad = '" & _Modalidad & "' And " &
                                                 "Tido = '" & _Tido & "' And " &
                                                 "Tipo = '" & _Tipo & "' And " &
@@ -524,7 +524,7 @@ Public Class Frm_Imp_Diablito_X_Est
         If CBool(_Reg) Then
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Usuarios_Impresion " & vbCrLf &
                             "Where CodFuncionario = '" & _CodFuncionario_Destino & "' And " &
-                            "Empresa = '" & ModEmpresa & "' And " &
+                            "Empresa = '" & Mod_Empresa & "' And " &
                             "Modalidad = '" & _Modalidad & "' And " &
                             "Tido = '" & _Tido & "' And " &
                             "Tipo = '" & _Tipo & "' And " &
@@ -537,7 +537,7 @@ Public Class Frm_Imp_Diablito_X_Est
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Usuarios_Impresion (CodFuncionario,Empresa,Modalidad,Tido,Tipo,NombreEquipo_Imprime," &
                            "NombreFormato,Impresora,Nro_Copias,Activo,Imprimir_Voucher_TJV_No_Imprimir,Imprimir_Voucher_TJV," &
                            "Imprimir_Voucher_TJV_Original,Imp_Todas_Modalidades,Sucursal_Picking,Bodega_Picking) Values " &
-                           "('" & _CodFuncionario_Destino & "','" & ModEmpresa & "','" & _Modalidad & "','" & _Tido & "','" & _Tipo &
+                           "('" & _CodFuncionario_Destino & "','" & Mod_Empresa & "','" & _Modalidad & "','" & _Tido & "','" & _Tipo &
                            "','" & _NombreEquipo_Imprime & "','" & _NombreFormato & "','" & _Impresora & "'," & _Nro_Copias & "," & _Activo &
                            "," & _Imprimir_Voucher_TJV_No_Imprimir & "," & _Imprimir_Voucher_TJV &
                            "," & _Imprimir_Voucher_TJV_Original & "," & _Imp_Todas_Modalidades & ",'" & _Sucursal_Picking & "','" & _Bodega_Picking & "')"

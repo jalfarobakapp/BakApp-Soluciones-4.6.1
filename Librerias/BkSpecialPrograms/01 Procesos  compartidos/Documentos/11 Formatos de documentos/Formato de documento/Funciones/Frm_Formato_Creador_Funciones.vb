@@ -116,14 +116,14 @@ Public Class Frm_Formato_Creador_Funciones
 
         If Pro_Sol_Prod_Bodega Then
 
-            Dim _Nokosu = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "'")
-            Dim _Nokobo = _Sql.Fx_Trae_Dato("TABBO", "NOKOBO", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "'")
+            Dim _Nokosu = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "'")
+            Dim _Nokobo = _Sql.Fx_Trae_Dato("TABBO", "NOKOBO", "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "'")
 
             Consulta_sql = "Select FLOOR(RAND()*(999-1)+1) As Id,'0060000005' As CodSolicitud,'PRB' As Estado," &
                            "'" & FUNCIONARIO & "' As Funcionario,'" & Nombre_funcionario_activo & "' As Nokofu," &
                            "'CODIGOXXXXXYZ' As Codigo," &
                            "'DESCRIPCION DEL PRODUCTO CINCUENTA CARACTERES..XYZ' As Descripcion," &
-                           "'" & ModEmpresa & "' As Empresa,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega," &
+                           "'" & Mod_Empresa & "' As Empresa,'" & Mod_Sucursal & "' As Sucursal,'" & Mod_Bodega & "' As Bodega," &
                            "'" & RazonEmpresa & "' As Razon,'" & _Nokosu & "' As Nokosu,'" & _Nokobo & "' As Nokobo," &
                            "'UBICACION Z-1' As Ubicacion," &
                            "FLOOR(RAND()*(999-1)+1) As StockUd1," &

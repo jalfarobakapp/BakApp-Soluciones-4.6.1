@@ -172,7 +172,7 @@ Public Class Frm_Demonio_02_Conf_X_Estacion
                     _DisplayIndex += 1
 
                     .Columns("Imp_Suc_Modal").Width = 120
-                    .Columns("Imp_Suc_Modal").HeaderText = "Impr. Solo doc. Suc. Modalidad " & ModSucursal
+                    .Columns("Imp_Suc_Modal").HeaderText = "Impr. Solo doc. Suc. Modalidad " & Mod_Sucursal
                     .Columns("Imp_Suc_Modal").Visible = True
                     .Columns("Imp_Suc_Modal").ReadOnly = False
                     .Columns("Imp_Suc_Modal").DisplayIndex = _DisplayIndex

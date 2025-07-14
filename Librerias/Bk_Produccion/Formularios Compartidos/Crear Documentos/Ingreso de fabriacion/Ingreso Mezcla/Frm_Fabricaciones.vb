@@ -457,7 +457,7 @@ Public Class Frm_Fabricaciones
 
         Try
 
-            Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+            Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
             Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim
@@ -476,7 +476,7 @@ Public Class Frm_Fabricaciones
 
             Dim _Cantidad As String = De_Num_a_Tx_01(_Cantidad_Floor, False, 5)
 
-            Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & ModSucursal & "' As Sucursal,'" & ModBodega & "' As Bodega" & vbCrLf &
+            Consulta_sql = "Select *," & _Cantidad & " As Cantidad,'" & Mod_Sucursal & "' As Sucursal,'" & Mod_Bodega & "' As Bodega" & vbCrLf &
                            "From POTL Where IDPOTL = " & _Cl_Mezcla.Zw_Pdp_CPT_MzDet.Idpotl_New
             Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -530,7 +530,7 @@ Public Class Frm_Fabricaciones
 
         Try
 
-            Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+            Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
             Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim

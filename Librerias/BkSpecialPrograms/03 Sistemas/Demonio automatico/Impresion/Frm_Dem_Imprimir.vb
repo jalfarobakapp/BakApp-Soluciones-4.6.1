@@ -20,7 +20,7 @@
 
         Me.Text = "Demonio para acciones automatizadas, V: [" & _Version_BkSpecialPrograms & "]"
         Lbl_Nombre_Equipo.Text = "Nombre equipo: " & _NombreEquipo
-        Lbl_Modalidad.Text = "Modalidad: " & Modalidad & ", Sucursal: " & ModSucursal & ", Bodega: " & ModBodega
+        Lbl_Modalidad.Text = "Modalidad: " & Mod_Modalidad & ", Sucursal: " & Mod_Sucursal & ", Bodega: " & Mod_Bodega
 
         _Cl_Imprimir_Documentos.Txt_Log = Txt_Log
         _Cl_Imprimir_Documentos.NombreEquipo = _NombreEquipo
@@ -29,7 +29,7 @@
 
         Timer_Clear.Interval = (60 * 1000) * 2 ' 2 Minutos
 
-        Lbl_Estatus.Text = "Empresa: " & ModEmpresa & ", Modalidad: " & Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _NombreEquipo
+        Lbl_Estatus.Text = "Empresa: " & Mod_Empresa & ", Modalidad: " & Mod_Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _NombreEquipo
 
         Sb_Color_Botones_Barra(Bar1)
 

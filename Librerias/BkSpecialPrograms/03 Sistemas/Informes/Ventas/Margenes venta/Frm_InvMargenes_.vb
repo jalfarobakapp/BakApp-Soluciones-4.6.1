@@ -736,7 +736,7 @@ Public Class Frm_InvMargenes_
 
         Consulta_Sql = My.Resources.Rs_InvMargenes.Margenes_de_venta
 
-        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
         Consulta_Sql = Replace(Consulta_Sql, "#ListaCosto#", ListaCosto)
         Consulta_Sql = Replace(Consulta_Sql, "#Opcion#", Opcion)
         Consulta_Sql = Replace(Consulta_Sql, "#Fecha1#", Fecha1)
@@ -907,7 +907,7 @@ Public Class Frm_InvMargenes_
 
         Consulta_Sql = My.Resources.Rs_InvMargenes.Margenes_de_venta2
 
-        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
         Consulta_Sql = Replace(Consulta_Sql, "#ListaCosto#", ListaCosto)
         Consulta_Sql = Replace(Consulta_Sql, "#Opcion#", Opcion)
         Consulta_Sql = Replace(Consulta_Sql, "#Fecha1#", _Fecha1)
@@ -1448,7 +1448,7 @@ Public Class Frm_InvMargenes_
             Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
 
             Fm.Pro_Tipo_Lista = "C" '.Tipo_Busqueda_Productos = Fm.Buscar_En.Maestro_de_Productos
-            Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+            Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             Fm.Pro_CodEntidad = String.Empty
             Fm.Pro_CodSucEntidad = String.Empty
             Fm.Pro_Mostrar_Info = False 'MostrarOcultos = True

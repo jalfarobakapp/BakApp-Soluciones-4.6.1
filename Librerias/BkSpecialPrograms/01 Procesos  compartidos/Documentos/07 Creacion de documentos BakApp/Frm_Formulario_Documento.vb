@@ -165,6 +165,9 @@ Public Class Frm_Formulario_Documento
     Private _RevisandoBotonesActivos As Boolean
     Private _AvisoCambioRTUVariable As Boolean
 
+    Public Property ModEmpresa_Doc As String
+    Public Property ModModalidad_Doc As String
+
 #Region "PROPIEDADES"
 
     Public ReadOnly Property Pro_Idmaeedo() As Integer
@@ -449,6 +452,9 @@ Public Class Frm_Formulario_Documento
         InitializeComponent()
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        ModEmpresa_Doc = Mod_Empresa
+        ModModalidad_Doc = Mod_Modalidad
+
         Me._Documento_Reciclado = Documento_Reciclado
 
         _DecimalesGl = 2
@@ -537,7 +543,7 @@ Public Class Frm_Formulario_Documento
 
         If Not _Facturacion_Automatica Then
 
-            Sb_Limpiar(Modalidad, True)
+            Sb_Limpiar(ModModalidad_Doc, True)
             Chk_Ver_Dscto_Maximo.Checked = Fx_Tiene_Permiso(Me, "Doc00048",, False)
 
         End If
@@ -682,15 +688,15 @@ Public Class Frm_Formulario_Documento
             End Select
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+                            "Where Empresa = '" & ModEmpresa_Doc & "' And Modalidad = '" & ModModalidad_Doc & "' And TipoDoc = '" & _Tido & "'"
             Dim _RowFormato_Mod As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Guardar_PDF_Auto As Boolean = _RowFormato_Mod.Item("Guardar_PDF_Auto")
 
             Dim _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
-                            "Empresa = '" & ModEmpresa & "' " &
+                            "Empresa = '" & ModEmpresa_Doc & "' " &
                             "And NombreEquipo = '" & _NombreEquipo & "' " &
-                            "And Modalidad = '" & Modalidad & "' " &
+                            "And Modalidad = '" & ModModalidad_Doc & "' " &
                             "And Tido = '" & _Tido & "' And Tipo_Ruta In ('PDF','')")
 
             If _Guardar_PDF_Auto Then
@@ -794,7 +800,7 @@ Public Class Frm_Formulario_Documento
 
         If _Es_Electronico Then
 
-            MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NroDocumento, Not _Facturacion_Automatica)
+            MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NroDocumento, Not _Facturacion_Automatica, ModEmpresa_Doc, ModModalidad_Doc)
 
             If Not MensajeRevFolio.EsCorrecto And Not _Facturacion_Automatica Then ' Not Fx_Revisar_Expiracion_Folio_SII(Nothing, _Tido, _NroDocumento, True) Then
 
@@ -1229,7 +1235,7 @@ Public Class Frm_Formulario_Documento
 
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+                       "Where Empresa = '" & ModEmpresa_Doc & "' And Modalidad = '" & ModModalidad_Doc & "' And TipoDoc = '" & _Tido & "'"
         _Row_Formato_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Grabar_Con_Huella As Boolean = _Row_Formato_Modalidad.Item("Grabar_Con_Huella")
@@ -1350,7 +1356,7 @@ Public Class Frm_Formulario_Documento
 
                 If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna Then
                     _RowEntidad.Item("KOEN") = RutEmpresa
-                    _RowEntidad.Item("SUEN") = ModSucursal
+                    _RowEntidad.Item("SUEN") = Mod_Sucursal
                 End If
 
                 _Aplicar_Venciminetos = False
@@ -1544,8 +1550,8 @@ Public Class Frm_Formulario_Documento
             .Item("Tipo_Documento") = _Tipo_Documento.ToString
 
             .Item("Modalidad") = _Modalidad_Doc
-            .Item("Empresa") = ModEmpresa
-            .Item("Sucursal") = ModSucursal
+            .Item("Empresa") = ModEmpresa_Doc
+            .Item("Sucursal") = Mod_Sucursal
             .Item("TipoDoc") = _Tido
             .Item("SubTido") = _SubTido
 
@@ -1781,12 +1787,12 @@ Public Class Frm_Formulario_Documento
 
             If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Then
 
-                Dim _Cn As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa & "' And Campo = 'Cn'")
+                Dim _Cn As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & ModEmpresa_Doc & "' And Campo = 'Cn'")
 
                 If String.IsNullOrEmpty(_Cn) Then
 
                     MessageBoxEx.Show(Me, "Falta incorporar el nombre del certificado digital" & vbCrLf & vbCrLf &
-                                      "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR", "Validación Modalidad: " & Modalidad,
+                                      "INFORME ESTA SITUACION AL ADMINISTRADOR DEL SISTEMA POR FAVOR", "Validación Modalidad: " & ModModalidad_Doc,
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                     If Me.Visible Then
@@ -1811,7 +1817,7 @@ Public Class Frm_Formulario_Documento
 
             End If
 
-            MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, False)
+            MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, False, ModEmpresa_Doc, ModModalidad_Doc)
 
             If Not MensajeRevFolio.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, True) Then
 
@@ -1930,7 +1936,7 @@ Public Class Frm_Formulario_Documento
 
 
             'Consulta_sql = "Select Modalidad, TipoDoc, NombreFormato, Grabar_Con_Huella
-            '            From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+            '            From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Where Empresa = '" & ModEmpresa_Doc & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
             'Dim _RowFormato_Mod As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             'Dim _Grabar_Con_Huella As Boolean = _RowFormato_Mod.Item("Grabar_Con_Huella")
@@ -1990,6 +1996,10 @@ Public Class Frm_Formulario_Documento
 
             'End If
 
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
+                           "Where Empresa = '" & ModEmpresa_Doc & "' And Modalidad = '" & ModModalidad_Doc & "' And TipoDoc = '" & _Tido & "'"
+            _Row_Formato_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+
             _New_Idmaeedo = 0
             Dim _TipoValor = _Global_Row_Configuracion_Estacion.Item("Vnta_TipoValor_Bruto_Neto")
 
@@ -2044,7 +2054,7 @@ Public Class Frm_Formulario_Documento
 
                 '    If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna Then
                 '        _RowEntidad.Item("KOEN") = RutEmpresa
-                '        _RowEntidad.Item("SUEN") = ModSucursal
+                '        _RowEntidad.Item("SUEN") = Mod_Sucursal
                 '    End If
 
                 '    _Aplicar_Venciminetos = False
@@ -2172,7 +2182,7 @@ Public Class Frm_Formulario_Documento
             End If
 
             If _Sql.Fx_Exite_Campo("CONFIEST", _Tido) And _Tido <> "GRP" Then
-                _NewNeroDocumento = Traer_Numero_Documento(_Tido, , , False, True, Me)
+                _NewNeroDocumento = Traer_Numero_Documento(_Tido, , , False, True, Me, ModEmpresa_Doc)
             End If
 
             Select Case _Tido
@@ -2238,8 +2248,8 @@ Public Class Frm_Formulario_Documento
                 .Item("Tipo_Documento") = _Tipo_Documento.ToString
 
                 .Item("Modalidad") = _Modalidad_Doc
-                .Item("Empresa") = ModEmpresa
-                .Item("Sucursal") = ModSucursal
+                .Item("Empresa") = ModEmpresa_Doc
+                .Item("Sucursal") = Mod_Sucursal
                 .Item("TipoDoc") = _Tido
                 .Item("SubTido") = _SubTido
 
@@ -2463,7 +2473,7 @@ Public Class Frm_Formulario_Documento
                 If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Then
 
                     Dim _Cn As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                                          "Empresa = '" & ModEmpresa & "' And Campo = 'Cn'",, False)
+                                                          "Empresa = '" & ModEmpresa_Doc & "' And Campo = 'Cn'",, False)
 
                     If String.IsNullOrEmpty(_Cn) Then
 
@@ -2495,7 +2505,7 @@ Public Class Frm_Formulario_Documento
 
                 End If
 
-                MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, False)
+                MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, False, ModEmpresa_Doc, ModModalidad_Doc)
 
                 If Not MensajeRevFolio.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _NewNeroDocumento, True) Then
 
@@ -2551,9 +2561,9 @@ Public Class Frm_Formulario_Documento
         Dim _Centro_Costo As String = _TblEncabezado.Rows(0).Item("Centro_Costo")
         Dim _Proyecto As String = String.Empty
 
-        Dim _Empresa = ModEmpresa
-        Dim _Sucursal = ModSucursal
-        Dim _Bodega = ModBodega
+        Dim _Empresa = ModEmpresa_Doc
+        Dim _Sucursal = Mod_Sucursal
+        Dim _Bodega = Mod_Bodega
 
         If _TblDetalle.Rows.Count >= 1 Then
 
@@ -3046,8 +3056,8 @@ Public Class Frm_Formulario_Documento
         NewFila = _Ds_Matriz_Documentos.Tables("Detalle_Doc").NewRow
         With NewFila
 
-            .Item("Sucursal") = ModSucursal
-            .Item("Bodega") = ModBodega
+            .Item("Sucursal") = Mod_Sucursal
+            .Item("Bodega") = Mod_Bodega
             .Item("Codigo") = String.Empty
             .Item("Descripcion") = String.Empty
             .Item("Descripcion_Ori") = String.Empty
@@ -4423,7 +4433,7 @@ Public Class Frm_Formulario_Documento
                     If Not _Post_Venta Then _RowEntidad_X_Defecto = Nothing
 
                     If Me.Visible Then
-                        Sb_Limpiar(Modalidad)
+                        Sb_Limpiar(ModModalidad_Doc)
                     End If
 
                     Return
@@ -5749,7 +5759,7 @@ Public Class Frm_Formulario_Documento
         _RowPrecios = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Consulta_sql = "Select Top 1 * From MAEST
-                        Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Sucursal &
+                        Where EMPRESA = '" & ModEmpresa_Doc & "' And KOSU = '" & _Sucursal &
                        "' And KOBO = '" & _Bodega & "' And KOPR = '" & _Codigo & "'"
         _RowStock = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -5895,11 +5905,11 @@ Public Class Frm_Formulario_Documento
             '_EsNetoLinea = False
         End If
 
-        Dim _PmLinea As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa & "'", True)
-        Dim _Precio_UC1 As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL01", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa & "'", True)
-        Dim _Precio_UC2 As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL02", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa & "'", True)
-        Dim _PmSucLinea As Double = _Sql.Fx_Trae_Dato("MAEPMSUC", "PMSUC", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa & "' AND KOSU = '" & _Sucursal & "'", True)
-        Dim _PmIFRS As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PMIFRS", "EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'", True)
+        Dim _PmLinea As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa_Doc & "'", True)
+        Dim _Precio_UC1 As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL01", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa_Doc & "'", True)
+        Dim _Precio_UC2 As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL02", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa_Doc & "'", True)
+        Dim _PmSucLinea As Double = _Sql.Fx_Trae_Dato("MAEPMSUC", "PMSUC", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa_Doc & "' AND KOSU = '" & _Sucursal & "'", True)
+        Dim _PmIFRS As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PMIFRS", "EMPRESA = '" & ModEmpresa_Doc & "' And KOPR = '" & _Codigo & "'", True)
 
         Dim _Ud1Linea = _RowProducto.Item("UD01PR")
         Dim _Ud2Linea = _RowProducto.Item("UD02PR")
@@ -6096,7 +6106,7 @@ Public Class Frm_Formulario_Documento
         End If
 
         Dim _UbicacionBod = _Sql.Fx_Trae_Dato("TABBOPR", "DATOSUBIC",
-                                              "EMPRESA = '" & ModEmpresa & "' AND KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "' AND KOPR = '" & _Codigo & "'")
+                                              "EMPRESA = '" & ModEmpresa_Doc & "' AND KOSU = '" & _Sucursal & "' AND KOBO = '" & _Bodega & "' AND KOPR = '" & _Codigo & "'")
 
         Dim _ValVtaStockInf = True
 
@@ -6356,8 +6366,8 @@ Public Class Frm_Formulario_Documento
                 _PrecioBrutoUd = _PrecioBruto
                 _PrecioNetoUdLinea = _PrecioNetoUd
                 _PrecioBrutoUdLinea = _PrecioBruto
-                If _Rtu <1 Then
-                    _PrecioNetoUdLista= _PrecioLinea / _Rtu
+                If _Rtu < 1 Then
+                    _PrecioNetoUdLista = _PrecioLinea / _Rtu
                     _PrecioBrutoUdLista = _PrecioBruto / _Rtu
                 Else
                     _PrecioNetoUdLista = _PrecioNeto
@@ -6511,11 +6521,11 @@ Public Class Frm_Formulario_Documento
         End If
 
 
-        Dim _PmLinea As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa & "'", True)
-        Dim _Precio_UC1 As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL01", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa & "'", True)
-        Dim _Precio_UC2 As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL02", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa & "'", True)
-        Dim _PmSucLinea As Double = _Sql.Fx_Trae_Dato("MAEPMSUC", "PMSUC", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa & "' AND KOSU = '" & _Sucursal & "'", True)
-        Dim _PmIFRS As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PMIFRS", "EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'", True)
+        Dim _PmLinea As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa_Doc & "'", True)
+        Dim _Precio_UC1 As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL01", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa_Doc & "'", True)
+        Dim _Precio_UC2 As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL02", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa_Doc & "'", True)
+        Dim _PmSucLinea As Double = _Sql.Fx_Trae_Dato("MAEPMSUC", "PMSUC", "KOPR = '" & _Codigo & "' And EMPRESA = '" & ModEmpresa_Doc & "' AND KOSU = '" & _Sucursal & "'", True)
+        Dim _PmIFRS As Double = _Sql.Fx_Trae_Dato("MAEPREM", "PMIFRS", "EMPRESA = '" & ModEmpresa_Doc & "' And KOPR = '" & _Codigo & "'", True)
 
         Dim _Ud1Linea = _RowProducto.Item("Ud01pr")
         Dim _Ud2Linea = _RowProducto.Item("Ud02pr")
@@ -7809,7 +7819,7 @@ Public Class Frm_Formulario_Documento
 
                 If String.IsNullOrEmpty(_Tict) And Not String.IsNullOrEmpty(_Tipr) And Not _Prct Then
                     _UltCompraLinea = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL0" & _UnTrans,
-                                                        "EMPRESA = '" & ModEmpresa & "' AND KOPR = '" & _Codigo & "'")
+                                                        "EMPRESA = '" & ModEmpresa_Doc & "' AND KOPR = '" & _Codigo & "'")
                     _Costo_Lista = _Sql.Fx_Trae_Dato("TABPRE", "PP0" & _UnTrans & "UD",
                                                      "KOLT = '" & _Lista_Costo & "' And KOPR = '" & _Codigo & "'", True)
                 ElseIf _Tict = "D" Then
@@ -8539,8 +8549,8 @@ Public Class Frm_Formulario_Documento
                 Fm.Pro_CodSucEntidad = _CodSucEntidad
                 Fm.Pro_Tipo_Lista = _Tipo_Lista
                 Fm.Pro_Lista_Busqueda = _TblEncabezado.Rows(0).Item("ListaPrecios")
-                Fm.Pro_Sucursal_Busqueda = ModSucursal
-                Fm.Pro_Bodega_Busqueda = ModBodega
+                Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+                Fm.Pro_Bodega_Busqueda = Mod_Bodega
                 Fm.Txtdescripcion.Text = _Codigo
                 Fm.Pro_Mostrar_Info = True
                 Fm.Pro_Actualizar_Precios = _Actualizar_Precios
@@ -8669,7 +8679,7 @@ Public Class Frm_Formulario_Documento
 
         Dim _PreguntaClientePuntos As Boolean
         Dim _Cl_Puntos As New Cl_Puntos()
-        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa_Doc)
 
         _PreguntaClientePuntos = _Cl_Puntos.Zw_PtsVta_Configuracion.Activo
 
@@ -9699,7 +9709,7 @@ Public Class Frm_Formulario_Documento
                                 If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, _Permiso_Bodega, Nothing) Then
 
                                     Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-                                    Fm_b.Pro_Empresa = ModEmpresa
+                                    Fm_b.Pro_Empresa = ModEmpresa_Doc
                                     Fm_b.Pro_Sucursal = _Sucursal
                                     Fm_b.Pro_Bodega = _Bodega
                                     Fm_b.ShowDialog(Me)
@@ -10093,7 +10103,7 @@ Public Class Frm_Formulario_Documento
                                                     _Idmaeedo_Origen = 0
                                                     _TblEncabezado.Rows(0).Item("Idmaeedo_Origen") = 0
                                                     _Editar_documento = False
-                                                    Sb_Limpiar(Modalidad)
+                                                    Sb_Limpiar(ModModalidad_Doc)
 
                                                 Else
 
@@ -10665,7 +10675,7 @@ Public Class Frm_Formulario_Documento
                         End If
 
                         Dim _Cl_Puntos As New Cl_Puntos
-                        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+                        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa_Doc)
 
                         If Not IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) AndAlso _Cl_Puntos.Zw_PtsVta_Configuracion.Concepto.Trim = _Codigo.Trim Then
                             MessageBoxEx.Show(Me, "CONCEPTO EXCLUSIVO PARA USO DE PUNTOS EN SISTEMA DE FIDELIZACION DE CLIENTES", "Validación",
@@ -10894,7 +10904,7 @@ Public Class Frm_Formulario_Documento
 
                     If _Cabeza = "Bodega" Then
 
-                        Dim _Bodega_Clon As String = NuloPorNro(_Fila_Clonada.Cells(3).Value, ModBodega)
+                        Dim _Bodega_Clon As String = NuloPorNro(_Fila_Clonada.Cells(3).Value, Mod_Bodega)
 
                         Dim _Empresa As String
                         Dim _Sucursal As String
@@ -10925,7 +10935,7 @@ Public Class Frm_Formulario_Documento
                                     Dim _RowBodega As DataRow
 
                                     Dim Fm_B As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-                                    Fm_B.Pro_Empresa = ModEmpresa
+                                    Fm_B.Pro_Empresa = ModEmpresa_Doc
                                     Fm_B.Pro_Sucursal = _Sucursal
 
                                     Fm_B.ShowDialog(Me)
@@ -11766,7 +11776,7 @@ Public Class Frm_Formulario_Documento
 
     Function Fx_Validar_Lineas_Por_Documento_VS_Formato(_Uno As Integer) As Boolean
 
-        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Modalidad, _Tido, False)
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, ModEmpresa_Doc, ModModalidad_Doc, _Tido, False)
 
         If Not (_RowFormato Is Nothing) Then
 
@@ -11965,7 +11975,7 @@ Public Class Frm_Formulario_Documento
 
         If _Solicitar_Pro_Bodega Then
             Dim _Solicitar As New Clase_Solicita_Producto_Bodega
-            _Solicitar.Sb_Solicitar_Producto(Me, _Codigo, FUNCIONARIO, ModEmpresa, _Sucursal, _Bodega, _Ubicacion)
+            _Solicitar.Sb_Solicitar_Producto(Me, _Codigo, FUNCIONARIO, ModEmpresa_Doc, _Sucursal, _Bodega, _Ubicacion)
             _Fila.Cells("Solicitado_bodega").Value = _Solicitar.Pro_Solicitado
             If _Solicitar.Pro_Solicitado Then
                 Sb_Marcar_Grilla()
@@ -12154,7 +12164,7 @@ Public Class Frm_Formulario_Documento
             Else
                 If CBool(_Id_DocEnc) Then
 
-                    Sb_Limpiar(Modalidad)
+                    Sb_Limpiar(ModModalidad_Doc)
                     ToastNotification.Show(Me, "DOCUMENTO GUARDADO CORRECTAMENTE EN LA NUBE", Btn_Grabar_Doc_Stand_By.Image,
                                           2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
                 End If
@@ -12993,7 +13003,7 @@ Public Class Frm_Formulario_Documento
 
             If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna Then
                 _RowEntidad.Item("KOEN") = RutEmpresa
-                _RowEntidad.Item("SUEN") = ModSucursal
+                _RowEntidad.Item("SUEN") = Mod_Sucursal
             End If
 
         Else
@@ -13230,7 +13240,7 @@ Public Class Frm_Formulario_Documento
 
             If String.IsNullOrEmpty(_Tict) And Not String.IsNullOrEmpty(_Tipr) And Not _Prct Then
                 _UltCompraLinea = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL0" & _UnTrans,
-                                                    "EMPRESA = '" & ModEmpresa & "' AND KOPR = '" & _Codigo & "'")
+                                                    "EMPRESA = '" & ModEmpresa_Doc & "' AND KOPR = '" & _Codigo & "'")
                 _Costo_Lista = _Sql.Fx_Trae_Dato("TABPRE", "PP0" & _UnTrans & "UD",
                                                  "KOLT = '" & _Lista_Costo & "' And KOPR = '" & _Codigo & "'", True)
             ElseIf _Tict = "D" Then
@@ -13761,7 +13771,7 @@ Public Class Frm_Formulario_Documento
 
     Private Sub BtnLimpiar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Limpiar.Click
 
-        Sb_Limpiar(Modalidad, True)
+        Sb_Limpiar(ModModalidad_Doc, True)
 
         Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Casi_DocTom Where NombreEquipo = '" & _NombreEquipo & "'"
         _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -13815,11 +13825,11 @@ Public Class Frm_Formulario_Documento
                 System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion")
             End If
 
-            If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & Modalidad) Then
-                System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & Modalidad)
+            If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & ModModalidad_Doc) Then
+                System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & ModModalidad_Doc)
             End If
 
-            _Ruta_Documento_Bkp = AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & Modalidad & "\DC_" & _Tido & ".xml"
+            _Ruta_Documento_Bkp = AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & ModModalidad_Doc & "\DC_" & _Tido & ".xml"
 
             If CBool(_Idmaeedo_Origen) Then
 
@@ -13852,14 +13862,14 @@ Public Class Frm_Formulario_Documento
 
             _CodVendedor = FUNCIONARIO
 
-            Modalidad = _Modalidad
+            ModModalidad_Doc = _Modalidad
 
             Dim _Mod As New Clas_Modalidades
 
             _Mod.Sb_Actualiza_Formatos_X_Modalidad()
             _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-            _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+            _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, ModModalidad_Doc)
+            _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc)
 
             If Not IsNothing(_Global_Frm_Menu) Then _Global_Frm_Menu.Refresh()
 
@@ -13900,11 +13910,11 @@ Public Class Frm_Formulario_Documento
                 System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion")
             End If
 
-            If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & Modalidad) Then
-                System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & Modalidad)
+            If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & ModModalidad_Doc) Then
+                System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & ModModalidad_Doc)
             End If
 
-            _Ruta_Documento_Bkp = AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & Modalidad & "\DC_" & _Tido & ".xml"
+            _Ruta_Documento_Bkp = AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & ModModalidad_Doc & "\DC_" & _Tido & ".xml"
 
             'If CBool(_Idmaeedo_Origen) Then
 
@@ -13937,14 +13947,14 @@ Public Class Frm_Formulario_Documento
 
             _CodVendedor = FUNCIONARIO
 
-            Modalidad = _Modalidad
+            ModModalidad_Doc = _Modalidad
 
             Dim _Mod As New Clas_Modalidades
 
             _Mod.Sb_Actualiza_Formatos_X_Modalidad(False)
-            _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "", False)
-            _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad, False)
-            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad, False)
+            _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "", False, ModEmpresa_Doc)
+            _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, ModModalidad_Doc, False, ModEmpresa_Doc)
+            _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc, False)
 
             If Not IsNothing(_Global_Frm_Menu) Then _Global_Frm_Menu.Refresh()
 
@@ -14225,7 +14235,7 @@ Public Class Frm_Formulario_Documento
 
                                     Else
 
-                                        Sb_Limpiar(Modalidad)
+                                        Sb_Limpiar(ModModalidad_Doc)
 
                                     End If
 
@@ -14372,7 +14382,7 @@ Public Class Frm_Formulario_Documento
     Function Fx_Buscar_Centro_De_Costo(ByRef _Centro_Costo As String,
                                        ByRef _DCentro_Costo As String) As Boolean
 
-        Dim _Sql_Filtro_Condicion_Extra = "And EMPRESAS LIKE '%" & ModEmpresa & "%'"
+        Dim _Sql_Filtro_Condicion_Extra = "And EMPRESAS LIKE '%" & ModEmpresa_Doc & "%'"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
@@ -14398,7 +14408,7 @@ Public Class Frm_Formulario_Documento
 
     Function Fx_Buscar_Proyecto(ByRef _Proyecto As String, ByRef _DProyecto As String) As Boolean
 
-        Dim _Sql_Filtro_Condicion_Extra = "And EMPRESAS LIKE '%" & ModEmpresa & "%'"
+        Dim _Sql_Filtro_Condicion_Extra = "And EMPRESAS LIKE '%" & ModEmpresa_Doc & "%'"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
@@ -14486,7 +14496,7 @@ Public Class Frm_Formulario_Documento
                 If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
 
                     Dim _Idmaeedo As Integer = _Sql.Fx_Trae_Dato("MAEEDO", "IDMAEEDO",
-                                                                 "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NroDocumento & "' And ENDO = '" & _CodEntidad & "'", True)
+                                                                 "EMPRESA = '" & ModEmpresa_Doc & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NroDocumento & "' And ENDO = '" & _CodEntidad & "'", True)
 
                     If Convert.ToBoolean(_Idmaeedo) Then
 
@@ -14502,7 +14512,7 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-                        Sb_Limpiar(Modalidad)
+                        Sb_Limpiar(ModModalidad_Doc)
                         Return
 
                     End If
@@ -14523,7 +14533,7 @@ Public Class Frm_Formulario_Documento
                     Else
                         Consulta_sql = "Select DISTINCT EDO.* From MAEEDO EDO
                                     INNER JOIN MAEDDO DDO ON EDO.IDMAEEDO = DDO.IDMAEEDO 
-                                    Where EDO.EMPRESA = '" & ModEmpresa & "' And EDO.TIDO = '" & _Tido_Relacionado & "' AND EDO.NUDO = '" & _Nudo_Relacionado & "'"
+                                    Where EDO.EMPRESA = '" & ModEmpresa_Doc & "' And EDO.TIDO = '" & _Tido_Relacionado & "' AND EDO.NUDO = '" & _Nudo_Relacionado & "'"
                     End If
 
                     _Row_Doc_Relacionado = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -14635,10 +14645,10 @@ Public Class Frm_Formulario_Documento
 
                             If Not Fx_Actualizar_Lista_De_Costos_Random_Desde_Bakapp(Me, _Koen, _Suen) Then
                                 MessageBoxEx.Show(Me, "No se puede generar el documento, ya que " & vbCrLf &
-                                                  "esta condición es obligatoria para la modalidad " & Modalidad,
+                                                  "esta condición es obligatoria para la modalidad " & ModModalidad_Doc,
                                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop,
                                                   MessageBoxDefaultButton.Button1, Me.TopMost)
-                                Sb_Limpiar(Modalidad)
+                                Sb_Limpiar(ModModalidad_Doc)
                                 Return
                             End If
 
@@ -14674,7 +14684,7 @@ Public Class Frm_Formulario_Documento
                             Dim _Suen As String = _RowEntidad.Item("SUEN").ToString.Trim
 
                             _Idmaeedo = _Sql.Fx_Trae_Dato("MAEEDO", "IDMAEEDO",
-                                                                 "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NroDocumento & "' And ENDO = '" & _Koen & "'", True)
+                                                                 "EMPRESA = '" & ModEmpresa_Doc & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NroDocumento & "' And ENDO = '" & _Koen & "'", True)
 
                             If Convert.ToBoolean(_Idmaeedo) Then
 
@@ -14688,7 +14698,7 @@ Public Class Frm_Formulario_Documento
 
                                 End If
 
-                                Sb_Limpiar(Modalidad)
+                                Sb_Limpiar(ModModalidad_Doc)
                                 Return
 
                             End If
@@ -14698,7 +14708,7 @@ Public Class Frm_Formulario_Documento
                         Dim _SuenRev = _RowEntidad.Item("SUEN")
 
                         If _Tido = "GRI" Then
-                            _SuenRev = ModSucursal
+                            _SuenRev = Mod_Sucursal
                         End If
 
                         Dim Fm As New Frm_Documentos_Relacionados(_Tido, _RowEntidad.Item("KOEN"), _SuenRev, _SubTido)
@@ -14932,11 +14942,11 @@ Public Class Frm_Formulario_Documento
 
                                             If _Requiere_Permiso_NCV Then
                                                 If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00026", Nothing, "", "") Then
-                                                    Sb_Limpiar(Modalidad, True)
+                                                    Sb_Limpiar(ModModalidad_Doc, True)
                                                     Return
                                                 End If
                                             Else
-                                                Sb_Limpiar(Modalidad)
+                                                Sb_Limpiar(ModModalidad_Doc)
                                             End If
 
                                             _NroDocumento_Editado_Por_Usuario = _NroDoc_Editado_Por_Usuario
@@ -14947,7 +14957,7 @@ Public Class Frm_Formulario_Documento
 
                                                 If _NroDocumento_Editado_Por_Usuario Then
 
-                                                    Dim _NewNudo = Traer_Numero_Documento(_Tido, , Modalidad,,, Me)
+                                                    Dim _NewNudo = Traer_Numero_Documento(_Tido, , ModModalidad_Doc,,, Me)
 
                                                     If _NroDocumento <> _NewNudo Then
 
@@ -14995,7 +15005,7 @@ Public Class Frm_Formulario_Documento
                                                     Dim _Permiso = "Bo" & _Empresa_Sel & _Sucursal_Sel & _Bodega_Recepcion
 
                                                     If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, _Permiso, Nothing) Then
-                                                        Sb_Limpiar(Modalidad)
+                                                        Sb_Limpiar(ModModalidad_Doc)
                                                     End If
 
                                                 End If
@@ -15006,7 +15016,7 @@ Public Class Frm_Formulario_Documento
 
                                             If _TblDetalle.Rows.Count = 1 Then
                                                 If _TblDetalle.Rows(0).Item("Nuevo_Producto") Then
-                                                    Sb_Limpiar(Modalidad)
+                                                    Sb_Limpiar(ModModalidad_Doc)
                                                 End If
                                             End If
 
@@ -15073,7 +15083,7 @@ Public Class Frm_Formulario_Documento
 
                         _Idmaeedo = _Sql.Fx_Trae_Dato("MAEEDO",
                                       "IDMAEEDO",
-                                      "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NroDocumento_New & "'", True)
+                                      "EMPRESA = '" & ModEmpresa_Doc & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NroDocumento_New & "'", True)
 
                         If CBool(_Idmaeedo) Then
 
@@ -15162,7 +15172,7 @@ Public Class Frm_Formulario_Documento
 
                         _Idmaeedo = _Sql.Fx_Trae_Dato("MAEEDO",
                                                       "IDMAEEDO",
-                                                      "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NroDocumento_New & "' And ENDO = '" & _Endo & "' And ESDO <> 'N'", True)
+                                                      "EMPRESA = '" & ModEmpresa_Doc & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NroDocumento_New & "' And ENDO = '" & _Endo & "' And ESDO <> 'N'", True)
 
                         If CBool(_Idmaeedo) Then
 
@@ -15176,13 +15186,13 @@ Public Class Frm_Formulario_Documento
 
                             End If
 
-                            Sb_Limpiar(Modalidad)
+                            Sb_Limpiar(ModModalidad_Doc)
 
                         Else
 
                             If Not String.IsNullOrEmpty(_Endo) Then
 
-                                Sb_Limpiar(Modalidad)
+                                Sb_Limpiar(ModModalidad_Doc)
 
                             End If
 
@@ -15528,7 +15538,7 @@ Public Class Frm_Formulario_Documento
 
         If Not _Row_Bodega_Destino Is Nothing Then
 
-            'Dim _Permiso = "Bo" & ModEmpresa & _Row_Bodega_Destino.Item("KOSU") & _Row_Bodega_Destino.Item("KOBO")
+            'Dim _Permiso = "Bo" & ModEmpresa_Doc & _Row_Bodega_Destino.Item("KOSU") & _Row_Bodega_Destino.Item("KOBO")
 
             'If Not Fx_Tiene_Permiso(Me, _Permiso) Then
             '    Return False
@@ -15720,7 +15730,7 @@ Public Class Frm_Formulario_Documento
 
         If Not Fx_Revisar_si_tiene_registros(False) Then
 
-            Dim _Modalidad As String = Modalidad
+            Dim _Modalidad As String = ModModalidad_Doc
 
             Dim Frm_Modalidad As New Frm_Modalidades(True)
             Frm_Modalidad.ControlBox = True
@@ -15730,11 +15740,11 @@ Public Class Frm_Formulario_Documento
 
             _Global_Frm_Menu.Refresh()
 
-            If _Modalidad <> Modalidad Then
+            If _Modalidad <> ModModalidad_Doc Then
 
-                Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Modalidad, _Tido, True)
+                Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, ModEmpresa_Doc, ModModalidad_Doc, _Tido, True)
 
-                Consulta_sql = "Select Top 1 * From CONFIEST WITH (NOLOCK) Where MODALIDAD = '" & Modalidad & "'"
+                Consulta_sql = "Select Top 1 * From CONFIEST WITH (NOLOCK) Where MODALIDAD = '" & ModModalidad_Doc & "'"
                 Dim _Row_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 Dim _Empresa As String = _Row_Modalidad.Item("EMPRESA")
@@ -15743,7 +15753,7 @@ Public Class Frm_Formulario_Documento
 
                 Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
                 If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, _Permiso, Nothing) Then
-                    Modalidad = _Modalidad
+                    ModModalidad_Doc = _Modalidad
                     MessageBoxEx.Show(Me, "LA MODALIDAD NO FUE CAMBIADA", "VALIDACION",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
                     Return
@@ -15751,9 +15761,9 @@ Public Class Frm_Formulario_Documento
 
                 If Not (_RowFormato Is Nothing) Then
                     '_Modalidad_Origen = Modalidad
-                    Sb_Limpiar(Modalidad)
+                    Sb_Limpiar(ModModalidad_Doc)
                 Else
-                    Modalidad = _Modalidad
+                    ModModalidad_Doc = _Modalidad
                 End If
 
             End If
@@ -15795,13 +15805,13 @@ Public Class Frm_Formulario_Documento
 
             Grilla_Encabezado.Rows(0).Cells("CodFuncionario").Value = FUNCIONARIO
             Grilla_Encabezado.Rows(0).Cells("NomFuncionario").Value = Nombre_funcionario_activo
-            Grilla_Encabezado.Rows(0).Cells("Sucursal").Value = ModSucursal
+            Grilla_Encabezado.Rows(0).Cells("Sucursal").Value = Mod_Sucursal
 
             Select Case _Tipo_Documento
                 Case csGlobales.Enum_Tipo_Documento.Venta, csGlobales.Enum_Tipo_Documento.Guia_Despacho
-                    Grilla_Encabezado.Rows(0).Cells("ListaPrecios").Value = ModListaPrecioVenta
+                    Grilla_Encabezado.Rows(0).Cells("ListaPrecios").Value = Mod_ListaPrecioVenta
                 Case csGlobales.Enum_Tipo_Documento.Compra, csGlobales.Enum_Tipo_Documento.Guia_Recepcion
-                    Grilla_Encabezado.Rows(0).Cells("ListaPrecios").Value = ModListaPrecioCosto
+                    Grilla_Encabezado.Rows(0).Cells("ListaPrecios").Value = Mod_ListaPrecioCosto
             End Select
 
         End If
@@ -16155,7 +16165,7 @@ Public Class Frm_Formulario_Documento
                         Consulta_sql = "Select KOPR,NOKOPR Into #Paso From MAEPR Where KOPR In " & _Filtro_In & "
                                     Select KOPR,NOKOPR From #Paso Where KOPR Not In 
                                     (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Usuario_Validador " &
-                                    "Where Empresa = '" & ModEmpresa & "' And Codigo In (Select KOPR From #Paso))
+                                    "Where Empresa = '" & ModEmpresa_Doc & "' And Codigo In (Select KOPR From #Paso))
                                     Drop Table #Paso"
                         Dim _Tbl_Producto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -16166,7 +16176,7 @@ Public Class Frm_Formulario_Documento
                             Dim _Kopr As String = _FlP.Item("KOPR")
                             Dim _Nokopr As String = _FlP.Item("NOKOPR")
 
-                            Dim _Msg = "El producto " & _Kopr.Trim & " - " & _Nokopr.Trim & " no tiene asignado un usuario validador en " & ModEmpresa & " - " & RazonEmpresa.Trim & "." & vbCrLf &
+                            Dim _Msg = "El producto " & _Kopr.Trim & " - " & _Nokopr.Trim & " no tiene asignado un usuario validador en " & ModEmpresa_Doc & " - " & RazonEmpresa.Trim & "." & vbCrLf &
                                        "Comuníquese con el administrador de compras para asignar validador"
 
                             MessageBoxEx.Show(Me, _Msg, "Validación (Producto " & _Contador & " de " & _Tbl_Producto.Rows.Count & ")", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -16323,7 +16333,7 @@ Public Class Frm_Formulario_Documento
 #End Region
 
                     'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad 
-                    '                Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+                    '                Where Empresa = '" & ModEmpresa_Doc & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
                     'Dim _Row_Formato_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                     If Not IsNothing(_Row_Formato_Modalidad) Then
@@ -16351,7 +16361,7 @@ Public Class Frm_Formulario_Documento
                                 Dim _Suc = _Fl.Item("Sucursal")
                                 Dim _Bod = _Fl.Item("Bodega")
 
-                                If _Suc <> ModSucursal Then
+                                If _Suc <> Mod_Sucursal Then
                                     _Obliga_Despacho = True
                                     Exit For
                                 End If
@@ -16877,7 +16887,7 @@ Public Class Frm_Formulario_Documento
 
                     Dim _Error_PDF As String
 
-                    _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo, ModEmpresa, Modalidad)
+                    _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo, ModEmpresa_Doc, ModModalidad_Doc)
 
                     If Not String.IsNullOrEmpty(_Error_PDF) Then
                         MessageBoxEx.Show(Me, _Error_PDF, "Error al querer grabar PDF automático", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -16885,11 +16895,11 @@ Public Class Frm_Formulario_Documento
 
                     If _Cerrar_Al_Grabar Then
                         Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                        _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Idmaeedo)
+                        _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(ModModalidad_Doc, _Idmaeedo)
                         If _Imprimir Then
 
                             If _Grabar_e_Imprimir Then
-                                Sb_Imprimir_Documento(Me, _Idmaeedo, _Post_Venta, Modalidad)
+                                Sb_Imprimir_Documento(Me, _Idmaeedo, _Post_Venta, ModModalidad_Doc)
                             Else
                                 Dim _Tido = _Row_NeDocEnc.Item("TIDO")
                                 Dim _Nudo = _Row_NeDocEnc.Item("NUDO")
@@ -16949,7 +16959,7 @@ Public Class Frm_Formulario_Documento
                             _Idmaeedo_Origen = 0
                             _TblEncabezado.Rows(0).Item("Idmaeedo_Origen") = 0
                         End If
-                        Dim _Modalidad_Formato = Modalidad
+                        Dim _Modalidad_Formato = ModModalidad_Doc
 
                         If _Grabar_e_Imprimir Then
 
@@ -16960,7 +16970,7 @@ Public Class Frm_Formulario_Documento
                                     _Modalidad_Formato = _Global_Row_EstacionBk.Item("Modalidad_Caja")
                                     _Grabar_e_Imprimir = _Global_Row_EstacionBk.Item("ImprDespGrabarCaja")
                                 Catch ex As Exception
-                                    _Modalidad_Formato = Modalidad
+                                    _Modalidad_Formato = ModModalidad_Doc
                                     _Grabar_e_Imprimir = True
                                 End Try
                             End If
@@ -16991,7 +17001,7 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-                        Sb_Limpiar(Modalidad)
+                        Sb_Limpiar(ModModalidad_Doc)
 
                     End If
 
@@ -17184,7 +17194,7 @@ Public Class Frm_Formulario_Documento
 
             Consulta_sql = "Select Distinct Id_Despacho,Idmaeedo From " & _Global_BaseBk & "Zw_Despachos_Doc_Det Where Idmaeedo In 
                                 (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where IDMAEDDO in (Select IDRST From MAEDDO WITH (NOLOCK) Where IDMAEEDO = " & _Idmaeedo & "))
-                                And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'"
+                                And Empresa = '" & ModEmpresa_Doc & "' And Sucursal = '" & Mod_Sucursal & "'"
             Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Fila As DataRow In _Tbl_Documentos.Rows
@@ -17237,7 +17247,7 @@ Public Class Frm_Formulario_Documento
 
     '            Consulta_sql = "Select Distinct Id_Despacho,Idmaeedo From " & _Global_BaseBk & "Zw_Despachos_Doc_Det Where Idmaeedo In 
     '                            (Select IDMAEEDO From MAEDDO Where IDMAEDDO in (Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & "))
-    '                            And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'"
+    '                            And Empresa = '" & ModEmpresa_Doc & "' And Sucursal = '" & Mod_Sucursal & "'"
     '            Dim _Tbl_Documentos As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
     '            For Each _Fila As DataRow In _Tbl_Documentos.Rows
@@ -17413,7 +17423,7 @@ Public Class Frm_Formulario_Documento
 
         If _Revisar_Stock_Disponible Then
 
-            _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
+            _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
 
             If _Tidopa = "NVV" And _Tido <> "NVV" Then
 
@@ -17431,7 +17441,7 @@ Public Class Frm_Formulario_Documento
             _Stock_Disponible += _Cantidad
         End If
 
-        _Stock = _Sql.Fx_Trae_Dato("MAEST", "STFI" & _UnTrans, "EMPRESA = '" & ModEmpresa &
+        _Stock = _Sql.Fx_Trae_Dato("MAEST", "STFI" & _UnTrans, "EMPRESA = '" & ModEmpresa_Doc &
                                    "' AND KOSU = '" & _Sucursal &
                                    "' AND KOBO = '" & _Bodega &
                                    "' AND KOPR = '" & _Codigo & "'", True)
@@ -17472,7 +17482,7 @@ Public Class Frm_Formulario_Documento
                                                 From " & _Global_BaseBk & "ZW_PermisosVsUsuarios
                                                     Where CodUsuario = '" & FUNCIONARIO & "' And 
                                                     CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega')) 
-                                                    Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
+                                                    Or (EMPRESA = '" & ModEmpresa_Doc & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')"
 
                             Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -17846,10 +17856,10 @@ Public Class Frm_Formulario_Documento
 
                     Dim _FechaEmision As Date = _TblEncabezado.Rows(0).Item("FechaEmision")
 
-                    Dim _Periodo = _FechaEmision.Year & numero_(_FechaEmision.Month, 2) & ModSucursal 'Now.Year & numero_(Now.Month, 2) & ModSucursal '
+                    Dim _Periodo = _FechaEmision.Year & numero_(_FechaEmision.Month, 2) & Mod_Sucursal 'Now.Year & numero_(Now.Month, 2) & Mod_Sucursal '
 
                     Dim _Maxlibro As String = _Sql.Fx_Trae_Dato("MAEEDO", "MAX(LIBRO)",
-                                                                "EMPRESA = '" & ModEmpresa & "' AND SUBSTRING(LIBRO,1,9)='" & _Periodo & "'  AND TIDO<>'BLC'")
+                                                                "EMPRESA = '" & ModEmpresa_Doc & "' AND SUBSTRING(LIBRO,1,9)='" & _Periodo & "'  AND TIDO<>'BLC'")
 
                     If String.IsNullOrEmpty(_Maxlibro) Then _Maxlibro = _Periodo & "00000"
 
@@ -17874,13 +17884,11 @@ Public Class Frm_Formulario_Documento
         End If
 
         Dim _Nudo As String
-        'Dim _Idmaeedo As Integer
-        Dim _Modalidad As String
-
-        _Modalidad = _TblEncabezado.Rows(0).Item("Modalidad")
+        Dim _Modalidad_Origen = _TblEncabezado.Rows(0).Item("Modalidad")
+        Dim _Empresa_Origen = _TblEncabezado.Rows(0).Item("Empresa")
 
         If _Cambiar_NroDocumento Then
-            _Nudo = Traer_Numero_Documento(_Tido, , _Modalidad, _Mostrar_Mensaje,, Me)
+            _Nudo = Traer_Numero_Documento(_Tido, , _Modalidad_Origen, _Mostrar_Mensaje,, Me, ModEmpresa_Doc)
             _TblEncabezado.Rows(0).Item("NroDocumento") = _Nudo
         Else
             _Nudo = _TblEncabezado.Rows(0).Item("NroDocumento")
@@ -17936,7 +17944,6 @@ Public Class Frm_Formulario_Documento
 
         Dim _Es_TLV As Boolean
 
-        Dim _Modalidad_Origen = _Modalidad
         Dim _Modalidad_Caja As String
         Dim _Caja_Habilitada As Boolean
 
@@ -17952,10 +17959,10 @@ Public Class Frm_Formulario_Documento
 
         If _Grabar_Y_Pagar_Vale And _Caja_Habilitada And _Post_Venta Then
 
-            Modalidad = _Modalidad_Caja
+            ModModalidad_Doc = _Modalidad_Caja
 
             _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+            _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc)
 
             _TblEncabezado.Rows(0).Item("Modalidad") = _Modalidad_Caja
             _Nudo = Traer_Numero_Documento(_Tido, , _Modalidad_Caja,,, Me)
@@ -17994,10 +18001,10 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
-                    Modalidad = _Modalidad_Origen
+                    ModModalidad_Doc = _Modalidad_Origen
 
                     _Mod.Sb_Actualiza_Formatos_X_Modalidad(_Mostrar_Mensaje)
-                    _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad, _Mostrar_Mensaje)
+                    _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc, _Mostrar_Mensaje)
 
                     _Nudo = Traer_Numero_Documento(_Tido, , _Modalidad_Origen,,, Me)
                     _TblEncabezado.Rows(0).Item("Modalidad") = _Modalidad_Origen
@@ -18019,7 +18026,7 @@ Public Class Frm_Formulario_Documento
 
             If _Tido = "FCV" Or _Tido = "BLV" Then
 
-                Dim _Msj As LsValiciones.Mensajes = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, False)
+                Dim _Msj As LsValiciones.Mensajes = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, False, ModEmpresa_Doc, ModModalidad_Doc)
 
                 If Not _Msj.EsCorrecto Then
 
@@ -18029,10 +18036,10 @@ Public Class Frm_Formulario_Documento
                             MessageBoxEx.Show(Me, _Msj.Mensaje, _Msj.Detalle, MessageBoxButtons.OK, _Msj.Icono)
                         End If
 
-                        Modalidad = _Modalidad_Origen
+                        ModModalidad_Doc = _Modalidad_Origen
 
                         _Mod.Sb_Actualiza_Formatos_X_Modalidad(_Mostrar_Mensaje)
-                        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad, _Mostrar_Mensaje)
+                        _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc, _Mostrar_Mensaje)
 
                         _Nudo = Traer_Numero_Documento(_Tido, , _Modalidad_Origen, _Mostrar_Mensaje,, Me)
                         _TblEncabezado.Rows(0).Item("Modalidad") = _Modalidad_Origen
@@ -18058,10 +18065,10 @@ Public Class Frm_Formulario_Documento
 
                         If _Caja_Habilitada Then
 
-                            Modalidad = _Modalidad_Origen
+                            ModModalidad_Doc = _Modalidad_Origen
 
                             _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-                            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                            _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc)
 
                             _Nudo = Traer_Numero_Documento(_Tido, , _Modalidad_Origen,,, Me)
                             _TblEncabezado.Rows(0).Item("Modalidad") = _Modalidad_Origen
@@ -18110,10 +18117,10 @@ Public Class Frm_Formulario_Documento
                     MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
                 End If
 
-                Modalidad = _Modalidad_Origen
+                ModModalidad_Doc = _Modalidad_Origen
 
                 _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-                _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc)
 
                 Return _Mensaje
 
@@ -18165,7 +18172,7 @@ Public Class Frm_Formulario_Documento
 
                     Dim _Respuesta As New Bk_ExpotarDoc.Respuesta
                     Dim _Cl_ExportarDoc As New Bk_ExpotarDoc.Cl_ExpotarDoc
-                    _Respuesta = _Cl_ExportarDoc.Fx_Importar_Documento(_New_Idmaeedo, _Id_Conexion, True, Modalidad)
+                    _Respuesta = _Cl_ExportarDoc.Fx_Importar_Documento(_New_Idmaeedo, _Id_Conexion, True, ModModalidad_Doc)
 
                     Dim _Msg As String
 
@@ -18351,7 +18358,7 @@ Public Class Frm_Formulario_Documento
 
                 If _Tido = "FCV" Or _Tido = "FDV" Or _Tido = "BLV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDV" Or _Tido = "NCV" Or _Tido = "GDD" Then
 
-                    Sb_Firmar_Documento_Electronico(Me, _Idmaeedo, _Tido)
+                    Sb_Firmar_Documento_Electronico(Me, _Idmaeedo, _Tido, ModEmpresa_Doc, ModModalidad_Doc)
 
                 End If
 
@@ -18415,7 +18422,7 @@ Public Class Frm_Formulario_Documento
 
                                 Dim Fm_Post As New Frm_Formulario_Documento("FCC", csGlobales.Enum_Tipo_Documento.Compra, False)
                                 Fm_Post.Pro_SubTido = "100"
-                                Fm_Post.Sb_Limpiar(Modalidad)
+                                Fm_Post.Sb_Limpiar(ModModalidad_Doc)
                                 Fm_Post.Pro_Nudo = _Nudo
                                 Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, False)
                                 Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, False)
@@ -18463,7 +18470,7 @@ Public Class Frm_Formulario_Documento
                 Dim _MsjPtos As LsValiciones.Mensajes
                 Dim _PtsUsados As Double
 
-                _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+                _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa_Doc)
 
                 If Not IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) Then
                     For Each _Fila As DataRow In _TblDetalle.Rows
@@ -18523,15 +18530,15 @@ Public Class Frm_Formulario_Documento
 
                 _Carpeta_Archivos_Txt = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF",
                                              "Ruta_PDF",
-                                             "Empresa = '" & ModEmpresa & "' " &
+                                             "Empresa = '" & ModEmpresa_Doc & "' " &
                                              "And NombreEquipo = '" & _NombreEquipo & "' " &
-                                             "And Modalidad = '" & Modalidad & "' And Tipo_Ruta = 'GRI_Ing'")
+                                             "And Modalidad = '" & ModModalidad_Doc & "' And Tipo_Ruta = 'GRI_Ing'")
 
                 _Carpeta_Generados_Txt = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF",
                                               "Ruta_PDF",
-                                              "Empresa = '" & ModEmpresa & "' " &
+                                              "Empresa = '" & ModEmpresa_Doc & "' " &
                                               "And NombreEquipo = '" & _NombreEquipo & "' " &
-                                              "And Modalidad = '" & Modalidad & "' And Tipo_Ruta = 'GRI_Gen'")
+                                              "And Modalidad = '" & ModModalidad_Doc & "' And Tipo_Ruta = 'GRI_Gen'")
 
                 If File.Exists(_Carpeta_Archivos_Txt & "\" & _Nombre_Archivo & ".txt") And Directory.Exists(_Carpeta_Generados_Txt) Then
                     File.Copy(_Carpeta_Archivos_Txt & "\" & _Nombre_Archivo & ".txt",
@@ -18563,7 +18570,7 @@ Public Class Frm_Formulario_Documento
 
             If _Origen_Modificado_Intertanto Then
 
-                Sb_Limpiar(Modalidad)
+                Sb_Limpiar(ModModalidad_Doc)
 
             Else
 
@@ -18573,10 +18580,10 @@ Public Class Frm_Formulario_Documento
 
         End If
 
-        Modalidad = _Modalidad_Origen
+        ModModalidad_Doc = _Modalidad_Origen
 
         _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+        _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc)
 
         Return _Mensaje
 
@@ -18798,7 +18805,7 @@ Public Class Frm_Formulario_Documento
                             _Tido = "BLV"
                         End If
 
-                        Sb_Limpiar(Modalidad)
+                        Sb_Limpiar(ModModalidad_Doc)
 
                         _Idmaeedo_Origen = _IdMaeedo
 
@@ -18837,7 +18844,7 @@ Public Class Frm_Formulario_Documento
                                 If _Row.Item("Facturar") Then
                                     MessageBoxEx.Show(Me, "No se puede reactivar o cerrar esta nota de venta ya que esta en proceso de Picking", "Validación",
                                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                    Sb_Limpiar(Modalidad)
+                                    Sb_Limpiar(ModModalidad_Doc)
                                     Return
                                 End If
 
@@ -18857,7 +18864,7 @@ Public Class Frm_Formulario_Documento
                                 If _HabilitadaFac Then
 
                                     If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00083", Nothing, "", "") Then  'Not Fx_Tiene_Permiso(Me, "Doc00083") Then
-                                        Sb_Limpiar(Modalidad)
+                                        Sb_Limpiar(ModModalidad_Doc)
                                         Return
                                     End If
 
@@ -18893,7 +18900,7 @@ Public Class Frm_Formulario_Documento
 
                         If Not _Doc_Rescatado And _Editar Then
 
-                            Sb_Limpiar(Modalidad)
+                            Sb_Limpiar(ModModalidad_Doc)
 
                             _Idmaeedo_Origen = 0
                             _Editar_documento = False
@@ -19048,7 +19055,7 @@ Public Class Frm_Formulario_Documento
 
                     Else
 
-                        Sb_Limpiar(Modalidad,, False)
+                        Sb_Limpiar(ModModalidad_Doc,, False)
 
                         _Idmaeedo_Origen = _IdMaeedo
 
@@ -19073,7 +19080,7 @@ Public Class Frm_Formulario_Documento
 
                         If Not _Doc_Rescatado Then
 
-                            Sb_Limpiar(Modalidad)
+                            Sb_Limpiar(ModModalidad_Doc)
 
                             _Idmaeedo_Origen = 0
                             _Editar_documento = False
@@ -19518,7 +19525,7 @@ Public Class Frm_Formulario_Documento
             Dim Chk_Cambiar_Bodegas As New Command
             Chk_Cambiar_Bodegas.Checked = False
             Chk_Cambiar_Bodegas.Name = "Chk_Cambiar_Bodegas"
-            Chk_Cambiar_Bodegas.Text = "Se cambia(n) la(s) bodega(s) por la bodega " & ModBodega
+            Chk_Cambiar_Bodegas.Text = "Se cambia(n) la(s) bodega(s) por la bodega " & Mod_Bodega
 
             Dim Chk_Traer_Solo_Produtos_Bod_Suc As New Command
             Chk_Traer_Solo_Produtos_Bod_Suc.Checked = _Traer_Solo_Produtos_Bod_Suc
@@ -19538,7 +19545,7 @@ Public Class Frm_Formulario_Documento
                         Dim _Bodega As String = Fila.Item("BOSULIDO")
 
                         Dim _Suc_Bod_Ori As String = Trim(_Sucursal) & Trim(_Bodega)
-                        Dim _Suc_Bod_Act As String = Trim(ModSucursal) & Trim(ModBodega)
+                        Dim _Suc_Bod_Act As String = Trim(Mod_Sucursal) & Trim(Mod_Bodega)
 
                         If _Suc_Bod_Ori = _Suc_Bod_Act Then
                             _Bodegas_Modalidad += 1
@@ -19916,16 +19923,16 @@ Public Class Frm_Formulario_Documento
 
                 If _Tido = "NCV" Or _Tido = "GDD" Or _Tido = "GRI" Then
 
-                    _Empresa = ModEmpresa
-                    _Sucursal = ModSucursal
-                    _Bodega = ModBodega
+                    _Empresa = ModEmpresa_Doc
+                    _Sucursal = Mod_Sucursal
+                    _Bodega = Mod_Bodega
 
                 End If
 
                 If _Tido = "GRD" And Not String.IsNullOrEmpty(_Bodega_Recepcion) Then
 
-                    _Empresa = ModEmpresa
-                    _Sucursal = ModSucursal
+                    _Empresa = ModEmpresa_Doc
+                    _Sucursal = Mod_Sucursal
                     _Bodega = _Bodega_Recepcion
 
                 End If
@@ -19951,7 +19958,7 @@ Public Class Frm_Formulario_Documento
                 End If
 
                 Dim _Suc_Bod_Ori As String = Trim(_Sucursal) & Trim(_Bodega)
-                Dim _Suc_Bod_Act As String = Trim(ModSucursal) & Trim(ModBodega)
+                Dim _Suc_Bod_Act As String = Trim(Mod_Sucursal) & Trim(Mod_Bodega)
 
                 Dim _Insertar_Producto As Boolean = Convert.ToBoolean(_Cantidad)
 
@@ -19975,7 +19982,7 @@ Public Class Frm_Formulario_Documento
 
                             Else
 
-                                MessageBoxEx.Show(Me, "Se mantiene la bodega " & ModBodega,
+                                MessageBoxEx.Show(Me, "Se mantiene la bodega " & Mod_Bodega,
                                           "No puede usar bodega " & _Bodega,
                                           MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
 
@@ -20008,7 +20015,7 @@ Public Class Frm_Formulario_Documento
                         Sb_Agregar_Concepto(_New_Fila, _RowConcepto)
 
                         Dim _Cl_Puntos As New Cl_Puntos
-                        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+                        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa_Doc)
 
                         If Not IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) AndAlso _Cl_Puntos.Zw_PtsVta_Configuracion.Concepto = _Codigo Then
                             _New_Fila.Cells("Espuntosvta").Value = True
@@ -20793,9 +20800,9 @@ Public Class Frm_Formulario_Documento
         Dim _Bodega As String
 
         'If String.IsNullOrEmpty(_Tido_Origen) Then
-        '_Empresa = ModEmpresa
-        '_Sucursal = ModSucursal
-        '_Bodega = ModBodega
+        '_Empresa = ModEmpresa_Doc
+        '_Sucursal = Mod_Sucursal
+        '_Bodega = Mod_Bodega
         'Else
         _Empresa = _Fila.Item("EMPRESA")
         _Sucursal = _Fila.Item("SULIDO")
@@ -20803,7 +20810,7 @@ Public Class Frm_Formulario_Documento
         'End If
 
         Dim _Suc_Bod_Ori As String = Trim(_Sucursal) & Trim(_Bodega)
-        Dim _Suc_Bod_Act As String = Trim(ModSucursal) & Trim(ModBodega)
+        Dim _Suc_Bod_Act As String = Trim(Mod_Sucursal) & Trim(Mod_Bodega)
 
 
         If _Suc_Bod_Ori <> _Suc_Bod_Act Then
@@ -20813,7 +20820,7 @@ Public Class Frm_Formulario_Documento
                     _New_Fila.Cells("Sucursal").Value = _Sucursal
                     _New_Fila.Cells("Bodega").Value = _Bodega
                 Else
-                    MessageBoxEx.Show(Me, "Se mantiene la bodega " & ModBodega,
+                    MessageBoxEx.Show(Me, "Se mantiene la bodega " & Mod_Bodega,
                                       "No puede usar bodega " & _Bodega,
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
                 End If
@@ -21750,7 +21757,7 @@ Public Class Frm_Formulario_Documento
             Dim _Mod As New Clas_Modalidades
 
             _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+            _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc)
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_EstacionesBkp Where NombreEquipo = '" & _NombreEquipo & "'"
             _Global_Row_EstacionBk = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -22207,7 +22214,7 @@ Public Class Frm_Formulario_Documento
 
                             Dim _Codigo = _Fila.Cells("Codigo").Value
                             Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Usuario_Validador",
-                                                                "Empresa = '" & ModEmpresa & "' And CodFuncionario = '" & FUNCIONARIO & "' And Codigo = '" & _Codigo & "'")
+                                                                "Empresa = '" & ModEmpresa_Doc & "' And CodFuncionario = '" & FUNCIONARIO & "' And Codigo = '" & _Codigo & "'")
 
                             If Not CBool(_Reg) Then
                                 _Fila.DefaultCellStyle.ForeColor = Color.LightGray
@@ -22612,7 +22619,7 @@ Public Class Frm_Formulario_Documento
                         Consulta_sql = "Select CodJefe,NOKOFU,CodJefeReemplazo 
                                         From " & _Global_BaseBk & "Zw_Usuarios_VS_Jefes 
                                         Inner Join TABFU On KOFU = CodJefe 
-                                        Where CodFuncionario = '" & FUNCIONARIO & "' And Empresa = '" & ModEmpresa & "'"
+                                        Where CodFuncionario = '" & FUNCIONARIO & "' And Empresa = '" & ModEmpresa_Doc & "'"
                         Dim _Row_Jefe As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                         Dim _CodJefe As String = "???"
@@ -22696,7 +22703,7 @@ Public Class Frm_Formulario_Documento
             If String.IsNullOrEmpty(_FunValida_Compra) Then
 
                 Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Usuario_Validador",
-                                                "Empresa = '" & ModEmpresa & "' And CodFuncionario = '" & FUNCIONARIO & "' And Codigo = '" & _Codigo & "'")
+                                                "Empresa = '" & ModEmpresa_Doc & "' And CodFuncionario = '" & FUNCIONARIO & "' And Codigo = '" & _Codigo & "'")
 
                 If CBool(_Reg) Then
 
@@ -23077,7 +23084,7 @@ Public Class Frm_Formulario_Documento
             Dim _Codigo = _Fila.Item("Codigo")
 
             Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Usuario_Validador",
-                                                "Empresa = '" & ModEmpresa & "' And CodFuncionario = '" & FUNCIONARIO & "' And Codigo = '" & _Codigo & "'")
+                                                "Empresa = '" & ModEmpresa_Doc & "' And CodFuncionario = '" & FUNCIONARIO & "' And Codigo = '" & _Codigo & "'")
 
             If CBool(_Reg) Then
                 _Fila.Item("FunValida_Compra") = FUNCIONARIO
@@ -23192,7 +23199,7 @@ Public Class Frm_Formulario_Documento
             Dim _Filtro_Prod = Generar_Filtro_IN(_TblDetalle, "", "Codigo", False, False, "'")
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos_MiniCompXProd" & vbCrLf &
-                           "Where Empresa = '" & ModEmpresa & "' And Codigo In " & _Filtro_Prod
+                           "Where Empresa = '" & ModEmpresa_Doc & "' And Codigo In " & _Filtro_Prod
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If _Tbl.Rows.Count Then
@@ -23203,7 +23210,7 @@ Public Class Frm_Formulario_Documento
             Else
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos_Configuracion" & vbCrLf &
-                               "Where Empresa = '" & ModEmpresa & "'"
+                               "Where Empresa = '" & ModEmpresa_Doc & "'"
                 Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 If Not IsNothing(_Row) Then
@@ -24110,7 +24117,7 @@ Public Class Frm_Formulario_Documento
         With NewFila
 
             .Item("Id_Enc") = 0
-            '.Item("Sucursal") = ModSucursal
+            '.Item("Sucursal") = Mod_Sucursal
             .Item("Nro_RCadena") = "XXXXXXXXXX"
             .Item("Orden") = _Orden
             .Item("CodPermiso") = _CodPermiso
@@ -24138,7 +24145,7 @@ Public Class Frm_Formulario_Documento
 
             .Item("Id_Enc") = 0
             .Item("Id_Det") = _Id_Det
-            '.Item("Id_Usu") = ModSucursal
+            '.Item("Id_Usu") = Mod_Sucursal
             .Item("Usuario_Destino") = _Usuario_Destino
             .Item("CodPermiso") = _CodPermiso
 
@@ -24220,7 +24227,7 @@ Public Class Frm_Formulario_Documento
 
             If Not String.IsNullOrEmpty(_IdMaeedo) Then
 
-                Sb_Limpiar(Modalidad)
+                Sb_Limpiar(ModModalidad_Doc)
 
                 Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _IdMaeedo & "
                                 Select *,
@@ -24347,7 +24354,7 @@ Public Class Frm_Formulario_Documento
             If _Prct Then
 
                 Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-                Fm_b.Pro_Empresa = ModEmpresa
+                Fm_b.Pro_Empresa = ModEmpresa_Doc
                 Fm_b.Pro_Sucursal = _Sucursal
                 Fm_b.Pro_Bodega = _Bodega
                 Fm_b.ShowDialog(Me)
@@ -25675,11 +25682,11 @@ Public Class Frm_Formulario_Documento
 
         Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER 
                         Select '" & FUNCIONARIO & "' As KOFULIDO,Det.Product_reference As KOPRCT,Cast(0 As Bit) As PRCT,'' As TICT,TIPR,
-                        Product_name As Descripcion,NOKOPR,'' As CodAlternativo,'" & ModListaPrecioVenta & "' As KOLTPR,UD01PR As UD1,UD02PR As UD2,
+                        Product_name As Descripcion,NOKOPR,'' As CodAlternativo,'" & Mod_ListaPrecioVenta & "' As KOLTPR,UD01PR As UD1,UD02PR As UD2,
                         Round(Unit_price_tax_incl * 1.19,0) as CostoUd1,Round(Unit_price_tax_incl * 1.19,0) as CostoUd2,
                         0 As Precio,Round(Unit_price_tax_incl * 1.19,0) As Precio_Vta,RLUD As Rtu,Product_quantity As Cantidad,Reduction_percent as PODTGLLI,
                         1 as UDTRPR,0 as POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
-                        0 As IDMAEEDO,0 As IDMAEDDO,'" & ModEmpresa & "' As EMPRESA,'" & ModSucursal & "' As SULIDO,'" & ModBodega & "' As BOSULIDO,
+                        0 As IDMAEEDO,0 As IDMAEDDO,'" & ModEmpresa_Doc & "' As EMPRESA,'" & Mod_Sucursal & "' As SULIDO,'" & Mod_Bodega & "' As BOSULIDO,
                         '' As ENDO,'' As SUENDO, GetDate() As FEEMLI,'' As TIDO,'' As NUDO,'' As NULIDO,
                         0 As CantUd1_Dori,0 As CantUd2_Dori,'' As OBSERVA,
                         0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
@@ -25966,7 +25973,7 @@ Public Class Frm_Formulario_Documento
             Try
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos_Configuracion" & vbCrLf &
-                               "Where Empresa = '" & ModEmpresa & "'"
+                               "Where Empresa = '" & ModEmpresa_Doc & "'"
                 Dim _RowConfDesp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 Dim Fm As New Frm_Desp_01_Ingreso
@@ -26011,7 +26018,7 @@ Public Class Frm_Formulario_Documento
                     Dim _Filtro_Prod = Generar_Filtro_IN(_TblDetalle, "", "Codigo", False, False, "'")
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos_MiniCompXProd" & vbCrLf &
-                                   "Where Empresa = '" & ModEmpresa & "' And Codigo In " & _Filtro_Prod
+                                   "Where Empresa = '" & ModEmpresa_Doc & "' And Codigo In " & _Filtro_Prod
                     Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     If _Tbl.Rows.Count Then
@@ -26022,7 +26029,7 @@ Public Class Frm_Formulario_Documento
                     Else
 
                         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Despachos_Configuracion" & vbCrLf &
-                                       "Where Empresa = '" & ModEmpresa & "'"
+                                       "Where Empresa = '" & ModEmpresa_Doc & "'"
                         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                         If Not IsNothing(_Row) Then
@@ -26226,7 +26233,7 @@ Public Class Frm_Formulario_Documento
         Dim _Suendo = _TblEncabezado.Rows(0).Item("CodSucEntidad")
         Dim _Nokoen = _TblEncabezado.Rows(0).Item("Nombre_Entidad")
 
-        Dim _Sudo = ModSucursal
+        Dim _Sudo = Mod_Sucursal
         Dim _Timodo = _TblEncabezado.Rows(0).Item("TipoMoneda")
         Dim _Modo = _TblEncabezado.Rows(0).Item("Moneda_Doc")
         Dim _Nuvedo = _TblEncabezado.Rows(0).Item("Cuotas")
@@ -26236,7 +26243,7 @@ Public Class Frm_Formulario_Documento
         Dim _Saldo = 0
         Dim _Vaabdo = 0
 
-        Consulta_sql = "Select '" & ModEmpresa & "' As EMPRESA,0 As IDMAEEDO,'" & _Tido & "' As TIDO,'" & _Nudo & "' As NUDO," &
+        Consulta_sql = "Select '" & ModEmpresa_Doc & "' As EMPRESA,0 As IDMAEEDO,'" & _Tido & "' As TIDO,'" & _Nudo & "' As NUDO," &
                        "'" & _Endo & "' As ENDO,'" & _Sudo & "' As SUDO,'" & _Timodo & "' As TIMODO,' " & _Modo & "' As MODO," & _Nuvedo & " As NUVEDO," &
                        "Cast('" & _Fe01vedo & "' As Datetime) As FE01VEDO,Cast(" & _Vabrdo & " As Float) As VABRDO,Cast(" & _Vabrdo & " As Float) As SALDO_ANTERIOR,Cast(0 As Float) As VAABDO," &
                        "CAST(0 AS FLOAT) AS PAGO_ACTUAL," &
@@ -26400,17 +26407,17 @@ Public Class Frm_Formulario_Documento
             Consulta_sql = "Declare @Idmaeedo Int,@Id_DocEnc Int
 
                             Insert Into MAEEDO (EMPRESA,TIDO,NUDO,ENDO,SUENDO,SUDO,TIGEDO,KOFUDO,ESDO,FEEMDO) Values " &
-                            "('" & ModEmpresa & "','" & _Tido & "','" & _Nudo & "','" & _CodEntidad & "','" & _CodSucEntidad & "','" & ModSucursal & "','I','" & FUNCIONARIO & "','N','" & _FechaEmision & "')
+                            "('" & ModEmpresa_Doc & "','" & _Tido & "','" & _Nudo & "','" & _CodEntidad & "','" & _CodSucEntidad & "','" & Mod_Sucursal & "','I','" & FUNCIONARIO & "','N','" & _FechaEmision & "')
                             Select @Idmaeedo = @@IDENTITY 
                         
                             Insert Into MAEDDO (IDMAEEDO,TIDO,NUDO,EMPRESA,KOPRCT,NOKOPR,PRCT,TICT,TIPR,ESLIDO,LILG,NULIDO,ARCHIRST,IDRST) Values 
-                            (@Idmaeedo,'OCC','','" & ModEmpresa & "','XXXXXXXXXXXXX','RESERVA NUMERO DE ORDEN DE COMPRA',0,'','FPN','C','SI','00001','',0)
+                            (@Idmaeedo,'OCC','','" & ModEmpresa_Doc & "','XXXXXXXXXXXXX','RESERVA NUMERO DE ORDEN DE COMPRA',0,'','FPN','C','SI','00001','',0)
 
                             Insert Into MAEEDOOB (IDMAEEDO,OBDO) Values (@Idmaeedo,'" & _Observacion & "')
 
                             Insert Into " & _Global_BaseBk & "Zw_Casi_DocEnc (Modalidad,Empresa,Sucursal,TipoDoc,NroDocumento,CodEntidad,CodSucEntidad," &
                             "Nombre_Entidad,FechaEmision,CodFuncionario,Reserva_NroOCC,Reserva_Idmaeedo) 
-                             Values ('" & _Modalidad & "','" & ModEmpresa & "','" & ModSucursal & "','" & _Tido & "','" & _Nudo & "'," &
+                             Values ('" & _Modalidad & "','" & ModEmpresa_Doc & "','" & Mod_Sucursal & "','" & _Tido & "','" & _Nudo & "'," &
                             "'" & _CodEntidad & "','" & _CodSucEntidad & "','" & _Nombre_Entidad & "','" & _FechaEmision & "','" & FUNCIONARIO & "',1,@Idmaeedo)
                         
                             Select @Id_DocEnc = @@IDENTITY
@@ -26510,7 +26517,7 @@ Public Class Frm_Formulario_Documento
                                 (" & _Id_DocEnc & ",'" & FUNCIONARIO & "',Getdate(),'" & _NombreEquipo & "','')"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                Sb_Limpiar(Modalidad, False)
+                Sb_Limpiar(ModModalidad_Doc, False)
 
                 Dim _RowNuevaEntidad As DataRow = Fx_Buscar_Entidad(Me, _CodEntidad, _CodSucEntidad, False, False)
 
@@ -26764,7 +26771,7 @@ Public Class Frm_Formulario_Documento
                 Dim _Codigo As String = _Row.Item("Codigo")
 
                 Dim _Reg = _Sql.Fx_Cuenta_Registros("TABBOPR",
-                           "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Sucursal_Sel & "' And KOBO = '" & _Bodega_Sel & "' And KOPR = '" & _Codigo & "'")
+                           "EMPRESA = '" & ModEmpresa_Doc & "' And KOSU = '" & _Sucursal_Sel & "' And KOBO = '" & _Bodega_Sel & "' And KOPR = '" & _Codigo & "'")
 
                 If CBool(_Reg) Then
 
@@ -27109,7 +27116,7 @@ Public Class Frm_Formulario_Documento
                 Dim _Koen As String = _RowEntidad.Item("KOEN").ToString.Trim
                 Dim _Suen As String = _RowEntidad.Item("SUEN").ToString.Trim
 
-                _Idmaeedo = _Sql.Fx_Trae_Dato("MAEEDO", "IDMAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NroDocumento & "' And ENDO = '" & _Koen & "'", True)
+                _Idmaeedo = _Sql.Fx_Trae_Dato("MAEEDO", "IDMAEEDO", "EMPRESA = '" & ModEmpresa_Doc & "' And TIDO = '" & _Tido & "' And NUDO = '" & _NroDocumento & "' And ENDO = '" & _Koen & "'", True)
 
                 If Convert.ToBoolean(_Idmaeedo) Then
 
@@ -27123,7 +27130,7 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
-                    Sb_Limpiar(Modalidad)
+                    Sb_Limpiar(ModModalidad_Doc)
                     Return
 
                 End If
@@ -27201,7 +27208,7 @@ Public Class Frm_Formulario_Documento
 
                             Else
 
-                                Sb_Limpiar(Modalidad)
+                                Sb_Limpiar(ModModalidad_Doc)
 
                             End If
 
@@ -27571,7 +27578,7 @@ Public Class Frm_Formulario_Documento
     End Sub
 
     Private Sub Btn_Impresion_PDF_Click(sender As Object, e As EventArgs) Handles Btn_Impresion_PDF.Click
-        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Modalidad, _Tido)
+        Sb_Configuracion_Salida_PDF(Me, ModEmpresa_Doc, ModModalidad_Doc, _Tido)
     End Sub
 
     Function Fx_Validar_Detalle_Asociado_Conceptos_DRA() As Boolean
@@ -27897,9 +27904,9 @@ Public Class Frm_Formulario_Documento
 
         _Carpeta_Archivos_Txt = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF",
                                                  "Ruta_PDF",
-                                                 "Empresa = '" & ModEmpresa & "' " &
+                                                 "Empresa = '" & ModEmpresa_Doc & "' " &
                                                  "And NombreEquipo = '" & _NombreEquipo & "' " &
-                                                 "And Modalidad = '" & Modalidad & "' And Tipo_Ruta = 'GRI_Ing'")
+                                                 "And Modalidad = '" & ModModalidad_Doc & "' And Tipo_Ruta = 'GRI_Ing'")
 
         If Not Directory.Exists(_Carpeta_Archivos_Txt) Then
             MessageBoxEx.Show(Me, "Falta la carpeta desde donde se deben ir a buscar los archivos txt" & vbCrLf &
@@ -27909,9 +27916,9 @@ Public Class Frm_Formulario_Documento
 
         _Carpeta_Generados_Txt = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF",
                                                   "Ruta_PDF",
-                                                  "Empresa = '" & ModEmpresa & "' " &
+                                                  "Empresa = '" & ModEmpresa_Doc & "' " &
                                                   "And NombreEquipo = '" & _NombreEquipo & "' " &
-                                                  "And Modalidad = '" & Modalidad & "' And Tipo_Ruta = 'GRI_Gen'")
+                                                  "And Modalidad = '" & ModModalidad_Doc & "' And Tipo_Ruta = 'GRI_Gen'")
 
         If Not Directory.Exists(_Carpeta_Generados_Txt) Then
             MessageBoxEx.Show(Me, "Falta la carpeta desde donde se dejaran los archios txt ya procesados" & vbCrLf &
@@ -27928,8 +27935,8 @@ Public Class Frm_Formulario_Documento
 
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Estaciones_Ruta_PDF" & vbCrLf &
                            "Where NombreEquipo = '" & _NombreEquipo & "' " &
-                           "And Empresa = '" & ModEmpresa & "' " &
-                           "And Modalidad = '" & Modalidad & "' " &
+                           "And Empresa = '" & ModEmpresa_Doc & "' " &
+                           "And Modalidad = '" & ModModalidad_Doc & "' " &
                            "And Tido = '" & _Tido & "' " &
                            "And Tipo_Ruta In ('GRI_Ing','GRI_Gen')"
             _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -28481,7 +28488,7 @@ Public Class Frm_Formulario_Documento
             If _Reg <> _Respuesta.Detalle.Count Then
                 MessageBoxEx.Show(Me, "No es posible cargar el documento." & vbCrLf &
                                   "Faltan productos que asociar a su código alternativo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Sb_Limpiar(Modalidad, False)
+                Sb_Limpiar(ModModalidad_Doc, False)
             End If
 
         End If
@@ -28635,7 +28642,7 @@ Public Class Frm_Formulario_Documento
                            "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                            "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
                            "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega_NVI'))" & vbCrLf &
-                           "Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
+                           "Or (EMPRESA = '" & ModEmpresa_Doc & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')"
 
         Else
 
@@ -28646,7 +28653,7 @@ Public Class Frm_Formulario_Documento
                            "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                            "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
                            "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega'))" & vbCrLf &
-                           "Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
+                           "Or (EMPRESA = '" & ModEmpresa_Doc & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')"
 
         End If
 
@@ -28717,7 +28724,7 @@ Public Class Frm_Formulario_Documento
         End If
 
         Dim _Cl_Puntos As New Cl_Puntos
-        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa_Doc)
 
         If IsNothing(_Cl_Puntos.Zw_PtsVta_Configuracion) Then
             Return
@@ -28773,7 +28780,7 @@ Public Class Frm_Formulario_Documento
                 Throw New ArgumentException("No existe tabla Zw_PtsVta_Configuracion en base de datos de Bakapp")
             End If
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Configuracion Where Empresa = '" & ModEmpresa & "'"
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_PtsVta_Configuracion Where Empresa = '" & ModEmpresa_Doc & "'"
             Dim _Row_ConfPuntos As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
             If Not String.IsNullOrWhiteSpace(_Sql.Pro_Error) Then
@@ -29453,7 +29460,7 @@ Public Class Frm_Formulario_Documento
 
         _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
 
-        Dim Fm As New Frm_ProdContenedorPreVta(ModEmpresa,
+        Dim Fm As New Frm_ProdContenedorPreVta(ModEmpresa_Doc,
                                                _Cl_Contenedor.Zw_Contenedor.IdCont,
                                                _Cl_Contenedor.Zw_Contenedor.Contenedor)
         Fm.ShowDialog(Me)
@@ -29586,9 +29593,9 @@ Public Class Frm_Formulario_Documento
 
                 Dim _Mensaje As LsValiciones.Mensajes = Fx_Validar_Si_Se_Puede_Traer_Producto_A_La_Nueva_Fila(_RowProducto,
                                                                                                               _CodLista,
-                                                                                                              ModEmpresa,
-                                                                                                              ModSucursal,
-                                                                                                              ModBodega,
+                                                                                                              ModEmpresa_Doc,
+                                                                                                              Mod_Sucursal,
+                                                                                                              Mod_Bodega,
                                                                                                               _Cantidad,
                                                                                                               True)
                 If Not _Mensaje.EsCorrecto Then

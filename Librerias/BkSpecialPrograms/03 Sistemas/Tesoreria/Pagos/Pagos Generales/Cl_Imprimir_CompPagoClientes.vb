@@ -48,7 +48,7 @@ Public Class Cl_Imprimir_CompPagoClientes
         Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _CodEntidad & "'"
         _Row_Entidad = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Consulta_sql = "Select * From TABSU Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Sucursal & "'"
+        Consulta_sql = "Select * From TABSU Where EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & _Sucursal & "'"
         _Row_Sucursal = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Me._Tbl_Maedpce = _Tbl_Maedpce

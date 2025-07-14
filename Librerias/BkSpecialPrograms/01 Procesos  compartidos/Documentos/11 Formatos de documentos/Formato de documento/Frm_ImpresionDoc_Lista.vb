@@ -77,14 +77,14 @@ Public Class Frm_ImpresionDoc_Lista
                        "Fila_InicioDetalle, Fila_FinDetalle, Col_InicioDetalle, Col_FinDetalle,Emdp)" & vbCrLf &
                        "Select 'CHC','Cta.Cte: '+CTACTE,'CARTA',27.94,21.59,20,300,900,1,600,KOENDP From TABENDP" & vbCrLf &
                        "Where KOENDP not in (Select Emdp From " & _Global_BaseBk & "Zw_Format_01 Where TipoDoc = 'CHC')" & vbCrLf &
-                       "And CTACTE <> '' AND TIDPEN = 'CH' And EMPRESA = '" & ModEmpresa & "'" &
+                       "And CTACTE <> '' AND TIDPEN = 'CH' And EMPRESA = '" & Mod_Empresa & "'" &
                        vbCrLf &
                        vbCrLf &
                        "Insert Into " & _Global_BaseBk & "Zw_Format_01 (TipoDoc,NombreFormato,Cod_Pagina,LargoDoc,AnchoDoc,NroLineasXpag," &
                        "Fila_InicioDetalle, Fila_FinDetalle, Col_InicioDetalle, Col_FinDetalle,Emdp)" & vbCrLf &
                        "Select 'TJV',LTRIM(RTRIM(KOENDP))+'-'+LTRIM(RTRIM(NOKOENDP)),'CARTA',10,7.5,2,8,2,1,6,KOENDP From TABENDP" & vbCrLf &
                        "Where KOENDP not in (Select Emdp From " & _Global_BaseBk & "Zw_Format_01 Where TipoDoc = 'TJV')" & vbCrLf &
-                       "And TIDPEN = 'TJ' And EMPRESA = '" & ModEmpresa & "'" &
+                       "And TIDPEN = 'TJ' And EMPRESA = '" & Mod_Empresa & "'" &
                        vbCrLf &
                        vbCrLf &
                        "Select TipoDoc,Subtido,Cast(Case" & vbCrLf &

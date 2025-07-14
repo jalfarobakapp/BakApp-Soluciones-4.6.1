@@ -295,7 +295,7 @@ Public Class Frm_Sol_Recom_Respuesta
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Notificaciones 
                             (Empresa,Usuario_Solicita,Usuario_Destino,Titulo,Texto,Accion,NroRemota,Solicita_Confirmacion,
                             IdRespuesta,Fecha,Hora,Mostrar,RCadena_Id_Enc,Id_SCom) Values 
-                            ('" & ModEmpresa & "','" & FUNCIONARIO & "','" & _CodFun_Solicita & "','SOLICITUD DE COMPRA DE PRODUCTO','" & _Texto & "',
+                            ('" & Mod_Empresa & "','" & FUNCIONARIO & "','" & _CodFun_Solicita & "','SOLICITUD DE COMPRA DE PRODUCTO','" & _Texto & "',
                             '" & _Accion.ToString & "','',1,0,Getdate(),Getdate(),1,0," & _Cl_Sol_Recom_Compra_Pr.Id_SCom & ")"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 

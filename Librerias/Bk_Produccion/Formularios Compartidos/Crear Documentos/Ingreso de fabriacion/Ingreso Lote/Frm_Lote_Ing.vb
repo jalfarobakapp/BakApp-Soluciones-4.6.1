@@ -77,7 +77,7 @@ Public Class Frm_Lote_Ing
 
             Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
             Fm.Pro_Tipo_Lista = "P"
-            Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+            Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             Fm.Pro_CodEntidad = String.Empty
             Fm.Pro_Mostrar_Info = True
             Fm.BtnCrearProductos.Visible = False

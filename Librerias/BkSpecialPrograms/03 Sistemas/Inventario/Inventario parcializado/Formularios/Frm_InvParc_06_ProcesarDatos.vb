@@ -163,7 +163,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
 
 
-        'Consulta_sql = "Select KOSU,KOBO From TABBO Where EMPRESA = '" & ModEmpresa & "'"
+        'Consulta_sql = "Select KOSU,KOBO From TABBO Where EMPRESA = '" & Mod_Empresa & "'"
         'Dim _TblBodegas As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
         Dim _SQLQuery = String.Empty
 
@@ -360,9 +360,9 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
                         'Generar_Documento_Ajuste("GRI", _
                         '                         RutEmpresa, _
-                        '                         ModSucursal, _
+                        '                         Mod_Sucursal, _
                         '                         "", _
-                        '                         ModListaPrecioCosto, _
+                        '                         Mod_ListaPrecioCosto, _
                         '                         _Fecha_Inv, _
                         '                         Consulta_sql)
 
@@ -388,9 +388,9 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
                         ' Generar_Documento_Ajuste("GDI", _
                         '                          RutEmpresa, _
-                        '                          ModSucursal, _
+                        '                          Mod_Sucursal, _
                         '                          "", _
-                        '                          ModListaPrecioCosto, _
+                        '                          Mod_ListaPrecioCosto, _
                         '                          _Fecha_Inv, _
                         '                          Consulta_sql)
                     End If
@@ -416,9 +416,9 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
                         ' Generar_Documento_Ajuste("GRI", _
                         '                         RutEmpresa, _
-                        '                         ModSucursal, _
+                        '                         Mod_Sucursal, _
                         '                         "", _
-                        '                         ModListaPrecioCosto, _
+                        '                         Mod_ListaPrecioCosto, _
                         '                         _Fecha_Inv, _
                         '                         Consulta_sql)
 
@@ -491,7 +491,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
     Function Fx_Generar_Guia_De_Ajuste(_Tipo_Documento As Enum_Tido_Doc_Ajuste) As DataRow
 
-        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Koen = _Row_Configp.Item("RUT")
@@ -565,7 +565,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
         NewFila = Dt_Documento.Tables("Encabezado_Doc").NewRow
         With NewFila
 
-            .Item("Modalidad") = Modalidad
+            .Item("Modalidad") = Mod_Modalidad
             .Item("Empresa") = _Empresa
             .Item("Sucursal") = _Sucursal
             .Item("TipoDoc") = _TipoDoc
@@ -742,12 +742,12 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
         Dim CambiaNroOrigen As Boolean = True
         Dim TipGrab As Integer
-        Dim NrNumeroDoco As String = _Sql.Fx_Trae_Dato("CONFIEST", _TipoDoc, "EMPRESA = '" & ModEmpresa &
-                                        "' AND MODALIDAD = '" & Modalidad & "'") 'FUNCIONARIO & numero_(Trim(Str(CantOCCFuncionario)), 7)
+        Dim NrNumeroDoco As String = _Sql.Fx_Trae_Dato("CONFIEST", _TipoDoc, "EMPRESA = '" & Mod_Empresa &
+                                        "' AND MODALIDAD = '" & Mod_Modalidad & "'") 'FUNCIONARIO & numero_(Trim(Str(CantOCCFuncionario)), 7)
         Dim Continua As Boolean = True
 
         If String.IsNullOrEmpty(Trim(NrNumeroDoco)) Then
-            NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _TipoDoc, "EMPRESA = '" & ModEmpresa &
+            NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _TipoDoc, "EMPRESA = '" & Mod_Empresa &
                            "' AND MODALIDAD = '  '") 'FUNCIONARIO & numero_(Trim(Str(CantOCCFuncionario)), 7)
             CambiaNroOrigen = False
             TipGrab = TipoGrabacion.EnBlanco
@@ -774,17 +774,17 @@ Public Class Frm_InvParc_06_ProcesarDatos
                 If TipGrab = TipoGrabacion.Con_Numeración Then
 
                     Consulta_sql = "UPDATE CONFIEST SET " & _TipoDoc & " = dbo.ProxNumero('" & NrNumeroDoco &
-                                   "') WHERE EMPRESA = '" & ModEmpresa &
-                                   "' AND  MODALIDAD = '" & Modalidad & "'"
+                                   "') WHERE EMPRESA = '" & Mod_Empresa &
+                                   "' AND  MODALIDAD = '" & Mod_Modalidad & "'"
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                     If CambiaNroOrigen Then
-                        NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _TipoDoc, "EMPRESA = '" & ModEmpresa &
-                                                 "' AND MODALIDAD = '" & Modalidad & "'")
+                        NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _TipoDoc, "EMPRESA = '" & Mod_Empresa &
+                                                 "' AND MODALIDAD = '" & Mod_Modalidad & "'")
                     End If
 
                 ElseIf TipGrab = TipoGrabacion.EnBlanco Then
-                    NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _TipoDoc, "EMPRESA = '" & ModEmpresa & "' AND MODALIDAD = '  '")
+                    NrNumeroDoco = _Sql.Fx_Trae_Dato("CONFIEST", _TipoDoc, "EMPRESA = '" & Mod_Empresa & "' AND MODALIDAD = '  '")
 
                 ElseIf TipGrab = TipoGrabacion.Puros_Ceros Then
                     NrNumeroDoco = _Sql.Fx_Trae_Dato("MAEEDO", "COALESCE(MAX(NUDO),'0000000000')", "TIDO = '" & _TipoDoc & "'")
@@ -805,7 +805,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
                 Dim info As New TaskDialogInfo("Grabar documento",
                             eTaskDialogIcon.Stop,
                             "El documento no se puede guardar correctamente",
-                            "Favor colocar la numeración correspondiente en Modalidad de trabajo " & Modalidad & vbCrLf &
+                            "Favor colocar la numeración correspondiente en Modalidad de trabajo " & Mod_Modalidad & vbCrLf &
                             "vuelva a intentar la grabación." & vbCrLf &
                             "El Nro que se esta intentado guarda Nro " & NrNumeroDoco & " ya exite en el sistema",
                             eTaskDialogButton.Close _
@@ -850,8 +850,8 @@ Public Class Frm_InvParc_06_ProcesarDatos
 
             If TipGrab = TipoGrabacion.Con_Numeración Then
                 Consulta_sql = "UPDATE CONFIEST SET " & _TipoDoc & " = dbo.ProxNumero('" & NrNumeroDoco &
-                               "') WHERE EMPRESA = '" & ModEmpresa &
-                               "' AND  MODALIDAD = '" & Modalidad & "'"
+                               "') WHERE EMPRESA = '" & Mod_Empresa &
+                               "' AND  MODALIDAD = '" & Mod_Modalidad & "'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
             End If
 
@@ -896,7 +896,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
                                                    "KOPR = '" & _Codigo & "'", True)
         Dim PmSucLinea As Double = _Sql.Fx_Trae_Dato("MAEPMSUC", "PMSUC",
                                    "KOPR = '" & _Codigo &
-                                   "' AND EMPRESA = '" & ModEmpresa &
+                                   "' AND EMPRESA = '" & Mod_Empresa &
                                    "' AND KOSU = '" & _Sucursal & "'", True)
 
 
@@ -915,7 +915,7 @@ Public Class Frm_InvParc_06_ProcesarDatos
         Dim NetoRealUd2 = 0
 
         Dim UbicacionBod = _Sql.Fx_Trae_Dato("TABBOPR", "DATOSUBIC",
-                                        "EMPRESA = '" & ModEmpresa &
+                                        "EMPRESA = '" & Mod_Empresa &
                                         "' AND KOSU = '" & _Sucursal &
                                         "' AND KOBO = '" & _Bodega &
                                         "' AND KOPR = '" & _Codigo & "'")

@@ -22,9 +22,9 @@ Public Class Frm_Inv_Inventarios
 
         Sb_Color_Botones_Barra(Bar1)
 
-        Empresa = ModEmpresa
-        Sucursal = ModSucursal
-        Bodega = ModBodega
+        Empresa = Mod_Empresa
+        Sucursal = Mod_Sucursal
+        Bodega = Mod_Bodega
 
         IdInventario_Selecionado = 0
 

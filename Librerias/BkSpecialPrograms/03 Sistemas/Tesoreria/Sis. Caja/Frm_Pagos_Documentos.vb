@@ -267,15 +267,15 @@ Public Class Frm_Pagos_Documentos
 
         With _Tbl_Maeedo
 
-            .Rows(0).Item("EMPRESA") = ModEmpresa
+            .Rows(0).Item("EMPRESA") = Mod_Empresa
             .Rows(0).Item("IDMAEEDO") = 0
             .Rows(0).Item("TIDO") = String.Empty
             .Rows(0).Item("NUDO") = String.Empty
             .Rows(0).Item("ENDO") = String.Empty
             .Rows(0).Item("SUDO") = String.Empty
             .Rows(0).Item("TIMODO") = String.Empty
-            .Rows(0).Item("MODO") = ModEmpresa
-            .Rows(0).Item("NUVEDO") = ModEmpresa
+            .Rows(0).Item("MODO") = Mod_Empresa
+            .Rows(0).Item("NUVEDO") = Mod_Empresa
             .Rows(0).Item("FE01VEDO") = Date.Now
             .Rows(0).Item("VABRDO") = 0
             .Rows(0).Item("SALDO_ANTERIOR") = 0
@@ -572,9 +572,9 @@ Public Class Frm_Pagos_Documentos
         With NewFila
 
             .Item("IDMAEDPCE") = 0
-            .Item("EMPRESA") = ModEmpresa
-            .Item("SUREDP") = ModSucursal
-            .Item("CJREDP") = ModCaja
+            .Item("EMPRESA") = Mod_Empresa
+            .Item("SUREDP") = Mod_Sucursal
+            .Item("CJREDP") = Mod_Caja
 
             .Item("TIDP") = String.Empty
             .Item("NUDP") = String.Empty
@@ -600,7 +600,7 @@ Public Class Frm_Pagos_Documentos
             .Item("KOTU") = 1
             .Item("KOFUDP") = FUNCIONARIO
             .Item("KOTNDP") = RutEmpresa
-            .Item("SUTNDP") = ModCaja
+            .Item("SUTNDP") = Mod_Caja
 
             .Item("ESASDP") = "A" ' ESTADO ASIGNACION DEL PAGO A = ASIGNADO A UN DOCUMENTO, P = NO ASIGNADO O PARCIALMENTE ASIGNADO, ES DECIR, SALDO A FAVOR DEL CLIENTE
             .Item("ESPGDP") = ""
@@ -624,9 +624,9 @@ Public Class Frm_Pagos_Documentos
         With NewFila
 
             .Item("IDMAEDPCE") = 0
-            .Item("EMPRESA") = ModEmpresa
-            .Item("SUREDP") = ModSucursal
-            .Item("CJREDP") = ModCaja
+            .Item("EMPRESA") = Mod_Empresa
+            .Item("SUREDP") = Mod_Sucursal
+            .Item("CJREDP") = Mod_Caja
 
             .Item("TIDP") = String.Empty
             .Item("NUDP") = String.Empty
@@ -652,7 +652,7 @@ Public Class Frm_Pagos_Documentos
             .Item("KOTU") = 1
             .Item("KOFUDP") = FUNCIONARIO
             .Item("KOTNDP") = RutEmpresa
-            .Item("SUTNDP") = ModCaja
+            .Item("SUTNDP") = Mod_Caja
 
             .Item("NUTRANSMI") = ""
             .Item("DOCUENANTI") = ""
@@ -962,7 +962,7 @@ Public Class Frm_Pagos_Documentos
                        "MAEEN.NOKOEN,ESPGDO,ESDO" & vbCrLf &
                        "FROM MAEEDO AS EDO WITH ( NOLOCK ) LEFT OUTER JOIN MAEEN ON ENDO=MAEEN.KOEN AND" & Space(1) &
                        "SUENDO=MAEEN.SUEN" & vbCrLf &
-                       "WHERE EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' AND NUDO = '" & _Nudo & "'" & vbCrLf &
+                       "WHERE EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' AND NUDO = '" & _Nudo & "'" & vbCrLf &
                        "AND TIDO IN ('BLV','BSV','FCV','FDV','NCV')"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -1046,7 +1046,7 @@ Public Class Frm_Pagos_Documentos
 
             .Grupo_Funcionario.Enabled = False
             .Rdb_Funcionarios_Uno.Checked = True
-            .Pro_Sql_Filtro_Otro_Filtro = "" '"AND ESPGDO='P' AND SUDO = '" & ModSucursal & "'"
+            .Pro_Sql_Filtro_Otro_Filtro = "" '"AND ESPGDO='P' AND SUDO = '" & Mod_Sucursal & "'"
             .Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado
             .Rdb_Tipo_Documento_Uno.Checked = True
 
@@ -1223,7 +1223,7 @@ Public Class Frm_Pagos_Documentos
         Dim _Iddt As Integer
 
         Dim _Tido = _Tbl_Maeedo.Rows(0).Item("TIDO")
-        Dim _Nudo As String = Traer_Numero_Documento(_Tido, , Modalidad) ' _Class_DTE.Pro_Nro_Documento
+        Dim _Nudo As String = Traer_Numero_Documento(_Tido, , Mod_Modalidad) ' _Class_DTE.Pro_Nro_Documento
 
         Dim _Tidoelec As Integer = CInt(Fx_Es_Electronico(_Tido)) * -1
 
@@ -1233,7 +1233,7 @@ Public Class Frm_Pagos_Documentos
 
             Dim _Mensaje As New LsValiciones.Mensajes
 
-            _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, False)
+            _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, False, Mod_Empresa, Mod_Sucursal)
 
             If Not _Mensaje.EsCorrecto Then ' Not Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nudo, True) Then
 
@@ -1249,7 +1249,7 @@ Public Class Frm_Pagos_Documentos
         Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO", "TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And IDMAEEDO <> " & _Idmaeedo)
 
         If CBool(_Reg) Then
-            _Nudo = Traer_Numero_Documento(_Tido, , Modalidad)
+            _Nudo = Traer_Numero_Documento(_Tido, , Mod_Modalidad)
         End If
 
         Consulta_sql = "Update MAEEDO Set NUDO='" & _Nudo & "',NUDONODEFI=0,TIDOELEC=" & _Tidoelec & " Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
@@ -1257,7 +1257,7 @@ Public Class Frm_Pagos_Documentos
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
-            Fx_Cambiar_Numeracion_Modalidad(_Tido, Modalidad)
+            Fx_Cambiar_Numeracion_Modalidad(_Tido, Mod_Empresa, Mod_Modalidad)
 
             Dim _Nudo_Old = _Tbl_Maeedo.Rows(0).Item("NUDO")
 
@@ -1265,7 +1265,7 @@ Public Class Frm_Pagos_Documentos
 
                 If CBool(_Tidoelec) Then
 
-                    Sb_Firmar_Documento_Electronico(Me, _Idmaeedo, _Tido)
+                    Sb_Firmar_Documento_Electronico(Me, _Idmaeedo, _Tido, Mod_Empresa, Mod_Modalidad)
 
                 End If
 
@@ -1291,7 +1291,7 @@ Public Class Frm_Pagos_Documentos
             ' *********************************************************************
             Dim _Error_PDF As String
 
-            _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo, ModEmpresa, Modalidad)
+            _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
 
             If Not String.IsNullOrEmpty(_Error_PDF) Then
                 MessageBoxEx.Show(Me, _Error_PDF, "Error al querer grabar PDF automático", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -1328,7 +1328,7 @@ Public Class Frm_Pagos_Documentos
             Dim _Cl_Puntos As New Cl_Puntos()
             Dim _MsjPtos As LsValiciones.Mensajes
 
-            _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+            _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(Mod_Empresa)
             _MsjPtos = _Cl_Puntos.Fx_Grabar_Registro_Puntos(_Idmaeedo, 0)
 
             If _MsjPtos.EsCorrecto Then
@@ -1369,7 +1369,7 @@ Public Class Frm_Pagos_Documentos
             ' IMPRIMIR EN DIABLITO
 
             Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-            _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Idmaeedo)
+            _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Modalidad, _Idmaeedo)
 
             '***********************************************************************************************
 
@@ -1458,7 +1458,7 @@ Public Class Frm_Pagos_Documentos
 
         Consulta_sql = "Select Top 1 Modalidad, TipoDoc, NombreFormato" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '" & Modalidad & "'"
+                       "Where Empresa = '" & Mod_Empresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '" & Mod_Modalidad & "'"
 
         Dim _RowNombreFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
         Dim _NombreFormato = _RowNombreFormato.Item("NombreFormato")
@@ -1971,7 +1971,7 @@ Public Class Frm_Pagos_Documentos
         End If
 
         Consulta_sql = My.Resources._24_Recursos.SQLQuery_Buscar_Docmuento
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#CantidadDoc#", 1000)
         Consulta_sql = Replace(Consulta_sql, "#TipoDocumento#", _Filtro_Documentos)
         Consulta_sql = Replace(Consulta_sql, "#NroDocumento#", "")
@@ -1979,7 +1979,7 @@ Public Class Frm_Pagos_Documentos
         Consulta_sql = Replace(Consulta_sql, "#Fecha#", _Filtro_Fechas)
         Consulta_sql = Replace(Consulta_sql, "#Estado#", "")
         Consulta_sql = Replace(Consulta_sql, "#Funcionario#", "")
-        Consulta_sql = Replace(Consulta_sql, "#SucursalDocumento#", "And Edo.SUDO = '" & ModSucursal & "'")
+        Consulta_sql = Replace(Consulta_sql, "#SucursalDocumento#", "And Edo.SUDO = '" & Mod_Sucursal & "'")
         Consulta_sql = Replace(Consulta_sql, "#Producto#", "")
         Consulta_sql = Replace(Consulta_sql, "#Orden#", "Order by IDMAEEDO Desc")
 
@@ -2490,7 +2490,7 @@ Public Class Frm_Pagos_Documentos
             Dim _Tido = _Tbl_Maeedo.Rows(0).Item("TIDO")
             Dim _Nudonodefi = _Tbl_Maeedo.Rows(0).Item("NUDONODEFI")
 
-            Dim _Nro_Documento As String = Traer_Numero_Documento(_Tido, , Modalidad) ' _Class_DTE.Pro_Nro_Documento
+            Dim _Nro_Documento As String = Traer_Numero_Documento(_Tido, , Mod_Modalidad) ' _Class_DTE.Pro_Nro_Documento
 
             Dim _Tidoelec As Integer = CInt(Fx_Es_Electronico(_Tido)) * -1
 
@@ -2498,7 +2498,7 @@ Public Class Frm_Pagos_Documentos
 
                 Dim _Mensaje As New LsValiciones.Mensajes
 
-                _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, False)
+                _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, False, Mod_Modalidad, Mod_Empresa)
 
                 If Not _Mensaje.EsCorrecto Then
 
@@ -3078,7 +3078,7 @@ Public Class Frm_Pagos_Documentos
         End If
 
         Consulta_sql = "Select *,Cast(0 As Bit) As Paga_Tidp_Obl,Cast(0 As Bit) As Tiene_Concepto_Obl 
-                        From " & _Global_BaseBk & "Zw_Docu_ObligPg Where Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'"
+                        From " & _Global_BaseBk & "Zw_Docu_ObligPg Where Modalidad = '" & Mod_Modalidad & "' And Tido = '" & _Tido & "'"
 
         Dim _Tbl_Docu_ObligPg As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -3202,7 +3202,7 @@ Public Class Frm_Pagos_Documentos
         End If
 
         Consulta_sql = "Select *,Cast(0 As Bit) As Paga_Tidp_Obl,Cast(0 As Bit) As Tiene_Concepto_Obl 
-                        From " & _Global_BaseBk & "Zw_Docu_ObligPg Where Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'"
+                        From " & _Global_BaseBk & "Zw_Docu_ObligPg Where Modalidad = '" & Mod_Modalidad & "' And Tido = '" & _Tido & "'"
 
         Dim _Tbl_Docu_ObligPg As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _TblDetalle As DataTable = _Ds_Matriz_Documentos.Tables("Detalle_Doc")
@@ -3328,7 +3328,7 @@ Public Class Frm_Pagos_Documentos
         Dim _posuser As String = FUNCIONARIO
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_CashDro_Operaciones (Numero,OperationId,FechaHora_Inicio,posid,posuser,Monto,Modalidad,Empresa,Sucursal,Bodega,Caja,Idmaeedo_H) Values " & vbCrLf &
-                       "('" & _Numero & "','',GetDate(),'" & _posid & "','" & _posuser & "'," & De_Num_a_Tx_01(_Monto, False, 5) & ",'" & Modalidad & "','" & ModEmpresa & "','" & ModSucursal & "','" & ModBodega & "','" & ModCaja & "'," & _Idmaeedo & ")"
+                       "('" & _Numero & "','',GetDate(),'" & _posid & "','" & _posuser & "'," & De_Num_a_Tx_01(_Monto, False, 5) & ",'" & Mod_Modalidad & "','" & Mod_Empresa & "','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & Mod_Caja & "'," & _Idmaeedo & ")"
         _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id)
 
         Dim _Pagado As Boolean
@@ -3898,10 +3898,10 @@ Public Class Frm_Pagos_Documentos
     End Sub
 
     Private Sub Btn_PDF_BLV_Click(sender As Object, e As EventArgs) Handles Btn_PDF_BLV.Click
-        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Modalidad, "BLV")
+        Sb_Configuracion_Salida_PDF(Me, Mod_Empresa, Mod_Modalidad, "BLV")
     End Sub
 
     Private Sub Btn_PDF_FCV_Click(sender As Object, e As EventArgs) Handles Btn_PDF_FCV.Click
-        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Modalidad, "FCV")
+        Sb_Configuracion_Salida_PDF(Me, Mod_Empresa, Mod_Modalidad, "FCV")
     End Sub
 End Class

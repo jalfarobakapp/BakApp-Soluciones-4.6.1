@@ -23,9 +23,9 @@ Public Class Frm_St_Recetas
 
     Private Sub Frm_St_Recetas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Dim _NomSucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "'").ToString.Replace("SUCURSAL", "")
+        Dim _NomSucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "'").ToString.Replace("SUCURSAL", "")
         _NomSucursal = _NomSucursal.Trim
-        Me.Text = "RECETAS PARA REPARACIONES SUCURSAL: (" & ModSucursal & ") - " & _NomSucursal
+        Me.Text = "RECETAS PARA REPARACIONES SUCURSAL: (" & Mod_Sucursal & ") - " & _NomSucursal
 
         Sb_Actualizar_Grilla()
 
@@ -49,7 +49,7 @@ Public Class Frm_St_Recetas
 
         Consulta_sql = "Select Id,Empresa,CodReceta,Descripcion,Activo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' --And Sucursal = '" & ModSucursal & "'" & vbCrLf &
+                       "Where Empresa = '" & Mod_Empresa & "' --And Sucursal = '" & Mod_Sucursal & "'" & vbCrLf &
                        "And CodReceta+Descripcion Like '%" & _Cadena & "%'" & _CondicionProd
         _Tbl_Recetas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -223,9 +223,9 @@ Public Class Frm_St_Recetas
             Fm.Pro_CodEntidad = String.Empty
             Fm.Pro_CodSucEntidad = String.Empty
             Fm.Pro_Tipo_Lista = "P"
-            'Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
-            Fm.Pro_Sucursal_Busqueda = ModSucursal
-            Fm.Pro_Bodega_Busqueda = ModBodega
+            'Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
+            Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+            Fm.Pro_Bodega_Busqueda = Mod_Bodega
             Fm.Txtdescripcion.Text = _Codigo
             Fm.Pro_Mostrar_Info = True
             Fm.Pro_Actualizar_Precios = True

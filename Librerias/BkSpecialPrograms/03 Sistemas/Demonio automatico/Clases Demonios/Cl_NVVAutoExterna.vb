@@ -86,7 +86,7 @@ Public Class Cl_NVVAutoExterna
 
     Function Fx_Crear_NVV(_Formulario As Form, _Id_Enc As Integer) As String
 
-        Dim _Modalidad_Old As String = Modalidad
+        Dim _Modalidad_Old As String = Mod_Modalidad
         Dim _LogR As String = String.Empty
 
         Try
@@ -125,7 +125,7 @@ Public Class Cl_NVVAutoExterna
                 Throw New System.Exception("No se encuentran registros para la tabla Zw_Demonio_NVVAutoDet con el Id_Enc = " & _Id_Enc)
             End If
 
-            Consulta_Sql = "Select * From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & Modalidad_NVV & "'"
+            Consulta_Sql = "Select * From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & Modalidad_NVV & "'"
             Dim _Row_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
@@ -134,13 +134,13 @@ Public Class Cl_NVVAutoExterna
             Dim _Bodega As String = _Row_Modalidad.Item("EBODEGA")
 
             Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Set " &
-                           "Empresa = '" & ModEmpresa & "',Sucursal = '" & _Sucursal & "',Bodega = '" & _Bodega & "' Where Id_Enc = " & _Id_Enc
+                           "Empresa = '" & Mod_Empresa & "',Sucursal = '" & _Sucursal & "',Bodega = '" & _Bodega & "' Where Id_Enc = " & _Id_Enc
             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
             Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Where Id_Enc = " & _Id_Enc
             Dim _Tbl_NVVAutoDet As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
-            Consulta_Sql = "Select * From TABBO Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Sucursal & "'"
+            Consulta_Sql = "Select * From TABBO Where EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & _Sucursal & "'"
             Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
             For Each _FlDet As DataRow In _Tbl_NVVAutoDet.Rows
@@ -158,7 +158,7 @@ Public Class Cl_NVVAutoExterna
                     Dim _Bod As String = _FlBod.Item("KOBO")
 
                     Dim _Stfi1 As Double = _Sql.Fx_Trae_Dato("MAEST", "STFI1",
-                                               "EMPRESA = '" & ModEmpresa & "' " &
+                                               "EMPRESA = '" & Mod_Empresa & "' " &
                                                "And KOSU = '" & _Suc & "' " &
                                                "And KOBO = '" & _Bod & "' " &
                                                "And KOPR = '" & _Codigo & "'", True)
@@ -174,7 +174,7 @@ Public Class Cl_NVVAutoExterna
                 If Not String.IsNullOrEmpty(_Bod_Mayor.Trim) Then
 
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet Set " &
-                           "Empresa = '" & ModEmpresa & "',Sucursal = '" & _Suc_Mayor & "',Bodega = '" & _Bod_Mayor & "' Where Id_Det = " & _Id_Det
+                           "Empresa = '" & Mod_Empresa & "',Sucursal = '" & _Suc_Mayor & "',Bodega = '" & _Bod_Mayor & "' Where Id_Det = " & _Id_Det
                     _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
                 End If
@@ -239,7 +239,7 @@ Drop table #Paso"
             ' ACA HAY QUE PONER LA BODEGA QUE VIENE DESDE LA TABLA Zw_Demonio_NVVAutoDet
             ' EL SISTEMA GRABA LA BODEGA WCM Y NO LA VIRTUAL
 
-            Modalidad = Modalidad_NVV
+            Mod_Modalidad = Modalidad_NVV
 
             Dim Fm As New Frm_Formulario_Documento(_Tido,
                                                    csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,
@@ -256,7 +256,7 @@ Drop table #Paso"
             If _Mensaje.EsCorrecto Then
 
                 Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Mensaje.Id)
+                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Modalidad, _Mensaje.Id)
 
                 Consulta_Sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id
                 Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
@@ -278,7 +278,7 @@ Drop table #Paso"
         Catch ex As Exception
             _LogR = ex.Message
         Finally
-            Modalidad = _Modalidad_Old
+            Mod_Modalidad = _Modalidad_Old
         End Try
 
         Return _LogR
@@ -289,7 +289,7 @@ Drop table #Paso"
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        Dim _Modalidad_Old As String = Modalidad
+        Dim _Modalidad_Old As String = Mod_Modalidad
         Dim _LogR As String = String.Empty
 
         Try
@@ -329,7 +329,7 @@ Drop table #Paso"
                 Throw New System.Exception("No se encuentran registros para la tabla Zw_Demonio_NVVAutoDet con el Id_Enc = " & _Id_Enc)
             End If
 
-            Consulta_Sql = "Select * From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & Modalidad_NVV & "'"
+            Consulta_Sql = "Select * From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & Modalidad_NVV & "'"
             Dim _Row_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
@@ -390,7 +390,7 @@ Drop table #Paso"
             ' ACA HAY QUE PONER LA BODEGA QUE VIENE DESDE LA TABLA Zw_Demonio_NVVAutoDet
             ' EL SISTEMA GRABA LA BODEGA WCM Y NO LA VIRTUALD
 
-            Modalidad = Modalidad_NVV
+            Mod_Modalidad = Modalidad_NVV
 
             Dim Fm As New Frm_Formulario_Documento(_Tido,
                                                    csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,
@@ -407,7 +407,7 @@ Drop table #Paso"
             If _Mensaje2.EsCorrecto Then
 
                 Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Mensaje2.Id)
+                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Modalidad, _Mensaje2.Id)
 
                 Consulta_Sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje2.Id
                 Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
@@ -461,7 +461,7 @@ Drop table #Paso"
             _Mensaje.EsCorrecto = False
             _Mensaje.Mensaje = ex.Message
         Finally
-            Modalidad = _Modalidad_Old
+            Mod_Modalidad = _Modalidad_Old
         End Try
 
         Return _Mensaje

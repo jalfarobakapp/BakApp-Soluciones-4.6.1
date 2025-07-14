@@ -142,9 +142,9 @@ Public Class Frm_Codigos_Alternativos
             .BtnExportaExcel.Visible = True
             .Pro_Tipo_Lista = "P"
             .Pro_Maestro_Productos = False
-            .Pro_Sucursal_Busqueda = ModSucursal
-            .Pro_Bodega_Busqueda = ModBodega
-            .Pro_Lista_Busqueda = ModListaPrecioVenta
+            .Pro_Sucursal_Busqueda = Mod_Sucursal
+            .Pro_Bodega_Busqueda = Mod_Bodega
+            .Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             .Mnu_Btn_Cambiar_Codigo_Producto.Visible = True
             .ShowDialog(Me)
             If .Pro_Seleccionado Then

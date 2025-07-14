@@ -210,7 +210,7 @@ Public Class Frm_MantCostosPrecios
                             Desc1,Desc2,Desc3,Desc4,Desc5,DescSuma,Flete,Un_Compra,Un_MinCompra,Ac_Oferta,Ac_Disponible,Ac_Cotizar,UD01PR As Ud1,UD02PR As Ud2,Map.PM As Pm,Map.PPUL01 As Uc1,Map.PPUL02 As Uc2,No_Usar --,NMARCA             
                             From " & _Global_BaseBk & "Zw_ListaPreCosto 
 	                            Inner Join MAEPR Mp On Mp.KOPR = Codigo
-		                            Inner Join MAEPREM Map On EMPRESA = '" & ModEmpresa & "' And Map.KOPR = Codigo
+		                            Inner Join MAEPREM Map On EMPRESA = '" & Mod_Empresa & "' And Map.KOPR = Codigo
                                         Inner Join TABCODAL Tda On KOEN = '" & _CodProveedor & "' And Tda.KOPR = Codigo And Tda.KOPRAL = CodAlternativo 
                             Where Proveedor = '" & _CodProveedor & "' And Sucursal = '" & _SucProveedor & "' And Lista = '" & _CodLista & "'"
 
@@ -554,7 +554,7 @@ Public Class Frm_MantCostosPrecios
                             Map.PM As Pm,Map.PPUL01 As Uc1,Map.PPUL02 As Uc2,No_Usar,Id,Id_Padre
                             From " & _Global_BaseBk & "Zw_ListaPreCosto 
 	                            Inner Join MAEPR Mp On Mp.KOPR = Codigo
-		                            Inner Join MAEPREM Map On EMPRESA = '" & ModEmpresa & "' And Map.KOPR = Codigo
+		                            Inner Join MAEPREM Map On EMPRESA = '" & Mod_Empresa & "' And Map.KOPR = Codigo
                                         Inner Join TABCODAL Tda On KOEN = '" & _CodProveedor & "' And Tda.KOPR = Codigo And Tda.KOPRAL = CodAlternativo 
                             Where Id_Padre = " & _Id_Padre & "
                             --Where Proveedor = '" & _CodProveedor & "' And Sucursal = '" & _SucProveedor & "' And Lista = '" & _CodLista & "' And FechaVigencia = '" & _FechaVigencia & "'"
@@ -1118,10 +1118,10 @@ Public Class Frm_MantCostosPrecios
         Next
 
         Consulta_sql = "Insert Into TABRECPR (KOPR,RECARGO,KOEN,ECUARECAR,EMPRESA)
-                        Select Codigo,Flete,Proveedor,'','" & ModEmpresa & "' From " & _Nombre_Tbl_Paso_Costos & " 
-                        Where Codigo Not In (Select KOPR From TABRECPR Where KOEN = '" & _CodProveedor & "' And EMPRESA = '" & ModEmpresa & "') And Flete > 0 
+                        Select Codigo,Flete,Proveedor,'','" & Mod_Empresa & "' From " & _Nombre_Tbl_Paso_Costos & " 
+                        Where Codigo Not In (Select KOPR From TABRECPR Where KOEN = '" & _CodProveedor & "' And EMPRESA = '" & Mod_Empresa & "') And Flete > 0 
 
-                        Update TABRECPR Set EMPRESA = '" & ModEmpresa & "' 
+                        Update TABRECPR Set EMPRESA = '" & Mod_Empresa & "' 
                         Where KOEN = '" & _CodProveedor & "' And KOPR In (Select Codigo From " & _Nombre_Tbl_Paso_Costos & ") And EMPRESA = ''"
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
@@ -1197,9 +1197,9 @@ Public Class Frm_MantCostosPrecios
         Fm.Pro_CodEntidad = String.Empty
         Fm.Pro_CodSucEntidad = String.Empty
         Fm.Pro_Tipo_Lista = "P"
-        Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
-        Fm.Pro_Sucursal_Busqueda = ModSucursal
-        Fm.Pro_Bodega_Busqueda = ModBodega
+        Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
+        Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+        Fm.Pro_Bodega_Busqueda = Mod_Bodega
         Fm.Pro_Mostrar_Info = False
         Fm.Pro_Actualizar_Precios = False
 
@@ -1956,7 +1956,7 @@ Public Class Frm_MantCostosPrecios
                         Update " & _Global_BaseBk & "Zw_ListaPreCosto_Enc Set Vigente = 1,CodFuncionario_Activa = '" & FUNCIONARIO & "',FechaActivacionVigencia = Getdate()
                         Where Id = " & _Id_Padre & "
                         Insert Into TABRECPR (KOPR,RECARGO,KOEN,ECUARECAR,EMPRESA)
-                        Select Codigo,Flete,Proveedor,'','" & ModEmpresa & "' From " & _Nombre_Tbl_Paso_Costos & " 
+                        Select Codigo,Flete,Proveedor,'','" & Mod_Empresa & "' From " & _Nombre_Tbl_Paso_Costos & " 
                         Where Codigo Not In (Select KOPR From TABRECPR Where KOEN = '" & _CodProveedor & "') And Flete > 0
                             
                         Update TABRECPR Set RECARGO = Flete 

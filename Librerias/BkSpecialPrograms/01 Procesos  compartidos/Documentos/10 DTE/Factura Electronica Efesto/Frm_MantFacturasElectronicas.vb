@@ -505,7 +505,7 @@ Public Class Frm_MantFacturasElectronicas
 
             Dim _Old_Id_Dte = _Id_Dte
 
-            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
 
             _Id_Dte = _Class_DTE.Fx_FirmarXHefesto()
 
@@ -572,7 +572,7 @@ Public Class Frm_MantFacturasElectronicas
             Return
         End If
 
-        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
 
         If CBool(_AceptadoSII) Then
 
@@ -644,7 +644,7 @@ Public Class Frm_MantFacturasElectronicas
             _Estado = "REC" Or _Estado = "106" Or
                        (_Id_Dte <> 0 And Not _DocFirmado) Then
 
-            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
             If CBool(_Class_DTE.Fx_FirmarXHefesto()) Then
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Eliminado = 1 Where Id_Dte = " & _Id_Dte

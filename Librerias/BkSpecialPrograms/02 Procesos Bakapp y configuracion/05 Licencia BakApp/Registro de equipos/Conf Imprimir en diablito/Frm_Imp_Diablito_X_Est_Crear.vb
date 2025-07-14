@@ -72,8 +72,8 @@ Public Class Frm_Imp_Diablito_X_Est_Crear
 
     Private Sub Frm_Imp_Diablito_X_Est_Crear_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        _Sucursal_Picking = ModSucursal
-        _Bodega_Picking = ModBodega
+        _Sucursal_Picking = Mod_Sucursal
+        _Bodega_Picking = Mod_Bodega
 
         If Not IsNothing(_Row_Impresion) Then
 
@@ -109,7 +109,7 @@ Public Class Frm_Imp_Diablito_X_Est_Crear
                 _Sucursal_Picking = .Item("Sucursal_Picking")
                 _Bodega_Picking = .Item("Bodega_Picking")
 
-                Consulta_sql = "Select * From TABBO Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Sucursal_Picking & "' And KOBO = '" & _Bodega_Picking & "'"
+                Consulta_sql = "Select * From TABBO Where EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & _Sucursal_Picking & "' And KOBO = '" & _Bodega_Picking & "'"
                 _Row_Bodega_Picking = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 If Not IsNothing(_Row_Bodega_Picking) Then
@@ -156,7 +156,7 @@ Public Class Frm_Imp_Diablito_X_Est_Crear
         End If
 
         If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & ModEmpresa & "' " & _Sql,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & Mod_Empresa & "' " & _Sql,
                                Nothing, False, True) Then
 
             Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
@@ -340,7 +340,7 @@ Public Class Frm_Imp_Diablito_X_Est_Crear
 
             Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Usuarios_Impresion",
                                                 "CodFuncionario = '" & _CodFuncionario & "' And " &
-                                                "Empresa = '" & ModEmpresa & "' And " &
+                                                "Empresa = '" & Mod_Empresa & "' And " &
                                                 "Modalidad = '" & _Modalidad & "' And " &
                                                 "Tido = '" & _Tido & "' And " &
                                                 "Tipo = '" & _Tipo & "' And " &
@@ -356,7 +356,7 @@ Public Class Frm_Imp_Diablito_X_Est_Crear
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Usuarios_Impresion (CodFuncionario,Empresa,Modalidad,Tido,Tipo,NombreEquipo_Imprime," &
                            "NombreFormato,Impresora,Nro_Copias,Activo,Imprimir_Voucher_TJV_No_Imprimir,Imprimir_Voucher_TJV," &
                            "Imprimir_Voucher_TJV_Original,Imp_Todas_Modalidades,Sucursal_Picking,Bodega_Picking) Values " &
-                           "('" & _CodFuncionario & "','" & ModEmpresa & "','" & _Modalidad & "','" & _Tido & "','" & _Tipo &
+                           "('" & _CodFuncionario & "','" & Mod_Empresa & "','" & _Modalidad & "','" & _Tido & "','" & _Tipo &
                            "','" & _NombreEquipo_Imprime & "','" & _NombreFormato & "','" & _Impresora & "'," & _Nro_Copias & "," & _Activo &
                            "," & _Imprimir_Voucher_TJV_No_Imprimir & "," & _Imprimir_Voucher_TJV &
                            "," & _Imprimir_Voucher_TJV_Original & "," & _Imp_Todas_Modalidades & ",'" & _Sucursal_Picking & "','" & _Bodega_Picking & "')"
@@ -468,7 +468,7 @@ Public Class Frm_Imp_Diablito_X_Est_Crear
     Private Sub Btn_Buscar_Bodega_Click(sender As Object, e As EventArgs) Handles Btn_Buscar_Bodega.Click
 
         Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-        Fm_b.Pro_Empresa = ModEmpresa
+        Fm_b.Pro_Empresa = Mod_Empresa
         Fm_b.Pro_Sucursal = _Sucursal_Picking
         Fm_b.Pro_Bodega = _Bodega_Picking
         Fm_b.ShowDialog(Me)
@@ -478,7 +478,7 @@ Public Class Frm_Imp_Diablito_X_Est_Crear
             _Sucursal_Picking = Fm_b.Pro_RowBodega.Item("KOSU")
             _Bodega_Picking = Fm_b.Pro_RowBodega.Item("KOBO")
 
-            Consulta_sql = "Select * From TABBO Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Sucursal_Picking & "' And KOBO = '" & _Bodega_Picking & "'"
+            Consulta_sql = "Select * From TABBO Where EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & _Sucursal_Picking & "' And KOBO = '" & _Bodega_Picking & "'"
             _Row_Bodega_Picking = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Txt_Bodega_Picking.Text = "Suc: " & _Sucursal_Picking & ", Bod: " & _Bodega_Picking & "-" & _Row_Bodega_Picking.Item("NOKOBO").ToString.Trim

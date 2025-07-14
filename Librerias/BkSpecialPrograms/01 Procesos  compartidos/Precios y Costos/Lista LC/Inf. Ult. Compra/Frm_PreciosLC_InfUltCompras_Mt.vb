@@ -317,7 +317,7 @@
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Hasta#", _Fecha_Hasta)
         Consulta_sql = Replace(Consulta_sql, "#Condicion#", _Condicion)
         Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
         _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 

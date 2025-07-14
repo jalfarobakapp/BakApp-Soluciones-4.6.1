@@ -58,8 +58,8 @@
         Consulta_sql = Replace(Consulta_sql, "#MesesEstudio#", Input_MesesEstudio)
         Consulta_sql = Replace(Consulta_sql, "#TblPs#", NombreTablaPaso)
         Consulta_sql = Replace(Consulta_sql, "#Tbl2Ps#", NombreTablaPasoInforme)
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", Mod_Sucursal)
 
         Dim _Filtro_Bodega As String
 

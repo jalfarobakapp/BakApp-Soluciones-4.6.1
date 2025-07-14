@@ -69,7 +69,7 @@ Namespace Bk_ExpotarDoc
             Dim _ProxNumero As String
 
             If _Cambiar_NroDocumento Then
-                _ProxNumero = _Sql.Fx_Trae_Dato("CONFIEST", "OCC", "EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & Modalidad & "'")
+                _ProxNumero = _Sql.Fx_Trae_Dato("CONFIEST", "OCC", "EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & Mod_Modalidad & "'")
             End If
 
             ' _Cadena_ConexionSQL_Server_Destino = "data source = 190.171.153.139,1451; initial catalog = SUPERMERCADO_SPA; user id = SUPERMERCADO_SPA; password = SUPERMERCADO_SPA"

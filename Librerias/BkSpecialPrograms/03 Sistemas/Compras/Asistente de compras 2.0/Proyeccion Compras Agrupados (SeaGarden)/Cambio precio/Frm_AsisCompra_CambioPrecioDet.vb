@@ -62,7 +62,7 @@
     Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_RevCambioPrecioXCodMadre
-        Consulta_sql = Replace(Consulta_sql, "{Empresa}", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "{Empresa}", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "{CodMadre}", _CodigoMadre)
         Consulta_sql = Replace(Consulta_sql, "{Lista}", _Lista)
         Consulta_sql = Replace(Consulta_sql, "{CantidadMax}", Math.Round(Input_CantNoQuiebra.Value, 0))

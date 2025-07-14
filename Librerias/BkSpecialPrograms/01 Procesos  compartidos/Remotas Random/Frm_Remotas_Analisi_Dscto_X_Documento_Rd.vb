@@ -624,7 +624,7 @@ Public Class Frm_Remotas_Analisi_Dscto_X_Documento_Rd
             Dim _ValNetoLinea = _Fila.Cells("VANELI").Value
             Dim _ValBrutoLinea = _Fila.Cells("VABRLI").Value
 
-            Dim _PmLinea As Double = 0 '= _Sql.Fx_Trae_Dato("MAEPREM", "PM", "EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'") '_Fila.Cells("PPPRPM").Value
+            Dim _PmLinea As Double = 0 '= _Sql.Fx_Trae_Dato("MAEPREM", "PM", "EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Codigo & "'") '_Fila.Cells("PPPRPM").Value
             Dim _PmSucLinea As Double = 0 '= _Fila.Cells("PmSucLinea").Value
             Dim _PmDocumento As Double = 0
 
@@ -636,8 +636,8 @@ Public Class Frm_Remotas_Analisi_Dscto_X_Documento_Rd
 
             If Not _Prct Then ' String.IsNullOrEmpty(_Tict) And Not String.IsNullOrEmpty(_Tipr) And Not _Prct Then
 
-                _PmLinea = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'") '_Fila.Cells("PPPRPM").Value
-                _UltCompraLinea = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL0" & _Udtrpt, "EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'")
+                _PmLinea = _Sql.Fx_Trae_Dato("MAEPREM", "PM", "EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Codigo & "'") '_Fila.Cells("PPPRPM").Value
+                _UltCompraLinea = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL0" & _Udtrpt, "EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Codigo & "'")
                 _Costo_Lista = _Sql.Fx_Trae_Dato("TABPRE",
                                                  "PP0" & _Udtrpt & "UD",
                                                  "KOLT = '" & _Lista_Costo & "' And KOPR = '" & _Codigo & "'", True)

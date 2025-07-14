@@ -298,11 +298,11 @@ Public Class Frm_Demonio_01
 
         Me.Text = "Demonio para acciones automatizadas, V: [" & _Version_BkSpecialPrograms & "]"
         Lbl_Nombre_Equipo.Text = "Nombre equipo: " & _Nombre_Equipo
-        Lbl_Modalidad.Text = "Modalidad: " & Modalidad & ", Sucursal: " & ModSucursal & ", Bodega: " & ModBodega
+        Lbl_Modalidad.Text = "Modalidad: " & Mod_Modalidad & ", Sucursal: " & Mod_Sucursal & ", Bodega: " & Mod_Bodega
 
         _Minimiza_Automatico = True
 
-        Lbl_Estatus.Text = "Empresa: " & ModEmpresa & ", Modalidad: " & Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _Nombre_Equipo
+        Lbl_Estatus.Text = "Empresa: " & Mod_Empresa & ", Modalidad: " & Mod_Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _Nombre_Equipo
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -1849,7 +1849,7 @@ Public Class Frm_Demonio_01
 
 #Region "WORDPRESS PROD"
 
-        Dim _Empresa = ModEmpresa
+        Dim _Empresa = Mod_Empresa
 
         If Switch_Wordpress_Prod.Value Then
 
@@ -2183,34 +2183,34 @@ Public Class Frm_Demonio_01
                     Consulta_sql = "Select MODALIDAD From CONFIEST WITH (NOLOCK) Where MODALIDAD In " & _FiltroModalidades
                     _TblModalidades = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-                    Dim _ModalidadOld As String = Modalidad
+                    Dim _ModalidadOld As String = Mod_Modalidad
                     Dim _Mod As New Clas_Modalidades
 
                     Me.WindowState = FormWindowState.Normal
 
                     For Each _Fl As DataRow In _TblModalidades.Rows
 
-                        Modalidad = _Fl.Item("MODALIDAD")
+                        Mod_Modalidad = _Fl.Item("MODALIDAD")
 
                         _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-                        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+                        _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
                         _Mod.Sb_Actualiza_Formatos_X_Modalidad()
 
-                        _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, False, True, False, False, True)
-                        _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, False, True, False)
-                        _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, True, False, False)
+                        _Cl_Asistente_Compras.Sb_Ejecutar(Me, Mod_Modalidad, False, True, False, False, True)
+                        _Cl_Asistente_Compras.Sb_Ejecutar(Me, Mod_Modalidad, True, False, False, True, False)
+                        _Cl_Asistente_Compras.Sb_Ejecutar(Me, Mod_Modalidad, True, False, True, False, False)
 
                     Next
 
                     Me.WindowState = FormWindowState.Minimized
 
-                    Modalidad = _ModalidadOld
+                    Mod_Modalidad = _ModalidadOld
 
                     _Mod = New Clas_Modalidades
                     _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-                    _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-                    _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                    _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+                    _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
                     _Mod.Sb_Actualiza_Formatos_X_Modalidad()
 
                     _Cl_Asistente_Compras.Ejecutado_Lunes = (_Dia = DayOfWeek.Monday)
@@ -2524,7 +2524,7 @@ Public Class Frm_Demonio_01
                                                     "Accion = 'Correo no enviado. Motivo: La entidad no tiene correos asociados en tabla MAEENMAIL' And" & Space(1) &
                                                     "Fecha_Hora >= '" & Format(DtpFecharevision.Value, "yyyyMMdd") & "'")
                 If _Reg = 0 Then
-                    Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _IdMaeedo, "Diablito",
+                    Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEEDO", _IdMaeedo, "Diablito",
                                    "Correo no enviado. Motivo: La entidad no tiene correos asociados en tabla MAEENMAIL", "", "", _Koen, _Suen, False, "")
                 End If
 
@@ -2691,7 +2691,7 @@ Public Class Frm_Demonio_01
                             End Try
                         End If
 
-                        Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _IdMaeedo, "Diablito",
+                        Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEEDO", _IdMaeedo, "Diablito",
                                            "Envio: Ok: " & _Destinatarios, "", "", _Koen, _Suen, False, "")
 
                     Else
@@ -2723,7 +2723,7 @@ Public Class Frm_Demonio_01
 
                         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
-                            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "MAEEDO", _IdMaeedo, "Diablito",
+                            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEEDO", _IdMaeedo, "Diablito",
                                            _Problema & _Destinatarios, "", "", _Koen, _Suen, False, "")
 
                         End If
@@ -3167,7 +3167,7 @@ Public Class Frm_Demonio_01
         Dim _Filtro_Sucursal = String.Empty
 
         If _Imp_Suc_Modal Then
-            _Filtro_Sucursal = "And SULIDO = '" & ModSucursal & "' And BOSULIDO = '" & ModBodega & "'"
+            _Filtro_Sucursal = "And SULIDO = '" & Mod_Sucursal & "' And BOSULIDO = '" & Mod_Bodega & "'"
         End If
 
         Fx_Insertar_Documento_Para_Imprimir_Picking =
@@ -3203,7 +3203,7 @@ Public Class Frm_Demonio_01
         Dim _Filtro_Sucursal = String.Empty
 
         If _Imp_Suc_Modal Then
-            _Filtro_Sucursal = "And SUDO = '" & ModSucursal & "'"
+            _Filtro_Sucursal = "And SUDO = '" & Mod_Sucursal & "'"
         End If
 
         Fx_Insertar_Documento_Para_Imprimir =
@@ -3231,7 +3231,7 @@ Public Class Frm_Demonio_01
         Dim _Id As Integer
 
         Consulta_sql = "Select Id From " & _Global_BaseBk & "Zw_Prod_SolBodega " &
-                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'  And Bodega = '" & ModBodega & "' And Impreso = 0"
+                       "Where Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & "'  And Bodega = '" & Mod_Bodega & "' And Impreso = 0"
 
         Dim _TblProd_SolBodega = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -3716,7 +3716,7 @@ Fin:
 
             Dim _Hora_Termino = Date.Now.ToShortTimeString
 
-            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "Consolidacion",
+            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "Consolidacion",
                                "Consolidación de stock automaticamente desde el diablito según programación..." & Space(1) &
                                "Productos: " & FormatNumber(_Tbl_Productos.Rows.Count, 0) & Space(1) &
                                "Hora inicio: " & _Hora_Inicio & ", Hora termino: " & _Hora_Termino,
@@ -3808,7 +3808,7 @@ Fin:
             Switch_LibroDTESII.Value = False
             CircularLibroDTESII.Visible = False
             Lbl_LibroDTESII.Text = "Monitoreo Libro DTE desde SII, ERROR!!!"
-            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "Demonio_Error", _Error, "", "", "", "", False, "")
+            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "Demonio_Error", _Error, "", "", "", "", False, "")
 
         End If
 
@@ -3969,7 +3969,7 @@ Fin:
 
         Consulta_sql = My.Resources.Recursos_Demonio.SQLQuery_Cierrer_Docmuento
         Consulta_sql = Replace(Consulta_sql, "#Filtro#",
-                       "Edo.EMPRESA = '" & ModEmpresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = '' And Edo.FEEMDO <= '" & Format(_Fecha, "yyyyMMdd") & "'")
+                       "Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = '' And Edo.FEEMDO <= '" & Format(_Fecha, "yyyyMMdd") & "'")
         Consulta_sql = Replace(Consulta_sql, "#Campo_SUENDOFI#", "")
         Consulta_sql = Replace(Consulta_sql, "#Left_Join_MAEEN_ENDOFI_SUENDOFI#", "")
         Consulta_sql = Replace(Consulta_sql, "Isnull(Mae2.NOKOEN,'') As RAZON_FISICA,", "")
@@ -4028,12 +4028,12 @@ Fin:
 
                 Me.Text = "Demonio para acciones automatizadas, V: [" & _Version_BkSpecialPrograms & "]"
                 Lbl_Nombre_Equipo.Text = "Nombre equipo: " & _Nombre_Equipo
-                Lbl_Modalidad.Text = "Modalidad: " & Modalidad & ", Sucursal: " & ModSucursal & ", Bodega: " & ModBodega
+                Lbl_Modalidad.Text = "Modalidad: " & Mod_Modalidad & ", Sucursal: " & Mod_Sucursal & ", Bodega: " & Mod_Bodega
 
                 _Segundos_Minimiza_Automatico = 60 * 2
                 _Minimiza_Automatico = True
 
-                Lbl_Estatus.Text = "Empresa: " & ModEmpresa & ", Modalidad: " & Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _Nombre_Equipo
+                Lbl_Estatus.Text = "Empresa: " & Mod_Empresa & ", Modalidad: " & Mod_Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _Nombre_Equipo
 
                 MessageBoxEx.Show(Me, "Usuario y modalidad cambiados para revisión", "Cambio de usuario", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -4297,7 +4297,7 @@ Fin:
         For Each _Fila As DataRow In _Tbl_Productos_Hermanos.Rows
 
             Dim _Codigo2 As String = _Fila.Item("Codigo")
-            Dim _Stock As Double = _Sql.Fx_Trae_Dato("MAEST", "SUM(STFI1)", "EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo2 & "'")
+            Dim _Stock As Double = _Sql.Fx_Trae_Dato("MAEST", "SUM(STFI1)", "EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Codigo2 & "'")
             Dim _Importado = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Asociacion",
                                                       "Codigo_Nodo = " & _Codigo_Nodo_Importados & " And Codigo = '" & _Codigo2 & "'")
 

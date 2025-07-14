@@ -200,13 +200,13 @@ Public Class Frm_Demonio_ConfAsisCompra
 
             Consulta_sql = "Select Distinct Cast(1 As Bit) As Chk,MODALIDAD As Codigo, MODALIDAD As Descripcion" & vbCrLf &
                            "From CONFIEST" & vbCrLf &
-                           "Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD In " & Txt_Modalidad.Text
+                           "Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD In " & Txt_Modalidad.Text
             _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
         If _Filtrar.Fx_Filtrar(_Tbl,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & ModEmpresa & "'",
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & Mod_Empresa & "'",
                                Nothing, False, True) Then
 
             Txt_Modalidad.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")

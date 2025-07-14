@@ -152,9 +152,9 @@ Public Class Frm_GRI_FabXProducto
                        "From POTL" & vbCrLf &
                        "Inner Join MAEPR On KOPR = CODIGO" & vbCrLf &
                        "Inner Join POTE On POTE.IDPOTE = POTL.IDPOTE" & vbCrLf &
-                       "Where POTL.NUMOT='" & _Numot & "' And POTL.EMPRESA = '" & ModEmpresa & "' And LILG <> 'IM' " &
+                       "Where POTL.NUMOT='" & _Numot & "' And POTL.EMPRESA = '" & Mod_Empresa & "' And LILG <> 'IM' " &
                        "And Exists (Select TABBOPR.* From TABBOPR " &
-                       "Where TABBOPR.KOPR = POTL.CODIGO And TABBOPR.KOSU = '" & ModSucursal & "' AND TABBOPR.KOBO = '" & ModBodega & "')"
+                       "Where TABBOPR.KOPR = POTL.CODIGO And TABBOPR.KOSU = '" & Mod_Sucursal & "' AND TABBOPR.KOBO = '" & Mod_Bodega & "')"
 
         Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -941,7 +941,7 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
-        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim
@@ -1300,9 +1300,9 @@ Public Class Frm_GRI_FabXProducto
     End Sub
     Sub Sb_TraerBodegaGRI()
 
-        Dim _Empresa As String = ModEmpresa
-        Dim _Sucursal As String = ModSucursal
-        Dim _Bodega As String = ModBodega
+        Dim _Empresa As String = Mod_Empresa
+        Dim _Sucursal As String = Mod_Sucursal
+        Dim _Bodega As String = Mod_Bodega
 
         If Rdb_BodegaDesdeOT.Checked Then
 
@@ -1349,7 +1349,7 @@ Public Class Frm_GRI_FabXProducto
 
     Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles ButtonItem1.Click
 
-        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim

@@ -1298,7 +1298,7 @@ Public Class Frm_BuscarDocumento_Mt
 
                 If _Firma_RunMonitor Then
                     Me.Cursor = Cursors.WaitCursor
-                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
                     Dim _Iddt As Integer = _Class_DTE.Fx_Dte_Genera_Documento(Me, True)
 
                     If CBool(_Iddt) Then
@@ -1825,7 +1825,7 @@ Public Class Frm_BuscarDocumento_Mt
 
                 If _Firmar Then
 
-                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
 
                     If CBool(_Class_DTE.Fx_FirmarXHefesto()) Then
                         MessageBoxEx.Show(Me, "DOCUMENTO FIRMADO, QUEDARA A LA ESPERA DE SER ENVIADO AL SII ...", "Firmar documento",
@@ -1873,7 +1873,7 @@ Public Class Frm_BuscarDocumento_Mt
             Me.Cursor = Cursors.WaitCursor
 
             Dim _Cl_ExportarDoc As New Bk_ExpotarDoc.Cl_ExpotarDoc
-            _Respuesta = _Cl_ExportarDoc.Fx_Importar_Documento(_Idmaeedo, _Id_Conexion, True, Modalidad)
+            _Respuesta = _Cl_ExportarDoc.Fx_Importar_Documento(_Idmaeedo, _Id_Conexion, True, Mod_Modalidad)
 
             Me.Cursor = Cursors.Default
 

@@ -33,9 +33,9 @@ Module Inv_parcial
                 report.SetParameterValue("RutEmpresa", RutEmpresa)
                 report.SetParameterValue("RazonEmpresa", RazonEmpresa)
                 Dim Bode As String
-                Bode = _Sql.Fx_Trae_Dato("TABBO", "NOKOBO", "KOSU = '" & ModSucursal & "' AND KOBO = '" & ModBodega & "'")
+                Bode = _Sql.Fx_Trae_Dato("TABBO", "NOKOBO", "KOSU = '" & Mod_Sucursal & "' AND KOBO = '" & Mod_Bodega & "'")
 
-                report.SetParameterValue("Sucursal", ModSucursal)
+                report.SetParameterValue("Sucursal", Mod_Sucursal)
                 report.SetParameterValue("Bodega", Bode)
                 'report.SetParameterValue("FechaInv", Format(FechaInv.Value, "dd-MM-yyyy"))
                 form.CrystalReportViewer1.ReportSource = report
@@ -70,11 +70,11 @@ Module Inv_parcial
                        "FROM dbo.MAEST RIGHT OUTER JOIN dbo.TABBOPR ON dbo.MAEST.KOPR = dbo.TABBOPR.KOPR" & vbCrLf & _
                        "AND dbo.MAEST.EMPRESA = dbo.TABBOPR.EMPRESA AND dbo.MAEST.KOBO = dbo.TABBOPR.KOBO " & vbCrLf & _
                        "RIGHT OUTER JOIN dbo.MAEPR WITH (NOLOCK) ON dbo.TABBOPR.KOPR = dbo.MAEPR.KOPR " & vbCrLf & _
-                       "WHERE (dbo.TABBOPR.EMPRESA = '" & ModEmpresa & "') AND (dbo.TABBOPR.KOSU = '" & ModSucursal & _
-                       "') AND (dbo.TABBOPR.KOBO = '" & ModBodega & "')" & vbCrLf & _
+                       "WHERE (dbo.TABBOPR.EMPRESA = '" & Mod_Empresa & "') AND (dbo.TABBOPR.KOSU = '" & Mod_Sucursal & _
+                       "') AND (dbo.TABBOPR.KOBO = '" & Mod_Bodega & "')" & vbCrLf & _
                        "AND dbo.MAEPR.KOPR NOT IN (SELECT CodigoPr FROM Zw_TmpInv_InvParcial" & vbCrLf & _
-                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & _
-                       "' And Bodega ='" & ModBodega & "')" & vbCrLf & _
+                       "Where Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & _
+                       "' And Bodega ='" & Mod_Bodega & "')" & vbCrLf & _
                        "And dbo.MAEST.STFI1 <=0" & vbCrLf & _
                        Ocultar & vbCrLf & _
                        "Order by Stock Desc OPTION ( FAST 20 )"
@@ -106,11 +106,11 @@ Module Inv_parcial
                        "FROM dbo.MAEST RIGHT OUTER JOIN dbo.TABBOPR ON dbo.MAEST.KOPR = dbo.TABBOPR.KOPR" & vbCrLf & _
                        "AND dbo.MAEST.EMPRESA = dbo.TABBOPR.EMPRESA AND dbo.MAEST.KOBO = dbo.TABBOPR.KOBO " & vbCrLf & _
                        "RIGHT OUTER JOIN dbo.MAEPR WITH (NOLOCK) ON dbo.TABBOPR.KOPR = dbo.MAEPR.KOPR " & vbCrLf & _
-                       "WHERE (dbo.TABBOPR.EMPRESA = '" & ModEmpresa & "') AND (dbo.TABBOPR.KOSU = '" & ModSucursal & _
-                       "') AND (dbo.TABBOPR.KOBO = '" & ModBodega & "')" & vbCrLf & _
+                       "WHERE (dbo.TABBOPR.EMPRESA = '" & Mod_Empresa & "') AND (dbo.TABBOPR.KOSU = '" & Mod_Sucursal & _
+                       "') AND (dbo.TABBOPR.KOBO = '" & Mod_Bodega & "')" & vbCrLf & _
                        "AND dbo.MAEPR.KOPR IN (SELECT CodigoPr FROM Zw_TmpInv_InvParcial" & vbCrLf & _
-                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & _
-                       "' And Bodega ='" & ModBodega & "' And CantidadUd1 > 0)" & vbCrLf & _
+                       "Where Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & _
+                       "' And Bodega ='" & Mod_Bodega & "' And CantidadUd1 > 0)" & vbCrLf & _
                        "And dbo.MAEST.STFI1 <=0" & vbCrLf & _
                        Ocultar & vbCrLf & _
                        "Order by dbo.MAEPR.KOPR OPTION ( FAST 20 )"
@@ -140,9 +140,9 @@ Module Inv_parcial
                 report.SetParameterValue("RutEmpresa", RutEmpresa)
                 report.SetParameterValue("RazonEmpresa", RazonEmpresa)
                 Dim Bode As String
-                Bode = _Sql.Fx_Trae_Dato("TABBO", "NOKOBO", "KOSU = '" & ModSucursal & "' AND KOBO = '" & ModBodega & "'")
+                Bode = _Sql.Fx_Trae_Dato("TABBO", "NOKOBO", "KOSU = '" & Mod_Sucursal & "' AND KOBO = '" & Mod_Bodega & "'")
 
-                report.SetParameterValue("Sucursal", ModSucursal)
+                report.SetParameterValue("Sucursal", Mod_Sucursal)
                 report.SetParameterValue("Bodega", Bode)
                 'report.SetParameterValue("FechaInv", Format(FechaInv.Value, "dd-MM-yyyy"))
                 form.CrystalReportViewer1.ReportSource = report
@@ -179,11 +179,11 @@ Module Inv_parcial
                        "FROM dbo.MAEST RIGHT OUTER JOIN dbo.TABBOPR ON dbo.MAEST.KOPR = dbo.TABBOPR.KOPR" & vbCrLf & _
                        "AND dbo.MAEST.EMPRESA = dbo.TABBOPR.EMPRESA AND dbo.MAEST.KOBO = dbo.TABBOPR.KOBO " & vbCrLf & _
                        "RIGHT OUTER JOIN dbo.MAEPR WITH (NOLOCK) ON dbo.TABBOPR.KOPR = dbo.MAEPR.KOPR " & vbCrLf & _
-                       "WHERE (dbo.TABBOPR.EMPRESA = '" & ModEmpresa & "') AND (dbo.TABBOPR.KOSU = '" & ModSucursal & _
-                       "') AND (dbo.TABBOPR.KOBO = '" & ModBodega & "')" & vbCrLf & _
+                       "WHERE (dbo.TABBOPR.EMPRESA = '" & Mod_Empresa & "') AND (dbo.TABBOPR.KOSU = '" & Mod_Sucursal & _
+                       "') AND (dbo.TABBOPR.KOBO = '" & Mod_Bodega & "')" & vbCrLf & _
                        "AND dbo.MAEPR.KOPR NOT IN (SELECT CodigoPr FROM Zw_TmpInv_InvParcial" & vbCrLf & _
-                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & _
-                       "' And Bodega ='" & ModBodega & "')" & vbCrLf & _
+                       "Where Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & _
+                       "' And Bodega ='" & Mod_Bodega & "')" & vbCrLf & _
                        Ocultar & vbCrLf & _
                        "Order by dbo.MAEPR.KOPR OPTION ( FAST 20 )"
 

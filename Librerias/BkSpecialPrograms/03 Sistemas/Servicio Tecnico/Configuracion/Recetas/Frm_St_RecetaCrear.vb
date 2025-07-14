@@ -38,7 +38,7 @@ Public Class Frm_St_RecetaCrear
         Me._CodReceta = _CodReceta
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And CodReceta = '" & _CodReceta & "' -- And Sucursal = '" & ModSucursal & "'"
+                       "Where Empresa = '" & Mod_Empresa & "' And CodReceta = '" & _CodReceta & "' -- And Sucursal = '" & Mod_Sucursal & "'"
         _Row_Receta = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
@@ -84,9 +84,9 @@ Public Class Frm_St_RecetaCrear
         AddHandler Grilla.EditingControlShowing, AddressOf Grilla_EditingControlShowing
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
-        Dim _NomSucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "'").ToString.Replace("SUCURSAL", "")
+        Dim _NomSucursal As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "'").ToString.Replace("SUCURSAL", "")
         _NomSucursal = _NomSucursal.Trim
-        Me.Text = "RECETAS PARA REPARACIONES, LOS PRECIOS SON PARA LA SUCURSAL: (" & ModSucursal & ") - " & _NomSucursal
+        Me.Text = "RECETAS PARA REPARACIONES, LOS PRECIOS SON PARA LA SUCURSAL: (" & Mod_Sucursal & ") - " & _NomSucursal
 
     End Sub
 
@@ -95,7 +95,7 @@ Public Class Frm_St_RecetaCrear
         Consulta_sql = "Select Cast(0 As Bit) As Nuevo_Item,Rec.*,Isnull(Ope.Descripcion,'') As Descripcion,Isnull(Pre.Id,0) As Id_Pre,Isnull(Pre.Precio,0) As Precio" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope Rec" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones Ope On Ope.Operacion = Rec.Operacion" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_St_OT_Recetas_OpePre Pre On Rec.Id = Pre.Id_ReOpe And Pre.Empresa = '" & ModEmpresa & "' And Pre.Sucursal = '" & ModSucursal & "'" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_St_OT_Recetas_OpePre Pre On Rec.Id = Pre.Id_ReOpe And Pre.Empresa = '" & Mod_Empresa & "' And Pre.Sucursal = '" & Mod_Sucursal & "'" & vbCrLf &
                        "Where Rec.Id_Rec = " & _Id_Rec & vbCrLf &
                        "Order By Orden"
 
@@ -475,7 +475,7 @@ Public Class Frm_St_RecetaCrear
             If _Nuevo Then
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Enc (Empresa,CodReceta,Descripcion,Activo) Values " &
-                               "('" & ModEmpresa & "','" & _CodReceta & "','" & _Descripcion & "'," & _Activo & ")"
+                               "('" & Mod_Empresa & "','" & _CodReceta & "','" & _Descripcion & "'," & _Activo & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                 Comando.Transaction = myTrans
@@ -504,7 +504,7 @@ Public Class Frm_St_RecetaCrear
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
 
-                Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_OT_Recetas_OpePre Where Id_Rec = " & _Id_Rec & " And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'"
+                Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_OT_Recetas_OpePre Where Id_Rec = " & _Id_Rec & " And Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & "'"
                 Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
@@ -532,7 +532,7 @@ Public Class Frm_St_RecetaCrear
                     If Not _Nuevo_Item Then
 
                         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope (Id_Rec,Empresa,CodReceta,Operacion,Orden,Cantidad,CantMayor1,Externa,TienePrecio) Values " &
-                                   "(" & _Id_Rec & ",'" & ModEmpresa & "','" & _CodReceta & "','" & _Operacion & "'," & _Orden & "," & _Cantidad & "," & _CantMayor1 & "," & _Externa & "," & _TienePrecio & ")"
+                                   "(" & _Id_Rec & ",'" & Mod_Empresa & "','" & _CodReceta & "','" & _Operacion & "'," & _Orden & "," & _Cantidad & "," & _CantMayor1 & "," & _Externa & "," & _TienePrecio & ")"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                         Comando.Transaction = myTrans
@@ -549,7 +549,7 @@ Public Class Frm_St_RecetaCrear
                         dfd1.Close()
 
                         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_OpePre (Id_Rec,Id_ReOpe,Empresa,Sucursal,Precio) Values " &
-                                   "(" & _Id_Rec & "," & _Id_ReOpe & ",'" & ModEmpresa & "','" & ModSucursal & "'," & _Precio & ")"
+                                   "(" & _Id_Rec & "," & _Id_ReOpe & ",'" & Mod_Empresa & "','" & Mod_Sucursal & "'," & _Precio & ")"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                         Comando.Transaction = myTrans
@@ -616,7 +616,7 @@ Public Class Frm_St_RecetaCrear
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
 
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_OT_Recetas_OpePre Where Id_Rec = " & _Id_Rec & " And Id_ReOpe Not In " & _Filtro_Id_ReOpe & " And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'"
+            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_St_OT_Recetas_OpePre Where Id_Rec = " & _Id_Rec & " And Id_ReOpe Not In " & _Filtro_Id_ReOpe & " And Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & "'"
             Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
@@ -644,7 +644,7 @@ Public Class Frm_St_RecetaCrear
                     If (_Nuevo_Item AndAlso Not String.IsNullOrEmpty(_Operacion)) Or (Not CBool(_Id) And Not String.IsNullOrEmpty(_Operacion)) Then
 
                         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_Ope (Id_Rec,Empresa,CodReceta,Operacion,Orden,Cantidad,CantMayor1,Externa,TienePrecio) Values " &
-                                   "(" & _Id_Rec & ",'" & ModEmpresa & "','" & _CodReceta & "','" & _Operacion & "'," & _Orden & "," & _Cantidad & "," & _CantMayor1 & "," & _Externa & "," & _TienePrecio & ")"
+                                   "(" & _Id_Rec & ",'" & Mod_Empresa & "','" & _CodReceta & "','" & _Operacion & "'," & _Orden & "," & _Cantidad & "," & _CantMayor1 & "," & _Externa & "," & _TienePrecio & ")"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                         Comando.Transaction = myTrans
@@ -661,7 +661,7 @@ Public Class Frm_St_RecetaCrear
                         dfd1.Close()
 
                         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_OpePre (Id_Rec,Id_ReOpe,Empresa,Sucursal,Precio) Values " &
-                                   "(" & _Id_Rec & "," & _Id_ReOpe & ",'" & ModEmpresa & "','" & ModSucursal & "'," & _Precio & ")"
+                                   "(" & _Id_Rec & "," & _Id_ReOpe & ",'" & Mod_Empresa & "','" & Mod_Sucursal & "'," & _Precio & ")"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                         Comando.Transaction = myTrans
@@ -682,7 +682,7 @@ Public Class Frm_St_RecetaCrear
                             If CBool(_Id) Then
 
                                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_St_OT_Recetas_OpePre (Id_Rec,Id_ReOpe,Empresa,Sucursal,Precio) Values " &
-                                           "(" & _Id_Rec & "," & _Id & ",'" & ModEmpresa & "','" & ModSucursal & "'," & _Precio & ")"
+                                           "(" & _Id_Rec & "," & _Id & ",'" & Mod_Empresa & "','" & Mod_Sucursal & "'," & _Precio & ")"
 
                                 Comando = New SqlClient.SqlCommand(Consulta_sql, _Cn)
                                 Comando.Transaction = myTrans
@@ -724,7 +724,7 @@ Public Class Frm_St_RecetaCrear
         Dim _Row_Operacion As DataRow
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And Operacion = '" & _CodOperacion & "' -- And Sucursal = '" & ModSucursal & "'"
+                       "Where Empresa = '" & Mod_Empresa & "' And Operacion = '" & _CodOperacion & "' -- And Sucursal = '" & Mod_Sucursal & "'"
         _Row_Operacion = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Not IsNothing(_Row_Operacion) Then

@@ -155,7 +155,7 @@ Public Class Frm_Aec_CesionDTE
             Return
         End If
 
-        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_RowDocumento.Item("IDMAEEDO"))
+        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_RowDocumento.Item("IDMAEEDO"), Mod_Empresa, Mod_Modalidad)
 
         Dim _RutCesionario = Me._RutCesionario
         Dim _RazonSocialCesionario = Me._RazonSocialCesionario

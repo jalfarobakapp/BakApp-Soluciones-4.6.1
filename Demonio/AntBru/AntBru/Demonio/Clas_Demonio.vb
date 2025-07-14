@@ -47,10 +47,10 @@ Public Module Clas_Demonio
             If IsNothing(_Global_Row_Empresa) Then
 
                 Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Empresas (Empresa,Rut,Razon,Ncorto,Direccion,Pais,Ciudad,Giro)" & vbCrLf &
-                               "Select EMPRESA,RUT,RAZON,NCORTO,DIRECCION,PAIS,CIUDAD,GIRO From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+                               "Select EMPRESA,RUT,RAZON,NCORTO,DIRECCION,PAIS,CIUDAD,GIRO From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
                 _Sql.Ej_consulta_IDU(Consulta_Sql)
 
-                Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & ModEmpresa & "'"
+                Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & Mod_Empresa & "'"
                 _Global_Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
             End If
@@ -59,7 +59,7 @@ Public Module Clas_Demonio
             DireccionEmpresa = _Global_Row_Empresa.Item("Direccion").ToString.Trim
             RutEmpresaActiva = _Global_Row_Empresa.Item("Rut").ToString.Trim
             RutEmpresa = RutEmpresaActiva
-            ModEmpresa = _Global_Row_Empresa.Item("Empresa").ToString.Trim
+            Mod_Empresa = _Global_Row_Empresa.Item("Empresa").ToString.Trim
 
         End If
 
@@ -90,10 +90,10 @@ Public Module Clas_Demonio
         If Not (_Global_Row_EstacionBk Is Nothing) Then
 
             FUNCIONARIO = _Global_Row_EstacionBk.Item("Usuario_X_Defecto")
-            Modalidad = _Global_Row_EstacionBk.Item("Modalidad_X_Defecto")
-            ModEmpresa = _Global_Row_EstacionBk.Item("Empresa_X_Defecto")
+            Mod_Modalidad = _Global_Row_EstacionBk.Item("Modalidad_X_Defecto")
+            Mod_Empresa = _Global_Row_EstacionBk.Item("Empresa_X_Defecto")
 
-            If String.IsNullOrWhiteSpace(ModEmpresa) Then
+            If String.IsNullOrWhiteSpace(Mod_Empresa) Then
                 FUNCIONARIO = String.Empty
             End If
 
@@ -116,11 +116,11 @@ Public Module Clas_Demonio
                     Frm_Modalidad.Dispose()
 
                     If MessageBoxEx.Show(_Formulario, "¿Desea dejar a este funcionario permanentemente como usuario por defecto para la estación de trabajo?" & vbCrLf & vbCrLf &
-                                         "Usuario: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim & " Modalidad: " & Modalidad,
+                                         "Usuario: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim & " Modalidad: " & Mod_Modalidad,
                                          "Usuario por defecto", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
                         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set " &
-                                       "Empresa_X_Defecto = '" & ModEmpresa & "',Usuario_X_Defecto = '" & FUNCIONARIO & "', Modalidad_X_Defecto = '" & Modalidad & "'" & vbCrLf &
+                                       "Empresa_X_Defecto = '" & Mod_Empresa & "',Usuario_X_Defecto = '" & FUNCIONARIO & "', Modalidad_X_Defecto = '" & Mod_Modalidad & "'" & vbCrLf &
                                        "Where NombreEquipo = '" & _Nombre_Equipo & "'"
                         _Sql.Ej_consulta_IDU(Consulta_Sql)
 
@@ -135,16 +135,16 @@ Public Module Clas_Demonio
             End If
 
 
-            Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & ModEmpresa & "'"
+            Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & Mod_Empresa & "'"
             _Global_Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
             If IsNothing(_Global_Row_Empresa) Then
 
                 Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Empresas (Empresa,Rut,Razon,Ncorto,Direccion,Pais,Ciudad,Giro)" & vbCrLf &
-                               "Select EMPRESA,RUT,RAZON,NCORTO,DIRECCION,PAIS,CIUDAD,GIRO From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+                               "Select EMPRESA,RUT,RAZON,NCORTO,DIRECCION,PAIS,CIUDAD,GIRO From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
                 _Sql.Ej_consulta_IDU(Consulta_Sql)
 
-                Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & ModEmpresa & "'"
+                Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & Mod_Empresa & "'"
                 _Global_Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
             End If
@@ -153,13 +153,13 @@ Public Module Clas_Demonio
             DireccionEmpresa = _Global_Row_Empresa.Item("Direccion").ToString.Trim
             RutEmpresaActiva = _Global_Row_Empresa.Item("Rut").ToString.Trim
             RutEmpresa = RutEmpresaActiva
-            ModEmpresa = _Global_Row_Empresa.Item("Empresa").ToString.Trim
+            Mod_Empresa = _Global_Row_Empresa.Item("Empresa").ToString.Trim
 
             Dim _Mod As New Clas_Modalidades
             _Mod.Sb_Actualiza_Formatos_X_Modalidad()
             _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-            _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+            _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+            _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
             'Sb_Demonio()
 

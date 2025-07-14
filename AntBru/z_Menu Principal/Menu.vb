@@ -69,7 +69,7 @@ Public Class Menu
 
         Try
             Lbl_Estatus.Text = "Fun: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim &
-                          ",Emp: " & ModEmpresa & ", Mod: " & Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
+                          ",Emp: " & Mod_Empresa & ", Mod: " & Mod_Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
                           "(Base BakApp: " & _Global_BaseBk & "). Estación: " & _Global_Row_EstacionBk.Item("NombreEquipo")
         Catch ex As Exception
             Lbl_Estatus.Text = String.Empty
@@ -298,7 +298,7 @@ Public Class Menu
 
                         If Cadena_ConexionSQL_Server <> _Cadena_ConexionSQL_Server_Original Then
 
-                            Dim _RutEmpresa = Trim(_Sql.Fx_Trae_Dato("CONFIGP", "RUT", "EMPRESA = '" & ModEmpresa & "'"))
+                            Dim _RutEmpresa = Trim(_Sql.Fx_Trae_Dato("CONFIGP", "RUT", "EMPRESA = '" & Mod_Empresa & "'"))
 
                             Dim _Class_BaseBk As New Class_Conectar_Base_BakApp(_Fm_Menu_Padre)
 
@@ -775,7 +775,7 @@ Public Class Menu
             Dim _Mod As New Clas_Modalidades
 
             _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+            _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
             Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
@@ -847,7 +847,7 @@ Public Class Menu
     Private Sub Menu_Enter(sender As Object, e As EventArgs) Handles MyBase.Enter
         Try
             Lbl_Estatus.Text = "Fun: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim &
-                          ", Mod: " & Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
+                          ", Mod: " & Mod_Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
                           "(Base BakApp: " & _Global_BaseBk & "). Estación: " & _Global_Row_EstacionBk.Item("NombreEquipo")
         Catch ex As Exception
             Lbl_Estatus.Text = String.Empty
@@ -1129,7 +1129,7 @@ Public Class Menu
 
     Private Sub Btn_OccPreventa_Click(sender As Object, e As EventArgs) Handles Btn_OccPreventa.Click
 
-        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, "OCC", True)
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, "OCC", True)
 
         If (_RowFormato Is Nothing) Then
 
@@ -1168,7 +1168,7 @@ Public Class Menu
 
         _Maedpce = New MAEDPCE With {
         .TIDP = "TJV",
-        .EMPRESA = ModEmpresa,
+        .EMPRESA = Mod_Empresa,
         .ENDP = _Row_Maeedo.Item("ENDO"),
         .EMDP = "904",
         .SUEMDP = "",
@@ -1221,7 +1221,7 @@ Public Class Menu
         Return
 
         Dim _Tido As String = "GDI"
-        Dim _Modalidad As String = Modalidad
+        Dim _Modalidad As String = Mod_Modalidad
         Dim _Fecha_Emision As Date = FechaDelServidor()
         Dim _Codigo As String = "01VAC16PMX000"
         Dim _Cantidad As Double = 200
@@ -1235,7 +1235,7 @@ Public Class Menu
 
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
-        'Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        'Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
         'Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         'Dim _Koen = _Row_Configp.Item("RUT")
@@ -1286,7 +1286,7 @@ Public Class Menu
 
         Try
 
-            Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+            Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
             Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Koen = _Row_Configp.Item("RUT")
@@ -1363,7 +1363,7 @@ Public Class Menu
             Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
             Dim Fm_Post As New Frm_Formulario_Documento("GRI", csGlobales.Enum_Tipo_Documento.Guia_Recepcion_Interna, False)
-            Fm_Post.Sb_Limpiar(Modalidad)
+            Fm_Post.Sb_Limpiar(Mod_Modalidad)
             Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True,, _Bodega_Recepcion, _Sucursal_Recepcion, True)
 
             _Mensaje = Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)

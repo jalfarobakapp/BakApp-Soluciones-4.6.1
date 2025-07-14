@@ -230,8 +230,8 @@ Public Class Frm_Importar_Stock_OEBD_Selec_Prod
 
         Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
         Fm_b.Pro_Empresa = _Empresa_Ori
-        Fm_b.Pro_Sucursal = ModSucursal
-        Fm_b.Pro_Bodega = ModBodega
+        Fm_b.Pro_Sucursal = Mod_Sucursal
+        Fm_b.Pro_Bodega = Mod_Bodega
         Fm_b.RevisarPermisosBodega = False
         Fm_b.Pedir_Permiso = False
         Fm_b.ShowDialog(Me)
@@ -256,9 +256,9 @@ Public Class Frm_Importar_Stock_OEBD_Selec_Prod
     Private Sub Btn_Bodega_Destino_Click(sender As Object, e As EventArgs) Handles Btn_Bodega_Destino.Click
 
         Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-        Fm_b.Pro_Empresa = ModEmpresa
-        Fm_b.Pro_Sucursal = ModSucursal
-        Fm_b.Pro_Bodega = ModBodega
+        Fm_b.Pro_Empresa = Mod_Empresa
+        Fm_b.Pro_Sucursal = Mod_Sucursal
+        Fm_b.Pro_Bodega = Mod_Bodega
         Fm_b.Pedir_Permiso = False
         Fm_b.ShowDialog(Me)
 

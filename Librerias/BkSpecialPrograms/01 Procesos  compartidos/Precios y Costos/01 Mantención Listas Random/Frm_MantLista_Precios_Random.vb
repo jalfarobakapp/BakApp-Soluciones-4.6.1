@@ -317,8 +317,8 @@ Public Class Frm_MantLista_Precios_Random
             Fm.BtnExportaExcel.Visible = False
             Fm.Pro_Tipo_Lista = "P"
             Fm.Pro_Maestro_Productos = False
-            Fm.Pro_Sucursal_Busqueda = ModSucursal
-            Fm.Pro_Bodega_Busqueda = ModBodega
+            Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+            Fm.Pro_Bodega_Busqueda = Mod_Bodega
             Fm.Pro_Lista_Busqueda = _Tbl_Listas_Seleccionadas.Rows(0).Item("KOLT")
 
             'If Rdb_Traer_Bloqueados_Compras.Checked Then
@@ -597,8 +597,8 @@ Public Class Frm_MantLista_Precios_Random
 
             Consulta_sql += My.Resources.Recursos_LP.SQLQuery_Actualizar_Costos_Impuestos_New
             Consulta_sql = Replace(Consulta_sql, "#Tbl_Paso_LP#", _Nombre_Tbl_Paso_Precios)
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-            Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+            Consulta_sql = Replace(Consulta_sql, "#Sucursal#", Mod_Sucursal)
 
             Consulta_sql += vbCrLf & "Select * From " & _Nombre_Tbl_Paso_Precios
 
@@ -798,7 +798,7 @@ Public Class Frm_MantLista_Precios_Random
 
             Lbl_Rtu.Text = _Fila.Cells("RLUD").Value
 
-            Consulta_sql = "Select Top 1 * From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & Codigo & "'"
+            Consulta_sql = "Select Top 1 * From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & Codigo & "'"
             Dim _Row_Maeprem As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Ppul01 As Double
@@ -1850,9 +1850,9 @@ Public Class Frm_MantLista_Precios_Random
         Fm.Pro_CodEntidad = String.Empty
         Fm.Pro_CodSucEntidad = String.Empty
         Fm.Pro_Tipo_Lista = "P"
-        Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
-        Fm.Pro_Sucursal_Busqueda = ModSucursal
-        Fm.Pro_Bodega_Busqueda = ModBodega
+        Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
+        Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+        Fm.Pro_Bodega_Busqueda = Mod_Bodega
         Fm.Pro_Mostrar_Info = False
         Fm.Pro_Actualizar_Precios = False
 

@@ -43,7 +43,7 @@ Public Class Cl_Enviar_Impresion_Diablito
     Function Fx_Trae_Tbl_Configuracion_Estaciones_Impresion(_Modalidad As String, _Tido As String, _Tipo As Enum_Tipo) As DataTable
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Usuarios_Impresion 
-                        Where CodFuncionario = '" & _CodFuncionario & "' And Empresa = '" & ModEmpresa & "' And " &
+                        Where CodFuncionario = '" & _CodFuncionario & "' And Empresa = '" & Mod_Empresa & "' And " &
                        "Modalidad = '" & _Modalidad & "' And Tido = '" & _Tido & "' And Tipo = '" & _Tipo.ToString & "' And Activo = 1"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -55,7 +55,7 @@ Public Class Cl_Enviar_Impresion_Diablito
     Function Fx_Trae_Tbl_Configuracion_Estaciones_Impresion_Todas_Modalidades(_Tido As String, _Tipo As Enum_Tipo) As DataTable
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Usuarios_Impresion 
-                        Where CodFuncionario = '" & _CodFuncionario & "' And Empresa = '" & ModEmpresa & "' And " &
+                        Where CodFuncionario = '" & _CodFuncionario & "' And Empresa = '" & Mod_Empresa & "' And " &
                        "Imp_Todas_Modalidades = 1 And Tido = '" & _Tido & "' And Tipo = '" & _Tipo.ToString & "' And Activo = 1 And Modalidad = ''"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)

@@ -106,13 +106,13 @@ Public Class Frm_Modalidades
 
         Cmb_Modalidades.DataSource = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
-        Modalidad = _Sql.Fx_Trae_Dato("TABFU", "MODALIDAD", "KOFU = '" & FUNCIONARIO & "'")
-        Dim _Emp As String = ModEmpresa '_Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Modalidad & "'")
+        Mod_Modalidad = _Sql.Fx_Trae_Dato("TABFU", "MODALIDAD", "KOFU = '" & FUNCIONARIO & "'")
+        Dim _Emp As String = Mod_Empresa '_Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Modalidad & "'")
 
         Cmb_Modalidades.SelectedValue = _Emp
 
         If IsNothing(Cmb_Modalidades.SelectedValue) Then
-            _Emp = _Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Modalidad & "'")
+            _Emp = _Sql.Fx_Trae_Dato("CONFIEST", "EMPRESA", "MODALIDAD = '" & Mod_Modalidad & "'")
             Cmb_Modalidades.SelectedValue = _Emp
         End If
 
@@ -230,7 +230,7 @@ Public Class Frm_Modalidades
 
         End With
 
-        BuscarDatoEnGrilla(Modalidad, "MODALIDAD", Grilla_Modalidades)
+        BuscarDatoEnGrilla(Mod_Modalidad, "MODALIDAD", Grilla_Modalidades)
 
         Me.ActiveControl = Grilla_Modalidades
 
@@ -263,7 +263,7 @@ Public Class Frm_Modalidades
 
             End If
 
-            Modalidad = _Fila.Cells("MODALIDAD").Value
+            Mod_Modalidad = _Fila.Cells("MODALIDAD").Value
 
             If _Preguntar_Por_Bodega Then
 
@@ -286,35 +286,35 @@ Public Class Frm_Modalidades
 
             If _Cambiar_Modalidad Then
 
-                ModEmpresa = _Fila.Cells("EMPRESA").Value
+                Mod_Empresa = _Fila.Cells("EMPRESA").Value
 
                 Consulta_Sql = "Select top 1 Cest.*,Cfgp.RAZON" & vbCrLf &
                                "From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA" & vbCrLf &
-                               "Where MODALIDAD = '" & Modalidad & "'  And Cest.EMPRESA = '" & ModEmpresa & "'"
+                               "Where MODALIDAD = '" & Mod_Modalidad & "'  And Cest.EMPRESA = '" & Mod_Empresa & "'"
                 _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
-                ModEmpresa = _Global_Row_Modalidad.Item("EMPRESA")
-                ModSucursal = _Global_Row_Modalidad.Item("ESUCURSAL")
-                ModBodega = _Global_Row_Modalidad.Item("EBODEGA")
-                ModCaja = _Global_Row_Modalidad.Item("ECAJA")
-                ModListaPrecioVenta = Mid(_Global_Row_Modalidad.Item("ELISTAVEN"), 6, 3)
-                ModListaPrecioCosto = Mid(_Global_Row_Modalidad.Item("ELISTACOM"), 6, 3)
+                Mod_Empresa = _Global_Row_Modalidad.Item("EMPRESA")
+                Mod_Sucursal = _Global_Row_Modalidad.Item("ESUCURSAL")
+                Mod_Bodega = _Global_Row_Modalidad.Item("EBODEGA")
+                Mod_Caja = _Global_Row_Modalidad.Item("ECAJA")
+                Mod_ListaPrecioVenta = Mid(_Global_Row_Modalidad.Item("ELISTAVEN"), 6, 3)
+                Mod_ListaPrecioCosto = Mid(_Global_Row_Modalidad.Item("ELISTACOM"), 6, 3)
 
                 _Modalidad_Seleccionada = True
 
 
                 If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Empresas") Then
 
-                    Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & ModEmpresa & "'"
+                    Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & Mod_Empresa & "'"
                     _Global_Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                     If IsNothing(_Global_Row_Empresa) Then
 
                         Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Empresas (Empresa,Rut,Razon,Ncorto,Direccion,Pais,Ciudad,Giro)" & vbCrLf &
-                                       "Select EMPRESA,RUT,RAZON,NCORTO,DIRECCION,PAIS,CIUDAD,GIRO From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+                                       "Select EMPRESA,RUT,RAZON,NCORTO,DIRECCION,PAIS,CIUDAD,GIRO From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
                         _Sql.Ej_consulta_IDU(Consulta_Sql)
 
-                        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & ModEmpresa & "'"
+                        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & Mod_Empresa & "'"
                         _Global_Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                     End If

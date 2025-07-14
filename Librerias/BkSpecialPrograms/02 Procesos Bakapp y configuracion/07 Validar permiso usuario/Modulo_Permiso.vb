@@ -125,7 +125,7 @@ Public Module Modulo_Permiso
                 End If
 
                 If _Grabar_Log Then
-                    _Id_Log_Gestion = Fx_Add_Log_Gestion(_Func, Modalidad, _Archirst, _Idmaeedo, "", _NombrePermiso,
+                    _Id_Log_Gestion = Fx_Add_Log_Gestion(_Func, Mod_Modalidad, _Archirst, _Idmaeedo, "", _NombrePermiso,
                                                          _Codpermiso, "", _CodEntidad, _CodSucEntidad,
                                                          True, _Rows_Usuario_Autoriza.Item("KOFU"))
                 End If
@@ -243,7 +243,7 @@ Public Module Modulo_Permiso
                         End If
 
                         If _Grabar_Log Then
-                            _Id_Log_Gestion = Fx_Add_Log_Gestion(_Func, Modalidad, _Archirst, _Idmaeedo, "", _NombrePermiso,
+                            _Id_Log_Gestion = Fx_Add_Log_Gestion(_Func, Mod_Modalidad, _Archirst, _Idmaeedo, "", _NombrePermiso,
                                                                  _Codpermiso, "", _CodEntidad, _CodSucEntidad,
                                                                  True, _Rows_Usuario_Autoriza.Item("KOFU"),
                                                                  _PermisoRemoto, _Id_Rem, _NroRemota)

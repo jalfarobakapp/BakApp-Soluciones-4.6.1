@@ -35,7 +35,7 @@ Public Class Frm_Importar_Stock_OEBD_Bod
     Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DbExt_Maest" & vbCrLf &
-                       "Where Empresa_Ori = '" & ModEmpresa & "'"
+                       "Where Empresa_Ori = '" & Mod_Empresa & "'"
 
         _Tbl_Configuraciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -193,8 +193,8 @@ Public Class Frm_Importar_Stock_OEBD_Bod
 
         Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
         Fm_b.Pro_Empresa = _Empresa_Ori
-        Fm_b.Pro_Sucursal = ModSucursal
-        Fm_b.Pro_Bodega = ModBodega
+        Fm_b.Pro_Sucursal = Mod_Sucursal
+        Fm_b.Pro_Bodega = Mod_Bodega
         Fm_b.RevisarPermisosBodega = False
         Fm_b.Pedir_Permiso = False
         Fm_b.ShowDialog(Me)
@@ -219,9 +219,9 @@ Public Class Frm_Importar_Stock_OEBD_Bod
 
 
         Fm_b = New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-        Fm_b.Pro_Empresa = ModEmpresa
-        Fm_b.Pro_Sucursal = ModSucursal
-        Fm_b.Pro_Bodega = ModBodega
+        Fm_b.Pro_Empresa = Mod_Empresa
+        Fm_b.Pro_Sucursal = Mod_Sucursal
+        Fm_b.Pro_Bodega = Mod_Bodega
         Fm_b.Pedir_Permiso = False
         Fm_b.ShowDialog(Me)
 

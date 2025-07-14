@@ -114,7 +114,7 @@ Public Class Frm_MtCreacionDeProducto
         caract_combo(Cmb_Codlista)
         Consulta_sql = Union & "SELECT 'TABPP'+KOLT AS Padre,KOLT+'-'+NOKOLT AS Hijo FROM TABPP"
         Cmb_Codlista.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
-        ListaCostoPro = "TABPP" & ModListaPrecioCosto
+        ListaCostoPro = "TABPP" & Mod_ListaPrecioCosto
         Cmb_Codlista.SelectedValue = ListaCostoPro
 
 

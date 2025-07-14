@@ -187,10 +187,10 @@ Public Class Frm_Chilexpress_Conf
         Fm.BtnExportaExcel.Visible = False
         Fm.Pro_Tipo_Lista = "P"
         Fm.Pro_Maestro_Productos = False
-        Fm.Pro_Sucursal_Busqueda = ModSucursal
-        Fm.Pro_Bodega_Busqueda = ModBodega
+        Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+        Fm.Pro_Bodega_Busqueda = Mod_Bodega
         Fm.Pro_Filtro_Sql_Extra = "And TIPR = 'SSN'"
-        Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+        Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
         Fm.ShowDialog(Me)
 
         If Fm.Pro_Seleccionado Then

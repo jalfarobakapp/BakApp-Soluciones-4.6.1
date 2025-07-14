@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 
 
@@ -77,10 +77,10 @@ Public Class Frm_Remotas_Revisar_Documento
                    ByVal Permiso_Remoto As Boolean, _
                    ByVal Tipo_Permiso As Enum_Tipo_de_Permiso)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         _Permiso_Remoto = Permiso_Remoto
         _RowRemota = RowRemota
 
@@ -194,7 +194,7 @@ Public Class Frm_Remotas_Revisar_Documento
 
             .Columns("NroDocumento").Visible = True
             .Columns("NroDocumento").Width = 90
-            .Columns("NroDocumento").HeaderText = "Número"
+            .Columns("NroDocumento").HeaderText = "NÃºmero"
             .Columns("NroDocumento").DisplayIndex = 1
             .Columns("NroDocumento").ReadOnly = True
 
@@ -336,14 +336,14 @@ Public Class Frm_Remotas_Revisar_Documento
             .Columns("Lincondest").DisplayIndex = 1
 
             .Columns("Codigo").Width = 100 + _Mas
-            .Columns("Codigo").HeaderText = "Código"
+            .Columns("Codigo").HeaderText = "CÃ³digo"
             .Columns("Codigo").Visible = True
             .Columns("Codigo").Frozen = True
             .Columns("Codigo").DisplayIndex = 2
 
             'If Not _Permiso_Remoto Then
             '.Columns("Descripcion").Width = 200 + _Mas
-            '.Columns("Descripcion").HeaderText = "Descripción"
+            '.Columns("Descripcion").HeaderText = "DescripciÃ³n"
             '.Columns("Descripcion").Visible = True
             '.Columns("Descripcion").Frozen = True
             '.Columns("Descripcion").DisplayIndex = 3
@@ -530,7 +530,7 @@ Public Class Frm_Remotas_Revisar_Documento
 
             If String.IsNullOrEmpty(_Tict) And Not String.IsNullOrEmpty(_Tipr) And Not _Prct Then
                 _UltCompraLinea = _Sql.Fx_Trae_Dato("MAEPREM", "PPUL0" & _UnTrans, _
-                                                    "EMPRESA = '" & ModEmpresa & "' AND KOPR = '" & _Codigo & "'")
+                                                    "EMPRESA = '" & Mod_Empresa & "' AND KOPR = '" & _Codigo & "'")
                 _Costo_Lista = _Sql.Fx_Trae_Dato("TABPRE", "PP0" & _UnTrans & "UD", _
                                                  "KOLT = '" & _Lista_Costo & "' And KOPR = '" & _Codigo & "'", True)
             ElseIf _Tict = "D" Then
@@ -729,14 +729,14 @@ Public Class Frm_Remotas_Revisar_Documento
 
             Else
 
-                MessageBoxEx.Show(Me, "Descuento global según documento " & Lbl_Total_Dscto_Porcentaje.Text & vbCrLf & _
-                                  "Descuento máximo permitido para el usuario: " & FormatPercent(_Valor_Dscto, 2), _
+                MessageBoxEx.Show(Me, "Descuento global segÃºn documento " & Lbl_Total_Dscto_Porcentaje.Text & vbCrLf & _
+                                  "Descuento mÃ¡ximo permitido para el usuario: " & FormatPercent(_Valor_Dscto, 2), _
                                   "PERMISO DENEGADO", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
             End If
         Else
-            MessageBoxEx.Show(Me, "Usted no posee permiso para realizar esta acción" & vbCrLf & _
-                              "Permiso Nro: Bkp00039", "Validación", _
+            MessageBoxEx.Show(Me, "Usted no posee permiso para realizar esta acciÃ³n" & vbCrLf & _
+                              "Permiso Nro: Bkp00039", "ValidaciÃ³n", _
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
@@ -813,7 +813,7 @@ Public Class Frm_Remotas_Revisar_Documento
             Dim _PmSucLinea = _Fila.Item("PmSucLinea")
 
             'Dim _UltCompraLinea As Double = _Sql.Fx_Trae_Dato(, "PPUL0" & _UnTrans, "MAEPREM", _
-            '                                          "EMPRESA = '" & ModEmpresa & "' AND KOPR = '" & _Codigo & "'")
+            '                                          "EMPRESA = '" & Mod_Empresa & "' AND KOPR = '" & _Codigo & "'")
             'Dim _Costo_Lista As Double = _Sql.Fx_Trae_Dato(, "PP0" & _UnTrans & "UD", _
             '                                       "TABPRE", "KOLT = '" & _Lista_Costo & "' And KOPR = '" & _Codigo & "'", True)
 
@@ -1061,7 +1061,7 @@ Public Class Frm_Remotas_Revisar_Documento
             Fm.ShowDialog(Me)
             Fm.Dispose()
         Else
-            MessageBoxEx.Show(Me, "Falta el entidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "Falta el entidad", "ValidaciÃ³n", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
     End Sub
 

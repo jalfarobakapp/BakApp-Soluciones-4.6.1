@@ -655,7 +655,7 @@ Public Class Frm_BusquedaDocumento_Filtro
                         Left Join TABTIDO Tdo On Ddo.TIDO = Tdo.TIDO
                         Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
                         Where 
-	                        Ddo.EMPRESA = '" & ModEmpresa & "' 
+	                        Ddo.EMPRESA = '" & Mod_Empresa & "' 
                         And Edo.TIDO = '" & CmbTipoDeDocumentos.SelectedValue & "'
                         And LILG In ('SI','CR') 
                         And PRCT = 0
@@ -769,7 +769,7 @@ Buscar:
 
 
         Consulta_sql = My.Resources._24_Recursos.SQLQuery_Buscar_Docmuento
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#CantidadDoc#", CmbCantFilas.Text)
         Consulta_sql = Replace(Consulta_sql, "#TipoDocumento#", _Sql_Filtro_Documentos)
         Consulta_sql = Replace(Consulta_sql, "#NroDocumento#", _Sql_Nro_Documento)
@@ -962,9 +962,9 @@ Buscar:
         Fm.BtnExportaExcel.Visible = False
         Fm.Pro_Tipo_Lista = "P"
         Fm.Pro_Maestro_Productos = False
-        Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
-        Fm.Pro_Sucursal_Busqueda = ModSucursal
-        Fm.Pro_Bodega_Busqueda = ModBodega
+        Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
+        Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+        Fm.Pro_Bodega_Busqueda = Mod_Bodega
         Fm.ShowDialog(Me)
 
         If Fm.Pro_Seleccionado Then

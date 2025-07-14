@@ -58,7 +58,7 @@ Public Class Frm_Prod_Vs_Funcionarios
                        "From " & _Global_BaseBk & "Zw_Prod_Usuario_Validador" & vbCrLf &
                        "Left Join MAEPR On KOPR = Codigo" & vbCrLf &
                        "Left Join TABCT On KOCT = Codigo" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And CodFuncionario = '" & _CodFuncionario & "'"
+                       "Where Empresa = '" & Mod_Empresa & "' And CodFuncionario = '" & _CodFuncionario & "'"
         Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql)
 
         _Tbl_Productos = _Ds.Tables("Table")
@@ -140,7 +140,7 @@ Public Class Frm_Prod_Vs_Funcionarios
                     If _Chk Then
 
                         Consulta_sql += "Delete " & _Global_BaseBk & "Zw_Prod_Usuario_Validador" & vbCrLf &
-                                       "Where Empresa = '" & ModEmpresa & "' And CodFuncionario = '" & _CodFuncionario & "' And Codigo = '" & _Codigo & "'" & vbCrLf
+                                       "Where Empresa = '" & Mod_Empresa & "' And CodFuncionario = '" & _CodFuncionario & "' And Codigo = '" & _Codigo & "'" & vbCrLf
 
                     End If
 
@@ -203,7 +203,7 @@ Public Class Frm_Prod_Vs_Funcionarios
         Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "Codigo", False, False, "'")
 
         Dim _Sql_Filtro_Condicion_Extra = "And KOPR Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Usuario_Validador " &
-                                          "Where Empresa = '" & ModEmpresa & "')"
+                                          "Where Empresa = '" & Mod_Empresa & "')"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
@@ -223,7 +223,7 @@ Public Class Frm_Prod_Vs_Funcionarios
                 _Filtro_Productos = Generar_Filtro_IN(_Tbl_Filtro_Productos, "Chk", "Codigo", False, True, "'")
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Usuario_Validador (Empresa, CodFuncionario, Codigo)" & vbCrLf &
-                               "Select '" & ModEmpresa & "','" & _CodFuncionario & "',KOPR" & vbCrLf &
+                               "Select '" & Mod_Empresa & "','" & _CodFuncionario & "',KOPR" & vbCrLf &
                                "From MAEPR" & vbCrLf &
                                "Where KOPR In " & _Filtro_Productos & vbCrLf
                 _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -243,7 +243,7 @@ Public Class Frm_Prod_Vs_Funcionarios
         Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "Codigo", False, False, "'")
 
         Dim _Sql_Filtro_Condicion_Extra = "And KOCT Not In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Usuario_Validador " &
-                                          "Where Empresa = '" & ModEmpresa & "')"
+                                          "Where Empresa = '" & Mod_Empresa & "')"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
@@ -263,7 +263,7 @@ Public Class Frm_Prod_Vs_Funcionarios
                 _Filtro_Productos = Generar_Filtro_IN(_Tbl_Filtro_Productos, "Chk", "Codigo", False, True, "'")
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Usuario_Validador (Empresa, CodFuncionario, Codigo)" & vbCrLf &
-                               "Select '" & ModEmpresa & "','" & _CodFuncionario & "',KOCT" & vbCrLf &
+                               "Select '" & Mod_Empresa & "','" & _CodFuncionario & "',KOCT" & vbCrLf &
                                "From TABCT" & vbCrLf &
                                "Where KOCT In " & _Filtro_Productos & vbCrLf
                 _Sql.Ej_consulta_IDU(Consulta_sql)

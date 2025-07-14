@@ -207,7 +207,7 @@ Public Class Clas_Despacho
                             From " & _Global_BaseBk & "Zw_Despachos_Configuracion ZConf
                             Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Tvta On Tvta.Tabla = 'SIS_DESPACHO_TIPO_VENTA' And Tvta.CodigoTabla = Tipo_Venta_X_Defecto
                             Left Join TABRETI On KORETI = Transportista_X_Defecto
-                            Where Empresa = '" & ModEmpresa & "'"
+                            Where Empresa = '" & Mod_Empresa & "'"
         _Row_Conf_Despacho = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Actualizar_Tablas Then
@@ -467,9 +467,9 @@ Public Class Clas_Despacho
             .Item("Id_Despacho") = 0
             .Item("Nro_Despacho") = String.Empty
             .Item("Nro_Sub") = String.Empty
-            .Item("Empresa") = ModEmpresa
-            .Item("Sucursal") = ModSucursal
-            .Item("Bodega") = ModBodega
+            .Item("Empresa") = Mod_Empresa
+            .Item("Sucursal") = Mod_Sucursal
+            .Item("Bodega") = Mod_Bodega
             .Item("Confirmado") = True
             .Item("Tipo_Despacho") = String.Empty
             .Item("Estado") = String.Empty
@@ -1875,7 +1875,7 @@ Public Class Clas_Despacho
             Dim _Filtro_Bodegas As String
 
             If _NoIncluirSucursalModalidadEnRetiro And (Tipo_Envio = "RT" Or Tipo_Envio = "RR") Then
-                _Filtro_Bodegas = "And Ddo.SULIDO <> '" & ModSucursal & "'"
+                _Filtro_Bodegas = "And Ddo.SULIDO <> '" & Mod_Sucursal & "'"
             End If
 
             Consulta_sql = "Select Distinct Edo.IDMAEEDO,Ddo.EMPRESA,Ddo.SULIDO,Ddo.BOSULIDO,Edo.NUDONODEFI 

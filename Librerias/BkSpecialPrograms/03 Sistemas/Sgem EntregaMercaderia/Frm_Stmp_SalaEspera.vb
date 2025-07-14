@@ -54,8 +54,8 @@
         _Condicion = vbCrLf & "And Estado = 'FACTU' Or (Estado IN ('PREPA','COMPL') And Planificada = 1 And Facturar = 1)"
 
         Consulta_sql = My.Resources.Recursos_WmsSgem.SQLQuery_Lista_de_espera_Sgem
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", Mod_Sucursal)
         Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)
         Consulta_sql = Replace(Consulta_sql, "Select * From #Paso Order by Tido,Nudo", "Select * From #Paso Order by Numero")
         Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_Enc", _Global_BaseBk & "Zw_Stmp_Enc")
@@ -121,8 +121,8 @@
                                            "FETCH NEXT @TamañoDePágina ROWS ONLY;"
 
         Consulta_sql = My.Resources.Recursos_WmsSgem.SQLQuery_Lista_de_espera_Sgem
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", Mod_Sucursal)
         Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)
         Consulta_sql = Replace(Consulta_sql, "Select * From #Paso Order by Tido,Nudo", "Select * From #Paso Order by Numero")
         Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_Enc", _Global_BaseBk & "Zw_Stmp_Enc")

@@ -68,7 +68,7 @@ Public Class Frm_Folios_Caf
         Consulta_sql = "Select Empresa,Tido,RE,RS,TD,NOTIDO,RNG_D,RNG_H,FA,RSAPK_M,RSAPK_E,IDK,FRMA,RSASK,RSAPUBK,CAF" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Caf" & vbCrLf &
                        "Left Join TABTIDO On Tido = TIDO" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion & vbCrLf & _Condicion & vbCrLf &
+                       "Where Empresa = '" & Mod_Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion & vbCrLf & _Condicion & vbCrLf &
                        "Order By TD,RNG_D"
 
         Dim _Tbl_Inventarios As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -215,7 +215,7 @@ Public Class Frm_Folios_Caf
                     End If
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Caf (Empresa,Tido,RE,RS,TD,RNG_D,RNG_H,FA,RSAPK_M,RSAPK_E,IDK,FRMA,RSASK,RSAPUBK,CAF,AmbienteCertificacion) Values " &
-                                   "('" & ModEmpresa & "','" & _Tido & "','" & _Re & "','" & _Rs & "'," & _Td & "," & _Rng_d & "," & _Rng_h &
+                                   "('" & Mod_Empresa & "','" & _Tido & "','" & _Re & "','" & _Rs & "'," & _Td & "," & _Rng_d & "," & _Rng_h &
                                    ",'" & Format(_Fa, "yyyyMMdd") & "','" & _Rsapk_m & "','" & _Rsapk_e & "','" & _Idk & "','" & _Frma & "'" &
                                    ",'" & _Rsask & "','" & _Rsapubk & "','" & _CafStr & "'," & _AmbienteCertificacion & ")"
 

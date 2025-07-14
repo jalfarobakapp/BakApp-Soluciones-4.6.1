@@ -27,7 +27,7 @@ Public Class SolCompras_DocumentosImportaciones
 
     Private Sub Btn_OCC_Click(sender As Object, e As EventArgs) Handles Btn_OCC.Click
 
-        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, "OCC", True)
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, "OCC", True)
 
         If (_RowFormato Is Nothing) Then
 

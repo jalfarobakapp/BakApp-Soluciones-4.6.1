@@ -51,7 +51,7 @@ Public Class Frm_ConfTidoXModal
         Consulta_sql = "Select ZConf.*,Td.*" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad ZConf" & vbCrLf &
                        "Left Join TABTIDO Td On Td.TIDO = ZConf.TipoDoc" & vbCrLf &
-                       "Where ZConf.Empresa = '" & ModEmpresa & "' And ZConf.Modalidad = '" & _Modalidad & "' And ZConf.TipoDoc = '" & _Tido & "'"
+                       "Where ZConf.Empresa = '" & Mod_Empresa & "' And ZConf.Modalidad = '" & _Modalidad & "' And ZConf.TipoDoc = '" & _Tido & "'"
 
         _RowFormato = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -86,14 +86,14 @@ Public Class Frm_ConfTidoXModal
             Input_AvisoSaldoFolios.MinValue = 0
             Input_AvisoSaldoFolios.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
                                                              "AvisoSaldoFolios",
-                                                             "Empresa = '" & ModEmpresa & "' And Modalidad = '  ' And TipoDoc = '" & _Tido & "'")
+                                                             "Empresa = '" & Mod_Empresa & "' And Modalidad = '  ' And TipoDoc = '" & _Tido & "'")
             Input_AvisoSaldoFolios.Enabled = False
             Lbl_AvisoSaldoFolios.Enabled = False
 
             Input_DiasAvisoExpiraFolio.MinValue = 0
             Input_DiasAvisoExpiraFolio.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
                                                              "DiasAvisoExpiraFolio",
-                                                             "Empresa = '" & ModEmpresa & "' And Modalidad = '  ' And TipoDoc = '" & _Tido & "'")
+                                                             "Empresa = '" & Mod_Empresa & "' And Modalidad = '  ' And TipoDoc = '" & _Tido & "'")
             Input_DiasAvisoExpiraFolio.Enabled = False
             Lbl_DiasAvisoExpiraFolio.Enabled = False
         End If
@@ -201,7 +201,7 @@ Public Class Frm_ConfTidoXModal
             End If
 
             Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("MAEEDO",
-                                        "EMPRESA = '" & ModEmpresa & "' And TIDO In " & _Filtro_Tido & " And NUDO = '" & _Numero & "'"))
+                                        "EMPRESA = '" & Mod_Empresa & "' And TIDO In " & _Filtro_Tido & " And NUDO = '" & _Numero & "'"))
 
             If _Reg Then
 
@@ -218,14 +218,14 @@ Public Class Frm_ConfTidoXModal
         Consulta_sql = String.Empty
 
         If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
-            Consulta_sql += "Update CONFIEST Set GDV = '" & _Numero & "' Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
-            Consulta_sql += "Update CONFIEST Set GTI = '" & _Numero & "' Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
-            Consulta_sql += "Update CONFIEST Set GDP = '" & _Numero & "' Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
-            Consulta_sql += "Update CONFIEST Set GDD = '" & _Numero & "' Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf & vbCrLf
+            Consulta_sql += "Update CONFIEST Set GDV = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
+            Consulta_sql += "Update CONFIEST Set GTI = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
+            Consulta_sql += "Update CONFIEST Set GDP = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
+            Consulta_sql += "Update CONFIEST Set GDD = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf & vbCrLf
         Else
 
             If Txt_Numero.Visible Then
-                Consulta_sql += "Update CONFIEST Set " & _Tido & " = '" & _Numero & "' Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf & vbCrLf
+                Consulta_sql += "Update CONFIEST Set " & _Tido & " = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf & vbCrLf
             End If
 
         End If
@@ -246,13 +246,13 @@ Public Class Frm_ConfTidoXModal
                    ",DiasAvisoExpiraFolio = " & _DiasAvisoExpiraFolio & vbCrLf &
                    ",AvisoSaldoFolios = " & _AvisoSaldoFolios & vbCrLf &
                    ",ListaPrecioDoc = '" & _ListaPrecioDoc & "'" & vbCrLf &
-                   "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'"
+                   "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'"
 
         If _Filtro_Tido = "('GDV','GTI','GDP','GDD')" Then
             Consulta_sql += vbCrLf & vbCrLf & "Update " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Set" & vbCrLf &
                             "DiasAvisoExpiraFolio = " & _DiasAvisoExpiraFolio & vbCrLf &
                             ",AvisoSaldoFolios = " & _AvisoSaldoFolios & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc In " & _Filtro_Tido
+                            "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc In " & _Filtro_Tido
         End If
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
@@ -260,7 +260,7 @@ Public Class Frm_ConfTidoXModal
             Consulta_sql = "Select ZConf.*,Td.*" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad ZConf" & vbCrLf &
                        "Left Join TABTIDO Td On Td.TIDO = ZConf.TipoDoc" & vbCrLf &
-                       "Where ZConf.Empresa = '" & ModEmpresa & "' And ZConf.Modalidad = '" & _Modalidad & "' And ZConf.TipoDoc = '" & _Tido & "'"
+                       "Where ZConf.Empresa = '" & Mod_Empresa & "' And ZConf.Modalidad = '" & _Modalidad & "' And ZConf.TipoDoc = '" & _Tido & "'"
 
             _RowFormato = _Sql.Fx_Get_DataRow(Consulta_sql)
 

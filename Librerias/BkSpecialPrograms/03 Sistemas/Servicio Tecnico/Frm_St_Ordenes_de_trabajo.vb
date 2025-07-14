@@ -57,7 +57,7 @@ Public Class Frm_St_Ordenes_de_trabajo
 
         Super_TabS.SelectedTabIndex = 0
 
-        Me.Text += Space(1) & "SUCURSAL: " & ModSucursal & " " '& _Global_Row_Configuracion_Estacion
+        Me.Text += Space(1) & "SUCURSAL: " & Mod_Sucursal & " " '& _Global_Row_Configuracion_Estacion
 
         Sb_Color_Botones_Barra(Bar2)
 
@@ -228,7 +228,7 @@ Public Class Frm_St_Ordenes_de_trabajo
 
         End Select
 
-        _Condicion += "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf
+        _Condicion += "And Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & "'" & vbCrLf
 
         Consulta_Sql = My.Resources.Recursos_Locales.SqlQuery_Lista_OT
         Consulta_Sql = Replace(Consulta_Sql, "#Db_BakApp#", _Global_BaseBk)
@@ -299,7 +299,7 @@ Public Class Frm_St_Ordenes_de_trabajo
 
         End Select
 
-        _Condicion += "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'" & vbCrLf
+        _Condicion += "And Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & "'" & vbCrLf
 
         Consulta_Sql = My.Resources.Recursos_Locales.SqlQuery_Lista_OT2
         Consulta_Sql = Replace(Consulta_Sql, "#Db_BakApp#", _Global_BaseBk)
@@ -963,7 +963,7 @@ Public Class Frm_St_Ordenes_de_trabajo
                String.IsNullOrEmpty(_ServTecnico_Sucursal) Or
                String.IsNullOrEmpty(_ServTecnico_Bodega) Then
             MessageBoxEx.Show(Me, "Faltan los datos de la configuración del ingreso de mercadería" & vbCrLf &
-                                  "para servicio tecnico en la modalidad: " & Modalidad, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                  "para servicio tecnico en la modalidad: " & Mod_Modalidad, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 

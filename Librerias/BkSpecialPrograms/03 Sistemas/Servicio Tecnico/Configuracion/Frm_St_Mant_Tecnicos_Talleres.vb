@@ -536,7 +536,7 @@ Public Class Frm_St_Mant_Tecnicos_Talleres
                        "','" & Txt_Telefono.Text.Trim & "','" & Txt_Email.Text.Trim &
                        "','" & _CodPais & "','" & _CodCiudad & "','" & _CodComuna & "'," & _Star &
                        "," & _Chk_Taller_Externo & "," & _Chk_Habilitado & "," & _Chk_Supervisor & "," & _Chk_Domicilio &
-                       ",'" & _Informacion & "'," & _EsTecnico & ",'" & Txt_PwTecnico.Text & "'," & _EsTaller & ",'" & ModEmpresa & "','" & ModSucursal & "')"
+                       ",'" & _Informacion & "'," & _EsTecnico & ",'" & Txt_PwTecnico.Text & "'," & _EsTaller & ",'" & Mod_Empresa & "','" & Mod_Sucursal & "')"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
             _Grabado = True

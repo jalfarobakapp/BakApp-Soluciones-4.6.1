@@ -27,9 +27,9 @@ Public Class Inv_Parcializado
     Private Sub BtnAbrirInventarios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAbrirInventarios.Click
 
         Dim Fm As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-        Fm.Pro_Empresa = ModEmpresa
-        Fm.Pro_Sucursal = ModSucursal
-        Fm.Pro_Bodega = ModBodega
+        Fm.Pro_Empresa = Mod_Empresa
+        Fm.Pro_Sucursal = Mod_Sucursal
+        Fm.Pro_Bodega = Mod_Bodega
         Fm.ShowDialog(Me)
 
         Dim _Seleccionado As Boolean = Fm.Pro_Seleccionado

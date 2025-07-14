@@ -275,7 +275,7 @@ Public Class Class_Prestashop
                     '                   "Se inserta producto en tabla Zw_Prod_PrestaShop Sitio: " & _Sitio, "", _Codigo, "", "", False, "")
                 Else
 
-                    Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "Prestashop",
+                    Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "Prestashop",
                                "Error al inserta producto en tabla Zw_Prod_PrestaShop. Sitio: " & _Sitio & " Error: " & _Sql.Pro_Error,
                                "", _Codigo, "", "", False, "")
 
@@ -315,7 +315,7 @@ Public Class Class_Prestashop
             Progress_Porcent.Value = 0
 
         Catch ex As Exception
-            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "Prestashop",
+            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "Prestashop",
                                "Error al inserta producto en tabla Zw_Prod_PrestaShop. Sitio: " & _Sitio & Space(1) & ex.Message, "", _Codigo,
                                "", "", False, "")
         Finally
@@ -624,7 +624,7 @@ Public Class Class_Prestashop
 
                 If Not String.IsNullOrEmpty(_Error) Then
 
-                    Fx_Add_Log_Gestion(Nothing, Modalidad, "", 0, "Prestashop",
+                    Fx_Add_Log_Gestion(Nothing, Mod_Modalidad, "", 0, "Prestashop",
                                        "Error_Prestashop_Precio! " & _Sitio & Space(1) & _Clas_Ps.Pro_Error, "", _Codigo,
                                        "", "", False, FUNCIONARIO)
                     _Error = String.Empty
@@ -756,7 +756,7 @@ Public Class Class_Prestashop
 
                 If Not String.IsNullOrEmpty(_Error) Then
 
-                    Fx_Add_Log_Gestion(Nothing, Modalidad, "", 0, "Prestashop",
+                    Fx_Add_Log_Gestion(Nothing, Mod_Modalidad, "", 0, "Prestashop",
                                        "Error_Prestashop_Stock! " & _Sitio & Space(1) & _Clas_Ps.Pro_Error, "", _Codigo, "",
                                        "", False, FUNCIONARIO)
                     _Error = String.Empty

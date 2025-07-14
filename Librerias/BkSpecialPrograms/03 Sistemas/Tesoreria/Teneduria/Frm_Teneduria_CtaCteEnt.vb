@@ -177,7 +177,7 @@ Public Class Frm_Teneduria_CtaCteEnt
                         From MAEDPCE AS DPCE  WITH ( NOLOCK )  
                         Where DPCE.ENDP = '" & _Koen & "' AND 
                               DPCE.TIDP IN ('ATB','CHV','CPV','CRV','DEP','EFV','LTV','PAV','RBV','RGV','RIV','TJV','VUE') AND 
-                              DPCE.ESASDP = 'P' AND DPCE.ESPGDP<> 'N'  AND DPCE.EMPRESA = '" & ModEmpresa & "' And DPCE.VADP-DPCE.VAASDP > 0"
+                              DPCE.ESASDP = 'P' AND DPCE.ESPGDP<> 'N'  AND DPCE.EMPRESA = '" & Mod_Empresa & "' And DPCE.VADP-DPCE.VAASDP > 0"
         _Tbl_Maedpcde_CtaCte = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
