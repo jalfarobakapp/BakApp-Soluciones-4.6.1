@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.LsValiciones
+Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Controls
 Imports MySql.Data.Authentication
 
@@ -162,11 +163,32 @@ Public Class Frm_Cantidades_Ud_Disintas
 
         _Icono = Nothing
 
+        Dim _BodegaRevWMS As String = _Bodega
+
         '_NecesitaPermisoCambiarRTU = True
         'Chk_RtuVariable.Enabled = False
+        If RutEmpresa = "77988832-0" Then
+            Try
+                Dim EmpSucBod As String = Mod_Empresa & ";" & Mod_Sucursal & ";" & _Bodega
+
+                Consulta_sql = "Select Tabla, DescripcionTabla, CodigoTabla, NombreTabla" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                               "Where Tabla = 'SEA2MEATGARDEN' And NombreTabla = '" & EmpSucBod & "'"
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If Not IsNothing(_Row) Then
+                    Dim _ESB = _Row.Item("CodigoTabla").ToString.Split(";"c)
+                    '_Empresa = _ESB(0).Trim
+                    '_Sucursal = _ESB(1).Trim
+                    _BodegaRevWMS = _ESB(2).Trim
+                End If
+            Catch ex As Exception
+                _BodegaRevWMS = _Bodega
+            End Try
+        End If
 
         ' Llama a la función para encontrar el producto en las bodegas
-        Dim RtuBodegas As LsValiciones.Mensajes = Fx_Consultar_RTU_xBodegas(_Bodega, _Codigo)
+        Dim RtuBodegas As LsValiciones.Mensajes = Fx_Consultar_RTU_xBodegas(_BodegaRevWMS, _Codigo)
 
         ' Muestra el resultado final en el textbox e impide la edición de Cantidad 1
         If RtuBodegas.EsCorrecto Then

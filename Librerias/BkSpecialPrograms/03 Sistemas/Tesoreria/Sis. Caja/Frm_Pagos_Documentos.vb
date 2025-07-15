@@ -1369,7 +1369,7 @@ Public Class Frm_Pagos_Documentos
             ' IMPRIMIR EN DIABLITO
 
             Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-            _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Modalidad, _Idmaeedo)
+            _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Empresa, Mod_Modalidad, _Idmaeedo)
 
             '***********************************************************************************************
 

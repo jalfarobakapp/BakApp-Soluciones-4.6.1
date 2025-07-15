@@ -4186,7 +4186,7 @@ Public Class Frm_Ver_Documento
     Private Sub Btn_Imprimir_Diablito_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir_Diablito.Click
 
         Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-        If _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Modalidad, _Idmaeedo) Then
+        If _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Empresa, Mod_Modalidad, _Idmaeedo) Then
             MessageBoxEx.Show(Me, "Documento enviado correctamente a la cola de impresión del diablito", "Imprimir en diablito", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
             MessageBoxEx.Show(Me, _Cl_Imprimir.Error, "Imprimir en diablito", MessageBoxButtons.OK, MessageBoxIcon.Error)

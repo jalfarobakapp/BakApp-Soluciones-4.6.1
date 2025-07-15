@@ -269,7 +269,7 @@
                     End If
 
                     Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                    _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Modalidad, _Idmaeedo_Fcv)
+                    _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Empresa, Mod_Modalidad, _Idmaeedo_Fcv)
 
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
                                    " NombreEquipo = '" & _Nombre_Equipo & "'" &
@@ -368,7 +368,7 @@
                 Dim _Modalidad_Fac As String = _Fila.Item("Modalidad_Fac")
 
                 Dim _Nudo_Nvv As String = _Fila.Item("Nudo_Nvv")
-                Dim _Empresa As String = _Sql.Fx_Trae_Dato("MAEEDO", "EMPRESA", "IDMAEEDO = " & _Idmaeedo,, False)
+                Dim _Empresa_Fac As String = _Sql.Fx_Trae_Dato("MAEEDO", "EMPRESA", "IDMAEEDO = " & _Idmaeedo,, False)
 
                 If Not IsNothing(Lbl_FacAuto) Then
                     Lbl_FacAuto.Text = "Facturando Nota de venta Nro: " & _Nudo_Nvv
@@ -387,9 +387,9 @@
                 Dim _Mensaje As LsValiciones.Mensajes
 
                 If _DesdePickeo Then
-                    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente_Pickeo(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Empresa, _Modalidad_Fac, _CerrarDespFact, _Id_Pickeo)
+                    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente_Pickeo(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Empresa_Fac, _Modalidad_Fac, _CerrarDespFact, _Id_Pickeo)
                 Else
-                    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente2(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Empresa, _Modalidad_Fac, _CerrarDespFact)
+                    _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente2(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Empresa_Fac, _Modalidad_Fac, _CerrarDespFact)
                 End If
 
                 If _Mensaje.EsCorrecto Then
@@ -429,7 +429,7 @@
                         _Cl_Imprimir.CodFuncionario = _CodFuncionario_Factura
                     End If
 
-                    _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Modalidad, _Idmaeedo_Fcv)
+                    _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(_Empresa_Fac, Modalidad_Fac, _Idmaeedo_Fcv)
 
                     Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
                                    " NombreEquipo = '" & _Nombre_Equipo & "'" &
@@ -448,7 +448,7 @@
                         Log_Registro += _Sql.Pro_Error
                     End If
 
-                    Dim _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Row_Factura.Item("IDMAEEDO"), Mod_Empresa, Modalidad_Fac)
+                    Dim _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Row_Factura.Item("IDMAEEDO"), _Empresa_Fac, Modalidad_Fac)
 
                     If Not String.IsNullOrEmpty(_Error_PDF) Then
                         Log_Registro += _Error_PDF

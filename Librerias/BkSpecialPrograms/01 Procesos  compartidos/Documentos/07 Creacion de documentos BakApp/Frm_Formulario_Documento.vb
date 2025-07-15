@@ -16895,7 +16895,7 @@ Public Class Frm_Formulario_Documento
 
                     If _Cerrar_Al_Grabar Then
                         Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                        _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(ModModalidad_Doc, _Idmaeedo)
+                        _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(ModEmpresa_Doc, ModModalidad_Doc, _Idmaeedo)
                         If _Imprimir Then
 
                             If _Grabar_e_Imprimir Then
@@ -16997,7 +16997,7 @@ Public Class Frm_Formulario_Documento
                             End If
 
                             Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                            _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(_Modalidad_Formato, _Idmaeedo)
+                            _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(ModEmpresa_Doc, _Modalidad_Formato, _Idmaeedo)
 
                         End If
 

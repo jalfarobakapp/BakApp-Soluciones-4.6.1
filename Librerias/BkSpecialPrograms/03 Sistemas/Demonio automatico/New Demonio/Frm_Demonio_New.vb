@@ -1323,7 +1323,6 @@ Public Class Frm_Demonio_New
 
                 If RutEmpresa = "76095906-5" Then
                     Dim _Mod As New Clas_Modalidades
-
                     _Mod.Sb_Actualiza_Formatos_X_Modalidad(False)
                     _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "", False, _Empresa_Ori)
                     _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, _Modalidad_Ori, False, _Empresa_Ori)

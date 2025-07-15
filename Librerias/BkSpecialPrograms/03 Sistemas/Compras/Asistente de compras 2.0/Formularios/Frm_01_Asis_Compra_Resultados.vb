@@ -9019,7 +9019,7 @@ Drop Table #Paso"
                 End Try
 
                 Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(_Modalidad_Estudio, _Fl.Idmaeedo)
+                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Empresa, _Modalidad_Estudio, _Fl.Idmaeedo)
 
             Next
 

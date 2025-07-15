@@ -256,7 +256,7 @@ Drop table #Paso"
             If _Mensaje.EsCorrecto Then
 
                 Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Modalidad, _Mensaje.Id)
+                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Empresa, Mod_Modalidad, _Mensaje.Id)
 
                 Consulta_Sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje.Id
                 Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
@@ -407,7 +407,7 @@ Drop table #Paso"
             If _Mensaje2.EsCorrecto Then
 
                 Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Modalidad, _Mensaje2.Id)
+                _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Empresa, Mod_Modalidad, _Mensaje2.Id)
 
                 Consulta_Sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje2.Id
                 Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)

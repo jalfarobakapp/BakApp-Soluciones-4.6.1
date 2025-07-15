@@ -193,7 +193,7 @@ Public Class Frm_Stmp_IncNVVPicking
             _DisplayIndex += 1
 
             .Columns("NUDO").HeaderText = "Número"
-            .Columns("NUDO").Width = 70
+            .Columns("NUDO").Width = 80
             .Columns("NUDO").Visible = True
             .Columns("NUDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -232,7 +232,7 @@ Public Class Frm_Stmp_IncNVVPicking
             _DisplayIndex += 1
 
             .Columns("NOKOEN").HeaderText = "Razón Social"
-            .Columns("NOKOEN").Width = 190
+            .Columns("NOKOEN").Width = 180
             .Columns("NOKOEN").Visible = True
             .Columns("NOKOEN").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1

@@ -6280,7 +6280,7 @@ Public Module Crear_Documentos_Desde_Otro
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, _Empresa,_Modalidad)
+        Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, _Empresa, _Modalidad)
 
         Dim _Firma_Bakapp As Boolean = Fx_Firmar_X_Bakapp(_Idmaeedo)
         Dim _Firma_RunMonitor As Boolean = Not _Firma_Bakapp
