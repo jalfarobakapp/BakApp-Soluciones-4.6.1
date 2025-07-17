@@ -23,21 +23,17 @@ Public Class Frm_ImpMasiva
         Me._Ls_Idmaeedo = _Ls_Idmaeedo
         Me._Tido = _Tido
 
-        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, False, False)
         Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
     Private Sub Frm_ImpMasiva_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Rdb_ImpFormatoModalidad.Text = "Imprimir en el formato de la modalidad: " & Mod_Modalidad
+
         For Each _Idmaeedo As String In _Ls_Idmaeedo
             ListaDocumentos.Add(Cl_ImpMasiva.Fx_llenar_ImpDocumento(_Idmaeedo))
-        Next
-
-        For Each _Filas As ImpMasiva.ImpDocumentos In ListaDocumentos
-
-
-
         Next
 
         Sb_Parametros_Informe_Sql(False)
@@ -105,6 +101,24 @@ Public Class Frm_ImpMasiva
             .Columns("Nokoen").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("Modalidad").Visible = True
+            .Columns("Modalidad").HeaderText = "Modalidad"
+            .Columns("Modalidad").Width = 150
+            .Columns("Modalidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NombreFormato_Modalidad").Visible = True
+            .Columns("NombreFormato_Modalidad").HeaderText = "Nombre Formato Modalidad"
+            .Columns("NombreFormato_Modalidad").Width = 150
+            .Columns("NombreFormato_Modalidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NombreFormato_ModalidadDoc").Visible = True
+            .Columns("NombreFormato_ModalidadDoc").HeaderText = "Nombre Formato Modalidad Documento"
+            .Columns("NombreFormato_ModalidadDoc").Width = 150
+            .Columns("NombreFormato_ModalidadDoc").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             '.Columns("Cantidad").Visible = True
             '.Columns("Cantidad").HeaderText = "Cantidad"
             '.Columns("Cantidad").Width = 100
@@ -135,7 +149,6 @@ Public Class Frm_ImpMasiva
     Private Sub Btn_Imprimir_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir.Click
 
         Dim _Subtido = String.Empty
-        Dim _NombreFormato As String
 
         Dim hayFilaChecada As Boolean = ListaDocumentos.Any(Function(doc) doc.Chk)
 
@@ -151,7 +164,7 @@ Public Class Frm_ImpMasiva
             Return
         End If
 
-        If String.IsNullOrEmpty(Txt_NombreFormato.Text) Then
+        If Rdb_ImpFormatoSeleccionado.Checked AndAlso String.IsNullOrEmpty(Txt_NombreFormato.Text) Then
             MessageBoxEx.Show(Me, "Debe seleccionar un formato", "Validación",
                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
@@ -174,7 +187,7 @@ Public Class Frm_ImpMasiva
             Return
         End If
 
-        _NombreFormato = CType(Txt_NombreFormato.Tag, DataRow).Item("NombreFormato")
+        '_NombreFormato = CType(Txt_NombreFormato.Tag, DataRow).Item("NombreFormato")
         _Subtido = CType(Txt_NombreFormato.Tag, DataRow).Item("SubTido")
 
         Dim _Lista As New List(Of LsValiciones.Mensajes)
@@ -199,6 +212,15 @@ Public Class Frm_ImpMasiva
 
                     Dim _Idmaeedo As Integer = _Row.Idmaeedo
                     Dim _Nudo As String = _Row.Nudo
+                    Dim _NombreFormato As String
+
+                    If Rdb_ImpFormatoSeleccionado.Checked Then
+                        _NombreFormato = Txt_NombreFormato.Text
+                    ElseIf Rdb_ImpFormatoModalidad.Checked Then
+                        _NombreFormato = _Row.NombreFormato_Modalidad
+                    ElseIf Rdb_ImpFormatoModalidadDoc.Checked Then
+                        _NombreFormato = _Row.NombreFormato_ModalidadDoc
+                    End If
 
                     Dim _ImprimirDocAdjuntos = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Format_01",
                                                                  "ImprimirDocAdjuntos",
@@ -353,6 +375,13 @@ Public Class Frm_ImpMasiva
             End If
 
         End If
+
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_ImpFormatoModalidad, _Informe, Rdb_ImpFormatoModalidad.Name,
+                                     Class_SQL.Enum_Type._Boolean, Rdb_ImpFormatoModalidad.Checked, _Actualizar, "Imprimir")
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_ImpFormatoModalidadDoc, _Informe, Rdb_ImpFormatoModalidadDoc.Name,
+                                        Class_SQL.Enum_Type._Boolean, Rdb_ImpFormatoModalidadDoc.Checked, _Actualizar, "Imprimir")
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_ImpFormatoSeleccionado, _Informe, Rdb_ImpFormatoSeleccionado.Name,
+                                        Class_SQL.Enum_Type._Boolean, Rdb_ImpFormatoSeleccionado.Checked, _Actualizar, "Imprimir")
 
     End Sub
     Private Sub Frm_ImpMasiva_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed

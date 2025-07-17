@@ -229,6 +229,10 @@ Public Class Clas_Imprimir_Documento
                            "Where TipoDoc = '" & _TipoDoc & "' And NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'"
             _TblEncForm = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
+            If Not CBool(_TblEncForm.Rows.Count) Then
+                Throw New Exception("No se encontro registros con el nombre del formato: " & _NombreFormato & ". (Tido:" & _TipoDoc & ", Subtido:" & _Subtido & ")")
+            End If
+
             _Es_Picking = _TblEncForm.Rows(0).Item("Es_Picking")
 
             Dim _Condicion_Extra_Maeddo As String
