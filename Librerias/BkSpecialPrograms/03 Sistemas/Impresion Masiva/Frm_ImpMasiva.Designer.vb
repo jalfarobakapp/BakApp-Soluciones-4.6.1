@@ -48,11 +48,12 @@ Partial Class Frm_ImpMasiva
         Me.MetroStatusBar1 = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Barra_Progreso = New DevComponents.DotNetBar.ProgressBarItem()
         Me.Lbl_Status = New DevComponents.DotNetBar.LabelItem()
-        Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_NombreFormato = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Impresora = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_ImprimirCedible = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_ImpFormatoModalidad = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.CheckBoxX1 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -69,7 +70,7 @@ Partial Class Frm_ImpMasiva
         Me.Chk_Marcar_Todas.CheckBoxImageChecked = CType(resources.GetObject("Chk_Marcar_Todas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Marcar_Todas.FocusCuesEnabled = False
         Me.Chk_Marcar_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Marcar_Todas.Location = New System.Drawing.Point(12, 515)
+        Me.Chk_Marcar_Todas.Location = New System.Drawing.Point(12, 484)
         Me.Chk_Marcar_Todas.Name = "Chk_Marcar_Todas"
         Me.Chk_Marcar_Todas.Size = New System.Drawing.Size(100, 20)
         Me.Chk_Marcar_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -85,7 +86,7 @@ Partial Class Frm_ImpMasiva
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 4)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(715, 505)
+        Me.GroupPanel1.Size = New System.Drawing.Size(715, 474)
         '
         '
         '
@@ -268,7 +269,7 @@ Partial Class Frm_ImpMasiva
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(709, 482)
+        Me.Grilla.Size = New System.Drawing.Size(709, 451)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 28
         '
@@ -344,20 +345,6 @@ Partial Class Frm_ImpMasiva
         Me.Lbl_Status.Name = "Lbl_Status"
         Me.Lbl_Status.Text = "Status..."
         '
-        'LabelX9
-        '
-        Me.LabelX9.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX9.ForeColor = System.Drawing.Color.Black
-        Me.LabelX9.Location = New System.Drawing.Point(328, 544)
-        Me.LabelX9.Name = "LabelX9"
-        Me.LabelX9.Size = New System.Drawing.Size(91, 19)
-        Me.LabelX9.TabIndex = 112
-        Me.LabelX9.Text = "Nombre formato"
-        '
         'LabelX11
         '
         Me.LabelX11.BackColor = System.Drawing.Color.Transparent
@@ -366,7 +353,7 @@ Partial Class Frm_ImpMasiva
         '
         Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX11.ForeColor = System.Drawing.Color.Black
-        Me.LabelX11.Location = New System.Drawing.Point(12, 541)
+        Me.LabelX11.Location = New System.Drawing.Point(12, 510)
         Me.LabelX11.Name = "LabelX11"
         Me.LabelX11.Size = New System.Drawing.Size(63, 19)
         Me.LabelX11.TabIndex = 111
@@ -385,7 +372,7 @@ Partial Class Frm_ImpMasiva
         Me.Txt_NombreFormato.ButtonCustom2.Image = CType(resources.GetObject("Txt_NombreFormato.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_NombreFormato.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_NombreFormato.ForeColor = System.Drawing.Color.Black
-        Me.Txt_NombreFormato.Location = New System.Drawing.Point(425, 541)
+        Me.Txt_NombreFormato.Location = New System.Drawing.Point(161, 538)
         Me.Txt_NombreFormato.Name = "Txt_NombreFormato"
         Me.Txt_NombreFormato.PreventEnterBeep = True
         Me.Txt_NombreFormato.Size = New System.Drawing.Size(302, 22)
@@ -405,10 +392,10 @@ Partial Class Frm_ImpMasiva
         Me.Txt_Impresora.ButtonCustom2.Image = CType(resources.GetObject("Txt_Impresora.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Impresora.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Impresora.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Impresora.Location = New System.Drawing.Point(71, 541)
+        Me.Txt_Impresora.Location = New System.Drawing.Point(161, 511)
         Me.Txt_Impresora.Name = "Txt_Impresora"
         Me.Txt_Impresora.PreventEnterBeep = True
-        Me.Txt_Impresora.Size = New System.Drawing.Size(229, 22)
+        Me.Txt_Impresora.Size = New System.Drawing.Size(302, 22)
         Me.Txt_Impresora.TabIndex = 109
         Me.Txt_Impresora.WatermarkText = "Nombre de impresora"
         '
@@ -422,22 +409,62 @@ Partial Class Frm_ImpMasiva
         Me.Chk_ImprimirCedible.CheckBoxImageChecked = CType(resources.GetObject("Chk_ImprimirCedible.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_ImprimirCedible.FocusCuesEnabled = False
         Me.Chk_ImprimirCedible.ForeColor = System.Drawing.Color.Black
-        Me.Chk_ImprimirCedible.Location = New System.Drawing.Point(627, 512)
+        Me.Chk_ImprimirCedible.Location = New System.Drawing.Point(627, 484)
         Me.Chk_ImprimirCedible.Name = "Chk_ImprimirCedible"
         Me.Chk_ImprimirCedible.Size = New System.Drawing.Size(100, 20)
         Me.Chk_ImprimirCedible.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_ImprimirCedible.TabIndex = 113
         Me.Chk_ImprimirCedible.Text = "Imprimir Cedible"
         '
+        'Rdb_ImpFormatoModalidad
+        '
+        Me.Rdb_ImpFormatoModalidad.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.CheckBoxX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_ImpFormatoModalidad.CheckBoxImageChecked = CType(resources.GetObject("Rdb_ImpFormatoModalidad.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_ImpFormatoModalidad.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_ImpFormatoModalidad.FocusCuesEnabled = False
+        Me.Rdb_ImpFormatoModalidad.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_ImpFormatoModalidad.Location = New System.Drawing.Point(478, 543)
+        Me.Rdb_ImpFormatoModalidad.Name = "Rdb_ImpFormatoModalidad"
+        Me.Rdb_ImpFormatoModalidad.Size = New System.Drawing.Size(219, 17)
+        Me.Rdb_ImpFormatoModalidad.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_ImpFormatoModalidad.TabIndex = 114
+        Me.Rdb_ImpFormatoModalidad.Text = "Imprimir en el formato de la modalidad"
+        '
+        'CheckBoxX1
+        '
+        Me.CheckBoxX1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.CheckBoxX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.CheckBoxX1.CheckBoxImageChecked = CType(resources.GetObject("CheckBoxX1.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.CheckBoxX1.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.CheckBoxX1.Checked = True
+        Me.CheckBoxX1.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CheckBoxX1.CheckValue = "Y"
+        Me.CheckBoxX1.FocusCuesEnabled = False
+        Me.CheckBoxX1.ForeColor = System.Drawing.Color.Black
+        Me.CheckBoxX1.Location = New System.Drawing.Point(12, 541)
+        Me.CheckBoxX1.Name = "CheckBoxX1"
+        Me.CheckBoxX1.Size = New System.Drawing.Size(143, 19)
+        Me.CheckBoxX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.CheckBoxX1.TabIndex = 115
+        Me.CheckBoxX1.Text = "Imprimir en este formato"
+        '
         'Frm_ImpMasiva
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(735, 639)
+        Me.Controls.Add(Me.CheckBoxX1)
+        Me.Controls.Add(Me.Rdb_ImpFormatoModalidad)
         Me.Controls.Add(Me.Chk_ImprimirCedible)
         Me.Controls.Add(Me.Txt_Impresora)
         Me.Controls.Add(Me.Txt_NombreFormato)
-        Me.Controls.Add(Me.LabelX9)
         Me.Controls.Add(Me.LabelX11)
         Me.Controls.Add(Me.Chk_Marcar_Todas)
         Me.Controls.Add(Me.GroupPanel1)
@@ -483,9 +510,10 @@ Partial Class Frm_ImpMasiva
     Friend WithEvents MetroStatusBar1 As DevComponents.DotNetBar.Metro.MetroStatusBar
     Friend WithEvents Barra_Progreso As DevComponents.DotNetBar.ProgressBarItem
     Friend WithEvents Lbl_Status As DevComponents.DotNetBar.LabelItem
-    Friend WithEvents LabelX9 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX11 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_NombreFormato As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Txt_Impresora As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Chk_ImprimirCedible As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Rdb_ImpFormatoModalidad As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents CheckBoxX1 As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -6765,7 +6765,7 @@ Public Module Crear_Documentos_Desde_Otro
                              _Idmaeedo As Integer,
                              _CodigoMarcar As String) As Boolean
 
-        Dim _VerSoloEntidadesDelVendedor As Boolean = Fx_Tiene_Permiso(_Formulario, "NO00021",, False) '_Global_Row_Configuracion_Estacion.Item("VerSoloEntidadesDelVendedor")
+        Dim _VerSoloEntidadesDelVendedor As Boolean = Fx_Tiene_Permiso(_Formulario, "NO00021",, False)
         Dim _VerDocumento As Boolean = True
 
         Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)

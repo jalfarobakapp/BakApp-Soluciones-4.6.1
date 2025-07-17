@@ -30,17 +30,15 @@ Public Class Frm_ImpMasiva
 
     Private Sub Frm_ImpMasiva_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        'Dim _Filtro As String = Generar_Filtro_IN_Lista2(_Ls_Idmaeedo, False, "")
-
-        'Consulta_sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where IDMAEEDO In " & _Filtro
-        'Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-        'For Each _Row As DataRow In _Tbl.Rows
         For Each _Idmaeedo As String In _Ls_Idmaeedo
             ListaDocumentos.Add(Cl_ImpMasiva.Fx_llenar_ImpDocumento(_Idmaeedo))
         Next
 
-        'Next
+        For Each _Filas As ImpMasiva.ImpDocumentos In ListaDocumentos
+
+
+
+        Next
 
         Sb_Parametros_Informe_Sql(False)
         Sb_ActualizarGrilla()
@@ -59,8 +57,6 @@ Public Class Frm_ImpMasiva
         Grilla.DataSource = bindingSource
 
         With Grilla
-
-            '.DataSource = _Source
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -95,6 +91,12 @@ Public Class Frm_ImpMasiva
             .Columns("Suendo").HeaderText = "Suc."
             .Columns("Suendo").Width = 50
             .Columns("Suendo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Nokoen").Visible = True
+            .Columns("Nokoen").HeaderText = "Razon social"
+            .Columns("Nokoen").Width = 350
+            .Columns("Nokoen").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Nokoen").Visible = True
