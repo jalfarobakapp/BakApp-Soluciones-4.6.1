@@ -437,6 +437,10 @@ Public Class Frm_ImpBarras_PorDocumento
         End If
     End Sub
 
+    Private Sub Cmbetiquetas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cmbetiquetas.SelectedIndexChanged
+
+    End Sub
+
     Private Sub Frm_ImpBarras_PorDocumento_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()

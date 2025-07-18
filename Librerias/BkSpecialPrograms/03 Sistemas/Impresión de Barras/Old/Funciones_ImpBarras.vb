@@ -1,5 +1,6 @@
 ﻿Imports System.Net.Sockets
 Imports System.Text
+Imports BkSpecialPrograms.LsValiciones
 
 Public Class Class_Imprimir_Barras
 
@@ -76,6 +77,181 @@ Public Class Class_Imprimir_Barras
 #End Region
 
 #Region "IMPRIMIR CODIGO"
+    Function CrearPRN(_NombreEtiqueta As String,
+                  _Puerto As String,
+                  _Codigo As String,
+                  _CodLista As String,
+                  _Empresa As String,
+                  _Sucursal As String,
+                  _Bodega As String,
+                  _CodUbicacion As String,
+                  _Imprimir_Todas_Las_Ubicaciones As Boolean,
+                  _ImprimirDesdePrecioFuturo As Boolean,
+                  _Id_PrecioFuturo As Integer,
+                  _CodAlternativo As String) As Mensajes
+
+
+
+        If _Imprimir_Todas_Las_Ubicaciones Then
+
+            Dim _TblProducto As DataTable = Fx_Producto_Ubicaciones(_Codigo, _CodLista, _Empresa, _Sucursal, _Bodega)
+
+            For Each _RowProducto As DataRow In _TblProducto.Rows
+
+                Sb_Incorporar_Precios(_RowProducto, _CodLista, _ImprimirDesdePrecioFuturo, _Id_PrecioFuturo)
+
+                _Codigo_principal = _Codigo
+                _Codigo_tecnico = _RowProducto.Item("KOPRTE")
+                _Codigo_rapido = _RowProducto.Item("KOPRRA")
+                _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+                _Descripcion_Corta = _RowProducto.Item("NOKOPRRA").ToString.Trim
+
+                _Marca_Pr = _RowProducto.Item("Marca").ToString.Trim
+
+                _Wms_Ubicacion_Codigo = _RowProducto.Item("Codigo_Ubic")
+                _Wms_Ubicacion_Columna = _RowProducto.Item("Columna")
+                _Wms_Ubicacion_Fila = _RowProducto.Item("Fila")
+
+                _Wms_Sector_Codigo = _RowProducto.Item("Codigo_Sector")
+                _Wms_Sector_Nombre = _RowProducto.Item("Nombre_Sector")
+
+                _Wms_Mapa_Nombre = _RowProducto.Item("Nombre_Mapa")
+                _Wms_Ubicacion_Nombre = _RowProducto.Item("Descripcion_Ubic")
+
+                _Ubicacion = _RowProducto.Item("Codigo_Ubic")
+
+                _Precio_ud1 = _RowProducto.Item("Precio_ud1")
+                _Precio_ud2 = _RowProducto.Item("Precio_ud2")
+
+                _Ud1 = _RowProducto.Item("UD01PR").ToString.Trim
+                _Ud2 = _RowProducto.Item("UD02PR").ToString.Trim
+
+                _PU01_Neto = _RowProducto.Item("PU01_Neto")
+                _PU02_Neto = _RowProducto.Item("PU02_Neto")
+                _PU01_Bruto = _RowProducto.Item("PU01_Bruto")
+                _PU02_Bruto = _RowProducto.Item("PU02_Bruto")
+
+                _Stock_Minimo_Ubic = _RowProducto.Item("Stock_Minimo_Ubic")
+                _Stock_Maximo_Ubic = _RowProducto.Item("Stock_Maximo_Ubic")
+
+                _Descripcion = Replace(_Descripcion, Chr(34), "")
+                _Desc0125 = Mid(_Descripcion, 1, 25)
+                _Desc2650 = Mid(_Descripcion, 26, 50)
+
+                Dim _RowEtiqueta As DataRow = Fx_TraeEtiqueta(_NombreEtiqueta)
+
+                Dim _Texto = _RowEtiqueta.Item("FUNCION")
+                RellenarPRN(_Texto)
+                Dim retorno As New Mensajes
+                retorno.EsCorrecto = True
+                retorno.Detalle = RellenarPRN(_Texto)
+
+                Return retorno
+
+
+            Next
+
+        Else
+
+            Dim _RowProducto As DataRow = Fx_DatosProducto(_Codigo,
+                                                           _CodLista,
+                                                           _Empresa,
+                                                           _Sucursal,
+                                                           _Bodega,,
+                                                           _CodUbicacion,
+                                                           _ImprimirDesdePrecioFuturo,
+                                                           _Id_PrecioFuturo)
+
+            _Codigo_principal = _Codigo
+            _Codigo_tecnico = _RowProducto.Item("KOPRTE")
+            _Codigo_rapido = _RowProducto.Item("KOPRRA")
+            _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+            _Descripcion_Corta = _RowProducto.Item("NOKOPRRA").ToString.Trim
+
+            If Not String.IsNullOrEmpty(_CodAlternativo) Then
+                _Codigo_Alternativo = _CodAlternativo.ToString.Trim
+            Else
+                _Codigo_Alternativo = _RowProducto.Item("Codigo_Alternativo").ToString.Trim
+            End If
+
+            _Ud1 = _RowProducto.Item("UD01PR").ToString.Trim
+            _Ud2 = _RowProducto.Item("UD02PR").ToString.Trim
+
+            _Marca_Pr = _RowProducto.Item("Marca").ToString.Trim
+
+            _Ubicacion = _RowProducto.Item("Ubic_Random")
+
+            _Precio_ud1 = _RowProducto.Item("Precio_ud1")
+            _Precio_ud2 = _RowProducto.Item("Precio_ud2")
+
+            _PU01_Neto = _RowProducto.Item("PU01_Neto")
+            _PU02_Neto = _RowProducto.Item("PU02_Neto")
+            _PU01_Bruto = _RowProducto.Item("PU01_Bruto")
+            _PU02_Bruto = _RowProducto.Item("PU02_Bruto")
+
+            _Rtu = _RowProducto.Item("RLUD")
+            _PrecioNetoXRtu = _RowProducto.Item("PrecioNetoXRtu")
+            _PrecioBrutoXRtu = _RowProducto.Item("PrecioBrutoXRtu")
+
+            _Stock_Minimo_Ubic = _RowProducto.Item("Stock_Minimo_Ubic")
+            _Stock_Maximo_Ubic = _RowProducto.Item("Stock_Maximo_Ubic")
+
+            _Descripcion = Replace(_Descripcion, Chr(34), "")
+            _Desc0125 = Mid(_Descripcion, 1, 25)
+            _Desc2650 = Mid(_Descripcion, 26, 50)
+
+            Dim _Descri25_Aju = Fx_AjustarTexto(_Descripcion, 35)
+
+            Dim _Desc_Aju = Split(_Descri25_Aju, vbCrLf, 2)
+
+            If _Desc_Aju.Length > 1 Then 'AndAlso _Desc_Aju(1).ToString.Replace(vbCrLf, " ").ToString.Length <= 25 Then
+
+                _Desc_0135 = _Desc_Aju(0)
+                _Desc_0235 = _Desc_Aju(1)
+
+            Else
+
+                _Desc_0135 = _Desc_Aju(0)
+                _Desc_0235 = String.Empty
+
+            End If
+
+            _Nodim1 = _RowProducto.Item("NODIM1").ToString.Trim
+            _Nodim2 = _RowProducto.Item("NODIM2").ToString.Trim
+            _Nodim3 = _RowProducto.Item("NODIM3").ToString.Trim
+
+            Dim _Dim1, _Dim2 As Double
+
+            If IsNumeric(_Nodim1) Then
+                _Dim1 = Val(_Nodim1)
+            End If
+
+            If IsNumeric(_Nodim2) Then
+                _Dim2 = Val(_Nodim2)
+            End If
+
+            _FechaProgramada_Futuro = _RowProducto.Item("FechaProgramada")
+
+            If _Dim1 = 0 Then _Dim1 = 1
+            If _Dim2 = 0 Then _Dim2 = 1
+
+            _PrecioLc1 = (_Precio_ud1 / _Dim1) * _Dim2
+
+            Dim _RowEtiqueta As DataRow = Fx_TraeEtiqueta(_NombreEtiqueta)
+
+            Dim _Texto = _RowEtiqueta.Item("FUNCION")
+            Dim retorno2 As New Mensajes
+            retorno2.EsCorrecto = True
+            retorno2.Detalle = RellenarPRN(_Texto)
+            Return retorno2
+
+
+        End If
+        Dim retorno3 As Mensajes = New Mensajes
+        retorno3.EsCorrecto = False
+        retorno3.Detalle = "Error de etiqueta"
+        Return retorno3
+    End Function
 
     Sub Sb_Imprimir_Producto(_NombreEtiqueta As String,
                              _Puerto As String,
@@ -1176,6 +1352,236 @@ Public Class Class_Imprimir_Barras
 #End Region
 
 #Region "IMPRIMIR EL ARCHIVO"
+    Function RellenarPRN(_Texto As String) As String
+
+        Dim _TextoOri As String = _Texto
+        Dim _Fecha_impresion As Date = Now
+
+        _Error = String.Empty
+
+        'Try
+
+        _Texto = Replace(_Texto, "<CODIGO_PR>", _Codigo_principal.ToString.Trim)
+        _Texto = Replace(_Texto, "<CODIGO_TC>", _Codigo_tecnico.ToString.Trim)
+        _Texto = Replace(_Texto, "<CODIGO_RA>", _Codigo_rapido.ToString.Trim)
+        _Texto = Replace(_Texto, "<CODIGO_ALT>", _Codigo_Alternativo.ToString.Trim)
+
+        _Texto = Replace(_Texto, "<UD1_PR>", _Ud1.ToString.Trim)
+        _Texto = Replace(_Texto, "<UD2_PR>", _Ud2.ToString.Trim)
+
+        Dim _Descripcion_cortamr As String
+
+        If Not String.IsNullOrEmpty(_Marca_Pr) Then
+            _Descripcion_cortamr = _Descripcion_Corta.ToString.Replace(_Marca_Pr, "").Trim
+        End If
+
+        _Texto = Replace(_Texto, "<DESCRIPCION_CORTASMR>", _Descripcion_cortamr)
+
+        _Texto = Replace(_Texto, "<DESCRIPCION_PR>", _Descripcion)
+        _Texto = Replace(_Texto, "<DESCRIPCION_CORTA>", _Descripcion_Corta)
+
+        Dim _Desc0125mr As String
+        Dim _Desc2650mr As String
+
+        If Not String.IsNullOrEmpty(_Marca_Pr) Then
+            _Desc0125mr = _Desc0125.ToString.Replace(_Marca_Pr, "").Trim
+            _Desc2650mr = _Desc2650.ToString.Replace(_Marca_Pr, "").Trim
+        End If
+
+        _Texto = Replace(_Texto, "<DESCRIPCION_1-25MR>", _Desc0125mr)
+        _Texto = Replace(_Texto, "<DESCRIPCION_26-50MR>", _Desc2650mr)
+
+        _Texto = Replace(_Texto, "<DESCRIPCION_1-25>", _Desc0125)
+        _Texto = Replace(_Texto, "<DESCRIPCION_26-50>", _Desc2650)
+
+        _Texto = Replace(_Texto, "<DESCRIPCION_1-35>", _Desc_0135)
+        _Texto = Replace(_Texto, "<DESCRIPCION_2-35>", _Desc_0235)
+
+        _Texto = Replace(_Texto, "<UBICACION_PR>", _Ubicacion)
+        _Texto = Replace(_Texto, "<UBICACION>", _Ubicacion)
+        _Texto = Replace(_Texto, "<MARCA_PR>", _Marca_Pr)
+        _Texto = Replace(_Texto, "<NODIM1>", _Nodim1)
+        _Texto = Replace(_Texto, "<NODIM2>", _Nodim2)
+        _Texto = Replace(_Texto, "<NODIM3>", _Nodim3)
+        _Texto = Replace(_Texto, "<FECHAPROGRFUTURO>", Format(_FechaProgramada_Futuro, "dd-MM-yyyy"))
+        _Texto = Replace(_Texto, "<RTU>", _Rtu)
+
+        '_Texto = Replace(_Texto, "<UBIC_BAKAPP>", _Ubic_BakApp)
+        _Texto = Replace(_Texto, "<WMS_UBIC_COLUMNA>", _Wms_Ubicacion_Columna)
+        _Texto = Replace(_Texto, "<WMS_UBIC_FILA>", _Wms_Ubicacion_Fila)
+        _Texto = Replace(_Texto, "<WMS_UBIC_CODIGO>", _Wms_Ubicacion_Codigo)
+        _Texto = Replace(_Texto, "<WMS_UBIC_DESCR>", _Wms_Ubicacion_Nombre)
+
+        _Texto = Replace(_Texto, "<WMS_SECTOR_CODIGO> ", _Wms_Sector_Codigo)
+        _Texto = Replace(_Texto, "<WMS_SECTOR_DESC>", _Wms_Sector_Nombre)
+
+        _Texto = Replace(_Texto, "<WMS_MAPA_NOMBRE> ", _Wms_Mapa_Nombre)
+
+        _Texto = Replace(_Texto, "<STOCK_MIN_UBIC>", _Stock_Minimo_Ubic)
+        _Texto = Replace(_Texto, "<STOCK_MAX_UBIC>", _Stock_Maximo_Ubic)
+
+        _Texto = Replace(_Texto, "<PRECIO_UD1>", _Precio_ud1)
+        _Texto = Replace(_Texto, "<PRECIO_UD2>", _Precio_ud2)
+
+        Dim _vPrecioNetoXRtu As String
+        Dim _vPrecioBrutoXRtu As String
+
+        Try
+            _vPrecioNetoXRtu = Fx_Formato_Numerico(_PrecioNetoXRtu, "9", False)
+        Catch ex As Exception
+            _vPrecioNetoXRtu = "?"
+        End Try
+
+        Try
+            _vPrecioBrutoXRtu = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
+        Catch ex As Exception
+            _vPrecioBrutoXRtu = "?"
+        End Try
+
+        If _Texto.Contains("PBRUTOUD1X6") Or _Texto.Contains("PBRUTOUD1XMULTIPLO") Or _Texto.Contains("PBRUTOUD2XMULTIPLO") Then
+
+            Consulta_sql = "Select Top 1 * From TABCODAL Where KOPRAL = '" & _Codigo_Alternativo & "' And KOPR = '" & _Codigo_principal & "'"
+            Dim _Row_Kopral As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row_Kopral) Then
+
+                Dim _Unimulti As Integer = 1
+                Dim _Multiplo As Integer = _Row_Kopral.Item("MULTIPLO")
+
+                Dim _PrecioMulti As Double
+
+                If _Texto.Contains("PBRUTOUD2XUNIMULTI2") Then
+                    _Unimulti = 2
+                End If
+
+                If _Unimulti = 1 Then : _PrecioMulti = _PU01_Bruto : Else : _PrecioMulti = _PU02_Bruto : End If
+
+                _PrecioBrutoXRtu = _Multiplo * _PrecioMulti
+
+                _vPrecioBrutoXRtu = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
+
+                _Texto = Replace(_Texto, "<PBRUTOUD1X6>", _vPrecioBrutoXRtu)
+
+            End If
+
+        End If
+
+        'If _Texto.Contains("PBRUTOUD1X6") Then
+        '    _PrecioBrutoXRtu = 6 * _PU01_Bruto
+        '    _vPrecioBrutoXRtu = Fx_Formato_Numerico(_PrecioBrutoXRtu, "9", False)
+        '    '_Texto = Replace(_Texto, "<PNETOXRTU_UD1>", _vPrecioNetoXRtu)
+        '    _Texto = Replace(_Texto, "<PBRUTOUD1X6>", _vPrecioBrutoXRtu)
+        'End If
+
+        Dim _St_PU01_Neto As String = Fx_Formato_Numerico(_PU01_Neto, "9", False)
+        Dim _St_PU02_Neto As String = Fx_Formato_Numerico(_PU02_Neto, "9", False)
+        Dim _St_PU01_Bruto As String = Fx_Formato_Numerico(_PU01_Bruto, "9", False)
+        Dim _St_PU02_Bruto As String = Fx_Formato_Numerico(_PU02_Bruto, "9", False)
+
+        Dim _St_PU01_Neto_d1 As String = Fx_Formato_Numerico(_PU01_Neto, "9,9", False)
+        Dim _St_PU02_Neto_d1 As String = Fx_Formato_Numerico(_PU02_Neto, "9,9", False)
+        Dim _St_PU01_Bruto_d1 As String = Fx_Formato_Numerico(_PU01_Bruto, "9,9", False)
+        Dim _St_PU02_Bruto_d1 As String = Fx_Formato_Numerico(_PU02_Bruto, "9,9", False)
+
+        Dim _St_PU01_Neto_d2 As String = Fx_Formato_Numerico(_PU01_Neto, "9,99", False)
+        Dim _St_PU02_Neto_d2 As String = Fx_Formato_Numerico(_PU02_Neto, "9,99", False)
+        Dim _St_PU01_Bruto_d2 As String = Fx_Formato_Numerico(_PU01_Bruto, "9,99", False)
+        Dim _St_PU02_Bruto_d2 As String = Fx_Formato_Numerico(_PU02_Bruto, "9,99", False)
+
+        Dim _St_PU01_Neto2 As String = Fx_Formato_Numerico(_PU01_Neto, "99.999", False)
+        Dim _St_PU02_Neto2 As String = Fx_Formato_Numerico(_PU02_Neto, "99.999", False)
+        Dim _St_PU01_Bruto2 As String = Fx_Formato_Numerico(_PU01_Bruto, "99.999", False)
+        Dim _St_PU02_Bruto2 As String = Fx_Formato_Numerico(_PU02_Bruto, "99.999", False)
+
+        Dim _St_PU01_Neto3 As String = Fx_Formato_Numerico(_PU01_Neto, "999.999", False)
+        Dim _St_PU02_Neto3 As String = Fx_Formato_Numerico(_PU02_Neto, "999.999", False)
+        Dim _St_PU01_Bruto3 As String = Fx_Formato_Numerico(_PU01_Bruto, "999.999", False)
+        Dim _St_PU02_Bruto3 As String = Fx_Formato_Numerico(_PU02_Bruto, "999.999", False)
+
+        Dim _Lc_PrecioEspLC1 As String
+        Dim _Lc_PrecioEspLC2 As String
+
+        Try
+            _Lc_PrecioEspLC1 = Fx_Formato_Numerico(_PrecioLc1, "9", False)
+        Catch ex As Exception
+            _Lc_PrecioEspLC1 = "?"
+        End Try
+
+        Try
+            _Lc_PrecioEspLC2 = Fx_Formato_Numerico(_PrecioLc1, "9.999.999", False)
+        Catch ex As Exception
+            _Lc_PrecioEspLC2 = "?"
+        End Try
+
+
+        Dim _St_PU01_Neto4 As String = Fx_Formato_Numerico(_PU01_Neto, "9.999.999", False)
+        Dim _St_PU02_Neto4 As String = Fx_Formato_Numerico(_PU02_Neto, "9.999.999", False)
+        Dim _St_PU01_Bruto4 As String = Fx_Formato_Numerico(_PU01_Bruto, "9.999.999", False)
+        Dim _St_PU02_Bruto4 As String = Fx_Formato_Numerico(_PU02_Bruto, "9.999.999", False)
+
+        _Texto = Replace(_Texto, "<PNETO_UD1>", _St_PU01_Neto)
+        _Texto = Replace(_Texto, "<PNETO_UD2>", _St_PU02_Neto)
+
+        ' Neto reserva 4 espacios a la derecha
+        _Texto = Replace(_Texto, "<PNETO_UD1_2>", _St_PU01_Neto2)
+        _Texto = Replace(_Texto, "<PNETO_UD2_2>", _St_PU02_Neto2)
+        ' Neto reserva 5 espacios a la derecha
+        _Texto = Replace(_Texto, "<PNETO_UD1_3>", _St_PU01_Neto3)
+        _Texto = Replace(_Texto, "<PNETO_UD2_3>", _St_PU02_Neto3)
+        ' Neto reserva 6 espacios a la derecha para millones
+        _Texto = Replace(_Texto, "<PNETO_UD1_4>", _St_PU01_Neto4)
+        _Texto = Replace(_Texto, "<PNETO_UD2_4>", _St_PU02_Neto4)
+
+        _Texto = Replace(_Texto, "<PBRUTO_UD1>", _St_PU01_Bruto)
+        _Texto = Replace(_Texto, "<PBRUTO_UD2>", _St_PU02_Bruto)
+
+        _Texto = Replace(_Texto, "<PBRUTO_UD1_2>", _St_PU01_Bruto2)
+        _Texto = Replace(_Texto, "<PBRUTO_UD2_2>", _St_PU02_Bruto2)
+
+        _Texto = Replace(_Texto, "<PBRUTO_UD1_3>", _St_PU01_Bruto3)
+        _Texto = Replace(_Texto, "<PBRUTO_UD2_3>", _St_PU02_Bruto3)
+
+        _Texto = Replace(_Texto, "<PBRUTO_UD1_4>", _St_PU01_Bruto4)
+        _Texto = Replace(_Texto, "<PBRUTO_UD2_4>", _St_PU02_Bruto4)
+
+        'Precios especiales La Colchaguina
+        _Texto = Replace(_Texto, "<PBRUTO_LCESP1>", _Lc_PrecioEspLC1)
+        _Texto = Replace(_Texto, "<PBRUTO_LCESP2>", _Lc_PrecioEspLC2)
+
+        _Texto = Replace(_Texto, "<FECHA_IMPRESION>", _Fecha_impresion)
+        _Texto = Replace(_Texto, "<FECHA_IMPRESION2>", _Fecha_impresion.ToShortDateString)
+        _Texto = Replace(_Texto, "<FECHA_IMPRESION3>", Format(_Fecha_impresion, "dd-MM-yyyy"))
+
+        _Texto = Replace(_Texto, "<TIDO>", _Tido)
+        _Texto = Replace(_Texto, "<NUDO>", _Nudo)
+
+        _Texto = Replace(_Texto, "<TIDOPA>", _Tidopa)
+        _Texto = Replace(_Texto, "<NUDOPA>", _Nudopa)
+
+        _Texto = Replace(_Texto, "<NOMBRE_EMPRESA>", RazonEmpresa.ToString.Trim)
+
+        Dim _PU01_BrutoCtdo As String
+        Dim _PU02_BrutoCtdo As String
+
+        _PU01_BrutoCtdo = Fx_FormatearValorCentrado(_PU01_Bruto, 12)
+        _PU02_BrutoCtdo = Fx_FormatearValorCentrado(_PU02_Bruto, 12)
+
+        _Texto = Replace(_Texto, "<PBRUTO_UD1_CENT>", _PU01_BrutoCtdo)
+        _Texto = Replace(_Texto, "<PBRUTO_UD2_CENT>", _PU02_BrutoCtdo)
+
+        Dim _Nudopa_Sc As String
+
+        Try
+            _Nudopa_Sc = CInt(_Nudopa)
+        Catch ex As Exception
+            _Nudopa_Sc = _Nudopa
+        End Try
+
+        _Texto = Replace(_Texto, "<NUDOPA_SC>", _Nudopa_Sc.Trim)
+
+        Return _Texto
+
+    End Function
     Private Sub Sb_Imprimir_PRN(_Texto As String,
                                 _Puerto As String,
                                 Optional _ImprimirAIP As Boolean = False)

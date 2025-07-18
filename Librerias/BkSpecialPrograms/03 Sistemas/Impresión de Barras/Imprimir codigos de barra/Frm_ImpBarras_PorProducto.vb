@@ -1,12 +1,13 @@
 ﻿Imports System.Net.Sockets
 Imports System.Text
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Frm_ImpBarras_PorProducto
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
-
+    Dim descripcion As String
     Dim _DsDocumento As DataSet
     Dim _Tbl_Productos As DataTable
     Dim _Tbl_Filtro_Productos As DataTable
@@ -14,7 +15,9 @@ Public Class Frm_ImpBarras_PorProducto
     Dim _Cantidad_Uno As Boolean
     Dim _Codigo_Ubic As String
     Dim _CerrarPorConfigurar As Boolean
-
+    Dim AUXCODE As String
+    Dim CodAlternativoAUx As String
+    Dim Zpl As String
     Public Property Pro_Tbl_Filtro_Productos() As DataTable
         Get
             Return _Tbl_Filtro_Productos
@@ -807,6 +810,78 @@ Public Class Frm_ImpBarras_PorProducto
     End Sub
 
     Private Sub BtnConfiguracion_Click(sender As Object, e As EventArgs) Handles BtnConfiguracion.Click
+
+    End Sub
+
+    Private Sub Bar1_ItemClick(sender As Object, e As EventArgs) Handles Bar1.ItemClick
+
+    End Sub
+
+    Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles Btn_Preview_Etiqueta.Click
+        If IsNothing(Cmbetiquetas.SelectedValue) Then
+            Throw New System.Exception("Debe seleccionar un formato de impresión")
+        End If
+
+        If String.IsNullOrEmpty(Cmbetiquetas.SelectedValue) Then
+            Throw New System.Exception("Debe seleccionar un formato de impresión")
+        End If
+        If IsNothing(descripcion) Then
+            Throw New System.Exception("Debe seleccionar un producto")
+        End If
+
+        If String.IsNullOrEmpty(descripcion) Then
+            Throw New System.Exception("Debe seleccionar un producto")
+        End If
+        Dim _Codigo = AUXCODE
+
+        Dim _CodAlternativo = CodAlternativoAUx
+
+        Dim _Lista = CmbLista.SelectedValue
+
+        Dim _Empresa, _Sucursal, _Bodega As String
+        Dim _ESB() = Split(CmbBodega.SelectedValue, ";")
+
+        _Empresa = _ESB(0)
+        _Sucursal = _ESB(1)
+        _Bodega = _ESB(2)
+        Dim _Imp As New Class_Imprimir_Barras
+        Dim MensajeRespuesta As New Mensajes
+
+        MensajeRespuesta = _Imp.CrearPRN(Cmbetiquetas.SelectedValue,
+                                                  _Puerto,
+                                                  _Codigo,
+                                                  _Lista,
+                                                  _Empresa,
+                                                  _Sucursal,
+                                                  _Bodega,
+                                                  _Codigo_Ubic,
+                                                  Chk_Imprimir_Todas_Las_Ubicaciones.Checked,
+                                                  Chk_ImprimiPrecioFuturo.Checked,
+                                                  Id_PrecioFuturo,
+                                                  _CodAlternativo)
+        If (MensajeRespuesta.EsCorrecto) Then
+            Zpl = MensajeRespuesta.Detalle
+        Else
+            Return
+        End If
+        Dim fr1 As Frm_ImpBarras_Preview = New Frm_ImpBarras_Preview(Zpl, Cmbetiquetas.SelectedValue, descripcion)
+        fr1.Show()
+
+    End Sub
+
+    Private Sub Grilla_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellContentClick
+        If e.RowIndex >= 0 AndAlso e.ColumnIndex >= 0 Then
+            descripcion = Grilla.Rows(e.RowIndex).Cells("Descripcion").Value.ToString()
+            AUXCODE = Grilla.Rows(e.RowIndex).Cells("Codigo").Value.ToString()
+            CodAlternativoAUx = Grilla.Rows(e.RowIndex).Cells("CodAlternativo").Value.ToString()
+        End If
+    End Sub
+
+    Private Sub Cmbetiquetas_SelectedIndexChanged(sender As Object, e As EventArgs) Handles Cmbetiquetas.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub Txt_Codigo_TextChanged(sender As Object, e As EventArgs) Handles Txt_Codigo.TextChanged
 
     End Sub
 

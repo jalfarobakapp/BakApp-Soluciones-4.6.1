@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_ImpBarras_PorDocumento
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -33,6 +33,9 @@ Partial Class Frm_ImpBarras_PorDocumento
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btnimprimiretiquetas = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_imprimir_Archivo = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnConfiguracion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Conf_PuertoEtiqueta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Conf_ConfEstacion = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.GrillaEncabezado = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -43,9 +46,6 @@ Partial Class Frm_ImpBarras_PorDocumento
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.LblEntidadFisica = New DevComponents.DotNetBar.LabelX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
-        Me.BtnConfiguracion = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Conf_PuertoEtiqueta = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Conf_ConfEstacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Puerto = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.CmbPuerto = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -99,6 +99,32 @@ Partial Class Frm_ImpBarras_PorDocumento
         Me.Btn_imprimir_Archivo.ImageAlt = CType(resources.GetObject("Btn_imprimir_Archivo.ImageAlt"), System.Drawing.Image)
         Me.Btn_imprimir_Archivo.Name = "Btn_imprimir_Archivo"
         Me.Btn_imprimir_Archivo.Text = "Imprimir a un archivo"
+        '
+        'BtnConfiguracion
+        '
+        Me.BtnConfiguracion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.BtnConfiguracion.ForeColor = System.Drawing.Color.Black
+        Me.BtnConfiguracion.Image = CType(resources.GetObject("BtnConfiguracion.Image"), System.Drawing.Image)
+        Me.BtnConfiguracion.ImageAlt = CType(resources.GetObject("BtnConfiguracion.ImageAlt"), System.Drawing.Image)
+        Me.BtnConfiguracion.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.BtnConfiguracion.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
+        Me.BtnConfiguracion.Name = "BtnConfiguracion"
+        Me.BtnConfiguracion.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Conf_PuertoEtiqueta, Me.Btn_Conf_ConfEstacion})
+        Me.BtnConfiguracion.Tooltip = "ConfiguraciÃ³n de sistema"
+        '
+        'Btn_Conf_PuertoEtiqueta
+        '
+        Me.Btn_Conf_PuertoEtiqueta.Image = CType(resources.GetObject("Btn_Conf_PuertoEtiqueta.Image"), System.Drawing.Image)
+        Me.Btn_Conf_PuertoEtiqueta.ImageAlt = CType(resources.GetObject("Btn_Conf_PuertoEtiqueta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Conf_PuertoEtiqueta.Name = "Btn_Conf_PuertoEtiqueta"
+        Me.Btn_Conf_PuertoEtiqueta.Text = "ConfiguraciÃ³n puerto y etiqueta por defecto"
+        '
+        'Btn_Conf_ConfEstacion
+        '
+        Me.Btn_Conf_ConfEstacion.Image = CType(resources.GetObject("Btn_Conf_ConfEstacion.Image"), System.Drawing.Image)
+        Me.Btn_Conf_ConfEstacion.ImageAlt = CType(resources.GetObject("Btn_Conf_ConfEstacion.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Conf_ConfEstacion.Name = "Btn_Conf_ConfEstacion"
+        Me.Btn_Conf_ConfEstacion.Text = "ConfiguraciÃ³n de estaciÃ³n local"
         '
         'GroupPanel1
         '
@@ -177,7 +203,8 @@ Partial Class Frm_ImpBarras_PorDocumento
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.GrillaEncabezado.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.GrillaEncabezado.RowHeadersVisible = False
-        Me.GrillaEncabezado.Size = New System.Drawing.Size(800, 57)
+        Me.GrillaEncabezado.RowHeadersWidth = 51
+        Me.GrillaEncabezado.Size = New System.Drawing.Size(800, 53)
         Me.GrillaEncabezado.TabIndex = 0
         '
         'GroupPanel2
@@ -228,7 +255,7 @@ Partial Class Frm_ImpBarras_PorDocumento
         Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Permisos})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(212, 110)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
-        Me.ContextMenuBar1.Size = New System.Drawing.Size(306, 25)
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(306, 29)
         Me.ContextMenuBar1.Stretch = True
         Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ContextMenuBar1.TabIndex = 57
@@ -292,7 +319,8 @@ Partial Class Frm_ImpBarras_PorDocumento
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.RowHeadersVisible = False
-        Me.Grilla.Size = New System.Drawing.Size(800, 261)
+        Me.Grilla.RowHeadersWidth = 51
+        Me.Grilla.Size = New System.Drawing.Size(800, 257)
         Me.Grilla.TabIndex = 1
         '
         'LblEntidadFisica
@@ -321,33 +349,7 @@ Partial Class Frm_ImpBarras_PorDocumento
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(75, 23)
         Me.LabelX4.TabIndex = 69
-        Me.LabelX4.Text = "Ent. física:"
-        '
-        'BtnConfiguracion
-        '
-        Me.BtnConfiguracion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.BtnConfiguracion.ForeColor = System.Drawing.Color.Black
-        Me.BtnConfiguracion.Image = CType(resources.GetObject("BtnConfiguracion.Image"), System.Drawing.Image)
-        Me.BtnConfiguracion.ImageAlt = CType(resources.GetObject("BtnConfiguracion.ImageAlt"), System.Drawing.Image)
-        Me.BtnConfiguracion.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.BtnConfiguracion.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
-        Me.BtnConfiguracion.Name = "BtnConfiguracion"
-        Me.BtnConfiguracion.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Conf_PuertoEtiqueta, Me.Btn_Conf_ConfEstacion})
-        Me.BtnConfiguracion.Tooltip = "Configuración de sistema"
-        '
-        'Btn_Conf_PuertoEtiqueta
-        '
-        Me.Btn_Conf_PuertoEtiqueta.Image = CType(resources.GetObject("Btn_Conf_PuertoEtiqueta.Image"), System.Drawing.Image)
-        Me.Btn_Conf_PuertoEtiqueta.ImageAlt = CType(resources.GetObject("Btn_Conf_PuertoEtiqueta.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Conf_PuertoEtiqueta.Name = "Btn_Conf_PuertoEtiqueta"
-        Me.Btn_Conf_PuertoEtiqueta.Text = "Configuración puerto y etiqueta por defecto"
-        '
-        'Btn_Conf_ConfEstacion
-        '
-        Me.Btn_Conf_ConfEstacion.Image = CType(resources.GetObject("Btn_Conf_ConfEstacion.Image"), System.Drawing.Image)
-        Me.Btn_Conf_ConfEstacion.ImageAlt = CType(resources.GetObject("Btn_Conf_ConfEstacion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Conf_ConfEstacion.Name = "Btn_Conf_ConfEstacion"
-        Me.Btn_Conf_ConfEstacion.Text = "Configuración de estación local"
+        Me.LabelX4.Text = "Ent. fÃ­sica:"
         '
         'Grupo_Puerto
         '
@@ -455,7 +457,7 @@ Partial Class Frm_ImpBarras_PorDocumento
         Me.Btn_ConfPuertoXEtiquetaXEquipo.Size = New System.Drawing.Size(26, 25)
         Me.Btn_ConfPuertoXEtiquetaXEquipo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_ConfPuertoXEtiquetaXEquipo.TabIndex = 80
-        Me.Btn_ConfPuertoXEtiquetaXEquipo.Tooltip = "Seleccionar puerto de salida según etiqueta por equipo"
+        Me.Btn_ConfPuertoXEtiquetaXEquipo.Tooltip = "Seleccionar puerto de salida segÃºn etiqueta por equipo"
         '
         'Cmbetiquetas
         '
@@ -473,7 +475,7 @@ Partial Class Frm_ImpBarras_PorDocumento
         '
         'Frm_ImpBarras_PorDocumento
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(830, 519)
         Me.Controls.Add(Me.GroupPanel3)
@@ -493,7 +495,7 @@ Partial Class Frm_ImpBarras_PorDocumento
         Me.Name = "Frm_ImpBarras_PorDocumento"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Impresión de código de barras por documento"
+        Me.Text = "ImpresiÃ³n de cÃ³digo de barras por documento"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.GrillaEncabezado, System.ComponentModel.ISupportInitialize).EndInit()
