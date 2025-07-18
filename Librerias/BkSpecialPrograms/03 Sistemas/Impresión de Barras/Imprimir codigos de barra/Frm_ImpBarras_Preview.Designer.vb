@@ -35,6 +35,8 @@ Partial Class Frm_ImpBarras_Preview
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Img_Etiqueta = New System.Windows.Forms.PictureBox()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Pnl_Ancho = New System.Windows.Forms.Panel()
+        Me.Pnl_Alto = New System.Windows.Forms.Panel()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Img_Etiqueta, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -156,6 +158,8 @@ Partial Class Frm_ImpBarras_Preview
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel2.Controls.Add(Me.Img_Etiqueta)
+        Me.GroupPanel2.Controls.Add(Me.Pnl_Alto)
+        Me.GroupPanel2.Controls.Add(Me.Pnl_Ancho)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(12, 39)
         Me.GroupPanel2.Name = "GroupPanel2"
@@ -193,13 +197,13 @@ Partial Class Frm_ImpBarras_Preview
         '
         'Img_Etiqueta
         '
-        Me.Img_Etiqueta.BackColor = System.Drawing.Color.White
+        Me.Img_Etiqueta.BackColor = System.Drawing.Color.Transparent
+        Me.Img_Etiqueta.Dock = System.Windows.Forms.DockStyle.Left
         Me.Img_Etiqueta.ErrorImage = CType(resources.GetObject("Img_Etiqueta.ErrorImage"), System.Drawing.Image)
         Me.Img_Etiqueta.ForeColor = System.Drawing.Color.Black
-        Me.Img_Etiqueta.Location = New System.Drawing.Point(-3, 33)
+        Me.Img_Etiqueta.Location = New System.Drawing.Point(104, 81)
         Me.Img_Etiqueta.Name = "Img_Etiqueta"
-        Me.Img_Etiqueta.Size = New System.Drawing.Size(814, 309)
-        Me.Img_Etiqueta.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage
+        Me.Img_Etiqueta.Size = New System.Drawing.Size(153, 296)
         Me.Img_Etiqueta.TabIndex = 0
         Me.Img_Etiqueta.TabStop = False
         '
@@ -218,6 +222,22 @@ Partial Class Frm_ImpBarras_Preview
         Me.LabelX2.TabIndex = 85
         Me.LabelX2.Text = "Etiqueta:"
         '
+        'Pnl_Ancho
+        '
+        Me.Pnl_Ancho.Dock = System.Windows.Forms.DockStyle.Top
+        Me.Pnl_Ancho.Location = New System.Drawing.Point(0, 0)
+        Me.Pnl_Ancho.Name = "Pnl_Ancho"
+        Me.Pnl_Ancho.Size = New System.Drawing.Size(814, 81)
+        Me.Pnl_Ancho.TabIndex = 1
+        '
+        'Pnl_Alto
+        '
+        Me.Pnl_Alto.Dock = System.Windows.Forms.DockStyle.Left
+        Me.Pnl_Alto.Location = New System.Drawing.Point(0, 81)
+        Me.Pnl_Alto.Name = "Pnl_Alto"
+        Me.Pnl_Alto.Size = New System.Drawing.Size(104, 296)
+        Me.Pnl_Alto.TabIndex = 2
+        '
         'Frm_ImpBarras_Preview
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
@@ -231,6 +251,7 @@ Partial Class Frm_ImpBarras_Preview
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -259,4 +280,6 @@ Partial Class Frm_ImpBarras_Preview
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Img_Etiqueta As PictureBox
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Pnl_Ancho As Panel
+    Friend WithEvents Pnl_Alto As Panel
 End Class

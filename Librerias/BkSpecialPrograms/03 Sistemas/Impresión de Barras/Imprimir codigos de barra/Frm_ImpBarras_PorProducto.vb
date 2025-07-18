@@ -818,54 +818,62 @@ Public Class Frm_ImpBarras_PorProducto
     End Sub
 
     Private Sub ButtonItem1_Click(sender As Object, e As EventArgs) Handles Btn_Preview_Etiqueta.Click
-        If IsNothing(Cmbetiquetas.SelectedValue) Then
-            Throw New System.Exception("Debe seleccionar un formato de impresión")
-        End If
 
-        If String.IsNullOrEmpty(Cmbetiquetas.SelectedValue) Then
-            Throw New System.Exception("Debe seleccionar un formato de impresión")
-        End If
-        If IsNothing(descripcion) Then
-            Throw New System.Exception("Debe seleccionar un producto")
-        End If
+        Try
 
-        If String.IsNullOrEmpty(descripcion) Then
-            Throw New System.Exception("Debe seleccionar un producto")
-        End If
-        Dim _Codigo = AUXCODE
 
-        Dim _CodAlternativo = CodAlternativoAUx
+            If IsNothing(Cmbetiquetas.SelectedValue) Then
+                Throw New System.Exception("Debe seleccionar un formato de impresión")
+            End If
 
-        Dim _Lista = CmbLista.SelectedValue
+            If String.IsNullOrEmpty(Cmbetiquetas.SelectedValue) Then
+                Throw New System.Exception("Debe seleccionar un formato de impresión")
+            End If
+            If IsNothing(descripcion) Then
+                Throw New System.Exception("Debe seleccionar un producto")
+            End If
 
-        Dim _Empresa, _Sucursal, _Bodega As String
-        Dim _ESB() = Split(CmbBodega.SelectedValue, ";")
+            If String.IsNullOrEmpty(descripcion) Then
+                Throw New System.Exception("Debe seleccionar un producto")
+            End If
+            Dim _Codigo = AUXCODE
 
-        _Empresa = _ESB(0)
-        _Sucursal = _ESB(1)
-        _Bodega = _ESB(2)
-        Dim _Imp As New Class_Imprimir_Barras
-        Dim MensajeRespuesta As New Mensajes
+            Dim _CodAlternativo = CodAlternativoAUx
 
-        MensajeRespuesta = _Imp.CrearPRN(Cmbetiquetas.SelectedValue,
-                                                  _Puerto,
-                                                  _Codigo,
-                                                  _Lista,
-                                                  _Empresa,
-                                                  _Sucursal,
-                                                  _Bodega,
-                                                  _Codigo_Ubic,
-                                                  Chk_Imprimir_Todas_Las_Ubicaciones.Checked,
-                                                  Chk_ImprimiPrecioFuturo.Checked,
-                                                  Id_PrecioFuturo,
-                                                  _CodAlternativo)
-        If (MensajeRespuesta.EsCorrecto) Then
-            Zpl = MensajeRespuesta.Detalle
-        Else
-            Return
-        End If
-        Dim fr1 As Frm_ImpBarras_Preview = New Frm_ImpBarras_Preview(Zpl, Cmbetiquetas.SelectedValue, descripcion)
-        fr1.Show()
+            Dim _Lista = CmbLista.SelectedValue
+
+            Dim _Empresa, _Sucursal, _Bodega As String
+            Dim _ESB() = Split(CmbBodega.SelectedValue, ";")
+
+            _Empresa = _ESB(0)
+            _Sucursal = _ESB(1)
+            _Bodega = _ESB(2)
+            Dim _Imp As New Class_Imprimir_Barras
+            Dim MensajeRespuesta As New Mensajes
+
+            MensajeRespuesta = _Imp.CrearPRN(Cmbetiquetas.SelectedValue,
+                                                      _Puerto,
+                                                      _Codigo,
+                                                      _Lista,
+                                                      _Empresa,
+                                                      _Sucursal,
+                                                      _Bodega,
+                                                      _Codigo_Ubic,
+                                                      Chk_Imprimir_Todas_Las_Ubicaciones.Checked,
+                                                      Chk_ImprimiPrecioFuturo.Checked,
+                                                      Id_PrecioFuturo,
+                                                      _CodAlternativo)
+            If (MensajeRespuesta.EsCorrecto) Then
+                Zpl = MensajeRespuesta.Detalle
+            Else
+                Return
+            End If
+            Dim fr1 As Frm_ImpBarras_Preview = New Frm_ImpBarras_Preview(Zpl, Cmbetiquetas.SelectedValue, descripcion)
+            fr1.Show()
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
 
     End Sub
 
