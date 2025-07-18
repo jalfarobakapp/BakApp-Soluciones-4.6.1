@@ -232,9 +232,9 @@ Public Class Class_Imprimir_Barras
             _PrecioLc1 = (_Precio_ud1 / _Dim1) * _Dim2
 
             Dim _RowEtiqueta As DataRow = Fx_TraeEtiqueta(_NombreEtiqueta)
-
             Dim _Texto = _RowEtiqueta.Item("FUNCION")
 
+            Sb_EtiquetasEspecialMayorista(_Codigo, _Texto)
             Sb_Imprimir_PRN(_Texto, _Puerto, _ImprimirAIP)
 
         End If
@@ -317,6 +317,119 @@ Public Class Class_Imprimir_Barras
             End If
         End Try
     End Sub
+
+    Sub Sb_EtiquetasEspecialMayorista(_Codigo As String, ByRef _Texto As String)
+
+        Consulta_sql = "Select KOPR,NOKOPR,RLUD,NODIM1,NODIM2,NODIM3 From MAEPR Where KOPR = '" & _Codigo & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Dim1, _Dim2 As Double
+        Dim _Dim3 As String = "X " & _Nodim3
+
+        If IsNumeric(_Nodim1) Then
+            _Dim1 = Val(_Nodim1)
+        End If
+
+        If IsNumeric(_Nodim2) Then
+            _Dim2 = Val(_Nodim2)
+        End If
+
+        Consulta_sql = "Select Top 1 *,(Select top 1 MELT From TABPP Where KOLT = 'PB1') As MELT" & vbCrLf &
+                       "From TABPRE" & vbCrLf &
+                       "Where KOLT = 'PB1' And KOPR = '" & _Codigo & "'"
+        Dim _RowPrecios_PB1 As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Consulta_sql = "Select Top 1 *,(Select top 1 MELT From TABPP Where KOLT = 'PB3') As MELT" & vbCrLf &
+                       "From TABPRE" & vbCrLf &
+                       "Where KOLT = 'PB3' And KOPR = '" & _Codigo & "'"
+        Dim _RowPrecios_PB3 As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Precio_1 As Double = Fx_Funcion_Ecuacion_Random(Nothing, "", "", _Codigo, 1, _RowPrecios_PB1, 0, 0, 0)
+        Dim _Precio_2 As Double = Fx_Funcion_Ecuacion_Random(Nothing, "", "", _Codigo, 1, _RowPrecios_PB3, 0, 0, 0)
+
+        Dim _PrecioXKilo1 As Double = 0
+        Dim _PrecioXKilo2 As Double = 0
+
+        _PrecioXKilo1 = Math.Round((_Dim2 / _Dim1) * _Precio_1, 0)
+        _PrecioXKilo2 = Math.Round((_Dim2 / _Dim1) * _Precio_2, 0)
+
+        Dim _May_Hasta As String = _Rtu - 1
+        Dim _May_Desde As String = _Rtu
+
+        If _Dim1 = 0 Then _Dim1 = 1
+        If _Dim2 = 0 Then _Dim2 = 1
+
+        Dim _Descripcion_May = Fx_DividirDescripcionEn2Palabras(_Descripcion)
+        Dim _May_Descripcion_1 As String = _Descripcion_May(0)
+        Dim _May_Descripcion_2 As String = _Descripcion_May(1)
+
+        Dim _May_Precio_1, _May_Precio_2 As String
+        Dim _May_Precioxkilo1, _May_Precioxkilo2 As String
+        Dim _May_dim3 As String
+
+        Try
+            _May_Precio_1 = Fx_Formato_Numerico(_Precio_1, "$ 999.999", False)
+        Catch ex As Exception
+            _May_Precio_1 = "?"
+        End Try
+
+        Try
+            _May_Precio_2 = Fx_Formato_Numerico(_Precio_2, "$ 999.999", False)
+        Catch ex As Exception
+            _May_Precio_2 = "?"
+        End Try
+
+        Try
+            _May_Precioxkilo1 = Fx_Formato_Numerico(_May_Precioxkilo1, "$ 999.999", False)
+        Catch ex As Exception
+            _May_Precioxkilo1 = "?"
+        End Try
+
+        Try
+            _May_Precioxkilo2 = Fx_Formato_Numerico(_May_Precioxkilo2, "$ 999.999", False)
+        Catch ex As Exception
+            _May_Precioxkilo2 = "?"
+        End Try
+
+        _May_dim3 = _Dim3.ToString.Trim
+
+        _Texto = Replace(_Texto, "<MAY_PRECIO1>", _May_Precio_1)
+        _Texto = Replace(_Texto, "<MAY_PRECIO2>", _May_Precio_1)
+        _Texto = Replace(_Texto, "<MAY_PRECIOXKILO1>", _May_Precioxkilo1)
+        _Texto = Replace(_Texto, "<MAY_PRECIOXKILO2>", _May_Precioxkilo2)
+
+        _Texto = Replace(_Texto, "<MAY_DIM3>", _May_dim3)
+        _Texto = Replace(_Texto, "<MAY_HASTA>", _May_Hasta)
+        _Texto = Replace(_Texto, "<MAY_DESDE>", _May_Desde)
+
+        _Texto = Replace(_Texto, "<MAY_DESCRIPCION_1>", _May_Descripcion_1)
+        _Texto = Replace(_Texto, "<MAY_DESCRIPCION_2>", _May_Descripcion_2)
+
+    End Sub
+
+    ''' <summary>
+    ''' Divide una descripción en dos partes: la primera palabra y el resto.
+    ''' </summary>
+    ''' <param name="descripcion">Texto a dividir</param>
+    ''' <returns>Array de 2 strings: palabra1, resto</returns>
+    Function Fx_DividirDescripcionEn2Palabras(descripcion As String) As String()
+        Dim resultado(1) As String
+        If String.IsNullOrWhiteSpace(descripcion) Then
+            resultado(0) = ""
+            resultado(1) = ""
+            Return resultado
+        End If
+
+        Dim partes As String() = descripcion.Trim().Split(New Char() {" "c}, 2, StringSplitOptions.RemoveEmptyEntries)
+        If partes.Length = 1 Then
+            resultado(0) = partes(0)
+            resultado(1) = ""
+        Else
+            resultado(0) = partes(0)
+            resultado(1) = partes(1)
+        End If
+        Return resultado
+    End Function
 
 #End Region
 
