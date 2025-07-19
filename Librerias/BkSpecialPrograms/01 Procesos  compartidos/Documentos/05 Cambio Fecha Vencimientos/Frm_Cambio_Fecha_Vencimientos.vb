@@ -436,7 +436,7 @@ Public Class Frm_Cambio_Fecha_Vencimientos
         With NewFila
 
             .Item("VAVE") = _Vave
-            .Item("ESPGVE") = ModBodega
+            .Item("ESPGVE") = Mod_Bodega
             .Item("FEVE") = String.Empty
             .Item("VAABVE") = String.Empty
             .Item("OBSERVA") = 0

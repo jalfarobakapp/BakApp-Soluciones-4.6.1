@@ -87,7 +87,7 @@ Public Class Clas_Imprimir_Cierre
 
         Dim _FechaCierre As String = Format(_Fecha_Cierre, "yyyyMMdd")
 
-        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
         _Row_Configp = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Estaciones_CashDro" & vbCrLf & _

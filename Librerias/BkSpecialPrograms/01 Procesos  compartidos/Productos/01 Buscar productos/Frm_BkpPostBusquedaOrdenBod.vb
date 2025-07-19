@@ -26,9 +26,9 @@ Public Class Frm_BkpPostBusquedaOrdenBod
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        _Orden_Bod = "ORDEN_BOD_" & ModEmpresa.Trim & ModSucursal.Trim
+        _Orden_Bod = "ORDEN_BOD_" & Mod_Empresa.Trim & Mod_Sucursal.Trim
 
-        Consulta_sql = "Select * From TABBO Where EMPRESA = '" & ModEmpresa & "'"
+        Consulta_sql = "Select * From TABBO Where EMPRESA = '" & Mod_Empresa & "'"
         _Tbl_Bodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl_Bodegas.Rows
@@ -73,7 +73,7 @@ Public Class Frm_BkpPostBusquedaOrdenBod
         Consulta_sql = "Select DISTINCT Cast(0 As int) As Orden,Ltrim(Rtrim(EMPRESA))+Ltrim(Rtrim(KOSU))+Ltrim(Rtrim(KOBO)) As Bodega,* 
                         Into #Paso
                         From TABBO
-                        Where EMPRESA = '" & ModEmpresa & "'
+                        Where EMPRESA = '" & Mod_Empresa & "'
    
                         Update #Paso Set Orden = Isnull((Select Orden From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones 
 						                        		 Where Tabla = '" & _Orden_Bod & "' And CodigoTabla = Bodega),0)

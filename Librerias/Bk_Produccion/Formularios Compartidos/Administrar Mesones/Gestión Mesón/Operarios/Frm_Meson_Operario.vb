@@ -689,7 +689,7 @@ Public Class Frm_Meson_Operario
                                    "Empresa,Numot,Nreg,Estado,Desde,Operacion,Nombreop,Codigo,Glosa,Asignado_Por," &
                                    "Fecha_Asignacion,Fabricar_OT,Fabricado_OT,Saldo_Fabricar_OT," &
                                    "Fabricar,Fabricado,Saldo_Fabricar,Cod_Funcionario_Asigna,Orden_Potpr,Orden_Meson,Nivel) " &
-                                   "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & ModEmpresa &
+                                   "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & Mod_Empresa &
                                    "','" & _Numot & "','" & _Nreg & "','PD','MS'" &
                                    ",'" & _Operacion & "','" & _Nombreop & "','" & _Codigo & "','" & _Glosa &
                                    "','" & FUNCIONARIO & "',Getdate()," & _Fabricar_OT & "," & _Fabricado_OT & "," & _Saldo_Fabricar_OT &
@@ -856,7 +856,7 @@ Public Class Frm_Meson_Operario
                                    "Empresa,Numot,Nreg,Estado,Desde,Operacion,Nombreop,Codigo,Glosa,Asignado_Por," &
                                    "Fecha_Asignacion,Fabricar_OT,Fabricado_OT,Saldo_Fabricar_OT," &
                                    "Fabricar,Fabricado,Saldo_Fabricar,Cod_Funcionario_Asigna,Orden_Potpr,Orden_Meson,Nivel) " &
-                                   "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & ModEmpresa &
+                                   "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & Mod_Empresa &
                                    "','" & _Numot & "','" & _Nreg & "','PD','MS'" &
                                    ",'" & _Operacion & "','" & _Nombreop & "','" & _Codigo & "','" & _Glosa &
                                    "','" & FUNCIONARIO & "',Getdate()," & _Fabricar & "," & _Fabricado & "," & _Saldo_Fabricar &
@@ -941,7 +941,7 @@ Public Class Frm_Meson_Operario
                            "Empresa,Numot,Nreg,Estado,Desde,Operacion,Nombreop,Codigo,Glosa,Asignado_Por," &
                            "Fecha_Asignacion,Fabricar_OT,Fabricado_OT,Saldo_Fabricar_OT," &
                            "Fabricar,Fabricado,Saldo_Fabricar,Cod_Funcionario_Asigna,Orden_Potpr,Orden_Meson,Nivel) " &
-                           "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & ModEmpresa &
+                           "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & Mod_Empresa &
                            "','" & _Numot & "','" & _Nreg & "','PD','MS'" &
                            ",'" & _Operacion & "','" & _Nombreop & "','" & _Codigo & "','" & _Glosa &
                            "','" & FUNCIONARIO & "',Getdate()," & _Fabricar & "," & _Fabricado & "," & _Saldo_Fabricar &

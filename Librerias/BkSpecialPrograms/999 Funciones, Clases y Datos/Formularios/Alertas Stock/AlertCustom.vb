@@ -426,7 +426,7 @@ Public Class AlertCustom
                            "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                            "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
                            "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega_NVI'))" & vbCrLf &
-                           "Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
+                           "Or (EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')"
 
         Else
 
@@ -437,7 +437,7 @@ Public Class AlertCustom
                            "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                            "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
                            "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega'))" & vbCrLf &
-                           "Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
+                           "Or (EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')"
 
         End If
 
@@ -447,10 +447,10 @@ Public Class AlertCustom
 
         _Filtro = "And Empresa+Sucursal+Bodega In " & _Filtro
 
-        Dim _Orden_Bod = "ORDEN_BOD_" & ModEmpresa.Trim & ModSucursal.Trim
+        Dim _Orden_Bod = "ORDEN_BOD_" & Mod_Empresa.Trim & Mod_Sucursal.Trim
 
         Consulta_sql = My.Resources.Recursos_Alerta_Stock.Stock_productos_por_emp_suc_bod
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Codigo)
         Consulta_sql = Replace(Consulta_sql, "#Codigos#", _Filtro_Productos)
         Consulta_sql = Replace(Consulta_sql, "#Ud#", _Ud)
@@ -541,7 +541,7 @@ Public Class AlertCustom
             Dim _Bodega As String = _Fila.Cells("Bodega").Value
 
             If Not String.IsNullOrEmpty(_Tido) Then
-                _St_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa, _Sucursal, _Bodega, _Codigo, _Ud, "STFI" & _Ud)
+                _St_Disponible = Fx_Stock_Disponible(_Tido, Mod_Empresa, _Sucursal, _Bodega, _Codigo, _Ud, "STFI" & _Ud)
                 If _St_Disponible < 0 Then _St_Disponible = 0
                 _Fila.Cells("ST_DISPONIBLE").Value = _St_Disponible
             End If
@@ -618,7 +618,7 @@ Public Class AlertCustom
                        "Inner Join MAEPR m On m.KOPR = p.Codigo" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Contenedor c On c.IdCont = p.IdCont" & vbCrLf &
                        "Inner Join MAEEDO e On c.Idmaeedo_Rela = e.IDMAEEDO" & vbCrLf &
-                       "Where p.Empresa = '" & ModEmpresa & "' And p.Codigo = '" & _Codigo & "'"
+                       "Where p.Empresa = '" & Mod_Empresa & "' And p.Codigo = '" & _Codigo & "'"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 

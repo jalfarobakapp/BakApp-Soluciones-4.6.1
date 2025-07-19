@@ -41,7 +41,7 @@ Public Class Frm_Pagos_Trae_NCV_Vigentes_X_Cliente
         _Koen = Koen
 
         Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,FEEMDO,VABRDO,VAABDO,VAIVARET,VABRDO-VAABDO AS SALDO,ESPGDO,MODO From MAEEDO" & vbCrLf &
-                       "Where EMPRESA = '" & ModEmpresa & "' And ENDO = '" & _Koen & "' And TIDO = 'NCV' AND ESPGDO = 'P' And VABRDO > 0" & vbCrLf & _Condicion_Extra
+                       "Where EMPRESA = '" & Mod_Empresa & "' And ENDO = '" & _Koen & "' And TIDO = 'NCV' AND ESPGDO = 'P' And VABRDO > 0" & vbCrLf & _Condicion_Extra
         _Tbl_Notas_de_credito = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)

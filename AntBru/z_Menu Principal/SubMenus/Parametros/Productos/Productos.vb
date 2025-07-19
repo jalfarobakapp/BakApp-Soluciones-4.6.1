@@ -76,7 +76,7 @@ Public Class Productos
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Espr0005") Then
 
-            Dim Fm As New Frm_Mt_InvParc_02_Seleccion(ModEmpresa, ModSucursal, ModBodega, FechaDelServidor, True)
+            Dim Fm As New Frm_Mt_InvParc_02_Seleccion(Mod_Empresa, Mod_Sucursal, Mod_Bodega, FechaDelServidor, True)
             Fm.ShowDialog(Me)
             Fm.Dispose()
 
@@ -133,9 +133,9 @@ Public Class Productos
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ubic0001") Then
 
             Dim Fm As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-            Fm.Pro_Empresa = ModEmpresa
-            Fm.Pro_Sucursal = ModSucursal
-            Fm.Pro_Bodega = ModBodega
+            Fm.Pro_Empresa = Mod_Empresa
+            Fm.Pro_Sucursal = Mod_Sucursal
+            Fm.Pro_Bodega = Mod_Bodega
             Fm.ShowDialog(Me)
 
             If Fm.Pro_Seleccionado Then
@@ -187,9 +187,9 @@ Public Class Productos
             .BtnExportaExcel.Visible = True
             .Pro_Tipo_Lista = "P"
             .Pro_Maestro_Productos = True
-            .Pro_Sucursal_Busqueda = ModSucursal
-            .Pro_Bodega_Busqueda = ModBodega
-            .Pro_Lista_Busqueda = ModListaPrecioVenta
+            .Pro_Sucursal_Busqueda = Mod_Sucursal
+            .Pro_Bodega_Busqueda = Mod_Bodega
+            .Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             .Mnu_Btn_Cambiar_Codigo_Producto.Visible = True
             .TraerTodosLosProductos = True
             .ShowDialog(Me)

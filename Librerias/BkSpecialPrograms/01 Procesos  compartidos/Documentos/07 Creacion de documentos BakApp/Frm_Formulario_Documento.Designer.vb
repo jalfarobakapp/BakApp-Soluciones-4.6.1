@@ -191,8 +191,8 @@ Partial Class Frm_Formulario_Documento
         Me.Lbl_NroDecimales = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Mini_Ver_Costo_Lista = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_Costo_Lista = New DevComponents.DotNetBar.LabelItem()
-        Me.Lbl_TipoVenta = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_CambiarTipoVenta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Lbl_TipoVenta = New DevComponents.DotNetBar.LabelItem()
         Me.Lbl_Totaliza_Cantidades = New DevComponents.DotNetBar.LabelX()
         Me.Radio3 = New DevComponents.DotNetBar.Command(Me.components)
         Me.Radio2 = New DevComponents.DotNetBar.Command(Me.components)
@@ -1845,7 +1845,7 @@ Partial Class Frm_Formulario_Documento
         Me.Barra_Herramientas_Producto.AntiAlias = True
         Me.Barra_Herramientas_Producto.BackColor = System.Drawing.Color.Transparent
         Me.Barra_Herramientas_Producto.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Barra_Herramientas_Producto.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mini_Buscar_Producto_Grilla, Me.Btn_Mini_Sol_Compra, Me.Btn_Mini_Refrescar_Stock_X_Linea, Me.Btn_Mini_Cambiar_Bodega, Me.Btn_Mini_Bodega_Para_Todos, Me.Btn_Mini_Sol_Crear_Producto, Me.Btn_Mini_Consolidar_Stock, Me.Btn_Mini_Recargar_Producto, Me.Btn_Mini_Clonar_Producto, Me.Btn_DecimalAgregar, Me.Btn_DecimalRestar, Me.Lbl_NroDecimales, Me.Btn_Mini_Ver_Costo_Lista, Me.Lbl_Costo_Lista, Me.Lbl_TipoVenta, Me.Btn_CambiarTipoVenta})
+        Me.Barra_Herramientas_Producto.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mini_Buscar_Producto_Grilla, Me.Btn_Mini_Sol_Compra, Me.Btn_Mini_Refrescar_Stock_X_Linea, Me.Btn_Mini_Cambiar_Bodega, Me.Btn_Mini_Bodega_Para_Todos, Me.Btn_Mini_Sol_Crear_Producto, Me.Btn_Mini_Consolidar_Stock, Me.Btn_Mini_Recargar_Producto, Me.Btn_Mini_Clonar_Producto, Me.Btn_DecimalAgregar, Me.Btn_DecimalRestar, Me.Lbl_NroDecimales, Me.Btn_Mini_Ver_Costo_Lista, Me.Lbl_Costo_Lista, Me.Btn_CambiarTipoVenta, Me.Lbl_TipoVenta})
         Me.Barra_Herramientas_Producto.Location = New System.Drawing.Point(0, 210)
         Me.Barra_Herramientas_Producto.Name = "Barra_Herramientas_Producto"
         Me.Barra_Herramientas_Producto.Size = New System.Drawing.Size(909, 25)
@@ -1975,6 +1975,13 @@ Partial Class Frm_Formulario_Documento
         Me.Lbl_Costo_Lista.TextAlignment = System.Drawing.StringAlignment.Far
         Me.Lbl_Costo_Lista.Visible = False
         '
+        'Btn_CambiarTipoVenta
+        '
+        Me.Btn_CambiarTipoVenta.Image = CType(resources.GetObject("Btn_CambiarTipoVenta.Image"), System.Drawing.Image)
+        Me.Btn_CambiarTipoVenta.ImageAlt = CType(resources.GetObject("Btn_CambiarTipoVenta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CambiarTipoVenta.Name = "Btn_CambiarTipoVenta"
+        Me.Btn_CambiarTipoVenta.Tooltip = "Cambiar tipo de venta"
+        '
         'Lbl_TipoVenta
         '
         Me.Lbl_TipoVenta.BorderType = DevComponents.DotNetBar.eBorderType.Sunken
@@ -1983,13 +1990,6 @@ Partial Class Frm_Formulario_Documento
         Me.Lbl_TipoVenta.Name = "Lbl_TipoVenta"
         Me.Lbl_TipoVenta.Text = "..."
         Me.Lbl_TipoVenta.Visible = False
-        '
-        'Btn_CambiarTipoVenta
-        '
-        Me.Btn_CambiarTipoVenta.Image = CType(resources.GetObject("Btn_CambiarTipoVenta.Image"), System.Drawing.Image)
-        Me.Btn_CambiarTipoVenta.ImageAlt = CType(resources.GetObject("Btn_CambiarTipoVenta.ImageAlt"), System.Drawing.Image)
-        Me.Btn_CambiarTipoVenta.Name = "Btn_CambiarTipoVenta"
-        Me.Btn_CambiarTipoVenta.Tooltip = "Cambiar tipo de venta"
         '
         'Lbl_Totaliza_Cantidades
         '

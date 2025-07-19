@@ -129,7 +129,7 @@ Public Class Frm_Meson_Asignar_Productos
             End If
 
             Consulta_sql = My.Resources.Recursos_Gestion_Meson.Buscar_OT_Para_Asignar_Meson
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
             Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro)
             Consulta_sql = Replace(Consulta_sql, "#Tipo_OT#", _Filtro_Tipo_OT)
             Consulta_sql = Replace(Consulta_sql, "#Base_Bakapp#", _Global_BaseBk)
@@ -369,19 +369,19 @@ Public Class Frm_Meson_Asignar_Productos
             If Not String.IsNullOrEmpty(Txt_BuscarXEntidad.Text.Trim) Then
                 _NuevoFiltro += "And IDPOTE In" & vbCrLf &
                                "(SELECT IDPOTE FROM POTL WITH (NOLOCK) INNER JOIN POTLCOM WITH (NOLOCK) ON POTLCOM.IDPOTL=POTL.IDPOTL" & vbCrLf &
-                                "WHERE POTLCOM.ENDO LIKE '%" & Txt_BuscarXEntidad.Text.Trim & "%' And POTL.EMPRESA = '" & ModEmpresa & "')" & vbCrLf
+                                "WHERE POTLCOM.ENDO LIKE '%" & Txt_BuscarXEntidad.Text.Trim & "%' And POTL.EMPRESA = '" & Mod_Empresa & "')" & vbCrLf
             End If
 
             If Not String.IsNullOrEmpty(Txt_BuscarXProducto.Text.Trim) Then
                 '_Filtro = CADENA_A_BUSCAR(RTrim$(Txt_BuscarXProducto.Text), "NUMOT+REFERENCIA LIKE '%")
                 _NuevoFiltro += "And IDPOTE In (SELECT IDPOTE FROM POTL WITH (NOLOCK) " &
-                    "WHERE CODIGO LIKE '%" & Txt_BuscarXProducto.Text.Trim & "%' And EMPRESA = '" & ModEmpresa & "')" & vbCrLf
+                    "WHERE CODIGO LIKE '%" & Txt_BuscarXProducto.Text.Trim & "%' And EMPRESA = '" & Mod_Empresa & "')" & vbCrLf
             End If
 
             If Not String.IsNullOrEmpty(Txt_BuscarXInsumo.Text.Trim) Then
                 '_Filtro = CADENA_A_BUSCAR(RTrim$(Txt_BuscarXProducto.Text), "NUMOT+REFERENCIA LIKE '%")
                 _NuevoFiltro += "And IDPOTE In (Select IDPOTE From POTL Where IDPOTL In " &
-                    "(SELECT IDPOTL FROM POTD WITH (NOLOCK) WHERE EMPRESA = '" & ModEmpresa & "' AND CODIGO LIKE '%" & Txt_BuscarXInsumo.Text.Trim & "%'))" & vbCrLf
+                    "(SELECT IDPOTL FROM POTD WITH (NOLOCK) WHERE EMPRESA = '" & Mod_Empresa & "' AND CODIGO LIKE '%" & Txt_BuscarXInsumo.Text.Trim & "%'))" & vbCrLf
             End If
 
             Dim _Select_Tablas As String
@@ -436,7 +436,7 @@ Public Class Frm_Meson_Asignar_Productos
             End If
 
             Consulta_sql = My.Resources.Recursos_Gestion_Meson.Buscar_OT_Para_Asignar_Meson2
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
             'Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro)
             Consulta_sql = Replace(Consulta_sql, "#NuevoFiltro#", _NuevoFiltro)
             Consulta_sql = Replace(Consulta_sql, "#Tipo_OT#", _Filtro_Tipo_OT)
@@ -806,7 +806,7 @@ Public Class Frm_Meson_Asignar_Productos
                         Fecha_Asignacion,Fabricar_Recep,Fabricado_Recep,
                         Fabricar_OT,Fabricado_OT,Saldo_Fabricar_OT,Fabricar,
                         Fabricado,Saldo_Fabricar,Cod_Funcionario_Asigna,Orden_Meson,Nivel) " & "
-                        Values('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & ModEmpresa & "',
+                        Values('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & Mod_Empresa & "',
                         '" & _Numot & "','" & _Nreg & "','PD','OR'," & _Orden_Potpr & ",'" & _Operacion & "','" & _Nombreop & "',
                         '" & _Codigo & "','" & _Glosa & "','" & FUNCIONARIO & "',GETDATE(),
                         " & _Fabricar & "," & _Realizado & "," & _Fabricar & "," & _Realizado & ",
@@ -1340,7 +1340,7 @@ Public Class Frm_Meson_Asignar_Productos
         Dim _Esodd As String = _Fila.Cells("ESODD").Value
 
         Consulta_sql = My.Resources.Recursos_Gestion_Meson.Buscar_OT_Para_Asignar_Meson
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Numot)
         Consulta_sql = Replace(Consulta_sql, "#Base_Bakapp#", _Global_BaseBk)
         Consulta_sql = Replace(Consulta_sql, "#Tipo_OT#", _Esodd)
@@ -1416,7 +1416,7 @@ Public Class Frm_Meson_Asignar_Productos
                                         Fabricar_Recep,Fabricado_Recep,
                                         Fabricar_OT,Fabricado_OT,Saldo_Fabricar_OT,Fabricar,
                                         Fabricado,Saldo_Fabricar,Cod_Funcionario_Asigna,Orden_Meson,Nivel,Idpotl_Padre,AsignadoAlPrincipio,CodMesonManda) " &
-                                        "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl_H & "," & _Idpote & ",'" & ModEmpresa &
+                                        "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl_H & "," & _Idpote & ",'" & Mod_Empresa &
                                         "','" & _Numot & "','" & _Nreg & "','PD','OR'" &
                                         "," & _Orden_Potpr & ",'" & _Operacion & "','" & _Nombreop & "','" & _Codigo & "','" & _Glosa &
                                         "','" & FUNCIONARIO & "',Getdate()," &
@@ -1434,7 +1434,7 @@ Public Class Frm_Meson_Asignar_Productos
                                         Fabricar_Recep,Fabricado_Recep,
                                         Fabricar_OT,Fabricado_OT,Saldo_Fabricar_OT,Fabricar,
                                         Fabricado,Saldo_Fabricar,Cod_Funcionario_Asigna,Orden_Meson,Nivel,Idpotl_Padre) " &
-                                        "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl_H & "," & _Idpote & ",'" & ModEmpresa &
+                                        "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl_H & "," & _Idpote & ",'" & Mod_Empresa &
                                         "','" & _Numot & "','" & _Nreg & "','PD','OR'" &
                                         "," & _Orden_Potpr & ",'" & _Operacion & "','" & _Nombreop & "','" & _Codigo & "','" & _Glosa &
                                         "','" & FUNCIONARIO & "',Getdate()," &
@@ -1541,7 +1541,7 @@ Public Class Frm_Meson_Asignar_Productos
                         LEFT OUTER JOIN POTLCOM ON POTLCOM.IDPOTL = POTL.IDPOTL
                         INNER JOIN MAEEDO EDO ON EDO.TIDO = POTLCOM.DESDE AND POTLCOM.NUMECOTI = EDO.NUDO
                         LEFT OUTER JOIN MAEEN ON EDO.ENDO = KOEN AND EDO.SUENDO = SUEN
-                        WHERE POTL.NUMOT='" & _Numot & "' AND POTL.EMPRESA = '" & ModEmpresa & "'" & vbCrLf
+                        WHERE POTL.NUMOT='" & _Numot & "' AND POTL.EMPRESA = '" & Mod_Empresa & "'" & vbCrLf
 
         Dim _TblDocRela As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -2465,10 +2465,10 @@ Public Class Frm_Meson_Asignar_Productos
         Fm.Top20 = Frm_BkpPostBusquedaEspecial_Mt.Enum_Top20.Top_Ventas
         'Fm.Pro_CodEntidad = _CodEntidad
         'Fm.Pro_CodSucEntidad = _CodSucEntidad
-        'Fm.Pro_Tipo_Lista = ModListaPrecioVenta
-        Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
-        Fm.Pro_Sucursal_Busqueda = ModSucursal
-        Fm.Pro_Bodega_Busqueda = ModBodega
+        'Fm.Pro_Tipo_Lista = Mod_ListaPrecioVenta
+        Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
+        Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+        Fm.Pro_Bodega_Busqueda = Mod_Bodega
         Fm.Pro_Mostrar_Info = False
         Fm.Pro_Actualizar_Precios = False
         Fm.Pro_Mostrar_Clasificaciones = True

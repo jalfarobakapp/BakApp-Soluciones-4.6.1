@@ -14,8 +14,8 @@ Public Class Cl_Tickets
 
     Public Sub New()
 
-        Zw_Stk_Tickets.Empresa = ModEmpresa
-        Zw_Stk_Tickets.Sucursal = ModSucursal
+        Zw_Stk_Tickets.Empresa = Mod_Empresa
+        Zw_Stk_Tickets.Sucursal = Mod_Sucursal
         Zw_Stk_Tickets.Numero = String.Empty
         Zw_Stk_Tickets.Prioridad = String.Empty
         Zw_Stk_Tickets.Asunto = String.Empty
@@ -283,8 +283,8 @@ Public Class Cl_Tickets
 
             With Zw_Stk_Tickets
 
-                .Empresa = ModEmpresa
-                .Sucursal = ModSucursal
+                .Empresa = Mod_Empresa
+                .Sucursal = Mod_Sucursal
 
                 If .Id_Raiz = 0 Then .Numero = Fx_NvoNro_OT()
 

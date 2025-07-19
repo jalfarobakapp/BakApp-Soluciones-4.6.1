@@ -266,7 +266,7 @@ Public Class Frm_Demonio_01_Conf_Local
 
                     Dim _RecepXMLComp_CorreoPOP3 As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion",
                                                                                "RecepXMLComp_CorreoPOP3",
-                                                                               "Empresa = '" & ModEmpresa & "' And Modalidad = '  '")
+                                                                               "Empresa = '" & Mod_Empresa & "' And Modalidad = '  '")
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos_Cuentas Where Nombre_Usuario = '" & _RecepXMLComp_CorreoPOP3 & "'"
                     Dim _Row_Cuenta = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -589,11 +589,11 @@ Public Class Frm_Demonio_01_Conf_Local
             Frm_Modalidad.Dispose()
 
             If MessageBoxEx.Show(Me, "¿Desea dejar a este funcionario permanentemente como usuario por defecto para la estación de trabajo?" & vbCrLf & vbCrLf &
-                                         "Usuario: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim & " Modalidad: " & Modalidad,
+                                         "Usuario: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim & " Modalidad: " & Mod_Modalidad,
                                          "Usuario por defecto", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set " &
-                               "Usuario_X_Defecto = '" & FUNCIONARIO & "', Modalidad_X_Defecto = '" & Modalidad & "'" & vbCrLf &
+                               "Usuario_X_Defecto = '" & FUNCIONARIO & "', Modalidad_X_Defecto = '" & Mod_Modalidad & "'" & vbCrLf &
                                "Where NombreEquipo = '" & _NombreEquipo & "'"
                 If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
@@ -682,13 +682,13 @@ Public Class Frm_Demonio_01_Conf_Local
 
             Consulta_sql = "Select Distinct Cast(1 As Bit) As Chk,MODALIDAD As Codigo, MODALIDAD As Descripcion" & vbCrLf &
                            "From CONFIEST" & vbCrLf &
-                           "Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD In " & _Txt.Text
+                           "Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD In " & _Txt.Text
             _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
 
         If _Filtrar.Fx_Filtrar(_Tbl,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & ModEmpresa & "'",
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & Mod_Empresa & "'",
                                Nothing, False, False) Then
 
             _Txt.Text = Generar_Filtro_IN(_Filtrar.Pro_Tbl_Filtro, "Chk", "Codigo", False, True, "'")
@@ -719,7 +719,7 @@ Public Class Frm_Demonio_01_Conf_Local
         Dim _Modalidad As String
 
         If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & ModEmpresa & "'",
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & Mod_Empresa & "'",
                                Nothing, False, True) Then
 
             Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)

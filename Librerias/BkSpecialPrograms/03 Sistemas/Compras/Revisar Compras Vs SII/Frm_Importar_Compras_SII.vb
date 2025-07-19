@@ -224,7 +224,7 @@ Public Class Frm_Importar_Compras_SII
                     _Endo = Trim(_RowProveedor.Item("KOEN"))
                 End If
 
-                Consulta_Sql = "Select Top 1 * From MAEEDO Where EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "'"
+                Consulta_Sql = "Select Top 1 * From MAEEDO Where EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "'"
                 Dim _RowMaeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                 Dim _Idmaeedo As Integer = 0

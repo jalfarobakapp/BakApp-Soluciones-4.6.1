@@ -50,10 +50,10 @@ Public Class Cl_Notificaciones
             If IsNothing(_Global_Row_Empresa) Then
 
                 Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Empresas (Empresa,Rut,Razon,Ncorto,Direccion,Pais,Ciudad,Giro)" & vbCrLf &
-                               "Select EMPRESA,RUT,RAZON,NCORTO,DIRECCION,PAIS,CIUDAD,GIRO From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+                               "Select EMPRESA,RUT,RAZON,NCORTO,DIRECCION,PAIS,CIUDAD,GIRO From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
                 _Sql.Ej_consulta_IDU(Consulta_Sql)
 
-                Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & ModEmpresa & "'"
+                Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & Mod_Empresa & "'"
                 _Global_Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
             End If
@@ -62,7 +62,7 @@ Public Class Cl_Notificaciones
             DireccionEmpresa = _Global_Row_Empresa.Item("Direccion").ToString.Trim
             RutEmpresaActiva = _Global_Row_Empresa.Item("Rut").ToString.Trim
             RutEmpresa = RutEmpresaActiva
-            ModEmpresa = _Global_Row_Empresa.Item("Empresa").ToString.Trim
+            Mod_Empresa = _Global_Row_Empresa.Item("Empresa").ToString.Trim
 
         End If
 
@@ -92,8 +92,8 @@ Public Class Cl_Notificaciones
         If Not (_Global_Row_EstacionBk Is Nothing) Then
 
             FUNCIONARIO = _Global_Row_EstacionBk.Item("Usuario_Actual")
-            ModEmpresa = _Global_Row_EstacionBk.Item("Empresa_Actual")
-            Modalidad = _Global_Row_EstacionBk.Item("Modalidad_Actual")
+            Mod_Empresa = _Global_Row_EstacionBk.Item("Empresa_Actual")
+            Mod_Modalidad = _Global_Row_EstacionBk.Item("Modalidad_Actual")
 
             If String.IsNullOrEmpty(Trim(FUNCIONARIO)) Then
 
@@ -124,8 +124,8 @@ Public Class Cl_Notificaciones
             Dim _Mod As New Clas_Modalidades
             _Mod.Sb_Actualiza_Formatos_X_Modalidad()
             _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-            _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+            _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+            _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
             Return True
 
@@ -147,7 +147,7 @@ Public Class Cl_Notificaciones
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Remotas 
                                     Where NroRemota In (Select  NroRemota From " & _Global_BaseBk & "Zw_Notificaciones 
-                                        Where Usuario_Destino = '" & FUNCIONARIO & "' And Accion = 'Remota') And Otorga = '' And Eliminada = 0 And Empresa = '" & ModEmpresa & "' -- And RCadena_Id_Enc = 0"
+                                        Where Usuario_Destino = '" & FUNCIONARIO & "' And Accion = 'Remota') And Otorga = '' And Eliminada = 0 And Empresa = '" & Mod_Empresa & "' -- And RCadena_Id_Enc = 0"
 
                 Dim _TblRemotas_Pendientes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
@@ -173,7 +173,7 @@ Public Class Cl_Notificaciones
                 End If
 
                 Dim _Permisos_Aceptados As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Notificaciones",
-                                    "Mostrar = 1 And Accion In ('Ok','Rechazado') And Usuario_Destino = '" & FUNCIONARIO & "' And Empresa = '" & ModEmpresa & "'")
+                                    "Mostrar = 1 And Accion In ('Ok','Rechazado') And Usuario_Destino = '" & FUNCIONARIO & "' And Empresa = '" & Mod_Empresa & "'")
 
                 If CBool(_Permisos_Aceptados) Then
 
@@ -203,7 +203,7 @@ Public Class Cl_Notificaciones
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Remotas
                                  Inner Join TABFU On KOFU = CodFuncionario_Solicita
                                     Where NroRemota In (Select  NroRemota From " & _Global_BaseBk & "Zw_Notificaciones 
-                                        Where Usuario_Destino = '" & FUNCIONARIO & "' And Accion = 'Remota') And Otorga = '' And Eliminada = 0 And Empresa = '" & ModEmpresa & "' And RCadena_Id_Enc = 0"
+                                        Where Usuario_Destino = '" & FUNCIONARIO & "' And Accion = 'Remota') And Otorga = '' And Eliminada = 0 And Empresa = '" & Mod_Empresa & "' And RCadena_Id_Enc = 0"
 
                     Dim _TblRemotas_Pendientes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
@@ -245,13 +245,13 @@ Public Class Cl_Notificaciones
 
                     Consulta_sql = "Select Top 5 * From " & _Global_BaseBk & "Zw_Notificaciones
                                     Where Usuario_Destino = '" & FUNCIONARIO & "' And Mostrar = 1 And 
-                                          Empresa = '" & ModEmpresa & "' And No_Volver_A_Notificar = 0 -- And RCadena_Id_Enc > 0
+                                          Empresa = '" & Mod_Empresa & "' And No_Volver_A_Notificar = 0 -- And RCadena_Id_Enc > 0
                                     Order by Id Desc"
 
                 Else
 
                     Consulta_sql = "Select Top 5 * From " & _Global_BaseBk & "Zw_Notificaciones
-                                    Where Usuario_Destino = '" & FUNCIONARIO & "' And Mostrar = 1 And Empresa = '" & ModEmpresa & "' --And RCadena_Id_Enc > 0
+                                    Where Usuario_Destino = '" & FUNCIONARIO & "' And Mostrar = 1 And Empresa = '" & Mod_Empresa & "' --And RCadena_Id_Enc > 0
                                     Order by Id Desc"
 
                 End If
@@ -316,7 +316,7 @@ Public Class Cl_Notificaciones
                 Consulta_sql = "Select Distinct Empresa,RUT,RAZON 
                                     From " & _Global_BaseBk & "Zw_Notificaciones
                                         Inner Join CONFIGP On Empresa = EMPRESA
-                                    Where Usuario_Destino = '" & FUNCIONARIO & "' And Mostrar = 1 And RCadena_Id_Enc > 0 And Empresa <> '" & ModEmpresa & "'"
+                                    Where Usuario_Destino = '" & FUNCIONARIO & "' And Mostrar = 1 And RCadena_Id_Enc > 0 And Empresa <> '" & Mod_Empresa & "'"
 
                 _TblNotificaciones = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
@@ -361,7 +361,7 @@ Public Class Cl_Notificaciones
                 End If
 
                 Dim _Permisos_Aceptados As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Notificaciones",
-                                                "Mostrar = 1 And Accion In ('Ok','Rechazado') And Usuario_Destino = '" & FUNCIONARIO & "' And Empresa = '" & ModEmpresa & "'")
+                                                "Mostrar = 1 And Accion In ('Ok','Rechazado') And Usuario_Destino = '" & FUNCIONARIO & "' And Empresa = '" & Mod_Empresa & "'")
 
                 If CBool(_Permisos_Aceptados) Then
 

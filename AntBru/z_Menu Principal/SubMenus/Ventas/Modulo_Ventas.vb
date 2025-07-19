@@ -44,9 +44,9 @@ Public Class Modulo_Ventas
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Bkp00027") Then
 
-            Dim _RowFormato_BLV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, "BLV", True)
-            Dim _RowFormato_FCV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, "FCV", True)
-            Dim _RowFormato_COV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, "COV", True)
+            Dim _RowFormato_BLV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, "BLV", True)
+            Dim _RowFormato_FCV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, "FCV", True)
+            Dim _RowFormato_COV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, "COV", True)
             'Dim _RowFormato_NVV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, "NVV", True)
 
             If (_RowFormato_BLV Is Nothing) Or
@@ -73,7 +73,7 @@ Public Class Modulo_Ventas
 
             If String.IsNullOrEmpty(_Koen_Xdefecto.ToString.Trim) Then
 
-                MessageBoxEx.Show(_Fm_Menu_Padre, "Falta la entidad por defecto en esta modalidad: " & Modalidad, "Validación",
+                MessageBoxEx.Show(_Fm_Menu_Padre, "Falta la entidad por defecto en esta modalidad: " & Mod_Modalidad, "Validación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
 
@@ -119,7 +119,7 @@ Public Class Modulo_Ventas
                 Dim _TblFormato_Mod As DataTable
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
-                               "Where Modalidad = '" & Modalidad & "' And TipoDoc In ('BLV','FCV')"
+                               "Where Modalidad = '" & Mod_Modalidad & "' And TipoDoc In ('BLV','FCV')"
                 _TblFormato_Mod = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Msg = String.Empty
@@ -132,7 +132,7 @@ Public Class Modulo_Ventas
                     If _Guardar_PDF_Auto Then
 
                         Dim _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
-                                      "NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _TipoDoc & "'")
+                                      "NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Mod_Modalidad & "' And Tido = '" & _TipoDoc & "'")
 
                         If String.IsNullOrEmpty(_Ruta_PDF) Or Not Directory.Exists(_Ruta_PDF) Then
                             If Not String.IsNullOrEmpty(_Msg) Then _Msg += " y "

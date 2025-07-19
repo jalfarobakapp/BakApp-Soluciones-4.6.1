@@ -467,8 +467,8 @@ Public Class Frm_OfDinamLista
         Fm.Pro_CodSucEntidad = String.Empty
         Fm.Pro_Tipo_Lista = "P"
 
-        Fm.Pro_Sucursal_Busqueda = ModSucursal
-        Fm.Pro_Bodega_Busqueda = ModBodega
+        Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+        Fm.Pro_Bodega_Busqueda = Mod_Bodega
         Fm.Txtdescripcion.Text = _Codigo
         Fm.Pro_Mostrar_Info = True
         Fm.Pro_Actualizar_Precios = True

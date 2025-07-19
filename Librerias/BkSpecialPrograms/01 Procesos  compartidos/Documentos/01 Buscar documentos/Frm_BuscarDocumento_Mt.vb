@@ -1003,13 +1003,24 @@ Public Class Frm_BuscarDocumento_Mt
                         _NombreFormato = String.Empty
                     End If
 
-                    Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo,
+                    'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo,
+                    '                                         False, True, "", False, 0, False, _Subtido)
+
+                    Dim _Mensaje As LsValiciones.Mensajes
+
+                    _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo,
                                                              False, True, "", False, 0, False, _Subtido)
 
-                    If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                        MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
-                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    If Not _Mensaje.EsCorrecto Then
+                        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Problemas al Imprimir",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
                     End If
+
+                    'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                    '    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                    '               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    'End If
 
                 End If
 
@@ -1287,7 +1298,7 @@ Public Class Frm_BuscarDocumento_Mt
 
                 If _Firma_RunMonitor Then
                     Me.Cursor = Cursors.WaitCursor
-                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
                     Dim _Iddt As Integer = _Class_DTE.Fx_Dte_Genera_Documento(Me, True)
 
                     If CBool(_Iddt) Then
@@ -1622,13 +1633,17 @@ Public Class Frm_BuscarDocumento_Mt
 
         Dim _RevFincredEnt As Boolean
 
-        If _Global_Row_Configuracion_General.Item("Fincred_Usar") Or _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
-
-            _RevFincredEnt = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
-                             "RevFincred",
-                             "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'",,,, True)
-
+        If Not _Global_Row_Configuracion_General.Item("Fincred_Usar") And Not _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
+            Return True
         End If
+
+        'If _Global_Row_Configuracion_General.Item("Fincred_Usar") Or _Global_Row_Configuracion_Estacion.Item("Fincred_Usar") Then
+
+        _RevFincredEnt = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
+                         "RevFincred",
+                         "CodEntidad = '" & _RowEntidad.Item("KOEN") & "' And CodSucEntidad = '" & _RowEntidad.Item("SUEN") & "'",,,, True)
+
+        'End If
 
         If Not _RevFincredEnt Then
             Return True
@@ -1810,7 +1825,7 @@ Public Class Frm_BuscarDocumento_Mt
 
                 If _Firmar Then
 
-                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+                    Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
 
                     If CBool(_Class_DTE.Fx_FirmarXHefesto()) Then
                         MessageBoxEx.Show(Me, "DOCUMENTO FIRMADO, QUEDARA A LA ESPERA DE SER ENVIADO AL SII ...", "Firmar documento",
@@ -1858,7 +1873,7 @@ Public Class Frm_BuscarDocumento_Mt
             Me.Cursor = Cursors.WaitCursor
 
             Dim _Cl_ExportarDoc As New Bk_ExpotarDoc.Cl_ExpotarDoc
-            _Respuesta = _Cl_ExportarDoc.Fx_Importar_Documento(_Idmaeedo, _Id_Conexion, True, Modalidad)
+            _Respuesta = _Cl_ExportarDoc.Fx_Importar_Documento(_Idmaeedo, _Id_Conexion, True, Mod_Modalidad)
 
             Me.Cursor = Cursors.Default
 

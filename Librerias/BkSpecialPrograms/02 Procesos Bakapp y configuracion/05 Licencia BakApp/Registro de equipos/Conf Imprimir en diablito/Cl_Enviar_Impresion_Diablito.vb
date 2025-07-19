@@ -40,10 +40,10 @@ Public Class Cl_Enviar_Impresion_Diablito
 
     End Sub
 
-    Function Fx_Trae_Tbl_Configuracion_Estaciones_Impresion(_Modalidad As String, _Tido As String, _Tipo As Enum_Tipo) As DataTable
+    Function Fx_Trae_Tbl_Configuracion_Estaciones_Impresion(_Empresa As String, _Modalidad As String, _Tido As String, _Tipo As Enum_Tipo) As DataTable
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Usuarios_Impresion 
-                        Where CodFuncionario = '" & _CodFuncionario & "' And Empresa = '" & ModEmpresa & "' And " &
+                        Where CodFuncionario = '" & _CodFuncionario & "' And Empresa = '" & _Empresa & "' And " &
                        "Modalidad = '" & _Modalidad & "' And Tido = '" & _Tido & "' And Tipo = '" & _Tipo.ToString & "' And Activo = 1"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -52,10 +52,10 @@ Public Class Cl_Enviar_Impresion_Diablito
 
     End Function
 
-    Function Fx_Trae_Tbl_Configuracion_Estaciones_Impresion_Todas_Modalidades(_Tido As String, _Tipo As Enum_Tipo) As DataTable
+    Function Fx_Trae_Tbl_Configuracion_Estaciones_Impresion_Todas_Modalidades(_Empresa As String, _Tido As String, _Tipo As Enum_Tipo) As DataTable
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Usuarios_Impresion 
-                        Where CodFuncionario = '" & _CodFuncionario & "' And Empresa = '" & ModEmpresa & "' And " &
+                        Where CodFuncionario = '" & _CodFuncionario & "' And Empresa = '" & _Empresa & "' And " &
                        "Imp_Todas_Modalidades = 1 And Tido = '" & _Tido & "' And Tipo = '" & _Tipo.ToString & "' And Activo = 1 And Modalidad = ''"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -64,7 +64,8 @@ Public Class Cl_Enviar_Impresion_Diablito
 
     End Function
 
-    Function Fx_Enviar_Impresion_Al_Diablito(_Modalidad As String,
+    Function Fx_Enviar_Impresion_Al_Diablito(_Empresa As String,
+                                             _Modalidad As String,
                                              _Idmaeedo As Integer) As Boolean
 
         _Error = String.Empty
@@ -84,19 +85,19 @@ Public Class Cl_Enviar_Impresion_Diablito
             Dim _Kofudo = _Row_Documento.Item("KOFUDO")
             Dim _Nudonodefi = _Row_Documento.Item("NUDONODEFI")
 
-            _Tbl_Conf_Impresion_Vale_Transitorio = Fx_Trae_Tbl_Configuracion_Estaciones_Impresion_Todas_Modalidades(_Tido, Enum_Tipo.Vale_Transitorio)
+            _Tbl_Conf_Impresion_Vale_Transitorio = Fx_Trae_Tbl_Configuracion_Estaciones_Impresion_Todas_Modalidades(_Empresa, _Tido, Enum_Tipo.Vale_Transitorio)
             If Not CBool(_Tbl_Conf_Impresion_Vale_Transitorio.Rows.Count) Then
-                _Tbl_Conf_Impresion_Vale_Transitorio = Fx_Trae_Tbl_Configuracion_Estaciones_Impresion(_Modalidad, _Tido, Enum_Tipo.Vale_Transitorio)
+                _Tbl_Conf_Impresion_Vale_Transitorio = Fx_Trae_Tbl_Configuracion_Estaciones_Impresion(_Empresa, _Modalidad, _Tido, Enum_Tipo.Vale_Transitorio)
             End If
 
-            _Tbl_Conf_Impresion_Normal = Fx_Trae_Tbl_Configuracion_Estaciones_Impresion_Todas_Modalidades(_Tido, Enum_Tipo.Normal)
+            _Tbl_Conf_Impresion_Normal = Fx_Trae_Tbl_Configuracion_Estaciones_Impresion_Todas_Modalidades(_Empresa, _Tido, Enum_Tipo.Normal)
             If Not CBool(_Tbl_Conf_Impresion_Normal.Rows.Count) Then
-                _Tbl_Conf_Impresion_Normal = Fx_Trae_Tbl_Configuracion_Estaciones_Impresion(_Modalidad, _Tido, Enum_Tipo.Normal)
+                _Tbl_Conf_Impresion_Normal = Fx_Trae_Tbl_Configuracion_Estaciones_Impresion(_Empresa, _Modalidad, _Tido, Enum_Tipo.Normal)
             End If
 
-            _Tbl_Conf_Impresion_Picking = Fx_Trae_Tbl_Configuracion_Estaciones_Impresion_Todas_Modalidades(_Tido, Enum_Tipo.Picking)
+            _Tbl_Conf_Impresion_Picking = Fx_Trae_Tbl_Configuracion_Estaciones_Impresion_Todas_Modalidades(_Empresa, _Tido, Enum_Tipo.Picking)
             If Not CBool(_Tbl_Conf_Impresion_Picking.Rows.Count) Then
-                _Tbl_Conf_Impresion_Picking = Fx_Trae_Tbl_Configuracion_Estaciones_Impresion(_Modalidad, _Tido, Enum_Tipo.Picking)
+                _Tbl_Conf_Impresion_Picking = Fx_Trae_Tbl_Configuracion_Estaciones_Impresion(_Empresa, _Modalidad, _Tido, Enum_Tipo.Picking)
             End If
 
             'Dim _NombreFormato As String
@@ -172,15 +173,15 @@ Public Class Cl_Enviar_Impresion_Diablito
 
                 For Each _Row As DataRow In _Tbl_Conf_Impresion_Picking.Rows
 
-                    Dim _Empresa = _Row.Item("Empresa")
-                    Dim _Sucursal = _Row.Item("Sucursal_Picking")
-                    Dim _Bodega = _Row.Item("Bodega_Picking")
+                    Dim _Empresa_Pk = _Row.Item("Empresa")
+                    Dim _Sucursal_Pk = _Row.Item("Sucursal_Picking")
+                    Dim _Bodega_Pk = _Row.Item("Bodega_Picking")
 
                     Dim _Enviar As Boolean = CBool(_Sql.Fx_Cuenta_Registros("MAEDDO",
                                                                             "IDMAEEDO = " & _Idmaeedo &
-                                                                            " And EMPRESA = '" & _Empresa & "'" &
-                                                                            " And SULIDO = '" & _Sucursal & "'" &
-                                                                            " And BOSULIDO = '" & _Bodega & "'"))
+                                                                            " And EMPRESA = '" & _Empresa_Pk & "'" &
+                                                                            " And SULIDO = '" & _Sucursal_Pk & "'" &
+                                                                            " And BOSULIDO = '" & _Bodega_Pk & "'"))
                     If _Enviar Then
                         Consulta_sql += Fx_Inyectar_Formato(_Idmaeedo, _Tido, _Nudo, _Kofudo, _Row, False, True)
                     End If

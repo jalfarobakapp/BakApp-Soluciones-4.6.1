@@ -11,7 +11,7 @@ Public Class Cl_Tarja
 
     Public Sub New()
 
-        Zw_Pdp_CPT_Tarja.Empresa = ModEmpresa
+        Zw_Pdp_CPT_Tarja.Empresa = Mod_Empresa
 
     End Sub
 

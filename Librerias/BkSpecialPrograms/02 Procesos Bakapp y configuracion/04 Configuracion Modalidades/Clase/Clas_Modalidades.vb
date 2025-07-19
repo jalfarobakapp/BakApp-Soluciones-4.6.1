@@ -14,16 +14,31 @@ Public Class Clas_Modalidades
 
     Public Function Fx_Sql_Trae_Modalidad(_Modal As Enum_Modalidad,
                                           _Modalidad As String,
-                                          Optional _Mostrar_Error As Boolean = True) As DataRow
+                                          Optional _Mostrar_Error As Boolean = True,
+                                          Optional _Empresa As String = "") As DataRow
+
+        If String.IsNullOrEmpty(_Empresa) Then
+            _Empresa = Mod_Empresa
+        End If
 
         If _Modal = Enum_Modalidad.General Then
             _Modalidad = "  "
         End If
 
-        Consulta_sql = My.Resources.Recursos_Configuracion.SqlQuery_Seleccionar_Modalidad
-        Consulta_sql = Replace(Consulta_sql, "#Tbl_Configuracion#", _Global_BaseBk & "Zw_Configuracion")
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-        Consulta_sql = Replace(Consulta_sql, "#Modalidad#", _Modalidad)
+        'Consulta_sql = My.Resources.Recursos_Configuracion.SqlQuery_Seleccionar_Modalidad
+        'Consulta_sql = Replace(Consulta_sql, "#Tbl_Configuracion#", _Global_BaseBk & "Zw_Configuracion")
+        'Consulta_sql = Replace(Consulta_sql, "#Empresa#", _Empresa)
+        'Consulta_sql = Replace(Consulta_sql, "#Modalidad#", _Modalidad)
+
+        Consulta_sql = "Select CEst.*," & vbCrLf &
+           "Csu.NOKOSU, Cbo.NOKOBO, Cja.NOKOCJ," & vbCrLf &
+           "Z1.*" & vbCrLf &
+           "From dbo.TABBO AS Cbo" & vbCrLf &
+           "Right Outer Join CONFIEST AS CEst WITH (NOLOCK) ON Cbo.EMPRESA = CEst.EMPRESA AND Cbo.KOSU = CEst.ESUCURSAL AND Cbo.KOBO = CEst.EBODEGA" & vbCrLf &
+           "Left Outer Join TABCJ AS Cja ON CEst.EMPRESA = Cja.EMPRESA AND CEst.ESUCURSAL = Cja.KOSU AND CEst.ECAJA = Cja.KOCJ" & vbCrLf &
+           "Left Outer Join TABSU AS Csu ON CEst.ESUCURSAL = Csu.KOSU AND CEst.EMPRESA = Csu.EMPRESA" & vbCrLf &
+           "Inner Join " & _Global_BaseBk & "Zw_Configuracion AS Z1 ON CEst.EMPRESA = Z1.Empresa And CEst.MODALIDAD = Z1.Modalidad" & vbCrLf &
+           "Where Z1.Modalidad = '" & _Modalidad & "' And Z1.Empresa = '" & _Empresa & "'"
 
         Dim _Fila As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Error)
 
@@ -34,12 +49,12 @@ Public Class Clas_Modalidades
     Sub Sb_Actualiza_Formatos_X_Modalidad(Optional _Mostrar_Error As Boolean = True)
 
         Consulta_sql = "Select Modalidad From " & _Global_BaseBk & "Zw_Configuracion" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And Modalidad <> '  '"
+                       "Where Empresa = '" & Mod_Empresa & "' And Modalidad <> '  '"
 
         Consulta_sql = "Select Modalidad From " & _Global_BaseBk & "Zw_Configuracion" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And Modalidad In " &
-                       "(Select MODALIDAD From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD Not In " &
-                       "(Select Modalidad From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Where Empresa = '" & ModEmpresa & "'))"
+                       "Where Empresa = '" & Mod_Empresa & "' And Modalidad In " &
+                       "(Select MODALIDAD From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD Not In " &
+                       "(Select Modalidad From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Where Empresa = '" & Mod_Empresa & "'))"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Error)
 
         Dim _SqlQuery = String.Empty
@@ -49,9 +64,9 @@ Public Class Clas_Modalidades
             Dim _Modalidad = _Fila.Item("Modalidad")
 
             _SqlQuery += "Insert Into " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad (Empresa,Modalidad,TipoDoc,NombreFormato)" & vbCrLf &
-                         "Select '" & ModEmpresa & "','" & _Modalidad & "',TIDO,'' From TABTIDO" & vbCrLf &
+                         "Select '" & Mod_Empresa & "','" & _Modalidad & "',TIDO,'' From TABTIDO" & vbCrLf &
                          "Where TIDO Not IN (Select TipoDoc FROM " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & Space(1) &
-                         "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "')" & vbCrLf
+                         "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "')" & vbCrLf
 
         Next
 
@@ -67,23 +82,23 @@ Public Class Clas_Modalidades
 
             Consulta_sql = "Select top 1 Cest.*,Cfgp.RAZON  
                         From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
-                        Where Cest.EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'"
+                        Where Cest.EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
 
             _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Error)
 
             _Global_Row_Configuracion_General = Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
             _Global_Row_Configuracion_Estacion = Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, _Modalidad)
 
-            Modalidad = _Modalidad
+            Mod_Modalidad = _Modalidad
 
-            ModEmpresa = _Global_Row_Modalidad.Item("EMPRESA") '"01"
-            ModSucursal = _Global_Row_Modalidad.Item("ESUCURSAL") 'TxtSucursal.Text
-            ModBodega = _Global_Row_Modalidad.Item("EBODEGA") 'TxtBodega.Text
-            ModCaja = _Global_Row_Modalidad.Item("ECAJA") 'TxtCaja.Text
-            ModListaPrecioVenta = Mid(_Global_Row_Modalidad.Item("ELISTAVEN"), 6, 3) 'Mid(TxtLPCompra.Text, 6, 3)
-            ModListaPrecioCosto = Mid(_Global_Row_Modalidad.Item("ELISTACOM"), 6, 3) 'Mid(TxtLPVenta.Text, 6, 3)
+            Mod_Empresa = _Global_Row_Modalidad.Item("EMPRESA") '"01"
+            Mod_Sucursal = _Global_Row_Modalidad.Item("ESUCURSAL") 'TxtSucursal.Text
+            Mod_Bodega = _Global_Row_Modalidad.Item("EBODEGA") 'TxtBodega.Text
+            Mod_Caja = _Global_Row_Modalidad.Item("ECAJA") 'TxtCaja.Text
+            Mod_ListaPrecioVenta = Mid(_Global_Row_Modalidad.Item("ELISTAVEN"), 6, 3) 'Mid(TxtLPCompra.Text, 6, 3)
+            Mod_ListaPrecioCosto = Mid(_Global_Row_Modalidad.Item("ELISTACOM"), 6, 3) 'Mid(TxtLPVenta.Text, 6, 3)
 
-            Consulta_sql = "Select * From CONFIGP Where EMPRESA = " & ModEmpresa
+            Consulta_sql = "Select * From CONFIGP Where EMPRESA = " & Mod_Empresa
             _Global_Row_Configp = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Error)
 
             Dim _New_RutEmpresa As String = _Global_Row_Configp.Item("RUT").ToString.Trim
@@ -112,7 +127,7 @@ Public Class Clas_Modalidades
 
             If Not IsNothing(_Global_Frm_Menu) Then
 
-                _Global_Frm_Menu.Text = "Sistema BakApp. Empresa :" & ModEmpresa & " " & RazonEmpresa & " (" & _New_RutEmpresa & ")" &
+                _Global_Frm_Menu.Text = "Sistema BakApp. Empresa :" & Mod_Empresa & " " & RazonEmpresa & " (" & _New_RutEmpresa & ")" &
                               ", Funcionario Activo: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim &
                               ", Modalidad: " & _Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
                               "(Conexión: " & _Global_NombreConexion.Trim & ",Base BakApp: " & _Global_BaseBk & "). Estación: " & _Global_Row_EstacionBk.Item("NombreEquipo")
@@ -122,7 +137,7 @@ Public Class Clas_Modalidades
             If Not IsNothing(FormMenu) Then
                 Try
                     FormMenu.Lbl_Estatus.Text = "Fun: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim &
-                                  ", Mod: " & Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
+                                  ", Mod: " & Mod_Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
                                   "(Base BakApp: " & _Global_BaseBk & "). Estación: " & _Global_Row_EstacionBk.Item("NombreEquipo")
                 Catch ex As Exception
                     FormMenu.Lbl_Estatus.Text = String.Empty

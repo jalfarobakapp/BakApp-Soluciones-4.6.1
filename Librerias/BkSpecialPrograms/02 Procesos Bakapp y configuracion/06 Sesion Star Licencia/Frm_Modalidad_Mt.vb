@@ -13,21 +13,21 @@ Public Class Frm_Modalidad_Mt
 
             If CmbModalidad.Text <> "" Then
 
-                Modalidad = CmbModalidad.SelectedValue.ToString
+                Mod_Modalidad = CmbModalidad.SelectedValue.ToString
 
                 Consulta_sql = "Select top 1 Cest.*,Cfgp.RAZON  
                                 From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
-                                Where MODALIDAD = '" & Modalidad & "'"
+                                Where MODALIDAD = '" & Mod_Modalidad & "'"
                 _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                ModEmpresa = _Global_Row_Modalidad.Item("EMPRESA") '"01"
-                ModSucursal = _Global_Row_Modalidad.Item("ESUCURSAL") 'TxtSucursal.Text
-                ModBodega = _Global_Row_Modalidad.Item("EBODEGA") 'TxtBodega.Text
-                ModCaja = _Global_Row_Modalidad.Item("ECAJA") 'TxtCaja.Text
-                ModListaPrecioVenta = Mid(_Global_Row_Modalidad.Item("ELISTAVEN"), 6, 3) 'Mid(TxtLPCompra.Text, 6, 3)
-                ModListaPrecioCosto = Mid(_Global_Row_Modalidad.Item("ELISTACOM"), 6, 3) 'Mid(TxtLPVenta.Text, 6, 3)
+                Mod_Empresa = _Global_Row_Modalidad.Item("EMPRESA") '"01"
+                Mod_Sucursal = _Global_Row_Modalidad.Item("ESUCURSAL") 'TxtSucursal.Text
+                Mod_Bodega = _Global_Row_Modalidad.Item("EBODEGA") 'TxtBodega.Text
+                Mod_Caja = _Global_Row_Modalidad.Item("ECAJA") 'TxtCaja.Text
+                Mod_ListaPrecioVenta = Mid(_Global_Row_Modalidad.Item("ELISTAVEN"), 6, 3) 'Mid(TxtLPCompra.Text, 6, 3)
+                Mod_ListaPrecioCosto = Mid(_Global_Row_Modalidad.Item("ELISTACOM"), 6, 3) 'Mid(TxtLPVenta.Text, 6, 3)
 
-                _ListaPrecio_BusquedaPR = ModListaPrecioVenta
+                _ListaPrecio_BusquedaPR = Mod_ListaPrecioVenta
                 ' MsgBox("Modalidad Fue cambiada", MsgBoxStyle.Information, "Cambiar Modalidad")
 
                 Me.Close()
@@ -60,11 +60,11 @@ Public Class Frm_Modalidad_Mt
         CmbModalidad.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CmbModalidad.Items.Count > 0 Then
-            Modalidad = _Sql.Fx_Trae_Dato("TABFU", "MODALIDAD", "KOFU = '" & FUNCIONARIO & "'")
+            Mod_Modalidad = _Sql.Fx_Trae_Dato("TABFU", "MODALIDAD", "KOFU = '" & FUNCIONARIO & "'")
 
-            If Modalidad <> "  " Then
-                CmbModalidad.SelectedValue = Modalidad
-                RevModalidad(Modalidad, "01")
+            If Mod_Modalidad <> "  " Then
+                CmbModalidad.SelectedValue = Mod_Modalidad
+                RevModalidad(Mod_Modalidad, "01")
             End If
         Else
             MsgBox("Usted no posee permiso para trabajar con ninguna modalidad de Random." & vbCrLf &
@@ -88,7 +88,7 @@ Public Class Frm_Modalidad_Mt
     End Function
 
     Private Sub CmbModalidad_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CmbModalidad.SelectedIndexChanged
-        RevModalidad(CmbModalidad.SelectedValue.ToString, Modalidad)
+        RevModalidad(CmbModalidad.SelectedValue.ToString, Mod_Modalidad)
     End Sub
 
     Private Sub BtnxActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnxActualizar.Click

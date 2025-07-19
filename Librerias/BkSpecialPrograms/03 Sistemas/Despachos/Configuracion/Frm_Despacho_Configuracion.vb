@@ -22,7 +22,7 @@ Public Class Frm_Despacho_Configuracion
             Btn_Correos.ForeColor = Color.White
         End If
 
-        Cl_Despachos.Fx_Llenar_Configuracion(ModEmpresa, ModSucursal)
+        Cl_Despachos.Fx_Llenar_Configuracion(Mod_Empresa, Mod_Sucursal)
 
         Sb_Color_Botones_Barra(Bar2)
 
@@ -386,8 +386,8 @@ Public Class Frm_Despacho_Configuracion
 
         With Cl_Despachos.Zw_Despachos_Configuracion
 
-            .Empresa = ModEmpresa
-            .Sucursal = ModSucursal
+            .Empresa = Mod_Empresa
+            .Sucursal = Mod_Sucursal
             .Pedir_Sucursal_Retiro = Chk_Pedir_Sucursal_Retiro.Checked
             .Transpor_Por_Pagar = Chk_Transpor_Por_Pagar.Checked
             .Tipo_Venta_X_Defecto = Txt_Tipo_Venta.Tag
@@ -410,10 +410,10 @@ Public Class Frm_Despacho_Configuracion
             Return
         End If
 
-        'Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Despachos_Configuracion Where Empresa = '" & ModEmpresa & "'" & vbCrLf &
+        'Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Despachos_Configuracion Where Empresa = '" & Mod_Empresa & "'" & vbCrLf &
         '               "Insert Into " & _Global_BaseBk & "Zw_Despachos_Configuracion (Empresa,Pedir_Sucursal_Retiro,Tipo_Venta_X_Defecto," &
         '               "Transportista_X_Defecto,Transpor_Por_Pagar,Valor_Min_Despacho,Mostrar_RetiraTransportista,Mostrar_Agencia,ConfirmarLecturaDespacho) Values " &
-        '               "('" & ModEmpresa & "'" &
+        '               "('" & Mod_Empresa & "'" &
         '               "," & Convert.ToInt32(Chk_Pedir_Sucursal_Retiro.Checked) &
         '               ",'" & Txt_Tipo_Venta.Tag & "'" &
         '               ",'" & Txt_Transportista.Tag &

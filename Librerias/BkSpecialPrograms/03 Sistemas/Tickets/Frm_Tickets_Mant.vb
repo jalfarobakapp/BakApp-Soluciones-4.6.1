@@ -316,6 +316,7 @@ Public Class Frm_Tickets_Mant
                     .CreaNewTicket = True
                     .Cierra_Ticket = True
                     .Id_Ticket_Cierra = _Cl_Tickets_Padre.Zw_Stk_Tickets.Id
+                    .Id_Ticket_Crea = _Cl_Tickets_Padre.Zw_Stk_Tickets.Id
                 End If
 
                 .Aceptado = Aceptado
@@ -447,7 +448,7 @@ Public Class Frm_Tickets_Mant
 
                 .Codigo = _RowProducto.Item("KOPR")
                 .Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
-                .Empresa = ModEmpresa
+                .Empresa = Mod_Empresa
                 .Rtu = _RowProducto.Item("RLUD")
                 .Ud1 = _RowProducto.Item("UD01PR")
                 .Ud2 = _RowProducto.Item("UD02PR")
@@ -461,9 +462,9 @@ Public Class Frm_Tickets_Mant
 
                 With _Cl_Tickets.Zw_Stk_Tickets_Producto
 
-                    .Empresa = ModEmpresa
-                    .Sucursal = ModSucursal
-                    .Bodega = ModBodega
+                    .Empresa = Mod_Empresa
+                    .Sucursal = Mod_Sucursal
+                    .Bodega = Mod_Bodega
 
                 End With
 
@@ -517,7 +518,7 @@ Public Class Frm_Tickets_Mant
                             .Rtu = 0
                             .Um = String.Empty
                             '.Ud2 = String.Empty
-                            .Empresa = ModEmpresa
+                            .Empresa = Mod_Empresa
                             .Sucursal = String.Empty
                             .Bodega = String.Empty
 
@@ -562,7 +563,7 @@ Public Class Frm_Tickets_Mant
         Do
             Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
             Fm.Pro_Tipo_Lista = "P"
-            Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+            Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             Fm.Pro_CodEntidad = String.Empty
             Fm.Pro_Mostrar_Info = True
             Fm.BtnCrearProductos.Visible = False
@@ -600,9 +601,9 @@ Public Class Frm_Tickets_Mant
         Do
 
             Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-            Fm_b.Pro_Empresa = ModEmpresa
-            Fm_b.Pro_Sucursal = NuloPorNro(_Cl_Tickets.Zw_Stk_Tickets_Producto.Sucursal, ModSucursal)
-            Fm_b.Pro_Bodega = NuloPorNro(_Cl_Tickets.Zw_Stk_Tickets_Producto.Bodega, ModBodega)
+            Fm_b.Pro_Empresa = Mod_Empresa
+            Fm_b.Pro_Sucursal = NuloPorNro(_Cl_Tickets.Zw_Stk_Tickets_Producto.Sucursal, Mod_Sucursal)
+            Fm_b.Pro_Bodega = NuloPorNro(_Cl_Tickets.Zw_Stk_Tickets_Producto.Bodega, Mod_Bodega)
             Fm_b.RevisarPermisosBodega = False
             Fm_b.Pedir_Permiso = False
             Fm_b.ShowDialog(Me)
@@ -800,9 +801,9 @@ Public Class Frm_Tickets_Mant
         End If
 
         Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-        Fm_b.Pro_Empresa = ModEmpresa
-        Fm_b.Pro_Sucursal = NuloPorNro(_Cl_Tickets.Zw_Stk_Tickets_Producto.Sucursal, ModSucursal)
-        Fm_b.Pro_Bodega = NuloPorNro(_Cl_Tickets.Zw_Stk_Tickets_Producto.Bodega, ModBodega)
+        Fm_b.Pro_Empresa = Mod_Empresa
+        Fm_b.Pro_Sucursal = NuloPorNro(_Cl_Tickets.Zw_Stk_Tickets_Producto.Sucursal, Mod_Sucursal)
+        Fm_b.Pro_Bodega = NuloPorNro(_Cl_Tickets.Zw_Stk_Tickets_Producto.Bodega, Mod_Bodega)
         Fm_b.RevisarPermisosBodega = False
         Fm_b.Pedir_Permiso = False
         Fm_b.ShowDialog(Me)
@@ -966,7 +967,7 @@ Public Class Frm_Tickets_Mant
             .Rtu = 0
             .Um = String.Empty
             '.Ud2 = String.Empty
-            .Empresa = ModEmpresa
+            .Empresa = Mod_Empresa
             .Sucursal = String.Empty
             .Bodega = String.Empty
 

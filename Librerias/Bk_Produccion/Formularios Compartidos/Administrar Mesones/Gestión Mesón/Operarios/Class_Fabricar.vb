@@ -474,7 +474,7 @@ Public Class Class_Fabricar
                 If Not String.IsNullOrEmpty(_Alerta.Trim) Then
 
                     Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_MesonVsAlertas (Empresa,Idpotpr,Idpotl,Idpote,Numot,Operacion,Codigoob_Envia,Alerta,Id_Padre_Edit) Values 
-                                                    ('" & ModEmpresa & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & numero_(_Numot, 10) &
+                                                    ('" & Mod_Empresa & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & numero_(_Numot, 10) &
                                                     "','" & _Operacion & "','" & _Codigoob & "','" & _Alerta & "',0)"
 
                     Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
@@ -646,7 +646,7 @@ Public Class Class_Fabricar
                                 If Not String.IsNullOrEmpty(_Alerta.Trim) Then
 
                                     Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_MesonVsAlertas (Empresa,Idpotpr,Idpotl,Idpote,Numot,Operacion,Codigoob_Envia,Alerta,Id_Padre_Edit) Values 
-                                                    ('" & ModEmpresa & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & numero_(_Numot, 10) &
+                                                    ('" & Mod_Empresa & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & numero_(_Numot, 10) &
                                                     "','" & _Operacion & "','" & _Codigoob & "','" & _Alerta & "',0)"
 
                                     Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
@@ -696,7 +696,7 @@ Public Class Class_Fabricar
                                             "Empresa,Numot,Nreg,Estado,Desde,Operacion,Nombreop,Codigo,Glosa,Asignado_Por," &
                                             "Fecha_Asignacion,Fabricar_OT,Fabricado_OT,Saldo_Fabricar_OT," &
                                             "Fabricar,Fabricado,Saldo_Fabricar,Cod_Funcionario_Asigna,Orden_Potpr,Orden_Meson,Nivel,AsignadoAlPrincipio,CodMesonManda,IdPotpr_Ac1) " &
-                                            "Values('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & ModEmpresa &
+                                            "Values('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & Mod_Empresa &
                                             "','" & _Numot & "','" & _Nreg & "','" & _NewEstado & "','MS'" &
                                             ",'" & _Operacion & "','" & _Nombreop & "','" & _Codigo & "','" & _Glosa &
                                             "','" & FUNCIONARIO & "',Getdate()," & _Fabricar_OT & "," & _Fabricado_OT & "," & _Saldo_Fabricar_OT &
@@ -879,7 +879,7 @@ Public Class Class_Fabricar
                                                "Empresa,Numot,Nreg,Estado,Desde,Operacion,Nombreop,Codigo,Glosa,Asignado_Por," &
                                                "Fecha_Asignacion,Fabricar_OT,Fabricado_OT,Saldo_Fabricar_OT," &
                                                "Fabricar,Fabricado,Saldo_Fabricar,Cod_Funcionario_Asigna,Orden_Potpr,Orden_Meson,Nivel) " &
-                                               "Values('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & ModEmpresa &
+                                               "Values('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & Mod_Empresa &
                                                "','" & _Numot & "','" & _Nreg & "','PD','MS'" &
                                                ",'" & _Operacion & "','" & _Nombreop & "','" & _Codigo & "','" & _Glosa &
                                                "','" & FUNCIONARIO & "',Getdate()," & _Fabricar & "," & _Fabricado & "," & _Saldo_Fabricar &
@@ -1351,7 +1351,7 @@ Public Class Class_Fabricar
                                 If Not String.IsNullOrEmpty(_Alerta.Trim) Then
 
                                     Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_MesonVsAlertas (Empresa,Idpotpr,Idpotl,Idpote,Numot,Operacion,Codigoob_Envia,Alerta,Id_Padre_Edit) Values 
-                                                    ('" & ModEmpresa & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & numero_(_Numot, 10) &
+                                                    ('" & Mod_Empresa & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & numero_(_Numot, 10) &
                                                     "','" & _Operacion & "','" & _Codigoob & "','" & _Alerta & "',0)"
 
                                     Comando = New SqlClient.SqlCommand(Consulta_Sql, cn2)
@@ -1366,7 +1366,7 @@ Public Class Class_Fabricar
                                                "Empresa,Numot,Nreg,Estado,Desde,Operacion,Nombreop,Codigo,Glosa,Asignado_Por," &
                                                "Fecha_Asignacion,Fabricar_OT,Fabricado_OT,Saldo_Fabricar_OT," &
                                                "Fabricar,Fabricado,Saldo_Fabricar,Cod_Funcionario_Asigna,Orden_Potpr,Orden_Meson,Nivel) " &
-                                               "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & ModEmpresa &
+                                               "VALUES('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & Mod_Empresa &
                                                "','" & _Numot & "','" & _Nreg & "','PD','MS'" &
                                                ",'" & _Operacion & "','" & _Nombreop & "','" & _Codigo & "','" & _Glosa &
                                                "','" & FUNCIONARIO & "',Getdate()," & _Fabricar_OT & "," & _Fabricado_OT & "," & _Saldo_Fabricar_OT &
@@ -1508,7 +1508,7 @@ Public Class Class_Fabricar
                                                "Empresa,Numot,Nreg,Estado,Desde,Operacion,Nombreop,Codigo,Glosa,Asignado_Por," &
                                                "Fecha_Asignacion,Fabricar_OT,Fabricado_OT,Saldo_Fabricar_OT," &
                                                "Fabricar,Fabricado,Saldo_Fabricar,Cod_Funcionario_Asigna,Orden_Potpr,Orden_Meson,Nivel) " &
-                                               "Values('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & ModEmpresa &
+                                               "Values('" & _Codmeson & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & Mod_Empresa &
                                                "','" & _Numot & "','" & _Nreg & "','PD','MS'" &
                                                ",'" & _Operacion & "','" & _Nombreop & "','" & _Codigo & "','" & _Glosa &
                                                "','" & FUNCIONARIO & "',Getdate()," & _Fabricar & "," & _Fabricado & "," & _Saldo_Fabricar &

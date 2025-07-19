@@ -327,7 +327,7 @@
             If _Accion = Enum_Accion.Editar Then
 
                 Consulta_sql = "Select * From MAEPR Where KOPR = ''
-                            Select * From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _kopr & "'
+                            Select * From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _kopr & "'
                             Select Top 1 * From MAEFICHA Where KOPR = '" & _kopr & "'"
                 Dim _Ds_Producto As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 

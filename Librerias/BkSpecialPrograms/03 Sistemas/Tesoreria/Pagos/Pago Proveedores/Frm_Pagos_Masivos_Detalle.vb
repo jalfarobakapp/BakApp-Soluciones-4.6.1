@@ -112,7 +112,7 @@ Public Class Frm_Pagos_Masivos_Detalle
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Inicio#", Format(_Fecha_Inicio, "yyyyMMdd"))
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Fin#", Format(_Fecha_Fin, "yyyyMMdd"))
         Consulta_sql = Replace(Consulta_sql, "--#Filtro_Adicional", _Filtro_Adicional)
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
         If Not Chk_Mostrar_Solo_Por_Pagar.Checked Then
             Consulta_sql = Replace(Consulta_sql, "AND VEN.ESPGVE <> 'C'", "")
@@ -675,7 +675,7 @@ Public Class Frm_Pagos_Masivos_Detalle
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Fin#", _Fecha_Fin)
 
         Consulta_sql = Replace(Consulta_sql, "--#Filtro_Adicional", _Filtro_Adicional)
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
 
         Consulta_sql += "Update #INFVEN Set Chk = 1 Where IDMAEVEN In " & _Filtro_Idmaeven & vbCrLf &

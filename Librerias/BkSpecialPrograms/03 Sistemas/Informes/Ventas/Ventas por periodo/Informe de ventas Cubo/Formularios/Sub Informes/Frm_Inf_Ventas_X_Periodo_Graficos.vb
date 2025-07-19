@@ -1512,7 +1512,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
 
     Sub Sb_Actualizar_Matriz_Cubo()
         Consulta_sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Inicio#", Format(Dtp_Fecha_Desde_01.Value, "yyyyMMdd"))
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Fin#", Format(Dtp_Fecha_Hasta_01.Value, "yyyyMMdd"))
@@ -2676,10 +2676,10 @@ Public Class Frm_Inf_Ventas_X_Periodo_Graficos
         Consulta_sql = Replace(Consulta_sql, "#Fecha_R2_Hasta#", Format(Dtp_Fecha_Hasta_02.Value, "yyyyMMdd"))
         Consulta_sql = Replace(Consulta_sql, "#dias_Habiles_R1#", _Dias_Habiles_R1)
         Consulta_sql = Replace(Consulta_sql, "#dias_Habiles_R2#", _Dias_Habiles_R2)
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
-        Consulta_sql = Replace(Consulta_sql, "#Bodega#", ModBodega)
-        Consulta_sql = Replace(Consulta_sql, "#Bodega#", ModBodega)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", Mod_Sucursal)
+        Consulta_sql = Replace(Consulta_sql, "#Bodega#", Mod_Bodega)
+        Consulta_sql = Replace(Consulta_sql, "#Bodega#", Mod_Bodega)
         Consulta_sql = Replace(Consulta_sql, "#Nombre_Tabla_Paso#", _Nombre_Tabla_Paso)
 
         Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro)

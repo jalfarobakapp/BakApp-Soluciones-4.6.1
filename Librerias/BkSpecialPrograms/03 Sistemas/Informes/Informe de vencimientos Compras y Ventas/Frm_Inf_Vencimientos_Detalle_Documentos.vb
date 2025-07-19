@@ -259,7 +259,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Inicio#", _Fecha_Inicio)
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Fin#", _Fecha_Fin)
 
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
         Consulta_sql = Replace(Consulta_sql, "--#Filtro_Adicional_Maeedo#", _Filtro_Maeedo)
         Consulta_sql = Replace(Consulta_sql, "--#Filtro_Adicional_Maedpce#", _Filtro_Maedpce)

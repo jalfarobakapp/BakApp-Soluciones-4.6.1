@@ -55,7 +55,7 @@ Public Class Frm_ComprasSinRecepcionar
                            "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                            "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
                            "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega_NVI'))" & vbCrLf &
-                           "Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
+                           "Or (EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')"
 
         Else
 
@@ -66,7 +66,7 @@ Public Class Frm_ComprasSinRecepcionar
                            "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
                            "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
                            "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega'))" & vbCrLf &
-                           "Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')"
+                           "Or (EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')"
 
         End If
 

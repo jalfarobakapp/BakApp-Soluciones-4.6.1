@@ -125,7 +125,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
         If _Fase_Prueba_Nota_De_Credito Then _Pr_NCV = "[Nota de crédito]"
 
 
-        Me.Text = "CAJERO AUTOMATICO. Modalidad: " & Modalidad & ", Caja: " & ModCaja & ", Usuario: " & "(" & FUNCIONARIO & ") - " & Nombre_funcionario_activo & ", Equipo: " & _NombreEquipo
+        Me.Text = "CAJERO AUTOMATICO. Modalidad: " & Mod_Modalidad & ", Caja: " & Mod_Caja & ", Usuario: " & "(" & FUNCIONARIO & ") - " & Nombre_funcionario_activo & ", Equipo: " & _NombreEquipo
         Lbl_Version.Text = "Versión: " & _Global_Version_BakApp
 
         If _Fase_Prueba_Efectivo Or _Fase_Prueba_Tarjeta Or _Fase_Prueba_Nota_De_Credito Then
@@ -278,12 +278,12 @@ Public Class Frm_Cashdro_Ingreso_Documento
                         End If
 
                         Dim _Monto As Double = _Row_Documento.Item("SALDO_ANTERIOR")
-                        Dim _Nro_Documento As String = Traer_Numero_Documento(_Tido, , Modalidad)
+                        Dim _Nro_Documento As String = Traer_Numero_Documento(_Tido, , Mod_Modalidad)
                         Dim _Tidoelec As Integer = CInt(Fx_Es_Electronico(_Tido)) * -1
 
                         Dim _Mensaje As New LsValiciones.Mensajes
 
-                        _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, False)
+                        _Mensaje = Fx_Revisar_Expiracion_Folio_SII(Me, _Tido, _Nro_Documento, False, Mod_Empresa, Mod_Modalidad)
 
                         If Not _Mensaje.EsCorrecto Then
                             Return
@@ -477,7 +477,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_CashDro_Operaciones (Numero,OperationId,FechaHora_Inicio,posid,posuser," &
                            "Tipo_De_Pago,Monto,Ajuste_Sencillo,Modalidad,Empresa,Sucursal,Bodega,Caja,Idmaeedo_H) Values " & vbCrLf &
                            "('" & _Numero & "','" & _OperationId & "',GetDate(),'" & _posid & "','" & _posuser & "','EFV'," & _Monto & "," & _Ajuste_Sencillo &
-                           ",'" & Modalidad & "','" & ModEmpresa & "','" & ModSucursal & "','" & ModBodega & "','" & ModCaja & "'," & _Idmaeedo & ")"
+                           ",'" & Mod_Modalidad & "','" & Mod_Empresa & "','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & Mod_Caja & "'," & _Idmaeedo & ")"
             _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id)
 
         Else
@@ -588,7 +588,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
         Dim _posuser As String = FUNCIONARIO
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_CashDro_Operaciones (Numero,OperationId,FechaHora_Inicio,posid,posuser,Monto,Modalidad,Empresa,Sucursal,Bodega,Caja) Values " & vbCrLf &
-                       "('" & _Numero & "','',GetDate(),'" & _posid & "','" & _posuser & "'," & De_Num_a_Tx_01(_Monto, False, 5) & ",'" & Modalidad & "','" & ModEmpresa & "','" & ModSucursal & "','" & ModBodega & "','" & ModCaja & "')"
+                       "('" & _Numero & "','',GetDate(),'" & _posid & "','" & _posuser & "'," & De_Num_a_Tx_01(_Monto, False, 5) & ",'" & Mod_Modalidad & "','" & Mod_Empresa & "','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & Mod_Caja & "')"
         _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id)
 
         If _Pago_Efectivo_Tarjeta Then
@@ -684,7 +684,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
         Dim _posuser As String = FUNCIONARIO
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_CashDro_Operaciones (Numero,OperationId,FechaHora_Inicio,posid,posuser,Monto,Modalidad,Empresa,Sucursal,Bodega,Caja) Values " & vbCrLf &
-                       "('" & _Numero & "','',GetDate(),'" & _posid & "','" & _posuser & "'," & De_Num_a_Tx_01(_Monto, False, 5) & ",'" & Modalidad & "','" & ModEmpresa & "','" & ModSucursal & "','" & ModBodega & "','" & ModCaja & "')"
+                       "('" & _Numero & "','',GetDate(),'" & _posid & "','" & _posuser & "'," & De_Num_a_Tx_01(_Monto, False, 5) & ",'" & Mod_Modalidad & "','" & Mod_Empresa & "','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & Mod_Caja & "')"
         _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id)
 
         If _Pago_Efectivo_Tarjeta Then
@@ -948,7 +948,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
         Dim _posuser As String = FUNCIONARIO
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_CashDro_Operaciones (Numero,OperationId,FechaHora_Inicio,posid,posuser,Monto,Modalidad,Empresa,Sucursal,Bodega,Caja,Idmaeedo_H) Values " & vbCrLf &
-                       "('" & _Numero & "','',GetDate(),'" & _posid & "','" & _posuser & "'," & De_Num_a_Tx_01(_Monto, False, 5) & ",'" & Modalidad & "','" & ModEmpresa & "','" & ModSucursal & "','" & ModBodega & "','" & ModCaja & "'," & _Idmaeedo & ")"
+                       "('" & _Numero & "','',GetDate(),'" & _posid & "','" & _posuser & "'," & De_Num_a_Tx_01(_Monto, False, 5) & ",'" & Mod_Modalidad & "','" & Mod_Empresa & "','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & Mod_Caja & "'," & _Idmaeedo & ")"
         _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id)
 
         If _Pago_Efectivo_Tarjeta Then
@@ -1279,7 +1279,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
         Dim _posuser As String = FUNCIONARIO
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_CashDro_Operaciones (Numero,OperationId,FechaHora_Inicio,posid,posuser,Monto,Modalidad,Empresa,Sucursal,Bodega,Caja,Idmaeedo_H) Values " & vbCrLf &
-                       "('" & _Numero & "','',GetDate(),'" & _posid & "','" & _posuser & "'," & De_Num_a_Tx_01(_Monto, False, 5) & ",'" & Modalidad & "','" & ModEmpresa & "','" & ModSucursal & "','" & ModBodega & "','" & ModCaja & "'," & _Idmaeedo & ")"
+                       "('" & _Numero & "','',GetDate(),'" & _posid & "','" & _posuser & "'," & De_Num_a_Tx_01(_Monto, False, 5) & ",'" & Mod_Modalidad & "','" & Mod_Empresa & "','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & Mod_Caja & "'," & _Idmaeedo & ")"
         _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id)
 
         If _Pago_Efectivo_Tarjeta Then
@@ -1775,7 +1775,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
                            "Tipo_De_Pago,Monto,Ajuste_Sencillo,Modalidad,Empresa,Sucursal,Bodega,Caja,Idmaeedo_H) Values " & vbCrLf &
                            "('" & _Numero & "','" & _OperationId & "',GetDate(),'" & _posid & "','" & _posuser & "'," & _Idmaeedo &
                            ",'EFV'," & _Monto_Efectivo & "," & _Ajuste_Sencillo &
-                           ",'" & Modalidad & "','" & ModEmpresa & "','" & ModSucursal & "','" & ModBodega & "','" & ModCaja & "'," & _Idmaeedo & ")"
+                           ",'" & Mod_Modalidad & "','" & Mod_Empresa & "','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & Mod_Caja & "'," & _Idmaeedo & ")"
             _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id)
 
         Else
@@ -2079,7 +2079,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
                        "MAEEN.NOKOEN,ESPGDO,ESDO" & vbCrLf &
                        "FROM MAEEDO AS EDO WITH ( NOLOCK ) LEFT OUTER JOIN MAEEN ON ENDO=MAEEN.KOEN AND" & Space(1) &
                        "SUENDO=MAEEN.SUEN" & vbCrLf &
-                       "WHERE EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' AND NUDO = '" & _Nudo & "'" & vbCrLf &
+                       "WHERE EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' AND NUDO = '" & _Nudo & "'" & vbCrLf &
                        "AND TIDO IN ( 'BLV','BSV','FCV','FDV','NCV' )"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -2247,14 +2247,14 @@ Public Class Frm_Cashdro_Ingreso_Documento
 
             Dim _Iddt As Integer
 
-            Dim _Nro_Documento As String = Traer_Numero_Documento(_Tido, , Modalidad)
+            Dim _Nro_Documento As String = Traer_Numero_Documento(_Tido, , Mod_Modalidad)
 
             Dim _Tidoelec As Integer = CInt(Fx_Es_Electronico(_Tido)) * -1
 
             Dim _Reg = _Sql.Fx_Cuenta_Registros("MAEEDO", "TIDO = '" & _Tido & "' And NUDO = '" & _Nro_Documento & "' And IDMAEEDO <> " & _Idmaeedo)
 
             If CBool(_Reg) Then
-                _Nro_Documento = Traer_Numero_Documento(_Tido, , Modalidad) ' _Class_DTE.Pro_Nro_Documento
+                _Nro_Documento = Traer_Numero_Documento(_Tido, , Mod_Modalidad) ' _Class_DTE.Pro_Nro_Documento
             End If
 
             Consulta_sql = "UPDATE MAEEDO SET NUDO='" & _Nro_Documento & "',NUDONODEFI=0,TIDOELEC=" & _Tidoelec & " WHERE IDMAEEDO=" & _Idmaeedo & vbCrLf &
@@ -2265,13 +2265,13 @@ Public Class Frm_Cashdro_Ingreso_Documento
 
             If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
-                Fx_Cambiar_Numeracion_Modalidad(_Tido, Modalidad)
+                Fx_Cambiar_Numeracion_Modalidad(_Tido, Mod_Empresa, Mod_Modalidad)
 
                 ''FIRMA ELECTRONICA 
 
                 If CBool(_Tidoelec) Then
 
-                    Sb_Firmar_Documento_Electronico(Me, _Idmaeedo, _Tido)
+                    Sb_Firmar_Documento_Electronico(Me, _Idmaeedo, _Tido, Mod_Empresa, Mod_Modalidad)
 
                     'Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
                     'Dim _Firma_Bakapp As Boolean
@@ -2349,7 +2349,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
         If _Nudonodefi Then
 
             Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-            _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Modalidad, _Idmaeedo)
+            _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Empresa, Mod_Modalidad, _Idmaeedo)
 
         End If
 
@@ -2946,9 +2946,9 @@ Public Class Frm_Cashdro_Ingreso_Documento
         With NewFila
 
             .Item("IDMAEDPCE") = 0
-            .Item("EMPRESA") = ModEmpresa
-            .Item("SUREDP") = ModSucursal
-            .Item("CJREDP") = ModCaja
+            .Item("EMPRESA") = Mod_Empresa
+            .Item("SUREDP") = Mod_Sucursal
+            .Item("CJREDP") = Mod_Caja
 
             .Item("TIDP") = String.Empty
             .Item("NUDP") = String.Empty
@@ -2974,7 +2974,7 @@ Public Class Frm_Cashdro_Ingreso_Documento
             .Item("KOTU") = 1
             .Item("KOFUDP") = FUNCIONARIO
             .Item("KOTNDP") = RutEmpresa
-            .Item("SUTNDP") = ModCaja
+            .Item("SUTNDP") = Mod_Caja
 
             .Item("NUTRANSMI") = ""
             .Item("DOCUENANTI") = ""
@@ -3009,19 +3009,32 @@ Public Class Frm_Cashdro_Ingreso_Documento
 
         Consulta_sql = "SELECT Top 1 Modalidad, TipoDoc, NombreFormato" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '" & Modalidad & "'"
+                       "Where Empresa = '" & Mod_Empresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '" & Mod_Modalidad & "'"
 
         Dim _RowNombreFormato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
         Dim _NombreFormato = _RowNombreFormato.Item("NombreFormato")
 
-        Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+        'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+        '                                                        False, False, _Impresora, False, 0, False, "")
+
+        'If String.IsNullOrEmpty(Trim(_Imprime)) Then
+        '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_CashDro_Operaciones Set Impreso = 1" & vbCrLf &
+        '                   "Where Idmaeedo = " & _Idmaeedo
+        'Else
+        '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_CashDro_Operaciones Set Impreso = 0,Log_Error = '" & _Imprime & "'" & vbCrLf &
+        '                   "Where Idmaeedo = " & _Idmaeedo
+        'End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
                                                                 False, False, _Impresora, False, 0, False, "")
 
-        If String.IsNullOrEmpty(Trim(_Imprime)) Then
+        If _Mensaje.EsCorrecto Then
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_CashDro_Operaciones Set Impreso = 1" & vbCrLf &
                            "Where Idmaeedo = " & _Idmaeedo
         Else
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_CashDro_Operaciones Set Impreso = 0,Log_Error = '" & _Imprime & "'" & vbCrLf &
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_CashDro_Operaciones Set Impreso = 0,Log_Error = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                            "Where Idmaeedo = " & _Idmaeedo
         End If
 

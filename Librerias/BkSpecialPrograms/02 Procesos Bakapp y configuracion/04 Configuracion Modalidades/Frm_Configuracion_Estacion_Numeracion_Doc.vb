@@ -176,7 +176,7 @@ Public Class Frm_Configuracion_Estacion_Numeracion_Doc
                     End If
 
                     Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("MAEEDO",
-                                                                         "EMPRESA = '" & ModEmpresa & "' And TIDO In " & _Tido & " And NUDO = '" & _Nudo & "'"))
+                                                                         "EMPRESA = '" & Mod_Empresa & "' And TIDO In " & _Tido & " And NUDO = '" & _Nudo & "'"))
 
                     If _Reg Then
 
@@ -238,45 +238,45 @@ Public Class Frm_Configuracion_Estacion_Numeracion_Doc
             Else
                 _Sql1 = "SELECT Cast(0 As Bit) As Editado,
                             '" & _Tido & "' As Tido,'" & _Notido & "' As 'NombreDocumento'," & vbCrLf &
-                        "Isnull((Select " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero," &
+                        "Isnull((Select " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero," &
                         "Cast(0 As Bit) As Edit_Numero," & vbCrLf
-                _Sql2 = "Isnull((Select " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero_Old,'A' as Cmb" & vbCrLf
+                _Sql2 = "Isnull((Select " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero_Old,'A' as Cmb" & vbCrLf
             End If
 
             Consulta_sql += _Sql1 & vbCrLf &
                             vbCrLf &
                             "Isnull((Select Top 1 NombreFormato From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),'') As NombreFormato," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),'') As NombreFormato," &
                             vbCrLf &
                             "Isnull((Select Top 1 NombreFormato_PDF From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),'') As NombreFormato_PDF," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),'') As NombreFormato_PDF," &
                             vbCrLf &
                             "Isnull((Select Top 1 Grabar_Con_Huella From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Grabar_Con_Huella," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Grabar_Con_Huella," &
                             vbCrLf &
                             "Isnull((Select Top 1 Sugiere_Despacho From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Sugiere_Despacho," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Sugiere_Despacho," &
                             vbCrLf &
                             "Isnull((Select Top 1 Obliga_Despacho From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Obliga_Despacho," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Obliga_Despacho," &
                             vbCrLf &
                             "Isnull((Select Top 1 Obliga_Despacho_BodDistintas From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Obliga_Despacho_BodDistintas," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Obliga_Despacho_BodDistintas," &
                             vbCrLf &
                             "Isnull((Select Top 1 Obliga_Transportista From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Obliga_Transportista," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Obliga_Transportista," &
                             vbCrLf &
                             "Isnull((Select Top 1 Guardar_PDF_Auto From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Guardar_PDF_Auto," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Guardar_PDF_Auto," &
                             vbCrLf &
                             "Isnull((Select Top 1 Enviar_Correo From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Enviar_Correo," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Enviar_Correo," &
                             vbCrLf &
                             "Isnull((Select Top 1 Guardar_PDF_Auto From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Guardar_PDF_Auto," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Guardar_PDF_Auto," &
                             vbCrLf &
                              "Isnull((Select Top 1 TimbrarXRandom From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As TimbrarXRandom," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As TimbrarXRandom," &
                             vbCrLf &
                             _Sql2
 
@@ -433,46 +433,46 @@ Public Class Frm_Configuracion_Estacion_Numeracion_Doc
             Else
                 _Sql1 = "SELECT Cast(0 As Bit) As Editado,
                             '" & _Tido & "' As Tido,'" & _Notido & "' As 'NombreDocumento'," & vbCrLf &
-                        "Isnull((Select " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero," &
+                        "Isnull((Select " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero," &
                         "Cast(0 As Bit) As Edit_Numero," & vbCrLf
-                _Sql2 = "Isnull((Select " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero_Old,'A' as Cmb" & vbCrLf
+                _Sql2 = "Isnull((Select " & _Tido & " From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'),'') As Numero_Old,'A' as Cmb" & vbCrLf
             End If
 
             Consulta_sql += _Sql1 & vbCrLf &
                             vbCrLf &
                             "Isnull((Select Top 1 NombreFormato From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),'') As NombreFormato," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),'') As NombreFormato," &
                             "Cast(0 As Bit) As Edit_NombreFormato," & vbCrLf &
                             vbCrLf &
                             "Isnull((Select Top 1 NombreFormato_PDF From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),'') As NombreFormato_PDF," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),'') As NombreFormato_PDF," &
                             "Cast(0 As Bit) As Edit_NombreFormato_PDF," & vbCrLf &
                             vbCrLf &
                             "Isnull((Select Top 1 Grabar_Con_Huella From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Grabar_Con_Huella," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Grabar_Con_Huella," &
                             "Cast(0 As Bit) As Edit_Grabar_Con_Huella," & vbCrLf &
                             vbCrLf &
                             "Isnull((Select Top 1 Sugiere_Despacho From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Sugiere_Despacho," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Sugiere_Despacho," &
                             "Cast(0 As Bit) As Edit_Sugiere_Despacho," & vbCrLf &
                             vbCrLf &
                             "Isnull((Select Top 1 Obliga_Despacho From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Obliga_Despacho," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Obliga_Despacho," &
                             "Cast(0 As Bit) As Edit_Obliga_Despacho," &
                             vbCrLf &
                             "Isnull((Select Top 1 Obliga_Despacho_BodDistintas From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Obliga_Despacho_BodDistintas," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Obliga_Despacho_BodDistintas," &
                             "Cast(0 As Bit) As Edit_Obliga_Despacho_BodDistintas," &
                             vbCrLf &
                             "Isnull((Select Top 1 Obliga_Transportista From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Obliga_Transportista," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Obliga_Transportista," &
                             "Cast(0 As Bit) As Edit_Obliga_Transportista," &
                             vbCrLf &
                             "Isnull((Select Top 1 Guardar_PDF_Auto From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Guardar_PDF_Auto," &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'),0) As Guardar_PDF_Auto," &
                             "Cast(0 As Bit) As Edit_Guardar_PDF_Auto," & vbCrLf &
                             "Isnull((Select Top 1 Ruta_PDF From " & _Global_BaseBk & "Zw_Estaciones_Ruta_PDF " & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "'  And Modalidad = '" & _Modalidad & "' And Tido = '" & _Tido & "' And NombreEquipo = '" & _NombreEquipo & "'),0) As Ruta_PDF," & vbCrLf &
+                            "Where Empresa = '" & Mod_Empresa & "'  And Modalidad = '" & _Modalidad & "' And Tido = '" & _Tido & "' And NombreEquipo = '" & _NombreEquipo & "'),0) As Ruta_PDF," & vbCrLf &
                             vbCrLf &
                             _Sql2
 

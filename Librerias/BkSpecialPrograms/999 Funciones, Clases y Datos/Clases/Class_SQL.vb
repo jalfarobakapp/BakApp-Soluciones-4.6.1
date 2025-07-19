@@ -781,7 +781,7 @@ Public Class Class_SQL
             Dim _Modalidad As String
 
             If String.IsNullOrEmpty(ModalidadAct) Then
-                _Modalidad = Modalidad
+                _Modalidad = Mod_Modalidad
             Else
                 _Modalidad = ModalidadAct
             End If
@@ -929,7 +929,7 @@ Public Class Class_SQL
             Dim _Insertar_dato = True
 
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
-                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "' And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "' And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Mod_Modalidad & "'"
             _Row_Fila = Fx_Get_DataRow(Consulta_sql)
 
             If (_Row_Fila Is Nothing) Then
@@ -950,7 +950,7 @@ Public Class Class_SQL
                 If _Insertar_dato Then
 
                     Consulta_sql = "INSERT INTO " & _Global_BaseBk & "Zw_Tmp_Prm_Informes (Funcionario,Informe,Campo,Tipo,Valor,Grupo,NombreEquipo,Modalidad) VALUES" & Space(1) &
-                          "('" & FUNCIONARIO & "','" & _Informe & "','" & _Campo & "','vString'," & "'" & _Valor & "','" & _Grupo & "','" & _NombreEquipo & "','" & Modalidad & "')"
+                          "('" & FUNCIONARIO & "','" & _Informe & "','" & _Campo & "','vString'," & "'" & _Valor & "','" & _Grupo & "','" & _NombreEquipo & "','" & Mod_Modalidad & "')"
                     Ej_consulta_IDU(Consulta_sql, False)
 
                 End If
@@ -985,7 +985,7 @@ Public Class Class_SQL
                     'End If
 
                     Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tmp_Prm_Informes Set Valor = '" & _Valor & "'" & vbCrLf &
-                                   "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "' And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                                   "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "' And Campo = '" & _Campo & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Mod_Modalidad & "'"
                     Ej_consulta_IDU(Consulta_sql, False)
 
                 Else

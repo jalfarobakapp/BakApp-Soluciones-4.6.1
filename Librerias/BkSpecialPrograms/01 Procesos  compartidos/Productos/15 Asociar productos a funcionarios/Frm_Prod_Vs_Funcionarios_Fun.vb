@@ -29,7 +29,7 @@ Public Class Frm_Prod_Vs_Funcionarios_Fun
 
         Consulta_Sql = "Select KOFU,NOKOFU," &
                        "(Select Count(*) From " & _Global_BaseBk & "Zw_Prod_Usuario_Validador " &
-                       "Where Empresa = '" & ModEmpresa & "' And CodFuncionario = KOFU) As Prod_Asignados," & vbCrLf &
+                       "Where Empresa = '" & Mod_Empresa & "' And CodFuncionario = KOFU) As Prod_Asignados," & vbCrLf &
                        "Cast((Select Count(*) From " & _Global_BaseBk & "ZW_PermisosVsUsuarios " &
                        "Where CodUsuario = KOFU And CodPermiso = 'Comp0095') As Bit) As Tiene_Permiso" & vbCrLf &
                        "From TABFU" & vbCrLf &

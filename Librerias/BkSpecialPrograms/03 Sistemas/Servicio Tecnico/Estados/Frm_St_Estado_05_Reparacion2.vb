@@ -465,7 +465,7 @@ Public Class Frm_St_Estado_05_Reparacion2
                 Dim _Fecha_Emision = FechaDelServidor()
 
                 Dim Fm_Post As New Frm_Formulario_Documento("NVV", csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
-                Fm_Post.Sb_Limpiar(Modalidad)
+                Fm_Post.Sb_Limpiar(Mod_Modalidad)
                 Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
                 Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
                 Dim _New_Idmaeedo = Fm_Post.Pro_Idmaeedo

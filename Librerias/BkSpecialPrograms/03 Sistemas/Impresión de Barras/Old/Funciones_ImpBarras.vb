@@ -6,7 +6,9 @@ Public Class Class_Imprimir_Barras
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Dim _Error As String
+    Public Property ErrorImp As String
+
+    Public Property Ult_Etiqueta As String
 
 #Region "VARIABLES DE IMPRESION"
 
@@ -66,10 +68,10 @@ Public Class Class_Imprimir_Barras
 
     Public Property [Error] As String
         Get
-            Return _Error
+            Return ErrorImp
         End Get
         Set(value As String)
-            _Error = value
+            ErrorImp = value
         End Set
     End Property
 
@@ -84,12 +86,13 @@ Public Class Class_Imprimir_Barras
                              _Empresa As String,
                              _Sucursal As String,
                              _Bodega As String,
-                             _CodUbicacion As String,
+                             _Codigo_Ubic As String,
                              _Imprimir_Todas_Las_Ubicaciones As Boolean,
                              _ImprimirDesdePrecioFuturo As Boolean,
                              _Id_PrecioFuturo As Integer,
                              _CodAlternativo As String,
-                             _ImprimirAIP As Boolean)
+                             _ImprimirAIP As Boolean,
+                             _VistaPrevia As Boolean)
 
         If _Imprimir_Todas_Las_Ubicaciones Then
 
@@ -141,6 +144,11 @@ Public Class Class_Imprimir_Barras
 
                 Dim _Texto = _RowEtiqueta.Item("FUNCION")
 
+                If _VistaPrevia Then
+                    Ult_Etiqueta = _Texto
+                    Return
+                End If
+
                 Sb_Imprimir_PRN(_Texto, _Puerto, _ImprimirAIP)
 
             Next
@@ -152,7 +160,7 @@ Public Class Class_Imprimir_Barras
                                                            _Empresa,
                                                            _Sucursal,
                                                            _Bodega,,
-                                                           _CodUbicacion,
+                                                           _Codigo_Ubic,
                                                            _ImprimirDesdePrecioFuturo,
                                                            _Id_PrecioFuturo)
 
@@ -232,10 +240,10 @@ Public Class Class_Imprimir_Barras
             _PrecioLc1 = (_Precio_ud1 / _Dim1) * _Dim2
 
             Dim _RowEtiqueta As DataRow = Fx_TraeEtiqueta(_NombreEtiqueta)
-
             Dim _Texto = _RowEtiqueta.Item("FUNCION")
 
-            Sb_Imprimir_PRN(_Texto, _Puerto, _ImprimirAIP)
+            Sb_EtiquetasEspecialMayorista(_Codigo, _Texto)
+            Sb_Imprimir_PRN(_Texto, _Puerto, _ImprimirAIP, _VistaPrevia)
 
         End If
 
@@ -317,6 +325,119 @@ Public Class Class_Imprimir_Barras
             End If
         End Try
     End Sub
+
+    Sub Sb_EtiquetasEspecialMayorista(_Codigo As String, ByRef _Texto As String)
+
+        Consulta_sql = "Select KOPR,NOKOPR,RLUD,NODIM1,NODIM2,NODIM3 From MAEPR Where KOPR = '" & _Codigo & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Dim1, _Dim2 As Double
+        Dim _Dim3 As String = "X " & _Nodim3
+
+        If IsNumeric(_Nodim1) Then
+            _Dim1 = Val(_Nodim1)
+        End If
+
+        If IsNumeric(_Nodim2) Then
+            _Dim2 = Val(_Nodim2)
+        End If
+
+        Consulta_sql = "Select Top 1 *,(Select top 1 MELT From TABPP Where KOLT = 'PB1') As MELT" & vbCrLf &
+                       "From TABPRE" & vbCrLf &
+                       "Where KOLT = 'PB1' And KOPR = '" & _Codigo & "'"
+        Dim _RowPrecios_PB1 As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Consulta_sql = "Select Top 1 *,(Select top 1 MELT From TABPP Where KOLT = 'PB3') As MELT" & vbCrLf &
+                       "From TABPRE" & vbCrLf &
+                       "Where KOLT = 'PB3' And KOPR = '" & _Codigo & "'"
+        Dim _RowPrecios_PB3 As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Precio_1 As Double = Fx_Funcion_Ecuacion_Random(Nothing, "", "", _Codigo, 1, _RowPrecios_PB1, 0, 0, 0)
+        Dim _Precio_2 As Double = Fx_Funcion_Ecuacion_Random(Nothing, "", "", _Codigo, 1, _RowPrecios_PB3, 0, 0, 0)
+
+        Dim _PrecioXKilo1 As Double = 0
+        Dim _PrecioXKilo2 As Double = 0
+
+        _PrecioXKilo1 = Math.Round((_Dim2 / _Dim1) * _Precio_1, 0)
+        _PrecioXKilo2 = Math.Round((_Dim2 / _Dim1) * _Precio_2, 0)
+
+        Dim _May_Hasta As String = _Rtu - 1
+        Dim _May_Desde As String = _Rtu
+
+        If _Dim1 = 0 Then _Dim1 = 1
+        If _Dim2 = 0 Then _Dim2 = 1
+
+        Dim _Descripcion_May = Fx_DividirDescripcionEn2Palabras(_Descripcion)
+        Dim _May_Descripcion_1 As String = _Descripcion_May(0)
+        Dim _May_Descripcion_2 As String = _Descripcion_May(1)
+
+        Dim _May_Precio_1, _May_Precio_2 As String
+        Dim _May_Precioxkilo1, _May_Precioxkilo2 As String
+        Dim _May_dim3 As String
+
+        Try
+            _May_Precio_1 = Fx_Formato_Numerico(_Precio_1, "$ 999.999", False)
+        Catch ex As Exception
+            _May_Precio_1 = "?"
+        End Try
+
+        Try
+            _May_Precio_2 = Fx_Formato_Numerico(_Precio_2, "$ 999.999", False)
+        Catch ex As Exception
+            _May_Precio_2 = "?"
+        End Try
+
+        Try
+            _May_Precioxkilo1 = Fx_Formato_Numerico(_PrecioXKilo1, "$ 999.999", False)
+        Catch ex As Exception
+            _May_Precioxkilo1 = "?"
+        End Try
+
+        Try
+            _May_Precioxkilo2 = Fx_Formato_Numerico(_PrecioXKilo2, "$ 999.999", False)
+        Catch ex As Exception
+            _May_Precioxkilo2 = "?"
+        End Try
+
+        _May_dim3 = _Dim3.ToString.Trim
+
+        _Texto = Replace(_Texto, "<MAY_PRECIO1>", _May_Precio_1)
+        _Texto = Replace(_Texto, "<MAY_PRECIO2>", _May_Precio_1)
+        _Texto = Replace(_Texto, "<MAY_PRECIOXKILO1>", _May_Precioxkilo1)
+        _Texto = Replace(_Texto, "<MAY_PRECIOXKILO2>", _May_Precioxkilo2)
+
+        _Texto = Replace(_Texto, "<MAY_DIM3>", _May_dim3)
+        _Texto = Replace(_Texto, "<MAY_HASTA>", _May_Hasta)
+        _Texto = Replace(_Texto, "<MAY_DESDE>", _May_Desde)
+
+        _Texto = Replace(_Texto, "<MAY_DESCRIPCION_1>", _May_Descripcion_1)
+        _Texto = Replace(_Texto, "<MAY_DESCRIPCION_2>", _May_Descripcion_2)
+
+    End Sub
+
+    ''' <summary>
+    ''' Divide una descripción en dos partes: la primera palabra y el resto.
+    ''' </summary>
+    ''' <param name="descripcion">Texto a dividir</param>
+    ''' <returns>Array de 2 strings: palabra1, resto</returns>
+    Function Fx_DividirDescripcionEn2Palabras(descripcion As String) As String()
+        Dim resultado(1) As String
+        If String.IsNullOrWhiteSpace(descripcion) Then
+            resultado(0) = ""
+            resultado(1) = ""
+            Return resultado
+        End If
+
+        Dim partes As String() = descripcion.Trim().Split(New Char() {" "c}, 2, StringSplitOptions.RemoveEmptyEntries)
+        If partes.Length = 1 Then
+            resultado(0) = partes(0)
+            resultado(1) = ""
+        Else
+            resultado(0) = partes(0)
+            resultado(1) = partes(1)
+        End If
+        Return resultado
+    End Function
 
 #End Region
 
@@ -488,7 +609,7 @@ Public Class Class_Imprimir_Barras
         Dim _Row_Potl As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_Potl) Then
-            _Error = "No existe registro de OT Tabla POTL"
+            ErrorImp = "No existe registro de OT Tabla POTL"
             Return
         End If
 
@@ -505,7 +626,7 @@ Public Class Class_Imprimir_Barras
         Dim _Row_Pote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_Pote) Then
-            _Error = "No existe registro de OT Tabla POTE"
+            ErrorImp = "No existe registro de OT Tabla POTE"
             Return
         End If
 
@@ -726,13 +847,13 @@ Public Class Class_Imprimir_Barras
 
     Sub Sb_Imprimir_Etiqueta_Chilexpress(_Puerto As String, _Id_Despacho As Integer)
 
-        _Error = String.Empty
+        ErrorImp = String.Empty
 
         Dim _Clas_CliexpressAPI As New Clas_CliexpressAPI()
         Dim _Row_Envio As DataRow = _Clas_CliexpressAPI.Fx_Trae_Row_Envio(0, _Id_Despacho)
 
         If IsNothing(_Row_Envio) Then
-            _Error = "No existe registro de envio Chilexpress IdDespacho: " & _Id_Despacho
+            ErrorImp = "No existe registro de envio Chilexpress IdDespacho: " & _Id_Despacho
             Return
         End If
 
@@ -741,7 +862,7 @@ Public Class Class_Imprimir_Barras
         Dim _Row_Respuesta As DataRow = _Clas_CliexpressAPI.Fx_Trae_Row_Respuesta(_Idenvio)
 
         If IsNothing(_Row_Respuesta) Then
-            _Error = "No existe registro de respuesta Chilexpress para el Idenvio: " & _Idenvio
+            ErrorImp = "No existe registro de respuesta Chilexpress para el Idenvio: " & _Idenvio
             Return
         End If
 
@@ -815,13 +936,13 @@ Public Class Class_Imprimir_Barras
 #Region "IMPRIMIR DESDE OT"
     Sub Sb_Imprimir_Etiqueta_OT(_Puerto As String, _NombreEtiqueta As String, _Idpote As Integer, _Kopral As String, _Idpotl As Integer)
 
-        _Error = String.Empty
+        ErrorImp = String.Empty
 
         Consulta_sql = "Select * From POTE Where IDPOTE = " & _Idpote
         Dim _Row_Pote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_Pote) Then
-            _Error = "No existe registro de OT Tabla POTE"
+            ErrorImp = "No existe registro de OT Tabla POTE"
             Return
         End If
 
@@ -834,7 +955,7 @@ Public Class Class_Imprimir_Barras
         Dim _Row_Potl As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_Potl) Then
-            _Error = "No existe registro de OT Tabla POTL"
+            ErrorImp = "No existe registro de OT Tabla POTL"
             Return
         End If
 
@@ -1176,14 +1297,15 @@ Public Class Class_Imprimir_Barras
 #End Region
 
 #Region "IMPRIMIR EL ARCHIVO"
-    Private Sub Sb_Imprimir_PRN(_Texto As String,
+    Private Sub Sb_Imprimir_PRN(ByRef _Texto As String,
                                 _Puerto As String,
-                                Optional _ImprimirAIP As Boolean = False)
+                                Optional _ImprimirAIP As Boolean = False,
+                                Optional _VistaPrevia As Boolean = False)
 
         Dim _TextoOri As String = _Texto
         Dim _Fecha_impresion As Date = Now
 
-        _Error = String.Empty
+        ErrorImp = String.Empty
 
         'Try
 
@@ -1405,6 +1527,11 @@ Public Class Class_Imprimir_Barras
 
         _Texto = Replace(_Texto, "<NUDOPA_SC>", _Nudopa_Sc.Trim)
 
+        If _VistaPrevia Then
+            Ult_Etiqueta = _Texto
+            Return
+        End If
+
         If _ImprimirAIP Then
             EnviarEtiqueta(_Texto)
         Else
@@ -1494,9 +1621,9 @@ Public Class Class_Imprimir_Barras
                        "Isnull((Select Top 1 PP01UD From TABPRE Where KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'),0) As Precio_ud1," & vbCrLf &
                        "Isnull((Select Top 1 PP02UD From TABPRE Where KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'),0) As Precio_ud2," & vbCrLf &
                        "Cast(0 As Float) As 'PrecioNetoXRtu',Cast(0 As Float) As 'PrecioBrutoXRtu'," & vbCrLf &
-                       "Isnull((Select top 1 PM From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'),0) As 'PM'," & vbCrLf &
-                       "Isnull((Select top 1 PPUL01 From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'),0) As 'PU01'," & vbCrLf &
-                       "Isnull((Select top 1 PPUL02 From MAEPREM Where EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo & "'),0) As 'PU02'," & vbCrLf &
+                       "Isnull((Select top 1 PM From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Codigo & "'),0) As 'PM'," & vbCrLf &
+                       "Isnull((Select top 1 PPUL01 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Codigo & "'),0) As 'PU01'," & vbCrLf &
+                       "Isnull((Select top 1 PPUL02 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Codigo & "'),0) As 'PU02'," & vbCrLf &
                        "Isnull((Select top 1 KOPRAL From TABCODAL Where KOEN = '" & _CodEntidad & "' And KOPR = '" & _Codigo & "'),'') As Codigo_Alternativo," & vbCrLf &
                        "Isnull((Select Top 1 NOKOMR From TABMR Where KOMR = MRPR),'') As Marca," & vbCrLf &
                        "Cast(0 As Float) As PU01_Neto,Cast(0 As Float) As PU02_Neto,Cast(0 As Float) As PU01_Bruto,Cast(0 As Float) As PU02_Bruto,Getdate() As FechaProgramada" & vbCrLf &

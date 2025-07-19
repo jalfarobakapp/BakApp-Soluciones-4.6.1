@@ -1,4 +1,4 @@
-Imports DevComponents.DotNetBar
+ï»¿Imports DevComponents.DotNetBar
 'Imports Lib_Bakapp_VarClassFunc
 
 
@@ -68,10 +68,10 @@ Public Class Frm_Cashdro_Pago_Efectivo
                    Row_CashDro As DataRow,
                    Idmaeedo As Integer)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         _Monto = Monto
         _Idmaeedo = Idmaeedo
 
@@ -79,7 +79,7 @@ Public Class Frm_Cashdro_Pago_Efectivo
 
         Dim _Ip_CashDro As String = Row_CashDro.Item("Ip_CashDro") ' = "192.168.1.20"
         Dim _Usuario As String = Row_CashDro.Item("Usuario_CashDro") ' = "admin"
-        Dim _Contraseña As String = Row_CashDro.Item("Contrasena_CashDro") ' = "12345"
+        Dim _ContraseÃ±a As String = Row_CashDro.Item("Contrasena_CashDro") ' = "12345"
 
         _Tiempo_Maximo = Row_CashDro.Item("Tiempo_Espera")
 
@@ -91,7 +91,7 @@ Public Class Frm_Cashdro_Pago_Efectivo
             _Tiempo_Maximo = _Tiempo_Maximo * 5
         End If
 
-        _CashDro = New Clas_Chasdro(_Ip_CashDro, _Usuario, _Contraseña)
+        _CashDro = New Clas_Chasdro(_Ip_CashDro, _Usuario, _ContraseÃ±a)
 
         _CashDro.Sb_Peticion_Venta(_Monto)
 
@@ -101,7 +101,7 @@ Public Class Frm_Cashdro_Pago_Efectivo
             _operationId = _CashDro.Pro_OperationId
 
             If _operationId = 0 Then
-                _Error = "¡No se puede obtener ""OperationId desde CashDro!"""
+                _Error = "Â¡No se puede obtener ""OperationId desde CashDro!"""
             End If
 
         End If
@@ -123,7 +123,7 @@ Public Class Frm_Cashdro_Pago_Efectivo
             _Numero = Fx_Proximo_NroDocumento(_Numero, 10)
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_CashDro_Operaciones (Numero,OperationId,FechaHora_Inicio,posid,posuser,Tipo_De_Pago,Monto,Modalidad,Empresa,Sucursal,Bodega,Caja,Idmaeedo_H) Values " & vbCrLf &
-                           "('" & _Numero & "'," & _operationId & ",GetDate(),'" & _posid & "','" & _posuser & "','EFV'," & De_Num_a_Tx_01(_Monto, False, 5) & ",'" & Modalidad & "','" & ModEmpresa & "','" & ModSucursal & "','" & ModBodega & "','" & ModCaja & "'," & _Idmaeedo & ")"
+                           "('" & _Numero & "'," & _operationId & ",GetDate(),'" & _posid & "','" & _posuser & "','EFV'," & De_Num_a_Tx_01(_Monto, False, 5) & ",'" & Mod_Modalidad & "','" & Mod_Empresa & "','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & Mod_Caja & "'," & _Idmaeedo & ")"
             _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id)
 
         End If
@@ -192,12 +192,12 @@ Public Class Frm_Cashdro_Pago_Efectivo
             Else
                 Select Case _State
                     Case "I"
-                        Me.Text = "la operación no existe"
+                        Me.Text = "la operaciÃ³n no existe"
                     Case "Q"
-                        Me.Text = "la operación está en cola"
+                        Me.Text = "la operaciÃ³n estÃ¡ en cola"
                         Tiempo_Pago_Efectivo.Enabled = True
                     Case "E"
-                        Me.Text = "la operación está en ejecución"
+                        Me.Text = "la operaciÃ³n estÃ¡ en ejecuciÃ³n"
                         Tiempo_Pago_Efectivo.Enabled = True
                     Case "F"
 

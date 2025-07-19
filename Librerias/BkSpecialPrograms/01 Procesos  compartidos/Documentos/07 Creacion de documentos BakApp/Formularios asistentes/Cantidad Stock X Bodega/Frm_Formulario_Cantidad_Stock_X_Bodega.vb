@@ -131,7 +131,7 @@ Public Class Frm_Formulario_Cantidad_Stock_X_Bodega
                             In (Select SUBSTRING(CodPermiso, 3, 10)
                             From " & _Global_BaseBk & "ZW_PermisosVsUsuarios
                             Where CodUsuario = '" & FUNCIONARIO & "' And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega'))
-                            Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')) And 
+                            Or (EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')) And 
                             (EMPRESA+KOSU+KOBO In (Select EMPRESA+KOSU+KOBO From TABBOPR Where KOPR = '" & _Codigo & "'))"
 
         Else
@@ -140,13 +140,13 @@ Public Class Frm_Formulario_Cantidad_Stock_X_Bodega
 
                 Consulta_sql = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* 
                             From TABBO
-                            Where EMPRESA = '" & ModEmpresa & "' And EMPRESA+KOSU+KOBO In (Select EMPRESA+KOSU+KOBO From TABBOPR Where KOPR = '" & _Codigo & "')"
+                            Where EMPRESA = '" & Mod_Empresa & "' And EMPRESA+KOSU+KOBO In (Select EMPRESA+KOSU+KOBO From TABBOPR Where KOPR = '" & _Codigo & "')"
 
             Else
 
                 Consulta_sql = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* 
                                 From TABBO
-                                Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & _Sucursal & "' 
+                                Where EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & _Sucursal & "' 
                                 And EMPRESA+KOSU+KOBO In (Select EMPRESA+KOSU+KOBO From TABBOPR Where KOPR = '" & _Codigo & "')"
 
             End If
@@ -160,10 +160,10 @@ Public Class Frm_Formulario_Cantidad_Stock_X_Bodega
         Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Bodegas, "", "Cod", False, False, "'")
 
         _Filtro = "And Empresa+Sucursal+Bodega In " & _Filtro
-        Dim _Orden_Bod = "ORDEN_BOD_" & ModEmpresa.Trim & ModSucursal.Trim
+        Dim _Orden_Bod = "ORDEN_BOD_" & Mod_Empresa.Trim & Mod_Sucursal.Trim
 
         Consulta_sql = My.Resources.Recursos_Cant_Stock_Bodega.Stock_productos_por_emp_suc_bod
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Codigo)
         Consulta_sql = Replace(Consulta_sql, "#Codigos#", _Filtro_Productos)
         Consulta_sql = Replace(Consulta_sql, "#Ud#", _Ud)
@@ -258,7 +258,7 @@ Public Class Frm_Formulario_Cantidad_Stock_X_Bodega
             Dim _Bodega = _Fila.Cells("Bodega").Value
 
             If Not String.IsNullOrEmpty(_Tido) Then
-                _St_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa, _Sucursal, _Bodega, _Codigo, _Ud, "STFI" & _Ud)
+                _St_Disponible = Fx_Stock_Disponible(_Tido, Mod_Empresa, _Sucursal, _Bodega, _Codigo, _Ud, "STFI" & _Ud)
                 If _St_Disponible < 0 Then _St_Disponible = 0
                 _Fila.Cells("ST_DISPONIBLE").Value = _St_Disponible
             End If

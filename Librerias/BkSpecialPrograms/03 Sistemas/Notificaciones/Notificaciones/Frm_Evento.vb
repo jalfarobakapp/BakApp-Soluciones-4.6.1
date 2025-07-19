@@ -521,7 +521,7 @@ Public Class Frm_Evento
                         Dim _Razon = _Row_Remota.Item("Razon").ToString.Trim
                         Dim _Revisar_Permiso = True
 
-                        If ModEmpresa <> _Empresa Then
+                        If Mod_Empresa <> _Empresa Then
 
                             MessageBoxEx.Show(Me, "Este permiso corresponde a la empresa " & _Empresa & " - " & _Razon & vbCrLf &
                                               "Debe cambiarse de modalidad y seleccionar la empresa para dar el permiso", "Permiso desde otra empresa",

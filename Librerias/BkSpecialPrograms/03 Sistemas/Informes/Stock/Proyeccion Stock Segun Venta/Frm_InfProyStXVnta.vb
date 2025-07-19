@@ -150,7 +150,7 @@ Public Class Frm_InfProyStXVnta
         Consulta_sql = Replace(Consulta_sql, "#MesesProyeccion#", Input_MesesProyeccion.Value)
         Consulta_sql = Replace(Consulta_sql, "#MesesEstudio#", Input_MesesEstudio.Value)
         Consulta_sql = Replace(Consulta_sql, "#TblPs#", _NombreTablaPaso)
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
         Consulta_sql = Replace(Consulta_sql, "--Update" & _NombreTablaPaso & "CondicionExtraordinaria", _CondicionExtraordinaria)
         Consulta_sql = Replace(Consulta_sql, "--#CondicionAdicional#", _CondicionAdicional)

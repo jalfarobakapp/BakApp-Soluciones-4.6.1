@@ -568,13 +568,22 @@ Public Class Frm_Demonio_04_Conf_Impr_X_Funcionarios
 
             _IdMaeedo = _RowDocumento_Pruebas.Item("IDMAEEDO")
 
-            Dim _Impresion_Pruebas = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo, True,
+            'Dim _Impresion_Pruebas = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo, True,
+            '                                                        False, _Impresora, False, 0, False, "")
+
+            Dim _Mensaje As LsValiciones.Mensajes
+
+            _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo, True,
                                                                     False, _Impresora, False, 0, False, "")
 
-            If Not String.IsNullOrEmpty(_Impresion_Pruebas) Then
-                MessageBoxEx.Show(Me, _Impresion_Pruebas, "Problema",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            If Not _Mensaje.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
+
+            'If Not String.IsNullOrEmpty(_Impresion_Pruebas) Then
+            '    MessageBoxEx.Show(Me, _Impresion_Pruebas, "Problema",
+            '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            'End If
 
         Else
             Return
@@ -685,7 +694,7 @@ Public Class Frm_Demonio_04_Conf_Impr_X_Funcionarios
         End If
 
 
-        Dim _Sql_Filtro_Condicion_Extra = "And INACTIVO = 0 And KOFU IN (Select KOFU From TABFUEM Where EMPRESA = '" & ModEmpresa & "')"
+        Dim _Sql_Filtro_Condicion_Extra = "And INACTIVO = 0 And KOFU IN (Select KOFU From TABFUEM Where EMPRESA = '" & Mod_Empresa & "')"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 

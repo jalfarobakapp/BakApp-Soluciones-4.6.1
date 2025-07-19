@@ -556,7 +556,7 @@ Public Class Frm_Formulario_Observaciones
             If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad", "Obliga_Transportista") Then
 
                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad 
-                                Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido2 & "'"
+                                Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & Mod_Modalidad & "' And TipoDoc = '" & _Tido2 & "'"
                 Dim _Row_Formato_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 If Not IsNothing(_Row_Formato_Modalidad) Then

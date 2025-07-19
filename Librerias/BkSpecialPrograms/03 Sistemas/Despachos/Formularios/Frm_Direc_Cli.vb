@@ -138,7 +138,7 @@ Public Class Frm_Direc_Cli
                             From " & _Global_BaseBk & "Zw_Despachos_Configuracion 
                             Left Join " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Tvta On Tvta.Tabla = 'SIS_DESPACHO_TIPO_VENTA' And Tvta.CodigoTabla = Tipo_Venta_X_Defecto
                             Left Join TABRETI On KORETI = Transportista_X_Defecto
-                            Where Empresa = '" & ModEmpresa & "'"
+                            Where Empresa = '" & Mod_Empresa & "'"
         _Row_Conf_Despacho = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Not IsNothing(_Row_Conf_Despacho) Then

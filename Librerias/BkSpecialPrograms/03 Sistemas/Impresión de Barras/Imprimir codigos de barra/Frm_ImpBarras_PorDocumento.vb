@@ -378,7 +378,7 @@ Public Class Frm_ImpBarras_PorDocumento
             Dim _Mod As New Clas_Modalidades
 
             _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+            _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
             Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 

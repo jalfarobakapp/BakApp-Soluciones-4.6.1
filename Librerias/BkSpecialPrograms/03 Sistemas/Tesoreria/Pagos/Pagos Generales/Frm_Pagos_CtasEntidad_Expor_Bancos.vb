@@ -41,7 +41,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             _Tamodp = 1
         End If
 
-        Consulta_Sql = "Select * From TABCJ Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' and KOCJ = '" & ModCaja & "'"
+        Consulta_Sql = "Select * From TABCJ Where EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' and KOCJ = '" & Mod_Caja & "'"
         _Row_Caja = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
         Sb_Color_Botones_Barra(Bar1)
@@ -50,7 +50,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
     Private Sub Frm_Pagos_CtasEntidad_Expor_Bancos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Me.Text = "LEVANTAMIENTO DE PAGOS MASIVAMENTE, CAJA: " & ModCaja & " - " & _Row_Caja.Item("NOKOCJ").ToString.Trim
+        Me.Text = "LEVANTAMIENTO DE PAGOS MASIVAMENTE, CAJA: " & Mod_Caja & " - " & _Row_Caja.Item("NOKOCJ").ToString.Trim
 
         ' Desarrollos 19-10-2020
 
@@ -238,9 +238,9 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             .Item("Id") = _Id
             .Item("Chk") = False
             .Item("IDMAEDPCE") = 0
-            .Item("EMPRESA") = ModEmpresa
-            .Item("SUREDP") = ModSucursal
-            .Item("CJREDP") = ModCaja
+            .Item("EMPRESA") = Mod_Empresa
+            .Item("SUREDP") = Mod_Sucursal
+            .Item("CJREDP") = Mod_Caja
 
             .Item("TIDP") = String.Empty
             .Item("NUDP") = String.Empty
@@ -267,7 +267,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             .Item("KOTU") = 1
             .Item("KOFUDP") = FUNCIONARIO
             .Item("KOTNDP") = RutEmpresa
-            .Item("SUTNDP") = ModCaja
+            .Item("SUTNDP") = Mod_Caja
 
             .Item("NUTRANSMI") = String.Empty
             .Item("DOCUENANTI") = String.Empty
@@ -657,7 +657,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
         '    _Campo_SUENDOFI = String.Empty
         'End If
 
-        'Dim _Otro_Filtro = "And Edo.EMPRESA='" & ModEmpresa & "' And Edo.TIDO IN ('NVV','RES','PRO') And Edo.ESDO Not In ('C','N') And" & vbCrLf &
+        'Dim _Otro_Filtro = "And Edo.EMPRESA='" & Mod_Empresa & "' And Edo.TIDO IN ('NVV','RES','PRO') And Edo.ESDO Not In ('C','N') And" & vbCrLf &
         '                   "Not Exists (Select * From MAEDPCE Where MAEDPCE.ARCHIRSD = 'MAEEDO' And MAEDPCE.IDRSD = Edo.IDMAEEDO)" & _MontoExacto
 
         'Dim _CodPagador As String
@@ -672,7 +672,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
         'End If
 
         'Consulta_Sql = My.Resources._24_Recursos.SQLQuery_Buscar_Docmuento
-        'Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+        'Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
         'Consulta_Sql = Replace(Consulta_Sql, "#CantidadDoc#", 1000)
         'Consulta_Sql = Replace(Consulta_Sql, "#TipoDocumento#", _Filtro_Documentos)
         'Consulta_Sql = Replace(Consulta_Sql, "#NroDocumento#", "")
@@ -680,7 +680,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
         'Consulta_Sql = Replace(Consulta_Sql, "#Fecha#", _Filtro_Fechas)
         'Consulta_Sql = Replace(Consulta_Sql, "#Estado#", "")
         'Consulta_Sql = Replace(Consulta_Sql, "#Funcionario#", "")
-        'Consulta_Sql = Replace(Consulta_Sql, "#SucursalDocumento#", "--And Edo.SUDO = '" & ModSucursal & "'")
+        'Consulta_Sql = Replace(Consulta_Sql, "#SucursalDocumento#", "--And Edo.SUDO = '" & Mod_Sucursal & "'")
         'Consulta_Sql = Replace(Consulta_Sql, "#Producto#", "")
         'Consulta_Sql = Replace(Consulta_Sql, "#Orden#", "Order by IDMAEEDO Desc")
 
@@ -775,7 +775,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
         End If
 
         Consulta_Sql = My.Resources._24_Recursos.SQLQuery_Buscar_Docmuento
-        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
         Consulta_Sql = Replace(Consulta_Sql, "#CantidadDoc#", 1000)
         Consulta_Sql = Replace(Consulta_Sql, "#TipoDocumento#", _Filtro_Documentos)
         Consulta_Sql = Replace(Consulta_Sql, "#NroDocumento#", "")
@@ -783,7 +783,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Consulta_Sql = Replace(Consulta_Sql, "#Fecha#", _Filtro_Fechas)
         Consulta_Sql = Replace(Consulta_Sql, "#Estado#", "")
         Consulta_Sql = Replace(Consulta_Sql, "#Funcionario#", "")
-        Consulta_Sql = Replace(Consulta_Sql, "#SucursalDocumento#", "--And Edo.SUDO = '" & ModSucursal & "'")
+        Consulta_Sql = Replace(Consulta_Sql, "#SucursalDocumento#", "--And Edo.SUDO = '" & Mod_Sucursal & "'")
         Consulta_Sql = Replace(Consulta_Sql, "#Producto#", "")
         Consulta_Sql = Replace(Consulta_Sql, "#Orden#", "Order by IDMAEEDO Desc")
 
@@ -1135,7 +1135,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Dim _Levantados = 0
         Dim _Cl_Pagar As New Clas_Pagar
 
-        If MessageBoxEx.Show(Me, "¿Esta seguro de levantar los registros a la caja: " & ModCaja & " - " & _Row_Caja.Item("NOKOCJ").ToString.Trim & " ?", "Levantar registros",
+        If MessageBoxEx.Show(Me, "¿Esta seguro de levantar los registros a la caja: " & Mod_Caja & " - " & _Row_Caja.Item("NOKOCJ").ToString.Trim & " ?", "Levantar registros",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
             For Each _Fila As DataGridViewRow In Grilla_Maedpce.Rows
@@ -1848,7 +1848,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
                     Consulta_Sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,NOKOEN" & vbCrLf &
                                    "From MAEEDO WITH (NOLOCK)" & vbCrLf &
                                    "Left Join MAEEN On KOEN = ENDO And SUEN = SUENDO" & vbCrLf &
-                                   "Where EMPRESA = '" & ModEmpresa & "' And ENDO In " & _FiltroEndo & " And TIDO In ('NVV','RES','PRO') And ESDO Not In ('C','N')" & vbCrLf &
+                                   "Where EMPRESA = '" & Mod_Empresa & "' And ENDO In " & _FiltroEndo & " And TIDO In ('NVV','RES','PRO') And ESDO Not In ('C','N')" & vbCrLf &
                                    "And NOT EXISTS (SELECT * FROM MAEDPCE WHERE MAEDPCE.ARCHIRSD = 'MAEEDO' AND MAEDPCE.IDRSD = MAEEDO.IDMAEEDO) And VABRDO = " & De_Num_a_Tx_01(_Vadp, False, 5)
                     Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 

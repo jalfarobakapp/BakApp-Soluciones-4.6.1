@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Remotas_Lista_Permisos_Solicitados
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -24,9 +24,9 @@ Partial Class Frm_Remotas_Lista_Permisos_Solicitados
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Remotas_Lista_Permisos_Solicitados))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
@@ -106,7 +106,7 @@ Partial Class Frm_Remotas_Lista_Permisos_Solicitados
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 0
-        Me.GroupPanel1.Text = "Para hacer gestión haga doble clic sobre la fila seleccionada"
+        Me.GroupPanel1.Text = "Para hacer gestiÃ³n haga doble clic sobre la fila seleccionada"
         '
         'ContextMenuBar1
         '
@@ -165,7 +165,7 @@ Partial Class Frm_Remotas_Lista_Permisos_Solicitados
         Me.LabelItem2.PaddingLeft = 10
         Me.LabelItem2.PaddingTop = 1
         Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem2.Text = "Información adicional"
+        Me.LabelItem2.Text = "InformaciÃ³n adicional"
         '
         'Btn_Ver_deuda_pendiente
         '
@@ -186,23 +186,23 @@ Partial Class Frm_Remotas_Lista_Permisos_Solicitados
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
@@ -210,14 +210,14 @@ Partial Class Frm_Remotas_Lista_Permisos_Solicitados
         Me.Grilla.MultiSelect = False
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla.Size = New System.Drawing.Size(990, 313)
         Me.Grilla.TabIndex = 1
@@ -308,7 +308,7 @@ Partial Class Frm_Remotas_Lista_Permisos_Solicitados
         '
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 117
-        Me.GroupPanel2.Text = "Información adicional de la línea activa"
+        Me.GroupPanel2.Text = "InformaciÃ³n adicional de la lÃ­nea activa"
         '
         'TableLayoutPanel4
         '
@@ -364,7 +364,7 @@ Partial Class Frm_Remotas_Lista_Permisos_Solicitados
         Me.LabelX1.Size = New System.Drawing.Size(222, 16)
         Me.LabelX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.LabelX1.TabIndex = 86
-        Me.LabelX1.Text = "Descripción del permiso"
+        Me.LabelX1.Text = "DescripciÃ³n del permiso"
         '
         'Lbl_Descripcion_Adicional
         '
@@ -490,7 +490,7 @@ Partial Class Frm_Remotas_Lista_Permisos_Solicitados
         Me.Btn_Cambiar_Modalidad.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Cambiar_Modalidad.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Cambiar_Modalidad.Image = CType(resources.GetObject("Btn_Cambiar_Modalidad.Image"), System.Drawing.Image)
-        Me.Btn_Cambiar_Modalidad.Location = New System.Drawing.Point(12, 6)
+        Me.Btn_Cambiar_Modalidad.Location = New System.Drawing.Point(871, 12)
         Me.Btn_Cambiar_Modalidad.Name = "Btn_Cambiar_Modalidad"
         Me.Btn_Cambiar_Modalidad.Size = New System.Drawing.Size(137, 23)
         Me.Btn_Cambiar_Modalidad.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -498,6 +498,7 @@ Partial Class Frm_Remotas_Lista_Permisos_Solicitados
         Me.Btn_Cambiar_Modalidad.TabStop = False
         Me.Btn_Cambiar_Modalidad.Text = "Empresa/Modalidad"
         Me.Btn_Cambiar_Modalidad.Tooltip = "Cambiar Sucursal/Modalidad"
+        Me.Btn_Cambiar_Modalidad.Visible = False
         '
         'Lbl_Empresa
         '
@@ -507,9 +508,9 @@ Partial Class Frm_Remotas_Lista_Permisos_Solicitados
         '
         Me.Lbl_Empresa.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Empresa.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Empresa.Location = New System.Drawing.Point(155, 6)
+        Me.Lbl_Empresa.Location = New System.Drawing.Point(12, 6)
         Me.Lbl_Empresa.Name = "Lbl_Empresa"
-        Me.Lbl_Empresa.Size = New System.Drawing.Size(375, 23)
+        Me.Lbl_Empresa.Size = New System.Drawing.Size(518, 23)
         Me.Lbl_Empresa.TabIndex = 127
         Me.Lbl_Empresa.Text = "Empresa..."
         '
@@ -526,7 +527,7 @@ Partial Class Frm_Remotas_Lista_Permisos_Solicitados
         Me.Chk_Mis_Permisos.Size = New System.Drawing.Size(218, 23)
         Me.Chk_Mis_Permisos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Mis_Permisos.TabIndex = 128
-        Me.Chk_Mis_Permisos.Text = "Mostrar solo los permisos enviados a mí"
+        Me.Chk_Mis_Permisos.Text = "Mostrar solo los permisos enviados a mÃ­"
         Me.Chk_Mis_Permisos.Visible = False
         '
         'Frm_Remotas_Lista_Permisos_Solicitados

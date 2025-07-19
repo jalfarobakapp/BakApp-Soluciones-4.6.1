@@ -20,7 +20,7 @@ CREATE TABLE [dbo].[Zw_Stk_Tickets_Producto](
     [Diferencia]        [float]			NOT NULL DEFAULT (0),
     [FechaRev]			[datetime]		NULL,
 	[Stfi1]				[float]			NOT NULL DEFAULT (0),
-	[Stfi2]				[float]			NOT NULL DEFAULT (0),		
+	[Stfi2]				[float]			NOT NULL DEFAULT (0),
 	[RevInventario]		[bit]			NOT NULL DEFAULT (0),
 	[AjusInventario]	[bit]			NOT NULL DEFAULT (0),
 	[SobreStock]		[bit]			NOT NULL DEFAULT (0),

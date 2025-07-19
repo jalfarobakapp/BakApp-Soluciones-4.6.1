@@ -149,7 +149,7 @@ Public Class Frm_Sol_Recom_Compra_Pr
 
             Consulta_sql = "Select Scom.*,TABFU.NOKOFU From " & _Global_BaseBk & "Zw_Prod_SolCompra Scom
                             Left Join TABFU On KOFU = Scom.CodFun_Solicita
-                            Where Empresa = '" & ModEmpresa & "' And Codigo = '" & _Codigo & "' And Para_Stock = 1 And Estado = 'PDT'"
+                            Where Empresa = '" & Mod_Empresa & "' And Codigo = '" & _Codigo & "' And Para_Stock = 1 And Estado = 'PDT'"
             Dim _Row_Solicitado As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If Not IsNothing(_Row_Solicitado) Then

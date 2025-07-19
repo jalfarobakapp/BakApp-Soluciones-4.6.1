@@ -38,9 +38,9 @@ Public Class Cl_OrdenServicio
             .Item("Nro_Ot") = "En proceso..."
             .Item("Fecha_Ingreso") = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
 
-            .Item("Empresa") = ModEmpresa
-            .Item("Sucursal") = ModSucursal
-            .Item("Bodega") = ModBodega
+            .Item("Empresa") = Mod_Empresa
+            .Item("Sucursal") = Mod_Sucursal
+            .Item("Bodega") = Mod_Bodega
 
             .Item("CodEntidad") = _RowEntidad.Item("KOEN")
             .Item("SucEntidad") = _RowEntidad.Item("SUEN")

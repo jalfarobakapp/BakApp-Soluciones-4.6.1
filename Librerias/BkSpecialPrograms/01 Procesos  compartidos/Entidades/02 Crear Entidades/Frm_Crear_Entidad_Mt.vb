@@ -1,5 +1,4 @@
 ﻿Imports System.Data.SqlClient
-Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Crear_Entidad_Mt
@@ -61,21 +60,21 @@ Public Class Frm_Crear_Entidad_Mt
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOLT AS Padre,'TABPP'+KOLT+' '+NOKOLT AS Hijo FROM TABPP WHERE TILT = 'C' ORDER BY Hijo "
         Cmb_Lcen.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
-        Cmb_Lcen.SelectedValue = ModListaPrecioCosto
+        Cmb_Lcen.SelectedValue = Mod_ListaPrecioCosto
 
 
         caract_combo(Cmb_Lven)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "SELECT KOLT AS Padre,'TABPP'+KOLT+' '+NOKOLT AS Hijo FROM TABPP WHERE TILT = 'P' ORDER BY Hijo "
         Cmb_Lven.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
-        Cmb_Lven.SelectedValue = ModListaPrecioVenta
+        Cmb_Lven.SelectedValue = Mod_ListaPrecioVenta
 
 
         caract_combo(Cmb_Kofuen)
         Consulta_sql = "Select '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "Select TABFU.KOFU AS Padre,TABFU.KOFU+'-'+NOKOFU AS Hijo" & vbCrLf &
                        "From TABFU" & vbCrLf &
-                       "Inner Join TABFUEM On TABFUEM.KOFU=TABFU.KOFU And TABFUEM.EMPRESA='" & ModEmpresa & "'" & vbCrLf &
+                       "Inner Join TABFUEM On TABFUEM.KOFU=TABFU.KOFU And TABFUEM.EMPRESA='" & Mod_Empresa & "'" & vbCrLf &
                        "Order BY Hijo"
         Cmb_Kofuen.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -89,7 +88,7 @@ Public Class Frm_Crear_Entidad_Mt
         Consulta_sql = "Select '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "Select TABFU.KOFU AS Padre,TABFU.KOFU+'-'+NOKOFU AS Hijo" & vbCrLf &
                        "From TABFU" & vbCrLf &
-                       "Inner Join TABFUEM On TABFUEM.KOFU=TABFU.KOFU And TABFUEM.EMPRESA='" & ModEmpresa & "'" & vbCrLf &
+                       "Inner Join TABFUEM On TABFUEM.KOFU=TABFU.KOFU And TABFUEM.EMPRESA='" & Mod_Empresa & "'" & vbCrLf &
                        "Order BY Hijo"
         Cmb_Cobrador.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -137,7 +136,7 @@ Public Class Frm_Crear_Entidad_Mt
 
         Dim _Creditos_Mod As DataTable
 
-        Consulta_sql = "SELECT CRTO,CRSD,CRCH,CRLT,CRPA FROM CONFIEST WITH (NOLOCK) WHERE MODALIDAD = '" & Modalidad & "'"
+        Consulta_sql = "SELECT CRTO,CRSD,CRCH,CRLT,CRPA FROM CONFIEST WITH (NOLOCK) WHERE MODALIDAD = '" & Mod_Modalidad & "'"
         _Creditos_Mod = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Txt_Crto.Text = _Creditos_Mod.Rows(0).Item("CRTO")
@@ -304,7 +303,7 @@ Public Class Frm_Crear_Entidad_Mt
 
         Consulta_sql = "Select KOEN,TIPOPAGO,EMISOR,CUENTA,RUT,NORUT,BLOQUEADA,Cast(Case When BLOQUEADA = 0 Then 1 Else 0 End As Bit) As Activo,SUCURSAL," &
                "TIPOPAGO +' - '+Isnull((Select top 1 NOKOENDP From TABENDP " &
-               "Where KOENDP = EMISOR And EMPRESA = '" & ModEmpresa & "' And TIDPEN = SUBSTRING(TIPOPAGO,1,2)),'') As BANCO" & vbCrLf &
+               "Where KOENDP = EMISOR And EMPRESA = '" & Mod_Empresa & "' And TIDPEN = SUBSTRING(TIPOPAGO,1,2)),'') As BANCO" & vbCrLf &
                "From MAEENCTA" & vbCrLf &
                "Where KOEN = '" & Txt_Koen.Text & "'"
 
@@ -1170,12 +1169,12 @@ Public Class Frm_Crear_Entidad_Mt
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
 
             If CrearEntidad Then
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Codigo: " & Txt_Koen.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Sucursal: " & Txt_Suen.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "CreaEntidad", "Rut: " & Txt_Rten.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
+                Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "CreaEntidad", "Codigo: " & Txt_Koen.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
+                Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "CreaEntidad", "Sucursal: " & Txt_Suen.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
+                Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "CreaEntidad", "Rut: " & Txt_Rten.Text, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
             Else
                 For Each _Log As String In _ListCamposModificados
-                    Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "ModEntidad", _Log, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
+                    Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "ModEntidad", _Log, "", "", Txt_Koen.Text.Trim, Txt_Suen.Text.Trim, False, FUNCIONARIO, False, 0, "")
                 Next
             End If
 
@@ -2192,7 +2191,7 @@ Public Class Frm_Crear_Entidad_Mt
         Dim _TipoPago = _Fila.Cells("_TIPOPAGO").FormattedValue
 
         Consulta_sql = "Select top 1 * From TABENDP" & vbCrLf &
-                       "Where EMPRESA = '" & ModEmpresa & "' And KOENDP = '" & Trim(_Koendp) & "' And TIDPEN = '" & _Tidepen & "'"
+                       "Where EMPRESA = '" & Mod_Empresa & "' And KOENDP = '" & Trim(_Koendp) & "' And TIDPEN = '" & _Tidepen & "'"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Fila.Cells("KOEN").Value = Txt_Koen.Text
@@ -2553,7 +2552,7 @@ Public Class Frm_Crear_Entidad_Mt
     Private Sub Btn_Puntos_Click(sender As Object, e As EventArgs) Handles Btn_Puntos.Click
 
         Dim _Cl_Puntos As New Cl_Puntos()
-        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(Mod_Empresa)
 
         If Not _Cl_Puntos.Zw_PtsVta_Configuracion.Activo Then
             MessageBoxEx.Show(Me, "Sistema de fidelización de clientes inactivo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -2753,7 +2752,7 @@ Public Class Frm_Crear_Entidad_Mt
         _Filtrar.Tabla = "TABIM"
         _Filtrar.Campo = "KOIM"
         _Filtrar.Descripcion = "NOKOIM"
-
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
         If _Filtrar.Fx_Filtrar(Nothing,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "",
                                Nothing, False, True) Then

@@ -78,7 +78,7 @@ Public Class Frm_Permisos_Usuario_Lista
         End If
 
         Dim _Mod As New Clas_Modalidades
-        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+        _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
         If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "Solo_Supervisores_Dan_Permisos") Then
 
@@ -347,7 +347,7 @@ Public Class Frm_Permisos_Usuario_Lista
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Configuracion Set 
                             Solo_Supervisores_Dan_Permisos = " & Convert.ToInt32(Rdb_Solo_Supervisores_Dan_Permisos.Checked) & " 
-                            Where Empresa = '" & ModEmpresa & "' And Modalidad = '  '"
+                            Where Empresa = '" & Mod_Empresa & "' And Modalidad = '  '"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             _Global_Row_Configuracion_General.Item("Solo_Supervisores_Dan_Permisos") = Rdb_Solo_Supervisores_Dan_Permisos.Checked

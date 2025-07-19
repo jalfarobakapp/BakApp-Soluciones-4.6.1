@@ -130,7 +130,7 @@ Public Class Frm_03_Sectores_Inv
         Dim Fm As New Frm_BuscarXProducto_Mt
         Fm.CodProveedor_productos = String.Empty
         Fm.Tipo_Busqueda_Productos = Fm.Buscar_En.Maestro_de_Productos
-        Fm.ListaDePrecio = ModListaPrecioVenta
+        Fm.ListaDePrecio = Mod_ListaPrecioVenta
         Fm.CodProveedor_productos = String.Empty
         Fm.MostrarOcultos = True
         Fm.BtnBusAlternativas.Visible = True

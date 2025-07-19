@@ -177,7 +177,7 @@ Public Class Frm_LiquidTJVcredito
         End If
 
         Consulta_sql = My.Resources.Recursos_Contabilidad.Nomina_de_tarjetas_de_credito_a_liquidacion
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Periodo#", _Percontact)
         Consulta_sql = Replace(Consulta_sql, "#Grancue#", _Grancue)
         Consulta_sql = Replace(Consulta_sql, "#Mayor#", _Mayor)
@@ -500,9 +500,9 @@ Public Class Frm_LiquidTJVcredito
         With NewFila
 
             .Item("IDMAEDPCE") = 0
-            .Item("EMPRESA") = ModEmpresa
-            .Item("SUREDP") = ModSucursal
-            .Item("CJREDP") = ModCaja
+            .Item("EMPRESA") = Mod_Empresa
+            .Item("SUREDP") = Mod_Sucursal
+            .Item("CJREDP") = Mod_Caja
 
             .Item("TIDP") = _Tidp
             .Item("NUDP") = _Nudp
@@ -528,7 +528,7 @@ Public Class Frm_LiquidTJVcredito
             .Item("KOTU") = 1
             .Item("KOFUDP") = FUNCIONARIO
             .Item("KOTNDP") = RutEmpresa
-            .Item("SUTNDP") = ModCaja
+            .Item("SUTNDP") = Mod_Caja
 
             .Item("ESASDP") = "A" ' ESTADO ASIGNACION DEL PAGO A = ASIGNADO A UN DOCUMENTO, P = NO ASIGNADO O PARCIALMENTE ASIGNADO, ES DECIR, SALDO A FAVOR DEL CLIENTE
             .Item("ESPGDP") = "P"

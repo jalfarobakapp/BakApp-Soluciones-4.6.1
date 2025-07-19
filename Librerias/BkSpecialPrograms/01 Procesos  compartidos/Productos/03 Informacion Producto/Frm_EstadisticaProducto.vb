@@ -165,7 +165,7 @@ Public Class Frm_EstadisticaProducto
         End If
 
         Consulta_sql = "Select EMPRESA+KOSU+KOBO As Codigo,1 As Chk,NOKOBO as Descripcion From TABBO" & vbCrLf &
-                       "Where EMPRESA+KOSU+KOBO = '" & ModEmpresa & ModSucursal & ModBodega & "'"
+                       "Where EMPRESA+KOSU+KOBO = '" & Mod_Empresa & Mod_Sucursal & Mod_Bodega & "'"
         _Tbl_Filtro_Bodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         _Codigo = Trim(Codigo)
@@ -457,7 +457,7 @@ Public Class Frm_EstadisticaProducto
 
         Consulta_sql = My.Resources.Recursos_Info_Producto.Ultimos_Movimientos_Del_Producto
 
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
         Consulta_sql = Replace(Consulta_sql, "#TipoDocumento#", _TipoDoc)
         Consulta_sql = Replace(Consulta_sql, "#NroDocumentos#", CmbCantFilas.Text)
@@ -670,7 +670,7 @@ Public Class Frm_EstadisticaProducto
         Dim FechaFin As String = Format(F2, "yyyyMMdd")
 
         Consulta_sql = My.Resources.Recursos_Info_Producto.SQLQuery_Estadisticas_por_producto
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Filtro_Codigos)
         Consulta_sql = Replace(Consulta_sql, "#Fecha#", FechaFin)
 
@@ -724,7 +724,7 @@ Public Class Frm_EstadisticaProducto
             Dim FStr As String = Format(Primerdiadelmes(Fecha), "yyyyMMdd")
 
             Consulta_sql += "Insert Into " & _TblPaso & "( Tipo,Sucursal,Bodega,Fecha, Mes_Palabra, Semana, Mes, Ano, SumTotalQtyUd1, SumTotalQtyUd2)" & vbCrLf &
-                            "Values ('V','" & ModSucursal & "','" & ModBodega & "','" & FStr & "'," & vbCrLf &
+                            "Values ('V','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & FStr & "'," & vbCrLf &
                             "DATENAME(month,'" & FStr & "')," & vbCrLf &
                             "DATEPART(week, '" & FStr & "')," & vbCrLf &
                             "MONTH('" & FStr & "')," & vbCrLf &
@@ -781,7 +781,7 @@ Public Class Frm_EstadisticaProducto
         Dim FechaFin As String = Format(F2, "yyyyMMdd")
 
         Consulta_sql = My.Resources.Recursos_Info_Producto.SQLQuery_Estadisticas_por_producto
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Filtro_Codigos)
         Consulta_sql = Replace(Consulta_sql, "#Fecha#", FechaFin)
 
@@ -835,7 +835,7 @@ Public Class Frm_EstadisticaProducto
         '    Dim FStr As String = Format(Primerdiadelmes(Fecha), "yyyyMMdd")
 
         '    Consulta_sql += "Insert Into " & _TblPaso & "( Tipo,Sucursal,Bodega,Fecha, Mes_Palabra, Semana, Mes, Ano, SumTotalQtyUd1, SumTotalQtyUd2)" & vbCrLf &
-        '                    "Values ('V','" & ModSucursal & "','" & ModBodega & "','" & FStr & "'," & vbCrLf &
+        '                    "Values ('V','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & FStr & "'," & vbCrLf &
         '                    "DATENAME(month,'" & FStr & "')," & vbCrLf &
         '                    "DATEPART(week, '" & FStr & "')," & vbCrLf &
         '                    "MONTH('" & FStr & "')," & vbCrLf &
@@ -866,7 +866,7 @@ Public Class Frm_EstadisticaProducto
                 FStr = _yyyy & numero_(_MM, 2) & numero_(_dd, 2)
 
                 Consulta_sql += "Insert Into " & _TblPaso & "( Tipo,Sucursal,Bodega,Fecha,Mes_Palabra,Semana,Dia,Mes,Ano,SumTotalQtyUd1,SumTotalQtyUd2)" & vbCrLf &
-                                "Values ('V','" & ModSucursal & "','" & ModBodega & "','" & FStr & "'," & vbCrLf &
+                                "Values ('V','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & FStr & "'," & vbCrLf &
                                 "DATENAME(month,'" & FStr & "')," & vbCrLf &
                                 "DATEPART(week, '" & FStr & "')," & vbCrLf &
                                 "DAY('" & FStr & "')," & vbCrLf &
@@ -1640,9 +1640,9 @@ Public Class Frm_EstadisticaProducto
 
             Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
             Fm.Pro_Tipo_Lista = "C"
-            Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
-            Fm.Pro_Sucursal_Busqueda = ModSucursal
-            Fm.Pro_Bodega_Busqueda = ModBodega
+            Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
+            Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+            Fm.Pro_Bodega_Busqueda = Mod_Bodega
             Fm.Txtdescripcion.Text = ""
             Fm.Pro_Mostrar_Info = False
             Fm.Pro_Actualizar_Precios = False
@@ -1933,7 +1933,7 @@ Public Class Frm_EstadisticaProducto
                         Sb_Actualizar_Estadisticas_Un_Solo_Producto(_Row_Producto)
                     End If
 
-                    Sb_Actualizar_Grafico_Movimiento_Stock(ModEmpresa)
+                    Sb_Actualizar_Grafico_Movimiento_Stock(Mod_Empresa)
 
                     'Fm_Espera.Close()
                     'Fm_Espera.Dispose()
@@ -1968,7 +1968,7 @@ Public Class Frm_EstadisticaProducto
     End Sub
 
     Private Sub Chk_Grafica_Ventas_Solo_Entidad_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles Chk_Grafica_Ventas_Solo_Entidad.CheckedChanged
-        Sb_Actualizar_Grafico_Movimiento_Stock(ModEmpresa)
+        Sb_Actualizar_Grafico_Movimiento_Stock(Mod_Empresa)
     End Sub
 
     Sub Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion()
@@ -2048,7 +2048,7 @@ Public Class Frm_EstadisticaProducto
 
             Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Info_Estadistica_X_Producto
             Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Filtro_Productos)
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
             Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
             Consulta_sql = Replace(Consulta_sql, "#FechaInicio#", Format(_Fecha_Inicio, "yyyyMMdd"))
             Consulta_sql = Replace(Consulta_sql, "#FechaTermino#", Format(_Fecha_Fin, "yyyyMMdd"))
@@ -2137,7 +2137,7 @@ Public Class Frm_EstadisticaProducto
 
             Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Info_Estadistica_X_Producto
             Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Filtro_Productos)
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
             Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
             Consulta_sql = Replace(Consulta_sql, "#FechaInicio#", Format(_Fecha_Inicio, "yyyyMMdd"))
             Consulta_sql = Replace(Consulta_sql, "#FechaTermino#", Format(_Fecha_Fin, "yyyyMMdd"))
@@ -2297,7 +2297,7 @@ Public Class Frm_EstadisticaProducto
             Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Info_Estadistica_X_Producto
 
             Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Filtro_Productos)
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
             Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
 
             Dim F1 As Date = DateAdd(DateInterval.Year, -2, FechaDelServidor)
@@ -2834,9 +2834,9 @@ Public Class Frm_EstadisticaProducto
 
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Tmp_Prm_Informes" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "'" & Space(1) &
-                           "And Grupo = 'Bodegas_Vta' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                           "And Grupo = 'Bodegas_Vta' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Mod_Modalidad & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
-            _Sql.Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Bodegas, _Informe, "Bodegas_Vta", Modalidad)
+            _Sql.Sb_Actualizar_Filtro_Tmp(_Tbl_Filtro_Bodegas, _Informe, "Bodegas_Vta", Mod_Modalidad)
 
         End If
 
@@ -2873,13 +2873,13 @@ Public Class Frm_EstadisticaProducto
         If Not _Actualizar Then
             Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
                            "Where Funcionario = '" & FUNCIONARIO & "' And Informe = '" & _Informe & "'" & Space(1) &
-                           "And Filtro = 'Bodegas_Vta' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "'"
+                           "And Filtro = 'Bodegas_Vta' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Mod_Modalidad & "'"
             _Tbl_Filtro_Bodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
 
         If Not CBool(_Tbl_Filtro_Bodegas.Rows.Count) Then
             Consulta_sql = "Select EMPRESA+KOSU+KOBO As Codigo,1 As Chk,NOKOBO as Descripcion From TABBO" & vbCrLf &
-                           "Where EMPRESA+KOSU+KOBO = '" & ModEmpresa & ModSucursal & ModBodega & "'"
+                           "Where EMPRESA+KOSU+KOBO = '" & Mod_Empresa & Mod_Sucursal & Mod_Bodega & "'"
             _Tbl_Filtro_Bodegas = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
 

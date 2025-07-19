@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_ConfTidoXModal
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -24,6 +24,8 @@ Partial Class Frm_ConfTidoXModal
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_ConfTidoXModal))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_ListaPrecioDoc = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Lbl_ListaPrecioDoc = New DevComponents.DotNetBar.LabelX()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.Btn_BuscarFormatoImpPDF_Quitar = New DevComponents.DotNetBar.ButtonX()
         Me.BuscarFormatoImpNormal_Quitar = New DevComponents.DotNetBar.ButtonX()
@@ -82,6 +84,8 @@ Partial Class Frm_ConfTidoXModal
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Txt_ListaPrecioDoc)
+        Me.GroupPanel1.Controls.Add(Me.Lbl_ListaPrecioDoc)
         Me.GroupPanel1.Controls.Add(Me.TableLayoutPanel2)
         Me.GroupPanel1.Controls.Add(Me.Btn_InfNumeracion)
         Me.GroupPanel1.Controls.Add(Me.TableLayoutPanel1)
@@ -125,6 +129,43 @@ Partial Class Frm_ConfTidoXModal
         Me.GroupPanel1.TabIndex = 1
         Me.GroupPanel1.Text = "Opciones para el documento"
         '
+        'Txt_ListaPrecioDoc
+        '
+        Me.Txt_ListaPrecioDoc.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_ListaPrecioDoc.Border.Class = "TextBoxBorder"
+        Me.Txt_ListaPrecioDoc.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_ListaPrecioDoc.ButtonCustom.Image = CType(resources.GetObject("Txt_ListaPrecioDoc.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_ListaPrecioDoc.ButtonCustom.Visible = True
+        Me.Txt_ListaPrecioDoc.ButtonCustom2.Image = CType(resources.GetObject("Txt_ListaPrecioDoc.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_ListaPrecioDoc.ButtonCustom2.Visible = True
+        Me.Txt_ListaPrecioDoc.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_ListaPrecioDoc.Font = New System.Drawing.Font("Courier New", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Txt_ListaPrecioDoc.ForeColor = System.Drawing.Color.Black
+        Me.Txt_ListaPrecioDoc.Location = New System.Drawing.Point(509, 32)
+        Me.Txt_ListaPrecioDoc.Name = "Txt_ListaPrecioDoc"
+        Me.Txt_ListaPrecioDoc.PreventEnterBeep = True
+        Me.Txt_ListaPrecioDoc.ReadOnly = True
+        Me.Txt_ListaPrecioDoc.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_ListaPrecioDoc.TabIndex = 101
+        Me.Txt_ListaPrecioDoc.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Lbl_ListaPrecioDoc
+        '
+        Me.Lbl_ListaPrecioDoc.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_ListaPrecioDoc.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_ListaPrecioDoc.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_ListaPrecioDoc.Location = New System.Drawing.Point(434, 30)
+        Me.Lbl_ListaPrecioDoc.Name = "Lbl_ListaPrecioDoc"
+        Me.Lbl_ListaPrecioDoc.Size = New System.Drawing.Size(69, 23)
+        Me.Lbl_ListaPrecioDoc.TabIndex = 100
+        Me.Lbl_ListaPrecioDoc.Text = "Lista precios"
+        '
         'TableLayoutPanel2
         '
         Me.TableLayoutPanel2.BackColor = System.Drawing.Color.Transparent
@@ -132,7 +173,7 @@ Partial Class Frm_ConfTidoXModal
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.54812!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.45188!))
         Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 45.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 63.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 66.0!))
         Me.TableLayoutPanel2.Controls.Add(Me.Btn_BuscarFormatoImpPDF_Quitar, 3, 1)
         Me.TableLayoutPanel2.Controls.Add(Me.BuscarFormatoImpNormal_Quitar, 3, 0)
         Me.TableLayoutPanel2.Controls.Add(Me.Btn_BuscarFormatoImpPDF, 2, 1)
@@ -155,36 +196,36 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoImpPDF_Quitar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoImpPDF_Quitar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoImpPDF_Quitar.Image = CType(resources.GetObject("Btn_BuscarFormatoImpPDF_Quitar.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoImpPDF_Quitar.Location = New System.Drawing.Point(552, 30)
+        Me.Btn_BuscarFormatoImpPDF_Quitar.Location = New System.Drawing.Point(549, 30)
         Me.Btn_BuscarFormatoImpPDF_Quitar.Name = "Btn_BuscarFormatoImpPDF_Quitar"
         Me.Btn_BuscarFormatoImpPDF_Quitar.Size = New System.Drawing.Size(28, 21)
         Me.Btn_BuscarFormatoImpPDF_Quitar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_BuscarFormatoImpPDF_Quitar.TabIndex = 101
-        Me.Btn_BuscarFormatoImpPDF_Quitar.Tooltip = "Seleccionar formato de impresión"
+        Me.Btn_BuscarFormatoImpPDF_Quitar.Tooltip = "Seleccionar formato de impresiÃ³n"
         '
         'BuscarFormatoImpNormal_Quitar
         '
         Me.BuscarFormatoImpNormal_Quitar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.BuscarFormatoImpNormal_Quitar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.BuscarFormatoImpNormal_Quitar.Image = CType(resources.GetObject("BuscarFormatoImpNormal_Quitar.Image"), System.Drawing.Image)
-        Me.BuscarFormatoImpNormal_Quitar.Location = New System.Drawing.Point(552, 3)
+        Me.BuscarFormatoImpNormal_Quitar.Location = New System.Drawing.Point(549, 3)
         Me.BuscarFormatoImpNormal_Quitar.Name = "BuscarFormatoImpNormal_Quitar"
         Me.BuscarFormatoImpNormal_Quitar.Size = New System.Drawing.Size(28, 21)
         Me.BuscarFormatoImpNormal_Quitar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.BuscarFormatoImpNormal_Quitar.TabIndex = 100
-        Me.BuscarFormatoImpNormal_Quitar.Tooltip = "Seleccionar formato de impresión"
+        Me.BuscarFormatoImpNormal_Quitar.Tooltip = "Seleccionar formato de impresiÃ³n"
         '
         'Btn_BuscarFormatoImpPDF
         '
         Me.Btn_BuscarFormatoImpPDF.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoImpPDF.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoImpPDF.Image = CType(resources.GetObject("Btn_BuscarFormatoImpPDF.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoImpPDF.Location = New System.Drawing.Point(507, 30)
+        Me.Btn_BuscarFormatoImpPDF.Location = New System.Drawing.Point(504, 30)
         Me.Btn_BuscarFormatoImpPDF.Name = "Btn_BuscarFormatoImpPDF"
         Me.Btn_BuscarFormatoImpPDF.Size = New System.Drawing.Size(39, 22)
         Me.Btn_BuscarFormatoImpPDF.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_BuscarFormatoImpPDF.TabIndex = 20
-        Me.Btn_BuscarFormatoImpPDF.Tooltip = "Seleccionar formato de impresión"
+        Me.Btn_BuscarFormatoImpPDF.Tooltip = "Seleccionar formato de impresiÃ³n"
         '
         'LabelX2
         '
@@ -219,12 +260,12 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoImpNormal.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoImpNormal.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoImpNormal.Image = CType(resources.GetObject("Btn_BuscarFormatoImpNormal.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoImpNormal.Location = New System.Drawing.Point(507, 3)
+        Me.Btn_BuscarFormatoImpNormal.Location = New System.Drawing.Point(504, 3)
         Me.Btn_BuscarFormatoImpNormal.Name = "Btn_BuscarFormatoImpNormal"
         Me.Btn_BuscarFormatoImpNormal.Size = New System.Drawing.Size(39, 21)
         Me.Btn_BuscarFormatoImpNormal.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_BuscarFormatoImpNormal.TabIndex = 18
-        Me.Btn_BuscarFormatoImpNormal.Tooltip = "Seleccionar formato de impresión"
+        Me.Btn_BuscarFormatoImpNormal.Tooltip = "Seleccionar formato de impresiÃ³n"
         '
         'Txt_Nombreformato
         '
@@ -240,7 +281,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_Nombreformato.Name = "Txt_Nombreformato"
         Me.Txt_Nombreformato.PreventEnterBeep = True
         Me.Txt_Nombreformato.ReadOnly = True
-        Me.Txt_Nombreformato.Size = New System.Drawing.Size(390, 22)
+        Me.Txt_Nombreformato.Size = New System.Drawing.Size(387, 22)
         Me.Txt_Nombreformato.TabIndex = 9
         '
         'Txt_NombreFormato_PDF
@@ -257,7 +298,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_NombreFormato_PDF.Name = "Txt_NombreFormato_PDF"
         Me.Txt_NombreFormato_PDF.PreventEnterBeep = True
         Me.Txt_NombreFormato_PDF.ReadOnly = True
-        Me.Txt_NombreFormato_PDF.Size = New System.Drawing.Size(390, 22)
+        Me.Txt_NombreFormato_PDF.Size = New System.Drawing.Size(387, 22)
         Me.Txt_NombreFormato_PDF.TabIndex = 10
         '
         'Btn_InfNumeracion
@@ -270,7 +311,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_InfNumeracion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_InfNumeracion.TabIndex = 19
         Me.Btn_InfNumeracion.Text = "<- como funciona?"
-        Me.Btn_InfNumeracion.Tooltip = "Información de como funciona la numeración"
+        Me.Btn_InfNumeracion.Tooltip = "InformaciÃ³n de como funciona la numeraciÃ³n"
         '
         'TableLayoutPanel1
         '
@@ -279,7 +320,7 @@ Partial Class Frm_ConfTidoXModal
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.72285!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.27715!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 43.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 67.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.Lbl_AvisoSaldoFolios, 1, 11)
         Me.TableLayoutPanel1.Controls.Add(Me.Input_AvisoSaldoFolios, 0, 11)
         Me.TableLayoutPanel1.Controls.Add(Me.Lbl_DiasAvisoExpiraFolio, 1, 10)
@@ -337,9 +378,9 @@ Partial Class Frm_ConfTidoXModal
         Me.Lbl_AvisoSaldoFolios.ForeColor = System.Drawing.Color.Black
         Me.Lbl_AvisoSaldoFolios.Location = New System.Drawing.Point(112, 289)
         Me.Lbl_AvisoSaldoFolios.Name = "Lbl_AvisoSaldoFolios"
-        Me.Lbl_AvisoSaldoFolios.Size = New System.Drawing.Size(390, 20)
+        Me.Lbl_AvisoSaldoFolios.Size = New System.Drawing.Size(387, 20)
         Me.Lbl_AvisoSaldoFolios.TabIndex = 101
-        Me.Lbl_AvisoSaldoFolios.Text = "Número de documentos que quedan para dar aviso por los folios DTE."
+        Me.Lbl_AvisoSaldoFolios.Text = "NÃºmero de documentos que quedan para dar aviso por los folios DTE."
         '
         'Input_AvisoSaldoFolios
         '
@@ -369,9 +410,9 @@ Partial Class Frm_ConfTidoXModal
         Me.Lbl_DiasAvisoExpiraFolio.ForeColor = System.Drawing.Color.Black
         Me.Lbl_DiasAvisoExpiraFolio.Location = New System.Drawing.Point(112, 263)
         Me.Lbl_DiasAvisoExpiraFolio.Name = "Lbl_DiasAvisoExpiraFolio"
-        Me.Lbl_DiasAvisoExpiraFolio.Size = New System.Drawing.Size(390, 20)
+        Me.Lbl_DiasAvisoExpiraFolio.Size = New System.Drawing.Size(387, 20)
         Me.Lbl_DiasAvisoExpiraFolio.TabIndex = 100
-        Me.Lbl_DiasAvisoExpiraFolio.Text = "Días de aviso para que expiren los folios DTE."
+        Me.Lbl_DiasAvisoExpiraFolio.Text = "DÃ­as de aviso para que expiren los folios DTE."
         '
         'LabelX16
         '
@@ -383,9 +424,9 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX16.ForeColor = System.Drawing.Color.Black
         Me.LabelX16.Location = New System.Drawing.Point(112, 237)
         Me.LabelX16.Name = "LabelX16"
-        Me.LabelX16.Size = New System.Drawing.Size(390, 20)
+        Me.LabelX16.Size = New System.Drawing.Size(387, 20)
         Me.LabelX16.TabIndex = 104
-        Me.LabelX16.Text = "Timbrar eléctronicamente siempre por Random ."
+        Me.LabelX16.Text = "Timbrar elÃ©ctronicamente siempre por Random ."
         '
         'Rdb_TimbrarXRandom
         '
@@ -410,24 +451,24 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoCorreo_Quitar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoCorreo_Quitar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoCorreo_Quitar.Image = CType(resources.GetObject("Btn_BuscarFormatoCorreo_Quitar.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoCorreo_Quitar.Location = New System.Drawing.Point(551, 211)
+        Me.Btn_BuscarFormatoCorreo_Quitar.Location = New System.Drawing.Point(548, 211)
         Me.Btn_BuscarFormatoCorreo_Quitar.Name = "Btn_BuscarFormatoCorreo_Quitar"
         Me.Btn_BuscarFormatoCorreo_Quitar.Size = New System.Drawing.Size(28, 20)
         Me.Btn_BuscarFormatoCorreo_Quitar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_BuscarFormatoCorreo_Quitar.TabIndex = 101
-        Me.Btn_BuscarFormatoCorreo_Quitar.Tooltip = "Seleccionar formato de impresión"
+        Me.Btn_BuscarFormatoCorreo_Quitar.Tooltip = "Seleccionar formato de impresiÃ³n"
         '
         'Btn_BuscarCorreo_Quitar
         '
         Me.Btn_BuscarCorreo_Quitar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarCorreo_Quitar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarCorreo_Quitar.Image = CType(resources.GetObject("Btn_BuscarCorreo_Quitar.Image"), System.Drawing.Image)
-        Me.Btn_BuscarCorreo_Quitar.Location = New System.Drawing.Point(551, 185)
+        Me.Btn_BuscarCorreo_Quitar.Location = New System.Drawing.Point(548, 185)
         Me.Btn_BuscarCorreo_Quitar.Name = "Btn_BuscarCorreo_Quitar"
         Me.Btn_BuscarCorreo_Quitar.Size = New System.Drawing.Size(28, 20)
         Me.Btn_BuscarCorreo_Quitar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_BuscarCorreo_Quitar.TabIndex = 101
-        Me.Btn_BuscarCorreo_Quitar.Tooltip = "Seleccionar formato de impresión"
+        Me.Btn_BuscarCorreo_Quitar.Tooltip = "Seleccionar formato de impresiÃ³n"
         '
         'Txt_NombreFormato_Correo
         '
@@ -443,7 +484,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_NombreFormato_Correo.Name = "Txt_NombreFormato_Correo"
         Me.Txt_NombreFormato_Correo.PreventEnterBeep = True
         Me.Txt_NombreFormato_Correo.ReadOnly = True
-        Me.Txt_NombreFormato_Correo.Size = New System.Drawing.Size(390, 22)
+        Me.Txt_NombreFormato_Correo.Size = New System.Drawing.Size(387, 22)
         Me.Txt_NombreFormato_Correo.TabIndex = 23
         '
         'LabelX14
@@ -470,7 +511,7 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX13.ForeColor = System.Drawing.Color.Black
         Me.LabelX13.Location = New System.Drawing.Point(112, 159)
         Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.Size = New System.Drawing.Size(390, 20)
+        Me.LabelX13.Size = New System.Drawing.Size(387, 20)
         Me.LabelX13.TabIndex = 24
         Me.LabelX13.Text = "Enviar correos despues de grabar documento"
         '
@@ -488,7 +529,7 @@ Partial Class Frm_ConfTidoXModal
         Me.Txt_Id_Correo.Name = "Txt_Id_Correo"
         Me.Txt_Id_Correo.PreventEnterBeep = True
         Me.Txt_Id_Correo.ReadOnly = True
-        Me.Txt_Id_Correo.Size = New System.Drawing.Size(390, 22)
+        Me.Txt_Id_Correo.Size = New System.Drawing.Size(387, 22)
         Me.Txt_Id_Correo.TabIndex = 22
         '
         'LabelX12
@@ -501,7 +542,7 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX12.ForeColor = System.Drawing.Color.Black
         Me.LabelX12.Location = New System.Drawing.Point(112, 133)
         Me.LabelX12.Name = "LabelX12"
-        Me.LabelX12.Size = New System.Drawing.Size(390, 20)
+        Me.LabelX12.Size = New System.Drawing.Size(387, 20)
         Me.LabelX12.TabIndex = 20
         Me.LabelX12.Text = "Obliga a ingresar transportista"
         '
@@ -565,7 +606,7 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX8.ForeColor = System.Drawing.Color.Black
         Me.LabelX8.Location = New System.Drawing.Point(112, 107)
         Me.LabelX8.Name = "LabelX8"
-        Me.LabelX8.Size = New System.Drawing.Size(390, 20)
+        Me.LabelX8.Size = New System.Drawing.Size(387, 20)
         Me.LabelX8.TabIndex = 19
         Me.LabelX8.Text = "Obliga grabar despacho cuando hay bodegas distintas en el detalle del documento"
         '
@@ -599,7 +640,7 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(149, 20)
         Me.LabelX4.TabIndex = 11
-        Me.LabelX4.Text = "Graba PDF automáticamente"
+        Me.LabelX4.Text = "Graba PDF automÃ¡ticamente"
         '
         'Sw_Grabar_Con_Huella
         '
@@ -702,12 +743,12 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarCorreo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarCorreo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarCorreo.Image = CType(resources.GetObject("Btn_BuscarCorreo.Image"), System.Drawing.Image)
-        Me.Btn_BuscarCorreo.Location = New System.Drawing.Point(508, 185)
+        Me.Btn_BuscarCorreo.Location = New System.Drawing.Point(505, 185)
         Me.Btn_BuscarCorreo.Name = "Btn_BuscarCorreo"
         Me.Btn_BuscarCorreo.Size = New System.Drawing.Size(31, 20)
         Me.Btn_BuscarCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_BuscarCorreo.TabIndex = 23
-        Me.Btn_BuscarCorreo.Tooltip = "Seleccionar formato de impresión"
+        Me.Btn_BuscarCorreo.Tooltip = "Seleccionar formato de impresiÃ³n"
         '
         'Sw_Guarda_PDF_Auto
         '
@@ -732,12 +773,12 @@ Partial Class Frm_ConfTidoXModal
         Me.Btn_BuscarFormatoCorreo.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_BuscarFormatoCorreo.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_BuscarFormatoCorreo.Image = CType(resources.GetObject("Btn_BuscarFormatoCorreo.Image"), System.Drawing.Image)
-        Me.Btn_BuscarFormatoCorreo.Location = New System.Drawing.Point(508, 211)
+        Me.Btn_BuscarFormatoCorreo.Location = New System.Drawing.Point(505, 211)
         Me.Btn_BuscarFormatoCorreo.Name = "Btn_BuscarFormatoCorreo"
         Me.Btn_BuscarFormatoCorreo.Size = New System.Drawing.Size(31, 20)
         Me.Btn_BuscarFormatoCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_BuscarFormatoCorreo.TabIndex = 24
-        Me.Btn_BuscarFormatoCorreo.Tooltip = "Seleccionar formato de impresión para archivo que se adjunta por correo"
+        Me.Btn_BuscarFormatoCorreo.Tooltip = "Seleccionar formato de impresiÃ³n para archivo que se adjunta por correo"
         '
         'Input_DiasAvisoExpiraFolio
         '
@@ -769,7 +810,7 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX7.Name = "LabelX7"
         Me.LabelX7.Size = New System.Drawing.Size(240, 23)
         Me.LabelX7.TabIndex = 8
-        Me.LabelX7.Text = "Formatos para salidas de impresión"
+        Me.LabelX7.Text = "Formatos para salidas de impresiÃ³n"
         '
         'Txt_Numero
         '
@@ -802,7 +843,7 @@ Partial Class Frm_ConfTidoXModal
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(89, 23)
         Me.LabelX3.TabIndex = 2
-        Me.LabelX3.Text = "Numeración"
+        Me.LabelX3.Text = "NumeraciÃ³n"
         '
         'Lbl_Tipo
         '
@@ -932,4 +973,6 @@ Partial Class Frm_ConfTidoXModal
     Friend WithEvents Input_DiasAvisoExpiraFolio As DevComponents.Editors.IntegerInput
     Friend WithEvents Lbl_AvisoSaldoFolios As DevComponents.DotNetBar.LabelX
     Friend WithEvents Input_AvisoSaldoFolios As DevComponents.Editors.IntegerInput
+    Friend WithEvents Txt_ListaPrecioDoc As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Lbl_ListaPrecioDoc As DevComponents.DotNetBar.LabelX
 End Class

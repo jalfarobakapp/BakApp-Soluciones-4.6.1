@@ -111,7 +111,7 @@ Public Class Frm_Desp_03_Preparar_Armar_Bulto
     '    Next
 
     '    Dim _Idmaeedo As Integer = _Sql.Fx_Trae_Dato("MAEEDO", "IDMAEEDO",
-    '                                                 "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'", True)
+    '                                                 "EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'", True)
 
     '    Consulta_Sql = "Select Codigo,Descripcion,Case Untrans When 1 then CantCUd1 else CantCUd2 End As Cantidad
     '                    From " & _Global_BaseBk & "Zw_Despachos_Doc_Det
@@ -338,7 +338,7 @@ Public Class Frm_Desp_03_Preparar_Armar_Bulto
         Next
 
         Dim _Idmaeedo As Integer = _Sql.Fx_Trae_Dato("MAEEDO", "IDMAEEDO",
-                                                     "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'", True)
+                                                     "EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'", True)
 
         Dim _Tbl_Detalle_Documento As DataTable
 

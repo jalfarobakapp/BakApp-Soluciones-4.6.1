@@ -71,9 +71,9 @@ Public Class Frm_Pagos_CtasEntidades_Expor_Banco_ImpExcel
         With NewFila
 
             .Item("IDMAEDPCE") = 0
-            .Item("EMPRESA") = ModEmpresa
-            .Item("SUREDP") = ModSucursal
-            .Item("CJREDP") = ModCaja
+            .Item("EMPRESA") = Mod_Empresa
+            .Item("SUREDP") = Mod_Sucursal
+            .Item("CJREDP") = Mod_Caja
 
             .Item("TIDP") = String.Empty
             .Item("NUDP") = String.Empty
@@ -100,7 +100,7 @@ Public Class Frm_Pagos_CtasEntidades_Expor_Banco_ImpExcel
             .Item("KOTU") = 1
             .Item("KOFUDP") = FUNCIONARIO
             .Item("KOTNDP") = RutEmpresa
-            .Item("SUTNDP") = ModCaja
+            .Item("SUTNDP") = Mod_Caja
 
             .Item("NUTRANSMI") = ""
             .Item("DOCUENANTI") = ""
@@ -179,9 +179,9 @@ Public Class Frm_Pagos_CtasEntidades_Expor_Banco_ImpExcel
 #Region "VARIABLES"
 
         Dim _Idmaedpce = 0
-        Dim _Empresa = ModEmpresa
-        Dim _Suredp = ModSucursal
-        Dim _Cjredp = ModCaja
+        Dim _Empresa = Mod_Empresa
+        Dim _Suredp = Mod_Sucursal
+        Dim _Cjredp = Mod_Caja
 
         Dim _Tidp = String.Empty
         Dim _Nudp = String.Empty
@@ -208,7 +208,7 @@ Public Class Frm_Pagos_CtasEntidades_Expor_Banco_ImpExcel
         Dim _Kotu = 1
         Dim _Kofudp = FUNCIONARIO
         Dim _Kotndp = RutEmpresa
-        Dim _Sutndp = ModCaja
+        Dim _Sutndp = Mod_Caja
 
         Dim _Nutransmi = String.Empty
         Dim _Docuenanti = String.Empty

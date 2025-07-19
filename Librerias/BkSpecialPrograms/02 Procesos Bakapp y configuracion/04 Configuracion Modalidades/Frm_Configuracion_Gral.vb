@@ -60,16 +60,16 @@ Public Class Frm_Configuracion_Gral
 
         If SpTab_DatosEmpresa.Visible Then
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & ModEmpresa & "'"
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & Mod_Empresa & "'"
             _Global_Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Global_Row_Empresa) Then
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Empresas (Empresa,Rut,Razon,Ncorto,Direccion,Pais,Ciudad,Giro)" & vbCrLf &
-                               "Select EMPRESA,RUT,RAZON,NCORTO,DIRECCION,PAIS,CIUDAD,GIRO From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+                               "Select EMPRESA,RUT,RAZON,NCORTO,DIRECCION,PAIS,CIUDAD,GIRO From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & ModEmpresa & "'"
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & Mod_Empresa & "'"
                 _Global_Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             End If
@@ -385,7 +385,7 @@ Public Class Frm_Configuracion_Gral
         Dim _Mod As New Clas_Modalidades
 
         _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
+        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
 
     End Sub
 
@@ -451,7 +451,7 @@ Public Class Frm_Configuracion_Gral
             Cmb_Nodo_Raiz_Asociados.SelectedValue = "0"
         End If
 
-        Consulta_sql = "Update CONFIEST Set TIDOEXCLU = '' Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'"
+        Consulta_sql = "Update CONFIEST Set TIDOEXCLU = '' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
         _Sql.Ej_consulta_IDU(Consulta_sql)
         Dim _Bodegas_Excluidas = String.Empty
 
@@ -462,7 +462,7 @@ Public Class Frm_Configuracion_Gral
         End If
 
         If Not String.IsNullOrEmpty(_Bodegas_Excluidas) Then
-            Consulta_sql = "Update CONFIEST Set TIDOEXCLU = '" & _Bodegas_Excluidas & "' Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'"
+            Consulta_sql = "Update CONFIEST Set TIDOEXCLU = '" & _Bodegas_Excluidas & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
@@ -564,7 +564,7 @@ Public Class Frm_Configuracion_Gral
                        ",NVIQuedaSUDOSucRecibe = " & Convert.ToInt32(Chk_NVIQuedaSUDOSucRecibe.Checked) & vbCrLf &
                        ",NuncaPickeaDocConRTUDesactivada = " & Convert.ToInt32(Chk_NuncaPickeaDocConRTUDesactivada.Checked) & vbCrLf &
                        ",RestringirVisualizacionDeDocumentos = " & Convert.ToInt32(Chk_RestringirVisualizacionDeDocumentos.Checked) & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "'"
+                       "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
@@ -718,7 +718,7 @@ Public Class Frm_Configuracion_Gral
     Private Sub Btn_ConfPuntosVta_Click(sender As Object, e As EventArgs) Handles Btn_ConfPuntosVta.Click
 
         Dim _Cl_Puntos As New Cl_Puntos()
-        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(ModEmpresa)
+        _Cl_Puntos.Zw_PtsVta_Configuracion = _Cl_Puntos.Fx_Llenar_Zw_PtsVta_Configuracion(Mod_Empresa)
 
         Dim Fm As New Frm_ConfPuntosVta
         Fm.ShowDialog(Me)

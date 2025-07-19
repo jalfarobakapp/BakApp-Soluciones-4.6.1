@@ -86,7 +86,7 @@ Public Class Frm_Vales_Caja_01_MarcarDoc
             Dim _Nudo As String = numero_(TxtNroDocumento.Text, 10)
 
             Dim _Idmaeedo As Integer = _Sql.Fx_Trae_Dato("MAEDDO", "IDMAEEDO",
-                                                 "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' AND NUDO = '" & _Nudo & "'", True)
+                                                 "EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' AND NUDO = '" & _Nudo & "'", True)
 
             If CBool(_Idmaeedo) Then
                 If Not Fx_BuscarSiExiste_Vale(_Idmaeedo) Then
@@ -172,7 +172,7 @@ Public Class Frm_Vales_Caja_01_MarcarDoc
 
             _Nudo = numero_(TxtNroDocumento.Text, 10)
             _Idmaeedo = _Sql.Fx_Trae_Dato("MAEDDO", "IDMAEEDO",
-                                                 "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' AND NUDO = '" & _Nudo & "'", True)
+                                                 "EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' AND NUDO = '" & _Nudo & "'", True)
         Else
             _Idmaeedo = 0
         End If

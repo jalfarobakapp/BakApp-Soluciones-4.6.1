@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Informe_Composicion_Stock
@@ -131,10 +131,10 @@ Public Class Frm_Informe_Composicion_Stock
                    ByVal Nombre_Tabla_Paso As String, _
                    Optional ByVal Correr_a_la_derecha As Boolean = False)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
         _Tabla_Paso = Nombre_Tabla_Paso
         '_SqlFiltro = SqlFiltro
         _Informe = Informe
@@ -228,7 +228,7 @@ Public Class Frm_Informe_Composicion_Stock
             OcultarEncabezadoGrilla(Grilla, True)
 
             .Columns("KOSU").Width = 40
-            .Columns("KOSU").HeaderText = "Cód."
+            .Columns("KOSU").HeaderText = "CÃ³d."
             .Columns("KOSU").Visible = True
 
             .Columns("SUCURSAL").Width = 230
@@ -294,7 +294,7 @@ Public Class Frm_Informe_Composicion_Stock
             OcultarEncabezadoGrilla(Grilla, True)
 
             .Columns("KOBO").Width = 40
-            .Columns("KOBO").HeaderText = "Cód."
+            .Columns("KOBO").HeaderText = "CÃ³d."
             .Columns("KOBO").Visible = True
 
             .Columns("BODEGA").Width = 230
@@ -366,7 +366,7 @@ Public Class Frm_Informe_Composicion_Stock
             OcultarEncabezadoGrilla(Grilla, True)
 
             .Columns("FMPR").Width = 40
-            .Columns("FMPR").HeaderText = "Cód."
+            .Columns("FMPR").HeaderText = "CÃ³d."
             .Columns("FMPR").Visible = True
 
             .Columns("SUPER_FAMILIA").Width = 200
@@ -430,7 +430,7 @@ Public Class Frm_Informe_Composicion_Stock
             OcultarEncabezadoGrilla(Grilla, True)
 
             .Columns("COD_OBSOLENCIA").Width = 40
-            .Columns("COD_OBSOLENCIA").HeaderText = "Cód."
+            .Columns("COD_OBSOLENCIA").HeaderText = "CÃ³d."
             .Columns("COD_OBSOLENCIA").Visible = True
 
             .Columns("OBSOLENCIA").Width = 230
@@ -599,7 +599,7 @@ Public Class Frm_Informe_Composicion_Stock
         Try
             _Kosu = _Fila.Cells("KOSU").Value
             _Sucursal = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", _
-                                         "EMPRESA = '" & ModEmpresa & "' AND KOSU = '" & _Kosu & "'", , , "Todas")
+                                         "EMPRESA = '" & Mod_Empresa & "' AND KOSU = '" & _Kosu & "'", , , "Todas")
 
             If _Kosu = "ZZZ" Then
                 _Kosu = Generar_Filtro_IN(_Tbl_Informe, "", "KOSU", False, False, "'")
@@ -691,7 +691,7 @@ Public Class Frm_Informe_Composicion_Stock
         Try
             _Kosu = _Fila.Cells("KOSU").Value
             _Sucursal = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", _
-                                         "EMPRESA = '" & ModEmpresa & "' AND KOSU = '" & _Kosu & "'", , , "Todas")
+                                         "EMPRESA = '" & Mod_Empresa & "' AND KOSU = '" & _Kosu & "'", , , "Todas")
 
             If _Kosu = "ZZZ" Then
                 _Kosu = String.Empty 'Generar_Filtro_IN(_Tbl_Informe, "", "KOSU", False, False, "'")

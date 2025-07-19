@@ -323,9 +323,9 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                         If _Cabeza = "Empresa" Or _Cabeza = "Sucursal" Or _Cabeza = "Bodega" Then
 
                             Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-                            Fm_b.Pro_Empresa = ModEmpresa
-                            Fm_b.Pro_Sucursal = NuloPorNro(_Fila.Cells("Sucursal").Value, ModSucursal)
-                            Fm_b.Pro_Bodega = NuloPorNro(_Fila.Cells("Bodega").Value, ModBodega)
+                            Fm_b.Pro_Empresa = Mod_Empresa
+                            Fm_b.Pro_Sucursal = NuloPorNro(_Fila.Cells("Sucursal").Value, Mod_Sucursal)
+                            Fm_b.Pro_Bodega = NuloPorNro(_Fila.Cells("Bodega").Value, Mod_Bodega)
                             Fm_b.RevisarPermisosBodega = False
                             Fm_b.Pedir_Permiso = False
                             Fm_b.ShowDialog(Me)

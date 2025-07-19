@@ -31,7 +31,7 @@ Public Class Mant_Productos
             With Fm
                 .CodProveedor_productos = String.Empty
                 .Tipo_Busqueda_Productos = Fm.Buscar_En.Maestro_de_Productos
-                .ListaDePrecio = ModListaPrecioVenta
+                .ListaDePrecio = Mod_ListaPrecioVenta
                 ' .BtnCrearProductos.Visible = True
                 .BtnEditarProducto.Visible = True
                 '.BtnEliminarProducto.Visible = True

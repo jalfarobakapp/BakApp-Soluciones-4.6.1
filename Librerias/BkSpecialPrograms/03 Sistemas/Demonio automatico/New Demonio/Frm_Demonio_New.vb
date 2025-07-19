@@ -28,6 +28,7 @@ Public Class Frm_Demonio_New
     Dim _Cl_Asistente_Compras As New Cl_Asistente_Compras
     Dim _Cl_Enviar_Doc_SinRecepcion As New Cl_Enviar_Doc_SinRecepcion
     Dim _Cl_NVVAutoExterna As New Cl_NVVAutoExterna
+    Dim _Cl_RecalculoPPP As New Cl_RecalculoPPP
 
     'Private _Timer_ImprimirDocumentos As Timer
     Private _Timer_ImprimirPicking As Timer
@@ -86,9 +87,9 @@ Public Class Frm_Demonio_New
 
         Me.Text = "Demonio para acciones automatizadas, V: [" & _Version_BkSpecialPrograms & "]"
         Lbl_Nombre_Equipo.Text = "Nombre equipo: " & _NombreEquipo
-        Lbl_Modalidad.Text = "Modalidad: " & Modalidad & ", Sucursal: " & ModSucursal & ", Bodega: " & ModBodega
+        Lbl_Modalidad.Text = "Modalidad: " & Mod_Modalidad & ", Sucursal: " & Mod_Sucursal & ", Bodega: " & Mod_Bodega
 
-        Lbl_Estatus.Text = "Empresa: " & ModEmpresa & ", Modalidad: " & Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _NombreEquipo & ", diablito = " & _Global_EsDiablito.ToString
+        Lbl_Estatus.Text = "Empresa: " & Mod_Empresa & ", Modalidad: " & Mod_Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _NombreEquipo & ", diablito = " & _Global_EsDiablito.ToString
 
 
         Dim _Grb_Programacion As New Grb_Programacion
@@ -155,6 +156,10 @@ Public Class Frm_Demonio_New
 
         If Fx_InsertarRegistroDeProgramacion("NVVAuto", _DProgramaciones.Sp_NVVExterna, "Notas de venta externas") Then
             _DProgramaciones.Sp_NVVExterna.Activo = True
+        End If
+
+        If Fx_InsertarRegistroDeProgramacion("RecalculoPPP", _DProgramaciones.Sp_RecalculoPPP, "Recalculo Precio Promedio Ponderado") Then
+            _DProgramaciones.Sp_RecalculoPPP.Activo = True
         End If
 
         Dim _CantidadFilas As Integer = Listv_Programaciones.Items.Count
@@ -242,6 +247,10 @@ Public Class Frm_Demonio_New
 
         If _DProgramaciones.Sp_NVVExterna.Activo Then
             Sb_Activar_ObjetosTimer(Timer_NVVAutoExterna, _DProgramaciones.Sp_NVVExterna)
+        End If
+
+        If _DProgramaciones.Sp_RecalculoPPP.Activo Then
+            Sb_Activar_ObjetosTimer(Timer_RecalculoPPP, _DProgramaciones.Sp_RecalculoPPP)
         End If
 
         Me.Refresh()
@@ -511,6 +520,11 @@ Public Class Frm_Demonio_New
 
                     _Descripcion = _CI_Programacion.Resumen
                     _IndexImagen = 15
+
+                Case "RecalculoPPP"
+
+                    _Descripcion = _CI_Programacion.Resumen
+                    _IndexImagen = 16
 
             End Select
 
@@ -947,7 +961,8 @@ Public Class Frm_Demonio_New
                 {Timer_Minimizar, Timer_Minimizar.Enabled},
                 {Timer_PrestaShopWeb, Timer_PrestaShopWeb.Enabled},
                 {Timer_NVVAutoExterna, Timer_NVVAutoExterna.Enabled},
-                {Timer_ImprimirDocumentos, Timer_ImprimirDocumentos.Enabled}
+                {Timer_ImprimirDocumentos, Timer_ImprimirDocumentos.Enabled},
+                {Timer_RecalculoPPP, Timer_RecalculoPPP.Enabled}
             }
 
 
@@ -1285,6 +1300,13 @@ Public Class Frm_Demonio_New
                 _Cl_FacturacionAuto.Nombre_Equipo = _NombreEquipo
                 _Cl_FacturacionAuto.Log_Registro = String.Empty
 
+                Dim _Empresa_Ori = Mod_Empresa
+                Dim _Modalidad_Ori = Mod_Modalidad
+
+                If RutEmpresa = "76095906-5" Then
+                    _Cl_FacturacionAuto.Sb_Cambiar_EmpSucBod()
+                End If
+
                 _Cl_FacturacionAuto.Sb_Traer_NVV_De_NVVAuto_A_Facturar()
                 _Cl_FacturacionAuto.Sb_Traer_NVV_A_Facturar()
                 _Cl_FacturacionAuto.Sb_Traer_NVV_De_Picking_A_Facturar()
@@ -1296,6 +1318,15 @@ Public Class Frm_Demonio_New
 
                 If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
                     registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
+                End If
+
+
+                If RutEmpresa = "76095906-5" Then
+                    Dim _Mod As New Clas_Modalidades
+                    _Mod.Sb_Actualiza_Formatos_X_Modalidad(False)
+                    _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "", False, _Empresa_Ori)
+                    _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, _Modalidad_Ori, False, _Empresa_Ori)
+                    _Mod.Sb_Actualizar_Variables_Modalidad(_Modalidad_Ori, False)
                 End If
 
                 RegistrarLog(registro)
@@ -1655,26 +1686,26 @@ Public Class Frm_Demonio_New
                         Dim _OCC_Star As Boolean = _Fila.Item("OCC_Star")
                         Dim _OCC_Prov As Boolean = _Fila.Item("OCC_Prov")
 
-                        Dim _ModalidadOld As String = Modalidad
+                        Dim _ModalidadOld As String = Mod_Modalidad
                         Dim _Mod As New Clas_Modalidades
 
-                        Modalidad = _Fila.Item("Modalidad")
+                        Mod_Modalidad = _Fila.Item("Modalidad")
 
                         _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-                        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+                        _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
                         _Mod.Sb_Actualiza_Formatos_X_Modalidad()
 
-                        If _NVI Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, False, True, False, False, True)
-                        If _OCC_Star Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, False, True, False)
-                        If _OCC_Prov Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Modalidad, True, False, True, False, False)
+                        If _NVI Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Mod_Modalidad, False, True, False, False, True)
+                        If _OCC_Star Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Mod_Modalidad, True, False, False, True, False)
+                        If _OCC_Prov Then _Cl_Asistente_Compras.Sb_Ejecutar(Me, Mod_Modalidad, True, False, True, False, False)
 
-                        Modalidad = _ModalidadOld
+                        Mod_Modalidad = _ModalidadOld
 
                         _Mod = New Clas_Modalidades
                         _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-                        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+                        _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
                         _Mod.Sb_Actualiza_Formatos_X_Modalidad()
 
                     End If
@@ -1757,6 +1788,38 @@ Public Class Frm_Demonio_New
 
 #End Region
 
+#Region "RECALCULO DEL PRECIO PROMEDIO PONDERADO"
+
+        If _Cl_RecalculoPPP.Ejecutar Then
+
+            If Not _Cl_RecalculoPPP.Procesando Then
+
+                _Cl_RecalculoPPP.Procesando = True
+
+                Dim registro As String = "Ejecutando tarea recalculo de PPP a las: " & DateTime.Now.ToString()
+
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                _Cl_RecalculoPPP.Log_Registro = String.Empty
+                _Cl_RecalculoPPP.Sb_RecalcularPPP(Me)
+
+                registro = "Tarea ejecutada (Recalculo del PPP) a las: " & DateTime.Now.ToString()
+                registro += _Cl_RecalculoPPP.Log_Registro & vbCrLf
+                RegistrarLog(registro)
+                MostrarRegistro(registro)
+
+                _Cl_RecalculoPPP.Procesando = False
+                _Cl_RecalculoPPP.Ejecutar = False
+
+                Sb_Activar_ObjetosTimer(Timer_RecalculoPPP, _DProgramaciones.Sp_RecalculoPPP)
+
+            End If
+
+        End If
+
+#End Region
+
         Timer_Ejecuciones.Start()
 
     End Sub
@@ -1812,6 +1875,12 @@ Public Class Frm_Demonio_New
     Private Sub Timer_ImprimirDocumentos_Tick(sender As Object, e As EventArgs) Handles Timer_ImprimirDocumentos.Tick
         If Fx_CumpleDiaSemana(_DProgramaciones.Sp_ColaImpDoc) Then
             _Cl_Imprimir_Documentos.Ejecutar = True
+        End If
+    End Sub
+
+    Private Sub Timer_RecalculoPPP_Tick(sender As Object, e As EventArgs) Handles Timer_RecalculoPPP.Tick
+        If Fx_CumpleDiaSemana(_DProgramaciones.Sp_RecalculoPPP) Then
+            _Cl_RecalculoPPP.Ejecutar = True
         End If
     End Sub
 End Class

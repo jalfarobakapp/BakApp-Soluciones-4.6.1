@@ -160,8 +160,8 @@ Public Class Frm_Stmp_ListadoXRutas
         _Condicion += vbCrLf & "And CONVERT(varchar, Enc." & Cmb_FiltroFecha.SelectedValue & ", 112) Between '" & Format(Dtp_FechaDesde.Value, "yyyyMMdd") & "' And '" & Format(Dtp_FechaHasta.Value, "yyyyMMdd") & "'"
 
         Consulta_sql = My.Resources.Recursos_WmsSgem.SQLQuery_Listado_Stmp_Rutas
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", ModSucursal)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+        Consulta_sql = Replace(Consulta_sql, "#Sucursal#", Mod_Sucursal)
         Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)
         'Consulta_sql = Replace(Consulta_sql, "Zw_Stmp_Enc", _Global_BaseBk & "Zw_Stmp_Enc")
         'Consulta_sql = Replace(Consulta_sql, "Zw_Demonio_FacAuto", _Global_BaseBk & "Zw_Demonio_FacAuto")
@@ -230,7 +230,7 @@ Public Class Frm_Stmp_ListadoXRutas
 
             .Columns("Nudo").Visible = True
             .Columns("Nudo").HeaderText = "Número"
-            .Columns("Nudo").Width = 70
+            .Columns("Nudo").Width = 80
             .Columns("Nudo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -730,11 +730,21 @@ Public Class Frm_Stmp_ListadoXRutas
                     _NombreFormato = String.Empty
                 End If
 
-                Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo,
+                'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo,
+                '                                         False, True, "", False, 0, False, _Subtido)
+
+                'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                '    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                '               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                'End If
+
+                Dim _Mensaje As LsValiciones.Mensajes
+
+                _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _IdMaeedo,
                                                          False, True, "", False, 0, False, _Subtido)
 
-                If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                If Not _Mensaje.EsCorrecto Then
+                    MessageBox.Show(Me, _Mensaje.Mensaje, "Problemas al Imprimir",
                                MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 End If
 

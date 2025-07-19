@@ -582,7 +582,7 @@ Public Class Frm_Menu
         Dim _Clas_Mod As New Clas_Modalidades
 
         _Global_Row_Configuracion_General = _Clas_Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-        _Global_Row_Configuracion_Estacion = _Clas_Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
+        _Global_Row_Configuracion_Estacion = _Clas_Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
 
         Dim _RowModalidad As DataRow = _Clas_Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "  ")
 
@@ -600,21 +600,17 @@ Public Class Frm_Menu
 
     Private Sub Btn_Configuracion_Estacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Configuracion_Estacion.Click
 
-        Dim _Modalidad As String = Modalidad
+        Dim _Modalidad As String = Mod_Modalidad
 
-        Dim _ModEmpresa = ModEmpresa
-        Dim _ModSucursal = ModSucursal
+        Dim _Mod_Empresa = Mod_Empresa
+        Dim _Mod_Sucursal = Mod_Sucursal
 
         Dim Fm As New Frm_Modalidades(False)
         Fm.Configuracion_Modalidad = True
+        Fm.Cmb_Modalidades.Enabled = False
         Fm.ControlBox = True
         Fm.ShowDialog(Me)
         Fm.Dispose()
-
-        'Dim NewPanel As Cntrl_Modalidad_Conf = Nothing
-        'NewPanel = New Cntrl_Modalidad_Conf()
-        'NewPanel.FmPrincipal = Me
-        'Me.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
     End Sub
 
@@ -684,7 +680,7 @@ Public Class Frm_Menu
         If Fx_Tiene_Permiso(Me, "Espr0015") Then
 
             Dim _Funcionario_Activo As String = FUNCIONARIO
-            Dim _Modalidad_Activa As String = Modalidad
+            Dim _Modalidad_Activa As String = Mod_Modalidad
             Dim _Nombre_Funcionario_Activo_ As String = Nombre_funcionario_activo
 
             Mnu_Compras.Enabled = False
@@ -705,7 +701,7 @@ Public Class Frm_Menu
         If Fx_Tiene_Permiso(Me, "Espr0016") Then
 
             Dim _Funcionario_Activo As String = FUNCIONARIO
-            Dim _Modalidad_Activa As String = Modalidad
+            Dim _Modalidad_Activa As String = Mod_Modalidad
             Dim _Nombre_Funcionario_Activo_ As String = Nombre_funcionario_activo
 
             Mnu_Ventas.Enabled = False
@@ -726,7 +722,7 @@ Public Class Frm_Menu
         If Fx_Tiene_Permiso(Me, "Espr0017") Then
 
             Dim _Funcionario_Activo As String = FUNCIONARIO
-            Dim _Modalidad_Activa As String = Modalidad
+            Dim _Modalidad_Activa As String = Mod_Modalidad
             Dim _Nombre_Funcionario_Activo_ As String = Nombre_funcionario_activo
 
             Dim NewPanel As Modulo_Lista_Precios_Costos = Nothing
@@ -748,7 +744,7 @@ Public Class Frm_Menu
         If Fx_Tiene_Permiso(Me, "Espr0018") Then
 
             Dim _Funcionario_Activo As String = FUNCIONARIO
-            Dim _Modalidad_Activa As String = Modalidad
+            Dim _Modalidad_Activa As String = Mod_Modalidad
             Dim _Nombre_Funcionario_Activo_ As String = Nombre_funcionario_activo
 
             Dim NewPanel As Modulo_Parametros = Nothing
@@ -770,7 +766,7 @@ Public Class Frm_Menu
         If Fx_Tiene_Permiso(Me, "Espr0019") Then
 
             Dim _Funcionario_Activo As String = FUNCIONARIO
-            Dim _Modalidad_Activa As String = Modalidad
+            Dim _Modalidad_Activa As String = Mod_Modalidad
             Dim _Nombre_Funcionario_Activo_ As String = Nombre_funcionario_activo
 
             Dim NewPanel As Sistema_Inventarios = Nothing
@@ -792,7 +788,7 @@ Public Class Frm_Menu
         If Fx_Tiene_Permiso(Me, "Espr0020") Then
 
             Dim _Funcionario_Activo As String = FUNCIONARIO
-            Dim _Modalidad_Activa As String = Modalidad
+            Dim _Modalidad_Activa As String = Mod_Modalidad
             Dim _Nombre_Funcionario_Activo_ As String = Nombre_funcionario_activo
 
             Dim NewPanel As Modulo_Informes = Nothing
@@ -814,7 +810,7 @@ Public Class Frm_Menu
         If Fx_Tiene_Permiso(Me, "Espr0021") Then
 
             Dim _Funcionario_Activo As String = FUNCIONARIO
-            Dim _Modalidad_Activa As String = Modalidad
+            Dim _Modalidad_Activa As String = Mod_Modalidad
             Dim _Nombre_Funcionario_Activo_ As String = Nombre_funcionario_activo
 
             Dim NewPanel As Modulo_Programas_Especiales = Nothing
@@ -854,7 +850,7 @@ Public Class Frm_Menu
         If Fx_Tiene_Permiso(Me, "Espr0022") Then
 
             Dim _Funcionario_Activo As String = FUNCIONARIO
-            Dim _Modalidad_Activa As String = Modalidad
+            Dim _Modalidad_Activa As String = Mod_Modalidad
             Dim _Nombre_Funcionario_Activo_ As String = Nombre_funcionario_activo
 
             Dim NewPanel As Modulo_Servicio_Tecnico = Nothing
@@ -876,7 +872,7 @@ Public Class Frm_Menu
         If Fx_Tiene_Permiso(Me, "Espr0023") Then
 
             Dim _Funcionario_Activo As String = FUNCIONARIO
-            Dim _Modalidad_Activa As String = Modalidad
+            Dim _Modalidad_Activa As String = Mod_Modalidad
             Dim _Nombre_Funcionario_Activo_ As String = Nombre_funcionario_activo
 
             Dim NewPanel As Modulo_Tesoreria = Nothing
@@ -899,14 +895,14 @@ Public Class Frm_Menu
 
         FUNCIONARIO = _Funcionario_Activo
         Nombre_funcionario_activo = _Nombre_Funcionario_Activo_
-        Modalidad = _Modalidad_Activa
+        Mod_Modalidad = _Modalidad_Activa
 
         Dim _Mod As New Clas_Modalidades
 
         _Mod.Sb_Actualiza_Formatos_X_Modalidad()
         '_Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Modalidad.General, "")
         '_Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Modalidad.Estacion, Modalidad)
-        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+        _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
         'Me.Text = "Sistema BakApp. Empresa :" & RazonEmpresa &
         '          ", Funcionario Activo: " & Trim(Nombre_funcionario_activo) &

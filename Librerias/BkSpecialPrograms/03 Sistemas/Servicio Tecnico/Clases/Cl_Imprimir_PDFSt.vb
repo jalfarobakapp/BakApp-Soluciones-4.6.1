@@ -173,7 +173,7 @@ Public Class Cl_Imprimir_PDFSt
                            "Left Outer Join MAEEN On EDO.ENDO = KOEN AND EDO.SUENDO = SUEN" & vbCrLf &
                            "Left Outer Join TABFU On KOFU = KOFUDO" & vbCrLf &
                            "Left Join MAEEDOOB OBS On OBS.IDMAEEDO = EDO.IDMAEEDO" & vbCrLf &
-                           "WHERE POTL.NUMOT='" & _Nro_Ot & "' AND POTL.EMPRESA = '" & ModEmpresa & "'"
+                           "WHERE POTL.NUMOT='" & _Nro_Ot & "' AND POTL.EMPRESA = '" & Mod_Empresa & "'"
             Dim _TblDocRela As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
             Dim _Row_DocRela As DataRow
 
@@ -229,7 +229,7 @@ Public Class Cl_Imprimir_PDFSt
 
                 Dim _Vendedor = _Row_DocRela.Item("VENDEDOR")
                 Dim _Sudo = _Row_DocRela.Item("SUDO")
-                Dim _Sucursal = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & ModEmpresa & "' AND KOSU = '" & _Sudo & "'")
+                Dim _Sucursal = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", "EMPRESA = '" & Mod_Empresa & "' AND KOSU = '" & _Sudo & "'")
                 Dim _Tidod = _Row_DocRela.Item("TIDOD")
                 Dim _Nudod = _Row_DocRela.Item("NUDOD")
                 Dim _Ocdo = _Row_DocRela.Item("OCDO")

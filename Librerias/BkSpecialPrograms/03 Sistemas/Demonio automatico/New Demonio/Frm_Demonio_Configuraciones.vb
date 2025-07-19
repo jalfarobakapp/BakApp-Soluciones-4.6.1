@@ -59,6 +59,7 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Chk_EnvDocSinRecep.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_ListasProgramadas.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
         AddHandler Chk_NVVAuto.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
+        AddHandler Chk_RecalculoPPP.CheckedChanged, AddressOf Chk_Habilitar_CheckedChanged
 
         AddHandler Sp_EnvioCorreo.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_ColaImpDoc.Click, AddressOf Sp_SuperTabItem_Click
@@ -78,6 +79,7 @@ Public Class Frm_Demonio_Configuraciones
         AddHandler Sp_AsistenteCompras.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_ListasProgramadas.Click, AddressOf Sp_SuperTabItem_Click
         AddHandler Sp_NVVAuto.Click, AddressOf Sp_SuperTabItem_Click
+        AddHandler Sp_RecalculoPPP.Click, AddressOf Sp_SuperTabItem_Click
 
         Input_DiasCOV.Enabled = Chk_COVCerrar.Checked
         Rdb_COV_FEmision.Enabled = Chk_COVCerrar.Checked
@@ -470,7 +472,7 @@ Public Class Frm_Demonio_Configuraciones
                 _Diariamente = True : _SucedeCada = True : _MinIntervalo = 2 : _MaxIntevalo = 2 : _TISegundos = True : _TIValorDefecto = "SS"
             Case "ArchivarDoc"
                 _Diariamente = True : _SucedeCada = True : _MinIntervalo = 30 : _MaxIntevalo = 30 : _TISegundos = True : _TIValorDefecto = "SS"
-            Case "ConsStock", "CierreDoc", "Prestashop_Total"
+            Case "ConsStock", "CierreDoc", "Prestashop_Total", "RecalculoPPP"
                 _Diariamente = True : _Semanalmente = True : _SucedeUnaVez = True : _SucedeCada = False
                 _MinIntervalo = 5 : _MaxIntevalo = 59 : _TIMinutos = True : _TIValorDefecto = ""
             Case "FacAuto", "NVVAuto"
@@ -560,10 +562,10 @@ Public Class Frm_Demonio_Configuraciones
 
         _Filtrar.Tabla = "CONFIEST"
         _Filtrar.Campo = "MODALIDAD"
-        _Filtrar.Descripcion = "MODALIDAD"
+        _Filtrar.Descripcion = "EMPRESA+'-'+MODALIDAD"
 
         If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And MODALIDAD <> '  '",
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & Mod_Empresa & "' And MODALIDAD <> '  '",
                                Nothing, False, True) Then
 
             Dim _Tbl_Transportista As DataTable = _Filtrar.Pro_Tbl_Filtro
@@ -572,7 +574,7 @@ Public Class Frm_Demonio_Configuraciones
 
             Dim _Modalidad = _Row.Item("Codigo").ToString.Trim
 
-            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad, "FCV", True)
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Mod_Empresa, _Modalidad, "FCV", True)
 
             If IsNothing(_RowFormato) Then
                 _Modalidad = String.Empty
@@ -792,53 +794,6 @@ Public Class Frm_Demonio_Configuraciones
                                       Chk_CierreDoc.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_CierreDoc.Checked, _Actualizar, "CierreDoc",, False)
 
-        '_Sql.Sb_Parametro_Informe_Sql(Chk_COVCerrar, "Demonio",
-        '                              Chk_COVCerrar.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Chk_COVCerrar.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasCOV, "Demonio",
-        '                              Input_DiasCOV.Name, Class_SQLite.Enum_Type._Double,
-        '                              Input_DiasCOV.Value, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Chk_NVICerrar, "Demonio",
-        '                              Chk_NVICerrar.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Chk_NVICerrar.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasNVI, "Demonio",
-        '                              Input_DiasNVI.Name, Class_SQLite.Enum_Type._Double,
-        '                              Input_DiasNVI.Value, _Actualizar, "CierreDoc",, False)
-
-        '_Sql.Sb_Parametro_Informe_Sql(Chk_NVVCerrar, "Demonio",
-        '                              Chk_NVVCerrar.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Chk_NVVCerrar.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasNVV, "Demonio",
-        '                              Input_DiasNVV.Name, Class_SQLite.Enum_Type._Double,
-        '                              Input_DiasNVV.Value, _Actualizar, "CierreDoc",, False)
-
-        '_Sql.Sb_Parametro_Informe_Sql(Rdb_NVV_FEmision, "Demonio",
-        '                              Rdb_NVV_FEmision.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Rdb_NVV_FEmision.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Rdb_NVV_FDespacho, "Demonio",
-        '                              Rdb_NVV_FDespacho.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Rdb_NVV_FDespacho.Checked, _Actualizar, "CierreDoc",, False)
-
-        '_Sql.Sb_Parametro_Informe_Sql(Chk_NVV_EnviaCorreo, "Demonio",
-        '                              Chk_NVV_EnviaCorreo.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Chk_NVV_EnviaCorreo.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasNVV_EnviaCorreo, "Demonio",
-        '                              Input_DiasNVV_EnviaCorreo.Name, Class_SQLite.Enum_Type._Double,
-        '                              Input_DiasNVV_EnviaCorreo.Value, _Actualizar, "CierreDoc",, False)
-
-
-        '_Sql.Sb_Parametro_Informe_Sql(Chk_OCICerrar, "Demonio",
-        '                              Chk_OCICerrar.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Chk_OCICerrar.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasOCI, "Demonio",
-        '                              Input_DiasOCI.Name, Class_SQLite.Enum_Type._Double,
-        '                              Input_DiasOCI.Value, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Chk_OCCCerrar, "Demonio",
-        '                              Chk_OCCCerrar.Name, Class_SQLite.Enum_Type._Boolean,
-        '                              Chk_OCCCerrar.Checked, _Actualizar, "CierreDoc",, False)
-        '_Sql.Sb_Parametro_Informe_Sql(Input_DiasOCC, "Demonio",
-        '                              Input_DiasOCC.Name, Class_SQLite.Enum_Type._Double,
-        '                              Input_DiasOCC.Value, _Actualizar, "CierreDoc",, False)
 
         'Facturación automatica
         _Sql.Sb_Parametro_Informe_Sql(Chk_FacAuto, "Demonio",
@@ -968,6 +923,11 @@ Public Class Frm_Demonio_Configuraciones
                                       Txt_NvvAuto_Modalidad.Name, Class_SQLite.Enum_Type._Text,
                                       Txt_NvvAuto_Modalidad.Text, _Actualizar, "NVVAuto",, False)
 
+        'Recalculo del Precio Promedio Ponderado
+        _Sql.Sb_Parametro_Informe_Sql(Chk_RecalculoPPP, "Demonio",
+                                      Chk_RecalculoPPP.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_RecalculoPPP.Checked, _Actualizar, "RecalculoPPP",, False)
+
     End Sub
 
     Private Sub Btn_Carpeta_Imagenes_Click(sender As Object, e As EventArgs) Handles Btn_Carpeta_Imagenes.Click
@@ -989,11 +949,11 @@ Public Class Frm_Demonio_Configuraciones
             Frm_Modalidad.Dispose()
 
             If MessageBoxEx.Show(Me, "¿Desea dejar a este funcionario permanentemente como usuario por defecto para la estación de trabajo?" & vbCrLf & vbCrLf &
-                                         "Usuario: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim & " Modalidad: " & Modalidad,
+                                         "Usuario: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim & " Modalidad: " & Mod_Modalidad,
                                          "Usuario por defecto", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set " &
-                               "Usuario_X_Defecto = '" & FUNCIONARIO & "', Modalidad_X_Defecto = '" & Modalidad & "'" & vbCrLf &
+                               "Usuario_X_Defecto = '" & FUNCIONARIO & "', Modalidad_X_Defecto = '" & Mod_Modalidad & "'" & vbCrLf &
                                "Where NombreEquipo = '" & _NombreEquipo & "'"
                 If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
@@ -1064,7 +1024,7 @@ Public Class Frm_Demonio_Configuraciones
 
             Dim _Modalidad = _Row.Item("Codigo").ToString.Trim
 
-            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, _Modalidad, "NVV", True)
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, Mod_Empresa, _Modalidad, "NVV", True)
 
             If IsNothing(_RowFormato) Then
                 _Modalidad = String.Empty
@@ -1134,15 +1094,15 @@ Public Class Frm_Demonio_Configuraciones
     End Sub
 
     Private Sub Btn_Rutas_PDF_Facturas_Click(sender As Object, e As EventArgs) Handles Btn_Rutas_PDF_Facturas.Click
-        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Txt_FacAuto_Modalidad.Text, "FCV")
+        Sb_Configuracion_Salida_PDF(Me, Mod_Empresa, Txt_FacAuto_Modalidad.Text, "FCV")
     End Sub
 
     Private Sub Btn_Rutas_PDF_Boletas_Click(sender As Object, e As EventArgs) Handles Btn_Rutas_PDF_Boletas.Click
-        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Txt_FacAuto_Modalidad.Text, "BLV")
+        Sb_Configuracion_Salida_PDF(Me, Mod_Empresa, Txt_FacAuto_Modalidad.Text, "BLV")
     End Sub
 
     Private Sub Btn_Rutas_PDF_Guias_Click(sender As Object, e As EventArgs) Handles Btn_Rutas_PDF_Guias.Click
-        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Txt_FacAuto_Modalidad.Text, "GDV")
+        Sb_Configuracion_Salida_PDF(Me, Mod_Empresa, Txt_FacAuto_Modalidad.Text, "GDV")
     End Sub
 
     Private Sub Btn_ConfCorreo_CierreNVV_Click(sender As Object, e As EventArgs) Handles Btn_ConfCorreo_CierreNVV.Click

@@ -136,7 +136,7 @@ Public Class Frm_SeleccionarBodega
         End If
 
         If _Empresa Is Nothing Then
-            _Empresa = ModEmpresa
+            _Empresa = Mod_Empresa
         End If
 
         Sb_Cargar_Empresa(_Empresa)

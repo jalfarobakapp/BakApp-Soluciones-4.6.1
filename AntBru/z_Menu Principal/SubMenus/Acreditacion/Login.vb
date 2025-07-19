@@ -1,6 +1,5 @@
-﻿Imports DevComponents.DotNetBar
-Imports BkSpecialPrograms
-Imports BkSpecialPrograms.LsValiciones
+﻿Imports BkSpecialPrograms
+Imports DevComponents.DotNetBar
 
 Public Class Login
 
@@ -156,11 +155,15 @@ Public Class Login
 
                 _Mod.FormMenu = FormMenu
                 _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-                _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
+
+                If Not IsNothing(FormMenu) Then
+                    CType(FormMenu, Menu).Sb_Load()
+                End If
 
                 If _Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion") Then
                     MessageBoxEx.Show(Me, "ESTA MODALIDAD ESTA EN AMBIENTE CERTIFICACION", "FACTURA ELECTRONICA SII",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                                  MessageBoxButtons.OK, MessageBoxIcon.Warning)
                 End If
 
                 Dim TipoEstacion = Trim(_Global_Row_EstacionBk.Item("TipoEstacion"))
@@ -177,7 +180,7 @@ Public Class Login
                 End If
 
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp 
-                                Set Empresa_Actual = '" & ModEmpresa & "', Usuario_Actual = '" & FUNCIONARIO & "', Modalidad_Actual = '" & Modalidad & "' 
+                                Set Empresa_Actual = '" & Mod_Empresa & "', Usuario_Actual = '" & FUNCIONARIO & "', Modalidad_Actual = '" & Mod_Modalidad & "' 
                                 Where NombreEquipo = '" & _NombreEquipo & "'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -331,10 +334,10 @@ Public Class Login
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Bkp00027") Then
 
-            Dim _RowFormato_BLV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, "BLV", True)
-            Dim _RowFormato_FCV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, "FCV", True)
-            Dim _RowFormato_COV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, "COV", True)
-            Dim _RowFormato_NVV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, "NVV", True)
+            Dim _RowFormato_BLV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, "BLV", True)
+            Dim _RowFormato_FCV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, "FCV", True)
+            Dim _RowFormato_COV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, "COV", True)
+            Dim _RowFormato_NVV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, "NVV", True)
 
             If (_RowFormato_BLV Is Nothing) Or
                (_RowFormato_BLV Is Nothing) Or
@@ -377,7 +380,7 @@ Public Class Login
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Bkp00041") Then
 
-            Dim _RowFormato_NVV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, "NVV", True)
+            Dim _RowFormato_NVV As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, "NVV", True)
 
             If IsNothing(_RowFormato_NVV) Then
 

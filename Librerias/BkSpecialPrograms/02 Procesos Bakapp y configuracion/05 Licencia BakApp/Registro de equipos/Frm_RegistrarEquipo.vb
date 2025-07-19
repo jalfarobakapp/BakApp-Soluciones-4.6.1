@@ -445,7 +445,7 @@ Public Class Frm_RegistrarEquipo
         '"And MODALIDAD In (Select SUBSTRING(KOOP,4,5) As Modalidad From MAEUS Where KOUS = '" & _CodFuncionario & "' And KOOP Like 'MO-%')"
 
         If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & ModEmpresa & "' " & _Sql,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & Mod_Empresa & "' " & _Sql,
                                Nothing, False, True) Then
 
             Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
@@ -499,7 +499,7 @@ Public Class Frm_RegistrarEquipo
 
         caract_combo(Cmb_Modalidad_X_Defecto)
         Consulta_sql = "SELECT '' AS Padre,'' As Hijo Union" & vbCrLf &
-                       "SELECT MODALIDAD AS Padre,MODALIDAD AS Hijo FROM CONFIEST WITH (NOLOCK) WHERE EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
+                       "SELECT MODALIDAD AS Padre,MODALIDAD AS Hijo FROM CONFIEST WITH (NOLOCK) WHERE EMPRESA = '" & Mod_Empresa & "'" & vbCrLf &
                        "AND MODALIDAD <> '  '"
         Cmb_Modalidad_X_Defecto.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Modalidad_X_Defecto.SelectedValue = ""
@@ -513,7 +513,7 @@ Public Class Frm_RegistrarEquipo
         caract_combo(Cmb_Empresa_X_Defecto)
         Consulta_sql = "SELECT EMPRESA AS Padre,RTRIM(LTRIM(RUT))+'-'+RAZON AS Hijo FROM CONFIGP"
         Cmb_Empresa_X_Defecto.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
-        Cmb_Empresa_X_Defecto.SelectedValue = ModEmpresa '"01"
+        Cmb_Empresa_X_Defecto.SelectedValue = Mod_Empresa '"01"
 
 
         Dim _Arr_Filtro_Huellas(,) As String = {{"", ""},

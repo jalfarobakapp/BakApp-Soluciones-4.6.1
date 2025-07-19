@@ -171,11 +171,11 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                 _CodProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
                                                  "Valor",
                                                  "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
-                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Mod_Modalidad & "'")
                 _CodSucProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
                                                         "Valor",
                                                         "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
-                                                        "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Modalidad & "'")
+                                                        "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & Mod_Modalidad & "'")
 
                 'Consulta_sql = "Select * From MAEEN Where KOEN = '" & _CodProveedor_Pstar & "' And SUEN = '" & _CodSucProveedor_Pstar & "'"
                 '_RowProveedorStar = _Sql.Fx_Get_DataRow(Consulta_sql)

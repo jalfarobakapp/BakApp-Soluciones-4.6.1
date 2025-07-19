@@ -335,7 +335,7 @@ Public Class Frm_Meson_Operario_QuitarOperaciones
                 If Not _Chk And Not _Hecho Then
                     Consulta_sql = "DELETE POTPR WHERE POTPR.IDPOTPR = " & _Idpotpr
                     If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                        Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "POTL", _Idpotl, "EliminaOp", "Operario: " & _Codigoob & ", Elimina Operacion: " & _Operacion & ", OT: " & _Numot & " (Item: " & _Orden & ")", "", "", "", "", False, "")
+                        Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "POTL", _Idpotl, "EliminaOp", "Operario: " & _Codigoob & ", Elimina Operacion: " & _Operacion & ", OT: " & _Numot & " (Item: " & _Orden & ")", "", "", "", "", False, "")
                     End If
                 End If
 

@@ -226,7 +226,7 @@ Public Class Frm_ExporProd
 
         Consulta_Sql += "Update " & _Global_BaseBk & "Zw_Configuracion Set" & vbCrLf &
                         "PermitirMigrarProductosBaseExterna = " & Convert.ToInt32(Chk_PermitirMigrarProductosBaseExterna.Checked) & vbCrLf &
-                        "Where Empresa = '" & ModEmpresa & "' And Modalidad = '  '"
+                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '  '"
 
         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
             _Global_Row_Configuracion_General.Item("PermitirMigrarProductosBaseExterna") = Chk_PermitirMigrarProductosBaseExterna.Checked

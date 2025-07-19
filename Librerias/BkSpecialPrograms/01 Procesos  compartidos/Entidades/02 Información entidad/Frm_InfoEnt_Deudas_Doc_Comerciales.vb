@@ -785,7 +785,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Consulta_Sql = My.Resources.Sql_Entidad.SqlQuery_InfoCreditoEntidad
         Consulta_Sql = Replace(Consulta_Sql, "#CodEntidad#", _CodEntidad)
         Consulta_Sql = Replace(Consulta_Sql, "#Base_Bakapp#", _Global_BaseBk)
-        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
 
         Dim _DsCredito As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql)
 
@@ -869,7 +869,7 @@ FROM MAEDPCE DPCE WITH ( NOLOCK )
 
 WHERE DPCE.TIDP IN ( 'EFV','CHV','TJV','LTV','PAV','ncv','fcv','fdv','DEP','CRV','ATB' )
 --AND DPCE.FEEMDP  >= '2010-09-01'
-AND DPCE.EMPRESA='" & ModEmpresa & "'  AND DPCE.ESASDP='P' 
+AND DPCE.EMPRESA='" & Mod_Empresa & "'  AND DPCE.ESASDP='P' 
  AND ROUND(DPCE.VADP,2)-ROUND(DPCE.VAASDP,2)-ROUND(DPCE.VAVUDP,2)<>0.0 
  AND DPCE.ENDP='" & _CodEntidad & "'
 

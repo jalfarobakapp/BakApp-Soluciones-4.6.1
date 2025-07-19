@@ -74,7 +74,7 @@ Public Class Modulo_Documentos_Venta
             Return
         End If
 
-        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Modalidad, _Tido, True)
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, _Tido, True)
 
         If IsNothing(_RowFormato) Then
 
@@ -83,9 +83,9 @@ Public Class Modulo_Documentos_Venta
             Return
         End If
 
-        Dim _Empresa As String = ModEmpresa
-        Dim _Sucursal As String = ModSucursal
-        Dim _Bodega As String = ModBodega
+        Dim _Empresa As String = Mod_Empresa
+        Dim _Sucursal As String = Mod_Sucursal
+        Dim _Bodega As String = Mod_Bodega
 
         Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
 

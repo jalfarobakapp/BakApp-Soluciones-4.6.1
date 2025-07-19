@@ -311,7 +311,7 @@ Public Class Frm_Usuarios_Random_Ficha
                    "--And MODALIDAD In (Select SUBSTRING(KOOP,4,5) As Modalidad From MAEUS Where KOUS = '" & Txt_Codigo.Text & "' And KOOP Like 'MO-%')"
 
         If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & ModEmpresa & "' " & _Sql,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And EMPRESA = '" & Mod_Empresa & "' " & _Sql,
                                Nothing, False, True) Then
 
             Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)

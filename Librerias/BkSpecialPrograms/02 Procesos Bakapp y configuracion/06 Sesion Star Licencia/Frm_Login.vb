@@ -286,7 +286,7 @@ Public Class Frm_Login
 
                         If _Reg >= _Cant_licencias Then
 
-                            Dim _Nombre_Empresa As String = _Sql.Fx_Trae_Dato("CONFIGP", "RAZON", "EMPRESA = '" & ModEmpresa & "'")
+                            Dim _Nombre_Empresa As String = _Sql.Fx_Trae_Dato("CONFIGP", "RAZON", "EMPRESA = '" & Mod_Empresa & "'")
 
                             MessageBoxEx.Show(_Formulario, "Superada la cantidad de usuarios conectados al sistema, empresa: " & _Nombre_Empresa & vbCrLf &
                                               "Para poder seguir debe cerrar una sesión o bien contactarse con" & vbCrLf &

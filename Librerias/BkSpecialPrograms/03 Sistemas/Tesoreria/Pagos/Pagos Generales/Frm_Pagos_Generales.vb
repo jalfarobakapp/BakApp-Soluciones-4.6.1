@@ -101,7 +101,7 @@ Public Class Frm_Pagos_Generales
             _Tamodp = 1
         End If
 
-        Consulta_sql = "Select * From TABCJ Where EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' and KOCJ = '" & ModCaja & "'"
+        Consulta_sql = "Select * From TABCJ Where EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' and KOCJ = '" & Mod_Caja & "'"
         _Row_Caja = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Global_Thema = Enum_Themas.Oscuro Then
@@ -158,7 +158,7 @@ Public Class Frm_Pagos_Generales
 
         If String.IsNullOrEmpty(_Koen) Then
 
-            Consulta_sql = "Select '' As KOEN,'' As NOKOEN,'" & Modalidad & "' As Modalidad,'" & ModSucursal & "' As Sucursal,'" & ModCaja & "' As Caja,'" & FUNCIONARIO & "' As KOFU,'" & Nombre_funcionario_activo & "' As Funcionario"
+            Consulta_sql = "Select '' As KOEN,'' As NOKOEN,'" & Mod_Modalidad & "' As Modalidad,'" & Mod_Sucursal & "' As Sucursal,'" & Mod_Caja & "' As Caja,'" & FUNCIONARIO & "' As KOFU,'" & Nombre_funcionario_activo & "' As Funcionario"
 
             Grupo_Pagos.Enabled = False
             Grupo_Estado_Cta.Enabled = False
@@ -166,7 +166,7 @@ Public Class Frm_Pagos_Generales
 
         Else
 
-            Consulta_sql = "Select top 1 KOEN,NOKOEN,'" & Modalidad & "' As Modalidad,'" & ModSucursal & "' As Sucursal,'" & ModCaja & "' As Caja,'" & FUNCIONARIO & "' As KOFU,'" & Nombre_funcionario_activo & "' As Funcionario" & vbCrLf &
+            Consulta_sql = "Select top 1 KOEN,NOKOEN,'" & Mod_Modalidad & "' As Modalidad,'" & Mod_Sucursal & "' As Sucursal,'" & Mod_Caja & "' As Caja,'" & FUNCIONARIO & "' As KOFU,'" & Nombre_funcionario_activo & "' As Funcionario" & vbCrLf &
                            "From MAEEN" & vbCrLf &
                            "Where KOEN = '" & _Koen & "'"
             _ReadOnly = True
@@ -244,7 +244,7 @@ Public Class Frm_Pagos_Generales
 
         Consulta_sql = Replace(Consulta_sql, "#Koen#", Me._Koen)
         Consulta_sql = Replace(Consulta_sql, "#Fecha#", _Fecha)
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
         _Ds_Pago = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -505,7 +505,7 @@ Public Class Frm_Pagos_Generales
             .Item("ARCHIRST") = _Fila_Pagada.Cells("ARCHIRST").Value
             .Item("TCASIG") = _Fila_Pagada.Cells("TCASIG").Value
 
-            .Item("EMPRESA") = ModEmpresa
+            .Item("EMPRESA") = Mod_Empresa
 
             .Item("DP") = _Fila_Pagada.Cells("DP").Value
             .Item("NUDP") = _Fila_Pagada.Cells("NUDP").Value
@@ -559,7 +559,7 @@ Public Class Frm_Pagos_Generales
             .Item("IDRST") = 0
             .Item("ARCHIRST") = String.Empty
             .Item("TCASIG") = 0
-            .Item("EMPRESA") = ModEmpresa
+            .Item("EMPRESA") = Mod_Empresa
 
             .Item("DP") = String.Empty
             .Item("NUDP") = String.Empty
@@ -1080,9 +1080,9 @@ Public Class Frm_Pagos_Generales
             .Item("Id") = _Id
             .Item("IDMAEDPCE") = _Idmaedpce 'rnd.Next(100, 10000)
             .Item("Nueva_Linea") = True
-            .Item("EMPRESA") = ModEmpresa
-            .Item("SUREDP") = ModSucursal
-            .Item("CJREDP") = ModCaja
+            .Item("EMPRESA") = Mod_Empresa
+            .Item("SUREDP") = Mod_Sucursal
+            .Item("CJREDP") = Mod_Caja
 
             .Item("TIDP") = String.Empty
             .Item("NUDP") = String.Empty
@@ -1111,7 +1111,7 @@ Public Class Frm_Pagos_Generales
             .Item("KOTU") = 1
             .Item("KOFUDP") = FUNCIONARIO
             .Item("KOTNDP") = RutEmpresa
-            .Item("SUTNDP") = ModCaja
+            .Item("SUTNDP") = Mod_Caja
 
             .Item("NUTRANSMI") = String.Empty
             .Item("DOCUENANTI") = String.Empty
@@ -1429,7 +1429,7 @@ Public Class Frm_Pagos_Generales
 
         Dim _Filtro_Idrsd As String = Generar_Filtro_IN(_Tbl_Maedpce, "", "IDRSD", True, False, "")
 
-        Dim _Condicion = "And EMPRESA='" & ModEmpresa & "'  AND ENDO='" & _Endp & "'  AND TIDO IN ('NCV') AND ESPGDO = 'P'   
+        Dim _Condicion = "And EMPRESA='" & Mod_Empresa & "'  AND ENDO='" & _Endp & "'  AND TIDO IN ('NCV') AND ESPGDO = 'P'   
                           And IDMAEEDO Not In " & _Filtro_Idrsd
 
         _Filtrar.Ver_Codigo = False
@@ -2091,7 +2091,7 @@ Public Class Frm_Pagos_Generales
                                             .Item("IDRST") = _Fila_Pd.Item("IDRST")
                                             .Item("ARCHIRST") = _Fila_Pd.Item("ARCHIRST")
                                             .Item("TCASIG") = _Fila_Pd.Item("TCASIG").Value
-                                            .Item("EMPRESA") = ModEmpresa
+                                            .Item("EMPRESA") = Mod_Empresa
 
                                             .Item("DP") = _Fila_Pd.Item("DP")
                                             .Item("NUDP") = _Fila_Pd.Item("NUDP")
@@ -2267,7 +2267,7 @@ Public Class Frm_Pagos_Generales
                                     .Item("IDRST") = _Fila_Pagada.Item("IDRST")
                                     .Item("ARCHIRST") = _Fila_Pagada.Item("ARCHIRST")
                                     .Item("TCASIG") = _Fila_Pagada.Item("TCASIG")
-                                    .Item("EMPRESA") = ModEmpresa
+                                    .Item("EMPRESA") = Mod_Empresa
 
                                     .Item("DP") = _Fila_Pagada.Item("DP")
                                     .Item("NUDP") = _Fila_Pagada.Item("NUDP")
@@ -2364,7 +2364,7 @@ Public Class Frm_Pagos_Generales
             If MessageBoxEx.Show(Me, "Pagos realizados correctamente" & vbCrLf & vbCrLf & "¿Desea imprimir compobante de pago?",
                                  "Imprimir", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
-                Dim _ClImp As New Cl_Imprimir_CompPagoClientes(_Tbl_Encabezado.Rows(0).Item("KOEN"), ModSucursal, _Tbl_Maedpce, _Tbl_Estado_Cuenta)
+                Dim _ClImp As New Cl_Imprimir_CompPagoClientes(_Tbl_Encabezado.Rows(0).Item("KOEN"), Mod_Sucursal, _Tbl_Maedpce, _Tbl_Estado_Cuenta)
                 _ClImp.Fx_Imprimir_Archivo(Me, "")
 
             End If
@@ -2439,7 +2439,7 @@ Public Class Frm_Pagos_Generales
             .Item("IDRST") = _Idmaeedo_Ncv
             .Item("ARCHIRST") = "MAEEDO"
             .Item("TCASIG") = _Tamodo
-            .Item("EMPRESA") = ModEmpresa
+            .Item("EMPRESA") = Mod_Empresa
 
             .Item("DP") = _Tido_Ncv
             .Item("NUDP") = _Nudo_Ncv

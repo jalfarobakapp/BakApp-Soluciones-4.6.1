@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Informe_Prox_Recep_VS_Comp_No_Desp
@@ -36,10 +36,10 @@ Public Class Frm_Informe_Prox_Recep_VS_Comp_No_Desp
                    ByVal Filtro_Tido_Despacho As String, _
                    ByVal Unidad As Integer)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         _Tabla_Paso = Tabla_Paso
         _Tabla_Paso_Prox_Recepciones = Tabla_Paso_Prox_Recepciones
@@ -88,9 +88,9 @@ Public Class Frm_Informe_Prox_Recep_VS_Comp_No_Desp
         Dim _Condicion As String = Space(1) & "And KOPRCT_+NOKOPR Like '%" & _Cadena & "%'"
         '-DESPNOFAC
         Consulta_sql = "Update " & _Tabla_Paso & vbCrLf & _
-                       "Set STK_FIS_BOD = Isnull((Select Sum(STFI" & _Unidad & ") From MAEST Where EMPRESA = '" & ModEmpresa & "' AND KOPR = KOPRCT_),0)," & _
-                       "STK_DESPNOFAC = Isnull((Select Sum(DESPNOFAC" & _Unidad & ") From MAEST Where EMPRESA = '" & ModEmpresa & "' AND KOPR = KOPRCT_),0)," & _
-                       "STK_RECENOFAC = Isnull((Select Sum(RECENOFAC" & _Unidad & ") From MAEST Where EMPRESA = '" & ModEmpresa & "' AND KOPR = KOPRCT_),0)" & _
+                       "Set STK_FIS_BOD = Isnull((Select Sum(STFI" & _Unidad & ") From MAEST Where EMPRESA = '" & Mod_Empresa & "' AND KOPR = KOPRCT_),0)," & _
+                       "STK_DESPNOFAC = Isnull((Select Sum(DESPNOFAC" & _Unidad & ") From MAEST Where EMPRESA = '" & Mod_Empresa & "' AND KOPR = KOPRCT_),0)," & _
+                       "STK_RECENOFAC = Isnull((Select Sum(RECENOFAC" & _Unidad & ") From MAEST Where EMPRESA = '" & Mod_Empresa & "' AND KOPR = KOPRCT_),0)" & _
                        vbCrLf & _
                        vbCrLf & _
                        "Select * From " & _Tabla_Paso & " Where 1 > 0" & _Condicion & vbCrLf & _
@@ -139,12 +139,12 @@ Public Class Frm_Informe_Prox_Recep_VS_Comp_No_Desp
 
             'OcultarEncabezadoGrilla(Grilla_Productos)
             .Columns("KOPRCT_").Width = 90
-            .Columns("KOPRCT_").HeaderText = "Código"
+            .Columns("KOPRCT_").HeaderText = "CÃ³digo"
             .Columns("KOPRCT_").Visible = True
             .Columns("KOPRCT_").DisplayIndex = 0
 
             .Columns("NOKOPR").Width = 240
-            .Columns("NOKOPR").HeaderText = "Descripción"
+            .Columns("NOKOPR").HeaderText = "DescripciÃ³n"
             .Columns("NOKOPR").Visible = True
             .Columns("NOKOPR").DisplayIndex = 1
 
@@ -237,7 +237,7 @@ Public Class Frm_Informe_Prox_Recep_VS_Comp_No_Desp
             .Columns("TIDO").DisplayIndex = 1
 
             .Columns("NUDO").Width = 80
-            .Columns("NUDO").HeaderText = "Número"
+            .Columns("NUDO").HeaderText = "NÃºmero"
             .Columns("NUDO").Visible = True
             .Columns("NUDO").DisplayIndex = 2
 
@@ -311,7 +311,7 @@ Public Class Frm_Informe_Prox_Recep_VS_Comp_No_Desp
             .Columns("TIDO").DisplayIndex = 1
 
             .Columns("NUDO").Width = 80
-            .Columns("NUDO").HeaderText = "Número"
+            .Columns("NUDO").HeaderText = "NÃºmero"
             .Columns("NUDO").Visible = True
             .Columns("NUDO").DisplayIndex = 2
 

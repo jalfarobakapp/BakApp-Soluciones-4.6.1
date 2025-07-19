@@ -580,7 +580,7 @@ Public Class Cl_Prestashop_Web
         For Each _Fila As DataRow In _Tbl_Productos_Hermanos.Rows
 
             Dim _Codigo2 As String = _Fila.Item("Codigo")
-            Dim _Stock As Double = _Sql.Fx_Trae_Dato("MAEST", "SUM(STFI1)", "EMPRESA = '" & ModEmpresa & "' And KOPR = '" & _Codigo2 & "'")
+            Dim _Stock As Double = _Sql.Fx_Trae_Dato("MAEST", "SUM(STFI1)", "EMPRESA = '" & Mod_Empresa & "' And KOPR = '" & _Codigo2 & "'")
             Dim _Importado = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Asociacion",
                                                       "Codigo_Nodo = " & _Codigo_Nodo_Importados & " And Codigo = '" & _Codigo2 & "'")
 

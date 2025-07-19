@@ -415,7 +415,7 @@ Public Module Mod_Variables
 
                         Try
                             If Not (_Row Is Nothing) Then
-                                RutEmpresa = Trim(_Sql.Fx_Trae_Dato("CONFIGP", "RUT", "EMPRESA = '" & ModEmpresa & "'"))
+                                RutEmpresa = Trim(_Sql.Fx_Trae_Dato("CONFIGP", "RUT", "EMPRESA = '" & Mod_Empresa & "'"))
 
                                 Dim _Class_BaseBk As New Class_Conectar_Base_BakApp(Frm_Menu)
 
@@ -566,7 +566,7 @@ Public Module Mod_Variables
 
                         If _Reg >= _Cant_licencias Then
 
-                            Dim _Nombre_Empresa As String = _Sql.Fx_Trae_Dato("CONFIGP", "RAZON", "EMPRESA = '" & ModEmpresa & "'")
+                            Dim _Nombre_Empresa As String = _Sql.Fx_Trae_Dato("CONFIGP", "RAZON", "EMPRESA = '" & Mod_Empresa & "'")
 
                             MessageBoxEx.Show(_Formulario, "Superada la cantidad de usuarios conectados al sistema, empresa: " & _Nombre_Empresa & vbCrLf &
                                               "Para poder seguir debe cerrar una sesión o bien contactarse con" & vbCrLf &
@@ -642,7 +642,7 @@ Public Module Mod_Variables
             If Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo) Then
 
                 FUNCIONARIO = _Row_CashDro.Item("Funcionario")
-                Modalidad = _Row_CashDro.Item("Modalidad")
+                Mod_Modalidad = _Row_CashDro.Item("Modalidad")
 
                 Consulta_sql = "Select * From TABFU Where KOFU = '" & FUNCIONARIO & "'"
                 Dim _RowUsuario As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -653,11 +653,11 @@ Public Module Mod_Variables
                 Dim _Mod As New Clas_Modalidades
                 _Mod.Sb_Actualiza_Formatos_X_Modalidad()
                 _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-                _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-                _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+                _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+                _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
-                Dim _RowFormato_BLV As DataRow = Fx_Formato_Modalidad(Frm_Menu, Modalidad, "BLV", True)
-                Dim _RowFormato_FCV As DataRow = Fx_Formato_Modalidad(Frm_Menu, Modalidad, "FCV", True)
+                Dim _RowFormato_BLV As DataRow = Fx_Formato_Modalidad(Frm_Menu, Mod_Empresa, Mod_Modalidad, "BLV", True)
+                Dim _RowFormato_FCV As DataRow = Fx_Formato_Modalidad(Frm_Menu, Mod_Empresa, Mod_Modalidad, "FCV", True)
 
                 If (_RowFormato_BLV Is Nothing) Or
                    (_RowFormato_BLV Is Nothing) Then
@@ -670,7 +670,7 @@ Public Module Mod_Variables
 
                     Frm_Menu.Text = "Sistema BakApp. Empresa :" & RazonEmpresa &
                                     ", Funcionario Activo: " & Trim(Nombre_funcionario_activo) &
-                                    ", Modalidad: " & Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & ","
+                                    ", Modalidad: " & Mod_Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & ","
 
                     Dim Fm_Cd As New Frm_Cashdro_Presentacion
                     Fm_Cd.ShowDialog(_Formulario)
@@ -695,7 +695,7 @@ Public Module Mod_Variables
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
         FUNCIONARIO = _Global_Row_EstacionBk.Item("Usuario_X_Defecto")
-        Modalidad = _Global_Row_EstacionBk.Item("Modalidad_X_Defecto")
+        Mod_Modalidad = _Global_Row_EstacionBk.Item("Modalidad_X_Defecto")
 
         Consulta_sql = "Select * From TABFU Where KOFU = '" & FUNCIONARIO & "'"
         Dim _RowUsuario As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -706,7 +706,7 @@ Public Module Mod_Variables
             Return
         End If
 
-        If String.IsNullOrEmpty(Modalidad) Then
+        If String.IsNullOrEmpty(Mod_Modalidad) Then
             MessageBoxEx.Show(Frm_Menu, "FALTA LA MODALIDAD POR DEFECTO EN LA CONFIGURACION DE LA ESTACION",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
@@ -718,8 +718,8 @@ Public Module Mod_Variables
         Dim _Mod As New Clas_Modalidades
         _Mod.Sb_Actualiza_Formatos_X_Modalidad()
         _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+        _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
         Dim Fm As New Frm_Meson_Operario_Ingreso(True)
         Fm.ShowDialog(Frm_Menu)
@@ -737,7 +737,7 @@ Public Module Mod_Variables
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
         FUNCIONARIO = _Global_Row_EstacionBk.Item("Usuario_X_Defecto")
-        Modalidad = _Global_Row_EstacionBk.Item("Modalidad_X_Defecto")
+        Mod_Modalidad = _Global_Row_EstacionBk.Item("Modalidad_X_Defecto")
 
         Consulta_sql = "Select * From TABFU Where KOFU = '" & FUNCIONARIO & "'"
         Dim _RowUsuario As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -748,7 +748,7 @@ Public Module Mod_Variables
             Return
         End If
 
-        If String.IsNullOrEmpty(Modalidad) Then
+        If String.IsNullOrEmpty(Mod_Modalidad) Then
             MessageBoxEx.Show(Frm_Menu, "FALTA LA MODALIDAD POR DEFECTO EN LA CONFIGURACION DE LA ESTACION",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
@@ -760,8 +760,8 @@ Public Module Mod_Variables
         Dim _Mod As New Clas_Modalidades
         _Mod.Sb_Actualiza_Formatos_X_Modalidad()
         _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+        _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
         Dim Fm As New Frm_ImpBarras_PorProducto
         Fm.BtnConfiguracion.Visible = True
@@ -788,7 +788,7 @@ Public Module Mod_Variables
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
         FUNCIONARIO = _Global_Row_EstacionBk.Item("Usuario_X_Defecto")
-        Modalidad = _Global_Row_EstacionBk.Item("Modalidad_X_Defecto")
+        Mod_Modalidad = _Global_Row_EstacionBk.Item("Modalidad_X_Defecto")
 
         Consulta_sql = "Select * From TABFU Where KOFU = '" & FUNCIONARIO & "'"
         Dim _RowUsuario As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -799,7 +799,7 @@ Public Module Mod_Variables
             Return
         End If
 
-        If String.IsNullOrEmpty(Modalidad) Then
+        If String.IsNullOrEmpty(Mod_Modalidad) Then
             MessageBoxEx.Show(Frm_Menu, "FALTA LA MODALIDAD POR DEFECTO EN LA CONFIGURACION DE LA ESTACION",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
@@ -811,8 +811,8 @@ Public Module Mod_Variables
         Dim _Mod As New Clas_Modalidades
         _Mod.Sb_Actualiza_Formatos_X_Modalidad()
         _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
-        _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+        _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
         Dim Fm As New Frm_GRI_Ingreso
         Fm.ShowDialog(Frm_Menu)

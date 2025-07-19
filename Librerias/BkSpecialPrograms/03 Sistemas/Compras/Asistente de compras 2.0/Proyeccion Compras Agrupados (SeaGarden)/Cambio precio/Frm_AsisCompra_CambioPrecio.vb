@@ -49,7 +49,7 @@ Public Class Frm_AsisCompra_CambioPrecio
             Dim _CantidadMax As Double = _Fila.Item("RotMensual_NoQuiebra")
 
             Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_RevCambioPrecioXCodMadre
-            Consulta_sql = Replace(Consulta_sql, "{Empresa}", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "{Empresa}", Mod_Empresa)
             Consulta_sql = Replace(Consulta_sql, "{CodMadre}", _CodMadre)
             Consulta_sql = Replace(Consulta_sql, "{Lista}", _Lista)
             Consulta_sql = Replace(Consulta_sql, "{CantidadMax}", _CantidadMax)
@@ -191,7 +191,7 @@ Public Class Frm_AsisCompra_CambioPrecio
         Dim _CantidadMax As Double = _Fila.Cells("RotMensual_NoQuiebra").Value
 
         Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_RevCambioPrecioXCodMadre
-        Consulta_sql = Replace(Consulta_sql, "{Empresa}", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "{Empresa}", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "{CodMadre}", _CodMadre)
         Consulta_sql = Replace(Consulta_sql, "{Lista}", _Lista)
         Consulta_sql = Replace(Consulta_sql, "{CantidadMax}", _CantidadMax)

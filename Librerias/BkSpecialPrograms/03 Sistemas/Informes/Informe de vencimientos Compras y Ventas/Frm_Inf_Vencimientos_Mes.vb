@@ -211,7 +211,7 @@ Public Class Frm_Inf_Vencimientos_Mes
         Consulta_sql = Replace(Consulta_sql, "--#Filtro_Adicional_Maedpce#", _Filtro_Maedpce)
         Consulta_sql = Replace(Consulta_sql, "--#Filtro_Adicional#", _Filtro_Adicional)
 
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
         '--#Filtro_Adicional_Maeedo#
         '--#Filtro_Adicional_Maedpce#
@@ -434,7 +434,7 @@ Public Class Frm_Inf_Vencimientos_Mes
                 _F_Fin = _F_Inicio
             End If
 
-            Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+            Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
             Consulta_sql = Replace(Consulta_sql, "--#Filtro_Adicional#", _Filtro_Adicional)
 
             Dim Fm As New Frm_Inf_Vencimientos_Mes_Detalle_Diario(Consulta_sql,

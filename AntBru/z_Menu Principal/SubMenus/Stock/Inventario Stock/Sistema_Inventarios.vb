@@ -38,9 +38,9 @@ Public Class Sistema_Inventarios
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Invp0001") Then
 
             Dim Fm As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-            Fm.Pro_Empresa = ModEmpresa
-            Fm.Pro_Sucursal = ModSucursal
-            Fm.Pro_Bodega = ModBodega
+            Fm.Pro_Empresa = Mod_Empresa
+            Fm.Pro_Sucursal = Mod_Sucursal
+            Fm.Pro_Bodega = Mod_Bodega
             Fm.ShowDialog(Me)
 
             Dim _Seleccionado As Boolean = Fm.Pro_Seleccionado
@@ -78,9 +78,9 @@ Public Class Sistema_Inventarios
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ubic0001") Then
 
             Dim Fm As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-            Fm.Pro_Empresa = ModEmpresa
-            Fm.Pro_Sucursal = ModSucursal
-            Fm.Pro_Bodega = ModBodega
+            Fm.Pro_Empresa = Mod_Empresa
+            Fm.Pro_Sucursal = Mod_Sucursal
+            Fm.Pro_Bodega = Mod_Bodega
             Fm.ShowDialog(Me)
 
             If Fm.Pro_Seleccionado Then

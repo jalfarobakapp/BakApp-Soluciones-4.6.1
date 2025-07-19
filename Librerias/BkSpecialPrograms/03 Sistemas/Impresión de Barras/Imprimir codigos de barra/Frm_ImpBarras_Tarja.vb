@@ -167,7 +167,7 @@ Public Class Frm_ImpBarras_Tarja
             Dim _Mod As New Clas_Modalidades
 
             _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-            _Mod.Sb_Actualizar_Variables_Modalidad(Modalidad)
+            _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
 
             Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
@@ -318,7 +318,7 @@ Public Class Frm_ImpBarras_Tarja
 
                     Dim _Imp As New Class_Imprimir_Barras
 
-                    _Imp.Sb_Imprimir_Tarja_Detalle_Pallet(Cmbetiquetas.SelectedValue, _Puerto, ModEmpresa, _Row_Tarja.Item("Id"), _Nro)
+                    _Imp.Sb_Imprimir_Tarja_Detalle_Pallet(Cmbetiquetas.SelectedValue, _Puerto, Mod_Empresa, _Row_Tarja.Item("Id"), _Nro)
 
                     If _Contar = _Veces2 Then
                         _Nro += 1
@@ -341,7 +341,7 @@ Public Class Frm_ImpBarras_Tarja
 
                     Dim _Imp As New Class_Imprimir_Barras
 
-                    _Imp.Sb_Imprimir_Tarja(Cmbetiquetas.SelectedValue, _Puerto, ModEmpresa, _Row_Tarja.Item("Id"))
+                    _Imp.Sb_Imprimir_Tarja(Cmbetiquetas.SelectedValue, _Puerto, Mod_Empresa, _Row_Tarja.Item("Id"))
 
                     If Not String.IsNullOrEmpty(_Imp.Error) Then
                         If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then

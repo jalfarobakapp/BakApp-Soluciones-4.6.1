@@ -79,7 +79,7 @@ Public Class Frm_DFA_Ingreso
 
     Function Fx_Trae_OT(ByVal _Numot As String) As DataRow
 
-        Consulta_sql = "Select Top 1 * From POTE Where EMPRESA = '" & ModEmpresa & "' Adn NUMOT = '" & _Numot & "'"
+        Consulta_sql = "Select Top 1 * From POTE Where EMPRESA = '" & Mod_Empresa & "' Adn NUMOT = '" & _Numot & "'"
         Fx_Trae_OT = _Sql.Fx_Get_DataRow(Consulta_sql)
 
     End Function
@@ -1700,7 +1700,7 @@ Public Class Frm_DFA_Ingreso
             NewFila = _Tbl_Pdatfae.NewRow
             With NewFila
 
-                .Item("EMPRESA") = Trim(ModEmpresa)
+                .Item("EMPRESA") = Trim(Mod_Empresa)
                 .Item("NUMDF") = Txt_Numero_DFA.Text
                 .Item("NUMODC") = String.Empty
                 .Item("FECHA") = FormatDateTime(Dtp_Fecha_Ingreso.Value, DateFormat.ShortDate)

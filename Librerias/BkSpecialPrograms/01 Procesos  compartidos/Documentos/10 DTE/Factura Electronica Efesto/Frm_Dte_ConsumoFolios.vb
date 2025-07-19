@@ -61,7 +61,7 @@ Public Class Frm_Dte_ConsumoFolios
 
     '    Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
     '                   "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-    '                   "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
+    '                   "Where Empresa = '" & Mod_Empresa & "' And TipoConfiguracion = 'ConfEmpresa'"
     '    Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
     '    If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then

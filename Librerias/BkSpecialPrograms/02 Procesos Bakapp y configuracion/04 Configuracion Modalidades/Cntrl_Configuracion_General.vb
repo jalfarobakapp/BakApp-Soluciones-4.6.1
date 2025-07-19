@@ -49,7 +49,7 @@ Public Class Cntrl_Configuracion_General
         Dim _Mod As New Clas_Modalidades
 
         _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Modalidad)
+        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
 
     End Sub
     Private Sub Cntrl_Configuracion_General_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load

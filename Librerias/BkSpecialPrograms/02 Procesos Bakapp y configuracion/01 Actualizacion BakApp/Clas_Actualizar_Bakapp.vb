@@ -181,7 +181,7 @@ Public Class Clas_Actualizar_Bakapp
 
             If Not String.IsNullOrEmpty(_Error) Then
 
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "Act_Ftp", _Error & " - " & _Host & " - " & _URL_Descarga, "", "", "", "", False, "")
+                Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "Act_Ftp", _Error & " - " & _Host & " - " & _URL_Descarga, "", "", "", "", False, "")
                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set Buscar_Actualizacion_En_FTP = 0 Where NombreEquipo = '" & _NombreEquipo & "'"
                 _Sql.Ej_consulta_IDU(Consulta_sql, False)
 

@@ -46,10 +46,10 @@
         Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Operacion+Descripcion Like '%")
 
         'Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
-        '               "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "' And Operacion+Descripcion Like '%" & _Cadena & "%'"
+        '               "Where Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & "' And Operacion+Descripcion Like '%" & _Cadena & "%'"
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_St_OT_Operaciones" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And Operacion+Descripcion Like '%" & _Cadena & "%'"
+                       "Where Empresa = '" & Mod_Empresa & "' And Operacion+Descripcion Like '%" & _Cadena & "%'"
         _Tbl_Operaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
@@ -137,7 +137,7 @@
             Consulta_sql = "Select Ope.*,ISNULL(Pre.Costo,0) As Costo,ISNULL(Pre.Precio,0) As Precio" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_St_OT_Operaciones Ope" & vbCrLf &
                            "Left Join " & _Global_BaseBk & "Zw_St_OT_Operaciones_Precios Pre On Pre.Id_Ope = Ope.Id And " &
-                           "Pre.Empresa = '" & ModEmpresa & "' And Pre.Sucursal = '" & ModSucursal & "'" & vbCrLf &
+                           "Pre.Empresa = '" & Mod_Empresa & "' And Pre.Sucursal = '" & Mod_Sucursal & "'" & vbCrLf &
                            "Where Ope.Operacion = '" & _Operacion & "'"
             _Row_Operacion = _Sql.Fx_Get_DataRow(Consulta_sql)
             Me.Close()

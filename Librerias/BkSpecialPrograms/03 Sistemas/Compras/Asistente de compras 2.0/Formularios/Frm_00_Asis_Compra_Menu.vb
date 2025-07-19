@@ -1888,7 +1888,7 @@ Public Class Frm_00_Asis_Compra_Menu
                                         Select Distinct Edo.IDMAEEDO,Ddo.EMPRESA,Ddo.KOPRCT,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Ddo.FEEMLI
                                         From MAEEDO Edo WITH (NOLOCK)
                                          Inner Join MAEDDO Ddo WITH (NOLOCK) On Ddo.IDMAEEDO = Edo.IDMAEEDO
-                                          Where Edo.TIDO In ('FCV','BLV','NCV') And FEEMDO BETWEEN @Fecha_Inicio And @Fecha_Fin And Edo.EMPRESA = '" & ModEmpresa & "' 
+                                          Where Edo.TIDO In ('FCV','BLV','NCV') And FEEMDO BETWEEN @Fecha_Inicio And @Fecha_Fin And Edo.EMPRESA = '" & Mod_Empresa & "' 
                                            And KOPRCT = '" & _Codigo & "' 
                                         --And KOPRCT In (Select Codigo From " & _TblPasoInforme & ")
                                         " & _Fl_Bodegas & "
@@ -2080,7 +2080,7 @@ Public Class Frm_00_Asis_Compra_Menu
                 Lbl_Status.Text = "Calculando rotación por productos, esto puede tardar algunos minutos..."
 
                 Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Sacar_la_velocidad_de_venta_mensual_Media2
-                Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
                 Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
                 Consulta_sql = Replace(Consulta_sql, "#FechaInicio#", Format(_Fecha_Desde_Rot_Vta, "yyyyMMdd"))
                 Consulta_sql = Replace(Consulta_sql, "#FechaTermino#", Format(_Fecha_Hasta_Rot_vta, "yyyyMMdd"))
@@ -2132,7 +2132,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
 
                 Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Sacar_la_velocidad_de_venta_mensual_Media2
-                Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
                 Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
                 Consulta_sql = Replace(Consulta_sql, "#FechaInicio#", Format(_Fecha_Desde_3M, "yyyyMMdd"))
                 Consulta_sql = Replace(Consulta_sql, "#FechaTermino#", Format(_Fecha_Hasta_3M, "yyyyMMdd"))
@@ -2170,7 +2170,7 @@ Public Class Frm_00_Asis_Compra_Menu
                 Lbl_Status.Text = "Calculando rotación por productos, esto puede tardar algunos minutos..."
 
                 Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_SumTotalQty_Venta_X_Periodo
-                Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
                 Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
                 Consulta_sql = Replace(Consulta_sql, "#FechaInicio#", Format(_Fecha_Desde_Rot_Vta, "yyyyMMdd"))
                 Consulta_sql = Replace(Consulta_sql, "#FechaTermino#", Format(_Fecha_Hasta_Rot_vta, "yyyyMMdd"))
@@ -2195,7 +2195,7 @@ Public Class Frm_00_Asis_Compra_Menu
                 ' CALCULO PARA TENDENCIA DE VENTA ULTIMOS 3 MESES
 
                 Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_SumTotalQty_Venta_X_Periodo
-                Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
                 Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
                 Consulta_sql = Replace(Consulta_sql, "#FechaInicio#", Format(_Fecha_Desde_3M, "yyyyMMdd"))
                 Consulta_sql = Replace(Consulta_sql, "#FechaTermino#", Format(_Fecha_Hasta_3M, "yyyyMMdd"))
@@ -2217,7 +2217,7 @@ Public Class Frm_00_Asis_Compra_Menu
                 Dim _Fecha_Desde_3Cio As Date = DateAdd(DateInterval.Month, -1, _Fecha_Hasta_3Cio)
 
                 Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_SumTotalQty_Venta_X_Periodo
-                Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
                 Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
                 Consulta_sql = Replace(Consulta_sql, "#FechaInicio#", Format(_Fecha_Desde_3Cio, "yyyyMMdd"))
                 Consulta_sql = Replace(Consulta_sql, "#FechaTermino#", Format(_Fecha_Hasta_3Cio, "yyyyMMdd"))

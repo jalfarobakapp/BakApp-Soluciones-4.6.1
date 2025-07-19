@@ -25,14 +25,14 @@ Public Class Frm_Dimensiones
             Exit Sub
         End If
 
-        Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("PDIMEN", "CODIGO = '" & CodigoRd & "' And EMPRESA = '" & ModEmpresa & "'"))
+        Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("PDIMEN", "CODIGO = '" & CodigoRd & "' And EMPRESA = '" & Mod_Empresa & "'"))
 
         If Not _Reg Then
-            Consulta_sql = "Insert Into PDIMEN (EMPRESA,CODIGO) Values ('" & ModEmpresa & "','" & CodigoRd & "')"
+            Consulta_sql = "Insert Into PDIMEN (EMPRESA,CODIGO) Values ('" & Mod_Empresa & "','" & CodigoRd & "')"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
-        Consulta_sql = "Update PDIMEN Set EMPRESA = '" & ModEmpresa & "', RANGO01 = " & Rango1 & ",RANGO02 = " & Rango2 & vbCrLf & "WHERE CODIGO = '" & CodigoRd & "'"
+        Consulta_sql = "Update PDIMEN Set EMPRESA = '" & Mod_Empresa & "', RANGO01 = " & Rango1 & ",RANGO02 = " & Rango2 & vbCrLf & "WHERE CODIGO = '" & CodigoRd & "'"
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
             MessageBoxEx.Show("Datos guardados correctamente", "Dimensiones", MessageBoxButtons.OK, MessageBoxIcon.Information)

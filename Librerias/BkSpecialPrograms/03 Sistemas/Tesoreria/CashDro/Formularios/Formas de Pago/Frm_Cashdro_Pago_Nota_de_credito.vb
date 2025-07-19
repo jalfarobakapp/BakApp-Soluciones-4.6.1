@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Cashdro_Pago_Nota_de_credito
@@ -43,10 +43,10 @@ Public Class Frm_Cashdro_Pago_Nota_de_credito
 
     Public Sub New(ByVal Row_Maeedo_NCV As DataRow)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         _Row_Maeedo_NCV = Row_Maeedo_NCV
 
@@ -86,8 +86,8 @@ Public Class Frm_Cashdro_Pago_Nota_de_credito
         _Vuelto = _Saldo_Doc
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_CashDro_Operaciones (Numero,OperationId,FechaHora_Inicio,posid,posuser,Modalidad,Empresa,Sucursal,Bodega,Caja) Values " & vbCrLf & _
-                       "('" & _Numero & "','',GetDate(),'" & _posid & "','" & _posuser & "','" & Modalidad & _
-                       "','" & ModEmpresa & "','" & ModSucursal & "','" & ModBodega & "','" & ModCaja & "')"
+                       "('" & _Numero & "','',GetDate(),'" & _posid & "','" & _posuser & "','" & Mod_Modalidad & _
+                       "','" & Mod_Empresa & "','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & Mod_Caja & "')"
         _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id)
 
 
@@ -100,7 +100,7 @@ Public Class Frm_Cashdro_Pago_Nota_de_credito
                        "Nudo_NCV = '" & _Nudo_NCV & "'," & _
                        "Vuelto = " & De_Num_a_Tx_01(_Vuelto, False, 5) & "," & _
                        "FechaHora_Fin = Getdate()," & _
-                       "Log_Error = 'Devolución de dinero en efectivo'" & vbCrLf & _
+                       "Log_Error = 'DevoluciÃ³n de dinero en efectivo'" & vbCrLf & _
                        "Where Id = " & _Id
         _Sql.Ej_consulta_IDU(Consulta_sql)
 

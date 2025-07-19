@@ -1,15 +1,9 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
-Imports System.Security.Cryptography.X509Certificates
-Imports System.Text
 Imports System.Threading
 Imports System.Xml.Schema
 Imports System.Xml.XPath
-Imports BkSpecialPrograms.Frm_BkpPostBusquedaEspecial_Mt
 Imports DevComponents.DotNetBar
-'Imports HEFESTO.FIRMA.DOC.FORM
-'Imports HEFESTO.FIRMA.DOCUMENTO
-Imports HefestoCesionV12
 Imports Ionic.Zip
 
 Public Class Class_Genera_DTE_RdBk
@@ -54,6 +48,9 @@ Public Class Class_Genera_DTE_RdBk
     Dim _Respuesta As String
 
     Dim _AmbienteCertificacion As Integer
+
+    Private _Empresa As String
+    Private _Modalidad As String
 
     Public Property Pro_Formulario() As Form
         Get
@@ -168,7 +165,7 @@ Public Class Class_Genera_DTE_RdBk
 
     Public Property _Mostrar_Mensaje As Boolean = True
 
-    Public Sub New(Idmaeedo As Integer)
+    Public Sub New(_Idmaeedo As Integer, _Empresa As String, _Modalidad As String)
 
         _Errores = New List(Of String)
 
@@ -189,13 +186,16 @@ Public Class Class_Genera_DTE_RdBk
 
         _Iddte = 0
 
-        _Idmaeedo = Idmaeedo
+        Me._Empresa = _Empresa
+        Me._Modalidad = _Modalidad
+        Me._Idmaeedo = _Idmaeedo
+
         _Directorio_GenDTE = _Global_Row_EstacionBk.Item("Directorio_GenDTE")
 
         Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo & Environment.NewLine &
                        "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo & " Order by IDMAEDDO" & Environment.NewLine &
                        "Select * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo & Environment.NewLine &
-                       "--Select Distinct 0 As Id_Ref,0 As NroLinRef,Id_Doc,Tido,Nudo,TpoDocRef,FolioRef,RUTOt,IdAdicOtr,FchRef,CodRef,RazonRef From " & _Global_BaseBk & "Zw_Referencias_Dte Where Id_Doc = " & _Idmaeedo & " And Kasi = 0" & vbCrLf &
+                       "--Select Distinct 0 As Id_Ref,0 As NroLinRef,Id_Doc,Tido,Nudo,TpoDocRef,FolioRef,RUTOt,IdAdicOtr,FchRef,CodRef,RazonRef From " & _Global_BaseBk & "Zw_Referencias_Dte Where Id_Doc = " & Me._Idmaeedo & " And Kasi = 0" & vbCrLf &
                        "--Select Top 1 * From " & _Global_BaseBk & "Zw_Referencias_Dte Where 1<0"
 
         _Ds_Documento = _Sql.Fx_Get_DataSet(Consulta_sql, _Mostrar_Mensaje)
@@ -492,8 +492,6 @@ Public Class Class_Genera_DTE_RdBk
 
     Function Fx_Dte_Genera_Documento(_Formulario As Form, _Reenviar As Boolean) As Integer
 
-        '_Global_Row_EstacionBk.Item("Directorio_GenDTE")
-
         Dim _Tido As String = _Maeedo.Rows(0).Item("TIDO")
         Dim _Nudo As String = _Maeedo.Rows.Item(0).Item("NUDO")
 
@@ -501,7 +499,7 @@ Public Class Class_Genera_DTE_RdBk
 
             Dim _Mensaje As New LsValiciones.Mensajes
 
-            _Mensaje = Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, False)
+            _Mensaje = Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, False, _Empresa, _Modalidad)
 
             If Not _Mensaje.EsCorrecto Then 'Not Fx_Revisar_Expiracion_Folio_SII(_Formulario, _Tido, _Nudo, True) Then
                 If _Mostrar_Mensaje Then
@@ -637,10 +635,10 @@ Public Class Class_Genera_DTE_RdBk
         If _Tido = "BLV" Then Return 0
 
 
-        Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & _Empresa & "'"
         _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje).Rows(0)
 
-        Dim _Empresa = _Row_Configp.Item("EMPRESA")
+        Dim _Empresa_Cfp = _Row_Configp.Item("EMPRESA")
         Dim _Nroresol = _Row_Configp.Item("NRORESOL")
         Dim _Rutemi = _Row_Configp.Item("RUT")
         Dim _Rutenvi = _Row_Configp.Item("FIRMAELEC")
@@ -709,7 +707,7 @@ Public Class Class_Genera_DTE_RdBk
 
                 Consulta_sql = "INSERT INTO FMAEPETE (KOPET,RUTEMI,RUTENVI,RUTRECEP,FRESOL,NRESOL,EMPRESA,INACTIVO,TSPETIC)  VALUES " &
                         "(" & _Kopet & ",'" & _Rutemi & "','" & _Rutenvi & "','" & _Rutrecep &
-                        "','" & _Fechresol & "','" & _Nroresol & "', '" & _Empresa & "',0,Getdate())"
+                        "','" & _Fechresol & "','" & _Nroresol & "', '" & _Empresa_Cfp & "',0,Getdate())"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -747,7 +745,7 @@ Public Class Class_Genera_DTE_RdBk
 
                 Consulta_sql = "INSERT INTO FMAEPETE (KOPET,RUTEMI,RUTENVI,RUTRECEP,FRESOL,NRESOL,EMPRESA,INACTIVO,TSPETIC)  VALUES " &
                         "(" & _Kopet & ",'" & _Rutemi & "','" & _Rutenvi & "','" & _Rutrecep &
-                        "','" & _Fechresol & "','" & _Nroresol & "', '" & _Empresa & "'," & Convert.ToInt32(_Reenvio) & ",Getdate())"
+                        "','" & _Fechresol & "','" & _Nroresol & "', '" & _Empresa_Cfp & "'," & Convert.ToInt32(_Reenvio) & ",Getdate())"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -791,7 +789,7 @@ Public Class Class_Genera_DTE_RdBk
 
                 Consulta_sql = "INSERT INTO FMAEPETE (KOPET,RUTEMI,RUTENVI,RUTRECEP,FRESOL,NRESOL,EMPRESA)  VALUES " &
                                "(" & _Kopet & ",'" & _Rutemi & "','" & _Rutenvi & "','" & _Rutrecep &
-                               "','" & _Fechresol & "','" & _Nroresol & "', '" & _Empresa & "')"
+                               "','" & _Fechresol & "','" & _Nroresol & "', '" & _Empresa_Cfp & "')"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                 Comando.Transaction = myTrans
@@ -882,7 +880,7 @@ Public Class Class_Genera_DTE_RdBk
 
             Dim _Tido = _Maeedo.Rows.Item(0).Item("TIDO")
 
-            Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+            Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
             _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql, _Mostrar_Mensaje).Rows(0)
 
             _Empresa = _Row_Configp.Item("EMPRESA")
@@ -993,11 +991,11 @@ Public Class Class_Genera_DTE_RdBk
         If _Firma_Bakapp Then
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Caf With ( NOLOCK )" & vbCrLf &
                            "Where Cast(RNG_D AS INT)<=" & _Nro_Documento & " And Cast(RNG_H AS INT)>=" & _Nro_Documento &
-                           " And TD='" & _Td & "' And Empresa='" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion
+                           " And TD='" & _Td & "' And Empresa='" & Mod_Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion
         Else
             Consulta_sql = "Select TOP 1 * FROM FFOLIOS WITH ( NOLOCK )" & vbCrLf &
                            "Where CAST(RNG_D AS INT)<=" & _Nro_Documento & " And Cast(RNG_H AS INT)>=" & _Nro_Documento &
-                           "  And TD='" & _Td & "'  AND EMPRESA='" & ModEmpresa & "' "
+                           "  And TD='" & _Td & "'  AND EMPRESA='" & Mod_Empresa & "' "
         End If
 
 
@@ -1613,7 +1611,7 @@ Public Class Class_Genera_DTE_RdBk
         Dim _Tido = _Maeedo.Rows.Item(0).Item("TIDO")
         Dim _TipoDTE As Integer = Fx_Tipo_DTE_VS_TIDO(_Tido)
 
-        Dim _Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Dim _Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
 
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(_Consulta_sql, False)
         Dim _Row_Ffolios = Fx_Trae_Ffolio(Nothing, _Nro_Documento, _TipoDTE, False)
@@ -1647,7 +1645,7 @@ Public Class Class_Genera_DTE_RdBk
         Dim _Frma = String.Empty
 
 
-        Dim _Firma_Bakapp As Boolean = Fx_Firmar_X_Bakapp2(_Tido)
+        Dim _Firma_Bakapp As Boolean = Fx_Firmar_X_Bakapp2(_Tido, _Empresa, _Modalidad)
 
         'Try
         '    _Firma_Bakapp = _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto")
@@ -1737,7 +1735,7 @@ Public Class Class_Genera_DTE_RdBk
 
         _Nro_Documento = _Maeedo.Rows(0).Item("NUDO")
 
-        Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
         _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql, False).Rows(0)
 
         If _Tido <> "FCC" And _Tido <> "GRC" And _Tido <> "NCC" Then
@@ -1905,7 +1903,7 @@ Public Class Class_Genera_DTE_RdBk
             'Nueva forma de timbrar 
             '' /* 56056.05 */ dte\bat\GenDTE.BAT "C:\Random.Cisternas\\dte\conf" 01 535489
 
-            Dim _Ejecutar As String = _Directorio & "\dte\bat\GenDTE.BAT """ & _Directorio & "\\dte\conf""" & Space(1) & ModEmpresa & " " & _Iddt
+            Dim _Ejecutar As String = _Directorio & "\dte\bat\GenDTE.BAT """ & _Directorio & "\\dte\conf""" & Space(1) & Mod_Empresa & " " & _Iddt
 
             Try
                 Shell(_Ejecutar, AppWinStyle.Hide, True)
@@ -2317,7 +2315,7 @@ Public Class Class_Genera_DTE_RdBk
     '    Dim _Dir = AppPath() & "\Data\" & RutEmpresaActiva
 
     '    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Caf" & vbCrLf &
-    '                   "Where Empresa = '" & ModEmpresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo)
+    '                   "Where Empresa = '" & Mod_Empresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo)
     '    Dim _Row_CAF As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
     '    If IsNothing(_Row_CAF) Then
@@ -2366,7 +2364,7 @@ Public Class Class_Genera_DTE_RdBk
 
     '    Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
     '                   "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-    '                   "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
+    '                   "Where Empresa = '" & Mod_Empresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
     '    Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
     '    If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
@@ -2390,7 +2388,7 @@ Public Class Class_Genera_DTE_RdBk
     '    If _AmbienteCertificacion Then
     '        _NroResol = "0"
     '        '    _FchResol = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-    '        '                                  "Empresa = '" & ModEmpresa & "' And Campo = 'FchResol' And AmbienteCertificacion = 1")
+    '        '                                  "Empresa = '" & Mod_Empresa & "' And Campo = 'FchResol' And AmbienteCertificacion = 1")
     '    End If
 
     '    Dim ClsFirmarDocumento As New HEFFirmarDocumento
@@ -2566,7 +2564,7 @@ Public Class Class_Genera_DTE_RdBk
     '    Dim _Dir = AppPath() & "\Data\" & RutEmpresaActiva
 
     '    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Caf" & vbCrLf &
-    '                   "Where Empresa = '" & ModEmpresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo)
+    '                   "Where Empresa = '" & Mod_Empresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo)
     '    Dim _Row_CAF As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
     '    If IsNothing(_Row_CAF) Then
@@ -2615,7 +2613,7 @@ Public Class Class_Genera_DTE_RdBk
 
     '    Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
     '                   "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-    '                   "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
+    '                   "Where Empresa = '" & Mod_Empresa & "' And TipoConfiguracion = 'ConfEmpresa'"
     '    Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
     '    If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
@@ -2639,7 +2637,7 @@ Public Class Class_Genera_DTE_RdBk
     '    If _AmbienteCertificacion Then
     '        _NroResol = "0"
     '        _FchResol = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-    '                                      "Empresa = '" & ModEmpresa & "' And Campo = 'FchResol' And AmbienteCertificacion = 1")
+    '                                      "Empresa = '" & Mod_Empresa & "' And Campo = 'FchResol' And AmbienteCertificacion = 1")
     '    End If
 
     '    Dim ClsFirmarDocumento As New HEFFirmarDocumento
@@ -2804,13 +2802,13 @@ Public Class Class_Genera_DTE_RdBk
                 Throw New System.Exception("No se encontro el archivo CaratulaXml en la tabla Zw_DTE_Documentos del sistema")
             End If
 
-            Dim _Id_Correo As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Campo = 'Id_Correo' And Empresa = '" & ModEmpresa & "'")
+            Dim _Id_Correo As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Campo = 'Id_Correo' And Empresa = '" & Mod_Empresa & "'")
 
             If Not CBool(_Id_Correo) Then
                 Throw New System.Exception("Falta asignar un correo de notificación en la configuración del sistema DTE")
             End If
 
-            Dim _NombreFormato_PDF As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Campo = 'NombreFormato_PDF_" & _Tido & "' And Empresa = '" & ModEmpresa & "'")
+            Dim _NombreFormato_PDF As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Campo = 'NombreFormato_PDF_" & _Tido & "' And Empresa = '" & Mod_Empresa & "'")
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Corr Where Id = " & _Id_Correo
             Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -2976,7 +2974,7 @@ Public Class Class_Genera_DTE_RdBk
 
     '        Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
     '                       "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-    '                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
+    '                       "Where Empresa = '" & Mod_Empresa & "' And TipoConfiguracion = 'ConfEmpresa'"
     '        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
     '        If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
@@ -3231,7 +3229,7 @@ Public Class Class_Genera_DTE_RdBk
 
     '            Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
     '                           "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-    '                           "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
+    '                           "Where Empresa = '" & Mod_Empresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
     '            Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
 
     '            If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then

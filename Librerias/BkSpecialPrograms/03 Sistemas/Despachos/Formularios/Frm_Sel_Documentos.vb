@@ -10,7 +10,7 @@ Public Class Frm_Sel_Documentos
     Dim _Koen As String
     Dim _Suen As String
 
-    Dim _Empresa As String = ModEmpresa
+    Dim _Empresa As String = Mod_Empresa
     Dim _Seleccionar As Boolean
 
     Dim _Endo As String

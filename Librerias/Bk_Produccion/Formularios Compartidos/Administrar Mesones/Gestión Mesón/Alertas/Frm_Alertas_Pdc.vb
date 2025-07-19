@@ -302,7 +302,7 @@ Public Class Frm_Alertas_Pdc
                 If _Aceptar Then
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_MesonVsAlertas (Empresa,Idpotpr,Idpotl,Idpote,Numot,Operacion,Codigoob_Envia,Alerta,Id_Padre_Edit) Values 
-                                ('" & ModEmpresa & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & _Numot &
+                                ('" & Mod_Empresa & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & _Numot &
                                 "','" & _Operacion & "','" & _Codigoob & "','" & _Alerta & "'," & _Id_Alertas & ")"
 
                     If _Accion = Enum_Alertas.Editar Then
@@ -432,7 +432,7 @@ Public Class Frm_Alertas_Pdc
         If _Aceptar Then
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_MesonVsAlertas (Empresa,Idpotpr,Idpotl,Idpote,Numot,Operacion,Codigoob_Envia,Alerta,Id_Padre_Edit) Values 
-                                ('" & ModEmpresa & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & _Numot &
+                                ('" & Mod_Empresa & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & _Numot &
                                 "','" & _Operacion & "','" & _Codigoob & "','" & _Alerta & "'," & _Id_Alertas & ")"
 
             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
@@ -504,7 +504,7 @@ Public Class Frm_Alertas_Pdc
         If _Aceptar Then
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_MesonVsAlertas (Empresa,Idpotpr,Idpotl,Idpote,Numot,Operacion,Codigoob_Envia,Alerta,Id_Padre_Edit) Values 
-                           ('" & ModEmpresa & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & _Numot &
+                           ('" & Mod_Empresa & "'," & _Idpotpr & "," & _Idpotl & "," & _Idpote & ",'" & _Numot &
                            "','" & _Operacion & "','" & _Codigoob_Envia & "','" & _Alerta & "'," & _Id_Alertas & ")
                            Update " & _Global_BaseBk & "Zw_Pdp_MesonVsAlertas Set Editada = 1 Where Id_Alertas = " & _Id_Alertas
 

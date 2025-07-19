@@ -171,7 +171,7 @@ Public Class Frm_ProductosReemplazo
                 Dim Fm As New Frm_BuscarXProducto_Mt
                 Fm.CodProveedor_productos = String.Empty
                 Fm.Tipo_Busqueda_Productos = Fm.Buscar_En.Maestro_de_Productos
-                Fm.ListaDePrecio = ModListaPrecioVenta
+                Fm.ListaDePrecio = Mod_ListaPrecioVenta
                 Fm.ShowDialog(Me)
 
                 If Not String.IsNullOrEmpty(Fm.CodigoPr_Sel) Then

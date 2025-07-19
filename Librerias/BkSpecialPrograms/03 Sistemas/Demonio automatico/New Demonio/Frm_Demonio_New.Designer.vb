@@ -54,6 +54,7 @@ Partial Class Frm_Demonio_New
         Me.Timer_Enviar_Doc_SinRecepcion = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_NVVAutoExterna = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_ImprimirDocumentos = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_RecalculoPPP = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
@@ -377,6 +378,10 @@ Partial Class Frm_Demonio_New
         '
         Me.Timer_ImprimirDocumentos.Interval = 1000
         '
+        'Timer_RecalculoPPP
+        '
+        Me.Timer_RecalculoPPP.Interval = 1000
+        '
         'Frm_Demonio_New
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -434,4 +439,5 @@ Partial Class Frm_Demonio_New
     Friend WithEvents Timer_Enviar_Doc_SinRecepcion As Timer
     Friend WithEvents Timer_NVVAutoExterna As Timer
     Friend WithEvents Timer_ImprimirDocumentos As Timer
+    Friend WithEvents Timer_RecalculoPPP As Timer
 End Class

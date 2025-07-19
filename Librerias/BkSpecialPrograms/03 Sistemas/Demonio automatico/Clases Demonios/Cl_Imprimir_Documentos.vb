@@ -182,7 +182,6 @@ Public Class Cl_Imprimir_Documentos
                       "FEEMDO BETWEEN CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
                       "AND CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102)"
 
-
         Dim _FechasAnteriores As Date = DateAdd(DateInterval.Day, -5, _Fecha_Revision)
 
         'Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion Set Fecha = Getdate(),Log_Error = 'Documento no impreso desde el día anterior' 
@@ -222,9 +221,8 @@ Public Class Cl_Imprimir_Documentos
         '                "Where Fecha < '" & _Fecha & "' And NombreEquipo = '" & _Nombre_Equipo & "' And Impreso = 1"
         '_Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
-        _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion" & vbCrLf &
+        _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion With (Nolock)" & vbCrLf &
                         "Where NombreEquipo = '" & _Nombre_Equipo & "' And Traer_Doc_Auto_Imprimir = 1"
-
         Dim _Tbl_Zw_Demonio_Cof_Estacion As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql, False)
 
         Dim _SqlQuery_Cola = String.Empty
@@ -240,7 +238,7 @@ Public Class Cl_Imprimir_Documentos
 
                 Dim _Imprimir_Picking = _Fila.Item("Imprimir_Picking")
 
-                _Consulta_sql = "Select Codigo From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion" & vbCrLf &
+                _Consulta_sql = "Select Codigo From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion With (Nolock)" & vbCrLf &
                                 "Where IdPadre = " & _IdPadre & " And Impresora <> '' And Picking = 0"
                 Dim _TblFiltroFunc As DataTable = _Sql.Fx_Get_DataTable(_Consulta_sql, False)
 
@@ -293,7 +291,7 @@ Public Class Cl_Imprimir_Documentos
 
         If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion", "FirmarDTE") Then
 
-            _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion" & vbCrLf &
+            _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion With (Nolock)" & vbCrLf &
                             "Where Tido In ('BLV','FCV','BLV','GTI','GDV') And FirmarDTE = 1 And Revizado_Demonio = 0 And NombreEquipo = '" & _Nombre_Equipo & "' And" & Space(1) &
                             "Fecha Between Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 00:00:00', 102)" & vbCrLf &
                             "And Convert(Datetime, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102) And Picking = 0"
@@ -309,7 +307,7 @@ Public Class Cl_Imprimir_Documentos
                 Dim _AmbienteCertificacion As Boolean = _Fl.Item("AmbienteCertificacion")
                 Dim _Msg As String = String.Empty
 
-                Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+                Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
                 _Class_DTE.AmbienteCertificacion = _AmbienteCertificacion
 
                 Dim _Id_Dte As Integer = _Class_DTE.Fx_FirmarXHefesto()
@@ -321,8 +319,8 @@ Public Class Cl_Imprimir_Documentos
                            "Informe de esta situación al administrador del sistema para que revise que el DTEMonitor este corriendo en algún equipo"
                 End If
                 Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion Set " &
-                           "FirmarDTE = 0,Log_Firma = '" & _Msg & "', Id_Dte = " & _Id_Dte & vbCrLf &
-                           "Where Id = " & _Id
+                               "FirmarDTE = 0,Log_Firma = '" & _Msg & "', Id_Dte = " & _Id_Dte & vbCrLf &
+                               "Where Id = " & _Id
                 If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                     Log_Registro += "Se envia a firmar Documento: " & _Tido & "-" & _Nudo & vbCrLf
                 Else
@@ -337,7 +335,7 @@ Public Class Cl_Imprimir_Documentos
 
         '_Nombre_Equipo = "DESKTOP-RNEC0ET"
 
-        _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion" & vbCrLf &
+        _Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion With (Nolock)" & vbCrLf &
                         "Where Revizado_Demonio = 0 And NombreEquipo = '" & _Nombre_Equipo & "' And Convert(Date, Fecha) = '" & _Fecha & "' And Picking = 0"
 
         '_Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Cola_Impresion" & vbCrLf &
@@ -412,7 +410,7 @@ Public Class Cl_Imprimir_Documentos
 
                     Dim _Log_Error = String.Empty
 
-                    Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion" & vbCrLf &
+                    Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Demonio_Cof_Estacion With (Nolock)" & vbCrLf &
                                    "Where NombreEquipo = '" & _Nombre_Equipo & "' And TipoDoc = '" & _Tido & "'"
                     Dim _Row_Demonio_Cof_Estacion As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
@@ -425,7 +423,7 @@ Public Class Cl_Imprimir_Documentos
                     End If
 
                     Consulta_Sql = "Select Top 1 * " &
-                                   "From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion " &
+                                   "From " & _Global_BaseBk & "Zw_Demonio_Filtros_X_Estacion With (Nolock)" &
                                    "Where IdPadre = " & _IdPadre & " And TipoDoc = '" & _Tido & "' And Codigo = '" & _Funcionario & "' And Picking = 0 " & _Vale_TransitorioStr & " And Impresora <> ''"
                     Dim _Row_Demonio_Filtros_X_Estacion As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
@@ -457,8 +455,16 @@ Public Class Cl_Imprimir_Documentos
                     If Fx_Validar_Impresora(_Impresora) Then
 
                         Try
-                            _Log_Error += Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
+
+                            Dim _Mensaje As LsValiciones.Mensajes
+
+                            _Mensaje = Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
                                                                     _IdMaeedo, False, False, _Impresora, False, _Nro_Copias_Impresion, False, "")
+
+                            _Log_Error += _Mensaje.Mensaje
+
+                            '_Log_Error += Fx_Enviar_A_Imprimir_Documento(Nothing, _NombreFormato,
+                            '                                        _IdMaeedo, False, False, _Impresora, False, _Nro_Copias_Impresion, False, "")
                         Catch ex As Exception
                             _Log_Error += Replace(ex.Message, "'", "''")
                             If String.IsNullOrWhiteSpace(_IdMaeedo) Then
@@ -539,10 +545,10 @@ Public Class Cl_Imprimir_Documentos
 
     End Sub
 
-    Sub Sb_Imprimir_Voucher_Tarjeta(ByVal _Idmaeedo As Integer,
+    Sub Sb_Imprimir_Voucher_Tarjeta(_Idmaeedo As Integer,
                                     ByRef _LogError As String,
-                                    ByVal _Impresora As String,
-                                    ByVal _Imprimir_Voucher_Original_Transbank As Boolean)
+                                    _Impresora As String,
+                                    _Imprimir_Voucher_Original_Transbank As Boolean)
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -630,7 +636,7 @@ Public Class Cl_Imprimir_Documentos
         Dim _Filtro_Sucursal = String.Empty
 
         If _Imp_Suc_Modal Then
-            _Filtro_Sucursal = "And SUDO = '" & ModSucursal & "'"
+            _Filtro_Sucursal = "And SUDO = '" & Mod_Sucursal & "'"
         End If
 
         Fx_Insertar_Documento_Para_Imprimir =

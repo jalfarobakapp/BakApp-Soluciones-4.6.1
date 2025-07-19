@@ -1,4 +1,4 @@
-
+ï»¿
 Public Class Frm_PrecioLC_ImpFleje
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -31,10 +31,10 @@ Public Class Frm_PrecioLC_ImpFleje
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         caract_combo(CmbLista)
         Consulta_sql = "SELECT KOLT AS Padre,KOLT+'-'+LTRIM(RTRIM(NOKOLT))+ CASE TILT WHEN 'C' THEN ' -  Costo' else ' - Precio' end  AS Hijo FROM TABPP WHERE KOLT IN (" & vbCrLf &
@@ -57,10 +57,10 @@ Public Class Frm_PrecioLC_ImpFleje
 
             'Dim Puerto = Trim(trae_datoAccess(tb, "Impresora", "Tmp_Conf_Local", "Modulo = 'Pto_Serial_Barras'"))
 
-            'imprimir_Codigo_de_barras(Puerto, True, Diseno, TxtCodigo.Text, "", CmbLista.SelectedValue, 0, "", "", ModEmpresa, ModSucursal, ModBodega, "", "")
+            'imprimir_Codigo_de_barras(Puerto, True, Diseno, TxtCodigo.Text, "", CmbLista.SelectedValue, 0, "", "", Mod_Empresa, Mod_Sucursal, Mod_Bodega, "", "")
 
         Else
-            MsgBox("Código de producto no existe", MsgBoxStyle.Critical, "Imprimir Fleje")
+            MsgBox("CÃ³digo de producto no existe", MsgBoxStyle.Critical, "Imprimir Fleje")
             TxtCodigo.SelectAll()
             TxtCodigo.Focus()
         End If

@@ -19,7 +19,7 @@
 
         Try
 
-            Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+            Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
             Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Koen = _Row_Configp.Item("RUT")
@@ -96,7 +96,7 @@
             Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
             Dim Fm_Post As New Frm_Formulario_Documento("GRI", csGlobales.Enum_Tipo_Documento.Guia_Recepcion_Interna, False)
-            Fm_Post.Sb_Limpiar(Modalidad)
+            Fm_Post.Sb_Limpiar(Mod_Modalidad)
             Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True,, _Bodega_Recepcion, _Sucursal_Recepcion, True)
 
             _Mensaje = Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)

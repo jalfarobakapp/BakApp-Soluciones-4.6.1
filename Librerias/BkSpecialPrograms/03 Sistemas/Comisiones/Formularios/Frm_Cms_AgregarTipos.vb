@@ -218,7 +218,7 @@ Public Class Frm_Cms_AgregarTipos
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Comisiones_Mis Set" &
                        " Descripcion = '" & Txt_Descripcion.Text.Trim & "'" &
                        ",PorcComision = " & De_Num_a_Tx_01(_PorcComsion, False, 5) &
-                       ",Empresa = " & ModEmpresa &
+                       ",Empresa = " & Mod_Empresa &
                        ",TieneSC = " & Convert.ToInt32(Chk_TieneSC.Checked) &
                        ",MisVentas = " & Convert.ToInt32(Chk_MisVentas.Checked) &
                        "Where Id = " & _Id_Mis &

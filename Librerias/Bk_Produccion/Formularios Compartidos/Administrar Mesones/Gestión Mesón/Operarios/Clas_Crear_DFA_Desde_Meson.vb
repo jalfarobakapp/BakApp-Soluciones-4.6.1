@@ -212,7 +212,7 @@ Public Class Clas_Crear_DFA_Desde_Meson
             NewFila = _Tbl_Pdatfae.NewRow
             With NewFila
 
-                .Item("EMPRESA") = Trim(ModEmpresa)
+                .Item("EMPRESA") = Trim(Mod_Empresa)
                 .Item("NUMDF") = _Numdf
                 .Item("NUMODC") = String.Empty
                 .Item("FECHA") = FormatDateTime(Now.Date, DateFormat.ShortDate)

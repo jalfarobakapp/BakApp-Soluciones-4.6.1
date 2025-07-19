@@ -101,7 +101,7 @@ Public Class Frm_Pagos_Trae_NCV
 
             Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,ENDOFI,FEEMDO,VABRDO,VAABDO,VAIVARET," &
                            "VABRDO-VAABDO AS SALDO,ESPGDO,MODO From MAEEDO" & vbCrLf &
-                           "Where EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                           "Where EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
             _RowMaeedo = _Sql.Fx_Get_DataRow(Consulta_sql)
 
 

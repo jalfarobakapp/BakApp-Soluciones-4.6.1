@@ -62,13 +62,13 @@ Public Class Frm_Facturacion_Masiva
         Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
+                       "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & Mod_Modalidad & "' And TipoDoc = '" & _Tido & "'"
         Dim _RowFormato_Mod As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Guardar_PDF_Auto As Boolean = _RowFormato_Mod.Item("Guardar_PDF_Auto")
 
         Dim _Ruta_PDF = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Estaciones_Ruta_PDF", "Ruta_PDF",
-                                      "Empresa = '" & ModEmpresa & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad & "' And Tido = '" & _Tido & "'")
+                                      "Empresa = '" & Mod_Empresa & "' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Mod_Modalidad & "' And Tido = '" & _Tido & "'")
 
         If _Guardar_PDF_Auto Then
 
@@ -457,12 +457,12 @@ Public Class Frm_Facturacion_Masiva
                             End If
 
                             If Chk_Imprimir.Checked Then
-                                Sb_Imprimir_Documento(Me, _Idmaeedo_Fcv, False, Modalidad)
+                                Sb_Imprimir_Documento(Me, _Idmaeedo_Fcv, False, Mod_Modalidad)
                             End If
 
                             Dim _Error_PDF As String
 
-                            _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo_Fcv, ModEmpresa, Modalidad)
+                            _Error_PDF = Fx_Guargar_PDF_Automaticamente_Por_Doc_Modalidad(_Idmaeedo_Fcv, Mod_Empresa, Mod_Modalidad)
 
                         End If
 
@@ -532,7 +532,7 @@ Public Class Frm_Facturacion_Masiva
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, Modalidad, _Tido_Destino, True)
+        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, Mod_Empresa, Mod_Modalidad, _Tido_Destino, True)
 
         If Not IsNothing(_RowFormato) Then
 
@@ -557,9 +557,9 @@ Public Class Frm_Facturacion_Masiva
 
                 If Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo_Origen) Then
 
-                    Dim _Empresa As String = ModEmpresa
-                    Dim _Sucursal As String = ModSucursal
-                    Dim _Bodega As String = ModBodega
+                    Dim _Empresa As String = Mod_Empresa
+                    Dim _Sucursal As String = Mod_Sucursal
+                    Dim _Bodega As String = Mod_Bodega
 
                     Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
 
@@ -613,7 +613,7 @@ Public Class Frm_Facturacion_Masiva
                         Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
                         Dim Fm_Post As New Frm_Formulario_Documento("FCV", csGlobales.Enum_Tipo_Documento.Venta, False)
-                        Fm_Post.Sb_Limpiar(Modalidad)
+                        Fm_Post.Sb_Limpiar(Mod_Modalidad)
                         Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
                         Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
                         _New_Idmaeedo = Fm_Post.Pro_Idmaeedo
@@ -1005,7 +1005,7 @@ Public Class Frm_Facturacion_Masiva
     End Sub
 
     Private Sub Btn_Impresion_PDF_Click(sender As Object, e As EventArgs) Handles Btn_Impresion_PDF.Click
-        Sb_Configuracion_Salida_PDF(Me, ModEmpresa, Modalidad, _Tido)
+        Sb_Configuracion_Salida_PDF(Me, Mod_Empresa, Mod_Modalidad, _Tido)
     End Sub
 
     Private Sub Btn_Opciones_Especiales_Click(sender As Object, e As EventArgs) Handles Btn_Opciones_Especiales.Click

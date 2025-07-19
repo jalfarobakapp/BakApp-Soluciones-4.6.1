@@ -44,7 +44,7 @@ Public Class Mnu_Ubic_Prod
                 .Pro_Tipo_Lista = "P"
                 .Pro_Sucursal_Busqueda = _RowBodega.Item("KOSU")
                 .Pro_Bodega_Busqueda = _RowBodega.Item("KOBO")
-                .Pro_Lista_Busqueda = ModListaPrecioVenta
+                .Pro_Lista_Busqueda = Mod_ListaPrecioVenta
                 .Mnu_Btn_Cambiar_Codigo_Producto.Visible = True
                 .Pro_Trabajar_Ubicaciones = True
                 .ShowDialog(Me)
@@ -76,9 +76,9 @@ Public Class Mnu_Ubic_Prod
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ubic0003") Then 'Mantención de ubicaciones
 
             'Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-            'Fm_b.Pro_Empresa = ModEmpresa
-            'Fm_b.Pro_Sucursal = ModSucursal
-            'Fm_b.Pro_Bodega = ModBodega
+            'Fm_b.Pro_Empresa = Mod_Empresa
+            'Fm_b.Pro_Sucursal = Mod_Sucursal
+            'Fm_b.Pro_Bodega = Mod_Bodega
             'Fm_b.ShowDialog(Me)
 
             'If Fm_b.Pro_Seleccionado Then

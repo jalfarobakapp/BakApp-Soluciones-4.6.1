@@ -304,16 +304,27 @@ Public Class Frm_Demonio_03_Doc_Impresos_X_Estacion
         Dim _RowEncabezado As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
 
-        Dim _Log_Error = Fx_Enviar_A_Imprimir_Documento(Me,
+        'Dim _Log_Error = Fx_Enviar_A_Imprimir_Documento(Me,
+        '                                                _NombreFormato,
+        '                                                _Idmaeedo,
+        '                                                False, False, _Impresora, False, 0, False, "")
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me,
                                                         _NombreFormato,
                                                         _Idmaeedo,
                                                         False, False, _Impresora, False, 0, False, "")
 
-        If Not String.IsNullOrEmpty(_Log_Error) Then
-            MessageBoxEx.Show(_Log_Error, "Error al imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(_Mensaje.Mensaje, "Error al imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
-        Return String.IsNullOrEmpty(_Log_Error)
+        'If Not String.IsNullOrEmpty(_Log_Error) Then
+        '    MessageBoxEx.Show(_Log_Error, "Error al imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        'End If
+
+        Return _Mensaje.EsCorrecto
 
     End Function
 

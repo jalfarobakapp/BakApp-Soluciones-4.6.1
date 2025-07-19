@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 Imports System.IO
 
@@ -118,7 +118,7 @@ Public Class Frm_Inf_Ventas_X_Vendedor_01
         End If
 
         Consulta_sql = My.Resources.Recuros_InfVtasXvendedor.SQLQuery_Informe_de_ventas_por_vendedor_detalle & vbCrLf & vbCrLf
-        Consulta_sql = Replace(Consulta_sql, "#Filtro_Empresa#", "And EDO.EMPRESA='" & ModEmpresa & "'")
+        Consulta_sql = Replace(Consulta_sql, "#Filtro_Empresa#", "And EDO.EMPRESA='" & Mod_Empresa & "'")
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Sucursales#", _Filtro_Sucursales)
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Fecha#", "And EDO.FEEMDO BETWEEN '" & _FDesde & "' And '" & _FHasta & "'")
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Vendedor#", _Filtro_Vendedores)
@@ -136,10 +136,10 @@ Public Class Frm_Inf_Ventas_X_Vendedor_01
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
 
         If Not Directory.Exists(_Directorio) Then
@@ -223,7 +223,7 @@ Public Class Frm_Inf_Ventas_X_Vendedor_01
         If Rdb_Sucursales_Algunos.Checked Then
             Dim Fm As New Frm_Filtro_Especial_Informes(Frm_Filtro_Especial_Informes._Tabla_Fl._Sucursales)
             Fm.Pro_Tbl_Filtro = _Tbl_Sucursales
-            Fm.Pro_Sql_Filtro_Condicion_Extra = "And EMPRESA = '" & ModEmpresa & "'"
+            Fm.Pro_Sql_Filtro_Condicion_Extra = "And EMPRESA = '" & Mod_Empresa & "'"
             Fm.Text = "SUCURSALES"
             Fm.ShowDialog(Me)
 

@@ -70,7 +70,7 @@ Public Class Cl_Cerrar_Documentos
 
         Consulta_Sql = My.Resources.Recursos_Demonio.SQLQuery_Cierrer_Docmuento
         Consulta_Sql = Replace(Consulta_Sql, "#Filtro#",
-                       "Edo.EMPRESA = '" & ModEmpresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = '' And Edo.FEEMDO <= '" & Format(_Fecha, "yyyyMMdd") & "'")
+                       "Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = '' And Edo.FEEMDO <= '" & Format(_Fecha, "yyyyMMdd") & "'")
         Consulta_Sql = Replace(Consulta_Sql, "#Campo_SUENDOFI#", "")
         Consulta_Sql = Replace(Consulta_Sql, "#Left_Join_MAEEN_ENDOFI_SUENDOFI#", "")
         Consulta_Sql = Replace(Consulta_Sql, "Isnull(Mae2.NOKOEN,'') As RAZON_FISICA,", "")
@@ -135,7 +135,7 @@ Public Class Cl_Cerrar_Documentos
 
         Consulta_Sql = My.Resources.Recursos_Demonio.SQLQuery_Cierrer_Docmuento
         Consulta_Sql = Replace(Consulta_Sql, "#Filtro#",
-                       "Edo.EMPRESA = '" & ModEmpresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
+                       "Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
         Consulta_Sql = Replace(Consulta_Sql, "#Campo_SUENDOFI#", "")
         Consulta_Sql = Replace(Consulta_Sql, "#Left_Join_MAEEN_ENDOFI_SUENDOFI#", "")
         Consulta_Sql = Replace(Consulta_Sql, "Isnull(Mae2.NOKOEN,'') As RAZON_FISICA,", "")
@@ -176,7 +176,7 @@ Public Class Cl_Cerrar_Documentos
 
             If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo, _Tbl_Maeddo) Then
 
-                Fx_Add_Log_Gestion("XXX", Modalidad, "MAEEDO", _Idmaeedo, "", "CIERRE Y REACTIVACIÓN DE DOCUMENTOS DE COMPROMISO", "Doc00011", "", "", "", False, "XXX")
+                Fx_Add_Log_Gestion("XXX", Mod_Modalidad, "MAEEDO", _Idmaeedo, "", "CIERRE Y REACTIVACIÓN DE DOCUMENTOS DE COMPROMISO", "Doc00011", "", "", "", False, "XXX")
 
                 If Not IsNothing(_Row_Stmp_Enc) Then
 
@@ -245,7 +245,7 @@ Public Class Cl_Cerrar_Documentos
 
         Consulta_Sql = My.Resources.Recursos_Demonio.SQLQuery_Cierrer_Docmuento
         Consulta_Sql = Replace(Consulta_Sql, "#Filtro#",
-                       "Edo.EMPRESA = '" & ModEmpresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
+                       "Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
         Consulta_Sql = Replace(Consulta_Sql, "#Campo_SUENDOFI#", "")
         Consulta_Sql = Replace(Consulta_Sql, "#Left_Join_MAEEN_ENDOFI_SUENDOFI#", "")
         Consulta_Sql = Replace(Consulta_Sql, "Isnull(Mae2.NOKOEN,'') As RAZON_FISICA,", "")
@@ -271,7 +271,7 @@ Public Class Cl_Cerrar_Documentos
                        "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
                        "Left Join MAEEN Mae1 On Edo.ENDO = Mae1.KOEN And Edo.SUENDO = Mae1.SUEN " & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = Ddo.KOFULIDO" & vbCrLf &
-                       "Where Edo.EMPRESA = '" & ModEmpresa & "' And Edo.TIDO = 'NVV' And Edo.ESDO = '' " & _TdFecha
+                       "Where Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.TIDO = 'NVV' And Edo.ESDO = '' " & _TdFecha
         Dim _Tbl_Vendedores As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then

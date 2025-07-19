@@ -388,13 +388,24 @@ Public Class Frm_St_Documento
 
                             If Fm.Formato_Seleccionado Then
                                 _NombreFormato = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
-                                Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
-                                                                               False, True, "", False, 0, False, "")
 
-                                If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                                    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
-                                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+                                '                                               False, True, "", False, 0, False, "")
+
+                                Dim _Mensaje As LsValiciones.Mensajes
+
+                                _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+                                                                          False, True, "", False, 0, False, "")
+
+                                If Not _Mensaje.EsCorrecto Then
+                                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Problemas al Imprimir",
+                                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
                                 End If
+
+                                'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                                '    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                                '               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                'End If
 
                             End If
 
@@ -434,9 +445,9 @@ Public Class Frm_St_Documento
             Dim _Row_Bodega As DataRow
 
             Dim Fmb As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-            Fmb.Pro_Empresa = ModEmpresa
-            Fmb.Pro_Sucursal = ModSucursal
-            Fmb.Pro_Bodega = ModBodega
+            Fmb.Pro_Empresa = Mod_Empresa
+            Fmb.Pro_Sucursal = Mod_Sucursal
+            Fmb.Pro_Bodega = Mod_Bodega
             Fmb.ShowDialog(Me)
             _Row_Bodega = Fmb.Pro_RowBodega
 
@@ -454,7 +465,7 @@ Public Class Frm_St_Documento
                                 ServTecnico_Empresa = '" & _ServTecnico_Empresa & "',
                                 ServTecnico_Sucursal = '" & _ServTecnico_Sucursal & "',
                                 ServTecnico_Bodega = '" & _ServTecnico_Bodega & "' 
-                                Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "'"
+                                Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & Mod_Modalidad & "'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
             Else
@@ -469,7 +480,7 @@ Public Class Frm_St_Documento
 
 
         'ServTecnico_Empresa, ServTecnico_Sucursal, ServTecnico_Bodega
-        Consulta_sql = "Insert Into MAEST (EMPRESA,KOSU,KOBO,KOPR) Values ('" & ModEmpresa & "','" & _ServTecnico_Sucursal & "','" & _ServTecnico_Bodega & "','" & _RowProducto.Item("KOPR") & "')"
+        Consulta_sql = "Insert Into MAEST (EMPRESA,KOSU,KOBO,KOPR) Values ('" & Mod_Empresa & "','" & _ServTecnico_Sucursal & "','" & _ServTecnico_Bodega & "','" & _RowProducto.Item("KOPR") & "')"
         _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
         Dim _NroDocumento = Fx_Rellena_ceros(_Nro_GRP, 10)
@@ -477,7 +488,7 @@ Public Class Frm_St_Documento
         Dim _Observaciones As String = "Documento generado desde Sis. Servicio técnico Bakapp" & vbCrLf & "Nro OT: " & _Nro_OT
 
         Dim _Costo As Double = _Sql.Fx_Trae_Dato("TABPRE", "PP01UD",
-                                                 "KOLT = '" & ModListaPrecioVenta & "' And KOPR = '" & _RowProducto.Item("KOPR") & "'", True)
+                                                 "KOLT = '" & Mod_ListaPrecioVenta & "' And KOPR = '" & _RowProducto.Item("KOPR") & "'", True)
 
         Consulta_sql = "Select '" & _ServTecnico_Sucursal & "' As Sucursal,'" & _ServTecnico_Bodega & "' As Bodega,'" & _RowProducto.Item("KOPR") & "' As Codigo,
                         1 As Cantidad," & De_Num_a_Tx_01(_Costo, False, 5) & " As Costo"
@@ -535,9 +546,9 @@ Public Class Frm_St_Documento
             .Item("Nro_Ot") = "En proceso..."
             .Item("Fecha_Ingreso") = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
 
-            .Item("Empresa") = ModEmpresa '_Global_Row_Modalidad.Item("EMPRESA")
-            .Item("Sucursal") = ModSucursal '_Global_Row_Modalidad.Item("ESUCURSAL")
-            .Item("Bodega") = ModBodega '_Global_Row_Modalidad.Item("EBODEGA")
+            .Item("Empresa") = Mod_Empresa '_Global_Row_Modalidad.Item("EMPRESA")
+            .Item("Sucursal") = Mod_Sucursal '_Global_Row_Modalidad.Item("ESUCURSAL")
+            .Item("Bodega") = Mod_Bodega '_Global_Row_Modalidad.Item("EBODEGA")
 
             .Item("CodEntidad") = _RowEntidad.Item("KOEN")
             .Item("SucEntidad") = _RowEntidad.Item("SUEN")
@@ -2736,15 +2747,25 @@ Public Class Frm_St_Documento
 
                 _Vista_Previa = False
 
-                Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+                'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+                '                                                        True, _Seleccionar_Impresora, _ImpresosaPredt,
+                '                                                        _Vista_Previa, 0, False, "")
+
+                'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                '    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                '                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                'End If
+
+                Dim _Mensaje As LsValiciones.Mensajes
+
+                _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
                                                                         True, _Seleccionar_Impresora, _ImpresosaPredt,
                                                                         _Vista_Previa, 0, False, "")
 
-                If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                If Not _Mensaje.EsCorrecto Then
+                    MessageBox.Show(Me, _Mensaje.Mensaje, "Problemas al Imprimir",
                                    MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 End If
-
 
             End If
 
@@ -3217,9 +3238,9 @@ Public Class Frm_St_Documento
             .BtnExportaExcel.Visible = True
             .Pro_Tipo_Lista = "C"
             .Pro_Maestro_Productos = False
-            .Pro_Sucursal_Busqueda = ModSucursal
-            .Pro_Bodega_Busqueda = ModBodega
-            .Pro_Lista_Busqueda = ModListaPrecioVenta
+            .Pro_Sucursal_Busqueda = Mod_Sucursal
+            .Pro_Bodega_Busqueda = Mod_Bodega
+            .Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             .Pro_Mostrar_Info = True
             .ShowDialog(Me)
             _RowProducto = .Pro_RowProducto

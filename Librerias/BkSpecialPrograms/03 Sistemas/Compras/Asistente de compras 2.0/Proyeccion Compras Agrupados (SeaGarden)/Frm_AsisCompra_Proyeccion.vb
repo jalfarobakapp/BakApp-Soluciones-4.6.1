@@ -475,9 +475,9 @@ Public Class Frm_AsisCompra_Proyeccion
             .BtnExportaExcel.Visible = True
             .Pro_Tipo_Lista = "P"
             .Pro_Maestro_Productos = True
-            .Pro_Sucursal_Busqueda = ModSucursal
-            .Pro_Bodega_Busqueda = ModBodega
-            .Pro_Lista_Busqueda = ModListaPrecioVenta
+            .Pro_Sucursal_Busqueda = Mod_Sucursal
+            .Pro_Bodega_Busqueda = Mod_Bodega
+            .Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             .Mnu_Btn_Cambiar_Codigo_Producto.Visible = True
             .TraerTodosLosProductos = True
             .ShowDialog(Me)

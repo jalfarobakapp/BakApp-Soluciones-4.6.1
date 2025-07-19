@@ -190,7 +190,7 @@ Public Class Frm_ValidarPermisoUsuario
 
             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
-                Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "",
+                Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "",
                                    "PERMISO OTORGADO PERMANENTEMENTE", _Codpermiso, "", "", "", False, "", False, 0, "")
 
                 MessageBoxEx.Show(Fm_Pass, "Permisos otorgado permanentemente al usuario",

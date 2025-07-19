@@ -196,9 +196,9 @@ Public Class Frm_St_EncIngreso
             '.BtnExportaExcel.Visible = True
             '.Pro_Tipo_Lista = "C"
             '.Pro_Maestro_Productos = False
-            '.Pro_Sucursal_Busqueda = ModSucursal
-            '.Pro_Bodega_Busqueda = ModBodega
-            '.Pro_Lista_Busqueda = ModListaPrecioVenta
+            '.Pro_Sucursal_Busqueda = Mod_Sucursal
+            '.Pro_Bodega_Busqueda = Mod_Bodega
+            '.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             '.Pro_Mostrar_Info = True
 
             .Pro_Actualizar_Precios = False
@@ -210,9 +210,9 @@ Public Class Frm_St_EncIngreso
             .Pro_Mostrar_Eliminar = True
             .BtnExportaExcel.Visible = True
             .Pro_Tipo_Lista = "P"
-            .Pro_Sucursal_Busqueda = ModSucursal
-            .Pro_Bodega_Busqueda = ModBodega
-            .Pro_Lista_Busqueda = ModListaPrecioVenta
+            .Pro_Sucursal_Busqueda = Mod_Sucursal
+            .Pro_Bodega_Busqueda = Mod_Bodega
+            .Pro_Lista_Busqueda = Mod_ListaPrecioVenta
             .Mnu_Btn_Cambiar_Codigo_Producto.Visible = True
             .MostrarSoloServTecnico_ProIngreso = True
             .ShowDialog(Me)
@@ -497,11 +497,22 @@ Public Class Frm_St_EncIngreso
 
                 If Fm.Formato_Seleccionado Then
                     _NombreFormato = Fm.Row_Formato_Seleccionado.Item("NombreFormato")
-                    Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
-                                                                       False, True, "", False, 0, False, "")
 
-                    If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                        MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                    'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+                    '                                                   False, True, "", False, 0, False, "")
+
+                    'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
+                    '    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
+                    '                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    'End If
+
+                    Dim _Mensaje As LsValiciones.Mensajes
+
+                    _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
+                                                              False, True, "", False, 0, False, "")
+
+                    If Not _Mensaje.EsCorrecto Then
+                        MessageBox.Show(Me, _Mensaje.Mensaje, "Problemas al Imprimir",
                                        MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     End If
 
@@ -563,9 +574,9 @@ Public Class Frm_St_EncIngreso
             Dim _Row_Bodega As DataRow
 
             Dim Fmb As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-            Fmb.Pro_Empresa = ModEmpresa
-            Fmb.Pro_Sucursal = ModSucursal
-            Fmb.Pro_Bodega = ModBodega
+            Fmb.Pro_Empresa = Mod_Empresa
+            Fmb.Pro_Sucursal = Mod_Sucursal
+            Fmb.Pro_Bodega = Mod_Bodega
             Fmb.ShowDialog(Me)
             _Row_Bodega = Fmb.Pro_RowBodega
 
@@ -583,7 +594,7 @@ Public Class Frm_St_EncIngreso
                                 ServTecnico_Empresa = '" & _ServTecnico_Empresa & "',
                                 ServTecnico_Sucursal = '" & _ServTecnico_Sucursal & "',
                                 ServTecnico_Bodega = '" & _ServTecnico_Bodega & "' 
-                                Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & Modalidad & "'"
+                                Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & Mod_Modalidad & "'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
             Else
@@ -618,12 +629,12 @@ Public Class Frm_St_EncIngreso
         For Each _Fila As DataRow In _Tbl_Ots.Rows 'Cl_OrdenServicio.DsDocumento.Tables(0).Rows
 
             Consulta_sql = "Insert Into MAEST (EMPRESA,KOSU,KOBO,KOPR) Values " &
-                "('" & ModEmpresa & "','" & _ServTecnico_Sucursal & "','" & _ServTecnico_Bodega & "','" & _Fila.Item("Codigo") & "')"
+                "('" & Mod_Empresa & "','" & _ServTecnico_Sucursal & "','" & _ServTecnico_Bodega & "','" & _Fila.Item("Codigo") & "')"
             _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
             Dim _Cantidad As Double = 1 '_Fila.Item("Cantidad")
             Dim _Costo As Double = _Sql.Fx_Trae_Dato("TABPRE", "PP01UD",
-                                                     "KOLT = '" & ModListaPrecioVenta & "' And KOPR = '" & _Fila.Item("Codigo") & "'", True)
+                                                     "KOLT = '" & Mod_ListaPrecioVenta & "' And KOPR = '" & _Fila.Item("Codigo") & "'", True)
 
             If _Costo = 0 Then _Costo = 1
 

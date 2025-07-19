@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports System.Data
 Imports System.Data.SqlClient
 Imports DevComponents.DotNetBar
@@ -18,9 +18,9 @@ Public Class Frm_BuscarXProducto_Mt
 
     Public ListaDePrecio As String
 
-    Public EmpresaPr As String = ModEmpresa
-    Public SucursarPr As String = ModSucursal
-    Public BodegaPr As String = ModBodega
+    Public EmpresaPr As String = Mod_Empresa
+    Public SucursarPr As String = Mod_Sucursal
+    Public BodegaPr As String = Mod_Bodega
 
     Public CodProducto_Sel As String
     Public DesProductos_sel As String
@@ -221,9 +221,9 @@ Public Class Frm_BuscarXProducto_Mt
 
 
             Consulta_sql = "SELECT TOP (100) KOPRAL ,KOPR , NOKOPRAL," & vbCrLf & _
-                           "ISNULL((SELECT STFI1 FROM MAEST WHERE EMPRESA = '" & ModEmpresa & "' AND KOSU = 'CM' AND KOBO = '001' AND KOPR = MP.KOPR),0)" & vbCrLf & _
+                           "ISNULL((SELECT STFI1 FROM MAEST WHERE EMPRESA = '" & Mod_Empresa & "' AND KOSU = 'CM' AND KOBO = '001' AND KOPR = MP.KOPR),0)" & vbCrLf & _
                            "AS STFI1," & vbCrLf & _
-                           "ISNULL((SELECT PP01UD FROM TABPRE WHERE KOLT = '" & ModListaPrecioVenta & "' AND KOPR = MP.KOPR),0)" & vbCrLf & _
+                           "ISNULL((SELECT PP01UD FROM TABPRE WHERE KOLT = '" & Mod_ListaPrecioVenta & "' AND KOPR = MP.KOPR),0)" & vbCrLf & _
                            "AS PP01UD" & vbCrLf & _
                            "FROM TABCODAL AS MP WITH (NOLOCK)" & vbCrLf & _
                             "WHERE (KOEN like '%" & _CodProveedor_Alt & "%')" & CONDICION
@@ -343,7 +343,7 @@ Public Class Frm_BuscarXProducto_Mt
                 .Columns("KOEN").Visible = True
 
                 .Columns("CodAlternativo").Width = 100
-                .Columns("CodAlternativo").HeaderText = "Cód. Alternativo"
+                .Columns("CodAlternativo").HeaderText = "CÃ³d. Alternativo"
                 '.Columns("Proveedor").Visible = False
                 .Columns("CodAlternativo").Visible = True
 
@@ -352,11 +352,11 @@ Public Class Frm_BuscarXProducto_Mt
 
             .Columns("Oculto").Visible = False
             .Columns("Codigo").Width = 110
-            .Columns("Codigo").HeaderText = "Código"
+            .Columns("Codigo").HeaderText = "CÃ³digo"
             .Columns("Codigo").Visible = True
 
             .Columns("Descripcion").Width = LgDescripcion + 60 + 70
-            .Columns("Descripcion").HeaderText = "Descripción"
+            .Columns("Descripcion").HeaderText = "DescripciÃ³n"
             .Columns("Descripcion").Visible = True
 
             '.Columns("StockFiUd1").Width = 60
@@ -408,10 +408,10 @@ Public Class Frm_BuscarXProducto_Mt
                 If Tabla = "MAEPR" Or Tabla = "MAEPROCU" Then
 
                     .Columns("KOPR").Width = 100
-                    .Columns("KOPR").HeaderText = "Código"
+                    .Columns("KOPR").HeaderText = "CÃ³digo"
 
                     .Columns("NOKOPR").Width = 350
-                    .Columns("NOKOPR").HeaderText = "Descripción"
+                    .Columns("NOKOPR").HeaderText = "DescripciÃ³n"
 
                     .Columns("STFI1").Width = 80
                     .Columns("STFI1").HeaderText = "Stock " & BodegaPr
@@ -433,13 +433,13 @@ Public Class Frm_BuscarXProducto_Mt
                 ElseIf Tabla = "TABCODALMAEPR" Or Tabla = "TABCODAL" Or Tabla = "ProductosCompra" Then
 
                     .Columns("KOPR").Width = 100
-                    .Columns("KOPR").HeaderText = "Código"
+                    .Columns("KOPR").HeaderText = "CÃ³digo"
 
                     .Columns("NOKOPRAL").Width = 370
-                    .Columns("NOKOPRAL").HeaderText = "Descripción"
+                    .Columns("NOKOPRAL").HeaderText = "DescripciÃ³n"
 
                     .Columns("KOPRAL").Width = 110
-                    .Columns("KOPRAL").HeaderText = "Código Alt."
+                    .Columns("KOPRAL").HeaderText = "CÃ³digo Alt."
 
                     .Columns("STFI1").Width = 80
                     .Columns("STFI1").HeaderText = "Stock " & BodegaPr
@@ -475,12 +475,12 @@ Public Class Frm_BuscarXProducto_Mt
 
 
         If Kode = Keys.Enter.ToString Then ' e.KeyCode = 112 Then                   ' F1
-            ' ' Instrucción para ejecutar el código correspondiente a la tecla F1
+            ' ' InstrucciÃ³n para ejecutar el cÃ³digo correspondiente a la tecla F1
             e.Handled = True
             Txtdescripcion.Focus()
 
         ElseIf Kode = Keys.Down Then               ' F2
-            ' Instrucción para ejecutar el código correspondiente a la tecla F2
+            ' InstrucciÃ³n para ejecutar el cÃ³digo correspondiente a la tecla F2
             e.Handled = True
             Grilla.Focus()
         End If
@@ -494,14 +494,14 @@ Public Class Frm_BuscarXProducto_Mt
 
 
         If Kode = Keys.Enter Then ' e.KeyCode = 112 Then                   ' F1
-            ' ' Instrucción para ejecutar el código correspondiente a la tecla F1
+            ' ' InstrucciÃ³n para ejecutar el cÃ³digo correspondiente a la tecla F1
             e.Handled = True
             If Grilla.RowCount > 0 Then
                 Grilla.Focus()
                 Grilla.CurrentCell = Grilla.Rows(0).Cells(0)
             End If
         ElseIf Kode = Keys.Down Then               ' F2
-            ' Instrucción para ejecutar el código correspondiente a la tecla F2
+            ' InstrucciÃ³n para ejecutar el cÃ³digo correspondiente a la tecla F2
             e.Handled = True
             Grilla.Focus()
         End If
@@ -584,10 +584,10 @@ Public Class Frm_BuscarXProducto_Mt
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         'EstiloFormulario(StyleManager1)
        Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
@@ -601,12 +601,12 @@ Public Class Frm_BuscarXProducto_Mt
         Dim Fm As New Frm_BuscarXProducto_Mt
         Fm.CodProveedor_productos = String.Empty
         Fm.Tipo_Busqueda_Productos = Fm.Buscar_En.Codigos_Alternativos
-        Fm.ListaDePrecio = ModListaPrecioVenta
+        Fm.ListaDePrecio = Mod_ListaPrecioVenta
         Fm.CodProveedor_productos = String.Empty
 
         Dim Razon As String = _Sql.Fx_Trae_Dato("MAEEN", "NOKOEN", "KOEN = '" & CodProveedor_productos & "'")
 
-        Fm.Text = "Busqueda de códigos alternativos" & " - " & Razon
+        Fm.Text = "Busqueda de cÃ³digos alternativos" & " - " & Razon
 
         Fm.ShowDialog(Me)
         Codigo_abuscar = Fm.CodigoPr_Sel
@@ -622,7 +622,7 @@ Public Class Frm_BuscarXProducto_Mt
     Private Sub Grilla_CellEnter(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellEnter
         If Tipo_Busqueda_Productos = Buscar_En.Codigos_Alternativos Then
             Dim _Proveedor = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Proveedor").Value
-            Me.Text = "Busqueda de códigos alternativos" & " - " & NuloPorNro(Trim(_Proveedor), "")
+            Me.Text = "Busqueda de cÃ³digos alternativos" & " - " & NuloPorNro(Trim(_Proveedor), "")
         End If
 
     End Sub

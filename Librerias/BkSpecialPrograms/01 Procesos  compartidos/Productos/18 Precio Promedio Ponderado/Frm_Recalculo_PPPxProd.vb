@@ -25,7 +25,7 @@ Public Class Frm_Recalculo_PPPxProd
     Private _NombreArchivoLog As String = String.Format("LogPPP_{0:yyyyMMdd_HHmmss}.txt", Now)
     Public Property EjecutarProcesoTodosLosProductos As Boolean
     Public Property ModoPruebas As Boolean = False
-
+    Public Property MensajeFinal As String = String.Empty
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -131,7 +131,7 @@ Public Class Frm_Recalculo_PPPxProd
                        ",MAEPREM.FEPM,Cast('" & _FechaTope & "' As Datetime) As 'FechaTope',Cast(0 As Float) As NewPM,MAEPR.KOPR,MAEPR.NOKOPR," &
                        "MAEPR.UD01PR,MAEPR.UD02PR,Cast(0 As Float) As Sum_Stock,Cast(0 As Float) As Stexistini,MAEPREM.PM As Pm2,MAEPREM.FEPM As Fepm2  " & vbCrLf &
                        "From MAEPR With ( Nolock )" & vbCrLf &
-                       "Inner Join MAEPREM ON MAEPREM.KOPR=MAEPR.KOPR And MAEPREM.EMPRESA='" & ModEmpresa & "'" & vbCrLf &
+                       "Inner Join MAEPREM ON MAEPREM.KOPR=MAEPR.KOPR And MAEPREM.EMPRESA='" & Mod_Empresa & "'" & vbCrLf &
                        "Where MAEPR.TIPR = 'FPN'" & vbCrLf &
                        _Condicion
 
@@ -417,11 +417,12 @@ Public Class Frm_Recalculo_PPPxProd
             ExportarTabla_JetExcel_Tabla(_UltTabla, Me, _Codigo & " Revisar PPP producto detalle")
         End If
 
-        Dim mensajeFinal As String
+        MensajeFinal = String.Empty
+
         If _ProcesoCanceladoPorUsuario OrElse Cl_Pm.Cancelar Then
-            mensajeFinal = String.Format("El proceso fue cancelado por el usuario. Total de productos procesados: {0}, Tiempo total: {1:hh\:mm\:ss}", Progreso_XProducto.Value, sw.Elapsed)
+            MensajeFinal = String.Format("El proceso fue cancelado por el usuario. Total de productos procesados: {0}, Tiempo total: {1:hh\:mm\:ss}", Progreso_XProducto.Value, sw.Elapsed)
         Else
-            mensajeFinal = String.Format("Proceso finalizado. Total de productos: {0}, Tiempo total: {1:hh\:mm\:ss}", productosSeleccionados.Count, sw.Elapsed)
+            MensajeFinal = String.Format("Proceso finalizado. Total de productos: {0}, Tiempo total: {1:hh\:mm\:ss}", productosSeleccionados.Count, sw.Elapsed)
         End If
 
         Lbl_StatusBar.Text = mensajeFinal

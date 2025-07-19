@@ -395,7 +395,7 @@ Public Class Frm_Importar_Desde_Excel
 
                 Consulta_sql = My.Resources.Recursos_LP.SQLQuery_Actualizar_Costos_Impuestos_New
                 Consulta_sql = Replace(Consulta_sql, "#Tbl_Paso_LP#", _Nombre_Tbl_Paso_Precios)
-                Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
                 Consulta_sql += vbCrLf & "Select * From " & _Nombre_Tbl_Paso_Precios
 

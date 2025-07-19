@@ -62,7 +62,7 @@ Public Class Frm_Prestashop_Producto
 
             Consulta_Sql = "Select Sitio,Id_product,Codigo,Descripcion,NOKOPR,Stock,Precio,Active,Usar_Padre,Sum(MAEST.STFI1) As Stock_Rd,Precio_Rd,Primario,FH_Actualizacion,FH_Revision
                             From " & _Global_BaseBk & "Zw_Prod_PrestaShop
-                            Inner Join MAEST On MAEST.KOPR = Codigo And EMPRESA = '" & ModEmpresa & "' 
+                            Inner Join MAEST On MAEST.KOPR = Codigo And EMPRESA = '" & Mod_Empresa & "' 
                             Inner Join MAEPR On MAEPR.KOPR = Codigo        
                             Where Sitio = '" & _Sitio & "' And Id_product = " & Id_product & "
                             Group By Sitio,Id_product,Codigo,Descripcion,NOKOPR,Stock,Precio,Active,Usar_Padre,Precio_Rd,Stock_Rd,Primario,FH_Actualizacion,FH_Revision"

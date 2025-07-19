@@ -250,8 +250,8 @@ Public Class Frm_Cashdro_Forma_de_Pago
                 End If
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_CashDro_Operaciones (Numero,OperationId,FechaHora_Inicio,posid,posuser,Modalidad,Empresa,Sucursal,Bodega,Caja) Values " & vbCrLf &
-                               "('" & _Numero & "','" & _OperationId_NCV & "',GetDate(),'" & _posid & "','" & _posuser & "','" & Modalidad &
-                               "','" & ModEmpresa & "','" & ModSucursal & "','" & ModBodega & "','" & ModCaja & "')"
+                               "('" & _Numero & "','" & _OperationId_NCV & "',GetDate(),'" & _posid & "','" & _posuser & "','" & Mod_Modalidad &
+                               "','" & Mod_Empresa & "','" & Mod_Sucursal & "','" & Mod_Bodega & "','" & Mod_Caja & "')"
                 _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id)
 
 

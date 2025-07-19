@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+﻿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 Imports Microsoft.VisualBasic.Strings
 
@@ -217,7 +217,7 @@ Public Class Frm_Vales_Listado_Espera_Filtro
         If Rdb_Tipo_doc_Uno.Checked Then
             If Not String.IsNullOrEmpty(Trim(Txt_Documento.Text)) Then
 
-                If CBool(_Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'")) Then
+                If CBool(_Sql.Fx_Cuenta_Registros("MAEEDO", "EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'")) Then
                     _Filtro_Documento = "And Tipo_Doc_As = '" & _Tido & "' And NroDoc_Doc_As = '" & _Nudo & "'"
                 Else
                     Beep()
@@ -452,7 +452,7 @@ Filtrar:
                 _CodProducto = .Pro_RowProducto.Item("KOPR")
                 _Descripcion_Producto = .Pro_RowProducto.Item("NOKOPR")
 
-                TxtProductoFiltro.Text = "C�digo: " & _CodProducto & " - " & _Descripcion_Producto
+                TxtProductoFiltro.Text = "Código: " & _CodProducto & " - " & _Descripcion_Producto
 
             End If
             .Dispose()

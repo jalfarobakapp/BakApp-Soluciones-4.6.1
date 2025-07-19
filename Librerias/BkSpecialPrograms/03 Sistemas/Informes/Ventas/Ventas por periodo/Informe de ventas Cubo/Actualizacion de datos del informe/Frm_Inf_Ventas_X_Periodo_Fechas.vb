@@ -195,7 +195,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                 Dim _Idmaeedo = _Sql.Fx_Trae_Dato("MAEEDO", "IDMAEEDO", "TIDO IN ('BLV','FCV','NCV')")
 
                 Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo
-                Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+                Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
                 Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
                 Consulta_Sql = Replace(Consulta_Sql, "#Filtro_Externo#", "")
                 Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(Dtp_Fecha_Desde.Value, "yyyyMMdd"))
@@ -351,7 +351,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                             _Sql.Ej_consulta_IDU(Consulta_Sql)
 
                             Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
-                            Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+                            Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
                             Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
                             Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
                             Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
@@ -388,7 +388,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                     System.Windows.Forms.Application.DoEvents()
 
                                     Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
-                                    Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+                                    Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
                                     Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
                                     Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
                                     Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
@@ -642,7 +642,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                 System.Windows.Forms.Application.DoEvents()
 
                                 Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
-                                Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+                                Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
                                 Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
                                 Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
                                 Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
@@ -675,7 +675,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                         System.Windows.Forms.Application.DoEvents()
 
                                         Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
-                                        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+                                        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
                                         Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
                                         Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
                                         Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
@@ -858,7 +858,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                             System.Windows.Forms.Application.DoEvents()
 
                             Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
-                            Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", ModEmpresa)
+                            Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
                             Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
                             Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
                             Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))

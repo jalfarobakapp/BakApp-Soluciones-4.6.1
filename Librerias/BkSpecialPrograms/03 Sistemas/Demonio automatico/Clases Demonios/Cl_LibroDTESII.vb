@@ -257,7 +257,7 @@ Public Class Cl_LibroDTESII
             'Switch_LibroDTESII.Value = False
             CircularLibroDTESII.Visible = False
             Lbl_LibroDTESII.Text = "Monitoreo Libro DTE desde SII, ERROR!!!"
-            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "Demonio_Error", _Error, "", "", "", "", False, "")
+            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "Demonio_Error", _Error, "", "", "", "", False, "")
 
         End If
 

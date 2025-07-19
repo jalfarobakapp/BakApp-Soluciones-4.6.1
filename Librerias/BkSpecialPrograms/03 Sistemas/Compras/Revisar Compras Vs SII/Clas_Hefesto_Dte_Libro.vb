@@ -107,7 +107,7 @@ Public Class Clas_Hefesto_Dte_Libro
 
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = 0"
+                       "Where Empresa = '" & Mod_Empresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = 0"
         Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
@@ -319,7 +319,7 @@ Public Class Clas_Hefesto_Dte_Libro
                         If Not _Enviado Then
 
                             'FIRMA ELECTRONICA 
-                            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo)
+                            Dim _Class_DTE As New Class_Genera_DTE_RdBk(_Idmaeedo, Mod_Empresa, Mod_Modalidad)
                             Dim _Iddt As Integer = _Class_DTE.Fx_Dte_Genera_Documento(Formulario, True)
                             Dim _Idpet As Integer
 
@@ -421,7 +421,7 @@ Public Class Clas_Hefesto_Dte_Libro
 
         Else
 
-            Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "Demonio",
+            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "Demonio",
                                "No se encontro el archivo runMonitor.BAT en el directorio (" & _Directorio_GenDTE & ")", "", "", "", "", 0, FUNCIONARIO)
 
         End If
@@ -579,7 +579,7 @@ Public Class Clas_Hefesto_Dte_Libro
                 End If
 
                 Consulta_sql = "Select Top 1 * From MAEEDO" & vbCrLf &
-                               "Where EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "' And TIDOELEC = 1"
+                               "Where EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "' And TIDOELEC = 1"
                 Dim _RowMaeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 Dim _Idmaeedo As Integer = 0
@@ -847,12 +847,12 @@ Public Class Clas_Hefesto_Dte_Libro
                 If _Tido = "DIN" Then
                     _Endo = "60805000"
                     Consulta_sql = "Select Top 1 * From MAEEDO" & vbCrLf &
-                               "Where EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "' And TIDOELEC = 0"
+                               "Where EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "' And TIDOELEC = 0"
                     _Monto_Neto = 0
                     _Monto_Total = _Monto_Iva_Recuperable
                 Else
                     Consulta_sql = "Select Top 1 * From MAEEDO" & vbCrLf &
-                               "Where EMPRESA = '" & ModEmpresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "' And TIDOELEC = 1"
+                               "Where EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "' And TIDOELEC = 1"
                 End If
 
                 Dim _RowMaeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)

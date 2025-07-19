@@ -36,7 +36,7 @@ Public Class Frm_Contenedores
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Contenedor" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "'"
+                       "Where Empresa = '" & Mod_Empresa & "'"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 

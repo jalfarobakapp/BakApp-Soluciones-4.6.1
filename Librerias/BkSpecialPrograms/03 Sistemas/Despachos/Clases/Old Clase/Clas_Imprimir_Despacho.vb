@@ -342,7 +342,7 @@ Public Class Clas_Imprimir_Despacho
             e.Graphics.DrawString(StrDup(200, "_"), _Font_C12, Brushes.Black, _xPos, _yPos)
             _yPos += 30
 
-            Consulta_sql = "Select * From MAEEN Where KOEN = '" & RutEmpresa & "' And SUEN = '" & ModSucursal & "'"
+            Consulta_sql = "Select * From MAEEN Where KOEN = '" & RutEmpresa & "' And SUEN = '" & Mod_Sucursal & "'"
             Dim _Row_Empresa As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
             Dim _Nokoen_Emp As String = RazonEmpresa

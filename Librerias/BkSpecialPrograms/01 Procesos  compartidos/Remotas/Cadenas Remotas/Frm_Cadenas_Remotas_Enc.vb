@@ -75,7 +75,7 @@ Public Class Frm_Cadenas_Remotas_Lista
         Dtp_Fecha_Emision_Hasta.Value = _Fecha_Desde
         Dtp_Fecha_Emision_Desde.Value = _Fecha_Desde
 
-        _Modalidad_Origen = Modalidad
+        _Modalidad_Origen = Mod_Modalidad
 
         Chk_Mostrar_Todas.Visible = (_Tido = "OCC" And Not _Accion = Enum_Accion.Mis_CRemotas)
 
@@ -142,7 +142,7 @@ Public Class Frm_Cadenas_Remotas_Lista
 
             Me.Enabled = False
 
-            Me.Text = "Documentos en espera para permisos remotos, Empresa: " & ModEmpresa & " - " & _Global_Row_Modalidad.Item("RAZON").Trim
+            Me.Text = "Documentos en espera para permisos remotos, Empresa: " & Mod_Empresa & " - " & _Global_Row_Modalidad.Item("RAZON").Trim
 
             Dim _Filtro = String.Empty
             Dim _Filtro_Estado = String.Empty
@@ -180,9 +180,9 @@ Public Class Frm_Cadenas_Remotas_Lista
             Dim _Filtro_Empresa_Sucursal As String
 
             If Cmb_Sucursal.SelectedValue = "01Todas" Then
-                _Filtro_Empresa_Sucursal = "And Empresa = '" & ModEmpresa & "'"
+                _Filtro_Empresa_Sucursal = "And Empresa = '" & Mod_Empresa & "'"
             Else
-                _Filtro_Empresa_Sucursal = "And Empresa = '" & ModEmpresa & "' And Sucursal = '" & Cmb_Sucursal.SelectedValue & "'"
+                _Filtro_Empresa_Sucursal = "And Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Cmb_Sucursal.SelectedValue & "'"
             End If
 
             _Filtro += vbCrLf & _Filtro_Extra
@@ -372,10 +372,10 @@ Public Class Frm_Cadenas_Remotas_Lista
 
             If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Notificaciones", "No_Volver_A_Notificar") Then
                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Notificaciones 
-                            Where Empresa = '" & ModEmpresa & "' And Usuario_Destino = '" & FUNCIONARIO & "' And RCadena_Id_Enc <> 0 And No_Volver_A_Notificar = 0"
+                            Where Empresa = '" & Mod_Empresa & "' And Usuario_Destino = '" & FUNCIONARIO & "' And RCadena_Id_Enc <> 0 And No_Volver_A_Notificar = 0"
             Else
                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Notificaciones 
-                            Where Empresa = '" & ModEmpresa & "' And Usuario_Destino = '" & FUNCIONARIO & "' And RCadena_Id_Enc <> 0"
+                            Where Empresa = '" & Mod_Empresa & "' And Usuario_Destino = '" & FUNCIONARIO & "' And RCadena_Id_Enc <> 0"
             End If
 
             _Sql.Ej_consulta_IDU(Consulta_sql)
@@ -547,10 +547,10 @@ Public Class Frm_Cadenas_Remotas_Lista
 
     Private Sub Btn_Cambiar_Modalidad_Click(sender As Object, e As EventArgs) Handles Btn_Cambiar_Modalidad.Click
 
-        Dim _Modalidad As String = Modalidad
+        Dim _Modalidad As String = Mod_Modalidad
 
-        Dim _ModEmpresa = ModEmpresa
-        Dim _ModSucursal = ModSucursal
+        Dim _Mod_Empresa = Mod_Empresa
+        Dim _Mod_Sucursal = Mod_Sucursal
 
         Dim Frm_Modalidad As New Frm_Modalidades(False)
         Frm_Modalidad.ControlBox = True
@@ -559,11 +559,11 @@ Public Class Frm_Cadenas_Remotas_Lista
 
         _Global_Frm_Menu.Refresh()
 
-        If _ModSucursal <> ModSucursal Then
+        If _Mod_Sucursal <> Mod_Sucursal Then
 
             RemoveHandler Cmb_Sucursal.SelectedIndexChanged, AddressOf Cmb_Sucursal_SelectedIndexChanged
             Sb_Cargar_Sucursales()
-            Cmb_Sucursal.SelectedValue = "01Todas" 'ModSucursal
+            Cmb_Sucursal.SelectedValue = "01Todas" 'Mod_Sucursal
             Sb_Acualizar_Grilla()
             AddHandler Cmb_Sucursal.SelectedIndexChanged, AddressOf Cmb_Sucursal_SelectedIndexChanged
 
@@ -573,7 +573,7 @@ Public Class Frm_Cadenas_Remotas_Lista
 
     Private Sub Frm_Cadenas_Remotas_Lista_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
 
-        If Modalidad <> _Modalidad_Origen Then
+        If Mod_Modalidad <> _Modalidad_Origen Then
 
             Dim _Mod As New Clas_Modalidades
 
@@ -588,9 +588,9 @@ Public Class Frm_Cadenas_Remotas_Lista
 
         caract_combo(Cmb_Sucursal)
         Consulta_sql = "SELECT '01Todas' AS Padre,'Todas las sucursales' AS Hijo " & vbCrLf & "Union" & vbCrLf &
-                       "SELECT KOSU AS Padre,KOSU+'-'+NOKOSU AS Hijo FROM TABSU WHERE EMPRESA = '" & ModEmpresa & "'"
+                       "SELECT KOSU AS Padre,KOSU+'-'+NOKOSU AS Hijo FROM TABSU WHERE EMPRESA = '" & Mod_Empresa & "'"
         Cmb_Sucursal.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
-        Cmb_Sucursal.SelectedValue = ModSucursal
+        Cmb_Sucursal.SelectedValue = Mod_Sucursal
 
     End Sub
 

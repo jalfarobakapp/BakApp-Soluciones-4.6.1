@@ -51,7 +51,7 @@ Public Class Frm_ConfTidoXModal
         Consulta_sql = "Select ZConf.*,Td.*" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad ZConf" & vbCrLf &
                        "Left Join TABTIDO Td On Td.TIDO = ZConf.TipoDoc" & vbCrLf &
-                       "Where ZConf.Empresa = '" & ModEmpresa & "' And ZConf.Modalidad = '" & _Modalidad & "' And ZConf.TipoDoc = '" & _Tido & "'"
+                       "Where ZConf.Empresa = '" & Mod_Empresa & "' And ZConf.Modalidad = '" & _Modalidad & "' And ZConf.TipoDoc = '" & _Tido & "'"
 
         _RowFormato = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -74,6 +74,7 @@ Public Class Frm_ConfTidoXModal
         Txt_NombreFormato_Correo.Text = _RowFormato.Item("NombreFormato_Correo")
 
         Rdb_TimbrarXRandom.Value = _RowFormato.Item("TimbrarXRandom")
+        Txt_ListaPrecioDoc.Text = _RowFormato.Item("ListaPrecioDoc")
 
         If Modalidad_General Then
             Input_AvisoSaldoFolios.Value = NuloPorNro(_RowFormato.Item("AvisoSaldoFolios"), 10)
@@ -85,14 +86,14 @@ Public Class Frm_ConfTidoXModal
             Input_AvisoSaldoFolios.MinValue = 0
             Input_AvisoSaldoFolios.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
                                                              "AvisoSaldoFolios",
-                                                             "Empresa = '" & ModEmpresa & "' And Modalidad = '  ' And TipoDoc = '" & _Tido & "'")
+                                                             "Empresa = '" & Mod_Empresa & "' And Modalidad = '  ' And TipoDoc = '" & _Tido & "'")
             Input_AvisoSaldoFolios.Enabled = False
             Lbl_AvisoSaldoFolios.Enabled = False
 
             Input_DiasAvisoExpiraFolio.MinValue = 0
             Input_DiasAvisoExpiraFolio.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
                                                              "DiasAvisoExpiraFolio",
-                                                             "Empresa = '" & ModEmpresa & "' And Modalidad = '  ' And TipoDoc = '" & _Tido & "'")
+                                                             "Empresa = '" & Mod_Empresa & "' And Modalidad = '  ' And TipoDoc = '" & _Tido & "'")
             Input_DiasAvisoExpiraFolio.Enabled = False
             Lbl_DiasAvisoExpiraFolio.Enabled = False
         End If
@@ -120,6 +121,9 @@ Public Class Frm_ConfTidoXModal
             End Select
 
         End If
+
+        Lbl_ListaPrecioDoc.Visible = (_Tido = "BLV")
+        Txt_ListaPrecioDoc.Visible = (_Tido = "BLV")
 
     End Sub
 
@@ -162,6 +166,7 @@ Public Class Frm_ConfTidoXModal
         Dim _TimbrarXRandom = Convert.ToInt32(Rdb_TimbrarXRandom.Value)
         Dim _DiasAvisoExpiraFolio = Input_DiasAvisoExpiraFolio.Value
         Dim _AvisoSaldoFolios = Input_AvisoSaldoFolios.Value
+        Dim _ListaPrecioDoc = Txt_ListaPrecioDoc.Text.Trim
 
         If Not String.IsNullOrEmpty(_Numero) Then
 
@@ -196,7 +201,7 @@ Public Class Frm_ConfTidoXModal
             End If
 
             Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("MAEEDO",
-                                        "EMPRESA = '" & ModEmpresa & "' And TIDO In " & _Filtro_Tido & " And NUDO = '" & _Numero & "'"))
+                                        "EMPRESA = '" & Mod_Empresa & "' And TIDO In " & _Filtro_Tido & " And NUDO = '" & _Numero & "'"))
 
             If _Reg Then
 
@@ -213,14 +218,14 @@ Public Class Frm_ConfTidoXModal
         Consulta_sql = String.Empty
 
         If _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "GDD" Then
-            Consulta_sql += "Update CONFIEST Set GDV = '" & _Numero & "' Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
-            Consulta_sql += "Update CONFIEST Set GTI = '" & _Numero & "' Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
-            Consulta_sql += "Update CONFIEST Set GDP = '" & _Numero & "' Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
-            Consulta_sql += "Update CONFIEST Set GDD = '" & _Numero & "' Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf & vbCrLf
+            Consulta_sql += "Update CONFIEST Set GDV = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
+            Consulta_sql += "Update CONFIEST Set GTI = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
+            Consulta_sql += "Update CONFIEST Set GDP = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
+            Consulta_sql += "Update CONFIEST Set GDD = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf & vbCrLf
         Else
 
             If Txt_Numero.Visible Then
-                Consulta_sql += "Update CONFIEST Set " & _Tido & " = '" & _Numero & "' Where EMPRESA = '" & ModEmpresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf & vbCrLf
+                Consulta_sql += "Update CONFIEST Set " & _Tido & " = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf & vbCrLf
             End If
 
         End If
@@ -240,13 +245,14 @@ Public Class Frm_ConfTidoXModal
                    ",TimbrarXRandom = '" & _TimbrarXRandom & "'" & vbCrLf &
                    ",DiasAvisoExpiraFolio = " & _DiasAvisoExpiraFolio & vbCrLf &
                    ",AvisoSaldoFolios = " & _AvisoSaldoFolios & vbCrLf &
-                   "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'" 'In " & _Filtro_Tido
+                   ",ListaPrecioDoc = '" & _ListaPrecioDoc & "'" & vbCrLf &
+                   "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'"
 
         If _Filtro_Tido = "('GDV','GTI','GDP','GDD')" Then
             Consulta_sql += vbCrLf & vbCrLf & "Update " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Set" & vbCrLf &
                             "DiasAvisoExpiraFolio = " & _DiasAvisoExpiraFolio & vbCrLf &
                             ",AvisoSaldoFolios = " & _AvisoSaldoFolios & vbCrLf &
-                            "Where Empresa = '" & ModEmpresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc In " & _Filtro_Tido
+                            "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc In " & _Filtro_Tido
         End If
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
@@ -254,7 +260,7 @@ Public Class Frm_ConfTidoXModal
             Consulta_sql = "Select ZConf.*,Td.*" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad ZConf" & vbCrLf &
                        "Left Join TABTIDO Td On Td.TIDO = ZConf.TipoDoc" & vbCrLf &
-                       "Where ZConf.Empresa = '" & ModEmpresa & "' And ZConf.Modalidad = '" & _Modalidad & "' And ZConf.TipoDoc = '" & _Tido & "'"
+                       "Where ZConf.Empresa = '" & Mod_Empresa & "' And ZConf.Modalidad = '" & _Modalidad & "' And ZConf.TipoDoc = '" & _Tido & "'"
 
             _RowFormato = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -344,4 +350,31 @@ Public Class Frm_ConfTidoXModal
         End If
     End Sub
 
+    Private Sub Txt_ListaPrecioDoc_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_ListaPrecioDoc.ButtonCustomClick
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "LISTAS DE PRECIOS Y COSTOS"
+
+        _Filtrar.Tabla = "TABPP"
+        _Filtrar.Campo = "KOLT"
+        _Filtrar.Descripcion = "NOKOLT"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "",
+                               Nothing, False, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+            Dim _Codigo As String = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion As String = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_ListaPrecioDoc.Tag = _Codigo
+            Txt_ListaPrecioDoc.Text = _Codigo ' & " - " & _Descripcion
+
+        End If
+    End Sub
+
+    Private Sub Txt_ListaPrecioDoc_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_ListaPrecioDoc.ButtonCustom2Click
+        Txt_ListaPrecioDoc.Text = String.Empty
+    End Sub
 End Class

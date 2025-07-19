@@ -133,13 +133,13 @@ Public Module Mod_Variables_Globales
 
 #End Region
 
-    Public Modalidad As String
-    Public ModEmpresa As String
-    Public ModSucursal As String
-    Public ModBodega As String
-    Public ModCaja As String
-    Public ModListaPrecioVenta As String
-    Public ModListaPrecioCosto As String
+    Public Mod_Modalidad As String
+    Public Mod_Empresa As String
+    Public Mod_Sucursal As String
+    Public Mod_Bodega As String
+    Public Mod_Caja As String
+    Public Mod_ListaPrecioVenta As String
+    Public Mod_ListaPrecioCosto As String
 
     Enum Enum_Themas
         Claro
@@ -147,6 +147,8 @@ Public Module Mod_Variables_Globales
         Oscuro
         Azul
         Oscuro_Ligth
+        Rojo
+        Verde
     End Enum
 
 

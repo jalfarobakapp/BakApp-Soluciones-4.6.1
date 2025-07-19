@@ -20,6 +20,7 @@ CREATE TABLE [dbo].[Zw_Configuracion_Formatos_X_Modalidad](
 [TimbrarXRandom]                [bit]			NOT NULL DEFAULT (0),
 [DiasAvisoExpiraFolio]          [int]			NOT NULL DEFAULT (0),
 [AvisoSaldoFolios]              [int]			NOT NULL DEFAULT (0),
+[ListaPrecioDoc]                [char](3)       NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Configuracion_Formatos_X_Modalidad_1] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC,

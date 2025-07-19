@@ -559,7 +559,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         End If
 
-        Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion, _Top)
+        Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion, _Top)
 
         Grilla.ClearSelection()
         'GrillaBusquedaOtros.ClearSelection()
@@ -609,7 +609,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
                 Consulta_sql = Replace(Consulta_sql, "#Endo#", _CodEntidad)
                 Consulta_sql = Replace(Consulta_sql, "#Filtro_Tido#", _Filtro_Tido)
-                Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
                 Consulta_sql = Replace(Consulta_sql, "#Sucursal#", _SucursalBusq)
                 Consulta_sql = Replace(Consulta_sql, "#Bodega#", _BodegaBusq)
                 Consulta_sql = Replace(Consulta_sql, "#Lista#", _ListaBusq)
@@ -717,7 +717,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Sub Sb_Actualizar_Tbl_Bodegas()
 
-        Dim _Orden_Bod = "ORDEN_BOD_" & ModEmpresa.Trim & ModSucursal.Trim
+        Dim _Orden_Bod = "ORDEN_BOD_" & Mod_Empresa.Trim & Mod_Sucursal.Trim
 
         If _Usar_Bodegas_NVI Then
 
@@ -729,12 +729,12 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                         Select SUBSTRING(CodPermiso, 5, 10)
                         From " & _Global_BaseBk & "ZW_PermisosVsUsuarios
                         Where CodUsuario = '" & FUNCIONARIO & "' And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega_NVI'))
-                        Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')
+                        Or (EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')
    
                         Update #Paso Set Orden = Isnull((Select Orden From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones 
 						                        		 Where Tabla = '" & _Orden_Bod & "' And CodigoTabla = Bodega),0)
 
-                        Select * From #Paso Where EMPRESA = '" & ModEmpresa & "' Order by Orden
+                        Select * From #Paso Where EMPRESA = '" & Mod_Empresa & "' Order by Orden
                         Drop Table #Paso"
         Else
 
@@ -746,12 +746,12 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                         Select SUBSTRING(CodPermiso, 3, 10)
                         From " & _Global_BaseBk & "ZW_PermisosVsUsuarios
                         Where CodUsuario = '" & FUNCIONARIO & "' And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega'))
-                        Or (EMPRESA = '" & ModEmpresa & "' And KOSU = '" & ModSucursal & "' And KOBO = '" & ModBodega & "')
+                        Or (EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')
    
                         Update #Paso Set Orden = Isnull((Select Orden From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones 
 						                        		 Where Tabla = '" & _Orden_Bod & "' And CodigoTabla = Bodega),0)
 
-                        Select * From #Paso Where EMPRESA = '" & ModEmpresa & "' Order by Orden
+                        Select * From #Paso Where EMPRESA = '" & Mod_Empresa & "' Order by Orden
                         Drop Table #Paso"
         End If
 
@@ -1254,7 +1254,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
                     Next
 
-                    .Columns("DATOSUBIC").HeaderText = "Ubicación Bod. " & ModBodega
+                    .Columns("DATOSUBIC").HeaderText = "Ubicación Bod. " & Mod_Bodega
                     .Columns("DATOSUBIC").Width = 100
                     .Columns("DATOSUBIC").Visible = True
                     .Columns("DATOSUBIC").DisplayIndex = _DisplayIndex
@@ -1382,7 +1382,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
                     Next
 
-                    .Columns("DATOSUBIC").HeaderText = "Ubicación Bod. " & ModBodega
+                    .Columns("DATOSUBIC").HeaderText = "Ubicación Bod. " & Mod_Bodega
                     .Columns("DATOSUBIC").Width = 100
                     .Columns("DATOSUBIC").Visible = True
                     .Columns("DATOSUBIC").DisplayIndex = _DisplayIndex
@@ -1447,7 +1447,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
                 If _Filas = _FilaSelect Then
 
-                    Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, False, _Opcion_Buscar._Descripcion)
+                    Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, False, _Opcion_Buscar._Descripcion)
 
                 End If
 
@@ -1637,7 +1637,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             If _Text_Ultima_Busqueda <> Txtdescripcion.Text Then
                 _Top = _Top_Filas
 
-                Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+                Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
 
                 If CBool(Grilla.RowCount) Then
                     Grilla.Focus()
@@ -1662,7 +1662,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Private Sub Txtdescripcion_TextChanged(sender As System.Object, e As System.EventArgs)
         If String.IsNullOrWhiteSpace(Txtdescripcion.Text.Trim) AndAlso String.IsNullOrWhiteSpace(Txt_CodAlternativo.Text.Trim) Then
-            Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+            Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
             Grilla.ClearSelection()
         End If
     End Sub
@@ -1738,7 +1738,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Dim Fm As New Frm_BuscarXProducto_Mt
             Fm.CodProveedor_productos = String.Empty
             Fm.Tipo_Busqueda_Productos = Fm.Buscar_En.Codigos_Alternativos
-            Fm.ListaDePrecio = ModListaPrecioVenta
+            Fm.ListaDePrecio = Mod_ListaPrecioVenta
             Fm.CodProveedor_productos = String.Empty
 
             ' Dim Razon As String = _Sql.Fx_Trae_Dato(, "NOKOEN", "MAEEN", "KOEN = '" & CodProveedor_productos & "'")
@@ -1748,7 +1748,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             Txtdescripcion.Text = Fm.CodigoPr_Sel
 
-            Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+            Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
             Grilla.ClearSelection()
             'GrillaBusquedaOtros.ClearSelection()
         End If
@@ -1791,7 +1791,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             If Fm.Pro_Grabar Then
                 Txtdescripcion.Text = Fm.Pro_RowProducto.Item("KOPR")
-                Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+                Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
             End If
 
             Fm.Dispose()
@@ -1946,7 +1946,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             End If
 
-            Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+            Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
 
         End If
 
@@ -2176,7 +2176,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             ChkMostrarOcultos.Checked = False
         End If
 
-        Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+        Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
         If CBool(Grilla.RowCount) Then Grilla.Focus()
 
     End Sub
@@ -2587,7 +2587,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             'End If
             _Top = 30
-            Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Codigo)
+            Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Codigo)
             If CBool(Grilla.RowCount) Then Grilla.Focus()
         End If
 
@@ -2605,7 +2605,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         If _Cima < 25 Then
             'Return
             Dim _Codigo = Trim(Grilla.Rows(Grilla.Rows.Count - 1).Cells("Codigo").Value)
-            Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, _Top_Filas)
+            Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, _Top_Filas)
             BuscarDatoEnGrilla(_Codigo, "Codigo", Grilla)
 
         End If
@@ -2900,7 +2900,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                 TxtCodigo.Text = String.Empty
                 Txtdescripcion.Text = String.Empty
 
-                Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion, _Top)
+                Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion, _Top)
 
             End If
 
@@ -3127,7 +3127,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         If e.KeyValue = Keys.Enter Then
             Patente_rvm = Txt_Patente.Text
             If Fx_Buscar_Patente() Then
-                Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+                Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
                 Txtdescripcion.Focus()
             Else
                 MessageBoxEx.Show(Me, "Patente No encontrada", "Patente RVM", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -3147,7 +3147,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         If Fx_Buscar_Patente() Then
             MessageBoxEx.Show(Me, "Patente encontrada: " & _Row_Patente_rvm.Item("Descripcion"), "Patente RVM", MessageBoxButtons.OK, MessageBoxIcon.Information)
             If Not String.IsNullOrEmpty(Txtdescripcion.Text) Then
-                Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+                Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
             End If
             Txtdescripcion.Focus()
         Else
@@ -3179,24 +3179,24 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             End If
             _Top = 30
-            Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Codigo_Alternativo)
+            Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Codigo_Alternativo)
             If CBool(Grilla.RowCount) Then Grilla.Focus()
         End If
 
     End Sub
 
     Private Sub Chk_MostrarVendidosUlt3Meses_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_MostrarVendidosUlt3Meses.CheckedChanged
-        Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+        Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
     End Sub
 
     Private Sub Chk_StockFisicoMayorCero_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_StockFisicoMayorCero.CheckedChanged
-        Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+        Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
     End Sub
 
     Private Sub Txt_Patente_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Patente.ButtonCustom2Click
         Patente_rvm = String.Empty
         Fx_Buscar_Patente()
-        Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+        Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
         Txtdescripcion.Focus()
     End Sub
 
@@ -3290,7 +3290,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             If (index >= count) Then
                 ' Es la última fila.
-                Sb_Buscar_Productos(ModEmpresa, _SucursalBusq, _BodegaBusq, _ListaBusq, False, _Opcion_Buscar._Descripcion)
+                Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, False, _Opcion_Buscar._Descripcion)
                 Return
             End If
 
@@ -3322,7 +3322,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
-        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tmp_Prm_Informes Set Modalidad = '" & Modalidad & "'
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Tmp_Prm_Informes Set Modalidad = '" & Mod_Modalidad & "'
                         Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Buscar_Productos'" & Space(1) &
                        "And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = ''"
         _Sql.Ej_consulta_IDU(Consulta_sql, False)

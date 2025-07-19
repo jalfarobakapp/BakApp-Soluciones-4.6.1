@@ -36,7 +36,7 @@ Public Class Frm_St_Lista_Tecnicos_Talleres
                        "Chk_Taller_Externo,Chk_Habilitado,Chk_Supervisor,Chk_Domicilio,Informacion," & vbCrLf &
                        "Case Chk_Taller_Externo When 1 Then 'TALLER' Else 'TECNICO' End As 'Tipo'" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_St_Conf_Tecnicos_Taller" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And Sucursal = '" & ModSucursal & "'"
+                       "Where Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & "'"
         _TblTecnicos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla

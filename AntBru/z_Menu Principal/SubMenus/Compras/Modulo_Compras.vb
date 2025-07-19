@@ -50,7 +50,7 @@ Public Class Modulo_Compras
                 NewPanel = New SolAsisCompraModos(_Fm_Menu_Padre)
                 _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
             Else
-                Dim Fm As New Frm_00_Asis_Compra_Menu(Modalidad)
+                Dim Fm As New Frm_00_Asis_Compra_Menu(Mod_Modalidad)
                 Fm.Tipo_Informe = "Asistente de compras"
                 Fm.Modo_OCC = True
                 Fm.ShowDialog(Me)
@@ -115,7 +115,7 @@ Public Class Modulo_Compras
     End Sub
 
     Private Sub Btn_OCCProveedores_Click(sender As Object, e As EventArgs) Handles Btn_OCCProveedores.Click
-        Dim Fm1 As New Frm_00_Asis_Compra_Menu(Modalidad)
+        Dim Fm1 As New Frm_00_Asis_Compra_Menu(Mod_Modalidad)
         Fm1.Accion_Automatica = True
         Fm1.Auto_GenerarAutomaticamenteOCCProveedores = True
         Fm1.Modo_OCC = True
@@ -125,7 +125,7 @@ Public Class Modulo_Compras
     End Sub
 
     Private Sub Btn_OCCStar_Click(sender As Object, e As EventArgs) Handles Btn_OCCStar.Click
-        Dim Fm2 As New Frm_00_Asis_Compra_Menu(Modalidad)
+        Dim Fm2 As New Frm_00_Asis_Compra_Menu(Mod_Modalidad)
         Fm2.Accion_Automatica = True
         Fm2.Auto_GenerarAutomaticamenteOCCProveedorStar = True
         Fm2.Modo_OCC = True
@@ -135,7 +135,7 @@ Public Class Modulo_Compras
     End Sub
 
     Private Sub Btn_NVI_Click(sender As Object, e As EventArgs) Handles Btn_NVI.Click
-        Dim Fm3 As New Frm_00_Asis_Compra_Menu(Modalidad)
+        Dim Fm3 As New Frm_00_Asis_Compra_Menu(Mod_Modalidad)
         Fm3.Accion_Automatica = True
         Fm3.Auto_GenerarAutomaticamenteNVI = True
         Fm3.Modo_NVI = True

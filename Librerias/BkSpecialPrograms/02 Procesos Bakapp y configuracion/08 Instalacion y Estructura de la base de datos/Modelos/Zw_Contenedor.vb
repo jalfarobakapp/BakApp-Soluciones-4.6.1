@@ -10,7 +10,7 @@
 
     Public Sub New()
         IdCont = 0
-        Empresa = ModEmpresa
+        Empresa = Mod_Empresa
         Contenedor = String.Empty
         NombreContenedor = String.Empty
         Tido_Rela = String.Empty

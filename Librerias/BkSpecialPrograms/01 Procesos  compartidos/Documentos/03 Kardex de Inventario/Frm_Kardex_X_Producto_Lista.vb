@@ -69,7 +69,7 @@ Public Class Frm_Kardex_X_Producto_Lista
 
     Private Sub Frm_DocmentoLista_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "ZW_PermisosVsUsuarios", "CodUsuario = '" & FUNCIONARIO & "' And CodPermiso Like 'Bo" & ModEmpresa & "%'")
+        Dim _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "ZW_PermisosVsUsuarios", "CodUsuario = '" & FUNCIONARIO & "' And CodPermiso Like 'Bo" & Mod_Empresa & "%'")
 
         If _Reg = 0 Then
             MessageBoxEx.Show(Me, "Usted no tiene permisos para ninguna bodega en Bakapp", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -144,8 +144,8 @@ Public Class Frm_Kardex_X_Producto_Lista
         End If
 
         Consulta_sql = My.Resources.Recursos_Kardex.Kardex_por_producto
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
-        Consulta_sql = Replace(Consulta_sql, "#ListaPrecio#", ModListaPrecioVenta)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+        Consulta_sql = Replace(Consulta_sql, "#ListaPrecio#", Mod_ListaPrecioVenta)
 
         If ChkMostrarOcultos.Checked Then
             _Condicion += "And MP.ATPR<>'OCU'"
@@ -164,10 +164,10 @@ Public Class Frm_Kardex_X_Producto_Lista
                                Isnull( TP.PP01UD,0) As PP02UD
                           FROM MAEPR MP WITH (NOLOCK) INNER JOIN MAEPREM WITH (NOLOCK)
                             ON MAEPREM.KOPR=MP.KOPR 
-                            AND MAEPREM.EMPRESA='" & ModEmpresa & "'  
+                            AND MAEPREM.EMPRESA='" & Mod_Empresa & "'  
                                 LEFT JOIN TABPRE TP 
                             ON MP.KOPR=TP.KOPR 
-                            AND TP.KOLT= '" & ModListaPrecioVenta & "'   
+                            AND TP.KOLT= '" & Mod_ListaPrecioVenta & "'   
                         WHERE  
                             MP.ATPR<>'OCU' AND 
                             MP.TIPR<>'SSN'  
@@ -235,10 +235,10 @@ Public Class Frm_Kardex_X_Producto_Lista
         _Codigo = _Codigo.Replace("'", "")
 
         Consulta_sql = My.Resources.Recursos_Kardex.Kardex_Stock_Productos_por_Suc_Bod
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Codigo)
         Consulta_sql = Replace(Consulta_sql, "#Ud#", _Unidad)
-        Consulta_sql = Replace(Consulta_sql, "#ListaPrecio#", ModListaPrecioVenta)
+        Consulta_sql = Replace(Consulta_sql, "#ListaPrecio#", Mod_ListaPrecioVenta)
         Consulta_sql = Replace(Consulta_sql, "#Kofu#", FUNCIONARIO)
         Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
 
@@ -262,7 +262,7 @@ Public Class Frm_Kardex_X_Producto_Lista
                        "'' AS DATOSUBIC                                                  -- UBICACION EN BODEGA" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From MAEST MST With (Nolock)  " & vbCrLf &
-                       "Where MST.KOPR = '" & _Codigo & "' AND MST.EMPRESA = '" & ModEmpresa & "'" & vbCrLf &
+                       "Where MST.KOPR = '" & _Codigo & "' AND MST.EMPRESA = '" & Mod_Empresa & "'" & vbCrLf &
                        "Group By KOPR" & vbCrLf &
                        "Update #Paso Set StTeorico = STFI" & _Unidad & "+STDV" & _Unidad & "C+STOCNV" & _Unidad & "C-STOCNV" & _Unidad & vbCrLf &
                        "Select * From #Paso" & vbCrLf &
@@ -462,7 +462,7 @@ Public Class Frm_Kardex_X_Producto_Lista
         Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
 
         Fm.Pro_Tipo_Lista = "C" '.Tipo_Busqueda_Productos = Fm.Buscar_En.Maestro_de_Productos
-        Fm.Pro_Lista_Busqueda = ModListaPrecioVenta
+        Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
         Fm.Pro_CodEntidad = String.Empty
         Fm.Pro_Mostrar_Info = False 'MostrarOcultos = True
         Fm.Pro_Actualizar_Precios = False
@@ -805,7 +805,7 @@ Public Class Frm_Kardex_X_Producto_Lista
 
                     If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
-                        Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "",
+                        Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "",
                                            "CAMBIO DE UBICACION DEL PRODUCTO," & Space(1) &
                                            "NUEVA UBICACION (" & _Empresa & "-" & _Sucursal & "-" & _Bodega & " -> " & _Ubicacion & ")" & Space(1) &
                                            "UBICACION ANTERIOR " & _OldUbicacion,

@@ -145,7 +145,7 @@ Public Class Frm_Consolidacion_Stock_PP
             If _consolidado Then
 
                 Consulta_sql = My.Resources._SQLquery.Consolidacion_Total_MAEPR_MAEPREM_X_producto
-                Consulta_sql = Replace(Consulta_sql, "#Empresa#", ModEmpresa)
+                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
                 Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Codigo)
 
                 Consulta_sql = Replace(Consulta_sql, "#Tabla_Paso#", _Consolidar_Stock.Pro_Tabla_Paso)
@@ -319,7 +319,7 @@ Public Class Frm_Consolidacion_Stock_PP
 
                 Dim _Id_DocEnc As Integer = _Fila_Enc.Item("Id_DocEnc")
 
-                Consulta_sql = "Select '" & ModEmpresa & "' As Empresa,Sucursal,Bodega,Codigo,Descripcion,Ud01PR,CantUd1,Ud02PR,CantUd2" & vbCrLf &
+                Consulta_sql = "Select '" & Mod_Empresa & "' As Empresa,Sucursal,Bodega,Codigo,Descripcion,Ud01PR,CantUd1,Ud02PR,CantUd2" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_Casi_DocDet" & vbCrLf &
                                "Where Id_DocEnc = " & _Id_DocEnc
                 _Tbl_DocDet = _Sql.Fx_Get_DataTable(Consulta_sql)

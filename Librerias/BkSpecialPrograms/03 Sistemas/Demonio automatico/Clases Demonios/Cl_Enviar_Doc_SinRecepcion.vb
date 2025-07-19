@@ -86,7 +86,7 @@ Left Join TABFU ON Edo.KOFUDO=TABFU.KOFU
 Left Join MAEEDOOB Obs On Edo.IDMAEEDO = Obs.IDMAEEDO
 Left Join TABTIDO Tdo On Edo.TIDO = Tdo.TIDO
 Where 
-Edo.EMPRESA='" & ModEmpresa & "'  And 
+Edo.EMPRESA='" & Mod_Empresa & "'  And 
 (1<0 " & _Documentos & ") And
 Ddo.LILG IN ('SI','CR') And Ddo.CAPRCO1 > Ddo.CAPREX1 + Ddo.CAPRAD1  
 Order By Edo.IDMAEEDO 

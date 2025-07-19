@@ -99,10 +99,10 @@ Public Class Frm_Pagos_Masivos_Transferencia
             End If
 
             Dim _Cudp As String = _Sql.Fx_Trae_Dato("TABENDP", "CTACTE",
-                                                "EMPRESA = '" & ModEmpresa & "' And KOENDP = '" & _Emdp & "'")
+                                                "EMPRESA = '" & Mod_Empresa & "' And KOENDP = '" & _Emdp & "'")
 
             Dim _Pagar As New Clas_Pagar
-            _Pagado = _Pagar.Fx_Crear_Pago_y_Pagar("PTB", "", "", ModEmpresa, ModSucursal, ModCaja, Cmb_Emdp.SelectedValue, _Cudp,
+            _Pagado = _Pagar.Fx_Crear_Pago_y_Pagar("PTB", "", "", Mod_Empresa, Mod_Sucursal, Mod_Caja, Cmb_Emdp.SelectedValue, _Cudp,
                                                _NroDocumento,
                                                Dtp_Fecha_Emision.Value, Dtp_Fecha_Emision.Value, "$", "N", 1,
                                                "Pago masivo BakApp", 1,
@@ -336,7 +336,7 @@ Public Class Frm_Pagos_Masivos_Transferencia
             Return
         End If
 
-        Consulta_sql = "Select top 1 *  From TABENDP Where EMPRESA = '" & ModEmpresa & "' And KOENDP = '" & _Emdp & "'"
+        Consulta_sql = "Select top 1 *  From TABENDP Where EMPRESA = '" & Mod_Empresa & "' And KOENDP = '" & _Emdp & "'"
         Dim _TblCtaCte As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblCtaCte.Rows.Count) Then
