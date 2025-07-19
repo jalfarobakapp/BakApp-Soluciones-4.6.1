@@ -973,6 +973,12 @@
     <Compile Include="03 Sistemas\Impresion Masiva\Frm_ImpMasiva.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Preview.Designer.vb">
+      <DependentUpon>Frm_ImpBarras_Preview.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Preview.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\Cl_Imprimir_CompNoDesp.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Cl_Inventario.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.Designer.vb">
@@ -4903,6 +4909,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Impresion Masiva\Frm_ImpMasiva.resx">
       <DependentUpon>Frm_ImpMasiva.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Preview.resx">
+      <DependentUpon>Frm_ImpBarras_Preview.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.resx">
       <DependentUpon>Frm_Inv_Inventarios.vb</DependentUpon>

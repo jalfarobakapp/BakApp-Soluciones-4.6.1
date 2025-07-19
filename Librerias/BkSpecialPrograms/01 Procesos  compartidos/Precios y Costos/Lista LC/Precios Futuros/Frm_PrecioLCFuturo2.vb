@@ -306,17 +306,18 @@ Public Class Frm_PrecioLCFuturo2
                                 Dim _Imp As New Class_Imprimir_Barras
 
                                 _Imp.Sb_Imprimir_Producto(CmbEtiqueta.SelectedValue,
-                                                  _Puerto,
-                                                  _Codigo,
-                                                  _Lista,
-                                                  Mod_Empresa,
-                                                  Mod_Sucursal,
-                                                  Mod_Bodega,
-                                                  "",
-                                                  False,
-                                                  True,
-                                                  _Id,
-                                                  "", False)
+                                                          _Puerto,
+                                                          _Codigo,
+                                                          _Lista,
+                                                          Mod_Empresa,
+                                                          Mod_Sucursal,
+                                                          Mod_Bodega,
+                                                          "",
+                                                          False,
+                                                          True,
+                                                          _Id,
+                                                          "",
+                                                          False, False)
 
                                 If Not String.IsNullOrEmpty(_Imp.Error) Then
                                     If MessageBoxEx.Show(Me, _Imp.Error, "Error al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then

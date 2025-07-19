@@ -276,7 +276,7 @@ Public Class Frm_ImpBarras_PorProducto
 
 #Region "IMPRIMIR ETIQUETAS"
 
-    Sub Sb_Imprimir_Etiquetas(_ImprimirAIP As Boolean)
+    Sub Sb_Imprimir_Etiquetas(_ImprimirAIP As Boolean, _VistaPrevia As Boolean)
 
         Try
 
@@ -297,11 +297,9 @@ Public Class Frm_ImpBarras_PorProducto
             If _CantPorLinea = 0 Then _CantPorLinea = 1
 
             Dim _TblDetalle As DataTable = Grilla.DataSource
-
-
             Dim _Suma As Double = NuloPorNro(_TblDetalle.Compute("Sum(Cantidad)", "1>0"), 0)
 
-            If Not CBool(_Suma) Then
+            If Not _VistaPrevia AndAlso Not CBool(_Suma) Then
 
                 Beep()
                 ToastNotification.Show(Me, "NO HAY DATOS QUE IMPRIMIR",
@@ -316,6 +314,10 @@ Public Class Frm_ImpBarras_PorProducto
 
                 Dim CanXlinea As Double = _CantPorLinea
                 Dim Veces As Double = _Fila("Cantidad").ToString()
+
+                If _VistaPrevia Then
+                    Veces = 1
+                End If
 
                 If CBool(Veces) Then
 
@@ -371,12 +373,22 @@ Public Class Frm_ImpBarras_PorProducto
                                                   Chk_ImprimiPrecioFuturo.Checked,
                                                   Id_PrecioFuturo,
                                                   _CodAlternativo,
-                                                  _ImprimirAIP)
+                                                  _ImprimirAIP, _VistaPrevia)
 
                         If Not String.IsNullOrEmpty(_Imp.Error) Then
                             If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
                                 Return
                             End If
+                        End If
+
+                        If _VistaPrevia Then
+
+                            Dim Fm As New Frm_ImpBarras_Preview(_Imp.Ult_Etiqueta, Cmbetiquetas.SelectedValue, _Codigo)
+                            Fm.ShowDialog(Me)
+                            Fm.Dispose()
+
+                            Return
+
                         End If
 
                     Next
@@ -433,7 +445,7 @@ Public Class Frm_ImpBarras_PorProducto
     End Sub
 
     Private Sub BtnImprimirEtiqueta_Click(sender As Object, e As EventArgs) Handles BtnImprimirEtiqueta.Click
-        Sb_Imprimir_Etiquetas(False)
+        Sb_Imprimir_Etiquetas(False, False)
     End Sub
 
     Function Fx_Buscar_Producto(_Codigo As String) As DataRow
@@ -755,10 +767,10 @@ Public Class Frm_ImpBarras_PorProducto
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
-        If _Cabeza = "CodAlternativo" Then
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+        Dim _Descripcion As String = _Fila.Cells("Descripcion").Value.ToString.Trim
 
-            Dim _Codigo As String = _Fila.Cells("Codigo").Value
-            Dim _Descripcion As String = _Fila.Cells("Descripcion").Value.ToString.Trim
+        If _Cabeza = "CodAlternativo" Then
 
             Dim _Rtu As Double = _Sql.Fx_Trae_Dato("MAEPR", "RLUD", "KOPR = '" & _Codigo & "'")
             Dim _RowTabcodal As DataRow
@@ -782,6 +794,10 @@ Public Class Frm_ImpBarras_PorProducto
             If Not IsNothing(_RowTabcodal) Then
                 _Fila.Cells("CodAlternativo").Value = _RowTabcodal.Item("KOPRAL")
             End If
+
+        Else
+
+            Sb_Imprimir_Etiquetas(False, True)
 
         End If
 
@@ -811,7 +827,7 @@ Public Class Frm_ImpBarras_PorProducto
     End Sub
 
     Private Sub Btn_ImpZebraPortatil_Click(sender As Object, e As EventArgs) Handles Btn_ImpZebraPortatil.Click
-        Sb_Imprimir_Etiquetas(True)
+        Sb_Imprimir_Etiquetas(True, False)
     End Sub
 
 End Class

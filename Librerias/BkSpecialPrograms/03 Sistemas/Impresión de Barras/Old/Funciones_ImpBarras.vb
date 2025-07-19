@@ -6,7 +6,9 @@ Public Class Class_Imprimir_Barras
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Dim _Error As String
+    Public Property ErrorImp As String
+
+    Public Property Ult_Etiqueta As String
 
 #Region "VARIABLES DE IMPRESION"
 
@@ -66,10 +68,10 @@ Public Class Class_Imprimir_Barras
 
     Public Property [Error] As String
         Get
-            Return _Error
+            Return ErrorImp
         End Get
         Set(value As String)
-            _Error = value
+            ErrorImp = value
         End Set
     End Property
 
@@ -84,12 +86,13 @@ Public Class Class_Imprimir_Barras
                              _Empresa As String,
                              _Sucursal As String,
                              _Bodega As String,
-                             _CodUbicacion As String,
+                             _Codigo_Ubic As String,
                              _Imprimir_Todas_Las_Ubicaciones As Boolean,
                              _ImprimirDesdePrecioFuturo As Boolean,
                              _Id_PrecioFuturo As Integer,
                              _CodAlternativo As String,
-                             _ImprimirAIP As Boolean)
+                             _ImprimirAIP As Boolean,
+                             _VistaPrevia As Boolean)
 
         If _Imprimir_Todas_Las_Ubicaciones Then
 
@@ -141,6 +144,11 @@ Public Class Class_Imprimir_Barras
 
                 Dim _Texto = _RowEtiqueta.Item("FUNCION")
 
+                If _VistaPrevia Then
+                    Ult_Etiqueta = _Texto
+                    Return
+                End If
+
                 Sb_Imprimir_PRN(_Texto, _Puerto, _ImprimirAIP)
 
             Next
@@ -152,7 +160,7 @@ Public Class Class_Imprimir_Barras
                                                            _Empresa,
                                                            _Sucursal,
                                                            _Bodega,,
-                                                           _CodUbicacion,
+                                                           _Codigo_Ubic,
                                                            _ImprimirDesdePrecioFuturo,
                                                            _Id_PrecioFuturo)
 
@@ -235,7 +243,7 @@ Public Class Class_Imprimir_Barras
             Dim _Texto = _RowEtiqueta.Item("FUNCION")
 
             Sb_EtiquetasEspecialMayorista(_Codigo, _Texto)
-            Sb_Imprimir_PRN(_Texto, _Puerto, _ImprimirAIP)
+            Sb_Imprimir_PRN(_Texto, _Puerto, _ImprimirAIP, _VistaPrevia)
 
         End If
 
@@ -380,13 +388,13 @@ Public Class Class_Imprimir_Barras
         End Try
 
         Try
-            _May_Precioxkilo1 = Fx_Formato_Numerico(_May_Precioxkilo1, "$ 999.999", False)
+            _May_Precioxkilo1 = Fx_Formato_Numerico(_PrecioXKilo1, "$ 999.999", False)
         Catch ex As Exception
             _May_Precioxkilo1 = "?"
         End Try
 
         Try
-            _May_Precioxkilo2 = Fx_Formato_Numerico(_May_Precioxkilo2, "$ 999.999", False)
+            _May_Precioxkilo2 = Fx_Formato_Numerico(_PrecioXKilo2, "$ 999.999", False)
         Catch ex As Exception
             _May_Precioxkilo2 = "?"
         End Try
@@ -601,7 +609,7 @@ Public Class Class_Imprimir_Barras
         Dim _Row_Potl As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_Potl) Then
-            _Error = "No existe registro de OT Tabla POTL"
+            ErrorImp = "No existe registro de OT Tabla POTL"
             Return
         End If
 
@@ -618,7 +626,7 @@ Public Class Class_Imprimir_Barras
         Dim _Row_Pote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_Pote) Then
-            _Error = "No existe registro de OT Tabla POTE"
+            ErrorImp = "No existe registro de OT Tabla POTE"
             Return
         End If
 
@@ -839,13 +847,13 @@ Public Class Class_Imprimir_Barras
 
     Sub Sb_Imprimir_Etiqueta_Chilexpress(_Puerto As String, _Id_Despacho As Integer)
 
-        _Error = String.Empty
+        ErrorImp = String.Empty
 
         Dim _Clas_CliexpressAPI As New Clas_CliexpressAPI()
         Dim _Row_Envio As DataRow = _Clas_CliexpressAPI.Fx_Trae_Row_Envio(0, _Id_Despacho)
 
         If IsNothing(_Row_Envio) Then
-            _Error = "No existe registro de envio Chilexpress IdDespacho: " & _Id_Despacho
+            ErrorImp = "No existe registro de envio Chilexpress IdDespacho: " & _Id_Despacho
             Return
         End If
 
@@ -854,7 +862,7 @@ Public Class Class_Imprimir_Barras
         Dim _Row_Respuesta As DataRow = _Clas_CliexpressAPI.Fx_Trae_Row_Respuesta(_Idenvio)
 
         If IsNothing(_Row_Respuesta) Then
-            _Error = "No existe registro de respuesta Chilexpress para el Idenvio: " & _Idenvio
+            ErrorImp = "No existe registro de respuesta Chilexpress para el Idenvio: " & _Idenvio
             Return
         End If
 
@@ -928,13 +936,13 @@ Public Class Class_Imprimir_Barras
 #Region "IMPRIMIR DESDE OT"
     Sub Sb_Imprimir_Etiqueta_OT(_Puerto As String, _NombreEtiqueta As String, _Idpote As Integer, _Kopral As String, _Idpotl As Integer)
 
-        _Error = String.Empty
+        ErrorImp = String.Empty
 
         Consulta_sql = "Select * From POTE Where IDPOTE = " & _Idpote
         Dim _Row_Pote As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_Pote) Then
-            _Error = "No existe registro de OT Tabla POTE"
+            ErrorImp = "No existe registro de OT Tabla POTE"
             Return
         End If
 
@@ -947,7 +955,7 @@ Public Class Class_Imprimir_Barras
         Dim _Row_Potl As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_Potl) Then
-            _Error = "No existe registro de OT Tabla POTL"
+            ErrorImp = "No existe registro de OT Tabla POTL"
             Return
         End If
 
@@ -1289,14 +1297,15 @@ Public Class Class_Imprimir_Barras
 #End Region
 
 #Region "IMPRIMIR EL ARCHIVO"
-    Private Sub Sb_Imprimir_PRN(_Texto As String,
+    Private Sub Sb_Imprimir_PRN(ByRef _Texto As String,
                                 _Puerto As String,
-                                Optional _ImprimirAIP As Boolean = False)
+                                Optional _ImprimirAIP As Boolean = False,
+                                Optional _VistaPrevia As Boolean = False)
 
         Dim _TextoOri As String = _Texto
         Dim _Fecha_impresion As Date = Now
 
-        _Error = String.Empty
+        ErrorImp = String.Empty
 
         'Try
 
@@ -1517,6 +1526,11 @@ Public Class Class_Imprimir_Barras
         End Try
 
         _Texto = Replace(_Texto, "<NUDOPA_SC>", _Nudopa_Sc.Trim)
+
+        If _VistaPrevia Then
+            Ult_Etiqueta = _Texto
+            Return
+        End If
 
         If _ImprimirAIP Then
             EnviarEtiqueta(_Texto)
