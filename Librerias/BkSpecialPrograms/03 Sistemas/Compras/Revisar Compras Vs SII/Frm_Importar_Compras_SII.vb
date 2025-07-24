@@ -1,9 +1,7 @@
 ﻿Imports System.IO
 Imports DevComponents.DotNetBar
 Imports HEFSIIREGCOMPRAVENTAS.LIB
-Imports Microsoft.Win32
 Imports Newtonsoft.Json
-
 
 Public Class Frm_Importar_Compras_SII
 

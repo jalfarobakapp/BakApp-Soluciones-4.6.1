@@ -69,7 +69,7 @@ Partial Class Frm_Demonio_New
         Me.Lbl_Modalidad.ForeColor = System.Drawing.Color.Black
         Me.Lbl_Modalidad.Location = New System.Drawing.Point(12, 49)
         Me.Lbl_Modalidad.Name = "Lbl_Modalidad"
-        Me.Lbl_Modalidad.Size = New System.Drawing.Size(605, 23)
+        Me.Lbl_Modalidad.Size = New System.Drawing.Size(731, 23)
         Me.Lbl_Modalidad.TabIndex = 70
         Me.Lbl_Modalidad.Text = "Nombre Equipo..."
         '
@@ -275,6 +275,7 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16.Images.SetKeyName(13, "wordpress 16.png")
         Me.Imagenes_16X16.Images.SetKeyName(14, "button-ok.png")
         Me.Imagenes_16X16.Images.SetKeyName(15, "documents-update.png")
+        Me.Imagenes_16X16.Images.SetKeyName(16, "")
         '
         'Circular_Monitoreo
         '
@@ -325,6 +326,7 @@ Partial Class Frm_Demonio_New
         Me.Imagenes_16X16_Dark.Images.SetKeyName(13, "wordpress 16.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(14, "button-ok.png")
         Me.Imagenes_16X16_Dark.Images.SetKeyName(15, "documents-update.png")
+        Me.Imagenes_16X16_Dark.Images.SetKeyName(16, "")
         '
         'timerHora
         '
@@ -399,7 +401,6 @@ Partial Class Frm_Demonio_New
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.MaximizeBox = False
         Me.Name = "Frm_Demonio_New"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen

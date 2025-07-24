@@ -15,7 +15,7 @@
 
         Dim Fm As New Frm_Recalculo_PPPxProd
         Fm.EjecutarProcesoTodosLosProductos = True
-        Fm.ModoPruebas = True
+        Fm.ModoPruebas = False
         Fm.ShowDialog(_Formulario)
         Log_Registro = Fm.MensajeFinal
         Fm.Dispose()

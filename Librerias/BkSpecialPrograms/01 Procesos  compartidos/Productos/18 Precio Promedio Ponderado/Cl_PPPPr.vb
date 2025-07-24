@@ -188,6 +188,8 @@ Public Class Cl_PPPPr
                 Dim _Costoifrs As Double = _Fila.Item("COSTOIFRS")
                 Dim _Vaneli As Double = _Fila.Item("VANELI")
                 Dim _Lilg As String = _Fila.Item("LILG")
+                Dim _Timodo As String = _Fila.Item("TIMODO")
+                Dim _Tamodo As Double = _Fila.Item("TAMODO")
 
                 Dim _Entrada As Double
                 Dim _Salida As Double
@@ -213,8 +215,12 @@ Public Class Cl_PPPPr
                     _UltSaldoNegativo = True
                 End If
 
-                If _Nudo = "0000049984" Then
+                If _Nudo = "0000051206" Then
                     Dim _Aqui = 0
+                End If
+
+                If _Timodo = "E" Then
+                    _Vaneli = Math.Round(_Vaneli * _Tamodo, 0)
                 End If
 
                 If CBool(_Cantidad) AndAlso
@@ -303,7 +309,7 @@ Public Class Cl_PPPPr
                     _PrecioCompra = Math.Round(_Costotrib / _Cantidad, 3)
 
                     Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(Math.Round(_Saldo_Stock, 2), Pm, _Cantidad, _PrecioCompra)
-                    Dim _PPP2 As Double = CalcularPPP(Saldo_Stock, Pm, _Cantidad, _PrecioCompra)
+                    ' Dim _PPP2 As Double = CalcularPPP(Saldo_Stock, Pm, _Cantidad, _PrecioCompra)
 
                     If _PPP > 0 Then
                         _Pm = _PPP
@@ -330,6 +336,10 @@ Public Class Cl_PPPPr
 
                     If _Lilg = "IM" Then
 
+                        'Dim _PrecioCompra2 As Double = Math.Round(Math.Round(_Vaneli, 0) / _Cantidad, 5)
+                        'Dim _DifStock As Double = _Saldo_Stock - _Cantidad
+                        'Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(_Saldo_Stock, Pm, _Saldo_Stock, _PrecioCompra2)
+
                         _V_Entrada = Math.Round(_Vaneli, 0)
                         _Saldo_Valor += _V_Entrada
                         _Costotrib = _V_Entrada
@@ -337,9 +347,8 @@ Public Class Cl_PPPPr
                         _Pm = Math.Round(_Pr_Pr_P, 3)
                         Fepm = _Feemli
 
-                        'Dim _PrecioCompra2 As Double = Math.Round(_Vaneli, 0) / _Cantidad
-                        'Dim _DifStock As Double = _Saldo_Stock - _Cantidad
-                        'Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(_Saldo_Stock, Pm, 1, _Vaneli)
+                        _Fila.Item("VANELI") = _V_Entrada
+
                         '_Pm = _PPP
 
                     End If

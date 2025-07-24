@@ -12366,7 +12366,15 @@ Public Class Frm_Formulario_Documento
             _TblEncabezado.Rows(0).Item("Tasadorig_Doc") = _Vamo
 
             .Item("Centro_Costo") = _TblEncabezado_StBy.Rows(0).Item("Centro_Costo")
-            .Item("Contacto_Ent") = _TblEncabezado_StBy.Rows(0).Item("Contacto_Ent")
+
+            Try
+                .Item("Contacto_Ent") = _TblEncabezado_StBy.Rows(0).Item("Contacto_Ent")
+            Catch ex As Exception
+                .Item("Contacto_Ent") = String.Empty
+            End Try
+
+            Txt_Contacto.Text = _Sql.Fx_Trae_Dato("MAEENCON", "NOKOCON",
+                                                  "KOEN = '" & _RowEntidad.Item("KOEN") & "' And RUTCONTACT = '" & _TblEncabezado.Rows(0).Item("Contacto_Ent") & "'")
 
             Dim _Fun_Auto_Deuda_Ven = _TblEncabezado_StBy.Rows(0).Item("Fun_Auto_Deuda_Ven")
             Dim _Fun_Auto_Stock_Ins = _TblEncabezado_StBy.Rows(0).Item("Fun_Auto_Stock_Ins")

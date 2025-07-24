@@ -1,4 +1,6 @@
-﻿Public Class Cl_FacAuto_NVV
+﻿Imports BkSpecialPrograms.My.Resources
+
+Public Class Cl_FacAuto_NVV
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_Sql As String
@@ -78,6 +80,7 @@
 
         Dim _CondicionSuc = String.Empty
         Dim _CondicionFunFac = " And CodFuncionario_Factura <> ''"
+        Dim _CondicionEspecial = String.Empty
 
         If SoloDeSucModalidad Then
             _CondicionSuc = " And ((Empresa = '" & _Empresa & "' And Sucursal = '" & _Esucursal & "')" & vbCrLf
@@ -85,13 +88,20 @@
         End If
 
         If Not String.IsNullOrWhiteSpace(CodFunFactura) Then
-            _CondicionFunFac = "And CodFuncionario_Factura In " & CodFunFactura
+            _CondicionFunFac = " And CodFuncionario_Factura In " & CodFunFactura
+        End If
+
+        If RutEmpresa = "76095906-5" Then
+            _CondicionEspecial = vbCrLf & "And Idmaeedo Not In (Select Distinct Idmaeedo" & vbCrLf &
+                                "Where Idmaeedo In (Select Zenc.Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Zenc" & vbCrLf &
+                                "Inner Join " & _Global_BaseBk & "Zw_Docu_Det Zd On Zenc.Idmaeedo = Zd.Idmaeedo" & vbCrLf &
+                                "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And Zd.Empresa = '02' And Zenc.Empresa = '01'))"
         End If
 
         Consulta_Sql = "Select TOP 20 Idmaeedo,Id,DocEmitir,Fecha_Facturar,CodFuncionario_Factura,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stmp_Enc" & vbCrLf &
-                       "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0" & _CondicionSuc & _CondicionFunFac &
+                       "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0" & _CondicionSuc & _CondicionFunFac & _CondicionEspecial &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set EnvFacAutoBk = 1" & vbCrLf &
                        "Where Idmaeedo In (Select Idmaeedo From #Paso)" & vbCrLf &
@@ -204,13 +214,20 @@
                            "Update MAEDDO Set EMPRESA = '" & _Empresa & "',SULIDO = '" & _Sucursal & "',BOSULIDO = '" & _Bodega & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
                            "Update " & _Global_BaseBk & "Zw_Despachos Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "',Bodega = '" & _Bodega &
                                 "' Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))" & vbCrLf &
-                           "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'PRUEB',Facturar = 0,Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
                            "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa = '" & _Empresa & "' Where Idmaeedo = @Idmaeedo"
+
+            'Clipboard.SetText(Consulta_Sql)
+
+            'MessageBox.Show(_Formulario, Consulta_Sql, "Actualizar empresa, sucursal y bodega de documentos", MessageBoxButtons.OK, MessageBoxIcon.Information)
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Log_Registro += _Sql.Pro_Error & vbCrLf
             End If
+
+            ' Espera 3 segundos antes de continuar
+            Threading.Thread.Sleep(3000)
 
         Next
 
