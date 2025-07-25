@@ -3070,6 +3070,8 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim _Tido = _Maeedo.Rows(0).Item("TIDO")
         Dim _Nudo = _Maeedo.Rows(0).Item("NUDO")
+        Dim _Empresa = _Maeedo.Rows(0).Item("EMPRESA")
+
         Dim _Id_Dte As Integer
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Firmar (Idmaeedo,Tido,Nudo,Firmar,AmbienteCertificacion,FechaEnvio) Values " &
