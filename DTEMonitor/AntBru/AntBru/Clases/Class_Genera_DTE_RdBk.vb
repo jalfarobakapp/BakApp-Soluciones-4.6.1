@@ -299,83 +299,92 @@ Public Class Class_Genera_DTE_RdBk
 
         End Try
 
-        If _Firma_Bakapp And File.Exists(AppPath() & "\Dte.zip") Then
+        Consulta_sql = "Select * From CONFIGP"
+        Dim _Tbl_Configp = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-            Dim _AppPath = AppPath()
+        For Each _Fila As DataRow In _Tbl_Configp.Rows
 
-            If Not Directory.Exists(_AppPath & "\Data\Dte") Then
-                System.IO.Directory.CreateDirectory(_AppPath & "\Data\Dte")
-            End If
+            _RutEmpresaActiva = _Fila.Item("RUT").ToString.Trim
 
-            If Not Directory.Exists(_AppPath & "\DocumentosSII") Then
-                System.IO.Directory.CreateDirectory(_AppPath & "\DocumentosSII")
-            End If
+            If File.Exists(AppPath() & "\Dte.zip") Then
 
-            If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE") Then
-                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE")
-            End If
+                Dim _AppPath = AppPath()
 
-            If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos") Then
-                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos")
-            End If
-
-            If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos\Boleta") Then
-                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos\Boleta")
-            End If
-
-            Dim _Fullpath = _AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos"
-
-            If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto") Then
-                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto")
-            End If
-
-            If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF") Then
-                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF")
-            End If
-
-            Try
-
-                ' Pseudocódigo:
-                ' 1. Identificar el bloque de código que utiliza la referencia ZipFile de Ionic.Zip.
-                ' 2. Reemplazar el uso de Ionic.Zip por otra librería de compresión/descompresión, por ejemplo System.IO.Compression.ZipFile (nativa de .NET Framework 4.5+).
-                ' 3. Cambiar la sintaxis para leer y extraer el archivo zip usando la nueva referencia.
-                ' 4. Asegurarse de que la nueva referencia esté importada y disponible en el proyecto.
-
-                ' Ejemplo usando System.IO.Compression.ZipFile (requiere .NET Framework 4.5 o superior):
-                ' Si tu proyecto es .NET Framework 4.6.1, puedes usar System.IO.Compression.ZipFile.
-                ' Asegúrate de agregar la referencia a System.IO.Compression y System.IO.Compression.FileSystem.
-
-
-
-                ' ...
-
-                ' Reemplaza este bloque:
-                ' Using Zip As ZipFile = ZipFile.Read(_AppPath & "\Dte.zip")
-                '     Zip.ExtractAll(AppPath())
-                ' End Using
-
-                ' Por este bloque usando System.IO.Compression.ZipFile:
-                Dim zipPath As String = _AppPath & "\Dte.zip"
-                Dim extractPath As String = AppPath()
-                If File.Exists(zipPath) Then
-                    ZipFile.ExtractToDirectory(zipPath, extractPath)
+                If Not Directory.Exists(_AppPath & "\Data\Dte") Then
+                    System.IO.Directory.CreateDirectory(_AppPath & "\Data\Dte")
                 End If
 
-                'RarArchive.WriteToDirectory(_AppPath & "\Dte.Rar", AppPath() & "\Dte", ExtractOptions.Overwrite)
+                If Not Directory.Exists(_AppPath & "\DocumentosSII") Then
+                    System.IO.Directory.CreateDirectory(_AppPath & "\DocumentosSII")
+                End If
 
-                'Copiamos la carpeta DocumentosSII en la raiz del sistema
-                My.Computer.FileSystem.CopyDirectory(AppPath() & "\Dtes\DocumentosSII", _AppPath & "\DocumentosSII", True)
-                'Copiamos la carpeta Dte dentro de la carpeta Data
-                My.Computer.FileSystem.CopyDirectory(AppPath() & "\Dtes\Dte", _AppPath & "\Data\Dte", True)
-                'Copiamos la carpeta Documentos dentro de la carpete DTE de la empresa
-                My.Computer.FileSystem.CopyDirectory(AppPath() & "\Dtes\Documentos", _AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos", True)
+                If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE") Then
+                    System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE")
+                End If
 
-                My.Computer.FileSystem.DeleteDirectory(AppPath() & "\Dtes", FileIO.DeleteDirectoryOption.DeleteAllContents)
-            Catch ex As Exception
+                If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos") Then
+                    System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos")
+                End If
 
-            End Try
+                If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos\Boleta") Then
+                    System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos\Boleta")
+                End If
 
-        End If
+                Dim _Fullpath = _AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos"
+
+                If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto") Then
+                    System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto")
+                End If
+
+                If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF") Then
+                    System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF")
+                End If
+
+                Try
+
+                    ' Pseudocódigo:
+                    ' 1. Identificar el bloque de código que utiliza la referencia ZipFile de Ionic.Zip.
+                    ' 2. Reemplazar el uso de Ionic.Zip por otra librería de compresión/descompresión, por ejemplo System.IO.Compression.ZipFile (nativa de .NET Framework 4.5+).
+                    ' 3. Cambiar la sintaxis para leer y extraer el archivo zip usando la nueva referencia.
+                    ' 4. Asegurarse de que la nueva referencia esté importada y disponible en el proyecto.
+
+                    ' Ejemplo usando System.IO.Compression.ZipFile (requiere .NET Framework 4.5 o superior):
+                    ' Si tu proyecto es .NET Framework 4.6.1, puedes usar System.IO.Compression.ZipFile.
+                    ' Asegúrate de agregar la referencia a System.IO.Compression y System.IO.Compression.FileSystem.
+
+                    ' ...
+
+                    ' Reemplaza este bloque:
+                    ' Using Zip As ZipFile = ZipFile.Read(_AppPath & "\Dte.zip")
+                    '     Zip.ExtractAll(AppPath())
+                    ' End Using
+
+                    ' Por este bloque usando System.IO.Compression.ZipFile:
+                    Dim zipPath As String = _AppPath & "\Dte.zip"
+                    Dim extractPath As String = AppPath()
+                    If File.Exists(zipPath) Then
+                        ZipFile.ExtractToDirectory(zipPath, extractPath)
+                    End If
+
+                    'RarArchive.WriteToDirectory(_AppPath & "\Dte.Rar", AppPath() & "\Dte", ExtractOptions.Overwrite)
+
+                    'Copiamos la carpeta DocumentosSII en la raiz del sistema
+                    My.Computer.FileSystem.CopyDirectory(AppPath() & "\Dtes\DocumentosSII", _AppPath & "\DocumentosSII", True)
+                    'Copiamos la carpeta Dte dentro de la carpeta Data
+                    My.Computer.FileSystem.CopyDirectory(AppPath() & "\Dtes\Dte", _AppPath & "\Data\Dte", True)
+                    'Copiamos la carpeta Documentos dentro de la carpete DTE de la empresa
+                    My.Computer.FileSystem.CopyDirectory(AppPath() & "\Dtes\Documentos", _AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos", True)
+
+                    My.Computer.FileSystem.DeleteDirectory(AppPath() & "\Dtes", FileIO.DeleteDirectoryOption.DeleteAllContents)
+                Catch ex As Exception
+
+                End Try
+
+            End If
+
+        Next
+
+        _RutEmpresaActiva = _Row_Configp.Item("RUT").ToString.Trim
 
     End Sub
 
