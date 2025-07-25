@@ -920,12 +920,12 @@ Public Class Frm_Demonio_DTEMonitor
         Try
 
             Consulta_sql = "Select Id,Id_Dte,Idmaeedo,Trackid,Informado,Aceptado,Rechazado,Reparo,Estado,Glosa,Respuesta,FechaEnvSII," &
-                   "AmbienteCertificacion,MailToDiablito, ErrorMailToDiablito" & vbCrLf &
-                   "From " & _Global_BaseBk & "Zw_DTE_Trackid" & vbCrLf &
-                   "Where Procesar = 0 " &
-                   "And Procesado = 1 " &
-                   "And EnviarMail = 1 " &
-                   "And AmbienteCertificacion = " & _AmbienteCertificacion
+                           "AmbienteCertificacion,MailToDiablito, ErrorMailToDiablito" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_DTE_Trackid" & vbCrLf &
+                           "Where Procesar = 0 " &
+                           "And Procesado = 1 " &
+                           "And EnviarMail = 1 " &
+                           "And AmbienteCertificacion = " & _AmbienteCertificacion
 
             Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
@@ -1499,6 +1499,8 @@ Public Class Frm_Demonio_DTEMonitor
             Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
             Dim _Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+
+            Dim _Empresa As String = _Zw_DTE_Documentos.Item("Empresa")
             Dim _Tido As String = _Zw_DTE_Documentos.Item("Tido")
             Dim _Nudo As String = _Zw_DTE_Documentos.Item("Nudo")
 
@@ -1669,8 +1671,8 @@ Public Class Frm_Demonio_DTEMonitor
 
                         Dim _Id_Trackid As Integer
 
-                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Trackid (Id_Dte,Idmaeedo,Trackid,FechaEnvSII,Procesar,AmbienteCertificacion) Values " & vbCrLf &
-                               "(" & _Id_Dte & "," & _Idmaeedo & ",'" & _Trackid & "',Getdate(),1," & Convert.ToInt32(_AmbienteCertificacion) & ")"
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Trackid (Id_Dte,Idmaeedo,Trackid,FechaEnvSII,Procesar,AmbienteCertificacion,Empresa) Values " & vbCrLf &
+                               "(" & _Id_Dte & "," & _Idmaeedo & ",'" & _Trackid & "',Getdate(),1," & Convert.ToInt32(_AmbienteCertificacion) & ",'" & _Empresa & "')"
                         _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Trackid, False)
 
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesado = 1 Where Id_Dte =  " & _Id_Dte
@@ -1944,6 +1946,7 @@ Public Class Frm_Demonio_DTEMonitor
             Return _HefRespuesta
         End If
 
+        Dim _Empresa As String = _Zw_DTE_Documentos.Item("Empresa")
         Dim _Idmaeedo As Integer = _Zw_DTE_Documentos.Item("Idmaeedo")
         Dim _Xml As String = _Zw_DTE_Documentos.Item("CaratulaXml")
 
@@ -1996,8 +1999,8 @@ Public Class Frm_Demonio_DTEMonitor
 
             Dim _Id_Trackid As Integer
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Trackid (Id_Dte,Idmaeedo,Trackid,FechaEnvSII,Procesar,AmbienteCertificacion) Values " & vbCrLf &
-                           "(" & _Id_Dte & "," & _Idmaeedo & ",'" & _Trackid & "',Getdate(),1," & Convert.ToInt32(_AmbienteCertificacion) & ")"
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Trackid (Id_Dte,Idmaeedo,Trackid,FechaEnvSII,Procesar,AmbienteCertificacion,Empresa) Values " & vbCrLf &
+                           "(" & _Id_Dte & "," & _Idmaeedo & ",'" & _Trackid & "',Getdate(),1," & Convert.ToInt32(_AmbienteCertificacion) & ",'" & _Empresa & "')"
             _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Trackid, False)
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesado = 1,Procesar = 0 Where Id_Dte =  " & _Id_Dte

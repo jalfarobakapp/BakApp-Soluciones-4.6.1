@@ -169,6 +169,9 @@ Public Class Class_Genera_DTE_RdBk
         End Set
     End Property
 
+    Dim _Empresa As String
+    Dim _RutEmpresaActiva As String
+
     Public Sub New(Idmaeedo As Integer)
 
         _Errores = New List(Of String)
@@ -212,6 +215,13 @@ Public Class Class_Genera_DTE_RdBk
             _Maeedoob = Nothing
             Return
         End If
+
+        _Empresa = _Maeedo.Rows(0).Item("EMPRESA").ToString.Trim
+
+        Consulta_sql = "Select * From CONFIGP Where EMPRESA = '" & _Empresa & "'"
+        _Row_Configp = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        _RutEmpresaActiva = _Row_Configp.Item("RUT").ToString.Trim
 
         Sb_Crear_Referencias()
 
@@ -301,26 +311,26 @@ Public Class Class_Genera_DTE_RdBk
                 System.IO.Directory.CreateDirectory(_AppPath & "\DocumentosSII")
             End If
 
-            If Not Directory.Exists(_AppPath & "\Data\" & RutEmpresaActiva & "\DTE") Then
-                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & RutEmpresaActiva & "\DTE")
+            If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE") Then
+                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE")
             End If
 
-            If Not Directory.Exists(_AppPath & "\Data\" & RutEmpresaActiva & "\DTE\Documentos") Then
-                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & RutEmpresaActiva & "\DTE\Documentos")
+            If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos") Then
+                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos")
             End If
 
-            If Not Directory.Exists(_AppPath & "\Data\" & RutEmpresaActiva & "\DTE\Documentos\Boleta") Then
-                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & RutEmpresaActiva & "\DTE\Documentos\Boleta")
+            If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos\Boleta") Then
+                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos\Boleta")
             End If
 
-            Dim _Fullpath = _AppPath & "\Data\" & RutEmpresaActiva & "\DTE\Documentos"
+            Dim _Fullpath = _AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos"
 
-            If Not Directory.Exists(_AppPath & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto") Then
-                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto")
+            If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto") Then
+                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto")
             End If
 
-            If Not Directory.Exists(_AppPath & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF") Then
-                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF")
+            If Not Directory.Exists(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF") Then
+                System.IO.Directory.CreateDirectory(_AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF")
             End If
 
             Try
@@ -358,7 +368,7 @@ Public Class Class_Genera_DTE_RdBk
                 'Copiamos la carpeta Dte dentro de la carpeta Data
                 My.Computer.FileSystem.CopyDirectory(AppPath() & "\Dtes\Dte", _AppPath & "\Data\Dte", True)
                 'Copiamos la carpeta Documentos dentro de la carpete DTE de la empresa
-                My.Computer.FileSystem.CopyDirectory(AppPath() & "\Dtes\Documentos", _AppPath & "\Data\" & RutEmpresaActiva & "\DTE\Documentos", True)
+                My.Computer.FileSystem.CopyDirectory(AppPath() & "\Dtes\Documentos", _AppPath & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos", True)
 
                 My.Computer.FileSystem.DeleteDirectory(AppPath() & "\Dtes", FileIO.DeleteDirectoryOption.DeleteAllContents)
             Catch ex As Exception
@@ -658,9 +668,8 @@ Public Class Class_Genera_DTE_RdBk
 
         If _Tido = "BLV" Then Return 0
 
-
-        Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
-        _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
+        'Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & _Empresa & "'"
+        '_Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
         Dim _Empresa = _Row_Configp.Item("EMPRESA")
         Dim _Nroresol = _Row_Configp.Item("NRORESOL")
@@ -904,8 +913,8 @@ Public Class Class_Genera_DTE_RdBk
 
             Dim _Tido = _Maeedo.Rows.Item(0).Item("TIDO")
 
-            Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
-            _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
+            'Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & _Empresa & "'"
+            '_Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
             _Empresa = _Row_Configp.Item("EMPRESA")
             _Nroresol = _Row_Configp.Item("NRORESOL")
@@ -1015,11 +1024,11 @@ Public Class Class_Genera_DTE_RdBk
         If _Firma_Bakapp Then
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Caf With ( NOLOCK )" & vbCrLf &
                       "Where Cast(RNG_D AS INT)<=" & _Nro_Documento & " And Cast(RNG_H AS INT)>=" & _Nro_Documento &
-                      " And TD='" & _Td & "' And Empresa='" & ModEmpresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion
+                      " And TD='" & _Td & "' And Empresa='" & _Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion
         Else
             Consulta_sql = "Select TOP 1 * FROM FFOLIOS WITH ( NOLOCK )" & vbCrLf &
                            "Where CAST(RNG_D AS INT)<=" & _Nro_Documento & " And Cast(RNG_H AS INT)>=" & _Nro_Documento &
-                           "  And TD='" & _Td & "'  AND EMPRESA='" & ModEmpresa & "' "
+                           "  And TD='" & _Td & "'  AND EMPRESA='" & _Empresa & "' "
         End If
 
 
@@ -1579,7 +1588,7 @@ Public Class Class_Genera_DTE_RdBk
         Dim _Tido = _Maeedo.Rows.Item(0).Item("TIDO")
         Dim _TipoDTE As Integer = Fx_Tipo_DTE_VS_TIDO(_Tido)
 
-        Dim _Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
+        Dim _Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & _Empresa & "'"
 
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(_Consulta_sql)
         Dim _Row_Ffolios = Fx_Trae_Ffolio(Nothing, _Nro_Documento, _TipoDTE, False)
@@ -1703,8 +1712,8 @@ Public Class Class_Genera_DTE_RdBk
 
         _Nro_Documento = _Maeedo.Rows(0).Item("NUDO")
 
-        Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & ModEmpresa & "'"
-        _Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
+        'Consulta_sql = "Select top 1 * From CONFIGP Where EMPRESA = '" & _Empresa & "'"
+        '_Row_Configp = _Sql.Fx_Get_DataTable(Consulta_sql).Rows(0)
 
         If _Tido <> "FCC" And _Tido <> "GRC" And _Tido <> "NCC" Then
 
@@ -1871,7 +1880,7 @@ Public Class Class_Genera_DTE_RdBk
             'Nueva forma de timbrar 
             '' /* 56056.05 */ dte\bat\GenDTE.BAT "C:\Random.Cisternas\\dte\conf" 01 535489
 
-            Dim _Ejecutar As String = _Directorio & "\dte\bat\GenDTE.BAT """ & _Directorio & "\\dte\conf""" & Space(1) & ModEmpresa & " " & _Iddt
+            Dim _Ejecutar As String = _Directorio & "\dte\bat\GenDTE.BAT """ & _Directorio & "\\dte\conf""" & Space(1) & _Empresa & " " & _Iddt
 
             Try
                 Shell(_Ejecutar, AppWinStyle.Hide, True)
@@ -2236,6 +2245,7 @@ Public Class Class_Genera_DTE_RdBk
         Dim _RutaArchivo As String
         Dim _Nombre_Archivo_Xml As String
 
+        'Dim _Empresa As String = _Maeedo.Rows(0).Item("EMPRESA")
         Dim _Tido As String = _Maeedo.Rows(0).Item("TIDO")
         Dim _Nudo As String = _Maeedo.Rows.Item(0).Item("NUDO")
 
@@ -2254,24 +2264,25 @@ Public Class Class_Genera_DTE_RdBk
         _Xml = Replace(_Xml, _a1, "<DTE version=""1.0"">" & vbCrLf & _a1)
         _Xml = Replace(_Xml, "</Documento>", "</Documento>" & vbCrLf & "</DTE>")
 
-        Dim _Fullpath = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Documentos"
+        Dim _Fullpath = AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos"
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto") Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto")
+        If Not Directory.Exists(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto") Then
+            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto")
         End If
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF") Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF")
+        If Not Directory.Exists(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF") Then
+            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF")
         End If
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido) Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido)
+        If Not Directory.Exists(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido) Then
+            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido)
         End If
 
-        Dim _Dir = AppPath() & "\Data\" & RutEmpresaActiva
+        Dim _Dir = AppPath() & "\Data\" & _RutEmpresaActiva
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Caf" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo)
+                       "Where Empresa = '" & _Empresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo) &
+                       " And AmbienteCertificacion = " & _AmbienteCertificacion
         Dim _Row_CAF As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_CAF) Then
@@ -2282,23 +2293,23 @@ Public Class Class_Genera_DTE_RdBk
         Dim _XmlCAF As String = _Row_CAF.Item("CAF")
 
         Try
-            File.Delete(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
+            File.Delete(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
         Catch ex As Exception
             _Errores.Add(ex.Message)
             Return 0
         End Try
 
-        Dim oSW As New System.IO.StreamWriter(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
+        Dim oSW As New System.IO.StreamWriter(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
         oSW.WriteLine(_XmlCAF)
         oSW.Close()
 
-        _uriCaf = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml" 'AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\FCV\FoliosSII7659092061192022161442.xml"
+        _uriCaf = AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml" 'AppPath() & "\Data\" & _RtEmpresaActiva & "\DTE\Hefesto\CAF\FCV\FoliosSII7659092061192022161442.xml"
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando") Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando")
+        If Not Directory.Exists(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando") Then
+            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando")
         End If
 
-        _RutaArchivo = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando"
+        _RutaArchivo = AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando"
         _Nombre_Archivo_Xml = _Tido & "-" & _Nudo & "_DTE.xml"
 
         oSW = New System.IO.StreamWriter(_RutaArchivo & "\" & _Nombre_Archivo_Xml)
@@ -2320,7 +2331,7 @@ Public Class Class_Genera_DTE_RdBk
 
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
+                       "Where Empresa = '" & _Empresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
         Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
@@ -2344,7 +2355,7 @@ Public Class Class_Genera_DTE_RdBk
         If _AmbienteCertificacion Then
             _NroResol = "0"
             '    _FchResol = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-            '                                  "Empresa = '" & ModEmpresa & "' And Campo = 'FchResol' And AmbienteCertificacion = 1")
+            '                                  "Empresa = '" & _Empresa & "' And Campo = 'FchResol' And AmbienteCertificacion = 1")
         End If
 
         Dim ClsFirmarDocumento As New HEFFirmarDocumento
@@ -2396,7 +2407,7 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim ArchivoFirmado As String = Path.GetFileName(Path.ChangeExtension(_uriDte, ".Firmado.xml"))
 
-        Dim Respuesta As HEFESTO.FIRMA.DOCUMENTO.HEFRespuesta = ClsFirmarDocumento.FirmarArchivo()
+        Dim Respuesta As Hefesto.FIRMA.DOCUMENTO.HEFRespuesta = ClsFirmarDocumento.FirmarArchivo()
         Dim FirmaStr As String
 
         If Not Respuesta.esCorrecto Then
@@ -2415,8 +2426,8 @@ Public Class Class_Genera_DTE_RdBk
             _Respuesta = Replace(_Respuesta, "'", "''")
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Documentos(Idmaeedo,Tido,Nudo,FechaSolicitud,Xml,Firma," &
-                           "CaratulaXml,AmbienteCertificacion,Procesar,Respuesta,ErrorEnvioDTE) Values " &
-                           "(" & _Idmaeedo & ", '" & _Tido & "', '" & _Nudo & "',Getdate(),'','',''," & _AmbienteCertificacion & ",0,'" & _Respuesta & "',1)"
+                           "CaratulaXml,AmbienteCertificacion,Procesar,Respuesta,ErrorEnvioDTE,Empresa) Values " &
+                           "(" & _Idmaeedo & ", '" & _Tido & "', '" & _Nudo & "',Getdate(),'','',''," & _AmbienteCertificacion & ",0,'" & _Respuesta & "',1,'" & _Empresa & "')"
             _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Dte)
 
             'val.ShowDialog()
@@ -2455,9 +2466,9 @@ Public Class Class_Genera_DTE_RdBk
         Dim _CaratulaCml As String = _DteResultado
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Documentos(Idmaeedo,Tido,Nudo,FechaSolicitud,Xml,Firma," &
-                       "CaratulaXml,AmbienteCertificacion,Procesar) Values " &
+                       "CaratulaXml,AmbienteCertificacion,Procesar,Empresa) Values " &
                      "(" & _Idmaeedo & ", '" & _Tido & "', '" & _Nudo & "',Getdate(),'" & _DteXml & "','" & _Firma.ToString &
-                     "','" & _CaratulaCml & "'," & _AmbienteCertificacion & ",1)"
+                     "','" & _CaratulaCml & "'," & _AmbienteCertificacion & ",1,'" & _Empresa & "')"
         _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Dte)
 
         If CBool(_Id_Dte) Then
@@ -2503,24 +2514,25 @@ Public Class Class_Genera_DTE_RdBk
         _Xml = Replace(_Xml, _a1, "<DTE version=""1.0"">" & vbCrLf & _a1)
         _Xml = Replace(_Xml, "</Documento>", "</Documento>" & vbCrLf & "</DTE>")
 
-        Dim _Fullpath = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Documentos"
+        Dim _Fullpath = AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos"
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto") Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto")
+        If Not Directory.Exists(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto") Then
+            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto")
         End If
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF") Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF")
+        If Not Directory.Exists(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF") Then
+            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF")
         End If
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido) Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido)
+        If Not Directory.Exists(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido) Then
+            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido)
         End If
 
-        Dim _Dir = AppPath() & "\Data\" & RutEmpresaActiva
+        Dim _Dir = AppPath() & "\Data\" & _RutEmpresaActiva
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Caf" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo)
+                       "Where Empresa = '" & _Empresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo) &
+                       " And AmbienteCertificacion = 1"
         Dim _Row_CAF As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_CAF) Then
@@ -2531,23 +2543,23 @@ Public Class Class_Genera_DTE_RdBk
         Dim _XmlCAF As String = _Row_CAF.Item("CAF")
 
         Try
-            File.Delete(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
+            File.Delete(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
         Catch ex As Exception
             _Errores.Add(ex.Message)
             Return 0
         End Try
 
-        Dim oSW As New System.IO.StreamWriter(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
+        Dim oSW As New System.IO.StreamWriter(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml")
         oSW.WriteLine(_XmlCAF)
         oSW.Close()
 
-        _uriCaf = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml" 'AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\CAF\FCV\FoliosSII7659092061192022161442.xml"
+        _uriCaf = AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml" 'AppPath() & "\Data\" & _RtEmpresaActiva & "\DTE\Hefesto\CAF\FCV\FoliosSII7659092061192022161442.xml"
 
-        If Not Directory.Exists(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando") Then
-            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando")
+        If Not Directory.Exists(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando") Then
+            System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando")
         End If
 
-        _RutaArchivo = AppPath() & "\Data\" & RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando"
+        _RutaArchivo = AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando"
         _Nombre_Archivo_Xml = _Tido & "-" & _Nudo & "_DTE.xml"
 
         oSW = New System.IO.StreamWriter(_RutaArchivo & "\" & _Nombre_Archivo_Xml)
@@ -2569,7 +2581,7 @@ Public Class Class_Genera_DTE_RdBk
 
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
+                       "Where Empresa = '" & _Empresa & "' And TipoConfiguracion = 'ConfEmpresa'"
         Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
@@ -2593,7 +2605,7 @@ Public Class Class_Genera_DTE_RdBk
         If _AmbienteCertificacion Then
             _NroResol = "0"
             _FchResol = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                          "Empresa = '" & ModEmpresa & "' And Campo = 'FchResol' And AmbienteCertificacion = 1")
+                                          "Empresa = '" & _Empresa & "' And Campo = 'FchResol' And AmbienteCertificacion = 1")
         End If
 
         Dim ClsFirmarDocumento As New HEFFirmarDocumento
@@ -2648,7 +2660,7 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim ArchivoFirmado As String = Path.GetFileName(Path.ChangeExtension(_uriDte, ".Firmado.xml"))
 
-        Dim Respuesta As HEFESTO.FIRMA.DOCUMENTO.HEFRespuesta = ClsFirmarDocumento.FirmarArchivo()
+        Dim Respuesta As Hefesto.FIRMA.DOCUMENTO.HEFRespuesta = ClsFirmarDocumento.FirmarArchivo()
         Dim FirmaStr As String
 
         If Not Respuesta.esCorrecto Then
@@ -2758,13 +2770,13 @@ Public Class Class_Genera_DTE_RdBk
                 Throw New System.Exception("No se encontro el archivo CaratulaXml en la tabla Zw_DTE_Documentos del sistema")
             End If
 
-            Dim _Id_Correo As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Campo = 'Id_Correo' And Empresa = '" & ModEmpresa & "'")
+            Dim _Id_Correo As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Campo = 'Id_Correo' And Empresa = '" & _Empresa & "'")
 
             If Not CBool(_Id_Correo) Then
                 Throw New System.Exception("Falta asignar un correo de notificación en la configuración del sistema DTE")
             End If
 
-            Dim _NombreFormato_PDF As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Campo = 'NombreFormato_PDF_" & _Tido & "' And Empresa = '" & ModEmpresa & "'")
+            Dim _NombreFormato_PDF As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Campo = 'NombreFormato_PDF_" & _Tido & "' And Empresa = '" & _Empresa & "'")
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Correos Corr Where Id = " & _Id_Correo
             Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -2886,138 +2898,6 @@ Public Class Class_Genera_DTE_RdBk
 
     End Sub
 
-    'Function Fx_Enviar_Consumo_Folios_Boletas_Al_SII(_FolioInicial As Integer,
-    '                                                 _FolioFinal As Integer,
-    '                                                 _vFoliosEmitidos As Integer,
-    '                                                 _vFoliosUtilizados As Integer,
-    '                                                 _vMntNeto As Double,
-    '                                                 _vMntIva As Double,
-    '                                                 _vMntTotal As Double,
-    '                                                 _FechaInicio As DateTime,
-    '                                                 _FechaFinal As DateTime,
-    '                                                 ByRef _Id_Consumo As Integer,
-    '                                                 ByRef _Resultado As String) As Boolean
-
-    '    Try
-
-    '        Dim _YearInicio As String = _FechaInicio.Year
-    '        Dim _MonthInicio As String = numero_(_FechaInicio.Month, 2)
-    '        Dim _DayInicio As String = numero_(_FechaInicio.Day, 2)
-
-    '        Dim _YearFinal As String = _FechaFinal.Year
-    '        Dim _MonthFinal As String = numero_(_FechaFinal.Month, 2)
-    '        Dim _DayFinal As String = numero_(_FechaFinal.Day, 2)
-
-    '        Dim _FchInicio As String = _YearInicio & "-" & _MonthInicio & "-" & _DayInicio
-    '        Dim _FchFinal As String = _YearFinal & "-" & _MonthFinal & "-" & _DayFinal
-
-    '        Dim _Inicial = _FolioInicial
-    '        Dim _Final = _FolioFinal
-
-    '        Dim _MntNeto = De_Num_a_Tx_01(_vMntNeto, True)
-    '        Dim _MntIva = De_Num_a_Tx_01(_vMntIva, True)
-    '        Dim _MntTotal = De_Num_a_Tx_01(_vMntTotal, True)
-    '        Dim _FoliosEmitidos = De_Num_a_Tx_01(_vFoliosEmitidos, True)
-    '        Dim _FoliosUtilizados = De_Num_a_Tx_01(_vFoliosUtilizados, True)
-
-    '        Dim _RutEmisor As String
-    '        Dim _RutEnvia As String
-    '        Dim _RutReceptor As String
-    '        Dim _FchResol As String
-    '        Dim _NroResol As String
-    '        Dim _TpoDTE As String = "39"
-    '        Dim _Cn As String
-
-    '        Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
-    '                       "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-    '                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
-    '        Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-    '        If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
-    '            Throw New System.Exception("Faltan los datos de configuración DTE para la empresa")
-    '        End If
-
-    '        For Each _Fila As DataRow In _Tbl_ConfEmpresa.Rows
-
-    '            Dim _Campo As String = _Fila.Item("Campo").ToString.Trim
-
-    '            If _Campo = "RutEmisor" Then _RutEmisor = _Fila.Item("Valor")
-    '            If _Campo = "RutEnvia" Then _RutEnvia = _Fila.Item("Valor")
-    '            If _Campo = "RutReceptor" Then _RutReceptor = _Fila.Item("Valor")
-    '            If _Campo = "FchResol" Then _FchResol = _Fila.Item("Valor")
-    '            If _Campo = "NroResol" Then _NroResol = _Fila.Item("Valor")
-    '            If _Campo = "Cn" Then _Cn = _Fila.Item("Valor")
-
-    '        Next
-
-    '        Dim _cf As New HefConsumoFolios
-
-    '        _cf.Certificado = _Cn '"JUAN PABLO SIERRALTA OREZZOLI"
-
-    '        Dim _Certificado As Security.Cryptography.X509Certificates.X509Certificate2 = FuncionesComunes.RecuperarCertificado(_Cn)
-
-    '        If IsNothing(_Certificado) Then
-    '            Throw New System.Exception("Falta instalar el certificado digital en este equipo" & vbCrLf & "Cetificado: " & _Cn)
-    '        End If
-
-    '        _cf.Schema = AppPath() & "\Data\Dte\Schemas\Rcof.xsd"
-
-    '        If Not File.Exists(_cf.Schema) Then
-    '            Throw New System.Exception("Falta el archivo Rcof.xsd en la carpeta de Schema: " & AppPath() & "\Data\Dte\Schemas")
-    '        End If
-
-    '        _cf.DocumentoConsumoFolios.Caratula.RutEmisor = _RutEmisor '"79514800-0"
-    '        _cf.DocumentoConsumoFolios.Caratula.RutEnvia = _RutEnvia ' "12628844-1"
-    '        _cf.DocumentoConsumoFolios.Caratula.FchResol = _FchResol '"2012-06-19"
-    '        _cf.DocumentoConsumoFolios.Caratula.NroResol = _NroResol '"72"
-    '        _cf.DocumentoConsumoFolios.Caratula.FchInicio = _FchInicio
-    '        _cf.DocumentoConsumoFolios.Caratula.FchFinal = _FchFinal
-    '        _cf.DocumentoConsumoFolios.Caratula.Correlativo = "0"
-    '        _cf.DocumentoConsumoFolios.Caratula.SecEnvio = "1"
-
-    '        Dim _Resumen As New HefResumen
-
-    '        _Resumen.TipoDocumento = _TpoDTE
-    '        _Resumen.MntNeto = _MntNeto
-    '        _Resumen.MntExento = 0
-    '        _Resumen.MntIva = _MntIva
-    '        _Resumen.MntTotal = _MntTotal
-    '        _Resumen.FoliosEmitidos = _FoliosEmitidos
-    '        _Resumen.FoliosAnulados = 0
-    '        _Resumen.FoliosUtilizados = _FoliosUtilizados
-
-    '        Dim RUtil1 As New HefRangoUtilizados
-
-    '        RUtil1.Inicial = _Inicial
-    '        RUtil1.Final = _Final
-    '        _Resumen.RangoUtilizados.Add(RUtil1)
-
-    '        _cf.DocumentoConsumoFolios.Resumenes.Add(_Resumen)
-
-    '        If _cf.Publicar() Then
-
-    '            Dim _Trackid = _cf.Trackid
-    '            Dim _ArcXml = _cf.ArcXml.ToString
-
-    '            _Resultado = _Trackid
-
-    '            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_ConsFolios (Trackid,FchInicio,FchFinal,Folioinicial,FolioFinal,FoliosEmitidos,FoliosUtilizados,Xml) Values " &
-    '                           "('" & _Trackid & "','" & _FchInicio & "','" & _FchFinal & "'," & _FolioInicial & "," & _FolioFinal & "," & _FoliosEmitidos & "," & _FoliosUtilizados & ",'" & _ArcXml & "')"
-    '            If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Consumo) Then
-    '                _Errores.Add(_Sql.Pro_Error)
-    '            End If
-
-    '        End If
-
-    '    Catch ex As Exception
-    '        _Errores.Add(ex.Message)
-    '        Return False
-    '    End Try
-
-    '    Return True
-
-    'End Function
-
     ''' <summary>
     ''' Enviar a firmar electronicamente al diablito DTEMonitor de Bakapp
     ''' </summary>
@@ -3119,7 +2999,7 @@ Public Class Class_Genera_DTE_RdBk
 
             _Errores.Clear()
 
-            Dim _FullpathAEC = _Path & "\Data\" & RutEmpresaActiva & "\DTE\Documentos\AEC"
+            Dim _FullpathAEC = _Path & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos\AEC"
             Dim _PathSchemas = _Path & "\Schemas"
             Dim _PathCedidas = _FullpathAEC + "\XmlCedidas"
 
@@ -3185,7 +3065,7 @@ Public Class Class_Genera_DTE_RdBk
 
             Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-                           "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
+                           "Where Empresa = '" & _Empresa & "' And TipoConfiguracion = 'ConfEmpresa' And AmbienteCertificacion = " & _AmbienteCertificacion
             Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
