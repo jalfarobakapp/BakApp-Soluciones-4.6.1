@@ -3074,8 +3074,8 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim _Id_Dte As Integer
 
-        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Firmar (Idmaeedo,Tido,Nudo,Firmar,AmbienteCertificacion,FechaEnvio) Values " &
-                       "(" & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "',1," & _AmbienteCertificacion & ",Getdate())"
+        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Firmar (Idmaeedo,Tido,Nudo,Firmar,AmbienteCertificacion,FechaEnvio,Empresa) Values " &
+                       "(" & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "',1," & _AmbienteCertificacion & ",Getdate(),'" & _Empresa & "')"
 
         Dim _Id As Integer
 
