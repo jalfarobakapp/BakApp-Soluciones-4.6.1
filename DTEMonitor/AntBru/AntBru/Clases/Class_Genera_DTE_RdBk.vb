@@ -233,11 +233,14 @@ Public Class Class_Genera_DTE_RdBk
         Dim _RutEmpresa
         Dim _Rten
 
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & _Empresa & "'"
+        Dim _Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_sql)
+
         If _Maeen.Rows.Count = 0 Then
 
             If _Maeedo.Rows(0).Item("TIDO") = "GDP" Or _Maeedo.Rows(0).Item("TIDO") = "GTI" Then
 
-                _RutEmpresa = _Global_Row_Empresa.Item("Rut")
+                _RutEmpresa = _Row_Empresa.Item("Rut")
                 _Rten = Split(_RutEmpresa, "-")
 
                 Dim _RowEntidad As DataRow
@@ -265,9 +268,9 @@ Public Class Class_Genera_DTE_RdBk
 
         End If
 
-        If Not IsNothing(_Global_Row_Empresa) Then
+        If Not IsNothing(_Row_Empresa) Then
 
-            _RutEmpresa = _Global_Row_Empresa.Item("Rut")
+            _RutEmpresa = _Row_Empresa.Item("Rut")
             _Rten = Split(_RutEmpresa, "-")
 
             Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _RutEmpresa & "' And TIPOSUC = 'P'"
@@ -1097,15 +1100,19 @@ Public Class Class_Genera_DTE_RdBk
         Dim _CmnaOrigen = Mid(Trim(_Row_Configp.Item("CIUDAD")), 1, 20)
         Dim _CiudadOrigen = Mid(Trim(_Row_Configp.Item("CIUDAD")), 1, 20)  ' "REGION METROPOLITANA"
 
-        If Not IsNothing(_Global_Row_Empresa) Then
 
-            _RUTEmisor = Trim(_Global_Row_Empresa.Item("Rut"))
-            _RznSoc = Trim(_Global_Row_Empresa.Item("Razon"))
-            _GiroEmis = Mid(Trim(_Global_Row_Empresa.Item("Giro")), 1, 50)
-            _Acteco = Trim(_Global_Row_Empresa.Item("Acteco"))
-            _DirOrigen = Trim(_Global_Row_Empresa.Item("Direccion"))
-            _CmnaOrigen = Mid(Trim(_Global_Row_Empresa.Item("Comuna")), 1, 20)
-            _CiudadOrigen = Mid(Trim(_Global_Row_Empresa.Item("Ciudad")), 1, 20)
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & _Empresa & "'"
+        Dim _Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row_Empresa) Then
+
+            _RUTEmisor = Trim(_Row_Empresa.Item("Rut"))
+            _RznSoc = Trim(_Row_Empresa.Item("Razon"))
+            _GiroEmis = Mid(Trim(_Row_Empresa.Item("Giro")), 1, 50)
+            _Acteco = Trim(_Row_Empresa.Item("Acteco"))
+            _DirOrigen = Trim(_Row_Empresa.Item("Direccion"))
+            _CmnaOrigen = Mid(Trim(_Row_Empresa.Item("Comuna")), 1, 20)
+            _CiudadOrigen = Mid(Trim(_Row_Empresa.Item("Ciudad")), 1, 20)
 
         End If
 
@@ -1645,6 +1652,8 @@ Public Class Class_Genera_DTE_RdBk
 
             _Re = _Row_Ffolios.Item("RE").ToString.Trim
             _Rs = _Row_Ffolios.Item("RS").ToString.Trim
+
+            Fx_Caracter_Raro_Quitar(_Rs)
 
             _Rng_d = _Row_Ffolios.Item("RNG_D").ToString.Trim
             _Rng_h = _Row_Ffolios.Item("RNG_H").ToString.Trim
