@@ -3741,7 +3741,7 @@ Public Module Crear_Documentos_Desde_Otro
             Dim _Firma_RunMonitor As Boolean = Not _Firma_Bakapp
 
             If _Firma_Bakapp Then
-                Return Fx_Revisar_Expiracion_Folio_SII_Hefesto_Bakapp(_Formulario, _Tido, _Folio, _MostrarMensajeExpiracion)
+                Return Fx_Revisar_Expiracion_Folio_SII_Hefesto_Bakapp(_Formulario, _Tido, _Folio, _MostrarMensajeExpiracion, _Empresa)
             End If
 
             If _Tido = "GDP" Or _Tido = "GDD" Or _Tido = "GTI" Then
@@ -3942,7 +3942,8 @@ Public Module Crear_Documentos_Desde_Otro
     Function Fx_Revisar_Expiracion_Folio_SII_Hefesto_Bakapp(_Formulario As Form,
                                                             _Tido As String,
                                                             _Folio As String,
-                                                            _MostrarMensajeExpiracion As Boolean) As LsValiciones.Mensajes
+                                                            _MostrarMensajeExpiracion As Boolean,
+                                                            _Empresa As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
         'Throw New System.Exception("No se encontro el detalle del documento en la tabla Zw_Stmp_Det")
@@ -3970,7 +3971,7 @@ Public Module Crear_Documentos_Desde_Otro
                            "RIGHT(REPLICATE('0', 10) + CAST(RNG_H AS VARCHAR(10)), 10) AS NroHasta," & vbCrLf &
                            "RSAPK_E, IDK, FRMA, RSASK, RSAPUBK, CAF, AmbienteCertificacion" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_DTE_Caf" & vbCrLf &
-                           "Where TD='" & _Td & "' And Empresa='" & Mod_Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion & vbCrLf &
+                           "Where TD='" & _Td & "' And Empresa='" & _Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion & vbCrLf &
                            "And " & Val(_Folio) & " Between Cast(RNG_D As int) And Cast(RNG_H As int) "
 
             Dim _Row_Folios As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
@@ -4000,7 +4001,7 @@ Public Module Crear_Documentos_Desde_Otro
 
                 Try
                     _DiasAvisoExpiraFolio = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
-                                                              "DiasAvisoExpiraFolio", "Empresa = '" & Mod_Empresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '  '",, False)
+                                                              "DiasAvisoExpiraFolio", "Empresa = '" & _Empresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '  '",, False)
                 Catch ex As Exception
                     _DiasAvisoExpiraFolio = 14
                 End Try
@@ -4011,7 +4012,7 @@ Public Module Crear_Documentos_Desde_Otro
 
                 Try
                     _AvisoSaldoFolios = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
-                                                              "AvisoSaldoFolios", "Empresa = '" & Mod_Empresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '  '",, False)
+                                                              "AvisoSaldoFolios", "Empresa = '" & _Empresa & "' And TipoDoc = '" & _Tido & "' And Modalidad = '  '",, False)
                 Catch ex As Exception
                     _AvisoSaldoFolios = 20
                 End Try
@@ -4035,7 +4036,7 @@ Public Module Crear_Documentos_Desde_Otro
                     If (_AvisoSaldoFolios >= _SaldoFolios) Then
 
                         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_DTE_Caf",
-                                     "TD='" & _Td & "' And Empresa='" & Mod_Empresa & "' " &
+                                     "TD='" & _Td & "' And Empresa='" & _Empresa & "' " &
                                      "And AmbienteCertificacion = " & _AmbienteCertificacion & " And Cast(RNG_D As int) > " & Val(_Folio), False)
 
                         If Not CBool(_Reg) Then
@@ -4081,19 +4082,19 @@ Public Module Crear_Documentos_Desde_Otro
                         Select Case _Tido
                             Case "BLV"
                                 _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                     "Campo = 'Input_siimesesexpiranfolios_BOLETAS' And Empresa = '" & Mod_Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
+                                     "Campo = 'Input_siimesesexpiranfolios_BOLETAS' And Empresa = '" & _Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
                             Case "NCV"
                                 _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                     "Campo = 'Input_siimesesexpiranfolios_NOTASCREDITO' And Empresa = '" & Mod_Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
+                                     "Campo = 'Input_siimesesexpiranfolios_NOTASCREDITO' And Empresa = '" & _Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
                             Case "FDV"
                                 _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                     "Campo = 'Input_siimesesexpiranfolios_NOTASDEBITO' And Empresa = '" & Mod_Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
+                                     "Campo = 'Input_siimesesexpiranfolios_NOTASDEBITO' And Empresa = '" & _Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
                             Case "GDV"
                                 _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                     "Campo = 'siimesesexpiranfolios_GUIAS' And Empresa = '" & Mod_Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
+                                     "Campo = 'siimesesexpiranfolios_GUIAS' And Empresa = '" & _Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
                             Case Else
                                 _Meses = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                        "Campo = 'siimesesexpiranfolios' And Empresa = '" & Mod_Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
+                                        "Campo = 'siimesesexpiranfolios' And Empresa = '" & _Empresa & "' And AmbienteCertificacion = " & _AmbienteCertificacion,, False)
                         End Select
 
                     Catch ex As Exception

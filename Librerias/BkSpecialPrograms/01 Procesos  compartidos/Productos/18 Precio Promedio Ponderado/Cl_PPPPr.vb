@@ -215,7 +215,7 @@ Public Class Cl_PPPPr
                     _UltSaldoNegativo = True
                 End If
 
-                If _Nudo = "0000051206" Then
+                If _Nudo = "3670099465" Then
                     Dim _Aqui = 0
                 End If
 
@@ -334,16 +334,26 @@ Public Class Cl_PPPPr
 
                 If _Tido = "DIN" Then
 
+                    If _Nudo = "3670099465" Then
+                        Dim _Aqui = 0
+                    End If
+
                     If _Lilg = "IM" Then
 
-                        'Dim _PrecioCompra2 As Double = Math.Round(Math.Round(_Vaneli, 0) / _Cantidad, 5)
-                        'Dim _DifStock As Double = _Saldo_Stock - _Cantidad
-                        'Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(_Saldo_Stock, Pm, _Saldo_Stock, _PrecioCompra2)
+                        _Cantidad = Math.Round(_Caprco1, 2)
+                        Dim _PrecioCompra2 As Double = Math.Round(Math.Round(_Vaneli, 0) / _Cantidad, 5)
+                        _PrecioCompra2 += _Ppprnere1 'Pm
+
+                        Dim _DifStock As Double = _Saldo_Stock - _Cantidad
+                        Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(_Saldo_Stock, Pm, _Cantidad, _PrecioCompra2)
 
                         _V_Entrada = Math.Round(_Vaneli, 0)
                         _Saldo_Valor += _V_Entrada
                         _Costotrib = _V_Entrada
                         _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
+
+                        '_Pr_Pr_P = _PPP
+
                         _Pm = Math.Round(_Pr_Pr_P, 3)
                         Fepm = _Feemli
 
