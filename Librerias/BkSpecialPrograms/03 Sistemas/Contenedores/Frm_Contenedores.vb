@@ -6,6 +6,7 @@ Public Class Frm_Contenedores
     Dim Consulta_sql As String
     Public Property ModoSeleccion As Boolean
     Public Property Zw_Contenedor As New Zw_Contenedor
+    Public Property SeleccionarSoloConProdDisponibles As Boolean
 
     Public Sub New()
 
@@ -36,7 +37,7 @@ Public Class Frm_Contenedores
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Contenedor" & vbCrLf &
-                       "Where Empresa = '" & Mod_Empresa & "'"
+                       "Where Empresa = '" & Mod_Empresa & "'" & vbCrLf & _Condicion
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -117,13 +118,6 @@ Public Class Frm_Contenedores
 
         If ModoSeleccion Then
 
-            'Consulta_sql = "SELECT Id,IdCont,Contenedor,CodFuncionario,Fecha_Hora,NombreEquipo,Id_DocEnc,NroRemota," &
-            '               "Rm.CodPermiso,Rm.Descripcion_Adicional,NOKOFU" & vbCrLf &
-            '               "From " & _Global_BaseBk & "Zw_Contenedor_DocTom Dt" & vbCrLf &
-            '               "Inner Join BAKAPP_SG.dbo.Zw_Remotas Rm On Dt.Id_DocEnc = Rm.Id_Casi_DocEnc" & vbCrLf &
-            '               "Left Join TABFU Tf On Tf.KOFU = Rm.CodFuncionario_Solicita" & vbCrLf &
-            '               "Where IdCont = " & _IdCont
-
             Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
             Consulta_sql = "Select t.*,f.NOKOFU From " & _Global_BaseBk & "Zw_Contenedor_DocTom t" & vbCrLf &
@@ -134,6 +128,14 @@ Public Class Frm_Contenedores
             If Not IsNothing(_Row) Then
                 MessageBoxEx.Show(Me, "Este contenedor se encuentra tomado por un documento en construcción." & vbCrLf &
                                   "Pertenece al funcionario: " & _Row.Item("CodFuncionario") & " - " & _Row.Item("NOKOFU"), "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Contenedor_StockProd", "IdCont = 0 And StcfiDisponibleUd1 > 0")
+
+            If Not CBool(_Reg) Then
+                MessageBoxEx.Show(Me, "Este contenedor no tiene productos disponibles para vender en Pre-Venta", "Validación",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If

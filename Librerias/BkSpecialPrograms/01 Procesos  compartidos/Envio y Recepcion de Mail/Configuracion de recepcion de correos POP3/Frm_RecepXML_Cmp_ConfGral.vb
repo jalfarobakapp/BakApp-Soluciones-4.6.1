@@ -101,16 +101,34 @@ Public Class Frm_RecepXML_Cmp_ConfGral
             Return
         End If
 
+        Dim _Mensaje As LsValiciones.Mensajes
+
         If Rdb_POP3.Checked Then
-            If Not Fx_ConectarPOP3() Then
+
+            _Mensaje = Fx_ConectarPOP3()
+
+            MessageBoxEx.Show(Me, _Mensaje.Detalle, "Conexión POP3", MessageBoxButtons.OK, _Mensaje.Icono)
+            If _Mensaje Is Nothing Then
                 Return
             End If
+            If Not _Mensaje.EsCorrecto Then
+                Return
+            End If
+
         End If
 
         If Rdb_IMAP.Checked Then
-            If Not Fx_Conectar_IMAP() Then
+
+            _Mensaje = Fx_Conectar_IMAP()
+
+            MessageBoxEx.Show(Me, _Mensaje.Detalle, "Conexión IMAP", MessageBoxButtons.OK, _Mensaje.Icono)
+            If _Mensaje Is Nothing Then
                 Return
             End If
+            If Not _Mensaje.EsCorrecto Then
+                Return
+            End If
+
         End If
 
         With _Global_Row_Configuracion_General
@@ -149,98 +167,93 @@ Public Class Frm_RecepXML_Cmp_ConfGral
 
     End Sub
 
-    Function Fx_ConectarPOP3() As Boolean
-
-        Dim _Host As String = _Row_CuentaSMTP.Item("Host")
-        Dim _User As String = _Row_CuentaSMTP.Item("Nombre_Usuario")
-        Dim _Pass As String = _Row_CuentaSMTP.Item("Contrasena")
-
-        Dim _Pop3 As New Pop3
-        'Using _Pop3 As New Pop3
-        _Pop3.Connect(_Host)                          'Utilice sobrecargas o ConnectSSL si necesita especificar otro puerto o SSL.
-        '_Pop3.Login(_User, _Pass)                    ' You can also use: LoginAPOP, LoginPLAIN, LoginCRAM, LoginDIGEST methods,
-        _Pop3.UseBestLogin(_User, _Pass)              ' You can also use: LoginAPOP, LoginPLAIN, LoginCRAM, LoginDIGEST methods,
-        ' or use UseBestLogin method if you want Mail.dll to choose for you.
-
-        If Not _Pop3.Connected Then
-            MessageBoxEx.Show(Me, "No es posible establecer conexión", "Conexión POP3", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Return False
-        End If
-
-        _Pop3.Close()
-
-        MessageBoxEx.Show(Me, "Conexión establecida correctamente", "Conexión POP3", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-        Return True
-
-    End Function
-
-    Function Fx_Conectar_IMAP() As Boolean
-
-        Dim _Host As String = _Row_CuentaSMTP.Item("Host")
-        Dim _User As String = _Row_CuentaSMTP.Item("Nombre_Usuario")
-        Dim _Pass As String = _Row_CuentaSMTP.Item("Contrasena")
-
-        Dim _Imap As New Imap
+    Function Fx_ConectarPOP3() As LsValiciones.Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
+            Dim _Host As String = _Row_CuentaSMTP.Item("Host")
+            Dim _User As String = _Row_CuentaSMTP.Item("Nombre_Usuario")
+            Dim _Pass As String = _Row_CuentaSMTP.Item("Contrasena")
 
-            '_Imap.SSLConfiguration.EnabledSslProtocols = SslProtocols.Tls12
+            Using _Pop3 As New Pop3
+                _Pop3.Connect(_Host)
+                _Pop3.UseBestLogin(_User, _Pass)
 
-            _Imap.ConnectSSL(_Host)  ' or Connect for non SSL/TLS<font></font>
-            _Imap.UseBestLogin(_User, _Pass)
+                If Not _Pop3.Connected Then
+                    Throw New System.Exception("No es posible establecer conexión")
+                End If
+            End Using
 
-            _Imap.SelectInbox()
-
-            If Not _Imap.Connected Then
-                Throw New System.Exception("No es posible establecer conexión")
-            End If
-
-            Dim _Folder = _Imap.GetFolders
-            Dim _ExisteCarpDestino As Boolean = True
-            Dim _ExisteCarpLectura As Boolean = True
-
-            If Not String.IsNullOrWhiteSpace(Txt_IMAP_CarpetaDestino.Text) Then
-                _ExisteCarpDestino = False
-                For Each _Carp In _Folder
-                    If _Carp.Name = Txt_IMAP_CarpetaDestino.Text Then
-                        _ExisteCarpDestino = True
-                        Exit For
-                    End If
-                Next
-            End If
-
-            If Not String.IsNullOrWhiteSpace(Txt_IMAP_CarpetaLectura.Text) Then
-                _ExisteCarpLectura = False
-                For Each _Carp In _Folder
-                    If _Carp.Name = Txt_IMAP_CarpetaLectura.Text Then
-                        _ExisteCarpLectura = True
-                        Exit For
-                    End If
-                Next
-            End If
-
-            If Not _ExisteCarpDestino Then
-                Throw New System.Exception("No existe carpeta de destino: " & Txt_IMAP_CarpetaDestino.Text)
-            End If
-
-            If Not _ExisteCarpLectura Then
-                Throw New System.Exception("No existe carpeta de lectura: " & Txt_IMAP_CarpetaDestino.Text)
-            End If
-
-            _Imap.Close()
-
-            MessageBoxEx.Show(Me, "Conexión establecida correctamente", "Conexión IMAP", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-            Return True
+            MessageBoxEx.Show(Me, "Conexión establecida correctamente", "Conexión POP3", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Conexión POP3 establecida correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Detalle = "Conexión POP3 establecida correctamente"
 
         Catch ex As Exception
-            MessageBoxEx.Show(Me, ex.Message, "Error de conexión IMAP", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return False
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Error de conexión POP3"
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            _Mensaje.Detalle = ex.Message
+            MessageBoxEx.Show(Me, ex.Message, "Error de conexión POP3", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End Try
 
-        '_Imap.CurrentFolder
+        Return _Mensaje
+    End Function
 
+    Function Fx_Conectar_IMAP() As LsValiciones.Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+            Dim _Host As String = _Row_CuentaSMTP.Item("Host")
+            Dim _User As String = _Row_CuentaSMTP.Item("Nombre_Usuario")
+            Dim _Pass As String = _Row_CuentaSMTP.Item("Contrasena")
+
+            Using _Imap As New Imap
+                _Imap.ConnectSSL(_Host)
+                _Imap.UseBestLogin(_User, _Pass)
+                _Imap.SelectInbox()
+
+                If Not _Imap.Connected Then
+                    Throw New System.Exception("No es posible establecer conexión")
+                End If
+
+                Dim _Folder = _Imap.GetFolders
+                Dim _Carpetas = _Folder.ToDictionary(Function(f) f.Name, Function(f) f)
+
+                Dim _ExisteCarpDestino As Boolean = True
+                Dim _ExisteCarpLectura As Boolean = True
+
+                If Not String.IsNullOrWhiteSpace(Txt_IMAP_CarpetaDestino.Text) Then
+                    _ExisteCarpDestino = _Carpetas.ContainsKey(Txt_IMAP_CarpetaDestino.Text)
+                End If
+
+                If Not String.IsNullOrWhiteSpace(Txt_IMAP_CarpetaLectura.Text) Then
+                    _ExisteCarpLectura = _Carpetas.ContainsKey(Txt_IMAP_CarpetaLectura.Text)
+                End If
+
+                If Not _ExisteCarpDestino Then
+                    Throw New System.Exception("No existe carpeta de destino: " & Txt_IMAP_CarpetaDestino.Text)
+                End If
+
+                If Not _ExisteCarpLectura Then
+                    Throw New System.Exception("No existe carpeta de lectura: " & Txt_IMAP_CarpetaLectura.Text)
+                End If
+            End Using
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Conexión IMAP establecida correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Detalle = "Conexión IMAP"
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            _Mensaje.Detalle = "Error de conexión IMAP"
+        End Try
+
+        Return _Mensaje
     End Function
 
 

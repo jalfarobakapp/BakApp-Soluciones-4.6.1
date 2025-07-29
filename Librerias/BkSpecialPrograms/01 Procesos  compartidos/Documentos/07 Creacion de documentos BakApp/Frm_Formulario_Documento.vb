@@ -29403,6 +29403,7 @@ Public Class Frm_Formulario_Documento
 
         Dim Fm As New Frm_Contenedores
         Fm.ModoSeleccion = True
+        Fm.SeleccionarSoloConProdDisponibles = True
         Fm.ShowDialog(Me)
         _Cl_Contenedor.Zw_Contenedor = Fm.Zw_Contenedor
         Fm.Dispose()
