@@ -126,7 +126,7 @@ Public Class Frm_MantFacturasElectronicas
 
             .Columns("Trackid").Visible = True
             .Columns("Trackid").HeaderText = "Trackid"
-            .Columns("Trackid").Width = 70
+            .Columns("Trackid").Width = 80
             .Columns("Trackid").Frozen = True
             .Columns("Trackid").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1

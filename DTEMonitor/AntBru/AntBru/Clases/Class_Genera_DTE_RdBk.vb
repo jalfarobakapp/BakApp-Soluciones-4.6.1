@@ -11,7 +11,6 @@ Imports DevComponents.DotNetBar
 Imports HEFESTO.FIRMA.DOC.FORM
 Imports HEFESTO.FIRMA.DOCUMENTO
 Imports HefestoCesionV12
-'Imports Ionic.Zip
 Imports System.IO.Compression
 
 
@@ -2284,6 +2283,10 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim _Fullpath = AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos"
 
+        If Not Directory.Exists(_Fullpath) Then
+            Directory.CreateDirectory(_Fullpath)
+        End If
+
         If Not Directory.Exists(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto") Then
             System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto")
         End If
@@ -2321,7 +2324,7 @@ Public Class Class_Genera_DTE_RdBk
         oSW.WriteLine(_XmlCAF)
         oSW.Close()
 
-        _uriCaf = AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml" 'AppPath() & "\Data\" & _RtEmpresaActiva & "\DTE\Hefesto\CAF\FCV\FoliosSII7659092061192022161442.xml"
+        _uriCaf = AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml"
 
         If Not Directory.Exists(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando") Then
             System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando")
@@ -2534,6 +2537,10 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim _Fullpath = AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Documentos"
 
+        If Not Directory.Exists(_Fullpath) Then
+            Directory.CreateDirectory(_Fullpath)
+        End If
+
         If Not Directory.Exists(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto") Then
             System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto")
         End If
@@ -2550,7 +2557,7 @@ Public Class Class_Genera_DTE_RdBk
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_DTE_Caf" & vbCrLf &
                        "Where Empresa = '" & _Empresa & "' And TD = '" & _Td & "' And RNG_D <= " & CInt(_Nudo) & " And RNG_H >= " & CInt(_Nudo) &
-                       " And AmbienteCertificacion = 1"
+                       " And AmbienteCertificacion = " & _AmbienteCertificacion
         Dim _Row_CAF As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_CAF) Then
@@ -2571,7 +2578,7 @@ Public Class Class_Genera_DTE_RdBk
         oSW.WriteLine(_XmlCAF)
         oSW.Close()
 
-        _uriCaf = AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml" 'AppPath() & "\Data\" & _RtEmpresaActiva & "\DTE\Hefesto\CAF\FCV\FoliosSII7659092061192022161442.xml"
+        _uriCaf = AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\CAF\" & _Tido & "\Caf_" & _Tido & ".xml"
 
         If Not Directory.Exists(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando") Then
             System.IO.Directory.CreateDirectory(AppPath() & "\Data\" & _RutEmpresaActiva & "\DTE\Hefesto\Doc_Firmando")
@@ -2807,6 +2814,10 @@ Public Class Class_Genera_DTE_RdBk
             Dim _Asunto As String = _Row_Correo.Item("Asunto")
             Dim _Mensaje As String = _Row_Correo.Item("CuerpoMensaje")
 
+            Dim _Nombre_Empresa As String = _Sql.Fx_Trae_Dato("CONFIGP", "RAZON", "EMPRESA = '" & _Row_Maeedo.Item("EMPRESA") & "'")
+
+            _Nombre_Empresa = Replace(_Nombre_Empresa, "&", "&amp;")
+
             If String.IsNullOrEmpty(_Asunto) Then
                 _Asunto = "Correo de notificación de pedido " & RazonEmpresa
             End If
@@ -2816,6 +2827,11 @@ Public Class Class_Genera_DTE_RdBk
             _Mensaje = Replace(_Mensaje, "&quot;", """")
 
             _Mensaje = Replace(_Mensaje, "'", "''")
+
+            '_Asunto = Replace(_Asunto, "COMERCIAL SEA GARDEN SPA.", _Nombre_Empresa.ToString.Trim)
+            '_Mensaje = Replace(_Mensaje, "COMERCIAL SEA GARDEN SPA", _Nombre_Empresa.ToString.Trim)
+
+            'Fx_Caracter_Raro_Quitar(_Mensaje)
 
             If Not String.IsNullOrEmpty(_Nombre_Correo) Then
 

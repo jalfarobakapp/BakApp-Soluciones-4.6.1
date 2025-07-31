@@ -930,6 +930,11 @@ Public Class Frm_Demonio_DTEMonitor
                            "And EnviarMail = 1 " &
                            "And AmbienteCertificacion = " & _AmbienteCertificacion
 
+            'Consulta_sql = "Select Id,Tk.Id_Dte,Tk.Idmaeedo,Tk.Trackid,Informado,Aceptado,Rechazado,Reparo,Estado,Glosa,Tk.Respuesta,FechaEnvSII,Tk.AmbienteCertificacion,MailToDiablito, ErrorMailToDiablito,Dc.CaratulaXmlEmail
+            'From BAKAPP_SG.dbo.Zw_DTE_Trackid Tk
+            'Inner Join BAKAPP_SG.dbo.Zw_DTE_Documentos Dc On Dc.Id_Dte = Tk.Id_Dte
+            'Where Tk.Procesar = 0 And Tk.Procesado = 1 And CaratulaXmlEmail = '' And Tk.AmbienteCertificacion = 0"
+
             Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
@@ -963,7 +968,7 @@ Public Class Frm_Demonio_DTEMonitor
 
                     If Fx_Esta_Firmando(_Filtro_Id_Trackid, _Id_Trackid) Then
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set MailToDiablito = 0,EnviarMail = 1" & vbCrLf &
-                               "Where Id In " & _Filtro_Id_Trackid
+                                       "Where Id In " & _Filtro_Id_Trackid
                         If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
                             Throw New System.Exception(_Sql.Pro_Error)
                         End If
@@ -983,6 +988,8 @@ Public Class Frm_Demonio_DTEMonitor
                     End If
 
                     If Not IsNothing(_Class_DTE.Maeedo) Then
+
+                        '_Class_DTE.Fx_Timbrar_Documento_Hefesto2(Me, _Id_Dte)
 
                         Dim _Empresa = _Class_DTE.Maeedo.Rows(0).Item("EMPRESA").ToString.Trim
                         Dim _Koen = _Class_DTE.Maeedo.Rows(0).Item("ENDO").ToString.Trim
