@@ -5702,6 +5702,8 @@ Public Class Frm_Formulario_Documento
         Dim _Bodega = _Fila.Cells("Bodega").Value
 
         Dim _Noaplica_Imp As String = String.Empty
+        Dim _PorIla As Double
+        Dim _QuitaImpCarne As Boolean = False
 
         If _Sql.Fx_Exite_Campo("TABIMPR", "NOAPLICEN") Then
 
@@ -5725,6 +5727,10 @@ Public Class Frm_Formulario_Documento
 
                 End If
 
+                If RutEmpresa = "77988832-0" Or (RutEmpresa = "76095906-5" And ModEmpresa_Doc = "02") Then
+                    _QuitaImpCarne = True
+                End If
+
             ElseIf _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
                 _Noaplica_Imp = " And NOAPLICEN Not like '%compras%'"
             End If
@@ -5734,6 +5740,16 @@ Public Class Frm_Formulario_Documento
         Consulta_sql = "Select Isnull(Sum(POIM),0) As Impuesto From TABIM" & Space(1) &
                        "Where KOIM In (Select KOIM From TABIMPR Where KOPR = '" & _Codigo & "'" & _Noaplica_Imp & ")"
         _RowImpuestos = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Try
+            _PorIla = NuloPorNro(_RowImpuestos.Item("Impuesto"), 0)
+        Catch ex As Exception
+            _PorIla = 0
+        End Try
+
+        If _QuitaImpCarne Then
+            _PorIla = 0
+        End If
 
         Dim _ExisteCosto As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABPRE", "KOLT = '" & _ListaCostos & "' And KOPR = '" & _Codigo & "'"))
         Dim _ExistePrecio As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABPRE", "KOLT = '" & _ListaPrecios & "' And KOPR = '" & _Codigo & "'"))
@@ -5807,14 +5823,6 @@ Public Class Frm_Formulario_Documento
         Dim _Ecuacion As String = NuloPorNro(_RowPrecios.Item("ECUACION").ToString.Trim, "")
         Dim _Ecuacionu2 As String = NuloPorNro(_RowPrecios.Item("ECUACIONU2").ToString.Trim, "")
         Dim _PorIva As Double = _RowProducto.Item("POIVPR")
-
-        Dim _PorIla As Double
-
-        Try
-            _PorIla = NuloPorNro(_RowImpuestos.Item("Impuesto"), 0)
-        Catch ex As Exception
-            _PorIla = 0
-        End Try
 
         If _SubTido = "IMP" Then
             _PorIva = 0
@@ -12366,7 +12374,15 @@ Public Class Frm_Formulario_Documento
             _TblEncabezado.Rows(0).Item("Tasadorig_Doc") = _Vamo
 
             .Item("Centro_Costo") = _TblEncabezado_StBy.Rows(0).Item("Centro_Costo")
-            .Item("Contacto_Ent") = _TblEncabezado_StBy.Rows(0).Item("Contacto_Ent")
+
+            Try
+                .Item("Contacto_Ent") = _TblEncabezado_StBy.Rows(0).Item("Contacto_Ent")
+            Catch ex As Exception
+                .Item("Contacto_Ent") = String.Empty
+            End Try
+
+            Txt_Contacto.Text = _Sql.Fx_Trae_Dato("MAEENCON", "NOKOCON",
+                                                  "KOEN = '" & _RowEntidad.Item("KOEN") & "' And RUTCONTACT = '" & _TblEncabezado.Rows(0).Item("Contacto_Ent") & "'")
 
             Dim _Fun_Auto_Deuda_Ven = _TblEncabezado_StBy.Rows(0).Item("Fun_Auto_Deuda_Ven")
             Dim _Fun_Auto_Stock_Ins = _TblEncabezado_StBy.Rows(0).Item("Fun_Auto_Stock_Ins")
@@ -19381,7 +19397,6 @@ Public Class Frm_Formulario_Documento
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False)
 
             End If
-
 
             _TblObservaciones.Rows(0).Item("Forma_pago") = _Forma_pago
 
@@ -29388,6 +29403,7 @@ Public Class Frm_Formulario_Documento
 
         Dim Fm As New Frm_Contenedores
         Fm.ModoSeleccion = True
+        Fm.SeleccionarSoloConProdDisponibles = True
         Fm.ShowDialog(Me)
         _Cl_Contenedor.Zw_Contenedor = Fm.Zw_Contenedor
         Fm.Dispose()

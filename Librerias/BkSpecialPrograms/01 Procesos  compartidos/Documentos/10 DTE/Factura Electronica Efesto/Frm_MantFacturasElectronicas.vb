@@ -126,7 +126,7 @@ Public Class Frm_MantFacturasElectronicas
 
             .Columns("Trackid").Visible = True
             .Columns("Trackid").HeaderText = "Trackid"
-            .Columns("Trackid").Width = 70
+            .Columns("Trackid").Width = 80
             .Columns("Trackid").Frozen = True
             .Columns("Trackid").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -364,12 +364,9 @@ Public Class Frm_MantFacturasElectronicas
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Hasta#", Format(_Cl_MFElec.Fecha_Hasta, "yyyyMMdd"))
 
         Consulta_sql = Replace(Consulta_sql, "#AmbienteCertificacion#", _AmbienteCertificacion)
+        Consulta_sql = Replace(Consulta_sql, "Where 1 > 0", "Where 1 > 0" & vbCrLf & "And Edo.EMPRESA = '" & Mod_Empresa & "'")
 
         Dim _SoloFirmadosPorBakapp = String.Empty
-
-        'If Chk_SoloFirmadosXBakapp.Checked Then
-        '    _SoloFirmadosPorBakapp = "And Edo.IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_DTE_Firmar)"
-        'End If
 
         Consulta_sql = Replace(Consulta_sql, "#SoloFirmadosPorBakapp#", _SoloFirmadosPorBakapp)
 

@@ -1378,14 +1378,23 @@ Public Class Cl_Correos
                 _Texto = Replace(_Texto, "Doc_Feemdo", "FEEMDO")
                 _Texto = Replace(_Texto, "Doc_Vabrdo", "VABRDO")
 
-                _Texto = Replace(_Texto, "<RazonEmpresa>", RazonEmpresa)
-                _Texto = Replace(_Texto, "<EMPRESAEMI>", RazonEmpresa)
+                Dim _Empresa As String = _Sql.Fx_Trae_Dato("MAEEDO", "EMPRESA", "IDMAEEDO = " & _Idmaeedo)
+
+                Consulta_Sql = "Select RAZON,RUT,NCORTO,DIRECCION,CIUDAD,PAIS,TELEFONOS,GIRO" & vbCrLf &
+                               "From CONFIGP Where EMPRESA = '" & _Empresa & "'"
+                Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                Dim _RazonEmpresa As String = _Row_Configp.Item("RAZON").ToString.Trim
+                Dim _RutEmpresaActiva As String = _Row_Configp.Item("RUT").ToString.Trim
+
+                _Texto = Replace(_Texto, "<RazonEmpresa>", _RazonEmpresa)
+                _Texto = Replace(_Texto, "<EMPRESAEMI>", _RazonEmpresa)
                 _Texto = Replace(_Texto, "<RutEmpresa>", RutEmpresa)
-                _Texto = Replace(_Texto, "<RutEmpresaActiva>", RutEmpresaActiva)
+                _Texto = Replace(_Texto, "<RutEmpresaActiva>", _RutEmpresaActiva)
 
                 Dim _Dv, _Rut, _RutEmpresaCP, _RutEmpresaActivaCP As String
 
-                _Rut = RutEmpresa
+                _Rut = _RutEmpresaActiva
                 If _Rut.Contains("-") Then
                     Dim _Rt = Split(_Rut, "-")
                     _Rut = _Rt(0)

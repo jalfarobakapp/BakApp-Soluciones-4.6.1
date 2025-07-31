@@ -116,6 +116,7 @@ Partial Class Frm_Demonio_DTEMonitor
         Me.Btn_Pruebas.Name = "Btn_Pruebas"
         Me.Btn_Pruebas.Text = "PRUEBAS"
         Me.Btn_Pruebas.Tooltip = "Limpiar log..."
+        Me.Btn_Pruebas.Visible = False
         '
         'Metro_Bar_Color
         '

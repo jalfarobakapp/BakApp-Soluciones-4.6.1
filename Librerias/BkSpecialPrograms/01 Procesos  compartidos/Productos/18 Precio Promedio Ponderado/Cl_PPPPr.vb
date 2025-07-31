@@ -188,6 +188,8 @@ Public Class Cl_PPPPr
                 Dim _Costoifrs As Double = _Fila.Item("COSTOIFRS")
                 Dim _Vaneli As Double = _Fila.Item("VANELI")
                 Dim _Lilg As String = _Fila.Item("LILG")
+                Dim _Timodo As String = _Fila.Item("TIMODO")
+                Dim _Tamodo As Double = _Fila.Item("TAMODO")
 
                 Dim _Entrada As Double
                 Dim _Salida As Double
@@ -213,9 +215,15 @@ Public Class Cl_PPPPr
                     _UltSaldoNegativo = True
                 End If
 
-                If _Nudo = "0000049984" Then
+                If _Nudo = "0000015146" Then
                     Dim _Aqui = 0
                 End If
+
+                If _Timodo = "E" Then
+                    _Vaneli = Math.Round(_Vaneli * _Tamodo, 0)
+                End If
+
+                Dim _NewPPPRPR2 As Double = _Pm
 
                 If CBool(_Cantidad) AndAlso
                     ((_Tido = "GDD") Or
@@ -276,7 +284,7 @@ Public Class Cl_PPPPr
 
                         End If
 
-                        If _Tido = "NCV" And _Tidopa = "FCV" Then
+                        If _Tido = "NCV" AndAlso _Tidopa = "FCV" AndAlso (_Row.Item("TIDO") <> "FCV") Then
 
                             Consulta_sql = "Select TOP 1 TIDO,TIDOPA,PPPRPM,PPPRPMIFRS,ARCHIRST,IDRST,CAPRCO1,CAPRAD1,IDMAEDDO" & vbCrLf &
                                            "From MAEDDO With (Nolock)" & vbCrLf &
@@ -300,16 +308,20 @@ Public Class Cl_PPPPr
                         _Costotrib = _Vaneli
                     End If
 
-                    _PrecioCompra = Math.Round(_Costotrib / _Cantidad, 3)
+                    '_Costotrib = Math.Round(_Costotrib, 0)
+
+                    _PrecioCompra = Math.Round(_Costotrib / _Cantidad, 5)
 
                     Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(Math.Round(_Saldo_Stock, 2), Pm, _Cantidad, _PrecioCompra)
-                    Dim _PPP2 As Double = CalcularPPP(Saldo_Stock, Pm, _Cantidad, _PrecioCompra)
+                    ' Dim _PPP2 As Double = CalcularPPP(Saldo_Stock, Pm, _Cantidad, _PrecioCompra)
 
                     If _PPP > 0 Then
                         _Pm = _PPP
                     Else
                         _Pm = _PrecioCompra
                     End If
+
+                    _NewPPPRPR2 = _Pm
 
                     _Costotrib = Math.Round(_Costotrib)
                     _V_Entrada = _Costotrib
@@ -328,19 +340,26 @@ Public Class Cl_PPPPr
 
                 If _Tido = "DIN" Then
 
+                    If _Nudo = "3670099375" And _Lilg = "IM" Then
+                        Dim _Aqui = 0
+                    End If
+
                     If _Lilg = "IM" Then
+
+                        _Cantidad = Math.Round(_Caprco1, 2)
+                        _NewPPPRPR2 = Fx_CalcularPrecioPromedioPonderadoDIM(_Saldo_Stock, _Pm, Math.Round(_Vaneli, 0))
 
                         _V_Entrada = Math.Round(_Vaneli, 0)
                         _Saldo_Valor += _V_Entrada
                         _Costotrib = _V_Entrada
                         _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
+
+                        _Pr_Pr_P = _NewPPPRPR2
+
                         _Pm = Math.Round(_Pr_Pr_P, 3)
                         Fepm = _Feemli
 
-                        'Dim _PrecioCompra2 As Double = Math.Round(_Vaneli, 0) / _Cantidad
-                        'Dim _DifStock As Double = _Saldo_Stock - _Cantidad
-                        'Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(_Saldo_Stock, Pm, 1, _Vaneli)
-                        '_Pm = _PPP
+                        _Fila.Item("VANELI") = _V_Entrada
 
                     End If
 
@@ -351,6 +370,7 @@ Public Class Cl_PPPPr
                 _Fila.Item("V_SALDO") = Math.Round(_Saldo_Valor, 2)
                 _Fila.Item("NewPPPRPR") = _Pm
                 _Fila.Item("Stfisico") = _Stexistini
+                _Fila.Item("NewPPPRPR2") = _NewPPPRPR2
 
                 _ContadorDocs += 1
 
@@ -451,9 +471,46 @@ Public Class Cl_PPPPr
             Return 0 ' Para evitar división por cero
         End If
 
-        'Dim precioPromedio As Double = (_TotalValorAnterior + _TotalValorCompra) / _TotalUnidades
+        ''Dim precioPromedio As Double = (_TotalValorAnterior + _TotalValorCompra) / _TotalUnidades
+
+        'Dim _ST_AntD As Decimal = Convert.ToDecimal(Math.Round(_ST_Ant, 5))
+        'Dim _PPP_AntD As Decimal = Convert.ToDecimal(Math.Round(_PPP_Ant, 5))
+        'Dim _IngresoD As Decimal = Convert.ToDecimal(Math.Round(_Ingreso, 5))
+        'Dim _PrecioD As Decimal = Convert.ToDecimal(Math.Round(_Precio, 5))
+
+        'Dim Calculo1 As Decimal = Math.Round((_ST_AntD * _PPP_AntD + _IngresoD * _PrecioD), 5)
+        'Dim Calculo2 As Decimal = Math.Round(_ST_AntD / _IngresoD, 5)
+        'Dim PPP As Decimal = Math.Round(Calculo1 / Calculo2, 5)
+
+        'Dim _PPP2 = Convert.ToDouble(Calculo1) / Convert.ToDouble(Calculo2) ' 14179383.51264 / 2266.984
 
         Dim precioPromedioRd As Double = (_ST_Ant * _PPP_Ant + _Ingreso * _Precio) / (_ST_Ant + _Ingreso)
+
+        Return Math.Round(precioPromedioRd, 5) ' Redondeo a 2 decimales
+        'Return Math.Round(precioPromedio, 5) ' Redondeo a 2 decimales
+
+    End Function
+
+    Function Fx_CalcularPrecioPromedioPonderadoDIM(_ST_Ant As Double,
+                                                   _PPP_Ant As Double,
+                                                   _Precio As Double) As Double
+
+        If _PPP_Ant < 0 Then _PPP_Ant = 0
+        If _ST_Ant < 0 Then _ST_Ant = 0
+
+        'Dim precioPromedio As Double = (_TotalValorAnterior + _TotalValorCompra) / _TotalUnidades
+
+        Dim _ST_AntD As Decimal = Convert.ToDecimal(Math.Round(_ST_Ant, 5))
+        Dim _PPP_AntD As Decimal = Convert.ToDecimal(Math.Round(_PPP_Ant, 5))
+        Dim _PrecioD As Decimal = Convert.ToDecimal(Math.Round(_Precio, 5))
+
+        Dim Calculo1 As Decimal = Math.Round((_ST_AntD * _PPP_AntD + 1 * _PrecioD), 5)
+        Dim Calculo2 As Decimal = Math.Round(_ST_AntD, 5)
+        Dim PPP As Decimal = Math.Round(Calculo1 / Calculo2, 5)
+
+        Dim _PPP2 = Convert.ToDouble(Calculo1) / Convert.ToDouble(Calculo2) ' 14179383.51264 / 2266.984
+
+        Dim precioPromedioRd As Double = (_ST_Ant * _PPP_Ant + _Precio) / (_ST_Ant)
 
         Return Math.Round(precioPromedioRd, 5) ' Redondeo a 2 decimales
         'Return Math.Round(precioPromedio, 5) ' Redondeo a 2 decimales

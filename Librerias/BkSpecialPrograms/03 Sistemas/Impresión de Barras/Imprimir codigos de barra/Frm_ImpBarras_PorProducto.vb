@@ -171,7 +171,8 @@ Public Class Frm_ImpBarras_PorProducto
         End If
 
         Consulta_sql = "Select Z1.KOPR AS 'Codigo',RLUD,Z1.NOKOPR As 'Descripcion',0 As Cantidad," &
-                       "Isnull((Select Top 1 Rtrim(Ltrim(KOPRAL)) From TABCODAL Z2 Where Z1.KOPR = Z2.KOPR And KOEN = '' Order By UNIMULTI),'') As CodAlternativo " & vbCrLf &
+                       "Isnull((Select Top 1 Rtrim(Ltrim(KOPRAL)) From TABCODAL Z2 Where Z1.KOPR = Z2.KOPR And KOEN = '' Order By UNIMULTI),'') As CodAlternativo," &
+                       "Cast(0 As Bit) As 'KopralLeido' " & vbCrLf &
                        "From MAEPR Z1" & vbCrLf &
                        "Where 1 > 0" & vbCrLf & _Filtro_Productos
 
@@ -383,6 +384,8 @@ Public Class Frm_ImpBarras_PorProducto
 
                         If _VistaPrevia Then
 
+                            Dim _KopralLeido As Boolean = _Fila("KopralLeido")
+
                             Dim Fm As New Frm_ImpBarras_Preview(_Imp.Ult_Etiqueta, Cmbetiquetas.SelectedValue, _Codigo)
                             Fm.ShowDialog(Me)
                             Fm.Dispose()
@@ -452,6 +455,7 @@ Public Class Frm_ImpBarras_PorProducto
 
         Dim _Kopr As String = _Codigo
         Dim _Kopral As String = String.Empty
+        Dim _KopralLeido As Boolean = False
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEPR", "KOPR = '" & _Kopr & " '")
 
@@ -462,6 +466,8 @@ Public Class Frm_ImpBarras_PorProducto
 
             If String.IsNullOrEmpty(_Kopr) Then
                 _Kopr = _Sql.Fx_Trae_Dato("TABCODAL", "KOPR", "KOPRAL = '" & _Kopral & "'")
+            Else
+                _KopralLeido = True
             End If
 
             If String.IsNullOrEmpty(_Kopr) Then
@@ -471,10 +477,11 @@ Public Class Frm_ImpBarras_PorProducto
         End If
 
         If Not String.IsNullOrEmpty(_Kopral) Then
-            Consulta_sql = "Select Top 1 *,'" & _Kopral & "' As CodAlternativo From MAEPR Where KOPR = '" & _Kopr & "'"
+            Consulta_sql = "Select Top 1 *,'" & _Kopral & "' As CodAlternativo,Cast(" & Convert.ToInt32(_KopralLeido) & " As Bit) As 'KopralLeido' From MAEPR Where KOPR = '" & _Kopr & "'"
         Else
             Consulta_sql = "Select Top 1 Z1.KOPR,RLUD,Z1.NOKOPR," &
-                           "Isnull((Select Top 1 KOPRAL From TABCODAL Z2 Where Z1.KOPR = Z2.KOPR And KOEN = '' Order By UNIMULTI),'') As CodAlternativo " & vbCrLf &
+                           "Isnull((Select Top 1 KOPRAL From TABCODAL Z2 Where Z1.KOPR = Z2.KOPR And KOEN = '' Order By UNIMULTI),'') As CodAlternativo," &
+                           "Cast(" & Convert.ToInt32(_KopralLeido) & " As Bit) As 'KopralLeido' " & vbCrLf &
                            "From MAEPR Z1" & vbCrLf &
                            "Where KOPR = '" & _Kopr & "'"
         End If
@@ -513,12 +520,15 @@ Public Class Frm_ImpBarras_PorProducto
                 ' Supongamos que tienes un DataRow llamado "row" y deseas agregar una columna llamada "NuevaColumna"
                 Dim dataTable As DataTable = _Row.Table
                 Dim nuevaColumna As New DataColumn("CodAlternativo", GetType(String)) ' Aquí especifica el tipo de datos de la columna
+                Dim nuevaColumna2 As New DataColumn("KopralLeido", GetType(Boolean)) ' Aquí especifica el tipo de datos de la columna
 
                 ' Agregar la columna a la colección de columnas de la tabla
                 dataTable.Columns.Add(nuevaColumna)
+                dataTable.Columns.Add(nuevaColumna2)
 
                 ' Asignar un valor a la nueva columna en el DataRow
                 _Row("CodAlternativo") = Fm.Txt_CodAlternativo.Text.Trim ' Aquí asigna el valor deseado a la nueva columna
+                _Row("KopralLeido") = False ' Aquí asigna el valor deseado a la nueva columna
 
                 Return _Row '_TblProducto.Rows(0)
             Else
@@ -630,13 +640,15 @@ Public Class Frm_ImpBarras_PorProducto
 
             Dim _Cantidad = 0
             If _Cantidad_Uno Then _Cantidad = 1
-            Sb_Agregar_Producto(_Tbl_Productos, _Row_Producto.Item("KOPR"), _Row_Producto.Item("NOKOPR"), _Cantidad, _Row_Producto.Item("CodAlternativo"))
+            Sb_Agregar_Producto(_Tbl_Productos,
+                                _Row_Producto.Item("KOPR"),
+                                _Row_Producto.Item("NOKOPR"),
+                                _Cantidad, _Row_Producto.Item("CodAlternativo"),
+                                _Row_Producto.Item("KopralLeido"))
 
             Txt_Codigo.Text = String.Empty
             Txt_Codigo.ButtonCustom.Visible = False
             Txt_Codigo.ButtonCustom2.Visible = True
-
-            'End If
 
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -806,7 +818,8 @@ Public Class Frm_ImpBarras_PorProducto
                              _Codigo As String,
                              _Descripcion As String,
                              _Cantidad As Integer,
-                             _CodAlternativo As String)
+                             _CodAlternativo As String,
+                             _KopralLeido As Boolean)
         Dim NewFila As DataRow
         NewFila = _Tbl.NewRow
         With NewFila
@@ -815,6 +828,7 @@ Public Class Frm_ImpBarras_PorProducto
             .Item("Descripcion") = _Descripcion.Trim
             .Item("Cantidad") = _Cantidad
             .Item("CodAlternativo") = _CodAlternativo.Trim
+            .Item("KopralLeido") = _KopralLeido
 
             _Tbl.Rows.Add(NewFila)
 

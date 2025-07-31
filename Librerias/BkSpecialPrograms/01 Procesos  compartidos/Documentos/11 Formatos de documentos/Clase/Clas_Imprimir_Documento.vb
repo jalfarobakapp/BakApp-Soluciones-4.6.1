@@ -260,11 +260,11 @@ Public Class Clas_Imprimir_Documento
 
             Dim _Detalle_Doc_Incluye = _TblEncForm.Rows(0).Item("Detalle_Doc_Incluye")
 
-            If _Detalle_Doc_Incluye = "SP" Then _Filtro_Productos = "Where TICT = ''" '_Imprimir_Fila = (_Tict = "")
-            If _Detalle_Doc_Incluye = "SP2" Then _Filtro_Productos = "Where TIPR <> 'SSN'" '_Imprimir_Fila = (_Tict = "")
-            If _Detalle_Doc_Incluye = "PD" Then _Filtro_Productos = "Where TICT In ('','D')" '_Imprimir_Fila = (_Tict = "D")
-            If _Detalle_Doc_Incluye = "PR" Then _Filtro_Productos = "Where TICT In ('','R')" '_Imprimir_Fila = (_Tict = "R")
-            If _Detalle_Doc_Incluye = "TD" Then _Filtro_Productos = String.Empty ' _Imprimir_Fila = True
+            If _Detalle_Doc_Incluye = "SP" Then _Filtro_Productos = "Where TICT = ''"           ' _Imprimir_Fila = (_Tict = "")
+            If _Detalle_Doc_Incluye = "SP2" Then _Filtro_Productos = "Where TIPR <> 'SSN'"      ' _Imprimir_Fila = (_Tict = "")
+            If _Detalle_Doc_Incluye = "PD" Then _Filtro_Productos = "Where TICT In ('','D')"    ' _Imprimir_Fila = (_Tict = "D")
+            If _Detalle_Doc_Incluye = "PR" Then _Filtro_Productos = "Where TICT In ('','R')"    ' _Imprimir_Fila = (_Tict = "R")
+            If _Detalle_Doc_Incluye = "TD" Then _Filtro_Productos = String.Empty                ' _Imprimir_Fila = True
 
             Consulta_sql = My.Resources.Recursos_Formato_Documento.SQLQuery_Traer_Documento_Para_Imprimir
             Consulta_sql = Replace(Consulta_sql, "#Idmaeedo#", _IdDoc)
@@ -272,7 +272,15 @@ Public Class Clas_Imprimir_Documento
             Consulta_sql = Replace(Consulta_sql, "#Filtro_Productos#", _Filtro_Productos)
             Consulta_sql = Replace(Consulta_sql, "#Orden_Detalle#", _Orden_Detalle)
 
-            Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+            Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql, False)
+
+            If IsNothing(_Ds) Then
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New Exception(_Sql.Pro_Error)
+                Else
+                    Throw New Exception("No se encontraron datos para el documento: " & _IdDoc)
+                End If
+            End If
 
             _Row_Encabezado = _Ds.Tables(0).Rows(0)
             _Tbl_Encabezado = _Ds.Tables(0)

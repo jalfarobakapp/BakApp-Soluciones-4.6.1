@@ -86,10 +86,10 @@ Public Class Frm_Demonio_New
         End If
 
         Me.Text = "Demonio para acciones automatizadas, V: [" & _Version_BkSpecialPrograms & "]"
-        Lbl_Nombre_Equipo.Text = "Nombre equipo: " & _NombreEquipo
+        Lbl_Nombre_Equipo.Text = "Nombre equipo: " & _NombreEquipo & ", Base de datos Bakapp: " & _Global_BaseBk
         Lbl_Modalidad.Text = "Modalidad: " & Mod_Modalidad & ", Sucursal: " & Mod_Sucursal & ", Bodega: " & Mod_Bodega
 
-        Lbl_Estatus.Text = "Empresa: " & Mod_Empresa & ", Modalidad: " & Mod_Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _NombreEquipo & ", diablito = " & _Global_EsDiablito.ToString
+        Lbl_Estatus.Text = "Empresa: " & RutEmpresa & " (" & Mod_Empresa & "), Modalidad: " & Mod_Modalidad & ", Usuario: " & FUNCIONARIO & ", Equipo: " & _NombreEquipo & ", diablito = " & _Global_EsDiablito.ToString
 
 
         Dim _Grb_Programacion As New Grb_Programacion
@@ -1304,7 +1304,11 @@ Public Class Frm_Demonio_New
                 Dim _Modalidad_Ori = Mod_Modalidad
 
                 If RutEmpresa = "76095906-5" Then
+                    'MessageBox.Show("Se cambiará la empresa y modalidad a la de facturación automática", "Atención",
+                    '                MessageBoxButtons.OK, MessageBoxIcon.Information)
                     _Cl_FacturacionAuto.Sb_Cambiar_EmpSucBod()
+                    'Me.Close()
+                    'Return
                 End If
 
                 _Cl_FacturacionAuto.Sb_Traer_NVV_De_NVVAuto_A_Facturar()

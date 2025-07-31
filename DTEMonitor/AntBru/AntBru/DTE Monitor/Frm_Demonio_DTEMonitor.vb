@@ -40,12 +40,12 @@ Public Class Frm_Demonio_DTEMonitor
 
     Private bgWorker As New BackgroundWorker
 
-    Dim _RutEmisor As String
-    Dim _RutEnvia As String
-    Dim _RutReceptor As String
-    Dim _FchResol As String
-    Dim _NroResol As String
-    Dim _Cn As String
+    'Dim _RutEmisor As String
+    'Dim _RutEnvia As String
+    'Dim _RutReceptor As String
+    'Dim _FchResol As String
+    'Dim _NroResol As String
+    'Dim _Cn As String
 
     Dim _RevisarReclamoDTE As Boolean
 
@@ -371,13 +371,14 @@ Public Class Frm_Demonio_DTEMonitor
         _Tido = _Maeedo.Item("TIDO")
         _Nudo = _Maeedo.Item("NUDO")
 
+        Dim _Empresa As String = _Maeedo.Item("EMPRESA")
         Dim _RutEmisor As String
 
         Dim _Cn As String
 
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
+                       "Where Empresa = '" & _Empresa & "' And TipoConfiguracion = 'ConfEmpresa'"
         Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
@@ -491,6 +492,7 @@ Public Class Frm_Demonio_DTEMonitor
                     Dim _Tido = _Fila.Item("Tido")
                     Dim _Nudo = _Fila.Item("Nudo")
                     Dim _FechaSolicitud As DateTime = _Fila.Item("FechaSolicitud")
+                    Dim _Empresa As String = _Fila.Item("Empresa")
 
                     If Fx_Esta_Firmando(_Filtro_Id_Dte, _Id_Dte) Then
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
@@ -509,7 +511,7 @@ Public Class Frm_Demonio_DTEMonitor
 
                     Dim _HefRespuesta As New HEFSIILIBDTES.HefRespuesta
 
-                    _HefRespuesta = Fx_Enviar_Boleta_SII(_Id_Dte, _AmbienteCertificacion, RutEmpresaActiva)
+                    _HefRespuesta = Fx_Enviar_Boleta_SII(_Id_Dte, _AmbienteCertificacion, RutEmpresaActiva, _Empresa)
 
                     Try
 
@@ -747,6 +749,7 @@ Public Class Frm_Demonio_DTEMonitor
                     Dim _Respuesta = _Fila.Item("Respuesta")
                     Dim _Estado = String.Empty
                     Dim _Glosa = String.Empty
+                    Dim _Empresa As String = _Fila.Item("Empresa")
 
                     If Fx_Esta_Firmando(_Filtro_Id_Trackid, _Id_Trackid) Then
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set Procesar = 1" & vbCrLf &
@@ -769,7 +772,7 @@ Public Class Frm_Demonio_DTEMonitor
 
                     Dim _HefRespuesta As New HEFSIILIBDTES.HefRespuesta
 
-                    _HefRespuesta = Fx_Consultar_Trackid_BLV(_Trackid, _AmbienteCertificacion)
+                    _HefRespuesta = Fx_Consultar_Trackid_BLV(_Trackid, _AmbienteCertificacion, _Empresa)
 
                     If Not IsNothing(_HefRespuesta) Then
 
@@ -920,12 +923,17 @@ Public Class Frm_Demonio_DTEMonitor
         Try
 
             Consulta_sql = "Select Id,Id_Dte,Idmaeedo,Trackid,Informado,Aceptado,Rechazado,Reparo,Estado,Glosa,Respuesta,FechaEnvSII," &
-                   "AmbienteCertificacion,MailToDiablito, ErrorMailToDiablito" & vbCrLf &
-                   "From " & _Global_BaseBk & "Zw_DTE_Trackid" & vbCrLf &
-                   "Where Procesar = 0 " &
-                   "And Procesado = 1 " &
-                   "And EnviarMail = 1 " &
-                   "And AmbienteCertificacion = " & _AmbienteCertificacion
+                           "AmbienteCertificacion,MailToDiablito, ErrorMailToDiablito" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_DTE_Trackid" & vbCrLf &
+                           "Where Procesar = 0 " &
+                           "And Procesado = 1 " &
+                           "And EnviarMail = 1 " &
+                           "And AmbienteCertificacion = " & _AmbienteCertificacion
+
+            'Consulta_sql = "Select Id,Tk.Id_Dte,Tk.Idmaeedo,Tk.Trackid,Informado,Aceptado,Rechazado,Reparo,Estado,Glosa,Tk.Respuesta,FechaEnvSII,Tk.AmbienteCertificacion,MailToDiablito, ErrorMailToDiablito,Dc.CaratulaXmlEmail
+            'From BAKAPP_SG.dbo.Zw_DTE_Trackid Tk
+            'Inner Join BAKAPP_SG.dbo.Zw_DTE_Documentos Dc On Dc.Id_Dte = Tk.Id_Dte
+            'Where Tk.Procesar = 0 And Tk.Procesado = 1 And CaratulaXmlEmail = '' And Tk.AmbienteCertificacion = 0"
 
             Dim _Tbl_DTE_Trackid As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
@@ -960,7 +968,7 @@ Public Class Frm_Demonio_DTEMonitor
 
                     If Fx_Esta_Firmando(_Filtro_Id_Trackid, _Id_Trackid) Then
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Trackid Set MailToDiablito = 0,EnviarMail = 1" & vbCrLf &
-                               "Where Id In " & _Filtro_Id_Trackid
+                                       "Where Id In " & _Filtro_Id_Trackid
                         If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
                             Throw New System.Exception(_Sql.Pro_Error)
                         End If
@@ -981,13 +989,16 @@ Public Class Frm_Demonio_DTEMonitor
 
                     If Not IsNothing(_Class_DTE.Maeedo) Then
 
+                        '_Class_DTE.Fx_Timbrar_Documento_Hefesto2(Me, _Id_Dte)
+
+                        Dim _Empresa = _Class_DTE.Maeedo.Rows(0).Item("EMPRESA").ToString.Trim
                         Dim _Koen = _Class_DTE.Maeedo.Rows(0).Item("ENDO").ToString.Trim
                         Dim _Suen = _Class_DTE.Maeedo.Rows(0).Item("SUENDO").ToString.Trim
                         Dim _Para = _Class_DTE.Maeen.Rows(0).Item("EMAIL").ToString.Trim
 
                         If CBool(_AmbienteCertificacion) Then
                             _Para = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor",
-                                                      "Empresa = '" & ModEmpresa & "' And Campo = 'MailContactoSIIPruebas' And AmbienteCertificacion = " & _AmbienteCertificacion)
+                                                      "Empresa = '" & _Empresa & "' And Campo = 'MailContactoSIIPruebas' And AmbienteCertificacion = " & _AmbienteCertificacion)
                         End If
 
                         Dim _EnvioCorreo As String = _Class_DTE.Fx_Enviar_Notificacion_Correo_Al_Diablito(_Idmaeedo, _Para, "", _Id_Trackid)
@@ -1499,6 +1510,8 @@ Public Class Frm_Demonio_DTEMonitor
             Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
             Dim _Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+
+            Dim _Empresa As String = _Zw_DTE_Documentos.Item("Empresa")
             Dim _Tido As String = _Zw_DTE_Documentos.Item("Tido")
             Dim _Nudo As String = _Zw_DTE_Documentos.Item("Nudo")
 
@@ -1538,7 +1551,7 @@ Public Class Frm_Demonio_DTEMonitor
 
             Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-                           "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
+                           "Where Empresa = '" & _Empresa & "' And TipoConfiguracion = 'ConfEmpresa'"
             Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
@@ -1669,8 +1682,8 @@ Public Class Frm_Demonio_DTEMonitor
 
                         Dim _Id_Trackid As Integer
 
-                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Trackid (Id_Dte,Idmaeedo,Trackid,FechaEnvSII,Procesar,AmbienteCertificacion) Values " & vbCrLf &
-                               "(" & _Id_Dte & "," & _Idmaeedo & ",'" & _Trackid & "',Getdate(),1," & Convert.ToInt32(_AmbienteCertificacion) & ")"
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Trackid (Id_Dte,Idmaeedo,Trackid,FechaEnvSII,Procesar,AmbienteCertificacion,Empresa) Values " & vbCrLf &
+                               "(" & _Id_Dte & "," & _Idmaeedo & ",'" & _Trackid & "',Getdate(),1," & Convert.ToInt32(_AmbienteCertificacion) & ",'" & _Empresa & "')"
                         _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Trackid, False)
 
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesado = 1 Where Id_Dte =  " & _Id_Dte
@@ -1874,11 +1887,12 @@ Public Class Frm_Demonio_DTEMonitor
 
     Function Fx_Enviar_Boleta_SII(_Id_Dte As Integer,
                                   _AmbienteCertificacion As Boolean,
-                                  _RutEmpresaActiva As String) As HEFSIILIBDTES.HefRespuesta
+                                  _RutEmpresaActiva As String,
+                                  _Empresa As String) As HEFSIILIBDTES.HefRespuesta
 
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
+                       "Where Empresa = '" & _Empresa & "' And TipoConfiguracion = 'ConfEmpresa'"
         Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_ConfEmpresa.Rows.Count) Then
@@ -1944,6 +1958,7 @@ Public Class Frm_Demonio_DTEMonitor
             Return _HefRespuesta
         End If
 
+        'Dim _Empresa As String = _Zw_DTE_Documentos.Item("Empresa")
         Dim _Idmaeedo As Integer = _Zw_DTE_Documentos.Item("Idmaeedo")
         Dim _Xml As String = _Zw_DTE_Documentos.Item("CaratulaXml")
 
@@ -1996,8 +2011,8 @@ Public Class Frm_Demonio_DTEMonitor
 
             Dim _Id_Trackid As Integer
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Trackid (Id_Dte,Idmaeedo,Trackid,FechaEnvSII,Procesar,AmbienteCertificacion) Values " & vbCrLf &
-                           "(" & _Id_Dte & "," & _Idmaeedo & ",'" & _Trackid & "',Getdate(),1," & Convert.ToInt32(_AmbienteCertificacion) & ")"
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Trackid (Id_Dte,Idmaeedo,Trackid,FechaEnvSII,Procesar,AmbienteCertificacion,Empresa) Values " & vbCrLf &
+                           "(" & _Id_Dte & "," & _Idmaeedo & ",'" & _Trackid & "',Getdate(),1," & Convert.ToInt32(_AmbienteCertificacion) & ",'" & _Empresa & "')"
             _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Trackid, False)
 
             Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set Procesado = 1,Procesar = 0 Where Id_Dte =  " & _Id_Dte
@@ -2061,7 +2076,7 @@ Public Class Frm_Demonio_DTEMonitor
 
     End Function
 
-    Function Fx_Consultar_Trackid_BLV(_Trackid As String, _AmbienteCertificacion As Boolean) As HEFSIILIBDTES.HefRespuesta
+    Function Fx_Consultar_Trackid_BLV(_Trackid As String, _AmbienteCertificacion As Boolean, _Empresa As String) As HEFSIILIBDTES.HefRespuesta
 
         Dim HefRespuesta As New HEFSIILIBDTES.HefRespuesta
         Dim HefConsultas As New HefConsultas
@@ -2069,7 +2084,7 @@ Public Class Frm_Demonio_DTEMonitor
 
         Consulta_sql = "Select Id,Empresa,Campo,Valor,FechaMod,TipoCampo,TipoConfiguracion" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_DTE_Configuracion" & vbCrLf &
-                       "Where Empresa = '" & ModEmpresa & "' And TipoConfiguracion = 'ConfEmpresa'"
+                       "Where Empresa = '" & _Empresa & "' And TipoConfiguracion = 'ConfEmpresa'"
         Dim _Tbl_ConfEmpresa As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _RutEmisor As String
