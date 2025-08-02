@@ -248,8 +248,13 @@ Public Class Frm_Configuracion_Gral
             Chk_NuncaPickeaDocConRTUDesactivada.Checked = .Item("NuncaPickeaDocConRTUDesactivada")
 
             Chk_RestringirVisualizacionDeDocumentos.Checked = .Item("RestringirVisualizacionDeDocumentos")
+            Chk_PermisoEspecialCambioVendedorLinea.Checked = .Item("PermisoEspecialCambioVendedorLinea")
+            Chk_Conservar_Vendedor_No_Preguntar.Checked = .Item("Conservar_Vendedor_No_Preguntar")
 
         End With
+
+        Chk_PermisoEspecialCambioVendedorLinea.Enabled = _Modalidad_General
+        Chk_Conservar_Vendedor_No_Preguntar.Enabled = Not _Modalidad_General
 
         Input_Dias_Para_Hacer_NCV.Enabled = Not _Modalidad_General
         Lbl_Dias_Para_Hacer_NCV.Enabled = Not _Modalidad_General
@@ -564,6 +569,8 @@ Public Class Frm_Configuracion_Gral
                        ",NVIQuedaSUDOSucRecibe = " & Convert.ToInt32(Chk_NVIQuedaSUDOSucRecibe.Checked) & vbCrLf &
                        ",NuncaPickeaDocConRTUDesactivada = " & Convert.ToInt32(Chk_NuncaPickeaDocConRTUDesactivada.Checked) & vbCrLf &
                        ",RestringirVisualizacionDeDocumentos = " & Convert.ToInt32(Chk_RestringirVisualizacionDeDocumentos.Checked) & vbCrLf &
+                       ",PermisoEspecialCambioVendedorLinea = " & Convert.ToInt32(Chk_PermisoEspecialCambioVendedorLinea.Checked) & vbCrLf &
+                       ",Conservar_Vendedor_No_Preguntar = " & Convert.ToInt32(Chk_Conservar_Vendedor_No_Preguntar.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

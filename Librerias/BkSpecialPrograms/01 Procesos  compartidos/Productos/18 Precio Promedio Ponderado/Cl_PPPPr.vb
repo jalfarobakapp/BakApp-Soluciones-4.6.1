@@ -506,6 +506,11 @@ Public Class Cl_PPPPr
 
         Dim Calculo1 As Decimal = Math.Round((_ST_AntD * _PPP_AntD + 1 * _PrecioD), 5)
         Dim Calculo2 As Decimal = Math.Round(_ST_AntD, 5)
+
+        If Calculo2 = 0 Then
+            Return _PPP_Ant
+        End If
+
         Dim PPP As Decimal = Math.Round(Calculo1 / Calculo2, 5)
 
         Dim _PPP2 = Convert.ToDouble(Calculo1) / Convert.ToDouble(Calculo2) ' 14179383.51264 / 2266.984

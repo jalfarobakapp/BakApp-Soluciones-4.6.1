@@ -1706,14 +1706,11 @@ Public Class Frm_Formulario_Documento
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00098", False, False, "", "", False, False, False)
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00101", False, False, "", "", False, False, False) ' Crear documento sin Picking
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00102", False, False, "", "", False, False, False) ' Cambiar RTU de pesos variables
+
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00161", False, False, "", "", False, False, False) ' Cambiar vendedor de la linea diferente al del cliente
+
         '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
-
-        'If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "RestringirFechaVencimientoClientes") Then
-        'If _Global_Row_Configuracion_General.Item("RestringirFechaVencimientoClientes") Then
-        '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00098", False, False, "", "", False, False, False)
-        'End If
-        'End If
-
+        'Doc00161
 
         _TblPermisos = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
 
@@ -2398,6 +2395,9 @@ Public Class Frm_Formulario_Documento
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "ODp00017", False, False, "", "", False, False, False) ' Despacho mínimo en Kg o Total Neto
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00101", False, False, "", "", False, False, False) ' Crear documento sin Picking
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00102", False, False, "", "", False, False, False) ' Crear documento sin Picking
+
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00161", False, False, "", "", False, False, False) ' Cambiar vendedor de la linea diferente al del cliente
+
             '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
 
             _TblPermisos = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
@@ -4278,7 +4278,7 @@ Public Class Frm_Formulario_Documento
                                 ElseIf Chk_Cambiar_A_Otro_Vendedor.Checked Then
 
                                     If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Bkp00040", Nothing, _Koen, _Suen) Then
-                                        Sb_Cambiar_Vendedor()
+                                        Sb_Cambiar_Vendedor(False)
                                     End If
 
                                 End If
@@ -9680,14 +9680,18 @@ Public Class Frm_Formulario_Documento
 
                                     Dim _Kofuen As String = LTrim(_RowEntidad.Item("KOFUEN"))
 
-                                    If _Kofuen <> _CodVendedor Then
-                                        Sb_Cambiar_Vendedor()
+                                    If _Global_Row_Configuracion_General.Item("PermisoEspecialCambioVendedorLinea") Then
+                                        Sb_Cambiar_Vendedor(True)
                                     Else
-                                        MessageBoxEx.Show(Me, "No es posible cambiar al vendedor asignado a la entidad",
-                                                        "Validación",
-                                                        MessageBoxButtons.OK,
-                                                        MessageBoxIcon.Stop,
-                                                        MessageBoxDefaultButton.Button1, Me.TopMost)
+                                        If _Kofuen <> _CodVendedor Then
+                                            Sb_Cambiar_Vendedor(False)
+                                        Else
+                                            MessageBoxEx.Show(Me, "No es posible cambiar al vendedor asignado a la entidad",
+                                                            "Validación",
+                                                            MessageBoxButtons.OK,
+                                                            MessageBoxIcon.Stop,
+                                                            MessageBoxDefaultButton.Button1, Me.TopMost)
+                                        End If
                                     End If
 
                                 End If
@@ -14558,7 +14562,7 @@ Public Class Frm_Formulario_Documento
 
                         _Idmaeedo_Relacionado = _Row_Doc_Relacionado.Item("IDMAEEDO")
 
-                        If Not Fx_NvvHabilitada_Fac(Me, _Idmaeedo_Relacionado, "NVV") Then
+                        If _Tido = "FCV" AndAlso Not Fx_NvvHabilitada_Fac(Me, _Idmaeedo_Relacionado, "NVV") Then
 
                             _Fila.Cells("CodEntidad").Value = String.Empty
                             If _Cerrar_Al_Grabar Then
@@ -21803,31 +21807,37 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
-    Sub Sb_Cambiar_Vendedor()
+    Sub Sb_Cambiar_Vendedor(_CambiaTodasLasFilas As Boolean)
 
-        Dim _Row As DataRow
+        Dim _Tbl_Filtro_Vendedores As DataTable
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
 
-        Dim Fm As New Frm_Seleccionar_1_Regitstro(Frm_Seleccionar_1_Regitstro.Enum_Tabla_Busqueda.Funcionarios)
-        Fm.Text = "SELECCIONAR VENDEDOR"
-        Fm.Pro_Condicion_Adicional = "And INACTIVO = 0"
-        Fm.ShowDialog(Me)
-        _Row = Fm.Pro_Row_Registro
-        Fm.Dispose()
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Vendedores,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, "And INACTIVO = 0", Nothing, False, True) Then
 
-        If Not (_Row Is Nothing) Then
-            _CodVendedor = _Row.Item("KOFU")
+            _Tbl_Filtro_Vendedores = _Filtrar.Pro_Tbl_Filtro
+            _CodVendedor = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+
+            If _CambiaTodasLasFilas Then
+                For Each _Row As DataRow In _TblDetalle.Rows
+                    _Row.Item("CodFuncionario") = _CodVendedor
+                    _Row.Item("CodVendedor") = _CodVendedor
+                Next
+            Else
+
+                Dim _Fila As DataGridViewRow
+
+                Try
+                    _Fila = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index)
+                Catch ex As Exception
+                    _Fila = Grilla_Detalle.Rows(0)
+                End Try
+
+                _Fila.Cells("CodFuncionario").Value = _CodVendedor
+                _Fila.Cells("CodVendedor").Value = _CodVendedor
+            End If
+
         End If
-
-        Dim _Fila As DataGridViewRow
-
-        Try
-            _Fila = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index)
-        Catch ex As Exception
-            _Fila = Grilla_Detalle.Rows(0)
-        End Try
-
-        _Fila.Cells("CodFuncionario").Value = _CodVendedor
-        _Fila.Cells("CodVendedor").Value = _CodVendedor
 
     End Sub
 
@@ -22304,7 +22314,7 @@ Public Class Frm_Formulario_Documento
                     Fx_Autorizar_X_Descuentos(False)
                 End If
 
-            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102" ', "Doc00103"
+            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102", "Doc00161" ', "Doc00103"
 
                 If _Crear_Doc_Def_Al_Grabar Then
 
@@ -23866,6 +23876,18 @@ Public Class Frm_Formulario_Documento
                     End If
 
                 End If
+
+                For Each _Fl As DataRow In _TblDetalle.Rows
+
+                    '_Fila.Cells("CodFuncionario").Value = _CodVendedor
+                    '_Fila.Cells("CodVendedor").Value = _CodVendedor
+                    If _Fl.Item("CodVendedor").ToString.Trim <> _RowEntidad.Item("KOFUEN").ToString.Trim Then
+                        If Not Fx_Tiene_Permiso(Me, "Doc00161", FUNCIONARIO, False) Then
+                            Sb_Revisar_Permiso("Doc00161", False, True)
+                        End If
+                        Exit For
+                    End If
+                Next
 
             End If
 

@@ -1099,7 +1099,6 @@ Public Class Class_Genera_DTE_RdBk
         Dim _CmnaOrigen = Mid(Trim(_Row_Configp.Item("CIUDAD")), 1, 20)
         Dim _CiudadOrigen = Mid(Trim(_Row_Configp.Item("CIUDAD")), 1, 20)  ' "REGION METROPOLITANA"
 
-
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & _Empresa & "'"
         Dim _Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -1114,6 +1113,18 @@ Public Class Class_Genera_DTE_RdBk
             _CiudadOrigen = Mid(Trim(_Row_Empresa.Item("Ciudad")), 1, 20)
 
         End If
+
+        'If Not IsNothing(_Global_Row_Empresa) Then
+
+        '    _RUTEmisor = Trim(_Global_Row_Empresa.Item("Rut"))
+        '    _RznSoc = Trim(_Global_Row_Empresa.Item("Razon"))
+        '    _GiroEmis = Mid(Trim(_Global_Row_Empresa.Item("Giro")), 1, 50)
+        '    _Acteco = Trim(_Global_Row_Empresa.Item("Acteco"))
+        '    _DirOrigen = Trim(_Global_Row_Empresa.Item("Direccion"))
+        '    _CmnaOrigen = Mid(Trim(_Global_Row_Empresa.Item("Comuna")), 1, 20)
+        '    _CiudadOrigen = Mid(Trim(_Global_Row_Empresa.Item("Ciudad")), 1, 20)
+
+        'End If
 
         Fx_Caracter_Raro_Quitar(_RznSoc)
         Fx_Caracter_Raro_Quitar(_GiroEmis)
@@ -1160,12 +1171,15 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim _Vanedo As Double = _Row_Maeedo.Item("VANEDO")
         Dim _Vaivdo As Double = _Row_Maeedo.Item("VAIVDO")
+        Dim _Vaimdo As Double = _Row_Maeedo.Item("VAIMDO")
         Dim _Vabrdo As Double = _Row_Maeedo.Item("VABRDO")
 
         Dim _Iva_Calculo As Double = Math.Round(_Vanedo * 0.19, 0)
         Dim _Vanedo_Calculo As Double = Math.Round(_Vabrdo / 1.19, 0)
 
-        _Vaivdo = _Vabrdo - _Vanedo_Calculo
+        If _Vaimdo = 0 Then
+            _Vaivdo = _Vabrdo - _Vanedo_Calculo
+        End If
 
         'If Math.Round(_Vaivdo, 2) <> _Iva_Calculo Then
         '_Vaivdo = Math.Round(_Iva_Calculo, 3) '+ 1
@@ -1208,6 +1222,37 @@ Public Class Class_Genera_DTE_RdBk
                              "<IVA>#IVA#</IVA>"
             _IndServicio = String.Empty
             _FormaDePago = String.Empty
+
+            If CBool(_Vaimdo) Then
+
+                Dim _ImptoReten As String = String.Empty
+
+                Consulta_sql = "Select Round(SUM(VAIMLI),0) As MontoImp,Isnull(Im.KOIMSII,'') As 'TipoImp',Im.POIM As 'TasaImp',Im.NOKOIM" & vbCrLf &
+                               "From MAEDDO" & vbCrLf &
+                               "Inner Join TABIMPR Imp On KOPR = KOPRCT" & vbCrLf &
+                               "Inner Join TABIM Im On Imp.KOIM = Im.KOIM" & vbCrLf &
+                               "Where IDMAEEDO = " & _Idmaeedo & vbCrLf &
+                               "Group By KOIMSII,Im.NOKOIM,Im.POIM"
+                Dim _Tbl_Impuestos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+
+                For Each _Fl As DataRow In _Tbl_Impuestos.Rows
+
+                    Dim _TipoImp As String = _Fl.Item("TipoImp").ToString.Trim
+                    Dim _TasaImp As String = _Fl.Item("TasaImp").ToString.Trim
+                    Dim _MontoImp As String = _Fl.Item("MontoImp").ToString.Trim
+
+                    _ImptoReten += vbCrLf & "<ImptoReten>" & vbCrLf &
+                                   "<TipoImp>" & _TipoImp & "</TipoImp>" & vbCrLf &
+                                   "<TasaImp>" & _TasaImp & "</TasaImp>" & vbCrLf &
+                                   "<MontoImp>" & _MontoImp & "</MontoImp>" & vbCrLf &
+                                   "</ImptoReten>"
+
+                Next
+
+                _Totales_Netos += _ImptoReten
+
+            End If
+
 
             If _Tido = "FCV" And _Nuevo_RunMonitor Then
 
@@ -1272,8 +1317,8 @@ Public Class Class_Genera_DTE_RdBk
 
             ' Retirador de mercaderia
             Dim _Koreti As String = NuloPorNro(_Row_Maeedoob.Item("DIENDESP").ToString.Trim, "")
-            Dim _Rureti As String = _Sql.Fx_Trae_Dato("TABRETI", "RURETI", "KORETI = '" & _Koreti & "'").ToString.Trim
-            Dim _Nokoreti As String = _Sql.Fx_Trae_Dato("TABRETI", "NORETI", "KORETI = '" & _Koreti & "'").ToString.Trim
+            Dim _Rureti As String = _Sql.Fx_Trae_Dato("TABRETI", "RURETI", "KORETI = '" & _Koreti & "'",, False).ToString.Trim
+            Dim _Nokoreti As String = _Sql.Fx_Trae_Dato("TABRETI", "NORETI", "KORETI = '" & _Koreti & "'",, False).ToString.Trim
             Dim _Placapat As String = NuloPorNro(_Row_Maeedoob.Item("PLACAPAT"), "").ToString.Trim
 
             Dim _Patente = String.Empty
@@ -1339,6 +1384,7 @@ Public Class Class_Genera_DTE_RdBk
                 Dim _Podtglli As Double = _Fila.Item("PODTGLLI")
                 Dim _DescuentoMonto As Double
                 Dim _Str_DescuentoMonto = String.Empty
+                Dim _CodImpAdic = String.Empty
                 Dim _PrcItem = String.Empty
 
                 If _Tido = "BLV" Or _Tido = "BSV" Then
@@ -1396,6 +1442,26 @@ Public Class Class_Genera_DTE_RdBk
 
                     End If
 
+                    If CBool(_Fila.Item("POIMGLLI")) Then
+
+                        Dim _Idmaeddo As Integer = _Fila.Item("IDMAEDDO")
+
+                        Consulta_sql = "Select KOPRCT,Isnull(Im.KOIMSII,'') As CodImpAdic,Im.NOKOIM,VAIMLI" & vbCrLf &
+                                       "From MAEDDO" & vbCrLf &
+                                       "Inner Join TABIMPR Imp On KOPR = KOPRCT" & vbCrLf &
+                                       "Inner Join TABIM Im On Imp.KOIM = Im.KOIM" & vbCrLf &
+                                       "Where IDMAEDDO = " & _Idmaeddo
+                        Dim _RowImp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+                        If Not IsNothing(_RowImp) Then
+
+                            _CodImpAdic = vbCrLf & "<CodImpAdic>" & _RowImp.Item("CodImpAdic").ToString.Trim & "</CodImpAdic>"
+
+                        End If
+
+                    End If
+
+
                 End If
 
                 Dim _MontoItem As Integer = Math.Round(_Fila.Item(_Campo_MontoItem), 0) 'De_Num_a_Tx_01(_Fila.Item(_Campo_MontoItem), False, 3)
@@ -1434,6 +1500,7 @@ Public Class Class_Genera_DTE_RdBk
                         "<QtyItem>" & _QtyItem_Str & "</QtyItem>" & vbCrLf &
                         "<UnmdItem>" & _UnmdItem & "</UnmdItem>" & vbCrLf &
                         "<PrcItem>" & _PrcItem & "</PrcItem>" &
+                        _CodImpAdic &
                         _Str_DescuentoMonto & vbCrLf &
                         "<MontoItem>" & _MontoItem & "</MontoItem>" & vbCrLf &
                         "</Detalle>"
@@ -1720,6 +1787,535 @@ Public Class Class_Genera_DTE_RdBk
 
     End Function
 
+    Private Function Fx_XML_DTE_Genera_Old(_Row_Ffolios As DataRow,
+                                           _Row_Maeedo As DataRow,
+                                           _Row_Maeen_Receptor As DataRow,
+                                           _Td As Integer,
+                                           _Maeddo As DataTable,
+                                           _Incorporar_Observaciones_En_DTE As Boolean,
+                                           _Row_Maeedoob As DataRow) As String
+
+        Dim _Nuevo_RunMonitor As Boolean = _Sql.Fx_Exite_Campo("CONFIGP", "VERSIONACT")
+
+        Dim _XML = String.Empty
+
+        If _Row_Maeedo.Item("TIDO") = "BLV" Then
+            _XML = My.Resources.Recursos_DTE.SQLQuery_Genera_Encabezado_DTE_RdBkBOLETA
+        Else
+            _XML = My.Resources.Recursos_DTE.SQLQuery_Genera_Encabezado_DTE_RdBk
+        End If
+
+        Dim _ID As String = "F" & CInt(_Row_Maeedo.Item("NUDO")) & "T" & _Td
+        _XML = Replace(_XML, "#ID#", _ID)
+
+        ' <IdDoc>
+        Dim _TipoDTE = _Td
+        Dim _Folio = CInt(_Row_Maeedo.Item("NUDO"))
+        Dim _FchEmis = Format(_Row_Maeedo.Item("FEEMDO"), "yyyy-MM-dd")
+
+        _XML = Replace(_XML, "#TipoDTE#", _TipoDTE)
+        _XML = Replace(_XML, "#Folio#", _Folio)
+        _XML = Replace(_XML, "#FchEmis#", _FchEmis)
+
+        ' <Emisor>
+
+        Dim _RUTEmisor = Trim(_Row_Configp.Item("RUT"))
+        Dim _RznSoc = Trim(_Row_Configp.Item("RAZON"))
+        Dim _GiroEmis = Mid(Trim(_Row_Configp.Item("GIRO")), 1, 50)
+        Dim _Acteco = Trim(_Row_Configp.Item("ACTECO"))
+        Dim _DirOrigen = Trim(_Row_Configp.Item("DIRECCION"))
+        Dim _CmnaOrigen = Mid(Trim(_Row_Configp.Item("CIUDAD")), 1, 20)
+        Dim _CiudadOrigen = Mid(Trim(_Row_Configp.Item("CIUDAD")), 1, 20)  ' "REGION METROPOLITANA"
+
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Empresas Where Empresa = '" & _Empresa & "'"
+        Dim _Row_Empresa = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row_Empresa) Then
+
+            _RUTEmisor = Trim(_Row_Empresa.Item("Rut"))
+            _RznSoc = Trim(_Row_Empresa.Item("Razon"))
+            _GiroEmis = Mid(Trim(_Row_Empresa.Item("Giro")), 1, 50)
+            _Acteco = Trim(_Row_Empresa.Item("Acteco"))
+            _DirOrigen = Trim(_Row_Empresa.Item("Direccion"))
+            _CmnaOrigen = Mid(Trim(_Row_Empresa.Item("Comuna")), 1, 20)
+            _CiudadOrigen = Mid(Trim(_Row_Empresa.Item("Ciudad")), 1, 20)
+
+        End If
+
+        Fx_Caracter_Raro_Quitar(_RznSoc)
+        Fx_Caracter_Raro_Quitar(_GiroEmis)
+        Fx_Caracter_Raro_Quitar(_DirOrigen)
+        Fx_Caracter_Raro_Quitar(_CmnaOrigen)
+        Fx_Caracter_Raro_Quitar(_CiudadOrigen)
+
+        _XML = Replace(_XML, "#RUTEmisor#", _RUTEmisor)
+        _XML = Replace(_XML, "#RznSoc#", _RznSoc)
+        _XML = Replace(_XML, "#GiroEmis#", _GiroEmis)
+        _XML = Replace(_XML, "#Acteco#", _Acteco)
+        _XML = Replace(_XML, "#DirOrigen#", _DirOrigen)
+        _XML = Replace(_XML, "#CmnaOrigen#", _CmnaOrigen)
+        _XML = Replace(_XML, "#CiudadOrigen#", _CiudadOrigen)
+        '-----------------------------------------------------------------------------------------------
+
+        ' <Receptor>
+
+        Dim _RUTRecep = Trim(_Row_Maeen_Receptor.Item("RTEN")) & "-" & Trim(RutDigito(_Row_Maeen_Receptor.Item("RTEN")))
+        Dim _RznSocRecep = Mid(Trim(_Row_Maeen_Receptor.Item("NOKOEN")), 1, 40)
+        Dim _GiroRecep = Mid(Trim(_Row_Maeen_Receptor.Item("GIEN")), 1, 40)
+        Dim _DirRecep = Trim(_Row_Maeen_Receptor.Item("DIEN"))
+        Dim _Paen = _Row_Maeen_Receptor.Item("PAEN")
+        Dim _Cien = _Row_Maeen_Receptor.Item("CIEN")
+        Dim _Cmen = _Row_Maeen_Receptor.Item("CMEN")
+        Dim _CmnaRecep = Mid(Trim(_Row_Maeen_Receptor.Item("COMUNA")), 1, 20)
+        Dim _CiudadRecep = Mid(Trim(_Row_Maeen_Receptor.Item("CIUDAD")), 1, 15)
+
+        Fx_Caracter_Raro_Quitar(_RznSocRecep)
+        Fx_Caracter_Raro_Quitar(_GiroRecep)
+        Fx_Caracter_Raro_Quitar(_DirRecep)
+        Fx_Caracter_Raro_Quitar(_CmnaRecep)
+        Fx_Caracter_Raro_Quitar(_CiudadRecep)
+
+        _XML = Replace(_XML, "#RUTRecep#", _RUTRecep)
+        _XML = Replace(_XML, "#RznSocRecep#", _RznSocRecep)
+        _XML = Replace(_XML, "#GiroRecep#", _GiroRecep)
+        _XML = Replace(_XML, "#DirRecep#", _DirRecep)
+        _XML = Replace(_XML, "#CmnaRecep#", _CmnaRecep)
+        _XML = Replace(_XML, "#CiudadRecep#", _CiudadRecep)
+        '-----------------------------------------------------------------------------------------------
+
+        ' <Totales>
+
+        Dim _Vanedo As Double = _Row_Maeedo.Item("VANEDO")
+        Dim _Vaivdo As Double = _Row_Maeedo.Item("VAIVDO")
+        Dim _Vabrdo As Double = _Row_Maeedo.Item("VABRDO")
+
+        Dim _Iva_Calculo As Double = Math.Round(_Vanedo * 0.19, 0)
+        Dim _Vanedo_Calculo As Double = Math.Round(_Vabrdo / 1.19, 0)
+
+        _Vaivdo = _Vabrdo - _Vanedo_Calculo
+
+        'If Math.Round(_Vaivdo, 2) <> _Iva_Calculo Then
+        '_Vaivdo = Math.Round(_Iva_Calculo, 3) '+ 1
+        '_Vabrdo = _Vanedo + _Vaivdo
+        'End If
+
+        Dim _Porc_Iva = Math.Round((_Vaivdo * 100) / _Vanedo, 0)
+
+        Dim _MntNeto As Integer = Math.Round(_Vanedo, 0)
+        Dim _TasaIVA As Double = _Porc_Iva
+        Dim _IVA As Double = Math.Round(_Vaivdo, 0)
+        Dim _MntTotal As Double = Math.Round(_Vabrdo, 0)
+
+        Dim _Totales_Netos As String
+
+        Dim _Meardo = _Row_Maeedo.Item("MEARDO")
+
+        Dim _Campo_PrcItem, _Campo_PrcItem_LT
+        Dim _Campo_MontoItem
+
+        Dim _IndServicio = String.Empty
+        Dim _FormaDePago = String.Empty
+        Dim _IndTraslado = String.Empty
+
+        Dim _Tido = _Row_Maeedo.Item("TIDO")
+        Dim _Tab = vbTab & vbTab & vbTab & vbTab & vbTab
+
+        If _Tido = "BLV" Or _Tido = "BSV" Then 'If _Meardo = "B" Then
+
+            _Totales_Netos = "<MntNeto>#MntNeto#</MntNeto>" & vbCrLf &
+                         "<IVA>#IVA#</IVA>"
+
+            _IndServicio = vbCrLf & "<IndServicio>3</IndServicio>" & vbCrLf
+            _FormaDePago = String.Empty
+
+        Else '_Meardo = "N" Then
+
+            _Totales_Netos = "<MntNeto>#MntNeto#</MntNeto>" & vbCrLf &
+                         "<TasaIVA>#TasaIVA#</TasaIVA>" & vbCrLf &
+                         "<IVA>#IVA#</IVA>"
+            _IndServicio = String.Empty
+            _FormaDePago = String.Empty
+
+            If _Tido = "FCV" And _Nuevo_RunMonitor Then
+
+                Dim _Endo = _Row_Maeedo.Item("ENDO")
+                Dim _Suendo = _Row_Maeedo.Item("SUENDO")
+
+                Dim _Row_Maeen As DataRow = Fx_Traer_Datos_Entidad(_Endo, _Suendo)
+
+                Dim _FchVenc = Format(_Row_Maeedo.Item("FEULVEDO"), "yyyy-MM-dd")
+                Dim _Dias = DateDiff(DateInterval.Day, _Row_Maeedo.Item("FEEMDO"), _Row_Maeedo.Item("FEULVEDO"))
+                Dim _Cuotas = _Row_Maeedo.Item("NUVEDO")
+
+                _Dias = _Row_Maeen.Item("DIPRVE")
+                _Cuotas = _Row_Maeen.Item("NUVECR")
+
+                Dim _FmaPago As Integer
+                Dim _TermPagoGlosa As String
+
+                If _Dias <= 1 Then
+                    _FmaPago = 1
+                    _TermPagoGlosa = "Contado"
+                Else
+                    _FmaPago = 2
+                    _TermPagoGlosa = "Credito a " & _Dias & " dias, " & _Cuotas & " cuotas"
+                End If
+
+                _FormaDePago = "<FmaPago>" & _FmaPago & "</FmaPago><TermPagoGlosa>" & _TermPagoGlosa & "</TermPagoGlosa><FchVenc>" & _FchVenc & "</FchVenc>"
+
+            End If
+
+            If _Tido.ToString.Contains("G") Then
+
+                Select Case _Tido.ToString
+                    Case "GTI"
+                        _IndTraslado = "<IndTraslado>5</IndTraslado>"
+                    Case "GDV"
+                        _IndTraslado = "<TipoDespacho>1</TipoDespacho><IndTraslado>1</IndTraslado>"
+                    Case "GDD"
+                        _IndTraslado = "<TipoDespacho>2</TipoDespacho><IndTraslado>6</IndTraslado>"
+                    Case "GDP"
+                        _IndTraslado = "<TipoDespacho>2</TipoDespacho><IndTraslado>3</IndTraslado>"
+                End Select
+
+            End If
+
+        End If
+
+        _XML = Replace(_XML, "#IndServicio#", _IndServicio)
+        _XML = Replace(_XML, "#FormaDePago#", _FormaDePago)
+        _XML = Replace(_XML, "#IndTraslado#", _IndTraslado)
+
+        _XML = Replace(_XML, "#Totales_Netos#", _Totales_Netos)
+        _XML = Replace(_XML, "#MntNeto#", _MntNeto)
+        _XML = Replace(_XML, "#TasaIVA#", _TasaIVA)
+        _XML = Replace(_XML, "#IVA#", _IVA)
+
+        _XML = Replace(_XML, "#MntTotal#", _MntTotal)
+
+        Dim _Transporte = String.Empty
+
+        If _Tido.ToString.Contains("G") Then
+
+            ' Retirador de mercaderia
+            Dim _Koreti As String = NuloPorNro(_Row_Maeedoob.Item("DIENDESP").ToString.Trim, "")
+            Dim _Rureti As String = _Sql.Fx_Trae_Dato("TABRETI", "RURETI", "KORETI = '" & _Koreti & "'").ToString.Trim
+            Dim _Nokoreti As String = _Sql.Fx_Trae_Dato("TABRETI", "NORETI", "KORETI = '" & _Koreti & "'").ToString.Trim
+            Dim _Placapat As String = NuloPorNro(_Row_Maeedoob.Item("PLACAPAT"), "").ToString.Trim
+
+            Dim _Patente = String.Empty
+            Dim _Chofer = String.Empty
+
+            If Not String.IsNullOrEmpty(_Rureti.Trim & _Nokoreti.Trim) Or
+           Not String.IsNullOrEmpty(_Placapat) Then
+
+                If Not String.IsNullOrEmpty(_Placapat) Then
+                    _Patente = "<Patente>" & _Placapat & "</Patente>" & vbCrLf
+                End If
+
+                If Not String.IsNullOrEmpty(_Rureti.Trim & _Nokoreti.Trim) Then
+
+                    Dim _Rut As String = _Rureti.ToString.Trim
+
+                    If _Rut.Contains("-") Then
+                        Dim _Rt = Split(_Rut, "-")
+                        _Rut = _Rt(0)
+                    End If
+
+                    _Rut = Convert.ToInt32(_Rut) & "-" & RutDigito(_Rut)
+                    _Rureti = _Rut
+
+                    _Chofer = "<Chofer>" & vbCrLf &
+                          "<RUTChofer>" & _Rureti & "</RUTChofer>" & vbCrLf &
+                          "<NombreChofer>" & _Nokoreti & "</NombreChofer>" & vbCrLf &
+                          "</Chofer>" & vbCrLf
+                End If
+
+                _Transporte = vbCrLf &
+                          "<Transporte>" & vbCrLf &
+                          _Patente &
+                          _Chofer &
+                          "</Transporte>"
+
+            End If
+
+        End If
+
+        _XML = Replace(_XML, "#Transporte#", _Transporte)
+
+        '-----------------------------------------------------------------------------------------------
+
+        'DETALLE
+        Dim _NroLinDet = 1
+        Dim _It1 As String
+        Dim _Mnt As String 'MNT
+
+        Dim _Detalle = String.Empty
+
+        For Each _Fila As DataRow In _Maeddo.Rows
+
+            Dim _Prct As Boolean = _Fila.Item("PRCT")
+
+            If Not _Prct Then
+
+                Dim _Udtrpr = _Fila.Item("UDTRPR")
+                Dim _NmbItem = Trim(Trim(_Fila.Item("NOKOPR")))
+                Dim _QtyItem = _Fila.Item("CAPRCO" & _Udtrpr)
+                Dim _UnmdItem = _Fila.Item("UD0" & _Udtrpr & "PR")
+
+                Dim _Podtglli As Double = _Fila.Item("PODTGLLI")
+                Dim _DescuentoMonto As Double
+                Dim _Str_DescuentoMonto = String.Empty
+                Dim _PrcItem = String.Empty
+
+                If _Tido = "BLV" Or _Tido = "BSV" Then
+
+                    _Campo_PrcItem = "PPPRBR"
+                    _Campo_MontoItem = "VABRLI"
+
+                    Dim _ValPrcItem As Double = Math.Round(_Fila.Item("VABRLI") / _QtyItem, 0)
+
+                    '_PrcItem = De_Num_a_Tx_01(_Fila.Item(_Campo_PrcItem), False, 3)
+                    _PrcItem = De_Num_a_Tx_01(_ValPrcItem, False, 3)
+
+                Else
+
+                    _Campo_MontoItem = "VANELI"
+
+                    If CBool(_Podtglli) Then
+
+                        _Campo_PrcItem = "PPPRNELT"
+
+                        Dim _Monto_Neto_LT = _Fila.Item("PPPRNELT") * _QtyItem
+                        Dim _Monto_Neto = _Fila.Item("PPPRNE") * _QtyItem
+
+                        If _Meardo = "N" Then
+
+                            _PrcItem = _Fila.Item("PPPRNE")
+                            _DescuentoMonto = _Fila.Item("VADTNELI")
+
+                            _Str_DescuentoMonto = vbCrLf & "<DescuentoMonto>" & De_Num_a_Tx_01(_DescuentoMonto, True, 0) & "</DescuentoMonto>"
+
+                        Else
+
+                            Dim _Poimgli = _Fila.Item("POIMGLLI")
+                            Dim _Poivli = _Fila.Item("POIVLI")
+
+                            Dim _Impuetos = 1 + Math.Round((_Poimgli + _Poivli) / 100, 5)
+
+                            _DescuentoMonto = Math.Round((_Fila.Item("VADTBRLI") / _Impuetos) * _QtyItem, 0)
+
+                            Dim _Vaneli As Double = Math.Round(_Fila.Item("VANELI"), 5)
+
+                            _PrcItem = Math.Round((_Vaneli + _DescuentoMonto) / _QtyItem, 5)
+
+                            '_DescuentoMonto = Math.Round(_DescuentoMonto / _QtyItem, 5)
+
+                            _Str_DescuentoMonto = vbCrLf & "<DescuentoMonto>" & De_Num_a_Tx_01(_DescuentoMonto, True, 0) & "</DescuentoMonto>"
+
+                        End If
+
+                        _PrcItem = De_Num_a_Tx_01(_PrcItem, False, 5)
+
+                    Else
+
+                        _PrcItem = De_Num_a_Tx_01(_Fila.Item("PPPRNE"), False, 3)
+
+                    End If
+
+                End If
+
+                Dim _MontoItem As Integer = Math.Round(_Fila.Item(_Campo_MontoItem), 0) 'De_Num_a_Tx_01(_Fila.Item(_Campo_MontoItem), False, 3)
+                Dim _VlrCodigo As String
+                Dim _TpoCodigo As String
+
+                'If _Nuevo_RunMonitor Then
+                '    _VlrCodigo = _Fila.Item("KOPRCT").ToString.Trim
+                '    _TpoCodigo = "INTERNA"
+                'Else
+                '    _VlrCodigo = Right(Trim(_Fila.Item("KOPRCT")), 3) ' String
+                '    _TpoCodigo = "CPCS"
+                'End If
+
+                _TpoCodigo = "INTERNO"
+                _VlrCodigo = _Fila.Item("KOPRCT").ToString.Trim
+
+                Fx_Caracter_Raro_Quitar(_NmbItem)
+
+                Dim _QtyItem_Str As String = _QtyItem
+                Dim _Decimales = Split(_QtyItem, ",")
+
+                If _Decimales.Length = 2 Then
+                    _QtyItem_Str = De_Num_a_Tx_01(_QtyItem, False, _Decimales(1).Length)
+                End If
+
+                _Detalle += vbCrLf &
+                    "<Detalle>" & vbCrLf &
+                    "<NroLinDet>" & _NroLinDet & "</NroLinDet>" & vbCrLf &
+                    "<CdgItem>" & vbCrLf &
+                    "<TpoCodigo>" & _TpoCodigo & "</TpoCodigo>" & vbCrLf &
+                    "<VlrCodigo>" & _VlrCodigo & "</VlrCodigo>" & vbCrLf &
+                    "</CdgItem>" & vbCrLf &
+                    "<NmbItem>" & _NmbItem & "</NmbItem>" & vbCrLf &
+                    "<DscItem/>" & vbCrLf &
+                    "<QtyItem>" & _QtyItem_Str & "</QtyItem>" & vbCrLf &
+                    "<UnmdItem>" & _UnmdItem & "</UnmdItem>" & vbCrLf &
+                    "<PrcItem>" & _PrcItem & "</PrcItem>" &
+                    _Str_DescuentoMonto & vbCrLf &
+                    "<MontoItem>" & _MontoItem & "</MontoItem>" & vbCrLf &
+                    "</Detalle>"
+
+                If _NroLinDet = 1 Then
+
+                    _It1 = _NmbItem
+                    _Mnt = _Fila.Item("VABRLI")
+
+                End If
+
+                _NroLinDet += 1
+
+            End If
+
+        Next
+
+
+        Dim _NroLinDR = 1
+
+        Dim _Detalle_DscRcgGlobal = String.Empty
+
+        '<DscRcgGlobal>
+        '	<NroLinDR>1</NroLinDR>
+        '	<TpoMov>D</TpoMov>
+        '	<GlosaDR>DESCUENTO RETIRO EN AGENCIA</GlosaDR>
+        '	<TpoValor>$</TpoValor>
+        '	<ValorDR>25000.00</ValorDR>
+        '</DscRcgGlobal>
+
+        For Each _Fila As DataRow In _Maeddo.Rows
+
+            Dim _Prct As Boolean = _Fila.Item("PRCT")
+
+            If _Prct Then
+
+                Dim _TpoMov = _Fila.Item("TICT")
+                Dim _GlosaDR = _Fila.Item("NOKOPR").ToString.Trim
+                Dim _TpoValor = _Fila.Item("MOPPPR").ToString.Trim
+                Dim _ValorDR = De_Num_a_Tx_01(_Fila.Item("VADTNELI"), False, 2)
+
+                If _TpoMov = "R" Then
+                    If _Tido = "BLV" Then
+                        _ValorDR = De_Num_a_Tx_01(_Fila.Item("VABRLI"), False, 2)
+                    Else
+                        _ValorDR = De_Num_a_Tx_01(_Fila.Item("VANELI"), False, 2)
+                    End If
+                End If
+
+                If _TpoMov = "D" Then
+                    If _Tido = "BLV" Then
+                        _TpoValor = "%"
+                        _ValorDR = De_Num_a_Tx_01(_Fila.Item("PODTGLLI"), False, 2)
+                    Else
+                        _ValorDR = De_Num_a_Tx_01(_Fila.Item("VADTNELI"), False, 0)
+                    End If
+                End If
+
+                Fx_Caracter_Raro_Quitar(_GlosaDR)
+
+                _Detalle += vbCrLf &
+                        "<DscRcgGlobal>" & vbCrLf &
+                        "<NroLinDR>" & _NroLinDR & "</NroLinDR>" & vbCrLf &
+                        "<TpoMov>" & _TpoMov & "</TpoMov>" & vbCrLf &
+                        "<GlosaDR>" & _GlosaDR & "</GlosaDR>" & vbCrLf &
+                        "<TpoValor>" & _TpoValor & "</TpoValor>" & vbCrLf &
+                        "<ValorDR>" & _ValorDR & "</ValorDR>" & vbCrLf &
+                        "</DscRcgGlobal>"
+
+                _NroLinDR += 1
+
+            End If
+
+        Next
+
+        If _Incorporar_Observaciones_En_DTE Then
+
+            If Not (_Row_Maeedoob Is Nothing) Then
+
+                _Detalle += vbCrLf
+
+                For _i = 1 To 10
+
+                    Dim _Obs = Trim(NuloPorNro(_Row_Maeedoob.Item("TEXTO" & _i), ""))
+
+                    If Not String.IsNullOrEmpty(_Obs) Then
+                        _Detalle += "<Detalle>" & vbCrLf &
+                                "<NroLinDet>" & _NroLinDet & "</NroLinDet>" & vbCrLf &
+                                "<NmbItem>" & _Obs & "</NmbItem>" & vbCrLf &
+                                "<DscItem/>" & vbCrLf &
+                                "</Detalle>"
+                    End If
+                    _NroLinDet += 1
+                Next
+
+            End If
+
+        End If
+
+
+        If Not IsNothing(_Referencias_DTE) Then
+
+            Dim _NroLinRef = 0
+
+            For Each _Row_Referencia As DataRow In _Referencias_DTE.Rows
+
+                _Detalle += vbCrLf
+
+                _NroLinRef += 1
+
+                Dim _TpoDocRef As String = _Row_Referencia.Item("TpoDocRef")
+                Dim _FolioRef As String = _Row_Referencia.Item("FolioRef")
+                Dim _FchRef As String = Format(_Row_Referencia.Item("FchRef"), "yyyy-MM-dd")
+                Dim _CodRef As String = _Row_Referencia.Item("CodRef")
+                Dim _RazonRef As String = Trim(_Row_Referencia.Item("RazonRef"))
+
+                If Convert.ToBoolean(Val(_CodRef)) Then
+                    _CodRef = "<CodRef>" & _CodRef & "</CodRef>" & vbCrLf
+                Else
+                    _CodRef = String.Empty
+                End If
+
+                If Not String.IsNullOrEmpty(_RazonRef) Then
+                    _RazonRef = "<RazonRef>" & _RazonRef & "</RazonRef>" & vbCrLf
+                End If
+
+                _Detalle += "<Referencia>" & vbCrLf &
+                        "<NroLinRef>" & _NroLinRef & "</NroLinRef>" & vbCrLf &
+                        "<TpoDocRef>" & _TpoDocRef & "</TpoDocRef>" & vbCrLf &
+                        "<FolioRef>" & _FolioRef & "</FolioRef>" & vbCrLf &
+                        "<FchRef>" & _FchRef & "</FchRef>" & vbCrLf &
+                        _CodRef &
+                        _RazonRef &
+                        "</Referencia>"
+
+            Next
+
+        End If
+
+        _XML = Replace(_XML, "#Detalle#", _Detalle)
+
+        '-----------------------------------------------------------------------------------------------
+        ' TIEMBRE
+        Dim _Sql_Timbre_Electronico = Fx_Crear_Timbre_Electronico(_MntTotal)
+
+        _XML = Replace(_XML, "#Timbre_Electronico#", _Sql_Timbre_Electronico)
+
+        _XML = Replace(_XML, "ñ", "n")
+        _XML = Replace(_XML, "Ñ", "N")
+
+        Return _XML
+
+    End Function
+
     Function Fx_Crear_Archivo_XML(_Formulario As Form) As String
 
         _Errores.Clear()
@@ -1796,7 +2392,7 @@ Public Class Class_Genera_DTE_RdBk
 
         Try
 
-            _Xml = Fx_XML_DTE_Genera(_Row_Ffolios, _Maeedo.Rows(0), _Maeen.Rows(0), _Td, _Maeddo, _Incorporar_Observaciones_En_DTE, _Row_Maeedoob)
+            _Xml = Fx_XML_DTE_Genera_Old(_Row_Ffolios, _Maeedo.Rows(0), _Maeen.Rows(0), _Td, _Maeddo, _Incorporar_Observaciones_En_DTE, _Row_Maeedoob)
 
             Dim _Dte As New XmlDocument()
             Dim _uriDteResultado As String = _Path & "\NuevoDTE.xml"

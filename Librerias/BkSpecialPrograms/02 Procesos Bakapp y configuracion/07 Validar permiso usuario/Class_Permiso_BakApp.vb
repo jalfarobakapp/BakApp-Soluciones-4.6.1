@@ -58,6 +58,13 @@ Public Class Class_Permiso_BakApp
 
         End If
 
+        If _Codpermiso = "Doc00161" AndAlso IsNothing(_Row_PermisosVsUsuarios) Then
+            Dim _Kofuen As String = _Sql.Fx_Trae_Dato("MAEEN", "KOFUEN", "KOEN = '" & _CodEntidad & "' And SUEN = '" & _CodSucEntidad & "'")
+            If _Kofuen = _Func Then
+                Return True
+            End If
+        End If
+
         If Not _Mostrar_Permiso Then
 
             If Not _Permiso Then
@@ -650,6 +657,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00158", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00159", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00160", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00161", _Objeto, _Formulario)
 
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
@@ -2887,6 +2895,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00160"
                 _DescripcionPermiso = "VER PROXIMAS RECEPCIONES DE PRODUCTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00161"
+                _DescripcionPermiso = "AUTORIZAR A CAMBIAR AL VENDEDOR DE LA LINEA POR OTRO QUE NO SEA EL DE LA ENTIDAD"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

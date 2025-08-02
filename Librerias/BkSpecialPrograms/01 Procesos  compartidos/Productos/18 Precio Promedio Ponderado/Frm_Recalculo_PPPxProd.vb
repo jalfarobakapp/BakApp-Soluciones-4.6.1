@@ -371,7 +371,7 @@ Public Class Frm_Recalculo_PPPxProd
             fila.Cells("NewPM").Value = If(_Mensaje.EsCorrecto, Cl_Pm.Pm, 0.0)
             fila.Cells("Stexistini").Value = Cl_Pm.Stexistini
             fila.Cells("Sum_Stock").Value = Cl_Pm.Saldo_Stock
-            fila.Cells("Pm").Value = Cl_Pm.Pm
+            'fila.Cells("Pm").Value = Cl_Pm.Pm
             fila.Cells("Fepm").Value = Cl_Pm.Fepm
 
             _UltTabla = _Mensaje.Tag
@@ -651,6 +651,5 @@ Public Class Frm_Recalculo_PPPxProd
         ' Refrescar controles
         Me.Refresh()
     End Sub
-
 
 End Class
