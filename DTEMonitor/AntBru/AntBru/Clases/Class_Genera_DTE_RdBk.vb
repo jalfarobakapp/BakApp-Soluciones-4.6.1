@@ -2858,6 +2858,11 @@ Public Class Class_Genera_DTE_RdBk
         Dim _RutaArchivo As String
         Dim _Nombre_Archivo_Xml As String
 
+        If IsNothing(_Maeedo) Then
+            _Errores.Add("No existe datos con el IDMAEEDO = " & _Idmaeedo)
+            Return 0
+        End If
+
         'Dim _Empresa As String = _Maeedo.Rows(0).Item("EMPRESA")
         Dim _Tido As String = _Maeedo.Rows(0).Item("TIDO")
         Dim _Nudo As String = _Maeedo.Rows.Item(0).Item("NUDO")

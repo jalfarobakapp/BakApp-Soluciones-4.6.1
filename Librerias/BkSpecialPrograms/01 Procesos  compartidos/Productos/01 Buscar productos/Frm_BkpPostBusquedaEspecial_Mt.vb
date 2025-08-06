@@ -52,6 +52,38 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Dim _Patente_rvm As String
 
+    Dim _Tbl_Filtro_Productos As DataTable
+    Dim _Tbl_Filtro_Super_Familias As DataTable
+    Dim _Tbl_Filtro_Familias As DataTable
+    Dim _Tbl_Filtro_Sub_Familias As DataTable
+    Dim _Tbl_Filtro_Marcas As DataTable
+    Dim _Tbl_Filtro_Rubro_Productos As DataTable
+    Dim _Tbl_Filtro_Clalibpr As DataTable
+    Dim _Tbl_Filtro_Zonas_Productos As DataTable
+
+    Private _Filtro_Super_Familias_Todas As Boolean
+    Private _Filtro_Familias_Todas As Boolean
+    Private _Filtro_Sub_Familias_Todas As Boolean
+    Private _Filtro_Marcas_Todas As Boolean
+    Private _Filtro_Rubro_Productos_Todas As Boolean
+    Private _Filtro_Clalibpr_Todas As Boolean
+    Private _Filtro_Zonas_Productos_Todas As Boolean
+    Private _Filtro_Bakapp_Todas As Boolean
+
+    Dim _Filtro_Productos = String.Empty
+    Dim _Filtro_Rubros = String.Empty
+    Dim _Filtro_Marcas = String.Empty
+    Dim _Filtro_Zonas = String.Empty
+    Dim _Filtro_SuperFamilias = String.Empty
+    Dim _Filtro_ClasLibre = String.Empty
+    Dim _Filtro_Bodega = String.Empty
+    Dim _Filtro_Bakapp = String.Empty
+
+    Public Property Ls_SelSuperFamilias As New List(Of SelSuperFamilias)
+    Public Property Ls_SelFamilias As New List(Of SelFamilias)
+    Public Property Ls_SelSubFamilias As New List(Of SelSubFamilias)
+    Public Property Ls_SelArbol_Asociaciones As New List(Of Zw_TblArbol_Asociaciones)
+
 #Region "PROPIEDADES"
 
     Public Property TraerTodosLosProductos As Boolean
@@ -485,6 +517,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     Dim _Top = 100
     Dim _Top_Filas = 100
 
+
+
     Public Sub New()
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -505,6 +539,15 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Btn_Seleccion_Multiple.ForeColor = Color.White
             Btn_Ocultar.ForeColor = Color.White
         End If
+
+        _Filtro_Clalibpr_Todas = True
+        _Filtro_Marcas_Todas = True
+        _Filtro_Rubro_Productos_Todas = True
+        _Filtro_Super_Familias_Todas = True
+        _Filtro_Familias_Todas = True
+        _Filtro_Sub_Familias_Todas = True
+        _Filtro_Zonas_Productos_Todas = True
+        _Filtro_Bakapp_Todas = True
 
     End Sub
     Private Sub Frm_BkpPostBusquedaEspecial_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
@@ -558,6 +601,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             _Campo_PreUd2 = "Precio2"
 
         End If
+
+        Sb_Icono_Filtrar()
 
         Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion, _Top)
 
@@ -1149,6 +1194,18 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             If TraerTodosLosProductos Then
                 Consulta_sql = Replace(Consulta_sql, "Inner Join MAEPREM Mpn WITH (NOLOCK) On Mpn.EMPRESA = @Empresa And Mpn.KOPR = Mp.KOPR ", "")
             End If
+
+            Dim _Sql_Filtro3 As String = String.Empty
+
+            _Sql_Filtro3 = _Filtro_ClasLibre & vbCrLf &
+                           _Filtro_Marcas & vbCrLf &
+                           _Filtro_Rubros & vbCrLf &
+                           _Filtro_SuperFamilias & vbCrLf &
+                           _Filtro_Zonas & vbCrLf &
+                           _Filtro_Bakapp
+
+            Consulta_sql = Replace(Consulta_sql, "#Sql_Filtro3#", _Sql_Filtro3)
+
 
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -2676,8 +2733,12 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
 
     Private Sub Btn_Mnu_Pr_Ver_Clasificacion_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Pr_Ver_Clasificacion_Producto.Click
-        Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
-        Sb_Ver_Clasificaciones_del_producto(Me, _Codigo)
+        Try
+            Dim _Codigo As String = Grilla.Rows(Grilla.CurrentRow.Index).Cells("Codigo").Value
+            Sb_Ver_Clasificaciones_del_producto(Me, _Codigo)
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message)
+        End Try
     End Sub
 
     Private Sub Btn_Mnu_Pr_Mantencion_Clasificacion_Producto_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Pr_Mantencion_Clasificacion_Producto.Click
@@ -3191,6 +3252,429 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Private Sub Chk_StockFisicoMayorCero_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_StockFisicoMayorCero.CheckedChanged
         Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+    End Sub
+
+    Private Sub Btn_Filtrar_Click(sender As Object, e As EventArgs) Handles Btn_Filtrar.Click
+
+        Sb_Filtrar()
+
+        'Return
+
+        'Btn_Filtro_Pro_Super_Familias.Image = Fx_Imagen_Filtro(_Filtro_Super_Familias_Todas)
+        'Btn_Filtro_Pro_Familias.Image = Fx_Imagen_Filtro(_Filtro_Familias_Todas)
+        'Btn_Filtro_Pro_Sub_Familias.Image = Fx_Imagen_Filtro(_Filtro_Sub_Familias_Todas)
+        'Btn_Filtro_Pro_Marcas.Image = Fx_Imagen_Filtro(_Filtro_Marcas_Todas)
+        'Btn_Filtro_Pro_Clas_Libre.Image = Fx_Imagen_Filtro(_Filtro_Clalibpr_Todas)
+        'Btn_Filtro_Pro_Rubros.Image = Fx_Imagen_Filtro(_Filtro_Rubro_Productos_Todas)
+        'Btn_Filtro_Pro_Zonas.Image = Fx_Imagen_Filtro(_Filtro_Zonas_Productos_Todas)
+
+        'If Not _Filtro_Super_Familias_Todas Or
+        '   Not _Filtro_Familias_Todas Or
+        '   Not _Filtro_Sub_Familias_Todas Or
+        '   Not _Filtro_Marcas_Todas Or
+        '   Not _Filtro_Clalibpr_Todas Or
+        '   Not _Filtro_Rubro_Productos_Todas Or
+        '   Not _Filtro_Zonas_Productos_Todas Then
+        '    'Btn_Filtrar_Productos.Image = Imagenes_16x16.Images.Item("filter.png")
+        'Else
+        '    'Btn_Filtrar_Productos.Image = Nothing
+        'End If
+
+        'ShowContextMenu(Menu_Contextual_Filtros_Productos)
+
+    End Sub
+
+    Function Fx_Imagen_Filtro(_Todas As Boolean) As Image
+
+        If _Todas Then
+            Return Nothing
+        Else
+            Return Imagenes_16x16.Images.Item("filter.png")
+        End If
+
+    End Function
+
+    Sub Sb_Filtrar()
+
+        Dim Fm As New Frm_Filtro_Especial_Productos
+
+        'Fm.Pro_Filtro_Extra_Productos = _Sql_Filtro_Condicion_Extra
+        'Fm.Pro_Filtro_Extra_Marcas = "And KOMR In (Select MRPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
+        'Fm.Pro_Filtro_Extra_Super_Familias = "And KOFM In (Select FMPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
+        'Fm.Pro_Filtro_Extra_Rubro_Productos = "And KORU In (Select RUPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
+        'Fm.Pro_Filtro_Extra_Clalibpr = "And KOCARAC In (Select CLALIBPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
+        'Fm.Pro_Filtro_Extra_Zonas = "And KOZO In (Select ZONAPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
+
+        'Fm.Pro_Filtro_Productos_Todos = _Filtro_Productos_Todos
+        Fm.Pro_Filtro_Clalibpr_Todas = _Filtro_Clalibpr_Todas
+        Fm.Pro_Filtro_Marcas_Todas = _Filtro_Marcas_Todas
+        Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Productos_Todas
+        Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
+        Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Productos_Todas
+        Fm.Pro_Filtro_Bakapp_Todas = _Filtro_Bakapp_Todas
+
+        Fm.Pro_Tbl_Filtro_Productos = _Tbl_Filtro_Productos
+        Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
+        Fm.Pro_Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
+        Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro_Productos
+        Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
+        Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas_Productos
+
+        Fm.BuscarSpfmfmsubfm = True
+        Fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
+        Fm.Ls_SelFamilias = Ls_SelFamilias
+        Fm.Ls_SelSubFamilias = Ls_SelSubFamilias
+
+        Fm.Ls_SelArbol_Asociaciones = Ls_SelArbol_Asociaciones
+
+        Fm.Rdb_Productos_Todos.Visible = False
+        Fm.Rdb_Productos_Algunos.Visible = False
+
+        Dim _Aceptar As Boolean
+
+        Fm.ShowInTaskbar = False
+        Fm.ShowDialog(Me)
+
+        _Aceptar = Fm.Aceptar
+
+        If _Aceptar Then
+
+            _Tbl_Filtro_Productos = Fm.Pro_Tbl_Filtro_Productos
+            _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
+            _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas
+            _Tbl_Filtro_Rubro_Productos = Fm.Pro_Tbl_Filtro_Rubro
+            _Tbl_Filtro_Super_Familias = Fm.Pro_Tbl_Filtro_Super_Familias
+            _Tbl_Filtro_Zonas_Productos = Fm.Pro_Tbl_Filtro_Zonas
+
+            _Filtro_Clalibpr_Todas = Fm.Pro_Filtro_Clalibpr_Todas
+            _Filtro_Marcas_Todas = Fm.Pro_Filtro_Marcas_Todas
+            _Filtro_Rubro_Productos_Todas = Fm.Pro_Filtro_Rubro_Todas
+            _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
+            _Filtro_Zonas_Productos_Todas = Fm.Pro_Filtro_Zonas_Todas
+            _Filtro_Bakapp_Todas = Fm.Pro_Filtro_Bakapp_Todas
+
+            Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
+            Ls_SelFamilias = Fm.Ls_SelFamilias
+            Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
+
+            Ls_SelArbol_Asociaciones = Fm.Ls_SelArbol_Asociaciones
+
+        End If
+
+        Fm.Dispose()
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        Sb_Icono_Filtrar()
+
+        '---- FILTROS -------------------------------
+
+
+        If Not _Filtro_Rubro_Productos_Todas Then
+            _Filtro_Rubros = Generar_Filtro_IN(_Tbl_Filtro_Rubro_Productos, "Chk", "Codigo", False, True, "'")
+            _Filtro_Rubros = "And Mp.KOPR IN (Select KOPR From MAEPR Where RUPR In " & _Filtro_Rubros & ")"
+        End If
+
+        If Not _Filtro_Marcas_Todas Then
+            _Filtro_Marcas = Generar_Filtro_IN(_Tbl_Filtro_Marcas, "Chk", "Codigo", False, True, "'")
+            _Filtro_Marcas = "And Mp.KOPR IN (Select KOPR From MAEPR Where MRPR In " & _Filtro_Marcas & ")"
+        End If
+
+        If Not _Filtro_Super_Familias_Todas Then
+
+            Dim _Fl_SuperFamilias As String = String.Empty
+            Dim _Fl_Familias As String = String.Empty
+            Dim _Fl_SubFamilias As String = String.Empty
+
+            For Each _Sfm As SelSubFamilias In Ls_SelSubFamilias
+                _Fl_SubFamilias += "(FMPR = '" & _Sfm.Kofm & "' And PFPR = '" & _Sfm.Kopf & "' And HFPR = '" & _Sfm.Kopf & "');"
+            Next
+            _Fl_SubFamilias = _Fl_SubFamilias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+            For Each _Fm As SelFamilias In Ls_SelFamilias
+                If _Fl_SubFamilias.Contains("FMPR = '" & _Fm.Kofm & "'") And _Fl_SubFamilias.Contains("PFPR = '" & _Fm.Kopf & "'") Then
+                    Continue For
+                End If
+                _Fl_Familias += "(FMPR = '" & _Fm.Kofm & "' And PFPR = '" & _Fm.Kopf & "');"
+            Next
+            _Fl_Familias = _Fl_Familias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+            For Each _Spfm As SelSuperFamilias In Ls_SelSuperFamilias
+                If _Fl_SubFamilias.Contains("FMPR = '" & _Spfm.Kofm & "'") Or _Fl_Familias.Contains("FMPR = '" & _Spfm.Kofm & "'") Then
+                    Continue For
+                End If
+                _Fl_SuperFamilias += "(FMPR = '" & _Spfm.Kofm & "');"
+            Next
+            _Fl_SuperFamilias = _Fl_SuperFamilias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+            If Not String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                _Filtro_SuperFamilias = "And Mp.KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & ")"
+            End If
+
+            If Not String.IsNullOrWhiteSpace(_Fl_Familias) Then
+                If String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                    _Filtro_SuperFamilias = "And Mp.KOPR IN (Select KOPR From MAEPR Where " & _Fl_Familias & ")"
+                Else
+                    _Filtro_SuperFamilias = "And Mp.KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & " Or " & _Fl_Familias & ")"
+                End If
+            End If
+
+            If Not String.IsNullOrWhiteSpace(_Fl_SubFamilias) Then
+                If String.IsNullOrWhiteSpace(_Fl_Familias) Then
+                    _Filtro_SuperFamilias = "And Mp.KOPR IN (Select KOPR From MAEPR Where " & _Fl_SubFamilias & ")"
+                Else
+
+                    If String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                        _Filtro_SuperFamilias = "And Mp.KOPR IN (Select KOPR From MAEPR Where " & _Fl_Familias & " Or " & _Fl_SubFamilias & ")"
+                    Else
+                        _Filtro_SuperFamilias = "And Mp.KOPR IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & " Or " & _Fl_Familias & " Or " & _Fl_SubFamilias & ")"
+                    End If
+
+                End If
+            End If
+
+            '_Filtro_SuperFamilias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
+            '_Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where FMPR In " & _Filtro_SuperFamilias & ")"
+
+        End If
+
+        _Filtro_Bakapp = String.Empty
+
+        If Not _Filtro_Bakapp_Todas Then
+            '    _Filtro_Bakapp = String.Empty
+            'Else
+
+            For Each _Asoc As Zw_TblArbol_Asociaciones In Ls_SelArbol_Asociaciones
+                If String.IsNullOrEmpty(_Filtro_Bakapp) Then
+                    _Filtro_Bakapp = _Asoc.Codigo_Nodo
+                Else
+                    _Filtro_Bakapp += "," & _Asoc.Codigo_Nodo
+                End If
+            Next
+
+            '_Filtro_Bakapp = Replace(_Filtro_Bakapp, "(,", "(")
+
+            If Not String.IsNullOrWhiteSpace(_Filtro_Bakapp) Then
+                _Filtro_Bakapp = "And Mp.KOPR IN (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo In (" & _Filtro_Bakapp & "))"
+            End If
+
+        End If
+
+        If Not _Filtro_Clalibpr_Todas Then
+            _Filtro_ClasLibre = Generar_Filtro_IN(_Tbl_Filtro_Clalibpr, "Chk", "Codigo", False, True, "'")
+            _Filtro_ClasLibre = "And Mp.KOPR IN (Select KOPR From MAEPR Where CLALIBPR In " & _Filtro_ClasLibre & ")"
+        End If
+
+        If Not _Filtro_Zonas_Productos_Todas Then
+            _Filtro_Zonas = Generar_Filtro_IN(_Tbl_Filtro_Zonas_Productos, "Chk", "Codigo", False, True, "'")
+            _Filtro_Zonas = "And Mp.KOPR IN (Select KOPR From MAEPR Where ZONAPR In " & _Filtro_Zonas & ")"
+        End If
+
+        Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+
+        '---------------------------
+
+        Consulta_sql = "Select Cast(1 As Bit) As Chk,KOPR as Codigo From MAEPR Where 1 > 0" & vbCrLf &
+                        _Filtro_Productos & vbCrLf &
+                        _Filtro_Bodega & vbCrLf &
+                        _Filtro_ClasLibre & vbCrLf &
+                        _Filtro_Marcas & vbCrLf &
+                        _Filtro_Rubros & vbCrLf &
+                        _Filtro_SuperFamilias & vbCrLf &
+                        _Filtro_Zonas
+
+        '_TblFiltroProductos_Proveedor = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+    End Sub
+
+    Sub Sb_Icono_Filtrar()
+
+        Dim _Imagen, _Imagen_Dark As Image
+
+        _Imagen = Imagenes_32x32.Images.Item("filter.png")
+        _Imagen_Dark = Imagenes_32x32_Dark.Images.Item("filter.png")
+        Btn_Filtrar.Tooltip = "Filtrar"
+
+        If Not _Filtro_Clalibpr_Todas Or
+           Not _Filtro_Marcas_Todas Or
+           Not _Filtro_Rubro_Productos_Todas Or
+           Not _Filtro_Super_Familias_Todas Or
+           Not _Filtro_Zonas_Productos_Todas Or
+           Not _Filtro_Bakapp_Todas Then
+
+            If Global_Thema = Enum_Themas.Oscuro Then
+                _Imagen = Imagenes_32x32_Dark.Images.Item("filter-ok.png")
+                _Imagen_Dark = Imagenes_32x32_Dark.Images.Item("filter-ok.png")
+            Else
+                _Imagen = Imagenes_32x32.Images.Item("filter-ok.png")
+                _Imagen_Dark = Imagenes_32x32.Images.Item("filter-ok.png")
+            End If
+
+            Btn_Filtrar.Tooltip = "Filtro aplicado..."
+
+        End If
+
+        'Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
+        'Ls_SelFamilias = Fm.Ls_SelFamilias
+        'Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
+
+        'Ls_SelArbol_Asociaciones = Fm.Ls_SelArbol_Asociaciones
+
+        Btn_Filtrar.Image = _Imagen
+        Btn_Filtrar.ImageAlt = _Imagen_Dark
+
+    End Sub
+
+    Private Sub Btn_Filtro_Pro_Super_Familias_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_Super_Familias.Click
+
+        Dim _Sql_Filtro_Condicion_Extra = ""
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Super_Familias,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Tabla_Super_Familia, _Sql_Filtro_Condicion_Extra,
+                               _Filtro_Super_Familias_Todas) Then
+
+            _Tbl_Filtro_Super_Familias = _Filtrar.Pro_Tbl_Filtro
+            _Filtro_Super_Familias_Todas = _Filtrar.Pro_Filtro_Todas
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Filtro_Pro_Familias_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_Familias.Click
+        Dim _SqlFiltro_Fechas As String
+
+        Dim _Sql_Filtro_Condicion_Extra = String.Empty
+        Dim _Filtro_Extra_Familias = String.Empty
+
+        If Not _Filtro_Super_Familias_Todas Then
+            If Not (_Tbl_Filtro_Super_Familias Is Nothing) Then
+                If _Tbl_Filtro_Super_Familias.Rows.Count Then
+
+                    Dim _Fl_Super_Familias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
+                    _Filtro_Extra_Familias = vbCrLf & "And KOFM In " & _Fl_Super_Familias
+
+                End If
+            End If
+        End If
+
+        _Sql_Filtro_Condicion_Extra = _Filtro_Extra_Familias
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Familias,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Tabla_Familia, _Sql_Filtro_Condicion_Extra,
+                               _Filtro_Familias_Todas) Then
+
+            _Tbl_Filtro_Familias = _Filtrar.Pro_Tbl_Filtro
+            _Filtro_Familias_Todas = _Filtrar.Pro_Filtro_Todas
+            'Actualizar vista
+        End If
+    End Sub
+
+    Private Sub Btn_Filtro_Pro_Sub_Familias_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_Sub_Familias.Click
+
+        Dim _Sql_Filtro_Condicion_Extra = String.Empty
+        Dim _Filtro_Extra_Familias = String.Empty
+
+        If Not _Filtro_Super_Familias_Todas Then
+            If Not (_Tbl_Filtro_Super_Familias Is Nothing) Then
+                If _Tbl_Filtro_Super_Familias.Rows.Count Then
+
+                    Dim _Fl_Super_Familias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
+                    _Filtro_Extra_Familias = vbCrLf & "And KOFM In " & _Fl_Super_Familias
+
+                End If
+            End If
+        End If
+
+        If Not _Filtro_Familias_Todas Then
+            If Not (_Tbl_Filtro_Familias Is Nothing) Then
+                If _Tbl_Filtro_Familias.Rows.Count Then
+
+                    Dim _Fl_Familias = Generar_Filtro_IN(_Tbl_Filtro_Familias, "Chk", "Codigo", False, True, "'")
+                    _Filtro_Extra_Familias += vbCrLf & "And KOFM+KOPF In " & _Fl_Familias
+
+                End If
+            End If
+        End If
+
+        _Sql_Filtro_Condicion_Extra = ""
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Sub_Familias,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Tabla_Sub_Familia, _Sql_Filtro_Condicion_Extra,
+                               _Filtro_Sub_Familias_Todas) Then
+
+            _Tbl_Filtro_Sub_Familias = _Filtrar.Pro_Tbl_Filtro
+            _Filtro_Sub_Familias_Todas = _Filtrar.Pro_Filtro_Todas
+
+            'Actualizar vista
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Filtro_Pro_Marcas_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_Marcas.Click
+
+
+        Dim _Sql_Filtro_Condicion_Extra = ""
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Marcas,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Tabla_Marcas, _Sql_Filtro_Condicion_Extra,
+                               _Filtro_Marcas_Todas) Then
+
+            _Tbl_Filtro_Marcas = _Filtrar.Pro_Tbl_Filtro
+            _Filtro_Marcas_Todas = _Filtrar.Pro_Filtro_Todas
+
+            'Actualizar vista
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Filtro_Pro_Rubros_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_Rubros.Click
+
+        Dim _Sql_Filtro_Condicion_Extra = ""
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Rubro_Productos,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Tabla_Rubros, _Sql_Filtro_Condicion_Extra,
+                               _Filtro_Rubro_Productos_Todas, True) Then
+
+            _Tbl_Filtro_Rubro_Productos = _Filtrar.Pro_Tbl_Filtro
+            _Filtro_Rubro_Productos_Todas = _Filtrar.Pro_Filtro_Todas
+
+            'Actualizar vista
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Filtro_Pro_Zonas_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_Zonas.Click
+
+        Dim _Sql_Filtro_Condicion_Extra = ""
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Zonas_Productos,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Tabla_Zonas, _Sql_Filtro_Condicion_Extra,
+                               _Filtro_Zonas_Productos_Todas, True) Then
+
+            _Tbl_Filtro_Zonas_Productos = _Filtrar.Pro_Tbl_Filtro
+            _Filtro_Zonas_Productos_Todas = _Filtrar.Pro_Filtro_Todas
+
+            'Actualizar vista
+
+        End If
+
     End Sub
 
     Private Sub Txt_Patente_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Patente.ButtonCustom2Click

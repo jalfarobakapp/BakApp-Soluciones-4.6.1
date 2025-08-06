@@ -45,6 +45,7 @@ WHERE 1 > 0
 	   #Filtro_Productos#
        #Stock_Disponible#
        #StockMayorCero#
+       #Sql_Filtro3#
 
 DECLARE @Kopr AS varchar(13)
 DECLARE @Ficha AS varchar(max)

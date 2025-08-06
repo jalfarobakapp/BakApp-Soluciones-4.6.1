@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Inf_Ventas_X_Periodo_Fechas
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -276,7 +276,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Fechas
         Me.Btn_Actualizar_Indices.Image = CType(resources.GetObject("Btn_Actualizar_Indices.Image"), System.Drawing.Image)
         Me.Btn_Actualizar_Indices.ImageAlt = CType(resources.GetObject("Btn_Actualizar_Indices.ImageAlt"), System.Drawing.Image)
         Me.Btn_Actualizar_Indices.Name = "Btn_Actualizar_Indices"
-        Me.Btn_Actualizar_Indices.Text = "Actualizar �ndices"
+        Me.Btn_Actualizar_Indices.Text = "Actualizar índices"
         '
         'Progreso_Porc
         '
