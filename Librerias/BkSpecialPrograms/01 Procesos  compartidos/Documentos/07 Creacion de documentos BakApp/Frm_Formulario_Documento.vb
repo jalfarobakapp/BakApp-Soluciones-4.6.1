@@ -8594,7 +8594,21 @@ Public Class Frm_Formulario_Documento
                 Fm.Tido_Stock = _Tido
                 Fm.Usar_Bodegas_NVI = (_Tido = "NVI")
 
+                If SoloprodEnDoc_CLALIBPR Then
+
+                    If _TblEncabezado.Rows(0).Item("TblTipoVenta") = "CLALIBPR" Then
+
+                        Consulta_sql = "Select CAST( 1 AS bit) AS Chk,KOCARAC as Codigo,NOKOCARAC as Descripcion From TABCARAC" & vbCrLf &
+                                       "Where KOCARAC IN ('" & _TblEncabezado.Rows(0).Item("CodTipoVenta") & "')"
+                        Dim _TblFiltro As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+                        Fm.Tbl_Filtro_Clalibpr = _TblFiltro
+
+                    End If
+
+                End If
+
                 Fm.ShowDialog(Me)
+
                 _Patente_rvm = Fm.Patente_rvm
 
                 If Fm.Seleccion_Multiple Then
@@ -9681,7 +9695,19 @@ Public Class Frm_Formulario_Documento
                                     Dim _Kofuen As String = LTrim(_RowEntidad.Item("KOFUEN"))
 
                                     If _Global_Row_Configuracion_General.Item("PermisoEspecialCambioVendedorLinea") Then
+                                        If Not String.IsNullOrEmpty(_TblDetalle.Rows(0).Item("Codigo")) Then
+                                            MessageBoxEx.Show(Me, "Hay detalles en el documento, no puede cambiar al vendedor de la línea" & vbCrLf &
+                                                              "Debe quitar el detalle y luego cambiar al vendedor", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                            Return
+                                        End If
                                         Sb_Cambiar_Vendedor(True)
+                                        If _Kofuen <> _CodVendedor Then
+                                            Dim _VendedorAsociado As String = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Kofuen & "'")
+                                            MessageBoxEx.Show(Me, "El cambio de vendedor requiere un permiso especial, el cual puede ser otorgado" & vbCrLf &
+                                                              "por el usuario " & _Kofuen & " - " & _VendedorAsociado & " o por cualquier otro usuario que cuente con el permiso correspondiente." & vbCrLf &
+                                                              "Este permiso será evaluado al momento de grabar el documento.",
+                                                              "Información", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                        End If
                                     Else
                                         If _Kofuen <> _CodVendedor Then
                                             Sb_Cambiar_Vendedor(False)

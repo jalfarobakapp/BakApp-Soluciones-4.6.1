@@ -1305,7 +1305,11 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
             Dim Fm As New Frm_Ver_Documento(_Idmaeedo_Cierra, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
             Fm.Codigo_Marcar = _Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo
-            Fm.ShowDialog(Me)
+            If Fm.Documento_Eliminado Then
+                MessageBoxEx.Show(Me, "El documento adjunto se encuantra eliminado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Else
+                Fm.ShowDialog(Me)
+            End If
             Fm.Dispose()
 
         End If

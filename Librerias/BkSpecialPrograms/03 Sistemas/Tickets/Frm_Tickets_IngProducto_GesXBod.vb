@@ -177,20 +177,20 @@ Public Class Frm_Tickets_IngProducto_GesXBod
             .Columns("Um").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("StfiEnBodega").Visible = True
-            .Columns("StfiEnBodega").HeaderText = "Stock Sistema"
-            .Columns("StfiEnBodega").Width = 100
-            .Columns("StfiEnBodega").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("StfiEnBodega").DefaultCellStyle.Format = "###,##0.##"
-            .Columns("StfiEnBodega").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
             .Columns("Cantidad").Visible = True
             .Columns("Cantidad").HeaderText = "Stock Físico"
             .Columns("Cantidad").Width = 100
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Cantidad").DefaultCellStyle.Format = "###,##0.##"
             .Columns("Cantidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("StfiEnBodega").Visible = True
+            .Columns("StfiEnBodega").HeaderText = "Stock Sistema"
+            .Columns("StfiEnBodega").Width = 100
+            .Columns("StfiEnBodega").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StfiEnBodega").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("StfiEnBodega").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Diferencia").Visible = True

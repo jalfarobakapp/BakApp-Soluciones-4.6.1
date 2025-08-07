@@ -52,14 +52,14 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Dim _Patente_rvm As String
 
-    Dim _Tbl_Filtro_Productos As DataTable
-    Dim _Tbl_Filtro_Super_Familias As DataTable
-    Dim _Tbl_Filtro_Familias As DataTable
-    Dim _Tbl_Filtro_Sub_Familias As DataTable
-    Dim _Tbl_Filtro_Marcas As DataTable
-    Dim _Tbl_Filtro_Rubro_Productos As DataTable
-    Dim _Tbl_Filtro_Clalibpr As DataTable
-    Dim _Tbl_Filtro_Zonas_Productos As DataTable
+    Public Property Tbl_Filtro_Super_Familias As DataTable
+    Public Property Tbl_Filtro_Familias As DataTable
+    Public Property Tbl_Filtro_Sub_Familias As DataTable
+    Public Property Tbl_Filtro_Marcas As DataTable
+    Public Property Tbl_Filtro_Rubro_Productos As DataTable
+    Public Property Tbl_Filtro_Clalibpr As DataTable
+    Public Property Tbl_Filtro_Zonas_Productos As DataTable
+
 
     Private _Filtro_Super_Familias_Todas As Boolean
     Private _Filtro_Familias_Todas As Boolean
@@ -540,15 +540,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Btn_Ocultar.ForeColor = Color.White
         End If
 
-        _Filtro_Clalibpr_Todas = True
-        _Filtro_Marcas_Todas = True
-        _Filtro_Rubro_Productos_Todas = True
-        _Filtro_Super_Familias_Todas = True
-        _Filtro_Familias_Todas = True
-        _Filtro_Sub_Familias_Todas = True
-        _Filtro_Zonas_Productos_Todas = True
-        _Filtro_Bakapp_Todas = True
-
     End Sub
     Private Sub Frm_BkpPostBusquedaEspecial_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
@@ -602,8 +593,31 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         End If
 
-        Sb_Icono_Filtrar()
+        If IsNothing(Tbl_Filtro_Clalibpr) OrElse Tbl_Filtro_Clalibpr.Rows.Count = 0 Then
+            _Filtro_Clalibpr_Todas = True
+        End If
+        If IsNothing(Tbl_Filtro_Marcas) OrElse Tbl_Filtro_Marcas.Rows.Count = 0 Then
+            _Filtro_Marcas_Todas = True
+        End If
+        If IsNothing(Tbl_Filtro_Rubro_Productos) OrElse Tbl_Filtro_Rubro_Productos.Rows.Count = 0 Then
+            _Filtro_Rubro_Productos_Todas = True
+        End If
+        If IsNothing(Tbl_Filtro_Super_Familias) OrElse Tbl_Filtro_Super_Familias.Rows.Count = 0 Then
+            _Filtro_Super_Familias_Todas = True
+        End If
+        If IsNothing(Tbl_Filtro_Familias) OrElse Tbl_Filtro_Familias.Rows.Count = 0 Then
+            _Filtro_Familias_Todas = True
+        End If
+        If IsNothing(Tbl_Filtro_Sub_Familias) OrElse Tbl_Filtro_Sub_Familias.Rows.Count = 0 Then
+            _Filtro_Sub_Familias_Todas = True
+        End If
+        If IsNothing(Tbl_Filtro_Zonas_Productos) OrElse Tbl_Filtro_Zonas_Productos.Rows.Count = 0 Then
+            _Filtro_Zonas_Productos_Todas = True
+        End If
 
+        _Filtro_Bakapp_Todas = True
+
+        Sb_LlenarFiltros()
         Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion, _Top)
 
         Grilla.ClearSelection()
@@ -2423,7 +2437,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Dim _Nodo_Raiz_Asociados = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
             Dim _Row_Nodo_Clasificaciones As DataRow
 
-            Consulta_sql = "SELECT Top 1 * From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
+            Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                            "Where (Codigo = '" & _Codigo & "') AND (Para_filtro = 1)" & vbCrLf &
                            "And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Nodo_Raiz = " & _Nodo_Raiz_Asociados & ")"
 
@@ -3298,14 +3312,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         Dim Fm As New Frm_Filtro_Especial_Productos
 
-        'Fm.Pro_Filtro_Extra_Productos = _Sql_Filtro_Condicion_Extra
-        'Fm.Pro_Filtro_Extra_Marcas = "And KOMR In (Select MRPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
-        'Fm.Pro_Filtro_Extra_Super_Familias = "And KOFM In (Select FMPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
-        'Fm.Pro_Filtro_Extra_Rubro_Productos = "And KORU In (Select RUPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
-        'Fm.Pro_Filtro_Extra_Clalibpr = "And KOCARAC In (Select CLALIBPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
-        'Fm.Pro_Filtro_Extra_Zonas = "And KOZO In (Select ZONAPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
-
-        'Fm.Pro_Filtro_Productos_Todos = _Filtro_Productos_Todos
         Fm.Pro_Filtro_Clalibpr_Todas = _Filtro_Clalibpr_Todas
         Fm.Pro_Filtro_Marcas_Todas = _Filtro_Marcas_Todas
         Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Productos_Todas
@@ -3313,12 +3319,12 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Productos_Todas
         Fm.Pro_Filtro_Bakapp_Todas = _Filtro_Bakapp_Todas
 
-        Fm.Pro_Tbl_Filtro_Productos = _Tbl_Filtro_Productos
-        Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
-        Fm.Pro_Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
-        Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro_Productos
-        Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
-        Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas_Productos
+        'Fm.Pro_Tbl_Filtro_Productos = Tbl_Filtro_Productos
+        Fm.Pro_Tbl_Filtro_Clalibpr = Tbl_Filtro_Clalibpr
+        Fm.Pro_Tbl_Filtro_Marcas = Tbl_Filtro_Marcas
+        Fm.Pro_Tbl_Filtro_Rubro = Tbl_Filtro_Rubro_Productos
+        Fm.Pro_Tbl_Filtro_Super_Familias = Tbl_Filtro_Super_Familias
+        Fm.Pro_Tbl_Filtro_Zonas = Tbl_Filtro_Zonas_Productos
 
         Fm.BuscarSpfmfmsubfm = True
         Fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
@@ -3339,7 +3345,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         If _Aceptar Then
 
-            _Tbl_Filtro_Productos = Fm.Pro_Tbl_Filtro_Productos
             _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
             _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas
             _Tbl_Filtro_Rubro_Productos = Fm.Pro_Tbl_Filtro_Rubro
@@ -3357,7 +3362,11 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Ls_SelFamilias = Fm.Ls_SelFamilias
             Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
 
-            Ls_SelArbol_Asociaciones = Fm.Ls_SelArbol_Asociaciones
+            If _Filtro_Bakapp_Todas Then
+                Ls_SelArbol_Asociaciones.Clear()
+            Else
+                Ls_SelArbol_Asociaciones = Fm.Ls_SelArbol_Asociaciones
+            End If
 
         End If
 
@@ -3367,10 +3376,16 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Return
         End If
 
+        Sb_LlenarFiltros()
+        Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+
+    End Sub
+
+    Sub Sb_LlenarFiltros()
+
         Sb_Icono_Filtrar()
 
         '---- FILTROS -------------------------------
-
 
         If Not _Filtro_Rubro_Productos_Todas Then
             _Filtro_Rubros = Generar_Filtro_IN(_Tbl_Filtro_Rubro_Productos, "Chk", "Codigo", False, True, "'")
@@ -3443,8 +3458,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         _Filtro_Bakapp = String.Empty
 
         If Not _Filtro_Bakapp_Todas Then
-            '    _Filtro_Bakapp = String.Empty
-            'Else
 
             For Each _Asoc As Zw_TblArbol_Asociaciones In Ls_SelArbol_Asociaciones
                 If String.IsNullOrEmpty(_Filtro_Bakapp) Then
@@ -3453,8 +3466,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                     _Filtro_Bakapp += "," & _Asoc.Codigo_Nodo
                 End If
             Next
-
-            '_Filtro_Bakapp = Replace(_Filtro_Bakapp, "(,", "(")
 
             If Not String.IsNullOrWhiteSpace(_Filtro_Bakapp) Then
                 _Filtro_Bakapp = "And Mp.KOPR IN (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo In (" & _Filtro_Bakapp & "))"
@@ -3471,21 +3482,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             _Filtro_Zonas = Generar_Filtro_IN(_Tbl_Filtro_Zonas_Productos, "Chk", "Codigo", False, True, "'")
             _Filtro_Zonas = "And Mp.KOPR IN (Select KOPR From MAEPR Where ZONAPR In " & _Filtro_Zonas & ")"
         End If
-
-        Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
-
-        '---------------------------
-
-        Consulta_sql = "Select Cast(1 As Bit) As Chk,KOPR as Codigo From MAEPR Where 1 > 0" & vbCrLf &
-                        _Filtro_Productos & vbCrLf &
-                        _Filtro_Bodega & vbCrLf &
-                        _Filtro_ClasLibre & vbCrLf &
-                        _Filtro_Marcas & vbCrLf &
-                        _Filtro_Rubros & vbCrLf &
-                        _Filtro_SuperFamilias & vbCrLf &
-                        _Filtro_Zonas
-
-        '_TblFiltroProductos_Proveedor = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
 

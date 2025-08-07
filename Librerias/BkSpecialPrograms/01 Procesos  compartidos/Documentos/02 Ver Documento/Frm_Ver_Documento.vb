@@ -68,6 +68,7 @@ Public Class Frm_Ver_Documento
 
     Dim _Cl_Contenedor As New Cl_Contenedor
 
+    Public Property Documento_Eliminado As Boolean
     Enum _Sector
         Encabezado
         Pie
@@ -254,6 +255,11 @@ Public Class Frm_Ver_Documento
                         _Idmaeedo = _Sql.Fx_Trae_Dato("MAEEDO", "IDMAEEDO",
                                                       "EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido &
                                                       "' and NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "'  And SUENDO = '" & _Suendo & "'",,, 0)
+
+                        If _Idmaeedo = 0 Then
+                            Documento_Eliminado = True
+                            Return
+                        End If
 
                     End If
 
