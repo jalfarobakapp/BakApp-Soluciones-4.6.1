@@ -2392,7 +2392,11 @@ Public Class Class_Genera_DTE_RdBk
 
         Try
 
-            _Xml = Fx_XML_DTE_Genera_Old(_Row_Ffolios, _Maeedo.Rows(0), _Maeen.Rows(0), _Td, _Maeddo, _Incorporar_Observaciones_En_DTE, _Row_Maeedoob)
+            _Xml = Fx_XML_DTE_Genera(_Row_Ffolios, _Maeedo.Rows(0), _Maeen.Rows(0), _Td, _Maeddo, _Incorporar_Observaciones_En_DTE, _Row_Maeedoob)
+
+            ' Esta funcionalidad es para generar el DTE con la versión antigua del generador de DTE.
+            ' Para compatibilidad con versiones antiguas de GenDTE
+            '_Xml = Fx_XML_DTE_Genera_Old(_Row_Ffolios, _Maeedo.Rows(0), _Maeen.Rows(0), _Td, _Maeddo, _Incorporar_Observaciones_En_DTE, _Row_Maeedoob)
 
             Dim _Dte As New XmlDocument()
             Dim _uriDteResultado As String = _Path & "\NuevoDTE.xml"

@@ -1041,8 +1041,8 @@ Public Class Clase_Crear_Documento
                                 dfd1 = Comando.ExecuteReader()
 
                                 While dfd1.Read()
-                                    _Caprnc1 = dfd1("CAPRNC1")
-                                    _Caprnc2 = dfd1("CAPRNC2")
+                                    _Caprnc1 = De_Num_a_Tx_01(dfd1("CAPRNC1"), False, 5)
+                                    _Caprnc2 = De_Num_a_Tx_01(dfd1("CAPRNC2"), False, 5)
                                 End While
                                 dfd1.Close()
 
