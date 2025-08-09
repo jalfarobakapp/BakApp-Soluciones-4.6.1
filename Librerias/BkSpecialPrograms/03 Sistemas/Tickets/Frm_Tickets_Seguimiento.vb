@@ -923,7 +923,31 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
         Consulta_sql = "Select Asg.*,NOKOFU" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado Asg" & vbCrLf &
                        "Left Join TABFU On KOFU = Asg.CodAgente " & vbCrLf &
-                       "Where Id_Ticket = " & _Id_Ticket
+                       "Where Id_Ticket = " & _Id_Ticket & vbCrLf &
+                       "Order By CodAgente"
+
+        Consulta_sql = $"-- Crear tabla temporal
+Select Asg.*, NOKOFU, Tks.Id_Tipo, Tks.Id_Area
+Into #Paso
+From {_Global_BaseBk}Zw_Stk_Tickets_Asignado Asg
+Left Join TABFU On KOFU = Asg.CodAgente
+Inner Join {_Global_BaseBk}Zw_Stk_Tickets Tks On Tks.Id = Asg.Id_Ticket
+Where Id_Ticket = {_Id_Ticket};
+
+-- Filtrar agentes relacionados
+Select * 
+From #Paso
+Where CodAgente In (
+    Select CodAgente 
+    From {_Global_BaseBk}Zw_Stk_Tipos
+    Union
+    Select CodAgente 
+    From {_Global_BaseBk}Zw_Stk_GrupoVsAgente
+);
+
+-- Eliminar tabla temporal
+Drop Table #Paso;"
+
         Dim _Tbl_Agentes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_Tbl_Agentes.Rows.Count) Then
@@ -937,7 +961,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             If Not String.IsNullOrEmpty(_Agentes) Then
                 _Agentes += vbCrLf
             End If
-            _Agentes += "- " & _FlAgente.Item("NOKOFU").ToString.Trim
+            _Agentes += "- (" & _FlAgente.Item("CodAgente").ToString.Trim & ") " & _FlAgente.Item("NOKOFU").ToString.Trim
         Next
 
         _Agentes = "AGENTE:" & vbCrLf & vbCrLf & _Agentes
@@ -1003,6 +1027,43 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
     End Sub
 
     Private Sub Btn_GestionarAcciones_Click(sender As Object, e As EventArgs) Handles Btn_GestionarAcciones.Click
+
+        If Not Mis_Ticket Then
+
+            Consulta_sql = $"-- Crear tabla temporal
+Select Asg.*, NOKOFU, Tks.Id_Tipo, Tks.Id_Area
+Into #Paso
+From {_Global_BaseBk}Zw_Stk_Tickets_Asignado Asg
+Left Join TABFU On KOFU = Asg.CodAgente
+Inner Join {_Global_BaseBk}Zw_Stk_Tickets Tks On Tks.Id = Asg.Id_Ticket
+Where Id_Ticket = {_Id_Ticket};
+
+-- Filtrar agentes relacionados
+Select * 
+From #Paso
+Where CodAgente In (
+    Select CodAgente 
+    From {_Global_BaseBk}Zw_Stk_Tipos
+    Union
+    Select CodAgente 
+    From {_Global_BaseBk}Zw_Stk_GrupoVsAgente
+)
+And CodAgente = '" & FUNCIONARIO & "';
+
+-- Eliminar tabla temporal
+Drop Table #Paso;"
+
+            Dim _Tbl_Agentes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            If Not CBool(_Tbl_Agentes.Rows.Count) Then
+
+                MessageBoxEx.Show(Me, "Usted ya no cuenta con los permisos necesarios como agente para ejecutar esta acción.", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+
+            End If
+
+        End If
 
         Btn_Mnu_RechazarTicket.Visible = Not Mis_Ticket
         Btn_Mnu_RechazarTicket.Enabled = Not _Cl_Tickets.Zw_Stk_Tickets.Rechazado
@@ -1306,7 +1367,7 @@ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             Dim Fm As New Frm_Ver_Documento(_Idmaeedo_Cierra, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
             Fm.Codigo_Marcar = _Cl_Tickets.Zw_Stk_Tickets_Producto.Codigo
             If Fm.Documento_Eliminado Then
-                MessageBoxEx.Show(Me, "El documento adjunto se encuantra eliminado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "El documento adjunto se encuentra eliminado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Else
                 Fm.ShowDialog(Me)
             End If

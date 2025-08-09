@@ -35,7 +35,6 @@ Public Class Frm_Permisos_Usuario_Lista
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
-
         Sb_Color_Botones_Barra(Bar2)
 
     End Sub
@@ -92,6 +91,7 @@ Public Class Frm_Permisos_Usuario_Lista
         End If
 
         AddHandler Rdb_Solo_Supervisores_Dan_Permisos.CheckedChanged, AddressOf Rdb_Solo_Supervisores_Dan_Permisos_CheckedChanged
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
     End Sub
 

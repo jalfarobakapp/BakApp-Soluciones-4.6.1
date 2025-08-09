@@ -87,7 +87,7 @@ Public Class Frm_Sectores_Lista_UbicOblig
 
             .Columns("EstaEnMapa").Width = 60
             .Columns("EstaEnMapa").HeaderText = "En Mapa"
-            .Columns("EstaEnMapa").ToolTipText = "Indica si el sector se encuantra visible en el mapa actualmente"
+            .Columns("EstaEnMapa").ToolTipText = "Indica si el sector se encuentra visible en el mapa actualmente"
             .Columns("EstaEnMapa").Visible = True
             .Columns("EstaEnMapa").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1

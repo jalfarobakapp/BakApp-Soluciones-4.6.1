@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Tickets_Areas
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -252,7 +252,7 @@ Partial Class Frm_Tickets_Areas
         Me.LabelX7.Name = "LabelX7"
         Me.LabelX7.Size = New System.Drawing.Size(404, 23)
         Me.LabelX7.TabIndex = 99
-        Me.LabelX7.Text = "Ingrese algo de la descripci�n del area/departamento a buscar"
+        Me.LabelX7.Text = "Ingrese algo de la descripción del area/departamento a buscar"
         '
         'GroupPanel1
         '
@@ -389,6 +389,7 @@ Partial Class Frm_Tickets_Areas
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

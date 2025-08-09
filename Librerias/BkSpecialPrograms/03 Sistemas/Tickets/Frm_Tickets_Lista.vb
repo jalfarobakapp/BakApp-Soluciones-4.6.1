@@ -63,15 +63,15 @@ Public Class Frm_Tickets_Lista
 
         Sb_CargarTreeView()
 
-        Sb_Actualizar_Grilla_Treeview(Nothing)
-        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
-        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
-        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(2))
-
         Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_ImagenAttach", "Est.", "ImagenAttach", 0, _Tipo_Boton.Imagen)
         Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_ProductoInfo", "P.I.", "ProductoInfo", 0, _Tipo_Boton.Imagen)
         Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_DocCierra", "Doc.", "DocCierra", 0, _Tipo_Boton.Imagen)
         Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_ImagenUser", "Est.", "ImagenUser", 0, _Tipo_Boton.Imagen)
+
+        Sb_Actualizar_Grilla_Treeview(Nothing)
+        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
+        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(2))
 
         Txt_Descripcion.ReadOnly = True
 
@@ -179,7 +179,7 @@ Public Class Frm_Tickets_Lista
             End If
 
 
-            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Month, -1, Now.Date)
+            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Weekday, -1, Now.Date)
             Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
 
             If _NodoHijo.Tag = "EnProceso" Then _Accion = "And Estado = 'PROC' And Aceptado = 0 And Rechazado = 0"
@@ -269,7 +269,7 @@ Public Class Frm_Tickets_Lista
                 _Condicion += vbCrLf & "And Tks.Estado = 'PROC' And Tks.Aceptado = 0 And Tks.Rechazado = 0"
             End If
 
-            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Month, -1, Now.Date)
+            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Weekday, -1, Now.Date)
             Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
 
             If _Carpeta.Tag = "Aceptados" Then
@@ -308,53 +308,53 @@ Public Class Frm_Tickets_Lista
 
         End If
 
-        Consulta_sql = $"Select Distinct Tks.*,
-Isnull(TksDeri.Numero,'') As 'NroDerivado',Isnull(TksDeri.SubNro,'') As 'SubDerivado',
-Isnull(TksAhilo.Numero,'') As 'NroHilo',Isnull(TksAhilo.SubNro,'') As 'SubHilo',
-NOKOFU As 'NomFuncCrea',TkPrd.Empresa As 'Empresa_Pr',TkPrd.Sucursal As 'Sucursal_Pr',TkPrd.Bodega As 'Bodega_Pr',
-TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr,
-TkPrd.Um As 'Udm',StfiEnBodega,Cantidad,Diferencia
-,Case Tks.Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad
-,Case Tks.UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion
-,Case Tks.Estado 
-                       When 'ABIE' Then 
-                            Case When Tks.Rechazado = 1 Then 'ABIERTO (Rechazado)' Else 'ABIERTO' End 
-					   When 'PROC' Then 'EN PROCESO'
-                       When 'CERR' Then 
-                            Case When Tks.Rechazado = 1 Then 'CERRADO (Rechazado)' When Tks.Aceptado = 1 Then 'CERRADO (Aceptado)' Else 'CERRADO' End 
-                       When 'NULO' then 'NULO' When 'SOLC' then 'Sol. Cierre' End As NomEstado,Cast('' As Varchar(100)) As 'NomEstadoExt',
-(Select COUNT(*) From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Raiz = Tks.Id_Raiz And AcMs.Accion In ('MENS','CREA') And AcMs.Visto = 0) As Mesn_Pdte_Ver,
-(Select COUNT(*) From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Raiz = Tks.Id_Raiz And AcRs.Accion In ('RESP','CREA') And AcRs.Visto = 0) As Resp_Pdte_Ver,
-Cast(0 As int) AS Idmaeedo_Cierra,Cast('' As Varchar(100)) As 'Motivo_Cierra',Cast('' As Varchar(30)) As 'NomFuncionario_Cierra'
-Into #Paso
-From {_Global_BaseBk}Zw_Stk_Tickets Tks
---Left Join {_Global_BaseBk}Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz And TkPrd.Id_Raiz = TkPrd.Id_Ticket
-Left Join {_Global_BaseBk}Zw_Stk_Tickets_Producto TkPrd On TkPrd.Id_Ticket = Tks.Id And Tks.Id_Raiz = TkPrd.Id_Raiz 
-Left Join TABFU Fu On Fu.KOFU = Tks.CodFuncionario_Crea
-Left Join {_Global_BaseBk}Zw_Stk_Tickets TksDeri On TksDeri.Id = Tks.Id_Padre
-Left Join {_Global_BaseBk}Zw_Stk_Tickets_Acciones TksADeri On Tks.Id = TksADeri.Id_Ticket_Cierra And TksADeri.Accion = 'CECR'
-Left Join {_Global_BaseBk}Zw_Stk_Tickets TksAhilo On TksAhilo.Id = TksADeri.Id_Ticket
-Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
-                       $"Order By Tks.FechaCreacion
-                       
-Update #Paso Set Idmaeedo_Cierra = Isnull((Select Top 1 Idmaeedo_Cierra From {_Global_BaseBk}Zw_Stk_Tickets_Acciones Aci Where Aci.Id_Ticket = #Paso.Id And Idmaeedo_Cierra <> 0),0)
-Update #Paso Set CodFuncionario_Cierra = Isnull((Select Top 1 Aci.CodFuncionario From {_Global_BaseBk}Zw_Stk_Tickets_Acciones Aci Where Aci.Id_Ticket = #Paso.Id And Accion = 'ACCI'),0)
-Update #Paso Set NomFuncionario_Cierra = Isnull((Select Top 1 NOKOFU From TABFU Where KOFU = #Paso.CodFuncionario_Cierra),'')
+        '        Consulta_sql = $"Select Distinct Tks.*,
+        'Isnull(TksDeri.Numero,'') As 'NroDerivado',Isnull(TksDeri.SubNro,'') As 'SubDerivado',
+        'Isnull(TksAhilo.Numero,'') As 'NroHilo',Isnull(TksAhilo.SubNro,'') As 'SubHilo',
+        'NOKOFU As 'NomFuncCrea',TkPrd.Empresa As 'Empresa_Pr',TkPrd.Sucursal As 'Sucursal_Pr',TkPrd.Bodega As 'Bodega_Pr',
+        'TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr,
+        'TkPrd.Um As 'Udm',StfiEnBodega,Cantidad,Diferencia
+        ',Case Tks.Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad
+        ',Case Tks.UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion
+        ',Case Tks.Estado 
+        '                       When 'ABIE' Then 
+        '                            Case When Tks.Rechazado = 1 Then 'ABIERTO (Rechazado)' Else 'ABIERTO' End 
+        '					   When 'PROC' Then 'EN PROCESO'
+        '                       When 'CERR' Then 
+        '                            Case When Tks.Rechazado = 1 Then 'CERRADO (Rechazado)' When Tks.Aceptado = 1 Then 'CERRADO (Aceptado)' Else 'CERRADO' End 
+        '                       When 'NULO' then 'NULO' When 'SOLC' then 'Sol. Cierre' End As NomEstado,Cast('' As Varchar(100)) As 'NomEstadoExt',
+        '(Select COUNT(*) From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Raiz = Tks.Id_Raiz And AcMs.Accion In ('MENS','CREA') And AcMs.Visto = 0) As Mesn_Pdte_Ver,
+        '(Select COUNT(*) From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Raiz = Tks.Id_Raiz And AcRs.Accion In ('RESP','CREA') And AcRs.Visto = 0) As Resp_Pdte_Ver,
+        'Cast(0 As int) AS Idmaeedo_Cierra,Cast('' As Varchar(100)) As 'Motivo_Cierra',Cast('' As Varchar(30)) As 'NomFuncionario_Cierra'
+        'Into #Paso
+        'From {_Global_BaseBk}Zw_Stk_Tickets Tks
+        '--Left Join {_Global_BaseBk}Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz And TkPrd.Id_Raiz = TkPrd.Id_Ticket
+        'Left Join {_Global_BaseBk}Zw_Stk_Tickets_Producto TkPrd On TkPrd.Id_Ticket = Tks.Id And Tks.Id_Raiz = TkPrd.Id_Raiz 
+        'Left Join TABFU Fu On Fu.KOFU = Tks.CodFuncionario_Crea
+        'Left Join {_Global_BaseBk}Zw_Stk_Tickets TksDeri On TksDeri.Id = Tks.Id_Padre
+        'Left Join {_Global_BaseBk}Zw_Stk_Tickets_Acciones TksADeri On Tks.Id = TksADeri.Id_Ticket_Cierra And TksADeri.Accion = 'CECR'
+        'Left Join {_Global_BaseBk}Zw_Stk_Tickets TksAhilo On TksAhilo.Id = TksADeri.Id_Ticket
+        'Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
+        '                       $"Order By Tks.FechaCreacion
 
-Update #Paso Set NomEstadoExt = NomEstado+'... (derivado de '+NroDerivado+'-'+SubDerivado+')' 
-Where Id_Padre <> 0 and NroDerivado <> '' And Estado in ('ABIE')
+        'Update #Paso Set Idmaeedo_Cierra = Isnull((Select Top 1 Idmaeedo_Cierra From {_Global_BaseBk}Zw_Stk_Tickets_Acciones Aci Where Aci.Id_Ticket = #Paso.Id And Idmaeedo_Cierra <> 0),0)
+        'Update #Paso Set CodFuncionario_Cierra = Isnull((Select Top 1 Aci.CodFuncionario From {_Global_BaseBk}Zw_Stk_Tickets_Acciones Aci Where Aci.Id_Ticket = #Paso.Id And Accion = 'ACCI'),0)
+        'Update #Paso Set NomFuncionario_Cierra = Isnull((Select Top 1 NOKOFU From TABFU Where KOFU = #Paso.CodFuncionario_Cierra),'')
 
-Update #Paso Set NomEstadoExt = NomEstado+'... (hilo continuado en '+NroHilo+'-'+SubHilo+')' 
-Where Id_Padre = 0 And NroHilo <> '' And Estado = 'PROC'
+        'Update #Paso Set NomEstadoExt = NomEstado+'... (derivado de '+NroDerivado+'-'+SubDerivado+')' 
+        'Where Id_Padre <> 0 and NroDerivado <> '' And Estado in ('ABIE')
 
-Update #Paso Set NomEstadoExt = NomEstado
-Where NomEstadoExt = ''
+        'Update #Paso Set NomEstadoExt = NomEstado+'... (hilo continuado en '+NroHilo+'-'+SubHilo+')' 
+        'Where Id_Padre = 0 And NroHilo <> '' And Estado = 'PROC'
 
-Update #Paso Set [Motivo_Cierra] = (Select Top 1 Motivo_Cierra From {_Global_BaseBk}Zw_Stk_Tickets_Acciones Acc Where Acc.Idmaeedo_Cierra = #Paso.Idmaeedo_Cierra) Where Idmaeedo_Cierra <> 0
-Update #Paso Set [Motivo_Cierra] = (Select Top 1 'MOTIVO: '+[Motivo_Cierra]+' - '+NOKOCARAC From TABCARAC Where KOCARAC = [Motivo_Cierra]) Where Idmaeedo_Cierra <> 0
+        'Update #Paso Set NomEstadoExt = NomEstado
+        'Where NomEstadoExt = ''
 
-Select * From #Paso
-Drop Table #Paso"
+        'Update #Paso Set [Motivo_Cierra] = (Select Top 1 Motivo_Cierra From {_Global_BaseBk}Zw_Stk_Tickets_Acciones Acc Where Acc.Idmaeedo_Cierra = #Paso.Idmaeedo_Cierra) Where Idmaeedo_Cierra <> 0
+        'Update #Paso Set [Motivo_Cierra] = (Select Top 1 'MOTIVO: '+[Motivo_Cierra]+' - '+NOKOCARAC From TABCARAC Where KOCARAC = [Motivo_Cierra]) Where Idmaeedo_Cierra <> 0
+
+        'Select * From #Paso
+        'Drop Table #Paso"
 
 
 
@@ -422,6 +422,7 @@ Left Join {_Global_BaseBk}Zw_Stk_Tickets TksDeri On TksDeri.Id = Tks.Id_Padre
 Left Join {_Global_BaseBk}Zw_Stk_Tickets_Acciones TksADeri On Tks.Id = TksADeri.Id_Ticket_Cierra And TksADeri.Accion = 'CECR'
 Left Join {_Global_BaseBk}Zw_Stk_Tickets TksAhilo On TksAhilo.Id = TksADeri.Id_Ticket
 --Where Tks.Id_Raiz = 1246
+Where 1 > 0 {_Condicion}
 Order By Tks.FechaCreacion
 
 -- Actualizaciones posteriores
