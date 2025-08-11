@@ -2,6 +2,7 @@
 Imports System.Threading
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
 Imports BkSpecialPrograms.DocumentoListaSuperior
+Imports BkSpecialPrograms.PreVenta
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Formulario_Documento
@@ -167,6 +168,8 @@ Public Class Frm_Formulario_Documento
 
     Public Property ModEmpresa_Doc As String
     Public Property ModModalidad_Doc As String
+
+    Dim _Ls_Cl_PreVenta As New List(Of PreVenta.Cl_PreVenta)
 
 #Region "PROPIEDADES"
 
@@ -1194,6 +1197,8 @@ Public Class Frm_Formulario_Documento
             Fm_MPC.Dispose()
             Fm_MPC = Nothing
         End If
+
+        _Ls_Cl_PreVenta = New List(Of PreVenta.Cl_PreVenta)
 
         'Dim _Cl_Contenedor As New Cl_Contenedor
         '_Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
@@ -5145,6 +5150,12 @@ Public Class Frm_Formulario_Documento
 
         If _Existe_En_Lista Then
 
+            If PreVenta And _Tido = "COV" Then
+                MessageBoxEx.Show(Me, "El producto ya esta en la lista", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                _Fila.Cells("Codigo").Value = String.Empty
+                Return
+            End If
+
             _Mensaje = Fx_ProductoEnLista(_Codigo, _Descripcion)
 
             If Not _Mensaje.EsCorrecto Then
@@ -9043,7 +9054,7 @@ Public Class Frm_Formulario_Documento
 
                                 If SoloprodEnDoc_CLALIBPR AndAlso
                                     String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("TblTipoVenta")) AndAlso
-                                        String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("CodTipoVenta")) Then
+                                        String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("CodTipoVenta")) AndAlso Not PreVenta Then
 
                                     MessageBoxEx.Show(Me, "Los productos a vender solo deben ser de un tipo especifico de venta" & vbCrLf &
                                                       "a continuación deberá seleccionar el tipo.", "Tipo de venta", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, True)
@@ -9056,13 +9067,9 @@ Public Class Frm_Formulario_Documento
 
                                 End If
 
-                                If Not Fx_ValidarSiTieneContenedor() Then
+                                If PreVenta AndAlso Not Fx_ValidarSiTieneContenedor() Then
                                     Return
                                 End If
-
-                                'If Not Fx_ValidarSiTieneContenedor() Then
-                                '    Return
-                                'End If
 
                                 Dim _Validar_Lineas_X_Pagina As Boolean = Fx_Validar_Lineas_Por_Documento_VS_Formato(1)
 
@@ -9228,8 +9235,8 @@ Public Class Frm_Formulario_Documento
 
                                             Fr_Alerta_Stock = New AlertCustom(_Codigo, _UnTrans)
                                             CType(Fr_Alerta_Stock, AlertCustom).Tido = _Tido
-
                                             ShowLoadAlert(Fr_Alerta_Stock, Me)
+
                                         End If
                                     End If
 
@@ -9246,6 +9253,44 @@ Public Class Frm_Formulario_Documento
                                         _RevisarRtuVariable = False
                                     End If
 
+                                    If PreVenta Then
+
+                                        If Not Fr_Alerta_Stock.Visible Then
+
+                                            Fr_Alerta_Stock = New AlertCustom(_Codigo, _UnTrans)
+                                            CType(Fr_Alerta_Stock, AlertCustom).Tido = _Tido
+                                            ShowLoadAlert(Fr_Alerta_Stock, Me,,,, True)
+
+                                        End If
+
+                                        ' Buscar el registro en _Cl_PreVenta_Producto con IdIndex = _Id y asignarlo a _Cl_PreVta
+                                        Dim _Cl_PreVta As PreVenta.Cl_PreVenta = _Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = _Id)
+                                        Dim _CantidadPallet As Double = _Cl_PreVta.Cantidad
+
+                                        Dim _Msj = "Indique la cantidad de " & _Cl_PreVta.FormatoPqte & " a vender." & vbCrLf &
+                                                                              "El mínimo permitido es " & _Cl_PreVta.FormatoPqte & " " & _Cl_PreVta.CantMinFormato
+
+                                        Dim _Aceptar As Boolean = InputBox_Bk(Me, _Msj, "Ingreso de Pallet",
+                                                                              _CantidadPallet, False, ,, True,
+                                                                              _Tipo_Imagen.Texto,, _Tipo_Caracter.Solo_Numeros_Enteros,
+                                                                              False)
+
+                                        If Not _Aceptar Then
+                                            Return
+                                        End If
+
+                                        If _CantidadPallet < _Cl_PreVta.CantMinFormato Then
+                                            MessageBoxEx.Show(Me, "La cantidad no puede ser menor a " & _Cl_PreVta.CantMinFormato & " " & _Cl_PreVta.FormatoPqte,
+                                                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                            Return
+                                        End If
+
+                                        _Cl_PreVta.Cantidad = _CantidadPallet
+                                        _CantUd1 = _CantidadPallet * _Cl_PreVta.Ud1XPqte
+                                        _CantUd2 = _CantUd1 / _Rtu
+
+                                    End If
+
                                     Dim Fm As New Frm_Cantidades_Ud_Disintas(_Fila, _Tido)
 
                                     Fm.Cantidad_Ud1 = _CantUd1
@@ -9259,7 +9304,11 @@ Public Class Frm_Formulario_Documento
                                     Fm.IdCont = _TblEncabezado.Rows(0).Item("IdCont")
                                     Fm.Chk_DesacRazTransf.Checked = _Fila.Cells("DesacRazTransf").Value
 
-                                    Fm.ShowDialog(Me)
+                                    If PreVenta Then
+                                        Fm.Aceptado = True
+                                    Else
+                                        Fm.ShowDialog(Me)
+                                    End If
 
                                     _RtuVariable = Fm.RtuVariable
 
@@ -9351,11 +9400,6 @@ Public Class Frm_Formulario_Documento
                                     _Fila.Cells("Recargo_Campo").Value = String.Empty
                                     _Fila.Cells("Recargo_Valor").Value = 0
 
-                                    'If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
-                                    '    Sb_Actualizar_Precio_Linea(_Fila)
-                                    'End If
-
-
                                     Sb_Procesar_Datos_De_Grilla(_Fila, "Cantidad", True, True)
                                     _DatosDeGrillaProcesados = True
 
@@ -9367,7 +9411,6 @@ Public Class Frm_Formulario_Documento
                                             Sb_Traer_Descuentos_Seteados_Desde_Lista(_Fila)
                                             _TblMaedtli = Fx_Crea_Tabla_Con_Filtro(_Ds_Matriz_Documentos.Tables("Descuentos_Doc"), "Id = " & _Id, "Id")
                                         End If
-
 
                                         ' VOLVEMOS A RECALCULAR LOS DESCUENTOS
                                         If ChkValores.Checked Then
@@ -10845,10 +10888,30 @@ Public Class Frm_Formulario_Documento
                         Dim _RowProducto As DataRow
 
                         If PreVenta And _Tido = "COV" Then
-                            _RowProducto = Fx_CargarProductoDesdeContenedor()
-                        Else
-                            _RowProducto = Fx_Buscar_Producto(_Codigo, _Es_Concepto, True, _Tbl_Productos_Seleccionados_Multiple, _EsKit)
+
+                            Dim _Cl_PreVenta_Producto As New PreVenta.Cl_PreVenta_Producto
+                            _Cl_PreVenta_Producto = Fx_CargarProductoDesdeContenedor()
+
+                            If Not _Cl_PreVenta_Producto.Mensaje.EsCorrecto Then
+                                _Fila.Cells("Codigo").Value = String.Empty
+                                Return
+                            End If
+
+                            _RowProducto = _Cl_PreVenta_Producto.RowProducto
+
+                            Sb_Traer_Producto_A_La_Nueva_Fila(_Fila, _RowProducto, _Indice)
+
+                            If Not String.IsNullOrEmpty(_Fila.Cells("Codigo").Value) Then
+                                _Cl_PreVenta_Producto.Cl_PreVenta.IdIndex = _Fila.Cells("Id").Value
+                                _Ls_Cl_PreVenta.Add(_Cl_PreVenta_Producto.Cl_PreVenta)
+                                _Fila.Cells("Precio").Value = _Cl_PreVenta_Producto.Cl_PreVenta.PrecioXUd1
+                            End If
+
+                            Return
+
                         End If
+
+                        _RowProducto = Fx_Buscar_Producto(_Codigo, _Es_Concepto, True, _Tbl_Productos_Seleccionados_Multiple, _EsKit)
 
                         If Not (_RowProducto Is Nothing) Then
 
@@ -29515,23 +29578,46 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
-    Function Fx_CargarProductoDesdeContenedor() As DataRow
+    Function Fx_CargarProductoDesdeContenedor() As PreVenta.Cl_PreVenta_Producto 'LsValiciones.Mensajes
 
-        Dim _IdCont As Integer = _TblEncabezado.Rows(0).Item("IdCont")
-        Dim _Cl_Contenedor As New Cl_Contenedor
+        Dim _Cl_PreVenta_Producto As New PreVenta.Cl_PreVenta_Producto
 
-        Dim _RowProducto As DataRow
+        Try
 
-        _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
+            Dim _IdCont As Integer = _TblEncabezado.Rows(0).Item("IdCont")
+            Dim _Cl_Contenedor As New Cl_Contenedor
 
-        Dim Fm As New Frm_ProdContenedorPreVta(ModEmpresa_Doc,
-                                               _Cl_Contenedor.Zw_Contenedor.IdCont,
-                                               _Cl_Contenedor.Zw_Contenedor.Contenedor)
-        Fm.ShowDialog(Me)
-        _RowProducto = Fm.RowProducto
-        Fm.Dispose()
+            Dim _RowProducto As DataRow
 
-        Return _RowProducto
+            _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
+
+            Dim Fm As New Frm_ProdContenedorPreVta(ModEmpresa_Doc,
+                                                   _Cl_Contenedor.Zw_Contenedor.IdCont,
+                                                   _Cl_Contenedor.Zw_Contenedor.Contenedor)
+            Fm.ShowDialog(Me)
+            _RowProducto = Fm.RowProducto
+            _Cl_PreVenta_Producto.Cl_PreVenta = Fm.Cl_PreVenta
+            Fm.Dispose()
+
+            If IsNothing(_RowProducto) Then
+                _Cl_PreVenta_Producto.Mensaje.Detalle = "Validación"
+                _Cl_PreVenta_Producto.Mensaje.Mensaje = "No se seleccionó ningún producto del contenedor"
+                _Cl_PreVenta_Producto.Mensaje.Icono = MessageBoxIcon.Stop
+                _Cl_PreVenta_Producto.Mensaje.Cancelado = True
+                Return _Cl_PreVenta_Producto
+            End If
+
+            _Cl_PreVenta_Producto.Mensaje.EsCorrecto = True
+            _Cl_PreVenta_Producto.Mensaje.Detalle = "Producto seleccionado"
+            _Cl_PreVenta_Producto.Mensaje.Mensaje = "Producto seleccionado desde el contenedor: " & _Cl_Contenedor.Zw_Contenedor.Contenedor
+            _Cl_PreVenta_Producto.Mensaje.Icono = MessageBoxIcon.Information
+            _Cl_PreVenta_Producto.RowProducto = _RowProducto
+
+        Catch ex As Exception
+
+        End Try
+
+        Return _Cl_PreVenta_Producto
 
     End Function
 
@@ -29829,6 +29915,50 @@ Namespace Pallet
             Pallet = False
             Codigo = String.Empty
             Cantidad = 0
+        End Sub
+
+    End Class
+
+End Namespace
+
+Namespace PreVenta
+
+    Public Class Cl_PreVenta
+
+        Public Property IdIndex As Integer
+        Public Property IdCont As Integer
+        Public Property StDispUd1 As Double
+        Public Property FormatoPqte As String
+        Public Property Ud1XPqte As Double
+        Public Property CantMinFormato As Double
+        Public Property Cantidad As Double
+        Public Property Moneda As String
+        Public Property PrecioXUd1 As Double
+
+        Public Sub New()
+
+            IdIndex = 0
+            IdCont = 0
+            StDispUd1 = 0
+            FormatoPqte = String.Empty
+            Ud1XPqte = 0
+            CantMinFormato = 0
+            Moneda = String.Empty
+            PrecioXUd1 = 0
+
+        End Sub
+
+    End Class
+
+    Public Class Cl_PreVenta_Producto
+        Public Property Mensaje As LsValiciones.Mensajes
+        Public Property Cl_PreVenta As Cl_PreVenta
+        Public Property RowProducto As DataRow
+
+        Public Sub New()
+            Mensaje = New LsValiciones.Mensajes
+            Cl_PreVenta = New Cl_PreVenta
+            RowProducto = Nothing
         End Sub
 
     End Class

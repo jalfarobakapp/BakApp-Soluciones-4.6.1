@@ -132,7 +132,7 @@ Public Class Frm_Contenedores
                 Return
             End If
 
-            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Contenedor_StockProd", "IdCont = 0 And StcfiDisponibleUd1 > 0")
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Contenedor_StockProd", "IdCont = " & _IdCont & " And StcfiDisponibleUd1 > 0")
 
             If Not CBool(_Reg) Then
                 MessageBoxEx.Show(Me, "Este contenedor no tiene productos disponibles para vender en Pre-Venta", "Validación",

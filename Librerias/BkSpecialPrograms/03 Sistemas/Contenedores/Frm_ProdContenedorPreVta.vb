@@ -12,6 +12,8 @@
     Public Property Seleccionado As Boolean
     Public Property RowProducto As DataRow
 
+    Public Property Cl_PreVenta As New PreVenta.Cl_PreVenta
+
     Public Sub New(_Empresa As String, _IdCont As Integer, _Contenedor As String)
 
         ' Esta llamada es exigida por el diseñador.
@@ -49,7 +51,8 @@
         '    _Condicion = " And Estado = 'Abierto'"
         'End If
 
-        Consulta_sql = "Select Empresa,IdCont,Contenedor,Codigo,NOKOPR,StcfiUd1,StcfiUd2,StcCompUd1,StcCompUd2,StcfiUd1-StcCompUd1 As StDispUd1" & vbCrLf &
+        Consulta_sql = "Select Empresa,IdCont,Contenedor,Codigo,NOKOPR,CLALIBPR,StcfiDisponibleUd1,StcfiDisponibleUd2," &
+                       "StcCompUd1,StcCompUd2,StcfiDisponibleUd1-StcCompUd1 As StDispUd1,FormatoPqte,Ud1XPqte,CantMinFormato,Moneda,PrecioXUd1" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Contenedor_StockProd p" & vbCrLf &
                        "Inner Join MAEPR m On m.KOPR = p.Codigo" & vbCrLf &
                        "Where Empresa = '" & _Empresa & "' And IdCont = " & _IdCont & " And Contenedor = '" & _Contenedor & "'"
@@ -82,27 +85,34 @@
             .Columns("Codigo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NOKOPR").Width = 350
+            .Columns("NOKOPR").Width = 310
             .Columns("NOKOPR").HeaderText = "Descripción"
             .Columns("NOKOPR").Visible = True
             .Columns("NOKOPR").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("StcfiUd1").Width = 60
-            '.Columns("StcfiUd1").HeaderText = "StCt Ud1"
-            '.Columns("StcfiUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("StcfiUd1").DefaultCellStyle.Format = "##,###0.##"
-            '.Columns("StcfiUd1").Visible = True
-            '.Columns("StcfiUd1").DisplayIndex = _DisplayIndex
+            '.Columns("FormatoPqte").Width = 80
+            '.Columns("FormatoPqte").HeaderText = "Form.Vnta"
+            '.Columns("FormatoPqte").Visible = True
+            '.Columns("FormatoPqte").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
 
-            '.Columns("StcCompUd1").Width = 60
-            '.Columns("StcCompUd1").HeaderText = "StCt Ud1"
-            '.Columns("StcCompUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("StcCompUd1").DefaultCellStyle.Format = "##,###0.##"
-            '.Columns("StcCompUd1").Visible = True
-            '.Columns("StcCompUd1").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("Ud1XPqte").Width = 60
+            .Columns("Ud1XPqte").HeaderText = "Ud1XPallet"
+            .Columns("Ud1XPqte").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Ud1XPqte").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("Ud1XPqte").Visible = True
+            .Columns("Ud1XPqte").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CantMinFormato").Width = 60
+            .Columns("CantMinFormato").HeaderText = "Cant.Min.Vta XForm."
+            .Columns("CantMinFormato").ToolTipText = "Cantidad Minima de venta por Pallet."
+            .Columns("CantMinFormato").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("CantMinFormato").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("CantMinFormato").Visible = True
+            .Columns("CantMinFormato").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("StDispUd1").Width = 70
             .Columns("StDispUd1").HeaderText = "Disponible Ud1"
@@ -123,6 +133,19 @@
 
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
         RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        With Cl_PreVenta
+
+            .IdCont = _IdCont
+            .CantMinFormato = _Fila.Cells("CantMinFormato").Value
+            .FormatoPqte = _Fila.Cells("FormatoPqte").Value
+            .StDispUd1 = _Fila.Cells("StDispUd1").Value
+            .Ud1XPqte = _Fila.Cells("Ud1XPqte").Value
+            .Cantidad = _Fila.Cells("CantMinFormato").Value
+            .CantMinFormato = _Fila.Cells("CantMinFormato").Value
+            .PrecioXUd1 = _Fila.Cells("PrecioXUd1").Value
+
+        End With
 
         Seleccionado = True
         Me.Close()

@@ -613,7 +613,8 @@ Public Class AlertCustom
         End If
 
         Consulta_sql = "Select p.Empresa,p.IdCont,c.Contenedor,c.NombreContenedor,p.Codigo,NOKOPR," &
-                       "StcfiUd" & _Ud & " As ST_FISICO,StcCompUd" & _Ud & " As ST_COMPROMETIDO,StcfiUd" & _Ud & "-StcCompUd" & _Ud & " As ST_DISPONIBLE,e.FEER" & vbCrLf &
+                       "StcfiDisponibleUd" & _Ud & " As ST_FISICO,StcCompUd" & _Ud & " As ST_COMPROMETIDO," &
+                       "StcfiDisponibleUd" & _Ud & "-StcCompUd" & _Ud & " As ST_DISPONIBLE,e.FEER" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Contenedor_StockProd p" & vbCrLf &
                        "Inner Join MAEPR m On m.KOPR = p.Codigo" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Contenedor c On c.IdCont = p.IdCont" & vbCrLf &
