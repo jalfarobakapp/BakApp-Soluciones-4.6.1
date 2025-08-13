@@ -51,7 +51,7 @@
         '    _Condicion = " And Estado = 'Abierto'"
         'End If
 
-        Consulta_sql = "Select Empresa,IdCont,Contenedor,Codigo,NOKOPR,CLALIBPR,StcfiDisponibleUd1,StcfiDisponibleUd2," &
+        Consulta_sql = "Select Id,Empresa,IdCont,Contenedor,Codigo,NOKOPR,CLALIBPR,StcfiDisponibleUd1,StcfiDisponibleUd2," &
                        "StcCompUd1,StcCompUd2,StcfiDisponibleUd1-StcCompUd1 As StDispUd1,FormatoPqte,Ud1XPqte,CantMinFormato,Moneda,PrecioXUd1" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Contenedor_StockProd p" & vbCrLf &
                        "Inner Join MAEPR m On m.KOPR = p.Codigo" & vbCrLf &
@@ -136,7 +136,9 @@
 
         With Cl_PreVenta
 
+            .Id = _Fila.Cells("Id").Value
             .IdCont = _IdCont
+            .Contenedor = _Fila.Cells("Contenedor").Value
             .CantMinFormato = _Fila.Cells("CantMinFormato").Value
             .FormatoPqte = _Fila.Cells("FormatoPqte").Value
             .StDispUd1 = _Fila.Cells("StDispUd1").Value

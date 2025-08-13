@@ -184,6 +184,8 @@ Public Class Clase_Crear_Documento
 
 #End Region
 
+    Public Property Ls_Cl_PreVenta As New List(Of PreVenta.Cl_PreVenta)
+
 #Region "FUNCION CREAR DOCUMENTO RANDOM DEFINITIVO"
 
     Public Property Idmaeedo_Edit As Integer
@@ -1288,6 +1290,35 @@ Public Class Clase_Crear_Documento
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
 
+                            Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+                            Comando.Transaction = myTrans
+                            dfd1 = Comando.ExecuteReader()
+                            Dim _Id As Integer
+                            While dfd1.Read()
+                                _Id = dfd1("Identity")
+                            End While
+                            dfd1.Close()
+
+                            If _PreVenta Then
+
+                                Dim _Cl_PreVenta As PreVenta.Cl_PreVenta = Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Contenedor_StockProd Set " &
+                                               "StcCompUd1 = " & _Caprco1 & ",StcCompUd2 = " & _Caprco2 & vbCrLf &
+                                               "Where Id = " & _Cl_PreVenta.Id
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
+                                               "IdCont = " & _Cl_PreVenta.IdCont & ",Contenedor = '" & _Cl_PreVenta.Contenedor & "'" & vbCrLf &
+                                               "Where Id = " & _Id
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                            End If
+
                         End If
 
 
@@ -1981,6 +2012,7 @@ Public Class Clase_Crear_Documento
                 Comando.ExecuteNonQuery()
 
             End If
+
 
             If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "BLV" Or _Tido = "FCV" Or
                _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "NCV" Or _Tido = "GRI" Or _Tido = "GDI" Then

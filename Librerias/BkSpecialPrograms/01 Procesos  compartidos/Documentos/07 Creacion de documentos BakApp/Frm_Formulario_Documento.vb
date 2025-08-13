@@ -9255,37 +9255,33 @@ Public Class Frm_Formulario_Documento
 
                                     If PreVenta Then
 
-                                        If Not Fr_Alerta_Stock.Visible Then
-
-                                            Fr_Alerta_Stock = New AlertCustom(_Codigo, _UnTrans)
-                                            CType(Fr_Alerta_Stock, AlertCustom).Tido = _Tido
-                                            ShowLoadAlert(Fr_Alerta_Stock, Me,,,, True)
-
-                                        End If
-
                                         ' Buscar el registro en _Cl_PreVenta_Producto con IdIndex = _Id y asignarlo a _Cl_PreVta
                                         Dim _Cl_PreVta As PreVenta.Cl_PreVenta = _Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = _Id)
                                         Dim _CantidadPallet As Double = _Cl_PreVta.Cantidad
 
-                                        Dim _Msj = "Indique la cantidad de " & _Cl_PreVta.FormatoPqte & " a vender." & vbCrLf &
-                                                                              "El mínimo permitido es " & _Cl_PreVta.FormatoPqte & " " & _Cl_PreVta.CantMinFormato
+                                        Dim FmPl As New Frm_Cantidades_PreVenta
+                                        FmPl.Cl_PreVta = _Cl_PreVta
+                                        FmPl.Codigo = _Codigo
+                                        FmPl.Rtu = _Rtu
+                                        FmPl.Rtu_Ori = _Rtu
+                                        FmPl.UnTrans = _UnTrans
+                                        FmPl.Cantidad_Original = _CantidadPallet
+                                        FmPl.Tido = _Tido
+                                        FmPl.RevisarRtuVariable = False
+                                        FmPl.Cantidad_Ud1 = _CantUd1
+                                        FmPl.Cantidad_Ud2 = _CantUd2
+                                        'FmPl.Aceptado
+                                        FmPl.Cl_PreVta = _Cl_PreVta
+                                        FmPl.TopMost = True
+                                        FmPl.ShowDialog(Me)
+                                        _Aceptado = FmPl.Aceptado
+                                        FmPl.Dispose()
 
-                                        Dim _Aceptar As Boolean = InputBox_Bk(Me, _Msj, "Ingreso de Pallet",
-                                                                              _CantidadPallet, False, ,, True,
-                                                                              _Tipo_Imagen.Texto,, _Tipo_Caracter.Solo_Numeros_Enteros,
-                                                                              False)
-
-                                        If Not _Aceptar Then
+                                        If Not _Aceptado Then
                                             Return
                                         End If
 
-                                        If _CantidadPallet < _Cl_PreVta.CantMinFormato Then
-                                            MessageBoxEx.Show(Me, "La cantidad no puede ser menor a " & _Cl_PreVta.CantMinFormato & " " & _Cl_PreVta.FormatoPqte,
-                                                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                            Return
-                                        End If
-
-                                        _Cl_PreVta.Cantidad = _CantidadPallet
+                                        _CantidadPallet = _Cl_PreVta.Cantidad
                                         _CantUd1 = _CantidadPallet * _Cl_PreVta.Ud1XPqte
                                         _CantUd2 = _CantUd1 / _Rtu
 
@@ -18206,6 +18202,10 @@ Public Class Frm_Formulario_Documento
         Dim _New_Doc As New Clase_Crear_Documento()
 
         Dim _Origen_Modificado_Intertanto As Boolean
+
+        If PreVenta Then
+            _New_Doc.Ls_Cl_PreVenta = _Ls_Cl_PreVenta
+        End If
 
         If _TipoGrab = _Tipo_de_Grabacion.Nuevo_documento Then
 
@@ -29926,7 +29926,9 @@ Namespace PreVenta
     Public Class Cl_PreVenta
 
         Public Property IdIndex As Integer
+        Public Property Id As Integer
         Public Property IdCont As Integer
+        Public Property Contenedor As String
         Public Property StDispUd1 As Double
         Public Property FormatoPqte As String
         Public Property Ud1XPqte As Double
@@ -29937,8 +29939,10 @@ Namespace PreVenta
 
         Public Sub New()
 
+            Id = 0
             IdIndex = 0
             IdCont = 0
+            Contenedor = String.Empty
             StDispUd1 = 0
             FormatoPqte = String.Empty
             Ud1XPqte = 0

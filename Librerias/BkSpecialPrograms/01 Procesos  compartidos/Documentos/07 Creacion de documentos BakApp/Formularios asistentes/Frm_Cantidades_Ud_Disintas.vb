@@ -1,7 +1,4 @@
-﻿Imports BkSpecialPrograms.LsValiciones
-Imports DevComponents.DotNetBar
-Imports DevComponents.DotNetBar.Controls
-Imports MySql.Data.Authentication
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Cantidades_Ud_Disintas
 
@@ -244,7 +241,7 @@ Public Class Frm_Cantidades_Ud_Disintas
         If _Aplica_Oferta Then
 
             Dim _Cantidad As Double
-            Dim _Txt As TextBoxX
+            Dim _Txt As Controls.TextBoxX
 
             If _UnTrans = 1 Then
                 _Cantidad = _Cantidad_Ud1 / _Cantidad_Oferta

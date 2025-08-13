@@ -24,7 +24,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_BkpPostBusquedaEspecial_Mt))
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.BtnCrearProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.LblOculto = New DevComponents.DotNetBar.LabelItem()
@@ -103,7 +103,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Btn_Ocultar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ver_Archivos_Adjuntos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Dimensiones = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Filtrar = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem8 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem9 = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_Top20 = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -118,6 +117,8 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
         Me.Imagenes_32x32_Dark = New System.Windows.Forms.ImageList(Me.components)
+        Me.Btn_Filtrar = New DevComponents.DotNetBar.ButtonX()
+        Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_BusquedaProducto.SuspendLayout()
         CType(Me.Context_Menu_Solicitud_Compra, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -768,10 +769,10 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.Bar_Menu_Producto.AntiAlias = True
         Me.Bar_Menu_Producto.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar_Menu_Producto.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Pr_Editar_Producto, Me.Btn_Mnu_Pr_Eliminar_Producto, Me.Btn_Mnu_Pr_Estadistica_Producto, Me.Btn_Mnu_Pr_Codigo_De_Reemplazo, Me.Btn_Productos_Asociados, Me.Btn_Mnu_Pr_Cambiar_Codigo_Producto, Me.Btn_Mnu_Pr_Ver_Clasificacion_Producto, Me.Btn_Mnu_Pr_Mantencion_Clasificacion_Producto, Me.Btn_Mnu_Pr_Imagen_Producto, Me.Btn_Mnu_Pr_Codigo_Alternativo, Me.Btn_Mnu_Pr_Kardex_Inventario, Me.Btn_Mnu_Pr_Ubicacion_Producto, Me.Btn_Ocultar, Me.Btn_Ver_Archivos_Adjuntos, Me.Btn_Dimensiones, Me.Btn_Filtrar})
+        Me.Bar_Menu_Producto.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Pr_Editar_Producto, Me.Btn_Mnu_Pr_Eliminar_Producto, Me.Btn_Mnu_Pr_Estadistica_Producto, Me.Btn_Mnu_Pr_Codigo_De_Reemplazo, Me.Btn_Productos_Asociados, Me.Btn_Mnu_Pr_Cambiar_Codigo_Producto, Me.Btn_Mnu_Pr_Ver_Clasificacion_Producto, Me.Btn_Mnu_Pr_Mantencion_Clasificacion_Producto, Me.Btn_Mnu_Pr_Imagen_Producto, Me.Btn_Mnu_Pr_Codigo_Alternativo, Me.Btn_Mnu_Pr_Kardex_Inventario, Me.Btn_Mnu_Pr_Ubicacion_Producto, Me.Btn_Ocultar, Me.Btn_Ver_Archivos_Adjuntos, Me.Btn_Dimensiones})
         Me.Bar_Menu_Producto.Location = New System.Drawing.Point(11, 68)
         Me.Bar_Menu_Producto.Name = "Bar_Menu_Producto"
-        Me.Bar_Menu_Producto.Size = New System.Drawing.Size(704, 41)
+        Me.Bar_Menu_Producto.Size = New System.Drawing.Size(662, 41)
         Me.Bar_Menu_Producto.Stretch = True
         Me.Bar_Menu_Producto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar_Menu_Producto.TabIndex = 34
@@ -899,14 +900,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Btn_Dimensiones.Name = "Btn_Dimensiones"
         Me.Btn_Dimensiones.Tooltip = "Dimensiones"
         '
-        'Btn_Filtrar
-        '
-        Me.Btn_Filtrar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Filtrar.Image = CType(resources.GetObject("Btn_Filtrar.Image"), System.Drawing.Image)
-        Me.Btn_Filtrar.ImageAlt = CType(resources.GetObject("Btn_Filtrar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtrar.Name = "Btn_Filtrar"
-        Me.Btn_Filtrar.Tooltip = "Dimensiones"
-        '
         'ButtonItem8
         '
         Me.ButtonItem8.Image = CType(resources.GetObject("ButtonItem8.Image"), System.Drawing.Image)
@@ -987,14 +980,14 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(5, 146)
         Me.Grilla.Name = "Grilla"
@@ -1047,9 +1040,10 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.Imagenes_16x16.ImageStream = CType(resources.GetObject("Imagenes_16x16.ImageStream"), System.Windows.Forms.ImageListStreamer)
         Me.Imagenes_16x16.TransparentColor = System.Drawing.Color.Transparent
-        Me.Imagenes_16x16.Images.SetKeyName(0, "filter.png")
-        Me.Imagenes_16x16.Images.SetKeyName(1, "ok.png")
-        Me.Imagenes_16x16.Images.SetKeyName(2, "delete.png")
+        Me.Imagenes_16x16.Images.SetKeyName(0, "ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(1, "delete.png")
+        Me.Imagenes_16x16.Images.SetKeyName(2, "filter-ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(3, "filter.png")
         '
         'Imagenes_32x32
         '
@@ -1065,11 +1059,30 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Imagenes_32x32_Dark.Images.SetKeyName(0, "filter.png")
         Me.Imagenes_32x32_Dark.Images.SetKeyName(1, "filter-ok.png")
         '
+        'Btn_Filtrar
+        '
+        Me.Btn_Filtrar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Filtrar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Filtrar.Location = New System.Drawing.Point(737, 115)
+        Me.Btn_Filtrar.Name = "Btn_Filtrar"
+        Me.Btn_Filtrar.Size = New System.Drawing.Size(119, 25)
+        Me.Btn_Filtrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Filtrar.TabIndex = 61
+        Me.Btn_Filtrar.Text = "Filtrar"
+        '
+        'Imagenes_16x16_Dark
+        '
+        Me.Imagenes_16x16_Dark.ImageStream = CType(resources.GetObject("Imagenes_16x16_Dark.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_16x16_Dark.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(0, "filter.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(1, "filter-ok.png")
+        '
         'Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(860, 631)
+        Me.Controls.Add(Me.Btn_Filtrar)
         Me.Controls.Add(Me.Chk_StockFisicoMayorCero)
         Me.Controls.Add(Me.Chk_MostrarVendidosUlt3Meses)
         Me.Controls.Add(Me.Context_Menu_Solicitud_Compra)
@@ -1180,7 +1193,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Public WithEvents Txt_CodAlternativo As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Chk_MostrarVendidosUlt3Meses As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_StockFisicoMayorCero As DevComponents.DotNetBar.Controls.CheckBoxX
-    Public WithEvents Btn_Filtrar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Menu_Contextual_Filtros_Productos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
     Public WithEvents Btn_Filtro_Pro_Productos As DevComponents.DotNetBar.ButtonItem
@@ -1197,4 +1209,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Friend WithEvents Imagenes_16x16 As ImageList
     Friend WithEvents Imagenes_32x32 As ImageList
     Friend WithEvents Imagenes_32x32_Dark As ImageList
+    Friend WithEvents Btn_Filtrar As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Imagenes_16x16_Dark As ImageList
 End Class

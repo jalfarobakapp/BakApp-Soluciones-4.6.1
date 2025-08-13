@@ -4709,6 +4709,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recuros_ListaSuperior.Designer.vb</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Pre-Venta\Frm_Cantidades_PreVenta.resx">
+      <DependentUpon>Frm_Cantidades_PreVenta.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Retiradores de mercaderia\Frm_Retirador_Mercaderia.resx">
       <DependentUpon>Frm_Retirador_Mercaderia.vb</DependentUpon>
     </EmbeddedResource>

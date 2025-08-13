@@ -3268,35 +3268,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
     End Sub
 
-    Private Sub Btn_Filtrar_Click(sender As Object, e As EventArgs) Handles Btn_Filtrar.Click
-
-        Sb_Filtrar()
-
-        'Return
-
-        'Btn_Filtro_Pro_Super_Familias.Image = Fx_Imagen_Filtro(_Filtro_Super_Familias_Todas)
-        'Btn_Filtro_Pro_Familias.Image = Fx_Imagen_Filtro(_Filtro_Familias_Todas)
-        'Btn_Filtro_Pro_Sub_Familias.Image = Fx_Imagen_Filtro(_Filtro_Sub_Familias_Todas)
-        'Btn_Filtro_Pro_Marcas.Image = Fx_Imagen_Filtro(_Filtro_Marcas_Todas)
-        'Btn_Filtro_Pro_Clas_Libre.Image = Fx_Imagen_Filtro(_Filtro_Clalibpr_Todas)
-        'Btn_Filtro_Pro_Rubros.Image = Fx_Imagen_Filtro(_Filtro_Rubro_Productos_Todas)
-        'Btn_Filtro_Pro_Zonas.Image = Fx_Imagen_Filtro(_Filtro_Zonas_Productos_Todas)
-
-        'If Not _Filtro_Super_Familias_Todas Or
-        '   Not _Filtro_Familias_Todas Or
-        '   Not _Filtro_Sub_Familias_Todas Or
-        '   Not _Filtro_Marcas_Todas Or
-        '   Not _Filtro_Clalibpr_Todas Or
-        '   Not _Filtro_Rubro_Productos_Todas Or
-        '   Not _Filtro_Zonas_Productos_Todas Then
-        '    'Btn_Filtrar_Productos.Image = Imagenes_16x16.Images.Item("filter.png")
-        'Else
-        '    'Btn_Filtrar_Productos.Image = Nothing
-        'End If
-
-        'ShowContextMenu(Menu_Contextual_Filtros_Productos)
-
-    End Sub
 
     Function Fx_Imagen_Filtro(_Todas As Boolean) As Image
 
@@ -3379,6 +3350,11 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Sb_LlenarFiltros()
         Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
 
+        If Not CBool(Grilla.RowCount) Then
+            MessageBoxEx.Show(Me, "No se econtraron productos", "Buscar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Sb_Filtrar()
+        End If
+
     End Sub
 
     Sub Sb_LlenarFiltros()
@@ -3386,6 +3362,13 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Sb_Icono_Filtrar()
 
         '---- FILTROS -------------------------------
+
+        _Filtro_ClasLibre = String.Empty
+        _Filtro_Marcas = String.Empty
+        _Filtro_Rubros = String.Empty
+        _Filtro_SuperFamilias = String.Empty
+        _Filtro_Zonas = String.Empty
+        _Filtro_Bakapp = String.Empty
 
         If Not _Filtro_Rubro_Productos_Todas Then
             _Filtro_Rubros = Generar_Filtro_IN(_Tbl_Filtro_Rubro_Productos, "Chk", "Codigo", False, True, "'")
@@ -3489,9 +3472,9 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         Dim _Imagen, _Imagen_Dark As Image
 
-        _Imagen = Imagenes_32x32.Images.Item("filter.png")
-        _Imagen_Dark = Imagenes_32x32_Dark.Images.Item("filter.png")
-        Btn_Filtrar.Tooltip = "Filtrar"
+        _Imagen = Imagenes_16x16.Images.Item("filter.png")
+        _Imagen_Dark = Imagenes_16x16_Dark.Images.Item("filter.png")
+        Btn_Filtrar.Text = "Filtrar"
 
         If Not _Filtro_Clalibpr_Todas Or
            Not _Filtro_Marcas_Todas Or
@@ -3501,14 +3484,14 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
            Not _Filtro_Bakapp_Todas Then
 
             If Global_Thema = Enum_Themas.Oscuro Then
-                _Imagen = Imagenes_32x32_Dark.Images.Item("filter-ok.png")
-                _Imagen_Dark = Imagenes_32x32_Dark.Images.Item("filter-ok.png")
+                _Imagen = Imagenes_16x16_Dark.Images.Item("filter-ok.png")
+                _Imagen_Dark = Imagenes_16x16_Dark.Images.Item("filter-ok.png")
             Else
-                _Imagen = Imagenes_32x32.Images.Item("filter-ok.png")
-                _Imagen_Dark = Imagenes_32x32.Images.Item("filter-ok.png")
+                _Imagen = Imagenes_16x16.Images.Item("filter-ok.png")
+                _Imagen_Dark = Imagenes_16x16.Images.Item("filter-ok.png")
             End If
 
-            Btn_Filtrar.Tooltip = "Filtro aplicado..."
+            Btn_Filtrar.Text = "Filtro aplicado..."
 
         End If
 
@@ -3671,6 +3654,10 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         End If
 
+    End Sub
+
+    Private Sub Btn_Filtrar_Click(sender As Object, e As EventArgs) Handles Btn_Filtrar.Click
+        Sb_Filtrar()
     End Sub
 
     Private Sub Txt_Patente_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Patente.ButtonCustom2Click
