@@ -250,9 +250,11 @@ Public Class Frm_Configuracion_Gral
             Chk_RestringirVisualizacionDeDocumentos.Checked = .Item("RestringirVisualizacionDeDocumentos")
             Chk_PermisoEspecialCambioVendedorLinea.Checked = .Item("PermisoEspecialCambioVendedorLinea")
             Chk_Conservar_Vendedor_No_Preguntar.Checked = .Item("Conservar_Vendedor_No_Preguntar")
+            Chk_VendeUD2DesacUD1soloRTUD.Checked = .Item("VendeUD2DesacUD1soloRTUD")
 
         End With
 
+        Chk_VendeUD2DesacUD1soloRTUD.Enabled = _Modalidad_General
         Chk_PermisoEspecialCambioVendedorLinea.Enabled = _Modalidad_General
         Chk_Conservar_Vendedor_No_Preguntar.Enabled = Not _Modalidad_General
 
@@ -571,6 +573,7 @@ Public Class Frm_Configuracion_Gral
                        ",RestringirVisualizacionDeDocumentos = " & Convert.ToInt32(Chk_RestringirVisualizacionDeDocumentos.Checked) & vbCrLf &
                        ",PermisoEspecialCambioVendedorLinea = " & Convert.ToInt32(Chk_PermisoEspecialCambioVendedorLinea.Checked) & vbCrLf &
                        ",Conservar_Vendedor_No_Preguntar = " & Convert.ToInt32(Chk_Conservar_Vendedor_No_Preguntar.Checked) & vbCrLf &
+                       ",VendeUD2DesacUD1soloRTUD = " & Convert.ToInt32(Chk_VendeUD2DesacUD1soloRTUD.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

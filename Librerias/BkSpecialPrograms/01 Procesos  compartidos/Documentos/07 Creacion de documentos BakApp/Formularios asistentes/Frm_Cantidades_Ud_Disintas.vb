@@ -100,7 +100,8 @@ Public Class Frm_Cantidades_Ud_Disintas
         End If
 
         Img_RtuAPI.Visible = _ValidarApiWMSBosOne
-        'TxtCantUD1.Enabled = Chk_DesacRazTransf.Checked
+
+        TxtCantUD1.Enabled = Not _Global_Row_Configuracion_General.Item("VendeUD2DesacUD1soloRTUD")
 
         'Chk_RtuVariable.Enabled = (_Fila.Cells("Nmarca").Value = "¡")
 

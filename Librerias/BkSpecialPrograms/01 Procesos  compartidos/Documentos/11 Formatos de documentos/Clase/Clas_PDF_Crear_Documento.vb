@@ -16,9 +16,10 @@ Public Class Clas_PDF_Crear_Documento
     Dim _IdMaeedo As Integer
 
     Dim _RowEncabezado As DataRow
-    Dim _TblDetalle As DataTable
-    Dim _TblDetalle_Agrupado As DataTable
-    Dim _TblReferencias As DataTable
+    Dim _Tbl_Detalle As DataTable
+    Dim _Tbl_Detalle_Agrupado As DataTable
+    Dim _Tbl_Referencias As DataTable
+    Dim _Tbl_Referencias_Bakapp As DataTable
 
     Dim _Fila_InicioDetalle As Double
     Dim _Fila_FinDetalle As Double
@@ -120,9 +121,14 @@ Public Class Clas_PDF_Crear_Documento
             Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
             _RowEncabezado = _Ds.Tables(0).Rows(0)
-            _TblDetalle = _Ds.Tables(1)
-            _TblReferencias = _Ds.Tables(2)
-            _TblDetalle_Agrupado = _Ds.Tables(3)
+            _Tbl_Detalle = _Ds.Tables(1)
+            _Tbl_Referencias = _Ds.Tables(2)
+            _Tbl_Detalle_Agrupado = _Ds.Tables(3)
+
+            Consulta_sql = "Select Tido+' - '+Nudo+' - '++convert(varchar, FchRef,103) As 'Referencia'" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Referencias_Dte" & vbCrLf &
+                           "Where Id_Doc = " & _IdMaeedo
+            _Tbl_Referencias_Bakapp = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             _RowEncabezado = Fx_New_Inserta_Funciones_Bk_En_Encabezado(_RowEncabezado)
 
@@ -567,14 +573,14 @@ Public Class Clas_PDF_Crear_Documento
 
             Dim _Salto_Linea As Integer = (_Mas_Alto + 2) * _Porc_Alto '0.73
 
-            Dim _Agrupar_Lineas As Boolean = (_TblDetalle.Rows.Count > _NroLineasXpag)
+            Dim _Agrupar_Lineas As Boolean = (_Tbl_Detalle.Rows.Count > _NroLineasXpag)
             Dim _Contador_Lineas = 0
 
             Dim _DrawBrush = XBrushes.Black '(_Color)
 
             If _Agrupar_Lineas Then
 
-                For Each _Fila_D As DataRow In _TblDetalle_Agrupado.Rows
+                For Each _Fila_D As DataRow In _Tbl_Detalle_Agrupado.Rows
 
                     Dim _Codigo = _Fila_D.Item("KOPR")
 
@@ -634,7 +640,7 @@ Public Class Clas_PDF_Crear_Documento
 
                                 Dim _Y_Texto = _Fila_InicioDetalle
 
-                                For Each _Fii As DataRow In _TblDetalle_Agrupado.Rows
+                                For Each _Fii As DataRow In _Tbl_Detalle_Agrupado.Rows
                                     _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Y_Texto)
                                     _Y_Texto += _Salto_Linea
                                 Next
@@ -645,7 +651,7 @@ Public Class Clas_PDF_Crear_Documento
 
                                     If Fx_Imprimir_Funciones_Detalle(_Funcion,
                                                                     _Texto,
-                                                                    _TblDetalle,
+                                                                    _Tbl_Detalle,
                                                                     _Pdf_gx,
                                                                     _Fila_Y,
                                                                     _Columna_X,
@@ -731,7 +737,7 @@ Public Class Clas_PDF_Crear_Documento
 
             Else
 
-                For Each _Fila_D As DataRow In _TblDetalle.Rows
+                For Each _Fila_D As DataRow In _Tbl_Detalle.Rows
 
                     Dim _Codigo = _Fila_D.Item("KOPR")
 
@@ -793,7 +799,7 @@ Public Class Clas_PDF_Crear_Documento
 
                                 Dim _Y_Texto = _Fila_InicioDetalle
 
-                                For Each _Fii As DataRow In _TblDetalle.Rows
+                                For Each _Fii As DataRow In _Tbl_Detalle.Rows
                                     _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Y_Texto)
                                     _Y_Texto += _Salto_Linea
                                 Next
@@ -804,7 +810,7 @@ Public Class Clas_PDF_Crear_Documento
 
                                     If Fx_Imprimir_Funciones_Detalle(_Funcion,
                                                                     _Texto,
-                                                                    _TblDetalle,
+                                                                    _Tbl_Detalle,
                                                                     _Pdf_gx,
                                                                     _Fila_Y,
                                                                     _Columna_X,
@@ -949,10 +955,114 @@ Public Class Clas_PDF_Crear_Documento
 
             '' REFERENCIAS *****
 
-            For Each _Fila_D As DataRow In _TblReferencias.Rows
+            'For Each _Fila_D As DataRow In _Tbl_Referencias.Rows
 
-                Dim _Referencia = _Fila_D.Item("Referencia")
-                Dim _Contador = 0
+            '    Dim _Referencia = _Fila_D.Item("Referencia")
+            '    Dim _Contador = 0
+
+            '    For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
+
+            '        _NombreObjeto = _Fila.Item("NombreObjeto")
+            '        _Funcion = _Fila.Item("Funcion")
+            '        _TipoDato = _Fila.Item("TipoDato")
+            '        _Seccion = _Fila.Item("Seccion")
+
+            '        _Formato = _Fila.Item("Formato")
+            '        _CantDecimales = _Fila.Item("CantDecimales")
+            '        _Fuente = _Fila.Item("Fuente")
+            '        _Tamano = _Fila.Item("Tamano")
+            '        _Alto = _Fila.Item("Alto")
+            '        _Ancho = _Fila.Item("Ancho")
+            '        _Estilo = _Fila.Item("Estilo")
+            '        _Color = _Fila.Item("Color")
+            '        _Fila_Y = _Fila.Item("Fila_Y")
+            '        _Columna_X = _Fila.Item("Columna_X")
+            '        _Texto = _Fila.Item("Texto")
+            '        _RutaImagen = _Fila.Item("RutaImagen")
+
+            '        Select Case _Estilo
+            '            Case 0
+            '                _Style = FontStyle.Regular
+            '            Case 1
+            '                _Style = FontStyle.Bold
+            '            Case 2
+            '                _Style = FontStyle.Italic
+            '            Case 4
+            '                _Style = FontStyle.Underline
+            '            Case 8
+            '                _Style = FontStyle.Strikeout
+            '            Case Else
+            '                _Style = FontStyle.Regular
+            '        End Select
+
+            '        _Fte_Usar = New XFont(_Fuente, _Tamano, _Style)
+
+            '        _Funcion_Bk = _Fila.Item("Funcion_Bk")
+            '        _Formato_Fx = _Fila.Item("Formato_Fx")
+            '        _Campo = _Fila.Item("Campo")
+            '        _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
+            '        _Es_Descuento = _Fila.Item("Es_Descuento")
+
+            '        _Color = Color.FromArgb(_Color)
+
+            '        If _NombreObjeto = "Funcion" Then
+
+            '            If _Funcion_Bk Then
+
+            '                If _Funcion = "Referencia DTE" Then
+
+            '                    If _Contador = 0 Then
+            '                        _Pdf_gx.DrawString("------------------  Referencias ------------------------",
+            '                                           _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+
+            '                        _Detalle_Y += _Salto_Linea
+            '                    End If
+
+            '                    _Pdf_gx.DrawString(_Referencia, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+
+            '                End If
+
+            '            End If
+
+            '        End If
+
+            '    Next
+            '    _Contador += 1
+            '    _Detalle_Y += _Salto_Linea
+
+            'Next
+
+            Dim _Ls_Referencias As New List(Of String)
+
+            For Each _Fila_D As DataRow In _Tbl_Referencias.Rows
+                Dim _Referencia = _Fila_D.Item("Referencia").ToString
+                Try
+                    Dim _Ref = Split(_Referencia, " - ")
+                    Dim _TidoRef = _Ref(0)
+                    Dim _NumRef = CInt(_Ref(1))
+                    Dim _FechaRef = _Ref(2)
+                    _Referencia = _TidoRef & " - " & _NumRef & " - " & _FechaRef
+                Catch ex As Exception
+                    _Referencia = _Fila_D.Item("Referencia").ToString
+                End Try
+                _Ls_Referencias.Add(_Referencia)
+            Next
+
+            For Each _Fila_D As DataRow In _Tbl_Referencias_Bakapp.Rows
+                Dim _Referencia = _Fila_D.Item("Referencia").ToString
+                If Not _Ls_Referencias.Contains(_Referencia) Then
+                    _Ls_Referencias.Add(_Referencia)
+                End If
+            Next
+
+            If CBool(_Ls_Referencias.Count) Then
+                _Detalle_Y += _Salto_Linea + 5
+            End If
+
+            'Dim _Referencia = _Fila_D.Item("Referencia")
+            Dim _Contador = 0
+
+            For Each _Referencia As String In _Ls_Referencias
 
                 For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
 
@@ -1007,8 +1117,7 @@ Public Class Clas_PDF_Crear_Documento
 
                                 If _Contador = 0 Then
                                     _Pdf_gx.DrawString("------------------  Referencias ------------------------",
-                                                       _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
-
+                                                           _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
                                     _Detalle_Y += _Salto_Linea
                                 End If
 
@@ -1023,7 +1132,6 @@ Public Class Clas_PDF_Crear_Documento
                 Next
                 _Contador += 1
                 _Detalle_Y += _Salto_Linea
-
             Next
 
             '' ********
@@ -1272,7 +1380,7 @@ Public Class Clas_PDF_Crear_Documento
                 _Formato_Fx = _Texto
                 _Texto = String.Empty
 
-                For Each _Fila As DataRow In _TblReferencias.Rows
+                For Each _Fila As DataRow In _Tbl_Referencias.Rows
                     _Texto += _Fila.Item("Referencia") & Space(1)
                 Next
 

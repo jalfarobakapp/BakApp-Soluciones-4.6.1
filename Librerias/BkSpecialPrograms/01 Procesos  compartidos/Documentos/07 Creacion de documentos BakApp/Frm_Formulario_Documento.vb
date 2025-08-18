@@ -6971,7 +6971,7 @@ Public Class Frm_Formulario_Documento
                     _Cantidad = 0
                 End If
 
-                If NuloPorNro(_Fila.Cells("RtuVariable").Value, False) Or _Facturacion_Automatica Then
+                If NuloPorNro(_Fila.Cells("RtuVariable").Value, False) Or _Facturacion_Automatica Or _Fila.Cells("DesacRazTransf").Value Then
 
                     _CantUd1 = _Fila.Cells("CantUd1").Value
                     _CantUd2 = _Fila.Cells("CantUd2").Value
@@ -15835,18 +15835,22 @@ Public Class Frm_Formulario_Documento
 
         If Not Fx_Revisar_si_tiene_registros(False) Then
 
-            Dim _Modalidad As String = ModModalidad_Doc
+            Dim _Modalidad_Seleccionada As String = ModModalidad_Doc
 
             Dim Frm_Modalidad As New Frm_Modalidades(True)
             Frm_Modalidad.ControlBox = True
             Frm_Modalidad.Cmb_Modalidades.Enabled = False
             Frm_Modalidad.ShowDialog(Me)
+            If Frm_Modalidad.Modalidad_Seleccionada Then
+                _Modalidad_Seleccionada = Mod_Modalidad
+            End If
             Frm_Modalidad.Dispose()
 
             _Global_Frm_Menu.Refresh()
 
-            If _Modalidad <> ModModalidad_Doc Then
+            If _Modalidad_Seleccionada <> ModModalidad_Doc Then
 
+                ModModalidad_Doc = _Modalidad_Seleccionada
                 Dim _RowFormato As DataRow = Fx_Formato_Modalidad(Me, ModEmpresa_Doc, ModModalidad_Doc, _Tido, True)
 
                 Consulta_sql = "Select Top 1 * From CONFIEST WITH (NOLOCK) Where MODALIDAD = '" & ModModalidad_Doc & "'"
@@ -15858,7 +15862,7 @@ Public Class Frm_Formulario_Documento
 
                 Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
                 If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, _Permiso, Nothing) Then
-                    ModModalidad_Doc = _Modalidad
+                    ModModalidad_Doc = _Modalidad_Seleccionada
                     MessageBoxEx.Show(Me, "LA MODALIDAD NO FUE CAMBIADA", "VALIDACION",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
                     Return
@@ -15868,7 +15872,7 @@ Public Class Frm_Formulario_Documento
                     '_Modalidad_Origen = Modalidad
                     Sb_Limpiar(ModModalidad_Doc)
                 Else
-                    ModModalidad_Doc = _Modalidad
+                    ModModalidad_Doc = _Modalidad_Seleccionada
                 End If
 
             End If

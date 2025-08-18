@@ -136,6 +136,7 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [NuncaPickeaDocConRTUDesactivada]                       [bit]           NOT NULL DEFAULT (0),
 [RestringirVisualizacionDeDocumentos]                   [bit]           NOT NULL DEFAULT (0),
 [PermisoEspecialCambioVendedorLinea]                    [bit]           NOT NULL DEFAULT (0),
+[VendeUD2DesacUD1soloRTUD]                              [bit]           NOT NULL DEFAULT (0),
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Empresa] ASC,

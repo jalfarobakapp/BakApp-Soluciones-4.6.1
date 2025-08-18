@@ -19,8 +19,9 @@ Public Class Clas_Imprimir_Documento
     Dim _Tbl_Encabezado As DataTable
     Dim _Tbl_Detalle As DataTable
     Dim _Tbl_Detalle_Agrupado As DataTable
-    Dim _Tbl_Referencias As DataTable           ' Documentos de referencia asociados 
+    Dim _Tbl_Referencias As DataTable               ' Documentos de referencia asociados 
     Dim _Tbl_Doc_Asociados_Recargos As DataTable    ' Documentos asociados al recargo
+    Dim _Tbl_Referencias_Bakapp As DataTable
 
     Dim _Row_Servicio_Tecnico_Enc As DataRow
 
@@ -288,6 +289,12 @@ Public Class Clas_Imprimir_Documento
             _Tbl_Referencias = _Ds.Tables(2)
             _Tbl_Detalle_Agrupado = _Ds.Tables(3)
             _Tbl_Doc_Asociados_Recargos = _Ds.Tables(4)
+
+
+            Consulta_sql = "Select Tido+' - '+Nudo+' - '++convert(varchar, FchRef,103) As 'Referencia'" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Referencias_Dte" & vbCrLf &
+                           "Where Id_Doc = " & _IdDoc
+            _Tbl_Referencias_Bakapp = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Format_01", "IncluyePickWms") Then
 
@@ -1108,29 +1115,58 @@ Public Class Clas_Imprimir_Documento
 
 #Region "REFERENCIAS"
 
-            If _Tbl_Referencias.Rows.Count Then
-                _Detalle_Y += _Salto_Linea + 5
-            End If
+            'If _Tbl_Referencias.Rows.Count Then
+            '    _Detalle_Y += _Salto_Linea + 5
+            'End If
+
+            Dim _Ls_Referencias As New List(Of String)
 
             For Each _Fila_D As DataRow In _Tbl_Referencias.Rows
-
                 Dim _Referencia = _Fila_D.Item("Referencia").ToString
-
                 Try
-
                     Dim _Ref = Split(_Referencia, " - ")
-
                     Dim _TidoRef = _Ref(0)
                     Dim _NumRef = CInt(_Ref(1))
                     Dim _FechaRef = _Ref(2)
-
                     _Referencia = _TidoRef & " - " & _NumRef & " - " & _FechaRef
-
                 Catch ex As Exception
-
                     _Referencia = _Fila_D.Item("Referencia").ToString
-
                 End Try
+                _Ls_Referencias.Add(_Referencia)
+            Next
+
+            For Each _Fila_D As DataRow In _Tbl_Referencias_Bakapp.Rows
+                Dim _Referencia = _Fila_D.Item("Referencia").ToString
+                If Not _Ls_Referencias.Contains(_Referencia) Then
+                    _Ls_Referencias.Add(_Referencia)
+                End If
+            Next
+
+            If CBool(_Ls_Referencias.Count) Then
+                _Detalle_Y += _Salto_Linea + 5
+            End If
+
+            'For Each _Fila_D As DataRow In _Tbl_Referencias.Rows
+
+            For Each _Referencia As String In _Ls_Referencias
+
+                'Dim _Referencia = _Fila_D.Item("Referencia").ToString
+
+                'Try
+
+                '    Dim _Ref = Split(_Referencia, " - ")
+
+                '    Dim _TidoRef = _Ref(0)
+                '    Dim _NumRef = CInt(_Ref(1))
+                '    Dim _FechaRef = _Ref(2)
+
+                '    _Referencia = _TidoRef & " - " & _NumRef & " - " & _FechaRef
+
+                'Catch ex As Exception
+
+                '    _Referencia = _Fila_D.Item("Referencia").ToString
+
+                'End Try
 
                 Dim _Contador = 0
 
@@ -1208,7 +1244,6 @@ Public Class Clas_Imprimir_Documento
             _Fila_FinDetalle = _Detalle_Y
 
             ' FIN REFERENCIA
-
 #End Region
 
 #Region "DOCUMENTOS ASOCIADOS A RECARGOS"
@@ -3108,13 +3143,121 @@ Public Class Clas_Imprimir_Documento
 
 #End Region
 
+            '#Region "REFERENCIAS"
+
+            '            '' REFERENCIAS *****
+
+            '            For Each _Fila_D As DataRow In _Tbl_Referencias.Rows
+
+            '                Dim _Referencia = _Fila_D.Item("Referencia")
+            '                Dim _Contador = 0
+
+            '                For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
+
+            '                    _NombreObjeto = _Fila.Item("NombreObjeto")
+            '                    _Funcion = _Fila.Item("Funcion")
+            '                    _TipoDato = _Fila.Item("TipoDato")
+            '                    _Seccion = _Fila.Item("Seccion")
+
+            '                    _Formato = _Fila.Item("Formato")
+            '                    _CantDecimales = _Fila.Item("CantDecimales")
+            '                    _Fuente = _Fila.Item("Fuente")
+            '                    _Tamano = _Fila.Item("Tamano")
+            '                    _Alto = _Fila.Item("Alto")
+            '                    _Ancho = _Fila.Item("Ancho")
+            '                    _Estilo = _Fila.Item("Estilo")
+            '                    _Color = _Fila.Item("Color")
+            '                    _Fila_Y = _Fila.Item("Fila_Y")
+            '                    _Columna_X = _Fila.Item("Columna_X")
+            '                    _Texto = _Fila.Item("Texto")
+            '                    _RutaImagen = _Fila.Item("RutaImagen")
+
+            '                    Select Case _Estilo
+            '                        Case 0
+            '                            _Style = FontStyle.Regular
+            '                        Case 1
+            '                            _Style = FontStyle.Bold
+            '                        Case 2
+            '                            _Style = FontStyle.Italic
+            '                        Case 4
+            '                            _Style = FontStyle.Underline
+            '                        Case 8
+            '                            _Style = FontStyle.Strikeout
+            '                        Case Else
+            '                            _Style = FontStyle.Regular
+            '                    End Select
+
+            '                    _Fte_Usar = New Font(_Fuente, _Tamano, _Style)
+
+            '                    _Funcion_Bk = _Fila.Item("Funcion_Bk")
+            '                    _Formato_Fx = _Fila.Item("Formato_Fx")
+            '                    _Campo = _Fila.Item("Campo")
+            '                    _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
+            '                    _Es_Descuento = _Fila.Item("Es_Descuento")
+
+            '                    _Color = Color.FromArgb(_Color)
+            '                    Dim _DrawBrush As New SolidBrush(_Color)
+
+            '                    If _NombreObjeto = "Funcion" Then
+
+            '                        If _Funcion_Bk Then
+
+            '                            If _Funcion = "Referencia DTE" Then
+
+            '                                If _Contador = 0 Then
+            '                                    e.Graphics.DrawString("------------------  Referencias ------------------------",
+            '                                                          _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+            '                                    _Detalle_Y += _Salto_Linea
+            '                                End If
+
+            '                                e.Graphics.DrawString(_Referencia, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+            '                            End If
+
+            '                        End If
+
+            '                    End If
+
+            '                Next
+
+            '                _Contador += 1
+            '                _Detalle_Y += _Salto_Linea
+
+            '            Next
+
+            '            '' ********
+            '#End Region
+
 #Region "REFERENCIAS"
 
-            '' REFERENCIAS *****
+            Dim _Ls_Referencias As New List(Of String)
 
             For Each _Fila_D As DataRow In _Tbl_Referencias.Rows
+                Dim _Referencia = _Fila_D.Item("Referencia").ToString
+                Try
+                    Dim _Ref = Split(_Referencia, " - ")
+                    Dim _TidoRef = _Ref(0)
+                    Dim _NumRef = CInt(_Ref(1))
+                    Dim _FechaRef = _Ref(2)
+                    _Referencia = _TidoRef & " - " & _NumRef & " - " & _FechaRef
+                Catch ex As Exception
+                    _Referencia = _Fila_D.Item("Referencia").ToString
+                End Try
+                _Ls_Referencias.Add(_Referencia)
+            Next
 
-                Dim _Referencia = _Fila_D.Item("Referencia")
+            For Each _Fila_D As DataRow In _Tbl_Referencias_Bakapp.Rows
+                Dim _Referencia = _Fila_D.Item("Referencia").ToString
+                If Not _Ls_Referencias.Contains(_Referencia) Then
+                    _Ls_Referencias.Add(_Referencia)
+                End If
+            Next
+
+            If CBool(_Ls_Referencias.Count) Then
+                _Detalle_Y += _Salto_Linea + 5
+            End If
+
+            For Each _Referencia As String In _Ls_Referencias
+
                 Dim _Contador = 0
 
                 For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
@@ -3170,7 +3313,7 @@ Public Class Clas_Imprimir_Documento
                             If _Funcion = "Referencia DTE" Then
 
                                 If _Contador = 0 Then
-                                    e.Graphics.DrawString("------------------  Referencias ------------------------",
+                                    e.Graphics.DrawString("------------- Referencias -------------",
                                                           _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
                                     _Detalle_Y += _Salto_Linea
                                 End If
@@ -3183,14 +3326,16 @@ Public Class Clas_Imprimir_Documento
                     End If
 
                 Next
-
                 _Contador += 1
                 _Detalle_Y += _Salto_Linea
 
             Next
 
-            '' ********
+            _Fila_FinDetalle = _Detalle_Y
+
+            ' FIN REFERENCIA
 #End Region
+
 
 #Region "DOCUMENTOS ASOCIADOS A RECARGOS"
 
