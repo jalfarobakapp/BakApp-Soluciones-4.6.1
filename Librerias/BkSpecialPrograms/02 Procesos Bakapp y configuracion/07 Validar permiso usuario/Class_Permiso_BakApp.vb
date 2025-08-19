@@ -239,6 +239,7 @@ Public Class Class_Permiso_BakApp
         CONTABILIDAD
         STEM
         TICKET
+        MODELAMIENTO
     End Enum
 
     Sub Sb_Actualizar_Base_De_Permisos(_Formulario As Form, ByRef _Objeto As Object)
@@ -1139,6 +1140,10 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Tkts0007", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Tkts0008", _Objeto, _Formulario)
 
+        _SqlQuery += Fx_Insertar_Permiso("Mode0001", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Mode0002", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Mode0003", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Mode0004", _Objeto, _Formulario)
 
         _SqlQuery += vbCrLf
 
@@ -5048,6 +5053,31 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "PODER GRABAR TICKET SIN ASIGNAR EL REQUERIMIENTO A ALGUN GRUPO O AGENTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TICKET, 6)
                 _NombreFamiliaPermiso = _Fml.TICKET.ToString
+
+        End Select
+
+#End Region
+
+#Region "MODELAMIENTO"
+
+        Select Case _CodPermiso
+
+            Case "Mode0001"
+                _DescripcionPermiso = "VER GRUPOS DE VENDEDORES/FUNCINARIOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.MODELAMIENTO, 6)
+                _NombreFamiliaPermiso = _Fml.MODELAMIENTO.ToString
+            Case "Mode0002"
+                _DescripcionPermiso = "CREAR GRUPOS DE VENDEDORES/FUNCINARIOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.MODELAMIENTO, 6)
+                _NombreFamiliaPermiso = _Fml.MODELAMIENTO.ToString
+            Case "Mode0003"
+                _DescripcionPermiso = "EDITAR GRUPOS DE VENDEDORES/FUNCINARIOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.MODELAMIENTO, 6)
+                _NombreFamiliaPermiso = _Fml.MODELAMIENTO.ToString
+            Case "Mode0004"
+                _DescripcionPermiso = "ELIMINAR GRUPOS DE VENDEDORES/FUNCINARIOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.MODELAMIENTO, 6)
+                _NombreFamiliaPermiso = _Fml.MODELAMIENTO.ToString
 
         End Select
 

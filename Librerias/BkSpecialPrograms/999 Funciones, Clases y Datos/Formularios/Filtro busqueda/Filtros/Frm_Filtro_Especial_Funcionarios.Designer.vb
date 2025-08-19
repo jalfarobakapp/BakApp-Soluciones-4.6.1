@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Filtro_Especial_Funcionarios
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 

@@ -1545,9 +1545,12 @@ Public Class Menu
         Sb_Revisar_Estilo("")
     End Sub
 
-    ' 4. Eliminar el método específico Lbl_Thema_Verde_MouseEnter y su handler Handles Lbl_Thema_Verde.MouseEnter.
-    ' 5. Eliminar el método específico Lbl_Thema_Verde_MouseLeave y su handler Handles Lbl_Thema_Verde.MouseLeave.
+    Private Sub Btn_Grupos_Click(sender As Object, e As EventArgs) Handles Btn_Grupos.Click
 
-    ' Así, todos los botones de themas usan el mismo evento y lógica.
+        Dim Fm As New Frm_Grupos_Lista
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 
 End Class

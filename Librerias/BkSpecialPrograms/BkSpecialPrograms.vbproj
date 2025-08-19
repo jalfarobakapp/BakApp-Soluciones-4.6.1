@@ -853,6 +853,19 @@
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Cl_GruposRD.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Lista.Designer.vb">
+      <DependentUpon>Frm_Grupos_Lista.vb</DependentUpon>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Lista.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Usuarios.Designer.vb">
+      <DependentUpon>Frm_Grupos_Usuarios.vb</DependentUpon>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Usuarios.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Clase\Cl_ConfiModalGral.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_Fincred.Designer.vb">
       <DependentUpon>Frm_Fincred.vb</DependentUpon>
@@ -875,6 +888,8 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\MAEDPCD.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\MAEDPCE.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\MAEVEN.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\TABFUGD.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\TABFUGE.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Casi_DocDet.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor.vb" />
@@ -4881,6 +4896,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.resx">
       <DependentUpon>Frm_Usuarios_Random_Ficha.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Lista.resx">
+      <DependentUpon>Frm_Grupos_Lista.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Usuarios.resx">
+      <DependentUpon>Frm_Grupos_Usuarios.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_Fincred.resx">
       <DependentUpon>Frm_Fincred.vb</DependentUpon>

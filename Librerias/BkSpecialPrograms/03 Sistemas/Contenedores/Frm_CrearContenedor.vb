@@ -20,6 +20,8 @@ Public Class Frm_CrearContenedor
 
         Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_CrearContenedor_Load(sender As Object, e As EventArgs) Handles MyBase.Load

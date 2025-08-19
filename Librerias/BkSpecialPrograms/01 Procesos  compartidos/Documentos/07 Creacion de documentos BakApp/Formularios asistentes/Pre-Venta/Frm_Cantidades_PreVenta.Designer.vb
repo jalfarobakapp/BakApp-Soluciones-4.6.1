@@ -73,14 +73,12 @@ Partial Class Frm_Cantidades_PreVenta
         '
         'Txt_CantUD2
         '
-        Me.Txt_CantUD2.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Txt_CantUD2.Border.Class = "TextBoxBorder"
         Me.Txt_CantUD2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_CantUD2.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CantUD2.FocusHighlightEnabled = True
         Me.Txt_CantUD2.ForeColor = System.Drawing.Color.Black
         Me.Txt_CantUD2.Location = New System.Drawing.Point(122, 117)
         Me.Txt_CantUD2.Name = "Txt_CantUD2"
@@ -92,14 +90,12 @@ Partial Class Frm_Cantidades_PreVenta
         '
         'Txt_CantUD1
         '
-        Me.Txt_CantUD1.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Txt_CantUD1.Border.Class = "TextBoxBorder"
         Me.Txt_CantUD1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_CantUD1.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CantUD1.FocusHighlightEnabled = True
         Me.Txt_CantUD1.ForeColor = System.Drawing.Color.Black
         Me.Txt_CantUD1.Location = New System.Drawing.Point(122, 67)
         Me.Txt_CantUD1.Name = "Txt_CantUD1"
@@ -201,14 +197,12 @@ Partial Class Frm_Cantidades_PreVenta
         '
         'Txt_CantidadPreVenta
         '
-        Me.Txt_CantidadPreVenta.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Txt_CantidadPreVenta.Border.Class = "TextBoxBorder"
         Me.Txt_CantidadPreVenta.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_CantidadPreVenta.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_CantidadPreVenta.FocusHighlightEnabled = True
         Me.Txt_CantidadPreVenta.ForeColor = System.Drawing.Color.Black
         Me.Txt_CantidadPreVenta.Location = New System.Drawing.Point(122, 25)
         Me.Txt_CantidadPreVenta.Name = "Txt_CantidadPreVenta"

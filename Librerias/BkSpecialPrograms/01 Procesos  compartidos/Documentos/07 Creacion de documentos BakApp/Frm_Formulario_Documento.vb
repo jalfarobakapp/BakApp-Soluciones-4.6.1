@@ -8609,7 +8609,9 @@ Public Class Frm_Formulario_Documento
 
                     If _TblEncabezado.Rows(0).Item("TblTipoVenta") = "CLALIBPR" Then
 
-                        Consulta_sql = "Select CAST( 1 AS bit) AS Chk,KOCARAC as Codigo,NOKOCARAC as Descripcion From TABCARAC" & vbCrLf &
+                        Consulta_sql = "Select CAST( 1 AS bit) As Chk,'' As Codigo,'' As Descripcion " & vbCrLf &
+                                       "Union" & vbCrLf &
+                                       "Select CAST( 1 AS bit) AS Chk,KOCARAC as Codigo,NOKOCARAC as Descripcion From TABCARAC" & vbCrLf &
                                        "Where KOCARAC IN ('" & _TblEncabezado.Rows(0).Item("CodTipoVenta") & "')"
                         Dim _TblFiltro As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
                         Fm.Tbl_Filtro_Clalibpr = _TblFiltro
@@ -15163,7 +15165,7 @@ Public Class Frm_Formulario_Documento
                 Grilla_Detalle.Enabled = True
 
                 Grilla_Detalle.Focus()
-                Grilla_Detalle.CurrentCell = Grilla_Encabezado.Rows(0).Cells("Codigo") '("CodEntidad")
+                Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(0).Cells("Codigo") '("CodEntidad")
 
             End If
 
@@ -15423,6 +15425,13 @@ Public Class Frm_Formulario_Documento
             End If
 
             Grilla_Encabezado.Columns(_Cabeza).ReadOnly = True
+
+            If PreVenta Then
+                MessageBoxEx.Show(Me, "A continuación, deberá seleccionar el contenedor" & vbCrLf &
+                                  "desde el cual se extraerán los productos.",
+                                  "Contenedor", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Call Btn_Contenedor_Asociar_Click(Nothing, Nothing)
+            End If
 
         Catch ex As Exception
         Finally
@@ -29549,12 +29558,20 @@ Public Class Frm_Formulario_Documento
 
         Dim Fm As New Frm_CrearContenedor(_IdCont)
         Fm.Btn_Eliminar.Enabled = False
+        Fm.Btn_Grabar.Enabled = False
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
     End Sub
 
     Private Sub Btn_Contenedor_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Quitar.Click
+
+        If Fx_Revisar_si_tiene_registros(False) Then
+            MessageBoxEx.Show(Me, "No es posible quitar el contenedor mientras existan productos en el detalle. " & vbCrLf &
+                              "Por favor, elimine los productos antes de continuar.",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim _IdCont As Integer = _TblEncabezado.Rows(0).Item("IdCont")
 

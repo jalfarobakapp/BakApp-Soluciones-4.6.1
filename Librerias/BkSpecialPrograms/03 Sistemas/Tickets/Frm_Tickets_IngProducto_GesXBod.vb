@@ -7,7 +7,6 @@ Public Class Frm_Tickets_IngProducto_GesXBod
     Public listaProductos As New BindingList(Of Zw_Stk_Tickets_Producto)
 
     Public Property Cl_Tickets As Cl_Tickets
-
     Public Property SoloUnProducto As Boolean
     Public Property ModoSoloLectura As Boolean
     Public Property Grabar As Boolean
@@ -21,7 +20,6 @@ Public Class Frm_Tickets_IngProducto_GesXBod
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla_Detalle, 18, New Font("Tahoma", 8), Color.LightYellow, ScrollBars.None, True, False, False)
-
         Sb_Color_Botones_Barra(Bar1)
 
     End Sub
@@ -168,7 +166,6 @@ Public Class Frm_Tickets_IngProducto_GesXBod
             '.Columns("Descripcion_Bodega").Width = 250
             '.Columns("Descripcion_Bodega").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
-
 
             .Columns("Um").Visible = True
             .Columns("Um").HeaderText = "UM"

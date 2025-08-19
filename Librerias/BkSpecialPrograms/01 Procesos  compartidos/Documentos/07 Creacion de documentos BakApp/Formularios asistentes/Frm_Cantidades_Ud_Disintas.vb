@@ -107,6 +107,7 @@ Public Class Frm_Cantidades_Ud_Disintas
 
         If Chk_DesacRazTransf.Checked Then
             Label3.Text = "R.T.U.  (" & _Rtu & ")"
+            TxtCantUD1.Enabled = True
         End If
 
         If _Rtu = 1 Then TxtCantUD2.Enabled = False

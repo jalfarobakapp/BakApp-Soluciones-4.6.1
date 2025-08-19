@@ -15,7 +15,7 @@ Public Class Frm_Contenedores
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla_Contenedores, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Contenedores, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
         Sb_Color_Botones_Barra(Bar1)
 
     End Sub
@@ -25,6 +25,8 @@ Public Class Frm_Contenedores
         AddHandler Grilla_Contenedores.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Sb_Actualizar_Grilla()
+
+        Btn_Crear_Contenedor.Enabled = Not ModoSeleccion
 
     End Sub
 
