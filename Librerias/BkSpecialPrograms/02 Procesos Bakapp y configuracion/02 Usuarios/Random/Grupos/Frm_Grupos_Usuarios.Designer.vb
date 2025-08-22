@@ -32,6 +32,9 @@ Partial Class Frm_Grupos_Usuarios
         Me.Btn_Subir = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Bajar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_QuitarFuncionario = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Kofujefe = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -40,14 +43,11 @@ Partial Class Frm_Grupos_Usuarios
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Kogru = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
-        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
-        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Mnu_QuitarFuncionario = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
-        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar1
@@ -142,6 +142,34 @@ Partial Class Frm_Grupos_Usuarios
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 121
         Me.GroupPanel2.Text = "Usuarios del grupo"
+        '
+        'ContextMenuBar1
+        '
+        Me.ContextMenuBar1.AntiAlias = True
+        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(75, 29)
+        Me.ContextMenuBar1.Name = "ContextMenuBar1"
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(330, 25)
+        Me.ContextMenuBar1.Stretch = True
+        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ContextMenuBar1.TabIndex = 56
+        Me.ContextMenuBar1.TabStop = False
+        Me.ContextMenuBar1.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_QuitarFuncionario})
+        Me.Menu_Contextual_01.Text = "Opciones"
+        '
+        'Btn_Mnu_QuitarFuncionario
+        '
+        Me.Btn_Mnu_QuitarFuncionario.Image = CType(resources.GetObject("Btn_Mnu_QuitarFuncionario.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_QuitarFuncionario.ImageAlt = CType(resources.GetObject("Btn_Mnu_QuitarFuncionario.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_QuitarFuncionario.Name = "Btn_Mnu_QuitarFuncionario"
+        Me.Btn_Mnu_QuitarFuncionario.Text = "Quitar funcionario"
         '
         'Grilla
         '
@@ -273,6 +301,7 @@ Partial Class Frm_Grupos_Usuarios
         Me.Txt_Nokogru.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nokogru.ForeColor = System.Drawing.Color.Black
         Me.Txt_Nokogru.Location = New System.Drawing.Point(106, 31)
+        Me.Txt_Nokogru.MaxLength = 50
         Me.Txt_Nokogru.Name = "Txt_Nokogru"
         Me.Txt_Nokogru.PreventEnterBeep = True
         Me.Txt_Nokogru.Size = New System.Drawing.Size(375, 22)
@@ -303,6 +332,7 @@ Partial Class Frm_Grupos_Usuarios
         Me.Txt_Kogru.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Kogru.ForeColor = System.Drawing.Color.Black
         Me.Txt_Kogru.Location = New System.Drawing.Point(106, 3)
+        Me.Txt_Kogru.MaxLength = 15
         Me.Txt_Kogru.Name = "Txt_Kogru"
         Me.Txt_Kogru.PreventEnterBeep = True
         Me.Txt_Kogru.Size = New System.Drawing.Size(97, 22)
@@ -321,34 +351,6 @@ Partial Class Frm_Grupos_Usuarios
         Me.LabelX2.Size = New System.Drawing.Size(95, 23)
         Me.LabelX2.TabIndex = 15
         Me.LabelX2.Text = "Código del grupo"
-        '
-        'ContextMenuBar1
-        '
-        Me.ContextMenuBar1.AntiAlias = True
-        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.ContextMenuBar1.Location = New System.Drawing.Point(75, 29)
-        Me.ContextMenuBar1.Name = "ContextMenuBar1"
-        Me.ContextMenuBar1.Size = New System.Drawing.Size(330, 25)
-        Me.ContextMenuBar1.Stretch = True
-        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ContextMenuBar1.TabIndex = 56
-        Me.ContextMenuBar1.TabStop = False
-        Me.ContextMenuBar1.Text = "ContextMenuBar1"
-        '
-        'Menu_Contextual_01
-        '
-        Me.Menu_Contextual_01.AutoExpandOnClick = True
-        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_QuitarFuncionario})
-        Me.Menu_Contextual_01.Text = "Opciones"
-        '
-        'Btn_Mnu_QuitarFuncionario
-        '
-        Me.Btn_Mnu_QuitarFuncionario.Image = CType(resources.GetObject("Btn_Mnu_QuitarFuncionario.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_QuitarFuncionario.ImageAlt = CType(resources.GetObject("Btn_Mnu_QuitarFuncionario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_QuitarFuncionario.Name = "Btn_Mnu_QuitarFuncionario"
-        Me.Btn_Mnu_QuitarFuncionario.Text = "Quitar funcionario"
         '
         'Frm_Grupos_Usuarios
         '
@@ -370,9 +372,9 @@ Partial Class Frm_Grupos_Usuarios
         Me.Text = "Mantención de usuarios del grupo"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
-        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

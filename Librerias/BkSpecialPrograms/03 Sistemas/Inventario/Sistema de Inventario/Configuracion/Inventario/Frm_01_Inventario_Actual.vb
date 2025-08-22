@@ -63,6 +63,8 @@ Public Class Frm_01_Inventario_Actual
 
         Sb_Actualizar_Grilla()
 
+        Me.Text += " (ID: " & _IdInventario & ")"
+
     End Sub
 
     Private Sub Sb_Actualizar_Grilla()
@@ -291,7 +293,7 @@ Public Class Frm_01_Inventario_Actual
 
         Dim Fm As New Frm_02_Detalle_Producto_Actual(_IdInventario, _CodigoPR)
 
-        Fm.Text = "Producto: " & _CodigoPR & " - " & _DescripcionPR
+        Fm.Text = "Producto: " & _CodigoPR.ToString.Trim & " - " & _DescripcionPR.ToString.Trim
         Fm.ShowDialog(Me)
 
         _Fila.Cells("Cant_Inventariada").Value = Fm.Zw_Inv_FotoInventario.Cant_Inventariada

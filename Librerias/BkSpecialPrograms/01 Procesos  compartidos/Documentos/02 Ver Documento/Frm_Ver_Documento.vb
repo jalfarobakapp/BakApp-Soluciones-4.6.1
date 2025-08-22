@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
+Imports BkSpecialPrograms.PreVenta
 Imports DevComponents.DotNetBar
 Imports MySql.Data.Authentication
 Imports PdfSharp
@@ -5067,7 +5068,7 @@ Public Class Frm_Ver_Documento
         End If
 
         Dim Fm As New Frm_Contenedores
-        Fm.ModoSeleccion = True
+        Fm.ModoSeleccion_Compra = True
         Fm.ShowDialog(Me)
         _Cl_Contenedor.Zw_Contenedor = Fm.Zw_Contenedor
         Fm.Dispose()
@@ -5122,6 +5123,26 @@ Public Class Frm_Ver_Documento
 
     Private Sub Txt_Nombre_Entidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Nombre_Entidad.ButtonCustomClick
         ShowContextMenu(Menu_Contextual_Info_Entidad)
+    End Sub
+
+    Private Sub Btn_PreVenta_Click(sender As Object, e As EventArgs) Handles Btn_PreVenta.Click
+
+        Dim _IdCont = _Cl_Contenedor.Zw_Contenedor.IdCont
+        Dim _Empresa = _Cl_Contenedor.Zw_Contenedor.Empresa
+        Dim _Contenedor = _Cl_Contenedor.Zw_Contenedor.Contenedor
+
+        If Not CBool(_IdCont) Then
+            MessageBoxEx.Show(Me, "No hay un contenedor asociado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
+
+        Dim Fm As New Frm_PreVenta_Productos(_Empresa, _IdCont, _Contenedor)
+        Fm.ModoPreVenta = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Contenedor_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Quitar.Click

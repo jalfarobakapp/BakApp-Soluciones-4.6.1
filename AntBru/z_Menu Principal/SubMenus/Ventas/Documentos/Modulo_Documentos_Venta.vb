@@ -66,57 +66,57 @@ Public Class Modulo_Documentos_Venta
         Modulo_Documentos.Sb_Generar_Documento(_Fm_Menu_Padre, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta, "")
     End Sub
 
-    Sub Sb_Generar_Documento(_Tido As String, _Minimizar As Boolean)
+    'Sub Sb_Generar_Documento(_Tido As String, _Minimizar As Boolean)
 
-        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+    '    Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
 
-        If Not _Msj_Tsc.EsCorrecto Then
-            Return
-        End If
+    '    If Not _Msj_Tsc.EsCorrecto Then
+    '        Return
+    '    End If
 
-        Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, _Tido, True)
+    '    Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, _Tido, True)
 
-        If IsNothing(_RowFormato) Then
+    '    If IsNothing(_RowFormato) Then
 
-            MessageBoxEx.Show(Me, "Debe configurar el formato de salida en la configuración por modalidad de trabajo",
-                              "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Return
-        End If
+    '        MessageBoxEx.Show(Me, "Debe configurar el formato de salida en la configuración por modalidad de trabajo",
+    '                          "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    '        Return
+    '    End If
 
-        Dim _Empresa As String = Mod_Empresa
-        Dim _Sucursal As String = Mod_Sucursal
-        Dim _Bodega As String = Mod_Bodega
+    '    Dim _Empresa As String = Mod_Empresa
+    '    Dim _Sucursal As String = Mod_Sucursal
+    '    Dim _Bodega As String = Mod_Bodega
 
-        Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
+    '    Dim _Permiso = "Bo" & _Empresa & _Sucursal & _Bodega
 
-        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso, , True) Then
-            Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
-            MessageBoxEx.Show(Me, "NO ESTA AUTORIZADO PARA EFECTUAR VENTAS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
-                                  "BODEGA: " & _Bodega & " - " & _Bod,
-                                  "VALIDACION",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End If
+    '    If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso, , True) Then
+    '        Dim _Bod = _Global_Row_Configuracion_Estacion.Item("NOKOBO")
+    '        MessageBoxEx.Show(Me, "NO ESTA AUTORIZADO PARA EFECTUAR VENTAS DESDE LA BODEGA DE ESTA MODALIDAD" & vbCrLf & vbCrLf &
+    '                              "BODEGA: " & _Bodega & " - " & _Bod,
+    '                              "VALIDACION",
+    '                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '    End If
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso) Then
+    '    If Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso) Then
 
-            If Fx_Es_Electronico(_Tido) Then
+    '        If Fx_Es_Electronico(_Tido) Then
 
-                Dim _Directorio_GenDTE As String = _Global_Row_EstacionBk.Item("Directorio_GenDTE")
-                Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+    '            Dim _Directorio_GenDTE As String = _Global_Row_EstacionBk.Item("Directorio_GenDTE")
+    '            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
-                Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo)
+    '            Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo)
 
-            End If
+    '        End If
 
-            Dim Fm_Post As New Frm_Formulario_Documento(_Tido, csGlobales.Enum_Tipo_Documento.Venta, False)
-            If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True
-            Fm_Post.MinimizeBox = _Minimizar
-            Fm_Post.ShowDialog(Me)
-            Fm_Post.Dispose()
+    '        Dim Fm_Post As New Frm_Formulario_Documento(_Tido, csGlobales.Enum_Tipo_Documento.Venta, False)
+    '        If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True
+    '        Fm_Post.MinimizeBox = _Minimizar
+    '        Fm_Post.ShowDialog(Me)
+    '        Fm_Post.Dispose()
 
-        End If
+    '    End If
 
-    End Sub
+    'End Sub
 
     Private Sub Btn_Guia_Recepcion_Devoluciones_Click(sender As Object, e As EventArgs) Handles Btn_Guia_Recepcion_Devoluciones.Click
         Dim _Tido = "GRD"

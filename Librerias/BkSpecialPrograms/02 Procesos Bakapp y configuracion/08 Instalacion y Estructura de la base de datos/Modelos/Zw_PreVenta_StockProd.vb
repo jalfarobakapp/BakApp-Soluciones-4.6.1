@@ -1,4 +1,4 @@
-﻿Public Class Zw_Contenedor_StockProd
+﻿Public Class Zw_PreVenta_StockProd
     Public Property Id_Cnt As Integer
     Public Property Empresa As String
     Public Property IdCont As Integer

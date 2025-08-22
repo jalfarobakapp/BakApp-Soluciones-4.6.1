@@ -894,7 +894,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_DocTom.vb" />
-    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_StockProd.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_PreVenta_StockProd.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_Conf_Correo.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_Conf_Cerrar_Documentos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
@@ -957,10 +957,16 @@
     <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.Designer.vb">
-      <DependentUpon>Frm_ProdContenedorPreVta.vb</DependentUpon>
+    <Compile Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_IngDet.Designer.vb">
+      <DependentUpon>Frm_PreVenta_IngDet.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.vb">
+    <Compile Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_IngDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_Productos.Designer.vb">
+      <DependentUpon>Frm_PreVenta_Productos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_Productos.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_ListaMayoristaMinorista.vb" />
@@ -4633,6 +4639,7 @@
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Fuentes_PDF_Manual.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Funciones_Comunes.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Funciones_Especiales_BakApp.vb" />
+    <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Modulo_Documentos.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Recursos\Recursos_Funciones.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -4925,8 +4932,11 @@
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_CrearContenedor.resx">
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.resx">
-      <DependentUpon>Frm_ProdContenedorPreVta.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_IngDet.resx">
+      <DependentUpon>Frm_PreVenta_IngDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_Productos.resx">
+      <DependentUpon>Frm_PreVenta_Productos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfCorreoAviso.resx">
       <DependentUpon>Frm_Demonio_ConfCorreoAviso.vb</DependentUpon>
@@ -8213,7 +8223,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Configuracion_Formatos_X_Modalidad.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor_DocTom.sql" />
-    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor_StockProd.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_PreVenta_StockProd.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Correos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CorreosEnvioRecepcion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Correos_Cuentas.sql" />

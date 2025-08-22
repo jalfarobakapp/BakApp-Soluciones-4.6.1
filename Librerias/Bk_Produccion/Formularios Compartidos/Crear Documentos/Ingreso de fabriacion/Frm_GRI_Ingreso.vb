@@ -36,6 +36,12 @@ Public Class Frm_GRI_Ingreso
 
         Lbl_Estatus.Text = _VersionBakappExe
 
+        Btn_GDI.Visible = True
+        Btn_GRI.Visible = True
+
+        Btn_GDI.Enabled = True
+        Btn_GRI.Enabled = True
+
     End Sub
 
     Private Sub Btn_Ingresar_GRI_Click(sender As Object, e As EventArgs) Handles Btn_Ingresar_GRI.Click
@@ -221,6 +227,16 @@ Public Class Frm_GRI_Ingreso
 
         FUNCIONARIO = _Old_Funcionario
 
+    End Sub
+
+    Private Sub Btn_GRI_Click(sender As Object, e As EventArgs) Handles Btn_GRI.Click
+        Dim _Tido = "GRI"
+        Sb_Generar_Documento(Me, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna, "")
+
+    End Sub
+    Private Sub Btn_GDI_Click(sender As Object, e As EventArgs) Handles Btn_GDI.Click
+        Dim _Tido = "GDI"
+        Sb_Generar_Documento(Me, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna, "")
     End Sub
 
 End Class

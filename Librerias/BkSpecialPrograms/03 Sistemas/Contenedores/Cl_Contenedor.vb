@@ -7,7 +7,7 @@ Public Class Cl_Contenedor
 
     Public Property Zw_Contenedor As New Zw_Contenedor
     Public Property Zw_Contenedor_DocTom As New Zw_Contenedor_DocTom
-    Public Property Ls_Zw_Contenedor_StockProd As New List(Of Zw_Contenedor_StockProd)
+    Public Property Ls_Zw_PreVenta_StockProd As New List(Of Zw_PreVenta_StockProd)
 
     Public Sub New()
         Zw_Contenedor = New Zw_Contenedor
@@ -316,11 +316,11 @@ Public Class Cl_Contenedor
                            "Group By EMPRESA,KOPRCT"
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-            Dim _Ls_Zw_Contenedor_StockProd As New List(Of Zw_Contenedor_StockProd)
+            Dim _Ls_Zw_PreVenta_StockProd As New List(Of Zw_PreVenta_StockProd)
 
             For Each _Fila As DataRow In _Tbl.Rows
 
-                Dim _ZwCntd As New Zw_Contenedor_StockProd
+                Dim _ZwCntd As New Zw_PreVenta_StockProd
 
                 With _ZwCntd
                     .IdCont = 0
@@ -334,7 +334,7 @@ Public Class Cl_Contenedor
                     .StcCompUd2 = 0
                 End With
 
-                _Ls_Zw_Contenedor_StockProd.Add(_ZwCntd)
+                _Ls_Zw_PreVenta_StockProd.Add(_ZwCntd)
 
             Next
 
@@ -362,9 +362,9 @@ Public Class Cl_Contenedor
             'End While
             'dfd1.Close()
 
-            For Each _Producto As Zw_Contenedor_StockProd In _Ls_Zw_Contenedor_StockProd
+            For Each _Producto As Zw_PreVenta_StockProd In _Ls_Zw_PreVenta_StockProd
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Contenedor_StockProd (Empresa,IdCont,Contenedor,Codigo," &
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_PreVenta_StockProd (Empresa,IdCont,Contenedor,Codigo," &
                                "StcfiUd1,StcfiUd2,StcCompUd1,StcCompUd2) Values " &
                                "('" & _Producto.Empresa & "'," & _Producto.IdCont & ",'" & _Producto.Contenedor & "','" & _Producto.Codigo & "'" &
                                "," & De_Num_a_Tx_01(_Producto.StcfiUd1, False, 5) &
@@ -462,7 +462,7 @@ Public Class Cl_Contenedor
         Dim _Mensaje As New LsValiciones.Mensajes
         _Mensaje.Detalle = "Quitar contenedor"
 
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Contenedor_StockProd",
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_PreVenta_StockProd",
                                                        "Empresa = '" & _Empresa & "' And IdCont = " & _IdCont & " And Contenedor = '" & _Contenedor & "' And StcCompUd1+StcCompUd2 <> 0")
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Det Where IdCont = " & _IdCont & " And Contenedor = '" & _Contenedor & "'"
@@ -494,7 +494,7 @@ Public Class Cl_Contenedor
                                ",Tido_Rela = ''" &
                                ",Nudo_Rela = ''" &
                                "Where IdCont = " & .IdCont & vbCrLf &
-                               "Delete " & _Global_BaseBk & "Zw_Contenedor_StockProd Where Empresa = '" & _Empresa & "' And IdCont = " & .IdCont & " And Contenedor ='" & _Contenedor & "'"
+                               "Delete " & _Global_BaseBk & "Zw_PreVenta_StockProd Where Empresa = '" & _Empresa & "' And IdCont = " & .IdCont & " And Contenedor ='" & _Contenedor & "'"
 
                 If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False) Then
                     Throw New System.Exception("Error al editar el contenedor" & vbCrLf & _Sql.Pro_Error)

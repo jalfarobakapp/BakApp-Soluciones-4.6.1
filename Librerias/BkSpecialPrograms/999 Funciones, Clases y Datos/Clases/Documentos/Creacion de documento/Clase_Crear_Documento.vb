@@ -1303,7 +1303,7 @@ Public Class Clase_Crear_Documento
 
                                 Dim _Cl_PreVenta As PreVenta.Cl_PreVenta = Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
 
-                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Contenedor_StockProd Set " &
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_PreVenta_StockProd Set " &
                                                "StcCompUd1 = " & _Caprco1 & ",StcCompUd2 = " & _Caprco2 & vbCrLf &
                                                "Where Id = " & _Cl_PreVenta.Id
                                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)

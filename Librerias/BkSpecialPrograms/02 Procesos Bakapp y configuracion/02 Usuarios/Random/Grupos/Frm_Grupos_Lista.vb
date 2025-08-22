@@ -228,6 +228,7 @@ Public Class Frm_Grupos_Lista
         If Fm.Grabar Then
             _Fila.Cells("NOKOGRU").Value = Fm._Cl_GruposRD.Tabfuge.NOKOGRU
             _Fila.Cells("KOFUJEFE").Value = Fm._Cl_GruposRD.Tabfuge.KOFUJEFE
+            _Fila.Cells("NOKOFU").Value = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & Fm._Cl_GruposRD.Tabfuge.KOFUJEFE & "'")
             Call Sb_Grilla_Grupos_CellEnter(Nothing, Nothing)
         End If
         Fm.Dispose()

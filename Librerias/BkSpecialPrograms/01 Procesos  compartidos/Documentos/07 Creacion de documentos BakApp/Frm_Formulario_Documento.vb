@@ -9255,7 +9255,7 @@ Public Class Frm_Formulario_Documento
                                         _RevisarRtuVariable = False
                                     End If
 
-                                    If PreVenta Then
+                                    If PreVenta AndAlso _Tido = "COV" Then
 
                                         ' Buscar el registro en _Cl_PreVenta_Producto con IdIndex = _Id y asignarlo a _Cl_PreVta
                                         Dim _Cl_PreVta As PreVenta.Cl_PreVenta = _Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = _Id)
@@ -9302,7 +9302,7 @@ Public Class Frm_Formulario_Documento
                                     Fm.IdCont = _TblEncabezado.Rows(0).Item("IdCont")
                                     Fm.Chk_DesacRazTransf.Checked = _Fila.Cells("DesacRazTransf").Value
 
-                                    If PreVenta Then
+                                    If PreVenta AndAlso _Tido = "COV" Then
                                         Fm.Aceptado = True
                                     Else
                                         Fm.ShowDialog(Me)
@@ -15448,7 +15448,8 @@ Public Class Frm_Formulario_Documento
     Private Sub Sb_Asociar_Contenedor()
 
         Dim Fm As New Frm_Contenedores
-        Fm.ModoSeleccion = True
+        Fm.ModoSeleccion_Compra = (_Tido = "OCC")
+        Fm.ModoSeleccion_Venta = (_Tido = "COV")
         Fm.ShowDialog(Me)
         _Zw_Contenedor = Fm.Zw_Contenedor
         Fm.Dispose()
@@ -29526,7 +29527,8 @@ Public Class Frm_Formulario_Documento
         End If
 
         Dim Fm As New Frm_Contenedores
-        Fm.ModoSeleccion = True
+        Fm.ModoSeleccion_Compra = (_Tido = "OCC")
+        Fm.ModoSeleccion_Venta = (_Tido = "COV")
         Fm.SeleccionarSoloConProdDisponibles = True
         Fm.ShowDialog(Me)
         _Cl_Contenedor.Zw_Contenedor = Fm.Zw_Contenedor
@@ -29599,7 +29601,7 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
-    Function Fx_CargarProductoDesdeContenedor() As PreVenta.Cl_PreVenta_Producto 'LsValiciones.Mensajes
+    Function Fx_CargarProductoDesdeContenedor() As PreVenta.Cl_PreVenta_Producto
 
         Dim _Cl_PreVenta_Producto As New PreVenta.Cl_PreVenta_Producto
 
@@ -29612,9 +29614,10 @@ Public Class Frm_Formulario_Documento
 
             _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
 
-            Dim Fm As New Frm_ProdContenedorPreVta(ModEmpresa_Doc,
+            Dim Fm As New Frm_PreVenta_Productos(ModEmpresa_Doc,
                                                    _Cl_Contenedor.Zw_Contenedor.IdCont,
                                                    _Cl_Contenedor.Zw_Contenedor.Contenedor)
+            Fm.ModoSeleccion = True
             Fm.ShowDialog(Me)
             _RowProducto = Fm.RowProducto
             _Cl_PreVenta_Producto.Cl_PreVenta = Fm.Cl_PreVenta
@@ -29950,13 +29953,19 @@ Namespace PreVenta
         Public Property Id As Integer
         Public Property IdCont As Integer
         Public Property Contenedor As String
+        Public Property StcfiUd1 As Double
         Public Property StDispUd1 As Double
         Public Property FormatoPqte As String
+        Public Property PqteHabilitado As Double
+        Public Property PqteComprometido As Double
+        Public Property PqteDisponible As Double
         Public Property Ud1XPqte As Double
         Public Property CantMinFormato As Double
         Public Property Cantidad As Double
         Public Property Moneda As String
         Public Property PrecioXUd1 As Double
+        Public Property Codigo As String
+        Public Property Descripcion As String
 
         Public Sub New()
 
@@ -29965,11 +29974,17 @@ Namespace PreVenta
             IdCont = 0
             Contenedor = String.Empty
             StDispUd1 = 0
-            FormatoPqte = String.Empty
+            FormatoPqte = "Pallet"
             Ud1XPqte = 0
             CantMinFormato = 0
-            Moneda = String.Empty
+            Moneda = "US$"
             PrecioXUd1 = 0
+            Codigo = String.Empty
+            Descripcion = String.Empty
+            PqteHabilitado = 0
+            PqteComprometido = 0
+            PqteDisponible = 0
+            Cantidad = 0
 
         End Sub
 

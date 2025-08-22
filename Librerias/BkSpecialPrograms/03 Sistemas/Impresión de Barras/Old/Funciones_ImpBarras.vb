@@ -402,7 +402,7 @@ Public Class Class_Imprimir_Barras
         _May_dim3 = _Dim3.ToString.Trim
 
         _Texto = Replace(_Texto, "<MAY_PRECIO1>", _May_Precio_1)
-        _Texto = Replace(_Texto, "<MAY_PRECIO2>", _May_Precio_1)
+        _Texto = Replace(_Texto, "<MAY_PRECIO2>", _May_Precio_2)
         _Texto = Replace(_Texto, "<MAY_PRECIOXKILO1>", _May_Precioxkilo1)
         _Texto = Replace(_Texto, "<MAY_PRECIOXKILO2>", _May_Precioxkilo2)
 

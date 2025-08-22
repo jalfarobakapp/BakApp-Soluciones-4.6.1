@@ -663,27 +663,6 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
-        '''CREATE TABLE [dbo].[Zw_Contenedor_StockProd](
-        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[IdCont]		[int]			NOT NULL DEFAULT (0),
-        '''	[Contenedor]	[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Idmaeedo_Rela] [int]			NOT NULL DEFAULT (0),
-        '''	[Idmaeddo_Rela] [int]			NOT NULL DEFAULT (0),
-        '''	[Tido_Rela]		[char](3)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nudo_Rela]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Codigo]		[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[StcfiUd1]		[float]			NOT NULL DEFAULT (0),
-        '''	[StcfiUd2]		[fl [resto de la cadena truncado]&quot;;.
-        '''</summary>
-        Friend Shared ReadOnly Property Zw_Contenedor_StockProd() As String
-            Get
-                Return ResourceManager.GetString("Zw_Contenedor_StockProd", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Busca una cadena traducida similar a USE [#Base#]
-        '''
         '''
         '''CREATE TABLE [dbo].[Zw_Correos](
         '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
@@ -884,9 +863,8 @@ Namespace My.Resources
         '''	[Dias]			[int]			NOT NULL DEFAULT (0),
         '''	[FEmision]		[bit]			NOT NULL DEFAULT (0),
         '''	[FDespacho]		[bit]			NOT NULL DEFAULT (0),
-        ''' CONSTRAINT [PK_Zw_Demonio_Conf_Cerrar_Documentos] PRIMARY KEY CLUSTERED 
-        '''(
-        '''	 [resto de la cadena truncado]&quot;;.
+        '''    [Id_ConfCorreo] [int]			NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_Demonio_C [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Demonio_Conf_Cerrar_Documentos() As String
             Get
@@ -903,11 +881,11 @@ Namespace My.Resources
         '''	[NombreEquipo]				[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Id_Padre]					[int]			NOT NULL DEFAULT (0),
         '''	[EnviarCorreo]				[bit]			NOT NULL DEFAULT (0),
-        '''	[Nombre_ConfCorreo]			[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Id_Correo]					[int]			NOT NULL DEFAULT (0),
         '''	[Nombre_Correo]				[varchar](100)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Enviar_Remitente]			[bit]			NOT NULL DEFAULT (0),
-        '''	[MailRemitente]				[varchar](2 [resto de la cadena truncado]&quot;;.
+        '''	[MailRemitente]				[varchar](200)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Enviar_VendedorCliente]	[bit]		 [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Demonio_Conf_Correo() As String
             Get
@@ -1410,6 +1388,7 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Docu_Det](
+        '''    [Id]                [int]           IDENTITY(1,1) NOT NULL,
         '''	[Idmaeddo]			[int]			NOT NULL DEFAULT (0),
         '''	[Idmaeedo]			[int]			NOT NULL DEFAULT (0),
         '''	[Tido]				[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
@@ -1417,10 +1396,7 @@ Namespace My.Resources
         '''	[Codigo]			[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Descripcion]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[RtuVariable]		[bit]			NOT NULL DEFAULT (0),
-        ''' CONSTRAINT [PK_Zw_Docu_Det] PRIMARY KEY CLUSTERED 
-        '''(
-        '''	[Idmaeddo] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = O [resto de la cadena truncado]&quot;;.
+        '''    [Empresa]           [char](2)       NOT NULL DEFAULT ( [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Docu_Det() As String
             Get
@@ -3202,6 +3178,27 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_PreVenta_StockProd](
+        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[IdCont]		[int]			NOT NULL DEFAULT (0),
+        '''	[Contenedor]	[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Idmaeedo_Rela] [int]			NOT NULL DEFAULT (0),
+        '''	[Idmaeddo_Rela] [int]			NOT NULL DEFAULT (0),
+        '''	[Tido_Rela]		[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo_Rela]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]		[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[StcfiUd1]		[float]			NOT NULL DEFAULT (0),
+        '''	[StcfiUd2]		[floa [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_PreVenta_StockProd() As String
+            Get
+                Return ResourceManager.GetString("Zw_PreVenta_StockProd", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''
         '''CREATE TABLE [dbo].[Zw_Prod_Archivos](
         '''	[Id] [int] IDENTITY(1,1) NOT NULL,
@@ -3637,17 +3634,15 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_Prod_Ubicacion_IngSal](
         '''	[Id]					[int]			IDENTITY(1,1) NOT NULL,
-        '''	[Semilla]				[int]			NOT NULL,
-        '''	[Empresa]				[varchar](2)	NOT NULL,
-        '''	[Sucursal]				[varchar](3)	NOT NULL,
-        '''	[Bodega]				[varchar](3)	NOT NULL,
-        '''	[Id_Mapa]				[int]			NOT NULL,
-        '''	[Codigo_Sector]			[varchar](20)	NOT NULL,
-        '''	[Codigo_Ubic]			[varchar](20)	NOT NULL,
-        '''	[Codigo]				[char](13)		NOT NULL,
-        '''	[NombreEquipo]			[varchar](50)	NOT NULL,
-        '''	[CodFuncionario_Ing]	[char](3)		NOT NULL,
-        '''	[Ingreso]				[b [resto de la cadena truncado]&quot;;.
+        '''	[Semilla]				[int]			NOT NULL DEFAULT (0),
+        '''	[Empresa]				[varchar](2)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]				[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega]				[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Id_Mapa]				[int]			NOT NULL DEFAULT (0),
+        '''	[Codigo_Sector]			[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo_Ubic]			[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]				[char](13)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	 [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Prod_Ubicacion_IngSal() As String
             Get
@@ -4542,7 +4537,7 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_Stk_Grupos](
         '''	[Id]		[int]			IDENTITY(1,1) NOT NULL,
-        '''	[Grupo]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Grupo]		[varchar](80)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Id_Area]	[int]			NOT NULL DEFAULT (0),
         '''	[Id_Tipo]	[int]			NOT NULL DEFAULT (0),
         ''' CONSTRAINT [PK_Zw_Stk_Grupos] PRIMARY KEY CLUSTERED 

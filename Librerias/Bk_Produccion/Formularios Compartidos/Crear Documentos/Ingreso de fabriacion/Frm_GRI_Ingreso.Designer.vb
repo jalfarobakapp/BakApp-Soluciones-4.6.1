@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_GRI_Ingreso
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -31,6 +31,8 @@ Partial Class Frm_GRI_Ingreso
         Me.Btn_FabMezcla = New DevComponents.DotNetBar.ButtonX()
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_GRI = New DevComponents.DotNetBar.ButtonX()
+        Me.Btn_GDI = New DevComponents.DotNetBar.ButtonX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -45,9 +47,9 @@ Partial Class Frm_GRI_Ingreso
         Me.ReflectionImage1.ForeColor = System.Drawing.Color.Black
         Me.ReflectionImage1.Image = CType(resources.GetObject("ReflectionImage1.Image"), System.Drawing.Image)
         Me.ReflectionImage1.ImeMode = System.Windows.Forms.ImeMode.NoControl
-        Me.ReflectionImage1.Location = New System.Drawing.Point(16, 271)
+        Me.ReflectionImage1.Location = New System.Drawing.Point(16, 280)
         Me.ReflectionImage1.Name = "ReflectionImage1"
-        Me.ReflectionImage1.Size = New System.Drawing.Size(519, 101)
+        Me.ReflectionImage1.Size = New System.Drawing.Size(519, 92)
         Me.ReflectionImage1.TabIndex = 34
         '
         'Bar1
@@ -83,7 +85,7 @@ Partial Class Frm_GRI_Ingreso
         Me.BtnConfiguracion.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.BtnConfiguracion.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
         Me.BtnConfiguracion.Name = "BtnConfiguracion"
-        Me.BtnConfiguracion.Tooltip = "Configuraci�n de sistema"
+        Me.BtnConfiguracion.Tooltip = "Configuración de sistema"
         '
         'Btn_Ingresar_GRI
         '
@@ -94,7 +96,7 @@ Partial Class Frm_GRI_Ingreso
         Me.Btn_Ingresar_GRI.ImageAlt = CType(resources.GetObject("Btn_Ingresar_GRI.ImageAlt"), System.Drawing.Image)
         Me.Btn_Ingresar_GRI.Location = New System.Drawing.Point(64, 40)
         Me.Btn_Ingresar_GRI.Name = "Btn_Ingresar_GRI"
-        Me.Btn_Ingresar_GRI.Size = New System.Drawing.Size(411, 138)
+        Me.Btn_Ingresar_GRI.Size = New System.Drawing.Size(411, 76)
         Me.Btn_Ingresar_GRI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Ingresar_GRI.TabIndex = 32
         Me.Btn_Ingresar_GRI.Text = "<b>INGRESAR PRODUCTOS</b><br/> " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<b>FABRICADOS A BODEGA</b>"
@@ -107,9 +109,9 @@ Partial Class Frm_GRI_Ingreso
         Me.Btn_FabMezcla.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_FabMezcla.Image = CType(resources.GetObject("Btn_FabMezcla.Image"), System.Drawing.Image)
         Me.Btn_FabMezcla.ImageAlt = CType(resources.GetObject("Btn_FabMezcla.ImageAlt"), System.Drawing.Image)
-        Me.Btn_FabMezcla.Location = New System.Drawing.Point(64, 184)
+        Me.Btn_FabMezcla.Location = New System.Drawing.Point(64, 122)
         Me.Btn_FabMezcla.Name = "Btn_FabMezcla"
-        Me.Btn_FabMezcla.Size = New System.Drawing.Size(411, 81)
+        Me.Btn_FabMezcla.Size = New System.Drawing.Size(411, 76)
         Me.Btn_FabMezcla.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_FabMezcla.TabIndex = 35
         Me.Btn_FabMezcla.Text = "<b>FABRICAR MEZCLAS</b>"
@@ -141,11 +143,41 @@ Partial Class Frm_GRI_Ingreso
         Me.Lbl_Estatus.Name = "Lbl_Estatus"
         Me.Lbl_Estatus.Text = "LabelItem2"
         '
+        'Btn_GRI
+        '
+        Me.Btn_GRI.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_GRI.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_GRI.Enabled = False
+        Me.Btn_GRI.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_GRI.Location = New System.Drawing.Point(64, 204)
+        Me.Btn_GRI.Name = "Btn_GRI"
+        Me.Btn_GRI.Size = New System.Drawing.Size(196, 61)
+        Me.Btn_GRI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_GRI.TabIndex = 73
+        Me.Btn_GRI.Text = "<b>Crear GRI</b>"
+        Me.Btn_GRI.Visible = False
+        '
+        'Btn_GDI
+        '
+        Me.Btn_GDI.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_GDI.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_GDI.Enabled = False
+        Me.Btn_GDI.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Btn_GDI.Location = New System.Drawing.Point(266, 204)
+        Me.Btn_GDI.Name = "Btn_GDI"
+        Me.Btn_GDI.Size = New System.Drawing.Size(209, 61)
+        Me.Btn_GDI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_GDI.TabIndex = 74
+        Me.Btn_GDI.Text = "<b>Crear GDI</b>"
+        Me.Btn_GDI.Visible = False
+        '
         'Frm_GRI_Ingreso
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(547, 455)
+        Me.Controls.Add(Me.Btn_GDI)
+        Me.Controls.Add(Me.Btn_GRI)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.Controls.Add(Me.Btn_FabMezcla)
@@ -174,4 +206,6 @@ Partial Class Frm_GRI_Ingreso
     Friend WithEvents Btn_FabMezcla As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Metro_Bar_Color As DevComponents.DotNetBar.Metro.MetroStatusBar
     Friend WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_GRI As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Btn_GDI As DevComponents.DotNetBar.ButtonX
 End Class

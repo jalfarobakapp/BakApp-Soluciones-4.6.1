@@ -260,6 +260,8 @@ Public Class Frm_Filtro_Especial_Informes
         Rdb_Mostrar_Solo_Tickeados.Visible = _Requiere_Seleccion
         Rdb_Mostrar_Todos.Visible = _Requiere_Seleccion
 
+        Btn_MarcarMasiva_Excel.Visible = Not _Seleccionar_Solo_Uno
+
         Sb_Cargar_Datos()
 
         With Grilla

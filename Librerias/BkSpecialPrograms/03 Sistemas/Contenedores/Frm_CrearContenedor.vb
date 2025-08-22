@@ -62,7 +62,7 @@ Public Class Frm_CrearContenedor
         With Zw_Contenedor
             .Contenedor = Txt_Contenedor.Text
             .NombreContenedor = Txt_NombreContenedor.Text
-            .Estado = "Activo"
+            .Estado = "Abierto"
         End With
 
         If Zw_Contenedor.IdCont = 0 Then

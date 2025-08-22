@@ -1,4 +1,4 @@
-﻿Public Class Frm_ProdContenedorPreVta
+﻿Public Class Frm_PreVenta_Productos
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -9,9 +9,10 @@
 
     Dim _Cl_Contenedor As New Cl_Contenedor
 
+    Public Property ModoSeleccion As Boolean
+    Public Property ModoPreVenta As Boolean
     Public Property Seleccionado As Boolean
     Public Property RowProducto As DataRow
-
     Public Property Cl_PreVenta As New PreVenta.Cl_PreVenta
 
     Public Sub New(_Empresa As String, _IdCont As Integer, _Contenedor As String)
@@ -41,6 +42,8 @@
 
         Sb_Actualizar_Grilla()
 
+        Btn_Grabar.Visible = Not ModoSeleccion
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
@@ -51,9 +54,8 @@
         '    _Condicion = " And Estado = 'Abierto'"
         'End If
 
-        Consulta_sql = "Select Id,Empresa,IdCont,Contenedor,Codigo,NOKOPR,CLALIBPR,StcfiDisponibleUd1,StcfiDisponibleUd2," &
-                       "StcCompUd1,StcCompUd2,StcfiDisponibleUd1-StcCompUd1 As StDispUd1,FormatoPqte,Ud1XPqte,CantMinFormato,Moneda,PrecioXUd1" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Contenedor_StockProd p" & vbCrLf &
+        Consulta_sql = "Select *,StcfiDisponibleUd1-StcCompUd1 As StDispUd1,PqteHabilitado-PqteComprometido As 'PqteDisponible'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_PreVenta_StockProd p" & vbCrLf &
                        "Inner Join MAEPR m On m.KOPR = p.Codigo" & vbCrLf &
                        "Where Empresa = '" & _Empresa & "' And IdCont = " & _IdCont & " And Contenedor = '" & _Contenedor & "'"
 
@@ -91,11 +93,23 @@
             .Columns("NOKOPR").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("FormatoPqte").Width = 80
-            '.Columns("FormatoPqte").HeaderText = "Form.Vnta"
-            '.Columns("FormatoPqte").Visible = True
-            '.Columns("FormatoPqte").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            If Not ModoSeleccion Then
+
+                .Columns("StcfiUd1").Width = 70
+                .Columns("StcfiUd1").HeaderText = "Disponible Ud1"
+                .Columns("StcfiUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("StcfiUd1").DefaultCellStyle.Format = "##,###0.##"
+                .Columns("StcfiUd1").Visible = True
+                .Columns("StcfiUd1").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+            End If
+
+            .Columns("FormatoPqte").Width = 80
+            .Columns("FormatoPqte").HeaderText = "Form.Vnta"
+            .Columns("FormatoPqte").Visible = True
+            .Columns("FormatoPqte").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Ud1XPqte").Width = 60
             .Columns("Ud1XPqte").HeaderText = "Ud1XPallet"
@@ -105,7 +119,7 @@
             .Columns("Ud1XPqte").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("CantMinFormato").Width = 60
+            .Columns("CantMinFormato").Width = 70
             .Columns("CantMinFormato").HeaderText = "Cant.Min.Vta XForm."
             .Columns("CantMinFormato").ToolTipText = "Cantidad Minima de venta por Pallet."
             .Columns("CantMinFormato").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -114,12 +128,42 @@
             .Columns("CantMinFormato").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("StDispUd1").Width = 70
-            .Columns("StDispUd1").HeaderText = "Disponible Ud1"
-            .Columns("StDispUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("StDispUd1").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("StDispUd1").Visible = True
-            .Columns("StDispUd1").DisplayIndex = _DisplayIndex
+            .Columns("PqteHabilitado").Width = 70
+            .Columns("PqteHabilitado").HeaderText = "Habilitado"
+            .Columns("PqteHabilitado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PqteHabilitado").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PqteHabilitado").Visible = True
+            .Columns("PqteHabilitado").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("PqteComprometido").Width = 70
+            .Columns("PqteComprometido").HeaderText = "Comprometido"
+            .Columns("PqteComprometido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PqteComprometido").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PqteComprometido").Visible = True
+            .Columns("PqteComprometido").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("PqteDisponible").Width = 70
+            .Columns("PqteDisponible").HeaderText = "Disponible"
+            .Columns("PqteDisponible").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PqteDisponible").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PqteDisponible").Visible = True
+            .Columns("PqteDisponible").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Moneda").Width = 30
+            .Columns("Moneda").HeaderText = "M."
+            .Columns("Moneda").Visible = True
+            .Columns("Moneda").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("PrecioXUd1").Width = 70
+            .Columns("PrecioXUd1").HeaderText = "Precio"
+            .Columns("PrecioXUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PrecioXUd1").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PrecioXUd1").Visible = True
+            .Columns("PrecioXUd1").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
@@ -138,19 +182,61 @@
 
             .Id = _Fila.Cells("Id").Value
             .IdCont = _IdCont
+            .Codigo = _Fila.Cells("Codigo").Value
+            .Descripcion = _Fila.Cells("NOKOPR").Value
             .Contenedor = _Fila.Cells("Contenedor").Value
             .CantMinFormato = _Fila.Cells("CantMinFormato").Value
             .FormatoPqte = _Fila.Cells("FormatoPqte").Value
+            .StcfiUd1 = _Fila.Cells("StcfiUd1").Value
             .StDispUd1 = _Fila.Cells("StDispUd1").Value
+            .PqteHabilitado = _Fila.Cells("PqteHabilitado").Value
+            .PqteComprometido = _Fila.Cells("PqteComprometido").Value
+            .PqteDisponible = _Fila.Cells("PqteDisponible").Value
             .Ud1XPqte = _Fila.Cells("Ud1XPqte").Value
             .Cantidad = _Fila.Cells("CantMinFormato").Value
             .CantMinFormato = _Fila.Cells("CantMinFormato").Value
+            .Moneda = _Fila.Cells("Moneda").Value
             .PrecioXUd1 = _Fila.Cells("PrecioXUd1").Value
 
         End With
 
-        Seleccionado = True
-        Me.Close()
+        If ModoSeleccion Then
+            Seleccionado = True
+            Me.Close()
+        End If
+
+        If ModoPreVenta Then
+
+            Dim Fm As New Frm_PreVenta_IngDet
+            Fm.Cl_PreVenta = Cl_PreVenta
+            Fm.ShowDialog(Me)
+
+            If Fm.Grabar Then
+
+                Cl_PreVenta = Fm.Cl_PreVenta
+
+                With Cl_PreVenta
+
+                    _Fila.Cells("Id").Value = .Id
+                    _IdCont = .IdCont
+                    _Fila.Cells("Contenedor").Value = .Contenedor
+                    _Fila.Cells("CantMinFormato").Value = .CantMinFormato
+                    _Fila.Cells("FormatoPqte").Value = .FormatoPqte
+                    _Fila.Cells("PqteHabilitado").Value = .PqteHabilitado
+                    _Fila.Cells("PqteDisponible").Value = .PqteHabilitado - _Fila.Cells("PqteComprometido").Value
+                    _Fila.Cells("Ud1XPqte").Value = .Ud1XPqte
+                    _Fila.Cells("CantMinFormato").Value = .Cantidad
+                    _Fila.Cells("CantMinFormato").Value = .CantMinFormato
+                    _Fila.Cells("Moneda").Value = .Moneda
+                    _Fila.Cells("PrecioXUd1").Value = .PrecioXUd1
+
+                End With
+
+            End If
+
+            Fm.Dispose()
+
+        End If
 
     End Sub
 
@@ -179,6 +265,9 @@
     Private Sub Frm_ProdContenedorPreVta_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
+        End If
+        If e.KeyValue = Keys.F5 Then
+            Sb_Actualizar_Grilla()
         End If
     End Sub
 

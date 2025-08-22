@@ -89,7 +89,7 @@ Public Class Frm_Consolidacion_Stock_PP
             Consulta_sql = "SELECT EMPRESA,KOSU,KOBO FROM TABBOPR" & Space(1) &
                            "WHERE KOPR = '" & _Codigo & "'" & vbCrLf &
                            "AND EMPRESA+KOSU+KOBO IN (SELECT DISTINCT EMPRESA+SULIDO+BOSULIDO" & Space(1) &
-                           "FROM MAEDDO WHERE KOPRCT = '" & _Codigo & "')"
+                           "FROM MAEDDO WHERE KOPRCT = '" & _Codigo & "' And EMPRESA = '" & Mod_Empresa & "')"
             Dim _TblBodegasPP As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             LblEstado.Text = "Producto: " & _Codigo & " - " & _Descripcion

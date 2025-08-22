@@ -2,12 +2,12 @@
 Imports DevComponents.DotNetBar
 Public Module Modulo_Documentos
 
-    Sub Sb_Generar_Documento(_Fm_Menu_Padre As Metro.MetroAppForm,
+    Sub Sb_Generar_Documento(_Fm_Menu_Padre As Object,
                              _Tido As String,
                              _Minimizar As Boolean,
                              _Tipo_Documento As csGlobales.Enum_Tipo_Documento,
                              _SubTido As String)
-
+        '_Fm_Menu_Padre As Metro.MetroAppForm
         Dim _Permiso As String = Fx_PermisoRegistroDoc(_Tido)
 
         If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso) Then Return
@@ -95,7 +95,7 @@ Public Module Modulo_Documentos
 
     End Sub
 
-    Function Fx_Tiene_Permiso_Generar_Documento(_Fm_Menu_Padre As Metro.MetroAppForm, _Tido As String, _SubTido As String) As Boolean
+    Function Fx_Tiene_Permiso_Generar_Documento(_Fm_Menu_Padre As Object, _Tido As String, _SubTido As String) As Boolean
 
         Dim _CodPermiso As String
 

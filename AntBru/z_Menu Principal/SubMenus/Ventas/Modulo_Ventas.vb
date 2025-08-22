@@ -101,7 +101,7 @@ Public Class Modulo_Ventas
 
     End Sub
 
-    Private Sub Btn_Pago_Documentos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Pago_Documentos.Click
+    Private Sub Btn_Pago_Documentos_Click(sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Pago_Documentos.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pcli0001") Then
 
