@@ -5130,15 +5130,47 @@ Public Class Frm_Ver_Documento
         Dim _IdCont = _Cl_Contenedor.Zw_Contenedor.IdCont
         Dim _Empresa = _Cl_Contenedor.Zw_Contenedor.Empresa
         Dim _Contenedor = _Cl_Contenedor.Zw_Contenedor.Contenedor
+        Dim _MonedaVenta = _Cl_Contenedor.Zw_Contenedor.MonedaVenta
 
         If Not CBool(_IdCont) Then
             MessageBoxEx.Show(Me, "No hay un contenedor asociado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
-        _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
+        If String.IsNullOrEmpty(_MonedaVenta) Then
+
+            MessageBoxEx.Show(Me, "Falta la moneda de venta para el contenedor", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+            _Filtrar.Tabla = "TABMO"
+            _Filtrar.Campo = "KOMO"
+            _Filtrar.Descripcion = "NOKOMO"
+
+            Dim _Komo As String
+            Dim _Nokomo As String
+
+            If _Filtrar.Fx_Filtrar(Nothing,
+                                   Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And KOMO In (Select Distinct KOMO From MAEMO Where TIMO = 'E')",
+                                   Nothing, False, True) Then
+
+                Dim _Tbl_Modena As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+                Dim _Row As DataRow = _Tbl_Modena.Rows(0)
+
+                _Komo = _Row.Item("Codigo").ToString.Trim
+                _Nokomo = _Row.Item("Descripcion").ToString.Trim
+
+                _Cl_Contenedor.Zw_Contenedor.MonedaVenta = _Komo
+
+            End If
+
+        End If
+
+        '_Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
 
         Dim Fm As New Frm_PreVenta_Productos(_Empresa, _IdCont, _Contenedor)
+        Fm.Cl_Contenedor = _Cl_Contenedor
         Fm.ModoPreVenta = True
         Fm.ShowDialog(Me)
         Fm.Dispose()

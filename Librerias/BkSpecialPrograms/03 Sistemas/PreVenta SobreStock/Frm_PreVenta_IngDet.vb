@@ -5,7 +5,9 @@ Public Class Frm_PreVenta_IngDet
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public Property Cl_PreVenta As New PreVenta.Cl_PreVenta
+
+    Public Property Cl_Contenedor As New Cl_Contenedor
+    Public Property _Zw_PreVenta_StockProd As New Zw_PreVenta_StockProd
     Public Property Grabar As Boolean
 
     Dim _Row_Producto As DataRow
@@ -23,7 +25,7 @@ Public Class Frm_PreVenta_IngDet
 
     Private Sub Frm_PreVenta_IngDet_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        With Cl_PreVenta
+        With _Zw_PreVenta_StockProd
 
             Consulta_sql = "Select * From MAEPR Where KOPR = '" & .Codigo & "'"
             _Row_Producto = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -34,11 +36,14 @@ Public Class Frm_PreVenta_IngDet
             Input_PqteHabilitado.Value = .PqteHabilitado
             DInput_Ud1XPqte.Value = .Ud1XPqte
             Input_CantMinFormato.Value = .CantMinFormato
-            Txt_Moneda.Text = .Moneda
+            Txt_Moneda.Text = Cl_Contenedor.Zw_Contenedor.MonedaVenta '.Moneda
             DInput_PrecioXUd1.Value = .PrecioXUd1
             Lbl_StcfiUd1.Text = _Row_Producto.Item("UD01PR").ToString.Trim & " Disponibles: " & .StcfiUd1.ToString("#,##")
 
         End With
+
+        Txt_FormatoPqte.ReadOnly = True
+        ActiveControl = DInput_Ud1XPqte
 
     End Sub
 
@@ -47,8 +52,10 @@ Public Class Frm_PreVenta_IngDet
         Dim _KilosHabilitados As Double
         Dim _PqtesMaximo As Double
         Dim _Ud = _Row_Producto.Item("UD01PR")
+        Dim _Rtu = _Row_Producto.Item("RLUD")
 
-        With Cl_PreVenta
+        With _Zw_PreVenta_StockProd
+
             .Codigo = Txt_Codigo.Text
             .Descripcion = Txt_Descripcion.Text
             .FormatoPqte = Txt_FormatoPqte.Text
@@ -60,6 +67,9 @@ Public Class Frm_PreVenta_IngDet
 
             _KilosHabilitados = .Ud1XPqte * .PqteHabilitado
             _PqtesMaximo = .StcfiUd1 / .Ud1XPqte
+
+            .StcfiDisponibleUd1 = _KilosHabilitados
+            .StcfiDisponibleUd2 = _KilosHabilitados / _Rtu
 
             If String.IsNullOrWhiteSpace(.Codigo) Then
                 MessageBoxEx.Show(Me, "Falta el código del producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -77,12 +87,12 @@ Public Class Frm_PreVenta_IngDet
                 Return
             End If
             If .Ud1XPqte <= 0 Then
-                MessageBoxEx.Show(Me, "La cantidad de " & _Ud & " por paquete debe ser mayor a cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "La cantidad de " & _Ud & " por " & .FormatoPqte & " debe ser mayor a cero", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 DInput_Ud1XPqte.Focus()
                 Return
             End If
             If .Ud1XPqte > .StcfiUd1 Then
-                MessageBoxEx.Show(Me, "La cantidad de " & _Ud & " por paquete no puede ser mayor que " & FormatNumber(.StcfiUd1, 0), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                MessageBoxEx.Show(Me, "La cantidad de " & _Ud & " por " & .FormatoPqte & " no puede ser mayor que " & FormatNumber(.StcfiUd1, 0), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 DInput_Ud1XPqte.Focus()
                 Return
             End If
@@ -112,7 +122,7 @@ Public Class Frm_PreVenta_IngDet
                 Dim _Msj As String
 
                 _Msj = "No es posible habilitar " & .PqteHabilitado & " " & .FormatoPqte & " para la venta." & vbCrLf & vbCrLf &
-                       "El máximo permitido es " & _PqtesMaximo & " " & .FormatoPqte & ", según el cálculo de " & .Ud1XPqte & " " & _Ud & " por " & .FormatoPqte & " y un " & vbCrLf &
+                       "El máximo permitido es " & Math.Round(_PqtesMaximo, 0) & " " & .FormatoPqte & ", según el cálculo de " & .Ud1XPqte & " " & _Ud & " por " & .FormatoPqte & " y un " & vbCrLf &
                        "stock disponible de " & FormatNumber(.StcfiUd1, 0) & " " & _Ud & "."
                 MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Input_PqteHabilitado.Focus()

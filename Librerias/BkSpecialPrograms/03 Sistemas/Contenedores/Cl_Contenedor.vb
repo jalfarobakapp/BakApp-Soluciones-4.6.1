@@ -32,6 +32,8 @@ Public Class Cl_Contenedor
                 .Nudo_Rela = _Row.Item("Nudo_Rela")
                 .Idmaeedo_Rela = _Row.Item("Idmaeedo_Rela")
                 .Estado = _Row.Item("Estado")
+                .FechaLibVenta = If(IsDBNull(_Row.Item("FechaLibVenta")), CDate("01/01/1900"), _Row.Item("FechaLibVenta"))
+                .MonedaVenta = _Row.Item("MonedaVenta")
 
             End If
 
@@ -62,6 +64,8 @@ Public Class Cl_Contenedor
             .Nudo_Rela = _Row.Item("Nudo_Rela")
             .Idmaeedo_Rela = _Row.Item("Idmaeedo_Rela")
             .Estado = _Row.Item("Estado")
+            .FechaLibVenta = If(IsDBNull(_Row.Item("FechaLibVenta")), CDate("01/01/1900"), _Row.Item("FechaLibVenta"))
+            .MonedaVenta = _Row.Item("MonedaVenta")
 
         End With
 
@@ -89,6 +93,8 @@ Public Class Cl_Contenedor
                 .Nudo_Rela = _Row.Item("Nudo_Rela")
                 .Idmaeedo_Rela = _Row.Item("Idmaeedo_Rela")
                 .Estado = _Row.Item("Estado")
+                .FechaLibVenta = If(IsDBNull(_Row.Item("FechaLibVenta")), CDate("01/01/1900"), _Row.Item("FechaLibVenta"))
+                .MonedaVenta = _Row.Item("MonedaVenta")
 
             End If
 
@@ -110,6 +116,7 @@ Public Class Cl_Contenedor
         End If
 
         With _Zw_Contenedor_DocTom
+
             .Id = _Row.Item("Id")
             .IdCont = _Row.Item("IdCont")
             .Contenedor = _Row.Item("Contenedor")
@@ -117,6 +124,7 @@ Public Class Cl_Contenedor
             .Fecha_Hora = _Row.Item("Fecha_Hora")
             .NombreEquipo = _Row.Item("NombreEquipo")
             .Id_DocEnc = _Row.Item("Id_DocEnc")
+
         End With
 
         Return _Zw_Contenedor_DocTom
@@ -511,6 +519,110 @@ Public Class Cl_Contenedor
             _Mensaje.Mensaje = ex.Message
             _Mensaje.EsCorrecto = False
             _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Grabar_Detalle_En_Contenedor_Documento(_Zw_Contenedor As Zw_Contenedor,
+                                                       _Ls_Zw_PreVenta_StockProd As List(Of Zw_PreVenta_StockProd)) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        _Mensaje.Detalle = "Relacionar contenedor con documento"
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            'Consulta_sql = "Select IDMAEEDO,TIDO,NUDO From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+            'Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            'If IsNothing(_Row) Then
+            '    Throw New System.Exception("Documento no encontrado")
+            'End If
+
+            If Not IsNothing(_Zw_Contenedor) Then
+
+                Dim _Contenedor As New Zw_Contenedor
+
+                _Contenedor = Fx_Llenar_Contenedor(_Zw_Contenedor.IdCont)
+
+                If IsNothing(_Contenedor) Then
+                    Throw New System.Exception("Contenedor no encontrado")
+                End If
+
+                'If Not String.IsNullOrWhiteSpace(_Contenedor.Tido_Rela) Then
+                '    Throw New System.Exception("El Contenedor ya tiene un documento relacionado" & vbCrLf &
+                '                               "Documento: " & _Contenedor.Tido_Rela & "-" & _Contenedor.Nudo_Rela)
+                'End If
+
+                myTrans = Cn2.BeginTransaction()
+
+                With _Zw_Contenedor
+
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Contenedor Set " &
+                                   "Empresa = '" & .Empresa & "'" &
+                                   ",Estado = 'Abierto'" &
+                                   ",FechaLibVenta = '" & Format(.FechaLibVenta, "yyyyMMdd") & "'" &
+                                   ",MonedaVenta = '" & .MonedaVenta & "'" & vbCrLf &
+                                   "Where IdCont = " & .IdCont
+
+                End With
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End If
+
+            For Each _Producto As Zw_PreVenta_StockProd In _Ls_Zw_PreVenta_StockProd
+
+                With _Producto
+
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_PreVenta_StockProd Set " &
+                                   "StcfiDisponibleUd1 = " & De_Num_a_Tx_01(.StcfiDisponibleUd1, False, 5) &
+                                   ",StcfiDisponibleUd2 = " & De_Num_a_Tx_01(.StcfiDisponibleUd2, False, 5) &
+                                   ",FormatoPqte = '" & .FormatoPqte & "'" &
+                                   ",PqteHabilitado = " & De_Num_a_Tx_01(.PqteHabilitado, False, 5) &
+                                   ",PqteComprometido = " & De_Num_a_Tx_01(.PqteComprometido, False, 5) &
+                                   ",Ud1XPqte = " & De_Num_a_Tx_01(.Ud1XPqte, False, 5) &
+                                   ",CantMinFormato = " & De_Num_a_Tx_01(.CantMinFormato, False, 5) &
+                                   ",Moneda = '" & .Moneda & "'" &
+                                   ",PrecioXUd1 = " & De_Num_a_Tx_01(.Ud1XPqte, False, 5) & vbCrLf &
+                                   "Where Id = " & .Id
+
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                End With
+
+            Next
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje.Mensaje = "Pre-Venta/Sobre Stock actualizado correctamente"
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Icono = MessageBoxIcon.Error
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
         End Try
 
         Return _Mensaje

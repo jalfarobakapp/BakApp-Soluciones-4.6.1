@@ -25,7 +25,6 @@ Partial Class Frm_PreVenta_IngDet
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_PreVenta_IngDet))
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Salir = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_FormatoPqte = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Lbl_UDisponibles = New DevComponents.DotNetBar.LabelX()
@@ -55,7 +54,7 @@ Partial Class Frm_PreVenta_IngDet
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Salir})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
         Me.Bar1.Location = New System.Drawing.Point(0, 255)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(558, 41)
@@ -73,15 +72,6 @@ Partial Class Frm_PreVenta_IngDet
         Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.Name = "Btn_Grabar"
         Me.Btn_Grabar.Tooltip = "Grabar"
-        '
-        'Btn_Salir
-        '
-        Me.Btn_Salir.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Salir.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        Me.Btn_Salir.Image = CType(resources.GetObject("Btn_Salir.Image"), System.Drawing.Image)
-        Me.Btn_Salir.ImageAlt = CType(resources.GetObject("Btn_Salir.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Salir.Name = "Btn_Salir"
-        Me.Btn_Salir.Tooltip = "Grabar  - ( Sin imprimir )"
         '
         'LabelX1
         '
@@ -178,8 +168,7 @@ Partial Class Frm_PreVenta_IngDet
         '
         Me.Txt_Moneda.Border.Class = "TextBoxBorder"
         Me.Txt_Moneda.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Moneda.ButtonCustom.Image = CType(resources.GetObject("TextBoxX3.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Moneda.ButtonCustom.Visible = True
+        Me.Txt_Moneda.ButtonCustom.Image = CType(resources.GetObject("Txt_Moneda.ButtonCustom.Image"), System.Drawing.Image)
         Me.Txt_Moneda.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Moneda.ForeColor = System.Drawing.Color.Black
         Me.Txt_Moneda.Location = New System.Drawing.Point(163, 189)
@@ -270,12 +259,14 @@ Partial Class Frm_PreVenta_IngDet
         '
         'DInput_Ud1XPqte
         '
+        Me.DInput_Ud1XPqte.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.DInput_Ud1XPqte.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.DInput_Ud1XPqte.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.DInput_Ud1XPqte.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.DInput_Ud1XPqte.ForeColor = System.Drawing.Color.Black
         Me.DInput_Ud1XPqte.Increment = 1.0R
         Me.DInput_Ud1XPqte.Location = New System.Drawing.Point(163, 105)
         Me.DInput_Ud1XPqte.MinValue = 0R
@@ -286,12 +277,14 @@ Partial Class Frm_PreVenta_IngDet
         '
         'DInput_PrecioXUd1
         '
+        Me.DInput_PrecioXUd1.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.DInput_PrecioXUd1.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.DInput_PrecioXUd1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.DInput_PrecioXUd1.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.DInput_PrecioXUd1.ForeColor = System.Drawing.Color.Black
         Me.DInput_PrecioXUd1.Increment = 0.1R
         Me.DInput_PrecioXUd1.Location = New System.Drawing.Point(163, 216)
         Me.DInput_PrecioXUd1.MinValue = 0R
@@ -316,12 +309,14 @@ Partial Class Frm_PreVenta_IngDet
         '
         'Input_PqteHabilitado
         '
+        Me.Input_PqteHabilitado.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Input_PqteHabilitado.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.Input_PqteHabilitado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_PqteHabilitado.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_PqteHabilitado.ForeColor = System.Drawing.Color.Black
         Me.Input_PqteHabilitado.Location = New System.Drawing.Point(163, 134)
         Me.Input_PqteHabilitado.Name = "Input_PqteHabilitado"
         Me.Input_PqteHabilitado.ShowUpDown = True
@@ -330,12 +325,14 @@ Partial Class Frm_PreVenta_IngDet
         '
         'Input_CantMinFormato
         '
+        Me.Input_CantMinFormato.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Input_CantMinFormato.BackgroundStyle.Class = "DateTimeInputBackground"
         Me.Input_CantMinFormato.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_CantMinFormato.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_CantMinFormato.ForeColor = System.Drawing.Color.Black
         Me.Input_CantMinFormato.Location = New System.Drawing.Point(163, 162)
         Me.Input_CantMinFormato.Name = "Input_CantMinFormato"
         Me.Input_CantMinFormato.ShowUpDown = True
@@ -386,7 +383,6 @@ Partial Class Frm_PreVenta_IngDet
 
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Salir As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Line1 As DevComponents.DotNetBar.Controls.Line
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_FormatoPqte As DevComponents.DotNetBar.Controls.TextBoxX

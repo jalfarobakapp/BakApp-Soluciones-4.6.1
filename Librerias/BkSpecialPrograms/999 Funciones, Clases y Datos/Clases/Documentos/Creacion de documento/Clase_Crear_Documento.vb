@@ -184,7 +184,7 @@ Public Class Clase_Crear_Documento
 
 #End Region
 
-    Public Property Ls_Cl_PreVenta As New List(Of PreVenta.Cl_PreVenta)
+    Public Property Ls_Cl_PreVenta As New List(Of Zw_PreVenta_StockProd)
 
 #Region "FUNCION CREAR DOCUMENTO RANDOM DEFINITIVO"
 
@@ -1301,17 +1301,21 @@ Public Class Clase_Crear_Documento
 
                             If _PreVenta Then
 
-                                Dim _Cl_PreVenta As PreVenta.Cl_PreVenta = Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
+                                Dim _Zw_PreVenta_StockProd As Zw_PreVenta_StockProd = Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
+
+                                Dim _PqteComprometido As String = De_Num_a_Tx_01(_Zw_PreVenta_StockProd.Cantidad, False, 5)
 
                                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_PreVenta_StockProd Set " &
-                                               "StcCompUd1 = " & _Caprco1 & ",StcCompUd2 = " & _Caprco2 & vbCrLf &
-                                               "Where Id = " & _Cl_PreVenta.Id
+                                               "PqteComprometido = PqteComprometido+" & _PqteComprometido &
+                                               ",StcCompUd1 = StcCompUd1+" & _Caprco1 &
+                                               ",StcCompUd2 = StcCompUd2+" & _Caprco2 & vbCrLf &
+                                               "Where Id = " & _Zw_PreVenta_StockProd.Id
                                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                 Comando.Transaction = myTrans
                                 Comando.ExecuteNonQuery()
 
                                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
-                                               "IdCont = " & _Cl_PreVenta.IdCont & ",Contenedor = '" & _Cl_PreVenta.Contenedor & "'" & vbCrLf &
+                                               "IdCont = " & _Zw_PreVenta_StockProd.IdCont & ",Contenedor = '" & _Zw_PreVenta_StockProd.Contenedor & "'" & vbCrLf &
                                                "Where Id = " & _Id
                                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                 Comando.Transaction = myTrans

@@ -1,4 +1,7 @@
-﻿Public Class Frm_PreVenta_Productos
+﻿Imports BkSpecialPrograms.PreVenta
+Imports DevComponents.DotNetBar
+
+Public Class Frm_PreVenta_Productos
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -7,13 +10,12 @@
     Private _IdCont As Integer
     Private _Contenedor As String
 
-    Dim _Cl_Contenedor As New Cl_Contenedor
-
+    Public Property Cl_Contenedor As New Cl_Contenedor
     Public Property ModoSeleccion As Boolean
     Public Property ModoPreVenta As Boolean
     Public Property Seleccionado As Boolean
     Public Property RowProducto As DataRow
-    Public Property Cl_PreVenta As New PreVenta.Cl_PreVenta
+    Public Property _Zw_PreVenta_StockProd As New Zw_PreVenta_StockProd
 
     Public Sub New(_Empresa As String, _IdCont As Integer, _Contenedor As String)
 
@@ -29,20 +31,25 @@
         Sb_Formato_Generico_Grilla(Grilla_Contenedores, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
         Sb_Color_Botones_Barra(Bar1)
 
-        _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
+        Cl_Contenedor.Zw_Contenedor = Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
 
     End Sub
 
     Private Sub Frm_ProdContenedorPreVta_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Me.Text = "CONTENEDOR: " & _Cl_Contenedor.Zw_Contenedor.Contenedor & " - " & _Cl_Contenedor.Zw_Contenedor.NombreContenedor
+        Me.Text = "CONTENEDOR: " & Cl_Contenedor.Zw_Contenedor.Contenedor & " - " & Cl_Contenedor.Zw_Contenedor.NombreContenedor
 
         AddHandler Grilla_Contenedores.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Contenedores.KeyDown, AddressOf Sb_Grilla_KeyDown
 
         Sb_Actualizar_Grilla()
 
-        Btn_Grabar.Visible = Not ModoSeleccion
+        Txt_Moneda.Text = Cl_Contenedor.Zw_Contenedor.MonedaVenta
+        Txt_Moneda.Enabled = Not ModoSeleccion
+        Dtp_FechaLibVenta.Enabled = Not ModoSeleccion
+        Dtp_FechaLibVenta.Value = Cl_Contenedor.Zw_Contenedor.FechaLibVenta
+        Btn_Grabar.Visible = ModoPreVenta
+        Btn_Salir.Visible = ModoSeleccion
 
     End Sub
 
@@ -54,7 +61,8 @@
         '    _Condicion = " And Estado = 'Abierto'"
         'End If
 
-        Consulta_sql = "Select *,StcfiDisponibleUd1-StcCompUd1 As StDispUd1,PqteHabilitado-PqteComprometido As 'PqteDisponible'" & vbCrLf &
+        Consulta_sql = "Select *,StcfiDisponibleUd1-StcCompUd1 As StDispUd1," &
+                       "PqteHabilitado-PqteComprometido As 'PqteDisponible',Cast(0 As Float) As Cantidad" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_PreVenta_StockProd p" & vbCrLf &
                        "Inner Join MAEPR m On m.KOPR = p.Codigo" & vbCrLf &
                        "Where Empresa = '" & _Empresa & "' And IdCont = " & _IdCont & " And Contenedor = '" & _Contenedor & "'"
@@ -178,44 +186,58 @@
         Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
         RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        With Cl_PreVenta
+        _Zw_PreVenta_StockProd = New Zw_PreVenta_StockProd
+
+        With _Zw_PreVenta_StockProd
 
             .Id = _Fila.Cells("Id").Value
             .IdCont = _IdCont
+            .Empresa = Cl_Contenedor.Zw_Contenedor.Empresa
+            .Sucursal = String.Empty
+            .Bodega = String.Empty
             .Codigo = _Fila.Cells("Codigo").Value
             .Descripcion = _Fila.Cells("NOKOPR").Value
             .Contenedor = _Fila.Cells("Contenedor").Value
             .CantMinFormato = _Fila.Cells("CantMinFormato").Value
-            .FormatoPqte = _Fila.Cells("FormatoPqte").Value
+            .FormatoPqte = IIf(String.IsNullOrEmpty(_Fila.Cells("FormatoPqte").Value), "Pallet", _Fila.Cells("FormatoPqte").Value)
             .StcfiUd1 = _Fila.Cells("StcfiUd1").Value
             .StDispUd1 = _Fila.Cells("StDispUd1").Value
             .PqteHabilitado = _Fila.Cells("PqteHabilitado").Value
             .PqteComprometido = _Fila.Cells("PqteComprometido").Value
             .PqteDisponible = _Fila.Cells("PqteDisponible").Value
             .Ud1XPqte = _Fila.Cells("Ud1XPqte").Value
-            .Cantidad = _Fila.Cells("CantMinFormato").Value
+            .Cantidad = _Fila.Cells("Cantidad").Value
             .CantMinFormato = _Fila.Cells("CantMinFormato").Value
-            .Moneda = _Fila.Cells("Moneda").Value
+            .Moneda = Cl_Contenedor.Zw_Contenedor.MonedaVenta
             .PrecioXUd1 = _Fila.Cells("PrecioXUd1").Value
 
         End With
 
         If ModoSeleccion Then
+
+            If _Fila.Cells("PqteDisponible").Value = 0 Then
+                MessageBoxEx.Show(Me, "No hay stock disponible de este producto para la venta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                RowProducto = Nothing
+                Return
+            End If
+
             Seleccionado = True
             Me.Close()
+
         End If
 
         If ModoPreVenta Then
 
             Dim Fm As New Frm_PreVenta_IngDet
-            Fm.Cl_PreVenta = Cl_PreVenta
+            Fm._Zw_PreVenta_StockProd = _Zw_PreVenta_StockProd
+            Fm.Cl_Contenedor = Cl_Contenedor
             Fm.ShowDialog(Me)
 
             If Fm.Grabar Then
 
-                Cl_PreVenta = Fm.Cl_PreVenta
+                _Zw_PreVenta_StockProd = Fm._Zw_PreVenta_StockProd
 
-                With Cl_PreVenta
+                With _Zw_PreVenta_StockProd
 
                     _Fila.Cells("Id").Value = .Id
                     _IdCont = .IdCont
@@ -224,8 +246,9 @@
                     _Fila.Cells("FormatoPqte").Value = .FormatoPqte
                     _Fila.Cells("PqteHabilitado").Value = .PqteHabilitado
                     _Fila.Cells("PqteDisponible").Value = .PqteHabilitado - _Fila.Cells("PqteComprometido").Value
+                    _Fila.Cells("StcfiDisponibleUd1").Value = .StcfiDisponibleUd1
+                    _Fila.Cells("StcfiDisponibleUd2").Value = .StcfiDisponibleUd2
                     _Fila.Cells("Ud1XPqte").Value = .Ud1XPqte
-                    _Fila.Cells("CantMinFormato").Value = .Cantidad
                     _Fila.Cells("CantMinFormato").Value = .CantMinFormato
                     _Fila.Cells("Moneda").Value = .Moneda
                     _Fila.Cells("PrecioXUd1").Value = .PrecioXUd1
@@ -269,6 +292,92 @@
         If e.KeyValue = Keys.F5 Then
             Sb_Actualizar_Grilla()
         End If
+    End Sub
+
+    Private Sub Txt_Moneda_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Moneda.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "TABMO"
+        _Filtrar.Campo = "KOMO"
+        _Filtrar.Descripcion = "NOKOMO"
+
+        Dim _Komo As String
+        Dim _Nokomo As String
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And KOMO In (Select Distinct KOMO From MAEMO Where TIMO = 'E')",
+                               Nothing, False, True) Then
+
+            Dim _Tbl_Modena As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+            Dim _Row As DataRow = _Tbl_Modena.Rows(0)
+
+            _Komo = _Row.Item("Codigo").ToString.Trim
+            _Nokomo = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_Moneda.Text = _Komo
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Grabar_Click(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
+
+        Dim _Ls_Zw_PreVenta_StockProd As New List(Of Zw_PreVenta_StockProd)
+
+        For Each _Fila As DataGridViewRow In Grilla_Contenedores.Rows
+            Dim _Zw_PreVenta_StockProd As New Zw_PreVenta_StockProd
+            With _Zw_PreVenta_StockProd
+                .Id = _Fila.Cells("Id").Value
+                .IdCont = _IdCont
+                .Empresa = _Fila.Cells("Empresa").Value
+                .Sucursal = _Fila.Cells("Sucursal").Value
+                .Bodega = _Fila.Cells("Bodega").Value
+                .Contenedor = _Fila.Cells("Contenedor").Value
+                .Codigo = _Fila.Cells("Codigo").Value
+                .StcfiDisponibleUd1 = _Fila.Cells("StcfiDisponibleUd1").Value
+                .StcfiDisponibleUd2 = _Fila.Cells("StcfiDisponibleUd2").Value
+                .FormatoPqte = _Fila.Cells("FormatoPqte").Value
+                .PqteHabilitado = _Fila.Cells("PqteHabilitado").Value
+                .Ud1XPqte = _Fila.Cells("Ud1XPqte").Value
+                .CantMinFormato = _Fila.Cells("CantMinFormato").Value
+                .Moneda = Txt_Moneda.Text
+                .PrecioXUd1 = _Fila.Cells("PrecioXUd1").Value
+            End With
+            _Ls_Zw_PreVenta_StockProd.Add(_Zw_PreVenta_StockProd)
+        Next
+
+        ' Verificar que al menos un registro tenga PqteHabilitado > 0
+        Dim hayHabilitado As Boolean = _Ls_Zw_PreVenta_StockProd.Any(Function(x) Convert.ToDecimal(x.PqteHabilitado) > 0)
+
+        If Not hayHabilitado Then
+            MessageBoxEx.Show(Me, "Debe haber al menos un producto con 'Habilitado' mayor a cero.",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Dtp_FechaLibVenta.Value < Date.Now Then
+            MessageBoxEx.Show(Me, "La fecha de habilitación de venta no puede ser menos a la fecha actual", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Dtp_FechaLibVenta.Focus()
+            Return
+        End If
+
+        Cl_Contenedor.Zw_Contenedor.FechaLibVenta = Dtp_FechaLibVenta.Value
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = Cl_Contenedor.Fx_Grabar_Detalle_En_Contenedor_Documento(Cl_Contenedor.Zw_Contenedor, _Ls_Zw_PreVenta_StockProd)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If Not _Mensaje.EsCorrecto Then
+            Return
+        End If
+
+        Me.Close()
+
     End Sub
 
 End Class

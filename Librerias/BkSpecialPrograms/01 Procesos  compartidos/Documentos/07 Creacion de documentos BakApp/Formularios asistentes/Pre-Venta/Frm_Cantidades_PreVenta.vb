@@ -5,7 +5,7 @@ Public Class Frm_Cantidades_PreVenta
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public Property Cl_PreVta As PreVenta.Cl_PreVenta
+    Public Property Zw_PreVenta_StockProd As Zw_PreVenta_StockProd 'PreVenta.Cl_PreVenta
     Public Property Codigo As String
     Public Property Rtu As Double
     Public Property Rtu_Ori As Double
@@ -40,8 +40,8 @@ Public Class Frm_Cantidades_PreVenta
         Dim _ValidarApiWMSBosOne As Boolean = False
         Dim _RtuVariable As Boolean = False
 
-        Txt_CantidadPreVenta.Text = Cl_PreVta.Cantidad
-        Txt_CantidadPreVenta.Tag = Cl_PreVta.Cantidad
+        Txt_CantidadPreVenta.Text = Zw_PreVenta_StockProd.Cantidad
+        Txt_CantidadPreVenta.Tag = Zw_PreVenta_StockProd.Cantidad
 
         If RevisarRtuVariable Then
 
@@ -84,7 +84,7 @@ Public Class Frm_Cantidades_PreVenta
 
         'Chk_RtuVariable.Enabled = (_Fila.Cells("Nmarca").Value = "¡")
 
-        _Cantidad_Ud1 = _Cl_PreVta.Cantidad * _Cl_PreVta.Ud1XPqte
+        _Cantidad_Ud1 = _Zw_PreVenta_StockProd.Cantidad * _Zw_PreVenta_StockProd.Ud1XPqte
         _Cantidad_Ud2 = Math.Round(_Cantidad_Ud1 / _Rtu, 5)
 
         If Chk_DesacRazTransf.Checked Then
@@ -114,7 +114,7 @@ Public Class Frm_Cantidades_PreVenta
             Txt_CantUD2.Text = Math.Round(Cantidad_Ud2, 3)
         End If
 
-        _Cantidad_Original = Cl_PreVta.Cantidad '_Fila.Cells("CantUd" & _UnTrans & "_Dori").Value
+        _Cantidad_Original = Zw_PreVenta_StockProd.Cantidad '_Fila.Cells("CantUd" & _UnTrans & "_Dori").Value
 
         Txt_CantUD1.Tag = _Cantidad_Ud1
         Txt_CantUD2.Tag = _Cantidad_Ud2
@@ -139,7 +139,7 @@ Public Class Frm_Cantidades_PreVenta
 
         _Fr_Alerta_Stock = New AlertCustom(_Codigo, _UnTrans)
         CType(_Fr_Alerta_Stock, AlertCustom).Tido = _Tido
-        ShowLoadAlert(_Fr_Alerta_Stock, Me,,,, True, Cl_PreVta.IdCont)
+        ShowLoadAlert(_Fr_Alerta_Stock, Me,,,, True, Zw_PreVenta_StockProd.IdCont)
 
     End Sub
 
@@ -149,7 +149,7 @@ Public Class Frm_Cantidades_PreVenta
 
     Private Sub Btn_Aceptar_Click(sender As Object, e As EventArgs) Handles Btn_Aceptar.Click
 
-        _Fr_Alerta_Stock.Close()
+        '_Fr_Alerta_Stock.Close()
 
         'Dim _Oferta = _Fila.Cells("Oferta").Value
         'Dim _Padre_Oferta = _Fila.Cells("Padre_Oferta").Value
@@ -165,8 +165,8 @@ Public Class Frm_Cantidades_PreVenta
         End If
 
 
-        If Txt_CantidadPreVenta.Tag < _Cl_PreVta.CantMinFormato Then
-            MessageBoxEx.Show(Me, "La cantidad no puede ser menor a " & _Cl_PreVta.CantMinFormato & " " & _Cl_PreVta.FormatoPqte,
+        If Txt_CantidadPreVenta.Tag < _Zw_PreVenta_StockProd.CantMinFormato Then
+            MessageBoxEx.Show(Me, "La cantidad no puede ser menor a " & _Zw_PreVenta_StockProd.CantMinFormato & " " & _Zw_PreVenta_StockProd.FormatoPqte,
                                                           "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
@@ -185,16 +185,16 @@ Public Class Frm_Cantidades_PreVenta
         '    Return
         'End If
 
-        If Cantidad_Ud1 > Cl_PreVta.StDispUd1 Then
-            Dim _Pallet As Double = Cl_PreVta.StDispUd1 / Cl_PreVta.Ud1XPqte
-            MessageBoxEx.Show(Me, "No puede vender mas de " & _Pallet & " " & Cl_PreVta.FormatoPqte & vbCrLf &
-                              "En su defecto " & Cl_PreVta.StDispUd1 & " " & _RowProducto.Item("UD01PR"),
+        If Zw_PreVenta_StockProd.Cantidad > Zw_PreVenta_StockProd.PqteDisponible Then
+            'Dim _Pallet As Double = Zw_PreVenta_StockProd.StDispUd1 / Zw_PreVenta_StockProd.Ud1XPqte
+            MessageBoxEx.Show(Me, "No puede vender mas de " & Zw_PreVenta_StockProd.PqteDisponible & " " & Zw_PreVenta_StockProd.FormatoPqte & vbCrLf &
+                              "En su defecto " & Zw_PreVenta_StockProd.Ud1XPqte * Zw_PreVenta_StockProd.Cantidad & " " & _RowProducto.Item("UD01PR"),
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_CantidadPreVenta.Focus()
             Return
         End If
 
-        _Fr_Alerta_Stock.Close()
+        '_Fr_Alerta_Stock.Close()
         Aceptado = True
 
         Me.Close()
@@ -220,8 +220,8 @@ Public Class Frm_Cantidades_PreVenta
             '    Return
             'End If
 
-            Cl_PreVta.Cantidad = _CantidadPallet
-            Cantidad_Ud1 = _CantidadPallet * _Cl_PreVta.Ud1XPqte
+            Zw_PreVenta_StockProd.Cantidad = _CantidadPallet
+            Cantidad_Ud1 = _CantidadPallet * _Zw_PreVenta_StockProd.Ud1XPqte
             Cantidad_Ud2 = Math.Round(_Cantidad_Ud1 / _Rtu, 5)
 
             Txt_CantidadPreVenta.Tag = _CantidadPallet
@@ -271,4 +271,12 @@ Public Class Frm_Cantidades_PreVenta
         Txt_CantUD1.Text = Math.Round(_Cantidad_Ud1, 3)
     End Sub
 
+    Private Sub Frm_Cantidades_PreVenta_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        If _Fr_Alerta_Stock.Visible Then
+            _Fr_Alerta_Stock.Close()
+        End If
+        If Not Aceptado Then
+            Zw_PreVenta_StockProd.Cantidad = Cantidad_Original
+        End If
+    End Sub
 End Class

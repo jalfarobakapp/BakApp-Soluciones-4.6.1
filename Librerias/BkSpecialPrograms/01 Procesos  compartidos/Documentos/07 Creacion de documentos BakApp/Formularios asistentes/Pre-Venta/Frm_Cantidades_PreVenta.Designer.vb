@@ -73,6 +73,7 @@ Partial Class Frm_Cantidades_PreVenta
         '
         'Txt_CantUD2
         '
+        Me.Txt_CantUD2.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -90,6 +91,7 @@ Partial Class Frm_Cantidades_PreVenta
         '
         'Txt_CantUD1
         '
+        Me.Txt_CantUD1.BackColor = System.Drawing.Color.White
         '
         '
         '
@@ -197,6 +199,7 @@ Partial Class Frm_Cantidades_PreVenta
         '
         'Txt_CantidadPreVenta
         '
+        Me.Txt_CantidadPreVenta.BackColor = System.Drawing.Color.White
         '
         '
         '

@@ -23,9 +23,9 @@ Partial Class Frm_PreVenta_Productos
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_PreVenta_Productos))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Salir = New DevComponents.DotNetBar.ButtonItem()
@@ -39,10 +39,15 @@ Partial Class Frm_PreVenta_Productos
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Contenedores = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Txt_Moneda = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Lbl_Moneda = New DevComponents.DotNetBar.LabelX()
+        Me.Dtp_FechaLibVenta = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Contenedores, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_FechaLibVenta, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar1
@@ -85,9 +90,9 @@ Partial Class Frm_PreVenta_Productos
         Me.GroupPanel1.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel1.Controls.Add(Me.Grilla_Contenedores)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 41)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1074, 377)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1074, 348)
         '
         '
         '
@@ -198,45 +203,148 @@ Partial Class Frm_PreVenta_Productos
         '
         Me.Grilla_Contenedores.AllowUserToAddRows = False
         Me.Grilla_Contenedores.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Contenedores.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Contenedores.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla_Contenedores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Contenedores.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Contenedores.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla_Contenedores.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Contenedores.EnableHeadersVisualStyles = False
         Me.Grilla_Contenedores.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Contenedores.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Contenedores.Name = "Grilla_Contenedores"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Contenedores.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla_Contenedores.Size = New System.Drawing.Size(1068, 354)
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Contenedores.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        Me.Grilla_Contenedores.Size = New System.Drawing.Size(1068, 325)
         Me.Grilla_Contenedores.StandardTab = True
         Me.Grilla_Contenedores.TabIndex = 30
+        '
+        'Txt_Moneda
+        '
+        Me.Txt_Moneda.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Moneda.Border.Class = "TextBoxBorder"
+        Me.Txt_Moneda.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Moneda.ButtonCustom.Image = CType(resources.GetObject("Txt_Moneda.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Moneda.ButtonCustom.Visible = True
+        Me.Txt_Moneda.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Moneda.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Moneda.Location = New System.Drawing.Point(332, 16)
+        Me.Txt_Moneda.Name = "Txt_Moneda"
+        Me.Txt_Moneda.PreventEnterBeep = True
+        Me.Txt_Moneda.ReadOnly = True
+        Me.Txt_Moneda.Size = New System.Drawing.Size(80, 22)
+        Me.Txt_Moneda.TabIndex = 158
+        Me.Txt_Moneda.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        '
+        'Lbl_Moneda
+        '
+        Me.Lbl_Moneda.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Lbl_Moneda.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Moneda.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Moneda.Location = New System.Drawing.Point(226, 15)
+        Me.Lbl_Moneda.Name = "Lbl_Moneda"
+        Me.Lbl_Moneda.Size = New System.Drawing.Size(100, 23)
+        Me.Lbl_Moneda.TabIndex = 159
+        Me.Lbl_Moneda.Text = "Moneda para venta"
+        '
+        'Dtp_FechaLibVenta
+        '
+        Me.Dtp_FechaLibVenta.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_FechaLibVenta.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FechaLibVenta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaLibVenta.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FechaLibVenta.ButtonDropDown.Visible = True
+        Me.Dtp_FechaLibVenta.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FechaLibVenta.IsPopupCalendarOpen = False
+        Me.Dtp_FechaLibVenta.Location = New System.Drawing.Point(93, 16)
+        '
+        '
+        '
+        Me.Dtp_FechaLibVenta.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaLibVenta.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaLibVenta.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FechaLibVenta.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_FechaLibVenta.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FechaLibVenta.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaLibVenta.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FechaLibVenta.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FechaLibVenta.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FechaLibVenta.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FechaLibVenta.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaLibVenta.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
+        Me.Dtp_FechaLibVenta.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FechaLibVenta.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FechaLibVenta.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaLibVenta.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FechaLibVenta.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaLibVenta.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FechaLibVenta.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaLibVenta.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FechaLibVenta.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FechaLibVenta.Name = "Dtp_FechaLibVenta"
+        Me.Dtp_FechaLibVenta.Size = New System.Drawing.Size(100, 22)
+        Me.Dtp_FechaLibVenta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FechaLibVenta.TabIndex = 161
+        '
+        'LabelX12
+        '
+        Me.LabelX12.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX12.ForeColor = System.Drawing.Color.Black
+        Me.LabelX12.Location = New System.Drawing.Point(12, 15)
+        Me.LabelX12.Name = "LabelX12"
+        Me.LabelX12.Size = New System.Drawing.Size(85, 20)
+        Me.LabelX12.TabIndex = 160
+        Me.LabelX12.Text = "Fecha vigencia"
         '
         'Frm_PreVenta_Productos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1098, 436)
+        Me.Controls.Add(Me.Dtp_FechaLibVenta)
+        Me.Controls.Add(Me.LabelX12)
+        Me.Controls.Add(Me.Txt_Moneda)
+        Me.Controls.Add(Me.Lbl_Moneda)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
@@ -247,12 +355,14 @@ Partial Class Frm_PreVenta_Productos
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_PreVenta_Productos"
+        Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "PRODUCTOS DISPONIBLE EN CONTENEDOR:"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla_Contenedores, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_FechaLibVenta, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -270,4 +380,8 @@ Partial Class Frm_PreVenta_Productos
     Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla_Contenedores As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Txt_Moneda As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Lbl_Moneda As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Dtp_FechaLibVenta As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents LabelX12 As DevComponents.DotNetBar.LabelX
 End Class

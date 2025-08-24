@@ -169,7 +169,7 @@ Public Class Frm_Formulario_Documento
     Public Property ModEmpresa_Doc As String
     Public Property ModModalidad_Doc As String
 
-    Dim _Ls_Cl_PreVenta As New List(Of PreVenta.Cl_PreVenta)
+    Dim _Ls_Cl_PreVenta As New List(Of Zw_PreVenta_StockProd)
 
 #Region "PROPIEDADES"
 
@@ -1198,7 +1198,7 @@ Public Class Frm_Formulario_Documento
             Fm_MPC = Nothing
         End If
 
-        _Ls_Cl_PreVenta = New List(Of PreVenta.Cl_PreVenta)
+        _Ls_Cl_PreVenta = New List(Of Zw_PreVenta_StockProd)
 
         'Dim _Cl_Contenedor As New Cl_Contenedor
         '_Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
@@ -9258,11 +9258,11 @@ Public Class Frm_Formulario_Documento
                                     If PreVenta AndAlso _Tido = "COV" Then
 
                                         ' Buscar el registro en _Cl_PreVenta_Producto con IdIndex = _Id y asignarlo a _Cl_PreVta
-                                        Dim _Cl_PreVta As PreVenta.Cl_PreVenta = _Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = _Id)
-                                        Dim _CantidadPallet As Double = _Cl_PreVta.Cantidad
+                                        Dim _Zw_PreVenta_StockProd As Zw_PreVenta_StockProd = _Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = _Id)
+                                        Dim _CantidadPallet As Double = _Zw_PreVenta_StockProd.Cantidad
 
                                         Dim FmPl As New Frm_Cantidades_PreVenta
-                                        FmPl.Cl_PreVta = _Cl_PreVta
+                                        FmPl.Zw_PreVenta_StockProd = _Zw_PreVenta_StockProd
                                         FmPl.Codigo = _Codigo
                                         FmPl.Rtu = _Rtu
                                         FmPl.Rtu_Ori = _Rtu
@@ -9273,18 +9273,19 @@ Public Class Frm_Formulario_Documento
                                         FmPl.Cantidad_Ud1 = _CantUd1
                                         FmPl.Cantidad_Ud2 = _CantUd2
                                         'FmPl.Aceptado
-                                        FmPl.Cl_PreVta = _Cl_PreVta
+                                        FmPl.Zw_PreVenta_StockProd = _Zw_PreVenta_StockProd
                                         FmPl.TopMost = True
                                         FmPl.ShowDialog(Me)
                                         _Aceptado = FmPl.Aceptado
                                         FmPl.Dispose()
 
                                         If Not _Aceptado Then
+                                            '_Zw_PreVenta_StockProd.Cantidad = _CantidadPallet
                                             Return
                                         End If
 
-                                        _CantidadPallet = _Cl_PreVta.Cantidad
-                                        _CantUd1 = _CantidadPallet * _Cl_PreVta.Ud1XPqte
+                                        _CantidadPallet = _Zw_PreVenta_StockProd.Cantidad
+                                        _CantUd1 = _CantidadPallet * _Zw_PreVenta_StockProd.Ud1XPqte
                                         _CantUd2 = _CantUd1 / _Rtu
 
                                     End If
@@ -10900,9 +10901,9 @@ Public Class Frm_Formulario_Documento
                             Sb_Traer_Producto_A_La_Nueva_Fila(_Fila, _RowProducto, _Indice)
 
                             If Not String.IsNullOrEmpty(_Fila.Cells("Codigo").Value) Then
-                                _Cl_PreVenta_Producto.Cl_PreVenta.IdIndex = _Fila.Cells("Id").Value
-                                _Ls_Cl_PreVenta.Add(_Cl_PreVenta_Producto.Cl_PreVenta)
-                                _Fila.Cells("Precio").Value = _Cl_PreVenta_Producto.Cl_PreVenta.PrecioXUd1
+                                _Cl_PreVenta_Producto.Zw_PreVenta_StockProd.IdIndex = _Fila.Cells("Id").Value
+                                _Ls_Cl_PreVenta.Add(_Cl_PreVenta_Producto.Zw_PreVenta_StockProd)
+                                _Fila.Cells("Precio").Value = _Cl_PreVenta_Producto.Zw_PreVenta_StockProd.PrecioXUd1
                             End If
 
                             Return
@@ -29620,7 +29621,7 @@ Public Class Frm_Formulario_Documento
             Fm.ModoSeleccion = True
             Fm.ShowDialog(Me)
             _RowProducto = Fm.RowProducto
-            _Cl_PreVenta_Producto.Cl_PreVenta = Fm.Cl_PreVenta
+            _Cl_PreVenta_Producto.Zw_PreVenta_StockProd = Fm._Zw_PreVenta_StockProd
             Fm.Dispose()
 
             If IsNothing(_RowProducto) Then
@@ -29947,57 +29948,14 @@ End Namespace
 
 Namespace PreVenta
 
-    Public Class Cl_PreVenta
-
-        Public Property IdIndex As Integer
-        Public Property Id As Integer
-        Public Property IdCont As Integer
-        Public Property Contenedor As String
-        Public Property StcfiUd1 As Double
-        Public Property StDispUd1 As Double
-        Public Property FormatoPqte As String
-        Public Property PqteHabilitado As Double
-        Public Property PqteComprometido As Double
-        Public Property PqteDisponible As Double
-        Public Property Ud1XPqte As Double
-        Public Property CantMinFormato As Double
-        Public Property Cantidad As Double
-        Public Property Moneda As String
-        Public Property PrecioXUd1 As Double
-        Public Property Codigo As String
-        Public Property Descripcion As String
-
-        Public Sub New()
-
-            Id = 0
-            IdIndex = 0
-            IdCont = 0
-            Contenedor = String.Empty
-            StDispUd1 = 0
-            FormatoPqte = "Pallet"
-            Ud1XPqte = 0
-            CantMinFormato = 0
-            Moneda = "US$"
-            PrecioXUd1 = 0
-            Codigo = String.Empty
-            Descripcion = String.Empty
-            PqteHabilitado = 0
-            PqteComprometido = 0
-            PqteDisponible = 0
-            Cantidad = 0
-
-        End Sub
-
-    End Class
-
     Public Class Cl_PreVenta_Producto
         Public Property Mensaje As LsValiciones.Mensajes
-        Public Property Cl_PreVenta As Cl_PreVenta
+        Public Property Zw_PreVenta_StockProd As Zw_PreVenta_StockProd
         Public Property RowProducto As DataRow
 
         Public Sub New()
             Mensaje = New LsValiciones.Mensajes
-            Cl_PreVenta = New Cl_PreVenta
+            Zw_PreVenta_StockProd = New Zw_PreVenta_StockProd
             RowProducto = Nothing
         End Sub
 
