@@ -21,6 +21,7 @@ Public Class Frm_Tickets_Lista
     End Enum
 
     Private _NodoSeleccionado As TreeNode
+    Private _NodoAnterior As TreeNode
 
     Public Sub New(_Funcionario As String, _Tipo As Enum_Tickets, _Id_Grupo As Integer)
 
@@ -301,6 +302,7 @@ Public Class Frm_Tickets_Lista
                 If _Carpeta.Tag = "ENVIADOS" Then
                     _Condicion = "And Tks.CodFuncionario_Crea = '" & _Funcionario & "'"
                 End If
+                _NodoSeleccionado = _Carpeta
             Catch ex As Exception
                 _Condicion = "And 1 = 0"
                 _NodoSeleccionado = Nothing
@@ -749,7 +751,10 @@ Drop Table #Paso"
             End If
 
 
-            If IsNothing(_NodoSeleccionado) OrElse _NodoSeleccionado.Parent.Text = "TODOS" Then
+            If IsNothing(_NodoSeleccionado) OrElse
+                _NodoSeleccionado.Text = "TODOS" OrElse
+                IsNothing(_NodoSeleccionado.Parent) OrElse
+                _NodoSeleccionado.Parent.Text = "TODOS" Then
                 _SoloLectura = True
             End If
 
@@ -927,11 +932,24 @@ Drop Table #Paso"
     Private Sub Tree_Bandeja_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Tree_Bandeja.AfterSelect
 
         Dim nodoSeleccionado As TreeNode = e.Node
+
+        If nodoSeleccionado.Text = "TODOS" AndAlso Not nodoSeleccionado.IsExpanded Then
+            If Not Fx_Tiene_Permiso(Me, "Tkts0007") Then
+                ' Si no tiene permiso, volver a seleccionar el nodo anterior si no es Nothing
+                If _NodoAnterior IsNot Nothing Then
+                    Tree_Bandeja.SelectedNode = _NodoAnterior
+                End If
+                Return
+            End If
+        End If
+
         Sb_Actualizar_Grilla_Treeview(nodoSeleccionado)
 
         Me.Refresh()
 
     End Sub
+
+
 
     Sub Sb_ActualizarTotalesTreeNodos(_NodoPadre As TreeNode)
 
@@ -1546,4 +1564,11 @@ Drop Table #Paso"
 
     End Sub
 
+    Private Sub Tree_Bandeja_BeforeSelect(sender As Object, e As TreeViewCancelEventArgs) Handles Tree_Bandeja.BeforeSelect
+        _NodoAnterior = Tree_Bandeja.SelectedNode
+        If _NodoAnterior IsNot Nothing Then
+            ' Aquí el nodoAnterior está a punto de dejar de estar seleccionado
+            'MessageBox.Show("Nodo que deja de estar seleccionado: " & _NodoAnterior.Text)
+        End If
+    End Sub
 End Class

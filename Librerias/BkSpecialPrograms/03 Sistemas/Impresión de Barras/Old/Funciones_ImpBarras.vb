@@ -92,7 +92,8 @@ Public Class Class_Imprimir_Barras
                              _Id_PrecioFuturo As Integer,
                              _CodAlternativo As String,
                              _ImprimirAIP As Boolean,
-                             _VistaPrevia As Boolean)
+                             _VistaPrevia As Boolean,
+                             _KopralLeido As Boolean)
 
         If _Imprimir_Todas_Las_Ubicaciones Then
 
@@ -242,7 +243,7 @@ Public Class Class_Imprimir_Barras
             Dim _RowEtiqueta As DataRow = Fx_TraeEtiqueta(_NombreEtiqueta)
             Dim _Texto = _RowEtiqueta.Item("FUNCION")
 
-            Sb_EtiquetasEspecialMayorista(_Codigo, _Texto)
+            Sb_EtiquetasEspecialMayorista(_Codigo, _Texto, _CodAlternativo, _KopralLeido)
             Sb_Imprimir_PRN(_Texto, _Puerto, _ImprimirAIP, _VistaPrevia)
 
         End If
@@ -326,7 +327,10 @@ Public Class Class_Imprimir_Barras
         End Try
     End Sub
 
-    Sub Sb_EtiquetasEspecialMayorista(_Codigo As String, ByRef _Texto As String)
+    Sub Sb_EtiquetasEspecialMayorista(_Codigo As String,
+                                      ByRef _Texto As String,
+                                      _CodAlternativo As String,
+                                      _KopralLeido As Boolean)
 
         Consulta_sql = "Select KOPR,NOKOPR,RLUD,NODIM1,NODIM2,NODIM3 From MAEPR Where KOPR = '" & _Codigo & "'"
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -352,14 +356,30 @@ Public Class Class_Imprimir_Barras
                        "Where KOLT = 'PB3' And KOPR = '" & _Codigo & "'"
         Dim _RowPrecios_PB3 As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Consulta_sql = "Select * From TABCODAL Where KOPRAL = '" & _CodAlternativo & "' And KOEN = '' And KOPR = '" & _Codigo & "'"
+        Dim _Row_Kopral As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
         Dim _Precio_1 As Double = Fx_Funcion_Ecuacion_Random(Nothing, "", "", _Codigo, 1, _RowPrecios_PB1, 0, 0, 0)
         Dim _Precio_2 As Double = Fx_Funcion_Ecuacion_Random(Nothing, "", "", _Codigo, 1, _RowPrecios_PB3, 0, 0, 0)
 
         Dim _PrecioXKilo1 As Double = 0
         Dim _PrecioXKilo2 As Double = 0
 
+        Dim _Multiplo As Double = 1
+
         _PrecioXKilo1 = Math.Round((_Dim2 / _Dim1) * _Precio_1, 0)
         _PrecioXKilo2 = Math.Round((_Dim2 / _Dim1) * _Precio_2, 0)
+
+        If _KopralLeido AndAlso Not IsNothing(_Row_Kopral) Then
+            _Multiplo = _Row_Kopral.Item("MULTIPLO")
+            _Precio_1 = _Precio_1 * _Multiplo
+            _Precio_2 = _Precio_2 * _Multiplo
+            _Texto = Replace(_Texto, "<ca1>", _Multiplo & "X")
+            _Texto = Replace(_Texto, "<ca2>", _Multiplo & "X")
+        Else
+            _Texto = Replace(_Texto, "<ca1>", "")
+            _Texto = Replace(_Texto, "<ca2>", "")
+        End If
 
         Dim _May_Hasta As String = _Rtu - 1
         Dim _May_Desde As String = _Rtu

@@ -47,11 +47,11 @@ Public Class Frm_BuscarEntidad_MtSuc
             .Columns("KOEN").HeaderText = "Código"
             .Columns("KOEN").Width = 80
             .Columns("SUEN").HeaderText = "Sucursal"
-            .Columns("SUEN").Width = 60
+            .Columns("SUEN").Width = 100
             .Columns("SIEN").HeaderText = "Sigla"
             .Columns("SIEN").Width = 100
             .Columns("DIEN").HeaderText = "Dirección"
-            .Columns("DIEN").Width = 350
+            .Columns("DIEN").Width = 310
         End With
 
     End Sub

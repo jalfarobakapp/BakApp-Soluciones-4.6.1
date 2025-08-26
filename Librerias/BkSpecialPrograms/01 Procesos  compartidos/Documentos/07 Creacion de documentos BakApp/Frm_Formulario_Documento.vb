@@ -18732,8 +18732,13 @@ Public Class Frm_Formulario_Documento
         Fm_Obs.DtpFechaEntrega.Enabled = _Habilitar
         Fm_Obs.TxtFormadepago.Enabled = _Habilitar
         Fm_Obs.TxtOrdendecompra.Enabled = _Habilitar
-        Fm_Obs.Btn_Buscar_Placa_Patente.Enabled = _Habilitar
-        Fm_Obs.Btn_Buscar_Retirador.Enabled = _Habilitar
+
+        Fm_Obs.Txt_Placa.ButtonCustom.Enabled = _Habilitar
+        Fm_Obs.Txt_Placa.ButtonCustom2.Enabled = _Habilitar
+
+        Fm_Obs.Txt_CodRetirador.ButtonCustom.Enabled = _Habilitar
+        Fm_Obs.Txt_CodRetirador.ButtonCustom2.Enabled = _Habilitar
+
         Fm_Obs.Txt_Placa.Enabled = _Habilitar
         Fm_Obs.Txt_CodRetirador.Enabled = _Habilitar
         Fm_Obs.Btn_Solo_Grabar.Visible = False

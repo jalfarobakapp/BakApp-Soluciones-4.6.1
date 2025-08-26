@@ -6,7 +6,8 @@ Public Module Modulo_Documentos
                              _Tido As String,
                              _Minimizar As Boolean,
                              _Tipo_Documento As csGlobales.Enum_Tipo_Documento,
-                             _SubTido As String)
+                             _SubTido As String,
+                             Optional _Cerrar_Al_Grabar As Boolean = False)
         '_Fm_Menu_Padre As Metro.MetroAppForm
         Dim _Permiso As String = Fx_PermisoRegistroDoc(_Tido)
 
@@ -75,7 +76,7 @@ Public Module Modulo_Documentos
                         _PreVenta = True
                     End If
 
-                    Dim Fm_Post As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False,,, _Es_Ajuste)
+                    Dim Fm_Post As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False, _Cerrar_Al_Grabar,, _Es_Ajuste)
                     If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True
                     Fm_Post.MinimizeBox = _Minimizar
                     Fm_Post.Pro_SubTido = _SubTido

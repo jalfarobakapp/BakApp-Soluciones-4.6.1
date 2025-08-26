@@ -24,7 +24,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_BkpPostBusquedaEspecial_Mt))
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.BtnCrearProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.LblOculto = New DevComponents.DotNetBar.LabelItem()
@@ -74,18 +74,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Mnu_Btn_Editar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Mnu_Btn_Eliminar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Mnu_Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_Filtros_Productos = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Filtro_Pro_Productos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Filtro_Pro_Super_Familias = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Filtro_Pro_Familias = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Filtro_Pro_Sub_Familias = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Filtro_Pro_Marcas = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Filtro_Pro_Clas_Libre = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Filtro_Pro_Rubros = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Filtro_Pro_Zonas = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem10 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Filtro_Pro_ProductosExcluidos = New DevComponents.DotNetBar.ButtonItem()
         Me.TouchKeyboard1 = New DevComponents.DotNetBar.Keyboard.TouchKeyboard()
         Me.Bar_Menu_Producto = New DevComponents.DotNetBar.Bar()
         Me.Btn_Mnu_Pr_Editar_Producto = New DevComponents.DotNetBar.ButtonItem()
@@ -469,7 +457,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.Context_Menu_Solicitud_Compra.AntiAlias = True
         Me.Context_Menu_Solicitud_Compra.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Context_Menu_Solicitud_Compra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_Filtros_Productos})
+        Me.Context_Menu_Solicitud_Compra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
         Me.Context_Menu_Solicitud_Compra.Location = New System.Drawing.Point(194, 158)
         Me.Context_Menu_Solicitud_Compra.Name = "Context_Menu_Solicitud_Compra"
         Me.Context_Menu_Solicitud_Compra.Size = New System.Drawing.Size(404, 25)
@@ -653,109 +641,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Mnu_Btn_Copiar.ImageAlt = CType(resources.GetObject("Mnu_Btn_Copiar.ImageAlt"), System.Drawing.Image)
         Me.Mnu_Btn_Copiar.Name = "Mnu_Btn_Copiar"
         Me.Mnu_Btn_Copiar.Text = "Copiar (portapapeles)"
-        '
-        'Menu_Contextual_Filtros_Productos
-        '
-        Me.Menu_Contextual_Filtros_Productos.AutoExpandOnClick = True
-        Me.Menu_Contextual_Filtros_Productos.ImageAlt = CType(resources.GetObject("Menu_Contextual_Filtros_Productos.ImageAlt"), System.Drawing.Image)
-        Me.Menu_Contextual_Filtros_Productos.Name = "Menu_Contextual_Filtros_Productos"
-        Me.Menu_Contextual_Filtros_Productos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Filtro_Pro_Productos, Me.Btn_Filtro_Pro_Super_Familias, Me.Btn_Filtro_Pro_Familias, Me.Btn_Filtro_Pro_Sub_Familias, Me.Btn_Filtro_Pro_Marcas, Me.Btn_Filtro_Pro_Clas_Libre, Me.Btn_Filtro_Pro_Rubros, Me.Btn_Filtro_Pro_Zonas, Me.LabelItem10, Me.Btn_Filtro_Pro_ProductosExcluidos})
-        Me.Menu_Contextual_Filtros_Productos.Text = "Filtros Productos"
-        '
-        'LabelItem2
-        '
-        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem2.Name = "LabelItem2"
-        Me.LabelItem2.PaddingBottom = 1
-        Me.LabelItem2.PaddingLeft = 10
-        Me.LabelItem2.PaddingTop = 1
-        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem2.Text = "Productos"
-        '
-        'Btn_Filtro_Pro_Productos
-        '
-        Me.Btn_Filtro_Pro_Productos.Image = CType(resources.GetObject("Btn_Filtro_Pro_Productos.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Productos.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_Productos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Productos.Name = "Btn_Filtro_Pro_Productos"
-        Me.Btn_Filtro_Pro_Productos.Text = "Filtrar por <b><font color=""#0072BC"">PRODUCTOS" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "</font></b>"
-        Me.Btn_Filtro_Pro_Productos.Visible = False
-        '
-        'Btn_Filtro_Pro_Super_Familias
-        '
-        Me.Btn_Filtro_Pro_Super_Familias.Image = CType(resources.GetObject("Btn_Filtro_Pro_Super_Familias.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Super_Familias.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_Super_Familias.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Super_Familias.Name = "Btn_Filtro_Pro_Super_Familias"
-        Me.Btn_Filtro_Pro_Super_Familias.Text = "Filtrar por <b><font color=""#0072BC"">SUPER FAMILIAS</font></b>"
-        '
-        'Btn_Filtro_Pro_Familias
-        '
-        Me.Btn_Filtro_Pro_Familias.Image = CType(resources.GetObject("Btn_Filtro_Pro_Familias.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Familias.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_Familias.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Familias.Name = "Btn_Filtro_Pro_Familias"
-        Me.Btn_Filtro_Pro_Familias.Text = "Filtrar por <b><font color=""#0072BC"">FAMILIAS</font></b>"
-        '
-        'Btn_Filtro_Pro_Sub_Familias
-        '
-        Me.Btn_Filtro_Pro_Sub_Familias.Image = CType(resources.GetObject("Btn_Filtro_Pro_Sub_Familias.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Sub_Familias.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_Sub_Familias.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Sub_Familias.Name = "Btn_Filtro_Pro_Sub_Familias"
-        Me.Btn_Filtro_Pro_Sub_Familias.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">SUB FAMILIAS</font></f" &
-    "ont></b>"
-        '
-        'Btn_Filtro_Pro_Marcas
-        '
-        Me.Btn_Filtro_Pro_Marcas.Image = CType(resources.GetObject("Btn_Filtro_Pro_Marcas.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Marcas.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_Marcas.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Marcas.Name = "Btn_Filtro_Pro_Marcas"
-        Me.Btn_Filtro_Pro_Marcas.Text = "Filtrar por <b><font color=""#0072BC"">MARCAS</font></b>"
-        '
-        'Btn_Filtro_Pro_Clas_Libre
-        '
-        Me.Btn_Filtro_Pro_Clas_Libre.Image = CType(resources.GetObject("Btn_Filtro_Pro_Clas_Libre.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Clas_Libre.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_Clas_Libre.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Clas_Libre.Name = "Btn_Filtro_Pro_Clas_Libre"
-        Me.Btn_Filtro_Pro_Clas_Libre.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">CLAS. LIBRE</font></fo" &
-    "nt></b>"
-        '
-        'Btn_Filtro_Pro_Rubros
-        '
-        Me.Btn_Filtro_Pro_Rubros.Image = CType(resources.GetObject("Btn_Filtro_Pro_Rubros.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Rubros.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_Rubros.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Rubros.Name = "Btn_Filtro_Pro_Rubros"
-        Me.Btn_Filtro_Pro_Rubros.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">RUBROS</font></font></" &
-    "b>"
-        '
-        'Btn_Filtro_Pro_Zonas
-        '
-        Me.Btn_Filtro_Pro_Zonas.Image = CType(resources.GetObject("Btn_Filtro_Pro_Zonas.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Zonas.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_Zonas.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_Zonas.Name = "Btn_Filtro_Pro_Zonas"
-        Me.Btn_Filtro_Pro_Zonas.Text = "Filtrar por <b><font color=""#4E5D30""><font color=""#0072BC"">ZONAS</font></font></b" &
-    ">"
-        '
-        'LabelItem10
-        '
-        Me.LabelItem10.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem10.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem10.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem10.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem10.Name = "LabelItem10"
-        Me.LabelItem10.PaddingBottom = 1
-        Me.LabelItem10.PaddingLeft = 10
-        Me.LabelItem10.PaddingTop = 1
-        Me.LabelItem10.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem10.Text = "Datos excluidos"
-        '
-        'Btn_Filtro_Pro_ProductosExcluidos
-        '
-        Me.Btn_Filtro_Pro_ProductosExcluidos.Image = CType(resources.GetObject("Btn_Filtro_Pro_ProductosExcluidos.Image"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_ProductosExcluidos.ImageAlt = CType(resources.GetObject("Btn_Filtro_Pro_ProductosExcluidos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Filtro_Pro_ProductosExcluidos.Name = "Btn_Filtro_Pro_ProductosExcluidos"
-        Me.Btn_Filtro_Pro_ProductosExcluidos.Text = "<font color=""#0072BC""><b><font color=""#ED1C24"">PRODUCTOS EXCLUIDOS</font></b></fo" &
-    "nt>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'TouchKeyboard1
         '
@@ -980,14 +865,14 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(5, 146)
         Me.Grilla.Name = "Grilla"
@@ -1193,18 +1078,6 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Public WithEvents Txt_CodAlternativo As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Chk_MostrarVendidosUlt3Meses As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_StockFisicoMayorCero As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents Menu_Contextual_Filtros_Productos As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
-    Public WithEvents Btn_Filtro_Pro_Productos As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Super_Familias As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Familias As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Sub_Familias As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Marcas As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Clas_Libre As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Rubros As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Filtro_Pro_Zonas As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents LabelItem10 As DevComponents.DotNetBar.LabelItem
-    Public WithEvents Btn_Filtro_Pro_ProductosExcluidos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Imagenes_20x20 As ImageList
     Friend WithEvents Imagenes_16x16 As ImageList
     Friend WithEvents Imagenes_32x32 As ImageList

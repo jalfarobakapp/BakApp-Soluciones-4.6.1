@@ -931,6 +931,8 @@ Buscar:
     Private Sub Btn_Entidad_Una_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Entidad_Una.Click
 
         Dim Fm As New Frm_BuscarEntidad_Mt(False)
+        Fm.VerSoloEntidadesDelVendedor = Chk_MostrarSoloDocClientesDelVendedor.Checked
+        Fm.Rdb_Clientes.Checked = Chk_MostrarSoloDocClientesDelVendedor.Checked
         Fm.BtnCrearUser.Visible = False
         Fm.BtnEditarUser.Visible = False
         Fm.BtnEliminarUser.Visible = False

@@ -1775,22 +1775,26 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
             Exit Sub
         End If
 
-        If Fx_Tiene_Permiso(Me, "Prod009") Then
-
-            Me.Cursor = Cursors.WaitCursor
-
-            Dim Fm As New Frm_EstadisticaProducto(_Codigo, _Endo, _Tipo_Doc)
-            Fm.ShowInTaskbar = True
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
-            Me.Cursor = Cursors.Default
-
+        If Not Fx_Tiene_Permiso(Me, "Prod009") Then
+            Return
         End If
+
+        Me.Cursor = Cursors.WaitCursor
+
+        Dim Fm As New Frm_EstadisticaProducto(_Codigo, _Endo, _Tipo_Doc)
+        Fm.ShowInTaskbar = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        Me.Cursor = Cursors.Default
 
     End Sub
 
     Sub Sb_Ver_Codigos_de_reemplazo(_Formulario As Form, _Codigo As String)
+
+        If Not Fx_Tiene_Permiso(Me, "Prod080") Then
+            Return
+        End If
 
         Dim _Row_Producto As DataRow = Fx_Row_Producto(_Formulario, _Codigo)
 
@@ -2374,26 +2378,27 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Sub Sb_Ver_Kardex_Inventario(_Formulario As Form, _Codigo As String)
 
-        If Fx_Tiene_Permiso(Me, "Prod002") Then
-            Dim _Row_Producto As DataRow = Fx_Row_Producto(_Formulario, _Codigo)
-
-            If (_Row_Producto Is Nothing) Then
-                Exit Sub
-            End If
-
-            Dim Fm As New Frm_Kardex_X_Producto_Lista
-            Fm.Pro_Codigo = _Codigo
-
-            If _Row_Producto.Item("ATPR") = "OCU" Then
-                Fm.ChkMostrarOcultos.Checked = True
-            Else
-                Fm.ChkMostrarOcultos.Checked = False
-            End If
-
-            Fm.ShowDialog(_Formulario)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(Me, "Prod002") Then
+            Return
         End If
+
+        Dim _Row_Producto As DataRow = Fx_Row_Producto(_Formulario, _Codigo)
+
+        If (_Row_Producto Is Nothing) Then
+            Exit Sub
+        End If
+
+        Dim Fm As New Frm_Kardex_X_Producto_Lista
+        Fm.Pro_Codigo = _Codigo
+
+        If _Row_Producto.Item("ATPR") = "OCU" Then
+            Fm.ChkMostrarOcultos.Checked = True
+        Else
+            Fm.ChkMostrarOcultos.Checked = False
+        End If
+
+        Fm.ShowDialog(_Formulario)
+        Fm.Dispose()
 
     End Sub
 
@@ -2432,61 +2437,61 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Sub Sb_Ver_Asociaciones_del_producto(_Formulario As Form, _Codigo As String)
 
-        If Fx_Tiene_Permiso(Me, "Prod056") Then
+        If Not Fx_Tiene_Permiso(Me, "Prod056") Then
+            Return
+        End If
 
-            Dim _Nodo_Raiz_Asociados = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
-            Dim _Row_Nodo_Clasificaciones As DataRow
+        Dim _Nodo_Raiz_Asociados = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
+        Dim _Row_Nodo_Clasificaciones As DataRow
 
-            Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                            "Where (Codigo = '" & _Codigo & "') AND (Para_filtro = 1)" & vbCrLf &
                            "And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Nodo_Raiz = " & _Nodo_Raiz_Asociados & ")"
 
-            _Row_Nodo_Clasificaciones = _Sql.Fx_Get_DataRow(Consulta_sql)
+        _Row_Nodo_Clasificaciones = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            Dim _Codigo_Nodo As Integer
+        Dim _Codigo_Nodo As Integer
 
-            If _Row_Nodo_Clasificaciones Is Nothing Then
-                _Codigo_Nodo = 0
-            Else
-                _Codigo_Nodo = _Row_Nodo_Clasificaciones.Item("Codigo_Nodo")
-            End If
+        If _Row_Nodo_Clasificaciones Is Nothing Then
+            _Codigo_Nodo = 0
+        Else
+            _Codigo_Nodo = _Row_Nodo_Clasificaciones.Item("Codigo_Nodo")
+        End If
 
-            Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
-            _Row_Nodo_Clasificaciones = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
+        _Row_Nodo_Clasificaciones = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            Consulta_sql = "Select KOPR From MAEPR Where KOPR In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & Space(1) &
+        Consulta_sql = "Select KOPR From MAEPR Where KOPR In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & Space(1) &
                            "Where Codigo_Nodo = " & _Codigo_Nodo & " And Codigo_Nodo <> 0)" & Space(1) &
                            "--AND KOPR <> '" & _Codigo & "'"
 
-            Dim _Tbl_Productos_Hermanos = _Sql.Fx_Get_DataTable(Consulta_sql)
+        Dim _Tbl_Productos_Hermanos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-            If CBool(_Tbl_Productos_Hermanos.Rows.Count) Then
+        If CBool(_Tbl_Productos_Hermanos.Rows.Count) Then
 
-                _Codigo_Nodo = _Row_Nodo_Clasificaciones.Item("Codigo_Nodo")
+            _Codigo_Nodo = _Row_Nodo_Clasificaciones.Item("Codigo_Nodo")
 
-                Dim _Identificador_NodoPadre = _Row_Nodo_Clasificaciones.Item("Codigo_Nodo")
-                Dim _FullPath = String.Empty
-                Dim _Es_Seleccionable = _Row_Nodo_Clasificaciones.Item("Es_Seleccionable")
-                Dim _Clas_Unica_X_Producto = _Row_Nodo_Clasificaciones.Item("Clas_Unica_X_Producto")
-                Dim _Descripcion = _Row_Nodo_Clasificaciones.Item("Descripcion")
-                Dim _Codigo_Madre = _Row_Nodo_Clasificaciones.Item("Codigo_Madre")
+            Dim _Identificador_NodoPadre = _Row_Nodo_Clasificaciones.Item("Codigo_Nodo")
+            Dim _FullPath = String.Empty
+            Dim _Es_Seleccionable = _Row_Nodo_Clasificaciones.Item("Es_Seleccionable")
+            Dim _Clas_Unica_X_Producto = _Row_Nodo_Clasificaciones.Item("Clas_Unica_X_Producto")
+            Dim _Descripcion = _Row_Nodo_Clasificaciones.Item("Descripcion")
+            Dim _Codigo_Madre = _Row_Nodo_Clasificaciones.Item("Codigo_Madre")
 
-                Dim Fm As New Frm_Arbol_Asociacion_04_Productos_x_class(_Identificador_NodoPadre,
+            Dim Fm As New Frm_Arbol_Asociacion_04_Productos_x_class(_Identificador_NodoPadre,
                                                                         _Codigo_Nodo,
                                                                         _Descripcion,
                                                                         _FullPath,
                                                                         _Es_Seleccionable,
                                                                         _Clas_Unica_X_Producto,
                                                                         False)
-                Fm.Pro_Codigo_Heredado = _Codigo
-                Fm.Text = "Clas: (Cód. " & _Codigo_Nodo & ") (Cód.Madre: " & _Codigo_Madre & ") " & _Descripcion
-                Fm.ShowDialog(_Formulario)
-                Fm.Dispose()
+            Fm.Pro_Codigo_Heredado = _Codigo
+            Fm.Text = "Clas: (Cód. " & _Codigo_Nodo & ") (Cód.Madre: " & _Codigo_Madre & ") " & _Descripcion
+            Fm.ShowDialog(_Formulario)
+            Fm.Dispose()
 
-            Else
-                MessageBoxEx.Show(_Formulario, "No existen productos asociados a este articulo", "Productos asociados", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            End If
-
+        Else
+            MessageBoxEx.Show(_Formulario, "No existen productos asociados a este articulo", "Productos asociados", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
 
     End Sub
@@ -2556,29 +2561,30 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Sub Mnu_Sb_Cambiar_Codigo()
 
-        If Fx_Tiene_Permiso(Me, "Prod003") Then
-
-            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
-            Dim _Codigo As String = _Fila.Cells("Codigo").Value
-            Dim _Codigo_Tecnico As String = _Fila.Cells("Codigo_Tecnico").Value
-            Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
-
-            Dim Fm As New Frm_Cambio_Codigos_UnoxUno
-            Fm.Txt_Codigo_Old.Text = _Codigo
-            Fm.Txt_Descripcion.Text = _Descripcion
-            Fm.Txt_Codigo_Tecnico_Old.Text = _Codigo_Tecnico
-            Fm.Txt_Codigo_Tecnico_New.Text = _Codigo_Tecnico
-            Fm._Cerrar_al_cambiar = True
-            Fm.ShowDialog(Me)
-
-            If Fm._CodigoCambiado Then
-                _Fila.Cells("Codigo").Value = Fm.Txt_Codigo_New.Text
-                Beep()
-                ToastNotification.Show(Me, "CODIGO CAMBIADO CORRECTAMENTE", My.Resources.ok_button,
-                                       1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
-            End If
-            Fm.Dispose()
+        If Not Fx_Tiene_Permiso(Me, "Prod003") Then
+            Return
         End If
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+        Dim _Codigo_Tecnico As String = _Fila.Cells("Codigo_Tecnico").Value
+        Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
+
+        Dim Fm As New Frm_Cambio_Codigos_UnoxUno
+        Fm.Txt_Codigo_Old.Text = _Codigo
+        Fm.Txt_Descripcion.Text = _Descripcion
+        Fm.Txt_Codigo_Tecnico_Old.Text = _Codigo_Tecnico
+        Fm.Txt_Codigo_Tecnico_New.Text = _Codigo_Tecnico
+        Fm._Cerrar_al_cambiar = True
+        Fm.ShowDialog(Me)
+
+        If Fm._CodigoCambiado Then
+            _Fila.Cells("Codigo").Value = Fm.Txt_Codigo_New.Text
+            Beep()
+            ToastNotification.Show(Me, "CODIGO CAMBIADO CORRECTAMENTE", My.Resources.ok_button,
+                                   1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+        End If
+        Fm.Dispose()
 
     End Sub
 
@@ -2811,42 +2817,48 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                                             _Codigo As String,
                                             _Accion As _Ocu) As Boolean
 
-        If Fx_Tiene_Permiso(Me, "Prod004") Then
+        If Not Fx_Tiene_Permiso(Me, "Prod004") Then
+            Return False
+        End If
 
-            Dim _Row_Producto As DataRow = Fx_Row_Producto(_Formulario, _Codigo)
+        Dim _Row_Producto As DataRow = Fx_Row_Producto(_Formulario, _Codigo)
 
-            If (_Row_Producto Is Nothing) Then
-                Exit Function
+        If (_Row_Producto Is Nothing) Then
+            Exit Function
+        End If
+
+        If _Accion = _Ocu.Ocultar Then
+
+            Consulta_sql = "Update MAEPR Set ATPR = 'OCU' Where KOPR = '" & _Codigo & "'"
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+                ToastNotification.Show(_Formulario, "PRODUCTO:" & _Row_Producto.Item("NOKOPR") & vbCrLf &
+                                       "OCULTADO CORRECTAMENTE", My.Resources.burn, 3 * 1000,
+                                       eToastGlowColor.Blue, eToastPosition.MiddleCenter)
             End If
+            Return True
 
-            If _Accion = _Ocu.Ocultar Then
+        Else
 
-                Consulta_sql = "Update MAEPR Set ATPR = 'OCU' Where KOPR = '" & _Codigo & "'"
-                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            Consulta_sql = "Update MAEPR Set ATPR = '' Where KOPR = '" & _Codigo & "'"
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
-                    ToastNotification.Show(_Formulario, "PRODUCTO:" & _Row_Producto.Item("NOKOPR") & vbCrLf &
-                                           "OCULTADO CORRECTAMENTE", My.Resources.burn, 3 * 1000,
-                                           eToastGlowColor.Blue, eToastPosition.MiddleCenter)
-                End If
-                Return True
-
-            Else
-
-                Consulta_sql = "Update MAEPR Set ATPR = '' Where KOPR = '" & _Codigo & "'"
-                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-
-                    ToastNotification.Show(_Formulario, "PRODUCTO:" & _Row_Producto.Item("NOKOPR") & vbCrLf &
-                                            "DESOCULTADO CORRECTAMENTE", My.Resources.burn, 3 * 1000,
-                                            eToastGlowColor.Blue, eToastPosition.MiddleCenter)
-                End If
-
+                ToastNotification.Show(_Formulario, "PRODUCTO:" & _Row_Producto.Item("NOKOPR") & vbCrLf &
+                                        "DESOCULTADO CORRECTAMENTE", My.Resources.burn, 3 * 1000,
+                                        eToastGlowColor.Blue, eToastPosition.MiddleCenter)
             End If
 
         End If
 
+
+
     End Function
 
     Sub Sb_Dimensiones_Producto()
+
+        If Not Fx_Tiene_Permiso(Me, "Prod081") Then
+            Return
+        End If
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
@@ -2858,16 +2870,16 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     End Sub
     Sub Sb_Ver_Archivos_Adjuntos_X_Productos()
 
-        If Fx_Tiene_Permiso(Me, "Prod045") Then
-
-            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
-            Dim _Codigo As String = _Fila.Cells("Codigo").Value
-
-            Dim Fm As New Frm_Adjuntar_Archivos_X_Productos(_Codigo)
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(Me, "Prod045") Then
+            Return
         End If
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+        Dim Fm As New Frm_Adjuntar_Archivos_X_Productos(_Codigo)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
@@ -3506,7 +3518,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Super_Familias_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_Super_Familias.Click
+    Private Sub Btn_Filtro_Pro_Super_Familias_Click(sender As Object, e As EventArgs)
 
         Dim _Sql_Filtro_Condicion_Extra = ""
 
@@ -3523,7 +3535,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Familias_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_Familias.Click
+    Private Sub Btn_Filtro_Pro_Familias_Click(sender As Object, e As EventArgs)
         Dim _SqlFiltro_Fechas As String
 
         Dim _Sql_Filtro_Condicion_Extra = String.Empty
@@ -3554,7 +3566,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         End If
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Sub_Familias_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_Sub_Familias.Click
+    Private Sub Btn_Filtro_Pro_Sub_Familias_Click(sender As Object, e As EventArgs)
 
         Dim _Sql_Filtro_Condicion_Extra = String.Empty
         Dim _Filtro_Extra_Familias = String.Empty
@@ -3598,7 +3610,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Marcas_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_Marcas.Click
+    Private Sub Btn_Filtro_Pro_Marcas_Click(sender As Object, e As EventArgs)
 
 
         Dim _Sql_Filtro_Condicion_Extra = ""
@@ -3618,7 +3630,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Rubros_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_Rubros.Click
+    Private Sub Btn_Filtro_Pro_Rubros_Click(sender As Object, e As EventArgs)
 
         Dim _Sql_Filtro_Condicion_Extra = ""
 
@@ -3637,7 +3649,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     End Sub
 
-    Private Sub Btn_Filtro_Pro_Zonas_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Pro_Zonas.Click
+    Private Sub Btn_Filtro_Pro_Zonas_Click(sender As Object, e As EventArgs)
 
         Dim _Sql_Filtro_Condicion_Extra = ""
 

@@ -230,13 +230,57 @@ Public Class Frm_GRI_Ingreso
     End Sub
 
     Private Sub Btn_GRI_Click(sender As Object, e As EventArgs) Handles Btn_GRI.Click
+
         Dim _Tido = "GRI"
-        Sb_Generar_Documento(Me, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna, "")
+        Dim _Old_Funcionario = FUNCIONARIO
+
+        If Not Fx_PuedeHacerDocumento(_Tido) Then
+            Return
+        End If
+
+        Sb_Generar_Documento(Me, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna, "", True)
+
+        FUNCIONARIO = _Old_Funcionario
 
     End Sub
     Private Sub Btn_GDI_Click(sender As Object, e As EventArgs) Handles Btn_GDI.Click
+
         Dim _Tido = "GDI"
-        Sb_Generar_Documento(Me, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna, "")
+        Dim _Old_Funcionario = FUNCIONARIO
+
+        If Not Fx_PuedeHacerDocumento(_Tido) Then
+            Return
+        End If
+
+        Sb_Generar_Documento(Me, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna, "", True)
+
+        FUNCIONARIO = _Old_Funcionario
+
     End Sub
 
+
+    Function Fx_PuedeHacerDocumento(_Tido As String) As Boolean
+
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(Me)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return False
+        End If
+
+        Dim _Aceptar As Boolean
+
+        Dim Fml As New Frm_Login
+        Fml.ValidarPermiso = True
+        Fml.Permiso = Fx_PermisoRegistroDoc(_Tido)
+        Fml.ShowDialog()
+        _Aceptar = Fml.Aceptar
+        Fml.Dispose()
+
+        If Not _Aceptar Then
+            Return False
+        End If
+
+        Return True
+
+    End Function
 End Class
