@@ -1020,7 +1020,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
 
                 Consulta_Sql = "Select Distinct IDMAEEDO 
                                 From " & _Nombre_Tabla_Paso & "
-                                Where FEEMLI Between '" & Format(_Fecha_Primer_Dia, "yyyyMMdd") & "' And '" & Format(_Fecha_Ultimo_Dia, "yyyyMMdd") & "'"
+                                Where FEEMLI Between '" & Format(_Fecha_Primer_Dia, "yyyyMMdd") & "' And '" & Format(_Fecha_Ultimo_Dia, "yyyyMMdd") & "' And EMPRESA = '" & Mod_Empresa & "'"
 
                 Dim _Tbl_Idmaeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 

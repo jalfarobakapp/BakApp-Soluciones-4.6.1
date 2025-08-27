@@ -6639,6 +6639,103 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
+    Function Fx_EntidadEnGrupoVendedores(_Row_Entidad As DataRow, _CodFuncionario As String) As LsValiciones.Mensajes
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Msj As String
+        Dim _Cl_Permiso As New Class_Permiso_BakApp
+
+        _Mensaje.EsCorrecto = True
+
+        Try
+
+            If Fx_Tiene_Permiso(Nothing, "NO00022",, False) Then
+
+                Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & _CodFuncionario & "'")
+                Dim _TienePermiso As Boolean
+
+                If Not _Kogru.Contains("'") Then
+                    _Kogru = "'" & _Kogru & "'"
+                End If
+
+                Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & ")"
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                For Each _Fila As DataRow In _Tbl_Grupo.Rows
+                    If _Fila.Item("KOFU").ToString.Trim = _Row_Entidad.Item("KOFUEN").ToString.Trim Then
+                        _TienePermiso = True
+                        Exit For
+                    End If
+                Next
+
+                If Not _TienePermiso Then
+
+                    Dim _Grupo As String = _Kogru.Trim & " - " & _Tbl_Grupo.Rows(0).Item("NOKOGRU").trim
+                    Dim _Row_Permiso As DataRow = _Cl_Permiso.Fx_Row_Traer_Permiso_Sistema("NO00022")
+
+                    Dim _DescripcionPermiso As String = _Row_Permiso.Item("DescripcionPermiso").ToString.Trim
+
+                    _Msj = "Acceso restringido: Entidad fuera de su grupo de vendedores" & vbCrLf &
+                           "La entidad seleccionada no está asociada a ningún vendedor de su grupo actual." & vbCrLf &
+                           "Por motivos de seguridad, usted tiene una restricción que impide visualizar o gestionar documentos " &
+                           "de clientes asignados a otros grupos de vendedores." & vbCrLf &
+                           "Solo puede acceder a documentos de clientes vinculados a vendedores de su grupo." & vbCrLf & vbCrLf &
+                           "Detalles de su configuración actual:" & vbCrLf &
+                           "- Permiso asignado: NO00022 " & vbCrLf &
+                           Fx_AjustarTexto(_DescripcionPermiso, 100) & vbCrLf & vbCrLf &
+                           "- Grupo de vendedores: " & _Grupo & vbCrLf & vbCrLf &
+                           "Si necesita acceso a esta entidad, contacte al administrador del sistema o a su supervisor."
+
+                    _Mensaje.Mensaje = _Msj
+                    _Mensaje.Icono = MessageBoxIcon.Stop
+                    _Row_Entidad = Nothing
+
+                End If
+
+            ElseIf Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
+
+                If _Row_Entidad.Item("KOFUEN").ToString.Trim <> _CodFuncionario.ToString.Trim Then
+
+                    Dim _Row_Permiso As DataRow = _Cl_Permiso.Fx_Row_Traer_Permiso_Sistema("NO00021")
+
+                    Dim _DescripcionPermiso As String = _Row_Permiso.Item("DescripcionPermiso").ToString.Trim
+
+                    _Msj = "Acceso restringido: Entidad no pertenece al vendedor" & vbCrLf &
+                       "La entidad seleccionada no está asociada a su cartera de clientes." & vbCrLf &
+                       "Por motivos de seguridad, usted tiene una restricción que impide visualizar o gestionar documentos " &
+                       "de clientes asignados a otros vendedores." & vbCrLf &
+                       "Solo puede acceder a documentos de clientes vinculados a usted." & vbCrLf & vbCrLf &
+                       "Detalles de su configuración actual:" & vbCrLf &
+                       "- Permiso asignado: NO00021 " & vbCrLf &
+                       Fx_AjustarTexto(_DescripcionPermiso, 100) & vbCrLf & vbCrLf &
+                       "Si necesita acceso a esta entidad, contacte al administrador del sistema o a su supervisor."
+
+                    _Mensaje.Mensaje = _Msj
+                    _Mensaje.Icono = MessageBoxIcon.Stop
+                    _Row_Entidad = Nothing
+
+                End If
+
+            End If
+
+            _Mensaje.EsCorrecto = Not IsNothing(_Row_Entidad)
+            _Mensaje.Mensaje = _Msj
+            _Mensaje.Tag = _Row_Entidad
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            _Mensaje.Tag = Nothing
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Function Fx_Vaidar_Fincred(_Idmaeedo As Integer,
                                _Tido As String,
                                _Nudo As String,

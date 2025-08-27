@@ -1079,7 +1079,8 @@ Public Class Cl_FacAuto_NVV
 
                         If _Msj_Limpiar.EsCorrecto Then
 
-                            Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
+                            Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision,
+                                                                              False, True,,,,, True)
 
                             _Msj_GrabarDoc = Fm_Post.Fx_Grabar_Documento(False,
                                                                          csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,

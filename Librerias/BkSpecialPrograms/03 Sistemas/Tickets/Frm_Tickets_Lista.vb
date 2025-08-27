@@ -773,14 +773,22 @@ Drop Table #Paso"
 
             If _GestionRealizada Then
 
-                If nodoSeleccionado IsNot Nothing Then
-                    ' El nodo seleccionado tiene el foco
-                    ' Puedes acceder a sus propiedades o realizar otras acciones aquí
-                    'Console.WriteLine("El nodo seleccionado es: " & nodoSeleccionado.Text)
-                    Sb_Actualizar_Grilla_Treeview(nodoSeleccionado)
-                    'Else
-                    'Console.WriteLine("Ningún nodo tiene el foco actualmente.")
-                End If
+                Txt_Filtrar.Text = String.Empty
+                Call Btn_Actualizar_Click(Nothing, Nothing)
+
+                'If nodoSeleccionado IsNot Nothing Then
+                '    ' El nodo seleccionado tiene el foco
+                '    ' Puedes acceder a sus propiedades o realizar otras acciones aquí
+                '    'Console.WriteLine("El nodo seleccionado es: " & nodoSeleccionado.Text)
+
+                '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
+                '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+                '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(2))
+
+                '    Sb_Actualizar_Grilla_Treeview(nodoSeleccionado)
+                '    'Else
+                '    'Console.WriteLine("Ningún nodo tiene el foco actualmente.")
+                'End If
 
                 BuscarDatoEnGrilla(_Numero, "Numero", Grilla)
 

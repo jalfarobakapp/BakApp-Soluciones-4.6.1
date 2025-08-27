@@ -2,7 +2,6 @@
 Imports System.Threading
 Imports BkSpecialPrograms.Bk_Comporamiento_UdMedidas
 Imports BkSpecialPrograms.DocumentoListaSuperior
-Imports BkSpecialPrograms.PreVenta
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Formulario_Documento
@@ -167,7 +166,11 @@ Public Class Frm_Formulario_Documento
     Private _AvisoCambioRTUVariable As Boolean
 
     Public Property ModEmpresa_Doc As String
+    Public Property ModSucursal_Doc As String
+    Public Property ModBodega_Doc As String
     Public Property ModModalidad_Doc As String
+
+    Dim _Row_Modalidad_Doc As DataRow
 
     Dim _Ls_Cl_PreVenta As New List(Of Zw_PreVenta_StockProd)
 
@@ -456,6 +459,8 @@ Public Class Frm_Formulario_Documento
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         ModEmpresa_Doc = Mod_Empresa
+        ModSucursal_Doc = Mod_Sucursal
+        ModBodega_Doc = Mod_Bodega
         ModModalidad_Doc = Mod_Modalidad
 
         Me._Documento_Reciclado = Documento_Reciclado
@@ -8781,44 +8786,56 @@ Public Class Frm_Formulario_Documento
 
                 Else
 
-                    If Fx_Tiene_Permiso(Me, "NO00022",, False) Then
+                    Dim _Mensaje As New LsValiciones.Mensajes
 
-                        Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
-                        Dim _TienePermiso As Boolean
+                    _Mensaje = Fx_EntidadEnGrupoVendedores(_RowEntidad, FUNCIONARIO)
 
-                        If Not _Kogru.Contains("'") Then
-                            _Kogru = "'" & _Kogru & "'"
-                        End If
-
-                        Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & ")"
-                        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-                        Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-                        For Each _Fila As DataRow In _Tbl_Grupo.Rows
-                            If _Fila.Item("KOFU").ToString.Trim = _RowEntidad.Item("KOFUEN").ToString.Trim Then
-                                _TienePermiso = True
-                                Exit For
-                            End If
-                        Next
-
-                        If Not _TienePermiso Then
-
-                            Dim _Grupo As String = _Kogru.Trim & " - " & _Tbl_Grupo.Rows(0).Item("NOKOGRU").trim
-
-                            Dim _Msj = "Tiene una restricción que le impide gestionar o ver documentos de clientes asignados a" & vbCrLf &
-                                       "otros vendedores fuera de su grupo. Esto significa que solo puede acceder y gestionar" & vbCrLf &
-                                       "documentos de los clientes de los vendedores asociados a su grupo." & vbCrLf & vbCrLf &
-                                       "Actualmente, tiene asignado el permiso (restricción) NO00022" & vbCrLf &
-                                       "y pertenece al grupo " & _Grupo
-
-                            MessageBoxEx.Show(_Formulario, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-                            Return Nothing
-
-                        End If
-
+                    If Not _Mensaje.EsCorrecto Then
+                        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK,
+                          IIf(_Mensaje.EsCorrecto, MessageBoxIcon.Information, MessageBoxIcon.Stop))
+                        Return Nothing
+                    Else
+                        _RowEntidad = _Mensaje.Tag
                     End If
+
+                    'If Fx_Tiene_Permiso(Me, "NO00022",, False) Then
+
+                    '    Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+                    '    Dim _TienePermiso As Boolean
+
+                    '    If Not _Kogru.Contains("'") Then
+                    '        _Kogru = "'" & _Kogru & "'"
+                    '    End If
+
+                    '    Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & ")"
+                    '    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                    '    Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                    '    For Each _Fila As DataRow In _Tbl_Grupo.Rows
+                    '        If _Fila.Item("KOFU").ToString.Trim = _RowEntidad.Item("KOFUEN").ToString.Trim Then
+                    '            _TienePermiso = True
+                    '            Exit For
+                    '        End If
+                    '    Next
+
+                    '    If Not _TienePermiso Then
+
+                    '        Dim _Grupo As String = _Kogru.Trim & " - " & _Tbl_Grupo.Rows(0).Item("NOKOGRU").trim
+
+                    '        Dim _Msj = "Tiene una restricción que le impide gestionar o ver documentos de clientes asignados a" & vbCrLf &
+                    '                   "otros vendedores fuera de su grupo. Esto significa que solo puede acceder y gestionar" & vbCrLf &
+                    '                   "documentos de los clientes de los vendedores asociados a su grupo." & vbCrLf & vbCrLf &
+                    '                   "Actualmente, tiene asignado el permiso (restricción) NO00022" & vbCrLf &
+                    '                   "y pertenece al grupo " & _Grupo
+
+                    '        MessageBoxEx.Show(_Formulario, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                    '        Return Nothing
+
+                    '    End If
+
+                    'End If
 
                 End If
 
@@ -14062,7 +14079,7 @@ Public Class Frm_Formulario_Documento
             _Mod.Sb_Actualiza_Formatos_X_Modalidad(False)
             _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "", False, ModEmpresa_Doc)
             _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, ModModalidad_Doc, False, ModEmpresa_Doc)
-            _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc, False)
+            _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc, False, ModEmpresa_Doc)
 
             If Not IsNothing(_Global_Frm_Menu) Then _Global_Frm_Menu.Refresh()
 
@@ -19251,7 +19268,8 @@ Public Class Frm_Formulario_Documento
                                                          Optional _Conservar_Nudo As Boolean = False,
                                                          Optional _Bodega_Recepcion As String = "",
                                                          Optional _Sucursal_Recepcion As String = "",
-                                                         Optional _Usar_SucBodRecepcion As Boolean = False)
+                                                         Optional _Usar_SucBodRecepcion As Boolean = False,
+                                                         Optional _Usar_SucursalDocOrigen As Boolean = False)
 
         Try
 
@@ -19277,6 +19295,10 @@ Public Class Frm_Formulario_Documento
                                 Delete MAEEDOOB Where IDMAEEDO = 0"
                 _RowMaeedoOb_Origen = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Error)
 
+            End If
+
+            If _Usar_SucursalDocOrigen Then
+                _TblEncabezado.Rows(0).Item("Sucursal") = _RowMaeedo_Origen.Item("SUDO")
             End If
 
             If _Tido <> "NCV" Then

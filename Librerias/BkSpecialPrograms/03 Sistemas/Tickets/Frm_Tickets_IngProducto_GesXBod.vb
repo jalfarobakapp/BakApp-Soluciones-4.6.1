@@ -364,7 +364,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                             Fm.ShowDialog(Me)
                             If Fm.Seleccionada Then
                                 _Fila.Cells("Um").Value = Fm.UdTrans
-                                Grilla_Detalle.CurrentCell = _Fila.Cells("StfiEnBodega")
+                                Grilla_Detalle.CurrentCell = _Fila.Cells("Cantidad") ' StfiEnBodega
                             End If
                             Fm.Dispose()
 
@@ -568,8 +568,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                     _Fila.Cells("Diferencia").Value = _Diferencia
 
-                    If _Cabeza = "StfiEnBodega" Then
-                        Grilla_Detalle.CurrentCell = _Fila.Cells("Cantidad")
+                    If _Cabeza = "Cantidad" Then
+                        Grilla_Detalle.CurrentCell = _Fila.Cells("StfiEnBodega")
                     Else
                         Grilla_Detalle.CurrentCell = _Fila.Cells("FechaRev")
                     End If

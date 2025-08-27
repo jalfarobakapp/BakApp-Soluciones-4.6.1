@@ -45,6 +45,7 @@ Public Class Frm_BusquedaDocumento_Filtro
     Dim _Mostrar_Vales_Transitorios As Boolean
 
     Private _VerSoloEntidadesDelVendedor As Boolean
+    Private _PermisoVerSoloEntidadesDelVendedor As String
     Private _Ls_DocumentosPermitidos As New List(Of Ls_DocumentosPermitidos)
 
     Public Property OcultarWarnig As Boolean
@@ -267,11 +268,13 @@ Public Class Frm_BusquedaDocumento_Filtro
         TxtNroDocumento.Enabled = Rdb_Tipo_Documento_Algunos.Checked
         LblNroDocumento.Enabled = Rdb_Tipo_Documento_Algunos.Checked
 
-        Consulta_sql = "SELECT KOFU AS Padre,KOFU+' - '+NOKOFU AS Hijo FROM TABFU ORDER BY KOFU"
-        caract_combo(CmbFuncionarios)
+        'Consulta_sql = "SELECT KOFU AS Padre,KOFU+' - '+NOKOFU AS Hijo FROM TABFU ORDER BY KOFU"
+        'caract_combo(CmbFuncionarios)
 
-        CmbFuncionarios.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
-        CmbFuncionarios.SelectedValue = FUNCIONARIO
+        'CmbFuncionarios.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
+        'CmbFuncionarios.SelectedValue = FUNCIONARIO
+
+        Txt_Funcionarios.Text = "Funcionario: " & FUNCIONARIO & ", " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & FUNCIONARIO & "'")
 
         'AddHandler ChkTipoDocumento_Todos.CheckedChanged, AddressOf Sb_Grupo_Documento
         AddHandler Rdb_Tipo_Documento_Algunos.CheckedChanged, AddressOf Sb_Grupo_Documento
@@ -302,7 +305,7 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         If _Mostrar_Solo_Datos_Usuario_Activo Then
             Rdb_Funcionarios_Uno.Checked = True
-            CmbFuncionarios.Enabled = False
+            Txt_Funcionarios.Enabled = False
         End If
 
         _Row_Documento_Seleccionado = Nothing
@@ -311,8 +314,13 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         _VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
 
-        If Not _VerSoloEntidadesDelVendedor Then
+        If _VerSoloEntidadesDelVendedor Then
+            _PermisoVerSoloEntidadesDelVendedor = "NO00021"
+        Else
             _VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False)
+            If _VerSoloEntidadesDelVendedor Then
+                _PermisoVerSoloEntidadesDelVendedor = "NO00022"
+            End If
         End If
 
         Chk_MostrarSoloDocClientesDelVendedor.Visible = _VerSoloEntidadesDelVendedor
@@ -391,9 +399,9 @@ Public Class Frm_BusquedaDocumento_Filtro
 
     End Sub
 
-    Private Sub Btn_Funcionarios_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Funcionarios.Click
-        Sb_Filtro_funcionarios()
-    End Sub
+    'Private Sub Btn_Funcionarios_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Funcionarios.Click
+    '    Sb_Filtro_funcionarios()
+    'End Sub
 
     Sub Sb_Filtro_funcionarios()
 
@@ -412,8 +420,8 @@ Public Class Frm_BusquedaDocumento_Filtro
     End Sub
 
     Sub Sb_Grupo_Funcionarios()
-        Btn_Funcionarios.Enabled = Rdb_Funcionarios_Algunos.Checked
-        CmbFuncionarios.Enabled = Rdb_Funcionarios_Uno.Checked
+        'Btn_Funcionarios.Enabled = Rdb_Funcionarios_Algunos.Checked
+        Txt_Funcionarios.Enabled = Rdb_Funcionarios_Uno.Checked
     End Sub
 
     Public Sub Sb_LlenarCombo_FlDoc(_TipoBusqueda As _TipoDoc_Sel,
@@ -445,7 +453,7 @@ Public Class Frm_BusquedaDocumento_Filtro
     End Sub
 
     Sub Sb_Grupo_Entidad()
-        Btn_Entidad_Una.Enabled = Rdb_Entidad_Una.Checked
+        'Btn_Entidad_Una.Enabled = Rdb_Entidad_Una.Checked
         Txt_Entidad.Enabled = Rdb_Entidad_Una.Checked
     End Sub
 
@@ -464,7 +472,7 @@ Public Class Frm_BusquedaDocumento_Filtro
     End Sub
 
     Sub Sb_Grupo_Producto()
-        Btn_Producto_Uno.Enabled = Rdb_Producto_Uno.Checked
+        'Btn_Producto_Uno.Enabled = Rdb_Producto_Uno.Checked
         Txt_Producto.Enabled = Rdb_Producto_Uno.Checked
         If Rdb_Producto_Todos.Checked Then
             Txt_Producto.Text = String.Empty
@@ -548,7 +556,7 @@ Public Class Frm_BusquedaDocumento_Filtro
 
         If Rdb_Entidad_Una.Checked Then
 
-            If Not IsNothing(_CodEntidad) OrElse Not String.IsNullOrEmpty(_CodEntidad) Then
+            If Not String.IsNullOrEmpty(Txt_Entidad.Text) Then 'Not IsNothing(_CodEntidad) OrElse String.IsNullOrEmpty(_CodEntidad) Then
 
                 If Chk_Todas_Sucursales.Checked Then
                     _Sql_Filtro_Entidades = "Edo.ENDO = '" & _CodEntidad & "'"
@@ -608,7 +616,7 @@ Public Class Frm_BusquedaDocumento_Filtro
             _Sql_Filtro_Fucnionarios = "And Edo.KOFUDO In " & _Fl
 
         ElseIf Rdb_Funcionarios_Uno.Checked Then
-            _Sql_Filtro_Fucnionarios = "And Edo.KOFUDO = '" & CmbFuncionarios.SelectedValue & "'"
+            _Sql_Filtro_Fucnionarios = "And Edo.KOFUDO = '" & Txt_Funcionarios.Tag & "'"
         End If
 
         If Rdb_FEmision_EmitidosEntre.Checked Then
@@ -928,22 +936,31 @@ Buscar:
 
     End Sub
 
-    Private Sub Btn_Entidad_Una_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Entidad_Una.Click
+    'Private Sub Btn_Entidad_Una_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Entidad_Una.Click
 
-        Dim Fm As New Frm_BuscarEntidad_Mt(False)
-        Fm.VerSoloEntidadesDelVendedor = Chk_MostrarSoloDocClientesDelVendedor.Checked
-        Fm.Rdb_Clientes.Checked = Chk_MostrarSoloDocClientesDelVendedor.Checked
-        Fm.BtnCrearUser.Visible = False
-        Fm.BtnEditarUser.Visible = False
-        Fm.BtnEliminarUser.Visible = False
+    '    Dim Fm As New Frm_BuscarEntidad_Mt(False)
+    '    Fm.VerSoloEntidadesDelVendedor = Chk_MostrarSoloDocClientesDelVendedor.Checked
+    '    Fm.Rdb_Clientes.Checked = Chk_MostrarSoloDocClientesDelVendedor.Checked
+    '    Fm.BtnCrearUser.Visible = False
+    '    Fm.BtnEditarUser.Visible = False
+    '    Fm.BtnEliminarUser.Visible = False
 
-        Fm.ShowDialog(Me)
+    '    Fm.ShowDialog(Me)
+    '    Dim _Row As DataRow = Fm.Pro_RowEntidad
+    '    Fm.Dispose()
 
-        If Not (Fm.Pro_RowEntidad Is Nothing) Then
-            Pro_Row_Entidad = Fm.Pro_RowEntidad
-        End If
+    '    Dim _Mensaje As New LsValiciones.Mensajes
 
-    End Sub
+    '    _Mensaje = Fx_EntidadEnGrupoVendedores(_Row, FUNCIONARIO)
+
+    '    If Not _Mensaje.EsCorrecto Then
+    '        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK,
+    '                      IIf(_Mensaje.EsCorrecto, MessageBoxIcon.Information, MessageBoxIcon.Stop))
+    '    Else
+    '        Pro_Row_Entidad = _Mensaje.Tag
+    '    End If
+
+    'End Sub
 
     Private Sub TxtNroDocumento_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles TxtNroDocumento.KeyDown
         If e.KeyValue = Keys.Enter Then
@@ -951,31 +968,31 @@ Buscar:
         End If
     End Sub
 
-    Private Sub Btn_Producto_Uno_Click(sender As Object, e As EventArgs) Handles Btn_Producto_Uno.Click
+    'Private Sub Btn_Producto_Uno_Click(sender As Object, e As EventArgs) Handles Btn_Producto_Uno.Click
 
-        Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt()
-        Fm.Pro_Actualizar_Precios = True
-        Fm.Pro_Mostrar_Info = True
-        Fm.BtnBuscarAlternativos.Visible = True
-        Fm.Pro_Mostrar_Imagenes = True
-        Fm.BtnCrearProductos.Visible = False
-        Fm.Pro_Mostrar_Editar = True
-        Fm.Pro_Mostrar_Eliminar = False
-        Fm.BtnExportaExcel.Visible = False
-        Fm.Pro_Tipo_Lista = "P"
-        Fm.Pro_Maestro_Productos = False
-        Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
-        Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
-        Fm.Pro_Bodega_Busqueda = Mod_Bodega
-        Fm.ShowDialog(Me)
+    '    Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt()
+    '    Fm.Pro_Actualizar_Precios = True
+    '    Fm.Pro_Mostrar_Info = True
+    '    Fm.BtnBuscarAlternativos.Visible = True
+    '    Fm.Pro_Mostrar_Imagenes = True
+    '    Fm.BtnCrearProductos.Visible = False
+    '    Fm.Pro_Mostrar_Editar = True
+    '    Fm.Pro_Mostrar_Eliminar = False
+    '    Fm.BtnExportaExcel.Visible = False
+    '    Fm.Pro_Tipo_Lista = "P"
+    '    Fm.Pro_Maestro_Productos = False
+    '    Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
+    '    Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+    '    Fm.Pro_Bodega_Busqueda = Mod_Bodega
+    '    Fm.ShowDialog(Me)
 
-        If Fm.Pro_Seleccionado Then
-            Pro_Row_Producto = Fm.Pro_RowProducto
-        End If
+    '    If Fm.Pro_Seleccionado Then
+    '        Pro_Row_Producto = Fm.Pro_RowProducto
+    '    End If
 
-        Fm.Dispose()
+    '    Fm.Dispose()
 
-    End Sub
+    'End Sub
 
     Private Sub Rdb_Sucursal_Doc_Algunas_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_Sucursal_Doc_Algunas.CheckedChanged
 
@@ -1113,9 +1130,15 @@ Buscar:
 
         If _VerSoloEntidadesDelVendedor Then
 
+            Dim Cl_Permiso As New Class_Permiso_BakApp
+            Dim _Row_Permiso As DataRow = Cl_Permiso.Fx_Row_Traer_Permiso_Sistema(_PermisoVerSoloEntidadesDelVendedor)
+
+            Dim _DescripcionPermiso As String = _Row_Permiso.Item("DescripcionPermiso").ToString.Trim
+
             _Msj = "Tiene una restricción que le impide ver documentos de clientes de otros vendedores." & vbCrLf &
                    "Esto significa que solo puede acceder a los documentos de su propia cartera de clientes." & vbCrLf &
-                   "Actualmente, tiene asignado el permiso (restricción) NO00021."
+                   "Actualmente, tiene una restricción asignada." & vbCrLf & vbCrLf & "Permiso: [" & _PermisoVerSoloEntidadesDelVendedor & "]" & vbCrLf &
+                   Fx_AjustarTexto(_DescripcionPermiso, 80) & "."
 
         End If
 
@@ -1134,6 +1157,80 @@ Buscar:
         End If
 
         MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+    End Sub
+
+    Private Sub Txt_Entidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Entidad.ButtonCustomClick
+
+        Dim Fm As New Frm_BuscarEntidad_Mt(False)
+        Fm.VerSoloEntidadesDelVendedor = Chk_MostrarSoloDocClientesDelVendedor.Checked
+        Fm.Rdb_Clientes.Checked = Chk_MostrarSoloDocClientesDelVendedor.Checked
+        Fm.BtnCrearUser.Visible = False
+        Fm.BtnEditarUser.Visible = False
+        Fm.BtnEliminarUser.Visible = False
+
+        Fm.ShowDialog(Me)
+        Dim _Row As DataRow = Fm.Pro_RowEntidad
+        Fm.Dispose()
+
+        If IsNothing(_Row) Then
+            Return
+        End If
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = Fx_EntidadEnGrupoVendedores(_Row, FUNCIONARIO)
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK,
+                          IIf(_Mensaje.EsCorrecto, MessageBoxIcon.Information, MessageBoxIcon.Stop))
+            _CodEntidad = String.Empty
+            _SucEntidad = String.Empty
+            Txt_Entidad.Text = String.Empty
+        Else
+            Pro_Row_Entidad = _Mensaje.Tag
+        End If
+
+    End Sub
+
+    Private Sub Txt_Producto_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Producto.ButtonCustomClick
+
+        Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt()
+        Fm.Pro_Actualizar_Precios = True
+        Fm.Pro_Mostrar_Info = True
+        Fm.BtnBuscarAlternativos.Visible = True
+        Fm.Pro_Mostrar_Imagenes = True
+        Fm.BtnCrearProductos.Visible = False
+        Fm.Pro_Mostrar_Editar = True
+        Fm.Pro_Mostrar_Eliminar = False
+        Fm.BtnExportaExcel.Visible = False
+        Fm.Pro_Tipo_Lista = "P"
+        Fm.Pro_Maestro_Productos = False
+        Fm.Pro_Lista_Busqueda = Mod_ListaPrecioVenta
+        Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+        Fm.Pro_Bodega_Busqueda = Mod_Bodega
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Seleccionado Then
+            Pro_Row_Producto = Fm.Pro_RowProducto
+        End If
+
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Txt_Funcionarios_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Funcionarios.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, "", False, False, True) Then
+
+            Dim _Fl As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+            Txt_Funcionarios.Tag = _Fl.Item("Codigo")
+            Txt_Funcionarios.Text = _Fl.Item("Codigo") & " - " & _Fl.Item("Descripcion")
+
+        End If
 
     End Sub
 
