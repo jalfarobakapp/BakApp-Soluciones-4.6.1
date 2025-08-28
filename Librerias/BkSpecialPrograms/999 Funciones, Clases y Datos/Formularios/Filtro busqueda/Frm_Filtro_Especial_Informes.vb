@@ -596,15 +596,16 @@ Public Class Frm_Filtro_Especial_Informes
         ChequearTodo(Grilla, chk, "")
     End Sub
 
-    Private Sub Txt_Codigo_TextChanged(sender As System.Object, e As System.EventArgs) Handles Txt_Codigo.TextChanged
+    'Private Sub Txt_Codigo_TextChanged(sender As System.Object, e As System.EventArgs) Handles Txt_Codigo.TextChanged
 
-        Dim _Fl As String
-        Select Case Cmb_Filtro_Codigo.SelectedValue
-            Case "C" : _Fl = "%{0}%" : Case "E" : _Fl = "{0}%" : Case "T" : _Fl = "%{0}"
-        End Select
-        _Dv.RowFilter = String.Format("Codigo Like '" & _Fl & "'", Trim(Txt_Codigo.Text))
+    '    Dim _Fl As String
+    '    Select Case Cmb_Filtro_Codigo.SelectedValue
+    '        Case "C" : _Fl = "%{0}%" : Case "E" : _Fl = "{0}%" : Case "T" : _Fl = "%{0}"
+    '    End Select
+    '    Txt_Codigo.Text = Txt_Codigo.Text.Replace("'", "''")
+    '    _Dv.RowFilter = String.Format("Codigo Like '" & _Fl & "'", Trim(Txt_Codigo.Text))
 
-    End Sub
+    'End Sub
 
     Private Sub Btn_Ver_documento_origen_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
@@ -934,5 +935,16 @@ Public Class Frm_Filtro_Especial_Informes
 
     End Sub
 
+    Private Sub Txt_Codigo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Codigo.KeyDown
 
+        If e.KeyValue = Keys.Enter Then
+            Dim _Fl As String
+            Select Case Cmb_Filtro_Codigo.SelectedValue
+                Case "C" : _Fl = "%{0}%" : Case "E" : _Fl = "{0}%" : Case "T" : _Fl = "%{0}"
+            End Select
+            Dim _Codigo As String = Txt_Codigo.Text.Replace("'", "''").ToString.Trim
+            _Dv.RowFilter = String.Format("Codigo Like '" & _Fl & "'", _Codigo)
+        End If
+
+    End Sub
 End Class

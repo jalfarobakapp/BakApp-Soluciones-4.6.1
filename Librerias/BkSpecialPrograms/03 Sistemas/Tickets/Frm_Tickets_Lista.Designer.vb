@@ -69,18 +69,20 @@ Partial Class Frm_Tickets_Lista
         Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
         Me.Txt_Descripcion = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_Filtro_Fcreacion = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Dtp_Filtro_Fcreacion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Chk_Filtro_FcreacionRango = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Dtp_Filtro_Fcreacion_Desde = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Btn_Filtrar = New DevComponents.DotNetBar.ButtonX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Dtp_Filtro_Fcreacion_Hasta = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Grilla_Acciones, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Dtp_Filtro_Fcreacion, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_Filtro_Fcreacion_Desde, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_Filtro_Fcreacion_Hasta, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar2
@@ -486,7 +488,7 @@ Partial Class Frm_Tickets_Lista
         Me.Txt_Filtrar.Location = New System.Drawing.Point(286, 22)
         Me.Txt_Filtrar.Name = "Txt_Filtrar"
         Me.Txt_Filtrar.PreventEnterBeep = True
-        Me.Txt_Filtrar.Size = New System.Drawing.Size(701, 22)
+        Me.Txt_Filtrar.Size = New System.Drawing.Size(556, 22)
         Me.Txt_Filtrar.TabIndex = 9
         Me.Txt_Filtrar.WatermarkText = "Ingrese una descripción de cualquier campo para filtrar. Para diferenciar por can" &
     "tidades, use Dif- o Dif+."
@@ -768,75 +770,75 @@ Partial Class Frm_Tickets_Lista
         Me.LabelX2.TabIndex = 176
         Me.LabelX2.Text = "OBSERVACIONES"
         '
-        'Chk_Filtro_Fcreacion
+        'Chk_Filtro_FcreacionRango
         '
-        Me.Chk_Filtro_Fcreacion.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.Chk_Filtro_Fcreacion.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Filtro_Fcreacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Filtro_Fcreacion.CheckBoxImageChecked = CType(resources.GetObject("Chk_Filtro_Fcreacion.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Filtro_Fcreacion.FocusCuesEnabled = False
-        Me.Chk_Filtro_Fcreacion.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Filtro_Fcreacion.Location = New System.Drawing.Point(1007, 21)
-        Me.Chk_Filtro_Fcreacion.Name = "Chk_Filtro_Fcreacion"
-        Me.Chk_Filtro_Fcreacion.Size = New System.Drawing.Size(105, 22)
-        Me.Chk_Filtro_Fcreacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Filtro_Fcreacion.TabIndex = 177
-        Me.Chk_Filtro_Fcreacion.Text = "Filtra F.Creación"
-        '
-        'Dtp_Filtro_Fcreacion
-        '
-        Me.Dtp_Filtro_Fcreacion.BackColor = System.Drawing.Color.White
+        Me.Chk_Filtro_FcreacionRango.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Chk_Filtro_FcreacionRango.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.Dtp_Filtro_Fcreacion.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_Filtro_Fcreacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Filtro_Fcreacion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_Filtro_Fcreacion.ButtonDropDown.Visible = True
-        Me.Dtp_Filtro_Fcreacion.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_Filtro_Fcreacion.IsPopupCalendarOpen = False
-        Me.Dtp_Filtro_Fcreacion.Location = New System.Drawing.Point(1107, 21)
+        Me.Chk_Filtro_FcreacionRango.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Filtro_FcreacionRango.CheckBoxImageChecked = CType(resources.GetObject("Chk_Filtro_FcreacionRango.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Filtro_FcreacionRango.FocusCuesEnabled = False
+        Me.Chk_Filtro_FcreacionRango.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Filtro_FcreacionRango.Location = New System.Drawing.Point(848, 22)
+        Me.Chk_Filtro_FcreacionRango.Name = "Chk_Filtro_FcreacionRango"
+        Me.Chk_Filtro_FcreacionRango.Size = New System.Drawing.Size(159, 22)
+        Me.Chk_Filtro_FcreacionRango.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Filtro_FcreacionRango.TabIndex = 177
+        Me.Chk_Filtro_FcreacionRango.Text = "Filtra F.Creación desde/hasta"
+        '
+        'Dtp_Filtro_Fcreacion_Desde
+        '
+        Me.Dtp_Filtro_Fcreacion_Desde.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        Me.Dtp_Filtro_Fcreacion_Desde.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_Filtro_Fcreacion_Desde.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Filtro_Fcreacion_Desde.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_Filtro_Fcreacion_Desde.ButtonDropDown.Visible = True
+        Me.Dtp_Filtro_Fcreacion_Desde.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_Filtro_Fcreacion_Desde.IsPopupCalendarOpen = False
+        Me.Dtp_Filtro_Fcreacion_Desde.Location = New System.Drawing.Point(1013, 21)
         '
         '
         '
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.ClearButtonVisible = True
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
         '
         '
         '
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.DisplayMonth = New Date(2025, 3, 1, 0, 0, 0, 0)
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.ClearButtonVisible = True
         '
         '
         '
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_Filtro_Fcreacion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_Filtro_Fcreacion.Name = "Dtp_Filtro_Fcreacion"
-        Me.Dtp_Filtro_Fcreacion.Size = New System.Drawing.Size(90, 22)
-        Me.Dtp_Filtro_Fcreacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_Filtro_Fcreacion.TabIndex = 178
-        Me.Dtp_Filtro_Fcreacion.Value = New Date(2025, 3, 27, 13, 14, 32, 0)
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.DisplayMonth = New Date(2025, 3, 1, 0, 0, 0, 0)
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_Filtro_Fcreacion_Desde.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_Filtro_Fcreacion_Desde.Name = "Dtp_Filtro_Fcreacion_Desde"
+        Me.Dtp_Filtro_Fcreacion_Desde.Size = New System.Drawing.Size(90, 22)
+        Me.Dtp_Filtro_Fcreacion_Desde.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_Filtro_Fcreacion_Desde.TabIndex = 178
+        Me.Dtp_Filtro_Fcreacion_Desde.Value = New Date(2025, 3, 27, 13, 14, 32, 0)
         '
         'Btn_Filtrar
         '
@@ -884,15 +886,68 @@ Partial Class Frm_Tickets_Lista
         Me.LabelX4.TabIndex = 181
         Me.LabelX4.Text = "Información"
         '
+        'Dtp_Filtro_Fcreacion_Hasta
+        '
+        Me.Dtp_Filtro_Fcreacion_Hasta.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_Filtro_Fcreacion_Hasta.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_Filtro_Fcreacion_Hasta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Filtro_Fcreacion_Hasta.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_Filtro_Fcreacion_Hasta.ButtonDropDown.Visible = True
+        Me.Dtp_Filtro_Fcreacion_Hasta.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_Filtro_Fcreacion_Hasta.IsPopupCalendarOpen = False
+        Me.Dtp_Filtro_Fcreacion_Hasta.Location = New System.Drawing.Point(1109, 21)
+        '
+        '
+        '
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.DisplayMonth = New Date(2025, 3, 1, 0, 0, 0, 0)
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_Filtro_Fcreacion_Hasta.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_Filtro_Fcreacion_Hasta.Name = "Dtp_Filtro_Fcreacion_Hasta"
+        Me.Dtp_Filtro_Fcreacion_Hasta.Size = New System.Drawing.Size(90, 22)
+        Me.Dtp_Filtro_Fcreacion_Hasta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_Filtro_Fcreacion_Hasta.TabIndex = 182
+        Me.Dtp_Filtro_Fcreacion_Hasta.Value = New Date(2025, 3, 27, 13, 14, 32, 0)
+        '
         'Frm_Tickets_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1264, 642)
+        Me.Controls.Add(Me.Dtp_Filtro_Fcreacion_Hasta)
         Me.Controls.Add(Me.LabelX4)
         Me.Controls.Add(Me.LabelX3)
         Me.Controls.Add(Me.Btn_Filtrar)
-        Me.Controls.Add(Me.Dtp_Filtro_Fcreacion)
+        Me.Controls.Add(Me.Dtp_Filtro_Fcreacion_Desde)
         Me.Controls.Add(Me.Txt_Descripcion)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.LabelX1)
@@ -903,10 +958,11 @@ Partial Class Frm_Tickets_Lista
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Metro_Bar_Color)
-        Me.Controls.Add(Me.Chk_Filtro_Fcreacion)
+        Me.Controls.Add(Me.Chk_Filtro_FcreacionRango)
         Me.Controls.Add(Me.LabelX2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MaximumSize = New System.Drawing.Size(1280, 720)
@@ -922,7 +978,8 @@ Partial Class Frm_Tickets_Lista
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
         CType(Me.Grilla_Acciones, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Dtp_Filtro_Fcreacion, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_Filtro_Fcreacion_Desde, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_Filtro_Fcreacion_Hasta, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -965,9 +1022,10 @@ Partial Class Frm_Tickets_Lista
     Friend WithEvents Imagenes_16x16_Dark As ImageList
     Friend WithEvents Txt_Descripcion As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
-    Public WithEvents Chk_Filtro_Fcreacion As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents Dtp_Filtro_Fcreacion As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Public WithEvents Chk_Filtro_FcreacionRango As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Dtp_Filtro_Fcreacion_Desde As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents Btn_Filtrar As DevComponents.DotNetBar.ButtonX
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Dtp_Filtro_Fcreacion_Hasta As DevComponents.Editors.DateTimeAdv.DateTimeInput
 End Class

@@ -76,6 +76,13 @@ Public Class Frm_Tickets_Lista
 
         Txt_Descripcion.ReadOnly = True
 
+        Dtp_Filtro_Fcreacion_Desde.Enabled = Chk_Filtro_FcreacionRango.Checked
+        Dtp_Filtro_Fcreacion_Hasta.Enabled = Chk_Filtro_FcreacionRango.Checked
+        Btn_Filtrar.Enabled = Chk_Filtro_FcreacionRango.Checked
+
+        Dtp_Filtro_Fcreacion_Desde.Value = Primerdiadelmes(Date.Now)
+        Dtp_Filtro_Fcreacion_Hasta.Value = ultimodiadelmes(Date.Now)
+
     End Sub
 
     Function ImagenLista(_Num As Integer) As Image
@@ -679,7 +686,7 @@ Drop Table #Paso"
 
         Grilla.Refresh()
 
-        If Not String.IsNullOrWhiteSpace(Txt_Filtrar.Text.Trim) Then
+        If Not String.IsNullOrWhiteSpace(Txt_Filtrar.Text.Trim) Or Chk_Filtro_FcreacionRango.Checked Then
             Sb_Filtrar()
         End If
 
@@ -1206,12 +1213,18 @@ Drop Table #Paso"
                 End If
             Next
 
-            If Chk_Filtro_Fcreacion.Checked Then
+            If Chk_Filtro_FcreacionRango.Checked Then
                 If Not String.IsNullOrEmpty(filtroFinal) Then
                     filtroFinal &= " AND "
                 End If
-                filtroFinal &= String.Format("(CONVERT(FechaCreacion, 'System.String') Like '{0}%' Or CONVERT(FechaCreacion, 'System.String') Like '{1}%')",
-                                                             Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"), Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+
+                ' Ajuste: comparar solo la fecha, ignorando la hora
+                filtroFinal &= String.Format("(
+                    CONVERT(FechaCreacion, 'System.DateTime') >= #{0}# 
+                    AND CONVERT(FechaCreacion, 'System.DateTime') < #{1}#
+                )",
+                    Dtp_Filtro_Fcreacion_Desde.Value.Date.ToString("MM/dd/yyyy"),
+                    Dtp_Filtro_Fcreacion_Hasta.Value.Date.AddDays(1).ToString("MM/dd/yyyy"))
             End If
 
             _Dv.RowFilter = filtroFinal
@@ -1233,7 +1246,7 @@ Drop Table #Paso"
     End Sub
 
     Private Sub Txt_Filtrar_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustom2Click
-        Chk_Filtro_Fcreacion.Checked = False
+        Chk_Filtro_FcreacionRango.Checked = False
         If String.IsNullOrWhiteSpace(Txt_Filtrar.Text) Then
             Return
         End If
@@ -1577,6 +1590,15 @@ Drop Table #Paso"
         If _NodoAnterior IsNot Nothing Then
             ' Aquí el nodoAnterior está a punto de dejar de estar seleccionado
             'MessageBox.Show("Nodo que deja de estar seleccionado: " & _NodoAnterior.Text)
+        End If
+    End Sub
+
+    Private Sub Chk_Filtro_FcreacionRango_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Filtro_FcreacionRango.CheckedChanged
+        Dtp_Filtro_Fcreacion_Desde.Enabled = Chk_Filtro_FcreacionRango.Checked
+        Dtp_Filtro_Fcreacion_Hasta.Enabled = Chk_Filtro_FcreacionRango.Checked
+        Btn_Filtrar.Enabled = Chk_Filtro_FcreacionRango.Checked
+        If Not Chk_Filtro_FcreacionRango.Checked Then
+            Sb_Filtrar()
         End If
     End Sub
 End Class

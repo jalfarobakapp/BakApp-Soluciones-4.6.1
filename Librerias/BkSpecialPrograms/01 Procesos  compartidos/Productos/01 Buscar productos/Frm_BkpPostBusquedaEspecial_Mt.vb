@@ -1091,17 +1091,21 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                     _Sep1 = "%" : _Sep2 = "%"
                 End If
 
-                Dim _Sql_Fl As String = CADENA_A_BUSCAR(RTrim$(_CodigoBuscar), "DescripcionBusqueda LIKE '%")
+                Dim _Sql_Fl As String '= CADENA_A_BUSCAR(RTrim$(_CodigoBuscar), "DescripcionBusqueda LIKE '%")
 
                 Dim _AndKoprra As String
                 Dim _AndKoprtr As String
 
+                _Sql_Fl = CADENA_A_BUSCAR(RTrim$(_CodigoBuscar), "Mp.KOPR LIKE '%")
+
                 If _Global_Row_Configuracion_General.Item("BuscarProdConCodRapido") Then
                     _AndKoprra = " Or Mp.KOPRRA LIKE '" & _Sep1 & _Sql_Fl & _Sep2 & "'"
+                    _Sql_Fl = CADENA_A_BUSCAR(RTrim$(_CodigoBuscar), "Mp.KOPRRA LIKE '%")
                 End If
 
                 If _Global_Row_Configuracion_General.Item("BuscarProdConCodTecnico") Then
                     _AndKoprtr = " Or Mp.KOPRTE LIKE '" & _Sep1 & _Sql_Fl & _Sep2 & "'"
+                    _Sql_Fl = CADENA_A_BUSCAR(RTrim$(_CodigoBuscar), "Mp.KOPRTE LIKE '%")
                 End If
 
                 _Sql_Filtro1 = "And (Mp.KOPR LIKE '" & _Sep1 & _Sql_Fl & _Sep2 & "'" & _AndKoprra & _AndKoprtr & ")" & vbCrLf
@@ -2649,23 +2653,18 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         End If
 
         If e.KeyValue = Keys.Return Then
-            'If _Actualizar_Precios Then
 
-            '    If _Tipo_Lista = "P" Then
+            If String.IsNullOrWhiteSpace(TxtCodigo.Text) Then
+                MessageBoxEx.Show(Me, "No se ingreso ningún código para buscar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
 
-            '        Dim _CondExtraProveedor As String = String.Empty
-            '        If Not String.IsNullOrEmpty(Trim(_CodEntidad)) Then
-            '            _CondExtraProveedor = "Where Proeveedor = '" & _CodEntidad & "' And Sucursal = '" & _CodSucEntidad & "'"
-            '        End If
-
-            '        Actualizar_Precio_BkRandom(_ListaBusq, _Tabla_Lista, _CondExtraProveedor, True)
-            '        '    BUSCA()
-            '    End If
-
-            'End If
             _Top = 30
             Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Codigo)
-            If CBool(Grilla.RowCount) Then Grilla.Focus()
+
+            If Not String.IsNullOrWhiteSpace(TxtCodigo.Text) Then
+                If CBool(Grilla.RowCount) Then Grilla.Focus()
+            End If
+
         End If
 
     End Sub

@@ -1330,7 +1330,7 @@ Public Class Frm_Demonio_New
                     _Mod.Sb_Actualiza_Formatos_X_Modalidad(False)
                     _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "", False, _Empresa_Ori)
                     _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, _Modalidad_Ori, False, _Empresa_Ori)
-                    _Mod.Sb_Actualizar_Variables_Modalidad(_Modalidad_Ori, False)
+                    _Mod.Sb_Actualizar_Variables_Modalidad(_Modalidad_Ori, False, _Empresa_Ori)
                 End If
 
                 RegistrarLog(registro)

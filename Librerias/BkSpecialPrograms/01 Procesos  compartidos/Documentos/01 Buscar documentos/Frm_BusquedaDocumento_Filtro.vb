@@ -274,6 +274,7 @@ Public Class Frm_BusquedaDocumento_Filtro
         'CmbFuncionarios.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         'CmbFuncionarios.SelectedValue = FUNCIONARIO
 
+        Txt_Funcionarios.Tag = FUNCIONARIO
         Txt_Funcionarios.Text = "Funcionario: " & FUNCIONARIO & ", " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & FUNCIONARIO & "'")
 
         'AddHandler ChkTipoDocumento_Todos.CheckedChanged, AddressOf Sb_Grupo_Documento
