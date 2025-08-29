@@ -3250,23 +3250,34 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         End If
 
         If e.KeyValue = Keys.Return Then
+
             If _Actualizar_Precios Then
 
                 If _Tipo_Lista = "P" Then
 
                     Dim _CondExtraProveedor As String = String.Empty
+
                     If Not String.IsNullOrEmpty(Trim(_CodEntidad)) Then
                         _CondExtraProveedor = "Where Proeveedor = '" & _CodEntidad & "' And Sucursal = '" & _CodSucEntidad & "'"
                     End If
 
                     Actualizar_Precio_BkRandom(_ListaBusq, _Tabla_Lista, _CondExtraProveedor, True)
-                    '    BUSCA()
+
                 End If
 
             End If
+
+            If String.IsNullOrWhiteSpace(Txt_CodAlternativo.Text) Then
+                MessageBoxEx.Show(Me, "No se ingreso ningún código para buscar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
+
             _Top = 30
             Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Codigo_Alternativo)
-            If CBool(Grilla.RowCount) Then Grilla.Focus()
+
+            If Not String.IsNullOrWhiteSpace(Txt_CodAlternativo.Text) Then
+                If CBool(Grilla.RowCount) Then Grilla.Focus()
+            End If
+
         End If
 
     End Sub

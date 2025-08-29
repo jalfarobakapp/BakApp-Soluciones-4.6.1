@@ -187,7 +187,7 @@ Public Class Frm_Tickets_Lista
             End If
 
 
-            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Weekday, -1, Now.Date)
+            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Day, -7, Now.Date)
             Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
 
             If _NodoHijo.Tag = "EnProceso" Then _Accion = "And Estado = 'PROC' And Aceptado = 0 And Rechazado = 0"
@@ -277,7 +277,7 @@ Public Class Frm_Tickets_Lista
                 _Condicion += vbCrLf & "And Tks.Estado = 'PROC' And Tks.Aceptado = 0 And Tks.Rechazado = 0"
             End If
 
-            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Weekday, -1, Now.Date)
+            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Day, -7, Now.Date)
             Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
 
             If _Carpeta.Tag = "Aceptados" Then
@@ -387,6 +387,7 @@ Select Distinct Tks.*,
     TkPrd.Codigo,
     TkPrd.Descripcion As DescripcionPr,
     TkPrd.Um As 'Udm',
+    TkPrd.Ubicacion As 'Ubicación',
     StfiEnBodega,
     Cantidad,
     Diferencia,
@@ -422,7 +423,9 @@ Select Distinct Tks.*,
      From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcRs 
      Where AcRs.Id_Raiz = Tks.Id_Raiz And AcRs.Accion In ('RESP','CREA') And AcRs.Visto = 0) As Resp_Pdte_Ver,
     Cast(0 As int) AS Idmaeedo_Cierra,
-    Cast('' As Varchar(100)) As 'Motivo_Cierra'
+    Cast('' As Varchar(100)) As 'Motivo_Cierra',
+    Isnull(TksADeri2.ConfSinDoc_Cierra,0) As 'Conf.Cierre S/Doc.',
+    Isnull(TksADeri2.Descripcion,0) As 'Observacion Cierre'
 Into #Paso
 From {_Global_BaseBk}Zw_Stk_Tickets Tks
 Left Join ProductosUnicos TkPrd On TkPrd.Id_Ticket = Tks.Id And TkPrd.Id_Raiz = Tks.Id_Raiz And TkPrd.rn = 1
@@ -430,6 +433,7 @@ Left Join TABFU Fu On Fu.KOFU = Tks.CodFuncionario_Crea
 Left Join {_Global_BaseBk}Zw_Stk_Tickets TksDeri On TksDeri.Id = Tks.Id_Padre
 Left Join {_Global_BaseBk}Zw_Stk_Tickets_Acciones TksADeri On Tks.Id = TksADeri.Id_Ticket_Cierra And TksADeri.Accion = 'CECR'
 Left Join {_Global_BaseBk}Zw_Stk_Tickets TksAhilo On TksAhilo.Id = TksADeri.Id_Ticket
+Left Join {_Global_BaseBk}Zw_Stk_Tickets_Acciones TksADeri2 On Tks.Id = TksADeri2.Id_Ticket And TksADeri2.Accion = 'ACCI'
 --Where Tks.Id_Raiz = 1246
 Where 1 > 0 {_Condicion}
 Order By Tks.FechaCreacion
