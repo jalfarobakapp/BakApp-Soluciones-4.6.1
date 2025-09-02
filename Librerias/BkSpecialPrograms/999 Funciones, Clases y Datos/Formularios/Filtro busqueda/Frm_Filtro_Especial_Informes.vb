@@ -198,6 +198,7 @@ Public Class Frm_Filtro_Especial_Informes
 
     Public Property MostrarNumeracionDeRegistros As Boolean
     Public Property SonProductos As Boolean
+    Public Property ReemplazarComillaspor As String
 
     Public Sub New(Tabla_filtro As _Tabla_Fl,
                    Optional Incorporar_Campo_Vacias As Boolean = False,
@@ -216,6 +217,8 @@ Public Class Frm_Filtro_Especial_Informes
         _Tabla = Tabla
         _Campo = Campo
         _Descripcion = Descripcion
+
+        ReemplazarComillaspor = String.Empty
 
         _Tabla_a_Filtras = Tabla_filtro
 
@@ -696,7 +699,9 @@ Public Class Frm_Filtro_Especial_Informes
 
             _Descripcion_a_buscar = Replace(_Descripcion_a_buscar, vbTab, "")
 
-            Dim _Descripcion As String = Replace(_Descripcion_a_buscar, "'", "")
+            Dim _Descripcion As String
+
+            _Descripcion = Replace(_Descripcion_a_buscar, "'", ReemplazarComillaspor)
 
             If IsNothing(_Descripcion) Then _Descripcion = String.Empty
 
@@ -938,12 +943,24 @@ Public Class Frm_Filtro_Especial_Informes
     Private Sub Txt_Codigo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Codigo.KeyDown
 
         If e.KeyValue = Keys.Enter Then
+
             Dim _Fl As String
+
             Select Case Cmb_Filtro_Codigo.SelectedValue
                 Case "C" : _Fl = "%{0}%" : Case "E" : _Fl = "{0}%" : Case "T" : _Fl = "%{0}"
             End Select
-            Dim _Codigo As String = Txt_Codigo.Text.Replace("'", "''").ToString.Trim
+
+            If String.IsNullOrEmpty(Txt_Codigo.Text.Trim) Then
+                Return
+            End If
+
+            Dim _Codigo As String
+
+            If ReemplazarComillaspor Is Nothing Then ReemplazarComillaspor = String.Empty
+            _Codigo = Replace(Txt_Codigo.Text, "'", ReemplazarComillaspor).ToString.Trim
+
             _Dv.RowFilter = String.Format("Codigo Like '" & _Fl & "'", _Codigo)
+
         End If
 
     End Sub

@@ -428,7 +428,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                             _Filtrar.Descripcion = "Ubicacion"
 
                             If _Filtrar.Fx_Filtrar(Nothing,
-                                                   Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra, Nothing, False, True) Then
+                                                   Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                                                   _Sql_Filtro_Condicion_Extra, Nothing, False, True,,,,,, "-") Then
 
                                 Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
 
