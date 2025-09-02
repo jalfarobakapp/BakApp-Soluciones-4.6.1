@@ -588,7 +588,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
                     Dim _Msj_Feer As New LsValiciones.Mensajes
 
-                    If _Feer.Date < Date.Now Then
+                    If _Feer.Date < Date.Now.Date Then
                         _Msj_Feer.EsCorrecto = False
                         _Msj_Feer.Detalle = "Documento: " & _Tido & " - " & _Nudo & ", Fecha despacho: " & _Feer.ToShortDateString
                         _Msj_Feer.Mensaje = "La fecha de despacho vencida"
