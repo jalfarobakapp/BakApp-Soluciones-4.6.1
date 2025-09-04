@@ -258,7 +258,7 @@ Public Class Frm_EstadisticaProducto
         series.MarkerSize = 8
         series.IsValueShownAsLabel = False 'True
 
-        Dtp_Fecha_Moviminetos_Stock_Hasta.Value = FechaDelServidor()
+        'Dtp_Fecha_Moviminetos_Stock_Hasta.Value = FechaDelServidor()
         Chk_Stock_Minimo.Checked = False
 
 

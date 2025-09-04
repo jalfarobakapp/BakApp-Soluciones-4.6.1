@@ -168,7 +168,8 @@ Public Class Frm_Kardex_X_Producto_Lista
                                 LEFT JOIN TABPRE TP 
                             ON MP.KOPR=TP.KOPR 
                             AND TP.KOLT= '" & Mod_ListaPrecioVenta & "'   
-                        WHERE  
+                        WHERE
+                            MAEPREM.EMPRESA = '" & Mod_Empresa & "' AND
                             MP.ATPR<>'OCU' AND 
                             MP.TIPR<>'SSN'  
                             " & _Condicion & "

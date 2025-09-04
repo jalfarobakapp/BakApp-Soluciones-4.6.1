@@ -151,7 +151,7 @@ Public Class Cl_Consolidacion_Stock
 
         Try
             Dim _Form As New Form
-            Sb_Procedimiento_Consolidar_Stock(_Form)
+            Sb_Procedimiento_Consolidar_Stock(_Form, Mod_Empresa)
 
         Catch ex As Exception
             e.Cancel = True
@@ -182,9 +182,7 @@ Public Class Cl_Consolidacion_Stock
 
     End Sub
 
-    Sub Sb_Procedimiento_Consolidar_Stock(_Formulario As Form)
-
-        'Procesando = True
+    Sub Sb_Procedimiento_Consolidar_Stock(_Formulario As Form, _Empresa As String)
 
         Dim _Tbl_Productos As DataTable
 
@@ -206,9 +204,8 @@ Public Class Cl_Consolidacion_Stock
 
             Dim _Filtro_Productos As String = Generar_Filtro_IN(_Tbl_Productos, "", "Codigo", False, False, "'")
 
-            'Dim _Formulario As New Form
-
             Dim Fm As New Frm_Consolidacion_Stock_PP(_Filtro_Productos)
+            Fm.Empresa = _Empresa
             Fm.Pro_Ejecutar_Automaticamente = True
             Fm.TopMost = True
             Fm.ShowDialog(_Formulario)
@@ -220,15 +217,7 @@ Public Class Cl_Consolidacion_Stock
                            vbTab & "Productos: " & FormatNumber(_Tbl_Productos.Rows.Count, 0) & Space(1) &
                            vbCrLf & "Hora inicio: " & _Hora_Inicio & ", Hora termino: " & _Hora_Termino
 
-            'Fx_Add_Log_Gestion(FUNCIONARIO, Modalidad, "", 0, "Consolidacion",
-            '                   "Consolidación de stock automaticamente desde el diablito según programación..." & Space(1) &
-            '                   "Productos: " & FormatNumber(_Tbl_Productos.Rows.Count, 0) & Space(1) &
-            '                   "Hora inicio: " & _Hora_Inicio & ", Hora termino: " & _Hora_Termino,
-            '                   "", "", "", "", 0, "")
-
         End If
-
-        'Procesando = False
 
     End Sub
 

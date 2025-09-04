@@ -24,7 +24,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_BkpPostBusquedaEspecial_Mt))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.BtnCrearProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.LblOculto = New DevComponents.DotNetBar.LabelItem()
@@ -249,14 +249,16 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.TxtCodigo.Border.Class = "TextBoxBorder"
         Me.TxtCodigo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.TxtCodigo.ButtonCustom.Image = CType(resources.GetObject("TxtCodigo.ButtonCustom.Image"), System.Drawing.Image)
+        Me.TxtCodigo.ButtonCustom.Visible = True
         Me.TxtCodigo.DisabledBackColor = System.Drawing.Color.White
         Me.TxtCodigo.FocusHighlightColor = System.Drawing.Color.PaleTurquoise
         Me.TxtCodigo.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtCodigo.ForeColor = System.Drawing.Color.Black
-        Me.TxtCodigo.Location = New System.Drawing.Point(556, 3)
+        Me.TxtCodigo.Location = New System.Drawing.Point(541, 3)
         Me.TxtCodigo.Name = "TxtCodigo"
         Me.TxtCodigo.PreventEnterBeep = True
-        Me.TxtCodigo.Size = New System.Drawing.Size(96, 22)
+        Me.TxtCodigo.Size = New System.Drawing.Size(111, 22)
         Me.TxtCodigo.TabIndex = 23
         '
         'Txt_Ficha
@@ -397,6 +399,8 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.Txt_CodAlternativo.Border.Class = "TextBoxBorder"
         Me.Txt_CodAlternativo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CodAlternativo.ButtonCustom.Image = CType(resources.GetObject("Txt_CodAlternativo.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_CodAlternativo.ButtonCustom.Visible = True
         Me.Txt_CodAlternativo.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_CodAlternativo.FocusHighlightColor = System.Drawing.Color.PaleTurquoise
         Me.Txt_CodAlternativo.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -415,12 +419,14 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.Txtdescripcion.Border.Class = "TextBoxBorder"
         Me.Txtdescripcion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txtdescripcion.ButtonCustom.Image = CType(resources.GetObject("Txtdescripcion.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txtdescripcion.ButtonCustom.Visible = True
         Me.Txtdescripcion.DisabledBackColor = System.Drawing.Color.White
         Me.Txtdescripcion.ForeColor = System.Drawing.Color.Black
         Me.Txtdescripcion.Location = New System.Drawing.Point(4, 3)
         Me.Txtdescripcion.Name = "Txtdescripcion"
         Me.Txtdescripcion.PreventEnterBeep = True
-        Me.Txtdescripcion.Size = New System.Drawing.Size(501, 22)
+        Me.Txtdescripcion.Size = New System.Drawing.Size(486, 22)
         Me.Txtdescripcion.TabIndex = 59
         '
         'LabelX2
@@ -431,7 +437,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(511, 3)
+        Me.LabelX2.Location = New System.Drawing.Point(496, 3)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(39, 23)
         Me.LabelX2.TabIndex = 24
@@ -865,14 +871,14 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(5, 146)
         Me.Grilla.Name = "Grilla"

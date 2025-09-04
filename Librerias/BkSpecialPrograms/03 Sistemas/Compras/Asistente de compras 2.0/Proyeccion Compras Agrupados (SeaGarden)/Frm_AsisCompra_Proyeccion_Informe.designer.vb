@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_AsisCompra_Proyeccion_Informe
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -57,10 +57,12 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
         Me.ButtonItem5 = New DevComponents.DotNetBar.ButtonItem()
         Me.Super_Grilla = New DevComponents.DotNetBar.SuperGrid.SuperGridControl()
-        Me.Rdb_Proyeccion_Promedio_Diario = New System.Windows.Forms.RadioButton()
-        Me.Rdb_Proyeccion_Rotacion_Diaria = New System.Windows.Forms.RadioButton()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Chk_MostrarSugCambioPrecio = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_Proyeccion_Rotacion_Diaria = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_Proyeccion_Promedio_Diario = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Redondeo, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -105,20 +107,20 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         '
         Me.Btn_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Estadisticas_Producto.Image"), System.Drawing.Image)
         Me.Btn_Estadisticas_Producto.Name = "Btn_Estadisticas_Producto"
-        Me.Btn_Estadisticas_Producto.Text = "Ver estadísticas del producto/información adicional"
+        Me.Btn_Estadisticas_Producto.Text = "Ver estadÃ­sticas del producto/informaciÃ³n adicional"
         '
         'Btn_Actualizar_Rotacion_Producto_Actual
         '
         Me.Btn_Actualizar_Rotacion_Producto_Actual.Image = CType(resources.GetObject("Btn_Actualizar_Rotacion_Producto_Actual.Image"), System.Drawing.Image)
         Me.Btn_Actualizar_Rotacion_Producto_Actual.Name = "Btn_Actualizar_Rotacion_Producto_Actual"
-        Me.Btn_Actualizar_Rotacion_Producto_Actual.Text = "Actualizar rotación del producto"
+        Me.Btn_Actualizar_Rotacion_Producto_Actual.Text = "Actualizar rotaciÃ³n del producto"
         Me.Btn_Actualizar_Rotacion_Producto_Actual.Visible = False
         '
         'Btn_Infor_Rotacion
         '
         Me.Btn_Infor_Rotacion.Image = CType(resources.GetObject("Btn_Infor_Rotacion.Image"), System.Drawing.Image)
         Me.Btn_Infor_Rotacion.Name = "Btn_Infor_Rotacion"
-        Me.Btn_Infor_Rotacion.Text = "Información de rotación según estudio"
+        Me.Btn_Infor_Rotacion.Text = "InformaciÃ³n de rotaciÃ³n segÃºn estudio"
         '
         'LabelItem5
         '
@@ -147,7 +149,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar, Me.Btn_Exportar_Excel, Me.Btn_Informe_Proximas_Recepciones, Me.Btn_Colapsar_Filas, Me.Btn_SugCambioPrecio})
         Me.Bar1.Location = New System.Drawing.Point(0, 535)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(1082, 41)
+        Me.Bar1.Size = New System.Drawing.Size(1248, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 111
@@ -179,7 +181,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Btn_Informe_Proximas_Recepciones.Image = CType(resources.GetObject("Btn_Informe_Proximas_Recepciones.Image"), System.Drawing.Image)
         Me.Btn_Informe_Proximas_Recepciones.ImageAlt = CType(resources.GetObject("Btn_Informe_Proximas_Recepciones.ImageAlt"), System.Drawing.Image)
         Me.Btn_Informe_Proximas_Recepciones.Name = "Btn_Informe_Proximas_Recepciones"
-        Me.Btn_Informe_Proximas_Recepciones.Tooltip = "Informe próximas recepciones"
+        Me.Btn_Informe_Proximas_Recepciones.Tooltip = "Informe prÃ³ximas recepciones"
         '
         'Btn_Colapsar_Filas
         '
@@ -209,7 +211,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(78, 13)
         Me.Label1.TabIndex = 126
-        Me.Label1.Text = "Múltiplos de :"
+        Me.Label1.Text = "MÃºltiplos de :"
         '
         'Input_Redondeo
         '
@@ -233,7 +235,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         '
         'Panel_Ayuda
         '
-        Me.Panel_Ayuda.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Panel_Ayuda.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Panel_Ayuda.CanvasColor = System.Drawing.SystemColors.Control
         Me.Panel_Ayuda.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Panel_Ayuda.Controls.Add(Me.Lbl_Rosado)
@@ -248,9 +250,9 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Panel_Ayuda.Controls.Add(Me.LabelX2)
         Me.Panel_Ayuda.DisabledBackColor = System.Drawing.Color.Empty
         Me.Panel_Ayuda.Expanded = False
-        Me.Panel_Ayuda.ExpandedBounds = New System.Drawing.Rectangle(548, 11, 523, 197)
+        Me.Panel_Ayuda.ExpandedBounds = New System.Drawing.Rectangle(714, 11, 523, 197)
         Me.Panel_Ayuda.HideControlsWhenCollapsed = True
-        Me.Panel_Ayuda.Location = New System.Drawing.Point(548, 11)
+        Me.Panel_Ayuda.Location = New System.Drawing.Point(713, 512)
         Me.Panel_Ayuda.Name = "Panel_Ayuda"
         Me.Panel_Ayuda.Size = New System.Drawing.Size(523, 26)
         Me.Panel_Ayuda.Style.Alignment = System.Drawing.StringAlignment.Center
@@ -386,7 +388,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(357, 23)
         Me.LabelX6.TabIndex = 5
-        Me.LabelX6.Text = "TIEMPO SIN STOCK ASEGURADO (dentro del periodo de proyección)"
+        Me.LabelX6.Text = "TIEMPO SIN STOCK ASEGURADO (dentro del periodo de proyecciÃ³n)"
         '
         'LabelX4
         '
@@ -433,20 +435,20 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         '
         Me.ButtonItem2.Image = CType(resources.GetObject("ButtonItem2.Image"), System.Drawing.Image)
         Me.ButtonItem2.Name = "ButtonItem2"
-        Me.ButtonItem2.Text = "Ver estadísticas del producto/información adicional"
+        Me.ButtonItem2.Text = "Ver estadÃ­sticas del producto/informaciÃ³n adicional"
         Me.ButtonItem2.Visible = False
         '
         'ButtonItem3
         '
         Me.ButtonItem3.Image = CType(resources.GetObject("ButtonItem3.Image"), System.Drawing.Image)
         Me.ButtonItem3.Name = "ButtonItem3"
-        Me.ButtonItem3.Text = "Actualizar rotación del producto"
+        Me.ButtonItem3.Text = "Actualizar rotaciÃ³n del producto"
         '
         'ButtonItem4
         '
         Me.ButtonItem4.Image = CType(resources.GetObject("ButtonItem4.Image"), System.Drawing.Image)
         Me.ButtonItem4.Name = "ButtonItem4"
-        Me.ButtonItem4.Text = "Información de rotación según estudio"
+        Me.ButtonItem4.Text = "InformaciÃ³n de rotaciÃ³n segÃºn estudio"
         '
         'LabelItem2
         '
@@ -478,40 +480,14 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Super_Grilla.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.Super_Grilla.Location = New System.Drawing.Point(12, 55)
         Me.Super_Grilla.Name = "Super_Grilla"
-        Me.Super_Grilla.PrimaryGrid.Caption.Text = "(Detallede busqueda)<div align=""vcenter"">Información detallada de los productos d" &
+        Me.Super_Grilla.PrimaryGrid.Caption.Text = "(Detallede busqueda)<div align=""vcenter"">InformaciÃ³n detallada de los productos d" &
     "e la empresa</div>"
         Me.Super_Grilla.PrimaryGrid.Filter.ShowPanelFilterExpr = True
         Me.Super_Grilla.PrimaryGrid.MultiSelect = False
         Me.Super_Grilla.PrimaryGrid.Title.RowHeaderVisibility = DevComponents.DotNetBar.SuperGrid.RowHeaderVisibility.PanelControlled
-        Me.Super_Grilla.Size = New System.Drawing.Size(1059, 451)
+        Me.Super_Grilla.Size = New System.Drawing.Size(1225, 451)
         Me.Super_Grilla.TabIndex = 2
         Me.Super_Grilla.Text = "SuperGridControl2"
-        '
-        'Rdb_Proyeccion_Promedio_Diario
-        '
-        Me.Rdb_Proyeccion_Promedio_Diario.AutoSize = True
-        Me.Rdb_Proyeccion_Promedio_Diario.BackColor = System.Drawing.Color.Transparent
-        Me.Rdb_Proyeccion_Promedio_Diario.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Proyeccion_Promedio_Diario.Location = New System.Drawing.Point(416, 22)
-        Me.Rdb_Proyeccion_Promedio_Diario.Name = "Rdb_Proyeccion_Promedio_Diario"
-        Me.Rdb_Proyeccion_Promedio_Diario.Size = New System.Drawing.Size(74, 17)
-        Me.Rdb_Proyeccion_Promedio_Diario.TabIndex = 130
-        Me.Rdb_Proyeccion_Promedio_Diario.Text = "Promedio"
-        Me.Rdb_Proyeccion_Promedio_Diario.UseVisualStyleBackColor = False
-        '
-        'Rdb_Proyeccion_Rotacion_Diaria
-        '
-        Me.Rdb_Proyeccion_Rotacion_Diaria.AutoSize = True
-        Me.Rdb_Proyeccion_Rotacion_Diaria.BackColor = System.Drawing.Color.Transparent
-        Me.Rdb_Proyeccion_Rotacion_Diaria.Checked = True
-        Me.Rdb_Proyeccion_Rotacion_Diaria.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Proyeccion_Rotacion_Diaria.Location = New System.Drawing.Point(285, 21)
-        Me.Rdb_Proyeccion_Rotacion_Diaria.Name = "Rdb_Proyeccion_Rotacion_Diaria"
-        Me.Rdb_Proyeccion_Rotacion_Diaria.Size = New System.Drawing.Size(125, 17)
-        Me.Rdb_Proyeccion_Rotacion_Diaria.TabIndex = 0
-        Me.Rdb_Proyeccion_Rotacion_Diaria.TabStop = True
-        Me.Rdb_Proyeccion_Rotacion_Diaria.Text = "Rotación (Mediana)"
-        Me.Rdb_Proyeccion_Rotacion_Diaria.UseVisualStyleBackColor = False
         '
         'LabelX1
         '
@@ -523,9 +499,9 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.LabelX1.ForeColor = System.Drawing.Color.Black
         Me.LabelX1.Location = New System.Drawing.Point(171, 16)
         Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(108, 23)
+        Me.LabelX1.Size = New System.Drawing.Size(206, 23)
         Me.LabelX1.TabIndex = 131
-        Me.LabelX1.Text = "Variable de estudio:"
+        Me.LabelX1.Text = "Variable de estudio de rotaciÃ³n de venta:"
         '
         'Chk_MostrarSugCambioPrecio
         '
@@ -545,16 +521,90 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Chk_MostrarSugCambioPrecio.TabIndex = 132
         Me.Chk_MostrarSugCambioPrecio.Text = "Mostrar sugerencia de cambio de precio"
         '
+        'Rdb_Proyeccion_Rotacion_Diaria
+        '
+        Me.Rdb_Proyeccion_Rotacion_Diaria.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Proyeccion_Rotacion_Diaria.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Proyeccion_Rotacion_Diaria.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Proyeccion_Rotacion_Diaria.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Proyeccion_Rotacion_Diaria.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Proyeccion_Rotacion_Diaria.FocusCuesEnabled = False
+        Me.Rdb_Proyeccion_Rotacion_Diaria.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Proyeccion_Rotacion_Diaria.Location = New System.Drawing.Point(383, 16)
+        Me.Rdb_Proyeccion_Rotacion_Diaria.Name = "Rdb_Proyeccion_Rotacion_Diaria"
+        Me.Rdb_Proyeccion_Rotacion_Diaria.Size = New System.Drawing.Size(68, 23)
+        Me.Rdb_Proyeccion_Rotacion_Diaria.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Proyeccion_Rotacion_Diaria.TabIndex = 133
+        Me.Rdb_Proyeccion_Rotacion_Diaria.Text = "Mediana"
+        '
+        'Rdb_Proyeccion_Promedio_Diario
+        '
+        Me.Rdb_Proyeccion_Promedio_Diario.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Proyeccion_Promedio_Diario.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Proyeccion_Promedio_Diario.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Proyeccion_Promedio_Diario.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Proyeccion_Promedio_Diario.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Proyeccion_Promedio_Diario.FocusCuesEnabled = False
+        Me.Rdb_Proyeccion_Promedio_Diario.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Proyeccion_Promedio_Diario.Location = New System.Drawing.Point(457, 16)
+        Me.Rdb_Proyeccion_Promedio_Diario.Name = "Rdb_Proyeccion_Promedio_Diario"
+        Me.Rdb_Proyeccion_Promedio_Diario.Size = New System.Drawing.Size(118, 23)
+        Me.Rdb_Proyeccion_Promedio_Diario.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Proyeccion_Promedio_Diario.TabIndex = 134
+        Me.Rdb_Proyeccion_Promedio_Diario.Text = "Promedio mensual"
+        '
+        'Rdb_Proyeccion_Promedio_Ult3Meses
+        '
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Proyeccion_Promedio_Ult3Meses.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses.FocusCuesEnabled = False
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses.Location = New System.Drawing.Point(581, 16)
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses.Name = "Rdb_Proyeccion_Promedio_Ult3Meses"
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses.Size = New System.Drawing.Size(126, 23)
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses.TabIndex = 135
+        Me.Rdb_Proyeccion_Promedio_Ult3Meses.Text = "Promedio Ult. 3 meses"
+        '
+        'Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes
+        '
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.FocusCuesEnabled = False
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Location = New System.Drawing.Point(713, 16)
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Name = "Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes"
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Size = New System.Drawing.Size(238, 23)
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.TabIndex = 136
+        Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Text = "Promedio Ult. 3 meses mas ventas ult. mes"
+        '
         'Frm_AsisCompra_Proyeccion_Informe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1082, 576)
+        Me.ClientSize = New System.Drawing.Size(1248, 576)
+        Me.Controls.Add(Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes)
+        Me.Controls.Add(Me.Rdb_Proyeccion_Promedio_Ult3Meses)
+        Me.Controls.Add(Me.Rdb_Proyeccion_Promedio_Diario)
+        Me.Controls.Add(Me.Rdb_Proyeccion_Rotacion_Diaria)
         Me.Controls.Add(Me.Chk_MostrarSugCambioPrecio)
         Me.Controls.Add(Me.LabelX1)
-        Me.Controls.Add(Me.Rdb_Proyeccion_Promedio_Diario)
         Me.Controls.Add(Me.Panel_Ayuda)
-        Me.Controls.Add(Me.Rdb_Proyeccion_Rotacion_Diaria)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.Super_Grilla)
         Me.Controls.Add(Me.Label1)
@@ -601,8 +651,6 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
     Friend WithEvents ButtonItem5 As DevComponents.DotNetBar.ButtonItem
     Private WithEvents Super_Grilla As DevComponents.DotNetBar.SuperGrid.SuperGridControl
     Friend WithEvents Btn_Colapsar_Filas As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Rdb_Proyeccion_Promedio_Diario As RadioButton
-    Public WithEvents Rdb_Proyeccion_Rotacion_Diaria As RadioButton
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_VerdeClaro As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
@@ -616,4 +664,8 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
     Friend WithEvents Lbl_Rosado As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_SugCambioPrecio As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Chk_MostrarSugCambioPrecio As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_Proyeccion_Rotacion_Diaria As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_Proyeccion_Promedio_Diario As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_Proyeccion_Promedio_Ult3Meses As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

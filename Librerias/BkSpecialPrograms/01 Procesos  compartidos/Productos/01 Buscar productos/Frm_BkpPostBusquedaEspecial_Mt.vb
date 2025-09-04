@@ -1710,13 +1710,15 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         If e.KeyValue = Keys.Return Then
 
             If _Text_Ultima_Busqueda <> Txtdescripcion.Text Then
+
                 _Top = _Top_Filas
 
                 Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
 
-                If CBool(Grilla.RowCount) Then
+                If CBool(Grilla.RowCount) And Not String.IsNullOrEmpty(Txtdescripcion.Text.Trim) Then
                     Grilla.Focus()
                     Grilla.CurrentCell = Grilla.Rows(0).Cells("Codigo")
+                    _Text_Ultima_Busqueda = Txtdescripcion.Text
                 End If
 
             End If
@@ -2654,15 +2656,14 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
         If e.KeyValue = Keys.Return Then
 
-            If String.IsNullOrWhiteSpace(TxtCodigo.Text) Then
-                MessageBoxEx.Show(Me, "No se ingreso ningún código para buscar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            End If
-
-            _Top = 30
-            Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Codigo)
-
             If Not String.IsNullOrWhiteSpace(TxtCodigo.Text) Then
-                If CBool(Grilla.RowCount) Then Grilla.Focus()
+                'MessageBoxEx.Show(Me, "No se ingreso ningún código para buscar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                _Top = 30
+                Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Codigo)
+
+                If Not String.IsNullOrWhiteSpace(TxtCodigo.Text) Then
+                    If CBool(Grilla.RowCount) Then Grilla.Focus()
+                End If
             End If
 
         End If
@@ -3267,15 +3268,13 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             End If
 
-            If String.IsNullOrWhiteSpace(Txt_CodAlternativo.Text) Then
-                MessageBoxEx.Show(Me, "No se ingreso ningún código para buscar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            End If
-
-            _Top = 30
-            Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Codigo_Alternativo)
-
             If Not String.IsNullOrWhiteSpace(Txt_CodAlternativo.Text) Then
-                If CBool(Grilla.RowCount) Then Grilla.Focus()
+                'MessageBoxEx.Show(Me, "No se ingreso ningún código para buscar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                _Top = 30
+                Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Codigo_Alternativo)
+                If Not String.IsNullOrWhiteSpace(Txt_CodAlternativo.Text) Then
+                    If CBool(Grilla.RowCount) Then Grilla.Focus()
+                End If
             End If
 
         End If
@@ -3680,6 +3679,27 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
     Private Sub Btn_Filtrar_Click(sender As Object, e As EventArgs) Handles Btn_Filtrar.Click
         Sb_Filtrar()
+    End Sub
+
+    Private Sub Txtdescripcion_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txtdescripcion.ButtonCustomClick
+        _Top = _Top_Filas
+        Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+        Txtdescripcion.Text = String.Empty
+        _Text_Ultima_Busqueda = String.Empty
+    End Sub
+
+    Private Sub TxtCodigo_ButtonCustomClick(sender As Object, e As EventArgs) Handles TxtCodigo.ButtonCustomClick
+        _Top = _Top_Filas
+        Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+        TxtCodigo.Text = String.Empty
+        _Text_Ultima_Busqueda = String.Empty
+    End Sub
+
+    Private Sub Txt_CodAlternativo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodAlternativo.ButtonCustomClick
+        _Top = _Top_Filas
+        Sb_Buscar_Productos(Mod_Empresa, _SucursalBusq, _BodegaBusq, _ListaBusq, True, _Opcion_Buscar._Descripcion)
+        Txt_CodAlternativo.Text = String.Empty
+        _Text_Ultima_Busqueda = String.Empty
     End Sub
 
     Private Sub Txt_Patente_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Patente.ButtonCustom2Click

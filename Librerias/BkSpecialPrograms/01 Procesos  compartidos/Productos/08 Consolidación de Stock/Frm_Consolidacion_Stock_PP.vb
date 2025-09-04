@@ -29,6 +29,8 @@ Public Class Frm_Consolidacion_Stock_PP
         End Set
     End Property
 
+    Public Property Empresa As String
+
     Public Sub New(Filtro_In_Productos As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -41,8 +43,9 @@ Public Class Frm_Consolidacion_Stock_PP
         Consulta_sql = "Select * From MAEPR Where KOPR In " & Filtro_In_Productos
         _TblProductos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-
         Sb_Color_Botones_Barra(Bar2)
+
+        Empresa = Mod_Empresa
 
     End Sub
 
@@ -89,7 +92,7 @@ Public Class Frm_Consolidacion_Stock_PP
             Consulta_sql = "SELECT EMPRESA,KOSU,KOBO FROM TABBOPR" & Space(1) &
                            "WHERE KOPR = '" & _Codigo & "'" & vbCrLf &
                            "AND EMPRESA+KOSU+KOBO IN (SELECT DISTINCT EMPRESA+SULIDO+BOSULIDO" & Space(1) &
-                           "FROM MAEDDO WHERE KOPRCT = '" & _Codigo & "' And EMPRESA = '" & Mod_Empresa & "')"
+                           "FROM MAEDDO WHERE KOPRCT = '" & _Codigo & "' And EMPRESA = '" & Empresa & "')"
             Dim _TblBodegasPP As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             LblEstado.Text = "Producto: " & _Codigo & " - " & _Descripcion
@@ -145,7 +148,7 @@ Public Class Frm_Consolidacion_Stock_PP
             If _consolidado Then
 
                 Consulta_sql = My.Resources._SQLquery.Consolidacion_Total_MAEPR_MAEPREM_X_producto
-                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Empresa)
                 Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Codigo)
 
                 Consulta_sql = Replace(Consulta_sql, "#Tabla_Paso#", _Consolidar_Stock.Pro_Tabla_Paso)
@@ -319,7 +322,7 @@ Public Class Frm_Consolidacion_Stock_PP
 
                 Dim _Id_DocEnc As Integer = _Fila_Enc.Item("Id_DocEnc")
 
-                Consulta_sql = "Select '" & Mod_Empresa & "' As Empresa,Sucursal,Bodega,Codigo,Descripcion,Ud01PR,CantUd1,Ud02PR,CantUd2" & vbCrLf &
+                Consulta_sql = "Select '" & Empresa & "' As Empresa,Sucursal,Bodega,Codigo,Descripcion,Ud01PR,CantUd1,Ud02PR,CantUd2" & vbCrLf &
                                "From " & _Global_BaseBk & "Zw_Casi_DocDet" & vbCrLf &
                                "Where Id_DocEnc = " & _Id_DocEnc
                 _Tbl_DocDet = _Sql.Fx_Get_DataTable(Consulta_sql)

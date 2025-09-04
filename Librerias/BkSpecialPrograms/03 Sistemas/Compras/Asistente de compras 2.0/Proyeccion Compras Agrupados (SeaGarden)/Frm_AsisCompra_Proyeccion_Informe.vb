@@ -130,6 +130,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
         AddHandler Rdb_Proyeccion_Rotacion_Diaria.CheckedChanged, AddressOf Sb_Rdb_Rotacion_CheckedChanged
         AddHandler Rdb_Proyeccion_Promedio_Diario.CheckedChanged, AddressOf Sb_Rdb_Rotacion_CheckedChanged
+        AddHandler Rdb_Proyeccion_Promedio_Ult3Meses.CheckedChanged, AddressOf Sb_Rdb_Rotacion_CheckedChanged
+        AddHandler Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.CheckedChanged, AddressOf Sb_Rdb_Rotacion_CheckedChanged
 
         Lbl_VerdeClaro.BackColor = Color.FromArgb(146, 208, 80)
         Lbl_VerdeOscuro.BackColor = Color.FromArgb(0, 128, 0)
@@ -221,6 +223,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
         If Rdb_Proyeccion_Rotacion_Diaria.Checked Then _RotCalculo = "D"
         If Rdb_Proyeccion_Promedio_Diario.Checked Then _RotCalculo = "P"
+        If Rdb_Proyeccion_Promedio_Ult3Meses.Checked Then _RotCalculo = "3M"
+        If Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked Then _RotCalculo = "X"
 
         Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
 
@@ -1003,8 +1007,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         '    _Rotacion = "Rotación" & vbCrLf & "efectiva"
         'End If
 
-        If Rdb_Proyeccion_Promedio_Diario.Checked Then _Rotacion = "Promedio" & vbCrLf & "diario"
-        If Rdb_Proyeccion_Rotacion_Diaria.Checked Then _Rotacion = "Rotación" & vbCrLf & "diaria"
+
 
         Me.Text = "Informe de proyección de compras a nivel: " & _Duracion
         'Grupo_Detalle.Text = "AGRUPACION: " & UCase(_Row_Nodo.Item("Descripcion"))
@@ -1108,32 +1111,52 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns(_Campo).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            If Rdb_Proyeccion_Promedio_Diario.Checked Then _Rotacion = "Promedio" & vbCrLf & "diario"
+            If Rdb_Proyeccion_Rotacion_Diaria.Checked Then _Rotacion = "Rotación" & vbCrLf & "diaria"
+            If Rdb_Proyeccion_Promedio_Ult3Meses.Checked Then _Rotacion = "Rot." & vbCrLf & "diaria" & vbCrLf & "Ult. 3Meses"
+            If Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked Then _Rotacion = "Rot." & vbCrLf & "diaria" & vbCrLf & "Ult. 3Meses+Ultmes"
+
             _Campo = "RotCalculo"
             .Columns(_Campo).Width = 80
             .Columns(_Campo).HeaderText = _Rotacion
-            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
             .Columns(_Campo).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             Dim _Campo_HT = String.Empty
+            Dim _CampoVisiable As Boolean = False
 
             If Rdb_Proyeccion_Promedio_Diario.Checked Then
                 _Campo = "Promedio_Mensual"
                 _Campo_HT = "Promedio" & vbCrLf & "mensual"
+                _CampoVisiable = True
             End If
 
             If Rdb_Proyeccion_Rotacion_Diaria.Checked Then
-                _Campo = "Venta_Periodo"
+                _Campo = "RotMensualUd1"
                 _Campo_HT = "Rotación" & vbCrLf & "mensual" & vbCrLf & "(Mediana)"
+                _CampoVisiable = True
+            End If
+
+            If Rdb_Proyeccion_Promedio_Ult3Meses.Checked Then
+                _Campo = "Promedio_3Mes"
+                _Campo_HT = "Promedio" & vbCrLf & "mensual" & vbCrLf & "(Mediana)"
+            End If
+
+            If Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked Then
+                _Campo = "Promedio_UltMesMasPromUlt3Mes"
+                _Campo_HT = "Rotación" & vbCrLf & "Ult.Mes mas " & vbCrLf &
+                            "Prom. Ult." & vbCrLf & "3 meses"
+                _CampoVisiable = True
             End If
 
             .Columns(_Campo).Width = 80
             .Columns(_Campo).HeaderText = _Campo_HT '"Rotación" & vbCrLf & "mensual" & vbCrLf & "(Mediana)"
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
-            .Columns(_Campo).Visible = True
+            .Columns(_Campo).Visible = _CampoVisiable
             .Columns(_Campo).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -1176,7 +1199,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             _Campo = "Duracion_Proyeccion"
             .Columns("Duracion_Proyeccion").Width = 80
             .Columns("Duracion_Proyeccion").HeaderText = "Duración" & vbCrLf & _Duracion & vbCrLf & "Según stock"
-            DirectCast(.Columns("Duracion_Proyeccion").RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
+            DirectCast(.Columns("Duracion_Proyeccion").RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
             .Columns("Duracion_Proyeccion").CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns("Duracion_Proyeccion").Visible = True
             .Columns("Duracion_Proyeccion").DisplayIndex = _DisplayIndex
@@ -1398,19 +1421,35 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
 
-            _Campo = "RotDiariaUd" & _Ud & "_Prod"
-            .Columns(_Campo).Width = 70
-            .Columns(_Campo).HeaderText = "Rotación" & vbCrLf & "diaria"
+            Dim _CampoRD As String = String.Empty
+            Dim _CampoRM As String = String.Empty
+            Dim _CampoHT As String = String.Empty
+
+            If Rdb_Proyeccion_Rotacion_Diaria.Checked Then
+                _CampoRD = "RotDiariaUd" & _Ud & "_Prod"
+                _CampoRM = "RotMensualUd" & _Ud & "_Prod"
+                _CampoHT = "R.Media"
+            End If
+
+            If Rdb_Proyeccion_Promedio_Diario.Checked Then
+                _CampoRD = "Promedio_Ud" & _Ud & "_Prod"
+                _CampoRM = "Promedio_MensualUd" & _Ud & "_Prod"
+                _CampoHT = "R.Promedio"
+            End If
+
+            '_Campo = "RotDiariaUd" & _Ud & "_Prod"
+            .Columns(_CampoRD).Width = 70
+            .Columns(_CampoRD).HeaderText = _CampoHT & vbCrLf & "diaria"
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
 
-            _Campo = "RotMensualUd" & _Ud & "_Prod"
-            .Columns(_Campo).Width = 70
-            .Columns(_Campo).HeaderText = "Rotación" & vbCrLf & "mensual"
-            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
-            .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
-            .Columns(_Campo).Visible = True
+            '_Campo = "RotMensualUd" & _Ud & "_Prod"
+            .Columns(_CampoRM).Width = 70
+            .Columns(_CampoRM).HeaderText = _CampoHT & vbCrLf & "mensual"
+            DirectCast(.Columns(_CampoRM).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
+            .Columns(_CampoRM).CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns(_CampoRM).Visible = True
 
             '.Columns("RotEfectivaUd" & _Ud).Width = 70
             '.Columns("RotEfectivaUd" & _Ud).HeaderText = "Rotación" & vbCrLf & "efectiva"
