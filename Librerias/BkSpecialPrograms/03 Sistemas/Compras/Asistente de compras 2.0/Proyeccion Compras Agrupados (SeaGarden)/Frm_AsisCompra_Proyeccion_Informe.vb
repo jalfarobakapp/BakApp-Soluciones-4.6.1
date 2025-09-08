@@ -1116,14 +1116,14 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             If Rdb_Proyeccion_Promedio_Ult3Meses.Checked Then _Rotacion = "Rot." & vbCrLf & "diaria" & vbCrLf & "Ult. 3Meses"
             If Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked Then _Rotacion = "Rot." & vbCrLf & "diaria" & vbCrLf & "Ult. 3Meses+Ultmes"
 
-            _Campo = "RotCalculo"
-            .Columns(_Campo).Width = 80
-            .Columns(_Campo).HeaderText = _Rotacion
-            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
-            .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
-            .Columns(_Campo).Visible = True
-            .Columns(_Campo).DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '_Campo = "RotCalculo"
+            '.Columns(_Campo).Width = 80
+            '.Columns(_Campo).HeaderText = _Rotacion
+            'DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
+            '.Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
+            '.Columns(_Campo).Visible = True
+            '.Columns(_Campo).DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
             Dim _Campo_HT = String.Empty
             Dim _CampoVisiable As Boolean = False

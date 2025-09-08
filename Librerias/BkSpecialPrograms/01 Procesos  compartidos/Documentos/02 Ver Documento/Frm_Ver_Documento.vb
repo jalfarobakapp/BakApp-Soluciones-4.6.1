@@ -550,11 +550,13 @@ Public Class Frm_Ver_Documento
             Dim _Tido = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
             Dim _Nudo = Trim(_TblEncabezado.Rows(0).Item("NUDO"))
 
-            If _Tido = "NVV" AndAlso
+            Dim _Esdo = _TblEncabezado.Rows(0).Item("ESDO")
+
+            If _Esdo <> "N" AndAlso _Tido = "NVV" AndAlso
                 _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") AndAlso
                 _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL Then
 
-                _Customizable = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Customizable", "Idmaeedo = " & _Idmaeedo)
+                _Customizable = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Customizable", "Idmaeedo = " & _Idmaeedo,,,, True)
 
                 Lbl_CusNVV.Visible = _Customizable
                 Btn_CusNVV.Visible = _Customizable

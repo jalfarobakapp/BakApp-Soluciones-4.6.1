@@ -86,6 +86,13 @@ Public Class Frm_BuscarEntidad_Mt
 
         VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False) And Rdb_Clientes.Checked
 
+        If Not VerSoloEntidadesDelVendedor Then
+            VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False) And Rdb_Clientes.Checked
+            If VerSoloEntidadesDelVendedor Then
+                Chk_Solo_Clientes_Del_Vendedor.Text = "Ver solo clientes del grupo de vendesores del usuario activo"
+            End If
+        End If
+
         If VerSoloEntidadesDelVendedor Then
             Chk_Solo_Clientes_Del_Vendedor.Checked = True
             Rdb_Ambos.Enabled = False

@@ -328,8 +328,16 @@ Public Class Frm_Usuarios_Random_Ficha
 
     Private Sub Txt_Kogru_Ventas_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Kogru_Ventas.ButtonCustomClick
 
+        'Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABFUGD", "KOFU = '" & Kofu & "'"))
+
+        'If Not _Reg Then
+        '    MessageBoxEx.Show(Me, "Para asociar un Grupo de Vendedores, el usuario debe pertenecer al menos a uno de los grupos seleccionados." & vbCrLf &
+        '                      "El usuario no pertenece a ningún Grupo, informe de esta situación al administrador del sistema", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
+
         Dim _Filtrar As New Clas_Filtros_Random(Me)
-        Dim _Sql_Filtro_Condicion_Extra As String = "And KOGRU In (Select KOGRU From TABFUGD Where KOFU = '" & Kofu & "')"
+        Dim _Sql_Filtro_Condicion_Extra As String = String.Empty '"And KOGRU In (Select KOGRU From TABFUGD Where KOFU = '" & Kofu & "')"
 
         _Filtrar.Tabla = "TABFUGE"
         _Filtrar.Campo = "KOGRU"

@@ -469,6 +469,10 @@ Public Class Frm_Filtro_Especial_Informes
 
     Private Sub Sb_Grilla_MouseUp(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
+        If Not CBool(Grilla.Rows.Count) Then
+            Return
+        End If
+
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
         RemoveHandler Chk_Seleccionar_Todos.CheckedChanged, AddressOf Sb_Chk_Seleccionar_Todos_CheckedChanged

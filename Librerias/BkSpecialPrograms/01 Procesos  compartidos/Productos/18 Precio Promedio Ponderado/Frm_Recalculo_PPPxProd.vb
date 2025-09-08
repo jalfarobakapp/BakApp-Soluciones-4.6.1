@@ -339,6 +339,7 @@ Public Class Frm_Recalculo_PPPxProd
         Me.Refresh()
 
         Cl_Pm.Cancelar = False
+        Cl_Pm.Empresa = Empresa
         _ProcesoCanceladoPorUsuario = False
 
         Dim _ActualizarPPP As Boolean = Not Chk_ModoPruebas.Checked

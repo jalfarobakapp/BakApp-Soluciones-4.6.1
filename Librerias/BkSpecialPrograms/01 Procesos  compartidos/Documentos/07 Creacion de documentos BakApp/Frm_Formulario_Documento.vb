@@ -22094,7 +22094,7 @@ Public Class Frm_Formulario_Documento
         Dim _Fx_Fecha_Inicio = "19000101"
         Dim _Fx_Fecha_Fin = "22001231"
 
-        Dim _Filtro_Maeedo = "And EDO.ENDO = '" & _Koen & "' AND EDO.SUENDO = '" & _Suen & "'"
+        Dim _Filtro_Maeedo = "And EDO.ENDO = '" & _Koen & "' -- AND EDO.SUENDO = '" & _Suen & "'"
         Dim _Filtro_Maedpce = "And DPCE.ENDP = '" & _Koen & "'"
 
         Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Ventas_Anuales & Environment.NewLine & Environment.NewLine

@@ -114,8 +114,8 @@ Public Class Frm_PreciosLC_Mt01
                        "From MAEDRES Dres" & vbCrLf &
                        "Inner Join MAEERES Eres On Eres.CODIGO = Dres.CODIGO" & vbCrLf &
                        "Left Join MAEPR On KOPR = Dres.ELEMENTO" & vbCrLf &
-                       "Where '" & Format(_FechaHoy, "yyyyMMdd") & "' Between Eres.FIOFERTA And Eres.FTOFERTA --And Eres.LISTAS Like '%PB7%'" & vbCrLf &
-                       "And Dres.ELEMENTO = '" & Codigo & "' "
+                       "Where '" & Format(_FechaHoy, "yyyyMMdd") & "' Between Eres.FIOFERTA And Eres.FTOFERTA" & vbCrLf &
+                       "And Dres.ELEMENTO = '" & Codigo & "'"
         Dim _TblOfertas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblOfertas.Rows.Count) Then

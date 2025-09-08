@@ -457,7 +457,7 @@
   <data name="ButtonItem2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAodJREFUSEu9Vs1rE1EQH48iXjwWb+J/0HOpJMWSsAsJVlIQ4iWH9KR/gBc/KFJI
+        vQAADr0BR/uQrQAAAodJREFUSEu9Vs1rE1EQH48iXjwWb+J/0HOpJMWSsAsJVlIQ4iWH9KR/gBc/KFJI
         aEvFSiSHhITdYLAUUVJRckhB7JJQqeJBURJsscRDqJTSzI7M288kuxZD6sCw8+a9N783M7/3EoCZ8j2Q
         VILpog5hhb8o1Mt2fLrvGsuWVDoTe54EkEuUrbWpQzRS5ZggqV1gNHaMWjgmhFVyA6A5x18/2+3rH1Nj
         l3Di7qawBQCXC2R12AxsgGytjefi6wTBPMJkDve7JkCIASJGDxKZHYqvfjhRZ1caVP16LCInMh85CEFI
@@ -474,7 +474,7 @@
   <data name="ButtonItem3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAdhJREFUSEvFlD1Lw1AYhQMujiKIYCcVNyX4gcViJf4CNxc3BzcFf4SbWPxERbE0
+        vQAADr0BR/uQrQAAAdhJREFUSEvFlD1Lw1AYhQMujiKIYCcVNyX4gcViJf4CNxc3BzcFf4SbWPxERbE0
         JYtLQDo5CCIuLoKoVKw0pIRa0EvBwap45E3aGm9uojWIF87Nzcd7nvuehEgApCBZmgK3zGQUpcwU3ON2
         OQJLG//yHInqPYa8+KJ/AnT8HtCovgWY6ihMNQ5TjdnK7/R5dpxdbIOZGrG7cZ6L1w2NFK1H/QF8m+JI
         /DO/2eiGsRcNC/DPnCZDHYGRjIkBjUoEwNMlcps9DiBs5iLA9VIrTHXMAfBtiiP5eeY05XcHUEg3BKhn
@@ -488,7 +488,7 @@
   <data name="ButtonItem4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAAzZJREFUSEulll1IU2EYx0fRjRfixsQ5xaVjY0FjYoEXSXiRKBJ204ZrD0dp9KFI
+        vQAADr0BR/uQrQAAAzZJREFUSEulll1IU2EYx0fRjRfixsQ5xaVjY0FjYoEXSXiRKBJ204ZrD0dp9KFI
         MjCpiy6KLpIi6YNAmzi2sbFdJY0mCskkQmEXI8hQMJDG2WE2h9FqovTE+57tuJ2zmdILP9h5P/6/9+sc
         JsOl/hOsqyHKeTRISHgaKex0DeLaC6Rl5zPGnQqhjaNokHVpNjOznScRUVYOGa6OI648Rlx5kmOMPu99
         us+H58pe7F6uXyGk7xji+sN2cbAgSNBZF8LPMu6sQsQtQfBtorKofR8N7rw1gThYECT9BiwF3SJMCwJ2
@@ -508,7 +508,7 @@
   <data name="ButtonItem5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-        vgAADr4B6kKxwAAAANtJREFUSEvdlDsKwzAQRHWDoCYXXKR75AKponME3LhwpzZt7rNhwAZr9bHWdopk
+        vQAADr0BR/uQrQAAANtJREFUSEvdlDsKwzAQRHWDoCYXXKR75AKponME3LhwpzZt7rNhwAZr9bHWdopk
         4GEwkt4OFjbMbL6JCSEMRNTD3Xt/kQdsYbCZmZtgTYxxcM49tJJuAZ57JCrBHkkisDQmzO+zTRogeDJz
         C1wEJqIeXt77a1VgaUxYBNi8FayJMbJz7r2WdDXoFSBS0mwwt1AJkLVE3cDSmLBEDgEJvslpDWoX4bQG
         pWQCOb2mQSmZoEKzQYmqQE7/ew0qHG5wg6SGFMhpSySC5Z/R4lADeViJ/2qgiUYwYfEOpg9PBNCHhACi
@@ -529,13 +529,12 @@
   </data>
   <data name="Rdb_Proyeccion_Rotacion_Diaria.CheckBoxImageChecked" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAEcSURBVChTjZJBSsNQEIZn93YVGqFZ5Ci6dxvUGoigYrFQCwHTxu7cN1jPUhcewHSVlXiFegSL
-        UfJEvgkPSlBwYMjwzz+Tf2aeiIh0OjsShkfmepwkaZqV83yxwW/SrAQ77kem2/WgNuTzi0Ewmc5enouV
-        rarK1nVdW2s1BiN3ORgGnrcrEoaHBmC9foOjZFfgYnJwTqLYyGicJHTBPj6/7MPy1R7cPakTg2FwkCfo
-        dDIg7N0u1fdnj998wZw8uMJw7td0bReAOXnz/P5d8nyxUcRaTULcdleAwRXW+F9J6SQrhUGKYqUFfwyt
-        G4OjQ3OU7bX+Zm6t8emZES7IUQDo0j4cGLmr4Sjo9fzm2lwwimJ9Gqyu/TTo7PsN+Qei5nzaA4R6UgAA
-        AABJRU5ErkJggg==
+        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABGdBTUEAALGPC/xhBQAAARxJREFUKFON
+        kkFKw1AQhmf3dhUaoVnkKLp3G9QaiKBisVALAdPG7tw3WM9SFx7AdJWVeIV6BItR8kS+CQ9KUHBgyPDP
+        P5N/Zp6IiHQ6OxKGR+Z6nCRpmpXzfLHBb9KsBDvuR6bb9aA25POLQTCZzl6ei5WtqsrWdV1bazUGI3c5
+        GAaetysShocGYL1+g6NkV+BicnBOotjIaJwkdME+Pr/sw/LVHtw9qRODYXCQJ+h0MiDs3S7V92eP33zB
+        nDy4wnDu13RtF4A5efP8/l3yfLFRxFpNQtx2V4DBFdb4X0npJCuFQYpipQV/DK0bg6NDc5Tttf5mbq3x
+        6ZkRLshRAOjSPhwYuavhKOj1/ObaXDCKYn0arK79NOjs+w35B6LmfNoDhHpSAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="Rdb_Proyeccion_Promedio_Diario.CheckBoxImageChecked" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

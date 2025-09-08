@@ -326,7 +326,13 @@ Public Class Frm_Permisos_Usuario_Permisos
                                   ByVal Chk As Boolean)
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
-            _Fila.Cells("Chk").Value = Chk
+
+            Dim _CodPermisoActual As String = _Fila.Cells("CodPermiso").Value
+
+            If _CodPermisoActual <> "NO00021" And _CodPermisoActual <> "NO00022" Then
+                _Fila.Cells("Chk").Value = Chk
+            End If
+
         Next
 
     End Function
@@ -339,6 +345,28 @@ Public Class Frm_Permisos_Usuario_Permisos
 
     Private Sub Grilla_Permisos_MouseUp(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles Grilla_Permisos.MouseUp
         Grilla_Permisos.EndEdit()
+
+        Dim _Fila As DataGridViewRow = Grilla_Permisos.CurrentRow
+        Dim _CodPermisoActual As String = _Fila.Cells("CodPermiso").Value
+
+        If _CodPermisoActual = "NO00021" Then
+            ' Buscar y desmarcar NO00022
+            For Each fila As DataGridViewRow In Grilla_Permisos.Rows
+                If fila.Cells("CodPermiso").Value = "NO00022" Then
+                    fila.Cells("Chk").Value = False
+                    Exit For
+                End If
+            Next
+        ElseIf _CodPermisoActual = "NO00022" Then
+            ' Buscar y desmarcar NO00021
+            For Each fila As DataGridViewRow In Grilla_Permisos.Rows
+                If fila.Cells("CodPermiso").Value = "NO00021" Then
+                    fila.Cells("Chk").Value = False
+                    Exit For
+                End If
+            Next
+        End If
+
     End Sub
 
     Private Sub Btn_Asignar_Permiso_A_Otro_Usuario_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Asignar_Permiso_A_Otro_Usuario.Click
