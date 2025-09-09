@@ -397,7 +397,9 @@ Public Class Frm_Cadenas_Remotas_Det
 
                     If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
-                        Sb_Reestablecer_Stock_En_Zw_Prod_Stock(_Tido, _TblDetalle)
+                        If _Estado <> "R" Then
+                            Sb_Reestablecer_Stock_En_Zw_Prod_Stock(_Tido, _TblDetalle)
+                        End If
 
                         MessageBoxEx.Show(Me, "Solicitud completamente anulada", "Anular solicitud", MessageBoxButtons.OK, MessageBoxIcon.Information)
                         _Actualizar = True
@@ -462,14 +464,16 @@ Public Class Frm_Cadenas_Remotas_Det
 
                 If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 
-                    Sb_Reestablecer_Stock_En_Zw_Prod_Stock(_Tido, _TblDetalle)
+                    If _Estado <> "R" Then
+                        Sb_Reestablecer_Stock_En_Zw_Prod_Stock(_Tido, _TblDetalle)
+                    End If
 
                     Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Remotas_Notif Where NroRemota Not In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas)"
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                     MessageBoxEx.Show(Me, "La Solicitud ha sido eliminada, pero el documento podrá ser rescatado nuevamente" & vbCrLf &
-                                      "desde el formulario de generación de notas de venta en la opción Stand-By",
-                                      "Documento Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
+                                  "desde el formulario de generación de notas de venta en la opción Stand-By",
+                                  "Documento Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
                     _Actualizar = True
                     Me.Close()
 
