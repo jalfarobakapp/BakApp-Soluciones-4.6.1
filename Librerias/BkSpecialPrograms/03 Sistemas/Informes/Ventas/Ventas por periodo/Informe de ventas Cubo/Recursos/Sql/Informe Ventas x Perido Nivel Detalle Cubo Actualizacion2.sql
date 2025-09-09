@@ -139,6 +139,7 @@ SELECT  EDO.IDMAEEDO,
 		Isnull(TP1.NOKOLT,''),
 		Isnull(MAEEN.LVEN,''),
 		Isnull(TP2.NOKOLT,'')
+        --,'','','','' Poner aca los valores de los GRUPOS de VENDEDORES
 --INTO #Tabla_Paso#
 FROM MAEEDO EDO WITH ( NOLOCK ) 
 	LEFT JOIN MAEDDO AS DDO WITH (NOLOCK) ON 

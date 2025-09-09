@@ -85,6 +85,10 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Btn_Filtro_Responzables = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtro_Vendedores = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Filtro_Vendedor_Asignado_Entidad = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem12 = New DevComponents.DotNetBar.LabelItem()
+        Me.LabelItem13 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Filtro_Grupo_Vendedores_Documento = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Filtro_Grupo_Vendedores_Asociado = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Vista_Detalle = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Informe_X_Clientes = New DevComponents.DotNetBar.ButtonItem()
@@ -297,7 +301,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.LabelItem3.PaddingLeft = 10
         Me.LabelItem3.PaddingTop = 1
         Me.LabelItem3.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem3.Text = "Productos"
+        Me.LabelItem3.Text = "Entidades"
         '
         'Btn_Filtro_Ent_Entidades
         '
@@ -518,7 +522,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.LabelItem4.PaddingLeft = 10
         Me.LabelItem4.PaddingTop = 1
         Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem4.Text = "Productos"
+        Me.LabelItem4.Text = "Sucursales-Bodegas"
         '
         'Btn_Filtro_SucursalDoc
         '
@@ -546,7 +550,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         '
         Me.Menu_Contextual_Filtros_Funcionarios.AutoExpandOnClick = True
         Me.Menu_Contextual_Filtros_Funcionarios.Name = "Menu_Contextual_Filtros_Funcionarios"
-        Me.Menu_Contextual_Filtros_Funcionarios.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem5, Me.Btn_Filtro_Responzables, Me.Btn_Filtro_Vendedores, Me.Btn_Filtro_Vendedor_Asignado_Entidad})
+        Me.Menu_Contextual_Filtros_Funcionarios.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem5, Me.Btn_Filtro_Responzables, Me.Btn_Filtro_Vendedores, Me.Btn_Filtro_Vendedor_Asignado_Entidad, Me.LabelItem12, Me.Btn_Filtro_Grupo_Vendedores_Documento, Me.Btn_Filtro_Grupo_Vendedores_Asociado})
         Me.Menu_Contextual_Filtros_Funcionarios.Text = "Filtros Funcionarios"
         '
         'LabelItem5
@@ -560,7 +564,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.LabelItem5.PaddingLeft = 10
         Me.LabelItem5.PaddingTop = 1
         Me.LabelItem5.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem5.Text = "Productos"
+        Me.LabelItem5.Text = "Funcionarios"
         '
         'Btn_Filtro_Responzables
         '
@@ -582,6 +586,48 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Btn_Filtro_Vendedor_Asignado_Entidad.ImageAlt = CType(resources.GetObject("Btn_Filtro_Vendedor_Asignado_Entidad.ImageAlt"), System.Drawing.Image)
         Me.Btn_Filtro_Vendedor_Asignado_Entidad.Name = "Btn_Filtro_Vendedor_Asignado_Entidad"
         Me.Btn_Filtro_Vendedor_Asignado_Entidad.Text = "Filtrar por <b><font color=""#0072BC"">VENDEDOR ASIGNADO</font></b>"
+        '
+        'LabelItem12
+        '
+        Me.LabelItem12.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem12.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem12.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem12.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem12.Name = "LabelItem12"
+        Me.LabelItem12.PaddingBottom = 1
+        Me.LabelItem12.PaddingLeft = 10
+        Me.LabelItem12.PaddingTop = 1
+        Me.LabelItem12.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem12.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem13})
+        Me.LabelItem12.Text = "Grupos de vendedores"
+        '
+        'LabelItem13
+        '
+        Me.LabelItem13.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem13.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem13.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem13.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem13.Name = "LabelItem13"
+        Me.LabelItem13.PaddingBottom = 1
+        Me.LabelItem13.PaddingLeft = 10
+        Me.LabelItem13.PaddingTop = 1
+        Me.LabelItem13.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem13.Text = "Productos"
+        '
+        'Btn_Filtro_Grupo_Vendedores_Documento
+        '
+        Me.Btn_Filtro_Grupo_Vendedores_Documento.Image = CType(resources.GetObject("Btn_Filtro_Grupo_Vendedores_Documento.Image"), System.Drawing.Image)
+        Me.Btn_Filtro_Grupo_Vendedores_Documento.ImageAlt = CType(resources.GetObject("Btn_Filtro_Grupo_Vendedores_Documento.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Filtro_Grupo_Vendedores_Documento.Name = "Btn_Filtro_Grupo_Vendedores_Documento"
+        Me.Btn_Filtro_Grupo_Vendedores_Documento.Text = "Filtrar por <b><font color=""#0072BC"">GRUPO VENDEDORES (DOCUMENTO)</font></b>"
+        '
+        'Btn_Filtro_Grupo_Vendedores_Asociado
+        '
+        Me.Btn_Filtro_Grupo_Vendedores_Asociado.Image = CType(resources.GetObject("Btn_Filtro_Grupo_Vendedores_Asociado.Image"), System.Drawing.Image)
+        Me.Btn_Filtro_Grupo_Vendedores_Asociado.ImageAlt = CType(resources.GetObject("Btn_Filtro_Grupo_Vendedores_Asociado.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Filtro_Grupo_Vendedores_Asociado.Name = "Btn_Filtro_Grupo_Vendedores_Asociado"
+        Me.Btn_Filtro_Grupo_Vendedores_Asociado.Text = "Filtrar por <b><font color=""#0072BC"">GRUPO VENDEDORES (ASOCIADO CLIENTE)</font></" &
+    "b>"
         '
         'Menu_Contextual_Vista_Detalle
         '
@@ -2267,4 +2313,8 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
     Public WithEvents Btn_Filtro_Pro_ProductosExcluidos As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Importar_Informe As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_CumplimientoClientes As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Filtro_Grupo_Vendedores_Documento As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Filtro_Grupo_Vendedores_Asociado As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem12 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents LabelItem13 As DevComponents.DotNetBar.LabelItem
 End Class

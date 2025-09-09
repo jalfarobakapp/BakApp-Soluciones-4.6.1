@@ -2749,6 +2749,7 @@ Public Class Frm_Formulario_Documento
             .Item("Condicionado") = False
             .Item("EsPallet") = False
             .Item("DesacRazTransf") = False
+            .Item("Grupo") = String.Empty
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -18238,6 +18239,10 @@ Public Class Frm_Formulario_Documento
         If PreVenta Then
             _New_Doc.Ls_Cl_PreVenta = _Ls_Cl_PreVenta
         End If
+
+        For Each _Fl As DataRow In _TblDetalle.Rows
+            _Fl.Item("Grupo") = _Sql.Fx_Trae_Dato("TABFUGD", "KOGRU", "KOFU = '" & _Fl.Item("CodVendedor") & "'",, False)
+        Next
 
         If _TipoGrab = _Tipo_de_Grabacion.Nuevo_documento Then
 

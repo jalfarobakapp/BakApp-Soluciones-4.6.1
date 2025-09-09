@@ -51,6 +51,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     Dim _Tbl_Filtro_EntidadExcluidas As DataTable
     Dim _Tbl_Filtro_ProductosExcluidos As DataTable
 
+    Dim _Tbl_Filtro_GruposAsociados As DataTable
+    Dim _Tbl_Filtro_GruposDocumentos As DataTable
+
     Dim _Filtro_Entidad_Todas As Boolean
     Dim _Filtro_SucursalDoc_Todas As Boolean
     Dim _Filtro_Sucursales_Todas As Boolean
@@ -79,6 +82,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     Dim _Filtro_Tama_Empresa_Todas As Boolean
 
     Dim _Filtro_Clas_BakApp_Todas As Boolean
+
+    Dim _Filtro_GruposAsociados_Todas As Boolean
+    Dim _Filtro_GruposDocumentos_Todas As Boolean
 
     Dim _Cp_Codigo, _Cp_Descripcion, _Tx_Descripcion As String
 
@@ -526,11 +532,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Tama_Empresa = value
         End Set
     End Property
-    Public Property FechaDesdeFd As Date
-    Public Property FechaHastaFh As Date
-    Public Property Comisiones As Boolean
-    Public Property TotalNetoComisiones As Double
-    Public Property ImportarComisiones As Boolean
     Public Property Tbl_Filtro_EntidadExcluidas As DataTable
         Get
             Return _Tbl_Filtro_EntidadExcluidas
@@ -547,6 +548,30 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_ProductosExcluidos = value
         End Set
     End Property
+    Public Property Tbl_Filtro_GruposAsociados As DataTable
+        Get
+            Return _Tbl_Filtro_GruposAsociados
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_GruposAsociados = value
+        End Set
+    End Property
+    Public Property Tbl_Filtro_GruposDocumentos As DataTable
+        Get
+            Return _Tbl_Filtro_GruposDocumentos
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_GruposDocumentos = value
+        End Set
+    End Property
+
+
+    Public Property FechaDesdeFd As Date
+    Public Property FechaHastaFh As Date
+    Public Property Comisiones As Boolean
+    Public Property TotalNetoComisiones As Double
+    Public Property ImportarComisiones As Boolean
+
 
     Public Sub New(Informe As Enum_Informe,
                    Nombre_Tabla_Paso As String,
@@ -579,8 +604,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             End If
 
-        Else
-
             If Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
 
                 _Filtro_Vendedores_Asignados_Todas = False
@@ -590,6 +613,18 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                 _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             End If
+
+        Else
+
+            'If Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
+
+            _Filtro_Vendedores_Asignados_Todas = False
+
+            Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
+                           "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
+            _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            'End If
 
         End If
 
@@ -626,6 +661,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         _Filtro_Sub_Familias_Todas = True
         _Filtro_Zonas_Productos_Todas = True
         _Filtro_Clas_BakApp_Todas = True
+
+        _Filtro_GruposAsociados_Todas = True
+        _Filtro_GruposDocumentos_Todas = True
 
         Dtp_Fecha_Desde.Value = Fecha_Desde
         Dtp_Fecha_Hasta.Value = Fecha_Hasta
@@ -744,6 +782,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Tipo_Entidad_Todas = Not CBool(_Tbl_Filtro_Tipo_Entidad.Rows.Count)
             _Filtro_Act_Economica_Todas = Not CBool(_Tbl_Filtro_Act_Economica.Rows.Count)
             _Filtro_Tama_Empresa_Todas = Not CBool(_Tbl_Filtro_Tama_Empresa.Rows.Count)
+
+            _Filtro_GruposAsociados_Todas = Not CBool(_Tbl_Filtro_GruposAsociados.Rows.Count)
+            _Filtro_GruposDocumentos_Todas = Not CBool(_Tbl_Filtro_GruposDocumentos.Rows.Count)
 
             Tiempo.Start()
 
@@ -1539,9 +1580,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-
-
-
     Function Fx_Filtro_Detalle(Optional _Incluye_Fechas As Boolean = True)
 
         Dim _Filtro_SucursalDoc,
@@ -1569,7 +1607,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Sub_Familias,
             _Filtro_ClasLibre,
             _Filtro_Lista_Precio_Asig,
-            _Filtro_Lista_Precio_Docu As String
+            _Filtro_Lista_Precio_Docu,
+            _Filtro_GruposAsociados,
+            _Filtro_GruposDocumentos As String
 
         If _Filtro_SucursalDoc_Todas Then
             _Filtro_SucursalDoc = String.Empty
@@ -1754,6 +1794,20 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Zonas_Pr = "And KOPRCT IN (Select KOPR From MAEPR Where ZONAPR In " & _Filtro_Zonas_Pr & ")" & vbCrLf
         End If
 
+        If _Filtro_GruposAsociados_Todas Then
+            _Filtro_GruposAsociados = String.Empty
+        Else
+            _Filtro_GruposAsociados = Generar_Filtro_IN(_Tbl_Filtro_GruposAsociados, "Chk", "Codigo", False, True, "")
+            _Filtro_GruposAsociados = "And KOGRU IN (" & _Filtro_GruposAsociados & ")" & vbCrLf
+        End If
+
+        If _Filtro_GruposDocumentos_Todas Then
+            _Filtro_GruposDocumentos = String.Empty
+        Else
+            _Filtro_GruposDocumentos = Generar_Filtro_IN(_Tbl_Filtro_GruposDocumentos, "Chk", "Codigo", False, True, "'")
+            _Filtro_GruposDocumentos = "And KOGRUDET IN " & _Filtro_GruposDocumentos & vbCrLf
+        End If
+
         '---------------------------
 
         Dim _SqlFiltro_Fechas As String
@@ -1797,6 +1851,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                               _Filtro_ClasLibre &
                               _Filtro_Lista_Precio_Asig &
                               _Filtro_Lista_Precio_Docu &
+                              _Filtro_GruposAsociados &
+                              _Filtro_GruposDocumentos &
                               _SqlFiltro_Fechas &
                               _Filtro_Tipr
 
@@ -3746,6 +3802,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Btn_Filtro_Ent_Lista_Precio_Doc.Image = Fx_Imagen_Filtro(_Filtro_Lista_Precio_Docu_Todas)
 
         Btn_Filtrar_Clas_BakApp.Image = Fx_Imagen_Filtro(_Filtro_Clas_BakApp_Todas)
+
+        Btn_Filtro_Grupo_Vendedores_Asociado.Image = Fx_Imagen_Filtro(_Filtro_GruposAsociados_Todas)
+        Btn_Filtro_Grupo_Vendedores_Documento.Image = Fx_Imagen_Filtro(_Filtro_GruposDocumentos_Todas)
 
         If Not _Filtro_Entidad_Todas Or
            Not _Filtro_Ciudad_Todas Or

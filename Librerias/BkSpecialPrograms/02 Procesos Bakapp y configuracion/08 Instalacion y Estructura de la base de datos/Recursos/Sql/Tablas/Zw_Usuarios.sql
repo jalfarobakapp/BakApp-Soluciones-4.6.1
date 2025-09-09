@@ -20,6 +20,7 @@ CREATE TABLE [dbo].[Zw_Usuarios](
 	[Pwfu]              [varchar](50)   NOT NULL DEFAULT (''),
 	[Es_Vendedor]       [bit]           NOT NULL DEFAULT (0),
     [Kogru_Ventas]      [varchar](MAX)  NOT NULL DEFAULT (''),
+    [Kofu_Kogru]        [varchar](3)    NOT NULL DEFAULT (''),
   CONSTRAINT [PK_Zw_Usuarios] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

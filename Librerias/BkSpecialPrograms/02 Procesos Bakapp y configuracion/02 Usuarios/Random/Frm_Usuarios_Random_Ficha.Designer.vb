@@ -59,6 +59,8 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Chk_Parafirma = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Inactivo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Kofu_Kogru = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -308,7 +310,7 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 354)
+        Me.Bar1.Location = New System.Drawing.Point(0, 404)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(649, 41)
         Me.Bar1.Stretch = True
@@ -667,11 +669,53 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.LabelX8.TabIndex = 154
         Me.LabelX8.Text = "Grupo vendedores"
         '
+        'Txt_Kofu_Kogru
+        '
+        Me.Txt_Kofu_Kogru.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Kofu_Kogru.Border.Class = "TextBoxBorder"
+        Me.Txt_Kofu_Kogru.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Kofu_Kogru.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Kofu_Kogru.ButtonCustom.Visible = True
+        Me.Txt_Kofu_Kogru.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Kofu_Kogru.ButtonCustom2.Visible = True
+        Me.Txt_Kofu_Kogru.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.Txt_Kofu_Kogru.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Kofu_Kogru.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_Kofu_Kogru.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Kofu_Kogru, True)
+        Me.Txt_Kofu_Kogru.Location = New System.Drawing.Point(307, 355)
+        Me.Txt_Kofu_Kogru.Name = "Txt_Kofu_Kogru"
+        Me.Txt_Kofu_Kogru.ReadOnly = True
+        Me.Txt_Kofu_Kogru.Size = New System.Drawing.Size(331, 22)
+        Me.Txt_Kofu_Kogru.TabIndex = 155
+        '
+        'LabelX9
+        '
+        Me.LabelX9.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX9.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX9.ForeColor = System.Drawing.Color.Black
+        Me.LabelX9.Location = New System.Drawing.Point(12, 356)
+        Me.LabelX9.Name = "LabelX9"
+        Me.LabelX9.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.LabelX9.Size = New System.Drawing.Size(299, 23)
+        Me.LabelX9.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.LabelX9.TabIndex = 156
+        Me.LabelX9.Text = "Usuario que pueden usar mi grupo de vendedores"
+        '
         'Frm_Usuarios_Random_Ficha
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(649, 395)
+        Me.ClientSize = New System.Drawing.Size(649, 445)
+        Me.Controls.Add(Me.Txt_Kofu_Kogru)
+        Me.Controls.Add(Me.LabelX9)
         Me.Controls.Add(Me.Txt_Kogru_Ventas)
         Me.Controls.Add(Me.LabelX8)
         Me.Controls.Add(Me.Chk_Inactivo)
@@ -753,4 +797,6 @@ Partial Class Frm_Usuarios_Random_Ficha
     Friend WithEvents Chk_Inactivo As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Txt_Kogru_Ventas As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
+    Public WithEvents Txt_Kofu_Kogru As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX9 As DevComponents.DotNetBar.LabelX
 End Class

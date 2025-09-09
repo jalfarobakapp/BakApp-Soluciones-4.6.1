@@ -600,10 +600,8 @@ Public Class Class_SQL
                 _Dato_Default = 0
             End If
 
-
             Dim _Sql As String = "SELECT TOP (1) " & _Campo & " AS CAMPO FROM " & _Tabla & " WITH (NOLOCK) " & vbCrLf &
                                  "Where 1 > 0" & _Condicion
-
 
             Dim _Tbl As DataTable = Fx_Get_DataTable(_Sql, _Mostrar_Error)
 

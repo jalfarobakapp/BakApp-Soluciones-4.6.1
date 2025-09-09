@@ -1,4 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
+Imports Microsoft.Office.Interop.Outlook
 
 
 Public Class Frm_Usuarios_Random_Ficha
@@ -15,6 +16,7 @@ Public Class Frm_Usuarios_Random_Ficha
     Dim _Row_Tabfu As DataRow
     Dim _Row_Usuario As DataRow
     Dim _Tbl_Grupos As DataTable
+    'Dim _Tbl_KofuGrupos As DataTable
 
     Public Property Grabar As Boolean
 
@@ -32,6 +34,8 @@ Public Class Frm_Usuarios_Random_Ficha
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Usuarios Where CodFuncionario = '" & _Kofu & "'"
         _Row_Usuario = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
     Private Sub Frm_Usuarios_Ficha_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -104,6 +108,33 @@ Public Class Frm_Usuarios_Random_Ficha
                 Txt_Kogru_Ventas.Text = _Grupos
 
             End If
+
+            ''Kofu_Kogru
+
+            Txt_Kofu_Kogru.Tag = _Row_Usuario.Item("Kofu_Kogru").ToString.Trim
+            If Not String.IsNullOrEmpty(Txt_Kofu_Kogru.Tag) Then
+                Txt_Kofu_Kogru.Text = _Row_Usuario.Item("Kofu_Kogru").ToString.Trim & " - " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & Txt_Kofu_Kogru.Tag & "'")
+            End If
+
+            'Dim _Kofu_Kogru_List As List(Of String) = _Row_Usuario.Item("Kofu_Kogru").ToString.Split(","c).ToList()
+
+            '_Kofu_Kogru = NuloPorNro(Replace(_Kofu_Kogru, "''", "'"), "")
+
+            'If _KogruList.Count = 1 Then
+            '    If Not String.IsNullOrWhiteSpace(_Kofu_Kogru) AndAlso Not _Kofu_Kogru.Contains("'") Then
+            '        _Kofu_Kogru = "'" & _Kofu_Kogru & "'"
+            '    End If
+            'End If
+
+            'If Not String.IsNullOrWhiteSpace(_Kofu_Kogru) Then
+
+            '    Consulta_sql = "Select KOFU As 'Codigo',NOKOFU As 'Descripcion' From TABFU Where KOGRU In (" & _Kofu_Kogru & ")"
+            '    _Tbl_KofuGrupos = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            '    Txt_Kofu_Kogru.Tag = _Tbl_KofuGrupos
+            '    Txt_Kofu_Kogru.Text = _Kofu_Kogru
+
+            'End If
 
         Else
 
@@ -328,16 +359,8 @@ Public Class Frm_Usuarios_Random_Ficha
 
     Private Sub Txt_Kogru_Ventas_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Kogru_Ventas.ButtonCustomClick
 
-        'Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABFUGD", "KOFU = '" & Kofu & "'"))
-
-        'If Not _Reg Then
-        '    MessageBoxEx.Show(Me, "Para asociar un Grupo de Vendedores, el usuario debe pertenecer al menos a uno de los grupos seleccionados." & vbCrLf &
-        '                      "El usuario no pertenece a ningún Grupo, informe de esta situación al administrador del sistema", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '    Return
-        'End If
-
         Dim _Filtrar As New Clas_Filtros_Random(Me)
-        Dim _Sql_Filtro_Condicion_Extra As String = String.Empty '"And KOGRU In (Select KOGRU From TABFUGD Where KOFU = '" & Kofu & "')"
+        Dim _Sql_Filtro_Condicion_Extra As String = String.Empty
 
         _Filtrar.Tabla = "TABFUGE"
         _Filtrar.Campo = "KOGRU"
@@ -360,5 +383,31 @@ Public Class Frm_Usuarios_Random_Ficha
     Private Sub Txt_Kogru_Ventas_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Kogru_Ventas.ButtonCustom2Click
         Txt_Kogru_Ventas.Text = String.Empty
         Txt_Kogru_Ventas.Tag = Nothing
+    End Sub
+
+    Private Sub Txt_Kofu_Kogru_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Kofu_Kogru.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+        Dim _Sql_Filtro_Condicion_Extra As String = "And KOFU <> '" & FUNCIONARIO & "'"
+
+        '_Filtrar.Tabla = "TABFUGE"
+        '_Filtrar.Campo = "KOGRU"
+        '_Filtrar.Descripcion = "NOKOGRU"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
+                               False, False, True, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+            Txt_Kofu_Kogru.Tag = _Row.Item("Codigo").ToString.Trim
+            Txt_Kofu_Kogru.Text = _Row.Item("Codigo").ToString.Trim & " - " & _Row.Item("Descripcion").ToString.Trim
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Kofu_Kogru_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Kofu_Kogru.ButtonCustom2Click
+        Txt_Kofu_Kogru.Tag = String.Empty
+        Txt_Kofu_Kogru.Text = String.Empty
     End Sub
 End Class
