@@ -744,6 +744,7 @@ Buscar:
         If Chk_MostrarSoloDocClientesDelVendedor.Checked Then
 
             Dim _Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+            Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru = '" & FUNCIONARIO & "'")
 
             If String.IsNullOrEmpty(_Kogru) Then
                 _Sql_Filtro_Entidades += vbCrLf & " And Mae1.KOFUEN = '" & FUNCIONARIO & "'"
@@ -751,6 +752,14 @@ Buscar:
 
                 If Not _Kogru.Contains("'") Then
                     _Kogru = "'" & _Kogru & "'"
+                End If
+
+                If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+                    If String.IsNullOrEmpty(_Kogru) Then
+                        _Kogru = _Kofu_Kogru
+                    Else
+                        _Kogru += "," & _Kofu_Kogru
+                    End If
                 End If
 
                 Consulta_sql = "Select KOFU From TABFUGD Where KOGRU In (" & _Kogru & ")"
@@ -930,7 +939,16 @@ Buscar:
         Else
 
             Beep()
-            ToastNotification.Show(Me, "NO EXISTEN DATOS QUE MOSTRAR", My.Resources.cross, 3 * 1000,
+
+            Dim _Msj As String = "NO EXISTEN DATOS QUE MOSTRAR"
+            Dim _Tiempo = 3
+
+            If _VerSoloEntidadesDelVendedor Then
+                _Msj += vbCrLf & "RECUERDE QUE QUIETE UNA RESTRICCIÓN PARA " & vbCrLf & "VER SOLO CIERTAS VENTA DE ALGUNOS USUARIOS"
+                _Tiempo = 5
+            End If
+
+            ToastNotification.Show(Me, _Msj, My.Resources.cross, _Tiempo * 1000,
                                    eToastGlowColor.Red, eToastPosition.MiddleCenter)
 
         End If

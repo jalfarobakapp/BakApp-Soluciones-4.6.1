@@ -267,7 +267,7 @@ Public Class Frm_Cadenas_Remotas_Det
 
             Else
                 MessageBoxEx.Show(Me, "Usuario: " & _Nombre_CodFuncionario_Autoriza & vbCrLf & vbCrLf & _Observaciones,
-                                  "Rechazado", MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+                                      "Rechazado", MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
             End If
 
         ElseIf _Otorga = "Enviado" Then

@@ -961,19 +961,19 @@ Public Class Frm_Formulario_Documento
             Chk_Pickear.Enabled = True
         End If
 
+
+
         If _Revisando_Situacion_Comercial Or _Revision_Remota Or _Solo_Revisar_El_Documento Then
 
             Btn_Aceptar_Documento.Visible = _Revision_Remota
             Btn_Rechazar_Documento.Visible = _Revision_Remota
             Btn_Observaciones.Visible = _Revision_Remota
-
             Btn_Ver_Costos.Visible = True
             Btn_Mostrar_Margenes.Visible = True
             Btn_Anotaciones_al_documento.Visible = True
-
             Btn_Recargar_Producto.Enabled = False
-
             Chk_Ver_Dscto_Maximo.Visible = False
+            Chk_Pickear.Enabled = False
 
         Else
 
@@ -8798,45 +8798,6 @@ Public Class Frm_Formulario_Documento
                     Else
                         _RowEntidad = _Mensaje.Tag
                     End If
-
-                    'If Fx_Tiene_Permiso(Me, "NO00022",, False) Then
-
-                    '    Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
-                    '    Dim _TienePermiso As Boolean
-
-                    '    If Not _Kogru.Contains("'") Then
-                    '        _Kogru = "'" & _Kogru & "'"
-                    '    End If
-
-                    '    Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & ")"
-                    '    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-                    '    Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-                    '    For Each _Fila As DataRow In _Tbl_Grupo.Rows
-                    '        If _Fila.Item("KOFU").ToString.Trim = _RowEntidad.Item("KOFUEN").ToString.Trim Then
-                    '            _TienePermiso = True
-                    '            Exit For
-                    '        End If
-                    '    Next
-
-                    '    If Not _TienePermiso Then
-
-                    '        Dim _Grupo As String = _Kogru.Trim & " - " & _Tbl_Grupo.Rows(0).Item("NOKOGRU").trim
-
-                    '        Dim _Msj = "Tiene una restricción que le impide gestionar o ver documentos de clientes asignados a" & vbCrLf &
-                    '                   "otros vendedores fuera de su grupo. Esto significa que solo puede acceder y gestionar" & vbCrLf &
-                    '                   "documentos de los clientes de los vendedores asociados a su grupo." & vbCrLf & vbCrLf &
-                    '                   "Actualmente, tiene asignado el permiso (restricción) NO00022" & vbCrLf &
-                    '                   "y pertenece al grupo " & _Grupo
-
-                    '        MessageBoxEx.Show(_Formulario, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-
-                    '        Return Nothing
-
-                    '    End If
-
-                    'End If
 
                 End If
 
@@ -22572,7 +22533,7 @@ Public Class Frm_Formulario_Documento
                                 Delete " & _Global_BaseBk & "Zw_Notificaciones Where RCadena_Id_Enc In (" & _Id_DocEnc & ") And (Autorizado = 1 Or Rechazado = 1)"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                Sb_Reestablecer_Stock_En_Zw_Prod_Stock(_Tido, _TblDetalle)
+                'Sb_Reestablecer_Stock_En_Zw_Prod_Stock(_Tido, _TblDetalle)
 
             End If
 
@@ -23070,14 +23031,17 @@ Public Class Frm_Formulario_Documento
         Dim _NroRemota = _RowRemota_Notificacion.Item("NroRemota")
         Dim _Id_Enc As Integer = _RowRemota_Notificacion.Item("RCadena_Id_Enc")
 
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Casi_DocTom Where Id_DocEnc = " & _Id_DocEnc & "
-                            Update " & _Global_BaseBk & "Zw_Remotas Set 
-                            CodFuncionario_Autoriza = '" & FUNCIONARIO & "',Otorga = 'Rechazado',
-                            Observaciones = '" & _Motivo_Rechazo & "',Fecha_Otorga = GetDate()
-                            Where NroRemota = '" & _NroRemota & "'
-                             Update " & _Global_BaseBk & "Zw_Remotas_En_Cadena_01_Enc Set
-                            Fecha_Hora_Grab = Getdate(),Estado = 'R'
-                            Where Id_Enc = " & _Id_Enc
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Casi_DocTom Where Id_DocEnc = " & _Id_DocEnc & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Remotas Set " & vbCrLf &
+                       "CodFuncionario_Autoriza = '" & FUNCIONARIO & "'" &
+                       ",Otorga = 'Rechazado'" &
+                       ",Observaciones = '" & _Motivo_Rechazo & "'" &
+                       ",Fecha_Otorga = GetDate()" & vbCrLf &
+                       "Where NroRemota = '" & _NroRemota & "'" & vbCrLf &
+                       "Update " & _Global_BaseBk & "Zw_Remotas_En_Cadena_01_Enc Set" & vbCrLf &
+                       "Fecha_Hora_Grab = Getdate()" &
+                       ",Estado = 'R'" & vbCrLf &
+                       "Where Id_Enc = " & _Id_Enc
 
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             Sb_Reestablecer_Stock_En_Zw_Prod_Stock(_Tido, _TblDetalle)

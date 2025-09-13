@@ -6653,10 +6653,20 @@ Public Module Crear_Documentos_Desde_Otro
             If Fx_Tiene_Permiso(Nothing, "NO00022",, False) Then
 
                 Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & _CodFuncionario & "'")
+                Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru = '" & FUNCIONARIO & "'")
+
                 Dim _TienePermiso As Boolean
 
                 If Not _Kogru.Contains("'") Then
                     _Kogru = "'" & _Kogru & "'"
+                End If
+
+                If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+                    If String.IsNullOrEmpty(_Kogru) Then
+                        _Kogru = _Kofu_Kogru
+                    Else
+                        _Kogru += "," & _Kofu_Kogru
+                    End If
                 End If
 
                 Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & ")"

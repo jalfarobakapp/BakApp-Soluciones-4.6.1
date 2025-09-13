@@ -136,6 +136,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
                             Or NroRemota In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas_Notif Where CodFuncionario_Destino = '" & FUNCIONARIO & "')
                           
                             Select * From #Paso Where Empresa = '" & Mod_Empresa & "'
+                            Order by Fecha,Hora
                             Drop Table #Paso"
 
             _TblRemotas = _Sql.Fx_Get_DataTable(Consulta_sql)

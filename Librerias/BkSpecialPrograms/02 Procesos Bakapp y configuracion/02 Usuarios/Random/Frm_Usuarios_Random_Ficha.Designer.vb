@@ -39,14 +39,14 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Telefono = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Cod_Ext = New DevComponents.DotNetBar.LabelX()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Telefono = New DevComponents.DotNetBar.LabelX()
         Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Email = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_EmailSup = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_EmailSup = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Modalidad = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Cod_Ext = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Comuna = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX24 = New DevComponents.DotNetBar.LabelX()
@@ -56,11 +56,12 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Highlighter1 = New DevComponents.DotNetBar.Validator.Highlighter()
         Me.Txt_Modalidad = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Kogru_Ventas = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Kofu_Kogru = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_Parafirma = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Inactivo = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_Kofu_Kogru = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Lbl_Kogru_Ventas = New DevComponents.DotNetBar.LabelX()
         Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_PedirConfirmacionModalidad = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel2.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -310,7 +311,7 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 404)
+        Me.Bar1.Location = New System.Drawing.Point(0, 388)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(649, 41)
         Me.Bar1.Stretch = True
@@ -327,22 +328,22 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar.Name = "Btn_Grabar"
         '
-        'LabelX6
+        'Lbl_Cod_Ext
         '
-        Me.LabelX6.BackColor = System.Drawing.Color.White
+        Me.Lbl_Cod_Ext.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX6.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX6.ForeColor = System.Drawing.Color.Black
-        Me.LabelX6.Location = New System.Drawing.Point(13, 209)
-        Me.LabelX6.Name = "LabelX6"
-        Me.LabelX6.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.LabelX6.Size = New System.Drawing.Size(101, 23)
-        Me.LabelX6.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX6.TabIndex = 118
-        Me.LabelX6.Text = "Codigo Externo:"
+        Me.Lbl_Cod_Ext.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Cod_Ext.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Cod_Ext.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Cod_Ext.Location = New System.Drawing.Point(13, 209)
+        Me.Lbl_Cod_Ext.Name = "Lbl_Cod_Ext"
+        Me.Lbl_Cod_Ext.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.Lbl_Cod_Ext.Size = New System.Drawing.Size(101, 23)
+        Me.Lbl_Cod_Ext.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.Lbl_Cod_Ext.TabIndex = 118
+        Me.Lbl_Cod_Ext.Text = "Codigo Externo:"
         '
         'LabelX7
         '
@@ -361,22 +362,22 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.LabelX7.TabIndex = 119
         Me.LabelX7.Text = "Direccion:"
         '
-        'LabelX10
+        'Lbl_Telefono
         '
-        Me.LabelX10.BackColor = System.Drawing.Color.White
+        Me.Lbl_Telefono.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.LabelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX10.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX10.ForeColor = System.Drawing.Color.Black
-        Me.LabelX10.Location = New System.Drawing.Point(12, 153)
-        Me.LabelX10.Name = "LabelX10"
-        Me.LabelX10.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.LabelX10.Size = New System.Drawing.Size(89, 23)
-        Me.LabelX10.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX10.TabIndex = 122
-        Me.LabelX10.Text = "Telefono:"
+        Me.Lbl_Telefono.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Telefono.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Telefono.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Telefono.Location = New System.Drawing.Point(12, 153)
+        Me.Lbl_Telefono.Name = "Lbl_Telefono"
+        Me.Lbl_Telefono.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.Lbl_Telefono.Size = New System.Drawing.Size(89, 23)
+        Me.Lbl_Telefono.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.Lbl_Telefono.TabIndex = 122
+        Me.Lbl_Telefono.Text = "Telefono:"
         '
         'LabelX11
         '
@@ -432,40 +433,40 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_EmailSup.Size = New System.Drawing.Size(247, 22)
         Me.Txt_EmailSup.TabIndex = 9
         '
-        'LabelX12
+        'Lbl_EmailSup
         '
-        Me.LabelX12.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX12.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(273, 180)
-        Me.LabelX12.Name = "LabelX12"
-        Me.LabelX12.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.LabelX12.Size = New System.Drawing.Size(112, 23)
-        Me.LabelX12.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX12.TabIndex = 125
-        Me.LabelX12.Text = "e-Mail Supervisor"
-        Me.LabelX12.TextAlignment = System.Drawing.StringAlignment.Far
-        '
-        'LabelX13
-        '
-        Me.LabelX13.BackColor = System.Drawing.Color.White
+        Me.Lbl_EmailSup.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.LabelX13.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX13.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX13.ForeColor = System.Drawing.Color.Black
-        Me.LabelX13.Location = New System.Drawing.Point(12, 180)
-        Me.LabelX13.Name = "LabelX13"
-        Me.LabelX13.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.LabelX13.Size = New System.Drawing.Size(89, 23)
-        Me.LabelX13.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX13.TabIndex = 127
-        Me.LabelX13.Text = "Modalidad:"
+        Me.Lbl_EmailSup.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_EmailSup.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_EmailSup.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_EmailSup.Location = New System.Drawing.Point(273, 180)
+        Me.Lbl_EmailSup.Name = "Lbl_EmailSup"
+        Me.Lbl_EmailSup.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.Lbl_EmailSup.Size = New System.Drawing.Size(112, 23)
+        Me.Lbl_EmailSup.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.Lbl_EmailSup.TabIndex = 125
+        Me.Lbl_EmailSup.Text = "e-Mail Supervisor"
+        Me.Lbl_EmailSup.TextAlignment = System.Drawing.StringAlignment.Far
+        '
+        'Lbl_Modalidad
+        '
+        Me.Lbl_Modalidad.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Lbl_Modalidad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Modalidad.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Modalidad.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Modalidad.Location = New System.Drawing.Point(12, 180)
+        Me.Lbl_Modalidad.Name = "Lbl_Modalidad"
+        Me.Lbl_Modalidad.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.Lbl_Modalidad.Size = New System.Drawing.Size(89, 23)
+        Me.Lbl_Modalidad.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.Lbl_Modalidad.TabIndex = 127
+        Me.Lbl_Modalidad.Text = "Modalidad:"
         '
         'Txt_Cod_Ext
         '
@@ -540,14 +541,20 @@ Partial Class Frm_Usuarios_Random_Ficha
         '
         Me.Txt_Password.Border.Class = "TextBoxBorder"
         Me.Txt_Password.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Password.ButtonCustom.Image = CType(resources.GetObject("Txt_Password.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Password.ButtonCustom.Visible = True
+        Me.Txt_Password.ButtonCustom2.Image = CType(resources.GetObject("Txt_Password.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Password.ButtonCustom2.Visible = True
         Me.Txt_Password.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Password.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
         Me.Txt_Password.ForeColor = System.Drawing.Color.Black
         Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Password, True)
         Me.Txt_Password.Location = New System.Drawing.Point(133, 237)
         Me.Txt_Password.Name = "Txt_Password"
+        Me.Txt_Password.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
         Me.Txt_Password.Size = New System.Drawing.Size(170, 22)
         Me.Txt_Password.TabIndex = 11
+        Me.Txt_Password.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Lbl_111
         '
@@ -616,6 +623,29 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Txt_Kogru_Ventas.Size = New System.Drawing.Size(505, 22)
         Me.Txt_Kogru_Ventas.TabIndex = 153
         '
+        'Txt_Kofu_Kogru
+        '
+        Me.Txt_Kofu_Kogru.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Kofu_Kogru.Border.Class = "TextBoxBorder"
+        Me.Txt_Kofu_Kogru.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Kofu_Kogru.ButtonCustom.Image = CType(resources.GetObject("Txt_Kofu_Kogru.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Kofu_Kogru.ButtonCustom.Visible = True
+        Me.Txt_Kofu_Kogru.ButtonCustom2.Image = CType(resources.GetObject("Txt_Kofu_Kogru.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Kofu_Kogru.ButtonCustom2.Visible = True
+        Me.Txt_Kofu_Kogru.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.Txt_Kofu_Kogru.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Kofu_Kogru.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_Kofu_Kogru.ForeColor = System.Drawing.Color.Black
+        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Kofu_Kogru, True)
+        Me.Txt_Kofu_Kogru.Location = New System.Drawing.Point(307, 355)
+        Me.Txt_Kofu_Kogru.Name = "Txt_Kofu_Kogru"
+        Me.Txt_Kofu_Kogru.ReadOnly = True
+        Me.Txt_Kofu_Kogru.Size = New System.Drawing.Size(331, 22)
+        Me.Txt_Kofu_Kogru.TabIndex = 155
+        '
         'Chk_Parafirma
         '
         Me.Chk_Parafirma.BackColor = System.Drawing.Color.Transparent
@@ -626,9 +656,9 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Chk_Parafirma.CheckBoxImageChecked = CType(resources.GetObject("Chk_Parafirma.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Parafirma.FocusCuesEnabled = False
         Me.Chk_Parafirma.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Parafirma.Location = New System.Drawing.Point(12, 275)
+        Me.Chk_Parafirma.Location = New System.Drawing.Point(12, 272)
         Me.Chk_Parafirma.Name = "Chk_Parafirma"
-        Me.Chk_Parafirma.Size = New System.Drawing.Size(139, 15)
+        Me.Chk_Parafirma.Size = New System.Drawing.Size(139, 24)
         Me.Chk_Parafirma.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Parafirma.TabIndex = 12
         Me.Chk_Parafirma.TabStop = False
@@ -652,45 +682,22 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Chk_Inactivo.TabStop = False
         Me.Chk_Inactivo.Text = "Bloquear funcionario"
         '
-        'LabelX8
+        'Lbl_Kogru_Ventas
         '
-        Me.LabelX8.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX8.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX8.ForeColor = System.Drawing.Color.Black
-        Me.LabelX8.Location = New System.Drawing.Point(12, 327)
-        Me.LabelX8.Name = "LabelX8"
-        Me.LabelX8.RightToLeft = System.Windows.Forms.RightToLeft.No
-        Me.LabelX8.Size = New System.Drawing.Size(109, 23)
-        Me.LabelX8.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.LabelX8.TabIndex = 154
-        Me.LabelX8.Text = "Grupo vendedores"
-        '
-        'Txt_Kofu_Kogru
-        '
-        Me.Txt_Kofu_Kogru.BackColor = System.Drawing.Color.White
+        Me.Lbl_Kogru_Ventas.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_Kofu_Kogru.Border.Class = "TextBoxBorder"
-        Me.Txt_Kofu_Kogru.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Kofu_Kogru.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Kofu_Kogru.ButtonCustom.Visible = True
-        Me.Txt_Kofu_Kogru.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_Kofu_Kogru.ButtonCustom2.Visible = True
-        Me.Txt_Kofu_Kogru.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.Txt_Kofu_Kogru.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Kofu_Kogru.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_Kofu_Kogru.ForeColor = System.Drawing.Color.Black
-        Me.Highlighter1.SetHighlightOnFocus(Me.Txt_Kofu_Kogru, True)
-        Me.Txt_Kofu_Kogru.Location = New System.Drawing.Point(307, 355)
-        Me.Txt_Kofu_Kogru.Name = "Txt_Kofu_Kogru"
-        Me.Txt_Kofu_Kogru.ReadOnly = True
-        Me.Txt_Kofu_Kogru.Size = New System.Drawing.Size(331, 22)
-        Me.Txt_Kofu_Kogru.TabIndex = 155
+        Me.Lbl_Kogru_Ventas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Kogru_Ventas.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_Kogru_Ventas.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Kogru_Ventas.Location = New System.Drawing.Point(12, 327)
+        Me.Lbl_Kogru_Ventas.Name = "Lbl_Kogru_Ventas"
+        Me.Lbl_Kogru_Ventas.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.Lbl_Kogru_Ventas.Size = New System.Drawing.Size(109, 23)
+        Me.Lbl_Kogru_Ventas.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.Lbl_Kogru_Ventas.TabIndex = 154
+        Me.Lbl_Kogru_Ventas.Text = "Grupo vendedores"
         '
         'LabelX9
         '
@@ -709,15 +716,34 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.LabelX9.TabIndex = 156
         Me.LabelX9.Text = "Usuario que pueden usar mi grupo de vendedores"
         '
+        'Chk_PedirConfirmacionModalidad
+        '
+        Me.Chk_PedirConfirmacionModalidad.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_PedirConfirmacionModalidad.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_PedirConfirmacionModalidad.CheckBoxImageChecked = CType(resources.GetObject("Chk_PedirConfirmacionModalidad.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_PedirConfirmacionModalidad.FocusCuesEnabled = False
+        Me.Chk_PedirConfirmacionModalidad.ForeColor = System.Drawing.Color.Black
+        Me.Chk_PedirConfirmacionModalidad.Location = New System.Drawing.Point(179, 275)
+        Me.Chk_PedirConfirmacionModalidad.Name = "Chk_PedirConfirmacionModalidad"
+        Me.Chk_PedirConfirmacionModalidad.Size = New System.Drawing.Size(323, 21)
+        Me.Chk_PedirConfirmacionModalidad.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_PedirConfirmacionModalidad.TabIndex = 157
+        Me.Chk_PedirConfirmacionModalidad.TabStop = False
+        Me.Chk_PedirConfirmacionModalidad.Text = "Perdir confirmar la modalidad al momento de ingresar"
+        '
         'Frm_Usuarios_Random_Ficha
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(649, 445)
+        Me.ClientSize = New System.Drawing.Size(649, 429)
+        Me.Controls.Add(Me.Chk_PedirConfirmacionModalidad)
         Me.Controls.Add(Me.Txt_Kofu_Kogru)
         Me.Controls.Add(Me.LabelX9)
         Me.Controls.Add(Me.Txt_Kogru_Ventas)
-        Me.Controls.Add(Me.LabelX8)
+        Me.Controls.Add(Me.Lbl_Kogru_Ventas)
         Me.Controls.Add(Me.Chk_Inactivo)
         Me.Controls.Add(Me.Chk_Parafirma)
         Me.Controls.Add(Me.Txt_Modalidad)
@@ -727,14 +753,14 @@ Partial Class Frm_Usuarios_Random_Ficha
         Me.Controls.Add(Me.LabelX24)
         Me.Controls.Add(Me.Btn_Buscar_Comuna)
         Me.Controls.Add(Me.Txt_Cod_Ext)
-        Me.Controls.Add(Me.LabelX13)
+        Me.Controls.Add(Me.Lbl_Modalidad)
         Me.Controls.Add(Me.Txt_EmailSup)
-        Me.Controls.Add(Me.LabelX12)
+        Me.Controls.Add(Me.Lbl_EmailSup)
         Me.Controls.Add(Me.Txt_Email)
         Me.Controls.Add(Me.LabelX11)
-        Me.Controls.Add(Me.LabelX10)
+        Me.Controls.Add(Me.Lbl_Telefono)
         Me.Controls.Add(Me.LabelX7)
-        Me.Controls.Add(Me.LabelX6)
+        Me.Controls.Add(Me.Lbl_Cod_Ext)
         Me.Controls.Add(Me.LabelX2)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Txt_Codigo)
@@ -777,14 +803,14 @@ Partial Class Frm_Usuarios_Random_Ficha
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Txt_Direccion As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_Cod_Ext As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents LabelX10 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_Telefono As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX11 As DevComponents.DotNetBar.LabelX
     Public WithEvents Txt_Email As DevComponents.DotNetBar.Controls.TextBoxX
     Public WithEvents Txt_EmailSup As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents LabelX12 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents LabelX13 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_EmailSup As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_Modalidad As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Cod_Ext As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Txt_Comuna As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX24 As DevComponents.DotNetBar.LabelX
@@ -796,7 +822,8 @@ Partial Class Frm_Usuarios_Random_Ficha
     Friend WithEvents Chk_Parafirma As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Inactivo As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Txt_Kogru_Ventas As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_Kogru_Ventas As DevComponents.DotNetBar.LabelX
     Public WithEvents Txt_Kofu_Kogru As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX9 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_PedirConfirmacionModalidad As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

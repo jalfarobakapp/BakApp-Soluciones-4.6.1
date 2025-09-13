@@ -582,6 +582,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
 
+        _Filtro_Vendedores_Todas = True
         _Filtro_Vendedores_Asignados_Todas = True
 
         If Fx_Tiene_Permiso(Me, "Inf00025", , False) Then
@@ -618,11 +619,16 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             'If Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
 
-            _Filtro_Vendedores_Asignados_Todas = False
+            '_Filtro_Vendedores_Asignados_Todas = False
+            _Filtro_Vendedores_Todas = False
+
+            'Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
+            '               "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
+            '_Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
-                           "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
-            _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
+               "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
+            _Tbl_Filtro_Vendedores = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             'End If
 
@@ -650,7 +656,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         _Filtro_Tama_Empresa_Todas = True
         _Filtro_Lista_Precio_Asig_Todas = True
         _Filtro_Lista_Precio_Docu_Todas = True
-        _Filtro_Vendedores_Todas = True
+
         _Filtro_Responzables_Todas = True
         _Filtro_Productos_Todos = True
         _Filtro_Clalibpr_Todas = True
@@ -5044,6 +5050,14 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
+    End Sub
+
+    Private Sub Btn_Filtro_Grupo_Vendedores_Documento_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Grupo_Vendedores_Documento.Click
+        MessageBoxEx.Show(Me, "Función en desarrollo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    End Sub
+
+    Private Sub Btn_Filtro_Grupo_Vendedores_Asociado_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Grupo_Vendedores_Asociado.Click
+        MessageBoxEx.Show(Me, "Función en desarrollo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
     End Sub
 
     Private Sub Sb_Grafico_Tendencias()
