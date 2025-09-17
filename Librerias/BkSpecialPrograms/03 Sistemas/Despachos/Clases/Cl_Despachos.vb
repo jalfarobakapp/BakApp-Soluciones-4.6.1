@@ -43,6 +43,7 @@ Public Class Cl_Despachos
             .Mostrar_Agencia = _Row.Item("Mostrar_Agencia")
             .ConfirmarLecturaDespacho = _Row.Item("ConfirmarLecturaDespacho")
             .Sucursal = _Row.Item("Sucursal")
+            .NoObligadatosRetiraCliente = _Row.Item("NoObligadatosRetiraCliente")
 
         End With
 
