@@ -12,4 +12,5 @@
     Public Property Mostrar_Agencia As Boolean
     Public Property ConfirmarLecturaDespacho As Boolean
     Public Property Sucursal As String
+    Public Property NoObligadatosRetiraCliente As Boolean
 End Class

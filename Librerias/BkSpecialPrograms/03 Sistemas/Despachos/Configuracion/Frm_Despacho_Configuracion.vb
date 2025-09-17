@@ -56,6 +56,8 @@ Public Class Frm_Despacho_Configuracion
             Chk_ConfirmarLecturaDespacho.Checked = .ConfirmarLecturaDespacho
             Txt_Obs_Retira_Cliente.Text = .Obs_Retira_Cliente
 
+            Chk_NoObligadatosRetiraCliente.Checked = .NoObligadatosRetiraCliente
+
         End With
 
         Txt_Valor_Min_Despacho.Text = FormatNumber(Txt_Valor_Min_Despacho.Tag, 0)
@@ -397,6 +399,7 @@ Public Class Frm_Despacho_Configuracion
             .Mostrar_Agencia = Chk_Mostrar_Agencia.Checked
             .ConfirmarLecturaDespacho = Chk_ConfirmarLecturaDespacho.Checked
             .Obs_Retira_Cliente = Txt_Obs_Retira_Cliente.Text
+            .NoObligadatosRetiraCliente = Chk_NoObligadatosRetiraCliente.Checked
 
         End With
 
@@ -409,27 +412,6 @@ Public Class Frm_Despacho_Configuracion
         If Not _Mensaje.EsCorrecto Then
             Return
         End If
-
-        'Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Despachos_Configuracion Where Empresa = '" & Mod_Empresa & "'" & vbCrLf &
-        '               "Insert Into " & _Global_BaseBk & "Zw_Despachos_Configuracion (Empresa,Pedir_Sucursal_Retiro,Tipo_Venta_X_Defecto," &
-        '               "Transportista_X_Defecto,Transpor_Por_Pagar,Valor_Min_Despacho,Mostrar_RetiraTransportista,Mostrar_Agencia,ConfirmarLecturaDespacho) Values " &
-        '               "('" & Mod_Empresa & "'" &
-        '               "," & Convert.ToInt32(Chk_Pedir_Sucursal_Retiro.Checked) &
-        '               ",'" & Txt_Tipo_Venta.Tag & "'" &
-        '               ",'" & Txt_Transportista.Tag &
-        '               "'," & Convert.ToInt32(Chk_Transpor_Por_Pagar.Checked) &
-        '               "," & De_Txt_a_Num_01(Txt_Valor_Min_Despacho.Tag, 5) &
-        '               "," & Convert.ToInt32(Chk_Mostrar_RetiraTransportista.Checked) &
-        '               "," & Convert.ToInt32(Chk_Mostrar_Agencia.Checked) &
-        '               "," & Convert.ToInt32(Chk_ConfirmarLecturaDespacho.Checked) & ")"
-
-        'If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql) Then
-
-        '    Dim _Cl As New Clas_Despacho(True)
-
-        '    MessageBoxEx.Show(Me, "Datos de configuración actualizados correctamente", "Grabar configuración", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-        'End If
 
     End Sub
 

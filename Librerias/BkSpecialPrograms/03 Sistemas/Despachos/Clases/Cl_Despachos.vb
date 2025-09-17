@@ -101,6 +101,7 @@ Public Class Cl_Despachos
                                ",Mostrar_RetiraTransportista = " & Convert.ToInt32(.Mostrar_RetiraTransportista) & vbCrLf &
                                ",Mostrar_Agencia = " & Convert.ToInt32(.Mostrar_Agencia) & vbCrLf &
                                ",ConfirmarLecturaDespacho = " & Convert.ToInt32(.ConfirmarLecturaDespacho) & vbCrLf &
+                               ",NoObligadatosRetiraCliente = " & Convert.ToInt32(.NoObligadatosRetiraCliente) & vbCrLf &
                                "Where Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "'"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)

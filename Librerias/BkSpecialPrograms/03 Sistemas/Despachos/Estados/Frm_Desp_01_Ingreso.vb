@@ -1347,7 +1347,10 @@ Public Class Frm_Desp_01_Ingreso
 
             End If
 
-            If (String.IsNullOrEmpty(_Email) And _Cl_Despacho.Row_Conf_Despacho.Item("Pedir_Sucursal_Retiro") And Cmb_Tipo_Envio.SelectedValue = "RT") Or
+            If ((String.IsNullOrEmpty(_Email) Or
+                String.IsNullOrEmpty(_Telefono)) And
+                Cmb_Tipo_Envio.SelectedValue = "RT" And
+                _Cl_Despacho.Row_Conf_Despacho.Item("NoObligadatosRetiraCliente")) Or
                 (
                 (Cmb_Tipo_Envio.SelectedValue <> "RT" And Cmb_Tipo_Envio.SelectedValue <> "RR") And
                 (

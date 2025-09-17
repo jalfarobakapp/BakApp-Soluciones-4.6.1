@@ -652,6 +652,8 @@ Public Class Class_SQL
                 Else
                     If _DevNumero Then
                         Return 0
+                    ElseIf _Es_Boolean Then
+                        Return False
                     Else
                         Return String.Empty
                     End If
