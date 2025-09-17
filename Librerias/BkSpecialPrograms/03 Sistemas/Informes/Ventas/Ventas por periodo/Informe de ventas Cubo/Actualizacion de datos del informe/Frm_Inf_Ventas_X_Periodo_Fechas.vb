@@ -493,15 +493,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
 
             Dim _Mostrar_Error As Boolean = True
 
-            'Sb_Actualizar_Indices()
-
-            'Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & vbCrLf &
-            '               "Where IDMAEDDO NOT IN (SELECT IDMAEDDO FROM MAEDDO With (Nolock)" & Space(1) &
-            '               "Where FEEMLI = '" & Format(_Fecha_Desde, "yyyyMMdd") & "' " &
-            '               "And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV'))" & vbCrLf &
-            '               "And FEEMLI = '" & Format(_Fecha_Desde, "yyyyMMdd") & "'"
-            '_Sql.Ej_consulta_IDU(Consulta_Sql, False)
-
             Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & "
                             Where TIDO = 'BLV' And NUDO Not In " &
                             "(Select NUDO From MAEEDO With (Nolock)" & Space(1) &
@@ -530,9 +521,15 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
             Progreso_Cont_Productos.Maximum = _TblFechas.Rows.Count
 
             Dim _Contador = 0
-
             Dim _Cronometro As New Class_Cronometro(Lbl_Tiempo)
+            Dim _ExistenCamposKogru As Boolean = False
 
+            If _Sql.Fx_Exite_Campo(_Nombre_Tabla_Paso, "KOGRU") And
+                _Sql.Fx_Exite_Campo(_Nombre_Tabla_Paso, "KOGRUDT") AndAlso
+                _Sql.Fx_Exite_Campo(_Nombre_Tabla_Paso, "NOKOGRU") AndAlso
+                _Sql.Fx_Exite_Campo(_Nombre_Tabla_Paso, "NOKOGRUDT") Then
+                _ExistenCamposKogru = True
+            End If
             If CBool(_TblFechas.Rows.Count) Then
 
                 _Cronometro.Sb_Iniciar()
@@ -641,13 +638,21 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
 
                                 System.Windows.Forms.Application.DoEvents()
 
-                                Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
+                                'Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2
+                                Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3
                                 Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
                                 Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
+                                Consulta_Sql = Replace(Consulta_Sql, "#Global_BaseBk#", _Global_BaseBk)
                                 Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Inicio#", Format(_Fecha, "yyyyMMdd"))
                                 Consulta_Sql = Replace(Consulta_Sql, "#Fecha_Fin#", Format(_Fecha, "yyyyMMdd"))
                                 Consulta_Sql = Replace(Consulta_Sql, "#Filtro_Externo#", "")
                                 Consulta_Sql = Replace(Consulta_Sql, "(#Idmaeedo#)", _Filtro_Idmaeedo2)
+
+                                If _ExistenCamposKogru Then
+                                    Consulta_Sql = Replace(Consulta_Sql, "/*--KOGRU", "")
+                                    Consulta_Sql = Replace(Consulta_Sql, "*/--KOGRU", "")
+                                End If
+
                                 _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
 
                                 System.Windows.Forms.Application.DoEvents()

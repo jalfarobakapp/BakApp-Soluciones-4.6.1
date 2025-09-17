@@ -274,7 +274,7 @@ Public Class Frm_Cadenas_Remotas_Det
 
             If Not String.IsNullOrEmpty(_NroRemota) Then
 
-                If Fx_Tiene_Permiso(Me, _CodPermiso, FUNCIONARIO, , False,,,, False) Then
+                If Fx_Tiene_Permiso(Me, _CodPermiso, FUNCIONARIO, , False,,,, False,,,,,,,,,,, True) Then
 
                     Dim _Id_Casi_DocEnc = _Row_Remota.Item("Id_Casi_DocEnc")
 

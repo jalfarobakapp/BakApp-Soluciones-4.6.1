@@ -163,4 +163,7 @@
   <data name="Inf_Grafico_Dinamica_Ventas_Mensuales_Fecha" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>graficos\inf grafico dinamica ventas mensuales fecha.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Informe Ventas x Perido Nivel Detalle Cubo Actualizacion3.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

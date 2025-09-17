@@ -263,6 +263,22 @@ Public Class Frm_Modalidades
 
             End If
 
+            Dim _PedirConfirmacionModalidad As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios",
+                                                                           "PedirConfirmacionModalidad",
+                                                                           "CodFuncionario = '" & FUNCIONARIO & "'",)
+
+            If _PedirConfirmacionModalidad Then
+
+                Dim _Msg1 = "MODALIDAD: " & _Fila.Cells("MODALIDAD").Value & vbCrLf &
+                             _Fila.Cells("NOKOSU").Value.ToString.Trim
+                Dim _Msg2 = vbCrLf & "¿CONFIRMA LA SELECCIÓN DE LA MODALIDAD?"
+
+                If Not Fx_Confirmar_Lectura(_Msg1, _Msg2, eTaskDialogIcon.Exclamation) Then
+                    Return
+                End If
+
+            End If
+
             Mod_Modalidad = _Fila.Cells("MODALIDAD").Value
 
             If _Preguntar_Por_Bodega Then

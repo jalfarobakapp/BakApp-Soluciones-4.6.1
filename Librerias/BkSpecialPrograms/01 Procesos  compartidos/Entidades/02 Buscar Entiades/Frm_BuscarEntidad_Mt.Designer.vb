@@ -1,9 +1,9 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_BuscarEntidad_Mt
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,13 +20,13 @@ Partial Class Frm_BuscarEntidad_Mt
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_BuscarEntidad_Mt))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnCrearUser = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnEditarUser = New DevComponents.DotNetBar.ButtonItem()
@@ -57,7 +57,6 @@ Partial Class Frm_BuscarEntidad_Mt
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.TouchKeyboard1 = New DevComponents.DotNetBar.Keyboard.TouchKeyboard()
         Me.Chk_Solo_Clientes_Del_Vendedor = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_ActivarSolo_Clientes_Del_Vendedor = New DevComponents.DotNetBar.ButtonX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Mnu_Contextual.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
@@ -263,7 +262,7 @@ Partial Class Frm_BuscarEntidad_Mt
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 10
-        Me.GroupPanel1.Text = "Seleccione la entidad con doble clic o enter sobre la línea"
+        Me.GroupPanel1.Text = "Seleccione la entidad con doble clic o enter sobre la lÃ­nea"
         '
         'ContextMenuBar1
         '
@@ -332,37 +331,37 @@ Partial Class Frm_BuscarEntidad_Mt
         Me.Grilla_Entidades.AllowUserToAddRows = False
         Me.Grilla_Entidades.AllowUserToDeleteRows = False
         Me.Grilla_Entidades.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Entidades.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Entidades.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla_Entidades.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Entidades.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Entidades.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla_Entidades.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Entidades.EnableHeadersVisualStyles = False
         Me.Grilla_Entidades.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Entidades.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Entidades.Name = "Grilla_Entidades"
         Me.Grilla_Entidades.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Entidades.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Entidades.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla_Entidades.Size = New System.Drawing.Size(875, 379)
         Me.Grilla_Entidades.StandardTab = True
         Me.Grilla_Entidades.TabIndex = 53
@@ -405,7 +404,7 @@ Partial Class Frm_BuscarEntidad_Mt
         '
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 11
-        Me.GroupPanel2.Text = "Filtro. Ingrese algo del rut, código o descripción de la entidad"
+        Me.GroupPanel2.Text = "Filtro. Ingrese algo del rut, cÃ³digo o descripciÃ³n de la entidad"
         '
         'TouchKeyboard1
         '
@@ -417,6 +416,7 @@ Partial Class Frm_BuscarEntidad_Mt
         '
         'Chk_Solo_Clientes_Del_Vendedor
         '
+        Me.Chk_Solo_Clientes_Del_Vendedor.AutoSize = True
         Me.Chk_Solo_Clientes_Del_Vendedor.BackColor = System.Drawing.Color.White
         '
         '
@@ -426,29 +426,16 @@ Partial Class Frm_BuscarEntidad_Mt
         Me.Chk_Solo_Clientes_Del_Vendedor.ForeColor = System.Drawing.Color.Black
         Me.Chk_Solo_Clientes_Del_Vendedor.Location = New System.Drawing.Point(9, 487)
         Me.Chk_Solo_Clientes_Del_Vendedor.Name = "Chk_Solo_Clientes_Del_Vendedor"
-        Me.Chk_Solo_Clientes_Del_Vendedor.Size = New System.Drawing.Size(195, 23)
+        Me.Chk_Solo_Clientes_Del_Vendedor.Size = New System.Drawing.Size(190, 17)
         Me.Chk_Solo_Clientes_Del_Vendedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Solo_Clientes_Del_Vendedor.TabIndex = 12
         Me.Chk_Solo_Clientes_Del_Vendedor.Text = "Ver solo clientes del usuario activo"
-        '
-        'Btn_ActivarSolo_Clientes_Del_Vendedor
-        '
-        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.Location = New System.Drawing.Point(200, 487)
-        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.Name = "Btn_ActivarSolo_Clientes_Del_Vendedor"
-        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.Size = New System.Drawing.Size(73, 23)
-        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.TabIndex = 13
-        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.Text = "<-- Activar"
-        Me.Btn_ActivarSolo_Clientes_Del_Vendedor.Visible = False
         '
         'Frm_BuscarEntidad_Mt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(902, 561)
-        Me.Controls.Add(Me.Btn_ActivarSolo_Clientes_Del_Vendedor)
         Me.Controls.Add(Me.Chk_Solo_Clientes_Del_Vendedor)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel1)
@@ -471,6 +458,7 @@ Partial Class Frm_BuscarEntidad_Mt
         CType(Me.Grilla_Entidades, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
@@ -503,5 +491,4 @@ Partial Class Frm_BuscarEntidad_Mt
     Friend WithEvents Btn_Contactos_Entidad As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Direcciones_Despacho As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
-    Friend WithEvents Btn_ActivarSolo_Clientes_Del_Vendedor As DevComponents.DotNetBar.ButtonX
 End Class

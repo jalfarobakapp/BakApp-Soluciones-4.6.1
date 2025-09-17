@@ -940,16 +940,27 @@ Buscar:
 
             Beep()
 
-            Dim _Msj As String = "NO EXISTEN DATOS QUE MOSTRAR"
-            Dim _Tiempo = 3
-
             If _VerSoloEntidadesDelVendedor Then
-                _Msj += vbCrLf & "RECUERDE QUE QUIETE UNA RESTRICCIÓN PARA " & vbCrLf & "VER SOLO CIERTAS VENTA DE ALGUNOS USUARIOS"
-                _Tiempo = 5
+
+                MessageBoxEx.Show(Me, "No se han encontrado documentos para los filtros seleccionados." & vbCrLf &
+                                  "Recuerde que el usuario actual tiene una restricción para ver solo ciertos documentos." & vbCrLf &
+                                  "Si desea ver todos los documentos, desactive la opción 'Mostrar solo documentos de clientes del vendedor' ",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            Else
+
+                Dim _Msj As String = "NO EXISTEN DATOS QUE MOSTRAR"
+                Dim _Tiempo = 3
+
+                '_Msj += vbCrLf & "RECUERDE QUE QUIETE UNA RESTRICCIÓN PARA " & vbCrLf & "VER SOLO CIERTAS VENTA DE ALGUNOS USUARIOS"
+                '_Tiempo = 5
+
+                ToastNotification.Show(Me, _Msj, My.Resources.cross, _Tiempo * 1000,
+                                   eToastGlowColor.Red, eToastPosition.MiddleCenter)
+
             End If
 
-            ToastNotification.Show(Me, _Msj, My.Resources.cross, _Tiempo * 1000,
-                                   eToastGlowColor.Red, eToastPosition.MiddleCenter)
+
 
         End If
 

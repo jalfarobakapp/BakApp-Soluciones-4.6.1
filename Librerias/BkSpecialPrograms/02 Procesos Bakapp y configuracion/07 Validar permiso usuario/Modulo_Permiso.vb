@@ -23,7 +23,8 @@ Public Module Modulo_Permiso
                                      Optional _Grabar_Log As Boolean = True,
                                      Optional ByRef _Solicitar_Permiso_Al_Final As Boolean = False,
                                      Optional _Descripcion_Adicionasl As String = "",
-                                     Optional _Idmaeedo As Integer = 0) As Boolean
+                                     Optional _Idmaeedo As Integer = 0,
+                                     Optional _PermitirPermisoBkp00039 As Boolean = False) As Boolean
 
         Dim _Permiso As Boolean = False
 
@@ -55,7 +56,7 @@ Public Module Modulo_Permiso
             _Permiso = (_Llave = _Llave_Scrip1 Or _Llave = _Llave_Scrip2 Or _Llave = _Llave_Scrip3 Or _Llave = _Llave_Scrip4)
 
             If _Permiso Then
-                If _Codpermiso = "Bkp00039" And _Func = FUNCIONARIO Then
+                If _Codpermiso = "Bkp00039" AndAlso _Func = FUNCIONARIO AndAlso Not _PermitirPermisoBkp00039 Then
                     _Permiso = False
                 End If
             Else

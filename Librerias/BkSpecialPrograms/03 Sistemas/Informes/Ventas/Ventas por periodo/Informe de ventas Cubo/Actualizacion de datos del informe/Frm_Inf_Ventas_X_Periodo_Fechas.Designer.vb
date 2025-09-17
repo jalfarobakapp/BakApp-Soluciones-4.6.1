@@ -242,7 +242,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Fechas
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Filtrar, Me.Btn_Cancelar, Me.Btn_Actualizar_Indices})
-        Me.Bar2.Location = New System.Drawing.Point(0, 206)
+        Me.Bar2.Location = New System.Drawing.Point(0, 189)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(324, 41)
         Me.Bar2.Stretch = True
@@ -353,7 +353,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Fechas
         Me.MetroStatusBar1.ForeColor = System.Drawing.Color.Black
         Me.MetroStatusBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Tiempo})
         Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 247)
+        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 230)
         Me.MetroStatusBar1.Name = "MetroStatusBar1"
         Me.MetroStatusBar1.Size = New System.Drawing.Size(324, 22)
         Me.MetroStatusBar1.TabIndex = 100
@@ -371,7 +371,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Fechas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(324, 269)
+        Me.ClientSize = New System.Drawing.Size(324, 252)
         Me.Controls.Add(Me.Lbl_Doc_Insert)
         Me.Controls.Add(Me.Progreso_Cont_Productos)
         Me.Controls.Add(Me.Lbl_Estado)
