@@ -171,13 +171,13 @@ Order by Producto
 
 
 Update #Tbl_Paso_Proyecto_01 Set Promedio_Diario = Round(SumTotalQtyUd1/Dias_Fecha,2)
-Update #Tbl_Paso_Proyecto_01 Set Promedio_Mensual = Round(Promedio_Diario*30.666,2) --Round(SumTotalQtyUd1/Meses_Fecha,0)
-
-Update #Tbl_Paso_Proyecto_01 Set Promedio_UltMesMasPromUlt3Mes = Round((SumTotalQtyUd1_Ult_3Cio+Promedio_Mensual)/2,2)
-Update #Tbl_Paso_Proyecto_01 Set Promedio_DiarioUltMMU3Mes = Round(Promedio_UltMesMasPromUlt3Mes/30.666,2)
+Update #Tbl_Paso_Proyecto_01 Set Promedio_Mensual = Round(Promedio_Diario*30.666,2) 
 
 Update #Tbl_Paso_Proyecto_01 Set Promedio_3Mes = Round(SumTotalQtyUd1_Ult_3Mes/3,2) 
 Update #Tbl_Paso_Proyecto_01 Set Promedio_Diario3Mes = Round(Promedio_3Mes/30.666,2)
+
+Update #Tbl_Paso_Proyecto_01 Set Promedio_UltMesMasPromUlt3Mes = Round((SumTotalQtyUd1_Ult_3Cio+Promedio_3Mes)/2,2)
+Update #Tbl_Paso_Proyecto_01 Set Promedio_DiarioUltMMU3Mes = Round(Promedio_UltMesMasPromUlt3Mes/30.666,2)
 
 --Set @Dias_Proyeccion = 30
 

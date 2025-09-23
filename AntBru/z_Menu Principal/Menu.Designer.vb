@@ -22,6 +22,7 @@ Partial Class Menu
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim MetroTileFrame1 As DevComponents.DotNetBar.Metro.MetroTileFrame
         Dim MetroTileFrame2 As DevComponents.DotNetBar.Metro.MetroTileFrame
         Dim MetroTileFrame3 As DevComponents.DotNetBar.Metro.MetroTileFrame
@@ -46,6 +47,7 @@ Partial Class Menu
         Me.Btn_Facturacion_Electronica = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Barra = New DevComponents.DotNetBar.Bar()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_FichaFucnionario = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar_BakApp = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Prueba_Monto_Palabra = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CambioDeEmpresa = New DevComponents.DotNetBar.ButtonItem()
@@ -80,7 +82,7 @@ Partial Class Menu
         Me.Btn_Rutas = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_PPP = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Grupos = New DevComponents.DotNetBar.ButtonItem()
-        Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer()
+        Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
@@ -95,14 +97,13 @@ Partial Class Menu
         Me.Btn_DesacNotif_30 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_DesacNotif_Siempre = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.ImageList1 = New System.Windows.Forms.ImageList()
-        Me.AppCommandTheme = New DevComponents.DotNetBar.Command()
+        Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
+        Me.AppCommandTheme = New DevComponents.DotNetBar.Command(Me.components)
         Me.Btn_Themas = New DevComponents.DotNetBar.ButtonX()
         Me.ReflectionLabel1 = New DevComponents.DotNetBar.Controls.ReflectionLabel()
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
-        Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager()
-        Me.Btn_FichaFucnionario = New DevComponents.DotNetBar.ButtonItem()
+        Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -668,6 +669,16 @@ Partial Class Menu
         Me.BtnCambiarDeUsuario.Name = "BtnCambiarDeUsuario"
         Me.BtnCambiarDeUsuario.Tooltip = "Cambiar de usuario"
         '
+        'Btn_FichaFucnionario
+        '
+        Me.Btn_FichaFucnionario.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_FichaFucnionario.ForeColor = System.Drawing.Color.Black
+        Me.Btn_FichaFucnionario.Image = CType(resources.GetObject("Btn_FichaFucnionario.Image"), System.Drawing.Image)
+        Me.Btn_FichaFucnionario.ImageAlt = CType(resources.GetObject("Btn_FichaFucnionario.ImageAlt"), System.Drawing.Image)
+        Me.Btn_FichaFucnionario.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_FichaFucnionario.Name = "Btn_FichaFucnionario"
+        Me.Btn_FichaFucnionario.Tooltip = "Ficha del usuario actual"
+        '
         'Btn_Actualizar_BakApp
         '
         Me.Btn_Actualizar_BakApp.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -1175,16 +1186,6 @@ Partial Class Menu
         '
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
-        '
-        'Btn_FichaFucnionario
-        '
-        Me.Btn_FichaFucnionario.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_FichaFucnionario.ForeColor = System.Drawing.Color.Black
-        Me.Btn_FichaFucnionario.Image = CType(resources.GetObject("Btn_FichaFucnionario.Image"), System.Drawing.Image)
-        Me.Btn_FichaFucnionario.ImageAlt = CType(resources.GetObject("Btn_FichaFucnionario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_FichaFucnionario.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_FichaFucnionario.Name = "Btn_FichaFucnionario"
-        Me.Btn_FichaFucnionario.Tooltip = "Cambiar de usuario"
         '
         'Menu
         '

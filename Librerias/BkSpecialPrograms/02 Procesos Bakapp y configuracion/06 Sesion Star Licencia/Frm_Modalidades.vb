@@ -265,7 +265,7 @@ Public Class Frm_Modalidades
 
             Dim _PedirConfirmacionModalidad As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios",
                                                                            "PedirConfirmacionModalidad",
-                                                                           "CodFuncionario = '" & FUNCIONARIO & "'",)
+                                                                           "CodFuncionario = '" & FUNCIONARIO & "'",, False,, True)
 
             If _PedirConfirmacionModalidad Then
 

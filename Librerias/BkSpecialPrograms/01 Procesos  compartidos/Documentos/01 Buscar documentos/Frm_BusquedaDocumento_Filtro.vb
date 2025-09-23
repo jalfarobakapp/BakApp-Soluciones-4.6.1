@@ -940,13 +940,13 @@ Buscar:
 
             Beep()
 
-            If _VerSoloEntidadesDelVendedor Then
+            If _VerSoloEntidadesDelVendedor And Chk_MostrarSoloDocClientesDelVendedor.Checked Then
 
                 MessageBoxEx.Show(Me, "No se han encontrado documentos para los filtros seleccionados." & vbCrLf &
                                   "Recuerde que el usuario actual tiene una restricción para ver solo ciertos documentos." & vbCrLf &
                                   "Si desea ver todos los documentos, desactive la opción 'Mostrar solo documentos de clientes del vendedor' ",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
+
             Else
 
                 Dim _Msj As String = "NO EXISTEN DATOS QUE MOSTRAR"
@@ -959,8 +959,6 @@ Buscar:
                                    eToastGlowColor.Red, eToastPosition.MiddleCenter)
 
             End If
-
-
 
         End If
 

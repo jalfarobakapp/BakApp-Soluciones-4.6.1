@@ -245,8 +245,6 @@ Public Class Frm_01_CrearInventario
             Me.Close()
         End If
 
-
-
     End Sub
 
     Private Function CrearFoto()
