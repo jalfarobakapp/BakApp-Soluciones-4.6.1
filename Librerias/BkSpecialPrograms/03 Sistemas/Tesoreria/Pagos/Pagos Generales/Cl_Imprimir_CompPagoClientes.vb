@@ -385,9 +385,20 @@ Public Class Cl_Imprimir_CompPagoClientes
                     Dim _Tidp As String = _FilaFm.Item("TIDP").ToString.Trim
                     Dim _Nudp As String = _FilaFm.Item("NUDP").ToString.Trim
                     Dim _Emdp As String = _FilaFm.Item("EMDP").ToString.Trim
-                    Dim _Nokoendp As String = _Sql.Fx_Trae_Dato("TABENDP", "NOKOENDP", "TIDPEN = SUBSTRING('" & _Tidp & "',1,2) And KOENDP = '" & _Emdp & "'").ToString.Trim
+                    Dim _Nokoendp As String
+                    Dim _Tidpen = _Tidp
 
-                    If _Tidp = "EFV" Then _Nokoendp = "EFECTIVO"
+                    If _Tidp = "EFV" Then
+                        _Nokoendp = "EFECTIVO"
+                    Else
+                        If _Tidpen = "ATB" Or _Tidpen = "DEP" Then
+                            _Tidpen = "CH"
+                        End If
+                        _Nokoendp = _Sql.Fx_Trae_Dato("TABENDP", "NOKOENDP", "TIDPEN = SUBSTRING('" & _Tidpen & "',1,2) And KOENDP = '" & _Emdp & "'").ToString.Trim
+                    End If
+
+                    '_Nokoendp = _Sql.Fx_Trae_Dato("TABENDP", "NOKOENDP", "TIDPEN = SUBSTRING('" & _Tidpen & "',1,2) And KOENDP = '" & _Emdp & "'").ToString.Trim
+                    'If _Tidp = "EFV" Then _Nokoendp = "EFECTIVO"
 
                     Dim _Cudp As String = _FilaFm.Item("CUDP").ToString.Trim
                     Dim _Nucudp As String = _FilaFm.Item("NUCUDP").ToString.Trim

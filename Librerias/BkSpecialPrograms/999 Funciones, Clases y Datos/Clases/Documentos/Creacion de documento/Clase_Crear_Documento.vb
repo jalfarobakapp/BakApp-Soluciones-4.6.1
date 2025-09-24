@@ -171,6 +171,10 @@ Public Class Clase_Crear_Documento
     Dim _Customizable As Boolean
     Dim _PreVenta As Boolean
 
+    Dim _IdCont As Integer
+    Dim _Contenedor As String
+    Dim _Grupo As String
+
 #End Region
 
 #Region "VARIABLES PIE DEL DOCUMENTO,OBSERVACIONES"
@@ -183,6 +187,8 @@ Public Class Clase_Crear_Documento
     Dim Obs(34) As String       ' Textos del 1 al 35
 
 #End Region
+
+    Public Property Ls_Cl_PreVenta As New List(Of Zw_PreVenta_StockProd)
 
 #Region "FUNCION CREAR DOCUMENTO RANDOM DEFINITIVO"
 
@@ -520,6 +526,10 @@ Public Class Clase_Crear_Documento
                         _Caprco2 = De_Num_a_Tx_01(.Item("CantUd2"), False, 5) ' Cantidad de la segunda unidad
                         _Tipr = .Item("Tipr")
                         _Lincondesp = .Item("Lincondest")
+
+                        _IdCont = 0
+                        _Contenedor = String.Empty
+                        _Grupo = .Item("Grupo")
 
                         'If _Prct Then _Lincondesp = True
 
@@ -1041,8 +1051,8 @@ Public Class Clase_Crear_Documento
                                 dfd1 = Comando.ExecuteReader()
 
                                 While dfd1.Read()
-                                    _Caprnc1 = dfd1("CAPRNC1")
-                                    _Caprnc2 = dfd1("CAPRNC2")
+                                    _Caprnc1 = De_Num_a_Tx_01(dfd1("CAPRNC1"), False, 5)
+                                    _Caprnc2 = De_Num_a_Tx_01(dfd1("CAPRNC2"), False, 5)
                                 End While
                                 dfd1.Close()
 
@@ -1281,12 +1291,46 @@ Public Class Clase_Crear_Documento
                         If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Det") Then
 
                             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable," &
-                                           "Empresa,Sucursal,Bodega) Values " &
+                                           "Empresa,Sucursal,Bodega,IdCont,Contenedor,Grupo) Values " &
                                            "(" & _Idmaeddo & "," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _Koprct & "','" & _Nokopr & "'" &
-                                           "," & Convert.ToInt32(_RtuVariable) & ",'" & _Empresa & "','" & _Sulido & "','" & _Bosulido & "')"
+                                           "," & Convert.ToInt32(_RtuVariable) & ",'" & _Empresa & "','" & _Sulido & "','" & _Bosulido &
+                                           "'," & _IdCont & ",'" & _Contenedor & "','" & _Grupo & "')"
                             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
+
+                            Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+                            Comando.Transaction = myTrans
+                            dfd1 = Comando.ExecuteReader()
+                            Dim _Id As Integer
+                            While dfd1.Read()
+                                _Id = dfd1("Identity")
+                            End While
+                            dfd1.Close()
+
+                            If _PreVenta Then
+
+                                Dim _Zw_PreVenta_StockProd As Zw_PreVenta_StockProd = Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
+
+                                Dim _PqteComprometido As String = De_Num_a_Tx_01(_Zw_PreVenta_StockProd.Cantidad, False, 5)
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_PreVenta_StockProd Set " &
+                                               "PqteComprometido = PqteComprometido+" & _PqteComprometido &
+                                               ",StcCompUd1 = StcCompUd1+" & _Caprco1 &
+                                               ",StcCompUd2 = StcCompUd2+" & _Caprco2 & vbCrLf &
+                                               "Where Id = " & _Zw_PreVenta_StockProd.Id
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
+                                               "IdCont = " & _Zw_PreVenta_StockProd.IdCont & ",Contenedor = '" & _Zw_PreVenta_StockProd.Contenedor & "'" & vbCrLf &
+                                               "Where Id = " & _Id
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                            End If
 
                         End If
 
@@ -1981,6 +2025,7 @@ Public Class Clase_Crear_Documento
                 Comando.ExecuteNonQuery()
 
             End If
+
 
             If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "BLV" Or _Tido = "FCV" Or
                _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "NCV" Or _Tido = "GRI" Or _Tido = "GDI" Then
@@ -3042,6 +3087,7 @@ Public Class Clase_Crear_Documento
 
         Dim _Customizable As Integer
         Dim _Pickear As Integer
+        Dim _Grupo As String
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -3384,6 +3430,7 @@ Public Class Clase_Crear_Documento
                         _ModFechVto = Convert.ToUInt32(.Item("ModFechVto"))
                         _Condicionado = Convert.ToUInt32(.Item("Condicionado"))
                         _DesacRazTransf = Convert.ToUInt32(.Item("DesacRazTransf"))
+                        _Grupo = .Item("Grupo")
 
                         If Not String.IsNullOrEmpty(Trim(_Tict)) Then
 
@@ -3461,7 +3508,8 @@ Public Class Clase_Crear_Documento
                                        "CodPermiso,Nuevo_Producto,Solicitado_bodega,Moneda,Tipo_Moneda,Tipo_Cambio,Crear_CPr,Id_CPr," &
                                        "Centro_Costo,Proyecto,Tasadorig," &
                                        "Id_Oferta,Es_Padre_Oferta,Oferta,Padre_Oferta,Aplica_Oferta,Hijo_Oferta," &
-                                       "Cantidad_Oferta,Porcdesc_Oferta,IdDet_Ori,Nmarca,RtuVariable,Espuntosvta,ModFechVto,Condicionado,DesacRazTransf) Values" & vbCrLf &
+                                       "Cantidad_Oferta,Porcdesc_Oferta,IdDet_Ori,Nmarca,RtuVariable,Espuntosvta," &
+                                       "ModFechVto,Condicionado,DesacRazTransf,Grupo) Values" & vbCrLf &
                                        "(" & _Id_DocEnc & ",'" & _Empresa & "','" & _Sucursal_Linea & "','" & _Bodega_Linea & "'," & _UnTrans & "," & _Lincondest &
                                        ",'" & _NroLinea & "','" & _Codigo & "','" & _CodigoProv & "','" & _UdTrans &
                                        "'," & _Cantidad & ",'" & _TipoValor & "'," & _Precio & "," & _DescuentoPorc &
@@ -3485,9 +3533,11 @@ Public Class Clase_Crear_Documento
                                        "'," & _Nuevo_Producto & "," & _Solicitado_bodega & ",'" & _Moneda & "','" & _Tipo_Moneda &
                                        "'," & _Tipo_Cambio & "," & _Crear_CPr & "," & _Id_CPr & ",'" & _Centro_Costo_Linea &
                                        "','" & _Proyecto & "'," & _Tasadorig_Det &
-                                       "," & _Id_Oferta & "," & _Es_Padre_Oferta & ",'" & _Oferta & "'," & _Padre_Oferta & "," & _Aplica_Oferta & "," & _Hijo_Oferta &
+                                       "," & _Id_Oferta & "," & _Es_Padre_Oferta & ",'" & _Oferta & "'," & _Padre_Oferta &
+                                       "," & _Aplica_Oferta & "," & _Hijo_Oferta &
                                        "," & _Cantidad_Oferta & "," & _Porcdesc_Oferta & "," & Id_Linea &
-                                       ",'" & _Nmarca & "'," & _RtuVariable & "," & _Espuntosvta & "," & _ModFechVto & "," & _Condicionado & "," & _DesacRazTransf & ")"
+                                       ",'" & _Nmarca & "'," & _RtuVariable & "," & _Espuntosvta & "," & _ModFechVto &
+                                       "," & _Condicionado & "," & _DesacRazTransf & ",'" & _Grupo & "')"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                         Comando.Transaction = myTrans

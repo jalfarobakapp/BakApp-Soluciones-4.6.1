@@ -77,7 +77,7 @@ Public Class Frm_02_Detalle_Producto_Actual
 
     Sub Sb_Ver_Detalle_Del_Producto()
 
-        Consulta_sql = "Select HDet.Id,IdHoja,Recontado,Sector,Ubicacion,Isnull(HEnc.Nro_Hoja,'') As Nro_Hoja," & vbCrLf &
+        Consulta_sql = "Select HDet.Id,IdHoja,Recontado,IdSector,Sector,Ubicacion,Isnull(HEnc.Nro_Hoja,'') As Nro_Hoja," & vbCrLf &
                        "Item_Hoja,FechaHoraToma,FechaHoraToma AS Hora,Cantidad as 'Cantidad',Responsable,ISNULL(Resp.NOKOFU,'') As Digitador," & vbCrLf &
                        "HEnc.IdContador1,ISNULL(C1.Nombre,'') As Contador1,HEnc.IdContador2,ISNULL(C2.Nombre,'') As Contador2," & vbCrLf &
                        "Observaciones,Actualizado_por,Obs_Actualizacion" & vbCrLf &

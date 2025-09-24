@@ -26,6 +26,8 @@ Public Class Frm_Recalculo_PPPxProd
     Public Property EjecutarProcesoTodosLosProductos As Boolean
     Public Property ModoPruebas As Boolean = False
     Public Property MensajeFinal As String = String.Empty
+    Public Property Empresa As String
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -33,7 +35,9 @@ Public Class Frm_Recalculo_PPPxProd
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Empresa = Mod_Empresa
         _RutaLogAutomatico = AppPath() & "\Data\" & RutEmpresa & "\Tmp\LogsPPP"
+
         If Not Directory.Exists(_RutaLogAutomatico) Then
             System.IO.Directory.CreateDirectory(_RutaLogAutomatico)
         End If
@@ -131,7 +135,7 @@ Public Class Frm_Recalculo_PPPxProd
                        ",MAEPREM.FEPM,Cast('" & _FechaTope & "' As Datetime) As 'FechaTope',Cast(0 As Float) As NewPM,MAEPR.KOPR,MAEPR.NOKOPR," &
                        "MAEPR.UD01PR,MAEPR.UD02PR,Cast(0 As Float) As Sum_Stock,Cast(0 As Float) As Stexistini,MAEPREM.PM As Pm2,MAEPREM.FEPM As Fepm2  " & vbCrLf &
                        "From MAEPR With ( Nolock )" & vbCrLf &
-                       "Inner Join MAEPREM ON MAEPREM.KOPR=MAEPR.KOPR And MAEPREM.EMPRESA='" & Mod_Empresa & "'" & vbCrLf &
+                       "Inner Join MAEPREM ON MAEPREM.KOPR=MAEPR.KOPR And MAEPREM.EMPRESA='" & Empresa & "'" & vbCrLf &
                        "Where MAEPR.TIPR = 'FPN'" & vbCrLf &
                        _Condicion
 
@@ -335,6 +339,7 @@ Public Class Frm_Recalculo_PPPxProd
         Me.Refresh()
 
         Cl_Pm.Cancelar = False
+        Cl_Pm.Empresa = Empresa
         _ProcesoCanceladoPorUsuario = False
 
         Dim _ActualizarPPP As Boolean = Not Chk_ModoPruebas.Checked
@@ -371,7 +376,7 @@ Public Class Frm_Recalculo_PPPxProd
             fila.Cells("NewPM").Value = If(_Mensaje.EsCorrecto, Cl_Pm.Pm, 0.0)
             fila.Cells("Stexistini").Value = Cl_Pm.Stexistini
             fila.Cells("Sum_Stock").Value = Cl_Pm.Saldo_Stock
-            fila.Cells("Pm").Value = Cl_Pm.Pm
+            'fila.Cells("Pm").Value = Cl_Pm.Pm
             fila.Cells("Fepm").Value = Cl_Pm.Fepm
 
             _UltTabla = _Mensaje.Tag
@@ -651,6 +656,5 @@ Public Class Frm_Recalculo_PPPxProd
         ' Refrescar controles
         Me.Refresh()
     End Sub
-
 
 End Class

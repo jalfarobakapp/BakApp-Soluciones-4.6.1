@@ -387,9 +387,9 @@
             NewFila = _Tbl_Productos_Diferencia.NewRow
             With NewFila
 
-                .Item("EMPRESA") = Mod_Empresa
-                .Item("KOSU") = Mod_Sucursal
-                .Item("KOBO") = Mod_Bodega
+                .Item("EMPRESA") = _Emp
+                .Item("KOSU") = _Suc
+                .Item("KOBO") = _Bod
                 .Item("KOPR") = _Codigo
                 .Item("NOKOPR") = _Descripcion
                 .Item("STFI1") = _STFI1

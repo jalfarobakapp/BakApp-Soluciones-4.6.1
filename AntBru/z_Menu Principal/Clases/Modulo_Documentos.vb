@@ -1,6 +1,6 @@
 ﻿Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
-Module Modulo_Documentos
+Public Module Modulo_Documentos
 
     Sub Sb_Generar_Documento(_Fm_Menu_Padre As Metro.MetroAppForm,
                              _Tido As String,

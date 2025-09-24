@@ -18,7 +18,7 @@ Public Class Frm_Filtro_Especial_Productos
         _Filtro_Extra_Clalibpr,
         _Filtro_Extra_Zonas As String
 
-    Dim _Aceptar As Boolean
+    Public Property Aceptar() As Boolean
 
     Public Property BuscarSpfmfmsubfm As Boolean = False
     Public Property Ls_SelSuperFamilias As New List(Of SelSuperFamilias)
@@ -300,7 +300,7 @@ Public Class Frm_Filtro_Especial_Productos
 
                 _Tbl_Filtro = _Tbl_Filtro_Clalibpr
                 _Tabla_Fl = Enum_Tabla_Fl._Tabla_Tabcarac
-                _Sql_Filtro_Condicion_Extra = "And KOTABLA = 'CLALIBPR'"
+                _Filtro_Extra_Clalibpr = "And KOTABLA = 'CLALIBPR'"
                 _Control_Todas = Rdb_Clasificacion_Masisa_Todas
                 _Sql_Filtro_Condicion_Extra = _Filtro_Extra_Clalibpr
                 Btn_Clasificacion_Libre_Algunas.Visible = _Control.Checked
@@ -382,6 +382,15 @@ Public Class Frm_Filtro_Especial_Productos
                 End If
 
                 Fm_As.Dispose()
+
+                'If Ls_SelArbol_Asociaciones.Count Then
+                '    Btn_Bakapp_Algunas.Visible = True
+                'Else
+                '    Btn_Bakapp_Algunas.Visible = False
+                'End If
+
+                Btn_Bakapp_Algunas.Visible = CBool(Ls_SelArbol_Asociaciones.Count)
+                _Control_Todas.Checked = Not CBool(Ls_SelArbol_Asociaciones.Count)
 
                 Return
 
@@ -467,7 +476,8 @@ Public Class Frm_Filtro_Especial_Productos
             Pro_Tbl_Filtro_Productos = Nothing
         End If
 
-        _Aceptar = True
+        Aceptar = True
+
         Me.Close()
 
     End Sub

@@ -66,24 +66,38 @@ Public Class Modulo_Parametros
 
     Private Sub Btn_PaCiCm_Click(sender As Object, e As EventArgs)
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Tbl00047") Then
-            Dim Fm As New Frm_PaCiCm_Lista
-            Fm.No_Cerrar = True
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Tbl00047") Then
+            Return
         End If
+
+        Dim Fm As New Frm_PaCiCm_Lista
+        Fm.No_Cerrar = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
     Private Sub Btn_Momendas_Click(sender As Object, e As EventArgs) Handles Btn_Momendas.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Espr0032") Then
-
-            Dim Fm As New Frm_MonedasLista
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Espr0032") Then
+            Return
         End If
+
+        Dim Fm As New Frm_MonedasLista
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Grupo_Vendedores_Click(sender As Object, e As EventArgs) Handles Btn_Grupo_Vendedores.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Mode0001") Then
+            Return
+        End If
+
+        Dim Fm As New Frm_Grupos_Lista
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 End Class

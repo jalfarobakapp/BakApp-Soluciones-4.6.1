@@ -94,7 +94,7 @@ Public Class Frm_Estructura_Base_De_Datos
 
             .Sb_Revisar_Tabla2(Me, "Zw_Contenedor", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Contenedor_DocTom", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_Contenedor_StockProd", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_PreVenta_StockProd", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_Compras_en_SII", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Configuracion", _Modificar, Lbl_Eventos)

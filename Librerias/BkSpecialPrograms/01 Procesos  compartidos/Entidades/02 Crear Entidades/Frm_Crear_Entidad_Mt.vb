@@ -1459,24 +1459,24 @@ Public Class Frm_Crear_Entidad_Mt
     End Sub
 
     Private Sub BtnModVendedor_Click(sender As System.Object, e As System.EventArgs) Handles BtnModVendedor.Click
-        Cmb_Kofuen.Enabled = Fx_Tiene_Permiso(Me, "CfEnt006")
+        Cmb_Kofuen.Enabled = Fx_Tiene_Permiso(Me, "CfEnt006",,,,, Txt_Koen.Text, Txt_Suen.Text)
         BtnModVendedor.Enabled = Not Cmb_Kofuen.Enabled
     End Sub
 
     Private Sub BtnModListas_Click(sender As System.Object, e As System.EventArgs) Handles BtnModListas.Click
-        Cmb_Lcen.Enabled = Fx_Tiene_Permiso(Me, "CfEnt008")
+        Cmb_Lcen.Enabled = Fx_Tiene_Permiso(Me, "CfEnt008",,,,, Txt_Koen.Text, Txt_Suen.Text)
         Cmb_Lven.Enabled = Cmb_Lcen.Enabled
         BtnModListas.Enabled = Not Cmb_Lcen.Enabled
     End Sub
 
     Private Sub BtnModCobrador_Click(sender As System.Object, e As System.EventArgs) Handles BtnModCobrador.Click
-        Cmb_Cobrador.Enabled = Fx_Tiene_Permiso(Me, "CfEnt007")
+        Cmb_Cobrador.Enabled = Fx_Tiene_Permiso(Me, "CfEnt007",,,,, Txt_Koen.Text, Txt_Suen.Text)
         BtnModCobrador.Enabled = Not Cmb_Cobrador.Enabled
     End Sub
 
     Private Sub BtnModCredito_Click(sender As System.Object, e As System.EventArgs) Handles BtnModCredito.Click
 
-        Dim _Enable As Boolean = Fx_Tiene_Permiso(Me, "CfEnt009")
+        Dim _Enable As Boolean = Fx_Tiene_Permiso(Me, "CfEnt009",,,,, Txt_Koen.Text, Txt_Suen.Text)
 
         Txt_Crch.Enabled = _Enable
         Txt_Crlt.Enabled = _Enable

@@ -7,6 +7,8 @@
     Public Property Nudo_Rela As String
     Public Property Idmaeedo_Rela As Integer
     Public Property Estado As String
+    Public Property FechaLibVenta As DateTime
+    Public Property MonedaVenta As String
 
     Public Sub New()
         IdCont = 0
@@ -17,6 +19,8 @@
         Nudo_Rela = String.Empty
         Idmaeedo_Rela = 0
         Estado = String.Empty
+        FechaLibVenta = New DateTime(1900, 1, 1)
+        MonedaVenta = String.Empty
     End Sub
 
 End Class

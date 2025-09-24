@@ -32,8 +32,9 @@ Partial Class Modulo_Parametros
         Me.Btn_Tablas_Conf_Entidad = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Tablas_Conf_Productos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Tablas_BakApp = New DevComponents.DotNetBar.Metro.MetroTileItem()
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Btn_Momendas = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_Grupo_Vendedores = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -43,9 +44,9 @@ Partial Class Modulo_Parametros
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
-        Me.Bar2.Location = New System.Drawing.Point(0, 277)
+        Me.Bar2.Location = New System.Drawing.Point(0, 272)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(633, 41)
+        Me.Bar2.Size = New System.Drawing.Size(843, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 33
@@ -77,7 +78,7 @@ Partial Class Modulo_Parametros
         Me.MetroTilePanel1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 48)
         Me.MetroTilePanel1.Name = "MetroTilePanel1"
-        Me.MetroTilePanel1.Size = New System.Drawing.Size(763, 304)
+        Me.MetroTilePanel1.Size = New System.Drawing.Size(871, 304)
         Me.MetroTilePanel1.TabIndex = 32
         Me.MetroTilePanel1.Text = "MetroTilePanel1"
         '
@@ -87,10 +88,10 @@ Partial Class Modulo_Parametros
         '
         '
         Me.ContenedorTablas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ContenedorTablas.FixedSize = New System.Drawing.Size(610, 240)
+        Me.ContenedorTablas.FixedSize = New System.Drawing.Size(810, 240)
         Me.ContenedorTablas.MultiLine = True
         Me.ContenedorTablas.Name = "ContenedorTablas"
-        Me.ContenedorTablas.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCreacionEntidad, Me.BtnProductos, Me.Btn_Tablas_Conf_Entidad, Me.Btn_Tablas_Conf_Productos, Me.Btn_Tablas_BakApp, Me.Btn_Momendas})
+        Me.ContenedorTablas.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCreacionEntidad, Me.BtnProductos, Me.Btn_Tablas_Conf_Entidad, Me.Btn_Tablas_Conf_Productos, Me.Btn_Tablas_BakApp, Me.Btn_Momendas, Me.Btn_Grupo_Vendedores})
         '
         '
         '
@@ -233,20 +234,6 @@ Partial Class Modulo_Parametros
         Me.Btn_Tablas_BakApp.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Tablas_BakApp.TitleText = "BakApp"
         '
-        'LabelX1
-        '
-        '
-        '
-        '
-        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.LabelX1.Location = New System.Drawing.Point(6, 0)
-        Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(245, 49)
-        Me.LabelX1.TabIndex = 39
-        Me.LabelX1.Text = "<font color=""#349FCE""><b>PARAMETROS</b></font>"
-        '
         'Btn_Momendas
         '
         Me.Btn_Momendas.Image = CType(resources.GetObject("Btn_Momendas.Image"), System.Drawing.Image)
@@ -274,6 +261,42 @@ Partial Class Modulo_Parametros
         Me.Btn_Momendas.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Momendas.TitleText = "BakApp"
         '
+        'LabelX1
+        '
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.Font = New System.Drawing.Font("Arial", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.LabelX1.Location = New System.Drawing.Point(6, 0)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(245, 49)
+        Me.LabelX1.TabIndex = 39
+        Me.LabelX1.Text = "<font color=""#349FCE""><b>PARAMETROS</b></font>"
+        '
+        'Btn_Grupo_Vendedores
+        '
+        Me.Btn_Grupo_Vendedores.Image = CType(resources.GetObject("Btn_Grupo_Vendedores.Image"), System.Drawing.Image)
+        Me.Btn_Grupo_Vendedores.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Grupo_Vendedores.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Grupo_Vendedores.Name = "Btn_Grupo_Vendedores"
+        Me.Btn_Grupo_Vendedores.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Grupo_Vendedores.Text = "<font size=""+4""><b>GRUPOS DE FUNCIONARIOS</b></font><br/><font size=""-1"">Mantenci" &
+    "on de grupos de vendedores</font>"
+        Me.Btn_Grupo_Vendedores.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
+        Me.Btn_Grupo_Vendedores.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Grupo_Vendedores.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
+        Me.Btn_Grupo_Vendedores.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
+        Me.Btn_Grupo_Vendedores.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
+        Me.Btn_Grupo_Vendedores.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(209, Byte), Integer), CType(CType(93, Byte), Integer), CType(CType(123, Byte), Integer))
+        Me.Btn_Grupo_Vendedores.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Grupo_Vendedores.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Grupo_Vendedores.TitleText = "BakApp"
+        '
         'Modulo_Parametros
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -282,7 +305,7 @@ Partial Class Modulo_Parametros
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Modulo_Parametros"
-        Me.Size = New System.Drawing.Size(633, 318)
+        Me.Size = New System.Drawing.Size(843, 313)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -298,4 +321,5 @@ Partial Class Modulo_Parametros
     Private WithEvents Btn_Tablas_BakApp As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Private WithEvents Btn_Momendas As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Grupo_Vendedores As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

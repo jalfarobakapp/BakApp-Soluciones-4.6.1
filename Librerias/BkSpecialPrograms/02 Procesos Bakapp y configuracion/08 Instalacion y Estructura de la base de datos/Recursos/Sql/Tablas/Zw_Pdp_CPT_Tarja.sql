@@ -12,7 +12,7 @@ CREATE TABLE [dbo].[Zw_Pdp_CPT_Tarja](
 	[Turno]				    [varchar](1)	NOT NULL Default(''),
 	[Planta]			    [varchar](1)	NOT NULL Default(''),
 	[Udm]				    [varchar](2)	NOT NULL Default(''),
-	[Formato]			    [int]			NOT NULL Default(0),
+	[Formato]			    [float]			NOT NULL Default(0),
 	[FechaElab]			    [datetime]		NULL,
 	[SacosXPallet]		    [int]			NOT NULL Default(0),
 	[Analista]			    [varchar](3)	NOT NULL Default(''),

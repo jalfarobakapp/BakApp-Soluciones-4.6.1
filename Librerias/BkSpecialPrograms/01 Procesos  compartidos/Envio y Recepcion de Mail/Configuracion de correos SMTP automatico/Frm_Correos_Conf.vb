@@ -1248,10 +1248,21 @@ Public Class Frm_Correos_Conf
 
                 End If
 
+                Dim _Resultado As String = $"Status: {result.Status}, Detalle: {result.ToString}"
+
                 If result.Status = SendMessageStatus.Success Then
                     _Mensaje.EsCorrecto = True
                     _Mensaje.Icono = MessageBoxIcon.Information
+                ElseIf result.Status = SendMessageStatus.PartialSuccess Then
+                    _Mensaje.EsCorrecto = True
+                    _Mensaje.Icono = MessageBoxIcon.Warning
+                ElseIf result.Status = SendMessageStatus.Failure Then
+                    _Mensaje.EsCorrecto = False
+                    _Mensaje.Icono = MessageBoxIcon.Stop
+                    _Error = _Resultado
                 End If
+
+                _Mensaje.Mensaje = _Resultado
 
             End Using
 

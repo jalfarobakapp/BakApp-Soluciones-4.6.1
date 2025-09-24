@@ -1386,29 +1386,39 @@ Public Class Frm_Demonio_DTEMonitor
                 'End Using
 
                 ' Por este bloque usando System.IO.Compression.ZipFile:
-                Dim zipPath As String = _AppPath & "\Dte.zip"
-                Dim extractPath As String = AppPath()
-                If File.Exists(zipPath) Then
-                    ZipFile.ExtractToDirectory(zipPath, extractPath)
+
+                Dim _extractPath As String = Path.Combine(Path.GetTempPath(), "ZipTmp")
+
+                ' Elimina la carpeta si existe
+                If Directory.Exists(_extractPath) Then
+                    Directory.Delete(_extractPath, True)
                 End If
 
+                Dim zipPath As String = _AppPath & "\Dte.zip"
+                'Dim extractPath As String = AppPath()
+                If File.Exists(zipPath) Then
+                    Try
+                        ZipFile.ExtractToDirectory(zipPath, _extractPath)
+                    Catch ex As Exception
 
+                    End Try
+                End If
 
                 'RarArchive.WriteToDirectory(_AppPath & "\Dte.Rar", AppPath() & "\Dte", ExtractOptions.Overwrite)
 
                 'Copiamos la carpeta DocumentosSII en la raiz del sistema
-                My.Computer.FileSystem.CopyDirectory(AppPath() & "\Dtes\DocumentosSII", _AppPath & "\DocumentosSII", True)
+                My.Computer.FileSystem.CopyDirectory(_extractPath & "\Dtes\DocumentosSII", _AppPath & "\DocumentosSII", True)
                 'Copiamos la carpeta Dte dentro de la carpeta Data
-                My.Computer.FileSystem.CopyDirectory(AppPath() & "\Dtes\Dte", _AppPath & "\Data\Dte", True)
+                My.Computer.FileSystem.CopyDirectory(_extractPath & "\Dtes\Dte", _AppPath & "\Data\Dte", True)
                 'Copiamos la carpeta Documentos dentro de la carpete DTE de la empresa
-                My.Computer.FileSystem.CopyDirectory(AppPath() & "\Dtes\Documentos", _AppPath & "\Data\" & RutEmpresaActiva & "\DTE\Documentos", True)
+                My.Computer.FileSystem.CopyDirectory(_extractPath & "\Dtes\Documentos", _AppPath & "\Data\" & RutEmpresaActiva & "\DTE\Documentos", True)
 
-                My.Computer.FileSystem.DeleteDirectory(AppPath() & "\Dtes", FileIO.DeleteDirectoryOption.DeleteAllContents)
-                'Catch ex As Exception
-                '    CircularPgrs.Visible = False
-                '    MessageBoxEx.Show(Me, ex.Message, "Error al extraer archivos desde: " & _AppPath & "\Dte.zip", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                '    Return False
-                'End Try
+                My.Computer.FileSystem.DeleteDirectory(_extractPath & "\Dtes", FileIO.DeleteDirectoryOption.DeleteAllContents)
+
+                ' Elimina la carpeta si existe
+                If Directory.Exists(_extractPath) Then
+                    Directory.Delete(_extractPath, True)
+                End If
 
             End If
 
@@ -1454,6 +1464,10 @@ Public Class Frm_Demonio_DTEMonitor
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Firmar" & vbCrLf &
                        "Where Firmar = 1 And AmbienteCertificacion = " & _AmbienteCertificacion
+
+        'Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Firmar" & vbCrLf &
+        '               "Where Idmaeedo = 858896"
+
         Dim _RowFirmar As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
         If Not IsNothing(_RowFirmar) Then

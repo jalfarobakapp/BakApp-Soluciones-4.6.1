@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Filtro_Especial_Funcionarios
@@ -7,8 +7,8 @@ Public Class Frm_Filtro_Especial_Funcionarios
 
     Dim _Tbl_Filtro_Responzables As DataTable
     Dim _Tbl_Filtro_Vendedores As DataTable
-    
-    Dim _Filtro_Extra_Responzables, _
+
+    Dim _Filtro_Extra_Responzables,
         _Filtro_Extra_Vendedores As String
 
     Dim _Aceptar As Boolean
@@ -86,10 +86,10 @@ Public Class Frm_Filtro_Especial_Funcionarios
 
     Public Sub New()
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
     End Sub
 

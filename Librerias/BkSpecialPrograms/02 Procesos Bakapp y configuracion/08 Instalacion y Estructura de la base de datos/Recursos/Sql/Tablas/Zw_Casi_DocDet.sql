@@ -128,7 +128,8 @@ CREATE TABLE [dbo].[Zw_Casi_DocDet](
 	[Espuntosvta]           [bit]                   NOT NULL DEFAULT (0),  
 	[ModFechVto]            [bit]                   NOT NULL DEFAULT (0),      
     [Condicionado]          [bit]                   NOT NULL DEFAULT (0),      
-    [DesacRazTransf]        [bit]                   NOT NULL DEFAULT (0),      
+    [DesacRazTransf]        [bit]                   NOT NULL DEFAULT (0), 
+    [Grupo]                 [varchar](1)            NOT NULL DEFAULT (''),
 ) ON [PRIMARY]
 
 

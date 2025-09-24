@@ -167,11 +167,11 @@ Public Class Frm_RegistrarEquipo
 
         If Not Chk_Caja_Habilitada.Checked Then Txt_Modalidad_Caja.Text = String.Empty
 
-        'Dim _RutEmpresa As String = _Sql.Fx_Trae_Dato("CONFIGP", "RUT", "EMPRESA = '01'")
+        Dim _RutEmpresa As String = _Sql.Fx_Trae_Dato("CONFIGP", "RUT", "EMPRESA = '01'")
 
         '_RutEmpresa = RutEmpresaActiva
 
-        Dim _Cadena As String = UCase(RutEmpresa.Trim & "@" & LblNombreEquipo.Text)
+        Dim _Cadena As String = UCase(_RutEmpresa.Trim & "@" & LblNombreEquipo.Text)
         Dim _Key = Encripta_md5(_Cadena)
 
         '249360d48e636367b865e0bc8619065d

@@ -86,6 +86,13 @@ Public Class Frm_BuscarEntidad_Mt
 
         VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False) And Rdb_Clientes.Checked
 
+        If Not VerSoloEntidadesDelVendedor Then
+            VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False) And Rdb_Clientes.Checked
+            If VerSoloEntidadesDelVendedor Then
+                Chk_Solo_Clientes_Del_Vendedor.Text = "Ver solo clientes del grupo de vendesores del usuario activo"
+            End If
+        End If
+
         If VerSoloEntidadesDelVendedor Then
             Chk_Solo_Clientes_Del_Vendedor.Checked = True
             Rdb_Ambos.Enabled = False
@@ -323,19 +330,26 @@ Public Class Frm_BuscarEntidad_Mt
         Dim _Filtro_Vendedores = String.Empty
 
         If Not Rdb_Proveedores.Checked Then
+
             If Chk_Solo_Clientes_Del_Vendedor.Checked Then
 
                 Dim _Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+                Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru = '" & FUNCIONARIO & "'")
 
                 If String.IsNullOrEmpty(_Kogru) Then
                     _Filtro_Vendedores = "And KOFUEN = '" & FUNCIONARIO & "'"
                 Else
 
-                    'Consulta_sql = "Select KOFU From TABFUGD Where KOGRU = '" & _Kogru & "'"
-                    'Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
                     If Not _Kogru.Contains("'") Then
                         _Kogru = "'" & _Kogru & "'"
+                    End If
+
+                    If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+                        If String.IsNullOrEmpty(_Kogru) Then
+                            _Kogru = _Kofu_Kogru
+                        Else
+                            _Kogru += "," & _Kofu_Kogru
+                        End If
                     End If
 
                     Consulta_sql = "Select KOFU From TABFUGD Where KOGRU In (" & _Kogru & ")"

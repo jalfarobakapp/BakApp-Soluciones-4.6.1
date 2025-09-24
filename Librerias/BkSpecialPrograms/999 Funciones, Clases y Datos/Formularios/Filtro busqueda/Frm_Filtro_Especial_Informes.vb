@@ -198,6 +198,7 @@ Public Class Frm_Filtro_Especial_Informes
 
     Public Property MostrarNumeracionDeRegistros As Boolean
     Public Property SonProductos As Boolean
+    Public Property ReemplazarComillaspor As String
 
     Public Sub New(Tabla_filtro As _Tabla_Fl,
                    Optional Incorporar_Campo_Vacias As Boolean = False,
@@ -216,6 +217,8 @@ Public Class Frm_Filtro_Especial_Informes
         _Tabla = Tabla
         _Campo = Campo
         _Descripcion = Descripcion
+
+        ReemplazarComillaspor = String.Empty
 
         _Tabla_a_Filtras = Tabla_filtro
 
@@ -259,6 +262,8 @@ Public Class Frm_Filtro_Especial_Informes
 
         Rdb_Mostrar_Solo_Tickeados.Visible = _Requiere_Seleccion
         Rdb_Mostrar_Todos.Visible = _Requiere_Seleccion
+
+        Btn_MarcarMasiva_Excel.Visible = Not _Seleccionar_Solo_Uno
 
         Sb_Cargar_Datos()
 
@@ -464,6 +469,10 @@ Public Class Frm_Filtro_Especial_Informes
 
     Private Sub Sb_Grilla_MouseUp(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
 
+        If Not CBool(Grilla.Rows.Count) Then
+            Return
+        End If
+
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
         RemoveHandler Chk_Seleccionar_Todos.CheckedChanged, AddressOf Sb_Chk_Seleccionar_Todos_CheckedChanged
@@ -594,15 +603,16 @@ Public Class Frm_Filtro_Especial_Informes
         ChequearTodo(Grilla, chk, "")
     End Sub
 
-    Private Sub Txt_Codigo_TextChanged(sender As System.Object, e As System.EventArgs) Handles Txt_Codigo.TextChanged
+    'Private Sub Txt_Codigo_TextChanged(sender As System.Object, e As System.EventArgs) Handles Txt_Codigo.TextChanged
 
-        Dim _Fl As String
-        Select Case Cmb_Filtro_Codigo.SelectedValue
-            Case "C" : _Fl = "%{0}%" : Case "E" : _Fl = "{0}%" : Case "T" : _Fl = "%{0}"
-        End Select
-        _Dv.RowFilter = String.Format("Codigo Like '" & _Fl & "'", Trim(Txt_Codigo.Text))
+    '    Dim _Fl As String
+    '    Select Case Cmb_Filtro_Codigo.SelectedValue
+    '        Case "C" : _Fl = "%{0}%" : Case "E" : _Fl = "{0}%" : Case "T" : _Fl = "%{0}"
+    '    End Select
+    '    Txt_Codigo.Text = Txt_Codigo.Text.Replace("'", "''")
+    '    _Dv.RowFilter = String.Format("Codigo Like '" & _Fl & "'", Trim(Txt_Codigo.Text))
 
-    End Sub
+    'End Sub
 
     Private Sub Btn_Ver_documento_origen_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
@@ -693,7 +703,9 @@ Public Class Frm_Filtro_Especial_Informes
 
             _Descripcion_a_buscar = Replace(_Descripcion_a_buscar, vbTab, "")
 
-            Dim _Descripcion As String = Replace(_Descripcion_a_buscar, "'", "")
+            Dim _Descripcion As String
+
+            _Descripcion = Replace(_Descripcion_a_buscar, "'", ReemplazarComillaspor)
 
             If IsNothing(_Descripcion) Then _Descripcion = String.Empty
 
@@ -932,5 +944,28 @@ Public Class Frm_Filtro_Especial_Informes
 
     End Sub
 
+    Private Sub Txt_Codigo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Codigo.KeyDown
 
+        If e.KeyValue = Keys.Enter Then
+
+            Dim _Fl As String
+
+            Select Case Cmb_Filtro_Codigo.SelectedValue
+                Case "C" : _Fl = "%{0}%" : Case "E" : _Fl = "{0}%" : Case "T" : _Fl = "%{0}"
+            End Select
+
+            If String.IsNullOrEmpty(Txt_Codigo.Text.Trim) Then
+                Return
+            End If
+
+            Dim _Codigo As String
+
+            If ReemplazarComillaspor Is Nothing Then ReemplazarComillaspor = String.Empty
+            _Codigo = Replace(Txt_Codigo.Text, "'", ReemplazarComillaspor).ToString.Trim
+
+            _Dv.RowFilter = String.Format("Codigo Like '" & _Fl & "'", _Codigo)
+
+        End If
+
+    End Sub
 End Class

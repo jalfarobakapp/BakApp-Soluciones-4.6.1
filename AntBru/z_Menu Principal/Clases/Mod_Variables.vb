@@ -115,123 +115,123 @@ Public Module Mod_Variables
 
     End Function
 
-    Function Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE As String,
-                                        _NombreEquipo As String) As Boolean
+    'Function Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE As String,
+    '                                    _NombreEquipo As String) As Boolean
 
-        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+    '    Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-        Dim _Existe_Archivo_GenDTE = False
+    '    Dim _Existe_Archivo_GenDTE = False
 
-        Dim _FolderBrowserDialog As New FolderBrowserDialog
+    '    Dim _FolderBrowserDialog As New FolderBrowserDialog
 
-        Dim _Nuevo_RunMonitor As Boolean = _Sql.Fx_Exite_Campo("CONFIGP", "VERSIONACT")
+    '    Dim _Nuevo_RunMonitor As Boolean = _Sql.Fx_Exite_Campo("CONFIGP", "VERSIONACT")
 
 
-        If _Nuevo_RunMonitor Then
+    '    If _Nuevo_RunMonitor Then
 
-            If File.Exists(_Directorio_GenDTE & "\dte\bat\GenDTE.BAT") Then
-                _Existe_Archivo_GenDTE = True
-            End If
+    '        If File.Exists(_Directorio_GenDTE & "\dte\bat\GenDTE.BAT") Then
+    '            _Existe_Archivo_GenDTE = True
+    '        End If
 
-        Else
+    '    Else
 
-            If File.Exists(_Directorio_GenDTE & "\GenDTE.BAT") Then
-                _Existe_Archivo_GenDTE = True
-            End If
+    '        If File.Exists(_Directorio_GenDTE & "\GenDTE.BAT") Then
+    '            _Existe_Archivo_GenDTE = True
+    '        End If
 
-        End If
+    '    End If
 
-        If _Existe_Archivo_GenDTE Then
+    '    If _Existe_Archivo_GenDTE Then
 
-            Return True
+    '        Return True
 
-        Else
+    '    Else
 
-            MessageBoxEx.Show(Frm_Menu, "El directorio GenDTE no existe o no esta registrado", "Validación",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '        MessageBoxEx.Show(Frm_Menu, "El directorio GenDTE no existe o no esta registrado", "Validación",
+    '                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-            With _FolderBrowserDialog
+    '        With _FolderBrowserDialog
 
-                .Reset()
+    '            .Reset()
 
-                ' leyenda  
-                .Description = " Seleccionar una carpeta "
-                ' Path " Mis documentos "  
-                .SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+    '            ' leyenda  
+    '            .Description = " Seleccionar una carpeta "
+    '            ' Path " Mis documentos "  
+    '            .SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
 
-                ' deshabilita el botón " crear nueva carpeta "  
-                .ShowNewFolderButton = False
-                '.RootFolder = Environment.SpecialFolder.Desktop  
-                '.RootFolder = Environment.SpecialFolder.StartMenu  
+    '            ' deshabilita el botón " crear nueva carpeta "  
+    '            .ShowNewFolderButton = False
+    '            '.RootFolder = Environment.SpecialFolder.Desktop  
+    '            '.RootFolder = Environment.SpecialFolder.StartMenu  
 
-                Dim ret As DialogResult = .ShowDialog ' abre el diálogo  
+    '            Dim ret As DialogResult = .ShowDialog ' abre el diálogo  
 
-                ' si se presionó el botón aceptar ...  
-                If ret = Windows.Forms.DialogResult.OK Then
+    '            ' si se presionó el botón aceptar ...  
+    '            If ret = Windows.Forms.DialogResult.OK Then
 
-                    Dim nFiles As ObjectModel.ReadOnlyCollection(Of String)
+    '                Dim nFiles As ObjectModel.ReadOnlyCollection(Of String)
 
-                    nFiles = My.Computer.FileSystem.GetFiles(.SelectedPath)
-                    _Directorio_GenDTE = .SelectedPath
+    '                nFiles = My.Computer.FileSystem.GetFiles(.SelectedPath)
+    '                _Directorio_GenDTE = .SelectedPath
 
-                    If _Nuevo_RunMonitor Then
+    '                If _Nuevo_RunMonitor Then
 
-                        If File.Exists(_Directorio_GenDTE & "\dte\bat\GenDTE.BAT") Then
-                            _Existe_Archivo_GenDTE = True
-                        End If
+    '                    If File.Exists(_Directorio_GenDTE & "\dte\bat\GenDTE.BAT") Then
+    '                        _Existe_Archivo_GenDTE = True
+    '                    End If
 
-                    Else
+    '                Else
 
-                        If File.Exists(_Directorio_GenDTE & "\GenDTE.BAT") Then
-                            _Existe_Archivo_GenDTE = True
-                        End If
+    '                    If File.Exists(_Directorio_GenDTE & "\GenDTE.BAT") Then
+    '                        _Existe_Archivo_GenDTE = True
+    '                    End If
 
-                    End If
+    '                End If
 
-                    'If Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo) Then
-                    '    _Existe_Archivo_GenDTE = True
-                    'Else
-                    '    Return False
-                    'End If
+    '                'If Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo) Then
+    '                '    _Existe_Archivo_GenDTE = True
+    '                'Else
+    '                '    Return False
+    '                'End If
 
-                End If
+    '            End If
 
-                .Dispose()
+    '            .Dispose()
 
-            End With
+    '        End With
 
-        End If
+    '    End If
 
-        If _Existe_Archivo_GenDTE Then
+    '    If _Existe_Archivo_GenDTE Then
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set Directorio_GenDTE = '" & _Directorio_GenDTE & "'" & vbCrLf &
-                           "Where NombreEquipo = '" & _NombreEquipo & "'"
+    '        Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set Directorio_GenDTE = '" & _Directorio_GenDTE & "'" & vbCrLf &
+    '                       "Where NombreEquipo = '" & _NombreEquipo & "'"
 
-            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                _Global_Row_EstacionBk.Item("Directorio_GenDTE") = _Directorio_GenDTE
-                Return True
-            End If
+    '        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+    '            _Global_Row_EstacionBk.Item("Directorio_GenDTE") = _Directorio_GenDTE
+    '            Return True
+    '        End If
 
-        Else
+    '    Else
 
-            If Not String.IsNullOrEmpty(_Directorio_GenDTE) Then
+    '        If Not String.IsNullOrEmpty(_Directorio_GenDTE) Then
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set Directorio_GenDTE = ''" & vbCrLf &
-                               "Where NombreEquipo = '" & _NombreEquipo & "'"
-                _Sql.Ej_consulta_IDU(Consulta_sql)
+    '            Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set Directorio_GenDTE = ''" & vbCrLf &
+    '                           "Where NombreEquipo = '" & _NombreEquipo & "'"
+    '            _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                _Global_Row_EstacionBk.Item("Directorio_GenDTE") = String.Empty
+    '            _Global_Row_EstacionBk.Item("Directorio_GenDTE") = String.Empty
 
-            End If
+    '        End If
 
-            MessageBoxEx.Show(Frm_Menu,
-                                  "No se encontro el archivo GenDTE.BAT en el directorio (" & _Directorio_GenDTE & ")" & vbCrLf &
-                                  "Este archivo es necesario para la generación de documentos electrónicos en DTE RunMonitor",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '        MessageBoxEx.Show(Frm_Menu,
+    '                              "No se encontro el archivo GenDTE.BAT en el directorio (" & _Directorio_GenDTE & ")" & vbCrLf &
+    '                              "Este archivo es necesario para la generación de documentos electrónicos en DTE RunMonitor",
+    '                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-        End If
+    '    End If
 
-    End Function
+    'End Function
 
     Function Fx_Ejecutar_Demonio_Old(_Directorio_Demonio As String) As Boolean
 
@@ -623,7 +623,7 @@ Public Module Mod_Variables
 
     End Function
 
-    Sub Sb_CashDro(ByVal _Formulario As Form)
+    Sub Sb_CashDro(_Formulario As Form)
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")

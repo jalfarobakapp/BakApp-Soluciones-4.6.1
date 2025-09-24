@@ -1,7 +1,4 @@
-﻿Imports BkSpecialPrograms.LsValiciones
-Imports DevComponents.DotNetBar
-Imports DevComponents.DotNetBar.Controls
-Imports MySql.Data.Authentication
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Cantidades_Ud_Disintas
 
@@ -103,12 +100,14 @@ Public Class Frm_Cantidades_Ud_Disintas
         End If
 
         Img_RtuAPI.Visible = _ValidarApiWMSBosOne
-        'TxtCantUD1.Enabled = Chk_DesacRazTransf.Checked
+
+        TxtCantUD1.Enabled = Not _Global_Row_Configuracion_General.Item("VendeUD2DesacUD1soloRTUD")
 
         'Chk_RtuVariable.Enabled = (_Fila.Cells("Nmarca").Value = "¡")
 
         If Chk_DesacRazTransf.Checked Then
             Label3.Text = "R.T.U.  (" & _Rtu & ")"
+            TxtCantUD1.Enabled = True
         End If
 
         If _Rtu = 1 Then TxtCantUD2.Enabled = False
@@ -244,7 +243,7 @@ Public Class Frm_Cantidades_Ud_Disintas
         If _Aplica_Oferta Then
 
             Dim _Cantidad As Double
-            Dim _Txt As TextBoxX
+            Dim _Txt As Controls.TextBoxX
 
             If _UnTrans = 1 Then
                 _Cantidad = _Cantidad_Ud1 / _Cantidad_Oferta

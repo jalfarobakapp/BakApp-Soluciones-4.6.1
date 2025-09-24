@@ -10,7 +10,7 @@ CREATE TABLE [dbo].[Zw_DTE_Firmar](
 	[Log_Error]             [varchar](max)  NOT NULL Default(''),
     [AmbienteCertificacion]	[bit]           NOT NULL DEFAULT (0),   
     [FechaEnvio]        	[datetime]		NULL,
-    [Empresa]               [char](3)		NOT NULL DEFAULT (''),
+    [Empresa]               [char](2)		NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_DTE_Firmar] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

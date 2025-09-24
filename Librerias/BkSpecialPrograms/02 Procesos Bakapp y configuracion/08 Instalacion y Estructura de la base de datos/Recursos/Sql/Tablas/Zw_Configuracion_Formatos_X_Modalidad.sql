@@ -21,6 +21,8 @@ CREATE TABLE [dbo].[Zw_Configuracion_Formatos_X_Modalidad](
 [DiasAvisoExpiraFolio]          [int]			NOT NULL DEFAULT (0),
 [AvisoSaldoFolios]              [int]			NOT NULL DEFAULT (0),
 [ListaPrecioDoc]                [char](3)       NOT NULL DEFAULT (''),
+[TimbrarXBakapp]	            [bit]			NOT NULL DEFAULT (0),
+[Deshabilitar_ObsAdicionales]   [bit]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Configuracion_Formatos_X_Modalidad_1] PRIMARY KEY CLUSTERED 
 (
 	[Modalidad] ASC,

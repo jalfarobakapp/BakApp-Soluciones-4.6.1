@@ -135,8 +135,11 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [NVIQuedaSUDOSucRecibe]                                 [bit]           NOT NULL DEFAULT (0),
 [NuncaPickeaDocConRTUDesactivada]                       [bit]           NOT NULL DEFAULT (0),
 [RestringirVisualizacionDeDocumentos]                   [bit]           NOT NULL DEFAULT (0),
+[PermisoEspecialCambioVendedorLinea]                    [bit]           NOT NULL DEFAULT (0),
+[VendeUD2DesacUD1soloRTUD]                              [bit]           NOT NULL DEFAULT (0),
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
+	[Empresa] ASC,
 	[Modalidad] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]

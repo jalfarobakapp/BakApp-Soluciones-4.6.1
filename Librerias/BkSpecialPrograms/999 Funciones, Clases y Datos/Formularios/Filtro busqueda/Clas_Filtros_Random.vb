@@ -122,7 +122,8 @@
                    Optional _Activar_Crear_Editar_Eliminar As Boolean = False,
                    Optional _Seleccionar_Todos_Visible As Boolean = True,
                    Optional _TableName As String = "",
-                   Optional _MostrarNumeracionDeRegistros As Boolean = False) As Boolean
+                   Optional _MostrarNumeracionDeRegistros As Boolean = False,
+                   Optional _ReemplazarComillaspor As String = "") As Boolean
 
         _Tbl_Filtro = Tbl_Filtro
         _Filtro_Todas = Filtro_Todas
@@ -143,6 +144,7 @@
         Fm.Chk_Seleccionar_Todos.Visible = _Seleccionar_Todos_Visible
         Fm.MostrarNumeracionDeRegistros = _MostrarNumeracionDeRegistros
         Fm.SonProductos = SonProductos
+        Fm.ReemplazarComillaspor = _ReemplazarComillaspor
         Fm.ShowDialog(_Formulario)
 
         If Fm.Pro_Filtrar Then

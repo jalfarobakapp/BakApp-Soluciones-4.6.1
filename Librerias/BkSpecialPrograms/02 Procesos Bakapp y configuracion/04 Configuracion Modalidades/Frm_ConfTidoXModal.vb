@@ -61,19 +61,22 @@ Public Class Frm_ConfTidoXModal
         Txt_Nombreformato.Text = _RowFormato.Item("Nombreformato")
         Txt_NombreFormato_PDF.Text = _RowFormato.Item("NombreFormato_PDF")
 
-        Sw_Grabar_Con_Huella.Value = _RowFormato.Item("Grabar_Con_Huella")
-        Sw_Guarda_PDF_Auto.Value = _RowFormato.Item("Guardar_PDF_Auto")
-        Sw_Obliga_Despacho.Value = _RowFormato.Item("Obliga_Despacho")
-        Sw_Obliga_Despacho_BodDistintas.Value = _RowFormato.Item("Obliga_Despacho_BodDistintas")
-        Sw_Obliga_Transportista.Value = _RowFormato.Item("Obliga_Transportista")
-        Sw_Sugiere_Despacho.Value = _RowFormato.Item("Sugiere_Despacho")
+        Chk_Grabar_Con_Huella.Checked = _RowFormato.Item("Grabar_Con_Huella")
+        Chk_Guarda_PDF_Auto.Checked = _RowFormato.Item("Guardar_PDF_Auto")
+        Chk_Obliga_Despacho.Checked = _RowFormato.Item("Obliga_Despacho")
+        Chk_Obliga_Despacho_BodDistintas.Checked = _RowFormato.Item("Obliga_Despacho_BodDistintas")
+        Chk_Obliga_Transportista.Checked = _RowFormato.Item("Obliga_Transportista")
+        Chk_Sugiere_Despacho.Checked = _RowFormato.Item("Sugiere_Despacho")
+        Chk_Deshabilitar_ObsAdicionales.Checked = _RowFormato.Item("Deshabilitar_ObsAdicionales")
 
-        Sw_Enviar_Correo.Value = _RowFormato.Item("Enviar_Correo")
+        Chk_Enviar_Correo.Checked = _RowFormato.Item("Enviar_Correo")
         Txt_Id_Correo.Tag = _RowFormato.Item("Id_Correo")
         Txt_Id_Correo.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Correos", "Nombre_Correo", "Id = " & Txt_Id_Correo.Tag)
         Txt_NombreFormato_Correo.Text = _RowFormato.Item("NombreFormato_Correo")
 
-        Rdb_TimbrarXRandom.Value = _RowFormato.Item("TimbrarXRandom")
+        Rdb_TimbrarXRandom.Checked = _RowFormato.Item("TimbrarXRandom")
+        Rdb_TimbrarXBakapp.Checked = _RowFormato.Item("TimbrarXBakapp")
+
         Txt_ListaPrecioDoc.Text = _RowFormato.Item("ListaPrecioDoc")
 
         If Modalidad_General Then
@@ -100,10 +103,9 @@ Public Class Frm_ConfTidoXModal
 
         If Modalidad_General Then
             Rdb_TimbrarXRandom.Enabled = False
-            Rdb_TimbrarXRandom.Value = False
-            LabelX16.Text = "Timbrar eléct. siempre por Random (SOLO PARA MODALIDADES DE ESTACION)"
-            LabelX16.Enabled = False
-
+            Rdb_TimbrarXRandom.Checked = False
+            Rdb_TimbrarXBakapp.Enabled = False
+            Rdb_TimbrarXBakapp.Checked = False
         Else
 
             If _Tido = "GRC" Or _Tido = "GRD" Then
@@ -113,32 +115,28 @@ Public Class Frm_ConfTidoXModal
                 Btn_InfNumeracion.Visible = False
             End If
 
+            Dim _Chk As Boolean
+
             Select Case _Tido
                 Case "BLV", "FCV", "GDV", "FDV", "NCV", "GDP", "GDD", "GTI"
-                    Rdb_TimbrarXRandom.Enabled = True
+                    _Chk = True
+                    If Not Rdb_TimbrarXRandom.Checked AndAlso Rdb_TimbrarXBakapp.Checked Then
+                        Rdb_TimbrarXBakapp.Checked = True
+                    End If
                 Case Else
-                    Rdb_TimbrarXRandom.Enabled = False
+                    _Chk = False
+                    Rdb_TimbrarXRandom.Checked = _Chk
+                    Rdb_TimbrarXBakapp.Checked = _Chk
             End Select
+
+            Rdb_TimbrarXRandom.Enabled = _Chk
+            Rdb_TimbrarXBakapp.Enabled = _Chk
 
         End If
 
         Lbl_ListaPrecioDoc.Visible = (_Tido = "BLV")
         Txt_ListaPrecioDoc.Visible = (_Tido = "BLV")
 
-    End Sub
-
-    Private Sub Btn_BuscarFormatoImpNormal_Click(sender As Object, e As EventArgs) Handles Btn_BuscarFormatoImpNormal.Click
-        Dim _Formato As String
-        If Fx_Buscar_Formato(_Formato) Then
-            Txt_Nombreformato.Text = _Formato
-        End If
-    End Sub
-
-    Private Sub Btn_BuscarFormatoImpPDF_Click(sender As Object, e As EventArgs) Handles Btn_BuscarFormatoImpPDF.Click
-        Dim _Formato As String
-        If Fx_Buscar_Formato(_Formato) Then
-            Txt_NombreFormato_PDF.Text = _Formato
-        End If
     End Sub
 
     Private Sub Btn_InfNumeracion_Click(sender As Object, e As EventArgs) Handles Btn_InfNumeracion.Click
@@ -154,19 +152,26 @@ Public Class Frm_ConfTidoXModal
         Dim _Numero = Txt_Numero.Text.Trim
         Dim _Nombreformato = Txt_Nombreformato.Text
         Dim _Nombreformato_PDF = Txt_NombreFormato_PDF.Text
-        Dim _Grabar_Con_Huella = Convert.ToInt32(Sw_Grabar_Con_Huella.Value)
-        Dim _Sugiere_Despacho = Convert.ToInt32(Sw_Sugiere_Despacho.Value)
-        Dim _Obliga_Transportista = Convert.ToInt32(Sw_Obliga_Transportista.Value)
-        Dim _Obliga_Despacho = Convert.ToInt32(Sw_Obliga_Despacho.Value)
-        Dim _Obliga_Despacho_BodDistintas = Convert.ToInt32(Sw_Obliga_Despacho_BodDistintas.Value)
-        Dim _Guardar_PDF_Auto = Convert.ToInt32(Sw_Guarda_PDF_Auto.Value)
-        Dim _Envia_Correo = Convert.ToInt32(Sw_Enviar_Correo.Value)
+        Dim _Grabar_Con_Huella = Convert.ToInt32(Chk_Grabar_Con_Huella.Checked)
+        Dim _Sugiere_Despacho = Convert.ToInt32(Chk_Sugiere_Despacho.Checked)
+        Dim _Obliga_Transportista = Convert.ToInt32(Chk_Obliga_Transportista.Checked)
+        Dim _Obliga_Despacho = Convert.ToInt32(Chk_Obliga_Despacho.Checked)
+        Dim _Obliga_Despacho_BodDistintas = Convert.ToInt32(Chk_Obliga_Despacho_BodDistintas.Checked)
+        Dim _Deshabilitar_ObsAdicionales = Convert.ToInt32(Chk_Deshabilitar_ObsAdicionales.Checked)
+
+        Dim _Guardar_PDF_Auto = Convert.ToInt32(Chk_Guarda_PDF_Auto.Checked)
+        Dim _Envia_Correo = Convert.ToInt32(Chk_Enviar_Correo.Checked)
         Dim _Id_Correo = Txt_Id_Correo.Tag
         Dim _NombreFormato_Correo = Txt_NombreFormato_Correo.Text
-        Dim _TimbrarXRandom = Convert.ToInt32(Rdb_TimbrarXRandom.Value)
+
+        Dim _TimbrarXRandom = Convert.ToInt32(Rdb_TimbrarXRandom.Checked)
+        Dim _TimbrarXBakapp = Convert.ToInt32(Rdb_TimbrarXBakapp.Checked)
+
         Dim _DiasAvisoExpiraFolio = Input_DiasAvisoExpiraFolio.Value
         Dim _AvisoSaldoFolios = Input_AvisoSaldoFolios.Value
         Dim _ListaPrecioDoc = Txt_ListaPrecioDoc.Text.Trim
+
+
 
         If Not String.IsNullOrEmpty(_Numero) Then
 
@@ -246,6 +251,8 @@ Public Class Frm_ConfTidoXModal
                    ",DiasAvisoExpiraFolio = " & _DiasAvisoExpiraFolio & vbCrLf &
                    ",AvisoSaldoFolios = " & _AvisoSaldoFolios & vbCrLf &
                    ",ListaPrecioDoc = '" & _ListaPrecioDoc & "'" & vbCrLf &
+                   ",Deshabilitar_ObsAdicionales = " & _Deshabilitar_ObsAdicionales & vbCrLf &
+                   ",TimbrarXBakapp = " & _TimbrarXBakapp & vbCrLf &
                    "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "' And TipoDoc = '" & _Tido & "'"
 
         If _Filtro_Tido = "('GDV','GTI','GDP','GDD')" Then
@@ -304,52 +311,6 @@ Public Class Frm_ConfTidoXModal
 
     End Function
 
-    Private Sub Btn_BuscarFormatoCorreo_Click(sender As Object, e As EventArgs) Handles Btn_BuscarFormatoCorreo.Click
-        Dim _Formato As String
-        If Fx_Buscar_Formato(_Formato) Then
-            Txt_NombreFormato_Correo.Text = _Formato
-        End If
-    End Sub
-
-    Private Sub Btn_BuscarCorreo_Click(sender As Object, e As EventArgs) Handles Btn_BuscarCorreo.Click
-
-        Dim Fm As New Frm_Correos_SMTP
-        Fm.Pro_Seleccionar = True
-        Fm.ShowDialog(Me)
-
-        If Fm.Pro_Seleccionado Then
-            Txt_Id_Correo.Tag = Fm.Pro_Row_Fila_Seleccionada.Item("Id")
-            Txt_Id_Correo.Text = Fm.Pro_Row_Fila_Seleccionada.Item("Nombre_Correo")
-        End If
-        Fm.Dispose()
-
-    End Sub
-
-    Private Sub BuscarFormatoImpNormal_Quitar_Click(sender As Object, e As EventArgs) Handles BuscarFormatoImpNormal_Quitar.Click
-        If MessageBoxEx.Show(Me, "Confirma quitar el formato", "Quitar formato", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            Txt_Nombreformato.Text = String.Empty
-        End If
-    End Sub
-
-    Private Sub Btn_BuscarFormatoImpPDF_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_BuscarFormatoImpPDF_Quitar.Click
-        If MessageBoxEx.Show(Me, "Confirma quitar el formato", "Quitar formato", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            Txt_NombreFormato_PDF.Text = String.Empty
-        End If
-    End Sub
-
-    Private Sub Btn_BuscarCorreo_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_BuscarCorreo_Quitar.Click
-        If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            Txt_Id_Correo.Tag = 0
-            Txt_Id_Correo.Text = String.Empty
-        End If
-    End Sub
-
-    Private Sub Btn_BuscarFormatoCorreo_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_BuscarFormatoCorreo_Quitar.Click
-        If MessageBoxEx.Show(Me, "Confirma quitar el formato para archivos adjuntos", "Quitar formato", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-            Txt_NombreFormato_Correo.Text = String.Empty
-        End If
-    End Sub
-
     Private Sub Txt_ListaPrecioDoc_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_ListaPrecioDoc.ButtonCustomClick
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
@@ -376,5 +337,63 @@ Public Class Frm_ConfTidoXModal
 
     Private Sub Txt_ListaPrecioDoc_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_ListaPrecioDoc.ButtonCustom2Click
         Txt_ListaPrecioDoc.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_Nombreformato_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Nombreformato.ButtonCustomClick
+        Dim _Formato As String
+        If Fx_Buscar_Formato(_Formato) Then
+            Txt_Nombreformato.Text = _Formato
+        End If
+    End Sub
+
+    Private Sub Txt_Nombreformato_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Nombreformato.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el formato", "Quitar formato", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_Nombreformato.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub Txt_NombreFormato_PDF_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF.ButtonCustomClick
+        Dim _Formato As String
+        If Fx_Buscar_Formato(_Formato) Then
+            Txt_NombreFormato_PDF.Text = _Formato
+        End If
+    End Sub
+
+    Private Sub Txt_NombreFormato_PDF_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_NombreFormato_PDF.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el formato", "Quitar formato", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_NombreFormato_PDF.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub Txt_Id_Correo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Id_Correo.ButtonCustomClick
+        Dim Fm As New Frm_Correos_SMTP
+        Fm.Pro_Seleccionar = True
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Seleccionado Then
+            Txt_Id_Correo.Tag = Fm.Pro_Row_Fila_Seleccionada.Item("Id")
+            Txt_Id_Correo.Text = Fm.Pro_Row_Fila_Seleccionada.Item("Nombre_Correo")
+        End If
+        Fm.Dispose()
+    End Sub
+
+    Private Sub Txt_Id_Correo_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Id_Correo.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el correo", "Quitar correo", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_Id_Correo.Tag = 0
+            Txt_Id_Correo.Text = String.Empty
+        End If
+    End Sub
+
+    Private Sub Txt_NombreFormato_Correo_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_NombreFormato_Correo.ButtonCustomClick
+        Dim _Formato As String
+        If Fx_Buscar_Formato(_Formato) Then
+            Txt_NombreFormato_Correo.Text = _Formato
+        End If
+    End Sub
+
+    Private Sub Txt_NombreFormato_Correo_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_NombreFormato_Correo.ButtonCustom2Click
+        If MessageBoxEx.Show(Me, "Confirma quitar el formato para archivos adjuntos", "Quitar formato", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+            Txt_NombreFormato_Correo.Text = String.Empty
+        End If
     End Sub
 End Class

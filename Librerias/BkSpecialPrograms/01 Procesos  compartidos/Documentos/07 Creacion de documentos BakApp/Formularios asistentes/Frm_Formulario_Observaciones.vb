@@ -33,7 +33,7 @@ Public Class Frm_Formulario_Observaciones
         Get
             Return _Preguntar_Grabar_Sin_Observaciones
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Preguntar_Grabar_Sin_Observaciones = value
         End Set
     End Property
@@ -169,7 +169,7 @@ Public Class Frm_Formulario_Observaciones
 
     End Sub
 
-    Private Sub Frm_Formulario_Observaciones_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Formulario_Observaciones_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         AddHandler Grilla_Obs_Adicionales.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
@@ -261,6 +261,19 @@ Public Class Frm_Formulario_Observaciones
             End If
 
         End If
+
+        If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad", "Deshabilitar_ObsAdicionales") Then
+            Dim _Tido = _Row_Encabezado.Item("TipoDoc")
+            Chk_Deshabilitar_ObsAdicionales.Checked = Not CBool(_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad",
+                                                      "Deshabilitar_ObsAdicionales",
+                                                      "Empresa = '" & Mod_Empresa & "' And Modalidad = '" & Mod_Modalidad & "' And TipoDoc = '" & _Tido & "'",,,, True))
+        End If
+
+        Grupo_OtrasObservaciones.Enabled = Chk_Deshabilitar_ObsAdicionales.Checked
+
+        AddHandler Chk_Deshabilitar_ObsAdicionales.CheckedChanged, AddressOf Chk_Deshabilitar_ObsAdicionales_CheckedChanged
+
+        Chk_Deshabilitar_ObsAdicionales.Enabled = Not Chk_Deshabilitar_ObsAdicionales.Checked
 
     End Sub
 
@@ -359,25 +372,41 @@ Public Class Frm_Formulario_Observaciones
 
                         Else
 
-                            Consulta_sql = "Select Top 1 Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.FEEMDO,Edo.KOFUDO,Tf.NOKOFU" & vbCrLf &
+                            Consulta_sql = "Select Top 1 Edo.TIDO,Tdo.NOTIDO,Edo.NUDO,Edo.ENDO,Edo.FEEMDO,Edo.KOFUDO,Tf.NOKOFU" & vbCrLf &
                                            "From MAEEDO Edo" & vbCrLf &
                                            "Inner Join MAEEDOOB Obs On Edo.IDMAEEDO = Obs.IDMAEEDO" & vbCrLf &
                                            "Left Join TABFU Tf On Tf.KOFU = Edo.KOFUDO" & vbCrLf &
+                                           "Left Join TABTIDO Tdo On Tdo.TIDO = Edo.TIDO" & vbCrLf &
                                            "Where Edo.TIDO In ('NVV','FCV','GDV','BLV') And Edo.ENDO = '" & _Row_Entidad.Item("KOEN") & "' And Obs.OCDO = '" & TxtOrdendecompra.Text.Trim & "'" & vbCrLf &
                                            "Order By Edo.IDMAEEDO"
 
                             Dim _RowNVVConOCC As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                             If Not IsNothing(_RowNVVConOCC) Then
-                                If MessageBoxEx.Show(Me, "El número de orden de compra ya fue relacionado anteriormente a otro documento" & vbCrLf & vbCrLf &
-                                                 "Documento: " & _RowNVVConOCC.Item("TIDO") & "-" & _RowNVVConOCC.Item("NUDO") & " " &
-                                                 FormatDateTime(_RowNVVConOCC.Item("FEEMDO"), DateFormat.ShortDate) &
-                                                 ", Resp. " & _RowNVVConOCC.Item("KOFUDO") & " - " & _RowNVVConOCC.Item("NOKOFU") & vbCrLf & vbCrLf &
-                                                 "¿Desea continuar con la grabación?", "Validación",
-                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
-                                    TxtOrdendecompra.Focus()
+
+                                Dim _Msg1 = "La orden ingresada ya fue registrada en otra " & _RowNVVConOCC.Item("NOTIDO").ToString.Trim.ToLower
+                                Dim _Msg2 = "Documento: " & _RowNVVConOCC.Item("TIDO") & "-" & _RowNVVConOCC.Item("NUDO") & " " &
+                                            FormatDateTime(_RowNVVConOCC.Item("FEEMDO"), DateFormat.ShortDate) & vbCrLf &
+                                            "Responsable: " & _RowNVVConOCC.Item("KOFUDO") & " - " & _RowNVVConOCC.Item("NOKOFU") & vbCrLf & vbCrLf &
+                                            "¿DESEA CONTINUAR CON LA GRABACIÓN?"
+
+                                Dim _Mensaje As LsValiciones.Mensajes = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.Exclamation,
+                                                                                                 "Alerta (Orden N° " & TxtOrdendecompra.Text.Trim & ")", False, , False)
+
+                                If CType(_Mensaje.Tag, eTaskDialogResult) <> eTaskDialogResult.Yes Then
                                     Return False
                                 End If
+
+                                'If MessageBoxEx.Show(Me, "El número de orden de compra ya fue relacionado anteriormente a otro documento" & vbCrLf & vbCrLf &
+                                '                 "Documento: " & _RowNVVConOCC.Item("TIDO") & "-" & _RowNVVConOCC.Item("NUDO") & " " &
+                                '                 FormatDateTime(_RowNVVConOCC.Item("FEEMDO"), DateFormat.ShortDate) &
+                                '                 ", Resp. " & _RowNVVConOCC.Item("KOFUDO") & " - " & _RowNVVConOCC.Item("NOKOFU") & vbCrLf & vbCrLf &
+                                '                 "¿Desea continuar con la grabación?", "Validación",
+                                '                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
+                                '    TxtOrdendecompra.Focus()
+                                '    Return False
+                                'End If
+
                             End If
 
                             Dim _Row = _Class_Referencias_DTE.Tbl_Referencias.Select("TpoDocRef = '801' And FolioRef = '" & TxtOrdendecompra.Text & "'")
@@ -625,13 +654,13 @@ Public Class Frm_Formulario_Observaciones
 
     End Function
 
-    Private Sub Frm_Formulario_Observaciones_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Formulario_Observaciones_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Grilla_Obs_Adicionales_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Grilla_Obs_Adicionales.KeyDown
+    Private Sub Grilla_Obs_Adicionales_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Grilla_Obs_Adicionales.KeyDown
 
         If e.KeyValue = Keys.Enter Then
             If Not TxtObservaciones.ReadOnly Then
@@ -644,15 +673,15 @@ Public Class Frm_Formulario_Observaciones
 
     End Sub
 
-    Private Sub Grilla_Obs_Adicionales_CellEndEdit(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Obs_Adicionales.CellEndEdit
+    Private Sub Grilla_Obs_Adicionales_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Obs_Adicionales.CellEndEdit
         Grilla_Obs_Adicionales.Columns("Descripcion").ReadOnly = True
     End Sub
 
-    Private Sub Btn_Grabar_Observaciones_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar_Observaciones.Click
+    Private Sub Btn_Grabar_Observaciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Grabar_Observaciones.Click
         Sb_Grabar(False, False)
     End Sub
 
-    Private Sub Warning_Visado_OptionsClick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Warning_Visado.OptionsClick
+    Private Sub Warning_Visado_OptionsClick(sender As System.Object, e As System.EventArgs) Handles Warning_Visado.OptionsClick
 
         Dim Fm_p As New Frm_Formulario_Permisos_Asociados_New(_Ds_Matriz_Documentos, _Row_Entidad, _Tipo_Documento) ', _RowEntidad, _Tipo_Documento)
         Fm_p.Btn_Enviar_Solicitudes_Cadenas_Remotas.Visible = False
@@ -692,85 +721,13 @@ Public Class Frm_Formulario_Observaciones
 
     End Sub
 
-    Private Sub Btn_Buscar_Retirador_Click(sender As Object, e As EventArgs) Handles Btn_Buscar_Retirador.Click
-        Try
-
-            Dim _Filtrar As New Clas_Filtros_Random(Me)
-
-            _Filtrar.Tabla = "TABRETI"
-            _Filtrar.Campo = "KORETI"
-            _Filtrar.Descripcion = "NORETI"
-
-            _Filtrar.Pro_Nombre_Encabezado_Informe = "RETIRADORES DE MERCADERIA"
-
-            If _Filtrar.Fx_Filtrar(Nothing,
-                                   Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "",
-                                   Nothing, False, True) Then
-
-                Dim _Tbl_Retirador As DataTable = _Filtrar.Pro_Tbl_Filtro
-
-                Dim _Row As DataRow = _Tbl_Retirador.Rows(0)
-
-                Dim _Codigo = _Row.Item("Codigo").ToString.Trim
-                Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
-
-                Txt_CodRetirador.Tag = _Codigo
-                Txt_CodRetirador.Text = _Codigo
-                Lbl_Nombre_Retirador_Mercaderia.Text = _Descripcion
-
-            End If
-        Catch ex As Exception
-            MessageBoxEx.Show(Me, ex.Message, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End Try
-    End Sub
-
-    Private Sub Btn_Buscar_Placa_Patente_Click(sender As Object, e As EventArgs) Handles Btn_Buscar_Placa_Patente.Click
-
-        Dim _Koenresp As String = _Sql.Fx_Trae_Dato("TABRETI", "KOENRESP", "KORETI = '" & Txt_CodRetirador.Tag & "'")
-
-        Dim _Sql_Filtro_Condicion_Extra As String
-
-        If Not String.IsNullOrEmpty(_Koenresp.Trim) Then
-
-            _Sql_Filtro_Condicion_Extra = "And KOENRESP = '" & _Koenresp & "'"
-
-        End If
-
-        Dim _Filtrar As New Clas_Filtros_Random(Me)
-
-        _Filtrar.Tabla = "TABPLACA"
-        _Filtrar.Campo = "PLACA"
-        _Filtrar.Descripcion = "DESCRIP"
-
-        Dim _Koen As String = _Row_Encabezado.Item("CodEntidad")
-
-        _Filtrar.Pro_Nombre_Encabezado_Informe = "PLACAS PATENTE"
-
-        If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra,
-                               Nothing, False, True) Then
-
-            Dim _Tbl_Placa As DataTable = _Filtrar.Pro_Tbl_Filtro
-
-            Dim _Row As DataRow = _Tbl_Placa.Rows(0)
-
-            Dim _Codigo = _Row.Item("Codigo").ToString.Trim
-            Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
-
-            Txt_Placa.Tag = _Codigo
-            Txt_Placa.Text = _Codigo
-
-        End If
-
-    End Sub
-
     Private Sub Txt_CodRetirador_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_CodRetirador.KeyDown
         If e.KeyValue = Keys.Delete Then
             Txt_CodRetirador.Tag = String.Empty
             Txt_CodRetirador.Text = String.Empty
             Lbl_Nombre_Retirador_Mercaderia.Text = String.Empty
         ElseIf e.KeyValue = Keys.Enter And String.IsNullOrEmpty(Txt_CodRetirador.Text.Trim) Then
-            Call Btn_Buscar_Retirador_Click(Nothing, Nothing)
+            Call Txt_CodRetirador_ButtonCustom2Click(Nothing, Nothing)
         End If
     End Sub
 
@@ -779,7 +736,7 @@ Public Class Frm_Formulario_Observaciones
             Txt_Placa.Tag = String.Empty
             Txt_Placa.Text = String.Empty
         ElseIf e.KeyValue = Keys.Enter And String.IsNullOrEmpty(Txt_Placa.Text.Trim) Then
-            Call Btn_Buscar_Placa_Patente_Click(Nothing, Nothing)
+            Sb_Placa_Patente()
         End If
     End Sub
 
@@ -829,30 +786,6 @@ Public Class Frm_Formulario_Observaciones
 
     Private Sub TxtOrdendecompra_TextChanged(sender As Object, e As EventArgs) Handles TxtOrdendecompra.TextChanged
         TxtOrdendecompra.Tag = TxtOrdendecompra.Text
-    End Sub
-
-    Private Sub Btn_Crear_Retirador_Click(sender As Object, e As EventArgs) Handles Btn_Crear_Retirador.Click
-
-        Dim _TblPermisos As DataTable = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
-
-        If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Tbl00045", _Ds_Matriz_Documentos, "", "") Then
-
-            Dim Fm As New Frm_Retirador_Mercaderia("")
-            Fm.ShowDialog(Me)
-            If Fm.Grabar Then
-                Dim _Row As DataRow = Fm.Row_Tabreti
-
-                Dim _Codigo = _Row.Item("KORETI")
-                Dim _Descripcion = _Row.Item("NORETI").ToString.Trim
-
-                Txt_CodRetirador.Tag = _Codigo
-                Txt_CodRetirador.Text = _Codigo
-                Lbl_Nombre_Retirador_Mercaderia.Text = _Descripcion
-            End If
-            Fm.Dispose()
-
-        End If
-
     End Sub
 
     Private Sub Frm_Formulario_Observaciones_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
@@ -991,4 +924,111 @@ Public Class Frm_Formulario_Observaciones
         Txt_MotivoNCV.Text = String.Empty
     End Sub
 
+    Private Sub Txt_Placa_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Placa.ButtonCustomClick
+        Sb_Placa_Patente()
+    End Sub
+
+    Sub Sb_Placa_Patente()
+
+        Dim _Koenresp As String = _Sql.Fx_Trae_Dato("TABRETI", "KOENRESP", "KORETI = '" & Txt_CodRetirador.Tag & "'")
+
+        Dim _Sql_Filtro_Condicion_Extra As String
+
+        If Not String.IsNullOrEmpty(_Koenresp.Trim) Then
+
+            _Sql_Filtro_Condicion_Extra = "And KOENRESP = '" & _Koenresp & "'"
+
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "TABPLACA"
+        _Filtrar.Campo = "PLACA"
+        _Filtrar.Descripcion = "DESCRIP"
+
+        Dim _Koen As String = _Row_Encabezado.Item("CodEntidad")
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "PLACAS PATENTE"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra,
+                               Nothing, False, True) Then
+
+            Dim _Tbl_Placa As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+            Dim _Row As DataRow = _Tbl_Placa.Rows(0)
+
+            Dim _Codigo = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_Placa.Tag = _Codigo
+            Txt_Placa.Text = _Codigo
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_CodRetirador_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_CodRetirador.ButtonCustomClick
+        Dim _TblPermisos As DataTable = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
+
+        If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Tbl00045", _Ds_Matriz_Documentos, "", "") Then
+
+            Dim Fm As New Frm_Retirador_Mercaderia("")
+            Fm.ShowDialog(Me)
+            If Fm.Grabar Then
+                Dim _Row As DataRow = Fm.Row_Tabreti
+
+                Dim _Codigo = _Row.Item("KORETI")
+                Dim _Descripcion = _Row.Item("NORETI").ToString.Trim
+
+                Txt_CodRetirador.Tag = _Codigo
+                Txt_CodRetirador.Text = _Codigo
+                Lbl_Nombre_Retirador_Mercaderia.Text = _Descripcion
+            End If
+            Fm.Dispose()
+
+        End If
+    End Sub
+
+    Private Sub Txt_CodRetirador_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_CodRetirador.ButtonCustom2Click
+        Try
+
+            Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+            _Filtrar.Tabla = "TABRETI"
+            _Filtrar.Campo = "KORETI"
+            _Filtrar.Descripcion = "NORETI"
+
+            _Filtrar.Pro_Nombre_Encabezado_Informe = "RETIRADORES DE MERCADERIA"
+
+            If _Filtrar.Fx_Filtrar(Nothing,
+                                   Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "",
+                                   Nothing, False, True) Then
+
+                Dim _Tbl_Retirador As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+                Dim _Row As DataRow = _Tbl_Retirador.Rows(0)
+
+                Dim _Codigo = _Row.Item("Codigo").ToString.Trim
+                Dim _Descripcion = _Row.Item("Descripcion").ToString.Trim
+
+                Txt_CodRetirador.Tag = _Codigo
+                Txt_CodRetirador.Text = _Codigo
+                Lbl_Nombre_Retirador_Mercaderia.Text = _Descripcion
+
+            End If
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Problema", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
+
+    End Sub
+
+    Private Sub Chk_Deshabilitar_ObsAdicionales_CheckedChanged(sender As Object, e As EventArgs)
+        If Chk_Deshabilitar_ObsAdicionales.Checked Then
+            If Not Fx_Tiene_Permiso(Me, "Doc00162") Then
+                Chk_Deshabilitar_ObsAdicionales.Checked = False
+            End If
+        End If
+        Grupo_OtrasObservaciones.Enabled = Chk_Deshabilitar_ObsAdicionales.Checked
+    End Sub
 End Class

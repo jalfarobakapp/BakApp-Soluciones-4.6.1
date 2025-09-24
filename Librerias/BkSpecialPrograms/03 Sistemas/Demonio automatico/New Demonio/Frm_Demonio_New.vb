@@ -1269,7 +1269,14 @@ Public Class Frm_Demonio_New
 
                 _Cl_Consolidacion_Stock.Log_Registro = String.Empty
                 _Cl_Consolidacion_Stock.Fecha_Revision = DtpFecharevision.Value
-                _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me)
+
+                Consulta_sql = "Select EMPRESA From CONFIGP"
+                Dim _Tbl_Configp As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                For Each _Row As DataRow In _Tbl_Configp.Rows
+                    Dim _Empresa = _Row.Item("EMPRESA")
+                    _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me, _Empresa)
+                Next
 
                 registro = "Tarea ejecutada (Consolidación de stock) a las: " & DateTime.Now.ToString()
                 registro += _Cl_Consolidacion_Stock.Log_Registro & vbCrLf
@@ -1330,7 +1337,7 @@ Public Class Frm_Demonio_New
                     _Mod.Sb_Actualiza_Formatos_X_Modalidad(False)
                     _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "", False, _Empresa_Ori)
                     _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, _Modalidad_Ori, False, _Empresa_Ori)
-                    _Mod.Sb_Actualizar_Variables_Modalidad(_Modalidad_Ori, False)
+                    _Mod.Sb_Actualizar_Variables_Modalidad(_Modalidad_Ori, False, _Empresa_Ori)
                 End If
 
                 RegistrarLog(registro)
@@ -1624,7 +1631,7 @@ Public Class Frm_Demonio_New
                 Dim _Cons_Stock_Todos As Boolean = _Cl_Consolidacion_Stock.Cons_Stock_Todos
 
                 _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy = True
-                _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me)
+                _Cl_Consolidacion_Stock.Sb_Procedimiento_Consolidar_Stock(Me, Mod_Empresa)
 
                 _Cl_Consolidacion_Stock.Cons_Stock_Mov_Hoy = _Cons_Stock_Mov_Hoy
                 _Cl_Consolidacion_Stock.Cons_Stock_Todos = _Cons_Stock_Todos
@@ -1806,7 +1813,15 @@ Public Class Frm_Demonio_New
                 MostrarRegistro(registro)
 
                 _Cl_RecalculoPPP.Log_Registro = String.Empty
-                _Cl_RecalculoPPP.Sb_RecalcularPPP(Me)
+
+                Consulta_sql = "Select EMPRESA From CONFIGP"
+                Dim _Tbl_Configp As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                For Each _Row As DataRow In _Tbl_Configp.Rows
+                    Dim _Empresa = _Row.Item("EMPRESA")
+                    _Cl_RecalculoPPP.Sb_RecalcularPPP(Me, _Empresa)
+                Next
+
 
                 registro = "Tarea ejecutada (Recalculo del PPP) a las: " & DateTime.Now.ToString()
                 registro += _Cl_RecalculoPPP.Log_Registro & vbCrLf

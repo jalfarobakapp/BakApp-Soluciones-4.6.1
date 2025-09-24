@@ -24,7 +24,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_BkpPostBusquedaEspecial_Mt))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.BtnCrearProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.LblOculto = New DevComponents.DotNetBar.LabelItem()
@@ -101,6 +101,12 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Chk_MostrarVendidosUlt3Meses = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_StockFisicoMayorCero = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Imagenes_20x20 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
+        Me.Imagenes_32x32_Dark = New System.Windows.Forms.ImageList(Me.components)
+        Me.Btn_Filtrar = New DevComponents.DotNetBar.ButtonX()
+        Me.Imagenes_16x16_Dark = New System.Windows.Forms.ImageList(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_BusquedaProducto.SuspendLayout()
         CType(Me.Context_Menu_Solicitud_Compra, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -243,14 +249,16 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.TxtCodigo.Border.Class = "TextBoxBorder"
         Me.TxtCodigo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.TxtCodigo.ButtonCustom.Image = CType(resources.GetObject("TxtCodigo.ButtonCustom.Image"), System.Drawing.Image)
+        Me.TxtCodigo.ButtonCustom.Visible = True
         Me.TxtCodigo.DisabledBackColor = System.Drawing.Color.White
         Me.TxtCodigo.FocusHighlightColor = System.Drawing.Color.PaleTurquoise
         Me.TxtCodigo.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TxtCodigo.ForeColor = System.Drawing.Color.Black
-        Me.TxtCodigo.Location = New System.Drawing.Point(556, 3)
+        Me.TxtCodigo.Location = New System.Drawing.Point(541, 3)
         Me.TxtCodigo.Name = "TxtCodigo"
         Me.TxtCodigo.PreventEnterBeep = True
-        Me.TxtCodigo.Size = New System.Drawing.Size(96, 22)
+        Me.TxtCodigo.Size = New System.Drawing.Size(111, 22)
         Me.TxtCodigo.TabIndex = 23
         '
         'Txt_Ficha
@@ -391,6 +399,8 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.Txt_CodAlternativo.Border.Class = "TextBoxBorder"
         Me.Txt_CodAlternativo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CodAlternativo.ButtonCustom.Image = CType(resources.GetObject("Txt_CodAlternativo.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_CodAlternativo.ButtonCustom.Visible = True
         Me.Txt_CodAlternativo.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_CodAlternativo.FocusHighlightColor = System.Drawing.Color.PaleTurquoise
         Me.Txt_CodAlternativo.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -409,12 +419,14 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.Txtdescripcion.Border.Class = "TextBoxBorder"
         Me.Txtdescripcion.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txtdescripcion.ButtonCustom.Image = CType(resources.GetObject("Txtdescripcion.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txtdescripcion.ButtonCustom.Visible = True
         Me.Txtdescripcion.DisabledBackColor = System.Drawing.Color.White
         Me.Txtdescripcion.ForeColor = System.Drawing.Color.Black
         Me.Txtdescripcion.Location = New System.Drawing.Point(4, 3)
         Me.Txtdescripcion.Name = "Txtdescripcion"
         Me.Txtdescripcion.PreventEnterBeep = True
-        Me.Txtdescripcion.Size = New System.Drawing.Size(501, 22)
+        Me.Txtdescripcion.Size = New System.Drawing.Size(486, 22)
         Me.Txtdescripcion.TabIndex = 59
         '
         'LabelX2
@@ -425,7 +437,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(511, 3)
+        Me.LabelX2.Location = New System.Drawing.Point(496, 3)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(39, 23)
         Me.LabelX2.TabIndex = 24
@@ -454,7 +466,7 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Context_Menu_Solicitud_Compra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
         Me.Context_Menu_Solicitud_Compra.Location = New System.Drawing.Point(194, 158)
         Me.Context_Menu_Solicitud_Compra.Name = "Context_Menu_Solicitud_Compra"
-        Me.Context_Menu_Solicitud_Compra.Size = New System.Drawing.Size(119, 25)
+        Me.Context_Menu_Solicitud_Compra.Size = New System.Drawing.Size(404, 25)
         Me.Context_Menu_Solicitud_Compra.Stretch = True
         Me.Context_Menu_Solicitud_Compra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Context_Menu_Solicitud_Compra.TabIndex = 50
@@ -859,14 +871,14 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(5, 146)
         Me.Grilla.Name = "Grilla"
@@ -908,11 +920,60 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
         Me.Chk_StockFisicoMayorCero.TabIndex = 60
         Me.Chk_StockFisicoMayorCero.Text = "Stock físico > 0"
         '
+        'Imagenes_20x20
+        '
+        Me.Imagenes_20x20.ImageStream = CType(resources.GetObject("Imagenes_20x20.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_20x20.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_20x20.Images.SetKeyName(0, "filter-ok.png")
+        Me.Imagenes_20x20.Images.SetKeyName(1, "filter.png")
+        '
+        'Imagenes_16x16
+        '
+        Me.Imagenes_16x16.ImageStream = CType(resources.GetObject("Imagenes_16x16.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_16x16.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_16x16.Images.SetKeyName(0, "ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(1, "delete.png")
+        Me.Imagenes_16x16.Images.SetKeyName(2, "filter-ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(3, "filter.png")
+        '
+        'Imagenes_32x32
+        '
+        Me.Imagenes_32x32.ImageStream = CType(resources.GetObject("Imagenes_32x32.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_32x32.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_32x32.Images.SetKeyName(0, "filter.png")
+        Me.Imagenes_32x32.Images.SetKeyName(1, "filter-ok.png")
+        '
+        'Imagenes_32x32_Dark
+        '
+        Me.Imagenes_32x32_Dark.ImageStream = CType(resources.GetObject("Imagenes_32x32_Dark.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_32x32_Dark.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_32x32_Dark.Images.SetKeyName(0, "filter.png")
+        Me.Imagenes_32x32_Dark.Images.SetKeyName(1, "filter-ok.png")
+        '
+        'Btn_Filtrar
+        '
+        Me.Btn_Filtrar.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Filtrar.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Filtrar.Location = New System.Drawing.Point(737, 115)
+        Me.Btn_Filtrar.Name = "Btn_Filtrar"
+        Me.Btn_Filtrar.Size = New System.Drawing.Size(119, 25)
+        Me.Btn_Filtrar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Filtrar.TabIndex = 61
+        Me.Btn_Filtrar.Text = "Filtrar"
+        '
+        'Imagenes_16x16_Dark
+        '
+        Me.Imagenes_16x16_Dark.ImageStream = CType(resources.GetObject("Imagenes_16x16_Dark.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_16x16_Dark.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(0, "filter.png")
+        Me.Imagenes_16x16_Dark.Images.SetKeyName(1, "filter-ok.png")
+        '
         'Frm_BkpPostBusquedaEspecial_Mt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(860, 631)
+        Me.Controls.Add(Me.Btn_Filtrar)
         Me.Controls.Add(Me.Chk_StockFisicoMayorCero)
         Me.Controls.Add(Me.Chk_MostrarVendidosUlt3Meses)
         Me.Controls.Add(Me.Context_Menu_Solicitud_Compra)
@@ -1023,4 +1084,10 @@ Partial Class Frm_BkpPostBusquedaEspecial_Mt
     Public WithEvents Txt_CodAlternativo As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Chk_MostrarVendidosUlt3Meses As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_StockFisicoMayorCero As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Imagenes_20x20 As ImageList
+    Friend WithEvents Imagenes_16x16 As ImageList
+    Friend WithEvents Imagenes_32x32 As ImageList
+    Friend WithEvents Imagenes_32x32_Dark As ImageList
+    Friend WithEvents Btn_Filtrar As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Imagenes_16x16_Dark As ImageList
 End Class

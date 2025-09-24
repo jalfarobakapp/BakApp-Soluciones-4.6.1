@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms.DataVisualization.Charting
+Imports BkSpecialPrograms.Frm_BkpPostBusquedaEspecial_Mt
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Inf_Ventas_X_Periodo_Cubo
@@ -51,6 +52,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     Dim _Tbl_Filtro_EntidadExcluidas As DataTable
     Dim _Tbl_Filtro_ProductosExcluidos As DataTable
 
+    Dim _Tbl_Filtro_GruposVendAsociados As DataTable
+    Dim _Tbl_Filtro_GruposVendDetDocumentos As DataTable
+
     Dim _Filtro_Entidad_Todas As Boolean
     Dim _Filtro_SucursalDoc_Todas As Boolean
     Dim _Filtro_Sucursales_Todas As Boolean
@@ -79,6 +83,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     Dim _Filtro_Tama_Empresa_Todas As Boolean
 
     Dim _Filtro_Clas_BakApp_Todas As Boolean
+
+    Dim _Filtro_GruposVendAsociados_Todas As Boolean
+    Dim _Filtro_GruposVendDetDocumentos_Todas As Boolean
 
     Dim _Cp_Codigo, _Cp_Descripcion, _Tx_Descripcion As String
 
@@ -526,11 +533,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_Tama_Empresa = value
         End Set
     End Property
-    Public Property FechaDesdeFd As Date
-    Public Property FechaHastaFh As Date
-    Public Property Comisiones As Boolean
-    Public Property TotalNetoComisiones As Double
-    Public Property ImportarComisiones As Boolean
     Public Property Tbl_Filtro_EntidadExcluidas As DataTable
         Get
             Return _Tbl_Filtro_EntidadExcluidas
@@ -547,6 +549,30 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Tbl_Filtro_ProductosExcluidos = value
         End Set
     End Property
+    Public Property Tbl_Filtro_GruposAsociados As DataTable
+        Get
+            Return _Tbl_Filtro_GruposVendAsociados
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_GruposVendAsociados = value
+        End Set
+    End Property
+    Public Property Tbl_Filtro_GruposDocumentos As DataTable
+        Get
+            Return _Tbl_Filtro_GruposVendDetDocumentos
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_GruposVendDetDocumentos = value
+        End Set
+    End Property
+
+
+    Public Property FechaDesdeFd As Date
+    Public Property FechaHastaFh As Date
+    Public Property Comisiones As Boolean
+    Public Property TotalNetoComisiones As Double
+    Public Property ImportarComisiones As Boolean
+    Public Property UltFiltroSeleccionado As String
 
     Public Sub New(Informe As Enum_Informe,
                    Nombre_Tabla_Paso As String,
@@ -557,19 +583,55 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
 
+        _Filtro_Vendedores_Todas = True
         _Filtro_Vendedores_Asignados_Todas = True
 
         If Fx_Tiene_Permiso(Me, "Inf00025", , False) Then
 
             _Filtro_Vendedores_Asignados_Todas = True
 
+            If Fx_Tiene_Permiso(Nothing, "NO00022",, False) Then
+
+                Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+
+                If Not _Kogru.Contains("'") Then
+                    _Kogru = "'" & _Kogru & "'"
+                End If
+
+                _Filtro_Vendedores_Asignados_Todas = False
+
+                Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
+                               "From TABFU Where KOFU In (Select d.KOFU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & "))"
+                _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            End If
+
+            If Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
+
+                _Filtro_Vendedores_Asignados_Todas = False
+
+                Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
+                               "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
+                _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            End If
+
         Else
 
-            _Filtro_Vendedores_Asignados_Todas = False
+            'If Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
+
+            '_Filtro_Vendedores_Asignados_Todas = False
+            _Filtro_Vendedores_Todas = False
+
+            'Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
+            '               "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
+            '_Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
-                           "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
-            _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
+               "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
+            _Tbl_Filtro_Vendedores = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            'End If
 
         End If
 
@@ -595,7 +657,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         _Filtro_Tama_Empresa_Todas = True
         _Filtro_Lista_Precio_Asig_Todas = True
         _Filtro_Lista_Precio_Docu_Todas = True
-        _Filtro_Vendedores_Todas = True
+
         _Filtro_Responzables_Todas = True
         _Filtro_Productos_Todos = True
         _Filtro_Clalibpr_Todas = True
@@ -606,6 +668,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         _Filtro_Sub_Familias_Todas = True
         _Filtro_Zonas_Productos_Todas = True
         _Filtro_Clas_BakApp_Todas = True
+
+        _Filtro_GruposVendAsociados_Todas = True
+        _Filtro_GruposVendDetDocumentos_Todas = True
 
         Dtp_Fecha_Desde.Value = Fecha_Desde
         Dtp_Fecha_Hasta.Value = Fecha_Hasta
@@ -724,6 +789,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Tipo_Entidad_Todas = Not CBool(_Tbl_Filtro_Tipo_Entidad.Rows.Count)
             _Filtro_Act_Economica_Todas = Not CBool(_Tbl_Filtro_Act_Economica.Rows.Count)
             _Filtro_Tama_Empresa_Todas = Not CBool(_Tbl_Filtro_Tama_Empresa.Rows.Count)
+
+            _Filtro_GruposVendAsociados_Todas = Not CBool(_Tbl_Filtro_GruposVendAsociados.Rows.Count)
+            _Filtro_GruposVendDetDocumentos_Todas = Not CBool(_Tbl_Filtro_GruposVendDetDocumentos.Rows.Count)
 
             Tiempo.Start()
 
@@ -1519,9 +1587,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-
-
-
     Function Fx_Filtro_Detalle(Optional _Incluye_Fechas As Boolean = True)
 
         Dim _Filtro_SucursalDoc,
@@ -1549,7 +1614,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Sub_Familias,
             _Filtro_ClasLibre,
             _Filtro_Lista_Precio_Asig,
-            _Filtro_Lista_Precio_Docu As String
+            _Filtro_Lista_Precio_Docu,
+            _Filtro_GruposAsociados,
+            _Filtro_GruposDocumentos As String
 
         If _Filtro_SucursalDoc_Todas Then
             _Filtro_SucursalDoc = String.Empty
@@ -1734,6 +1801,20 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             _Filtro_Zonas_Pr = "And KOPRCT IN (Select KOPR From MAEPR Where ZONAPR In " & _Filtro_Zonas_Pr & ")" & vbCrLf
         End If
 
+        If _Filtro_GruposVendAsociados_Todas Then
+            _Filtro_GruposAsociados = String.Empty
+        Else
+            _Filtro_GruposAsociados = Generar_Filtro_IN(_Tbl_Filtro_GruposVendAsociados, "Chk", "Codigo", False, True, "")
+            _Filtro_GruposAsociados = "And KOGRU IN (" & _Filtro_GruposAsociados & ")" & vbCrLf
+        End If
+
+        If _Filtro_GruposVendDetDocumentos_Todas Then
+            _Filtro_GruposDocumentos = String.Empty
+        Else
+            _Filtro_GruposDocumentos = Generar_Filtro_IN(_Tbl_Filtro_GruposVendDetDocumentos, "Chk", "Codigo", False, True, "'")
+            _Filtro_GruposDocumentos = "And KOGRUDT IN " & _Filtro_GruposDocumentos & vbCrLf
+        End If
+
         '---------------------------
 
         Dim _SqlFiltro_Fechas As String
@@ -1777,6 +1858,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                               _Filtro_ClasLibre &
                               _Filtro_Lista_Precio_Asig &
                               _Filtro_Lista_Precio_Docu &
+                              _Filtro_GruposAsociados &
+                              _Filtro_GruposDocumentos &
                               _SqlFiltro_Fechas &
                               _Filtro_Tipr
 
@@ -3347,6 +3430,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     End Sub
 
     Private Sub Btn_Filtro_Ent_Ciudades_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Ciudades.Click
+
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -3371,9 +3455,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
         End If
+
     End Sub
 
     Private Sub Btn_Filtro_Ent_Comunas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Comunas.Click
+
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -3410,9 +3496,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
         End If
+
     End Sub
 
     Private Sub Btn_Filtro_Ent_Rubros_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Rubros.Click
+
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -3437,9 +3525,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
         End If
+
     End Sub
 
     Private Sub Btn_Filtro_Ent_Zonas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Zonas.Click
+
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -3464,9 +3554,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
         End If
+
     End Sub
 
     Private Sub Btn_Filtro_Ent_Tipo_Entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Tipo_Entidad.Click
+
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -3491,9 +3583,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
         End If
+
     End Sub
 
     Private Sub Btn_Filtro_Ent_Act_Economica_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Act_Economica.Click
+
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -3518,9 +3612,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
         End If
+
     End Sub
 
     Private Sub Btn_Filtro_Ent_Tamano_Empresa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Ent_Tamano_Empresa.Click
+
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -3545,9 +3641,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
         End If
+
     End Sub
 
     Private Sub Btn_Filtro_Responzables_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Responzables.Click
+
         Dim _SqlFiltro_Fechas As String
 
         _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
@@ -3570,35 +3668,62 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             Else
                 Cmb_Vista_Informe.SelectedValue = "KOFUDO"
             End If
+
         End If
+
     End Sub
 
     Private Sub Btn_Filtro_Vendedores_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Vendedores.Click
-        If Fx_Tiene_Permiso(Me, "Inf00025") Then
-            Dim _SqlFiltro_Fechas As String
 
-            _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+        If Not Fx_Tiene_Permiso(Me, "Inf00025") Then
+            Return
+        End If
+
+        Dim _SqlFiltro_Fechas As String
+
+        _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
                                  Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'"
 
-            Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select Distinct KOFULIDO From " &
+        Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select Distinct KOFULIDO From " &
                                               _Nombre_Tabla_Paso & vbCrLf & _SqlFiltro_Fechas & ")"
 
-            Dim _Filtrar As New Clas_Filtros_Random(Me)
+        If Fx_Tiene_Permiso(Nothing, "NO00022",, False) Then
 
-            If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Vendedores,
+            Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+
+            If Not _Kogru.Contains("'") Then
+                _Kogru = "'" & _Kogru & "'"
+            End If
+
+            _Filtro_Vendedores_Asignados_Todas = False
+
+            _Sql_Filtro_Condicion_Extra += vbCrLf & "And KOFU In (Select d.KOFU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & "))"
+
+        ElseIf Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
+
+            _Filtro_Vendedores_Asignados_Todas = False
+            _Sql_Filtro_Condicion_Extra += "And KOFU = '" & FUNCIONARIO & "'"
+
+        End If
+
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Vendedores,
                                    Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
                                    _Filtro_Vendedores_Todas, False) Then
 
-                _Tbl_Filtro_Vendedores = _Filtrar.Pro_Tbl_Filtro
-                _Filtro_Vendedores_Todas = _Filtrar.Pro_Filtro_Todas
+            _Tbl_Filtro_Vendedores = _Filtrar.Pro_Tbl_Filtro
+            _Filtro_Vendedores_Todas = _Filtrar.Pro_Filtro_Todas
 
-                If Cmb_Vista_Informe.SelectedValue = "KOFULIDO" Then
-                    Sb_Actualizar_Grilla(False)
-                Else
-                    Cmb_Vista_Informe.SelectedValue = "KOFULIDO"
-                End If
+            If Cmb_Vista_Informe.SelectedValue = "KOFULIDO" Then
+                Sb_Actualizar_Grilla(False)
+            Else
+                Cmb_Vista_Informe.SelectedValue = "KOFULIDO"
             End If
+
         End If
+
     End Sub
 
     Private Sub Btn_Filtro_Sucursales_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Sucursales.Click
@@ -3684,6 +3809,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Btn_Filtro_Ent_Lista_Precio_Doc.Image = Fx_Imagen_Filtro(_Filtro_Lista_Precio_Docu_Todas)
 
         Btn_Filtrar_Clas_BakApp.Image = Fx_Imagen_Filtro(_Filtro_Clas_BakApp_Todas)
+
+        Btn_Filtro_Grupo_Vendedores_Asociado.Image = Fx_Imagen_Filtro(_Filtro_GruposVendAsociados_Todas)
+        Btn_Filtro_Grupo_Vendedores_Documento.Image = Fx_Imagen_Filtro(_Filtro_GruposVendDetDocumentos_Todas)
 
         If Not _Filtro_Entidad_Todas Or
            Not _Filtro_Ciudad_Todas Or
@@ -3861,7 +3989,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         End If
 
-        _Filtro += _Filtro_Nodos
+        _Filtro += _Filtro_Nodos & vbCrLf & "And EMPRESA = '" & Mod_Empresa & "'"
 
         Dim Fm As New Frm_Inf_Ventas_X_Periodo_Sub_Informes_01(_Nombre_Tabla_Paso,
                                                                _Filtro,
@@ -3996,6 +4124,12 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     Private Sub Sb_Cmb_Vista_Informe_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
 
+        If Cmb_Vista_Informe.SelectedValue.ToString.Contains("KOGRU") Then
+            MessageBoxEx.Show(Me, "Función en desarrollo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Cmb_Vista_Informe.SelectedValue = UltFiltroSeleccionado
+            Return
+        End If
+
         _Row_Vista = Fx_Crea_Tabla_Con_Filtro(_Tbl_Vista_Informe,
                                               "CODIGO = '" & Cmb_Vista_Informe.SelectedValue & "'", "Id").Rows(0)
 
@@ -4005,6 +4139,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Else
             Btn_Vista_Informe.Enabled = False
         End If
+
+        UltFiltroSeleccionado = Cmb_Vista_Informe.SelectedValue
 
         Sb_Actualizar_Grilla(False)
 
@@ -4338,6 +4474,18 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         If Fx_Tiene_Permiso(Me, "Bkp00041") Then 'Doc00150
 
+            Dim _Kofu_Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kofu_Kogru",
+                                                          "CodFuncionario = '" & FUNCIONARIO & "'").ToString.Trim
+
+            If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+
+                _Kofu_Kogru = _Kofu_Kogru & " - " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Kofu_Kogru & "'").ToString.Trim
+
+                Sb_Confirmar_Lectura("Aun tiene su grupo de vendedores asociado a otro usuario." & vbCrLf &
+                                     _Kofu_Kogru, "Debe quitarlo desde su ficha de usuario.", eTaskDialogIcon.Exclamation, Nothing)
+
+            End If
+
             Dim Fm_Post As New Frm_Formulario_Documento("NVV", csGlobales.Enum_Tipo_Documento.Venta, False)
             'Fm_Post.Btn_Minimizar.Visible = True
             Fm_Post.MinimizeBox = False
@@ -4369,31 +4517,55 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     End Sub
 
     Private Sub Btn_Filtro_Vendedor_Asignado_Entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Filtro_Vendedor_Asignado_Entidad.Click
-        If Fx_Tiene_Permiso(Me, "Inf00025") Then
-            Dim _SqlFiltro_Fechas As String
 
-            _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
-                                 Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'"
-
-            Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select Distinct KOFUEN From " &
-                                              _Nombre_Tabla_Paso & vbCrLf & _SqlFiltro_Fechas & ")"
-
-            Dim _Filtrar As New Clas_Filtros_Random(Me)
-
-            If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Vendedores_Asignados,
-                                   Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
-                                   _Filtro_Vendedores_Asignados_Todas, False) Then
-
-                _Tbl_Filtro_Vendedores_Asignados = _Filtrar.Pro_Tbl_Filtro
-                _Filtro_Vendedores_Asignados_Todas = _Filtrar.Pro_Filtro_Todas
-
-                If Cmb_Vista_Informe.SelectedValue = "KOFUEN" Then
-                    Sb_Actualizar_Grilla(False)
-                Else
-                    Cmb_Vista_Informe.SelectedValue = "KOFUEN"
-                End If
-            End If
+        If Not Fx_Tiene_Permiso(Me, "Inf00025") Then
+            Return
         End If
+
+        Dim _SqlFiltro_Fechas As String
+
+        _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+                             Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'"
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select Distinct KOFUEN From " &
+                                          _Nombre_Tabla_Paso & vbCrLf & _SqlFiltro_Fechas & ")"
+
+        If Fx_Tiene_Permiso(Nothing, "NO00022",, False) Then
+
+            Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+
+            If Not _Kogru.Contains("'") Then
+                _Kogru = "'" & _Kogru & "'"
+            End If
+
+            _Filtro_Vendedores_Asignados_Todas = False
+
+            _Sql_Filtro_Condicion_Extra += vbCrLf & "And KOFU In (Select d.KOFU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & "))"
+
+        ElseIf Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
+
+            _Filtro_Vendedores_Asignados_Todas = False
+            _Sql_Filtro_Condicion_Extra += "And KOFU = '" & FUNCIONARIO & "'"
+
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Vendedores_Asignados,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
+                               _Filtro_Vendedores_Asignados_Todas, False) Then
+
+            _Tbl_Filtro_Vendedores_Asignados = _Filtrar.Pro_Tbl_Filtro
+            _Filtro_Vendedores_Asignados_Todas = _Filtrar.Pro_Filtro_Todas
+
+            If Cmb_Vista_Informe.SelectedValue = "KOFUEN" Then
+                Sb_Actualizar_Grilla(False)
+            Else
+                Cmb_Vista_Informe.SelectedValue = "KOFUEN"
+            End If
+
+        End If
+
     End Sub
 
     Private Sub Grilla_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
@@ -4898,6 +5070,88 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Dim Fm As New Frm_Inf_Ventas_CumplClientes(Dtp_Fecha_Desde.Value, Dtp_Fecha_Hasta.Value, _Tbl_FiltroVendedores)
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Filtro_Grupo_Vendedores_Documento_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Grupo_Vendedores_Documento.Click
+        MessageBoxEx.Show(Me, "Función en desarrollo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Return
+        If Fx_Tiene_Permiso(Me, "NO00021",, False) Then
+            MessageBoxEx.Show(Me, "Usted no tiene permiso para usar este filtro ya que tiene una restricción de visualización",
+                              "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _SqlFiltro_Fechas As String
+
+        _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+                                 Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'"
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOGRU In (Select Distinct KOGRUDT From " &
+                                              _Nombre_Tabla_Paso & vbCrLf & _SqlFiltro_Fechas & ")"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "TABFUGE"
+        _Filtrar.Campo = "KOGRU"
+        _Filtrar.Descripcion = "NOKOGRU"
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_GruposVendDetDocumentos,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra,
+                               _Filtro_GruposVendDetDocumentos_Todas) Then
+
+            _Tbl_Filtro_GruposVendDetDocumentos = _Filtrar.Pro_Tbl_Filtro
+            _Filtro_GruposVendDetDocumentos_Todas = _Filtrar.Pro_Filtro_Todas
+
+            If Cmb_Vista_Informe.SelectedValue = "KOGRUDT" Then
+                Sb_Actualizar_Grilla(False)
+            Else
+                Cmb_Vista_Informe.SelectedValue = "KOGRUDT"
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Filtro_Grupo_Vendedores_Asociado_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Grupo_Vendedores_Asociado.Click
+        MessageBoxEx.Show(Me, "Función en desarrollo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Return
+        If Fx_Tiene_Permiso(Me, "NO00021",, False) Then
+            MessageBoxEx.Show(Me, "Usted no tiene permiso para usar este filtro ya que tiene una restricción de visualización",
+                              "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _SqlFiltro_Fechas As String
+
+        _SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
+                                 Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'"
+
+        Dim _Sql_Filtro_Condicion_Extra = "And KOGRU In (Select Distinct KOGRU From " &
+                                              _Nombre_Tabla_Paso & vbCrLf & _SqlFiltro_Fechas & ")"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = "TABFUGE"
+        _Filtrar.Campo = "KOGRU"
+        _Filtrar.Descripcion = "NOKOGRU"
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_GruposVendDetDocumentos,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra,
+                               _Filtro_GruposVendDetDocumentos_Todas) Then
+
+            _Tbl_Filtro_GruposVendDetDocumentos = _Filtrar.Pro_Tbl_Filtro
+            _Filtro_GruposVendDetDocumentos_Todas = _Filtrar.Pro_Filtro_Todas
+
+            If Cmb_Vista_Informe.SelectedValue = "KOGRU" Then
+                Sb_Actualizar_Grilla(False)
+            Else
+                Cmb_Vista_Informe.SelectedValue = "KOGRU"
+            End If
+
+        End If
 
     End Sub
 

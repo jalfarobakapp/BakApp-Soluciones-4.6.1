@@ -136,6 +136,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
                             Or NroRemota In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas_Notif Where CodFuncionario_Destino = '" & FUNCIONARIO & "')
                           
                             Select * From #Paso Where Empresa = '" & Mod_Empresa & "'
+                            Order by Fecha,Hora
                             Drop Table #Paso"
 
             _TblRemotas = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -360,12 +361,9 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
         Dim _CodEntidad As String = _Fila.Cells("CodEntidad").Value
         Dim _CodSucEntidad As String = _Fila.Cells("CodSucEntidad").Value
 
-
         Dim _DsDocumento As DataSet
-
         Dim _Tbl_Encabezado As DataTable
         Dim _Tbl_Detalle As DataTable
-
 
         Dim _CodPermiso As String = _Fila.Cells("CodPermiso").Value
 
@@ -382,7 +380,15 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
         If Not _Eliminada Then
 
-            If _Permiso_BakApp.Fx_Tiene_Permiso(_CodPermiso, _Funcionario, True, False, , , , False, False) Then
+            Dim _CodEntidadP = String.Empty
+            Dim _CodSucEntidadP = String.Empty
+
+            If _CodPermiso = "Doc00161" Then
+                _CodEntidadP = _CodEntidad
+                _CodSucEntidadP = _CodSucEntidad
+            End If
+
+            If _Permiso_BakApp.Fx_Tiene_Permiso(_CodPermiso, _Funcionario, True, False, , _CodEntidadP, _CodSucEntidadP, False, False) Then
 
                 Dim _Rows_Info_Remota As DataRow
                 Dim _Rows_Usuario_Autoriza As DataRow

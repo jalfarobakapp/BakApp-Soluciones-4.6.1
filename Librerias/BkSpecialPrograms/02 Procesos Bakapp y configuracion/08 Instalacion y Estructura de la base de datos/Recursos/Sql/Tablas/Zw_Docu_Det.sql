@@ -12,6 +12,9 @@ CREATE TABLE [dbo].[Zw_Docu_Det](
     [Empresa]           [char](2)       NOT NULL DEFAULT (''),
 	[Sucursal]          [varchar](3)    NOT NULL DEFAULT (''),
 	[Bodega]            [varchar](3)    NOT NULL DEFAULT (''),
+    [IdCont]			[int]			NOT NULL DEFAULT (0),
+    [Contenedor]        [varchar](20)   NOT NULL DEFAULT (''),
+    [Grupo]             [varchar](15)   NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Docu_Det] PRIMARY KEY CLUSTERED 
 (
 	[Idmaeddo] ASC,

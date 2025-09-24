@@ -21,7 +21,7 @@ Public Class Frm_Formulario_Permisos_Asociados_New
     Dim _Tbl_Funcionarios_X_09_FVigenciaCrVencida As DataTable
     Dim _Tbl_Funcionarios_X_10_DocSinPickear As DataTable
     Dim _Tbl_Funcionarios_X_11_RazonTransfomDescativada As DataTable
-    'Dim _Tbl_Funcionarios_X_12_Protestos As DataTable
+    Dim _Tbl_Funcionarios_X_12_CambiarVendedorCliente As DataTable
 
     Dim _Id_Enc As Integer
     Dim _Id_DocEnc As Integer
@@ -280,8 +280,9 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl = _Tbl_Funcionarios_X_10_DocSinPickear
                 Case "Doc00102"
                     _Tbl = _Tbl_Funcionarios_X_11_RazonTransfomDescativada
-                    'Case "Doc00103"
-                    '    _Tbl = _Tbl_Funcionarios_X_12_Protestos
+                Case "Doc00161"
+                    _Tbl = _Tbl_Funcionarios_X_12_CambiarVendedorCliente
+
             End Select
 
             If _Revisar Then
@@ -461,6 +462,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                         _Tbl = _Tbl_Funcionarios_X_10_DocSinPickear
                     Case "Doc00102"
                         _Tbl = _Tbl_Funcionarios_X_11_RazonTransfomDescativada
+                    Case "Doc00161"
+                        _Tbl = _Tbl_Funcionarios_X_12_CambiarVendedorCliente
                         'Case "Doc00103"
                         '    _Tbl = _Tbl_Funcionarios_X_12_Protestos
                 End Select
@@ -625,6 +628,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                 _Tbl = _Tbl_Funcionarios_X_10_DocSinPickear
             Case "Doc00102"
                 _Tbl = _Tbl_Funcionarios_X_11_RazonTransfomDescativada
+            Case "Doc00161"
+                _Tbl = _Tbl_Funcionarios_X_12_CambiarVendedorCliente
                 'Case "Doc00103"
                 '    _Tbl = _Tbl_Funcionarios_X_12_Protestos
         End Select
@@ -656,6 +661,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl_Funcionarios_X_10_DocSinPickear = _Tbl
                 Case "Doc00102"
                     _Tbl_Funcionarios_X_11_RazonTransfomDescativada = _Tbl
+                Case "Doc00161"
+                    _Tbl_Funcionarios_X_12_CambiarVendedorCliente = _Tbl
                     'Case "Doc00103"
                     '    _Tbl_Funcionarios_X_12_Protestos = _Tbl
             End Select
@@ -675,9 +682,14 @@ Public Class Frm_Formulario_Permisos_Asociados_New
         Dim _RowPermiso As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Descripcion = _RowPermiso.Item("DescripcionPermiso")
+        Dim _CondicionExtra = String.Empty
+
+        If _Codpermiso = "Doc00161" Then
+            _CondicionExtra = vbCrLf & " Or CodUsuario = '" & _Row_Entidad.Item("KOFUEN") & "'"
+        End If
 
         Consulta_sql = "Select CodUsuario From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
-                       "Where CodPermiso = '" & _Codpermiso & "'"
+                       "Where CodPermiso = '" & _Codpermiso & "'" & _CondicionExtra
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
         Dim _Filtro_Usuarios_NOT_In As String
 
@@ -789,6 +801,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl_Funcionarios_X_10_DocSinPickear = Nothing
                 Case "Doc00102"
                     _Tbl_Funcionarios_X_11_RazonTransfomDescativada = Nothing
+                Case "Doc00161"
+                    _Tbl_Funcionarios_X_12_CambiarVendedorCliente = Nothing
                     'Case "Doc00103"
                     '    _Tbl_Funcionarios_X_12_Protestos = Nothing
             End Select

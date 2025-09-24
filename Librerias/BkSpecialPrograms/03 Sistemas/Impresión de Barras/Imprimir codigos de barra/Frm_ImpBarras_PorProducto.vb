@@ -277,7 +277,9 @@ Public Class Frm_ImpBarras_PorProducto
 
 #Region "IMPRIMIR ETIQUETAS"
 
-    Sub Sb_Imprimir_Etiquetas(_ImprimirAIP As Boolean, _VistaPrevia As Boolean)
+    Sub Sb_Imprimir_Etiquetas(_ImprimirAIP As Boolean,
+                              _VistaPrevia As Boolean,
+                              Optional _FilaImpr As Object = Nothing)
 
         Try
 
@@ -310,8 +312,11 @@ Public Class Frm_ImpBarras_PorProducto
 
             End If
 
-
             For Each _Fila As DataRow In _TblDetalle.Rows
+
+                If Not IsNothing(_FilaImpr) Then
+                    _Fila = _FilaImpr
+                End If
 
                 Dim CanXlinea As Double = _CantPorLinea
                 Dim Veces As Double = _Fila("Cantidad").ToString()
@@ -358,6 +363,8 @@ Public Class Frm_ImpBarras_PorProducto
                     _Sucursal = _ESB(1)
                     _Bodega = _ESB(2)
 
+                    Dim _KopralLeido As Boolean = _Fila("KopralLeido")
+
                     For w = 1 To Veces
 
                         Dim _Imp As New Class_Imprimir_Barras
@@ -374,7 +381,9 @@ Public Class Frm_ImpBarras_PorProducto
                                                   Chk_ImprimiPrecioFuturo.Checked,
                                                   Id_PrecioFuturo,
                                                   _CodAlternativo,
-                                                  _ImprimirAIP, _VistaPrevia)
+                                                  _ImprimirAIP,
+                                                  _VistaPrevia,
+                                                  _KopralLeido)
 
                         If Not String.IsNullOrEmpty(_Imp.Error) Then
                             If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
@@ -383,8 +392,6 @@ Public Class Frm_ImpBarras_PorProducto
                         End If
 
                         If _VistaPrevia Then
-
-                            Dim _KopralLeido As Boolean = _Fila("KopralLeido")
 
                             Dim Fm As New Frm_ImpBarras_Preview(_Imp.Ult_Etiqueta, Cmbetiquetas.SelectedValue, _Codigo)
                             Fm.ShowDialog(Me)
@@ -779,6 +786,12 @@ Public Class Frm_ImpBarras_PorProducto
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
 
+        ' Nueva variable _Row de tipo DataRow que guarda el registro seleccionado
+        Dim _Row As DataRow = Nothing
+        If Not IsNothing(_Fila.DataBoundItem) AndAlso TypeOf _Fila.DataBoundItem Is DataRowView Then
+            _Row = CType(_Fila.DataBoundItem, DataRowView).Row
+        End If
+
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
         Dim _Descripcion As String = _Fila.Cells("Descripcion").Value.ToString.Trim
 
@@ -809,7 +822,7 @@ Public Class Frm_ImpBarras_PorProducto
 
         Else
 
-            Sb_Imprimir_Etiquetas(False, True)
+            Sb_Imprimir_Etiquetas(False, True, _Row)
 
         End If
 

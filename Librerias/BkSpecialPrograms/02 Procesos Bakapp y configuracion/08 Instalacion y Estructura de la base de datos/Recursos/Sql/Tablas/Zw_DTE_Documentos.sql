@@ -17,5 +17,5 @@ CREATE TABLE [dbo].[Zw_DTE_Documentos](
     [ErrorEnvioDTE]	        [bit]           NOT NULL DEFAULT (0),       
     [Eliminado]	            [bit]           NOT NULL DEFAULT (0), 
     [CaratulaXmlEmail]	    [varchar](max)	NOT NULL DEFAULT (''),
-    [Empresa]               [char](3)		NOT NULL DEFAULT (''),
+    [Empresa]               [char](2)		NOT NULL DEFAULT (''),
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]

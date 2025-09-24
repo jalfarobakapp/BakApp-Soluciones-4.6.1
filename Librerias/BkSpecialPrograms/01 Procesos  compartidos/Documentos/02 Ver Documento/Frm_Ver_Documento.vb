@@ -1,7 +1,9 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
+Imports BkSpecialPrograms.PreVenta
 Imports DevComponents.DotNetBar
 Imports MySql.Data.Authentication
+Imports OfficeOpenXml.FormulaParsing.LexicalAnalysis
 Imports PdfSharp
 Imports PdfSharp.Drawing
 Imports PdfSharp.Drawing.Layout
@@ -68,6 +70,7 @@ Public Class Frm_Ver_Documento
 
     Dim _Cl_Contenedor As New Cl_Contenedor
 
+    Public Property Documento_Eliminado As Boolean
     Enum _Sector
         Encabezado
         Pie
@@ -254,6 +257,11 @@ Public Class Frm_Ver_Documento
                         _Idmaeedo = _Sql.Fx_Trae_Dato("MAEEDO", "IDMAEEDO",
                                                       "EMPRESA = '" & Mod_Empresa & "' And TIDO = '" & _Tido &
                                                       "' and NUDO = '" & _Nudo & "' And ENDO = '" & _Endo & "'  And SUENDO = '" & _Suendo & "'",,, 0)
+
+                        If _Idmaeedo = 0 Then
+                            Documento_Eliminado = True
+                            Return
+                        End If
 
                     End If
 
@@ -543,11 +551,13 @@ Public Class Frm_Ver_Documento
             Dim _Tido = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
             Dim _Nudo = Trim(_TblEncabezado.Rows(0).Item("NUDO"))
 
-            If _Tido = "NVV" AndAlso
+            Dim _Esdo = _TblEncabezado.Rows(0).Item("ESDO")
+
+            If _Esdo <> "N" AndAlso _Tido = "NVV" AndAlso
                 _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") AndAlso
                 _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL Then
 
-                _Customizable = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Customizable", "Idmaeedo = " & _Idmaeedo)
+                _Customizable = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Customizable", "Idmaeedo = " & _Idmaeedo,,,, True)
 
                 Lbl_CusNVV.Visible = _Customizable
                 Btn_CusNVV.Visible = _Customizable
@@ -3069,34 +3079,34 @@ Public Class Frm_Ver_Documento
             Dim _ImpresosaPredt As String = _Instance.PrinterName
             Dim _Seleccionar_Impresora = True
 
+            Dim _Accion_Imprimir As Enum_Accion_Imprimir
+
+            Dim _Mensaje As LsValiciones.Mensajes = Fx_Tipo_Impresion()
+
+            If _Mensaje.EsCorrecto Then
+                _Accion_Imprimir = _Mensaje.Tag
+            Else
+                Return
+            End If
+
             Select Case _Tipo_Impresion
 
                 Case Enum_Tipo_Impresion.Imprimir, Enum_Tipo_Impresion.Vista_Previa
 
                     _Vista_Previa = (_Tipo_Impresion = Enum_Tipo_Impresion.Vista_Previa)
 
-                    'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
-                    '                                       True, _Seleccionar_Impresora, _ImpresosaPredt, _Vista_Previa, 1, True, _Subtido)
-
-                    Dim _Mensaje As LsValiciones.Mensajes
-
                     _Mensaje = Fx_Enviar_A_Imprimir_Documento(Me, _NombreFormato, _Idmaeedo,
-                                                           True, _Seleccionar_Impresora, _ImpresosaPredt, _Vista_Previa, 1, True, _Subtido)
+                                                              True, _Seleccionar_Impresora,
+                                                              _ImpresosaPredt, _Vista_Previa, 1, True, _Subtido, _Accion_Imprimir)
 
                     If Not _Mensaje.EsCorrecto Then
                         MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Problemas al Imprimir",
                                           MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     End If
 
-                    'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                    '    MessageBox.Show(Me, _Imprime, "Problemas al Imprimir",
-                    '       MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    'End If
-
-
                 Case Enum_Tipo_Impresion.PDF
 
-                    Fx_Imprimir_En_PDF(_NombreFormato)
+                    Fx_Imprimir_En_PDF(_NombreFormato, _Accion_Imprimir)
 
             End Select
 
@@ -3109,7 +3119,90 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Function Fx_Imprimir_En_PDF(_NombreFormato As String) As Boolean
+    Function Fx_Tipo_Impresion() As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Consulta_sql = "Select Distinct Edo.TIDO As TD,Edo.NUDO As Numero,FEEMDO As FEmision,VABRDO As Monto" & vbCrLf &
+                           "From MAEEDO Edo" & vbCrLf &
+                           "Inner Join MAEDDO Ddo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
+                           "Where Ddo.IDMAEDDO In (Select IDRST From MAEDDO Where IDMAEEDO = " & _Idmaeedo & ")"
+
+            Dim _Tbl_Documentos_Previos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            If Not CBool(_Tbl_Documentos_Previos.Rows.Count) Then
+                _Mensaje.EsCorrecto = True
+                Throw New InvalidOperationException("No tiene documentos relacionados")
+            End If
+
+            Dim _Accion_Imprimir As Enum_Accion_Imprimir
+
+            Dim Rdb_Detalle As New Command
+            Rdb_Detalle.Checked = True
+            Rdb_Detalle.Name = "Rdb_Detalle"
+            Rdb_Detalle.Text = "Detalle del documento"
+
+            Dim Rdb_DocPrevios1 As New Command
+            Rdb_DocPrevios1.Checked = False
+            Rdb_DocPrevios1.Name = "Rdb_DocPrevios1"
+            Rdb_DocPrevios1.Text = "Documentos Previos (TD-Num-F.Emi)"
+
+            Dim Rdb_DocPrevios2 As New Command
+            Rdb_DocPrevios2.Checked = False
+            Rdb_DocPrevios2.Name = "Rdb_DocPrevios2"
+            Rdb_DocPrevios2.Text = "Documentos Previos (Num-F.Emi-Monto)"
+
+            Dim Rdb_DocPrevios3 As New Command
+            Rdb_DocPrevios3.Checked = False
+            Rdb_DocPrevios3.Name = "Rdb_DocPrevios3"
+            Rdb_DocPrevios3.Text = "Documentos Previos (TD-Num-F.Emi-Monto)"
+
+
+            Dim _Opciones() As Command = {Rdb_Detalle, Rdb_DocPrevios1, Rdb_DocPrevios2, Rdb_DocPrevios3}
+
+            Dim _Info As New TaskDialogInfo("Imprimir documento",
+                                          eTaskDialogIcon.Information2,
+                                          "Seleccione tipo de impresión",
+                                          "Confirme su opción",
+                                          eTaskDialogButton.Ok + eTaskDialogButton.Cancel, eTaskDialogBackgroundColor.Red,
+                                          _Opciones, Nothing, Nothing, "Tipo de impresión", ImageList_16x16.Images.Item("printer.png"))
+
+            Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+            If _Resultado <> eTaskDialogResult.Ok Then
+                _Mensaje.Cancelado = True
+                _Mensaje.EsCorrecto = False
+                Throw New InvalidOperationException("Acción cancelada por el usuario")
+            End If
+
+            If Rdb_Detalle.Checked Then
+                _Accion_Imprimir = Enum_Accion_Imprimir.Detalle
+            ElseIf Rdb_DocPrevios1.Checked Then
+                _Accion_Imprimir = Enum_Accion_Imprimir.Documentos_Previos1
+            ElseIf Rdb_DocPrevios2.Checked Then
+                _Accion_Imprimir = Enum_Accion_Imprimir.Documentos_Previos2
+            ElseIf Rdb_DocPrevios3.Checked Then
+                _Accion_Imprimir = Enum_Accion_Imprimir.Documentos_Previos3
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = _Accion_Imprimir.ToString
+            _Mensaje.Detalle = "Imprimir"
+            _Mensaje.Tag = _Accion_Imprimir
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Detalle = "Error"
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Imprimir_En_PDF(_NombreFormato As String,
+                                Optional _Accion_Imprimir As Enum_Accion_Imprimir = Enum_Accion_Imprimir.Detalle) As Boolean
 
         Dim _IdMaeedo = Pro_Row_Maeedo.Item("IDMAEEDO")
         Dim _Tido = Pro_Row_Maeedo.Item("TIDO")
@@ -3135,6 +3228,7 @@ Public Class Frm_Ver_Documento
                                                          _Tido & "-" & _Nudo,
                                                          _Path, _Tido & "-" & _Nudo, _Imprimir_Cedible)
 
+        _Pdf_Adjunto.Accion_Imprimir = _Accion_Imprimir
         _Pdf_Adjunto.Sb_Crear_PDF("", False, _Pdf_Adjunto.Pro_Nombre_Archivo)
 
         Dim _Error_Pdf = _Pdf_Adjunto.Pro_Error
@@ -5051,6 +5145,10 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Contenedor_Asociar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Asociar.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Doc00164") Then
+            Return
+        End If
+
         Dim _IdCont = _Cl_Contenedor.Zw_Contenedor.IdCont
 
         If CBool(_IdCont) Then
@@ -5061,7 +5159,7 @@ Public Class Frm_Ver_Documento
         End If
 
         Dim Fm As New Frm_Contenedores
-        Fm.ModoSeleccion = True
+        Fm.ModoSeleccion_Compra = True
         Fm.ShowDialog(Me)
         _Cl_Contenedor.Zw_Contenedor = Fm.Zw_Contenedor
         Fm.Dispose()
@@ -5116,6 +5214,62 @@ Public Class Frm_Ver_Documento
 
     Private Sub Txt_Nombre_Entidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Nombre_Entidad.ButtonCustomClick
         ShowContextMenu(Menu_Contextual_Info_Entidad)
+    End Sub
+
+    Private Sub Btn_PreVenta_Click(sender As Object, e As EventArgs) Handles Btn_PreVenta.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Doc00165") Then
+            Return
+        End If
+
+        Dim _IdCont = _Cl_Contenedor.Zw_Contenedor.IdCont
+        Dim _Empresa = _Cl_Contenedor.Zw_Contenedor.Empresa
+        Dim _Contenedor = _Cl_Contenedor.Zw_Contenedor.Contenedor
+        Dim _MonedaVenta = _Cl_Contenedor.Zw_Contenedor.MonedaVenta
+
+        If Not CBool(_IdCont) Then
+            MessageBoxEx.Show(Me, "No hay un contenedor asociado", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If String.IsNullOrEmpty(_MonedaVenta) Then
+
+            MessageBoxEx.Show(Me, "Falta la moneda de venta para el contenedor", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+            _Filtrar.Tabla = "TABMO"
+            _Filtrar.Campo = "KOMO"
+            _Filtrar.Descripcion = "NOKOMO"
+
+            Dim _Komo As String
+            Dim _Nokomo As String
+
+            If _Filtrar.Fx_Filtrar(Nothing,
+                                   Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "And KOMO In (Select Distinct KOMO From MAEMO Where TIMO = 'E')",
+                                   Nothing, False, True) Then
+
+                Dim _Tbl_Modena As DataTable = _Filtrar.Pro_Tbl_Filtro
+
+                Dim _Row As DataRow = _Tbl_Modena.Rows(0)
+
+                _Komo = _Row.Item("Codigo").ToString.Trim
+                _Nokomo = _Row.Item("Descripcion").ToString.Trim
+
+                _Cl_Contenedor.Zw_Contenedor.MonedaVenta = _Komo
+
+            End If
+
+        End If
+
+        '_Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_IdCont)
+
+        Dim Fm As New Frm_PreVenta_Productos(_Empresa, _IdCont, _Contenedor)
+        Fm.Cl_Contenedor = _Cl_Contenedor
+        Fm.ModoPreVenta = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Btn_Contenedor_Quitar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Quitar.Click

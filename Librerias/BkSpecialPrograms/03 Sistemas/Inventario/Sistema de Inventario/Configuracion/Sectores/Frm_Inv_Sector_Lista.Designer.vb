@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_Inv_Sector_Lista
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -51,11 +51,11 @@ Partial Class Frm_Inv_Sector_Lista
         Me.Btn_Crear_Ubicacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Importar_Desde_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ExportarExcel = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ImprimirMasivamente = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Filtrar = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Lbl_UsuarioACargo = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_ImprimirMasivamente = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_Marcar_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -237,7 +237,7 @@ Partial Class Frm_Inv_Sector_Lista
         Me.Lbl_Gestion.PaddingLeft = 10
         Me.Lbl_Gestion.PaddingTop = 1
         Me.Lbl_Gestion.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.Lbl_Gestion.Text = "Gesti�n"
+        Me.Lbl_Gestion.Text = "Gestión"
         '
         'Btn_VerProductos
         '
@@ -345,7 +345,7 @@ Partial Class Frm_Inv_Sector_Lista
         Me.Btn_Crear_Ubicacion.Image = CType(resources.GetObject("Btn_Crear_Ubicacion.Image"), System.Drawing.Image)
         Me.Btn_Crear_Ubicacion.ImageAlt = CType(resources.GetObject("Btn_Crear_Ubicacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Crear_Ubicacion.Name = "Btn_Crear_Ubicacion"
-        Me.Btn_Crear_Ubicacion.Tooltip = "Crear Inventario"
+        Me.Btn_Crear_Ubicacion.Tooltip = "Crear sector"
         '
         'Btn_Importar_Desde_Excel
         '
@@ -365,6 +365,15 @@ Partial Class Frm_Inv_Sector_Lista
         Me.Btn_ExportarExcel.ImageAlt = CType(resources.GetObject("Btn_ExportarExcel.ImageAlt"), System.Drawing.Image)
         Me.Btn_ExportarExcel.Name = "Btn_ExportarExcel"
         Me.Btn_ExportarExcel.Tooltip = "Exportar a Excel"
+        '
+        'Btn_ImprimirMasivamente
+        '
+        Me.Btn_ImprimirMasivamente.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_ImprimirMasivamente.ForeColor = System.Drawing.Color.Black
+        Me.Btn_ImprimirMasivamente.Image = CType(resources.GetObject("Btn_ImprimirMasivamente.Image"), System.Drawing.Image)
+        Me.Btn_ImprimirMasivamente.ImageAlt = CType(resources.GetObject("Btn_ImprimirMasivamente.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ImprimirMasivamente.Name = "Btn_ImprimirMasivamente"
+        Me.Btn_ImprimirMasivamente.Tooltip = "Imprimir sectores en forma masiva"
         '
         'Btn_Actualizar
         '
@@ -426,15 +435,6 @@ Partial Class Frm_Inv_Sector_Lista
         Me.Lbl_UsuarioACargo.Size = New System.Drawing.Size(567, 23)
         Me.Lbl_UsuarioACargo.TabIndex = 177
         Me.Lbl_UsuarioACargo.Text = "Usuario a cargo:"
-        '
-        'Btn_ImprimirMasivamente
-        '
-        Me.Btn_ImprimirMasivamente.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_ImprimirMasivamente.ForeColor = System.Drawing.Color.Black
-        Me.Btn_ImprimirMasivamente.Image = CType(resources.GetObject("Btn_ImprimirMasivamente.Image"), System.Drawing.Image)
-        Me.Btn_ImprimirMasivamente.ImageAlt = CType(resources.GetObject("Btn_ImprimirMasivamente.ImageAlt"), System.Drawing.Image)
-        Me.Btn_ImprimirMasivamente.Name = "Btn_ImprimirMasivamente"
-        Me.Btn_ImprimirMasivamente.Tooltip = "Imprimir sectores en forma masiva"
         '
         'Chk_Marcar_Todas
         '

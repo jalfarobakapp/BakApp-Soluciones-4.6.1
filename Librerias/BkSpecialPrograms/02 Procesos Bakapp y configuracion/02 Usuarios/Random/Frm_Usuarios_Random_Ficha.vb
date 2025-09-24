@@ -1,4 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
+Imports Microsoft.Office.Interop.Outlook
 
 
 Public Class Frm_Usuarios_Random_Ficha
@@ -15,8 +16,84 @@ Public Class Frm_Usuarios_Random_Ficha
     Dim _Row_Tabfu As DataRow
     Dim _Row_Usuario As DataRow
     Dim _Tbl_Grupos As DataTable
+    'Dim _Tbl_KofuGrupos As DataTable
 
     Public Property Grabar As Boolean
+    Public Property ModoEdicionComoFuncionario As Boolean
+
+    ' Paso a paso:
+    ' 1. Crear una clase para almacenar los cambios (nombre del campo, valor anterior, valor nuevo).
+    ' 2. Al momento de grabar, comparar los valores actuales del formulario con los valores originales del DataRow.
+    ' 3. Guardar en una lista solo los campos que han cambiado.
+    ' 4. Usar esa lista para registrar los cambios en el log.
+
+    ' 1. Clase para cambios
+    Public Class CambioParametro
+        Public Property Campo As String
+        Public Property ValorAnterior As Object
+        Public Property ValorNuevo As Object
+    End Class
+
+    ' 2. Método para comparar y obtener cambios
+    Private Function ObtenerCambios() As List(Of CambioParametro)
+        Dim cambios As New List(Of CambioParametro)
+
+        If Not IsNothing(_Row_Tabfu) Then
+            If _Row_Tabfu.Item("NOKOFU").ToString.Trim <> Txt_Nombre.Text.Trim Then
+                cambios.Add(New CambioParametro With {.Campo = "NOKOFU", .ValorAnterior = _Row_Tabfu.Item("NOKOFU"), .ValorNuevo = Txt_Nombre.Text.Trim})
+            End If
+            If _Row_Tabfu.Item("RTFU").ToString.Trim <> Txt_Rut.Text.Trim Then
+                cambios.Add(New CambioParametro With {.Campo = "RTFU", .ValorAnterior = _Row_Tabfu.Item("RTFU"), .ValorNuevo = Txt_Rut.Text.Trim})
+            End If
+            If _Row_Tabfu.Item("DIFU").ToString.Trim <> Txt_Direccion.Text.Trim Then
+                cambios.Add(New CambioParametro With {.Campo = "DIFU", .ValorAnterior = _Row_Tabfu.Item("DIFU"), .ValorNuevo = Txt_Direccion.Text.Trim})
+            End If
+            If _Row_Tabfu.Item("CIFU").ToString <> _Ciudad Then
+                cambios.Add(New CambioParametro With {.Campo = "CIFU", .ValorAnterior = _Row_Tabfu.Item("CIFU"), .ValorNuevo = _Ciudad})
+            End If
+            If _Row_Tabfu.Item("CMFU").ToString <> _Comuna Then
+                cambios.Add(New CambioParametro With {.Campo = "CMFU", .ValorAnterior = _Row_Tabfu.Item("CMFU"), .ValorNuevo = _Comuna})
+            End If
+            If _Row_Tabfu.Item("MODALIDAD").ToString <> Txt_Modalidad.Text Then
+                cambios.Add(New CambioParametro With {.Campo = "MODALIDAD", .ValorAnterior = _Row_Tabfu.Item("MODALIDAD"), .ValorNuevo = Txt_Modalidad.Text})
+            End If
+            If _Row_Tabfu.Item("EMAIL").ToString.Trim <> Txt_Email.Text.Trim Then
+                cambios.Add(New CambioParametro With {.Campo = "EMAIL", .ValorAnterior = _Row_Tabfu.Item("EMAIL"), .ValorNuevo = Txt_Email.Text.Trim})
+            End If
+            If _Row_Tabfu.Item("EMAILSUP").ToString.Trim <> Txt_EmailSup.Text.Trim Then
+                cambios.Add(New CambioParametro With {.Campo = "EMAILSUP", .ValorAnterior = _Row_Tabfu.Item("EMAILSUP"), .ValorNuevo = Txt_EmailSup.Text.Trim})
+            End If
+            If _Row_Tabfu.Item("CODEXTERN").ToString.Trim <> Txt_Cod_Ext.Text.Trim Then
+                cambios.Add(New CambioParametro With {.Campo = "CODEXTERN", .ValorAnterior = _Row_Tabfu.Item("CODEXTERN"), .ValorNuevo = Txt_Cod_Ext.Text.Trim})
+            End If
+            If _Row_Tabfu.Item("FOFU").ToString.Trim <> Txt_Telefono.Text.Trim Then
+                cambios.Add(New CambioParametro With {.Campo = "FOFU", .ValorAnterior = _Row_Tabfu.Item("FOFU"), .ValorNuevo = Txt_Telefono.Text.Trim})
+            End If
+            If DecryptClaveRD(_Row_Tabfu.Item("PWFU")) <> Txt_Password.Text Then
+                cambios.Add(New CambioParametro With {.Campo = "PWFU", .ValorAnterior = DecryptClaveRD(_Row_Tabfu.Item("PWFU")), .ValorNuevo = Txt_Password.Text})
+            End If
+            If CBool(_Row_Tabfu.Item("INACTIVO")) <> Chk_Inactivo.Checked Then
+                cambios.Add(New CambioParametro With {.Campo = "INACTIVO", .ValorAnterior = _Row_Tabfu.Item("INACTIVO"), .ValorNuevo = Chk_Inactivo.Checked})
+            End If
+            If (_Row_Tabfu.Item("PARAFIRMA").ToString = "N") <> Chk_Parafirma.Checked Then
+                cambios.Add(New CambioParametro With {.Campo = "PARAFIRMA", .ValorAnterior = _Row_Tabfu.Item("PARAFIRMA"), .ValorNuevo = If(Chk_Parafirma.Checked, "N", "F")})
+            End If
+        End If
+
+        If Not IsNothing(_Row_Usuario) Then
+            If _Row_Usuario.Item("Kogru_Ventas").ToString.Trim <> Txt_Kogru_Ventas.Text.Trim Then
+                cambios.Add(New CambioParametro With {.Campo = "Kogru_Ventas", .ValorAnterior = _Row_Usuario.Item("Kogru_Ventas"), .ValorNuevo = Txt_Kogru_Ventas.Text.Trim})
+            End If
+            If _Row_Usuario.Item("Kofu_Kogru").ToString.Trim <> Txt_Kofu_Kogru.Tag.ToString.Trim Then
+                cambios.Add(New CambioParametro With {.Campo = "Kofu_Kogru", .ValorAnterior = _Row_Usuario.Item("Kofu_Kogru"), .ValorNuevo = Txt_Kofu_Kogru.Tag.ToString.Trim})
+            End If
+            If _Row_Usuario.Item("PedirConfirmacionModalidad") <> Chk_PedirConfirmacionModalidad.Checked Then
+                cambios.Add(New CambioParametro With {.Campo = "PedirConfirmacionModalidad", .ValorAnterior = _Row_Usuario.Item("PedirConfirmacionModalidad"), .ValorNuevo = Chk_PedirConfirmacionModalidad.Checked})
+            End If
+        End If
+
+        Return cambios
+    End Function
 
     Public Sub New(_Kofu As String)
 
@@ -33,10 +110,18 @@ Public Class Frm_Usuarios_Random_Ficha
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Usuarios Where CodFuncionario = '" & _Kofu & "'"
         _Row_Usuario = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
+
     Private Sub Frm_Usuarios_Ficha_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         Txt_Kogru_Ventas.Tag = Nothing
+
+        Txt_Password.PasswordChar = "●"
+        Txt_Password.MaxLength = 5
+        Txt_Password.ButtonCustom.Visible = True
+        Txt_Password.ButtonCustom2.Visible = False
 
         If Not IsNothing(_Row_Tabfu) Then
 
@@ -80,7 +165,11 @@ Public Class Frm_Usuarios_Random_Ficha
 
             Chk_Inactivo.Checked = _Row_Tabfu.Item("INACTIVO")
 
-            If _Row_Tabfu.Item("PARAFIRMA") = "N" Then Chk_Parafirma.Checked = True
+            If _Row_Tabfu.Item("PARAFIRMA") = "N" Then
+                Chk_Parafirma.Checked = True
+            End If
+
+            Chk_PedirConfirmacionModalidad.Checked = _Row_Usuario.Item("PedirConfirmacionModalidad")
 
             Me.ActiveControl = Txt_Nombre
 
@@ -105,9 +194,33 @@ Public Class Frm_Usuarios_Random_Ficha
 
             End If
 
+            ''Kofu_Kogru
+
+            Txt_Kofu_Kogru.Tag = _Row_Usuario.Item("Kofu_Kogru").ToString.Trim
+            If Not String.IsNullOrEmpty(Txt_Kofu_Kogru.Tag) Then
+                Txt_Kofu_Kogru.Text = _Row_Usuario.Item("Kofu_Kogru").ToString.Trim & " - " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & Txt_Kofu_Kogru.Tag & "'")
+            End If
+
         Else
 
             Me.ActiveControl = Txt_Codigo
+
+        End If
+
+        If ModoEdicionComoFuncionario Then
+
+            Txt_Modalidad.Enabled = False
+            Txt_EmailSup.Enabled = False
+            Txt_Cod_Ext.Enabled = False
+            Chk_Parafirma.Enabled = False
+            Chk_Inactivo.Enabled = False
+            Chk_PedirConfirmacionModalidad.Enabled = False
+            Txt_Kogru_Ventas.Enabled = False
+
+            Lbl_Modalidad.Enabled = False
+            Lbl_EmailSup.Enabled = False
+            lbl_Cod_Ext.Enabled = False
+            Lbl_Kogru_Ventas.Enabled = False
 
         End If
 
@@ -251,16 +364,33 @@ Public Class Frm_Usuarios_Random_Ficha
 
         Dim _Kogru_Ventas As String = String.Empty
 
-        'If Not IsNothing(Txt_Kogru_Ventas.Tag) Then
         _Kogru_Ventas = Replace(Txt_Kogru_Ventas.Text, "'", "''")
-        'End If
 
-        Consulta_sql += "Update " & _Global_BaseBk & "Zw_Usuarios Set Kogru_Ventas = '" & _Kogru_Ventas & "' Where CodFuncionario = '" & _Kofu & "'"
+        Consulta_sql += "Update " & _Global_BaseBk & "Zw_Usuarios Set " &
+                        "Kogru_Ventas = '" & _Kogru_Ventas & "'" &
+                        ",Kofu_Kogru = '" & Txt_Kofu_Kogru.Tag & "'" &
+                        ",PedirConfirmacionModalidad = " & Convert.ToInt32(Chk_PedirConfirmacionModalidad.Checked) &
+                        vbCrLf & "Where CodFuncionario = '" & _Kofu & "'"
 
         If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
+
+        Dim listaCambios As List(Of CambioParametro) = ObtenerCambios()
+
+        If listaCambios.Count And Not ModoEdicionComoFuncionario Then
+            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0,
+                               "EditFuncionario", "Bajo la clave de Administrador se edita perfil de: " & Kofu, "", "", "", "", False, "", False, 0, "")
+        End If
+
+        ' Aquí puedes guardar en el log solo los cambios de listaCambios
+        ' Ejemplo simple de log (puedes adaptar a tu sistema de log):
+        For Each cambio In listaCambios
+            ' Guardar en log: cambio.Campo, cambio.ValorAnterior, cambio.ValorNuevo
+            Dim _Accion As String = "Campo: " & cambio.Campo & ", Valor Anterior : """ & cambio.ValorAnterior & """, Valor Nuevo: """ & cambio.ValorNuevo & ""
+            Fx_Add_Log_Gestion(Kofu, Mod_Modalidad, "", 0, "EditFuncionario", _Accion, "", "", "", "", False, FUNCIONARIO, False, 0, "")
+        Next
 
         Grabar = True
         Me.Close()
@@ -329,7 +459,7 @@ Public Class Frm_Usuarios_Random_Ficha
     Private Sub Txt_Kogru_Ventas_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Kogru_Ventas.ButtonCustomClick
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
-        Dim _Sql_Filtro_Condicion_Extra As String = "And KOGRU In (Select KOGRU From TABFUGD Where KOFU = '" & Kofu & "')"
+        Dim _Sql_Filtro_Condicion_Extra As String = String.Empty
 
         _Filtrar.Tabla = "TABFUGE"
         _Filtrar.Campo = "KOGRU"
@@ -352,5 +482,48 @@ Public Class Frm_Usuarios_Random_Ficha
     Private Sub Txt_Kogru_Ventas_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Kogru_Ventas.ButtonCustom2Click
         Txt_Kogru_Ventas.Text = String.Empty
         Txt_Kogru_Ventas.Tag = Nothing
+    End Sub
+
+    Private Sub Txt_Kofu_Kogru_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Kofu_Kogru.ButtonCustomClick
+
+        If String.IsNullOrEmpty(Txt_Kogru_Ventas.Text.Trim) Then
+            MessageBoxEx.Show(Me, "No tiene grupo de vendedores asociados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+        Dim _Sql_Filtro_Condicion_Extra As String = "And KOFU <> '" & FUNCIONARIO & "'"
+
+        '_Filtrar.Tabla = "TABFUGE"
+        '_Filtrar.Campo = "KOGRU"
+        '_Filtrar.Descripcion = "NOKOGRU"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
+                               False, False, True, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+            Txt_Kofu_Kogru.Tag = _Row.Item("Codigo").ToString.Trim
+            Txt_Kofu_Kogru.Text = _Row.Item("Codigo").ToString.Trim & " - " & _Row.Item("Descripcion").ToString.Trim
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_Kofu_Kogru_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Kofu_Kogru.ButtonCustom2Click
+        Txt_Kofu_Kogru.Tag = String.Empty
+        Txt_Kofu_Kogru.Text = String.Empty
+    End Sub
+
+    Private Sub Txt_Password_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Password.ButtonCustomClick
+        Txt_Password.PasswordChar = ""
+        Txt_Password.ButtonCustom.Visible = False
+        Txt_Password.ButtonCustom2.Visible = True
+    End Sub
+
+    Private Sub Txt_Password_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Password.ButtonCustom2Click
+        Txt_Password.PasswordChar = "●"
+        Txt_Password.ButtonCustom.Visible = True
+        Txt_Password.ButtonCustom2.Visible = False
     End Sub
 End Class

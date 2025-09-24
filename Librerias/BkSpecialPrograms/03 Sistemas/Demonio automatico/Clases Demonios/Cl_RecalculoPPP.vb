@@ -7,21 +7,25 @@
 
     End Sub
 
-    Sub Sb_RecalcularPPP(_Formulario As Form)
+    Sub Sb_RecalcularPPP(_Formulario As Form, _Empresa As String)
+
         If Not Ejecutar Then
             Return
         End If
+
         Procesando = True
 
         Dim Fm As New Frm_Recalculo_PPPxProd
         Fm.EjecutarProcesoTodosLosProductos = True
         Fm.ModoPruebas = False
+        Fm.Empresa = _Empresa
         Fm.ShowDialog(_Formulario)
         Log_Registro = Fm.MensajeFinal
         Fm.Dispose()
 
         System.Threading.Thread.Sleep(2000)
         Procesando = False
+
     End Sub
 
 End Class

@@ -4,9 +4,11 @@ Public Class Frm_Contenedores
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
-    Public Property ModoSeleccion As Boolean
+    ' Public Property ModoSeleccion As Boolean
     Public Property Zw_Contenedor As New Zw_Contenedor
     Public Property SeleccionarSoloConProdDisponibles As Boolean
+    Public Property ModoSeleccion_Compra As Boolean
+    Public Property ModoSeleccion_Venta As Boolean
 
     Public Sub New()
 
@@ -15,7 +17,7 @@ Public Class Frm_Contenedores
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla_Contenedores, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Contenedores, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
         Sb_Color_Botones_Barra(Bar1)
 
     End Sub
@@ -25,6 +27,8 @@ Public Class Frm_Contenedores
         AddHandler Grilla_Contenedores.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Sb_Actualizar_Grilla()
+
+        'Btn_Crear_Contenedor.Enabled = Not ModoSeleccion
 
     End Sub
 
@@ -96,7 +100,7 @@ Public Class Frm_Contenedores
 
         If _Grabar Then
 
-            If ModoSeleccion Then
+            If ModoSeleccion_Compra Then
 
                 Zw_Contenedor = _New_Zw_Contenedor
                 Me.Close()
@@ -115,10 +119,25 @@ Public Class Frm_Contenedores
         Dim _Fila As DataGridViewRow = Grilla_Contenedores.CurrentRow
 
         Dim _IdCont As Integer = _Fila.Cells("IdCont").Value
+        Dim _Idmaeedo_Rela As Integer = _Fila.Cells("Idmaeedo_Rela").Value
+        Dim _Tido_Rela As String = _Fila.Cells("Tido_Rela").Value
+        Dim _Nudo_Rela As String = _Fila.Cells("Nudo_Rela").Value
 
-        If ModoSeleccion Then
+        If ModoSeleccion_Venta Or ModoSeleccion_Compra Then
+
+            If ModoSeleccion_Compra Then
+
+                If CBool(_Idmaeedo_Rela) Then
+                    MessageBoxEx.Show(Me, "Este contenedor está actualmente asociado a una orden de compra." & vbCrLf &
+                                  "Orden de compra: " & _Nudo_Rela, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
+            End If
 
             Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+            Consulta_sql = "Select * From Zw_Contenedor"
 
             Consulta_sql = "Select t.*,f.NOKOFU From " & _Global_BaseBk & "Zw_Contenedor_DocTom t" & vbCrLf &
                            "Inner Join TABFU f On f.KOFU = t.CodFuncionario" & vbCrLf &
@@ -132,12 +151,16 @@ Public Class Frm_Contenedores
                 Return
             End If
 
-            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Contenedor_StockProd", "IdCont = 0 And StcfiDisponibleUd1 > 0")
+            If ModoSeleccion_Venta Then
 
-            If Not CBool(_Reg) Then
-                MessageBoxEx.Show(Me, "Este contenedor no tiene productos disponibles para vender en Pre-Venta", "Validación",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
+                Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_PreVenta_StockProd", "IdCont = " & _IdCont & " And StcfiDisponibleUd1 > 0")
+
+                If Not CBool(_Reg) Then
+                    MessageBoxEx.Show(Me, "Este contenedor no tiene productos disponibles para vender en Pre-Venta", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
             End If
 
             Dim _Cl_Contenedor As New Cl_Contenedor

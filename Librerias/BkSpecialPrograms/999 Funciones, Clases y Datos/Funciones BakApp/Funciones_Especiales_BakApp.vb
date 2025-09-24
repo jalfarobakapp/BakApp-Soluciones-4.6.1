@@ -16,6 +16,25 @@ Public Module Funciones_Especiales_BakApp
         'Public Property Empresa As String
     End Class
 
+    Enum Enum_Accion_Imprimir
+        ''' <summary>
+        ''' Imprime el detalle normal del documento
+        ''' </summary>
+        Detalle
+        ''' <summary>
+        ''' 1.- Imprime documentos previos relacionados al documento principal Formato: (TD - Numero - F.Emisión).
+        ''' </summary>
+        Documentos_Previos1
+        ''' <summary>
+        ''' 2.- Imprime documentos previos relacionados al documento principal Formato: (Numero - F.Emisión - Monto).
+        ''' </summary>
+        Documentos_Previos2
+        ''' <summary>
+        ''' 3.- Imprime documentos previos relacionados al documento principal Formato: (TD - Numero - F.Emisión - Monto).
+        ''' </summary>
+        Documentos_Previos3
+    End Enum
+
     Function Fx_Formato_Modalidad(_Formulario As Form,
                                   _Empresa As String,
                                   _Modalidad As String,
@@ -3129,6 +3148,7 @@ Public Module Modulo_Precios_Costos
     End Function
 
 End Module
+
 
 Public Module Colores_Bakapp
 
@@ -6639,6 +6659,113 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
+    Function Fx_EntidadEnGrupoVendedores(_Row_Entidad As DataRow, _CodFuncionario As String) As LsValiciones.Mensajes
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Msj As String
+        Dim _Cl_Permiso As New Class_Permiso_BakApp
+
+        _Mensaje.EsCorrecto = True
+
+        Try
+
+            If Fx_Tiene_Permiso(Nothing, "NO00022",, False) Then
+
+                Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & _CodFuncionario & "'")
+                Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru = '" & FUNCIONARIO & "'")
+
+                Dim _TienePermiso As Boolean
+
+                If Not _Kogru.Contains("'") Then
+                    _Kogru = "'" & _Kogru & "'"
+                End If
+
+                If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+                    If String.IsNullOrEmpty(_Kogru) Then
+                        _Kogru = _Kofu_Kogru
+                    Else
+                        _Kogru += "," & _Kofu_Kogru
+                    End If
+                End If
+
+                Consulta_sql = "Select d.*,NOKOGRU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & ")"
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                Dim _Tbl_Grupo As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                For Each _Fila As DataRow In _Tbl_Grupo.Rows
+                    If _Fila.Item("KOFU").ToString.Trim = _Row_Entidad.Item("KOFUEN").ToString.Trim Then
+                        _TienePermiso = True
+                        Exit For
+                    End If
+                Next
+
+                If Not _TienePermiso Then
+
+                    Dim _Grupo As String = _Kogru.Trim & " - " & _Tbl_Grupo.Rows(0).Item("NOKOGRU").trim
+                    Dim _Row_Permiso As DataRow = _Cl_Permiso.Fx_Row_Traer_Permiso_Sistema("NO00022")
+
+                    Dim _DescripcionPermiso As String = _Row_Permiso.Item("DescripcionPermiso").ToString.Trim
+
+                    _Msj = "Acceso restringido: Entidad fuera de su grupo de vendedores" & vbCrLf &
+                           "La entidad seleccionada no está asociada a ningún vendedor de su grupo actual." & vbCrLf &
+                           "Por motivos de seguridad, usted tiene una restricción que impide visualizar o gestionar documentos " &
+                           "de clientes asignados a otros grupos de vendedores." & vbCrLf &
+                           "Solo puede acceder a documentos de clientes vinculados a vendedores de su grupo." & vbCrLf & vbCrLf &
+                           "Detalles de su configuración actual:" & vbCrLf &
+                           "- Permiso asignado: NO00022 " & vbCrLf &
+                           Fx_AjustarTexto(_DescripcionPermiso, 100) & vbCrLf & vbCrLf &
+                           "- Grupo de vendedores: " & _Grupo & vbCrLf & vbCrLf &
+                           "Si necesita acceso a esta entidad, contacte al administrador del sistema o a su supervisor."
+
+                    _Mensaje.Mensaje = _Msj
+                    _Mensaje.Icono = MessageBoxIcon.Stop
+                    _Row_Entidad = Nothing
+
+                End If
+
+            ElseIf Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
+
+                If _Row_Entidad.Item("KOFUEN").ToString.Trim <> _CodFuncionario.ToString.Trim Then
+
+                    Dim _Row_Permiso As DataRow = _Cl_Permiso.Fx_Row_Traer_Permiso_Sistema("NO00021")
+
+                    Dim _DescripcionPermiso As String = _Row_Permiso.Item("DescripcionPermiso").ToString.Trim
+
+                    _Msj = "Acceso restringido: Entidad no pertenece al vendedor" & vbCrLf &
+                       "La entidad seleccionada no está asociada a su cartera de clientes." & vbCrLf &
+                       "Por motivos de seguridad, usted tiene una restricción que impide visualizar o gestionar documentos " &
+                       "de clientes asignados a otros vendedores." & vbCrLf &
+                       "Solo puede acceder a documentos de clientes vinculados a usted." & vbCrLf & vbCrLf &
+                       "Detalles de su configuración actual:" & vbCrLf &
+                       "- Permiso asignado: NO00021 " & vbCrLf &
+                       Fx_AjustarTexto(_DescripcionPermiso, 100) & vbCrLf & vbCrLf &
+                       "Si necesita acceso a esta entidad, contacte al administrador del sistema o a su supervisor."
+
+                    _Mensaje.Mensaje = _Msj
+                    _Mensaje.Icono = MessageBoxIcon.Stop
+                    _Row_Entidad = Nothing
+
+                End If
+
+            End If
+
+            _Mensaje.EsCorrecto = Not IsNothing(_Row_Entidad)
+            _Mensaje.Mensaje = _Msj
+            _Mensaje.Tag = _Row_Entidad
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+            _Mensaje.Tag = Nothing
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Function Fx_Vaidar_Fincred(_Idmaeedo As Integer,
                                _Tido As String,
                                _Nudo As String,
@@ -6926,10 +7053,12 @@ Public Module Crear_Documentos_Desde_Otro
 
             Dim _Tido As String = _Sql.Fx_Trae_Dato("MAEEDO", "TIDO", "IDMAEEDO = " & _Idmaeedo)
 
-            If _Tido = "GRI" Or _Tido = "GDI" Or _Tido = "GTI" Then
+            If _Tido = "GRI" Or _Tido = "GDI" Or _Tido = "GTI" Or _Tido = "NVI" Then
                 Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,KOFUEN" & vbCrLf &
-                               "From MAEEDO Edo Inner Join MAEEN e On e.KOEN = Edo.ENDO" & vbCrLf &
+                               "From MAEEDO Edo Inner Join MAEEN e On e.KOEN = Edo.ENDO And e.TIPOSUC = 'P'" & vbCrLf &
                                "Where IDMAEEDO = " & _Idmaeedo
+                _Mensaje.Mensaje = "Documento interno"
+                Return _Mensaje
             Else
                 Consulta_sql = $"Select IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,KOFUEN" & vbCrLf &
                                "From MAEEDO Edo Inner Join MAEEN e On e.KOEN = Edo.ENDO And e.SUEN = Edo.SUENDO" & vbCrLf &
@@ -7288,6 +7417,123 @@ Public Module Crear_Documentos_Desde_Otro
         Catch logEx As Exception
             ' Si falla el log, no hacer nada para no interrumpir el flujo
         End Try
+
+    End Function
+
+    Function Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE As String,
+                                        _NombreEquipo As String) As Boolean
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _Existe_Archivo_GenDTE = False
+
+        Dim _FolderBrowserDialog As New FolderBrowserDialog
+
+        Dim _Nuevo_RunMonitor As Boolean = _Sql.Fx_Exite_Campo("CONFIGP", "VERSIONACT")
+
+
+        If _Nuevo_RunMonitor Then
+
+            If File.Exists(_Directorio_GenDTE & "\dte\bat\GenDTE.BAT") Then
+                _Existe_Archivo_GenDTE = True
+            End If
+
+        Else
+
+            If File.Exists(_Directorio_GenDTE & "\GenDTE.BAT") Then
+                _Existe_Archivo_GenDTE = True
+            End If
+
+        End If
+
+        If _Existe_Archivo_GenDTE Then
+
+            Return True
+
+        Else
+
+            MessageBoxEx.Show("El directorio GenDTE no existe o no esta registrado", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            With _FolderBrowserDialog
+
+                .Reset()
+
+                ' leyenda  
+                .Description = " Seleccionar una carpeta "
+                ' Path " Mis documentos "  
+                .SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+
+                ' deshabilita el botón " crear nueva carpeta "  
+                .ShowNewFolderButton = False
+                '.RootFolder = Environment.SpecialFolder.Desktop  
+                '.RootFolder = Environment.SpecialFolder.StartMenu  
+
+                Dim ret As DialogResult = .ShowDialog ' abre el diálogo  
+
+                ' si se presionó el botón aceptar ...  
+                If ret = Windows.Forms.DialogResult.OK Then
+
+                    Dim nFiles As ObjectModel.ReadOnlyCollection(Of String)
+
+                    nFiles = My.Computer.FileSystem.GetFiles(.SelectedPath)
+                    _Directorio_GenDTE = .SelectedPath
+
+                    If _Nuevo_RunMonitor Then
+
+                        If File.Exists(_Directorio_GenDTE & "\dte\bat\GenDTE.BAT") Then
+                            _Existe_Archivo_GenDTE = True
+                        End If
+
+                    Else
+
+                        If File.Exists(_Directorio_GenDTE & "\GenDTE.BAT") Then
+                            _Existe_Archivo_GenDTE = True
+                        End If
+
+                    End If
+
+                    'If Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo) Then
+                    '    _Existe_Archivo_GenDTE = True
+                    'Else
+                    '    Return False
+                    'End If
+
+                End If
+
+                .Dispose()
+
+            End With
+
+        End If
+
+        If _Existe_Archivo_GenDTE Then
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set Directorio_GenDTE = '" & _Directorio_GenDTE & "'" & vbCrLf &
+                           "Where NombreEquipo = '" & _NombreEquipo & "'"
+
+            If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                _Global_Row_EstacionBk.Item("Directorio_GenDTE") = _Directorio_GenDTE
+                Return True
+            End If
+
+        Else
+
+            If Not String.IsNullOrEmpty(_Directorio_GenDTE) Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set Directorio_GenDTE = ''" & vbCrLf &
+                               "Where NombreEquipo = '" & _NombreEquipo & "'"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                _Global_Row_EstacionBk.Item("Directorio_GenDTE") = String.Empty
+
+            End If
+
+            MessageBoxEx.Show("No se encontro el archivo GenDTE.BAT en el directorio (" & _Directorio_GenDTE & ")" & vbCrLf &
+                              "Este archivo es necesario para la generación de documentos electrónicos en DTE RunMonitor",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+        End If
 
     End Function
 

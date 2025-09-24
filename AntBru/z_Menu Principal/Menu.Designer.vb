@@ -47,6 +47,7 @@ Partial Class Menu
         Me.Btn_Facturacion_Electronica = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Barra = New DevComponents.DotNetBar.Bar()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_FichaFucnionario = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar_BakApp = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Prueba_Monto_Palabra = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CambioDeEmpresa = New DevComponents.DotNetBar.ButtonItem()
@@ -80,6 +81,7 @@ Partial Class Menu
         Me.Btn_GDI2GRI = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Rutas = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_PPP = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Grupos = New DevComponents.DotNetBar.ButtonItem()
         Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
@@ -647,7 +649,7 @@ Partial Class Menu
         Me.Barra.AntiAlias = True
         Me.Barra.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Barra.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCambiarDeUsuario, Me.Btn_Actualizar_BakApp, Me.Btn_Prueba_Monto_Palabra, Me.Btn_CambioDeEmpresa, Me.BtnTeamviewer, Me.Btn_Cambio_Empresa, Me.Btn_Desconectar_Bases, Me.Btn_Permisos_Remotos, Me.BtnConfiguracion, Me.Btn_Cerrar_Sistema})
+        Me.Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCambiarDeUsuario, Me.Btn_FichaFucnionario, Me.Btn_Actualizar_BakApp, Me.Btn_Prueba_Monto_Palabra, Me.Btn_CambioDeEmpresa, Me.BtnTeamviewer, Me.Btn_Cambio_Empresa, Me.Btn_Desconectar_Bases, Me.Btn_Permisos_Remotos, Me.BtnConfiguracion, Me.Btn_Cerrar_Sistema})
         Me.Barra.Location = New System.Drawing.Point(0, 554)
         Me.Barra.Name = "Barra"
         Me.Barra.Size = New System.Drawing.Size(845, 57)
@@ -666,6 +668,16 @@ Partial Class Menu
         Me.BtnCambiarDeUsuario.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.BtnCambiarDeUsuario.Name = "BtnCambiarDeUsuario"
         Me.BtnCambiarDeUsuario.Tooltip = "Cambiar de usuario"
+        '
+        'Btn_FichaFucnionario
+        '
+        Me.Btn_FichaFucnionario.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_FichaFucnionario.ForeColor = System.Drawing.Color.Black
+        Me.Btn_FichaFucnionario.Image = CType(resources.GetObject("Btn_FichaFucnionario.Image"), System.Drawing.Image)
+        Me.Btn_FichaFucnionario.ImageAlt = CType(resources.GetObject("Btn_FichaFucnionario.ImageAlt"), System.Drawing.Image)
+        Me.Btn_FichaFucnionario.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_FichaFucnionario.Name = "Btn_FichaFucnionario"
+        Me.Btn_FichaFucnionario.Tooltip = "Ficha del usuario actual"
         '
         'Btn_Actualizar_BakApp
         '
@@ -810,7 +822,7 @@ Partial Class Menu
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP})
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP, Me.Btn_Grupos})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
         Me.ButtonX1.Visible = False
@@ -928,6 +940,12 @@ Partial Class Menu
         Me.Btn_PPP.GlobalItem = False
         Me.Btn_PPP.Name = "Btn_PPP"
         Me.Btn_PPP.Text = "Recalcular PPP por producto"
+        '
+        'Btn_Grupos
+        '
+        Me.Btn_Grupos.GlobalItem = False
+        Me.Btn_Grupos.Name = "Btn_Grupos"
+        Me.Btn_Grupos.Text = "Grupos"
         '
         'Tiempo_Actualizar_BakApp
         '
@@ -1265,4 +1283,6 @@ Partial Class Menu
     Friend WithEvents Btn_PPP As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Lbl_Thema_Rojo As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Lbl_Thema_Verde As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Grupos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_FichaFucnionario As DevComponents.DotNetBar.ButtonItem
 End Class

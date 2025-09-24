@@ -118,7 +118,8 @@ Public Class Frm_Stmp_IncNVVPicking
                        "CONVERT(NVARCHAR, CONVERT(datetime, (Edo.HORAGRAB*1.0/3600)/24), 108) AS Hora_Emision,VANEDO," & vbCrLf &
                        "VAIVDO,VAIMDO,VABRDO,VAABDO,KOFUDO,NOKOFU," & vbCrLf &
                        "Cast(0 As Bit) As Facturado,Cast(0 As Int) As IDMAEEDO_FCV,Cast('' As Varchar(10)) As NUDO_FCV," & vbCrLf &
-                       "FEEMDO AS Fecha_Emision,Edo.FEER AS Fecha_Despacho,Cast(0 As Float) As VABRDO_FCV,Cast(0 As Float) As VAABDO_FCV," & vbCrLf &
+                       "FEEMDO AS Fecha_Emision,Edo.FEER AS Fecha_Despacho," &
+                       "Cast('" & Format(Dtp_FechaParaFacturacion.Value, "yyyyMMdd") & "' As Datetime) As 'FechaParaFacturacion',Cast(0 As Float) As VABRDO_FCV,Cast(0 As Float) As VAABDO_FCV," & vbCrLf &
                        "Cast(0 As Bit) As FCV_PAGADA,Cast(0 As Bit) As FCV_IMPRESA," & vbCrLf &
                        "Cast(0 As Int) As IDMAEDPCE,Cast(0 As Float) As VADP,Cast(0 As Float) As VAASDP," & vbCrLf &
                        "Cast(0 As Float) As SALDO,Cast(0 As Bit) As CRV, Cast(0 as Float) SALDO_CRV,Isnull(OBDO,'') As OBDO," & vbCrLf &
@@ -300,6 +301,14 @@ Public Class Frm_Stmp_IncNVVPicking
             .Columns("FEER").Visible = True
             .Columns("FEER").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            .Columns("FechaParaFacturacion").HeaderText = "F.Facturar"
+            .Columns("FechaParaFacturacion").Width = 70
+            .Columns("FechaParaFacturacion").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FechaParaFacturacion").Visible = True
+            .Columns("FechaParaFacturacion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
 
             '.Columns("FEULVEDO").HeaderText = "F.Vencimiento"
             '.Columns("FEULVEDO").Width = 70
@@ -507,12 +516,121 @@ Public Class Frm_Stmp_IncNVVPicking
             Return
         End If
 
-        Dim _Msj_Tsc As LsValiciones.Mensajes
+        'If Rdb_FechaFacFechaManual.Checked Then
 
-        _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Me, Dtp_FechaParaFacturacion.Value)
+        '    Dim _Msj_Tsc As LsValiciones.Mensajes
 
-        If Not _Msj_Tsc.EsCorrecto Then
+        '    _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Me, Dtp_FechaParaFacturacion.Value)
+
+        '    If Not _Msj_Tsc.EsCorrecto Then
+        '        Return
+        '    End If
+
+        'End If
+
+        Dim _ListaFFac As New List(Of LsValiciones.Mensajes)
+
+        For Each _Fila As DataRow In _Tbl_Documentos.Rows
+
+            Dim _Pickear As Boolean = _Fila.Item("EnvPickeo")
+
+            If _Pickear Then
+
+                Dim _Tido As String = _Fila.Item("TIDO")
+                Dim _Nudo As String = _Fila.Item("NUDO")
+                Dim _FechaParaFacturacion As DateTime = _Fila.Item("FechaParaFacturacion")
+
+                Dim _Msj_Feer As New LsValiciones.Mensajes
+
+                If _FechaParaFacturacion.Date < Date.Now.Date Then
+                    _Msj_Feer.EsCorrecto = False
+                    _Msj_Feer.Detalle = "Documento: " & _Tido & " - " & _Nudo & ", Fecha despacho: " & _FechaParaFacturacion.ToShortDateString
+                    _Msj_Feer.Mensaje = "La fecha de facturación no puede ser menos que la fecha de hoy"
+                    _Msj_Feer.Icono = MessageBoxIcon.Stop
+                Else
+                    _Msj_Feer = Fx_Revisar_Tasa_Cambio(Me, _FechaParaFacturacion,, False)
+                End If
+
+                If Not _Msj_Feer.EsCorrecto Then
+                    _ListaFFac.Add(_Msj_Feer)
+                End If
+
+            End If
+
+        Next
+
+        If Not IsNothing(_ListaFFac) AndAlso CBool(_ListaFFac.Count) Then
+
+            MessageBoxEx.Show(Me, "Hay documentos con problemas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            Dim Fmf As New Frm_Validaciones
+            Fmf.ListaMensajes = _ListaFFac
+            Fmf.ShowDialog(Me)
+            Fmf.Dispose()
+
             Return
+
+        End If
+
+        If Not Chk_FactConFDespVencida.Checked Then
+
+            Dim _ListaFeer As New List(Of LsValiciones.Mensajes)
+
+            For Each _Fila As DataRow In _Tbl_Documentos.Rows
+
+                Dim _Pickear As Boolean = _Fila.Item("EnvPickeo")
+
+                If _Pickear Then
+
+                    Dim _Tido As String = _Fila.Item("TIDO")
+                    Dim _Nudo As String = _Fila.Item("NUDO")
+                    Dim _Feer As DateTime = _Fila.Item("FEER")
+
+                    Dim _Msj_Feer As New LsValiciones.Mensajes
+
+                    If _Feer.Date < Date.Now.Date Then
+                        _Msj_Feer.EsCorrecto = False
+                        _Msj_Feer.Detalle = "Documento: " & _Tido & " - " & _Nudo & ", Fecha despacho: " & _Feer.ToShortDateString
+                        _Msj_Feer.Mensaje = "La fecha de despacho vencida"
+                        _Msj_Feer.Icono = MessageBoxIcon.Stop
+                    Else
+                        _Msj_Feer = Fx_Revisar_Tasa_Cambio(Me, _Feer,, False)
+                    End If
+
+                    If Not _Msj_Feer.EsCorrecto Then
+                        _ListaFeer.Add(_Msj_Feer)
+                    End If
+
+                End If
+
+            Next
+
+            If Not IsNothing(_ListaFeer) AndAlso CBool(_ListaFeer.Count) Then
+
+                MessageBoxEx.Show(Me, "Hay documentos con fecha de despacho vencida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                Dim Fmf As New Frm_Validaciones
+                Fmf.ListaMensajes = _ListaFeer
+                Fmf.ShowDialog(Me)
+                Fmf.Dispose()
+
+                MessageBoxEx.Show(Me, "Para enviar a picking y facturar los documentos con fecha de despacho vencida, " & vbCrLf &
+                                  "debe marcar la opción: ""'Facturar notas de venta con fecha de despacho vencida'.""" & vbCrLf &
+                                  "¡Requiere autorización!", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+
+                'If MessageBoxEx.Show(Me, "¿Desea enviar a picking igualmente estas notas de venta?", "Validación",
+                '                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+                '    If Not Fx_Tiene_Permiso(Me, "Doc00163") Then
+                '        Return
+                '    End If
+                'End If
+
+                'Return
+
+            End If
+
         End If
 
         Dim _Lista As List(Of LsValiciones.Mensajes) = Fx_Cargar_NVV_FechaDespachoHoy()
@@ -541,7 +659,6 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Dim _Cl_Stmp As New Cl_Stmp
 
-
         For Each _Fila As DataRow In _Tbl_Documentos.Rows
 
             Dim _Mensaje_Stem As New LsValiciones.Mensajes
@@ -551,7 +668,7 @@ Public Class Frm_Stmp_IncNVVPicking
             Dim _Nudo As String = _Fila.Item("Nudo")
             Dim _Pickear As Boolean = _Fila.Item("EnvPickeo")
             Dim _Facturar As Boolean = _Fila.Item("Facturar")
-
+            Dim _FechaParaFacturar As DateTime
             Dim _PagarAuto As Boolean = Chk_Pagar_Documentos.Checked
             Dim _Idmaedpce_Paga As Integer
             Dim _CodFuncionario_Paga As String
@@ -568,13 +685,15 @@ Public Class Frm_Stmp_IncNVVPicking
 
             End If
 
+            _FechaParaFacturar = _Fila.Item("FechaParaFacturacion")
+
             If _Pickear Then
 
                 _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Idmaeedo,
                                                          _Tido,
                                                          _Nudo,
                                                          _Facturar,
-                                                         Dtp_FechaParaFacturacion.Value,
+                                                         _FechaParaFacturar,
                                                          "R",
                                                          False,
                                                          Mod_Empresa,
@@ -606,7 +725,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Try
 
-            Consulta_sql = "Select Top 1 EMPRESA As Empresa,SULIDO As Sucursal,BOSULIDO As Bodega From MAEDDO Where IDMAEEDO = " & _Idmaeedo
+            Consulta_sql = "Select Top 1 EMPRESA As Empresa, SULIDO As Sucursal, BOSULIDO As Bodega From MAEDDO Where IDMAEEDO = " & _Idmaeedo
             Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Empresa As String
@@ -638,7 +757,7 @@ Public Class Frm_Stmp_IncNVVPicking
             Consulta_sql = "Select Tabla, DescripcionTabla, CodigoTabla, NombreTabla" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                            "Where Tabla = 'SEA2MEATGARDEN' And NombreTabla = '" & EmpSucBod & "'"
-            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row) Then
                 _Mensaje.EsCorrecto = False
@@ -817,6 +936,38 @@ Public Class Frm_Stmp_IncNVVPicking
         Select Case _Cabeza
             Case "VADP", "SALDOAFAVOR", "NUDO", "NUDO_FCV"
                 Sb_Ver_Documento()
+            Case "FechaParaFacturacion"
+
+                Dim _Grabar As Boolean
+                Dim _FechaSeleccionada As DateTime
+
+                Dim Fm As New Frm_Seleccionar_Fecha
+
+                Fm.SolicitarConfirmacionDeFecha = True
+                'Fm.ExigeFechaMaxima = True
+                'Fm.FechaMaxima = Now.Date.AddDays(1)
+                Fm.FechaMinima = Now.Date
+                Fm.ExigeFechaMinima = True
+
+                If IsNothing(_Fila.Cells("FechaParaFacturacion").Value) Then
+                    Fm.FechaDisplay = Now.Date
+                Else
+                    Fm.FechaDisplay = _Fila.Cells("FechaParaFacturacion").Value
+                End If
+                Fm.Dtp_Fecha.Value = _Fila.Cells("FechaParaFacturacion").Value
+                Fm.Dtp_Hora.Value = Now
+                Fm.MostraFormularioAlCentro = True
+                Fm.SeleccionarHora = False
+                Fm.ShowDialog(Me)
+
+                _Grabar = Fm.Grabar
+                _FechaSeleccionada = Fm.FechaSeleccionada
+                Fm.Dispose()
+
+                If _Grabar Then
+                    _Fila.Cells("FechaParaFacturacion").Value = _FechaSeleccionada
+                End If
+
             Case Else
                 Return
         End Select
@@ -860,5 +1011,27 @@ Public Class Frm_Stmp_IncNVVPicking
         If e.KeyValue = Keys.Enter Then
             Sb_Actualizar_Grilla()
         End If
+    End Sub
+
+    Private Sub Rdb_FechaFacFechaDespachoNVV_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_FechaFacFechaDespachoNVV.CheckedChanged
+
+        For Each _Fila As DataRow In _Tbl_Documentos.Rows
+            If Rdb_FechaFacFechaDespachoNVV.Checked Then
+                _Fila.Item("FechaParaFacturacion") = _Fila.Item("FEER")
+            Else
+                _Fila.Item("FechaParaFacturacion") = Dtp_FechaParaFacturacion.Value
+            End If
+        Next
+
+    End Sub
+
+    Private Sub Chk_FactConFDespVencida_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_FactConFDespVencida.CheckedChanged
+
+        If Chk_FactConFDespVencida.Checked Then
+            If Not Fx_Tiene_Permiso(Me, "Doc00163") Then
+                Chk_FactConFDespVencida.Checked = False
+            End If
+        End If
+
     End Sub
 End Class

@@ -19,8 +19,9 @@ Public Class Clas_Imprimir_Documento
     Dim _Tbl_Encabezado As DataTable
     Dim _Tbl_Detalle As DataTable
     Dim _Tbl_Detalle_Agrupado As DataTable
-    Dim _Tbl_Referencias As DataTable           ' Documentos de referencia asociados 
+    Dim _Tbl_Referencias As DataTable               ' Documentos de referencia asociados 
     Dim _Tbl_Doc_Asociados_Recargos As DataTable    ' Documentos asociados al recargo
+    Dim _Tbl_Referencias_Bakapp As DataTable
 
     Dim _Row_Servicio_Tecnico_Enc As DataRow
 
@@ -163,6 +164,7 @@ Public Class Clas_Imprimir_Documento
         End Set
     End Property
 
+    Public Property _Accion_Imprimir As Enum_Accion_Imprimir = Enum_Accion_Imprimir.Detalle
 
     Public Sub New(_IdDoc As Integer,
                    _TipoDoc As String,
@@ -288,6 +290,12 @@ Public Class Clas_Imprimir_Documento
             _Tbl_Referencias = _Ds.Tables(2)
             _Tbl_Detalle_Agrupado = _Ds.Tables(3)
             _Tbl_Doc_Asociados_Recargos = _Ds.Tables(4)
+
+
+            Consulta_sql = "Select Tido+' - '+Nudo+' - '++convert(varchar, FchRef,103) As 'Referencia'" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Referencias_Dte" & vbCrLf &
+                           "Where Id_Doc = " & _IdDoc
+            _Tbl_Referencias_Bakapp = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Format_01", "IncluyePickWms") Then
 
@@ -1108,29 +1116,58 @@ Public Class Clas_Imprimir_Documento
 
 #Region "REFERENCIAS"
 
-            If _Tbl_Referencias.Rows.Count Then
-                _Detalle_Y += _Salto_Linea + 5
-            End If
+            'If _Tbl_Referencias.Rows.Count Then
+            '    _Detalle_Y += _Salto_Linea + 5
+            'End If
+
+            Dim _Ls_Referencias As New List(Of String)
 
             For Each _Fila_D As DataRow In _Tbl_Referencias.Rows
-
                 Dim _Referencia = _Fila_D.Item("Referencia").ToString
-
                 Try
-
                     Dim _Ref = Split(_Referencia, " - ")
-
                     Dim _TidoRef = _Ref(0)
                     Dim _NumRef = CInt(_Ref(1))
                     Dim _FechaRef = _Ref(2)
-
                     _Referencia = _TidoRef & " - " & _NumRef & " - " & _FechaRef
-
                 Catch ex As Exception
-
                     _Referencia = _Fila_D.Item("Referencia").ToString
-
                 End Try
+                _Ls_Referencias.Add(_Referencia)
+            Next
+
+            For Each _Fila_D As DataRow In _Tbl_Referencias_Bakapp.Rows
+                Dim _Referencia = _Fila_D.Item("Referencia").ToString
+                If Not _Ls_Referencias.Contains(_Referencia) Then
+                    _Ls_Referencias.Add(_Referencia)
+                End If
+            Next
+
+            If CBool(_Ls_Referencias.Count) Then
+                _Detalle_Y += _Salto_Linea + 5
+            End If
+
+            'For Each _Fila_D As DataRow In _Tbl_Referencias.Rows
+
+            For Each _Referencia As String In _Ls_Referencias
+
+                'Dim _Referencia = _Fila_D.Item("Referencia").ToString
+
+                'Try
+
+                '    Dim _Ref = Split(_Referencia, " - ")
+
+                '    Dim _TidoRef = _Ref(0)
+                '    Dim _NumRef = CInt(_Ref(1))
+                '    Dim _FechaRef = _Ref(2)
+
+                '    _Referencia = _TidoRef & " - " & _NumRef & " - " & _FechaRef
+
+                'Catch ex As Exception
+
+                '    _Referencia = _Fila_D.Item("Referencia").ToString
+
+                'End Try
 
                 Dim _Contador = 0
 
@@ -1208,7 +1245,6 @@ Public Class Clas_Imprimir_Documento
             _Fila_FinDetalle = _Detalle_Y
 
             ' FIN REFERENCIA
-
 #End Region
 
 #Region "DOCUMENTOS ASOCIADOS A RECARGOS"
@@ -2631,28 +2667,32 @@ Public Class Clas_Imprimir_Documento
             Dim _Salir_del_For As Boolean
             Dim _Mas_Alto As Integer
 
-            For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
+            If _Accion_Imprimir = Enum_Accion_Imprimir.Detalle Then
 
-                Dim _Es_Codigo_De_Barras As Boolean = _Fila.Item("Codigo_De_Barras")
-                Dim _Orden_Detalle As Integer = _Fila.Item("Orden_Detalle")
+                For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
 
-                If _Orden_Detalle = 1 Then
+                    Dim _Es_Codigo_De_Barras As Boolean = _Fila.Item("Codigo_De_Barras")
+                    Dim _Orden_Detalle As Integer = _Fila.Item("Orden_Detalle")
 
-                    _Alto = _Fila.Item("Alto")
+                    If _Orden_Detalle = 1 Then
 
-                    If _Es_Codigo_De_Barras Then
-                        _Alto += 6
+                        _Alto = _Fila.Item("Alto")
+
+                        If _Es_Codigo_De_Barras Then
+                            _Alto += 6
+                        End If
+
+                        If _Mas_Alto < _Alto Then
+                            _Mas_Alto = _Alto
+                        End If
+
+                        _NombreObjeto = _Fila.Item("NombreObjeto")
+
                     End If
 
-                    If _Mas_Alto < _Alto Then
-                        _Mas_Alto = _Alto
-                    End If
+                Next
 
-                    _NombreObjeto = _Fila.Item("NombreObjeto")
-
-                End If
-
-            Next
+            End If
 
             Dim _Salto_Linea As Integer = _Mas_Alto + 2
 
@@ -2663,45 +2703,222 @@ Public Class Clas_Imprimir_Documento
 
 #Region "DETALLE AGRUPA LINEAS"
 
-            If _Agrupar_Lineas Then
+            If _Accion_Imprimir = Enum_Accion_Imprimir.Detalle Then
 
-                For Each _Fila_D As DataRow In _Tbl_Detalle.Rows
+                If _Agrupar_Lineas Then
 
-                    For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
+                    For Each _Fila_D As DataRow In _Tbl_Detalle.Rows
 
-                        _NombreObjeto = _Fila.Item("NombreObjeto")
-                        _Funcion = _Fila.Item("Funcion")
-                        _TipoDato = _Fila.Item("TipoDato")
-                        _Seccion = _Fila.Item("Seccion")
+                        For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
 
-                        _Formato = _Fila.Item("Formato")
-                        _CantDecimales = _Fila.Item("CantDecimales")
-                        _Fuente = _Fila.Item("Fuente")
-                        _Tamano = _Fila.Item("Tamano")
-                        _Alto = _Fila.Item("Alto")
-                        _Ancho = _Fila.Item("Ancho")
-                        _Estilo = _Fila.Item("Estilo")
-                        _Color = _Fila.Item("Color")
-                        _Fila_Y = _Fila.Item("Fila_Y")
-                        _Columna_X = _Fila.Item("Columna_X")
-                        _Texto = _Fila.Item("Texto")
-                        _RutaImagen = _Fila.Item("RutaImagen")
+                            _NombreObjeto = _Fila.Item("NombreObjeto")
+                            _Funcion = _Fila.Item("Funcion")
+                            _TipoDato = _Fila.Item("TipoDato")
+                            _Seccion = _Fila.Item("Seccion")
 
-                        Dim _Orden_Detalle = _Fila.Item("Orden_Detalle")
+                            _Formato = _Fila.Item("Formato")
+                            _CantDecimales = _Fila.Item("CantDecimales")
+                            _Fuente = _Fila.Item("Fuente")
+                            _Tamano = _Fila.Item("Tamano")
+                            _Alto = _Fila.Item("Alto")
+                            _Ancho = _Fila.Item("Ancho")
+                            _Estilo = _Fila.Item("Estilo")
+                            _Color = _Fila.Item("Color")
+                            _Fila_Y = _Fila.Item("Fila_Y")
+                            _Columna_X = _Fila.Item("Columna_X")
+                            _Texto = _Fila.Item("Texto")
+                            _RutaImagen = _Fila.Item("RutaImagen")
 
-                        If _Orden_Detalle = 1 Then
+                            Dim _Orden_Detalle = _Fila.Item("Orden_Detalle")
+
+                            If _Orden_Detalle = 1 Then
+
+                                _SQL_Personalizada = _Fila.Item("SQL_Personalizada")
+                                _SqlQuery = _Fila.Item("SqlQuery")
+
+                                Dim _Prct As Boolean = _Fila_D.Item("PRCT")
+                                _Mostrar_En_Concepto = _Fila.Item("Mostrar_En_Concepto")
+
+                                Dim _Imprimir_Detalle As Boolean = True
+
+                                If _Prct And Not _Mostrar_En_Concepto Then
+                                    _Imprimir_Detalle = False
+                                End If
+
+                                Select Case _Estilo
+                                    Case 0
+                                        _Style = FontStyle.Regular
+                                    Case 1
+                                        _Style = FontStyle.Bold
+                                    Case 2
+                                        _Style = FontStyle.Italic
+                                    Case 4
+                                        _Style = FontStyle.Underline
+                                    Case 8
+                                        _Style = FontStyle.Strikeout
+                                    Case Else
+                                        _Style = FontStyle.Regular
+                                End Select
+
+                                _Fte_Usar = New Font(_Fuente, _Tamano, _Style)
+
+                                _Funcion_Bk = _Fila.Item("Funcion_Bk")
+                                _Formato_Fx = _Fila.Item("Formato_Fx")
+                                _Campo = _Fila.Item("Campo")
+                                _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
+                                _Es_Descuento = _Fila.Item("Es_Descuento")
+
+                                _Color = Color.FromArgb(_Color)
+                                Dim _DrawBrush As New SolidBrush(_Color)
+
+                                If CBool(_IdDoc) Then
+
+                                    If _NombreObjeto = "Texto_libre" Then
+
+                                        If _Imprimir_Detalle Then
+
+                                            Dim _Y_Texto = _Fila_InicioDetalle
+
+                                            For Each _Fii As DataRow In _Tbl_Detalle.Rows
+                                                e.Graphics.DrawString(_Texto, _Fte_Usar, Brushes.Black, _Columna_X, _Y_Texto)
+                                                _Y_Texto += _Salto_Linea
+                                            Next
+
+                                        End If
+
+                                    ElseIf _NombreObjeto = "Funcion" Then
+
+                                        If _Funcion_Bk Then
+
+                                            If Fx_Imprimir_Funciones_Detalle(_Funcion,
+                                                                                _Texto,
+                                                                                _Tbl_Detalle,
+                                                                                e,
+                                                                                _Fila_Y,
+                                                                                _Columna_X,
+                                                                                _Fte_Usar,
+                                                                                _DrawBrush, _Imprimir_Detalle) Then
+                                                _Salir_del_For = True
+                                                Exit For
+                                            End If
+
+                                        Else
+
+                                            Dim _Row_Fila_D As DataRow = _Fila_D
+
+                                            If _SQL_Personalizada Then
+
+                                                Dim _Error As String
+                                                Dim _Idmaeddo = _Fila_D.Item("IDMAEDDO")
+
+                                                _Row_Fila_D = Fx_Funcion_SQL_Personalizada_Detalle(_SqlQuery, _Idmaeddo, _Error)
+
+                                                If String.IsNullOrEmpty(_Error) Then
+                                                    _Campo = "CAMPO"
+                                                Else
+                                                    _Campo = "_Error"
+                                                End If
+
+                                            End If
+
+                                            Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
+
+                                            _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
+                                                                                   _TipoDato,
+                                                                                   _Es_Descuento,
+                                                                                   _Row_Fila_D,
+                                                                                   _Texto,
+                                                                                   _Moneda_Str)
+
+                                            'IMPRIME CODIGO DE BARRAS
+                                            If _Codigo_De_Barras Then
+
+                                                Dim bm As Bitmap = Nothing
+                                                Dim CodBarras As New PictureBox
+
+                                                Dim iType As BarCode.Code128SubTypes =
+                                                    DirectCast([Enum].Parse(GetType(BarCode.Code128SubTypes), "CODE128"), BarCode.Code128SubTypes)
+                                                bm = BarCode.Code128(_Texto, iType, False)
+                                                If Not IsNothing(bm) Then
+                                                    CodBarras.Image = bm
+                                                End If
+                                                Dim d = _Detalle_Y
+
+                                                If _Imprimir_Detalle Then
+
+                                                    e.Graphics.DrawImage(CodBarras.Image, _Columna_X, _Detalle_Y - 3, _Ancho, _Alto - 2)
+
+                                                End If
+
+                                            Else
+
+                                                If _Imprimir_Detalle Then
+
+                                                    e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+
+                                                End If
+
+                                            End If
+
+                                        End If
+
+                                    End If
+
+                                Else
+
+                                End If
+
+                            End If
+
+                        Next
+
+                        _Detalle_Y += _Salto_Linea - 2
+
+                        _Contador_Lineas += 1
+
+                        If _Contador_Lineas > _NroLineasXpag Then
+                            _Salir_del_For = True
+                        End If
+
+                        If _Salir_del_For Then
+                            Exit For
+                        End If
+
+                    Next
+
+                    'Dim _DrawBrush2 As New SolidBrush(Color.Black)
+                    e.Graphics.DrawString("--------------------", _Fte_Usar, New SolidBrush(Color.Black), 100, _Detalle_Y)
+
+                Else
+
+                    For Each _Fila_D As DataRow In _Tbl_Detalle.Rows
+
+                        'Dim _Saltar_Linea = True
+
+                        For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
+
+                            _NombreObjeto = _Fila.Item("NombreObjeto")
+                            _Funcion = _Fila.Item("Funcion")
+                            _TipoDato = _Fila.Item("TipoDato")
+                            _Seccion = _Fila.Item("Seccion")
+
+                            _Formato = _Fila.Item("Formato")
+                            _CantDecimales = _Fila.Item("CantDecimales")
+                            _Fuente = _Fila.Item("Fuente")
+                            _Tamano = _Fila.Item("Tamano")
+                            _Alto = _Fila.Item("Alto")
+                            _Ancho = _Fila.Item("Ancho")
+                            _Estilo = _Fila.Item("Estilo")
+                            _Color = _Fila.Item("Color")
+                            _Fila_Y = _Fila.Item("Fila_Y")
+                            _Columna_X = _Fila.Item("Columna_X")
+                            _Texto = _Fila.Item("Texto")
+                            _RutaImagen = _Fila.Item("RutaImagen")
 
                             _SQL_Personalizada = _Fila.Item("SQL_Personalizada")
                             _SqlQuery = _Fila.Item("SqlQuery")
 
-                            Dim _Prct As Boolean = _Fila_D.Item("PRCT")
-                            _Mostrar_En_Concepto = _Fila.Item("Mostrar_En_Concepto")
-
-                            Dim _Imprimir_Detalle As Boolean = True
-
-                            If _Prct And Not _Mostrar_En_Concepto Then
-                                _Imprimir_Detalle = False
-                            End If
+                            Dim _Orden_Detalle = _Fila.Item("Orden_Detalle")
 
                             Select Case _Estilo
                                 Case 0
@@ -2727,7 +2944,25 @@ Public Class Clas_Imprimir_Documento
                             _Es_Descuento = _Fila.Item("Es_Descuento")
 
                             _Color = Color.FromArgb(_Color)
+
                             Dim _DrawBrush As New SolidBrush(_Color)
+
+                            Dim _Prct As Boolean = _Fila_D.Item("PRCT")
+                            _Mostrar_En_Concepto = _Fila.Item("Mostrar_En_Concepto")
+
+                            Dim _Imprimir_Detalle As Boolean = True
+
+                            If _Prct And Not _Mostrar_En_Concepto Then
+                                _Imprimir_Detalle = False
+                            End If
+
+
+                            Dim _FilaEnc = _TblEncForm.Rows(0)
+                            Dim _Agrupar_CodDescripcion As Boolean = _FilaEnc.Item("Agrupar_CodDescripcion")
+
+                            If _Orden_Detalle = 2 And _Agrupar_CodDescripcion Then
+                                _Imprimir_Detalle = False
+                            End If
 
                             If CBool(_IdDoc) Then
 
@@ -2756,8 +2991,10 @@ Public Class Clas_Imprimir_Documento
                                                                             _Columna_X,
                                                                             _Fte_Usar,
                                                                             _DrawBrush, _Imprimir_Detalle) Then
+
                                             _Salir_del_For = True
                                             Exit For
+
                                         End If
 
                                     Else
@@ -2781,6 +3018,9 @@ Public Class Clas_Imprimir_Documento
 
                                         Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
 
+                                        Dim _Formato_Texto As String = _Texto
+                                        Dim _Formatext = Split(_Formato_Texto, vbCrLf)
+
                                         _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
                                                                                _TipoDato,
                                                                                _Es_Descuento,
@@ -2788,297 +3028,101 @@ Public Class Clas_Imprimir_Documento
                                                                                _Texto,
                                                                                _Moneda_Str)
 
-                                        'IMPRIME CODIGO DE BARRAS
-                                        If _Codigo_De_Barras Then
 
-                                            Dim bm As Bitmap = Nothing
-                                            Dim CodBarras As New PictureBox
+                                        If _Orden_Detalle = 2 Then
 
-                                            Dim iType As BarCode.Code128SubTypes =
-                                                DirectCast([Enum].Parse(GetType(BarCode.Code128SubTypes), "CODE128"), BarCode.Code128SubTypes)
-                                            bm = BarCode.Code128(_Texto, iType, False)
-                                            If Not IsNothing(bm) Then
-                                                CodBarras.Image = bm
-                                            End If
-                                            Dim d = _Detalle_Y
+                                            If Not String.IsNullOrWhiteSpace(_Texto) AndAlso _Formatext.Length > 1 Then
 
-                                            If _Imprimir_Detalle Then
-
-                                                e.Graphics.DrawImage(CodBarras.Image, _Columna_X, _Detalle_Y - 3, _Ancho, _Alto - 2)
-
-                                            End If
-
-                                        Else
-
-                                            If _Imprimir_Detalle Then
-
-                                                e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
-
-                                            End If
-
-                                        End If
-
-                                    End If
-
-                                End If
-
-                            Else
-
-                            End If
-
-                        End If
-
-                    Next
-
-                    _Detalle_Y += _Salto_Linea - 2
-
-                    _Contador_Lineas += 1
-
-                    If _Contador_Lineas > _NroLineasXpag Then
-                        _Salir_del_For = True
-                    End If
-
-                    If _Salir_del_For Then
-                        Exit For
-                    End If
-
-                Next
-
-                'Dim _DrawBrush2 As New SolidBrush(Color.Black)
-                e.Graphics.DrawString("--------------------", _Fte_Usar, New SolidBrush(Color.Black), 100, _Detalle_Y)
-
-            Else
-
-                For Each _Fila_D As DataRow In _Tbl_Detalle.Rows
-
-                    'Dim _Saltar_Linea = True
-
-                    For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
-
-                        _NombreObjeto = _Fila.Item("NombreObjeto")
-                        _Funcion = _Fila.Item("Funcion")
-                        _TipoDato = _Fila.Item("TipoDato")
-                        _Seccion = _Fila.Item("Seccion")
-
-                        _Formato = _Fila.Item("Formato")
-                        _CantDecimales = _Fila.Item("CantDecimales")
-                        _Fuente = _Fila.Item("Fuente")
-                        _Tamano = _Fila.Item("Tamano")
-                        _Alto = _Fila.Item("Alto")
-                        _Ancho = _Fila.Item("Ancho")
-                        _Estilo = _Fila.Item("Estilo")
-                        _Color = _Fila.Item("Color")
-                        _Fila_Y = _Fila.Item("Fila_Y")
-                        _Columna_X = _Fila.Item("Columna_X")
-                        _Texto = _Fila.Item("Texto")
-                        _RutaImagen = _Fila.Item("RutaImagen")
-
-                        _SQL_Personalizada = _Fila.Item("SQL_Personalizada")
-                        _SqlQuery = _Fila.Item("SqlQuery")
-
-                        Dim _Orden_Detalle = _Fila.Item("Orden_Detalle")
-
-                        Select Case _Estilo
-                            Case 0
-                                _Style = FontStyle.Regular
-                            Case 1
-                                _Style = FontStyle.Bold
-                            Case 2
-                                _Style = FontStyle.Italic
-                            Case 4
-                                _Style = FontStyle.Underline
-                            Case 8
-                                _Style = FontStyle.Strikeout
-                            Case Else
-                                _Style = FontStyle.Regular
-                        End Select
-
-                        _Fte_Usar = New Font(_Fuente, _Tamano, _Style)
-
-                        _Funcion_Bk = _Fila.Item("Funcion_Bk")
-                        _Formato_Fx = _Fila.Item("Formato_Fx")
-                        _Campo = _Fila.Item("Campo")
-                        _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
-                        _Es_Descuento = _Fila.Item("Es_Descuento")
-
-                        _Color = Color.FromArgb(_Color)
-
-                        Dim _DrawBrush As New SolidBrush(_Color)
-
-                        Dim _Prct As Boolean = _Fila_D.Item("PRCT")
-                        _Mostrar_En_Concepto = _Fila.Item("Mostrar_En_Concepto")
-
-                        Dim _Imprimir_Detalle As Boolean = True
-
-                        If _Prct And Not _Mostrar_En_Concepto Then
-                            _Imprimir_Detalle = False
-                        End If
-
-
-                        Dim _FilaEnc = _TblEncForm.Rows(0)
-                        Dim _Agrupar_CodDescripcion As Boolean = _FilaEnc.Item("Agrupar_CodDescripcion")
-
-                        If _Orden_Detalle = 2 And _Agrupar_CodDescripcion Then
-                            _Imprimir_Detalle = False
-                        End If
-
-                        If CBool(_IdDoc) Then
-
-                            If _NombreObjeto = "Texto_libre" Then
-
-                                If _Imprimir_Detalle Then
-
-                                    Dim _Y_Texto = _Fila_InicioDetalle
-
-                                    For Each _Fii As DataRow In _Tbl_Detalle.Rows
-                                        e.Graphics.DrawString(_Texto, _Fte_Usar, Brushes.Black, _Columna_X, _Y_Texto)
-                                        _Y_Texto += _Salto_Linea
-                                    Next
-
-                                End If
-
-                            ElseIf _NombreObjeto = "Funcion" Then
-
-                                If _Funcion_Bk Then
-
-                                    If Fx_Imprimir_Funciones_Detalle(_Funcion,
-                                                                        _Texto,
-                                                                        _Tbl_Detalle,
-                                                                        e,
-                                                                        _Fila_Y,
-                                                                        _Columna_X,
-                                                                        _Fte_Usar,
-                                                                        _DrawBrush, _Imprimir_Detalle) Then
-
-                                        _Salir_del_For = True
-                                        Exit For
-
-                                    End If
-
-                                Else
-
-                                    Dim _Row_Fila_D As DataRow = _Fila_D
-
-                                    If _SQL_Personalizada Then
-
-                                        Dim _Error As String
-                                        Dim _Idmaeddo = _Fila_D.Item("IDMAEDDO")
-
-                                        _Row_Fila_D = Fx_Funcion_SQL_Personalizada_Detalle(_SqlQuery, _Idmaeddo, _Error)
-
-                                        If String.IsNullOrEmpty(_Error) Then
-                                            _Campo = "CAMPO"
-                                        Else
-                                            _Campo = "_Error"
-                                        End If
-
-                                    End If
-
-                                    Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
-
-                                    Dim _Formato_Texto As String = _Texto
-                                    Dim _Formatext = Split(_Formato_Texto, vbCrLf)
-
-                                    _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
-                                                                           _TipoDato,
-                                                                           _Es_Descuento,
-                                                                           _Row_Fila_D,
-                                                                           _Texto,
-                                                                           _Moneda_Str)
-
-
-                                    If _Orden_Detalle = 2 Then
-
-                                        If Not String.IsNullOrWhiteSpace(_Texto) AndAlso _Formatext.Length > 1 Then
-
-                                            '_Saltar_Linea = False
-
-                                            Dim _Caracteres = _Formato_Texto.Length
-
-                                            Dim _i = 0
-
-                                            If IsNothing(_Texto) Then _Texto = String.Empty
-
-                                            _Texto = Replace(_Texto, vbCrLf, " ")
-                                            _Texto = Replace(_Texto, vbTab, " ")
-
-                                            If IsNothing(_Texto) Then
-                                                _Texto = String.Empty
-                                            End If
-
-                                            If Not String.IsNullOrWhiteSpace(_Texto) Then
-                                                _Texto = Replace(_Texto, "  ", " ")
-                                            End If
-
-                                            Dim _SubCarac = _Formato_Texto.Split(vbCrLf)
-                                            Dim _TextoAjustado As String = Fx_AjustarTexto(_Texto, _SubCarac(0).Length)
-
-                                            Dim _AltoL = (_Alto / _Formatext.Length) + 2
-
-                                            _Formatext = Split(_TextoAjustado, vbCrLf)
-
-                                            '_Detalle_Y += _AltoL + 2
-
-                                            For Each _Texto1 As String In _Formatext
-
-                                                If Not String.IsNullOrWhiteSpace(_Texto1) Then
-                                                    _Detalle_Y += _AltoL
-                                                    e.Graphics.DrawString(_Texto1.Trim, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
-                                                End If
-
-                                            Next
-
-                                        Else
-
-                                            If _Imprimir_Detalle AndAlso Not String.IsNullOrEmpty(_Texto) Then
-
-                                                _Detalle_Y += _Alto + 2
-                                                _Texto = Replace(_Texto, vbCrLf, " ")
-                                                e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
                                                 '_Saltar_Linea = False
 
+                                                Dim _Caracteres = _Formato_Texto.Length
+
+                                                Dim _i = 0
+
+                                                If IsNothing(_Texto) Then _Texto = String.Empty
+
+                                                _Texto = Replace(_Texto, vbCrLf, " ")
+                                                _Texto = Replace(_Texto, vbTab, " ")
+
+                                                If IsNothing(_Texto) Then
+                                                    _Texto = String.Empty
+                                                End If
+
+                                                If Not String.IsNullOrWhiteSpace(_Texto) Then
+                                                    _Texto = Replace(_Texto, "  ", " ")
+                                                End If
+
+                                                Dim _SubCarac = _Formato_Texto.Split(vbCrLf)
+                                                Dim _TextoAjustado As String = Fx_AjustarTexto(_Texto, _SubCarac(0).Length)
+
+                                                Dim _AltoL = (_Alto / _Formatext.Length) + 2
+
+                                                _Formatext = Split(_TextoAjustado, vbCrLf)
+
+                                                '_Detalle_Y += _AltoL + 2
+
+                                                For Each _Texto1 As String In _Formatext
+
+                                                    If Not String.IsNullOrWhiteSpace(_Texto1) Then
+                                                        _Detalle_Y += _AltoL
+                                                        e.Graphics.DrawString(_Texto1.Trim, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                                                    End If
+
+                                                Next
+
+                                            Else
+
+                                                If _Imprimir_Detalle AndAlso Not String.IsNullOrEmpty(_Texto) Then
+
+                                                    _Detalle_Y += _Alto + 2
+                                                    _Texto = Replace(_Texto, vbCrLf, " ")
+                                                    e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                                                    '_Saltar_Linea = False
+
+                                                End If
+
                                             End If
 
-                                        End If
+                                            'End If
 
-                                        'End If
+                                            'If _Orden_Detalle = 2 Then
 
-                                        'If _Orden_Detalle = 2 Then
+                                            '    If _Imprimir_Detalle AndAlso Not String.IsNullOrEmpty(_Texto) Then
 
-                                        '    If _Imprimir_Detalle AndAlso Not String.IsNullOrEmpty(_Texto) Then
+                                            '        _Detalle_Y += _Alto + 2
 
-                                        '        _Detalle_Y += _Alto + 2
-
-                                        '    End If
-
-                                    Else
-
-                                        '_Saltar_Linea = True
-
-                                        'IMPRIME CODIGO DE BARRAS
-                                        If _Codigo_De_Barras Then
-
-                                            Dim bm As Bitmap = Nothing
-                                            Dim CodBarras As New PictureBox
-
-                                            Dim iType As BarCode.Code128SubTypes =
-                                                DirectCast([Enum].Parse(GetType(BarCode.Code128SubTypes), "CODE128"), BarCode.Code128SubTypes)
-                                            bm = BarCode.Code128(_Texto, iType, False)
-                                            If Not IsNothing(bm) Then
-                                                CodBarras.Image = bm
-                                            End If
-
-                                            If _Imprimir_Detalle Then
-
-                                                e.Graphics.DrawImage(CodBarras.Image, _Columna_X, _Detalle_Y - 3, _Ancho, _Alto - 2)
-
-                                            End If
+                                            '    End If
 
                                         Else
 
-                                            If _Imprimir_Detalle Then
+                                            '_Saltar_Linea = True
 
-                                                e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                                            'IMPRIME CODIGO DE BARRAS
+                                            If _Codigo_De_Barras Then
+
+                                                Dim bm As Bitmap = Nothing
+                                                Dim CodBarras As New PictureBox
+
+                                                Dim iType As BarCode.Code128SubTypes =
+                                                    DirectCast([Enum].Parse(GetType(BarCode.Code128SubTypes), "CODE128"), BarCode.Code128SubTypes)
+                                                bm = BarCode.Code128(_Texto, iType, False)
+                                                If Not IsNothing(bm) Then
+                                                    CodBarras.Image = bm
+                                                End If
+
+                                                If _Imprimir_Detalle Then
+
+                                                    e.Graphics.DrawImage(CodBarras.Image, _Columna_X, _Detalle_Y - 3, _Ancho, _Alto - 2)
+
+                                                End If
+
+                                            Else
+
+                                                If _Imprimir_Detalle Then
+
+                                                    e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+
+                                                End If
 
                                             End If
 
@@ -3090,19 +3134,91 @@ Public Class Clas_Imprimir_Documento
 
                             End If
 
+                        Next
+
+                        'If _Saltar_Linea Then
+                        _Detalle_Y += _Salto_Linea
+                        'End If
+
+                        If _Salir_del_For Then
+                            Exit For
                         End If
 
                     Next
 
-                    'If _Saltar_Linea Then
-                    _Detalle_Y += _Salto_Linea
-                    'End If
+                End If
 
-                    If _Salir_del_For Then
-                        Exit For
-                    End If
+            End If
+
+#End Region
+
+#Region "DOCUMENTOS PREVIOS"
+
+            If _Accion_Imprimir <> Enum_Accion_Imprimir.Detalle Then
+
+                _Salto_Linea = 14
+
+                Consulta_sql = "Select Distinct Edo.TIDO As TD,Edo.NUDO As Numero,FEEMDO As FEmision,VABRDO As Monto" & vbCrLf &
+                               "From MAEEDO Edo" & vbCrLf &
+                               "Inner Join MAEDDO Ddo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
+                               "Where Ddo.IDMAEDDO In (Select IDRST From MAEDDO Where IDMAEEDO = " & _IdDoc & ")"
+
+                Dim _Tbl_Documentos_Previos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                Dim _Ls_Documentos_Previos As New List(Of String)
+
+                For Each _Fila_D As DataRow In _Tbl_Documentos_Previos.Rows
+
+                    Dim _TD As String = _Fila_D.Item("TD").ToString
+                    Dim _Numero As String = _Fila_D.Item("Numero").ToString
+                    Dim _FEmision As String = FormatDateTime(_Fila_D.Item("FEmision"), DateFormat.ShortDate).Replace("-", "/")
+                    Dim _Monto As String = FormatNumber(_Fila_D.Item("Monto").ToString, 0)
+
+                    Dim _DocPrevio As String
+
+                    Select Case _Accion_Imprimir
+                        Case Enum_Accion_Imprimir.Documentos_Previos1
+                            _DocPrevio = _TD & " - " & _Numero & " - " & _FEmision
+                        Case Enum_Accion_Imprimir.Documentos_Previos2
+                            _DocPrevio = _Numero & " - " & _FEmision & " - " & _Monto
+                        Case Enum_Accion_Imprimir.Documentos_Previos3
+                            _DocPrevio = _TD & " - " & _Numero & " - " & _FEmision & " - " & _Monto
+                    End Select
+
+                    _Ls_Documentos_Previos.Add(_DocPrevio)
 
                 Next
+
+                'If CBool(_Ls_Documentos_Previos.Count) Then
+                '    _Detalle_Y += _Salto_Linea + 5
+                'End If
+
+                Dim _Contador = 0
+
+                For Each _DocPrevio As String In _Ls_Documentos_Previos
+
+                    _Style = FontStyle.Regular
+                    _Fuente = "Courier New"
+                    '_Color = Color.Black
+                    _Fte_Usar = New Font(_Fuente, _Tamano, _Style)
+                    '_Color = Color.FromArgb(_Color)
+
+                    Dim _DrawBrush As New SolidBrush(Color.Black)
+
+                    If _Contador = 0 Then
+                        e.Graphics.DrawString("------------- Documentos pevios -------------",
+                                                  _Fte_Usar, _DrawBrush, 100, _Detalle_Y)
+                        _Detalle_Y += _Salto_Linea
+                    End If
+
+                    e.Graphics.DrawString(_DocPrevio, _Fte_Usar, _DrawBrush, 100, _Detalle_Y)
+
+                    _Contador += 1
+                    _Detalle_Y += _Salto_Linea
+
+                Next
+
+                _Fila_FinDetalle = _Detalle_Y
 
             End If
 
@@ -3110,11 +3226,35 @@ Public Class Clas_Imprimir_Documento
 
 #Region "REFERENCIAS"
 
-            '' REFERENCIAS *****
+            Dim _Ls_Referencias As New List(Of String)
 
             For Each _Fila_D As DataRow In _Tbl_Referencias.Rows
+                Dim _Referencia = _Fila_D.Item("Referencia").ToString
+                Try
+                    Dim _Ref = Split(_Referencia, " - ")
+                    Dim _TidoRef = _Ref(0)
+                    Dim _NumRef = CInt(_Ref(1))
+                    Dim _FechaRef = _Ref(2)
+                    _Referencia = _TidoRef & " - " & _NumRef & " - " & _FechaRef
+                Catch ex As Exception
+                    _Referencia = _Fila_D.Item("Referencia").ToString
+                End Try
+                _Ls_Referencias.Add(_Referencia)
+            Next
 
-                Dim _Referencia = _Fila_D.Item("Referencia")
+            For Each _Fila_D As DataRow In _Tbl_Referencias_Bakapp.Rows
+                Dim _Referencia = _Fila_D.Item("Referencia").ToString
+                If Not _Ls_Referencias.Contains(_Referencia) Then
+                    _Ls_Referencias.Add(_Referencia)
+                End If
+            Next
+
+            If CBool(_Ls_Referencias.Count) Then
+                _Detalle_Y += _Salto_Linea + 5
+            End If
+
+            For Each _Referencia As String In _Ls_Referencias
+
                 Dim _Contador = 0
 
                 For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
@@ -3170,7 +3310,7 @@ Public Class Clas_Imprimir_Documento
                             If _Funcion = "Referencia DTE" Then
 
                                 If _Contador = 0 Then
-                                    e.Graphics.DrawString("------------------  Referencias ------------------------",
+                                    e.Graphics.DrawString("------------- Referencias -------------",
                                                           _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
                                     _Detalle_Y += _Salto_Linea
                                 End If
@@ -3189,7 +3329,9 @@ Public Class Clas_Imprimir_Documento
 
             Next
 
-            '' ********
+            _Fila_FinDetalle = _Detalle_Y
+
+            ' FIN REFERENCIA
 #End Region
 
 #Region "DOCUMENTOS ASOCIADOS A RECARGOS"

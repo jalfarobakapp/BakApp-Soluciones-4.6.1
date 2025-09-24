@@ -40,14 +40,15 @@ Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('CL
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('ZOPR','ZONA_PR','PRODUCTOS -> ZONAS','Inf_Zona_Pr')                         
 
 
-Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOFULIDO','VENDEDOR','VENDEDORES','Inf_Vendedores')                         
+Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOFULIDO','VENDEDOR','VENDEDORES (DETALLE DEL DOCUMENTO)','Inf_Vendedores')                         
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOFUDO','FUNCIONARIO','RESPONSABLE DE DOCUMENTOS','Inf_Responzable')   
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOFUEN','VENDEDOR_ASIGNADO','VENDEDOR ASIGNADO AL CLIENTE','Inf_Vendedor_Asignado')                        
 
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('0','ARBOL_CLASIF','CLASIFICACIONES (BAKAPP)','Class_BakApp')                         
-
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('Mes+Ano','Mes_Ano','MES/AÑO','Inf_MesAno')                         
 
+Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOGRUDT','NOKOGRUDT','GRUPOS VENDEDOR DOCUMENTO','Inf_GrupoVendDoc') 
+Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOGRU','NOKOGRU','GRUPOS VENDEDOR ASOCIADO','Inf_GrupoVendAsoc') 
 
 --Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL,ARBOL_BAKAPP,Es_Seleccionable,Nodo_Padre) 
 --Values ('-1','Sin_Asociacion','Sin Asociación','Detalle_Inf',1,1,0)

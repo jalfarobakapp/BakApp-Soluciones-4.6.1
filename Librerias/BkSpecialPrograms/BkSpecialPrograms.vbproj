@@ -503,6 +503,12 @@
       <DependentUpon>Recuros_ListaSuperior.resx</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Permisos Asociados\Cl_Permisos_Asociados.vb" />
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Pre-Venta\Frm_Cantidades_PreVenta.Designer.vb">
+      <DependentUpon>Frm_Cantidades_PreVenta.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Pre-Venta\Frm_Cantidades_PreVenta.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Reservar numero OCC\Clas_Imprimir_Reserva_OCC.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Retiradores de mercaderia\Frm_Retirador_Mercaderia.Designer.vb">
       <DependentUpon>Frm_Retirador_Mercaderia.vb</DependentUpon>
@@ -847,6 +853,19 @@
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Cl_GruposRD.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Lista.Designer.vb">
+      <DependentUpon>Frm_Grupos_Lista.vb</DependentUpon>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Lista.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Usuarios.Designer.vb">
+      <DependentUpon>Frm_Grupos_Usuarios.vb</DependentUpon>
+    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Usuarios.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Clase\Cl_ConfiModalGral.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_Fincred.Designer.vb">
       <DependentUpon>Frm_Fincred.vb</DependentUpon>
@@ -869,11 +888,13 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\MAEDPCD.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\MAEDPCE.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\MAEVEN.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\TABFUGD.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\TABFUGE.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Casi_DocDet.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_DocTom.vb" />
-    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_StockProd.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_PreVenta_StockProd.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_Conf_Correo.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_Conf_Cerrar_Documentos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_FacAuto.vb" />
@@ -936,10 +957,16 @@
     <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.Designer.vb">
-      <DependentUpon>Frm_ProdContenedorPreVta.vb</DependentUpon>
+    <Compile Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_IngDet.Designer.vb">
+      <DependentUpon>Frm_PreVenta_IngDet.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.vb">
+    <Compile Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_IngDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_Productos.Designer.vb">
+      <DependentUpon>Frm_PreVenta_Productos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_Productos.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Demonio automatico\Clases Demonios\Cl_ListaMayoristaMinorista.vb" />
@@ -4612,6 +4639,7 @@
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Fuentes_PDF_Manual.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Funciones_Comunes.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Funciones_Especiales_BakApp.vb" />
+    <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Modulo_Documentos.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Recursos\Recursos_Funciones.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -4702,6 +4730,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recuros_ListaSuperior.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Pre-Venta\Frm_Cantidades_PreVenta.resx">
+      <DependentUpon>Frm_Cantidades_PreVenta.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Retiradores de mercaderia\Frm_Retirador_Mercaderia.resx">
       <DependentUpon>Frm_Retirador_Mercaderia.vb</DependentUpon>
@@ -4873,6 +4904,12 @@
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.resx">
       <DependentUpon>Frm_Usuarios_Random_Ficha.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Lista.resx">
+      <DependentUpon>Frm_Grupos_Lista.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Usuarios.resx">
+      <DependentUpon>Frm_Grupos_Usuarios.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Fincred\Frm_Fincred.resx">
       <DependentUpon>Frm_Fincred.vb</DependentUpon>
     </EmbeddedResource>
@@ -4895,8 +4932,11 @@
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_CrearContenedor.resx">
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_ProdContenedorPreVta.resx">
-      <DependentUpon>Frm_ProdContenedorPreVta.vb</DependentUpon>
+    <EmbeddedResource Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_IngDet.resx">
+      <DependentUpon>Frm_PreVenta_IngDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_Productos.resx">
+      <DependentUpon>Frm_PreVenta_Productos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_ConfCorreoAviso.resx">
       <DependentUpon>Frm_Demonio_ConfCorreoAviso.vb</DependentUpon>
@@ -8183,7 +8223,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Configuracion_Formatos_X_Modalidad.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor_DocTom.sql" />
-    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor_StockProd.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_PreVenta_StockProd.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Correos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CorreosEnvioRecepcion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Correos_Cuentas.sql" />
@@ -8442,6 +8482,7 @@
     <Content Include="03 Sistemas\Informes\Ventas\Margenes de venta y proyeccion\Recursos\Sql\SQLQuery Revision Margenes SeaGarden Con Mediana.sql" />
     <None Include="03 Sistemas\Informes\Ventas\Margenes venta\Sql\Margenes de venta2.sql" />
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Graficos\Inf Grafico Dinamica Ventas Mensuales Fecha.sql" />
+    <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Informe Ventas x Perido Nivel Detalle Cubo Actualizacion3.sql" />
     <Content Include="03 Sistemas\Inventario\Inventario parcializado\Sql\Foto_StockXProducto.sql" />
     <Content Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Sql\Crear Html Facturas Cobranza.htm" />
     <Content Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Sql\Crear Html Facturas Pago Proveedores.htm" />

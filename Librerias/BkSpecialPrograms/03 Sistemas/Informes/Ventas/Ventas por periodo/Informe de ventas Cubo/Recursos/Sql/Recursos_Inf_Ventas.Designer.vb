@@ -400,26 +400,111 @@ Namespace My.Resources
         
         '''<summary>
         '''  Busca una cadena traducida similar a 
-        '''Insert Into #Tabla_Paso#
-        '''
-        '''SELECT  EDO.IDMAEEDO, 
-        '''        DDO.IDMAEDDO, 
-        '''        DDO.EMPRESA,
-        '''        EDO.TIDO, 
-        '''        EDO.NUDO, 
-        '''        Isnull(EN.RTEN,&apos;&apos;) As RTEN,
-        '''        CAST(&apos;&apos; AS VARCHAR(15)) AS RUT,
-        '''        EDO.ENDO,
-        '''        EDO.SUENDO,
-        '''        Isnull((SELECT TOP 1 NOKOEN FROM MAEEN WHERE KOEN = EDO.ENDO AND SUEN = EDO.SUENDO),&apos;???&apos;) AS RAZON,
-        '''        CAST(&apos;&apos; AS CHAR(3)) AS KOFUEN,
-        '''        CAST(&apos;&apos; AS VARCHAR(50)) AS VENDEDOR_ASIGNADO,
-        '''        Isnull(EN.RUEN,&apos;&apos;) As RUEN,
-        '''		CAST(&apos;&apos; AS [resto de la cadena truncado]&quot;;.
+        '''Insert Into #Tabla_Paso# (
+        '''IDMAEEDO
+        ''',IDMAEDDO 
+        ''',EMPRESA 
+        ''',TIDO 
+        ''',NUDO 
+        ''',RTEN 
+        ''',RUT 
+        ''',ENDO 
+        ''',SUENDO 
+        ''',RAZON 
+        ''',KOFUEN 
+        ''',VENDEDOR_ASIGNADO 
+        ''',RUEN 
+        ''',RUBRO_EN 
+        ''',ZOEN 
+        ''',ZONA_EN 
+        ''',ACTIEN 
+        ''',ACTIVIDAD_ECONOMICA 
+        ''',TIPOEN 
+        ''',TIPO_ENTIDAD 
+        ''',TAMAEN 
+        ''',TAMANO_EMPRESA 
+        ''',TRANSPOEN 
+        ''',TRANSPORTISTA 
+        ''',DIEN 
+        ''',CIEN 
+        ''',CIUDAD 
+        ''',CMEN 
+        ''',COMUNA 
+        ''',SUDO 
+        ''',SUCURSAL 
+        ''',Mes_Ano 
+        ''',Dia_Palabra 
+        ''',Mes_Palabra 
+        ''',Dia 
+        ''',Mes 
+        ''',Ano 
+        ''',FEEMDO 
+        ''',FEULVEDO 
+        ''',KOFUDO 
+        ''',FUNCIONARIO 
+        ''',MODO 
+        ''',TIMODO 
+        ''',TAMODO 
+        ''',CA [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2() As String
             Get
                 Return ResourceManager.GetString("Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a 
+        '''Insert Into #Tabla_Paso# (
+        '''IDMAEEDO
+        ''',IDMAEDDO 
+        ''',EMPRESA 
+        ''',TIDO 
+        ''',NUDO 
+        ''',RTEN 
+        ''',RUT 
+        ''',ENDO 
+        ''',SUENDO 
+        ''',RAZON 
+        ''',KOFUEN 
+        ''',VENDEDOR_ASIGNADO 
+        ''',RUEN 
+        ''',RUBRO_EN 
+        ''',ZOEN 
+        ''',ZONA_EN 
+        ''',ACTIEN 
+        ''',ACTIVIDAD_ECONOMICA 
+        ''',TIPOEN 
+        ''',TIPO_ENTIDAD 
+        ''',TAMAEN 
+        ''',TAMANO_EMPRESA 
+        ''',TRANSPOEN 
+        ''',TRANSPORTISTA 
+        ''',DIEN 
+        ''',CIEN 
+        ''',CIUDAD 
+        ''',CMEN 
+        ''',COMUNA 
+        ''',SUDO 
+        ''',SUCURSAL 
+        ''',Mes_Ano 
+        ''',Dia_Palabra 
+        ''',Mes_Palabra 
+        ''',Dia 
+        ''',Mes 
+        ''',Ano 
+        ''',FEEMDO 
+        ''',FEULVEDO 
+        ''',KOFUDO 
+        ''',FUNCIONARIO 
+        ''',MODO 
+        ''',TIMODO 
+        ''',TAMODO 
+        ''',CA [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3() As String
+            Get
+                Return ResourceManager.GetString("Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3", resourceCulture)
             End Get
         End Property
         

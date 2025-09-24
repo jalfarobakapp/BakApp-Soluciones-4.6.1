@@ -55,12 +55,12 @@ Public Class Frm_Tickets_Grupos
 
         Dim _Texto_Busqueda As String = Txt_Buscador.Text.Trim
 
-        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Gr.Grupo+Isnull(NOKOFU,'') Like '%")
+        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(_Texto_Busqueda), "Gr.Grupo+Isnull(KOFU+NOKOFU,'') Like '%")
 
         Consulta_sql = "Select Distinct Gr.* From " & _Global_BaseBk & "Zw_Stk_Grupos Gr" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente GvsA On GvsA.Id_Grupo = Gr.Id" & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = GvsA.CodAgente" & vbCrLf &
-                       "Where Gr.Grupo+Isnull(NOKOFU,'') Like '%" & _Cadena & "%'" & vbCrLf &
+                       "Where Gr.Grupo+Isnull(KOFU+NOKOFU,'') Like '%" & _Cadena & "%'" & vbCrLf &
                        Sql_Filtro_Condicion_Extra & vbCrLf &
                        "Order by Gr.Grupo"
         _Tbl_Grupos = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -255,7 +255,7 @@ Public Class Frm_Tickets_Grupos
         Consulta_sql = "Select Gr.*,Rtrim(Ltrim(Gr.CodAgente))+' - '+Tf.NOKOFU As 'NOKOFU' From " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Gr" & vbCrLf &
                        "Left Join TABFU Tf On Tf.KOFU = Gr.CodAgente" & vbCrLf &
                        "Where Id_Grupo = " & _Id_Grupo & vbCrLf &
-                       "Order by Tf.NOKOFU"
+                       "Order by Gr.CodAgente,Tf.NOKOFU"
 
         _Tbl_Agentes = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -287,7 +287,7 @@ Public Class Frm_Tickets_Grupos
 
             .DataSource = _Tbl_Tipos
 
-            OcultarEncabezadoGrilla(Grilla_Tipos)
+            OcultarEncabezadoGrilla(Grilla_Tipos, True)
 
             Dim _DisplayIndex = 0
 

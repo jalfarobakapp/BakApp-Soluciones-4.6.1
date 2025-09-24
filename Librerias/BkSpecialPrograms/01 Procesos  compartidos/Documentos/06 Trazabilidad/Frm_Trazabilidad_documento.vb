@@ -85,8 +85,9 @@ Public Class Frm_Trazabilidad_documento
                 Sb_Crear_Nodos_Hijos_Documentos(_Tbl_Documento.Rows(0), _Nodo, Traza.Posterior, "DOCUMENTOS POSTERIORES", , , False)
             End If
 
-            Consulta_sql = "Select IDRVE,KOTABLA,KOCARAC,NOKOCARAC,ARCHIRSE,IDRSE" & vbCrLf &
-                           "From MEVENTO" & vbCrLf &
+            Consulta_sql = "Select IDRVE,KOTABLA,KOCARAC,NOKOCARAC,ARCHIRSE,IDRSE,Isnull(TIDO,'') As TIDO,Isnull(NUDO,'') As NUDO" & vbCrLf &
+                           "From MEVENTO Mv" & vbCrLf &
+                           "Left Join MAEEDO Edo On Edo.IDMAEEDO = Mv.IDRSE" & vbCrLf &
                            "Where ARCHIRVE = 'MAEEDO' And IDRVE = " & _Idmaeedo_Origen & " And ARCHIRSE = 'MAEEDO' And IDRSE <> 0"
 
             Dim _TblMevento As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -97,13 +98,16 @@ Public Class Frm_Trazabilidad_documento
 
                     Dim _Idrse As Integer = _Fila.Item("IDRSE")
 
-                    Dim _Kotabla As String = Trim(_Fila.Item("KOTABLA"))
-                    Dim _Kocarac As String = Trim(_Fila.Item("KOCARAC"))
-                    Dim _Nokocarac As String = Trim(_Fila.Item("NOKOCARAC"))
+                    Dim _Kotabla As String = _Fila.Item("KOTABLA").ToString.Trim
+                    Dim _Kocarac As String = _Fila.Item("KOCARAC").ToString.Trim
+                    Dim _Nokocarac As String = _Fila.Item("NOKOCARAC").ToString.Trim
+                    Dim _TidoMv As String = _Fila.Item("TIDO").ToString.Trim
+                    Dim _NudoMv As String = _Fila.Item("NUDO").ToString.Trim
 
-                    Dim _Nombre_Nodo As String = _Kotabla & " " & _Kocarac & " -> " & _Nokocarac
+                    Dim _Nombre_Nodo As String = _Kotabla & " " & _Kocarac & " -> " & _Nokocarac & " (" & _TidoMv & "-" & _NudoMv & ")"
 
                     Sb_Crear_Nodos_Hijos_Documentos_Enlace_Externo_BakApp(_Nodo, _Nombre_Nodo, _Idrse)
+
                 Next
 
             End If

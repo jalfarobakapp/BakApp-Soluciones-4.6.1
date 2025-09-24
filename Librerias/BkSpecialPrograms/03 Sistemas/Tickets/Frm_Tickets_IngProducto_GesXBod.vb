@@ -7,7 +7,6 @@ Public Class Frm_Tickets_IngProducto_GesXBod
     Public listaProductos As New BindingList(Of Zw_Stk_Tickets_Producto)
 
     Public Property Cl_Tickets As Cl_Tickets
-
     Public Property SoloUnProducto As Boolean
     Public Property ModoSoloLectura As Boolean
     Public Property Grabar As Boolean
@@ -21,7 +20,6 @@ Public Class Frm_Tickets_IngProducto_GesXBod
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla_Detalle, 18, New Font("Tahoma", 8), Color.LightYellow, ScrollBars.None, True, False, False)
-
         Sb_Color_Botones_Barra(Bar1)
 
     End Sub
@@ -169,20 +167,11 @@ Public Class Frm_Tickets_IngProducto_GesXBod
             '.Columns("Descripcion_Bodega").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
 
-
             .Columns("Um").Visible = True
             .Columns("Um").HeaderText = "UM"
             .Columns("Um").ToolTipText = "Unidad de medida"
             .Columns("Um").Width = 30
             .Columns("Um").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("StfiEnBodega").Visible = True
-            .Columns("StfiEnBodega").HeaderText = "Stock Sistema"
-            .Columns("StfiEnBodega").Width = 100
-            .Columns("StfiEnBodega").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("StfiEnBodega").DefaultCellStyle.Format = "###,##0.##"
-            .Columns("StfiEnBodega").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Cantidad").Visible = True
@@ -191,6 +180,14 @@ Public Class Frm_Tickets_IngProducto_GesXBod
             .Columns("Cantidad").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Cantidad").DefaultCellStyle.Format = "###,##0.##"
             .Columns("Cantidad").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("StfiEnBodega").Visible = True
+            .Columns("StfiEnBodega").HeaderText = "Stock Sistema"
+            .Columns("StfiEnBodega").Width = 100
+            .Columns("StfiEnBodega").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StfiEnBodega").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("StfiEnBodega").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Diferencia").Visible = True
@@ -367,7 +364,7 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                             Fm.ShowDialog(Me)
                             If Fm.Seleccionada Then
                                 _Fila.Cells("Um").Value = Fm.UdTrans
-                                Grilla_Detalle.CurrentCell = _Fila.Cells("StfiEnBodega")
+                                Grilla_Detalle.CurrentCell = _Fila.Cells("Cantidad") ' StfiEnBodega
                             End If
                             Fm.Dispose()
 
@@ -431,7 +428,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                             _Filtrar.Descripcion = "Ubicacion"
 
                             If _Filtrar.Fx_Filtrar(Nothing,
-                                                   Clas_Filtros_Random.Enum_Tabla_Fl._Otra, _Sql_Filtro_Condicion_Extra, Nothing, False, True) Then
+                                                   Clas_Filtros_Random.Enum_Tabla_Fl._Otra,
+                                                   _Sql_Filtro_Condicion_Extra, Nothing, False, True,,,,,, "-") Then
 
                                 Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
 
@@ -571,8 +569,8 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                     _Fila.Cells("Diferencia").Value = _Diferencia
 
-                    If _Cabeza = "StfiEnBodega" Then
-                        Grilla_Detalle.CurrentCell = _Fila.Cells("Cantidad")
+                    If _Cabeza = "Cantidad" Then
+                        Grilla_Detalle.CurrentCell = _Fila.Cells("StfiEnBodega")
                     Else
                         Grilla_Detalle.CurrentCell = _Fila.Cells("FechaRev")
                     End If

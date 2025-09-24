@@ -76,13 +76,19 @@ Public Class Clas_Modalidades
 
     End Sub
 
-    Sub Sb_Actualizar_Variables_Modalidad(_Modalidad As String, Optional _Mostrar_Error As Boolean = True)
+    Sub Sb_Actualizar_Variables_Modalidad(_Modalidad As String,
+                                          Optional _Mostrar_Error As Boolean = True,
+                                          Optional _Empresa As String = "")
 
         Try
 
+            If String.IsNullOrEmpty(_Empresa) Then
+                _Empresa = Mod_Empresa
+            End If
+
             Consulta_sql = "Select top 1 Cest.*,Cfgp.RAZON  
                         From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA  
-                        Where Cest.EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
+                        Where Cest.EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'"
 
             _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Error)
 
@@ -98,7 +104,7 @@ Public Class Clas_Modalidades
             Mod_ListaPrecioVenta = Mid(_Global_Row_Modalidad.Item("ELISTAVEN"), 6, 3) 'Mid(TxtLPCompra.Text, 6, 3)
             Mod_ListaPrecioCosto = Mid(_Global_Row_Modalidad.Item("ELISTACOM"), 6, 3) 'Mid(TxtLPVenta.Text, 6, 3)
 
-            Consulta_sql = "Select * From CONFIGP Where EMPRESA = " & Mod_Empresa
+            Consulta_sql = "Select * From CONFIGP Where EMPRESA = " & _Empresa
             _Global_Row_Configp = _Sql.Fx_Get_DataRow(Consulta_sql, _Mostrar_Error)
 
             Dim _New_RutEmpresa As String = _Global_Row_Configp.Item("RUT").ToString.Trim

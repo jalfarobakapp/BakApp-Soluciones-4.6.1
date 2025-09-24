@@ -23,7 +23,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_BusquedaDocumento_Filtro))
-        Me.Btn_Entidad_Una = New DevComponents.DotNetBar.ButtonX()
         Me.Rdb_Entidad_Una = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Entidad = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.ChkBuscarEntidadFisica = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -44,8 +43,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Estado_Vigente = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Estado_Cerrado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Funcionarios_Uno = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.CmbFuncionarios = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.Btn_Funcionarios = New DevComponents.DotNetBar.ButtonX()
         Me.Rdb_Funcionarios_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Funcionarios_Algunos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.CmbCantFilas = New System.Windows.Forms.ComboBox()
@@ -66,8 +63,8 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Grupo_Entidad = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Chk_Todas_Sucursales = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grupo_Funcionario = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_Funcionarios = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Grupo_Producto = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Btn_Producto_Uno = New DevComponents.DotNetBar.ButtonX()
         Me.Rdb_Producto_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Producto_Uno = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Producto = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -106,18 +103,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
         CType(Me.Dtp_FEntrega_Desde, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'Btn_Entidad_Una
-        '
-        Me.Btn_Entidad_Una.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Entidad_Una.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Entidad_Una.Image = CType(resources.GetObject("Btn_Entidad_Una.Image"), System.Drawing.Image)
-        Me.Btn_Entidad_Una.Location = New System.Drawing.Point(135, 45)
-        Me.Btn_Entidad_Una.Name = "Btn_Entidad_Una"
-        Me.Btn_Entidad_Una.Size = New System.Drawing.Size(31, 23)
-        Me.Btn_Entidad_Una.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Entidad_Una.TabIndex = 28
-        Me.Btn_Entidad_Una.Tooltip = "Ver selección"
-        '
         'Rdb_Entidad_Una
         '
         Me.Rdb_Entidad_Una.BackColor = System.Drawing.Color.Transparent
@@ -144,14 +129,16 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         Me.Txt_Entidad.Border.Class = "TextBoxBorder"
         Me.Txt_Entidad.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Entidad.ButtonCustom.Image = CType(resources.GetObject("Txt_Entidad.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Entidad.ButtonCustom.Visible = True
         Me.Txt_Entidad.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Entidad.Enabled = False
         Me.Txt_Entidad.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Entidad.Location = New System.Drawing.Point(172, 46)
+        Me.Txt_Entidad.Location = New System.Drawing.Point(138, 46)
         Me.Txt_Entidad.Name = "Txt_Entidad"
         Me.Txt_Entidad.PreventEnterBeep = True
         Me.Txt_Entidad.ReadOnly = True
-        Me.Txt_Entidad.Size = New System.Drawing.Size(590, 22)
+        Me.Txt_Entidad.Size = New System.Drawing.Size(624, 22)
         Me.Txt_Entidad.TabIndex = 9
         '
         'ChkBuscarEntidadFisica
@@ -442,37 +429,12 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Funcionarios_Uno.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Funcionarios_Uno.FocusCuesEnabled = False
         Me.Rdb_Funcionarios_Uno.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Funcionarios_Uno.Location = New System.Drawing.Point(181, 12)
+        Me.Rdb_Funcionarios_Uno.Location = New System.Drawing.Point(138, 11)
         Me.Rdb_Funcionarios_Uno.Name = "Rdb_Funcionarios_Uno"
         Me.Rdb_Funcionarios_Uno.Size = New System.Drawing.Size(106, 24)
         Me.Rdb_Funcionarios_Uno.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Funcionarios_Uno.TabIndex = 26
         Me.Rdb_Funcionarios_Uno.Text = "Uno en especifico"
-        '
-        'CmbFuncionarios
-        '
-        Me.CmbFuncionarios.DisplayMember = "Text"
-        Me.CmbFuncionarios.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.CmbFuncionarios.ForeColor = System.Drawing.Color.Black
-        Me.CmbFuncionarios.FormattingEnabled = True
-        Me.CmbFuncionarios.ItemHeight = 16
-        Me.CmbFuncionarios.Location = New System.Drawing.Point(293, 13)
-        Me.CmbFuncionarios.Name = "CmbFuncionarios"
-        Me.CmbFuncionarios.Size = New System.Drawing.Size(469, 22)
-        Me.CmbFuncionarios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.CmbFuncionarios.TabIndex = 25
-        '
-        'Btn_Funcionarios
-        '
-        Me.Btn_Funcionarios.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Funcionarios.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Funcionarios.Image = CType(resources.GetObject("Btn_Funcionarios.Image"), System.Drawing.Image)
-        Me.Btn_Funcionarios.Location = New System.Drawing.Point(135, 13)
-        Me.Btn_Funcionarios.Name = "Btn_Funcionarios"
-        Me.Btn_Funcionarios.Size = New System.Drawing.Size(31, 23)
-        Me.Btn_Funcionarios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Funcionarios.TabIndex = 23
-        Me.Btn_Funcionarios.Tooltip = "Ver selección"
         '
         'Rdb_Funcionarios_Todos
         '
@@ -580,7 +542,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.TableLayoutPanel3.ColumnCount = 3
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 132.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 134.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Algunas, 2, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Todas, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.LabelX2, 0, 0)
@@ -602,7 +564,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Sucursal_Doc_Algunas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(252, 4)
+        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(250, 4)
         Me.Rdb_Sucursal_Doc_Algunas.Name = "Rdb_Sucursal_Doc_Algunas"
         Me.Rdb_Sucursal_Doc_Algunas.Size = New System.Drawing.Size(94, 17)
         Me.Rdb_Sucursal_Doc_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -622,7 +584,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Sucursal_Doc_Todas.CheckValue = "Y"
         Me.Rdb_Sucursal_Doc_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(160, 4)
+        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(158, 4)
         Me.Rdb_Sucursal_Doc_Todas.Name = "Rdb_Sucursal_Doc_Todas"
         Me.Rdb_Sucursal_Doc_Todas.Size = New System.Drawing.Size(85, 17)
         Me.Rdb_Sucursal_Doc_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -923,7 +885,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Grupo_Entidad.BackColor = System.Drawing.Color.White
         Me.Grupo_Entidad.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.Grupo_Entidad.Controls.Add(Me.Chk_Todas_Sucursales)
-        Me.Grupo_Entidad.Controls.Add(Me.Btn_Entidad_Una)
         Me.Grupo_Entidad.Controls.Add(Me.Rdb_Entidad_Todas)
         Me.Grupo_Entidad.Controls.Add(Me.Rdb_Entidad_Una)
         Me.Grupo_Entidad.Controls.Add(Me.ChkBuscarEntidadFisica)
@@ -984,11 +945,10 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         Me.Grupo_Funcionario.BackColor = System.Drawing.Color.White
         Me.Grupo_Funcionario.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Funcionario.Controls.Add(Me.Txt_Funcionarios)
         Me.Grupo_Funcionario.Controls.Add(Me.Rdb_Funcionarios_Uno)
         Me.Grupo_Funcionario.Controls.Add(Me.Rdb_Funcionarios_Todos)
-        Me.Grupo_Funcionario.Controls.Add(Me.CmbFuncionarios)
         Me.Grupo_Funcionario.Controls.Add(Me.Rdb_Funcionarios_Algunos)
-        Me.Grupo_Funcionario.Controls.Add(Me.Btn_Funcionarios)
         Me.Grupo_Funcionario.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Funcionario.Location = New System.Drawing.Point(12, 279)
         Me.Grupo_Funcionario.Name = "Grupo_Funcionario"
@@ -1024,11 +984,30 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Grupo_Funcionario.TabIndex = 33
         Me.Grupo_Funcionario.Text = "Funcionario que creo el documento"
         '
+        'Txt_Funcionarios
+        '
+        Me.Txt_Funcionarios.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Funcionarios.Border.Class = "TextBoxBorder"
+        Me.Txt_Funcionarios.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Funcionarios.ButtonCustom.Image = CType(resources.GetObject("Txt_Funcionarios.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Funcionarios.ButtonCustom.Visible = True
+        Me.Txt_Funcionarios.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Funcionarios.Enabled = False
+        Me.Txt_Funcionarios.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Funcionarios.Location = New System.Drawing.Point(250, 13)
+        Me.Txt_Funcionarios.Name = "Txt_Funcionarios"
+        Me.Txt_Funcionarios.PreventEnterBeep = True
+        Me.Txt_Funcionarios.ReadOnly = True
+        Me.Txt_Funcionarios.Size = New System.Drawing.Size(512, 22)
+        Me.Txt_Funcionarios.TabIndex = 29
+        '
         'Grupo_Producto
         '
         Me.Grupo_Producto.BackColor = System.Drawing.Color.White
         Me.Grupo_Producto.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.Grupo_Producto.Controls.Add(Me.Btn_Producto_Uno)
         Me.Grupo_Producto.Controls.Add(Me.Rdb_Producto_Todos)
         Me.Grupo_Producto.Controls.Add(Me.Rdb_Producto_Uno)
         Me.Grupo_Producto.Controls.Add(Me.Txt_Producto)
@@ -1066,18 +1045,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Grupo_Producto.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_Producto.TabIndex = 34
         Me.Grupo_Producto.Text = "Contiene producto en particular"
-        '
-        'Btn_Producto_Uno
-        '
-        Me.Btn_Producto_Uno.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Producto_Uno.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Producto_Uno.Image = CType(resources.GetObject("Btn_Producto_Uno.Image"), System.Drawing.Image)
-        Me.Btn_Producto_Uno.Location = New System.Drawing.Point(135, 32)
-        Me.Btn_Producto_Uno.Name = "Btn_Producto_Uno"
-        Me.Btn_Producto_Uno.Size = New System.Drawing.Size(31, 23)
-        Me.Btn_Producto_Uno.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Producto_Uno.TabIndex = 28
-        Me.Btn_Producto_Uno.Tooltip = "Ver selección"
         '
         'Rdb_Producto_Todos
         '
@@ -1126,14 +1093,16 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         Me.Txt_Producto.Border.Class = "TextBoxBorder"
         Me.Txt_Producto.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Producto.ButtonCustom.Image = CType(resources.GetObject("Txt_Producto.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Producto.ButtonCustom.Visible = True
         Me.Txt_Producto.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Producto.Enabled = False
         Me.Txt_Producto.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Producto.Location = New System.Drawing.Point(172, 33)
+        Me.Txt_Producto.Location = New System.Drawing.Point(138, 33)
         Me.Txt_Producto.Name = "Txt_Producto"
         Me.Txt_Producto.PreventEnterBeep = True
         Me.Txt_Producto.ReadOnly = True
-        Me.Txt_Producto.Size = New System.Drawing.Size(590, 22)
+        Me.Txt_Producto.Size = New System.Drawing.Size(624, 22)
         Me.Txt_Producto.TabIndex = 9
         '
         'Chk_Mostrar_Vales_Transitorios
@@ -1623,11 +1592,8 @@ Partial Class Frm_BusquedaDocumento_Filtro
     Public WithEvents Rdb_Tipo_Documento_Uno As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents CmbTipoDeDocumentos As DevComponents.DotNetBar.Controls.ComboBoxEx
     Public WithEvents Btn_Documentos As DevComponents.DotNetBar.ButtonX
-    Public WithEvents Btn_Funcionarios As DevComponents.DotNetBar.ButtonX
     Friend WithEvents CmbCantFilas As System.Windows.Forms.ComboBox
     Public WithEvents Rdb_Funcionarios_Uno As DevComponents.DotNetBar.Controls.CheckBoxX
-    Public WithEvents CmbFuncionarios As DevComponents.DotNetBar.Controls.ComboBoxEx
-    Public WithEvents Btn_Entidad_Una As DevComponents.DotNetBar.ButtonX
     Public WithEvents Rdb_Entidad_Una As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_Estado_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Grupo_FEmision As DevComponents.DotNetBar.Controls.GroupPanel
@@ -1635,7 +1601,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
     Public WithEvents Grupo_Funcionario As DevComponents.DotNetBar.Controls.GroupPanel
     Public WithEvents Grupo_documento As DevComponents.DotNetBar.Controls.GroupPanel
-    Public WithEvents Btn_Producto_Uno As DevComponents.DotNetBar.ButtonX
     Public WithEvents Rdb_Producto_Todos As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_Producto_Uno As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Txt_Producto As DevComponents.DotNetBar.Controls.TextBoxX
@@ -1669,4 +1634,5 @@ Partial Class Frm_BusquedaDocumento_Filtro
     Public WithEvents Rdb_FEntrega_EmitidosEntre As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Lbl_FEntrega_Hasta As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_FEntrega_Desde As DevComponents.DotNetBar.LabelX
+    Public WithEvents Txt_Funcionarios As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

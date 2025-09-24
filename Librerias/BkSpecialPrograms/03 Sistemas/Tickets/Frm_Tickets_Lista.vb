@@ -21,6 +21,7 @@ Public Class Frm_Tickets_Lista
     End Enum
 
     Private _NodoSeleccionado As TreeNode
+    Private _NodoAnterior As TreeNode
 
     Public Sub New(_Funcionario As String, _Tipo As Enum_Tickets, _Id_Grupo As Integer)
 
@@ -63,17 +64,24 @@ Public Class Frm_Tickets_Lista
 
         Sb_CargarTreeView()
 
-        Sb_Actualizar_Grilla_Treeview(Nothing)
-        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
-        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
-        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(2))
-
         Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_ImagenAttach", "Est.", "ImagenAttach", 0, _Tipo_Boton.Imagen)
         Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_ProductoInfo", "P.I.", "ProductoInfo", 0, _Tipo_Boton.Imagen)
         Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_DocCierra", "Doc.", "DocCierra", 0, _Tipo_Boton.Imagen)
         Sb_InsertarBotonenGrilla(Grilla_Acciones, "Btn_ImagenUser", "Est.", "ImagenUser", 0, _Tipo_Boton.Imagen)
 
+        Sb_Actualizar_Grilla_Treeview(Nothing)
+        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
+        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+        Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(2))
+
         Txt_Descripcion.ReadOnly = True
+
+        Dtp_Filtro_Fcreacion_Desde.Enabled = Chk_Filtro_FcreacionRango.Checked
+        Dtp_Filtro_Fcreacion_Hasta.Enabled = Chk_Filtro_FcreacionRango.Checked
+        Btn_Filtrar.Enabled = Chk_Filtro_FcreacionRango.Checked
+
+        Dtp_Filtro_Fcreacion_Desde.Value = Primerdiadelmes(Date.Now)
+        Dtp_Filtro_Fcreacion_Hasta.Value = ultimodiadelmes(Date.Now)
 
     End Sub
 
@@ -179,7 +187,7 @@ Public Class Frm_Tickets_Lista
             End If
 
 
-            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Month, -1, Now.Date)
+            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Day, -7, Now.Date)
             Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
 
             If _NodoHijo.Tag = "EnProceso" Then _Accion = "And Estado = 'PROC' And Aceptado = 0 And Rechazado = 0"
@@ -269,7 +277,7 @@ Public Class Frm_Tickets_Lista
                 _Condicion += vbCrLf & "And Tks.Estado = 'PROC' And Tks.Aceptado = 0 And Tks.Rechazado = 0"
             End If
 
-            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Month, -1, Now.Date)
+            Dim _FechaLimite As DateTime = DateAdd(DateInterval.Day, -7, Now.Date)
             Dim _FechaLimiteStr As String = Format(_FechaLimite, "yyyyMMdd")
 
             If _Carpeta.Tag = "Aceptados" Then
@@ -301,6 +309,7 @@ Public Class Frm_Tickets_Lista
                 If _Carpeta.Tag = "ENVIADOS" Then
                     _Condicion = "And Tks.CodFuncionario_Crea = '" & _Funcionario & "'"
                 End If
+                _NodoSeleccionado = _Carpeta
             Catch ex As Exception
                 _Condicion = "And 1 = 0"
                 _NodoSeleccionado = Nothing
@@ -308,65 +317,160 @@ Public Class Frm_Tickets_Lista
 
         End If
 
-        'Consulta_sql = "Select Distinct Tks.*,NOKOFU As 'NomFuncCrea',TkPrd.Empresa,TkPrd.Sucursal,TkPrd.Bodega," & vbCrLf &
-        '               "TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr," & vbCrLf &
-        '               "TkPrd.Um As 'Udm',StfiEnBodega,Cantidad,Diferencia" & vbCrLf &
-        '               ",Case Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad" & vbCrLf &
-        '               ",Case UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion" & vbCrLf &
-        '               ",Case Estado 
-        '               When 'ABIE' Then 
-        '                    Case When Rechazado = 1 Then 'Abierto (Rechazado)' Else 'Abierto' End 
-        '               When 'PROC' Then 'En proceso'
-        '               When 'CERR' Then 
-        '                    Case When Rechazado = 1 Then 'Cerrado (Rechazado)' When Aceptado = 1 Then 'Cerrado (Aceptado)' Else 'Cerrado' End 
-        '               When 'NULO' then 'Nulo' When 'SOLC' then 'Sol. Cierre' End As NomEstado," & vbCrLf &
-        '               "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Raiz = Tks.Id_Raiz And AcMs.Accion In ('MENS','CREA') And AcMs.Visto = 0) As Mesn_Pdte_Ver," & vbCrLf &
-        '               "(Select COUNT(*) From " & _Global_BaseBk & "Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Raiz = Tks.Id_Raiz And AcRs.Accion In ('RESP','CREA') And AcRs.Visto = 0) As Resp_Pdte_Ver" & vbCrLf &
-        '               "From " & _Global_BaseBk & "Zw_Stk_Tickets Tks" & vbCrLf &
-        '               "Left Join " & _Global_BaseBk & "Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz And TkPrd.Id_Raiz = TkPrd.Id_Ticket" & vbCrLf &
-        '               "Left Join TABFU Fu On Fu.KOFU = CodFuncionario_Crea" & vbCrLf &
-        '               "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
-        '               "Order By Tks.FechaCreacion"
+        '        Consulta_sql = $"Select Distinct Tks.*,
+        'Isnull(TksDeri.Numero,'') As 'NroDerivado',Isnull(TksDeri.SubNro,'') As 'SubDerivado',
+        'Isnull(TksAhilo.Numero,'') As 'NroHilo',Isnull(TksAhilo.SubNro,'') As 'SubHilo',
+        'NOKOFU As 'NomFuncCrea',TkPrd.Empresa As 'Empresa_Pr',TkPrd.Sucursal As 'Sucursal_Pr',TkPrd.Bodega As 'Bodega_Pr',
+        'TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr,
+        'TkPrd.Um As 'Udm',StfiEnBodega,Cantidad,Diferencia
+        ',Case Tks.Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad
+        ',Case Tks.UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion
+        ',Case Tks.Estado 
+        '                       When 'ABIE' Then 
+        '                            Case When Tks.Rechazado = 1 Then 'ABIERTO (Rechazado)' Else 'ABIERTO' End 
+        '					   When 'PROC' Then 'EN PROCESO'
+        '                       When 'CERR' Then 
+        '                            Case When Tks.Rechazado = 1 Then 'CERRADO (Rechazado)' When Tks.Aceptado = 1 Then 'CERRADO (Aceptado)' Else 'CERRADO' End 
+        '                       When 'NULO' then 'NULO' When 'SOLC' then 'Sol. Cierre' End As NomEstado,Cast('' As Varchar(100)) As 'NomEstadoExt',
+        '(Select COUNT(*) From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Raiz = Tks.Id_Raiz And AcMs.Accion In ('MENS','CREA') And AcMs.Visto = 0) As Mesn_Pdte_Ver,
+        '(Select COUNT(*) From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Raiz = Tks.Id_Raiz And AcRs.Accion In ('RESP','CREA') And AcRs.Visto = 0) As Resp_Pdte_Ver,
+        'Cast(0 As int) AS Idmaeedo_Cierra,Cast('' As Varchar(100)) As 'Motivo_Cierra',Cast('' As Varchar(30)) As 'NomFuncionario_Cierra'
+        'Into #Paso
+        'From {_Global_BaseBk}Zw_Stk_Tickets Tks
+        '--Left Join {_Global_BaseBk}Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz And TkPrd.Id_Raiz = TkPrd.Id_Ticket
+        'Left Join {_Global_BaseBk}Zw_Stk_Tickets_Producto TkPrd On TkPrd.Id_Ticket = Tks.Id And Tks.Id_Raiz = TkPrd.Id_Raiz 
+        'Left Join TABFU Fu On Fu.KOFU = Tks.CodFuncionario_Crea
+        'Left Join {_Global_BaseBk}Zw_Stk_Tickets TksDeri On TksDeri.Id = Tks.Id_Padre
+        'Left Join {_Global_BaseBk}Zw_Stk_Tickets_Acciones TksADeri On Tks.Id = TksADeri.Id_Ticket_Cierra And TksADeri.Accion = 'CECR'
+        'Left Join {_Global_BaseBk}Zw_Stk_Tickets TksAhilo On TksAhilo.Id = TksADeri.Id_Ticket
+        'Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
+        '                       $"Order By Tks.FechaCreacion
 
-        Consulta_sql = $"Select Distinct Tks.*,
-Isnull(TksDeri.Numero,'') As 'NroDerivado',Isnull(TksDeri.SubNro,'') As 'SubDerivado',
-Isnull(TksAhilo.Numero,'') As 'NroHilo',Isnull(TksAhilo.SubNro,'') As 'SubHilo',
-NOKOFU As 'NomFuncCrea',TkPrd.Empresa As 'Empresa_Pr',TkPrd.Sucursal As 'Sucursal_Pr',TkPrd.Bodega As 'Bodega_Pr',
-TkPrd.Codigo,TkPrd.Descripcion As DescripcionPr,
-TkPrd.Um As 'Udm',StfiEnBodega,Cantidad,Diferencia
-,Case Tks.Prioridad When 'AL' Then 'Alta' When 'NR' Then 'Normal' When 'BJ' Then 'Baja' When 'UR' Then 'Urgente' Else '??' End As NomPrioridad
-,Case Tks.UltAccion When 'INGR' then 'Ingresada' When 'MENS' then 'Mensaje' When 'RESP' then 'Respondido' When 'CERR' then 'Cerrada' End As UltimaAccion
-,Case Tks.Estado 
-                       When 'ABIE' Then 
-                            Case When Tks.Rechazado = 1 Then 'ABIERTO (Rechazado)' Else 'ABIERTO' End 
-					   When 'PROC' Then 'EN PROCESO'
-                       When 'CERR' Then 
-                            Case When Tks.Rechazado = 1 Then 'CERRADO (Rechazado)' When Tks.Aceptado = 1 Then 'CERRADO (Aceptado)' Else 'CERRADO' End 
-                       When 'NULO' then 'NULO' When 'SOLC' then 'Sol. Cierre' End As NomEstado,Cast('' As Varchar(100)) As 'NomEstadoExt',
-(Select COUNT(*) From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcMs Where AcMs.Id_Raiz = Tks.Id_Raiz And AcMs.Accion In ('MENS','CREA') And AcMs.Visto = 0) As Mesn_Pdte_Ver,
-(Select COUNT(*) From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcRs Where AcRs.Id_Raiz = Tks.Id_Raiz And AcRs.Accion In ('RESP','CREA') And AcRs.Visto = 0) As Resp_Pdte_Ver
+        'Update #Paso Set Idmaeedo_Cierra = Isnull((Select Top 1 Idmaeedo_Cierra From {_Global_BaseBk}Zw_Stk_Tickets_Acciones Aci Where Aci.Id_Ticket = #Paso.Id And Idmaeedo_Cierra <> 0),0)
+        'Update #Paso Set CodFuncionario_Cierra = Isnull((Select Top 1 Aci.CodFuncionario From {_Global_BaseBk}Zw_Stk_Tickets_Acciones Aci Where Aci.Id_Ticket = #Paso.Id And Accion = 'ACCI'),0)
+        'Update #Paso Set NomFuncionario_Cierra = Isnull((Select Top 1 NOKOFU From TABFU Where KOFU = #Paso.CodFuncionario_Cierra),'')
+
+        'Update #Paso Set NomEstadoExt = NomEstado+'... (derivado de '+NroDerivado+'-'+SubDerivado+')' 
+        'Where Id_Padre <> 0 and NroDerivado <> '' And Estado in ('ABIE')
+
+        'Update #Paso Set NomEstadoExt = NomEstado+'... (hilo continuado en '+NroHilo+'-'+SubHilo+')' 
+        'Where Id_Padre = 0 And NroHilo <> '' And Estado = 'PROC'
+
+        'Update #Paso Set NomEstadoExt = NomEstado
+        'Where NomEstadoExt = ''
+
+        'Update #Paso Set [Motivo_Cierra] = (Select Top 1 Motivo_Cierra From {_Global_BaseBk}Zw_Stk_Tickets_Acciones Acc Where Acc.Idmaeedo_Cierra = #Paso.Idmaeedo_Cierra) Where Idmaeedo_Cierra <> 0
+        'Update #Paso Set [Motivo_Cierra] = (Select Top 1 'MOTIVO: '+[Motivo_Cierra]+' - '+NOKOCARAC From TABCARAC Where KOCARAC = [Motivo_Cierra]) Where Idmaeedo_Cierra <> 0
+
+        'Select * From #Paso
+        'Drop Table #Paso"
+
+
+
+        Consulta_sql = $"-- CTE para seleccionar solo un producto por ticket
+;With ProductosUnicos As (
+    Select *,
+           ROW_NUMBER() Over (Partition By Id_Ticket, Id_Raiz Order By Id) As rn
+    From {_Global_BaseBk}Zw_Stk_Tickets_Producto
+)
+
+-- Selección principal con JOIN al producto único
+Select Distinct Tks.*,
+    Isnull(TksDeri.Numero,'') As 'NroDerivado',
+    Isnull(TksDeri.SubNro,'') As 'SubDerivado',
+    Isnull(TksAhilo.Numero,'') As 'NroHilo',
+    Isnull(TksAhilo.SubNro,'') As 'SubHilo',
+    NOKOFU As 'NomFuncCrea',
+    TkPrd.Empresa As 'Empresa_Pr',
+    TkPrd.Sucursal As 'Sucursal_Pr',
+    TkPrd.Bodega As 'Bodega_Pr',
+    TkPrd.Codigo,
+    TkPrd.Descripcion As DescripcionPr,
+    TkPrd.Um As 'Udm',
+    TkPrd.Ubicacion As 'Ubicación',
+    StfiEnBodega,
+    Cantidad,
+    Diferencia,
+    Case Tks.Prioridad 
+        When 'AL' Then 'Alta' 
+        When 'NR' Then 'Normal' 
+        When 'BJ' Then 'Baja' 
+        When 'UR' Then 'Urgente' 
+        Else '??' 
+    End As NomPrioridad,
+    Case Tks.UltAccion 
+        When 'INGR' then 'Ingresada' 
+        When 'MENS' then 'Mensaje' 
+        When 'RESP' then 'Respondido' 
+        When 'CERR' then 'Cerrada' 
+    End As UltimaAccion,
+    Case Tks.Estado  
+        When 'ABIE' Then  
+            Case When Tks.Rechazado = 1 Then 'ABIERTO (Rechazado)' Else 'ABIERTO' End  
+        When 'PROC' Then 'EN PROCESO'
+        When 'CERR' Then  
+            Case When Tks.Rechazado = 1 Then 'CERRADO (Rechazado)' 
+                 When Tks.Aceptado = 1 Then 'CERRADO (Aceptado)' 
+                 Else 'CERRADO' End  
+        When 'NULO' then 'NULO' 
+        When 'SOLC' then 'Sol. Cierre' 
+    End As NomEstado,
+    Cast('' As Varchar(100)) As 'NomEstadoExt',
+    (Select COUNT(*) 
+     From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcMs 
+     Where AcMs.Id_Raiz = Tks.Id_Raiz And AcMs.Accion In ('MENS','CREA') And AcMs.Visto = 0) As Mesn_Pdte_Ver,
+    (Select COUNT(*) 
+     From {_Global_BaseBk}Zw_Stk_Tickets_Acciones AcRs 
+     Where AcRs.Id_Raiz = Tks.Id_Raiz And AcRs.Accion In ('RESP','CREA') And AcRs.Visto = 0) As Resp_Pdte_Ver,
+    Cast(0 As int) AS Idmaeedo_Cierra,
+    Cast('' As Varchar(100)) As 'Motivo_Cierra',
+    Isnull(TksADeri2.ConfSinDoc_Cierra,0) As 'Conf.Cierre S/Doc.',
+    Isnull(TksADeri2.Descripcion,0) As 'Observacion Cierre'
 Into #Paso
 From {_Global_BaseBk}Zw_Stk_Tickets Tks
-Left Join {_Global_BaseBk}Zw_Stk_Tickets_Producto TkPrd On Tks.Id_Raiz = TkPrd.Id_Raiz And TkPrd.Id_Raiz = TkPrd.Id_Ticket
+Left Join ProductosUnicos TkPrd On TkPrd.Id_Ticket = Tks.Id And TkPrd.Id_Raiz = Tks.Id_Raiz And TkPrd.rn = 1
 Left Join TABFU Fu On Fu.KOFU = Tks.CodFuncionario_Crea
 Left Join {_Global_BaseBk}Zw_Stk_Tickets TksDeri On TksDeri.Id = Tks.Id_Padre
 Left Join {_Global_BaseBk}Zw_Stk_Tickets_Acciones TksADeri On Tks.Id = TksADeri.Id_Ticket_Cierra And TksADeri.Accion = 'CECR'
-Left Join {_Global_BaseBk}Zw_Stk_Tickets TksAhilo On TksAhilo.Id = TksADeri.Id_Ticket" & vbCrLf &
-                       "Where 1 > 0" & vbCrLf & _Condicion & vbCrLf &
-                       "Order By Tks.FechaCreacion
+Left Join {_Global_BaseBk}Zw_Stk_Tickets TksAhilo On TksAhilo.Id = TksADeri.Id_Ticket
+Left Join {_Global_BaseBk}Zw_Stk_Tickets_Acciones TksADeri2 On Tks.Id = TksADeri2.Id_Ticket And TksADeri2.Accion = 'ACCI'
+--Where Tks.Id_Raiz = 1246
+Where 1 > 0 {_Condicion}
+Order By Tks.FechaCreacion
 
-Update #Paso Set NomEstadoExt = NomEstado+'... (derivado de '+NroDerivado+'-'+SubDerivado+')' 
+-- Actualizaciones posteriores
+Update #Paso 
+Set Idmaeedo_Cierra = Isnull((Select Top 1 Idmaeedo_Cierra 
+                              From {_Global_BaseBk}Zw_Stk_Tickets_Acciones Aci 
+                              Where Aci.Id_Ticket = #Paso.Id And Idmaeedo_Cierra <> 0),0)
+
+Update #Paso 
+Set NomEstadoExt = NomEstado+'... (derivado de '+NroDerivado+'-'+SubDerivado+')' 
 Where Id_Padre <> 0 and NroDerivado <> '' And Estado in ('ABIE')
 
-Update #Paso Set NomEstadoExt = NomEstado+'... (hilo continuado en '+NroHilo+'-'+SubHilo+')' 
+Update #Paso 
+Set NomEstadoExt = NomEstado+'... (hilo continuado en '+NroHilo+'-'+SubHilo+')' 
 Where Id_Padre = 0 And NroHilo <> '' And Estado = 'PROC'
 
-Update #Paso Set NomEstadoExt = NomEstado
+Update #Paso 
+Set NomEstadoExt = NomEstado 
 Where NomEstadoExt = ''
 
+Update #Paso 
+Set [Motivo_Cierra] = (Select Top 1 Motivo_Cierra 
+                       From {_Global_BaseBk}Zw_Stk_Tickets_Acciones Acc 
+                       Where Acc.Idmaeedo_Cierra = #Paso.Idmaeedo_Cierra) 
+Where Idmaeedo_Cierra <> 0
+
+Update #Paso 
+Set [Motivo_Cierra] = (Select Top 1 'MOTIVO: '+[Motivo_Cierra]+' - '+NOKOCARAC 
+                       From TABCARAC 
+                       Where KOCARAC = [Motivo_Cierra]) 
+Where Idmaeedo_Cierra <> 0
+
+-- Resultado final
 Select * From #Paso
-Drop Table #Paso
-"
+Drop Table #Paso"
 
 
         _Tbl_Tickets = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -422,7 +526,7 @@ Drop Table #Paso
 
             .Columns("NomFuncCrea").Visible = True
             .Columns("NomFuncCrea").HeaderText = "De"
-            .Columns("NomFuncCrea").Width = 150
+            .Columns("NomFuncCrea").Width = 140
             .Columns("NomFuncCrea").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -586,7 +690,7 @@ Drop Table #Paso
 
         Grilla.Refresh()
 
-        If Not String.IsNullOrWhiteSpace(Txt_Filtrar.Text.Trim) Then
+        If Not String.IsNullOrWhiteSpace(Txt_Filtrar.Text.Trim) Or Chk_Filtro_FcreacionRango.Checked Then
             Sb_Filtrar()
         End If
 
@@ -658,7 +762,10 @@ Drop Table #Paso
             End If
 
 
-            If _NodoSeleccionado.Parent.Text = "TODOS" Then
+            If IsNothing(_NodoSeleccionado) OrElse
+                _NodoSeleccionado.Text = "TODOS" OrElse
+                IsNothing(_NodoSeleccionado.Parent) OrElse
+                _NodoSeleccionado.Parent.Text = "TODOS" Then
                 _SoloLectura = True
             End If
 
@@ -677,14 +784,22 @@ Drop Table #Paso
 
             If _GestionRealizada Then
 
-                If nodoSeleccionado IsNot Nothing Then
-                    ' El nodo seleccionado tiene el foco
-                    ' Puedes acceder a sus propiedades o realizar otras acciones aquí
-                    'Console.WriteLine("El nodo seleccionado es: " & nodoSeleccionado.Text)
-                    Sb_Actualizar_Grilla_Treeview(nodoSeleccionado)
-                    'Else
-                    'Console.WriteLine("Ningún nodo tiene el foco actualmente.")
-                End If
+                Txt_Filtrar.Text = String.Empty
+                Call Btn_Actualizar_Click(Nothing, Nothing)
+
+                'If nodoSeleccionado IsNot Nothing Then
+                '    ' El nodo seleccionado tiene el foco
+                '    ' Puedes acceder a sus propiedades o realizar otras acciones aquí
+                '    'Console.WriteLine("El nodo seleccionado es: " & nodoSeleccionado.Text)
+
+                '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(0))
+                '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(1))
+                '    Sb_ActualizarTotalesTreeNodos(Tree_Bandeja.Nodes(2))
+
+                '    Sb_Actualizar_Grilla_Treeview(nodoSeleccionado)
+                '    'Else
+                '    'Console.WriteLine("Ningún nodo tiene el foco actualmente.")
+                'End If
 
                 BuscarDatoEnGrilla(_Numero, "Numero", Grilla)
 
@@ -836,11 +951,24 @@ Drop Table #Paso
     Private Sub Tree_Bandeja_AfterSelect(sender As Object, e As TreeViewEventArgs) Handles Tree_Bandeja.AfterSelect
 
         Dim nodoSeleccionado As TreeNode = e.Node
+
+        If nodoSeleccionado.Text = "TODOS" AndAlso Not nodoSeleccionado.IsExpanded Then
+            If Not Fx_Tiene_Permiso(Me, "Tkts0007") Then
+                ' Si no tiene permiso, volver a seleccionar el nodo anterior si no es Nothing
+                If _NodoAnterior IsNot Nothing Then
+                    Tree_Bandeja.SelectedNode = _NodoAnterior
+                End If
+                Return
+            End If
+        End If
+
         Sb_Actualizar_Grilla_Treeview(nodoSeleccionado)
 
         Me.Refresh()
 
     End Sub
+
+
 
     Sub Sb_ActualizarTotalesTreeNodos(_NodoPadre As TreeNode)
 
@@ -1089,12 +1217,18 @@ Drop Table #Paso
                 End If
             Next
 
-            If Chk_Filtro_Fcreacion.Checked Then
+            If Chk_Filtro_FcreacionRango.Checked Then
                 If Not String.IsNullOrEmpty(filtroFinal) Then
                     filtroFinal &= " AND "
                 End If
-                filtroFinal &= String.Format("(CONVERT(FechaCreacion, 'System.String') Like '{0}%' Or CONVERT(FechaCreacion, 'System.String') Like '{1}%')",
-                                                             Dtp_Filtro_Fcreacion.Value.ToString("dd/MM/yyyy"), Dtp_Filtro_Fcreacion.Value.ToString("dd-MM-yyyy"))
+
+                ' Ajuste: comparar solo la fecha, ignorando la hora
+                filtroFinal &= String.Format("(
+                    CONVERT(FechaCreacion, 'System.DateTime') >= #{0}# 
+                    AND CONVERT(FechaCreacion, 'System.DateTime') < #{1}#
+                )",
+                    Dtp_Filtro_Fcreacion_Desde.Value.Date.ToString("MM/dd/yyyy"),
+                    Dtp_Filtro_Fcreacion_Hasta.Value.Date.AddDays(1).ToString("MM/dd/yyyy"))
             End If
 
             _Dv.RowFilter = filtroFinal
@@ -1116,7 +1250,7 @@ Drop Table #Paso
     End Sub
 
     Private Sub Txt_Filtrar_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustom2Click
-        Chk_Filtro_Fcreacion.Checked = False
+        Chk_Filtro_FcreacionRango.Checked = False
         If String.IsNullOrWhiteSpace(Txt_Filtrar.Text) Then
             Return
         End If
@@ -1455,4 +1589,20 @@ Drop Table #Paso
 
     End Sub
 
+    Private Sub Tree_Bandeja_BeforeSelect(sender As Object, e As TreeViewCancelEventArgs) Handles Tree_Bandeja.BeforeSelect
+        _NodoAnterior = Tree_Bandeja.SelectedNode
+        If _NodoAnterior IsNot Nothing Then
+            ' Aquí el nodoAnterior está a punto de dejar de estar seleccionado
+            'MessageBox.Show("Nodo que deja de estar seleccionado: " & _NodoAnterior.Text)
+        End If
+    End Sub
+
+    Private Sub Chk_Filtro_FcreacionRango_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Filtro_FcreacionRango.CheckedChanged
+        Dtp_Filtro_Fcreacion_Desde.Enabled = Chk_Filtro_FcreacionRango.Checked
+        Dtp_Filtro_Fcreacion_Hasta.Enabled = Chk_Filtro_FcreacionRango.Checked
+        Btn_Filtrar.Enabled = Chk_Filtro_FcreacionRango.Checked
+        If Not Chk_Filtro_FcreacionRango.Checked Then
+            Sb_Filtrar()
+        End If
+    End Sub
 End Class

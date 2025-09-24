@@ -653,8 +653,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Contenedor
             Case "Zw_Contenedor_DocTom"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Contenedor_DocTom
-            Case "Zw_Contenedor_StockProd"
-                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Contenedor_StockProd
+            Case "Zw_PreVenta_StockProd"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_PreVenta_StockProd
 
 
             Case "Zw_Compras_en_SII"

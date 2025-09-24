@@ -204,16 +204,23 @@ Public Class Frm_Tickets_Agentes
         Dim _Fila As DataGridViewRow = Grilla_Agentes.CurrentRow
         Dim _CodAgente As String = _Fila.Cells("CodAgente").Value
 
-        If MessageBoxEx.Show(Me, "¿Confirma eliminar este Agente?" & vbCrLf &
-                             "Se perdera toda su configuración", "Quitar Agente",
+        Dim _Msj = "ADVERTECIA. Al eliminar a un agente, se eliminará toda su configuración personalizada. " &
+                   "El agente perderá acceso y capacidad de gestión sobre los tickets que alguna vez le fueron asignados. " &
+                   "Se recomienda revisar y reasignar dichos tickets antes de proceder."
+        _Msj = Fx_AjustarTexto(_Msj, 80)
+
+        If MessageBoxEx.Show(Me, _Msj & vbCrLf & vbCrLf & "¿Confirma eliminar este Agente?",
+                             "Quitar Agente",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
 
         Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stk_Agentes Where CodAgente = '" & _CodAgente & "'" & vbCrLf &
-                       "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado Where CodAgente = '" & _CodAgente & "'"
+                       "Delete " & _Global_BaseBk & "Zw_Stk_Tickets_Asignado Where CodAgente = '" & _CodAgente & "'" & vbCrLf &
+                       "Delete " & _Global_BaseBk & "Zw_Stk_GrupoVsAgente Where CodAgente = '" & _CodAgente & "'"
         If _Sql.Ej_consulta_IDU(Consulta_sql) Then
             MessageBoxEx.Show(Me, "El Agente se elimino correctamente", "Eliminar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Txt_Buscador.Text = String.Empty
             Sb_Actualizar_Grilla()
         End If
 
