@@ -360,6 +360,7 @@ From MAEDCR Rec
 Inner Join MAEDDO Ddo On Ddo.IDMAEDDO = Rec.IDDDODCR
 Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
 Where Rec.IDMAEEDO = @Idmaeedo
+Order By Edo.TIDO,Edo.NUDO
 
 Drop Table #Paso_Encabezado
 Drop Table #Paso_Detalle

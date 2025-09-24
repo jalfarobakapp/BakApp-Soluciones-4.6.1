@@ -661,6 +661,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00161", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00162", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00163", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00164", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00165", _Objeto, _Formulario)
 
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
@@ -2916,6 +2918,14 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00163"
                 _DescripcionPermiso = "PERMITIR ENVIAR A PICKING DOCUMENTOS CON FECHA DE DESPACHO VENCIDA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00164"
+                _DescripcionPermiso = "ASOCIAR CONTENEDOR AL DOCUMENTO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00165"
+                _DescripcionPermiso = "ASOCIAR PRODUCTOS A PRE-VENTA DESDE CONTENEDOR"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

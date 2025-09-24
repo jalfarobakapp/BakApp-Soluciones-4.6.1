@@ -1,9 +1,9 @@
-﻿Imports PdfSharp
-Imports PdfSharp.Pdf
-Imports PdfSharp.Drawing
+﻿Imports System.IO
 Imports System.Xml.XPath
-Imports System.IO
 Imports Gma.QrCodeNet.Encoding.Windows.Forms
+Imports PdfSharp
+Imports PdfSharp.Drawing
+Imports PdfSharp.Pdf
 
 Public Class Clas_PDF_Crear_Documento
 
@@ -60,6 +60,8 @@ Public Class Clas_PDF_Crear_Documento
             _Nombre_Archivo = value
         End Set
     End Property
+
+    Public Property Accion_Imprimir As Enum_Accion_Imprimir = Enum_Accion_Imprimir.Detalle
 
     Public Sub New(Idmaeedo As Integer,
                    TipoDoc As String,
@@ -554,22 +556,26 @@ Public Class Clas_PDF_Crear_Documento
             Dim _Salir_del_For As Boolean
             Dim _Mas_Alto As Integer
 
-            For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
+            If Accion_Imprimir = Enum_Accion_Imprimir.Detalle Then
 
-                Dim _Orden_Detalle As Integer = _Fila.Item("Orden_Detalle")
-                _Alto = _Fila.Item("Alto")
+                For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
 
-                If _Orden_Detalle = 1 Then
+                    Dim _Orden_Detalle As Integer = _Fila.Item("Orden_Detalle")
+                    _Alto = _Fila.Item("Alto")
 
-                    If _Mas_Alto < _Alto Then
-                        _Mas_Alto = _Alto
+                    If _Orden_Detalle = 1 Then
+
+                        If _Mas_Alto < _Alto Then
+                            _Mas_Alto = _Alto
+                        End If
+
+                        _NombreObjeto = _Fila.Item("NombreObjeto")
+
                     End If
 
-                    _NombreObjeto = _Fila.Item("NombreObjeto")
+                Next
 
-                End If
-
-            Next
+            End If
 
             Dim _Salto_Linea As Integer = (_Mas_Alto + 2) * _Porc_Alto '0.73
 
@@ -578,340 +584,120 @@ Public Class Clas_PDF_Crear_Documento
 
             Dim _DrawBrush = XBrushes.Black '(_Color)
 
-            If _Agrupar_Lineas Then
+            If Accion_Imprimir = Enum_Accion_Imprimir.Detalle Then
 
-                For Each _Fila_D As DataRow In _Tbl_Detalle_Agrupado.Rows
+                If _Agrupar_Lineas Then
 
-                    Dim _Codigo = _Fila_D.Item("KOPR")
+                    For Each _Fila_D As DataRow In _Tbl_Detalle_Agrupado.Rows
 
-                    For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
+                        Dim _Codigo = _Fila_D.Item("KOPR")
 
-                        _NombreObjeto = _Fila.Item("NombreObjeto")
-                        _Funcion = _Fila.Item("Funcion")
-                        _TipoDato = _Fila.Item("TipoDato")
-                        _Seccion = _Fila.Item("Seccion")
+                        For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
 
-                        _Formato = _Fila.Item("Formato")
-                        _CantDecimales = _Fila.Item("CantDecimales")
-                        _Fuente = _Fila.Item("Fuente")
-                        _Tamano = _Fila.Item("Tamano")
-                        _Alto = _Fila.Item("Alto") * _Porc_Alto
-                        _Ancho = _Fila.Item("Ancho") * _Porc_Ancho
-                        _Estilo = _Fila.Item("Estilo")
-                        _Color = _Fila.Item("Color")
-                        _Fila_Y = _Fila.Item("Fila_Y") * _Porc_Alto
-                        _Columna_X = _Fila.Item("Columna_X") * _Porc_Ancho
-                        _Texto = _Fila.Item("Texto")
-                        _RutaImagen = _Fila.Item("RutaImagen")
+                            _NombreObjeto = _Fila.Item("NombreObjeto")
+                            _Funcion = _Fila.Item("Funcion")
+                            _TipoDato = _Fila.Item("TipoDato")
+                            _Seccion = _Fila.Item("Seccion")
 
-                        _SQL_Personalizada = _Fila.Item("SQL_Personalizada")
-                        _SqlQuery = _Fila.Item("SqlQuery")
+                            _Formato = _Fila.Item("Formato")
+                            _CantDecimales = _Fila.Item("CantDecimales")
+                            _Fuente = _Fila.Item("Fuente")
+                            _Tamano = _Fila.Item("Tamano")
+                            _Alto = _Fila.Item("Alto") * _Porc_Alto
+                            _Ancho = _Fila.Item("Ancho") * _Porc_Ancho
+                            _Estilo = _Fila.Item("Estilo")
+                            _Color = _Fila.Item("Color")
+                            _Fila_Y = _Fila.Item("Fila_Y") * _Porc_Alto
+                            _Columna_X = _Fila.Item("Columna_X") * _Porc_Ancho
+                            _Texto = _Fila.Item("Texto")
+                            _RutaImagen = _Fila.Item("RutaImagen")
 
-                        Select Case _Estilo
-                            Case 0
-                                _Style = FontStyle.Regular
-                            Case 1
-                                _Style = FontStyle.Bold
-                            Case 2
-                                _Style = FontStyle.Italic
-                            Case 4
-                                _Style = FontStyle.Underline
-                            Case 8
-                                _Style = FontStyle.Strikeout
-                            Case Else
-                                _Style = FontStyle.Regular
-                        End Select
+                            _SQL_Personalizada = _Fila.Item("SQL_Personalizada")
+                            _SqlQuery = _Fila.Item("SqlQuery")
 
-                        _Fte_Usar = New XFont(_Fuente, _Tamano, _Style)
+                            Select Case _Estilo
+                                Case 0
+                                    _Style = FontStyle.Regular
+                                Case 1
+                                    _Style = FontStyle.Bold
+                                Case 2
+                                    _Style = FontStyle.Italic
+                                Case 4
+                                    _Style = FontStyle.Underline
+                                Case 8
+                                    _Style = FontStyle.Strikeout
+                                Case Else
+                                    _Style = FontStyle.Regular
+                            End Select
 
-                        _Funcion_Bk = _Fila.Item("Funcion_Bk")
-                        _Formato_Fx = _Fila.Item("Formato_Fx")
-                        _Campo = _Fila.Item("Campo")
-                        _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
-                        _Es_Descuento = _Fila.Item("Es_Descuento")
+                            _Fte_Usar = New XFont(_Fuente, _Tamano, _Style)
 
-                        _Color = Color.FromArgb(_Color)
+                            _Funcion_Bk = _Fila.Item("Funcion_Bk")
+                            _Formato_Fx = _Fila.Item("Formato_Fx")
+                            _Campo = _Fila.Item("Campo")
+                            _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
+                            _Es_Descuento = _Fila.Item("Es_Descuento")
 
-                        ' Dim _DrawBrush As New SolidBrush(_Color)
+                            _Color = Color.FromArgb(_Color)
 
-                        If CBool(_IdMaeedo) Then
+                            ' Dim _DrawBrush As New SolidBrush(_Color)
 
-                            If _NombreObjeto = "Texto_libre" Then
+                            If CBool(_IdMaeedo) Then
 
-                                Dim _Y_Texto = _Fila_InicioDetalle
+                                If _NombreObjeto = "Texto_libre" Then
 
-                                For Each _Fii As DataRow In _Tbl_Detalle_Agrupado.Rows
-                                    _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Y_Texto)
-                                    _Y_Texto += _Salto_Linea
-                                Next
+                                    Dim _Y_Texto = _Fila_InicioDetalle
 
-                            ElseIf _NombreObjeto = "Funcion" Then
+                                    For Each _Fii As DataRow In _Tbl_Detalle_Agrupado.Rows
+                                        _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Y_Texto)
+                                        _Y_Texto += _Salto_Linea
+                                    Next
 
-                                If _Funcion_Bk Then
+                                ElseIf _NombreObjeto = "Funcion" Then
 
-                                    If Fx_Imprimir_Funciones_Detalle(_Funcion,
-                                                                    _Texto,
-                                                                    _Tbl_Detalle,
-                                                                    _Pdf_gx,
-                                                                    _Fila_Y,
-                                                                    _Columna_X,
-                                                                    _Fte_Usar,
-                                                                    _DrawBrush) Then
-                                        _Salir_del_For = True
-                                        Exit For
-                                    End If
+                                    If _Funcion_Bk Then
 
-                                Else
-
-                                    Dim _Row_Fila_D As DataRow = _Fila_D
-
-                                    If _SQL_Personalizada Then
-
-                                        Dim _Error As String
-                                        Dim _Idmaeddo = _Fila_D.Item("IDMAEDDO")
-
-                                        _Row_Fila_D = Fx_Funcion_SQL_Personalizada_Detalle(_SqlQuery, _Idmaeddo, _Error)
-
-                                        If String.IsNullOrEmpty(_Error) Then
-                                            _Campo = "CAMPO"
-                                        Else
-                                            _Campo = "_Error"
+                                        If Fx_Imprimir_Funciones_Detalle(_Funcion,
+                                                                        _Texto,
+                                                                        _Tbl_Detalle,
+                                                                        _Pdf_gx,
+                                                                        _Fila_Y,
+                                                                        _Columna_X,
+                                                                        _Fte_Usar,
+                                                                        _DrawBrush) Then
+                                            _Salir_del_For = True
+                                            Exit For
                                         End If
-
-                                    End If
-
-                                    Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
-
-                                    _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
-                                                                           _TipoDato,
-                                                                           _Es_Descuento,
-                                                                           _Row_Fila_D,
-                                                                           _Texto,
-                                                                           _Moneda_Str)
-
-                                    If _Texto.ToString.Contains("Error_") Then _Texto = String.Empty
-
-                                    'IMPRIME CODIGO DE BARRAS
-                                    If _Codigo_De_Barras Then
-
-                                        Dim bm As Bitmap = Nothing
-                                        Dim CodBarras As XImage
-
-                                        Dim iType As BarCode.Code128SubTypes =
-                                        DirectCast([Enum].Parse(GetType(BarCode.Code128SubTypes), "CODE128"), BarCode.Code128SubTypes)
-                                        bm = BarCode.Code128(_Texto, iType, False)
-                                        If Not IsNothing(bm) Then
-                                            CodBarras = bm
-                                        End If
-                                        Dim d = _Detalle_Y
-                                        _Pdf_gx.DrawImage(CodBarras, _Columna_X, _Detalle_Y, _Ancho, _Alto - 2)
-                                    Else
-                                        _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
-                                    End If
-
-                                End If
-
-                            End If
-
-                        Else
-
-                        End If
-
-                    Next
-
-                    _Detalle_Y += _Salto_Linea - 1
-
-                    _Contador_Lineas += 1
-
-                    If _Contador_Lineas > _NroLineasXpag Then
-                        _Salir_del_For = True '_Pdf_gx.DrawString("--------------------", _Fte_Usar, _DrawBrush, 100, _Detalle_Y)
-                    End If
-
-                    If _Salir_del_For Then
-                        Exit For
-                    End If
-
-                Next
-
-                _Pdf_gx.DrawString("--------------------", _Fte_Usar, _DrawBrush, 100, _Detalle_Y)
-
-            Else
-
-                For Each _Fila_D As DataRow In _Tbl_Detalle.Rows
-
-                    Dim _Codigo = _Fila_D.Item("KOPR")
-
-                    For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
-
-                        _NombreObjeto = _Fila.Item("NombreObjeto")
-                        _Funcion = _Fila.Item("Funcion")
-                        _TipoDato = _Fila.Item("TipoDato")
-                        _Seccion = _Fila.Item("Seccion")
-
-                        _Formato = _Fila.Item("Formato")
-                        _CantDecimales = _Fila.Item("CantDecimales")
-                        _Fuente = _Fila.Item("Fuente")
-                        _Tamano = _Fila.Item("Tamano")
-                        _Alto = _Fila.Item("Alto") * _Porc_Alto
-                        _Ancho = _Fila.Item("Ancho") * _Porc_Ancho
-                        _Estilo = _Fila.Item("Estilo")
-                        _Color = _Fila.Item("Color")
-                        _Fila_Y = _Fila.Item("Fila_Y") * _Porc_Alto
-                        _Columna_X = _Fila.Item("Columna_X") * _Porc_Ancho
-                        _Texto = _Fila.Item("Texto")
-                        _RutaImagen = _Fila.Item("RutaImagen")
-
-                        _SQL_Personalizada = _Fila.Item("SQL_Personalizada")
-                        _SqlQuery = _Fila.Item("SqlQuery")
-
-                        Dim _Orden_Detalle = _Fila.Item("Orden_Detalle")
-
-                        Select Case _Estilo
-                            Case 0
-                                _Style = FontStyle.Regular
-                            Case 1
-                                _Style = FontStyle.Bold
-                            Case 2
-                                _Style = FontStyle.Italic
-                            Case 4
-                                _Style = FontStyle.Underline
-                            Case 8
-                                _Style = FontStyle.Strikeout
-                            Case Else
-                                _Style = FontStyle.Regular
-                        End Select
-
-                        _Fte_Usar = New XFont(_Fuente, _Tamano, _Style)
-
-                        _Funcion_Bk = _Fila.Item("Funcion_Bk")
-                        _Formato_Fx = _Fila.Item("Formato_Fx")
-                        _Campo = _Fila.Item("Campo")
-                        _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
-                        _Es_Descuento = _Fila.Item("Es_Descuento")
-
-                        _Color = Color.FromArgb(_Color)
-
-                        ' Dim _DrawBrush As New SolidBrush(_Color)
-
-                        If CBool(_IdMaeedo) Then
-
-                            If _NombreObjeto = "Texto_libre" Then
-
-                                Dim _Y_Texto = _Fila_InicioDetalle
-
-                                For Each _Fii As DataRow In _Tbl_Detalle.Rows
-                                    _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Y_Texto)
-                                    _Y_Texto += _Salto_Linea
-                                Next
-
-                            ElseIf _NombreObjeto = "Funcion" Then
-
-                                If _Funcion_Bk Then
-
-                                    If Fx_Imprimir_Funciones_Detalle(_Funcion,
-                                                                    _Texto,
-                                                                    _Tbl_Detalle,
-                                                                    _Pdf_gx,
-                                                                    _Fila_Y,
-                                                                    _Columna_X,
-                                                                    _Fte_Usar,
-                                                                    _DrawBrush) Then
-                                        _Salir_del_For = True
-                                        Exit For
-                                    End If
-
-                                Else
-
-                                    Dim _Row_Fila_D As DataRow = _Fila_D
-
-                                    If _SQL_Personalizada Then
-
-                                        Dim _Error As String
-                                        Dim _Idmaeddo = _Fila_D.Item("IDMAEDDO")
-
-                                        _Row_Fila_D = Fx_Funcion_SQL_Personalizada_Detalle(_SqlQuery, _Idmaeddo, _Error)
-
-                                        If String.IsNullOrEmpty(_Error) Then
-                                            _Campo = "CAMPO"
-                                        Else
-                                            _Campo = "_Error"
-                                        End If
-
-                                    End If
-
-                                    Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
-
-                                    Dim _Formato_Texto As String = _Texto
-                                    Dim _Formatext = Split(_Formato_Texto, vbCrLf)
-
-                                    _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
-                                                                           _TipoDato,
-                                                                           _Es_Descuento,
-                                                                           _Row_Fila_D,
-                                                                           _Texto,
-                                                                           _Moneda_Str)
-
-                                    'If _Orden_Detalle = 2 And Not String.IsNullOrEmpty(_Texto) Then
-
-                                    '    _Detalle_Y += _Alto + 2
-
-                                    'End If
-
-                                    If _Orden_Detalle = 2 Then
-
-                                        If Not String.IsNullOrWhiteSpace(_Texto) AndAlso _Formatext.Length > 1 Then
-
-                                            '_Saltar_Linea = False
-
-                                            Dim _Caracteres = _Formato_Texto.Length
-
-                                            Dim _i = 0
-
-                                            If IsNothing(_Texto) Then _Texto = String.Empty
-
-                                            _Texto = Replace(_Texto, vbCrLf, " ")
-                                            _Texto = Replace(_Texto, vbTab, " ")
-
-                                            If IsNothing(_Texto) Then
-                                                _Texto = String.Empty
-                                            End If
-
-                                            If Not String.IsNullOrWhiteSpace(_Texto) Then
-                                                _Texto = Replace(_Texto, "  ", " ")
-                                            End If
-
-                                            Dim _SubCarac = _Formato_Texto.Split(vbCrLf)
-                                            Dim _TextoAjustado As String = Fx_AjustarTexto(_Texto, _SubCarac(0).Length)
-
-                                            Dim _AltoL = (_Alto / _Formatext.Length) + 2
-
-                                            _Formatext = Split(_TextoAjustado, vbCrLf)
-
-                                            '_Detalle_Y += _AltoL + 2
-
-                                            For Each _Texto1 As String In _Formatext
-
-                                                If Not String.IsNullOrWhiteSpace(_Texto1) Then
-                                                    _Detalle_Y += _AltoL
-                                                    _Pdf_gx.DrawString(_Texto1.Trim, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
-                                                End If
-
-                                            Next
-
-                                        Else
-
-                                            If Not String.IsNullOrEmpty(_Texto) Then
-
-                                                _Detalle_Y += _Alto + 2
-                                                _Texto = Replace(_Texto, vbCrLf, " ")
-                                                _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
-
-                                            End If
-
-                                        End If
-
 
                                     Else
+
+                                        Dim _Row_Fila_D As DataRow = _Fila_D
+
+                                        If _SQL_Personalizada Then
+
+                                            Dim _Error As String
+                                            Dim _Idmaeddo = _Fila_D.Item("IDMAEDDO")
+
+                                            _Row_Fila_D = Fx_Funcion_SQL_Personalizada_Detalle(_SqlQuery, _Idmaeddo, _Error)
+
+                                            If String.IsNullOrEmpty(_Error) Then
+                                                _Campo = "CAMPO"
+                                            Else
+                                                _Campo = "_Error"
+                                            End If
+
+                                        End If
+
+                                        Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
+
+                                        _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
+                                                                               _TipoDato,
+                                                                               _Es_Descuento,
+                                                                               _Row_Fila_D,
+                                                                               _Texto,
+                                                                               _Moneda_Str)
+
+                                        If _Texto.ToString.Contains("Error_") Then _Texto = String.Empty
 
                                         'IMPRIME CODIGO DE BARRAS
                                         If _Codigo_De_Barras Then
@@ -935,102 +721,324 @@ Public Class Clas_PDF_Crear_Documento
 
                                 End If
 
+                            Else
+
                             End If
 
-                        Else
+                        Next
 
+                        _Detalle_Y += _Salto_Linea - 1
+
+                        _Contador_Lineas += 1
+
+                        If _Contador_Lineas > _NroLineasXpag Then
+                            _Salir_del_For = True '_Pdf_gx.DrawString("--------------------", _Fte_Usar, _DrawBrush, 100, _Detalle_Y)
+                        End If
+
+                        If _Salir_del_For Then
+                            Exit For
                         End If
 
                     Next
 
-                    _Detalle_Y += _Salto_Linea
+                    _Pdf_gx.DrawString("--------------------", _Fte_Usar, _DrawBrush, 100, _Detalle_Y)
 
-                    If _Salir_del_For Then
-                        Exit For
-                    End If
+                Else
 
-                Next
+                    For Each _Fila_D As DataRow In _Tbl_Detalle.Rows
+
+                        Dim _Codigo = _Fila_D.Item("KOPR")
+
+                        For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
+
+                            _NombreObjeto = _Fila.Item("NombreObjeto")
+                            _Funcion = _Fila.Item("Funcion")
+                            _TipoDato = _Fila.Item("TipoDato")
+                            _Seccion = _Fila.Item("Seccion")
+
+                            _Formato = _Fila.Item("Formato")
+                            _CantDecimales = _Fila.Item("CantDecimales")
+                            _Fuente = _Fila.Item("Fuente")
+                            _Tamano = _Fila.Item("Tamano")
+                            _Alto = _Fila.Item("Alto") * _Porc_Alto
+                            _Ancho = _Fila.Item("Ancho") * _Porc_Ancho
+                            _Estilo = _Fila.Item("Estilo")
+                            _Color = _Fila.Item("Color")
+                            _Fila_Y = _Fila.Item("Fila_Y") * _Porc_Alto
+                            _Columna_X = _Fila.Item("Columna_X") * _Porc_Ancho
+                            _Texto = _Fila.Item("Texto")
+                            _RutaImagen = _Fila.Item("RutaImagen")
+
+                            _SQL_Personalizada = _Fila.Item("SQL_Personalizada")
+                            _SqlQuery = _Fila.Item("SqlQuery")
+
+                            Dim _Orden_Detalle = _Fila.Item("Orden_Detalle")
+
+                            Select Case _Estilo
+                                Case 0
+                                    _Style = FontStyle.Regular
+                                Case 1
+                                    _Style = FontStyle.Bold
+                                Case 2
+                                    _Style = FontStyle.Italic
+                                Case 4
+                                    _Style = FontStyle.Underline
+                                Case 8
+                                    _Style = FontStyle.Strikeout
+                                Case Else
+                                    _Style = FontStyle.Regular
+                            End Select
+
+                            _Fte_Usar = New XFont(_Fuente, _Tamano, _Style)
+
+                            _Funcion_Bk = _Fila.Item("Funcion_Bk")
+                            _Formato_Fx = _Fila.Item("Formato_Fx")
+                            _Campo = _Fila.Item("Campo")
+                            _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
+                            _Es_Descuento = _Fila.Item("Es_Descuento")
+
+                            _Color = Color.FromArgb(_Color)
+
+                            ' Dim _DrawBrush As New SolidBrush(_Color)
+
+                            If CBool(_IdMaeedo) Then
+
+                                If _NombreObjeto = "Texto_libre" Then
+
+                                    Dim _Y_Texto = _Fila_InicioDetalle
+
+                                    For Each _Fii As DataRow In _Tbl_Detalle.Rows
+                                        _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Y_Texto)
+                                        _Y_Texto += _Salto_Linea
+                                    Next
+
+                                ElseIf _NombreObjeto = "Funcion" Then
+
+                                    If _Funcion_Bk Then
+
+                                        If Fx_Imprimir_Funciones_Detalle(_Funcion,
+                                                                        _Texto,
+                                                                        _Tbl_Detalle,
+                                                                        _Pdf_gx,
+                                                                        _Fila_Y,
+                                                                        _Columna_X,
+                                                                        _Fte_Usar,
+                                                                        _DrawBrush) Then
+                                            _Salir_del_For = True
+                                            Exit For
+                                        End If
+
+                                    Else
+
+                                        Dim _Row_Fila_D As DataRow = _Fila_D
+
+                                        If _SQL_Personalizada Then
+
+                                            Dim _Error As String
+                                            Dim _Idmaeddo = _Fila_D.Item("IDMAEDDO")
+
+                                            _Row_Fila_D = Fx_Funcion_SQL_Personalizada_Detalle(_SqlQuery, _Idmaeddo, _Error)
+
+                                            If String.IsNullOrEmpty(_Error) Then
+                                                _Campo = "CAMPO"
+                                            Else
+                                                _Campo = "_Error"
+                                            End If
+
+                                        End If
+
+                                        Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
+
+                                        Dim _Formato_Texto As String = _Texto
+                                        Dim _Formatext = Split(_Formato_Texto, vbCrLf)
+
+                                        _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
+                                                                               _TipoDato,
+                                                                               _Es_Descuento,
+                                                                               _Row_Fila_D,
+                                                                               _Texto,
+                                                                               _Moneda_Str)
+
+                                        'If _Orden_Detalle = 2 And Not String.IsNullOrEmpty(_Texto) Then
+
+                                        '    _Detalle_Y += _Alto + 2
+
+                                        'End If
+
+                                        If _Orden_Detalle = 2 Then
+
+                                            If Not String.IsNullOrWhiteSpace(_Texto) AndAlso _Formatext.Length > 1 Then
+
+                                                '_Saltar_Linea = False
+
+                                                Dim _Caracteres = _Formato_Texto.Length
+
+                                                Dim _i = 0
+
+                                                If IsNothing(_Texto) Then _Texto = String.Empty
+
+                                                _Texto = Replace(_Texto, vbCrLf, " ")
+                                                _Texto = Replace(_Texto, vbTab, " ")
+
+                                                If IsNothing(_Texto) Then
+                                                    _Texto = String.Empty
+                                                End If
+
+                                                If Not String.IsNullOrWhiteSpace(_Texto) Then
+                                                    _Texto = Replace(_Texto, "  ", " ")
+                                                End If
+
+                                                Dim _SubCarac = _Formato_Texto.Split(vbCrLf)
+                                                Dim _TextoAjustado As String = Fx_AjustarTexto(_Texto, _SubCarac(0).Length)
+
+                                                Dim _AltoL = (_Alto / _Formatext.Length) + 2
+
+                                                _Formatext = Split(_TextoAjustado, vbCrLf)
+
+                                                '_Detalle_Y += _AltoL + 2
+
+                                                For Each _Texto1 As String In _Formatext
+
+                                                    If Not String.IsNullOrWhiteSpace(_Texto1) Then
+                                                        _Detalle_Y += _AltoL
+                                                        _Pdf_gx.DrawString(_Texto1.Trim, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                                                    End If
+
+                                                Next
+
+                                            Else
+
+                                                If Not String.IsNullOrEmpty(_Texto) Then
+
+                                                    _Detalle_Y += _Alto + 2
+                                                    _Texto = Replace(_Texto, vbCrLf, " ")
+                                                    _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+
+                                                End If
+
+                                            End If
+
+
+                                        Else
+
+                                            'IMPRIME CODIGO DE BARRAS
+                                            If _Codigo_De_Barras Then
+
+                                                Dim bm As Bitmap = Nothing
+                                                Dim CodBarras As XImage
+
+                                                Dim iType As BarCode.Code128SubTypes =
+                                                DirectCast([Enum].Parse(GetType(BarCode.Code128SubTypes), "CODE128"), BarCode.Code128SubTypes)
+                                                bm = BarCode.Code128(_Texto, iType, False)
+                                                If Not IsNothing(bm) Then
+                                                    CodBarras = bm
+                                                End If
+                                                Dim d = _Detalle_Y
+                                                _Pdf_gx.DrawImage(CodBarras, _Columna_X, _Detalle_Y, _Ancho, _Alto - 2)
+                                            Else
+                                                _Pdf_gx.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                                            End If
+
+                                        End If
+
+                                    End If
+
+                                End If
+
+                            Else
+
+                            End If
+
+                        Next
+
+                        _Detalle_Y += _Salto_Linea
+
+                        If _Salir_del_For Then
+                            Exit For
+                        End If
+
+                    Next
+
+                End If
 
             End If
 
-            '' REFERENCIAS *****
+            Dim _Contador = 0
 
-            'For Each _Fila_D As DataRow In _Tbl_Referencias.Rows
+#Region "DOCUMENTOS PREVIOS"
 
-            '    Dim _Referencia = _Fila_D.Item("Referencia")
-            '    Dim _Contador = 0
+            If Accion_Imprimir <> Enum_Accion_Imprimir.Detalle Then
 
-            '    For Each _Fila As DataRow In _Tbl_Fx_Detalle.Rows
+                _Salto_Linea = 14
 
-            '        _NombreObjeto = _Fila.Item("NombreObjeto")
-            '        _Funcion = _Fila.Item("Funcion")
-            '        _TipoDato = _Fila.Item("TipoDato")
-            '        _Seccion = _Fila.Item("Seccion")
+                Consulta_sql = "Select Distinct Edo.TIDO As TD,Edo.NUDO As Numero,FEEMDO As FEmision,VABRDO As Monto" & vbCrLf &
+                               "From MAEEDO Edo" & vbCrLf &
+                               "Inner Join MAEDDO Ddo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
+                               "Where Ddo.IDMAEDDO In (Select IDRST From MAEDDO Where IDMAEEDO = " & _IdMaeedo & ")"
 
-            '        _Formato = _Fila.Item("Formato")
-            '        _CantDecimales = _Fila.Item("CantDecimales")
-            '        _Fuente = _Fila.Item("Fuente")
-            '        _Tamano = _Fila.Item("Tamano")
-            '        _Alto = _Fila.Item("Alto")
-            '        _Ancho = _Fila.Item("Ancho")
-            '        _Estilo = _Fila.Item("Estilo")
-            '        _Color = _Fila.Item("Color")
-            '        _Fila_Y = _Fila.Item("Fila_Y")
-            '        _Columna_X = _Fila.Item("Columna_X")
-            '        _Texto = _Fila.Item("Texto")
-            '        _RutaImagen = _Fila.Item("RutaImagen")
+                Dim _Tbl_Documentos_Previos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-            '        Select Case _Estilo
-            '            Case 0
-            '                _Style = FontStyle.Regular
-            '            Case 1
-            '                _Style = FontStyle.Bold
-            '            Case 2
-            '                _Style = FontStyle.Italic
-            '            Case 4
-            '                _Style = FontStyle.Underline
-            '            Case 8
-            '                _Style = FontStyle.Strikeout
-            '            Case Else
-            '                _Style = FontStyle.Regular
-            '        End Select
+                Dim _Ls_Documentos_Previos As New List(Of String)
 
-            '        _Fte_Usar = New XFont(_Fuente, _Tamano, _Style)
+                For Each _Fila_D As DataRow In _Tbl_Documentos_Previos.Rows
 
-            '        _Funcion_Bk = _Fila.Item("Funcion_Bk")
-            '        _Formato_Fx = _Fila.Item("Formato_Fx")
-            '        _Campo = _Fila.Item("Campo")
-            '        _Codigo_De_Barras = _Fila.Item("Codigo_De_Barras")
-            '        _Es_Descuento = _Fila.Item("Es_Descuento")
+                    Dim _TD As String = _Fila_D.Item("TD").ToString
+                    Dim _Numero As String = _Fila_D.Item("Numero").ToString
+                    Dim _FEmision As String = FormatDateTime(_Fila_D.Item("FEmision"), DateFormat.ShortDate).Replace("-", "/")
+                    Dim _Monto As String = FormatNumber(_Fila_D.Item("Monto").ToString, 0)
 
-            '        _Color = Color.FromArgb(_Color)
+                    Dim _DocPrevio As String
 
-            '        If _NombreObjeto = "Funcion" Then
+                    Select Case Accion_Imprimir
+                        Case Enum_Accion_Imprimir.Documentos_Previos1
+                            _DocPrevio = _TD & " - " & _Numero & " - " & _FEmision
+                        Case Enum_Accion_Imprimir.Documentos_Previos2
+                            _DocPrevio = _Numero & " - " & _FEmision & " - " & _Monto
+                        Case Enum_Accion_Imprimir.Documentos_Previos3
+                            _DocPrevio = _TD & " - " & _Numero & " - " & _FEmision & " - " & _Monto
+                    End Select
 
-            '            If _Funcion_Bk Then
+                    _Ls_Documentos_Previos.Add(_DocPrevio)
 
-            '                If _Funcion = "Referencia DTE" Then
+                Next
 
-            '                    If _Contador = 0 Then
-            '                        _Pdf_gx.DrawString("------------------  Referencias ------------------------",
-            '                                           _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                'If CBool(_Ls_Documentos_Previos.Count) Then
+                '    _Detalle_Y += _Salto_Linea + 5
+                'End If
 
-            '                        _Detalle_Y += _Salto_Linea
-            '                    End If
+                _Contador = 0
 
-            '                    _Pdf_gx.DrawString(_Referencia, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                For Each _DocPrevio As String In _Ls_Documentos_Previos
 
-            '                End If
+                    _Style = FontStyle.Regular
+                    _Fuente = "Courier New"
+                    '_Color = Color.Black
+                    _Fte_Usar = New XFont(_Fuente, _Tamano, _Style)
+                    '_Color = Color.FromArgb(_Color)
 
-            '            End If
+                    _DrawBrush = XBrushes.Black
 
-            '        End If
+                    If _Contador = 0 Then
 
-            '    Next
-            '    _Contador += 1
-            '    _Detalle_Y += _Salto_Linea
+                        _Pdf_gx.DrawString("------------------  Documentos pevios ------------------------",
+                                                           _Fte_Usar, _DrawBrush, 100, _Detalle_Y)
 
-            'Next
+                        _Detalle_Y += _Salto_Linea
+                    End If
+
+                    _Pdf_gx.DrawString(_DocPrevio, _Fte_Usar, _DrawBrush, 100, _Detalle_Y)
+
+                    _Contador += 1
+                    _Detalle_Y += _Salto_Linea
+
+                Next
+
+                _Fila_FinDetalle = _Detalle_Y
+
+            End If
+
+#End Region
+
 
             Dim _Ls_Referencias As New List(Of String)
 
@@ -1060,7 +1068,7 @@ Public Class Clas_PDF_Crear_Documento
             End If
 
             'Dim _Referencia = _Fila_D.Item("Referencia")
-            Dim _Contador = 0
+            _Contador = 0
 
             For Each _Referencia As String In _Ls_Referencias
 

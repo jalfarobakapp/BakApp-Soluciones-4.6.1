@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms.DataVisualization.Charting
+Imports BkSpecialPrograms.Frm_BkpPostBusquedaEspecial_Mt
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Inf_Ventas_X_Periodo_Cubo
@@ -4472,6 +4473,18 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     Private Sub Btn_Nota_de_venta_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Nota_de_venta.Click
 
         If Fx_Tiene_Permiso(Me, "Bkp00041") Then 'Doc00150
+
+            Dim _Kofu_Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kofu_Kogru",
+                                                          "CodFuncionario = '" & FUNCIONARIO & "'").ToString.Trim
+
+            If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+
+                _Kofu_Kogru = _Kofu_Kogru & " - " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Kofu_Kogru & "'").ToString.Trim
+
+                Sb_Confirmar_Lectura("Aun tiene su grupo de vendedores asociado a otro usuario." & vbCrLf &
+                                     _Kofu_Kogru, "Debe quitarlo desde su ficha de usuario.", eTaskDialogIcon.Exclamation, Nothing)
+
+            End If
 
             Dim Fm_Post As New Frm_Formulario_Documento("NVV", csGlobales.Enum_Tipo_Documento.Venta, False)
             'Fm_Post.Btn_Minimizar.Visible = True

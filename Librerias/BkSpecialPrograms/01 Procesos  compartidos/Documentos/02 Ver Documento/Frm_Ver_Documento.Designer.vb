@@ -1719,6 +1719,7 @@ Partial Class Frm_Ver_Documento
         Me.ImageList_16x16.Images.SetKeyName(0, "money.png")
         Me.ImageList_16x16.Images.SetKeyName(1, "money-warn.png")
         Me.ImageList_16x16.Images.SetKeyName(2, "money-error.png")
+        Me.ImageList_16x16.Images.SetKeyName(3, "printer.png")
         '
         'Imagenes_32x32
         '

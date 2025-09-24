@@ -173,6 +173,8 @@ Module Mod_Imprimir
 
     'End Function
 
+
+
     Function Fx_Enviar_A_Imprimir_Documento(_Formulario As Form,
                                             _NombreFormato As String,
                                             _Idmaeedo As Integer,
@@ -182,7 +184,8 @@ Module Mod_Imprimir
                                             _Vista_Previa As Boolean,
                                             _Nro_Copias As Integer,
                                             _Reimprimir As Boolean,
-                                            _Subtido As String) As LsValiciones.Mensajes
+                                            _Subtido As String,
+                                            Optional _Accion_Imprimir As Enum_Accion_Imprimir = Enum_Accion_Imprimir.Detalle) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -282,11 +285,8 @@ Module Mod_Imprimir
 
                 Dim _Msj_Imprimir As New LsValiciones.Mensajes
 
-                '_LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, False,
-                '                                  _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
-
                 _Msj_Imprimir = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, False,
-                                                  _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
+                                                  _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido, _Accion_Imprimir)
 
                 Dim _Imp = _Impresora
 
@@ -302,13 +302,9 @@ Module Mod_Imprimir
 
                         If _Doc_Electronico Then
 
-                            '_LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, True,
-                            '                              False, _Vista_Previa,
-                            '                              _Imp, _Subtido)
-
                             _Msj_Imprimir = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, True,
                                                                   False, _Vista_Previa,
-                                                                  _Imp, _Subtido)
+                                                                  _Imp, _Subtido, _Accion_Imprimir)
 
                         End If
 
@@ -594,16 +590,18 @@ Module Mod_Imprimir
                                    _Seleccionar_Impresora As Boolean,
                                    _Vista_Previa As Boolean,
                                    _Impresora As String,
-                                   _Subtido As String) As LsValiciones.Mensajes
+                                   _Subtido As String,
+                                   Optional _Accion_Imprimir As Enum_Accion_Imprimir = Enum_Accion_Imprimir.Detalle) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
 
             Dim _Imprimir As New Clas_Imprimir_Documento(_Id,
-                                                     _Tido,
-                                                     _NombreFormato,
-                                                     _Tido & "-" & _Nudo, _Imprimir_Cedible, "", _Subtido)
+                                                        _Tido,
+                                                        _NombreFormato,
+                                                        _Tido & "-" & _Nudo, _Imprimir_Cedible, "", _Subtido)
+            _Imprimir._Accion_Imprimir = _Accion_Imprimir
             Dim _Documento_Impreso As Boolean
 
 

@@ -16,6 +16,25 @@ Public Module Funciones_Especiales_BakApp
         'Public Property Empresa As String
     End Class
 
+    Enum Enum_Accion_Imprimir
+        ''' <summary>
+        ''' Imprime el detalle normal del documento
+        ''' </summary>
+        Detalle
+        ''' <summary>
+        ''' 1.- Imprime documentos previos relacionados al documento principal Formato: (TD - Numero - F.Emisión).
+        ''' </summary>
+        Documentos_Previos1
+        ''' <summary>
+        ''' 2.- Imprime documentos previos relacionados al documento principal Formato: (Numero - F.Emisión - Monto).
+        ''' </summary>
+        Documentos_Previos2
+        ''' <summary>
+        ''' 3.- Imprime documentos previos relacionados al documento principal Formato: (TD - Numero - F.Emisión - Monto).
+        ''' </summary>
+        Documentos_Previos3
+    End Enum
+
     Function Fx_Formato_Modalidad(_Formulario As Form,
                                   _Empresa As String,
                                   _Modalidad As String,
@@ -3129,6 +3148,7 @@ Public Module Modulo_Precios_Costos
     End Function
 
 End Module
+
 
 Public Module Colores_Bakapp
 

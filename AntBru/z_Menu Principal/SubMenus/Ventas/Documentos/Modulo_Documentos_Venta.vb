@@ -48,7 +48,7 @@ Public Class Modulo_Documentos_Venta
 
     Private Sub Btn_Nota_De_Venta_Click(sender As Object, e As EventArgs) Handles Btn_Nota_De_Venta.Click
         Dim _Tido = "NVV"
-        Modulo_Documentos.Sb_Generar_Documento(_Fm_Menu_Padre, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta, "")
+        Modulo_Documentos.Sb_Generar_Documento(_Fm_Menu_Padre, _Tido, True, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta, "",, True)
     End Sub
 
     Private Sub Btn_Factura_Click(sender As Object, e As EventArgs) Handles Btn_Factura.Click

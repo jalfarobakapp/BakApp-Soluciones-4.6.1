@@ -1,5 +1,4 @@
-﻿Imports BkSpecialPrograms
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 Public Module Modulo_Documentos
 
     Sub Sb_Generar_Documento(_Fm_Menu_Padre As Object,
@@ -7,8 +6,9 @@ Public Module Modulo_Documentos
                              _Minimizar As Boolean,
                              _Tipo_Documento As csGlobales.Enum_Tipo_Documento,
                              _SubTido As String,
-                             Optional _Cerrar_Al_Grabar As Boolean = False)
-        '_Fm_Menu_Padre As Metro.MetroAppForm
+                             Optional _Cerrar_Al_Grabar As Boolean = False,
+                             Optional _PreguntarPorGrupoAsociado As Boolean = False)
+
         Dim _Permiso As String = Fx_PermisoRegistroDoc(_Tido)
 
         If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso) Then Return
@@ -18,6 +18,24 @@ Public Module Modulo_Documentos
 
         If Not _Msj_Tsc.EsCorrecto Then
             Return
+        End If
+
+        If _PreguntarPorGrupoAsociado Then
+
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+            Dim _Kofu_Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kofu_Kogru",
+                                              "CodFuncionario = '" & FUNCIONARIO & "'").ToString.Trim
+
+            If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+
+                _Kofu_Kogru = _Kofu_Kogru & " - " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Kofu_Kogru & "'").ToString.Trim
+
+                Sb_Confirmar_Lectura("Aun tiene su grupo de vendedores asociado a otro usuario." & vbCrLf &
+                                     _Kofu_Kogru, "Debe quitarlo desde su ficha de usuario.", eTaskDialogIcon.Exclamation, Nothing)
+
+            End If
+
         End If
 
         Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Fm_Menu_Padre, Mod_Empresa, Mod_Modalidad, _Tido, True)
