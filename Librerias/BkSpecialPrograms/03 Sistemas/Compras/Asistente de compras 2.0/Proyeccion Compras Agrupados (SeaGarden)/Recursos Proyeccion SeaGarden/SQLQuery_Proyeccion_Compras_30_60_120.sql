@@ -28,8 +28,11 @@ SELECT  Codigo,
         RotMensualUd#Ud#, 
         RotDiariaUd#Ud#_Prod, 
         RotMensualUd#Ud#_Prod,
-        Promedio_Ud1_Prod,
-		Promedio_MensualUd1_Prod,
+        Promedio_Ud#Ud#_Prod,
+		Promedio_MensualUd#Ud#_Prod,
+        RotMensualUd#Ud#_Ult_3Mes_Prod,
+		PromMensualUd#Ud#_Ul3Mes_Prod,
+        PromUlt3CioPromUlt3Meses_Ud#Ud#_Prod,
 
         SUM(SumTotalQtyUd#Ud#) AS SumTotalQtyUd#Ud#,
 		Fecha_Inicio,
@@ -66,9 +69,10 @@ Where Codigo In (SELECT Codigo FROM #Tbl_BakApp#Zw_Prod_Asociacion
 				 Where Codigo_Nodo In #Filtro_Nodos#))
 And Es_Agrupador = 0	
 
-Group by UD1,Rtu,Codigo,Descripcion,Codigo_Nodo,Codigo_Nodo_Madre,Descripcion_Madre,
-         Stock_CriticoUd1_Rd,RotDiariaUd1,RotDiariaUd1_Prod,RotMensualUd1,RotMensualUd1_Prod,Fecha_Inicio,Fecha_Fin,
-         Promedio_Ud1_Prod,Promedio_MensualUd1_Prod
+Group by UD#Ud#,Rtu,Codigo,Descripcion,Codigo_Nodo,Codigo_Nodo_Madre,Descripcion_Madre,
+         Stock_CriticoUd#Ud#_Rd,RotDiariaUd#Ud#,RotDiariaUd#Ud#_Prod,RotMensualUd#Ud#,RotMensualUd#Ud#_Prod,Fecha_Inicio,Fecha_Fin,
+         Promedio_Ud#Ud#_Prod,Promedio_MensualUd#Ud#_Prod,RotMensualUd#Ud#_Ult_3Mes_Prod,
+         PromMensualUd#Ud#_Ul3Mes_Prod,PromUlt3CioPromUlt3Meses_Ud#Ud#_Prod
 
 Update #Tbl_Paso_Proyecto Set Dias_Fecha = DATEDIFF(D,Fecha_Inicio,Fecha_Fin)                                  
 Update #Tbl_Paso_Proyecto Set Meses_Fecha = DATEDIFF(M,Fecha_Inicio,Fecha_Fin)                                      

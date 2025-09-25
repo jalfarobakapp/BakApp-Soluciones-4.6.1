@@ -3208,7 +3208,7 @@ Public Class Clas_Imprimir_Documento
                     If _Contador = 0 Then
                         e.Graphics.DrawString("------------- Documentos pevios -------------",
                                                   _Fte_Usar, _DrawBrush, 100, _Detalle_Y)
-                        _Detalle_Y += _Salto_Linea
+                        _Detalle_Y += _Salto_Linea + 4
                     End If
 
                     e.Graphics.DrawString(_DocPrevio, _Fte_Usar, _DrawBrush, 100, _Detalle_Y)

@@ -1376,22 +1376,29 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             'UpdateDetailsFooter(_Grilla, "VANEDO", "VAIVDO", "VABRDO")
 
             Dim _Campo As String
+            Dim _DisplayIndex = 0
 
             _Campo = "Codigo"
             .Columns(_Campo).Width = 120
             .Columns(_Campo).HeaderText = "Código"
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             _Campo = "Descripcion"
-            .Columns(_Campo).Width = 300
+            .Columns(_Campo).Width = 350
             .Columns(_Campo).HeaderText = "Descripción"
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             _Campo = "Ud" & _Ud
             .Columns("Ud" & _Ud).Width = 30
             .Columns("Ud" & _Ud).HeaderText = "UN"
-            .Columns("Ud" & _Ud).CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns("Ud" & _Ud).CellStyles.Default.Alignment = Alignment.MiddleCenter
             .Columns("Ud" & _Ud).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             _Campo = "StockUd" & _Ud
             .Columns(_Campo).Width = 70
@@ -1399,6 +1406,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             _Campo = "StockEnTransitoUd" & _Ud
             .Columns(_Campo).Width = 70
@@ -1406,6 +1415,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             _Campo = "StockPedidoUd" & _Ud
             .Columns(_Campo).Width = 70
@@ -1413,6 +1424,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             _Campo = "StockFacSinRecepUd" & _Ud
             .Columns(_Campo).Width = 70
@@ -1420,54 +1433,54 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            Dim _CampoRD As String = String.Empty
-            Dim _CampoRM As String = String.Empty
-            Dim _CampoHT As String = String.Empty
+            _Campo = "PromUlt3CioPromUlt3Meses_Ud" & _Ud & "_Prod"
+            .Columns(_Campo).Width = 90
+            .Columns(_Campo).HeaderText = "Rotación" & vbCrLf & "Ult.Mes mas " & vbCrLf & "Prom. Ult." & vbCrLf & "3 meses"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
+            .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns(_Campo).Visible = Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            If Rdb_Proyeccion_Rotacion_Diaria.Checked Then
-                _CampoRD = "RotDiariaUd" & _Ud & "_Prod"
-                _CampoRM = "RotMensualUd" & _Ud & "_Prod"
-                _CampoHT = "R.Media"
-            End If
+            _Campo = "RotMensualUd" & _Ud & "_Prod"
+            .Columns(_Campo).Width = 80
+            .Columns(_Campo).HeaderText = "Rotación" & vbCrLf & "mensual" & vbCrLf & "(Mediana)"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
+            .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns(_Campo).Visible = Rdb_Proyeccion_Rotacion_Diaria.Checked
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            If Rdb_Proyeccion_Promedio_Diario.Checked Then
-                _CampoRD = "Promedio_Ud" & _Ud & "_Prod"
-                _CampoRM = "Promedio_MensualUd" & _Ud & "_Prod"
-                _CampoHT = "R.Promedio"
-            End If
+            _Campo = "Promedio_MensualUd" & _Ud & "_Prod"
+            .Columns(_Campo).Width = 80
+            .Columns(_Campo).HeaderText = "Promedio" & vbCrLf & "mensual"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
+            .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns(_Campo).Visible = Rdb_Proyeccion_Promedio_Diario.Checked
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '_Campo = "RotDiariaUd" & _Ud & "_Prod"
-            .Columns(_CampoRD).Width = 70
-            .Columns(_CampoRD).HeaderText = _CampoHT & vbCrLf & "diaria"
-            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
+            _Campo = "PromMensualUd" & _Ud & "_Ul3Mes_Prod"
+            .Columns(_Campo).Width = 100
+            .Columns(_Campo).HeaderText = "Promedio Ventas" & vbCrLf & "últimos 3 meses"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '_Campo = "RotMensualUd" & _Ud & "_Prod"
-            .Columns(_CampoRM).Width = 70
-            .Columns(_CampoRM).HeaderText = _CampoHT & vbCrLf & "mensual"
-            DirectCast(.Columns(_CampoRM).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
-            .Columns(_CampoRM).CellStyles.Default.Alignment = Alignment.MiddleRight
-            .Columns(_CampoRM).Visible = True
+            _Campo = "SumTotalQtyUd" & _Ud & "_Ult_3Cio"
+            .Columns(_Campo).Width = 80
+            .Columns(_Campo).HeaderText = "Ventas" & vbCrLf & "Ventas último" & vbCrLf & "mes"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
+            .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("RotEfectivaUd" & _Ud).Width = 70
-            '.Columns("RotEfectivaUd" & _Ud).HeaderText = "Rotación" & vbCrLf & "efectiva"
-            'DirectCast(.Columns("RotEfectivaUd" & _Ud).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
-            '.Columns("RotEfectivaUd" & _Ud).CellStyles.Default.Alignment = Alignment.MiddleRight
-            '.Columns("RotEfectivaUd" & _Ud).Visible = True
-
-            '.Columns("Duracion_Proyeccion").Width = 70
-            '.Columns("Duracion_Proyeccion").HeaderText = "Duración" & vbCrLf & _Duracion
-            'DirectCast(.Columns("Duracion_Proyeccion").RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
-            '.Columns("Duracion_Proyeccion").CellStyles.Default.Alignment = Alignment.MiddleRight
-            '.Columns("Duracion_Proyeccion").Visible = True
-
-            '.Columns("Cant_Comprar_Sug").Width = 70
-            '.Columns("Cant_Comprar_Sug").HeaderText = "Cantidad" & vbCrLf & "sugerida" & vbCrLf & "comprar"
-            'DirectCast(.Columns("Cant_Comprar_Sug").RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
-            '.Columns("Cant_Comprar_Sug").CellStyles.Default.Alignment = Alignment.MiddleRight
-            '.Columns("Cant_Comprar_Sug").Visible = True
 
         End With
 

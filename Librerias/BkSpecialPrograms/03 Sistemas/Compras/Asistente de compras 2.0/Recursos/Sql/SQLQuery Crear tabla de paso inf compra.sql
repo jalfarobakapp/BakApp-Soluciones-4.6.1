@@ -59,20 +59,6 @@ CREATE TABLE [dbo].[#TablaPaso#](
 	[Ranking_Top]               [Int]          DEFAULT (0),
 	[Clasificacion_Rk]          [VarChar](20)  DEFAULT '', 
 	[Star]                      [Int]          DEFAULT (0),
-	[Marca]                     [VarChar](20)  DEFAULT '',
-	[Rubro]                     [VarChar](20)  DEFAULT '',
-	[ClasificacionLibre]        [VarChar](20)  DEFAULT '',
-	[Zona]                      [VarChar](20)  DEFAULT '',
-	[SuperFamilia]              [VarChar](20)  DEFAULT '',
-	[Familia]                   [VarChar](20)  DEFAULT '',
-	[SubFamilia]                [VarChar](20)  DEFAULT '',
-	[Nom_Marca]                 [VarChar](50)  DEFAULT '',
-	[Nom_Rubro]                 [VarChar](50)  DEFAULT '',
-	[Nom_ClasificacionLibre]    [VarChar](50)  DEFAULT '',
-	[Nom_Zona]                  [VarChar](50)  DEFAULT '',
-	[Nom_SuperFamilia]          [VarChar](50)  DEFAULT '',
-	[Nom_Familia]               [VarChar](50)  DEFAULT '',
-	[Nom_SubFamilia]            [VarChar](50)  DEFAULT '',
 	[Tiempo_Reposicion]         [Float]        DEFAULT (0),
 	[Stock_CriticoUd1_Rd]       [Float]        DEFAULT (0),
 	[Stock_CriticoUd2_Rd]       [Float]        DEFAULT (0),
@@ -91,17 +77,57 @@ CREATE TABLE [dbo].[#TablaPaso#](
 	[Porc_Crecimiento]          [Float]        DEFAULT (0),
 	[CantSugeridaTot]           [Float]        DEFAULT (0),
 
-	[RotDiariaUd1]              [Float]        DEFAULT (0),
-	[RotDiariaUd2]              [Float]        DEFAULT (0),
-	
-    [RotMensualUd1]             [Float]        DEFAULT (0),
-	[RotMensualUd2]             [Float]        DEFAULT (0),
-	
-    [RotDiariaUd1_Prod]         [Float]        DEFAULT (0),
-	[RotDiariaUd2_Prod]         [Float]        DEFAULT (0),
-	
-    [RotMensualUd1_Prod]        [Float]        DEFAULT (0),
-	[RotMensualUd2_Prod]        [Float]        DEFAULT (0),
+	[RotDiariaUd1]              [Float]        DEFAULT (0), -- Mediana diaria Ud1
+	[RotDiariaUd2]              [Float]        DEFAULT (0),	-- Mediana diaria Ud2
+    [RotMensualUd1]             [Float]        DEFAULT (0), -- Mediana Mensual Ud1
+	[RotMensualUd2]             [Float]        DEFAULT (0), -- Mediana Mensual Ud2	
+
+    [RotDiariaUd1_Prod]         [Float]        DEFAULT (0), -- Mediana diaria por producto Ud1
+	[RotDiariaUd2_Prod]         [Float]        DEFAULT (0),	-- Mediana diaria por producto Ud1
+    [RotMensualUd1_Prod]        [Float]        DEFAULT (0), -- Mediana mensual por producto Ud1
+	[RotMensualUd2_Prod]        [Float]        DEFAULT (0), -- Mediana mensual por producto Ud2
+
+	[Promedio_Ud1]              [Float]        DEFAULT (0), -- Promedio diario Ud1
+	[Promedio_Ud2]              [Float]        DEFAULT (0), -- Promedio diario Ud2
+    [Promedio_MensualUd1]       [Float]        DEFAULT (0), -- Promedio mensual Ud1
+	[Promedio_MensualUd2]       [Float]        DEFAULT (0), -- Promedio mensual Ud2
+
+    [Promedio_Ud1_Prod]         [Float]        DEFAULT (0), -- Promedio diario por producto Ud1
+	[Promedio_Ud2_Prod]         [Float]        DEFAULT (0), -- Promedio diario por producto Ud2
+    [Promedio_MensualUd1_Prod]  [Float]        DEFAULT (0), -- Promedio mensual por producto Ud1
+	[Promedio_MensualUd2_Prod]  [Float]        DEFAULT (0), -- Promedio mensual por producto Ud2
+
+    [RotDiariaUd1_Ult_3Mes]     [Float]        DEFAULT (0), -- Rotacion diaria Ud1 ult 3 meses
+	[RotDiariaUd2_Ult_3Mes]     [Float]        DEFAULT (0),	-- Rotacion diaria Ud2 ult 3 meses 
+    [RotMensualUd1_Ult_3Mes]    [Float]        DEFAULT (0), -- Rotacion mensual Ud1 ult 3 meses
+	[RotMensualUd2_Ult_3Mes]    [Float]        DEFAULT (0), -- Rotacion mensual Ud2 ult 3 meses
+
+    [PromDiariaUd1_Ul3Mes]      [Float]        DEFAULT (0), -- Promedio diario Ud1 ult 3 meses
+	[PromDiariaUd2_Ul3Mes]      [Float]        DEFAULT (0),	-- Promedio diario Ud2 ult 3 meses 
+    [PromMensualUd1_Ul3Mes]     [Float]        DEFAULT (0), -- Promedio mensual Ud1 ult 3 meses
+	[PromMensualUd2_Ul3Mes]     [Float]        DEFAULT (0), -- Promedio mensual Ud2 ult 3 meses
+
+    [RotDiariaUd1_Ult_3Mes_Prod]     [Float]        DEFAULT (0), -- Rotacion diaria Ud1 ult 3 meses por producto
+	[RotDiariaUd2_Ult_3Mes_Prod]     [Float]        DEFAULT (0), -- Rotacion diaria Ud2 ult 3 meses por producto	
+    [RotMensualUd1_Ult_3Mes_Prod]    [Float]        DEFAULT (0), -- Rotacion mensual Ud1 ult 3 meses por producto
+	[RotMensualUd2_Ult_3Mes_Prod]    [Float]        DEFAULT (0), -- Rotacion mensual Ud2 ult 3 meses por producto
+
+    [PromDiariaUd1_Ul3Mes_Prod]  [Float]        DEFAULT (0), -- Promedio diario Ud1 ult 3 meses por producto
+	[PromDiariaUd2_Ul3Mes_Prod]  [Float]        DEFAULT (0), -- Promedio diario Ud2 ult 3 meses por producto	
+    [PromMensualUd1_Ul3Mes_Prod] [Float]        DEFAULT (0), -- Promedio mensual Ud1 ult 3 meses por producto
+	[PromMensualUd2_Ul3Mes_Prod] [Float]        DEFAULT (0), -- Promedio mensual Ud2 ult 3 meses por producto
+    
+ --   [Prom_Ud1_Ult_3Mes]         [Float]        DEFAULT (0),
+	--[Prom_Ud2_Ult_3Mes]         [Float]        DEFAULT (0),
+ --   [Prom_Ud1_Mensual_Ult_3Mes] [Float]        DEFAULT (0),
+	--[Prom_Ud2_Mensual_Ult_3Mes] [Float]        DEFAULT (0),
+
+ --   [Prom_Ult_Ud1_Ult_3Mes]     [Float]        DEFAULT (0),
+	--[Prom_Ult_Ud2_Ult_3Mes]     [Float]        DEFAULT (0),
+
+    [PromUlt3CioPromUlt3Meses_Ud1_Prod] [Float]        DEFAULT (0),
+    [PromUlt3CioPromUlt3Meses_Ud2_Prod] [Float]        DEFAULT (0),
+    --[Promedio_Mensual_Ud1_UltMesMasPromUlt3Mes_Prod]    [Float]        DEFAULT (0),
 
 	[SumTotalQtyUd1]            [Float]        DEFAULT (0),
 	[SumTotalQtyUd2]            [Float]        DEFAULT (0),
@@ -111,22 +137,7 @@ CREATE TABLE [dbo].[#TablaPaso#](
 
     [SumTotalQtyUd1_Ult_3Cio]   [Float]        DEFAULT (0),
 	[SumTotalQtyUd2_Ult_3Cio]   [Float]        DEFAULT (0),
-
-	[Promedio_Ud1]              [Float]        DEFAULT (0),
-	[Promedio_Ud2]              [Float]        DEFAULT (0),
-
-    [Promedio_MensualUd1]       [Float]        DEFAULT (0),
-	[Promedio_MensualUd2]       [Float]        DEFAULT (0),
-
-    [Promedio_Ud1_Prod]         [Float]        DEFAULT (0),
-	[Promedio_Ud2_Prod]         [Float]        DEFAULT (0),
-
-    [Promedio_MensualUd1_Prod]  [Float]        DEFAULT (0),
-	[Promedio_MensualUd2_Prod]  [Float]        DEFAULT (0),
-
-    [Prom_Ult_Ud1_Ult_3Mes]     [Float]        DEFAULT (0),
-	[Prom_Ult_Ud2_Ult_3Mes]     [Float]        DEFAULT (0),
-
+    
     [TipoRotCalculo]            [Varchar](20)   DEFAULT '',
     [RotCalculo]                [Float]        DEFAULT (0),
 
@@ -200,6 +211,20 @@ CREATE TABLE [dbo].[#TablaPaso#](
     [UdCompra]                  [Int]          DEFAULT (0),
     [MultiploCompra]            [Float]        DEFAULT (0),
     [CantComprarMinXProv]       [Float]        DEFAULT (0),
+    [Marca]                     [VarChar](20)  DEFAULT '',
+	[Rubro]                     [VarChar](20)  DEFAULT '',
+	[ClasificacionLibre]        [VarChar](20)  DEFAULT '',
+	[Zona]                      [VarChar](20)  DEFAULT '',
+	[SuperFamilia]              [VarChar](20)  DEFAULT '',
+	[Familia]                   [VarChar](20)  DEFAULT '',
+	[SubFamilia]                [VarChar](20)  DEFAULT '',
+	[Nom_Marca]                 [VarChar](50)  DEFAULT '',
+	[Nom_Rubro]                 [VarChar](50)  DEFAULT '',
+	[Nom_ClasificacionLibre]    [VarChar](50)  DEFAULT '',
+	[Nom_Zona]                  [VarChar](50)  DEFAULT '',
+	[Nom_SuperFamilia]          [VarChar](50)  DEFAULT '',
+	[Nom_Familia]               [VarChar](50)  DEFAULT '',
+	[Nom_SubFamilia]            [VarChar](50)  DEFAULT '',
 	CONSTRAInt [PK_Zw_#TablaPaso#_Codigo] PRIMARY KEY CLUSTERED 
 (
 	[Codigo] ASC,
