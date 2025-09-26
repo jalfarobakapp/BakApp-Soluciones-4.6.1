@@ -2120,7 +2120,15 @@ Public Class Clas_Imprimir_Documento
                 Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_DTE_Documentos", "Idmaeedo = " & _Idmaeedo)
 
                 If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Or CBool(_Reg) Then
-                    CodBarras = Fx_Timbre_Electronico_Hefesto(_IdDoc, _Tido, _Nudo)
+
+                    Dim _Archivo_Xml As String = _Sql.Fx_Trae_Dato("FMAEDTE", "XML", "IDMAEEDO = " & _Idmaeedo,, False)
+
+                    If Not String.IsNullOrEmpty(_Archivo_Xml) Then
+                        CodBarras = Fx_Timbre_Electronico(_IdDoc, _Tido, _Nudo)
+                    Else
+                        CodBarras = Fx_Timbre_Electronico_Hefesto(_IdDoc, _Tido, _Nudo)
+                    End If
+
                 Else
                     CodBarras = Fx_Timbre_Electronico(_IdDoc, _Tido, _Nudo)
                 End If

@@ -99,4 +99,28 @@ SUCURSALLIDO = ISNULL((SELECT TOP 1 NOKOSU FROM TABSU Ts WHERE Ts.EMPRESA = #Tab
 WHERE IDMAEEDO IN (#Idmaeedo#)
 
 
+/*--KOGRU
+
+Update #Tabla_Paso# Set NOKOGRU = '',NOKOGRUDT= '',KOGRU = '',KOGRUDT = '' 
+Where IDMAEEDO IN (#Idmaeedo#)
+
+Update #Tabla_Paso# Set KOGRU = Isnull((Select Top 1 KOGRU From TABFUGD Where KOFU = KOFULIDO Order By ORDEN),''),
+                        NOKOGRU = Isnull((Select Top 1 g.NOKOGRU 
+                                            From TABFUGE g Inner Join TABFUGD d On g.KOGRU = d.KOGRU 
+                                                Where d.KOFU = KOFULIDO),'')
+Where IDMAEEDO IN (#Idmaeedo#)
+
+
+Update #Tabla_Paso# Set KOGRUDT = Isnull(Bk.Grupo,''),NOKOGRUDT = Isnull(G.NOKOGRU,'')
+From #Global_BaseBk#Zw_Docu_Det Bk
+Inner Join #Tabla_Paso# Tp On Bk.Idmaeddo = Tp.IDMAEDDO
+Left Join TABFUGE G On Bk.Grupo = G.KOGRU
+Where Tp.IDMAEEDO IN (#Idmaeedo#)
+
+Update #Tabla_Paso# Set NOKOGRU = 'Sin Grupo' Where KOGRU = '' And IDMAEEDO IN (#Idmaeedo#)
+Update #Tabla_Paso# Set NOKOGRUDT = 'Sin Grupo' Where KOGRUDT = '' And IDMAEEDO IN (#Idmaeedo#)
+
+*/--KOGRU
+
+
 
