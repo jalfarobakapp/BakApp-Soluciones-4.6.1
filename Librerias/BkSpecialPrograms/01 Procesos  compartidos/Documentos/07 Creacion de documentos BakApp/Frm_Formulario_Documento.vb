@@ -8787,16 +8787,20 @@ Public Class Frm_Formulario_Documento
 
                 Else
 
-                    Dim _Mensaje As New LsValiciones.Mensajes
+                    If Not _Global_Row_Configuracion_General.Item("SelectOtrosClientesPedirPermiso") Then
 
-                    _Mensaje = Fx_EntidadEnGrupoVendedores(_RowEntidad, FUNCIONARIO)
+                        Dim _Mensaje As New LsValiciones.Mensajes
 
-                    If Not _Mensaje.EsCorrecto Then
-                        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK,
-                          IIf(_Mensaje.EsCorrecto, MessageBoxIcon.Information, MessageBoxIcon.Stop))
-                        Return Nothing
-                    Else
-                        _RowEntidad = _Mensaje.Tag
+                        _Mensaje = Fx_EntidadEnGrupoVendedores(_RowEntidad, FUNCIONARIO, True)
+
+                        If Not _Mensaje.EsCorrecto Then
+                            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK,
+                              IIf(_Mensaje.EsCorrecto, MessageBoxIcon.Information, MessageBoxIcon.Stop))
+                            Return Nothing
+                        Else
+                            _RowEntidad = _Mensaje.Tag
+                        End If
+
                     End If
 
                 End If
@@ -9723,7 +9727,7 @@ Public Class Frm_Formulario_Documento
                                         End If
                                         Sb_Cambiar_Vendedor(True)
                                         If _Kofuen <> _CodVendedor Then
-                                            Dim _VendedorAsociado As String = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Kofuen & "'")
+                                            Dim _VendedorAsociado As String = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Kofuen & "'").ToString.Trim
                                             MessageBoxEx.Show(Me, "El cambio de vendedor requiere un permiso especial, el cual puede ser otorgado" & vbCrLf &
                                                               "por el usuario " & _Kofuen & " - " & _VendedorAsociado & " o por cualquier otro usuario que cuente con el permiso correspondiente." & vbCrLf &
                                                               "Este permiso será evaluado al momento de grabar el documento.",
@@ -15146,6 +15150,34 @@ Public Class Frm_Formulario_Documento
 
                 Grilla_Detalle.Focus()
                 Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(0).Cells("Codigo") '("CodEntidad")
+
+                If Not IsNothing(_RowEntidad) AndAlso _Global_Row_Configuracion_General.Item("SelectOtrosClientesPedirPermiso") Then
+
+                    Dim _Mensaje As New LsValiciones.Mensajes
+
+                    _Mensaje = Fx_EntidadEnGrupoVendedores(_RowEntidad, FUNCIONARIO, True)
+
+                    If Not _Mensaje.EsCorrecto Then
+
+                        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK,
+                                          IIf(_Mensaje.EsCorrecto, MessageBoxIcon.Information, MessageBoxIcon.Stop))
+
+                        MessageBoxEx.Show(Me, "A continuación debera seleccionar un vendedor del Grupo de vendedores asociados", "Validación",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                        Dim _CodV = Grilla_Detalle.Rows(0).Cells("CodVendedor").Value
+
+                        Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(0).Cells("CodFuncionario")
+                        Call Grilla_Detalle_KeyDown(Grilla_Detalle, Nothing)
+
+                        If Grilla_Detalle.Rows(0).Cells("CodVendedor").Value = _CodV Then
+                            MessageBoxEx.Show(Me, "No se selecciono ningún vendedor", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            Call BtnLimpiar_Click(Nothing, Nothing)
+                        End If
+
+                    End If
+
+                End If
 
             End If
 
@@ -21909,8 +21941,22 @@ Public Class Frm_Formulario_Documento
         Dim _Tbl_Filtro_Vendedores As DataTable
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
+        Dim _Sql_Filtro_Condicion_Extra As String = "And INACTIVO = 0"
+
+        If Fx_Tiene_Permiso(Nothing, "NO00022",, False) Then
+
+            Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+
+            If Not _Kogru.Contains("'") Then
+                _Kogru = "'" & _Kogru & "'"
+            End If
+
+            _Sql_Filtro_Condicion_Extra += vbCrLf & "And KOFU In (Select d.KOFU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & "))"
+
+        End If
+
         If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Vendedores,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, "And INACTIVO = 0", Nothing, False, True) Then
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra, Nothing, False, True) Then
 
             _Tbl_Filtro_Vendedores = _Filtrar.Pro_Tbl_Filtro
             _CodVendedor = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
@@ -21945,6 +21991,15 @@ Public Class Frm_Formulario_Documento
 
         If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "CfEnt001", Nothing, _Koen, _Suen) Then
 
+            Dim _Mensaje As New LsValiciones.Mensajes
+
+            _Mensaje = Fx_EntidadEnGrupoVendedores(_RowEntidad, FUNCIONARIO, False)
+
+            If Not _Mensaje.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
             Dim Fm As New Frm_Crear_Entidad_Mt
             Fm.Fx_Llenar_Entidad(_Koen, _Suen)
             Fm.CrearEntidad = False
@@ -21960,11 +22015,6 @@ Public Class Frm_Formulario_Documento
                                       "en el documento, debe limpiar y recargar la entidad.", "Información",
                                       MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, True)
 
-                    'Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False, False, True)
-
-                    'Beep()
-                    'ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
-                    '                   1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
                 End If
 
             End If

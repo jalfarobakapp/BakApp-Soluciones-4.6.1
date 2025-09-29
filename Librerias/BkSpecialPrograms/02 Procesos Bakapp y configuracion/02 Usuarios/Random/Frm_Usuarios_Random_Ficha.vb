@@ -492,7 +492,7 @@ Public Class Frm_Usuarios_Random_Ficha
         End If
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
-        Dim _Sql_Filtro_Condicion_Extra As String = "And KOFU <> '" & FUNCIONARIO & "'"
+        Dim _Sql_Filtro_Condicion_Extra As String = "And KOFU <> '" & Kofu & "'"
 
         '_Filtrar.Tabla = "TABFUGE"
         '_Filtrar.Campo = "KOGRU"

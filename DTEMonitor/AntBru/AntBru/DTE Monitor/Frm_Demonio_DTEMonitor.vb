@@ -132,6 +132,12 @@ Public Class Frm_Demonio_DTEMonitor
 
         _AmbienteCertificacion = Convert.ToInt32(Chk_AmbienteCertificacion.Checked)
 
+        If CBool(_AmbienteCertificacion) Then
+            Dim _BackColor_Tido As Color = Color.FromArgb(235, 81, 13)
+            Metro_Bar_Color.BackgroundStyle.BackColor = _BackColor_Tido
+            'Lbl_Etiqueta.Text = "Ambiente de Certificación y Prueba"
+        End If
+
         Chk_MostrarBoletaBkHfDOS.Checked = False
         Chk_MostrarBoletaBkHfDOS.Visible = Chk_AmbienteCertificacion.Checked
 

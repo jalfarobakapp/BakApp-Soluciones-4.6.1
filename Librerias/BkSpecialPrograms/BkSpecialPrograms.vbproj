@@ -407,9 +407,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documentos_Permisos.designer.vb">
       <DependentUpon>Frm_Ver_Documentos_Permisos.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documentos_Permisos.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documentos_Permisos.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documentos_Recargos_Asociados.Designer.vb">
       <DependentUpon>Frm_Ver_Documentos_Recargos_Asociados.vb</DependentUpon>
     </Compile>
@@ -439,9 +437,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Cantidad Stock X Bodega\Frm_Formulario_Cantidad_Stock_X_Bodega.Designer.vb">
       <DependentUpon>Frm_Formulario_Cantidad_Stock_X_Bodega.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Cantidad Stock X Bodega\Frm_Formulario_Cantidad_Stock_X_Bodega.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Cantidad Stock X Bodega\Frm_Formulario_Cantidad_Stock_X_Bodega.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Cantidad Stock X Bodega\Recursos\Recursos_Cant_Stock_Bodega.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -450,15 +446,11 @@
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Cantidades_Selec_Ud.designer.vb">
       <DependentUpon>Frm_Cantidades_Selec_Ud.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Cantidades_Selec_Ud.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Cantidades_Selec_Ud.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Iva_Ila.designer.vb">
       <DependentUpon>Frm_Formulario_Iva_Ila.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Iva_Ila.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Iva_Ila.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Oferta.designer.vb">
       <DependentUpon>Frm_Formulario_Oferta.vb</DependentUpon>
     </Compile>
@@ -475,9 +467,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Generar Doc desde DTE\Frm_DocsDesdeDTEXML.Designer.vb">
       <DependentUpon>Frm_DocsDesdeDTEXML.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Generar Doc desde DTE\Frm_DocsDesdeDTEXML.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Generar Doc desde DTE\Frm_DocsDesdeDTEXML.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Imprimir doc. en construccion\Clas_Imprimir_DocEnconstruccion.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lector de Barras\Frm_Formulario_Lector_Barra.Designer.vb">
       <DependentUpon>Frm_Formulario_Lector_Barra.vb</DependentUpon>
@@ -494,9 +484,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Levantar Productos Masivamente\Frm_Impor_Prod_Masivamente.Designer.vb">
       <DependentUpon>Frm_Impor_Prod_Masivamente.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Levantar Productos Masivamente\Frm_Impor_Prod_Masivamente.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Levantar Productos Masivamente\Frm_Impor_Prod_Masivamente.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lista Superior\Recursos\Recuros_ListaSuperior.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -524,9 +512,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\09 Seleccionar documentos entidad\Frm_Documentos_Relacionados.designer.vb">
       <DependentUpon>Frm_Documentos_Relacionados.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\09 Seleccionar documentos entidad\Frm_Documentos_Relacionados.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\09 Seleccionar documentos entidad\Frm_Documentos_Relacionados.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Class_Referencias_DTE.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Archivo Electronico Cesion AEC\Cl_BakAppHefestoEAC.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Archivo Electronico Cesion AEC\Frm_Aec_CesionDTE.Designer.vb">
@@ -545,9 +531,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Dte_ConsumoFolios.Designer.vb">
       <DependentUpon>Frm_Dte_ConsumoFolios.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Dte_ConsumoFolios.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Dte_ConsumoFolios.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Folios_Caf.Designer.vb">
       <DependentUpon>Frm_Folios_Caf.vb</DependentUpon>
     </Compile>
@@ -557,9 +541,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_MantFacturasElecFiltrar.Designer.vb">
       <DependentUpon>Frm_MantFacturasElecFiltrar.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_MantFacturasElecFiltrar.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_MantFacturasElecFiltrar.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_MantFacturasElectronicas.Designer.vb">
       <DependentUpon>Frm_MantFacturasElectronicas.vb</DependentUpon>
     </Compile>
@@ -570,9 +552,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Otros\Form1.Designer.vb">
       <DependentUpon>Form1.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Otros\Form1.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Otros\Form1.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Recursos\Recursos_Dte_Hefesto.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -617,17 +597,13 @@
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Asociacion de documentos a OCC\Frm_RecargosXProd.Designer.vb">
       <DependentUpon>Frm_RecargosXProd.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Asociacion de documentos a OCC\Frm_RecargosXProd.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Asociacion de documentos a OCC\Frm_RecargosXProd.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\14 Exportar documentos\Cl_ExpotarDoc.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\15 Pesos Variables\Cl_PesoVariable.vb" />
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.Designer.vb">
       <DependentUpon>Frm_Crear_Entidad_Mt_Puntos.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.vb" />
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdCanMinXProv.Designer.vb">
       <DependentUpon>Frm_Crear_Entidad_Mt_ProdCanMinXProv.vb</DependentUpon>
     </Compile>
@@ -637,9 +613,7 @@
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdExcluidosCompra.Designer.vb">
       <DependentUpon>Frm_Crear_Entidad_Mt_ProdExcluidosCompra.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdExcluidosCompra.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdExcluidosCompra.vb" />
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Procedimientos\Cl_Entidad.vb" />
     <Compile Include="01 Procesos  compartidos\Entidades\02 Información entidad\Frm_InfoEnt_Protestos.Designer.vb">
       <DependentUpon>Frm_InfoEnt_Protestos.vb</DependentUpon>
@@ -738,9 +712,7 @@
     <Compile Include="01 Procesos  compartidos\Productos\02 Mantencion de Imagenes\Frm_Imagenes_X_Producto_Lev.Designer.vb">
       <DependentUpon>Frm_Imagenes_X_Producto_Lev.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\02 Mantencion de Imagenes\Frm_Imagenes_X_Producto_Lev.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\02 Mantencion de Imagenes\Frm_Imagenes_X_Producto_Lev.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\02 Mantencion de Imagenes\Frm_Imagenes_X_Producto_Lista.Designer.vb">
       <DependentUpon>Frm_Imagenes_X_Producto_Lista.vb</DependentUpon>
     </Compile>
@@ -762,15 +734,11 @@
     <Compile Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_ComprasSinRecepcionar.Designer.vb">
       <DependentUpon>Frm_ComprasSinRecepcionar.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_ComprasSinRecepcionar.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_ComprasSinRecepcionar.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_CumplXProveedor.Designer.vb">
       <DependentUpon>Frm_CumplXProveedor.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_CumplXProveedor.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Frm_CumplXProveedor.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\16 Importar stock otras empresa\Cl_Importar_Stock_Otra_Bodega.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\16 Importar stock otras empresa\Frm_Importar_Stock_OEBD.Designer.vb">
       <DependentUpon>Frm_Importar_Stock_OEBD.vb</DependentUpon>
@@ -793,9 +761,7 @@
     <Compile Include="01 Procesos  compartidos\Productos\17 Dimensiones\Frm_Dimensiones_Pr.Designer.vb">
       <DependentUpon>Frm_Dimensiones_Pr.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\17 Dimensiones\Frm_Dimensiones_Pr.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\17 Dimensiones\Frm_Dimensiones_Pr.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\18 Precio Promedio Ponderado\Cl_PPPPr.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\18 Precio Promedio Ponderado\Frm_Recalculo_PPPxProd.Designer.vb">
       <DependentUpon>Frm_Recalculo_PPPxProd.vb</DependentUpon>
@@ -807,9 +773,7 @@
     <Compile Include="01 Procesos  compartidos\Productos\19 Migrar productos entre empresas\Frm_Migrar_Productos.designer.vb">
       <DependentUpon>Frm_Migrar_Productos.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\19 Migrar productos entre empresas\Frm_Migrar_Productos.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\19 Migrar productos entre empresas\Frm_Migrar_Productos.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\20 Impresiones adicionales\Frm_ImpAdicXProd_Lista.Designer.vb">
       <DependentUpon>Frm_ImpAdicXProd_Lista.vb</DependentUpon>
     </Compile>
@@ -819,9 +783,7 @@
     <Compile Include="01 Procesos  compartidos\Productos\20 Impresiones adicionales\Frm_ImpAdicXProd.Designer.vb">
       <DependentUpon>Frm_ImpAdicXProd.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\20 Impresiones adicionales\Frm_ImpAdicXProd.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\20 Impresiones adicionales\Frm_ImpAdicXProd.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Frm_OfDinamFicha.Designer.vb">
       <DependentUpon>Frm_OfDinamFicha.vb</DependentUpon>
     </Compile>
@@ -844,15 +806,11 @@
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.Designer.vb">
       <DependentUpon>Frm_Usuarios_Random.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.designer.vb">
       <DependentUpon>Frm_Usuarios_Random_Ficha.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random_Ficha.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Cl_GruposRD.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Grupos\Frm_Grupos_Lista.Designer.vb">
       <DependentUpon>Frm_Grupos_Lista.vb</DependentUpon>
@@ -882,9 +840,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.Designer.vb">
       <DependentUpon>Frm_Configuracion_Gral.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Gral.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\MAEDPCD.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\MAEDPCE.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos Random\MAEVEN.vb" />
@@ -935,9 +891,7 @@
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecio.Designer.vb">
       <DependentUpon>Frm_AsisCompra_CambioPrecio.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecio.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecio.vb" />
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.Designer.vb">
       <DependentUpon>Frm_AsisCompra_CambioPrecioDet.vb</DependentUpon>
     </Compile>
@@ -954,9 +908,7 @@
     <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.Designer.vb">
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb" />
     <Compile Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_IngDet.Designer.vb">
       <DependentUpon>Frm_PreVenta_IngDet.vb</DependentUpon>
     </Compile>
@@ -990,9 +942,7 @@
     <Compile Include="03 Sistemas\GDI2GRI\Frm_GDI2GRI.Designer.vb">
       <DependentUpon>Frm_GDI2GRI.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\GDI2GRI\Frm_GDI2GRI.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\GDI2GRI\Frm_GDI2GRI.vb" />
     <Compile Include="03 Sistemas\Impresion Masiva\Cl_ImpMasiva.vb" />
     <Compile Include="03 Sistemas\Impresion Masiva\Frm_ImpMasiva.Designer.vb">
       <DependentUpon>Frm_ImpMasiva.vb</DependentUpon>
@@ -1003,9 +953,7 @@
     <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Preview.Designer.vb">
       <DependentUpon>Frm_ImpBarras_Preview.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Preview.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Preview.vb" />
     <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\Cl_Imprimir_CompNoDesp.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Cl_Inventario.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_Inv_Inventarios.Designer.vb">
@@ -1026,9 +974,7 @@
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Crear.Designer.vb">
       <DependentUpon>Frm_Inv_Sector_Crear.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Crear.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_Crear.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Sectores\Frm_Inv_Sector_ImporExcel.Designer.vb">
       <DependentUpon>Frm_Inv_Sector_ImporExcel.vb</DependentUpon>
     </Compile>
@@ -1070,9 +1016,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\05 Licencia BakApp\Registro de equipos\Conf Imprimir en diablito\Frm_Imp_Diablito_X_Est_Crear.Designer.vb">
       <DependentUpon>Frm_Imp_Diablito_X_Est_Crear.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\05 Licencia BakApp\Registro de equipos\Conf Imprimir en diablito\Frm_Imp_Diablito_X_Est_Crear.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\05 Licencia BakApp\Registro de equipos\Conf Imprimir en diablito\Frm_Imp_Diablito_X_Est_Crear.vb" />
     <Compile Include="01 Procesos  compartidos\Entidades\02 Buscar Entiades\Frm_BuscarEntidad_Mt.Designer.vb">
       <DependentUpon>Frm_BuscarEntidad_Mt.vb</DependentUpon>
     </Compile>
@@ -1153,9 +1097,7 @@
     <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de correos SMTP automatico\Frm_Correos_Conf_SMTP.Designer.vb">
       <DependentUpon>Frm_Correos_Conf_SMTP.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de correos SMTP automatico\Frm_Correos_Conf_SMTP.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de correos SMTP automatico\Frm_Correos_Conf_SMTP.vb" />
     <Compile Include="01 Procesos  compartidos\Envio y Recepcion de Mail\Configuracion de correos SMTP automatico\Frm_Correos_Conf_SMTP_Lista.Designer.vb">
       <DependentUpon>Frm_Correos_Conf_SMTP_Lista.vb</DependentUpon>
     </Compile>
@@ -1183,9 +1125,7 @@
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Feriados\Frm_Feriados_Anuales.Designer.vb">
       <DependentUpon>Frm_Feriados_Anuales.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Feriados\Frm_Feriados_Anuales.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Feriados\Frm_Feriados_Anuales.vb" />
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Tabla Caracterizaciones\Frm_Tabla_Caracterizaciones_01_Listado.Designer.vb">
       <DependentUpon>Frm_Tabla_Caracterizaciones_01_Listado.vb</DependentUpon>
     </Compile>
@@ -1201,15 +1141,11 @@
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Pais, ciudad comunas\Frm_PaCiCm_Lista.Designer.vb">
       <DependentUpon>Frm_PaCiCm_Lista.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Pais, ciudad comunas\Frm_PaCiCm_Lista.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Pais, ciudad comunas\Frm_PaCiCm_Lista.vb" />
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Vehiculos Empresa\Frm_Vehiculos_Empresa.Designer.vb">
       <DependentUpon>Frm_Vehiculos_Empresa.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Vehiculos Empresa\Frm_Vehiculos_Empresa.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Vehiculos Empresa\Frm_Vehiculos_Empresa.vb" />
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Vehiculos Empresa\Frm_Vehiculos_Empresa_Imagenes.Designer.vb">
       <DependentUpon>Frm_Vehiculos_Empresa_Imagenes.vb</DependentUpon>
     </Compile>
@@ -1264,9 +1200,7 @@
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Frm_Tabla_Zonas.Designer.vb">
       <DependentUpon>Frm_Tabla_Zonas.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Frm_Tabla_Zonas.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Frm_Tabla_Zonas.vb" />
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Costos Proveedores\Frm_LcProv_Mantencion.designer.vb">
       <DependentUpon>Frm_LcProv_Mantencion.vb</DependentUpon>
     </Compile>
@@ -1282,21 +1216,15 @@
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Frm_Dimensiones.Designer.vb">
       <DependentUpon>Frm_Dimensiones.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Frm_Dimensiones.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Frm_Dimensiones.vb" />
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Frm_PrecioLC_ImpFleje.Designer.vb">
       <DependentUpon>Frm_PrecioLC_ImpFleje.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Frm_PrecioLC_ImpFleje.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Frm_PrecioLC_ImpFleje.vb" />
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Frm_PreciosLC_Mt01.Designer.vb">
       <DependentUpon>Frm_PreciosLC_Mt01.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Frm_PreciosLC_Mt01.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Frm_PreciosLC_Mt01.vb" />
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Inf. Ult. Compra\Frm_PreciosLC_InfUltCompras_Mt.Designer.vb">
       <DependentUpon>Frm_PreciosLC_InfUltCompras_Mt.vb</DependentUpon>
     </Compile>
@@ -1330,9 +1258,7 @@
     <Compile Include="01 Procesos  compartidos\Productos\01 Buscar productos\Frm_BuscarXProducto_Mt_Listas.Designer.vb">
       <DependentUpon>Frm_BuscarXProducto_Mt_Listas.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\01 Buscar productos\Frm_BuscarXProducto_Mt_Listas.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\01 Buscar productos\Frm_BuscarXProducto_Mt_Listas.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\01 Buscar productos\SQL\Recursos_Productos.Designer.vb">
       <DependentUpon>Recursos_Productos_.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -1359,9 +1285,7 @@
     <Compile Include="01 Procesos  compartidos\Productos\01 Crear Productos\Crea Producto clasic\Frm_MtCreacionDeProducto.Designer.vb">
       <DependentUpon>Frm_MtCreacionDeProducto.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\01 Crear Productos\Crea Producto clasic\Frm_MtCreacionDeProducto.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\01 Crear Productos\Crea Producto clasic\Frm_MtCreacionDeProducto.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\01 Crear Productos\Crea Producto clasic\Recursos\Recursos_Producto.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1450,9 +1374,7 @@
     <Compile Include="01 Procesos  compartidos\Productos\03 Unificar codigo\Frm_UnificacionProducto.Designer.vb">
       <DependentUpon>Frm_UnificacionProducto.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\03 Unificar codigo\Frm_UnificacionProducto.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\03 Unificar codigo\Frm_UnificacionProducto.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\05 Ocultar producto\Frm_OcultarPr.Designer.vb">
       <DependentUpon>Frm_OcultarPr.vb</DependentUpon>
     </Compile>
@@ -1480,15 +1402,11 @@
     <Compile Include="01 Procesos  compartidos\Productos\08 Informe Analisis Compra\Frm_Inf_PopUp_Stock_PrvsFiltros.Designer.vb">
       <DependentUpon>Frm_Inf_PopUp_Stock_PrvsFiltros.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\08 Informe Analisis Compra\Frm_Inf_PopUp_Stock_PrvsFiltros.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\08 Informe Analisis Compra\Frm_Inf_PopUp_Stock_PrvsFiltros.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\09 Ranking de productos\Frm_Ranking_Menu.Designer.vb">
       <DependentUpon>Frm_Ranking_Menu.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\09 Ranking de productos\Frm_Ranking_Menu.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\09 Ranking de productos\Frm_Ranking_Menu.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\09 Ranking de productos\Frm_Ranking_Resultado.Designer.vb">
       <DependentUpon>Frm_Ranking_Resultado.vb</DependentUpon>
     </Compile>
@@ -1498,9 +1416,7 @@
     <Compile Include="01 Procesos  compartidos\Productos\09 Ranking de productos\Frm_Ranking_Resultado_Clasificar.Designer.vb">
       <DependentUpon>Frm_Ranking_Resultado_Clasificar.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\09 Ranking de productos\Frm_Ranking_Resultado_Clasificar.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\09 Ranking de productos\Frm_Ranking_Resultado_Clasificar.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\09 Ranking de productos\Procedimientos SQL\Consultas.Designer.vb">
       <DependentUpon>Consultas.resx</DependentUpon>
       <DesignTime>True</DesignTime>
@@ -1532,9 +1448,7 @@
     <Compile Include="01 Procesos  compartidos\Productos\11 Stock History\Frm_Stock_History.Designer.vb">
       <DependentUpon>Frm_Stock_History.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\11 Stock History\Frm_Stock_History.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\11 Stock History\Frm_Stock_History.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\12 Adjuntar archivos al producto\Frm_Adjuntar_Archivos_X_Productos.Designer.vb">
       <DependentUpon>Frm_Adjuntar_Archivos_X_Productos.vb</DependentUpon>
     </Compile>
@@ -1580,9 +1494,7 @@
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Mantencion de precios y costos\Frm_MantListas_Crear.Designer.vb">
       <DependentUpon>Frm_MantListas_Crear.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Precios y Costos\Mantencion de precios y costos\Frm_MantListas_Crear.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Mantencion de precios y costos\Frm_MantListas_Crear.vb" />
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Mantencion de precios y costos\Frm_MantListas_Importar.Designer.vb">
       <DependentUpon>Frm_MantListas_Importar.vb</DependentUpon>
     </Compile>
@@ -1592,21 +1504,15 @@
     <Compile Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Frm_MantLista_Precios_Random.Designer.vb">
       <DependentUpon>Frm_MantLista_Precios_Random.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Frm_MantLista_Precios_Random.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Frm_MantLista_Precios_Random.vb" />
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Mantencion de precios y costos\Frm_PreciosLCEditorFormulas.Designer.vb">
       <DependentUpon>Frm_PreciosLCEditorFormulas.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Precios y Costos\Mantencion de precios y costos\Frm_PreciosLCEditorFormulas.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Mantencion de precios y costos\Frm_PreciosLCEditorFormulas.vb" />
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Mantencion de precios y costos\Funciones\Frm_MantListas_Conf_Funciones.Designer.vb">
       <DependentUpon>Frm_MantListas_Conf_Funciones.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Precios y Costos\Mantencion de precios y costos\Funciones\Frm_MantListas_Conf_Funciones.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Precios y Costos\Mantencion de precios y costos\Funciones\Frm_MantListas_Conf_Funciones.vb" />
     <Compile Include="01 Procesos  compartidos\Precios y Costos\Mantencion de precios y costos\Funciones\Frm_MantListas_Redondeo.Designer.vb">
       <DependentUpon>Frm_MantListas_Redondeo.vb</DependentUpon>
     </Compile>
@@ -1631,15 +1537,11 @@
     <Compile Include="01 Procesos  compartidos\Productos\14 Solicitar recomendacion de compra\Frm_Sol_Recom_Lista.designer.vb">
       <DependentUpon>Frm_Sol_Recom_Lista.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\14 Solicitar recomendacion de compra\Frm_Sol_Recom_Lista.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\14 Solicitar recomendacion de compra\Frm_Sol_Recom_Lista.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\14 Solicitar recomendacion de compra\Frm_Sol_Recom_Respuesta.designer.vb">
       <DependentUpon>Frm_Sol_Recom_Respuesta.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Productos\14 Solicitar recomendacion de compra\Frm_Sol_Recom_Respuesta.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\14 Solicitar recomendacion de compra\Frm_Sol_Recom_Respuesta.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\15 Asociar productos a funcionarios\Frm_Prod_Vs_Funcionarios.Designer.vb">
       <DependentUpon>Frm_Prod_Vs_Funcionarios.vb</DependentUpon>
     </Compile>
@@ -1675,9 +1577,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\03 Conexion Empresas\Multiempresa Random\Frm_Multiempresa_Random.designer.vb">
       <DependentUpon>Frm_Multiempresa_Random.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\03 Conexion Empresas\Multiempresa Random\Frm_Multiempresa_Random.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\03 Conexion Empresas\Multiempresa Random\Frm_Multiempresa_Random.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Formularios\Conceptos obligatorios Pgo\Frm_Conceptos_ObliXDoc.Designer.vb">
       <DependentUpon>Frm_Conceptos_ObliXDoc.vb</DependentUpon>
     </Compile>
@@ -1693,9 +1593,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\06 Sesion Star Licencia\Frm_Modalidades.designer.vb">
       <DependentUpon>Frm_Modalidades.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\06 Sesion Star Licencia\Frm_Modalidades.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\06 Sesion Star Licencia\Frm_Modalidades.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\07 Validar permiso usuario\Class_Permiso_Random.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\07 Validar permiso usuario\Lista\Frm_Permisos_Usuario_Mis_Jefes.designer.vb">
       <DependentUpon>Frm_Permisos_Usuario_Mis_Jefes.vb</DependentUpon>
@@ -1713,9 +1611,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Frm_Estructura_Base_De_Datos.Designer.vb">
       <DependentUpon>Frm_Estructura_Base_De_Datos.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Frm_Estructura_Base_De_Datos.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Frm_Estructura_Base_De_Datos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Recursos_Inst_Tablas.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1789,9 +1685,7 @@
     <Compile Include="03 Sistemas\Comisiones\Formularios\Periodos\Frm_Cms_Periodos.Designer.vb">
       <DependentUpon>Frm_Cms_Periodos.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Comisiones\Formularios\Periodos\Frm_Cms_Periodos.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Comisiones\Formularios\Periodos\Frm_Cms_Periodos.vb" />
     <Compile Include="03 Sistemas\Comisiones\Formularios\Periodos\Frm_Cms_Periodos_Crear.Designer.vb">
       <DependentUpon>Frm_Cms_Periodos_Crear.vb</DependentUpon>
     </Compile>
@@ -1802,9 +1696,7 @@
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Frm_01_Asis_Compra_Resultados_Hijo.Designer.vb">
       <DependentUpon>Frm_01_Asis_Compra_Resultados_Hijo.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Frm_01_Asis_Compra_Resultados_Hijo.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Frm_01_Asis_Compra_Resultados_Hijo.vb" />
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Formularios\Frm_09_Asis_Compra_Reabastecer_BB.Designer.vb">
       <DependentUpon>Frm_09_Asis_Compra_Reabastecer_BB.vb</DependentUpon>
     </Compile>
@@ -1875,9 +1767,7 @@
     <Compile Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir.Designer.vb">
       <DependentUpon>Frm_Dem_Imprimir.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Impresion\Frm_Dem_Imprimir_Conf.Designer.vb">
       <DependentUpon>Frm_Dem_Imprimir_Conf.vb</DependentUpon>
     </Compile>
@@ -1905,9 +1795,7 @@
     <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_New.Designer.vb">
       <DependentUpon>Frm_Demonio_New.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_New.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Frm_Demonio_New.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\New Demonio\Recursos_NewDemonio.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1928,9 +1816,7 @@
     <Compile Include="03 Sistemas\Despachos\Estados\Frm_Desp_01_Ingreso.designer.vb">
       <DependentUpon>Frm_Desp_01_Ingreso.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Despachos\Estados\Frm_Desp_01_Ingreso.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Despachos\Estados\Frm_Desp_01_Ingreso.vb" />
     <Compile Include="03 Sistemas\Despachos\Estados\Frm_Desp_02_Confirmacion.designer.vb">
       <DependentUpon>Frm_Desp_02_Confirmacion.vb</DependentUpon>
     </Compile>
@@ -1946,9 +1832,7 @@
     <Compile Include="03 Sistemas\Despachos\Estados\Frm_Desp_04_Depachar.designer.vb">
       <DependentUpon>Frm_Desp_04_Depachar.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Despachos\Estados\Frm_Desp_04_Depachar.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Despachos\Estados\Frm_Desp_04_Depachar.vb" />
     <Compile Include="03 Sistemas\Despachos\Estados\Frm_Desp_05_Cerrar.designer.vb">
       <DependentUpon>Frm_Desp_05_Cerrar.vb</DependentUpon>
     </Compile>
@@ -1976,9 +1860,7 @@
     <Compile Include="03 Sistemas\Despachos\Formularios\Frm_Direc_Cli.Designer.vb">
       <DependentUpon>Frm_Direc_Cli.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Despachos\Formularios\Frm_Direc_Cli.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Despachos\Formularios\Frm_Direc_Cli.vb" />
     <Compile Include="03 Sistemas\Despachos\Formularios\Frm_Direc_Cli_Lista.Designer.vb">
       <DependentUpon>Frm_Direc_Cli_Lista.vb</DependentUpon>
     </Compile>
@@ -2006,9 +1888,7 @@
     <Compile Include="03 Sistemas\Despachos\Frm_Despacho_Lista.designer.vb">
       <DependentUpon>Frm_Despacho_Lista.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Despachos\Frm_Despacho_Lista.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Despachos\Frm_Despacho_Lista.vb" />
     <Compile Include="03 Sistemas\Despachos\Frm_Despacho_Ordenes.Designer.vb">
       <DependentUpon>Frm_Despacho_Ordenes.vb</DependentUpon>
     </Compile>
@@ -2032,9 +1912,7 @@
     <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_PorOT.Designer.vb">
       <DependentUpon>Frm_ImpBarras_PorOT.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_PorOT.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_PorOT.vb" />
     <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_Tarja.Designer.vb">
       <DependentUpon>Frm_ImpBarras_Tarja.vb</DependentUpon>
     </Compile>
@@ -2087,9 +1965,7 @@
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Informes Especiales\Frm_Inf_Ventas_CumplClientes.Designer.vb">
       <DependentUpon>Frm_Inf_Ventas_CumplClientes.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Informes Especiales\Frm_Inf_Ventas_CumplClientes.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Informes Especiales\Frm_Inf_Ventas_CumplClientes.vb" />
     <Compile Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Crear_Guias_De_Ajuste_De_Stock.Designer.vb">
       <DependentUpon>Frm_Crear_Guias_De_Ajuste_De_Stock.vb</DependentUpon>
     </Compile>
@@ -2105,15 +1981,11 @@
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_CrearContador.Designer.vb">
       <DependentUpon>Frm_CrearContador.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_CrearContador.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Contadores\Frm_CrearContador.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Parejas\Frm_Parejas.Designer.vb">
       <DependentUpon>Frm_Parejas.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Parejas\Frm_Parejas.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Parejas\Frm_Parejas.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Parejas\Frm_Parejas_Crear.Designer.vb">
       <DependentUpon>Frm_Parejas_Crear.vb</DependentUpon>
     </Compile>
@@ -2123,9 +1995,7 @@
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Parejas\Frm_Parejas_Plan.Designer.vb">
       <DependentUpon>Frm_Parejas_Plan.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Parejas\Frm_Parejas_Plan.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Parejas\Frm_Parejas_Plan.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Plan\Frm_Plan.Designer.vb">
       <DependentUpon>Frm_Plan.vb</DependentUpon>
     </Compile>
@@ -2141,9 +2011,7 @@
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Ctrl_Inventario.Designer.vb">
       <DependentUpon>Frm_Inv_Ctrl_Inventario.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Ctrl_Inventario.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Frm_Inv_Ctrl_Inventario.vb" />
     <Compile Include="03 Sistemas\Lector de huellas\Frm_Huellas_Menu.Designer.vb">
       <DependentUpon>Frm_Huellas_Menu.vb</DependentUpon>
     </Compile>
@@ -2195,15 +2063,11 @@
     <Compile Include="03 Sistemas\Patentes rvm\Frm_Patentes_rvm.Designer.vb">
       <DependentUpon>Frm_Patentes_rvm.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Patentes rvm\Frm_Patentes_rvm.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Patentes rvm\Frm_Patentes_rvm.vb" />
     <Compile Include="03 Sistemas\Pockey-Pc\Frm_Pocket_Dispositivos.Designer.vb">
       <DependentUpon>Frm_Pocket_Dispositivos.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Pockey-Pc\Frm_Pocket_Dispositivos.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Pockey-Pc\Frm_Pocket_Dispositivos.vb" />
     <Compile Include="03 Sistemas\Pockey-Pc\Frm_Pocket_Equipos.Designer.vb">
       <DependentUpon>Frm_Pocket_Equipos.vb</DependentUpon>
     </Compile>
@@ -2219,9 +2083,7 @@
     <Compile Include="03 Sistemas\C.R. Negocios\Autorizacion comite\Frm_SolCredito_Autorizar_Formulario.Designer.vb">
       <DependentUpon>Frm_SolCredito_Autorizar_Formulario.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\C.R. Negocios\Autorizacion comite\Frm_SolCredito_Autorizar_Formulario.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\C.R. Negocios\Autorizacion comite\Frm_SolCredito_Autorizar_Formulario.vb" />
     <Compile Include="03 Sistemas\C.R. Negocios\Configuracion\DsNegocioCr.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2253,9 +2115,7 @@
     <Compile Include="03 Sistemas\C.R. Negocios\Formulario\Frm_SolCredito_File_Attach.Designer.vb">
       <DependentUpon>Frm_SolCredito_File_Attach.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\C.R. Negocios\Formulario\Frm_SolCredito_File_Attach.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\C.R. Negocios\Formulario\Frm_SolCredito_File_Attach.vb" />
     <Compile Include="03 Sistemas\C.R. Negocios\Formulario\Frm_SolCredito_Ingreso  .Designer.vb">
       <DependentUpon>Frm_SolCredito_Ingreso  .vb</DependentUpon>
     </Compile>
@@ -2271,15 +2131,11 @@
     <Compile Include="03 Sistemas\C.R. Negocios\Formulario\Frm_SolCredito_Observaciones_Rtf.Designer.vb">
       <DependentUpon>Frm_SolCredito_Observaciones_Rtf.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\C.R. Negocios\Formulario\Frm_SolCredito_Observaciones_Rtf.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\C.R. Negocios\Formulario\Frm_SolCredito_Observaciones_Rtf.vb" />
     <Compile Include="03 Sistemas\C.R. Negocios\Formulario\Frm_SolCredito_Participantes.Designer.vb">
       <DependentUpon>Frm_SolCredito_Participantes.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\C.R. Negocios\Formulario\Frm_SolCredito_Participantes.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\C.R. Negocios\Formulario\Frm_SolCredito_Participantes.vb" />
     <Compile Include="03 Sistemas\C.R. Negocios\Formulario\Recursos\Archivos\Recursos_Negocios.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2300,15 +2156,11 @@
     <Compile Include="03 Sistemas\Lector de huellas\SDK Lector de huellas ZKTeco ZK4500\Registrar Verificar\Frm_Huella_Identificar.Designer.vb">
       <DependentUpon>Frm_Huella_Identificar.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Lector de huellas\SDK Lector de huellas ZKTeco ZK4500\Registrar Verificar\Frm_Huella_Identificar.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Lector de huellas\SDK Lector de huellas ZKTeco ZK4500\Registrar Verificar\Frm_Huella_Identificar.vb" />
     <Compile Include="03 Sistemas\Lector de huellas\SDK Lector de huellas ZKTeco ZK4500\Frm_Lector_Huellas_ZK4500.Designer.vb">
       <DependentUpon>Frm_Lector_Huellas_ZK4500.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Lector de huellas\SDK Lector de huellas ZKTeco ZK4500\Frm_Lector_Huellas_ZK4500.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Lector de huellas\SDK Lector de huellas ZKTeco ZK4500\Frm_Lector_Huellas_ZK4500.vb" />
     <Compile Include="03 Sistemas\Notificaciones\Recursos_Notif.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2371,21 +2223,15 @@
     <Compile Include="03 Sistemas\Autoconsultas\Saldos de clientes\Frm_02_AutoconsultaSaldo.Designer.vb">
       <DependentUpon>Frm_02_AutoconsultaSaldo.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Autoconsultas\Saldos de clientes\Frm_02_AutoconsultaSaldo.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Autoconsultas\Saldos de clientes\Frm_02_AutoconsultaSaldo.vb" />
     <Compile Include="03 Sistemas\Autoconsultas\Saldos de clientes\Frm_03_AutoconsultaSaldo.Designer.vb">
       <DependentUpon>Frm_03_AutoconsultaSaldo.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Autoconsultas\Saldos de clientes\Frm_03_AutoconsultaSaldo.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Autoconsultas\Saldos de clientes\Frm_03_AutoconsultaSaldo.vb" />
     <Compile Include="03 Sistemas\Produccion\Avances por OT\Frm_Inf_Prod_Avance_OT.Designer.vb">
       <DependentUpon>Frm_Inf_Prod_Avance_OT.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Produccion\Avances por OT\Frm_Inf_Prod_Avance_OT.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Produccion\Avances por OT\Frm_Inf_Prod_Avance_OT.vb" />
     <Compile Include="03 Sistemas\Produccion\Avances por OT\Frm_Proceso_Por_Operaciones.designer.vb">
       <DependentUpon>Frm_Proceso_Por_Operaciones.vb</DependentUpon>
     </Compile>
@@ -2400,9 +2246,7 @@
     <Compile Include="03 Sistemas\Puntos Venta\Frm_InformePtosClientes.Designer.vb">
       <DependentUpon>Frm_InformePtosClientes.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Puntos Venta\Frm_InformePtosClientes.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Puntos Venta\Frm_InformePtosClientes.vb" />
     <Compile Include="03 Sistemas\Puntos Venta\Frm_UsarPuntos.Designer.vb">
       <DependentUpon>Frm_UsarPuntos.vb</DependentUpon>
     </Compile>
@@ -2437,9 +2281,7 @@
     <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Operaciones\Frm_St_OperacionesCrear.Designer.vb">
       <DependentUpon>Frm_St_OperacionesCrear.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Operaciones\Frm_St_OperacionesCrear.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Recetas\Operaciones\Frm_St_OperacionesCrear.vb" />
     <Compile Include="03 Sistemas\Servicio Tecnico\Estados\Frm_St_Estado_05_Reparacion2.Designer.vb">
       <DependentUpon>Frm_St_Estado_05_Reparacion2.vb</DependentUpon>
     </Compile>
@@ -2480,9 +2322,7 @@
     <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.Designer.vb">
       <DependentUpon>Frm_St_EncIngreso.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Ingreso Varios\Frm_St_EncIngreso.vb" />
     <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Cl_Stmp.vb" />
     <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Clase\Recursos\Recursos_WmsSgem.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -2498,9 +2338,7 @@
     <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.Designer.vb">
       <DependentUpon>Frm_Stmp_IncNVVPicking.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_IncNVVPicking.vb" />
     <Compile Include="03 Sistemas\Sgem EntregaMercaderia\Frm_Stmp_ListadoXRutas.Designer.vb">
       <DependentUpon>Frm_Stmp_ListadoXRutas.vb</DependentUpon>
     </Compile>
@@ -2580,9 +2418,7 @@
     <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Frm_Ubicaciones_Buscar.Designer.vb">
       <DependentUpon>Frm_Ubicaciones_Buscar.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Frm_Ubicaciones_Buscar.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Frm_Ubicaciones_Buscar.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Ubicaciones\Ubicaciones productos\Frm_01_UbicXpro.Designer.vb">
       <DependentUpon>Frm_01_UbicXpro.vb</DependentUpon>
     </Compile>
@@ -2598,9 +2434,7 @@
     <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Ubicaciones\Ubicaciones productos\Frm_AsociarUbicXprod.Designer.vb">
       <DependentUpon>Frm_AsociarUbicXprod.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Ubicaciones\Ubicaciones productos\Frm_AsociarUbicXprod.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Mapa\Ubicaciones\Ubicaciones\Ubicaciones productos\Frm_AsociarUbicXprod.vb" />
     <Compile Include="03 Sistemas\SQL2Excel\Cl_SQL2Query.vb" />
     <Compile Include="03 Sistemas\Tesoreria\CashDro\Formularios\Cl_Pago_Cashdro.vb" />
     <Compile Include="03 Sistemas\Tesoreria\CashDro\Formularios\Formas de Pago\Frm_Cashdro_Pago_Efectivo_y_Tarjeta.Designer.vb">
@@ -2653,22 +2487,16 @@
     <Compile Include="03 Sistemas\Tesoreria\Sis. Caja\Frm_Pagos_Agregar_Cte_Maeencta.Designer.vb">
       <DependentUpon>Frm_Pagos_Agregar_Cte_Maeencta.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Tesoreria\Sis. Caja\Frm_Pagos_Agregar_Cte_Maeencta.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Tesoreria\Sis. Caja\Frm_Pagos_Agregar_Cte_Maeencta.vb" />
     <Compile Include="03 Sistemas\Tesoreria\Teneduria\Frm_Teneduria_CtaCteEnt.Designer.vb">
       <DependentUpon>Frm_Teneduria_CtaCteEnt.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Tesoreria\Teneduria\Frm_Teneduria_CtaCteEnt.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Tesoreria\Teneduria\Frm_Teneduria_CtaCteEnt.vb" />
     <Compile Include="03 Sistemas\Tickets\Cl_Tickets.vb" />
     <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Agentes.Designer.vb">
       <DependentUpon>Frm_Tickets_Agentes.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Agentes.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Agentes.vb" />
     <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Areas.Designer.vb">
       <DependentUpon>Frm_Tickets_Areas.vb</DependentUpon>
     </Compile>
@@ -2678,9 +2506,7 @@
     <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Grupos.Designer.vb">
       <DependentUpon>Frm_Tickets_Grupos.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Grupos.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Grupos.vb" />
     <Compile Include="03 Sistemas\Tickets\Configuracion\Frm_Tickets_Tipos.Designer.vb">
       <DependentUpon>Frm_Tickets_Tipos.vb</DependentUpon>
     </Compile>
@@ -2738,9 +2564,7 @@
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Respuesta.Designer.vb">
       <DependentUpon>Frm_Tickets_Respuesta.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Respuesta.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Respuesta.vb" />
     <Compile Include="03 Sistemas\Tickets\Frm_Tickets_Seguimiento.Designer.vb">
       <DependentUpon>Frm_Tickets_Seguimiento.vb</DependentUpon>
     </Compile>
@@ -2779,9 +2603,7 @@
     <Compile Include="03 Sistemas\Demonio automatico\Frm_Demonio_04_Conf_Impr_X_Funcionarios.Designer.vb">
       <DependentUpon>Frm_Demonio_04_Conf_Impr_X_Funcionarios.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Demonio automatico\Frm_Demonio_04_Conf_Impr_X_Funcionarios.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Demonio automatico\Frm_Demonio_04_Conf_Impr_X_Funcionarios.vb" />
     <Compile Include="03 Sistemas\Demonio automatico\Procedimientos\Ds_Config_Picking.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2829,9 +2651,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Configuración de formato\Frm_Formatos_Numericos.Designer.vb">
       <DependentUpon>Frm_Formatos_Numericos.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Configuración de formato\Frm_Formatos_Numericos.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Configuración de formato\Frm_Formatos_Numericos.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Configuración de formato\Recursos\Recursos_Formato_Documento.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2846,9 +2666,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Configuración de formato\Frm_Formato_Diseno_Encabezado.Designer.vb">
       <DependentUpon>Frm_Formato_Diseno_Encabezado.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Configuración de formato\Frm_Formato_Diseno_Encabezado.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Configuración de formato\Frm_Formato_Diseno_Encabezado.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Configuración de formato\Frm_ImpresionDoc_Configuracion.Designer.vb">
       <DependentUpon>Frm_ImpresionDoc_Configuracion.vb</DependentUpon>
     </Compile>
@@ -2870,15 +2688,11 @@
     <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Frm_ImpresionDoc_Lista.Designer.vb">
       <DependentUpon>Frm_ImpresionDoc_Lista.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Frm_ImpresionDoc_Lista.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Frm_ImpresionDoc_Lista.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Funciones\Frm_Formato_Sel_Funciones.Designer.vb">
       <DependentUpon>Frm_Formato_Sel_Funciones.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Funciones\Frm_Formato_Sel_Funciones.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\11 Formatos de documentos\Formato de documento\Funciones\Frm_Formato_Sel_Funciones.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Diseño\Clases\Clas_Formato_Herramientas_Mapa.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Diseño\Hijo\Frm_Formulario_Diseno_Mapa_Crear_Sector.Designer.vb">
       <DependentUpon>Frm_Formulario_Diseno_Mapa_Crear_Sector.vb</DependentUpon>
@@ -2901,9 +2715,7 @@
     <Compile Include="03 Sistemas\Sistema WMS\Mapa\Frm_Mapa_Diseno_Elementos.Designer.vb">
       <DependentUpon>Frm_Mapa_Diseno_Elementos.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Sistema WMS\Mapa\Frm_Mapa_Diseno_Elementos.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Mapa\Frm_Mapa_Diseno_Elementos.vb" />
     <Compile Include="03 Sistemas\Sistema WMS\Mapa\Frm_Mapa_Encabezado.Designer.vb">
       <DependentUpon>Frm_Mapa_Encabezado.vb</DependentUpon>
     </Compile>
@@ -2948,9 +2760,7 @@
     <Compile Include="03 Sistemas\Impresión de Barras\Creacion de barras\Frm_ImpBarras_ListaEtiquetas.Designer.vb">
       <DependentUpon>Frm_ImpBarras_ListaEtiquetas.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Impresión de Barras\Creacion de barras\Frm_ImpBarras_ListaEtiquetas.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Impresión de Barras\Creacion de barras\Frm_ImpBarras_ListaEtiquetas.vb" />
     <Compile Include="03 Sistemas\Impresión de Barras\Imprimir codigos de barra\Frm_ImpBarras_PorDocumento.Designer.vb">
       <DependentUpon>Frm_ImpBarras_PorDocumento.vb</DependentUpon>
     </Compile>
@@ -3061,9 +2871,7 @@
     <Compile Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Frm_Inf_Vencimientos_Mes.Designer.vb">
       <DependentUpon>Frm_Inf_Vencimientos_Mes.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Frm_Inf_Vencimientos_Mes.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Frm_Inf_Vencimientos_Mes.vb" />
     <Compile Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Frm_Inf_Vencimientos_Mes_Detalle_Diario.Designer.vb">
       <DependentUpon>Frm_Inf_Vencimientos_Mes_Detalle_Diario.vb</DependentUpon>
     </Compile>
@@ -3101,9 +2909,7 @@
     <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\02 Compromisos No Despachados\Frm_Informe_Compr_No_Despachados.Designer.vb">
       <DependentUpon>Frm_Informe_Compr_No_Despachados.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\02 Compromisos No Despachados\Frm_Informe_Compr_No_Despachados.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\02 Compromisos No Despachados\Frm_Informe_Compr_No_Despachados.vb" />
     <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\03 Proximas Recepciones\Frm_Informe_Proximas_Recepiones.Designer.vb">
       <DependentUpon>Frm_Informe_Proximas_Recepiones.vb</DependentUpon>
     </Compile>
@@ -3132,9 +2938,7 @@
     <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos.Designer.vb">
       <DependentUpon>Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos.vb" />
     <Compile Include="03 Sistemas\Informes\Stock\Comp No Despachados y Proximas Recepciones\Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Entidades_Documento_X_Productos.Designer.vb">
       <DependentUpon>Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Entidades_Documento_X_Productos.vb</DependentUpon>
     </Compile>
@@ -3144,15 +2948,11 @@
     <Compile Include="03 Sistemas\Informes\Stock\Informe valorizado a una fecha\Frm_Informe_Composicion_Stock.Designer.vb">
       <DependentUpon>Frm_Informe_Composicion_Stock.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Stock\Informe valorizado a una fecha\Frm_Informe_Composicion_Stock.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Stock\Informe valorizado a una fecha\Frm_Informe_Composicion_Stock.vb" />
     <Compile Include="03 Sistemas\Informes\Stock\Informe valorizado a una fecha\Frm_Informe_Composicion_Stock_X_Productos.Designer.vb">
       <DependentUpon>Frm_Informe_Composicion_Stock_X_Productos.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Stock\Informe valorizado a una fecha\Frm_Informe_Composicion_Stock_X_Productos.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Stock\Informe valorizado a una fecha\Frm_Informe_Composicion_Stock_X_Productos.vb" />
     <Compile Include="03 Sistemas\Informes\Stock\Informe valorizado a una fecha\Frm_Informe_Stock_Valorizado.Designer.vb">
       <DependentUpon>Frm_Informe_Stock_Valorizado.vb</DependentUpon>
     </Compile>
@@ -3184,21 +2984,15 @@
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Sub Informes\Graficos\Frm_Inf_Ventas_Linea_Tiempo.Designer.vb">
       <DependentUpon>Frm_Inf_Ventas_Linea_Tiempo.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Sub Informes\Graficos\Frm_Inf_Ventas_Linea_Tiempo.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Sub Informes\Graficos\Frm_Inf_Ventas_Linea_Tiempo.vb" />
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe On Line\Configuracion informe\Frm_Informe_Gerencia_On_Line_Filtros.Designer.vb">
       <DependentUpon>Frm_Informe_Gerencia_On_Line_Filtros.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe On Line\Configuracion informe\Frm_Informe_Gerencia_On_Line_Filtros.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe On Line\Configuracion informe\Frm_Informe_Gerencia_On_Line_Filtros.vb" />
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe On Line\Configuracion informe\Frm_Seleccion_Empresas.Designer.vb">
       <DependentUpon>Frm_Seleccion_Empresas.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe On Line\Configuracion informe\Frm_Seleccion_Empresas.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe On Line\Configuracion informe\Frm_Seleccion_Empresas.vb" />
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe On Line\Data\Ds_Inf_Ventas_OnLine.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3224,9 +3018,7 @@
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Frm_Inf_Ventas_X_Periodo_Cubo.Designer.vb">
       <DependentUpon>Frm_Inf_Ventas_X_Periodo_Cubo.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Frm_Inf_Ventas_X_Periodo_Cubo.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Frm_Inf_Ventas_X_Periodo_Cubo.vb" />
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Sub Informes\Frm_Inf_Ventas_X_Periodo_Graficos.Designer.vb">
       <DependentUpon>Frm_Inf_Ventas_X_Periodo_Graficos.vb</DependentUpon>
     </Compile>
@@ -3236,9 +3028,7 @@
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Sub Informes\Frm_Inf_Ventas_X_Periodo_Productos_Vs_Rangos_Venta.Designer.vb">
       <DependentUpon>Frm_Inf_Ventas_X_Periodo_Productos_Vs_Rangos_Venta.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Sub Informes\Frm_Inf_Ventas_X_Periodo_Productos_Vs_Rangos_Venta.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Sub Informes\Frm_Inf_Ventas_X_Periodo_Productos_Vs_Rangos_Venta.vb" />
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Sub Informes\Frm_Inf_Ventas_X_Periodo_Proyeccion.Designer.vb">
       <DependentUpon>Frm_Inf_Ventas_X_Periodo_Proyeccion.vb</DependentUpon>
     </Compile>
@@ -3254,9 +3044,7 @@
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Sub Informes\Frm_Inf_Ventas_X_Periodo_Sub_Informes_02_Mensual.Designer.vb">
       <DependentUpon>Frm_Inf_Ventas_X_Periodo_Sub_Informes_02_Mensual.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Sub Informes\Frm_Inf_Ventas_X_Periodo_Sub_Informes_02_Mensual.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Sub Informes\Frm_Inf_Ventas_X_Periodo_Sub_Informes_02_Mensual.vb" />
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Formularios\Sub Informes\Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid.Designer.vb">
       <DependentUpon>Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid.vb</DependentUpon>
     </Compile>
@@ -3305,9 +3093,7 @@
     <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Ventas por vendedor\Formularios\Frm_Inf_Ventas_X_Vendedor_03.Designer.vb">
       <DependentUpon>Frm_Inf_Ventas_X_Vendedor_03.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Ventas por vendedor\Formularios\Frm_Inf_Ventas_X_Vendedor_03.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Ventas por vendedor\Formularios\Frm_Inf_Ventas_X_Vendedor_03.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Class_Genera_DTE_RdBk.vb" />
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Clas_Arbol_Asociaciones.vb" />
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_05_Busqueda.Designer.vb">
@@ -3319,21 +3105,15 @@
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_05_Crear_Nueva_Raiz.Designer.vb">
       <DependentUpon>Frm_Arbol_Asociacion_05_Crear_Nueva_Raiz.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_05_Crear_Nueva_Raiz.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_05_Crear_Nueva_Raiz.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documento_Pagos.Designer.vb">
       <DependentUpon>Frm_Ver_Documento_Pagos.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documento_Pagos.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\02 Ver Documento\Frm_Ver_Documento_Pagos.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Cantidades_Ud_Disintas.Designer.vb">
       <DependentUpon>Frm_Cantidades_Ud_Disintas.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Cantidades_Ud_Disintas.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Cantidades_Ud_Disintas.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Cambiar_Doc_Venta.Designer.vb">
       <DependentUpon>Frm_Formulario_Cambiar_Doc_Venta.vb</DependentUpon>
     </Compile>
@@ -3355,27 +3135,19 @@
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Potencia.Designer.vb">
       <DependentUpon>Frm_Formulario_Potencia.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Potencia.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Potencia.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Stand_By.Designer.vb">
       <DependentUpon>Frm_Formulario_Stand_By.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Stand_By.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Frm_Formulario_Stand_By.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Wms\Frm_Formulario_Stock_Desde_WMS_Seriados.Designer.vb">
       <DependentUpon>Frm_Formulario_Stock_Desde_WMS_Seriados.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Wms\Frm_Formulario_Stock_Desde_WMS_Seriados.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Wms\Frm_Formulario_Stock_Desde_WMS_Seriados.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Frm_Formulario_Documento.Designer.vb">
       <DependentUpon>Frm_Formulario_Documento.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Frm_Formulario_Documento.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Frm_Formulario_Documento.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\08 Cerrar documento de compromiso\Clas_Cerrar_Documento.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\08 Cerrar documento de compromiso\Frm_Cerrar_Abrir_Documentos.Designer.vb">
       <DependentUpon>Frm_Cerrar_Abrir_Documentos.vb</DependentUpon>
@@ -3431,9 +3203,7 @@
     <Compile Include="03 Sistemas\Tesoreria\CashDro\Formularios\Configuracion CashDro\Test Pruebas CashDro\Frm_Prubeas_Transbank.Designer.vb">
       <DependentUpon>Frm_Prubeas_Transbank.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Tesoreria\CashDro\Formularios\Configuracion CashDro\Test Pruebas CashDro\Frm_Prubeas_Transbank.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Tesoreria\CashDro\Formularios\Configuracion CashDro\Test Pruebas CashDro\Frm_Prubeas_Transbank.vb" />
     <Compile Include="03 Sistemas\Tesoreria\CashDro\Formularios\Formas de Pago\Frm_Cashdro_Pago_Nota_de_credito.Designer.vb">
       <DependentUpon>Frm_Cashdro_Pago_Nota_de_credito.vb</DependentUpon>
     </Compile>
@@ -3518,9 +3288,7 @@
     <Compile Include="03 Sistemas\Tesoreria\Frm_Seleccionar_Emisor_Doc_Pago.Designer.vb">
       <DependentUpon>Frm_Seleccionar_Emisor_Doc_Pago.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Tesoreria\Frm_Seleccionar_Emisor_Doc_Pago.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Tesoreria\Frm_Seleccionar_Emisor_Doc_Pago.vb" />
     <Compile Include="03 Sistemas\Tesoreria\Pagos\Clas_Pagar.vb" />
     <Compile Include="03 Sistemas\Tesoreria\Reparar Maeven\Frm_Reparar_Maeven.Designer.vb">
       <DependentUpon>Frm_Reparar_Maeven.vb</DependentUpon>
@@ -3630,9 +3398,7 @@
     <Compile Include="03 Sistemas\Tesoreria\Teneduria\Frm_Tenerduria_Buscar_Documento_Pago.Designer.vb">
       <DependentUpon>Frm_Tenerduria_Buscar_Documento_Pago.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Tesoreria\Teneduria\Frm_Tenerduria_Buscar_Documento_Pago.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Tesoreria\Teneduria\Frm_Tenerduria_Buscar_Documento_Pago.vb" />
     <Compile Include="03 Sistemas\Tesoreria\Teneduria\Recursos\Recursos_Teneduria_Pagos.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -3674,9 +3440,7 @@
     <Compile Include="03 Sistemas\Compras\Revisar Compras Vs SII\Frm_Conf_Importar_Compras_SII.Designer.vb">
       <DependentUpon>Frm_Conf_Importar_Compras_SII.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Compras\Revisar Compras Vs SII\Frm_Conf_Importar_Compras_SII.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Compras\Revisar Compras Vs SII\Frm_Conf_Importar_Compras_SII.vb" />
     <Compile Include="03 Sistemas\Compras\Revisar Compras Vs SII\Frm_Importar_Compras_SII.Designer.vb">
       <DependentUpon>Frm_Importar_Compras_SII.vb</DependentUpon>
     </Compile>
@@ -3697,9 +3461,7 @@
     <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Lista_Tecnicos_Talleres.Designer.vb">
       <DependentUpon>Frm_St_Lista_Tecnicos_Talleres.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Lista_Tecnicos_Talleres.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Lista_Tecnicos_Talleres.vb" />
     <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Mant_Tecnicos_Talleres.Designer.vb">
       <DependentUpon>Frm_St_Mant_Tecnicos_Talleres.vb</DependentUpon>
     </Compile>
@@ -3709,9 +3471,7 @@
     <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Notas_Reportes.Designer.vb">
       <DependentUpon>Frm_St_Notas_Reportes.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Notas_Reportes.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Configuracion\Frm_St_Notas_Reportes.vb" />
     <Compile Include="03 Sistemas\Servicio Tecnico\Estados\Frm_St_Estado_01_Ingreso_Check_In.Designer.vb">
       <DependentUpon>Frm_St_Estado_01_Ingreso_Check_In.vb</DependentUpon>
     </Compile>
@@ -3721,15 +3481,11 @@
     <Compile Include="03 Sistemas\Servicio Tecnico\Estados\Frm_St_Estado_02_Asignacion.Designer.vb">
       <DependentUpon>Frm_St_Estado_02_Asignacion.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Servicio Tecnico\Estados\Frm_St_Estado_02_Asignacion.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Estados\Frm_St_Estado_02_Asignacion.vb" />
     <Compile Include="03 Sistemas\Servicio Tecnico\Estados\Frm_St_Estado_03_Presupuesto.Designer.vb">
       <DependentUpon>Frm_St_Estado_03_Presupuesto.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Servicio Tecnico\Estados\Frm_St_Estado_03_Presupuesto.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Estados\Frm_St_Estado_03_Presupuesto.vb" />
     <Compile Include="03 Sistemas\Servicio Tecnico\Estados\Frm_St_Estado_04_Cotizaciones.Designer.vb">
       <DependentUpon>Frm_St_Estado_04_Cotizaciones.vb</DependentUpon>
     </Compile>
@@ -3757,9 +3513,7 @@
     <Compile Include="03 Sistemas\Servicio Tecnico\Frm_St_Documento.Designer.vb">
       <DependentUpon>Frm_St_Documento.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Servicio Tecnico\Frm_St_Documento.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Servicio Tecnico\Frm_St_Documento.vb" />
     <Compile Include="03 Sistemas\Servicio Tecnico\Frm_St_Documento_Dir_Serv_Domicilio.Designer.vb">
       <DependentUpon>Frm_St_Documento_Dir_Serv_Domicilio.vb</DependentUpon>
     </Compile>
@@ -3929,28 +3683,20 @@
     <Compile Include="02 Procesos Bakapp y configuracion\03 Conexion Empresas\Frm_ConexionBD.Designer.vb">
       <DependentUpon>Frm_ConexionBD.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\03 Conexion Empresas\Frm_ConexionBD.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\03 Conexion Empresas\Frm_ConexionBD.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Estacion_Numeracion_Doc.Designer.vb">
       <DependentUpon>Frm_Configuracion_Estacion_Numeracion_Doc.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Estacion_Numeracion_Doc.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Configuracion_Estacion_Numeracion_Doc.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Seleccionar_Formato.Designer.vb">
       <DependentUpon>Frm_Seleccionar_Formato.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Seleccionar_Formato.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Frm_Seleccionar_Formato.vb" />
     <Compile Include="01 Procesos  compartidos\Exportar Excel\ExportarJetExcel.vb" />
     <Compile Include="01 Procesos  compartidos\Exportar Excel\Frm_Exportar_Excel.Designer.vb">
       <DependentUpon>Frm_Exportar_Excel.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Exportar Excel\Frm_Exportar_Excel.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Exportar Excel\Frm_Exportar_Excel.vb" />
     <Compile Include="01 Procesos  compartidos\Exportar Excel\Old\Frm_ExportarJetExcel.Designer.vb">
       <DependentUpon>Frm_ExportarJetExcel.vb</DependentUpon>
     </Compile>
@@ -4073,9 +3819,7 @@
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Form Tabla de paso\Frm_CargarTablasDePAso.designer.vb">
       <DependentUpon>Frm_CargarTablasDePAso.vb</DependentUpon>
     </Compile>
-    <Compile Include="999 Funciones, Clases y Datos\Formularios\Form Tabla de paso\Frm_CargarTablasDePAso.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Form Tabla de paso\Frm_CargarTablasDePAso.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Entidades Excluidas\Frm_EntExcluidas.Designer.vb">
       <DependentUpon>Frm_EntExcluidas.vb</DependentUpon>
     </Compile>
@@ -4099,9 +3843,7 @@
     <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\01 Ingreso de productos\Frm_01_HojaConteo.Designer.vb">
       <DependentUpon>Frm_01_HojaConteo.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\01 Ingreso de productos\Frm_01_HojaConteo.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\01 Ingreso de productos\Frm_01_HojaConteo.vb" />
     <Compile Include="03 Sistemas\Inventario\Sistema de Inventario\Configuracion\Inventario\Frm_02_Detalle_Producto_Actual.Designer.vb">
       <DependentUpon>Frm_02_Detalle_Producto_Actual.vb</DependentUpon>
     </Compile>
@@ -4142,9 +3884,7 @@
     <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_01_Inventarios.Designer.vb">
       <DependentUpon>Frm_01_Inventarios.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_01_Inventarios.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_01_Inventarios.vb" />
     <Compile Include="03 Sistemas\Inventario\Inventario General\Formularios\03 Parametros\Frm_03_Sectores_Inv.Designer.vb">
       <DependentUpon>Frm_03_Sectores_Inv.vb</DependentUpon>
     </Compile>
@@ -4164,9 +3904,7 @@
     <Compile Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Mt_InvParc_Importar.Designer.vb">
       <DependentUpon>Frm_Mt_InvParc_Importar.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Mt_InvParc_Importar.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Mt_InvParc_Importar.vb" />
     <Compile Include="03 Sistemas\Inventario\Inventario parcializado\Formularios\Frm_Mt_InvParc_NuevoAjuste.Designer.vb">
       <DependentUpon>Frm_Mt_InvParc_NuevoAjuste.vb</DependentUpon>
     </Compile>
@@ -4235,9 +3973,7 @@
     <Compile Include="03 Sistemas\Informes\Ventas\Margenes venta\Frm_InvMargenesDet_.Designer.vb">
       <DependentUpon>Frm_InvMargenesDet_.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\Informes\Ventas\Margenes venta\Frm_InvMargenesDet_.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="03 Sistemas\Informes\Ventas\Margenes venta\Frm_InvMargenesDet_.vb" />
     <Compile Include="03 Sistemas\Informes\Ventas\Margenes venta\Frm_InvMargenes_Grf_Res.Designer.vb">
       <DependentUpon>Frm_InvMargenes_Grf_Res.vb</DependentUpon>
     </Compile>
@@ -4375,9 +4111,7 @@
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_04_Productos_x_class.Designer.vb">
       <DependentUpon>Frm_Arbol_Asociacion_04_Productos_x_class.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_04_Productos_x_class.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_04_Productos_x_class.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\01 Buscar documentos\Frm_BuscarDocumento_Mt.Designer.vb">
       <DependentUpon>Frm_BuscarDocumento_Mt.vb</DependentUpon>
     </Compile>
@@ -4429,9 +4163,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\04 Anotaciones en documentos MEVENTO\Frm_Anotaciones_Ver_Anotaciones.Designer.vb">
       <DependentUpon>Frm_Anotaciones_Ver_Anotaciones.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\04 Anotaciones en documentos MEVENTO\Frm_Anotaciones_Ver_Anotaciones.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\04 Anotaciones en documentos MEVENTO\Frm_Anotaciones_Ver_Anotaciones.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\04 Anotaciones en documentos MEVENTO\Tabla Caracterizaiones TABCARAC\Frm_Anotaciones_Tabuladas_01_Encabezados.Designer.vb">
       <DependentUpon>Frm_Anotaciones_Tabuladas_01_Encabezados.vb</DependentUpon>
     </Compile>
@@ -4465,9 +4197,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\06 Trazabilidad\Recursos\Control_Detalle_Pagos_X_Documento.Designer.vb">
       <DependentUpon>Control_Detalle_Pagos_X_Documento.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\06 Trazabilidad\Recursos\Control_Detalle_Pagos_X_Documento.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\06 Trazabilidad\Recursos\Control_Detalle_Pagos_X_Documento.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\06 Trazabilidad\Recursos\Control_Documento_Pagado.Designer.vb">
       <DependentUpon>Control_Documento_Pagado.vb</DependentUpon>
     </Compile>
@@ -4489,9 +4219,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\06 Trazabilidad\Recursos\Control_Producto.Designer.vb">
       <DependentUpon>Control_Producto.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\06 Trazabilidad\Recursos\Control_Producto.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\06 Trazabilidad\Recursos\Control_Producto.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\Recursos Sql\24_Recursos.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -4518,9 +4246,7 @@
     <Compile Include="01 Procesos  compartidos\Remotas\Frm_Remotas_Revisar_Documentos_En_Espera.Designer.vb">
       <DependentUpon>Frm_Remotas_Revisar_Documentos_En_Espera.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Remotas\Frm_Remotas_Revisar_Documentos_En_Espera.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="01 Procesos  compartidos\Remotas\Frm_Remotas_Revisar_Documentos_En_Espera.vb" />
     <Compile Include="01 Procesos  compartidos\Remotas\Mod_Funciones_Remotas.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Filtro busqueda\Frm_Filtro_Especial_Informes.Designer.vb">
       <DependentUpon>Frm_Filtro_Especial_Informes.vb</DependentUpon>
@@ -4542,15 +4268,11 @@
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Bakapp\Frm_Usuarios_Bk.Designer.vb">
       <DependentUpon>Frm_Usuarios_Bk.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Bakapp\Frm_Usuarios_Bk.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Bakapp\Frm_Usuarios_Bk.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Bakapp\Frm_Usuarios_Bk_Ficha.Designer.vb">
       <DependentUpon>Frm_Usuarios_Bk_Ficha.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Bakapp\Frm_Usuarios_Bk_Ficha.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Bakapp\Frm_Usuarios_Bk_Ficha.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\01 Actualizacion BakApp\Frm_Actualizar_BakApp.Designer.vb">
       <DependentUpon>Frm_Actualizar_BakApp.vb</DependentUpon>
     </Compile>
@@ -4567,9 +4289,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Cntrl_Modalidad_Conf.Designer.vb">
       <DependentUpon>Cntrl_Modalidad_Conf.vb</DependentUpon>
     </Compile>
-    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Cntrl_Modalidad_Conf.vb">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Cntrl_Modalidad_Conf.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\04 Configuracion Modalidades\Sql\Recursos_Configuracion.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -4603,9 +4323,7 @@
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_SeleccionarBodega.Designer.vb">
       <DependentUpon>Frm_SeleccionarBodega.vb</DependentUpon>
     </Compile>
-    <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_SeleccionarBodega.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_SeleccionarBodega.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Seleccionar_1_Regitstro.Designer.vb">
       <DependentUpon>Frm_Seleccionar_1_Regitstro.vb</DependentUpon>
     </Compile>
@@ -4615,22 +4333,16 @@
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Seleccionar_Bodega_Grilla.Designer.vb">
       <DependentUpon>Frm_Seleccionar_Bodega_Grilla.vb</DependentUpon>
     </Compile>
-    <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Seleccionar_Bodega_Grilla.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Seleccionar_Bodega_Grilla.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Seleccionar_Impresoras.Designer.vb">
       <DependentUpon>Frm_Seleccionar_Impresoras.vb</DependentUpon>
     </Compile>
-    <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Seleccionar_Impresoras.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Seleccionar_Impresoras.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Cl_RevVersion.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Validaciones.Designer.vb">
       <DependentUpon>Frm_Validaciones.vb</DependentUpon>
     </Compile>
-    <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Validaciones.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Validaciones.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Entidad\Recursos\Recursos_Entidad.Designer.vb">
       <DependentUpon>Recursos_Entidad.resx</DependentUpon>
       <AutoGen>True</AutoGen>

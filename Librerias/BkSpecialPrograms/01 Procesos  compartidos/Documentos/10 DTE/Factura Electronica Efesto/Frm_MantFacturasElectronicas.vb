@@ -353,6 +353,11 @@ Public Class Frm_MantFacturasElectronicas
         Dim _Filtros As String = _Filtro_Idmaeedo & _Filtro_Entidades & _Filtro_Documentos & _Filtro_Responsables & _Filtro_Sucursales & _Filtro_Estado
 
         Consulta_sql = My.Resources.Recursos_Dte_Hefesto.SQLQuery_Estado_de_avance_de_envios_de_DTE_vs_Trackid
+
+        If _AmbienteCertificacion Then
+            Consulta_sql = Replace(Consulta_sql, "Left Join #Global_BaseBk#Zw_DTE_Documentos", "Inner Join #Global_BaseBk#Zw_DTE_Documentos")
+        End If
+
         Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
         Consulta_sql = Replace(Consulta_sql, "#Filtros#", _Filtros)
 
@@ -362,7 +367,6 @@ Public Class Frm_MantFacturasElectronicas
 
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Desde#", Format(_Cl_MFElec.Fecha_Desde, "yyyyMMdd"))
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Hasta#", Format(_Cl_MFElec.Fecha_Hasta, "yyyyMMdd"))
-
         Consulta_sql = Replace(Consulta_sql, "#AmbienteCertificacion#", _AmbienteCertificacion)
         Consulta_sql = Replace(Consulta_sql, "Where 1 > 0", "Where 1 > 0" & vbCrLf & "And Edo.EMPRESA = '" & Mod_Empresa & "'")
 

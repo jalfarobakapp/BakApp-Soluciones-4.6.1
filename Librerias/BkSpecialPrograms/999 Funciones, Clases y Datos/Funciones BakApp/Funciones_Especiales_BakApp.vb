@@ -6659,7 +6659,9 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Function Fx_EntidadEnGrupoVendedores(_Row_Entidad As DataRow, _CodFuncionario As String) As LsValiciones.Mensajes
+    Function Fx_EntidadEnGrupoVendedores(_Row_Entidad As DataRow,
+                                         _CodFuncionario As String,
+                                         _Revisar_Kofu_Kogru As Boolean) As LsValiciones.Mensajes
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -6681,11 +6683,13 @@ Public Module Crear_Documentos_Desde_Otro
                     _Kogru = "'" & _Kogru & "'"
                 End If
 
-                If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
-                    If String.IsNullOrEmpty(_Kogru) Then
-                        _Kogru = _Kofu_Kogru
-                    Else
-                        _Kogru += "," & _Kofu_Kogru
+                If _Revisar_Kofu_Kogru Then
+                    If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+                        If String.IsNullOrEmpty(_Kogru) Then
+                            _Kogru = _Kofu_Kogru
+                        Else
+                            _Kogru += "," & _Kofu_Kogru
+                        End If
                     End If
                 End If
 
