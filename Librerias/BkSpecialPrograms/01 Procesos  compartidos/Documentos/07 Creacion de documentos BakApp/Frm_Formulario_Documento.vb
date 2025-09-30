@@ -8806,7 +8806,7 @@ Public Class Frm_Formulario_Documento
                 End If
 
 
-                If _Mostrar_Mensaje_Deuda Then
+                    If _Mostrar_Mensaje_Deuda Then
 
                     _Bloqueada = _RowEntidad.Item("BLOQUEADO")
 
@@ -24027,17 +24027,16 @@ Public Class Frm_Formulario_Documento
 
                 End If
 
-                For Each _Fl As DataRow In _TblDetalle.Rows
-
-                    '_Fila.Cells("CodFuncionario").Value = _CodVendedor
-                    '_Fila.Cells("CodVendedor").Value = _CodVendedor
-                    If _Fl.Item("CodVendedor").ToString.Trim <> _RowEntidad.Item("KOFUEN").ToString.Trim Then
-                        If Not Fx_Tiene_Permiso(Me, "Doc00161", FUNCIONARIO, False) Then
-                            Sb_Revisar_Permiso("Doc00161", False, True)
+                If Not String.IsNullOrEmpty(_RowEntidad.Item("KOFUEN").ToString.Trim) Then
+                    For Each _Fl As DataRow In _TblDetalle.Rows
+                        If _Fl.Item("CodVendedor").ToString.Trim <> _RowEntidad.Item("KOFUEN").ToString.Trim Then
+                            If Not Fx_Tiene_Permiso(Me, "Doc00161", FUNCIONARIO, False) Then
+                                Sb_Revisar_Permiso("Doc00161", False, True)
+                            End If
+                            Exit For
                         End If
-                        Exit For
-                    End If
-                Next
+                    Next
+                End If
 
             End If
 

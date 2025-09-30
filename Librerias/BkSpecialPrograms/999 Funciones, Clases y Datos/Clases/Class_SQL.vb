@@ -1,6 +1,5 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
-Imports DevComponents.DotNetBar
 
 Public Class Class_SQL
 

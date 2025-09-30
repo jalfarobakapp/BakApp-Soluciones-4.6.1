@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Threading.Tasks
+Imports DevComponents.DotNetBar
 
 Public Class Frm_BuscarEntidad_Mt
 
@@ -17,6 +18,9 @@ Public Class Frm_BuscarEntidad_Mt
     Dim _VerTeclado As Boolean
 
     Dim _Filtro_Extra As String
+
+    Private _CargandoFechasUltimaVenta As Boolean = False
+    Private _PendienteCargarFechasUltimaVenta As Boolean = False
 
     Public Property Pro_Filtro_Extra() As String
         Get
@@ -111,20 +115,20 @@ Public Class Frm_BuscarEntidad_Mt
         BtnEditarUser.Enabled = False
         BtnEliminarUser.Enabled = False
 
-        Consulta_sql = "SELECT TOP (50) IDMAEEN,KOEN,SUEN,NOKOEN,SIEN,DIEN," &
+        Consulta_sql = "Select Top (50) IDMAEEN,KOEN,SUEN,NOKOEN,SIEN,DIEN," &
                        "Case TIEN " &
                        "When 'A' Then 'Ambos' " &
-                       "When 'P' Then 'Proveedor' When 'C' Then 'Cliente' Else '' End As Tipo_Entidad," & vbCrLf &
-                       "SUBSTRING(LCEN,6,3) As LCosto,SUBSTRING(LVEN,6,3) As LVenta," & vbCrLf &
-                       "Case BLOQUEADO When 1 Then 'SI' Else '' End As Bloqueado_Venta," & vbCrLf &
-                       "Case BLOQENCOM When 1 Then 'SI' Else '' End As Bloqueado_Compra," & vbCrLf &
-                       "Cast('' As Char(3)) As KOFUEN,Cast('' As Varchar(30)) As NOKOFU,Cast(Null As Datetime) As 'FechaUltVnta'" & vbCrLf &
-                       "FROM MAEEN Where 1<0"
+                       "When 'P' Then 'Proveedor' When 'C' Then 'Cliente' Else '' End As Tipo_Entidad" & vbCrLf &
+                       ",SUBSTRING(LCEN,6,3) As LCosto,SUBSTRING(LVEN,6,3) As LVenta" & vbCrLf &
+                       ",Case BLOQUEADO When 1 Then 'SI' Else '' End As Bloqueado_Venta" & vbCrLf &
+                       ",Case BLOQENCOM When 1 Then 'SI' Else '' End As Bloqueado_Compra" & vbCrLf &
+                       ",Cast('' As Char(3)) As KOFUEN,Cast('' As Varchar(30)) As NOKOFU,Cast(Null As Datetime) As 'FechaUltVnta'" & vbCrLf &
+                       ",Cast(0 As Bit) As 'FUVRevisada'" & vbCrLf &
+                       "From MAEEN Where 1<0"
 
         _Tbl_Entidades = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Grilla_Entidades.DataSource = _Tbl_Entidades
-
 
         'Chk_Solo_Clientes_Del_Vendedor.Checked = True
 
@@ -430,6 +434,26 @@ Public Class Frm_BuscarEntidad_Mt
             _Filtro_Entidades = String.Empty
         End If
 
+        'Consulta_sql = "Select Top (50) IDMAEEN,KOEN,SUEN,NOKOEN,SIEN,DIEN," &
+        '               "Case TIEN " &
+        '               "When 'A' Then 'Ambos' " &
+        '               "When 'P' Then 'Proveedor' When 'C' Then 'Cliente' Else '' End As Tipo_Entidad," & vbCrLf &
+        '               "SUBSTRING(LCEN,6,3) As LCosto,SUBSTRING(LVEN,6,3) As LVenta," & vbCrLf &
+        '               "BLOQUEADO,BLOQENCOM," & vbCrLf &
+        '               "Case BLOQUEADO When 1 Then 'SI' Else '' End As Bloqueado_Venta," & vbCrLf &
+        '               "Case BLOQENCOM When 1 Then 'SI' Else '' End As Bloqueado_Compra," & vbCrLf &
+        '               "KOFUEN,Isnull(NOKOFU,'') As NOKOFU," & vbCrLf &
+        '               "(Select Top 1 FEEMLI From MAEDDO d With (Nolock)" &
+        '               "Where d.TIDO In ('GDV','FCV','BLV','FVX') And d.ENDO = KOEN And d.SUENDO = SUEN Order By FEEMLI Desc) As FechaUltVnta" & vbCrLf &
+        '               "From MAEEN With (Nolock)" & vbCrLf &
+        '               "Left Join TABFU Tf On KOFUEN = Tf.KOFU" & vbCrLf &
+        '               "Where KOEN+NOKOEN+SUEN+DIEN LIKE '%" & _Cadena & "%'" & vbCrLf &
+        '               _Condicion_Entidad & vbCrLf &
+        '               _Filtro_Extra & vbCrLf &
+        '               _Filtro_Entidades & vbCrLf &
+        '               _Filtro_Vendedores & vbCrLf &
+        '               "Order by KOEN"
+
         Consulta_sql = "Select Top (50) IDMAEEN,KOEN,SUEN,NOKOEN,SIEN,DIEN," &
                        "Case TIEN " &
                        "When 'A' Then 'Ambos' " &
@@ -438,9 +462,7 @@ Public Class Frm_BuscarEntidad_Mt
                        "BLOQUEADO,BLOQENCOM," & vbCrLf &
                        "Case BLOQUEADO When 1 Then 'SI' Else '' End As Bloqueado_Venta," & vbCrLf &
                        "Case BLOQENCOM When 1 Then 'SI' Else '' End As Bloqueado_Compra," & vbCrLf &
-                       "KOFUEN,Isnull(NOKOFU,'') As NOKOFU," & vbCrLf &
-                       "(Select Top 1 FEEMLI From MAEDDO d " &
-                       "Where d.TIDO In ('GDV','FCV','BLV','FVX') And d.ENDO = KOEN And d.SUENDO = SUEN Order By FEEMLI Desc) As FechaUltVnta" & vbCrLf &
+                       "KOFUEN,Isnull(NOKOFU,'') As NOKOFU" & vbCrLf &
                        "From MAEEN With (Nolock)" & vbCrLf &
                        "Left Join TABFU Tf On KOFUEN = Tf.KOFU" & vbCrLf &
                        "Where KOEN+NOKOEN+SUEN+DIEN LIKE '%" & _Cadena & "%'" & vbCrLf &
@@ -449,6 +471,7 @@ Public Class Frm_BuscarEntidad_Mt
                        _Filtro_Entidades & vbCrLf &
                        _Filtro_Vendedores & vbCrLf &
                        "Order by KOEN"
+
         Dim _Tmp As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tmp.Rows
@@ -456,8 +479,49 @@ Public Class Frm_BuscarEntidad_Mt
         Next
 
         Sb_Formato_Grilla()
+        Sb_Cargar_FechasUltimaVenta_Async()
 
     End Function
+
+    Private Sub Sb_Cargar_FechasUltimaVenta_Async()
+
+        If _CargandoFechasUltimaVenta Then
+            _PendienteCargarFechasUltimaVenta = True
+            Return
+        End If
+
+        Dim _Sql2 As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        _CargandoFechasUltimaVenta = True
+        Task.Run(Sub()
+                     Dim filasNoRevisadas = _Tbl_Entidades.Select("FUVRevisada = 0")
+                     For Each row As DataRow In filasNoRevisadas
+                         Dim koen As String = row("KOEN").ToString()
+                         Dim suen As String = row("SUEN").ToString()
+                         Consulta_sql =
+                            "SELECT TOP 1 FEEMLI FROM MAEDDO WITH (NOLOCK) " &
+                            "WHERE TIDO IN ('GDV','FCV','BLV','FVX') AND ENDO = '" & koen & "' AND SUENDO = '" & suen & "' " &
+                            "ORDER BY FEEMLI DESC"
+                         Dim _Row As DataRow = _Sql2.Fx_Get_DataRow(Consulta_sql)
+                         Dim fechaUltimaVenta As Object = Nothing
+                         If Not IsNothing(_Row) Then
+                             fechaUltimaVenta = _Row.Item("FEEMLI")
+                         End If
+                         Me.Invoke(Sub()
+                                       row("FechaUltVnta") = If(fechaUltimaVenta IsNot Nothing, fechaUltimaVenta, DBNull.Value)
+                                       row("FUVRevisada") = True
+                                       Grilla_Entidades.Refresh()
+                                   End Sub)
+                     Next
+                     Me.Invoke(Sub()
+                                   _CargandoFechasUltimaVenta = False
+                                   If _PendienteCargarFechasUltimaVenta Then
+                                       _PendienteCargarFechasUltimaVenta = False
+                                       Sb_Cargar_FechasUltimaVenta_Async()
+                                   End If
+                               End Sub)
+                 End Sub)
+    End Sub
 
     Private Sub Sb_Nueva_Linea(_Fila As DataRow)
 
@@ -476,7 +540,8 @@ Public Class Frm_BuscarEntidad_Mt
             .Item("Tipo_Entidad") = _Fila.Item("Tipo_Entidad")
             .Item("KOFUEN") = _Fila.Item("KOFUEN")
             .Item("NOKOFU") = _Fila.Item("NOKOFU")
-            .Item("FechaUltVnta") = _Fila.Item("FechaUltVnta")
+            '.Item("FechaUltVnta") = _Fila.Item("FechaUltVnta")
+            .Item("FUVRevisada") = False
 
             _Tbl_Entidades.Rows.Add(NewFila)
 
