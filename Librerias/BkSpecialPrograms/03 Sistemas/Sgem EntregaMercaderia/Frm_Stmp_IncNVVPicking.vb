@@ -133,7 +133,7 @@ Public Class Frm_Stmp_IncNVVPicking
                         "Left Join " & _Global_BaseBk & "Zw_Despachos_Doc Ddd On Ddd.Idrst = Edo.IDMAEEDO And Ddd.Archidrst = 'MAEEDO'" & vbCrLf &
                         "Left Join " & _Global_BaseBk & "Zw_Despachos Den On Den.Id_Despacho = Ddd.Id_Despacho" & vbCrLf &
                         "Where 1 > 0" & vbCrLf &
-                        "And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado Not In ('NULO','NULA') And Empresa = '" & Mod_Empresa & "' And Sucursal = '" & Mod_Sucursal & "')" & vbCrLf &
+                        "And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado Not In ('NULO','NULA') And Empresa = '" & Mod_Empresa & "') -- And Sucursal = '" & Mod_Sucursal & "')" & vbCrLf &
                         _FiltroFechaEmision &
                         _FiltroFechaDespacho &
                         _FiltroEntidad &
@@ -668,6 +668,8 @@ Public Class Frm_Stmp_IncNVVPicking
             Dim _Nudo As String = _Fila.Item("Nudo")
             Dim _Pickear As Boolean = _Fila.Item("EnvPickeo")
             Dim _Facturar As Boolean = _Fila.Item("Facturar")
+            Dim _Empresa As String = _Fila.Item("EMPRESA")
+            Dim _Sucursal As String = _Fila.Item("SUDO")
             Dim _FechaParaFacturar As DateTime
             Dim _PagarAuto As Boolean = Chk_Pagar_Documentos.Checked
             Dim _Idmaedpce_Paga As Integer
@@ -696,8 +698,8 @@ Public Class Frm_Stmp_IncNVVPicking
                                                          _FechaParaFacturar,
                                                          "R",
                                                          False,
-                                                         Mod_Empresa,
-                                                         Mod_Sucursal,
+                                                         _Empresa,
+                                                         _Sucursal,
                                                          FUNCIONARIO,
                                                          _PagarAuto,
                                                          _Idmaedpce_Paga,

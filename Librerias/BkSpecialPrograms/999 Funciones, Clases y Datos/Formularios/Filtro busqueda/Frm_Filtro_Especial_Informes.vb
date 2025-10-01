@@ -944,28 +944,69 @@ Public Class Frm_Filtro_Especial_Informes
 
     End Sub
 
-    Private Sub Txt_Codigo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Codigo.KeyDown
+    'Private Sub Txt_Codigo_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Codigo.KeyDown
 
-        If e.KeyValue = Keys.Enter Then
+    '    'If e.KeyValue = Keys.Enter Then
 
-            Dim _Fl As String
+    '    Dim _Fl As String
 
-            Select Case Cmb_Filtro_Codigo.SelectedValue
-                Case "C" : _Fl = "%{0}%" : Case "E" : _Fl = "{0}%" : Case "T" : _Fl = "%{0}"
-            End Select
+    '    Select Case Cmb_Filtro_Codigo.SelectedValue
+    '        Case "C" : _Fl = "%{0}%" : Case "E" : _Fl = "{0}%" : Case "T" : _Fl = "%{0}"
+    '    End Select
 
-            If String.IsNullOrEmpty(Txt_Codigo.Text.Trim) Then
-                Return
+    '    If String.IsNullOrEmpty(Txt_Codigo.Text.Trim) Then
+    '        'Dim _e As New KeyEventArgs(Keys.Enter)
+    '        'Txt_Descripcion_KeyDown(Txt_Descripcion, _e)
+    '        'If String.IsNullOrEmpty(_Dv.RowFilter) Then
+    '        ' Deshacer todos los filtros de _Dv
+    '        _Dv.RowFilter = String.Empty
+    '        Return
+    '        'End If
+    '    End If
+
+    '    Dim _Codigo As String
+
+    '    If ReemplazarComillaspor Is Nothing Then ReemplazarComillaspor = String.Empty
+    '    _Codigo = Replace(Txt_Codigo.Text, "'", ReemplazarComillaspor).ToString.Trim
+
+    '    _Dv.RowFilter = String.Format("Codigo Like '" & _Fl & "'", _Codigo)
+
+    '    'End If
+
+    'End Sub
+
+    Private Sub Txt_Codigo_TextChanged(sender As Object, e As EventArgs) Handles Txt_Codigo.TextChanged
+
+        If String.IsNullOrEmpty(Txt_Codigo.Text.Trim) Then
+            'Dim _e As New KeyEventArgs(Keys.Enter)
+            'Txt_Descripcion_KeyDown(Txt_Descripcion, _e)
+            If Not String.IsNullOrEmpty(_Dv.RowFilter) Then
+                ' Deshacer todos los filtros de _Dv
+                _Dv.RowFilter = String.Empty
             End If
-
-            Dim _Codigo As String
-
-            If ReemplazarComillaspor Is Nothing Then ReemplazarComillaspor = String.Empty
-            _Codigo = Replace(Txt_Codigo.Text, "'", ReemplazarComillaspor).ToString.Trim
-
-            _Dv.RowFilter = String.Format("Codigo Like '" & _Fl & "'", _Codigo)
-
+            Return
         End If
 
+        Dim _Codigo As String
+
+        If ReemplazarComillaspor Is Nothing Then ReemplazarComillaspor = String.Empty
+        _Codigo = Replace(Txt_Codigo.Text, "'", ReemplazarComillaspor).ToString.Trim
+
+        Dim _Fl As String
+
+        Select Case Cmb_Filtro_Codigo.SelectedValue
+            Case "I"
+                _Fl = _Codigo
+            Case "C"
+                _Fl = "%{0}%"
+            Case "E"
+                _Fl = "{0}%"
+            Case "T"
+                _Fl = "%{0}"
+        End Select
+
+        _Dv.RowFilter = String.Format("Codigo Like '" & _Fl & "'", _Codigo)
+
     End Sub
+
 End Class
