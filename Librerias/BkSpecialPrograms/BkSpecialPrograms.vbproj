@@ -8483,6 +8483,7 @@
     <None Include="03 Sistemas\Informes\Ventas\Margenes venta\Sql\Margenes de venta2.sql" />
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Graficos\Inf Grafico Dinamica Ventas Mensuales Fecha.sql" />
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Informe Ventas x Perido Nivel Detalle Cubo Actualizacion3.sql" />
+    <None Include="03 Sistemas\Inventario\Inventario General\SQL Query\Inv_Invetario_Creae_Foto_Stock2.Sql" />
     <Content Include="03 Sistemas\Inventario\Inventario parcializado\Sql\Foto_StockXProducto.sql" />
     <Content Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Sql\Crear Html Facturas Cobranza.htm" />
     <Content Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Sql\Crear Html Facturas Pago Proveedores.htm" />
