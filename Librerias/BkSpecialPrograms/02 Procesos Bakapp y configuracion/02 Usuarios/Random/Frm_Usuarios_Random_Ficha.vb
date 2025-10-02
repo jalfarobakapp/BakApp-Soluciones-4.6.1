@@ -250,6 +250,18 @@ Public Class Frm_Usuarios_Random_Ficha
 
         End If
 
+        If String.IsNullOrEmpty(Txt_Kogru_Ventas.Text.Trim) AndAlso Fx_Tiene_Permiso("NO00022", Kofu) Then
+
+            Dim _Msg As String = "Este usuario tiene activa la restricción NO00022, que depende de un grupo de vendedores asociado. Como no tiene grupo asignado, la restricción no puede aplicarse correctamente."
+            _Msg = Fx_AjustarTexto(_Msg, 80)
+
+            If MessageBoxEx.Show(Me, _Msg & vbCrLf & vbCrLf & "¿Confirma continuar sin grupo de vendedores?", "Validación",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                Return
+            End If
+
+        End If
+
         If IsNothing(_Row_Tabfu) Then
 
             Kofu = Fx_CrearFuncionario(Txt_Codigo.Text)

@@ -4125,7 +4125,8 @@ Public Class Frm_Formulario_Documento
                                           Optional _Revisar_Permiso_Lista_Precio As Boolean = True,
                                           Optional _Aplicar_Venciminetos As Boolean = True,
                                           Optional _Cambiar_Vendedor As Boolean = True,
-                                          Optional ByRef _No_Puede_Acceder As Boolean = False)
+                                          Optional ByRef _No_Puede_Acceder As Boolean = False,
+                                          Optional _ListaOrigen As String = "")
 
         Dim _Koen As String
         Dim _Suen As String
@@ -4201,9 +4202,12 @@ Public Class Frm_Formulario_Documento
             _Kofuen = FUNCIONARIO
         End If
 
+        ' Si el documento en el formato de la modalidad tiene una lista de precios por defecto, el sistema deja a esa lista en el documento actual
+        ' de lo contrario conserva la lista de precios de la modalidad del sistema, solo para Boletas.
         Dim _ListaPrecioDoc As String = _Row_Formato_Modalidad.Item("ListaPrecioDoc")
 
-        If _Tido = "BLV" And Not String.IsNullOrWhiteSpace(_ListaPrecioDoc) AndAlso Not (_RowEntidad_X_Defecto Is Nothing) AndAlso Not IsDBNull(_RowEntidad_X_Defecto) Then
+        If _Tido = "BLV" AndAlso Not String.IsNullOrWhiteSpace(_ListaPrecioDoc) AndAlso
+            Not (_RowEntidad_X_Defecto Is Nothing) AndAlso Not IsDBNull(_RowEntidad_X_Defecto) Then
 
             Dim _ListaVtaEntidad As String = _Sql.Fx_Trae_Dato("MAEEN", "LVEN",
                                                                "KOEN = '" & _RowEntidad.Item("KOEN") & "' And SUEN = '" & _RowEntidad.Item("SUEN") & "'")
@@ -4219,6 +4223,12 @@ Public Class Frm_Formulario_Documento
                     _Lista = _ListaPrecioDoc
                 End If
 
+            End If
+
+        Else
+
+            If Not String.IsNullOrEmpty(_ListaOrigen) Then
+                _Lista = _ListaOrigen
             End If
 
         End If
@@ -4296,23 +4306,6 @@ Public Class Frm_Formulario_Documento
 
                             End If
 
-                            'If _Cambiar_Vendedor_Doc Then
-
-                            '    If _Post_Venta Then
-
-                            '        _TblEncabezado.Rows(0).Item("CodFuncionario") = _CodVendedor
-
-                            '    End If
-
-                            '    For Each _Fila As DataRow In _TblDetalle.Rows
-
-                            '        _Fila.Item("CodFuncionario") = _CodVendedor
-                            '        _Fila.Item("CodVendedor") = _CodVendedor
-
-                            '    Next
-
-                            'End If
-
                         End If
 
                     End If
@@ -4339,12 +4332,6 @@ Public Class Frm_Formulario_Documento
             Next
 
         End If
-
-        'If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Then
-        '    _Permiso = "Lp-" & _Lista
-        'Else
-        '    _Permiso = "Lc-" & _Lista
-        'End If
 
         _Permiso = "Lp-" & _Lista
 
@@ -4451,8 +4438,6 @@ Public Class Frm_Formulario_Documento
 
                 End If
 
-
-
                 If MessageBoxEx.Show(_Formulario, "Usted no posee permiso para trabajar con esta lista de precios: " & _Lista & Environment.NewLine &
                                   "La lista seguirá siendo:" & _ListaPrecios & Environment.NewLine & Environment.NewLine &
                                   "¿Desea pedir permiso para trabajar con la lista de la entidad?",
@@ -4460,7 +4445,7 @@ Public Class Frm_Formulario_Documento
                                   MessageBoxDefaultButton.Button1, Me.TopMost) = Windows.Forms.DialogResult.Yes Then
 
                     _Cambiar_lista = Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, _Permiso, Nothing, _Koen, _Suen, "TRABAJAR CON LISTA " & _Permiso)
-                    _Cambiar_lista = Fx_Tiene_Permiso(Me, _Permiso, , , , "TRABAJAR CON LISTA " & _Permiso)
+                    '_Cambiar_lista = Fx_Tiene_Permiso(Me, _Permiso, , , , "TRABAJAR CON LISTA " & _Permiso)
 
                     If Not _Cambiar_lista Then
 
@@ -19519,9 +19504,19 @@ Public Class Frm_Formulario_Documento
 
                 End If
 
+                Dim _ListaOrigen As String = String.Empty
+
+                Try
+                    If _Global_Row_Configuracion_General.Item("ConservaListaDocOrigen") Then
+                        _ListaOrigen = _RowMaeedo_Origen.Item("LISACTIVA").ToString.Trim.Replace("TABPP", "")
+                    End If
+                Catch ex As Exception
+                    _ListaOrigen = String.Empty
+                End Try
+
                 Sb_RevListaSuperiosEntidad(True)
 
-                Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, _Revisar_Permiso_Lista_Precio, _Aplicar_Vencimientos, False)
+                Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, _Revisar_Permiso_Lista_Precio, _Aplicar_Vencimientos, False,, _ListaOrigen)
 
                 Sb_RevListaSuperiosEntidad_VtaCurso()
 

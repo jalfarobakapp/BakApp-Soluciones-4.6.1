@@ -253,6 +253,7 @@ Public Class Frm_Configuracion_Gral
             Chk_VendeUD2DesacUD1soloRTUD.Checked = .Item("VendeUD2DesacUD1soloRTUD")
 
             Chk_SelectOtrosClientesPedirPermiso.Checked = .Item("SelectOtrosClientesPedirPermiso")
+            Chk_ConservaListaDocOrigen.Checked = .Item("ConservaListaDocOrigen")
 
         End With
 
@@ -364,6 +365,7 @@ Public Class Frm_Configuracion_Gral
         Chk_RestringirVisualizacionDeDocumentos.Enabled = _Modalidad_General
 
         Chk_SelectOtrosClientesPedirPermiso.Enabled = _Modalidad_General
+        Chk_ConservaListaDocOrigen.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -579,6 +581,7 @@ Public Class Frm_Configuracion_Gral
                        ",Conservar_Vendedor_No_Preguntar = " & Convert.ToInt32(Chk_Conservar_Vendedor_No_Preguntar.Checked) & vbCrLf &
                        ",VendeUD2DesacUD1soloRTUD = " & Convert.ToInt32(Chk_VendeUD2DesacUD1soloRTUD.Checked) & vbCrLf &
                        ",SelectOtrosClientesPedirPermiso = " & Convert.ToInt32(Chk_SelectOtrosClientesPedirPermiso.Checked) & vbCrLf &
+                       ",ConservaListaDocOrigen = " & Convert.ToInt32(Chk_ConservaListaDocOrigen.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
