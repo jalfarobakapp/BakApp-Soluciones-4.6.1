@@ -1556,6 +1556,10 @@ Public Class Menu
 
     Private Sub Btn_FichaFucnionario_Click(sender As Object, e As EventArgs) Handles Btn_FichaFucnionario.Click
 
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "User0005") Then
+            Return
+        End If
+
         Dim _Grabar As Boolean
 
         Dim Fm As New Frm_Usuarios_Random_Ficha(FUNCIONARIO)
@@ -1570,5 +1574,6 @@ Public Class Menu
         End If
 
     End Sub
+
 
 End Class

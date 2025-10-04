@@ -1777,6 +1777,9 @@ Public Class Frm_Demonio_New
 
             If Not _Cl_NVVAutoExterna.Procesando Then
 
+                '_Cl_NVVAutoExterna.Sb_Importar_NVV_Desde_PDARandomMOVIL_NVVAuto()
+                '_Cl_NVVAutoExterna.Sb_Procesar_NVV_Desde_PDARandomMOVIL()
+
                 _Cl_NVVAutoExterna.Sb_Procesar_NVV(Me)
 
                 Dim registro As String = "Tarea ejecutada (Notas de ventas externas) a las: " & DateTime.Now.ToString()

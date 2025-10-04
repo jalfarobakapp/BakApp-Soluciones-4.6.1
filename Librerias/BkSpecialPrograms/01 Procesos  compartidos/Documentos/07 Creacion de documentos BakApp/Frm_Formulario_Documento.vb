@@ -17704,7 +17704,12 @@ Public Class Frm_Formulario_Documento
 
         For Each row As DataGridViewRow In Grilla_Detalle.Rows
 
-            Dim _Nuevo_Producto = row.Cells("Nuevo_Producto")
+            Dim _Nuevo_Producto As Boolean = row.Cells("Nuevo_Producto").Value
+
+            If _Nuevo_Producto Then
+                Continue For ' Salta al siguiente registro si es True
+            End If
+
             Dim _Tipr = NuloPorNro(row.Cells("Tipr").Value, "")
             Dim _Tict = NuloPorNro(row.Cells("Tict").Value, "_")
             Dim _ValVtaStockInf = row.Cells("ValVtaStockInf").Value
@@ -21077,20 +21082,26 @@ Public Class Frm_Formulario_Documento
                                                     Optional _CantLineas As Integer = 0,
                                                     Optional _LblEstatus As Object = Nothing,
                                                     Optional _MarcarGrilla As Boolean = True,
-                                                    Optional _Revisar_Descuentos As Boolean = True)
+                                                    Optional _Revisar_Descuentos As Boolean = True,
+                                                    Optional _FechaRecepcion As Date = Nothing,
+                                                    Optional _Cambiar_Vendedor As Boolean = True)
 
         _TblObservaciones.Rows(0).Item("Observaciones") = _Observaciones
 
-        Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False)
+        Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False, _Cambiar_Vendedor)
 
         If Not String.IsNullOrEmpty(_NroDocumento) Then
             _TblEncabezado.Rows(0).Item("NroDocumento") = _NroDocumento
         End If
 
+        If IsNothing(_FechaRecepcion) Then
+            _FechaRecepcion = _FechaEmision
+        End If
+
         _TblEncabezado.Rows(0).Item("FechaEmision") = _FechaEmision
         _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _FechaEmision
         _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _FechaEmision
-        _TblEncabezado.Rows(0).Item("FechaRecepcion") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("FechaRecepcion") = _FechaRecepcion
         _TblEncabezado.Rows(0).Item("FechaMaxRecepcion") = _FechaEmision
         _TblEncabezado.Rows(0).Item("Cuotas") = 0
         _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
@@ -21198,12 +21209,6 @@ Public Class Frm_Formulario_Documento
                 Catch ex As Exception
 
                 End Try
-
-                'If Not IsNothing(_LblEstatus) Then
-                '    System.Windows.Forms.Application.DoEvents()
-                '    _LblEstatus.Text = "Producto: " & _Codigo.ToString.Trim & ", " & _New_Fila.Cells("Descripcion").Value
-                'End If
-
 
                 _New_Fila.Cells("Codigo").Value = _Codigo
                 _New_Fila.Cells("Cantidad").Value = _Cantidad
@@ -21329,6 +21334,266 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
+    Public Sub Sb_Crear_Documento_Interno_Con_Tabla_PDARandomMovil(_Tbl_Detalle_Externo As DataTable,
+                                                                   _FechaEmision As Date,
+                                                                   _Campo_Codigo As String,
+                                                                   _Campo_Cantidad As String,
+                                                                   _Campo_Precio As String,
+                                                                   _Observaciones As String,
+                                                                   _Aplica_Descuentos As Boolean,
+                                                                   _Aplicar_Precio_De_Listas As Boolean,
+                                                                   Optional _NroDocumento As String = "",
+                                                                   Optional _AgregarDscotSeteados As Boolean = False,
+                                                                   Optional _Progreso_Porc As Object = Nothing,
+                                                                   Optional _Progreso_Cont As Object = Nothing,
+                                                                   Optional _CantLineas As Integer = 0,
+                                                                   Optional _LblEstatus As Object = Nothing,
+                                                                   Optional _MarcarGrilla As Boolean = True,
+                                                                   Optional _Revisar_Descuentos As Boolean = True)
+
+        _TblObservaciones.Rows(0).Item("Observaciones") = _Observaciones
+
+        Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False)
+
+        If Not String.IsNullOrEmpty(_NroDocumento) Then
+            _TblEncabezado.Rows(0).Item("NroDocumento") = _NroDocumento
+        End If
+
+        _TblEncabezado.Rows(0).Item("FechaEmision") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("FechaRecepcion") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("FechaMaxRecepcion") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("Cuotas") = 0
+        _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
+        _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
+        _TblObservaciones.Rows(0).Item("Forma_pago") = String.Empty
+
+        Dim _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
+
+        Dim _Contador = 0
+        Dim _Cont_Filas = 0
+
+        Dim tiempoPorProducto As Double
+
+        For Each Fila As DataRow In _Tbl_Detalle_Externo.Rows
+
+            Dim _Codigo As String = Fila.Item(_Campo_Codigo).ToString
+            Dim _Descripcion As String
+            Dim _Prct As Boolean
+
+            Try
+                _Prct = Fila.Item("Prct")
+            Catch ex As Exception
+                _Prct = False
+            End Try
+
+            Dim _RowProducto As DataRow
+            Dim _RowConcepto As DataRow
+
+            If _Prct Then
+
+                Consulta_sql = "Select Top 1 * From TABCT Where KOCT = '" & _Codigo & "'"
+                _RowConcepto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                _Descripcion = _RowConcepto.Item("NOKOCT").ToString.Trim
+
+            Else
+
+                Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
+                _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+
+            End If
+
+            Dim _Cantidad As Double = Fila.Item(_Campo_Cantidad)
+
+            If _Codigo = "SET060257" Then
+                Dim a = 0
+            End If
+
+            If CBool(_Cantidad) Then
+
+                ' Iniciar el cronómetro
+                Dim stopwatch As Stopwatch = System.Diagnostics.Stopwatch.StartNew()
+
+                Dim _UnTrans As Integer = 1
+                Dim _Precio As Double = Fila.Item(_Campo_Precio)
+
+                Dim _Observa As String
+                Dim _DescuentoPorc As Double
+
+                If _Aplica_Descuentos Then
+
+                    Dim _Desc1 As Double = Fila.Item("Desc1")
+                    Dim _Desc2 As Double = Fila.Item("Desc2")
+                    Dim _Desc3 As Double = Fila.Item("Desc3")
+                    Dim _Desc4 As Double = Fila.Item("Desc4")
+                    Dim _Desc5 As Double = Fila.Item("Desc5")
+
+                    _DescuentoPorc = 100 * (1 - ((1 - (_Desc1 / 100.0)) *
+                                                      (1 - (_Desc2 / 100.0)) *
+                                                      (1 - (_Desc3 / 100.0)) *
+                                                      (1 - (_Desc4 / 100.0)) *
+                                                      (1 - (_Desc5 / 100.0))))
+
+                    _DescuentoPorc = Math.Round(_DescuentoPorc, 2)
+
+                Else
+                    _DescuentoPorc = 0
+                End If
+
+                Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(_Cont_Filas)
+
+                _New_Fila.Cells("FechaEmision").Value = _FechaEmision
+
+                If _Prct Then
+                    Sb_Agregar_Concepto(_New_Fila, _RowConcepto)
+                Else
+                    Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True)
+                End If
+
+                Dim _Sucursal As String
+                Dim _Bodega As String
+
+                Try
+                    _Sucursal = Fila.Item("Sucursal")
+                    _New_Fila.Cells("Sucursal").Value = _Sucursal
+                Catch ex As Exception
+
+                End Try
+
+                Try
+                    _Bodega = Fila.Item("Bodega")
+                    _New_Fila.Cells("Bodega").Value = _Bodega
+                Catch ex As Exception
+
+                End Try
+
+                _New_Fila.Cells("Codigo").Value = _Codigo
+                _New_Fila.Cells("Cantidad").Value = _Cantidad
+
+                Dim _Precio_Old As Double = _New_Fila.Cells("Precio").Value
+
+                If Not _Aplicar_Precio_De_Listas Then
+                    _New_Fila.Cells("Precio").Value = _Precio
+                End If
+
+                If _New_Fila.Cells("Precio").Value = 0 Then
+                    _New_Fila.Cells("Precio").Value = 1
+                End If
+
+                _New_Fila.Cells("Observa").Value = _Observa
+
+                _New_Fila.Cells("Potencia").Value = 0
+                _New_Fila.Cells("Operacion").Value = String.Empty
+
+                Try
+                    _New_Fila.Cells("CodFuncionario").Value = Fila.Item("Kofulido")
+                Catch ex As Exception
+
+                End Try
+
+                If _New_Fila.Cells("Precio").Value > 0 Then
+
+                    If _Prct Then
+
+                        Dim _Campo
+                        Dim _Campo_Bk
+
+                        If ChkValores.Checked Then
+                            _Campo = "VADTNELI"
+                            _Campo_Bk = "ValNetoLinea"
+                        Else
+                            _Campo = "VADTBRLI"
+                            _Campo_Bk = "ValBrutoLinea"
+                        End If
+
+                        _New_Fila.Cells("Cantidad").Value = 0
+                        _New_Fila.Cells("Precio").Value = 0
+                        _New_Fila.Cells(_Campo_Bk).Value = _Precio
+
+                        Sb_Procesar_Datos_De_Grilla(_New_Fila, _Campo_Bk, False, False, True)
+
+                    Else
+
+                        Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False, , _Revisar_Descuentos)
+
+                        If _DescuentoPorc > 0 Then
+                            _New_Fila.Cells("DescuentoPorc").Value = Math.Round(_DescuentoPorc, 2)
+                            Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", False, False, , _Revisar_Descuentos)
+                        Else
+
+                            If _AgregarDscotSeteados Then
+                                Sb_Agregar_DsctoSeteadoPorLinea(_New_Fila)
+                            End If
+
+                        End If
+
+                    End If
+
+                End If
+
+                Sb_Nueva_Linea(_CodLista)
+
+                _Cont_Filas += 1
+
+                stopwatch.Stop()
+                Dim aa = stopwatch.ElapsedMilliseconds
+
+                tiempoPorProducto = aa / 1000.0
+
+            End If
+
+            ' Define el tiempo estimado por producto en segundos
+            tiempoPorProducto = 0.333
+
+            ' Calcula el número de productos restantes
+            Dim productosRestantes As Integer = _CantLineas - _Contador
+
+            ' Calcula el tiempo restante en segundos
+            Dim tiempoRestante As Integer = productosRestantes * tiempoPorProducto
+
+            '' Muestra el tiempo restante en una etiqueta (Label)
+            'If Not IsNothing(_LblTiempoRestante) Then
+            '    _LblTiempoRestante.Text = "Tiempo restante: " & tiempoRestante.ToString() & " segundos"
+            'End If
+            ' Crear un TimeSpan a partir del tiempo en segundos
+            Dim tiempo As TimeSpan = TimeSpan.FromSeconds(tiempoRestante)
+
+            ' Obtener horas, minutos y segundos
+            Dim horas As Integer = tiempo.Hours
+            Dim minutos As Integer = tiempo.Minutes
+            Dim segundos As Integer = tiempo.Seconds
+
+
+            If Not IsNothing(_LblEstatus) Then
+                System.Windows.Forms.Application.DoEvents()
+                _LblEstatus.Text = "Tiempo restante: " & tiempo.ToString() & ", Producto: " & _Codigo.ToString.Trim & ", " & _Descripcion
+            End If
+
+            If Not IsNothing(_Progreso_Porc) AndAlso Not IsNothing(_Progreso_Cont) AndAlso CBool(_CantLineas) Then
+
+                System.Windows.Forms.Application.DoEvents()
+                _Progreso_Porc.Value = ((_Contador * 100) / _CantLineas)
+                _Progreso_Cont.Value += 1
+
+            End If
+
+            _Contador += 1
+
+            If Cancelar Then
+                Return
+            End If
+
+        Next
+
+        If _MarcarGrilla Then
+            Sb_Marcar_Grilla()
+        End If
+
+    End Sub
 
     Sub Sb_Agregar_DsctoSeteadoPorLinea(ByRef _Fila As DataGridViewRow)
 

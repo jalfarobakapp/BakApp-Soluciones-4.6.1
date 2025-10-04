@@ -451,8 +451,6 @@ Drop table #Paso"
                                ",TEXTO10 = '" & _Texto10 & "'" & vbCrLf &
                                "Where IDMAEEDO = " & _Mensaje2.Id
 
-                'Consulta_Sql = "Update MAEEDOOB Set OCDO = '" & _Id_Pago & "',OBDO = 'Documento generado desde diablito automático desde MELI Nro: " & _Id_Meli & "'" & vbCrLf &
-                '               "Where IDMAEEDO = " & _Mensaje2.Id
                 _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
             End If
@@ -467,5 +465,214 @@ Drop table #Paso"
         Return _Mensaje
 
     End Function
+
+    Sub Sb_Importar_NVV_Desde_PDARandomMOVIL_NVVAuto()
+
+        Consulta_Sql = "Update PDAENCA Set VALIDO = 'B' Where VALIDO = 'S'"
+        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+        Consulta_Sql = "Select Top 20 * From PDAENCA Where VALIDO = 'B'"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+        If _Tbl.Rows.Count = 0 Then
+            Return
+        End If
+
+        Dim _Filtro_Valido As String = Generar_Filtro_IN(_Tbl, "", "IDPDAENCA", True, False, "")
+
+        Consulta_Sql = "Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA In " & _Filtro_Valido
+        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Idpdaenca As Integer = _Fila.Item("IDPDAENCA")
+            Dim _Empresa As String = _Fila.Item("EMPRESA")
+
+            Consulta_Sql = $"
+DECLARE @IdEnc INT;
+
+-- Insertar encabezado y capturar el Id autogenerado
+INSERT INTO {_Global_BaseBk}Zw_Demonio_NVVAuto (
+    IdmaeedoOCC_Ori, NudoOCC_Ori, Endo_Ori, Suendo_Ori, FechaGrab,
+    GenerarNVV, NVVGenerada, Idmaeedo_NVV, Nudo_NVV, Feemdo_NVV,
+    Observaciones, TipoOri, Ocdo, Facturar, DocEmitir, CodFuncionario_Factura, EnvFacAutoBk, Empresa,  Feer_NVV
+)
+SELECT 
+    IDPDAENCA, NUDO, ENDO, SUENDO, GETDATE(),
+    1, 0, 0, '', FEEMDO,
+    '', 'PDAENCA', '', 0, 'SOL', KOFUDO, 0, EMPRESA,FEER
+FROM PDAENCA
+WHERE IDPDAENCA = {_Idpdaenca};
+
+-- Capturar el Id generado
+SET @IdEnc = SCOPE_IDENTITY();
+
+-- Insertar detalle usando el Id capturado
+INSERT INTO {_Global_BaseBk}Zw_Demonio_NVVAutoDet (
+    Id_Enc, Idmaeddo_Ori, Codigo, Cantidad, Untrans, Descripcion,
+    Empresa, Sucursal, Bodega, CantidadDefinitiva, Precio,
+    Kofulido, Prct, Tict
+)
+SELECT 
+    @IdEnc, IDPDADETA, KOPR,
+    CASE UDTRPR WHEN 1 THEN CAPRCO1 ELSE CAPRCO2 END,
+    UDTRPR, NOKOPR,
+    '{_Empresa}', SULIDO, BOSULIDO,
+    CASE UDTRPR WHEN 1 THEN CAPRCO1 ELSE CAPRCO2 END,
+    PPPRNE, KOFULIDO, 0, ''
+FROM PDADETA
+WHERE IDPDAENCA = {_Idpdaenca};"
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+
+        Next
+
+    End Sub
+
+
+    Sub Sb_Procesar_NVV_Desde_PDARandomMOVIL()
+
+        Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Where TipoOri = 'PDAENCA' And GenerarNVV = 1"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+        If _Tbl.Rows.Count = 0 Then
+            Return
+        End If
+
+        Dim _Filro_Id_Enc As String = Generar_Filtro_IN(_Tbl, "", "Id_Enc", True, False)
+
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set GenerarNVV = 0 Where Id_Enc In " & _Filro_Id_Enc
+        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+        For Each _Fila As DataRow In _Tbl.Rows
+
+            Dim _Id_Enc As Integer = _Fila.Item("Id_Enc")
+
+            Dim _Mensaje As New LsValiciones.Mensajes
+            _Mensaje = Fx_Crear_NVV_PDARandomMOVIL(_Id_Enc)
+
+            If Not String.IsNullOrEmpty(Log_Registro) Then
+                Log_Registro += vbCrLf
+            End If
+
+            Dim _Idpdaenc As Integer = _Fila.Item("IdmaeedoOCC_Ori")
+            Dim _Nudo As String = _Fila.Item("NudoOCC_Ori")
+
+            If _Mensaje.EsCorrecto Then
+                Log_Registro += "Se ha generado la NVV desde PDA Random MOVIL para el Número: " & _Nudo
+            Else
+                Log_Registro += "Problemas al generar la NVV desde PDA Random MOVIL para el Número: " & _Nudo & ", " & _Mensaje.Mensaje
+            End If
+
+            Consulta_Sql = "Update PDAENCA Set VALIDO = 'W' Where IDPDAENCA = " & _Idpdaenc
+            _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+        Next
+
+    End Sub
+
+    Function Fx_Crear_NVV_PDARandomMOVIL(_Id_Enc As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim _Modalidad_Old As String = Mod_Modalidad
+        Dim _LogR As String = String.Empty
+
+        Try
+
+
+            Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Where Id_Enc = " & _Id_Enc
+            Dim _Row_Encabezado As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
+
+            If IsNothing(_Row_Encabezado) Then
+                Throw New System.Exception("No se encuentra el Id_Enc = " & _Id_Enc & " en la tabla Zw_Demonio_NVVAuto")
+            End If
+
+            Dim _Empresa As String = _Row_Encabezado.Item("Empresa")
+            Dim _Endo As String = _Row_Encabezado.Item("Endo_Ori")
+            Dim _Suendo As String = _Row_Encabezado.Item("Suendo_Ori")
+            Dim _Nudo As String = _Row_Encabezado.Item("NudoOCC_Ori")
+
+            Consulta_Sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Endo & "' And SUEN = '" & _Suendo & "'"
+            Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
+
+            If IsNothing(_Row_Entidad) Then
+                Throw New System.Exception("No se encuentra la entidad: " & _Endo.ToString.Trim & "-" & _Suendo.ToString.Trim)
+            End If
+
+            Dim _Tido As String = "NVV"
+            Dim _FechaEmision As DateTime = _Row_Encabezado.Item("Feemdo_NVV")
+            Dim _FechaRecepcion As DateTime = _Row_Encabezado.Item("Feer_NVV")
+
+            Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAutoDet" & vbCrLf &
+                           "Where Id_Enc = " & _Id_Enc
+            Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then Throw New System.Exception(_Sql.Pro_Error)
+
+            If _Tbl_Productos.Rows.Count = 0 Then
+                Throw New System.Exception("No se encuentran registros para la tabla Zw_Demonio_NVVAutoDet con el Id_Enc = " & _Id_Enc)
+            End If
+
+            Consulta_Sql = "Select * From CONFIEST WITH (NOLOCK) Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & Modalidad_NVV & "'"
+            Dim _Row_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+            Mod_Modalidad = Modalidad_NVV
+
+            Dim Fm As New Frm_Formulario_Documento(_Tido,
+                                                   csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,
+                                                   False, False, False, False, False)
+            Fm.Sb_Limpiar(Modalidad_NVV)
+            Fm.Pro_RowEntidad = _Row_Entidad
+            Fm.ChkValores.Checked = True
+            Fm.Sb_Crear_Documento_Interno_Con_Tabla(Nothing, _Tbl_Productos, _FechaEmision,
+                                                    "Codigo", "Cantidad", "Precio", "Observacion", False, False, _Nudo,,,,,, False, False, _FechaRecepcion, False)
+
+            Fm.Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
+
+            Dim _Mensaje2 As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False,, False)
+
+            Fm.Dispose()
+
+            If _Mensaje2.EsCorrecto Then
+
+                'Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
+                '_Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Empresa, Mod_Modalidad, _Mensaje2.Id)
+
+                Consulta_Sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje2.Id
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set " &
+                               "NVVGenerada = 1" &
+                               ",Idmaeedo_NVV = " & _Row.Item("IDMAEEDO") &
+                               ",Nudo_NVV = '" & _Row.Item("NUDO") & "'" &
+                               ",Feemdo_NVV = '" & Format(_Row.Item("FEEMDO"), "yyyyMMdd") & "'" & vbCrLf &
+                                "Where Id_Enc = " & _Id_Enc
+                _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Id = _Mensaje2.Id
+                _Mensaje.Tag = _Row
+
+            End If
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+        Finally
+            Mod_Modalidad = _Modalidad_Old
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
 
 End Class
