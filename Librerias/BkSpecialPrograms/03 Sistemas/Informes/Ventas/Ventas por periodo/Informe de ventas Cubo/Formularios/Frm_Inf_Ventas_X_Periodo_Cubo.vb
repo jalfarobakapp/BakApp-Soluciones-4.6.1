@@ -4500,7 +4500,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
             Dim Fm_Post As New Frm_Formulario_Documento("NVV", csGlobales.Enum_Tipo_Documento.Venta, False)
-            'Fm_Post.Btn_Minimizar.Visible = True
             Fm_Post.MinimizeBox = False
             Fm_Post.ShowDialog(Me)
             Fm_Post.Dispose()

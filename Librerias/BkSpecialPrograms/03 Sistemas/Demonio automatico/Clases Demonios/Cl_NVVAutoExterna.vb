@@ -633,9 +633,17 @@ WHERE IDPDAENCA = {_Idpdaenca};"
             Fm.Pro_RowEntidad = _Row_Entidad
             Fm.ChkValores.Checked = True
             Fm.Sb_Crear_Documento_Interno_Con_Tabla(Nothing, _Tbl_Productos, _FechaEmision,
-                                                    "Codigo", "Cantidad", "Precio", "Observacion", False, False, _Nudo,,,,,, False, False, _FechaRecepcion, False)
+                                                    "Codigo", "Cantidad", "Precio", "Observacion",
+                                                    False, False, _Nudo,,,,,, False, False, _FechaRecepcion, False, True)
 
-            Fm.Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
+            Dim _Mensaje_RevPermisos As LsValiciones.Mensajes = Fm.Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto()
+
+            If _Mensaje_RevPermisos.EsCorrecto = False Then
+                Fm.Dispose()
+                Return _Mensaje_RevPermisos
+            End If
+
+            'Fm.Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
 
             Dim _Mensaje2 As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False,, False)
 

@@ -8791,7 +8791,7 @@ Public Class Frm_Formulario_Documento
                 End If
 
 
-                    If _Mostrar_Mensaje_Deuda Then
+                If _Mostrar_Mensaje_Deuda Then
 
                     _Bloqueada = _RowEntidad.Item("BLOQUEADO")
 
@@ -21084,11 +21084,35 @@ Public Class Frm_Formulario_Documento
                                                     Optional _MarcarGrilla As Boolean = True,
                                                     Optional _Revisar_Descuentos As Boolean = True,
                                                     Optional _FechaRecepcion As Date = Nothing,
-                                                    Optional _Cambiar_Vendedor As Boolean = True)
+                                                    Optional _Cambiar_Vendedor As Boolean = True,
+                                                    Optional _Conservar_Lista_Entidad As Boolean = False)
 
         _TblObservaciones.Rows(0).Item("Observaciones") = _Observaciones
 
+        Dim _Kolt As String = String.Empty
+
+        If _Conservar_Lista_Entidad Then
+            _Kolt = _RowEntidad.Item("LVEN").ToString.Replace("TABPP", "")
+        End If
+
         Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False, _Cambiar_Vendedor)
+
+        If _Conservar_Lista_Entidad Then
+
+            _TblEncabezado.Rows(0).Item("ListaPrecios") = _Kolt
+            _TblDetalle.Rows(0).Item("CodLista") = _Kolt
+
+            Consulta_sql = "Select * From TABPP Inner Join TABMO On MOLT = KOMO Where KOLT = '" & _Kolt & "'"
+            Dim _RowMoneda_Det = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            _TblDetalle.Rows(0).Item("CodLista") = _RowMoneda_Det.Item("KOLT")
+            _TblDetalle.Rows(0).Item("Moneda") = _RowMoneda_Det.Item("KOMO")
+            _TblDetalle.Rows(0).Item("Tipo_Cambio") = _RowMoneda_Det.Item("VAMO")
+            _TblDetalle.Rows(0).Item("Tipo_Moneda") = _RowMoneda_Det.Item("TIMO")
+            _TblDetalle.Rows(0).Item("Tasadorig") = _TblEncabezado.Rows(0).Item("Tasadorig_Doc")
+
+        End If
+
 
         If Not String.IsNullOrEmpty(_NroDocumento) Then
             _TblEncabezado.Rows(0).Item("NroDocumento") = _NroDocumento
@@ -24246,6 +24270,7 @@ Public Class Frm_Formulario_Documento
                         Sb_Revisar_Permiso("Bkp00033", _Autorizado, _Necesita_Permiso)
                     End If
 
+                    'Fecha de vigencia del credito
                     If Fx_CreditoVigenteVencido(_RowEntidad) Then
                         If Not Fx_Tiene_Permiso(Me, "Doc00098",, False) Then
                             Sb_Revisar_Permiso("Doc00098", False, True)
@@ -24319,6 +24344,174 @@ Public Class Frm_Formulario_Documento
         End If
 
     End Sub
+
+    Function Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto() As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Cl_RemotasEnCadena As New Cl_RemotasEnCadena(_Ds_Matriz_Documentos)
+
+        Try
+
+            Dim _Autorizado As Boolean
+            Dim _Necesita_Permiso As Boolean
+
+            _Autorizado = False : _Necesita_Permiso = False
+            _Autorizado = Fx_Validar_Stock(False, _Necesita_Permiso)
+
+            If _Necesita_Permiso And Not _Autorizado Then
+                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00015")
+            End If
+
+            _Autorizado = False : _Necesita_Permiso = False
+            _Autorizado = Fx_Validad_Morosidad(_Necesita_Permiso)
+
+            If _Necesita_Permiso And Not _Autorizado Then
+                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00019")
+            End If
+
+            _Autorizado = False : _Necesita_Permiso = False
+            _Autorizado = Fx_Validad_MinimoVenta(_Necesita_Permiso)
+
+            If _Necesita_Permiso And Not _Autorizado Then
+                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00062")
+            End If
+
+            Dim _Revisar As Boolean = True
+            Dim _Existe_Tbl_Entidades_Bakapp As Boolean = _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades", False)
+
+            If _Existe_Tbl_Entidades_Bakapp Then
+
+                Dim _Libera_NVV As Boolean
+                Dim _Koen As String = _RowEntidad.Item("KOEN")
+                Dim _Suen As String = _RowEntidad.Item("SUEN")
+
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades" & vbCrLf &
+                               "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
+                Dim _Row_Entidades As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If IsNothing(_Row_Entidades) Then
+
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Entidades (CodEntidad,CodSucEntidad,Libera_NVV) Values ('" & _Koen & "','" & _Suen & "',0)" & vbCrLf &
+                                   "Select * From " & _Global_BaseBk & "Zw_Entidades where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
+                    _Row_Entidades = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+                End If
+
+                _Libera_NVV = _Row_Entidades.Item("Libera_NVV")
+
+                If _Libera_NVV Then
+
+                    Consulta_sql = "Select CRSD,CRCH,CRLT,CRPA,CRTO From MAEEN Where KOEN = '" & _Koen & "' And SUEN = '" & _Suen & "'"
+                    Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+                    Dim _SumCrto As Double = _Row.Item("CRSD") + _Row.Item("CRCH") + _Row.Item("CRLT") + _Row.Item("CRPA") + _Row.Item("CRTO")
+                    _Revisar = CBool(_SumCrto)
+
+                    If Not (_Revisar) Then
+                        Sb_Revisar_Permiso("Bkp00019", False, False)
+                    End If
+
+                End If
+
+            End If
+
+            If _TblEncabezado.Rows(0).Item("RevFincred") Then
+                _Revisar = False
+            End If
+
+            If _Revisar Then
+                _Autorizado = False : _Necesita_Permiso = False
+                _Autorizado = Fx_Validad_Cupo_Excedido(_Necesita_Permiso)
+                'Sb_Revisar_Permiso("Bkp00033", _Autorizado, _Necesita_Permiso)
+                If _Necesita_Permiso And Not _Autorizado Then
+                    _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00033")
+                End If
+            End If
+
+            If Fx_CreditoVigenteVencido(_RowEntidad) Then
+                If Not Fx_Tiene_Permiso(Me, "Doc00098",, False) Then
+                    'Sb_Revisar_Permiso("Doc00098", False, True)
+                    _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Doc00098")
+                End If
+            End If
+
+            'If _Tido = "NVV" Then
+
+            'If Chk_Pickear.Visible And Not Chk_Pickear.Checked Then
+
+            '    If Not Fx_Tiene_Permiso(Me, "Doc00101", FUNCIONARIO, False) Then
+            '        Sb_Revisar_Permiso("Doc00101", False, True)
+            '    End If
+
+            'End If
+
+            'Dim _PidePermiso As Boolean = False
+
+            'For Each _Fl As DataRow In _TblDetalle.Rows
+            '    If _Fl.Item("DesacRazTransf") And _Fl.Item("RtuVariable") Then
+            '        _PidePermiso = True
+            '        Exit For
+            '    End If
+            'Next
+
+            'If Not Chk_Pickear.Checked And _Global_Row_Configuracion_General.Item("NuncaPickeaDocConRTUDesactivada") Then
+            '    _PidePermiso = False
+            'End If
+
+            'If _PidePermiso Then
+
+            '    If Not Fx_Tiene_Permiso(Me, "Doc00102", FUNCIONARIO, False) Then
+            '        Sb_Revisar_Permiso("Doc00102", False, True)
+            '    End If
+
+            'End If
+
+            'End If
+
+            'If Not String.IsNullOrEmpty(_RowEntidad.Item("KOFUEN").ToString.Trim) Then
+            '    For Each _Fl As DataRow In _TblDetalle.Rows
+            '        If _Fl.Item("CodVendedor").ToString.Trim <> _RowEntidad.Item("KOFUEN").ToString.Trim Then
+            '            If Not Fx_Tiene_Permiso(Me, "Doc00161", FUNCIONARIO, False) Then
+            '                Sb_Revisar_Permiso("Doc00161", False, True)
+            '            End If
+            '            Exit For
+            '        End If
+            '    Next
+            'End If
+
+            _Autorizado = False : _Necesita_Permiso = False
+            _Autorizado = Fx_Validar_Descuentos(_Necesita_Permiso)
+            'Sb_Revisar_Permiso("Bkp00039", _Autorizado, _Necesita_Permiso)
+            If _Necesita_Permiso And Not _Autorizado Then
+                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00039")
+            End If
+
+            _Autorizado = False : _Necesita_Permiso = False
+            _Autorizado = Fx_Validar_Fecha_Despacho(_Necesita_Permiso)
+            'Sb_Revisar_Permiso("Bkp00057", _Autorizado, _Necesita_Permiso)
+            If _Necesita_Permiso And Not _Autorizado Then
+                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00057")
+            End If
+
+            'If Not IsNothing(_Cl_Despacho) Then
+            '    _Autorizado = False : _Necesita_Permiso = False
+            '    _Autorizado = Fx_Validar_Peso_Minimo_o_Valores_Por_Despacho_A_Domicilio(_Necesita_Permiso, False)
+            '    Sb_Revisar_Permiso("ODp00017", _Autorizado, _Necesita_Permiso)
+            'End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Validación de permisos terminada"
+            _Mensaje.Tag = _Cl_RemotasEnCadena
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Tag = Nothing
+        End Try
+
+        Return _Mensaje
+
+    End Function
 
     Sub Sb_Revisar_Permiso(_CodPermiso As String, _Autorizado As Boolean, _Necesita_Permiso As Boolean)
 
@@ -30230,6 +30423,10 @@ Public Class Frm_Formulario_Documento
         Barra.Enabled = False
         Barra_Herramientas_Producto.Enabled = False
     End Sub
+
+    'Private Sub Frm_Formulario_Documento_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+    '    FormularioAbierto = False
+    'End Sub
 
 End Class
 
