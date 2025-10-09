@@ -152,7 +152,7 @@ Public Class Cl_RemotasEnCadena
             .Nro_RCadena = String.Empty
             .Orden = Ls_Zw_Remotas_En_Cadena_02_Det.Count + 1
             .CodPermiso = _CodPermiso
-            .Descripcion = String.Empty
+            .Descripcion = _Sql.Fx_Trae_Dato(_Global_BaseBk & "ZW_Permisos", "DescripcionPermiso", "CodPermiso = '" & _CodPermiso & "'")
             .Monto_Aprobacion = 0
         End With
 

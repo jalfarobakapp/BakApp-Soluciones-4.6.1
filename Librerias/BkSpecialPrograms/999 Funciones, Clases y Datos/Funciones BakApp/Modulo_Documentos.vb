@@ -29,7 +29,7 @@ Public Module Modulo_Documentos
 
             If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
 
-                _Kofu_Kogru = _Kofu_Kogru & " - " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Kofu_Kogru & "'").ToString.Trim
+                _Kofu_Kogru = "Usuario(s): " & _Kofu_Kogru '_Kofu_Kogru & " - " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU In (" & _Kofu_Kogru & ")").ToString.Trim
 
                 Sb_Confirmar_Lectura("Aun tiene su grupo de vendedores asociado a otro usuario." & vbCrLf &
                                      _Kofu_Kogru, "Debe quitarlo desde su ficha de usuario.", eTaskDialogIcon.Exclamation, Nothing)
@@ -93,6 +93,8 @@ Public Module Modulo_Documentos
                         _SubTido = String.Empty
                         _PreVenta = True
                     End If
+
+                    _Minimizar = False
 
                     Dim Fm_Post As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False, _Cerrar_Al_Grabar,, _Es_Ajuste)
                     If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True

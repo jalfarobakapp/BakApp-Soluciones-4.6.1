@@ -1641,6 +1641,10 @@ Public Class Frm_Formulario_Documento
             .Item("IdCont") = 0
             .Item("Contenedor") = String.Empty
 
+            .Item("PdaRMovil") = False
+            .Item("Idpdaenca") = 0
+            .Item("ConservaNudo") = False
+
             _TblEncabezado.Rows.Add(NewFila)
 
         End With
@@ -5824,6 +5828,16 @@ Public Class Frm_Formulario_Documento
         Dim _DescMaximo As Double = NuloPorNro(_RowPrecios.Item("DTMA01UD"), 0)
         Dim _Ecuacion As String = NuloPorNro(_RowPrecios.Item("ECUACION").ToString.Trim, "")
         Dim _Ecuacionu2 As String = NuloPorNro(_RowPrecios.Item("ECUACIONU2").ToString.Trim, "")
+
+        If String.IsNullOrEmpty(_Ecuacion.Trim) Then
+            _Ecuacion = _Sql.Fx_Trae_Dato("TABPP", "ECUDEF01UD", "KOLT = '" & _ListaPrecios & "'").ToString.Trim
+        End If
+
+        If String.IsNullOrEmpty(_Ecuacionu2.Trim) Then
+            _Ecuacionu2 = _Sql.Fx_Trae_Dato("TABPP", "ECUDEF02UD", "KOLT = '" & _ListaPrecios & "'").ToString.Trim
+        End If
+
+
         Dim _PorIva As Double = _RowProducto.Item("POIVPR")
 
         If _SubTido = "IMP" Then
@@ -24345,12 +24359,24 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
-    Function Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto() As LsValiciones.Mensajes
+    Function Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto(_CodFuncionario_Autoriza As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Cl_RemotasEnCadena As New Cl_RemotasEnCadena(_Ds_Matriz_Documentos)
 
         Try
+
+            _TblEncabezado.Rows(0).Item("CodFuncionario") = _CodFuncionario_Autoriza
+
+            'For Each _Fl As DataRow In _TblPermisos.Rows
+            '    If Not _Fl.Item("PermisoIndependiente") Then
+            '        _Fl.Item("Autorizado") = False
+            '        _Fl.Item("Necesita_Permiso") = False
+            '        _Fl.Item("Permiso_Presencial") = False
+            '        _Fl.Item("CodFuncionario_Autoriza") = String.Empty
+            '        _Fl.Item("NomFuncionario_Autoriza") = String.Empty
+            '    End If
+            'Next
 
             Dim _Autorizado As Boolean
             Dim _Necesita_Permiso As Boolean
@@ -24499,9 +24525,36 @@ Public Class Frm_Formulario_Documento
             '    Sb_Revisar_Permiso("ODp00017", _Autorizado, _Necesita_Permiso)
             'End If
 
-            _Mensaje.EsCorrecto = True
-            _Mensaje.Mensaje = "Validación de permisos terminada"
-            _Mensaje.Tag = _Cl_RemotasEnCadena
+            If _Cl_RemotasEnCadena.Ls_Zw_Remotas_En_Cadena_02_Det.Count > 0 Then
+
+                With _Cl_RemotasEnCadena.Zw_Remotas_En_Cadena_01_Enc
+
+                    .Empresa = _TblEncabezado.Rows(0).Item("Empresa")
+                    .Modalidad = _TblEncabezado.Rows(0).Item("Modalidad")
+                    .Nro_RCadena = String.Empty
+                    .Id_DocEnc = _Id_DocEnc
+                    .Id_Enc = 0
+                    .CodEntidad = _TblEncabezado.Rows(0).Item("CodEntidad")
+                    .CodSucEntidad = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+                    .Nombre_Entidad = _TblEncabezado.Rows(0).Item("Nombre_Entidad")
+                    .Usuario_Solicita = _TblEncabezado.Rows(0).Item("CodFuncionario")
+                    .Tido = _TblEncabezado.Rows(0).Item("Tido")
+                    .Total_Original = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
+                    .Total_Documento = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
+
+                End With
+
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = "Documento necesita permisos"
+                _Mensaje.Tag = _Cl_RemotasEnCadena
+
+            Else
+
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = "Documento no necesita permisos"
+                _Mensaje.Tag = Nothing
+
+            End If
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False

@@ -143,6 +143,7 @@ Public Class Cl_FacAuto_NVV
                        "Inner Join " & _Global_BaseBk & "Zw_Entidades Ent" & vbCrLf &
                        "On Nv.Endo_Ori = Ent.CodEntidad And Nv.Suendo_Ori = Ent.CodSucEntidad" & vbCrLf &
                        "Where NVVGenerada = 1 And Facturar = 1 And Ent.FacAuto = 0"
+
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf
         End If

@@ -215,7 +215,7 @@ Public Class Frm_BuscarEntidad_Mt
 
                             Dim _Mensaje As New LsValiciones.Mensajes
 
-                            _Mensaje = Fx_EntidadEnGrupoVendedores(_DataRowEntidad, FUNCIONARIO, True)
+                            _Mensaje = Fx_EntidadEnGrupoVendedores(_DataRowEntidad, FUNCIONARIO, False)
 
                             If Not _Mensaje.EsCorrecto Then
                                 MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -399,7 +399,7 @@ Public Class Frm_BuscarEntidad_Mt
             If Chk_Solo_Clientes_Del_Vendedor.Checked Then
 
                 Dim _Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
-                Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru = '" & FUNCIONARIO & "'")
+                Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru Like  '%" & FUNCIONARIO & "%'")
 
                 If String.IsNullOrEmpty(_Kogru) Then
                     _Filtro_Vendedores = "And KOFUEN = '" & FUNCIONARIO & "'"

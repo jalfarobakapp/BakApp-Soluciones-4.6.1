@@ -1546,14 +1546,6 @@ Public Class Menu
         Sb_Revisar_Estilo("")
     End Sub
 
-    Private Sub Btn_Grupos_Click(sender As Object, e As EventArgs) Handles Btn_Grupos.Click
-
-        Dim Fm As New Frm_Grupos_Lista
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
-
-    End Sub
-
     Private Sub Btn_FichaFucnionario_Click(sender As Object, e As EventArgs) Handles Btn_FichaFucnionario.Click
 
         If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "User0005") Then
@@ -1575,5 +1567,11 @@ Public Class Menu
 
     End Sub
 
+    Private Sub Btn_PDARMovil_Click(sender As Object, e As EventArgs) Handles Btn_PDARMovil.Click
 
+        Dim Fm As New Frm_PreVentasPDA
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

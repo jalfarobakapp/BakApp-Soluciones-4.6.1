@@ -961,6 +961,13 @@
     <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\PDARandomMovil\Cl_PDARandomMovil.vb" />
+    <Compile Include="03 Sistemas\PDARandomMovil\Frm_PreVentasPDA.Designer.vb">
+      <DependentUpon>Frm_PreVentasPDA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\PDARandomMovil\Frm_PreVentasPDA.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_IngDet.Designer.vb">
       <DependentUpon>Frm_PreVenta_IngDet.vb</DependentUpon>
     </Compile>
@@ -4935,6 +4942,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_CrearContenedor.resx">
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\PDARandomMovil\Frm_PreVentasPDA.resx">
+      <DependentUpon>Frm_PreVentasPDA.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_IngDet.resx">
       <DependentUpon>Frm_PreVenta_IngDet.vb</DependentUpon>

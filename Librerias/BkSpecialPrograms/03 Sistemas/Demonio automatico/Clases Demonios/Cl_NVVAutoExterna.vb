@@ -480,8 +480,8 @@ Drop table #Paso"
 
         Dim _Filtro_Valido As String = Generar_Filtro_IN(_Tbl, "", "IDPDAENCA", True, False, "")
 
-        Consulta_Sql = "Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA In " & _Filtro_Valido
-        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+        'Consulta_Sql = "Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA In " & _Filtro_Valido
+        '_Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
         For Each _Fila As DataRow In _Tbl.Rows
 
@@ -521,8 +521,20 @@ SELECT
     CASE UDTRPR WHEN 1 THEN CAPRCO1 ELSE CAPRCO2 END,
     PPPRNE, KOFULIDO, 0, ''
 FROM PDADETA
-WHERE IDPDAENCA = {_Idpdaenca};"
-            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+WHERE IDPDAENCA = {_Idpdaenca};
+
+Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA = {_Idpdaenca}"
+
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+
+                Consulta_Sql = $"Update PDAENCA Set VALIDO = 'S' Where IDPDAENCA = {_Idpdaenca}"
+                _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+                Log_Registro += _Sql.Pro_Error & vbCrLf
+
+            End If
 
         Next
 
@@ -532,7 +544,7 @@ WHERE IDPDAENCA = {_Idpdaenca};"
     Sub Sb_Procesar_NVV_Desde_PDARandomMOVIL()
 
         Consulta_Sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Where TipoOri = 'PDAENCA' And GenerarNVV = 1"
-        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         If _Tbl.Rows.Count = 0 Then
             Return
@@ -593,6 +605,8 @@ WHERE IDPDAENCA = {_Idpdaenca};"
             Dim _Endo As String = _Row_Encabezado.Item("Endo_Ori")
             Dim _Suendo As String = _Row_Encabezado.Item("Suendo_Ori")
             Dim _Nudo As String = _Row_Encabezado.Item("NudoOCC_Ori")
+            Dim _Idpdaenca As Integer = _Row_Encabezado.Item("IdmaeedoOCC_Ori")
+            Dim _CodFuncionario_Autoriza As String = _Row_Encabezado.Item("CodFuncionario_Factura")
 
             Consulta_Sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Endo & "' And SUEN = '" & _Suendo & "'"
             Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
@@ -635,12 +649,53 @@ WHERE IDPDAENCA = {_Idpdaenca};"
             Fm.Sb_Crear_Documento_Interno_Con_Tabla(Nothing, _Tbl_Productos, _FechaEmision,
                                                     "Codigo", "Cantidad", "Precio", "Observacion",
                                                     False, False, _Nudo,,,,,, False, False, _FechaRecepcion, False, True)
-
-            Dim _Mensaje_RevPermisos As LsValiciones.Mensajes = Fm.Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto()
+            'CodFuncionario_Autoriza
+            Dim _Mensaje_RevPermisos As LsValiciones.Mensajes = Fm.Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto(_CodFuncionario_Autoriza)
 
             If _Mensaje_RevPermisos.EsCorrecto = False Then
                 Fm.Dispose()
                 Return _Mensaje_RevPermisos
+            Else
+
+                Dim _Cl_RemotasEnCadena As Cl_RemotasEnCadena = _Mensaje_RevPermisos.Tag
+                Dim _Ds_Matriz_Documentos As Ds_Matriz_Documentos = _Cl_RemotasEnCadena.Ds_Matriz_Documentos
+
+                With _Ds_Matriz_Documentos.Tables(0).Rows(0)
+                    .Item("PdaRMovil") = True
+                    .Item("Idpdaenca") = _Idpdaenca
+                    .Item("ConservaNudo") = True
+                    .Item("CodFuncionario_Autoriza") = _CodFuncionario_Autoriza
+                End With
+
+
+                ' CREAMOS EL DOCUMENTO DE PASO
+                Dim _Crear_Doc As New Clase_Crear_Documento
+
+                Dim _Id_DocEnc As Integer = _Crear_Doc.Fx_Crear_Documento_En_BakApp_Casi(_Ds_Matriz_Documentos, False, False)
+
+                If CBool(_Id_DocEnc) Then
+
+                    Dim _Nro_RCadena = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Remotas_En_Cadena_01_Enc",
+                                               "COALESCE(MAX(Nro_RCadena),'0000000000')")
+                    If _Nro_RCadena = "0000000000" Then
+                        _Nro_RCadena = "RC00000000"
+                    End If
+
+                    _Nro_RCadena = Fx_Proximo_NroDocumento(_Nro_RCadena, 10)
+
+                    With _Cl_RemotasEnCadena.Zw_Remotas_En_Cadena_01_Enc
+
+                        .Nro_RCadena = _Nro_RCadena
+                        .Id_DocEnc = _Id_DocEnc
+                        .Id_Enc = _Id_Enc
+                        .Usuario_Solicita = ""
+
+                    End With
+
+                    _Cl_RemotasEnCadena.Fx_Cadena_Remotas_Crear_Cadena()
+
+                End If
+
             End If
 
             'Fm.Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
