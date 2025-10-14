@@ -141,6 +141,10 @@ CREATE TABLE [dbo].[#TablaPaso#](
     [TipoRotCalculo]            [Varchar](20)   DEFAULT '',
     [RotCalculo]                [Float]        DEFAULT (0),
 
+    [RotCalculo_Prod]           [Float]        DEFAULT (0),
+    [Duracion_Proyeccion_Prod]               [Float]        DEFAULT (0),
+    [Duracion_Proyeccion_Recepcion_Prod]     [Float]        DEFAULT (0), 
+
 	[Tendencia]				    [Float]        DEFAULT (0),
 	[SumTotalVal]               [Float]        DEFAULT (0),
 	[Fecha_Inicio]              [Date],

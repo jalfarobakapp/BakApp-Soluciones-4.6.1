@@ -1080,6 +1080,7 @@ Public Class Frm_Demonio_New
 
             If _Fecha_Computador <> _Fecha_Dtp Then
 
+                Dim _FechaDelServidor As Date = FechaDelServidor()
                 DtpFecharevision.Value = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
 
             End If

@@ -124,7 +124,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         _Row_Nodo = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Sb_Initialize_Grid()
-        Sb_Actualizar_SuperGrid()
+        Sb_Actualizar_SuperGrid(False)
 
         Me.WindowState = FormWindowState.Maximized
 
@@ -227,6 +227,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         If Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked Then _RotCalculo = "X"
 
         Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
+        Consulta_sql = Replace(Consulta_sql, "#MesesPreImportacion#", 6)
 
         _Ds_Proyecto = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -234,7 +235,141 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Function
 
-    Sub Sb_Actualizar_SuperGrid()
+    Function Fx_Generar_Informe_Ds_CreaTablaPaso() As DataSet
+
+        Dim _Ds_Proyecto As DataSet
+
+        Dim _Tbl_Asc_01_Productos As String = "Tbl_Asc_01_Productos_" & FUNCIONARIO
+        Dim _Tbl_Asc_02_Asociaciones As String = "Tbl_Asc_02_Asociaciones_" & FUNCIONARIO
+        Dim _Tbl_Asc_03_Totales As String = "Tbl_Asc_03_Totales_" & FUNCIONARIO
+        Dim _Tbl_Asc_04_DocUltComp As String = "Tbl_Asc_04_DocUltComp_" & FUNCIONARIO
+
+        Consulta_sql = "Drop Table " & _Tbl_Asc_01_Productos
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        Consulta_sql = "Drop Table " & _Tbl_Asc_02_Asociaciones
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        Consulta_sql = "Drop Table " & _Tbl_Asc_03_Totales
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        Consulta_sql = "Drop Table " & _Tbl_Asc_04_DocUltComp
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+        Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Proyeccion_Compras_30_60_120_CreaTablas
+        Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", _Tabla_Paso)
+        Consulta_sql = Replace(Consulta_sql, "#Tbl_BakApp#", _Global_BaseBk)
+        Consulta_sql = Replace(Consulta_sql, "#Ud#", _Ud)
+
+        Consulta_sql = Replace(Consulta_sql, "#Filtro_Nodos#", _Filtro_Nodos)
+
+        Consulta_sql = Replace(Consulta_sql, "#Identificador_NodoPadre#", _Identificador_NodoPadre)
+        Consulta_sql = Replace(Consulta_sql, "#Porc_Creciminto#", _Porc_Creciminto)
+        Consulta_sql = Replace(Consulta_sql, "#Dias_Proyeccion#", _Dias_Proyeccion)
+        Consulta_sql = Replace(Consulta_sql, "#Marca_Proyeccion#", _Marca_Proyeccion)
+        Consulta_sql = Replace(Consulta_sql, "#Dias_Abastecer#", _Dias_Abastecer)
+
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_01_Productos", _Tbl_Asc_01_Productos)
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_02_Asociaciones", _Tbl_Asc_02_Asociaciones)
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_03_Totales", _Tbl_Asc_03_Totales)
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_04_DocUltComp", _Tbl_Asc_04_DocUltComp)
+
+        '_Identificador_NodoPadre
+        '_Porc_Creciminto
+        '_Dias_Proyeccion
+        '_Marca_Proyeccion
+        '_Dias_Abastecer
+
+        Dim _Sql_Campos_Proyeccion = String.Empty
+        Dim _Sql_Update_Campo_Proyeccion = String.Empty
+
+        Dim _MesActual = _Fecha_Servidor.Month
+        Dim _YearActual = _Fecha_Servidor.Year
+
+        'For _i = 1 To _Campos 'Input_Cant_Campos.Value
+
+        '    Dim _Campo = numero_(_i, 2) & "_P"
+        '    'Dim _Campo2 = numero_(_i, 2) & "_P" & "_" & numero_(_MesActual, 2) & "_" & _YearActual
+
+        '    _Sql_Campos_Proyeccion += "CAST('' As Char(1)) As '" & _Campo & "'," & vbCrLf
+        '    _Sql_Update_Campo_Proyeccion +=
+        '    "Update #Tbl_Paso_Proyecto_01 Set [" & _Campo & "] = Case When Duracion_Proyeccion >= " & _i & " Then " & vbCrLf &
+        '    "Case When @Marca_Proyeccion < " & _i & " Then 'O' Else 'X' End Else '-' end" & vbCrLf &
+        '    "-------" & vbCrLf
+
+        '    _MesActual += 1
+        '    If _MesActual = 13 Then
+        '        _MesActual = 1
+        '        _YearActual += 1
+        '    End If
+
+        'Next
+
+        'Consulta_sql = Replace(Consulta_sql, "#Campos_Proyeccion#", _Sql_Campos_Proyeccion)
+        'Consulta_sql = Replace(Consulta_sql, "#Update_Campos_Proyeccion#", _Sql_Update_Campo_Proyeccion)
+
+        If Rdb_Proyeccion_Rotacion_Diaria.Checked Then _RotCalculo = "D"
+        If Rdb_Proyeccion_Promedio_Diario.Checked Then _RotCalculo = "P"
+        If Rdb_Proyeccion_Promedio_Ult3Meses.Checked Then _RotCalculo = "3M"
+        If Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked Then _RotCalculo = "X"
+
+        Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
+        Consulta_sql = Replace(Consulta_sql, "#MesesPreImportacion#", 6)
+
+        _Ds_Proyecto = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+        Return _Ds_Proyecto
+
+    End Function
+
+    Function Fx_Actualizar_Informe_Ds() As DataSet
+
+        Dim _Ds_Proyecto As DataSet
+
+        Dim _Tbl_Asc_01_Productos As String = "Tbl_Asc_01_Productos_" & FUNCIONARIO
+        Dim _Tbl_Asc_02_Asociaciones As String = "Tbl_Asc_02_Asociaciones_" & FUNCIONARIO
+        Dim _Tbl_Asc_03_Totales As String = "Tbl_Asc_03_Totales_" & FUNCIONARIO
+        Dim _Tbl_Asc_04_DocUltComp As String = "Tbl_Asc_04_DocUltComp_" & FUNCIONARIO
+
+        'Consulta_sql = "Drop Table " & _Tbl_Asc_01_Productos
+        '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+        'Consulta_sql = "Drop Table " & _Tbl_Asc_02_Asociaciones
+        '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+        'Consulta_sql = "Drop Table " & _Tbl_Asc_03_Totales
+        '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+        'Consulta_sql = "Drop Table " & _Tbl_Asc_04_DocUltComp
+        '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+        Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Proyeccion_Compras_30_60_120_ActualizaTablas
+        Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", _Tabla_Paso)
+        Consulta_sql = Replace(Consulta_sql, "#Tbl_BakApp#", _Global_BaseBk)
+        Consulta_sql = Replace(Consulta_sql, "#Ud#", _Ud)
+
+        Consulta_sql = Replace(Consulta_sql, "#Filtro_Nodos#", _Filtro_Nodos)
+
+        Consulta_sql = Replace(Consulta_sql, "#Identificador_NodoPadre#", _Identificador_NodoPadre)
+        Consulta_sql = Replace(Consulta_sql, "#Porc_Creciminto#", _Porc_Creciminto)
+        Consulta_sql = Replace(Consulta_sql, "#Dias_Proyeccion#", _Dias_Proyeccion)
+        Consulta_sql = Replace(Consulta_sql, "#Marca_Proyeccion#", _Marca_Proyeccion)
+        Consulta_sql = Replace(Consulta_sql, "#Dias_Abastecer#", _Dias_Abastecer)
+
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_01_Productos", _Tbl_Asc_01_Productos)
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_02_Asociaciones", _Tbl_Asc_02_Asociaciones)
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_03_Totales", _Tbl_Asc_03_Totales)
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_04_DocUltComp", _Tbl_Asc_04_DocUltComp)
+
+        If Rdb_Proyeccion_Rotacion_Diaria.Checked Then _RotCalculo = "D"
+        If Rdb_Proyeccion_Promedio_Diario.Checked Then _RotCalculo = "P"
+        If Rdb_Proyeccion_Promedio_Ult3Meses.Checked Then _RotCalculo = "3M"
+        If Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked Then _RotCalculo = "X"
+
+        Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
+        Consulta_sql = Replace(Consulta_sql, "#MesesPreImportacion#", 6)
+
+        _Ds_Proyecto = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+        Return _Ds_Proyecto
+
+    End Function
+
+    Sub Sb_Actualizar_SuperGrid(_Actualizar As Boolean)
 
         Dim Fm_Espera = New Frm_Form_Esperar
         Fm_Espera.BarraCircular.IsRunning = True
@@ -242,7 +377,13 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
         _Fecha_Servidor = FechaDelServidor()
 
-        _Ds_Informe = Fx_Generar_Informe_Ds()
+        If _Actualizar Then
+            _Ds_Informe = Fx_Actualizar_Informe_Ds() ' Fx_Generar_Informe_Ds()
+        Else
+            _Ds_Informe = Fx_Generar_Informe_Ds_CreaTablaPaso() ' Fx_Generar_Informe_Ds()
+        End If
+
+        '_Ds_Informe = Fx_Generar_Informe_Ds()
 
         Me.Text = "Informe de proyección de compras a nivel: " & _Proyeccion.ToString
 
@@ -474,7 +615,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
     End Sub
 
     Private Sub Btn_Actualizar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar.Click
-        Sb_Actualizar_SuperGrid()
+        Sb_Actualizar_SuperGrid(True)
     End Sub
 
     Sub Sb_Revisar_Info_Producto(_Fila As Object)
@@ -623,7 +764,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         If Fm.Pro_Informe_Procesado Then
             _Clas_Asistente_Compras.Sb_Actualizar_Stock(False)
             _Clas_Asistente_Compras.Sb_Actualizar_Rotacion("", True)
-            Sb_Actualizar_SuperGrid()
+            Sb_Actualizar_SuperGrid(True)
         End If
 
     End Sub
@@ -1205,6 +1346,15 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns("Duracion_Proyeccion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            _Campo = "PreImportacion"
+            .Columns("PreImportacion").Width = 60
+            .Columns("PreImportacion").HeaderText = "Pre-Impo?"
+            .Columns("PreImportacion").ToolTip = "Es Pre-Importación"
+            .Columns("PreImportacion").CellStyles.Default.Alignment = Alignment.MiddleCenter
+            .Columns("PreImportacion").Visible = True
+            .Columns("PreImportacion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             _Campo = "Cant_Comprar"
             .Columns("Cant_Comprar").Width = 80
             .Columns("Cant_Comprar").HeaderText = "Cantidad" & vbCrLf & "necesaria" '"Cant. Comprar"
@@ -1731,7 +1881,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     Private Sub Sb_Rdb_Rotacion_CheckedChanged(sender As Object, e As EventArgs)
         If sender.Checked Then
-            Sb_Actualizar_SuperGrid()
+            Sb_Actualizar_SuperGrid(True)
         End If
     End Sub
 
@@ -1751,4 +1901,23 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         Me.Enabled = True
 
     End Sub
+
+    Private Sub Frm_AsisCompra_Proyeccion_Informe_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+
+        Dim _Tbl_Asc_01_Productos As String = "Tbl_Asc_01_Productos_" & FUNCIONARIO
+        Dim _Tbl_Asc_02_Asociaciones As String = "Tbl_Asc_02_Asociaciones_" & FUNCIONARIO
+        Dim _Tbl_Asc_03_Totales As String = "Tbl_Asc_03_Totales_" & FUNCIONARIO
+        Dim _Tbl_Asc_04_DocUltComp As String = "Tbl_Asc_04_DocUltComp_" & FUNCIONARIO
+
+        Consulta_sql = "Drop Table " & _Tbl_Asc_01_Productos
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        Consulta_sql = "Drop Table " & _Tbl_Asc_02_Asociaciones
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        Consulta_sql = "Drop Table " & _Tbl_Asc_03_Totales
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        Consulta_sql = "Drop Table " & _Tbl_Asc_04_DocUltComp
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+    End Sub
+
 End Class

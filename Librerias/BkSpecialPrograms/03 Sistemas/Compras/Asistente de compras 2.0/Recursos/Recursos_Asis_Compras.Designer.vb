@@ -303,14 +303,15 @@ Namespace My.Resources
         '''       CAST(0 As Float) As StfiBodExt1,
         '''       Sum(STFI2) As STFI2,
         '''       CAST(0 As Float) As StfiBodExt2,
-        '''       Sum(STOCNV1C) As STOCNV1C,Sum(STOCNV2C) As STOCNV2C,Sum(STDV1C) As STDV1C,Sum(STDV2C) As STDV2C,
+        '''       Sum(STDV1) As STDV1,Sum(STDV2) As STDV2,
+        '''       Sum(STOCNV1C) As STOCNV1C,
+        '''       Sum(STOCNV2C) As STOCNV2C,
+        '''       Sum(STDV1C) As STDV1C,
+        '''       Sum(STDV2C) As STDV2C,
+        '''       Sum(STTR1) As STTR1,
+        '''       Sum(STTR2) As STTR2,
         '''       CAST(0 As Float) As StPedNVIUd1,
-        '''	   CAST(0 As Float) As StPedNVIUd2,
-        '''       CAST(0 As Float) As StTransitoUd1,
-        '''	   CAST(0 As Float) As StTransitoUd2
-        '''Into #Paso
-        '''From MAEST
-        '''Where KOPR In (Sele [resto de la cadena truncado]&quot;;.
+        '''	   CAST(0 As Float) As StPed [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Inserta_stock_por_producto() As String
             Get
@@ -321,11 +322,11 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a 
         '''Update #TablaPaso# Set 
-        '''                       Nom_Rubro = Isnull((Select top 1 NOKORU From TABRU Where KORU = Rubro),&apos;&apos;),
-        '''                       Nom_Marca = Isnull((Select Top 1 NOKOMR From TABMR Where KOMR = Marca),&apos;&apos;),
-        '''                       Nom_Zona = Isnull((Select Top 1 NOKOZO From TABZO Where KOZO = Zona),&apos;&apos;),
-        '''                       Nom_SuperFamilia = Isnull((Select Top 1 NOKOFM From TABFM Where KOFM = SuperFamilia),&apos;&apos;),
-        '''                       Nom_Familia = Isnull((Select Top 1 NOKOPF From TAB [resto de la cadena truncado]&quot;;.
+        '''                       Nom_Rubro = Isnull((Select top 1 NOKORU From TABRU WITH (NOLOCK) Where KORU = Rubro),&apos;&apos;),
+        '''                       Nom_Marca = Isnull((Select Top 1 NOKOMR From TABMR WITH (NOLOCK) Where KOMR = Marca),&apos;&apos;),
+        '''                       Nom_Zona = Isnull((Select Top 1 NOKOZO From TABZO WITH (NOLOCK) Where KOZO = Zona),&apos;&apos;),
+        '''                       Nom_SuperFamilia = Isnull((Select Top 1 NOKOFM From TABFM WITH (NOLOCK) Where KOFM = SuperFamilia),&apos;&apos;),
+        '''                  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Insertar_Productos_en_tabla_de_paso_inf_compra() As String
             Get
@@ -362,17 +363,58 @@ Namespace My.Resources
         '''Declare @Dias_Proyeccion Float = #Dias_Proyeccion#
         '''Declare @Dias_Abastecer Int
         '''Declare @Marca_Proyeccion Int = #Marca_Proyeccion#
-        '''Declare @RotCalculo Char(1) = &apos;#RotCalculo#&apos;
+        '''Declare @RotCalculo varchar(2) = &apos;#RotCalculo#&apos;
         '''Declare @Fecha_Actual Date = GetDate()
+        '''Declare @MesesPreImportacion Int = #MesesPreImportacion#
         '''
         '''Set @Porc_Creciminto = @Porc_Creciminto /100.0 + 1        
-        '''Set @Dias_Abastecer = #Dias_Abastecer#--@Dias_Proyeccion * 4
-        '''        
-        '''        --select @Porc_Creciminto,10/100. [resto de la cadena truncado]&quot;;.
+        '''Set @Dias_Abastecer = #Dias_Abastecer#--@Dias_Proyec [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Proyeccion_Compras_30_60_120() As String
             Get
                 Return ResourceManager.GetString("SQLQuery_Proyeccion_Compras_30_60_120", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a SET NOCOUNT ON;
+        '''
+        '''Declare @Identificador_NodoPadre Int = #Identificador_NodoPadre#
+        '''Declare @Porc_Creciminto Float = #Porc_Creciminto#
+        '''Declare @Dias_Proyeccion Float = #Dias_Proyeccion#
+        '''Declare @Dias_Abastecer Int
+        '''Declare @Marca_Proyeccion Int = #Marca_Proyeccion#
+        '''Declare @RotCalculo varchar(2) = &apos;#RotCalculo#&apos;
+        '''Declare @Fecha_Actual Date = GetDate()
+        '''Declare @MesesPreImportacion Int = #MesesPreImportacion#
+        '''
+        '''Set @Porc_Creciminto = @Porc_Creciminto /100.0 + 1        
+        '''Set @Dias_Abastecer = #Dias_Abast [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property SQLQuery_Proyeccion_Compras_30_60_120_ActualizaTablas() As String
+            Get
+                Return ResourceManager.GetString("SQLQuery_Proyeccion_Compras_30_60_120_ActualizaTablas", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a SET NOCOUNT ON;
+        '''
+        '''Declare @Identificador_NodoPadre Int = #Identificador_NodoPadre#
+        '''Declare @Porc_Creciminto Float = #Porc_Creciminto#
+        '''Declare @Dias_Proyeccion Float = #Dias_Proyeccion#
+        '''Declare @Dias_Abastecer Int
+        '''Declare @Marca_Proyeccion Int = #Marca_Proyeccion#
+        '''Declare @RotCalculo varchar(2) = &apos;#RotCalculo#&apos;
+        '''Declare @Fecha_Actual Date = GetDate()
+        '''Declare @MesesPreImportacion Int = #MesesPreImportacion#
+        '''
+        '''Set @Porc_Creciminto = @Porc_Creciminto /100.0 + 1        
+        '''Set @Dias_Abastecer = #Dias_Abast [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property SQLQuery_Proyeccion_Compras_30_60_120_CreaTablas() As String
+            Get
+                Return ResourceManager.GetString("SQLQuery_Proyeccion_Compras_30_60_120_CreaTablas", resourceCulture)
             End Get
         End Property
         
@@ -400,18 +442,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Busca una cadena traducida similar a Declare @Identificador_NodoPadre Int = #Identificador_NodoPadre#
-        '''Declare @Porc_Creciminto Float = #Porc_Creciminto#
-        '''Declare @Dias_Proyeccion Float = #Dias_Proyeccion#
-        '''Declare @Dias_Abastecer Int
-        '''Declare @Marca_Proyeccion Int = #Marca_Proyeccion#
-        '''Declare @RotCalculo Char(1) = &apos;#RotCalculo#&apos;
-        '''Declare @Fecha_Actual Date = GetDate()
-        '''
-        '''Set @Porc_Creciminto = @Porc_Creciminto /100.0 + 1        
-        '''Set @Dias_Abastecer = #Dias_Abastecer#--@Dias_Proyeccion * 4
-        '''        
-        '''        --select @Porc_Creciminto,10/100. [resto de la cadena truncado]&quot;;.
+        '''  Busca una cadena traducida similar a DECLARE @Empresa		    Char(2)  = &apos;{Empresa}&apos;
+        '''DECLARE @CantidadMax	    Float = {CantidadMax}	    -- &lt;-- ACA PONER LA CANTIDAD DE KILOS PARA REVISAER	
+        '''DECLARE @CantidadNoQuiebra	Float = {CantidadNoQuiebra}
+        '''DECLARE @Lista		        Char(3) = &apos;{Lista}&apos;
+        '''DECLARE @IDMAEDDO		    Int
+        '''DECLARE @cantidad		    Decimal(10,2)
+        '''DECLARE @suma_acumulada     Decimal(10,2) = 0
+        '''DECLARE @CodigoMadre	    Varchar(20) = &apos;{CodMadre}&apos; --&lt; -- ACA VA EL CODIGO DE LA CLASIFICACION DEL PRODUCTO
+        '''DECLARE @Descripcion	    Varchar(50)  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_RevCambioPrecioXCodMadre() As String
             Get

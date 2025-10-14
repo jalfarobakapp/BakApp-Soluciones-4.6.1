@@ -1,4 +1,6 @@
-﻿Public Class Frm_PreVentasPDA
+﻿Imports DevComponents.DotNetBar
+
+Public Class Frm_PreVentasPDA
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -26,7 +28,7 @@
     Sub Sb_Actualizar_Grilla()
 
         Consulta_sql = "SELECT Pda.IDPDAENCA,Pda.KOFUDO,Pda.NUDO,Pda.SUDO,Pda.VALIDO,Pda.FEEMDO,Pda.HORAFIN,Pda.ENDO,Pda.SUENDO,Ent.NOKOEN," &
-                       "Pda.VABRDO,Pda.OBS,Pda.FECULTSIN,Pda.HORULTSIN,Pda.TPOGRAB,Pda.TPOPROTRA,Pda.EMPRESA," & vbCrLf &
+                       "Pda.VABRDO,Pda.OBS,Pda.FECULTSIN,Pda.HORULTSIN,Pda.TPOGRAB,Pda.TPOPROTRA,Pda.EMPRESA,Pda.LINEAS," & vbCrLf &
                        "CAST(0 AS BIT) AS TRASPASAR," &
                        "CAST(0 AS BIT) AS NOPDA," &
                        "CAST(0 AS FLOAT) AS CRSD," &
@@ -119,6 +121,13 @@
             .Columns("VABRDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("LINEAS").Width = 50
+            .Columns("LINEAS").HeaderText = "Ítems"
+            .Columns("LINEAS").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("LINEAS").Visible = True
+            .Columns("LINEAS").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
 
         End With
 
@@ -168,8 +177,19 @@
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
+
         ' Crear instancia de la clase y pasar datos según su API
         Dim _Cl_PDARandomMovil As New Cl_PDARandomMovil
+
+        '_Mensaje = _Cl_PDARandomMovil.Fx_Importar_NVV_Desde_PDARandomMOVIL_NVVAuto(_FilaDataRow)
+
+        'If Not _Mensaje.EsCorrecto Then
+        '    MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
+
+        _Mensaje = _Cl_PDARandomMovil.Fx_Crear_NVV_PDARandomMOVIL(_FilaDataRow, Mod_Modalidad)
+
         _Mensaje = _Cl_PDARandomMovil.Fx_RevisarSituacionComercialCliente(_FilaDataRow, Date.Now)
 
         If _Mensaje.EsCorrecto Then

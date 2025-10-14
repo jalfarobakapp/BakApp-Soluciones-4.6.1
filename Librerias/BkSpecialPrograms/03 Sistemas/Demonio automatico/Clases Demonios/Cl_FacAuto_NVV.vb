@@ -712,7 +712,7 @@ Public Class Cl_FacAuto_NVV
 
                 Dim _Msj_Tsc As LsValiciones.Mensajes
 
-                _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing,,, False)
+                _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing, _Fecha_Emision,, False)
 
                 If Not _Msj_Tsc.EsCorrecto Then
 
@@ -830,7 +830,7 @@ Public Class Cl_FacAuto_NVV
 
                 Dim _Msj_Tsc As LsValiciones.Mensajes
 
-                _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing,,, False)
+                _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing, _Fecha_Emision,, False)
 
                 If Not _Msj_Tsc.EsCorrecto Then
 
@@ -986,7 +986,7 @@ Public Class Cl_FacAuto_NVV
 
                     Dim _Msj_Tsc As LsValiciones.Mensajes
 
-                    _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing,,, False)
+                    _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing, _Fecha_Emision,, False)
 
                     If Not _Msj_Tsc.EsCorrecto Then
 
@@ -1227,7 +1227,7 @@ Public Class Cl_FacAuto_NVV
 
                     Dim _Msj_Tsc As LsValiciones.Mensajes
 
-                    _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing,,, False)
+                    _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing, _Fecha_Emision,, False)
 
                     If Not _Msj_Tsc.EsCorrecto Then
 

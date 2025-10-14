@@ -6067,7 +6067,6 @@ Public Class Frm_Formulario_Documento
 
         Dim _Melt As String
 
-
         Select Case _Valor_desde_Lista
 
             Case csGlobales.Enum_Neto_Bruto.Neto
@@ -7414,6 +7413,7 @@ Public Class Frm_Formulario_Documento
                 Dim _PrecioLista As Double
 
                 If ChkValores.Checked Then
+                    _PrecioLista = NuloPorNro(.Cells("PrecioNetoUdLista").Value, 0)
                     _PrecioLista = Math.Round(NuloPorNro(.Cells("PrecioNetoUdLista").Value, 0), 0)
                 Else
                     _PrecioLista = NuloPorNro(.Cells("PrecioBrutoUdLista").Value, 0)
@@ -21097,7 +21097,7 @@ Public Class Frm_Formulario_Documento
                                                     Optional _LblEstatus As Object = Nothing,
                                                     Optional _MarcarGrilla As Boolean = True,
                                                     Optional _Revisar_Descuentos As Boolean = True,
-                                                    Optional _FechaRecepcion As Date = Nothing,
+                                                    Optional _FechaRecepcion As Date? = Nothing,
                                                     Optional _Cambiar_Vendedor As Boolean = True,
                                                     Optional _Conservar_Lista_Entidad As Boolean = False)
 
@@ -21132,7 +21132,11 @@ Public Class Frm_Formulario_Documento
             _TblEncabezado.Rows(0).Item("NroDocumento") = _NroDocumento
         End If
 
-        If IsNothing(_FechaRecepcion) Then
+        'If IsNothing(_FechaRecepcion) Then
+        '    _FechaRecepcion = _FechaEmision
+        'End If
+
+        If Not _FechaRecepcion.HasValue OrElse _FechaRecepcion.Value = Date.MinValue Then
             _FechaRecepcion = _FechaEmision
         End If
 
@@ -21186,7 +21190,7 @@ Public Class Frm_Formulario_Documento
 
             Dim _Cantidad As Double = Fila.Item(_Campo_Cantidad)
 
-            If _Codigo = "SET060257" Then
+            If _Codigo = "7801620009694" Then
                 Dim a = 0
             End If
 

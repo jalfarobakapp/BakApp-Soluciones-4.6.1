@@ -948,6 +948,12 @@
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\PreImpo\Frm_PreImpo.Designer.vb">
+      <DependentUpon>Frm_PreImpo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\PreImpo\Frm_PreImpo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Contenedores\Cl_Contenedor.vb" />
     <Compile Include="03 Sistemas\Contenedores\Frm_Contenedores.Designer.vb">
       <DependentUpon>Frm_Contenedores.vb</DependentUpon>
@@ -4937,6 +4943,9 @@
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.resx">
       <DependentUpon>Frm_AsisCompra_CambioPrecioDet.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\PreImpo\Frm_PreImpo.resx">
+      <DependentUpon>Frm_PreImpo.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_Contenedores.resx">
       <DependentUpon>Frm_Contenedores.vb</DependentUpon>
     </EmbeddedResource>
@@ -8481,6 +8490,8 @@
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Informe Ventas x Perido Nivel Detalle Cubo Actualizacion3 Clasificaciones.sql" />
     <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Reabastecer entre bodegas.sql" />
     <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Sql\SQLQuery_RevCambioPrecioXCodMadre.sql" />
+    <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Recursos Proyeccion SeaGarden\SQLQuery_Proyeccion_Compras_30_60_120_CreaTablas.sql" />
+    <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Recursos Proyeccion SeaGarden\SQLQuery_Proyeccion_Compras_30_60_120_ActualizaTablas.sql" />
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Html\Crear Html Proveedores Con Productos Sin Stock.htm" />
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Info Estadistica X Producto Compra.sql" />
     <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Sacar la velocidad de venta mensual Media2.sql" />
