@@ -37,7 +37,6 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Btn_Informe_Proximas_Recepciones = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Colapsar_Filas = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_SugCambioPrecio = New DevComponents.DotNetBar.ButtonItem()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.Input_Redondeo = New DevComponents.Editors.IntegerInput()
         Me.Panel_Ayuda = New DevComponents.DotNetBar.ExpandablePanel()
         Me.Lbl_Rosado = New DevComponents.DotNetBar.LabelX()
@@ -63,10 +62,15 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Rdb_Proyeccion_Promedio_Diario = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Proyeccion_Promedio_Ult3Meses = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_MostrarSoloProdConStockEnDetalle = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.Input_CalcSobreStock = New DevComponents.Editors.DoubleInput()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Redondeo, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Panel_Ayuda.SuspendLayout()
+        CType(Me.Input_CalcSobreStock, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'ContextMenuBar1
@@ -202,19 +206,9 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Btn_SugCambioPrecio.Tooltip = "Colapsar todas las filas"
         Me.Btn_SugCambioPrecio.Visible = False
         '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.Transparent
-        Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(290, 519)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(78, 13)
-        Me.Label1.TabIndex = 126
-        Me.Label1.Text = "Múltiplos de :"
-        '
         'Input_Redondeo
         '
+        Me.Input_Redondeo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Input_Redondeo.BackColor = System.Drawing.Color.White
         '
         '
@@ -224,7 +218,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Input_Redondeo.ButtonClear.Visible = True
         Me.Input_Redondeo.FocusHighlightEnabled = True
         Me.Input_Redondeo.ForeColor = System.Drawing.Color.Black
-        Me.Input_Redondeo.Location = New System.Drawing.Point(374, 516)
+        Me.Input_Redondeo.Location = New System.Drawing.Point(333, 500)
         Me.Input_Redondeo.MaxValue = 10000
         Me.Input_Redondeo.MinValue = 1
         Me.Input_Redondeo.Name = "Input_Redondeo"
@@ -485,7 +479,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Super_Grilla.PrimaryGrid.Filter.ShowPanelFilterExpr = True
         Me.Super_Grilla.PrimaryGrid.MultiSelect = False
         Me.Super_Grilla.PrimaryGrid.Title.RowHeaderVisibility = DevComponents.DotNetBar.SuperGrid.RowHeaderVisibility.PanelControlled
-        Me.Super_Grilla.Size = New System.Drawing.Size(1290, 451)
+        Me.Super_Grilla.Size = New System.Drawing.Size(1290, 435)
         Me.Super_Grilla.TabIndex = 2
         Me.Super_Grilla.Text = "SuperGridControl2"
         '
@@ -514,9 +508,9 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Chk_MostrarSugCambioPrecio.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSugCambioPrecio.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_MostrarSugCambioPrecio.FocusCuesEnabled = False
         Me.Chk_MostrarSugCambioPrecio.ForeColor = System.Drawing.Color.Black
-        Me.Chk_MostrarSugCambioPrecio.Location = New System.Drawing.Point(12, 516)
+        Me.Chk_MostrarSugCambioPrecio.Location = New System.Drawing.Point(12, 496)
         Me.Chk_MostrarSugCambioPrecio.Name = "Chk_MostrarSugCambioPrecio"
-        Me.Chk_MostrarSugCambioPrecio.Size = New System.Drawing.Size(249, 13)
+        Me.Chk_MostrarSugCambioPrecio.Size = New System.Drawing.Size(249, 26)
         Me.Chk_MostrarSugCambioPrecio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_MostrarSugCambioPrecio.TabIndex = 132
         Me.Chk_MostrarSugCambioPrecio.Text = "Mostrar sugerencia de cambio de precio"
@@ -593,11 +587,85 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.TabIndex = 136
         Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Text = "Promedio Ult. 3 meses mas ventas ult. mes"
         '
+        'Chk_MostrarSoloProdConStockEnDetalle
+        '
+        Me.Chk_MostrarSoloProdConStockEnDetalle.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Chk_MostrarSoloProdConStockEnDetalle.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_MostrarSoloProdConStockEnDetalle.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MostrarSoloProdConStockEnDetalle.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSoloProdConStockEnDetalle.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MostrarSoloProdConStockEnDetalle.FocusCuesEnabled = False
+        Me.Chk_MostrarSoloProdConStockEnDetalle.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MostrarSoloProdConStockEnDetalle.Location = New System.Drawing.Point(442, 500)
+        Me.Chk_MostrarSoloProdConStockEnDetalle.Name = "Chk_MostrarSoloProdConStockEnDetalle"
+        Me.Chk_MostrarSoloProdConStockEnDetalle.Size = New System.Drawing.Size(249, 22)
+        Me.Chk_MostrarSoloProdConStockEnDetalle.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MostrarSoloProdConStockEnDetalle.TabIndex = 137
+        Me.Chk_MostrarSoloProdConStockEnDetalle.Text = "Mostrar solo productos con stock en detalle"
+        '
+        'LabelX3
+        '
+        Me.LabelX3.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.LabelX3.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(267, 496)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(76, 26)
+        Me.LabelX3.TabIndex = 138
+        Me.LabelX3.Text = "Multiplo de"
+        '
+        'LabelX5
+        '
+        Me.LabelX5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.LabelX5.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(686, 496)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(144, 26)
+        Me.LabelX5.TabIndex = 140
+        Me.LabelX5.Text = "Meses para calc. sobre stock"
+        '
+        'Input_CalcSobreStock
+        '
+        Me.Input_CalcSobreStock.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Input_CalcSobreStock.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_CalcSobreStock.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_CalcSobreStock.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_CalcSobreStock.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_CalcSobreStock.ForeColor = System.Drawing.Color.Black
+        Me.Input_CalcSobreStock.Increment = 1.0R
+        Me.Input_CalcSobreStock.Location = New System.Drawing.Point(836, 500)
+        Me.Input_CalcSobreStock.MaxValue = 12.0R
+        Me.Input_CalcSobreStock.MinValue = 1.0R
+        Me.Input_CalcSobreStock.Name = "Input_CalcSobreStock"
+        Me.Input_CalcSobreStock.ShowUpDown = True
+        Me.Input_CalcSobreStock.Size = New System.Drawing.Size(54, 22)
+        Me.Input_CalcSobreStock.TabIndex = 141
+        Me.Input_CalcSobreStock.Value = 6.5R
+        '
         'Frm_AsisCompra_Proyeccion_Informe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1314, 576)
+        Me.Controls.Add(Me.Input_CalcSobreStock)
+        Me.Controls.Add(Me.LabelX5)
+        Me.Controls.Add(Me.Input_Redondeo)
+        Me.Controls.Add(Me.LabelX3)
+        Me.Controls.Add(Me.Chk_MostrarSoloProdConStockEnDetalle)
         Me.Controls.Add(Me.Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes)
         Me.Controls.Add(Me.Rdb_Proyeccion_Promedio_Ult3Meses)
         Me.Controls.Add(Me.Rdb_Proyeccion_Promedio_Diario)
@@ -607,8 +675,6 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Controls.Add(Me.Panel_Ayuda)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.Super_Grilla)
-        Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.Input_Redondeo)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -624,8 +690,8 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_Redondeo, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Panel_Ayuda.ResumeLayout(False)
+        CType(Me.Input_CalcSobreStock, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
-        Me.PerformLayout()
 
     End Sub
     Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
@@ -637,7 +703,6 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
     Friend WithEvents Btn_Ver_documento_origen As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Label1 As System.Windows.Forms.Label
     Public WithEvents Input_Redondeo As DevComponents.Editors.IntegerInput
     Friend WithEvents Btn_Exportar_Excel As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Panel_Ayuda As DevComponents.DotNetBar.ExpandablePanel
@@ -668,4 +733,8 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
     Public WithEvents Rdb_Proyeccion_Promedio_Diario As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_Proyeccion_Promedio_Ult3Meses As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Chk_MostrarSoloProdConStockEnDetalle As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Input_CalcSobreStock As DevComponents.Editors.DoubleInput
 End Class

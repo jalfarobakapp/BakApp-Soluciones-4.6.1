@@ -7,7 +7,7 @@ Declare @Dias_Abastecer Int
 Declare @Marca_Proyeccion Int = #Marca_Proyeccion#
 Declare @RotCalculo varchar(2) = '#RotCalculo#'
 Declare @Fecha_Actual Date = GetDate()
-Declare @MesesPreImportacion Int = #MesesPreImportacion#
+Declare @MesesSobreStock Int = #MesesSobreStock#
 
 Set @Porc_Creciminto = @Porc_Creciminto /100.0 + 1        
 Set @Dias_Abastecer = #Dias_Abastecer#--@Dias_Proyeccion * 4
@@ -20,7 +20,7 @@ Set @Dias_Abastecer = #Dias_Abastecer#--@Dias_Proyeccion * 4
 --Declare @Marca_Proyeccion Int = 3;
 --Declare @RotCalculo varchar(2) = '3M';
 --Declare @Fecha_Actual DATETIME = GETDATE();
---Declare @MesesPreImportacion Int = 6;
+--Declare @MesesSobreStock Int = 6;
 
 --Set @Porc_Creciminto = @Porc_Creciminto / 100.0 + 1;        
 --Set @Dias_Abastecer = 130; -- @Dias_Proyeccion * 4
@@ -70,6 +70,8 @@ BEGIN
         Cant_Comprar_Sug_Red FLOAT,
         Dias_Abastecer INT,
         Proyeccion_Abastecer FLOAT,
+        MesesSobreStock FLOAT,
+        SobreStock VARCHAR(2),
         Idmaeedo INT,
         Tido CHAR(3),
         Nudo VARCHAR(20),
@@ -121,7 +123,8 @@ BEGIN
         Cant_Comprar_Sug_Red FLOAT,
         Dias_Abastecer INT,
         Proyeccion_Abastecer FLOAT,
-        PreImportacion VARCHAR(2),
+        MesesSobreStock FLOAT,
+        SobreStock VARCHAR(2),
         Idmaeedo_ProxRC INT,
         Tido_ProxRC CHAR(3),
         Nudo_ProxRC VARCHAR(10),
@@ -204,7 +207,7 @@ INSERT INTO dbo.Tbl_Asc_01_Productos (
     Promedio_3Meses, Tendencia, RotCalculo, Stock_Asegurado_Dias,
     Stock_Asegurado_Proyeccion, Duracion_Dias, Duracion_Proyeccion,
     Duracion_Proyeccion_Recepcion, Cant_Comprar, Cant_Comprar_Sug,
-    Cant_Comprar_Sug_Red, Dias_Abastecer, Proyeccion_Abastecer,
+    Cant_Comprar_Sug_Red, Dias_Abastecer, Proyeccion_Abastecer, MesesSobreStock, SobreStock,
     Idmaeedo, Tido, Nudo, Fecha_Recep
 )
 SELECT
@@ -248,6 +251,8 @@ SELECT
     CAST(0 As Float) As Cant_Comprar_Sug_Red,
     @Dias_Abastecer AS Dias_Abastecer,
     CAST(0 As Float) As Proyeccion_Abastecer,
+    @MesesSobreStock AS MesesSobreStock,
+    Cast('No' As varchar(2)) As SobreStock,
     CAST(0 As Int) As Idmaeedo,
     CAST('' As CHAR(3)) As Tido,
     CAST('' As Varchar(10)) As Nudo,
@@ -304,8 +309,8 @@ INSERT INTO dbo.Tbl_Asc_02_Asociaciones (
     SumTotalQtyUd#Ud#_Ult_3Mes, Promedio_Diario3Mes, Promedio_3Mes, Venta_Ult_3Cio,
     SumTotalQtyUd#Ud#_Ult_3Cio, Tendencia, Stock_Asegurado_Dias, Stock_Asegurado_Proyeccion,
     Duracion_Dias, Duracion_Proyeccion, Duracion_Proyeccion_Recepcion, Cant_Comprar,
-    Cant_Comprar_Sug, Cant_Comprar_Sug_Red, Dias_Abastecer, Proyeccion_Abastecer,
-    PreImportacion, Idmaeedo_ProxRC, Tido_ProxRC, Nudo_ProxRC, Feerli_ProxRC,
+    Cant_Comprar_Sug, Cant_Comprar_Sug_Red, Dias_Abastecer, Proyeccion_Abastecer, MesesSobreStock,
+    SobreStock, Idmaeedo_ProxRC, Tido_ProxRC, Nudo_ProxRC, Feerli_ProxRC,
     Dias_ProxRC, Meses_ProxRC, RotDiaria_NoQuiebra, RotMensual_NoQuiebra, SugCmbPrecio,
     [01_P],[02_P],[03_P],[04_P],[05_P],[06_P],[07_P],[08_P],[09_P],[10_P],[11_P],[12_P], Fin
 )
@@ -347,7 +352,8 @@ SELECT
     SUM(Cant_Comprar_Sug_Red) As Cant_Comprar_Sug_Red,
     Dias_Abastecer,
     Proyeccion_Abastecer,
-    Cast('No' As varchar(2)) As PreImportacion,
+    @MesesSobreStock AS MesesSobreStock,
+    Cast('No' As varchar(2)) As SobreStock,
     CAST(0 As int) As Idmaeedo_ProxRC,
     CAST('' As char(3)) As Tido_ProxRC,
     CAST('' As char(10)) As Nudo_ProxRC,
@@ -387,9 +393,9 @@ UPDATE dbo.Tbl_Asc_02_Asociaciones SET Promedio_DiarioUltMMU3Mes = Round(Promedi
 UPDATE dbo.Tbl_Asc_01_Productos
 SET RotCalculo = 
     CASE @RotCalculo
-        WHEN 'D' THEN RotDiariaUd#Ud#_Prod
+        WHEN 'D' THEN RotMensualUd#Ud#_Prod
         WHEN 'P' THEN Promedio_MensualUd#Ud#_Prod
-        WHEN 'X' THEN RotMensualUd#Ud#_Ult_3Mes_Prod
+        WHEN 'X' THEN PromUlt3CioPromUlt3Meses_Ud#Ud#_Prod
         WHEN '3M' THEN PromMensualUd#Ud#_Ul3Mes_Prod
         ELSE RotCalculo
     END;
@@ -441,8 +447,20 @@ UPDATE dbo.Tbl_Asc_02_Asociaciones Set Duracion_Proyeccion_Recepcion =
     ROUND(((StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#)/ NULLIF(RotCalculo,1) * @Porc_Creciminto)/@Dias_Proyeccion,2)
 WHERE RotCalculo > 0;
 
--- Pre importación
-UPDATE dbo.Tbl_Asc_02_Asociaciones Set PreImportacion = 'Si' Where Duracion_Proyeccion > @MesesPreImportacion;
+
+UPDATE dbo.Tbl_Asc_01_Productos Set Duracion_Proyeccion = 
+    ROUND((((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#)/NULLIF(RotCalculo,1)) * @Porc_Creciminto),2)
+WHERE RotCalculo > 0;
+
+UPDATE dbo.Tbl_Asc_01_Productos Set Duracion_Proyeccion_Recepcion = 
+    ROUND(((StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#)/ NULLIF(RotCalculo,1) * @Porc_Creciminto),2)
+WHERE RotCalculo > 0;
+
+
+
+-- Sobre Stock
+UPDATE dbo.Tbl_Asc_01_Productos Set SobreStock = 'Si' Where Duracion_Proyeccion >= MesesSobreStock;
+UPDATE dbo.Tbl_Asc_02_Asociaciones Set SobreStock = 'Si' Where Duracion_Proyeccion >= MesesSobreStock;
 
 -- Casos RotCalculo = 0
 UPDATE dbo.Tbl_Asc_02_Asociaciones Set Stock_Asegurado_Dias = ROUND((StockUd#Ud#+StockEnTransitoUd#Ud#)/1,0) Where RotCalculo = 0;
@@ -537,7 +555,9 @@ And Stock_Asegurado_Dias < @Dias_Abastecer
 And StockUd#Ud# > 0 And Duracion_Proyeccion > 0;
 
 -- Salidas que antes imprimían SELECT * FROM #...
-SELECT * From dbo.Tbl_Asc_01_Productos Order by Producto;
+SELECT * From dbo.Tbl_Asc_01_Productos 
+--FiltroProductosSoloConStock Where (StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#) <> 0
+Order by Producto;
 SELECT * From dbo.Tbl_Asc_02_Asociaciones;
 SELECT * From dbo.Tbl_Asc_04_DocUltComp;
 SELECT * From dbo.Tbl_Asc_03_Totales;

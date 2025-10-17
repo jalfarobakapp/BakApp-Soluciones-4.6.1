@@ -7,7 +7,7 @@ Declare @Dias_Abastecer Int
 Declare @Marca_Proyeccion Int = #Marca_Proyeccion#
 Declare @RotCalculo varchar(2) = '#RotCalculo#'
 Declare @Fecha_Actual Date = GetDate()
-Declare @MesesPreImportacion Int = #MesesPreImportacion#
+--Declare @MesesSobreStock Int = #MesesSobreStock#
 
 Set @Porc_Creciminto = @Porc_Creciminto /100.0 + 1        
 Set @Dias_Abastecer = #Dias_Abastecer#--@Dias_Proyeccion * 4
@@ -22,9 +22,9 @@ Set @Dias_Abastecer = #Dias_Abastecer#--@Dias_Proyeccion * 4
 UPDATE dbo.Tbl_Asc_01_Productos
 SET RotCalculo = 
     CASE @RotCalculo
-        WHEN 'D' THEN RotDiariaUd#Ud#_Prod
+        WHEN 'D' THEN RotMensualUd#Ud#_Prod
         WHEN 'P' THEN Promedio_MensualUd#Ud#_Prod
-        WHEN 'X' THEN RotMensualUd#Ud#_Ult_3Mes_Prod
+        WHEN 'X' THEN PromUlt3CioPromUlt3Meses_Ud#Ud#_Prod
         WHEN '3M' THEN PromMensualUd#Ud#_Ul3Mes_Prod
         ELSE RotCalculo
     END;
@@ -76,9 +76,19 @@ UPDATE dbo.Tbl_Asc_02_Asociaciones Set Duracion_Proyeccion_Recepcion =
     ROUND(((StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#)/ NULLIF(RotCalculo,1) * @Porc_Creciminto)/@Dias_Proyeccion,2)
 WHERE RotCalculo > 0;
 
--- Pre importación
-UPDATE dbo.Tbl_Asc_02_Asociaciones Set PreImportacion = 'No';
-UPDATE dbo.Tbl_Asc_02_Asociaciones Set PreImportacion = 'Si' Where Duracion_Proyeccion > @MesesPreImportacion;
+UPDATE dbo.Tbl_Asc_01_Productos Set Duracion_Proyeccion = 
+    ROUND((((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#)/NULLIF(RotCalculo,1)) * @Porc_Creciminto),2)
+WHERE RotCalculo > 0;
+
+UPDATE dbo.Tbl_Asc_01_Productos Set Duracion_Proyeccion_Recepcion = 
+    ROUND(((StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#)/ NULLIF(RotCalculo,1) * @Porc_Creciminto),2)
+WHERE RotCalculo > 0;
+
+-- Sobre Stock
+UPDATE dbo.Tbl_Asc_01_Productos Set SobreStock = 'No' Where Duracion_Proyeccion < MesesSobreStock;
+UPDATE dbo.Tbl_Asc_02_Asociaciones Set SobreStock = 'No' Where Duracion_Proyeccion < MesesSobreStock;
+UPDATE dbo.Tbl_Asc_01_Productos Set SobreStock = 'Si' Where Duracion_Proyeccion >= MesesSobreStock;
+UPDATE dbo.Tbl_Asc_02_Asociaciones Set SobreStock = 'Si' Where Duracion_Proyeccion >= MesesSobreStock;
 
 -- Casos RotCalculo = 0
 UPDATE dbo.Tbl_Asc_02_Asociaciones Set Stock_Asegurado_Dias = ROUND((StockUd#Ud#+StockEnTransitoUd#Ud#)/1,0) Where RotCalculo = 0;
@@ -159,7 +169,10 @@ And Stock_Asegurado_Dias < @Dias_Abastecer
 And StockUd#Ud# > 0 And Duracion_Proyeccion > 0;
 
 -- Salidas que antes imprimían SELECT * FROM #...
-SELECT * From dbo.Tbl_Asc_01_Productos Order by Producto;
+SELECT * From dbo.Tbl_Asc_01_Productos 
+--FiltroProductosSoloConStock Where (StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#) <> 0
+Order by Producto;
+
 SELECT * From dbo.Tbl_Asc_02_Asociaciones;
 SELECT * From dbo.Tbl_Asc_04_DocUltComp;
 SELECT * From dbo.Tbl_Asc_03_Totales;

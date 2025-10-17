@@ -271,39 +271,11 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_03_Totales", _Tbl_Asc_03_Totales)
         Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_04_DocUltComp", _Tbl_Asc_04_DocUltComp)
 
-        '_Identificador_NodoPadre
-        '_Porc_Creciminto
-        '_Dias_Proyeccion
-        '_Marca_Proyeccion
-        '_Dias_Abastecer
-
         Dim _Sql_Campos_Proyeccion = String.Empty
         Dim _Sql_Update_Campo_Proyeccion = String.Empty
 
         Dim _MesActual = _Fecha_Servidor.Month
         Dim _YearActual = _Fecha_Servidor.Year
-
-        'For _i = 1 To _Campos 'Input_Cant_Campos.Value
-
-        '    Dim _Campo = numero_(_i, 2) & "_P"
-        '    'Dim _Campo2 = numero_(_i, 2) & "_P" & "_" & numero_(_MesActual, 2) & "_" & _YearActual
-
-        '    _Sql_Campos_Proyeccion += "CAST('' As Char(1)) As '" & _Campo & "'," & vbCrLf
-        '    _Sql_Update_Campo_Proyeccion +=
-        '    "Update #Tbl_Paso_Proyecto_01 Set [" & _Campo & "] = Case When Duracion_Proyeccion >= " & _i & " Then " & vbCrLf &
-        '    "Case When @Marca_Proyeccion < " & _i & " Then 'O' Else 'X' End Else '-' end" & vbCrLf &
-        '    "-------" & vbCrLf
-
-        '    _MesActual += 1
-        '    If _MesActual = 13 Then
-        '        _MesActual = 1
-        '        _YearActual += 1
-        '    End If
-
-        'Next
-
-        'Consulta_sql = Replace(Consulta_sql, "#Campos_Proyeccion#", _Sql_Campos_Proyeccion)
-        'Consulta_sql = Replace(Consulta_sql, "#Update_Campos_Proyeccion#", _Sql_Update_Campo_Proyeccion)
 
         If Rdb_Proyeccion_Rotacion_Diaria.Checked Then _RotCalculo = "D"
         If Rdb_Proyeccion_Promedio_Diario.Checked Then _RotCalculo = "P"
@@ -311,7 +283,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         If Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked Then _RotCalculo = "X"
 
         Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
-        Consulta_sql = Replace(Consulta_sql, "#MesesPreImportacion#", 6)
+        Consulta_sql = Replace(Consulta_sql, "#MesesSobreStock#", De_Num_a_Tx_01(Input_CalcSobreStock.Value, False, 2))
+        Consulta_sql = Replace(Consulta_sql, "--FiltroProductosSoloConStock", "")
 
         _Ds_Proyecto = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -361,7 +334,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         If Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked Then _RotCalculo = "X"
 
         Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
-        Consulta_sql = Replace(Consulta_sql, "#MesesPreImportacion#", 6)
+        Consulta_sql = Replace(Consulta_sql, "#MesesSobreStock#", De_Num_a_Tx_01(Input_CalcSobreStock.Value, False, 2))
+        Consulta_sql = Replace(Consulta_sql, "--FiltroProductosSoloConStock", "")
 
         _Ds_Proyecto = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -1346,13 +1320,13 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns("Duracion_Proyeccion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            _Campo = "PreImportacion"
-            .Columns("PreImportacion").Width = 60
-            .Columns("PreImportacion").HeaderText = "Pre-Impo?"
-            .Columns("PreImportacion").ToolTip = "Es Pre-Importación"
-            .Columns("PreImportacion").CellStyles.Default.Alignment = Alignment.MiddleCenter
-            .Columns("PreImportacion").Visible = True
-            .Columns("PreImportacion").DisplayIndex = _DisplayIndex
+            _Campo = "SobreStock"
+            .Columns("SobreStock").Width = 40
+            .Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
+            .Columns("SobreStock").ToolTip = "Productos con sobre stock disponible"
+            .Columns("SobreStock").CellStyles.Default.Alignment = Alignment.MiddleCenter
+            .Columns("SobreStock").Visible = True
+            .Columns("SobreStock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             _Campo = "Cant_Comprar"
@@ -1629,6 +1603,24 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
             .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            _Campo = "Duracion_Proyeccion"
+            .Columns("Duracion_Proyeccion").Width = 80
+            .Columns("Duracion_Proyeccion").HeaderText = "Duración" & vbCrLf & _Duracion & vbCrLf & "Según stock"
+            DirectCast(.Columns("Duracion_Proyeccion").RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
+            .Columns("Duracion_Proyeccion").CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns("Duracion_Proyeccion").Visible = True
+            .Columns("Duracion_Proyeccion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            _Campo = "SobreStock"
+            .Columns("SobreStock").Width = 40
+            .Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
+            .Columns("SobreStock").ToolTip = "Productos con sobre stock disponible"
+            .Columns("SobreStock").CellStyles.Default.Alignment = Alignment.MiddleCenter
+            .Columns("SobreStock").Visible = True
+            .Columns("SobreStock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
 

@@ -160,6 +160,8 @@ Public Class Frm_Formulario_Documento
 
     Public Property ForzarDecimalesEnUnidadesEnteras As Boolean
     Public Property PreVenta As Boolean
+    Public Property SobreStock As Boolean
+
     Dim _Zw_Contenedor As New Zw_Contenedor
 
     Private _RevisandoBotonesActivos As Boolean
@@ -559,6 +561,9 @@ Public Class Frm_Formulario_Documento
         AddHandler Chk_Ver_Dscto_Maximo.CheckedChanging, AddressOf Chk_Ver_Dscto_Maximo_CheckedChanging
         AddHandler Chk_Ver_Dscto_Maximo.CheckedChanged, AddressOf Chk_Ver_Dscto_Maximo_CheckedChanged
 
+        Sb_Color_Botones_Barra(Barra)
+        Sb_Color_Botones_Barra(Barra_Herramientas_Producto)
+
     End Sub
 
     Private Sub Frm_Formulario_Documento_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
@@ -579,9 +584,6 @@ Public Class Frm_Formulario_Documento
         If Not String.IsNullOrWhiteSpace(_SubTido) Then
             _TblEncabezado.Rows(0).Item("SubTido") = _SubTido
         End If
-
-        Sb_Color_Botones_Barra(Barra)
-        Sb_Color_Botones_Barra(Barra_Herramientas_Producto)
 
         Lblx_Total_Costo.ForeColor = _Color_Totales
         Lblx_Margen_Porc.ForeColor = _Color_Totales
@@ -21127,6 +21129,13 @@ Public Class Frm_Formulario_Documento
 
         End If
 
+        Dim _TipoValor = _Sql.Fx_Trae_Dato("TABTIDO", "MEARDO", "TIDO = '" & _Tido & "'")
+
+        If _TipoValor = "N" Then
+            ChkValores.Checked = True
+        ElseIf _TipoValor = "B" Then
+            ChkValores.Checked = False
+        End If
 
         If Not String.IsNullOrEmpty(_NroDocumento) Then
             _TblEncabezado.Rows(0).Item("NroDocumento") = _NroDocumento
@@ -22798,7 +22807,7 @@ Public Class Frm_Formulario_Documento
         If _Crea_Doc_Definitivo Then
 
             If CBool(_New_Idmaeedo) Then
-
+                '_Id_Enc = 6
                 If CBool(_Id_Enc) Then
 
                     Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Remotas_En_Cadena_01_Enc Where Id_Enc = " & _Id_Enc
@@ -24363,12 +24372,15 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
-    Function Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto(_CodFuncionario_Autoriza As String) As LsValiciones.Mensajes
+    Function Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto(_CodFuncionario_Autoriza As String,
+                                                                  _InsertarFuncionario As Boolean) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Cl_RemotasEnCadena As New Cl_RemotasEnCadena(_Ds_Matriz_Documentos)
 
         Try
+
+            Sb_Borrar_Lineas_En_Blanco()
 
             _TblEncabezado.Rows(0).Item("CodFuncionario") = _CodFuncionario_Autoriza
 
@@ -24389,21 +24401,21 @@ Public Class Frm_Formulario_Documento
             _Autorizado = Fx_Validar_Stock(False, _Necesita_Permiso)
 
             If _Necesita_Permiso And Not _Autorizado Then
-                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00015")
+                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00015", _InsertarFuncionario)
             End If
 
             _Autorizado = False : _Necesita_Permiso = False
             _Autorizado = Fx_Validad_Morosidad(_Necesita_Permiso)
 
             If _Necesita_Permiso And Not _Autorizado Then
-                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00019")
+                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00019", _InsertarFuncionario)
             End If
 
             _Autorizado = False : _Necesita_Permiso = False
             _Autorizado = Fx_Validad_MinimoVenta(_Necesita_Permiso)
 
             If _Necesita_Permiso And Not _Autorizado Then
-                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00062")
+                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00062", _InsertarFuncionario)
             End If
 
             Dim _Revisar As Boolean = True
@@ -24454,14 +24466,14 @@ Public Class Frm_Formulario_Documento
                 _Autorizado = Fx_Validad_Cupo_Excedido(_Necesita_Permiso)
                 'Sb_Revisar_Permiso("Bkp00033", _Autorizado, _Necesita_Permiso)
                 If _Necesita_Permiso And Not _Autorizado Then
-                    _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00033")
+                    _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00033", _InsertarFuncionario)
                 End If
             End If
 
             If Fx_CreditoVigenteVencido(_RowEntidad) Then
                 If Not Fx_Tiene_Permiso(Me, "Doc00098",, False) Then
                     'Sb_Revisar_Permiso("Doc00098", False, True)
-                    _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Doc00098")
+                    _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Doc00098", _InsertarFuncionario)
                 End If
             End If
 
@@ -24513,14 +24525,14 @@ Public Class Frm_Formulario_Documento
             _Autorizado = Fx_Validar_Descuentos(_Necesita_Permiso)
             'Sb_Revisar_Permiso("Bkp00039", _Autorizado, _Necesita_Permiso)
             If _Necesita_Permiso And Not _Autorizado Then
-                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00039")
+                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00039", _InsertarFuncionario)
             End If
 
             _Autorizado = False : _Necesita_Permiso = False
             _Autorizado = Fx_Validar_Fecha_Despacho(_Necesita_Permiso)
             'Sb_Revisar_Permiso("Bkp00057", _Autorizado, _Necesita_Permiso)
             If _Necesita_Permiso And Not _Autorizado Then
-                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00057")
+                _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00057", _InsertarFuncionario)
             End If
 
             'If Not IsNothing(_Cl_Despacho) Then
@@ -24542,13 +24554,13 @@ Public Class Frm_Formulario_Documento
                     .CodSucEntidad = _TblEncabezado.Rows(0).Item("CodSucEntidad")
                     .Nombre_Entidad = _TblEncabezado.Rows(0).Item("Nombre_Entidad")
                     .Usuario_Solicita = _TblEncabezado.Rows(0).Item("CodFuncionario")
-                    .Tido = _TblEncabezado.Rows(0).Item("Tido")
+                    .Tido = _TblEncabezado.Rows(0).Item("TipoDoc")
                     .Total_Original = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
                     .Total_Documento = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
 
                 End With
 
-                _Mensaje.EsCorrecto = True
+                _Mensaje.EsCorrecto = False
                 _Mensaje.Mensaje = "Documento necesita permisos"
                 _Mensaje.Tag = _Cl_RemotasEnCadena
 
@@ -24556,7 +24568,7 @@ Public Class Frm_Formulario_Documento
 
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Mensaje = "Documento no necesita permisos"
-                _Mensaje.Tag = Nothing
+                _Mensaje.Tag = _Cl_RemotasEnCadena
 
             End If
 

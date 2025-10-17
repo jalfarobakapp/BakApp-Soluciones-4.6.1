@@ -650,7 +650,7 @@ Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA = {_Idpdaenca}"
                                                     "Codigo", "Cantidad", "Precio", "Observacion",
                                                     False, False, _Nudo,,,,,, False, False, _FechaRecepcion, False, True)
             'CodFuncionario_Autoriza
-            Dim _Mensaje_RevPermisos As LsValiciones.Mensajes = Fm.Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto(_CodFuncionario_Autoriza)
+            Dim _Mensaje_RevPermisos As LsValiciones.Mensajes = Fm.Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto(_CodFuncionario_Autoriza, False)
 
             If _Mensaje_RevPermisos.EsCorrecto = False Then
                 Fm.Dispose()

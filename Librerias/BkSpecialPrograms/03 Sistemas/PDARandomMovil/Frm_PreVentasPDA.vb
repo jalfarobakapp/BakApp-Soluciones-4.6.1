@@ -21,6 +21,8 @@ Public Class Frm_PreVentasPDA
 
     Private Sub Frm_PreVentasPDA_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
         Sb_Actualizar_Grilla()
 
     End Sub
@@ -190,7 +192,7 @@ Public Class Frm_PreVentasPDA
 
         _Mensaje = _Cl_PDARandomMovil.Fx_Crear_NVV_PDARandomMOVIL(_FilaDataRow, Mod_Modalidad)
 
-        _Mensaje = _Cl_PDARandomMovil.Fx_RevisarSituacionComercialCliente(_FilaDataRow, Date.Now)
+        '_Mensaje = _Cl_PDARandomMovil.Fx_RevisarSituacionComercialCliente(_FilaDataRow, Date.Now)
 
         If _Mensaje.EsCorrecto Then
 

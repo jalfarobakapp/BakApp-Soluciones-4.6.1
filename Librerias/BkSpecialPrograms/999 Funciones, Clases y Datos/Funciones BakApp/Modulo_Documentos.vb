@@ -86,12 +86,18 @@ Public Module Modulo_Documentos
 
                     Dim _Es_Ajuste As Boolean
                     Dim _PreVenta As Boolean
+                    Dim _SobreStock As Boolean
 
                     If _SubTido = "AJU" Then _Es_Ajuste = True
 
                     If _Tido = "COV" And _SubTido = "PRE" Then
                         _SubTido = String.Empty
                         _PreVenta = True
+                    End If
+
+                    If _Tido = "NVV" And _SubTido = "STK" Then
+                        _SubTido = String.Empty
+                        _SobreStock = True
                     End If
 
                     _Minimizar = False
@@ -101,6 +107,7 @@ Public Module Modulo_Documentos
                     Fm_Post.MinimizeBox = _Minimizar
                     Fm_Post.Pro_SubTido = _SubTido
                     Fm_Post.PreVenta = _PreVenta
+                    Fm_Post.SobreStock = _SobreStock
                     Fm_Post.ShowDialog(_Fm_Menu_Padre)
                     Fm_Post.Dispose()
 

@@ -69,9 +69,9 @@ Public Class Cl_RemotasEnCadena
                     .Id_Enc = Zw_Remotas_En_Cadena_01_Enc.Id_Enc
                     .Nro_RCadena = Zw_Remotas_En_Cadena_01_Enc.Nro_RCadena
 
-                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Remotas_En_Cadena_02_Det (Id_Enc,Nro_RCadena,Orden,CodPermiso,Descripcion,Monto_Aprobacion)" & vbCrLf &
+                    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Remotas_En_Cadena_02_Det (Id_Enc,Nro_RCadena,Orden,CodPermiso,Descripcion,Monto_Aprobacion,NroRemota)" & vbCrLf &
                                    "Values (" & .Id_Enc & ",'" & .Nro_RCadena & "'," & .Orden & ",'" & .CodPermiso &
-                                   "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Monto_Aprobacion, False, 5) & ")"
+                                   "','" & .Descripcion & "'," & De_Num_a_Tx_01(.Monto_Aprobacion, False, 5) & ",'" & .NroRemota & "')"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
                     Comando.Transaction = myTrans
@@ -136,7 +136,7 @@ Public Class Cl_RemotasEnCadena
 
     End Function
 
-    Sub Sb_Insertar_DetalleConUsuario(_CodPermiso As String)
+    Sub Sb_Insertar_DetalleConUsuario(_CodPermiso As String, _InsertarFuncionario As Boolean)
 
         Dim _Det As New Zw_Remotas_En_Cadena_02_Det
 
@@ -157,6 +157,10 @@ Public Class Cl_RemotasEnCadena
         End With
 
         Ls_Zw_Remotas_En_Cadena_02_Det.Add(_Det)
+
+        If Not _InsertarFuncionario Then
+            Return
+        End If
 
         Consulta_sql = "Select CodUsuario From " & _Global_BaseBk & " ZW_PermisosVsUsuarios Where CodPermiso = '" & _CodPermiso & "'"
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)

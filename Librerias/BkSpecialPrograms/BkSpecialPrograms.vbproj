@@ -916,6 +916,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Productos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Prod_Asociacion.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Ftp_Conexiones.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Prod_SobreStock.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Remotas_En_Cadena_01_Enc.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Remotas_En_Cadena_02_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Remotas_En_Cadena_03_Usu.vb" />
@@ -1062,6 +1063,19 @@
       <DependentUpon>Frm_RevMayMin.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\MayoristaMinoristas\Frm_RevMayMin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sobre Stock\Cl_SobreStock.vb" />
+    <Compile Include="03 Sistemas\Sobre Stock\Frm_SobreStock_IngDet.Designer.vb">
+      <DependentUpon>Frm_SobreStock_IngDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sobre Stock\Frm_SobreStock_IngDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sobre Stock\Frm_SobreStock_Productos.Designer.vb">
+      <DependentUpon>Frm_SobreStock_Productos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sobre Stock\Frm_SobreStock_Productos.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Puntos Venta\Cl_Puntos.vb" />
@@ -4993,6 +5007,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\MayoristaMinoristas\Frm_RevMayMin.resx">
       <DependentUpon>Frm_RevMayMin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sobre Stock\Frm_SobreStock_IngDet.resx">
+      <DependentUpon>Frm_SobreStock_IngDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sobre Stock\Frm_SobreStock_Productos.resx">
+      <DependentUpon>Frm_SobreStock_Productos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.resx">
       <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>

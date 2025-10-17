@@ -318,7 +318,7 @@ Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA = {_Idpdaenca}"
 
             Consulta_sql = "SELECT KOPR As 'Codigo'," & vbCrLf &
                            "CASE UDTRPR WHEN 1 THEN CAPRCO1 ELSE CAPRCO2 END As Cantidad," & vbCrLf &
-                           "UDTRPR, NOKOPR,'" & _Empresa & "' As Empresa,SULIDO As Sucursal,BOSULIDO As Bodega,PPPRNE As Precio,'' As 'Observacion'" & vbCrLf &
+                           "UDTRPR, NOKOPR,'" & _Empresa & "' As Empresa,SULIDO As Sucursal,BOSULIDO As Bodega,PPPRBR As Precio,'' As 'Observacion'" & vbCrLf &
                            "FROM PDADETA" & vbCrLf &
                            "WHERE IDPDAENCA = " & _Idpdaenca
             Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
@@ -348,21 +348,26 @@ Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA = {_Idpdaenca}"
                                                     "Codigo", "Cantidad", "Precio", "Observacion",
                                                     False, False, _Nudo,,,,,, False, False,, False, True)
             'CodFuncionario_Autoriza
-            Dim _Mensaje_RevPermisos As LsValiciones.Mensajes = Fm.Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto(_CodFuncionario)
+            Dim _Mensaje_RevPermisos As LsValiciones.Mensajes = Fm.Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto(_CodFuncionario, False)
 
-            If _Mensaje_RevPermisos.EsCorrecto = False Then
+            If _Mensaje_RevPermisos.EsCorrecto Then
+
+                Dim _Mensaje2 As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False,, False)
                 Fm.Dispose()
-                Return _Mensaje_RevPermisos
+
+                Return _Mensaje2
+
             Else
 
                 Dim _Cl_RemotasEnCadena As Cl_RemotasEnCadena = _Mensaje_RevPermisos.Tag
                 Dim _Ds_Matriz_Documentos As Ds_Matriz_Documentos = _Cl_RemotasEnCadena.Ds_Matriz_Documentos
 
-                With _Ds_Matriz_Documentos.Tables(0).Rows(0)
+                Dim _Tbl_Encabezado As DataTable = _Ds_Matriz_Documentos.Tables(4)
+
+                With _Tbl_Encabezado.Rows(0)
                     .Item("PdaRMovil") = True
                     .Item("Idpdaenca") = _Idpdaenca
                     .Item("ConservaNudo") = True
-                    .Item("CodFuncionario_Autoriza") = _CodFuncionario
                 End With
 
 
@@ -386,9 +391,42 @@ Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA = {_Idpdaenca}"
                         .Nro_RCadena = _Nro_RCadena
                         .Id_DocEnc = _Id_DocEnc
                         .Id_Enc = _Idpdaenca
-                        .Usuario_Solicita = ""
+                        .Usuario_Solicita = _CodFuncionario
 
                     End With
+
+                    For Each _Det As Zw_Remotas_En_Cadena_02_Det In _Cl_RemotasEnCadena.Ls_Zw_Remotas_En_Cadena_02_Det
+                        _Det.Nro_RCadena = _Nro_RCadena
+                        _Det.NroRemota = String.Empty
+                    Next
+
+                    Dim _NroRemota As String
+
+                    Dim _Det1 As Zw_Remotas_En_Cadena_02_Det
+                    _Det1 = _Cl_RemotasEnCadena.Ls_Zw_Remotas_En_Cadena_02_Det.Item(0)
+
+                    Dim _Usuario_Solicita = _Cl_RemotasEnCadena.Zw_Remotas_En_Cadena_01_Enc.Usuario_Solicita
+                    Dim _CodPermiso = _Det1.CodPermiso
+                    Dim _Descripcion_Permiso = _Det1.Descripcion
+                    Dim _Koen = _Cl_RemotasEnCadena.Zw_Remotas_En_Cadena_01_Enc.CodEntidad
+                    Dim _Nokoen = _Cl_RemotasEnCadena.Zw_Remotas_En_Cadena_01_Enc.Nombre_Entidad
+
+                    _NroRemota = Fx_Solicitar_Remota(_Usuario_Solicita,
+                                         _CodPermiso,
+                                         _Descripcion_Permiso,
+                                         _Id_DocEnc,
+                                         _Koen,
+                                         _Nokoen, False, "")
+
+                    _Det1.NroRemota = _NroRemota
+
+                    If _Cl_RemotasEnCadena.Ls_Zw_Remotas_En_Cadena_02_Det.Count = 1 Then
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Remotas Set Crear_Doc_Def_Al_Grabar = 1" & vbCrLf &
+                                       "Where NroRemota = '" & _NroRemota & "'"
+                        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                    End If
 
                     _Cl_RemotasEnCadena.Fx_Cadena_Remotas_Crear_Cadena()
 
@@ -396,33 +434,33 @@ Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA = {_Idpdaenca}"
 
             End If
 
+            'Dim _Mensaje2 As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False,, False)
+            'Fm.Dispose()
+
             'Fm.Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
 
-            Dim _Mensaje2 As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False,, False)
 
-            Fm.Dispose()
+            'If _Mensaje2.EsCorrecto Then
 
-            If _Mensaje2.EsCorrecto Then
+            '    'Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
+            '    '_Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Empresa, Mod_Modalidad, _Mensaje2.Id)
 
-                'Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
-                '_Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(Mod_Empresa, Mod_Modalidad, _Mensaje2.Id)
+            '    Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje2.Id
+            '    Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                Consulta_sql = "Select Top 1 * From MAEEDO Where IDMAEEDO = " & _Mensaje2.Id
-                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            '    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set " &
+            '                   "NVVGenerada = 1" &
+            '                   ",Idmaeedo_NVV = " & _Row.Item("IDMAEEDO") &
+            '                   ",Nudo_NVV = '" & _Row.Item("NUDO") & "'" &
+            '                   ",Feemdo_NVV = '" & Format(_Row.Item("FEEMDO"), "yyyyMMdd") & "'" & vbCrLf &
+            '                    "Where Id_Enc = " & _Idpdaenca
+            '    _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set " &
-                               "NVVGenerada = 1" &
-                               ",Idmaeedo_NVV = " & _Row.Item("IDMAEEDO") &
-                               ",Nudo_NVV = '" & _Row.Item("NUDO") & "'" &
-                               ",Feemdo_NVV = '" & Format(_Row.Item("FEEMDO"), "yyyyMMdd") & "'" & vbCrLf &
-                                "Where Id_Enc = " & _Idpdaenca
-                _Sql.Ej_consulta_IDU(Consulta_sql, False)
+            '    _Mensaje.EsCorrecto = True
+            '    _Mensaje.Id = _Mensaje2.Id
+            '    _Mensaje.Tag = _Row
 
-                _Mensaje.EsCorrecto = True
-                _Mensaje.Id = _Mensaje2.Id
-                _Mensaje.Tag = _Row
-
-            End If
+            'End If
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False

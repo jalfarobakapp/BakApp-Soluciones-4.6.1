@@ -82,6 +82,9 @@ Partial Class Menu
         Me.Btn_Rutas = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_PPP = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_PDARMovil = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_SobreStock = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_SobreStockCrear = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_SobreStockNVV = New DevComponents.DotNetBar.ButtonItem()
         Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
@@ -822,7 +825,7 @@ Partial Class Menu
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP, Me.Btn_PDARMovil})
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP, Me.Btn_PDARMovil, Me.Btn_SobreStock})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
         Me.ButtonX1.Visible = False
@@ -946,6 +949,23 @@ Partial Class Menu
         Me.Btn_PDARMovil.GlobalItem = False
         Me.Btn_PDARMovil.Name = "Btn_PDARMovil"
         Me.Btn_PDARMovil.Text = "PDA Random Movil"
+        '
+        'Btn_SobreStock
+        '
+        Me.Btn_SobreStock.GlobalItem = False
+        Me.Btn_SobreStock.Name = "Btn_SobreStock"
+        Me.Btn_SobreStock.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_SobreStockCrear, Me.Btn_SobreStockNVV})
+        Me.Btn_SobreStock.Text = "Sobre Stock"
+        '
+        'Btn_SobreStockCrear
+        '
+        Me.Btn_SobreStockCrear.Name = "Btn_SobreStockCrear"
+        Me.Btn_SobreStockCrear.Text = "Ingresar productos con Sobre Stock"
+        '
+        'Btn_SobreStockNVV
+        '
+        Me.Btn_SobreStockNVV.Name = "Btn_SobreStockNVV"
+        Me.Btn_SobreStockNVV.Text = "NVV Sobre Stock"
         '
         'Tiempo_Actualizar_BakApp
         '
@@ -1285,4 +1305,7 @@ Partial Class Menu
     Friend WithEvents Lbl_Thema_Verde As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_PDARMovil As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_FichaFucnionario As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_SobreStock As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_SobreStockCrear As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_SobreStockNVV As DevComponents.DotNetBar.ButtonItem
 End Class
