@@ -1,13 +1,17 @@
 ﻿Imports DevComponents.DotNetBar
+Imports Microsoft.Office.Interop.Outlook
 
 Public Class Frm_SobreStock_Productos
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public Property ModoSeleccion As Boolean
-
     Private _Empresa As String = Mod_Empresa
+
+    Public Property Seleccionado As Boolean
+    Public Property ModoSeleccion As Boolean
+    Public Property Zw_Prod_SobreStock As New Zw_Prod_SobreStock
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -33,8 +37,8 @@ Public Class Frm_SobreStock_Productos
 
         Dim _Condicion As String = String.Empty
 
-        Consulta_sql = "Select Sbs.*,Pst.StComp1,Pst.StComp2,Pst.StSobStockUd1,Pst.StSobStockUd2,Pst.StSbCompStock1,Pst.StSbCompStock2" & vbCrLf &
-                       ",STFI1,STFI2,Ms.STOCNV1,Ms.STOCNV2" & vbCrLf &
+        Consulta_sql = "Select Sbs.*,Sbs.PqteHabilitado-Sbs.PqteComprometido As 'PqteDisponible' ,Pst.StComp1,Pst.StComp2," &
+                       "STFI1,STFI2,Ms.STOCNV1,Ms.STOCNV2" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_SobreStock Sbs" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Prod_Stock Pst On " &
                        "Sbs.Empresa = Pst.Empresa And Sbs.Sucursal = Pst.Sucursal And Sbs.Bodega = Pst.Bodega And Sbs.Codigo = Pst.Codigo" & vbCrLf &
@@ -81,17 +85,31 @@ Public Class Frm_SobreStock_Productos
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            'If Not ModoSeleccion Then
+            .Columns("Moneda").Width = 30
+            .Columns("Moneda").HeaderText = "M."
+            .Columns("Moneda").Visible = True
+            .Columns("Moneda").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '    .Columns("StcfiUd1").Width = 70
-            '    .Columns("StcfiUd1").HeaderText = "Disponible Ud1"
-            '    .Columns("StcfiUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '    .Columns("StcfiUd1").DefaultCellStyle.Format = "##,###0.##"
-            '    .Columns("StcfiUd1").Visible = True
-            '    .Columns("StcfiUd1").DisplayIndex = _DisplayIndex
-            '    _DisplayIndex += 1
+            .Columns("PrecioXUd1").Width = 70
+            .Columns("PrecioXUd1").HeaderText = "Precio"
+            .Columns("PrecioXUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PrecioXUd1").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PrecioXUd1").Visible = True
+            .Columns("PrecioXUd1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            'End If
+            If Not ModoSeleccion Then
+
+                .Columns("StSobStockUd1").Width = 70
+                .Columns("StSobStockUd1").HeaderText = "Disponible Ud1"
+                .Columns("StSobStockUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("StSobStockUd1").DefaultCellStyle.Format = "##,###0.##"
+                .Columns("StSobStockUd1").Visible = True
+                .Columns("StSobStockUd1").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+            End If
 
             .Columns("FormatoPqte").Width = 80
             .Columns("FormatoPqte").HeaderText = "Form.Vnta"
@@ -108,50 +126,36 @@ Public Class Frm_SobreStock_Productos
             _DisplayIndex += 1
 
             .Columns("CantMinFormato").Width = 70
-            .Columns("CantMinFormato").HeaderText = "Cant.Min.Vta XForm."
-            .Columns("CantMinFormato").ToolTipText = "Cantidad Minima de venta por Pallet."
+            .Columns("CantMinFormato").HeaderText = "Cant.Min.Vta"
+            .Columns("CantMinFormato").ToolTipText = "Cantidad Mínima de venta por Pallet."
             .Columns("CantMinFormato").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("CantMinFormato").DefaultCellStyle.Format = "##,###0.##"
             .Columns("CantMinFormato").Visible = True
             .Columns("CantMinFormato").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("PqteHabilitado").Width = 70
-            '.Columns("PqteHabilitado").HeaderText = "Habilitado"
-            '.Columns("PqteHabilitado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("PqteHabilitado").DefaultCellStyle.Format = "##,###0.##"
-            '.Columns("PqteHabilitado").Visible = True
-            '.Columns("PqteHabilitado").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            '.Columns("PqteComprometido").Width = 70
-            '.Columns("PqteComprometido").HeaderText = "Comprometido"
-            '.Columns("PqteComprometido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("PqteComprometido").DefaultCellStyle.Format = "##,###0.##"
-            '.Columns("PqteComprometido").Visible = True
-            '.Columns("PqteComprometido").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            '.Columns("PqteDisponible").Width = 70
-            '.Columns("PqteDisponible").HeaderText = "Disponible"
-            '.Columns("PqteDisponible").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("PqteDisponible").DefaultCellStyle.Format = "##,###0.##"
-            '.Columns("PqteDisponible").Visible = True
-            '.Columns("PqteDisponible").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            .Columns("Moneda").Width = 30
-            .Columns("Moneda").HeaderText = "M."
-            .Columns("Moneda").Visible = True
-            .Columns("Moneda").DisplayIndex = _DisplayIndex
+            .Columns("PqteHabilitado").Width = 70
+            .Columns("PqteHabilitado").HeaderText = "Habilitado"
+            .Columns("PqteHabilitado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PqteHabilitado").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PqteHabilitado").Visible = True
+            .Columns("PqteHabilitado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("PrecioXUd1").Width = 70
-            .Columns("PrecioXUd1").HeaderText = "Precio"
-            .Columns("PrecioXUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("PrecioXUd1").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("PrecioXUd1").Visible = True
-            .Columns("PrecioXUd1").DisplayIndex = _DisplayIndex
+            .Columns("PqteComprometido").Width = 70
+            .Columns("PqteComprometido").HeaderText = "Comprometido"
+            .Columns("PqteComprometido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PqteComprometido").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PqteComprometido").Visible = True
+            .Columns("PqteComprometido").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("PqteDisponible").Width = 70
+            .Columns("PqteDisponible").HeaderText = "Disponible"
+            .Columns("PqteDisponible").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PqteDisponible").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PqteDisponible").Visible = True
+            .Columns("PqteDisponible").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
@@ -234,7 +238,7 @@ Public Class Frm_SobreStock_Productos
             .Descripcion = _RowProducto.Item("NOKOPR")
             .CantMinFormato = 0
             .FormatoPqte = "Pallet"
-            .StDispUd1 = _Row_Stock.Item("StDispUd1")
+            .StSobStockUd1 = _Row_Stock.Item("StDispUd1")
             .PqteHabilitado = 0
             .Ud1XPqte = 1
             .CantMinFormato = 0
@@ -310,6 +314,42 @@ Public Class Frm_SobreStock_Productos
     End Sub
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+
+        If ModoSeleccion Then
+
+            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+            With Zw_Prod_SobreStock
+
+                .Id = _Fila.Cells("Id").Value
+                .Empresa = _Fila.Cells("Empresa").Value
+                .Sucursal = _Fila.Cells("Sucursal").Value
+                .Bodega = _Fila.Cells("Bodega").Value
+                .Codigo = _Fila.Cells("Codigo").Value
+                .Descripcion = _Fila.Cells("Descripcion").Value
+                .Activo = _Fila.Cells("Activo").Value
+                .CodFuncionarioCrea = _Fila.Cells("CodFuncionarioCrea").Value
+                .FechaVigencia = _Fila.Cells("FechaVigencia").Value
+                .FormatoPqte = _Fila.Cells("FormatoPqte").Value
+                .PqteHabilitado = _Fila.Cells("PqteHabilitado").Value
+                .PqteComprometido = _Fila.Cells("PqteComprometido").Value
+                .Ud1XPqte = _Fila.Cells("Ud1XPqte").Value
+                .CantMinFormato = _Fila.Cells("CantMinFormato").Value
+                .Moneda = _Fila.Cells("Moneda").Value
+                .PrecioXUd1 = _Fila.Cells("PrecioXUd1").Value
+                .StSobStockUd1 = _Fila.Cells("StSobStockUd1").Value
+                .StSobStockUd2 = _Fila.Cells("StSobStockUd2").Value
+                .StSbCompStock1 = _Fila.Cells("StSbCompStock1").Value
+                .StSbCompStock2 = _Fila.Cells("StSbCompStock2").Value
+                .StDispUd1 = _Fila.Cells("StSobStockUd1").Value - _Fila.Cells("StSbCompStock1").Value
+
+            End With
+
+            Seleccionado = True
+
+            Me.Close()
+
+        End If
 
     End Sub
 

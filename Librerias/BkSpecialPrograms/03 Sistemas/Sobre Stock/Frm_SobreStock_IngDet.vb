@@ -39,7 +39,7 @@ Public Class Frm_SobreStock_IngDet
             Input_CantMinFormato.Value = .CantMinFormato
             Txt_Moneda.Text = Zw_Prod_SobreStock.Moneda
             DInput_PrecioXUd1.Value = .PrecioXUd1
-            Lbl_StcfiUd1.Text = _Row_Producto.Item("UD01PR").ToString.Trim & " Disponibles: " & .StDispUd1.ToString("#,##")
+            Lbl_StcfiUd1.Text = _Row_Producto.Item("UD01PR").ToString.Trim & " Disponibles: " & .StSobStockUd1.ToString("#,##")
 
         End With
 
@@ -67,10 +67,10 @@ Public Class Frm_SobreStock_IngDet
             .PrecioXUd1 = DInput_PrecioXUd1.Value
 
             _KilosHabilitados = .Ud1XPqte * .PqteHabilitado
-            _PqtesMaximo = Math.Floor(.StDispUd1 / .Ud1XPqte)
+            _PqtesMaximo = Math.Floor(.StSobStockUd1 / .Ud1XPqte)
 
-            .StDispUd1 = _KilosHabilitados
-            .StDispUd2 = _KilosHabilitados / _Rtu
+            .StSobStockUd1 = _KilosHabilitados
+            .StSobStockUd2 = _KilosHabilitados / _Rtu
 
             If String.IsNullOrWhiteSpace(.Codigo) Then
                 MessageBoxEx.Show(Me, "Falta el código del producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -92,8 +92,8 @@ Public Class Frm_SobreStock_IngDet
                 DInput_Ud1XPqte.Focus()
                 Return
             End If
-            If .Ud1XPqte > .StDispUd1 Then
-                MessageBoxEx.Show(Me, "La cantidad de " & _Ud & " por " & .FormatoPqte & " no puede ser mayor que " & FormatNumber(.StDispUd1, 0), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            If .Ud1XPqte > .StSobStockUd1 Then
+                MessageBoxEx.Show(Me, "La cantidad de " & _Ud & " por " & .FormatoPqte & " no puede ser mayor que " & FormatNumber(.StSobStockUd1, 0), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 DInput_Ud1XPqte.Focus()
                 Return
             End If
@@ -124,7 +124,7 @@ Public Class Frm_SobreStock_IngDet
 
                 _Msj = "No es posible habilitar " & .PqteHabilitado & " " & .FormatoPqte & " para la venta." & vbCrLf & vbCrLf &
                        "El máximo permitido es " & Math.Round(_PqtesMaximo, 0) & " " & .FormatoPqte & ", según el cálculo de " & .Ud1XPqte & " " & _Ud & " por " & .FormatoPqte & " y un " & vbCrLf &
-                       "stock disponible de " & FormatNumber(.StDispUd1, 0) & " " & _Ud & "."
+                       "stock disponible de " & FormatNumber(.StSobStockUd1, 0) & " " & _Ud & "."
                 MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Input_PqteHabilitado.Focus()
                 Return

@@ -175,6 +175,7 @@ Public Class Frm_Formulario_Documento
     Dim _Row_Modalidad_Doc As DataRow
 
     Dim _Ls_Cl_PreVenta As New List(Of Zw_PreVenta_StockProd)
+    Dim _Ls_Cl_SobreStock As New List(Of Zw_Prod_SobreStock)
 
 #Region "PROPIEDADES"
 
@@ -636,6 +637,12 @@ Public Class Frm_Formulario_Documento
             If PreVenta Then
                 Me.Text += Space(1) & "(PRE-VENTA)"
                 Lbl_DocActual.Text += Space(1) & "(PRE-VENTA)"
+                Lbl_DocActual.ForeColor = Color.Yellow
+            End If
+
+            If SobreStock Then
+                Me.Text += Space(1) & "(SOBRE STOCK)"
+                Lbl_DocActual.Text += Space(1) & "(SOBRE STOCK)"
                 Lbl_DocActual.ForeColor = Color.Yellow
             End If
 
@@ -9040,7 +9047,8 @@ Public Class Frm_Formulario_Documento
 
                                 If SoloprodEnDoc_CLALIBPR AndAlso
                                     String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("TblTipoVenta")) AndAlso
-                                        String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("CodTipoVenta")) AndAlso Not PreVenta Then
+                                        String.IsNullOrWhiteSpace(_TblEncabezado.Rows(0).Item("CodTipoVenta")) AndAlso
+                                        Not PreVenta AndAlso Not SobreStock Then
 
                                     MessageBoxEx.Show(Me, "Los productos a vender solo deben ser de un tipo especifico de venta" & vbCrLf &
                                                       "a continuación deberá seleccionar el tipo.", "Tipo de venta", MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, True)
@@ -9054,6 +9062,10 @@ Public Class Frm_Formulario_Documento
                                 End If
 
                                 If PreVenta AndAlso Not Fx_ValidarSiTieneContenedor() Then
+                                    Return
+                                End If
+
+                                If SobreStock AndAlso Not Fx_ValidarSiExistenProductosSobreStock() Then
                                     Return
                                 End If
 
@@ -9246,7 +9258,7 @@ Public Class Frm_Formulario_Documento
                                         Dim _CantidadPallet As Double = _Zw_PreVenta_StockProd.Cantidad
 
                                         Dim FmPl As New Frm_Cantidades_PreVenta
-                                        FmPl.Zw_PreVenta_StockProd = _Zw_PreVenta_StockProd
+                                        'FmPl.Zw_PreVenta_StockProd = _Zw_PreVenta_StockProd
                                         FmPl.Codigo = _Codigo
                                         FmPl.Rtu = _Rtu
                                         FmPl.Rtu_Ori = _Rtu
@@ -9257,7 +9269,7 @@ Public Class Frm_Formulario_Documento
                                         FmPl.Cantidad_Ud1 = _CantUd1
                                         FmPl.Cantidad_Ud2 = _CantUd2
                                         'FmPl.Aceptado
-                                        FmPl.Zw_PreVenta_StockProd = _Zw_PreVenta_StockProd
+                                        ' FmPl.Zw_PreVenta_StockProd = _Zw_PreVenta_StockProd
                                         FmPl.TopMost = True
                                         FmPl.ShowDialog(Me)
                                         _Aceptado = FmPl.Aceptado
@@ -10228,6 +10240,62 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
+    Function Fx_Cantidad_PorPalletSobreStock(_IdIndex As Integer,
+                                             _Rtu As Double) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Aceptado As Boolean
+
+        Try
+
+            ' Buscar el registro en _Cl_PreVenta_Producto con IdIndex = _Id y asignarlo a _Cl_PreVta
+            Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = _Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = _IdIndex)
+            'Dim _CantidadPallet As Double = _Zw_Prod_SobreStock.Cantidad
+
+            Dim Fm As New Frm_Cantidades_PreVenta
+            Fm.Codigo = _Zw_Prod_SobreStock.Codigo
+            Fm.Rtu = _Rtu
+            Fm.Rtu_Ori = _Rtu
+            Fm.UnTrans = 2
+            Fm.Cantidad_Original = _Zw_Prod_SobreStock.Cantidad
+            Fm.Tido = _Tido
+            Fm.RevisarRtuVariable = False
+            Fm.Cantidad = _Zw_Prod_SobreStock.Cantidad
+            'FmPl.Cantidad_Ud1 = _CantUd1
+            'FmPl.Cantidad_Ud2 = _CantUd2
+            'FmPl.Aceptado
+            ' FmPl.Zw_PreVenta_StockProd = _Zw_PreVenta_StockProd
+            Fm.TopMost = True
+            Fm.ShowDialog(Me)
+            _Aceptado = Fm.Aceptado
+            Fm.Dispose()
+
+            If Not _Aceptado Then
+                Throw New System.Exception("Documento no encontrado")
+            End If
+
+            '_CantidadPallet = _Zw_Prod_SobreStock.Cantidad
+            '_CantUd1 = _CantidadPallet * _Zw_Prod_SobreStock.Ud1XPqte
+            '_CantUd2 = _CantUd1 / _Rtu
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Cantidad actualizada correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Detalle = "Cantidad por pallet sobre stock"
+            _Mensaje.Tag = Fm
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Error
+            _Mensaje.Detalle = "Cantidad por pallet sobre stock"
+            _Mensaje.Tag = Nothing
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Function Fx_Revisar_encabezado() As Boolean
 
         If _RowEntidad Is Nothing Then
@@ -10888,6 +10956,34 @@ Public Class Frm_Formulario_Documento
                                 _Cl_PreVenta_Producto.Zw_PreVenta_StockProd.IdIndex = _Fila.Cells("Id").Value
                                 _Ls_Cl_PreVenta.Add(_Cl_PreVenta_Producto.Zw_PreVenta_StockProd)
                                 _Fila.Cells("Precio").Value = _Cl_PreVenta_Producto.Zw_PreVenta_StockProd.PrecioXUd1
+                            End If
+
+                            Return
+
+                        End If
+
+                        If SobreStock And _Tido = "NVV" Then
+
+                            Dim _Mensaje As New LsValiciones.Mensajes
+                            _Mensaje = Fx_CargarProductoDesdeSobreStock()
+
+                            If Not _Mensaje.EsCorrecto Then
+                                _Fila.Cells("Codigo").Value = String.Empty
+                                Return
+                            End If
+
+                            Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = _Mensaje.Tag
+
+                            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Zw_Prod_SobreStock.Codigo & "'"
+                            _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                            Sb_Traer_Producto_A_La_Nueva_Fila(_Fila, _RowProducto, _Indice)
+
+                            If Not String.IsNullOrEmpty(_Fila.Cells("Codigo").Value) Then
+                                _Zw_Prod_SobreStock.IdIndex = _Fila.Cells("Id").Value
+                                _Ls_Cl_SobreStock.Add(_Zw_Prod_SobreStock)
+                                Dim _Valor_Dolar As Double = _TblEncabezado.Rows(0).Item("Valor_Dolar")
+                                _Fila.Cells("Precio").Value = Math.Round(_Zw_Prod_SobreStock.PrecioXUd1 * _Valor_Dolar, 5)
                             End If
 
                             Return
@@ -12183,6 +12279,23 @@ Public Class Frm_Formulario_Documento
         End If
 
         Return CBool(_IdCont)
+
+    End Function
+
+    Function Fx_ValidarSiExistenProductosSobreStock() As Boolean
+
+        If Not SobreStock Then
+            Return True
+        End If
+
+        Dim _TieneSobreStock As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_SobreStock", "Activo = 1")
+
+        If Not CBool(_TieneSobreStock) Then
+            MessageBoxEx.Show(Me, "No existen productos con Sobre Stock para la venta.", "Validación", MessageBoxButtons.OK,
+                              MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+        End If
+
+        Return CBool(_TieneSobreStock)
 
     End Function
 
@@ -30210,6 +30323,42 @@ Public Class Frm_Formulario_Documento
         End Try
 
         Return _Cl_PreVenta_Producto
+
+    End Function
+
+    Function Fx_CargarProductoDesdeSobreStock() As LsValiciones.Mensajes
+
+        Dim _Zw_Prod_SobreStock As New Zw_Prod_SobreStock
+        Dim _Seleccionado As Boolean
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim Fm As New Frm_SobreStock_Productos
+            Fm.ModoSeleccion = True
+            Fm.ShowDialog(Me)
+            _Zw_Prod_SobreStock = Fm.Zw_Prod_SobreStock
+            _Seleccionado = Fm.Seleccionado
+            Fm.Dispose()
+
+            If Not _Seleccionado Then
+                Throw New System.Exception("No se seleccionó ningún producto")
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Producto seleccionado"
+            _Mensaje.Mensaje = "Producto seleccionado correctamente"
+            _Mensaje.Tag = _Zw_Prod_SobreStock
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Validación"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
 
     End Function
 
