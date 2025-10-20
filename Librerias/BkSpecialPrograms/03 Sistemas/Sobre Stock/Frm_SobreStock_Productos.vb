@@ -1,5 +1,4 @@
 ﻿Imports DevComponents.DotNetBar
-Imports Microsoft.Office.Interop.Outlook
 
 Public Class Frm_SobreStock_Productos
 
@@ -11,7 +10,7 @@ Public Class Frm_SobreStock_Productos
     Public Property Seleccionado As Boolean
     Public Property ModoSeleccion As Boolean
     Public Property Zw_Prod_SobreStock As New Zw_Prod_SobreStock
-
+    Public Property Ls_ListaProductos As New List(Of String)
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -206,8 +205,8 @@ Public Class Frm_SobreStock_Productos
 
         Consulta_sql = "Select Ms.EMPRESA,Ms.KOSU,Ms.KOBO,Ms.STFI1,Ms.STFI2,Ms.STTR1,Ms.STTR2,Ms.STOCNV1,Ms.STOCNV2" & vbCrLf &
                        ",Isnull(St.StComp1,0) As 'StComp1',Isnull(St.StComp2,0) As 'StComp2'" & vbCrLf &
-                       ",Isnull(St.StSbCompStock1,0) As 'StSbCompStock1',Isnull(St.StSbCompStock2,0) As 'StSbCompStock2'" & vbCrLf &
-                       ",Isnull(St.StSobStockUd1,0) As 'StSobStockUd1',Isnull(St.StSobStockUd2,0) As 'StSobStockUd2'" & vbCrLf &
+                       "--,Isnull(St.StSbCompStock1,0) As 'StSbCompStock1',Isnull(St.StSbCompStock2,0) As 'StSbCompStock2'" & vbCrLf &
+                       "--,Isnull(St.StSobStockUd1,0) As 'StSobStockUd1',Isnull(St.StSobStockUd2,0) As 'StSobStockUd2'" & vbCrLf &
                        ",Cast(0 As Float) As StDispUd1,Cast(0 As Float) As StockDisponibleUd2" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From MAEST Ms" & vbCrLf &
@@ -318,6 +317,29 @@ Public Class Frm_SobreStock_Productos
         If ModoSeleccion Then
 
             Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+            If IsNothing(_Fila) Then
+                Return
+            End If
+
+            Dim _Codigo As String = String.Empty
+
+            Try
+                If Not IsNothing(_Fila.Cells("Codigo").Value) Then
+                    _Codigo = _Fila.Cells("Codigo").Value.ToString().Trim()
+                End If
+            Catch ex As Exception
+                _Codigo = String.Empty
+            End Try
+
+            ' Comprobar si el código ya está en la lista de productos seleccionados (insensible a mayúsculas)
+            If Not String.IsNullOrEmpty(_Codigo) AndAlso Ls_ListaProductos.Exists(Function(x) String.Equals(x, _Codigo, StringComparison.OrdinalIgnoreCase)) Then
+                MessageBoxEx.Show(Me,
+                                  "No se puede seleccionar el producto '" & _Codigo & "' - " & _Fila.Cells("Descripcion").Value & vbCrLf &
+                                  "porque ya está en la lista de selección para la creación del documento.",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
             With Zw_Prod_SobreStock
 

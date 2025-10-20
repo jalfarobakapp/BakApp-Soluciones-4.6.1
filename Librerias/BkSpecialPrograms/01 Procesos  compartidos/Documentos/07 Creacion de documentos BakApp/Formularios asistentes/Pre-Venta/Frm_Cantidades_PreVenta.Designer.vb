@@ -32,12 +32,17 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Lbl_Ud2 = New System.Windows.Forms.Label()
         Me.Lbl_Ud1 = New System.Windows.Forms.Label()
         Me.Txt_RTU = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.Label1 = New System.Windows.Forms.Label()
         Me.Txt_CantidadPreVenta = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Lbl_Cantidad = New System.Windows.Forms.Label()
         Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_Rtu = New DevComponents.DotNetBar.LabelX()
+        Me.Line2 = New DevComponents.DotNetBar.Controls.Line()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CantMinFormato = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_CantidadDisponible = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.SuspendLayout()
         '
         'Img_RtuAPI
@@ -84,6 +89,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_CantUD2.Location = New System.Drawing.Point(122, 117)
         Me.Txt_CantUD2.Name = "Txt_CantUD2"
         Me.Txt_CantUD2.PreventEnterBeep = True
+        Me.Txt_CantUD2.ReadOnly = True
         Me.Txt_CantUD2.Size = New System.Drawing.Size(100, 22)
         Me.Txt_CantUD2.TabIndex = 130
         Me.Txt_CantUD2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -102,6 +108,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_CantUD1.Location = New System.Drawing.Point(122, 67)
         Me.Txt_CantUD1.Name = "Txt_CantUD1"
         Me.Txt_CantUD1.PreventEnterBeep = True
+        Me.Txt_CantUD1.ReadOnly = True
         Me.Txt_CantUD1.Size = New System.Drawing.Size(100, 22)
         Me.Txt_CantUD1.TabIndex = 129
         Me.Txt_CantUD1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
@@ -164,39 +171,6 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_RTU.TabIndex = 124
         Me.Txt_RTU.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.BackColor = System.Drawing.Color.White
-        Me.Label3.ForeColor = System.Drawing.Color.Black
-        Me.Label3.Location = New System.Drawing.Point(12, 95)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(39, 13)
-        Me.Label3.TabIndex = 123
-        Me.Label3.Text = "R.T.U. "
-        '
-        'Label2
-        '
-        Me.Label2.AutoSize = True
-        Me.Label2.BackColor = System.Drawing.Color.White
-        Me.Label2.ForeColor = System.Drawing.Color.Black
-        Me.Label2.Location = New System.Drawing.Point(12, 119)
-        Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(105, 13)
-        Me.Label2.TabIndex = 122
-        Me.Label2.Text = "Unidad Secundaria"
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.BackColor = System.Drawing.Color.White
-        Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(12, 69)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(89, 13)
-        Me.Label1.TabIndex = 121
-        Me.Label1.Text = "Unidad Primaria"
-        '
         'Txt_CantidadPreVenta
         '
         Me.Txt_CantidadPreVenta.BackColor = System.Drawing.Color.White
@@ -215,34 +189,163 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_CantidadPreVenta.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.Txt_CantidadPreVenta.WatermarkText = "0"
         '
-        'Lbl_Cantidad
-        '
-        Me.Lbl_Cantidad.AutoSize = True
-        Me.Lbl_Cantidad.BackColor = System.Drawing.Color.White
-        Me.Lbl_Cantidad.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Cantidad.Location = New System.Drawing.Point(12, 27)
-        Me.Lbl_Cantidad.Name = "Lbl_Cantidad"
-        Me.Lbl_Cantidad.Size = New System.Drawing.Size(101, 13)
-        Me.Lbl_Cantidad.TabIndex = 133
-        Me.Lbl_Cantidad.Text = "Cantidad de Pallet"
-        '
         'Line1
         '
         Me.Line1.BackColor = System.Drawing.Color.White
         Me.Line1.ForeColor = System.Drawing.Color.Black
-        Me.Line1.Location = New System.Drawing.Point(15, 43)
+        Me.Line1.Location = New System.Drawing.Point(15, 51)
         Me.Line1.Name = "Line1"
         Me.Line1.Size = New System.Drawing.Size(240, 23)
         Me.Line1.TabIndex = 136
         Me.Line1.Text = "Line1"
         '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(15, 25)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(102, 23)
+        Me.LabelX1.TabIndex = 137
+        Me.LabelX1.Text = "Cantidad de Pallet"
+        '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(15, 67)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(102, 23)
+        Me.LabelX2.TabIndex = 138
+        Me.LabelX2.Text = "Unidad primaria"
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(15, 117)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(102, 23)
+        Me.LabelX3.TabIndex = 139
+        Me.LabelX3.Text = "Unidad Secundaria"
+        '
+        'Lbl_Rtu
+        '
+        Me.Lbl_Rtu.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Lbl_Rtu.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Rtu.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Rtu.Location = New System.Drawing.Point(15, 92)
+        Me.Lbl_Rtu.Name = "Lbl_Rtu"
+        Me.Lbl_Rtu.Size = New System.Drawing.Size(102, 23)
+        Me.Lbl_Rtu.TabIndex = 140
+        Me.Lbl_Rtu.Text = "R.T.U."
+        '
+        'Line2
+        '
+        Me.Line2.BackColor = System.Drawing.Color.White
+        Me.Line2.ForeColor = System.Drawing.Color.Black
+        Me.Line2.Location = New System.Drawing.Point(12, 204)
+        Me.Line2.Name = "Line2"
+        Me.Line2.Size = New System.Drawing.Size(240, 23)
+        Me.Line2.TabIndex = 141
+        Me.Line2.Text = "Line2"
+        '
+        'LabelX5
+        '
+        Me.LabelX5.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(12, 224)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(101, 36)
+        Me.LabelX5.TabIndex = 143
+        Me.LabelX5.Text = "Cantidad minima" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "de venta (Pallet)"
+        '
+        'Txt_CantMinFormato
+        '
+        Me.Txt_CantMinFormato.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CantMinFormato.Border.Class = "TextBoxBorder"
+        Me.Txt_CantMinFormato.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CantMinFormato.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CantMinFormato.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CantMinFormato.Location = New System.Drawing.Point(119, 233)
+        Me.Txt_CantMinFormato.Name = "Txt_CantMinFormato"
+        Me.Txt_CantMinFormato.PreventEnterBeep = True
+        Me.Txt_CantMinFormato.ReadOnly = True
+        Me.Txt_CantMinFormato.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_CantMinFormato.TabIndex = 142
+        Me.Txt_CantMinFormato.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.Txt_CantMinFormato.WatermarkText = "0"
+        '
+        'LabelX6
+        '
+        Me.LabelX6.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX6.ForeColor = System.Drawing.Color.Black
+        Me.LabelX6.Location = New System.Drawing.Point(12, 266)
+        Me.LabelX6.Name = "LabelX6"
+        Me.LabelX6.Size = New System.Drawing.Size(102, 23)
+        Me.LabelX6.TabIndex = 144
+        Me.LabelX6.Text = "Pallet disponibles"
+        '
+        'Txt_CantidadDisponible
+        '
+        Me.Txt_CantidadDisponible.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_CantidadDisponible.Border.Class = "TextBoxBorder"
+        Me.Txt_CantidadDisponible.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_CantidadDisponible.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_CantidadDisponible.ForeColor = System.Drawing.Color.Black
+        Me.Txt_CantidadDisponible.Location = New System.Drawing.Point(119, 266)
+        Me.Txt_CantidadDisponible.Name = "Txt_CantidadDisponible"
+        Me.Txt_CantidadDisponible.PreventEnterBeep = True
+        Me.Txt_CantidadDisponible.ReadOnly = True
+        Me.Txt_CantidadDisponible.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_CantidadDisponible.TabIndex = 145
+        Me.Txt_CantidadDisponible.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.Txt_CantidadDisponible.WatermarkText = "0"
+        '
         'Frm_Cantidades_PreVenta
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(270, 209)
+        Me.ClientSize = New System.Drawing.Size(270, 295)
+        Me.Controls.Add(Me.Txt_CantidadDisponible)
+        Me.Controls.Add(Me.LabelX6)
+        Me.Controls.Add(Me.LabelX5)
+        Me.Controls.Add(Me.Txt_CantMinFormato)
+        Me.Controls.Add(Me.Line2)
+        Me.Controls.Add(Me.Lbl_Rtu)
+        Me.Controls.Add(Me.LabelX3)
+        Me.Controls.Add(Me.LabelX2)
+        Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Txt_CantidadPreVenta)
-        Me.Controls.Add(Me.Lbl_Cantidad)
         Me.Controls.Add(Me.Img_RtuAPI)
         Me.Controls.Add(Me.Chk_DesacRazTransf)
         Me.Controls.Add(Me.Txt_CantUD2)
@@ -252,9 +355,6 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Controls.Add(Me.Lbl_Ud2)
         Me.Controls.Add(Me.Lbl_Ud1)
         Me.Controls.Add(Me.Txt_RTU)
-        Me.Controls.Add(Me.Label3)
-        Me.Controls.Add(Me.Label2)
-        Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Line1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -281,10 +381,15 @@ Partial Class Frm_Cantidades_PreVenta
     Public WithEvents Lbl_Ud2 As Label
     Public WithEvents Lbl_Ud1 As Label
     Public WithEvents Txt_RTU As TextBox
-    Friend WithEvents Label3 As Label
-    Friend WithEvents Label2 As Label
-    Friend WithEvents Label1 As Label
     Friend WithEvents Txt_CantidadPreVenta As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents Lbl_Cantidad As Label
     Friend WithEvents Line1 As DevComponents.DotNetBar.Controls.Line
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_Rtu As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Line2 As DevComponents.DotNetBar.Controls.Line
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_CantMinFormato As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_CantidadDisponible As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

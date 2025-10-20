@@ -47,8 +47,8 @@ Public Class Frm_Cantidades_PreVenta
         Dim _ValidarApiWMSBosOne As Boolean = False
         Dim _RtuVariable As Boolean = False
 
-        Txt_CantidadPreVenta.Text = Cantidad_Pqte ' Zw_PreVenta_StockProd.Cantidad
-        Txt_CantidadPreVenta.Tag = Cantidad_Pqte ' Zw_PreVenta_StockProd.Cantidad
+        Txt_CantidadPreVenta.Text = Cantidad ' Zw_PreVenta_StockProd.Cantidad
+        Txt_CantidadPreVenta.Tag = Cantidad ' Zw_PreVenta_StockProd.Cantidad
 
         If RevisarRtuVariable Then
 
@@ -86,6 +86,9 @@ Public Class Frm_Cantidades_PreVenta
 
         End If
 
+        Txt_CantidadDisponible.Text = FormatNumber(PqteDisponible, 0)
+        Txt_CantMinFormato.Text = CantMinFormato
+
         Img_RtuAPI.Visible = _ValidarApiWMSBosOne
         'TxtCantUD1.Enabled = Chk_DesacRazTransf.Checked
 
@@ -95,7 +98,7 @@ Public Class Frm_Cantidades_PreVenta
         _Cantidad_Ud2 = Math.Round(_Cantidad_Ud1 / _Rtu, 5)
 
         If Chk_DesacRazTransf.Checked Then
-            Label3.Text = "R.T.U.  (" & _Rtu & ")"
+            Lbl_Rtu.Text = "R.T.U.  (" & _Rtu & ")"
         End If
 
         If _Rtu = 1 Then Txt_CantUD2.Enabled = False
@@ -156,17 +159,10 @@ Public Class Frm_Cantidades_PreVenta
 
     Private Sub Btn_Aceptar_Click(sender As Object, e As EventArgs) Handles Btn_Aceptar.Click
 
-        '_Fr_Alerta_Stock.Close()
-
-        'Dim _Oferta = _Fila.Cells("Oferta").Value
-        'Dim _Padre_Oferta = _Fila.Cells("Padre_Oferta").Value
-        'Dim _Cantidad_Oferta = _Fila.Cells("Cantidad_Oferta").Value
-        'Dim _Aplica_Oferta = _Fila.Cells("Aplica_Oferta").Value
-        'Dim _Rtu = _Fila.Cells("Rtu").Value
-
         If Cantidad_Ud1 <= 0 Then
             MessageBoxEx.Show(Me, "La cantidad no puede ser cero o negativa", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_CantidadPreVenta.SelectAll()
             Txt_CantidadPreVenta.Focus()
             Return
         End If
@@ -175,6 +171,8 @@ Public Class Frm_Cantidades_PreVenta
         If Txt_CantidadPreVenta.Tag < CantMinFormato Then
             MessageBoxEx.Show(Me, "La cantidad no puede ser menor a " & CantMinFormato & " " & FormatoPqte,
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_CantidadPreVenta.SelectAll()
+            Txt_CantidadPreVenta.Focus()
             Return
         End If
 
@@ -193,7 +191,6 @@ Public Class Frm_Cantidades_PreVenta
         'End If
 
         If Cantidad > PqteDisponible Then
-            'Dim _Pallet As Double = Zw_PreVenta_StockProd.StDispUd1 / Zw_PreVenta_StockProd.Ud1XPqte
             MessageBoxEx.Show(Me, "No puede vender mas de " & PqteDisponible & " " & FormatoPqte & vbCrLf &
                               "En su defecto " & Ud1XPqte * Cantidad & " " & _RowProducto.Item("UD01PR"),
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -201,7 +198,6 @@ Public Class Frm_Cantidades_PreVenta
             Return
         End If
 
-        '_Fr_Alerta_Stock.Close()
         Aceptado = True
 
         Me.Close()
@@ -286,4 +282,6 @@ Public Class Frm_Cantidades_PreVenta
             Cantidad = Cantidad_Original
         End If
     End Sub
+
+
 End Class

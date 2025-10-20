@@ -2713,6 +2713,11 @@ Public Class Frm_Formulario_Documento
             .Item("PrecioNetoRealUd1") = 0
             .Item("PrecioNetoRealUd2") = 0
 
+            .Item("SobreStock") = False
+            .Item("Id_SobreStock") = 0
+            .Item("Moneda_SobreStock") = String.Empty
+            .Item("Precio_SobreStock") = 0
+            .Item("Qty_SobreStock") = 0
 
             Dim _RowMoneda_Det As DataRow
 
@@ -9251,6 +9256,27 @@ Public Class Frm_Formulario_Documento
                                         _RevisarRtuVariable = False
                                     End If
 
+                                    If SobreStock AndAlso _Tido = "NVV" Then
+
+                                        Dim _Mensaje As New LsValiciones.Mensajes
+                                        Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = _Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = _Id)
+
+                                        _Mensaje = Fx_Cantidad_PorPalletSobreStock(_Id, _Rtu, _Zw_Prod_SobreStock)
+
+                                        If Not _Mensaje.EsCorrecto Then
+                                            Return
+                                        End If
+
+                                        Dim _SobreStock As Frm_Cantidades_PreVenta = CType(_Mensaje.Tag, Frm_Cantidades_PreVenta)
+
+                                        _CantUd1 = _SobreStock.Cantidad_Ud1
+                                        _CantUd2 = _SobreStock.Cantidad_Ud2
+                                        _Zw_Prod_SobreStock.Cantidad = _SobreStock.Cantidad
+
+                                        _Fila.Cells("Qty_SobreStock").Value = _Zw_Prod_SobreStock.Cantidad
+
+                                    End If
+
                                     If PreVenta AndAlso _Tido = "COV" Then
 
                                         ' Buscar el registro en _Cl_PreVenta_Producto con IdIndex = _Id y asignarlo a _Cl_PreVta
@@ -9299,7 +9325,7 @@ Public Class Frm_Formulario_Documento
                                     Fm.IdCont = _TblEncabezado.Rows(0).Item("IdCont")
                                     Fm.Chk_DesacRazTransf.Checked = _Fila.Cells("DesacRazTransf").Value
 
-                                    If PreVenta AndAlso _Tido = "COV" Then
+                                    If (PreVenta AndAlso _Tido = "COV") Or (SobreStock AndAlso _Tido = "NVV") Then
                                         Fm.Aceptado = True
                                     Else
                                         Fm.ShowDialog(Me)
@@ -10241,7 +10267,8 @@ Public Class Frm_Formulario_Documento
     End Sub
 
     Function Fx_Cantidad_PorPalletSobreStock(_IdIndex As Integer,
-                                             _Rtu As Double) As LsValiciones.Mensajes
+                                             _Rtu As Double,
+                                             ByRef _Zw_Prod_SobreStock As Zw_Prod_SobreStock) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Aceptado As Boolean
@@ -10249,8 +10276,11 @@ Public Class Frm_Formulario_Documento
         Try
 
             ' Buscar el registro en _Cl_PreVenta_Producto con IdIndex = _Id y asignarlo a _Cl_PreVta
-            Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = _Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = _IdIndex)
+            'Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = _Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = _IdIndex)
             'Dim _CantidadPallet As Double = _Zw_Prod_SobreStock.Cantidad
+
+            _Zw_Prod_SobreStock.PqteDisponible = _Zw_Prod_SobreStock.PqteHabilitado - _Zw_Prod_SobreStock.PqteComprometido
+
 
             Dim Fm As New Frm_Cantidades_PreVenta
             Fm.Codigo = _Zw_Prod_SobreStock.Codigo
@@ -10261,22 +10291,21 @@ Public Class Frm_Formulario_Documento
             Fm.Tido = _Tido
             Fm.RevisarRtuVariable = False
             Fm.Cantidad = _Zw_Prod_SobreStock.Cantidad
-            'FmPl.Cantidad_Ud1 = _CantUd1
-            'FmPl.Cantidad_Ud2 = _CantUd2
-            'FmPl.Aceptado
-            ' FmPl.Zw_PreVenta_StockProd = _Zw_PreVenta_StockProd
+            Fm.Ud1XPqte = _Zw_Prod_SobreStock.Ud1XPqte
+            Fm.PqteDisponible = _Zw_Prod_SobreStock.PqteDisponible
+            Fm.FormatoPqte = _Zw_Prod_SobreStock.FormatoPqte
+            Fm.CantMinFormato = _Zw_Prod_SobreStock.CantMinFormato
             Fm.TopMost = True
             Fm.ShowDialog(Me)
             _Aceptado = Fm.Aceptado
+
+            _Zw_Prod_SobreStock.Cantidad = Fm.Cantidad
+
             Fm.Dispose()
 
             If Not _Aceptado Then
                 Throw New System.Exception("Documento no encontrado")
             End If
-
-            '_CantidadPallet = _Zw_Prod_SobreStock.Cantidad
-            '_CantUd1 = _CantidadPallet * _Zw_Prod_SobreStock.Ud1XPqte
-            '_CantUd2 = _CantUd1 / _Rtu
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Mensaje = "Cantidad actualizada correctamente"
@@ -10980,10 +11009,17 @@ Public Class Frm_Formulario_Documento
                             Sb_Traer_Producto_A_La_Nueva_Fila(_Fila, _RowProducto, _Indice)
 
                             If Not String.IsNullOrEmpty(_Fila.Cells("Codigo").Value) Then
+
                                 _Zw_Prod_SobreStock.IdIndex = _Fila.Cells("Id").Value
                                 _Ls_Cl_SobreStock.Add(_Zw_Prod_SobreStock)
                                 Dim _Valor_Dolar As Double = _TblEncabezado.Rows(0).Item("Valor_Dolar")
+
                                 _Fila.Cells("Precio").Value = Math.Round(_Zw_Prod_SobreStock.PrecioXUd1 * _Valor_Dolar, 5)
+                                _Fila.Cells("SobreStock").Value = True
+                                _Fila.Cells("Id_SobreStock").Value = _Zw_Prod_SobreStock.Id
+                                _Fila.Cells("Moneda_SobreStock").Value = _Zw_Prod_SobreStock.Moneda
+                                _Fila.Cells("Precio_SobreStock").Value = _Zw_Prod_SobreStock.PrecioXUd1
+
                             End If
 
                             Return
@@ -12305,10 +12341,10 @@ Public Class Frm_Formulario_Documento
 
         If Fx_Revisar_si_tiene_registros(True) Then
 
-            If PreVenta Then
+            If PreVenta Or SobreStock Then
 
                 MessageBoxEx.Show(Me, "Este documento no se puede guardar en Stand-By" & Environment.NewLine &
-                                  "Documento de tipo PRE-VENTA",
+                                  "Documento de tipo " & Me.Text.Trim,
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
                 Return
 
@@ -30334,7 +30370,48 @@ Public Class Frm_Formulario_Documento
 
         Try
 
+            ' 1) Preparar lista con los códigos presentes en la grilla
+            Dim listaProductos As New List(Of String)
+
+            If Not Grilla_Detalle Is Nothing Then
+                For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
+                    If _Fl Is Nothing Then Continue For
+                    If _Fl.IsNewRow Then Continue For
+
+                    Try
+                        Dim _codigoObj = _Fl.Cells("Codigo").Value
+                        If _codigoObj IsNot Nothing Then
+                            Dim _codigo As String = _codigoObj.ToString().Trim()
+                            If _codigo <> String.Empty AndAlso Not listaProductos.Contains(_codigo) Then
+                                listaProductos.Add(_codigo)
+                            End If
+                        End If
+                    Catch exCel As Exception
+                        ' Ignorar filas con errores (p. ej. columna no existente) y continuar
+                        Continue For
+                    End Try
+                Next
+            End If
+
+
+            ' 2) Abrir formulario de sobre-stock y pasar la lista
             Dim Fm As New Frm_SobreStock_Productos
+
+            ' Intentar asignación directa de la propiedad pública Ls_ListaProductos
+            Try
+                Fm.Ls_ListaProductos = listaProductos
+            Catch exProp As Exception
+                ' Si la propiedad no existe o no es accesible, intentar por reflexión (no crítico)
+                Try
+                    Dim prop = Fm.GetType().GetProperty("Ls_ListaProductos")
+                    If prop IsNot Nothing AndAlso prop.CanWrite Then
+                        prop.SetValue(Fm, listaProductos, Nothing)
+                    End If
+                Catch
+                    ' No hacer nada si también falla la reflexión
+                End Try
+            End Try
+
             Fm.ModoSeleccion = True
             Fm.ShowDialog(Me)
             _Zw_Prod_SobreStock = Fm.Zw_Prod_SobreStock
@@ -30344,6 +30421,19 @@ Public Class Frm_Formulario_Documento
             If Not _Seleccionado Then
                 Throw New System.Exception("No se seleccionó ningún producto")
             End If
+
+            'Dim _Existe_En_Lista As Boolean = False
+
+            'For Each _Fl As DataGridViewRow In Grilla_Detalle.Rows
+            '    If _Fl.Cells("Codigo").Value = _Zw_Prod_SobreStock.Codigo Then
+            '        _Existe_En_Lista = True
+            '        Exit For
+            '    End If
+            'Next
+
+            'If _Existe_En_Lista Then
+
+            'End If
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Detalle = "Producto seleccionado"
