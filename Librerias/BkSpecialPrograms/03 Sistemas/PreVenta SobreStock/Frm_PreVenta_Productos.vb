@@ -1,5 +1,4 @@
-﻿Imports BkSpecialPrograms.PreVenta
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_PreVenta_Productos
 

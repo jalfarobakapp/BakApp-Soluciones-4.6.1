@@ -16,7 +16,7 @@ Public Class Frm_Usuarios_Random_Ficha
     Dim _Row_Tabfu As DataRow
     Dim _Row_Usuario As DataRow
     Dim _Tbl_Grupos As DataTable
-    'Dim _Tbl_KofuGrupos As DataTable
+    Dim _Tbl_KofuGrupos As DataTable
 
     Public Property Grabar As Boolean
     Public Property ModoEdicionComoFuncionario As Boolean
@@ -84,8 +84,8 @@ Public Class Frm_Usuarios_Random_Ficha
             If _Row_Usuario.Item("Kogru_Ventas").ToString.Trim <> Txt_Kogru_Ventas.Text.Trim Then
                 cambios.Add(New CambioParametro With {.Campo = "Kogru_Ventas", .ValorAnterior = _Row_Usuario.Item("Kogru_Ventas"), .ValorNuevo = Txt_Kogru_Ventas.Text.Trim})
             End If
-            If _Row_Usuario.Item("Kofu_Kogru").ToString.Trim <> Txt_Kofu_Kogru.Tag.ToString.Trim Then
-                cambios.Add(New CambioParametro With {.Campo = "Kofu_Kogru", .ValorAnterior = _Row_Usuario.Item("Kofu_Kogru"), .ValorNuevo = Txt_Kofu_Kogru.Tag.ToString.Trim})
+            If _Row_Usuario.Item("Kofu_Kogru").ToString.Trim <> Txt_Kofu_Kogru.Text.Trim Then
+                cambios.Add(New CambioParametro With {.Campo = "Kofu_Kogru", .ValorAnterior = _Row_Usuario.Item("Kofu_Kogru"), .ValorNuevo = Txt_Kofu_Kogru.Text.Trim})
             End If
             If _Row_Usuario.Item("PedirConfirmacionModalidad") <> Chk_PedirConfirmacionModalidad.Checked Then
                 cambios.Add(New CambioParametro With {.Campo = "PedirConfirmacionModalidad", .ValorAnterior = _Row_Usuario.Item("PedirConfirmacionModalidad"), .ValorNuevo = Chk_PedirConfirmacionModalidad.Checked})
@@ -194,11 +194,25 @@ Public Class Frm_Usuarios_Random_Ficha
 
             End If
 
-            ''Kofu_Kogru
+            Dim _KofuGrupos As String = _Row_Usuario.Item("Kofu_Kogru").ToString.Trim
+            Dim _KofuGruposList As List(Of String) = _Row_Usuario.Item("Kofu_Kogru").ToString.Split(","c).ToList()
 
-            Txt_Kofu_Kogru.Tag = _Row_Usuario.Item("Kofu_Kogru").ToString.Trim
-            If Not String.IsNullOrEmpty(Txt_Kofu_Kogru.Tag) Then
-                Txt_Kofu_Kogru.Text = _Row_Usuario.Item("Kofu_Kogru").ToString.Trim & " - " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & Txt_Kofu_Kogru.Tag & "'")
+            _KofuGrupos = NuloPorNro(Replace(_KofuGrupos, "''", "'"), "")
+
+            If _KogruList.Count = 1 Then
+                If Not String.IsNullOrWhiteSpace(_KofuGrupos) AndAlso Not _KofuGrupos.Contains("'") Then
+                    _KofuGrupos = "'" & _KofuGrupos & "'"
+                End If
+            End If
+
+            If Not String.IsNullOrWhiteSpace(_KofuGrupos) Then
+
+                Consulta_sql = "Select KOFU As 'Codigo',NOKOFU As 'Descripcion' From TABFU Where KOFU In (" & _KofuGrupos & ")"
+                _Tbl_KofuGrupos = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                Txt_Kofu_Kogru.Tag = _Tbl_Grupos
+                Txt_Kofu_Kogru.Text = _KofuGrupos
+
             End If
 
         Else
@@ -244,6 +258,18 @@ Public Class Frm_Usuarios_Random_Ficha
 
             If MessageBoxEx.Show(Me, "¡Al inactivar, todos los permisos asignados a este usuario se perderan!" & vbCrLf & vbCrLf &
                                  "¿Confirma dejar al usuario inactivo?", "Inactivar usuario",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                Return
+            End If
+
+        End If
+
+        If String.IsNullOrEmpty(Txt_Kogru_Ventas.Text.Trim) AndAlso Fx_Tiene_Permiso("NO00022", Kofu) Then
+
+            Dim _Msg As String = "Este usuario tiene activa la restricción NO00022, que depende de un grupo de vendedores asociado. Como no tiene grupo asignado, la restricción no puede aplicarse correctamente."
+            _Msg = Fx_AjustarTexto(_Msg, 80)
+
+            If MessageBoxEx.Show(Me, _Msg & vbCrLf & vbCrLf & "¿Confirma continuar sin grupo de vendedores?", "Validación",
                                  MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
                 Return
             End If
@@ -363,12 +389,14 @@ Public Class Frm_Usuarios_Random_Ficha
         End If
 
         Dim _Kogru_Ventas As String = String.Empty
+        Dim _Kofu_Kogru As String = String.Empty
 
         _Kogru_Ventas = Replace(Txt_Kogru_Ventas.Text, "'", "''")
+        _Kofu_Kogru = Replace(Txt_Kofu_Kogru.Text, "'", "''")
 
         Consulta_sql += "Update " & _Global_BaseBk & "Zw_Usuarios Set " &
                         "Kogru_Ventas = '" & _Kogru_Ventas & "'" &
-                        ",Kofu_Kogru = '" & Txt_Kofu_Kogru.Tag & "'" &
+                        ",Kofu_Kogru = '" & _Kofu_Kogru & "'" &
                         ",PedirConfirmacionModalidad = " & Convert.ToInt32(Chk_PedirConfirmacionModalidad.Checked) &
                         vbCrLf & "Where CodFuncionario = '" & _Kofu & "'"
 
@@ -492,19 +520,31 @@ Public Class Frm_Usuarios_Random_Ficha
         End If
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
-        Dim _Sql_Filtro_Condicion_Extra As String = "And KOFU <> '" & FUNCIONARIO & "'"
+        Dim _Sql_Filtro_Condicion_Extra As String = "And KOFU <> '" & Kofu & "'"
 
-        '_Filtrar.Tabla = "TABFUGE"
-        '_Filtrar.Campo = "KOGRU"
-        '_Filtrar.Descripcion = "NOKOGRU"
+        ''_Filtrar.Tabla = "TABFUGE"
+        ''_Filtrar.Campo = "KOGRU"
+        ''_Filtrar.Descripcion = "NOKOGRU"
 
-        If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
-                               False, False, True, True) Then
+        'If _Filtrar.Fx_Filtrar(Nothing,
+        '                       Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
+        '                       False, False, True, True) Then
 
-            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
-            Txt_Kofu_Kogru.Tag = _Row.Item("Codigo").ToString.Trim
-            Txt_Kofu_Kogru.Text = _Row.Item("Codigo").ToString.Trim & " - " & _Row.Item("Descripcion").ToString.Trim
+        '    Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+        '    Txt_Kofu_Kogru.Tag = _Row.Item("Codigo").ToString.Trim
+        '    Txt_Kofu_Kogru.Text = _Row.Item("Codigo").ToString.Trim & " - " & _Row.Item("Descripcion").ToString.Trim
+
+        'End If
+
+        If _Filtrar.Fx_Filtrar(_Tbl_KofuGrupos,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra, False, False, False, True) Then
+
+            _Tbl_KofuGrupos = _Filtrar.Pro_Tbl_Filtro
+
+            Dim _KofuGrupos As String = String.Join(",", _Tbl_KofuGrupos.AsEnumerable().[Select](Function(row) "'" & row.Field(Of String)("Codigo").ToString.Trim & "'"))
+
+            Txt_Kofu_Kogru.Tag = _Tbl_KofuGrupos
+            Txt_Kofu_Kogru.Text = _KofuGrupos
 
         End If
 

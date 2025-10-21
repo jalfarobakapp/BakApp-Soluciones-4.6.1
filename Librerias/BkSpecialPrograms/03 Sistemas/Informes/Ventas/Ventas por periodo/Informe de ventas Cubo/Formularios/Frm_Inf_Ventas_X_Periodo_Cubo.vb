@@ -1,5 +1,5 @@
 ﻿Imports System.Windows.Forms.DataVisualization.Charting
-Imports BkSpecialPrograms.Frm_BkpPostBusquedaEspecial_Mt
+'Imports BkSpecialPrograms.Frm_BkpPostBusquedaEspecial_Mt
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Inf_Ventas_X_Periodo_Cubo
@@ -1202,7 +1202,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             If _Tbl_Informe.Rows.Count = 0 Then
                 Sb_Actualizar_Graficos()
                 Sb_Imagenes_Filtros()
-                Throw New Exception("No existe información de ventas entre estas fechas")
+                'Throw New Exception("No existe información de ventas entre estas fechas")
             End If
 
             'RemoveHandler Grilla.CellEnter, AddressOf Sb_Grilla_CellEnter
@@ -3687,6 +3687,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select Distinct KOFULIDO From " &
                                               _Nombre_Tabla_Paso & vbCrLf & _SqlFiltro_Fechas & ")"
 
+        Dim _Pro_Nombre_Encabezado_Informe = String.Empty
+        Dim _SoloAlgunosVendedores = False
+
         If Fx_Tiene_Permiso(Nothing, "NO00022",, False) Then
 
             Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
@@ -3699,22 +3702,32 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             _Sql_Filtro_Condicion_Extra += vbCrLf & "And KOFU In (Select d.KOFU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & "))"
 
+            _Pro_Nombre_Encabezado_Informe = "MUESTRA SOLO VENDEDORES DE LOS GRUPOS ASOCIADOS AL FUNCIONARIO"
+            _SoloAlgunosVendedores = True
+
         ElseIf Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
 
             _Filtro_Vendedores_Asignados_Todas = False
             _Sql_Filtro_Condicion_Extra += "And KOFU = '" & FUNCIONARIO & "'"
+            _SoloAlgunosVendedores = True
 
         End If
 
-
         Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If Not String.IsNullOrWhiteSpace(_Pro_Nombre_Encabezado_Informe) Then
+            _Filtrar.Pro_Nombre_Encabezado_Informe = _Pro_Nombre_Encabezado_Informe
+        End If
 
         If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Vendedores,
                                    Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
                                    _Filtro_Vendedores_Todas, False) Then
 
             _Tbl_Filtro_Vendedores = _Filtrar.Pro_Tbl_Filtro
-            _Filtro_Vendedores_Todas = _Filtrar.Pro_Filtro_Todas
+
+            If Not _SoloAlgunosVendedores Then
+                _Filtro_Vendedores_Asignados_Todas = _Filtrar.Pro_Filtro_Todas
+            End If
 
             If Cmb_Vista_Informe.SelectedValue = "KOFULIDO" Then
                 Sb_Actualizar_Grilla(False)
@@ -4124,11 +4137,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     Private Sub Sb_Cmb_Vista_Informe_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
 
-        If Cmb_Vista_Informe.SelectedValue.ToString.Contains("KOGRU") Then
-            MessageBoxEx.Show(Me, "Función en desarrollo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Cmb_Vista_Informe.SelectedValue = UltFiltroSeleccionado
-            Return
-        End If
+        'If Cmb_Vista_Informe.SelectedValue.ToString.Contains("KOGRU") Then
+        '    MessageBoxEx.Show(Me, "Función en desarrollo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        '    Cmb_Vista_Informe.SelectedValue = UltFiltroSeleccionado
+        '    Return
+        'End If
 
         _Row_Vista = Fx_Crea_Tabla_Con_Filtro(_Tbl_Vista_Informe,
                                               "CODIGO = '" & Cmb_Vista_Informe.SelectedValue & "'", "Id").Rows(0)
@@ -4487,7 +4500,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
             Dim Fm_Post As New Frm_Formulario_Documento("NVV", csGlobales.Enum_Tipo_Documento.Venta, False)
-            'Fm_Post.Btn_Minimizar.Visible = True
             Fm_Post.MinimizeBox = False
             Fm_Post.ShowDialog(Me)
             Fm_Post.Dispose()
@@ -4530,6 +4542,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         Dim _Sql_Filtro_Condicion_Extra = "And KOFU In (Select Distinct KOFUEN From " &
                                           _Nombre_Tabla_Paso & vbCrLf & _SqlFiltro_Fechas & ")"
 
+        Dim _Pro_Nombre_Encabezado_Informe = String.Empty
+        Dim _SoloAlgunosVendedores = False
+
         If Fx_Tiene_Permiso(Nothing, "NO00022",, False) Then
 
             Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
@@ -4542,21 +4557,32 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             _Sql_Filtro_Condicion_Extra += vbCrLf & "And KOFU In (Select d.KOFU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & "))"
 
+            _Pro_Nombre_Encabezado_Informe = "MUESTRA SOLO VENDEDORES DE LOS GRUPOS ASOCIADOS AL FUNCIONARIO"
+            _SoloAlgunosVendedores = True
+
         ElseIf Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
 
             _Filtro_Vendedores_Asignados_Todas = False
             _Sql_Filtro_Condicion_Extra += "And KOFU = '" & FUNCIONARIO & "'"
+            _SoloAlgunosVendedores = True
 
         End If
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If Not String.IsNullOrWhiteSpace(_Pro_Nombre_Encabezado_Informe) Then
+            _Filtrar.Pro_Nombre_Encabezado_Informe = _Pro_Nombre_Encabezado_Informe
+        End If
 
         If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Vendedores_Asignados,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
                                _Filtro_Vendedores_Asignados_Todas, False) Then
 
             _Tbl_Filtro_Vendedores_Asignados = _Filtrar.Pro_Tbl_Filtro
-            _Filtro_Vendedores_Asignados_Todas = _Filtrar.Pro_Filtro_Todas
+
+            If Not _SoloAlgunosVendedores Then
+                _Filtro_Vendedores_Asignados_Todas = _Filtrar.Pro_Filtro_Todas
+            End If
 
             If Cmb_Vista_Informe.SelectedValue = "KOFUEN" Then
                 Sb_Actualizar_Grilla(False)
@@ -5074,8 +5100,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     End Sub
 
     Private Sub Btn_Filtro_Grupo_Vendedores_Documento_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Grupo_Vendedores_Documento.Click
-        MessageBoxEx.Show(Me, "Función en desarrollo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Return
+        'MessageBoxEx.Show(Me, "Función en desarrollo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'Return
         If Fx_Tiene_Permiso(Me, "NO00021",, False) Then
             MessageBoxEx.Show(Me, "Usted no tiene permiso para usar este filtro ya que tiene una restricción de visualización",
                               "Validación",
@@ -5115,8 +5141,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     End Sub
 
     Private Sub Btn_Filtro_Grupo_Vendedores_Asociado_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Grupo_Vendedores_Asociado.Click
-        MessageBoxEx.Show(Me, "Función en desarrollo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Return
+        'MessageBoxEx.Show(Me, "Función en desarrollo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'Return
         If Fx_Tiene_Permiso(Me, "NO00021",, False) Then
             MessageBoxEx.Show(Me, "Usted no tiene permiso para usar este filtro ya que tiene una restricción de visualización",
                               "Validación",

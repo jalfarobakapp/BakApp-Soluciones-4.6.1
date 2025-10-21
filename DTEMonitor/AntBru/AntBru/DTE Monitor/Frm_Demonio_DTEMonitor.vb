@@ -132,6 +132,12 @@ Public Class Frm_Demonio_DTEMonitor
 
         _AmbienteCertificacion = Convert.ToInt32(Chk_AmbienteCertificacion.Checked)
 
+        If CBool(_AmbienteCertificacion) Then
+            Dim _BackColor_Tido As Color = Color.FromArgb(235, 81, 13)
+            Metro_Bar_Color.BackgroundStyle.BackColor = _BackColor_Tido
+            'Lbl_Etiqueta.Text = "Ambiente de Certificación y Prueba"
+        End If
+
         Chk_MostrarBoletaBkHfDOS.Checked = False
         Chk_MostrarBoletaBkHfDOS.Visible = Chk_AmbienteCertificacion.Checked
 
@@ -459,7 +465,7 @@ Public Class Frm_Demonio_DTEMonitor
                 Throw New System.Exception(_Sql.Pro_Error)
             End If
 
-            Consulta_sql = "Select Top 20 Id_Dte,Idmaeedo,Tido,Nudo,Trackid,FechaSolicitud,Xml,Firma,CaratulaXml,Respuesta,AmbienteCertificacion,Procesar,Procesado" & vbCrLf &
+            Consulta_sql = "Select Top 20 Id_Dte,Idmaeedo,Tido,Nudo,Trackid,FechaSolicitud,Xml,Firma,CaratulaXml,Respuesta,AmbienteCertificacion,Procesar,Procesado,Empresa" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_DTE_Documentos" & vbCrLf &
                            "Where Procesar = 1 And Procesado = 0 And AmbienteCertificacion = " & _AmbienteCertificacion & " And Tido = 'BLV'" & vbCrLf &
                            "Order By Tido,Nudo"

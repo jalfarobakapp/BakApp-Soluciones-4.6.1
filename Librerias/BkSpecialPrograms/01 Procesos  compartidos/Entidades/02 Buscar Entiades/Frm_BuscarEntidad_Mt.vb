@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Threading.Tasks
+Imports DevComponents.DotNetBar
 
 Public Class Frm_BuscarEntidad_Mt
 
@@ -17,6 +18,9 @@ Public Class Frm_BuscarEntidad_Mt
     Dim _VerTeclado As Boolean
 
     Dim _Filtro_Extra As String
+
+    Private _CargandoFechasUltimaVenta As Boolean = False
+    Private _PendienteCargarFechasUltimaVenta As Boolean = False
 
     Public Property Pro_Filtro_Extra() As String
         Get
@@ -65,6 +69,7 @@ Public Class Frm_BuscarEntidad_Mt
 
     Public Property PreguntaClientePuntos As Boolean
     Public Property VerSoloEntidadesDelVendedor As Boolean
+    Public Property VerSoloEntidadesDelGrupo As Boolean
 
     Public Sub New(_Preguntar_Despues_de_seleccionar As Boolean)
 
@@ -85,15 +90,23 @@ Public Class Frm_BuscarEntidad_Mt
         Fx_Activar_Deactivar_Teclado()
 
         VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False) And Rdb_Clientes.Checked
+        VerSoloEntidadesDelGrupo = Fx_Tiene_Permiso(Me, "NO00022",, False) 'And Rdb_Clientes.Checked
 
-        If Not VerSoloEntidadesDelVendedor Then
-            VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False) And Rdb_Clientes.Checked
-            If VerSoloEntidadesDelVendedor Then
-                Chk_Solo_Clientes_Del_Vendedor.Text = "Ver solo clientes del grupo de vendesores del usuario activo"
-            End If
+        'If Not VerSoloEntidadesDelVendedor Then
+        '    VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00022",, False) And Rdb_Clientes.Checked
+        '    If VerSoloEntidadesDelVendedor Then
+        '        Chk_Solo_Clientes_Del_Vendedor.Text = "Ver solo clientes del grupo de vendesores del usuario activo"
+        '    End If
+        'End If
+
+        If VerSoloEntidadesDelGrupo Then
+
+            'VerSoloEntidadesDelVendedor = True
+            Chk_Solo_Clientes_Del_Vendedor.Text = "Ver solo clientes del grupo de vendedores del usuario activo"
+
         End If
 
-        If VerSoloEntidadesDelVendedor Then
+        If VerSoloEntidadesDelVendedor Or VerSoloEntidadesDelGrupo Then
             Chk_Solo_Clientes_Del_Vendedor.Checked = True
             Rdb_Ambos.Enabled = False
             Rdb_Proveedores.Enabled = False
@@ -102,18 +115,20 @@ Public Class Frm_BuscarEntidad_Mt
         BtnEditarUser.Enabled = False
         BtnEliminarUser.Enabled = False
 
-        Consulta_sql = "SELECT TOP (50) IDMAEEN,KOEN,SUEN,NOKOEN,SIEN,DIEN," &
+        Consulta_sql = "Select Top (50) IDMAEEN,KOEN,SUEN,NOKOEN,SIEN,DIEN," &
                        "Case TIEN " &
                        "When 'A' Then 'Ambos' " &
-                       "When 'P' Then 'Proveedor' When 'C' Then 'Cliente' Else '' End As Tipo_Entidad," & vbCrLf &
-                       "SUBSTRING(LCEN,6,3) As LCosto,SUBSTRING(LVEN,6,3) As LVenta," & vbCrLf &
-                       "Case BLOQUEADO When 1 Then 'SI' Else '' End As Bloqueado_Venta," & vbCrLf &
-                       "Case BLOQENCOM When 1 Then 'SI' Else '' End As Bloqueado_Compra" & vbCrLf &
-                       "FROM MAEEN Where 1<0"
+                       "When 'P' Then 'Proveedor' When 'C' Then 'Cliente' Else '' End As Tipo_Entidad" & vbCrLf &
+                       ",SUBSTRING(LCEN,6,3) As LCosto,SUBSTRING(LVEN,6,3) As LVenta" & vbCrLf &
+                       ",Case BLOQUEADO When 1 Then 'SI' Else '' End As Bloqueado_Venta" & vbCrLf &
+                       ",Case BLOQENCOM When 1 Then 'SI' Else '' End As Bloqueado_Compra" & vbCrLf &
+                       ",Cast('' As Char(3)) As KOFUEN,Cast('' As Varchar(30)) As NOKOFU,Cast(Null As Datetime) As 'FechaUltVnta'" & vbCrLf &
+                       ",Cast(0 As Bit) As 'FUVRevisada'" & vbCrLf &
+                       "From MAEEN Where 1<0"
+
         _Tbl_Entidades = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Grilla_Entidades.DataSource = _Tbl_Entidades
-
 
         'Chk_Solo_Clientes_Del_Vendedor.Checked = True
 
@@ -170,62 +185,90 @@ Public Class Frm_BuscarEntidad_Mt
 
     Sub Sb_Seleccionar_Fila(_Crear_Editar_Entidad As Boolean)
 
-        Dim _Fila As DataGridViewRow = Grilla_Entidades.Rows(Grilla_Entidades.CurrentRow.Index)
+        Try
 
-        Dim _CodEntidad As String = _Fila.Cells("KOEN").Value
-        Dim _SucEntidad As String = _Fila.Cells("SUEN").Value
-        Dim _RazonSocial As String = Trim(_Fila.Cells("NOKOEN").Value)
+            Dim _Fila As DataGridViewRow = Grilla_Entidades.Rows(Grilla_Entidades.CurrentRow.Index)
 
-        Me.Enabled = False
+            Dim _CodEntidad As String = _Fila.Cells("KOEN").Value
+            Dim _SucEntidad As String = _Fila.Cells("SUEN").Value
+            Dim _RazonSocial As String = Trim(_Fila.Cells("NOKOEN").Value)
+            Dim _Kofuen As String = Trim(_Fila.Cells("KOFUEN").Value)
 
-        If Grilla_Entidades.RowCount > 0 Then
+            Me.Enabled = False
 
-            If _Crear_Editar_Entidad Then
+            If Grilla_Entidades.RowCount > 0 Then
 
-                If Fx_Tiene_Permiso(Me, "CfEnt003") Then
+                If _Crear_Editar_Entidad Then
 
-                    Dim Fm As New Frm_Crear_Entidad_Mt
-                    Fm.Fx_Llenar_Entidad(_CodEntidad, _SucEntidad)
-                    Fm.CrearEntidad = False
-                    Fm.EditarEntidad = True
-                    Fm.ShowDialog(Me)
+                    If Fx_Tiene_Permiso(Me, "CfEnt003") Then
 
-                    If Fm.Elimnar Then
-                        Grilla_Entidades.Rows.RemoveAt(Grilla_Entidades.CurrentRow.Index)
-                    ElseIf Fm.EditarEntidad Then
-                        If Fm.Grabar Then
-                            ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
-                                          3 * 1000, eToastGlowColor.Blue, eToastPosition.MiddleCenter)
+                        If VerSoloEntidadesDelGrupo Then
+
+                            ' Crear una variable tipo DataRow y llenarla con los valores de _Fila
+                            Dim _DataRowEntidad As DataRow = _Tbl_Entidades.NewRow()
+
+                            For Each cell As DataGridViewCell In _Fila.Cells
+                                If _Tbl_Entidades.Columns.Contains(cell.OwningColumn.Name) Then
+                                    _DataRowEntidad(cell.OwningColumn.Name) = cell.Value
+                                End If
+                            Next
+
+                            Dim _Mensaje As New LsValiciones.Mensajes
+
+                            _Mensaje = Fx_EntidadEnGrupoVendedores(_DataRowEntidad, FUNCIONARIO, False)
+
+                            If Not _Mensaje.EsCorrecto Then
+                                MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Return
+                            End If
+
+                        End If
+
+                        Dim Fm As New Frm_Crear_Entidad_Mt
+                        Fm.Fx_Llenar_Entidad(_CodEntidad, _SucEntidad)
+                        Fm.CrearEntidad = False
+                        Fm.EditarEntidad = True
+                        Fm.ShowDialog(Me)
+
+                        If Fm.Elimnar Then
+                            Grilla_Entidades.Rows.RemoveAt(Grilla_Entidades.CurrentRow.Index)
+                        ElseIf Fm.EditarEntidad Then
+                            If Fm.Grabar Then
+                                ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.ok_button,
+                                              3 * 1000, eToastGlowColor.Blue, eToastPosition.MiddleCenter)
+                            End If
+                        End If
+                        Fm.Dispose()
+
+                    End If
+
+                Else
+
+                    If _Preguntar_Despues_de_seleccionar Then
+
+                        If MessageBoxEx.Show(Me, "¿Esta seguro de seleccionar esta entidad?" & vbCrLf &
+                                          "Entidad: " & _CodEntidad & " " & Trim(_RazonSocial),
+                                          "Seleccionar entidad", MessageBoxButtons.YesNo,
+                                          MessageBoxIcon.Question) = DialogResult.No Then
+                            Return
                         End If
                     End If
-                    Fm.Dispose()
+
+                    _RowEntidad = Fx_Traer_Datos_Entidad(_CodEntidad, _SucEntidad)
+                    _TblEntidad = Fx_Traer_Datos_Entidad_Tabla(_CodEntidad, _SucEntidad)
+
+                    Me.Close()
 
                 End If
-
             Else
-
-                If _Preguntar_Despues_de_seleccionar Then
-
-                    If MessageBoxEx.Show(Me, "¿Esta seguro de seleccionar esta entidad?" & vbCrLf &
-                                      "Entidad: " & _CodEntidad & " " & Trim(_RazonSocial),
-                                      "Seleccionar entidad", MessageBoxButtons.YesNo,
-                                      MessageBoxIcon.Question) = DialogResult.No Then
-                        Return
-                    End If
-                End If
-
-                _RowEntidad = Fx_Traer_Datos_Entidad(_CodEntidad, _SucEntidad)
-                _TblEntidad = Fx_Traer_Datos_Entidad_Tabla(_CodEntidad, _SucEntidad)
-
-                Me.Close()
-
+                MessageBoxEx.Show(Me, "No hay ninguna entidad que editar",
+                                  "Edita Entidad", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
-        Else
-            MessageBoxEx.Show(Me, "No hay ninguna entidad que editar",
-                              "Edita Entidad", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End If
 
-        Me.Enabled = True
+        Catch ex As Exception
+        Finally
+            Me.Enabled = True
+        End Try
 
     End Sub
 
@@ -302,6 +345,28 @@ Public Class Frm_BuscarEntidad_Mt
             .Columns("Bloqueado_Compra").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("KOFUEN").Width = 30
+            .Columns("KOFUEN").HeaderText = "Ven."
+            .Columns("KOFUEN").ToolTipText = "Código del vendedor"
+            .Columns("KOFUEN").Visible = True
+            .Columns("KOFUEN").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NOKOFU").Width = 150
+            .Columns("NOKOFU").HeaderText = "Vendedor"
+            .Columns("NOKOFU").ToolTipText = "Nombre de vendedor"
+            .Columns("NOKOFU").Visible = True
+            .Columns("NOKOFU").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FechaUltVnta").HeaderText = "F.Ult.Venta"
+            .Columns("FechaUltVnta").ToolTipText = "Fecha de la última venta"
+            .Columns("FechaUltVnta").Width = 70
+            .Columns("FechaUltVnta").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FechaUltVnta").Visible = True
+            .Columns("FechaUltVnta").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
         End With
 
     End Sub
@@ -334,7 +399,7 @@ Public Class Frm_BuscarEntidad_Mt
             If Chk_Solo_Clientes_Del_Vendedor.Checked Then
 
                 Dim _Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
-                Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru = '" & FUNCIONARIO & "'")
+                Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru Like  '%" & FUNCIONARIO & "%'")
 
                 If String.IsNullOrEmpty(_Kogru) Then
                     _Filtro_Vendedores = "And KOFUEN = '" & FUNCIONARIO & "'"
@@ -369,6 +434,26 @@ Public Class Frm_BuscarEntidad_Mt
             _Filtro_Entidades = String.Empty
         End If
 
+        'Consulta_sql = "Select Top (50) IDMAEEN,KOEN,SUEN,NOKOEN,SIEN,DIEN," &
+        '               "Case TIEN " &
+        '               "When 'A' Then 'Ambos' " &
+        '               "When 'P' Then 'Proveedor' When 'C' Then 'Cliente' Else '' End As Tipo_Entidad," & vbCrLf &
+        '               "SUBSTRING(LCEN,6,3) As LCosto,SUBSTRING(LVEN,6,3) As LVenta," & vbCrLf &
+        '               "BLOQUEADO,BLOQENCOM," & vbCrLf &
+        '               "Case BLOQUEADO When 1 Then 'SI' Else '' End As Bloqueado_Venta," & vbCrLf &
+        '               "Case BLOQENCOM When 1 Then 'SI' Else '' End As Bloqueado_Compra," & vbCrLf &
+        '               "KOFUEN,Isnull(NOKOFU,'') As NOKOFU," & vbCrLf &
+        '               "(Select Top 1 FEEMLI From MAEDDO d With (Nolock)" &
+        '               "Where d.TIDO In ('GDV','FCV','BLV','FVX') And d.ENDO = KOEN And d.SUENDO = SUEN Order By FEEMLI Desc) As FechaUltVnta" & vbCrLf &
+        '               "From MAEEN With (Nolock)" & vbCrLf &
+        '               "Left Join TABFU Tf On KOFUEN = Tf.KOFU" & vbCrLf &
+        '               "Where KOEN+NOKOEN+SUEN+DIEN LIKE '%" & _Cadena & "%'" & vbCrLf &
+        '               _Condicion_Entidad & vbCrLf &
+        '               _Filtro_Extra & vbCrLf &
+        '               _Filtro_Entidades & vbCrLf &
+        '               _Filtro_Vendedores & vbCrLf &
+        '               "Order by KOEN"
+
         Consulta_sql = "Select Top (50) IDMAEEN,KOEN,SUEN,NOKOEN,SIEN,DIEN," &
                        "Case TIEN " &
                        "When 'A' Then 'Ambos' " &
@@ -376,14 +461,17 @@ Public Class Frm_BuscarEntidad_Mt
                        "SUBSTRING(LCEN,6,3) As LCosto,SUBSTRING(LVEN,6,3) As LVenta," & vbCrLf &
                        "BLOQUEADO,BLOQENCOM," & vbCrLf &
                        "Case BLOQUEADO When 1 Then 'SI' Else '' End As Bloqueado_Venta," & vbCrLf &
-                       "Case BLOQENCOM When 1 Then 'SI' Else '' End As Bloqueado_Compra" & vbCrLf &
-                       "From MAEEN With (Nolock) " &
+                       "Case BLOQENCOM When 1 Then 'SI' Else '' End As Bloqueado_Compra," & vbCrLf &
+                       "KOFUEN,Isnull(NOKOFU,'') As NOKOFU" & vbCrLf &
+                       "From MAEEN With (Nolock)" & vbCrLf &
+                       "Left Join TABFU Tf On KOFUEN = Tf.KOFU" & vbCrLf &
                        "Where KOEN+NOKOEN+SUEN+DIEN LIKE '%" & _Cadena & "%'" & vbCrLf &
                        _Condicion_Entidad & vbCrLf &
                        _Filtro_Extra & vbCrLf &
                        _Filtro_Entidades & vbCrLf &
                        _Filtro_Vendedores & vbCrLf &
                        "Order by KOEN"
+
         Dim _Tmp As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tmp.Rows
@@ -391,8 +479,49 @@ Public Class Frm_BuscarEntidad_Mt
         Next
 
         Sb_Formato_Grilla()
+        Sb_Cargar_FechasUltimaVenta_Async()
 
     End Function
+
+    Private Sub Sb_Cargar_FechasUltimaVenta_Async()
+
+        If _CargandoFechasUltimaVenta Then
+            _PendienteCargarFechasUltimaVenta = True
+            Return
+        End If
+
+        Dim _Sql2 As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        _CargandoFechasUltimaVenta = True
+        Task.Run(Sub()
+                     Dim filasNoRevisadas = _Tbl_Entidades.Select("FUVRevisada = 0")
+                     For Each row As DataRow In filasNoRevisadas
+                         Dim koen As String = row("KOEN").ToString()
+                         Dim suen As String = row("SUEN").ToString()
+                         Consulta_sql =
+                            "SELECT TOP 1 FEEMLI FROM MAEDDO WITH (NOLOCK) " &
+                            "WHERE TIDO IN ('GDV','FCV','BLV','FVX') AND ENDO = '" & koen & "' AND SUENDO = '" & suen & "' " &
+                            "ORDER BY FEEMLI DESC"
+                         Dim _Row As DataRow = _Sql2.Fx_Get_DataRow(Consulta_sql)
+                         Dim fechaUltimaVenta As Object = Nothing
+                         If Not IsNothing(_Row) Then
+                             fechaUltimaVenta = _Row.Item("FEEMLI")
+                         End If
+                         Me.Invoke(Sub()
+                                       row("FechaUltVnta") = If(fechaUltimaVenta IsNot Nothing, fechaUltimaVenta, DBNull.Value)
+                                       row("FUVRevisada") = True
+                                       Grilla_Entidades.Refresh()
+                                   End Sub)
+                     Next
+                     Me.Invoke(Sub()
+                                   _CargandoFechasUltimaVenta = False
+                                   If _PendienteCargarFechasUltimaVenta Then
+                                       _PendienteCargarFechasUltimaVenta = False
+                                       Sb_Cargar_FechasUltimaVenta_Async()
+                                   End If
+                               End Sub)
+                 End Sub)
+    End Sub
 
     Private Sub Sb_Nueva_Linea(_Fila As DataRow)
 
@@ -409,6 +538,10 @@ Public Class Frm_BuscarEntidad_Mt
             .Item("LCosto") = _Fila.Item("LCosto")
             .Item("LVenta") = _Fila.Item("LVenta")
             .Item("Tipo_Entidad") = _Fila.Item("Tipo_Entidad")
+            .Item("KOFUEN") = _Fila.Item("KOFUEN")
+            .Item("NOKOFU") = _Fila.Item("NOKOFU")
+            '.Item("FechaUltVnta") = _Fila.Item("FechaUltVnta")
+            .Item("FUVRevisada") = False
 
             _Tbl_Entidades.Rows.Add(NewFila)
 
@@ -801,7 +934,7 @@ Public Class Frm_BuscarEntidad_Mt
 
     Private Sub Chk_Solo_Clientes_Del_Vendedor_CheckedChanged(sender As Object, e As EventArgs)
 
-        If VerSoloEntidadesDelVendedor Then
+        If VerSoloEntidadesDelVendedor Or VerSoloEntidadesDelGrupo Then
             If Not Chk_Solo_Clientes_Del_Vendedor.Checked Then
                 If Not Fx_Tiene_Permiso(Me, "CfEnt031") Then
                     Chk_Solo_Clientes_Del_Vendedor.Checked = True

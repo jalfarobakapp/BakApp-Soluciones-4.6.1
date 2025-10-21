@@ -361,8 +361,6 @@ Public Class Cl_Permisos_Asociados
 
     End Function
 
-
-
     Function Fx_Cadena_Remotas_Generar_Detalle(_CodPermiso As String,
                                                _Orden As Integer,
                                                _Tbl_Usuario As DataTable,

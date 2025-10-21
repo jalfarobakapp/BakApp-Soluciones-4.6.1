@@ -42,11 +42,11 @@ Set @dias_habiles = @dias_habiles+@dias_domingo
 --Select @dias_semana As Dias_Semana,@dias_sabado As Dias_Sabado,@dias_domingo As Dias_Domingo
 
 Set @Dias = Datediff(D,@Fecha1,@Fecha2)
-Set	@Meses = Round(@Dias/30.41,1)
-Set @meses_habiles= Round(@dias_habiles/30.41,3)
+Set	@Meses = Round(@Dias/30.41666,1)
+Set @meses_habiles= Round(@dias_habiles/30.41666,3)
 Set @dias_habiles_mes=@dias_habiles/@Meses
 
---Select @dias_habiles As 'Dias Habiles',@Dias as Dias_dif,@Meses As Mes, @meses_habiles As Mes_Habil,@dias_habiles_mes As Dias_Habil_X_Mes
+--Select @Fecha1 As 'F.Desde',@Fecha2 As 'F.Hasta', @dias_habiles As 'Dias Habiles',@Dias as Dias,@Meses As Meses, @meses_habiles As meses_habiles,@dias_habiles_mes As Dias_Habil_X_Mes
 
 
 --Set @Dias = Datediff( D,@Fecha1,@Fecha2)
@@ -119,11 +119,13 @@ Select #Codigo_Revision#,Round(Sum(CantUd1),2) As CantUd1,
 						 Round(Sum(CantUd2),2) As CantUd2,
 						 @Dias As Dias,
 						 @Meses As Meses,
-						 Isnull(Round(Sum(CantUd1)/@meses_habiles,2),2) As Promedio_Ud1,
+						 --Isnull(Round(Sum(CantUd1)/@meses_habiles,2),2) As Promedio_Ud1,
+                         Isnull(Round(Sum(CantUd1)/@Meses,2),2) As Promedio_Ud1,
                          Isnull(Round(STDEVP(CantUd1),2),0) As DvSt_Ud1,
 			             Isnull(Round(Var(CantUd1),2),0) As Varianza_Ud1,
 			             Cast(0 As Float) As Media_Ud1,
-			             Isnull(Round(Sum(CantUd2)/@meses_habiles,1),2) As Promedio_Ud2,
+			             --Isnull(Round(Sum(CantUd2)/@meses_habiles,1),2) As Promedio_Ud2,
+			             Isnull(Round(Sum(CantUd2)/@Meses,1),2) As Promedio_Ud2,
                          Isnull(Round(STDEVP(CantUd2),2),0) As DvSt_Ud2,
 			             Isnull(Round(Var(CantUd2),2),0) As Varianza_Ud2,
 			             Cast(0 As Float) As Media_Ud2
@@ -177,11 +179,13 @@ Select #Codigo_Revision#,Round(Sum(CantUd1),2) As CantUd1,
 						 Round(Sum(CantUd2),2) As CantUd2,
 						 @dias_habiles As Dias,
 						 @meses_habiles As Meses,
-						 Isnull(Round((Sum(CantUd1)/@dias_habiles)*@dias_habiles_mes,2),2) As Promedio_Ud1,
+						 --Isnull(Round((Sum(CantUd1)/@dias_habiles)*@dias_habiles_mes,2),2) As Promedio_Ud1,
+						 Isnull(Round(Sum(CantUd1)/@Meses,2),2) As Promedio_Ud1,
                          Isnull(Round(STDEVP(CantUd1),2),0) As DvSt_Ud1,
 			             Isnull(Round(Var(CantUd1),2),0) As Varianza_Ud1,
 			             Cast(0 As Float) As Media_Ud1,
-			             Isnull(Round(Sum(CantUd2)/@meses_habiles,2),2) As Promedio_Ud2,
+			             --Isnull(Round(Sum(CantUd2)/@meses_habiles,2),2) As Promedio_Ud2,
+                         Isnull(Round(Sum(CantUd2)/@Meses,2),2) As Promedio_Ud2,
                          Isnull(Round(STDEVP(CantUd2),2),0) As DvSt_Ud2,
 			             Isnull(Round(Var(CantUd2),2),0) As Varianza_Ud2,
 			             Cast(0 As Float) As Media_Ud2
@@ -239,8 +243,11 @@ From #TablaPaso# Z1
 Update #TablaPaso# Set #Campo_RotUd2Mes# = Round(#Campo_RotUd1Mes#/Rtu,5)
 Update #TablaPaso# Set #Campo_Promedio_Ud2Mes# = Round(#Campo_Promedio_Ud1Mes#/Rtu,5)
 
-Update #TablaPaso# Set #Campo_Promedio_Ud1Dia# = Round(#Campo_Promedio_Ud1Mes#/@dias_habiles_mes,5)
-Update #TablaPaso# Set #Campo_Promedio_Ud2Dia# = Round(#Campo_Promedio_Ud2Mes#/@dias_habiles_mes,5)  
+--Update #TablaPaso# Set #Campo_Promedio_Ud1Dia# = Round(#Campo_Promedio_Ud1Mes#/@dias_habiles_mes,5)
+--Update #TablaPaso# Set #Campo_Promedio_Ud2Dia# = Round(#Campo_Promedio_Ud2Mes#/@dias_habiles_mes,5)
+
+Update #TablaPaso# Set #Campo_Promedio_Ud1Dia# = Round(#Campo_Promedio_Ud1Mes#/30.41666,5)
+Update #TablaPaso# Set #Campo_Promedio_Ud2Dia# = Round(#Campo_Promedio_Ud2Mes#/30.41666,5)
 
 Update #TablaPaso# Set #Campo_RotUd1Dia# = Round(#Campo_RotUd1Mes#/@dias_habiles_mes,5)
 Update #TablaPaso# Set #Campo_RotUd2Dia# = Round(#Campo_RotUd2Mes#/@dias_habiles_mes,5)  

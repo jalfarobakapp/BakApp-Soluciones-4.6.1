@@ -30,6 +30,8 @@ CREATE TABLE [dbo].[Zw_Demonio_NVVAuto](
     [CodFuncionario_Factura]    [varchar](3)    NOT NULL DEFAULT (''),
     [EnvFacAutoBk]              [bit]           NOT NULL DEFAULT (0),
     [Modalidad_Fac]             [varchar](5)    NOT NULL DEFAULT (''),
+    [Empresa]                   [char](2)       NOT NULL DEFAULT (''),
+    [Feer_NVV]                  [datetime]      NULL,
  CONSTRAINT [PK_Zw_Demonio_NVVAuto] PRIMARY KEY CLUSTERED 
 (
 	[Id_Enc] ASC

@@ -448,6 +448,143 @@ Public Class Cl_Inventario
 
     End Function
 
+
+    Function Fx_CrearFoto2(_IdInventario As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Inv_FotoInventario", "IdInventario = " & _IdInventario)
+
+        If CBool(_Reg) Then
+            _Mensaje.Detalle = "Validación"
+            Throw New System.Exception("No es posible tomar una foto del stock de la bodega, ya que existen datos de" & vbCrLf &
+                                       "una foto anterior. Para poder obtener una nueva foto, primero debes eliminar" & vbCrLf &
+                                       "la anterior.")
+        End If
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Try
+
+            SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+            myTrans = Cn2.BeginTransaction()
+
+            With Zw_Inv_Inventario
+
+                Consulta_sql = $"Insert Into {_Global_BaseBk}Zw_Inv_FotoInventario 
+(IdInventario,Empresa,Sucursal,Bodega,Tipr,Codigo,CodigoRap,CodigoTec,Descripcion,
+ StFisicoUd1,StFisicoUd2,Costo,PPP,PUltCompra,FechaFoto,HoraFoto,SuperFamilia,Familia,SubFamilia,Marca,Rubro,ClasLibre,Zona)
+
+Select {_IdInventario},'{ .Empresa}','{ .Sucursal}','{ .Bodega}',Mp.TIPR,Mp.KOPR,Mp.KOPRRA,Mp.KOPRTE, 
+Mp.NOKOPR,SUM(Mst.STFI1) AS StFisicoUd1,SUM(Mst.STFI2) AS StFisicoUd2,
+ISNULL(Men.PM,0) AS Costo,ISNULL(Men.PM,0) AS PM,ISNULL(Men.PPUL01, 0) AS PPUL01,
+GETDATE()AS F1,GETDATE() AS H1,
+ISNULL(Mp.FMPR,''),
+ISNULL(Mp.PFPR,''),
+ISNULL(Mp.HFPR,''),
+ISNULL(Mp.MRPR,''),
+ISNULL(Mp.RUPR,''),
+ISNULL(Mp.CLALIBPR,''),
+ISNULL(Mp.ZONAPR,'')
+From MAEST Mst With (Nolock)
+Inner Join MAEPR Mp With (Nolock) On Mp.KOPR = Mst.KOPR
+Inner Join MAEPREM Men With (Nolock) On Men.KOPR = Mst.KOPR And Men.EMPRESA = '{ .Empresa}'
+Where Mst.EMPRESA = '{ .Empresa}' And Mst.KOSU = '{ .Sucursal}' And Mst.KOBO = '{ .Bodega}'
+Group By Men.EMPRESA, Mst.KOSU, Mst.KOBO, Mp.KOPR, 
+Mp.KOPRRA,Mp.KOPRTE,Mp.NOKOPR,Men.PM, Men.PPUL01,Mp.TIPR,
+Mp.FMPR,
+Mp.PFPR,
+Mp.HFPR,
+Mp.MRPR,
+Mp.RUPR,
+Mp.CLALIBPR,
+Mp.ZONAPR"
+
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                Consulta_sql = $"
+Insert Into {_Global_BaseBk}Zw_Inv_FotoInventario (IdInventario,Empresa,Sucursal,Bodega,Tipr,Codigo,
+CodigoRap,CodigoTec,Descripcion,StFisicoUd1,StFisicoUd2,Costo,PPP,PUltCompra,FechaFoto,HoraFoto,
+SuperFamilia,Familia,SubFamilia,Marca,Rubro,ClasLibre,Zona)
+SELECT {_IdInventario},'{ .Empresa}','{ .Sucursal}','{ .Bodega}',MAEPR.TIPR, MAEPR.KOPR, MAEPR.KOPRRA,MAEPR.KOPRTE, 
+MAEPR.NOKOPR,0 AS StFisicoUd1,0 AS StFisicoUd2,ISNULL(MAEPREM.PM, 0) AS Costo,ISNULL(MAEPREM.PM, 0) AS PM, ISNULL(MAEPREM.PPUL01, 0) AS PPUL01,
+GETDATE()AS F1,GETDATE() AS H1,
+ISNULL(MAEPR.FMPR,''),
+ISNULL(MAEPR.PFPR,''),
+ISNULL(MAEPR.HFPR,''),
+ISNULL(MAEPR.MRPR,''),
+ISNULL(MAEPR.RUPR,''),
+ISNULL(MAEPR.CLALIBPR,''),
+ISNULL(MAEPR.ZONAPR,'')
+From MAEPREM 
+Inner Join MAEPR On MAEPREM.KOPR = MAEPR.KOPR
+Where (MAEPR.KOPR Not In (Select Codigo From {_Global_BaseBk}Zw_Inv_FotoInventario Where IdInventario = {_IdInventario})) 
+Order By MAEPR.KOPR "
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End With
+
+            Consulta_sql = $"Update {_Global_BaseBk}Zw_Inv_FotoInventario Set 
+Nom_Rubro = Isnull((Select top 1 NOKORU From TABRU Where KORU = Rubro),''),
+Nom_Marca = Isnull((Select Top 1 NOKOMR From TABMR Where KOMR = Marca),''),
+Nom_Zona = Isnull((Select Top 1 NOKOZO From TABZO Where KOZO = Zona),''),
+Nom_SuperFamilia = Isnull((Select Top 1 NOKOFM From TABFM Where KOFM = SuperFamilia),''),
+Nom_Familia = Isnull((Select Top 1 NOKOPF From TABPF Where KOFM = SuperFamilia And KOPF = Familia),''),
+Nom_SubFamilia = Isnull((Select Top 1 NOKOHF From TABHF Where KOFM = SuperFamilia And KOPF = Familia And KOHF = SubFamilia),''),
+Nom_ClasLibre = Isnull((Select Top 1 NOKOCARAC From TABCARAC Where KOTABLA = 'CLALIBPR' And KOCARAC = ClasLibre),'')
+Where IdInventario = {_IdInventario}"
+
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+
+            'If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            '    _Mensaje.Detalle = "Error al tomar foto stock"
+            '    Throw New System.Exception(_Sql.Pro_Error)
+            'End If
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Tomar foto stock"
+            _Mensaje.Mensaje = "Foto del stock de la bodega creado correctamente"
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Error al tomar foto stock"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+
+            If Not IsNothing(myTrans) Then
+                myTrans.Rollback()
+            End If
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Function Fx_EliminarFoto(_Formulario As Form, _IdInventario As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes

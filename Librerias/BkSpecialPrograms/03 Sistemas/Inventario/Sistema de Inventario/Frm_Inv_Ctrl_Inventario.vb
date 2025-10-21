@@ -80,7 +80,7 @@ Public Class Frm_Inv_Ctrl_Inventario
         End If
 
         Dim _Mensaje As LsValiciones.Mensajes
-        _Mensaje = Cl_Inventario.Fx_CrearFoto(_IdInventario)
+        _Mensaje = Cl_Inventario.Fx_CrearFoto2(_IdInventario)
 
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 

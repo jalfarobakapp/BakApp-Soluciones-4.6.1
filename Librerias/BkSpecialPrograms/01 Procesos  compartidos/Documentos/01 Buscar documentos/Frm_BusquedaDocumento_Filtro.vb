@@ -1207,7 +1207,7 @@ Buscar:
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        _Mensaje = Fx_EntidadEnGrupoVendedores(_Row, FUNCIONARIO)
+        _Mensaje = Fx_EntidadEnGrupoVendedores(_Row, FUNCIONARIO, True)
 
         If Not _Mensaje.EsCorrecto Then
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK,

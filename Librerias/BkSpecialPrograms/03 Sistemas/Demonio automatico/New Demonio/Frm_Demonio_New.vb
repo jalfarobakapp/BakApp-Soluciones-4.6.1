@@ -1080,6 +1080,7 @@ Public Class Frm_Demonio_New
 
             If _Fecha_Computador <> _Fecha_Dtp Then
 
+                Dim _FechaDelServidor As Date = FechaDelServidor()
                 DtpFecharevision.Value = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
 
             End If
@@ -1776,6 +1777,9 @@ Public Class Frm_Demonio_New
         If _Cl_NVVAutoExterna.Ejecutar Then
 
             If Not _Cl_NVVAutoExterna.Procesando Then
+
+                _Cl_NVVAutoExterna.Sb_Importar_NVV_Desde_PDARandomMOVIL_NVVAuto()
+                _Cl_NVVAutoExterna.Sb_Procesar_NVV_Desde_PDARandomMOVIL()
 
                 _Cl_NVVAutoExterna.Sb_Procesar_NVV(Me)
 

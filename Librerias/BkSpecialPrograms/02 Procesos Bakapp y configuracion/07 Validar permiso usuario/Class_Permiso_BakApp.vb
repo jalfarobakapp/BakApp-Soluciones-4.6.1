@@ -1068,10 +1068,12 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Ubic0018", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ubic0019", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ubic0020", _Objeto, _Formulario)
+
         _SqlQuery += Fx_Insertar_Permiso("User0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("User0002", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("User0003", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("User0004", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("User0005", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Pdc00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Pdc00002", _Objeto, _Formulario)
@@ -4700,6 +4702,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.USUARIOS.ToString
             Case "User0004"
                 _DescripcionPermiso = "ELIMINAR FUNCIONARIO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.USUARIOS, 6)
+                _NombreFamiliaPermiso = _Fml.USUARIOS.ToString
+            Case "User0005"
+                _DescripcionPermiso = "EDITAR MI FICHA DE FUNCIONARIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.USUARIOS, 6)
                 _NombreFamiliaPermiso = _Fml.USUARIOS.ToString
 

@@ -1816,7 +1816,6 @@ Public Class Frm_00_Asis_Compra_Menu
                     Consulta_sql = Replace(Consulta_sql, "#FiltroBodegas#", _Filtro_Bodega)
                     Consulta_sql = Replace(Consulta_sql, "#EntExcluidas#", _EntExcluidas)
                     Consulta_sql = Replace(Consulta_sql, "#IN#", "")
-
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                 End If
@@ -2069,15 +2068,61 @@ Public Class Frm_00_Asis_Compra_Menu
 
 #Region "CALCULO DE ROTACION POR PRODUCTOS"
 
+                Dim _Filtro_Documentos As String
+
+                If Chk_Incluir_Salidas_GDI_OT.Checked Then
+                    _Filtro_Documentos = "And (TIDO IN ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV','GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV') Or " &
+                                          "TIDO In ('GDI','GRI') And ARCHIRST = 'POTD')"
+                Else
+                    _Filtro_Documentos = "And TIDO IN ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV','GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV')"
+                End If
+
 #Region "ROTACION POR PRODUCTO"
-
-
-#End Region
 
                 Rdb_RotMeses.Checked = True
 
                 Me.Refresh()
-                Lbl_Status.Text = "Calculando rotación por productos, esto puede tardar algunos minutos..."
+                Lbl_Status.Text = "Calculando rotación por productos por Agrupación de código madre, esto puede tardar algunos minutos..."
+
+                Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Sacar_la_velocidad_de_venta_mensual_Media2
+                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+                Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
+                Consulta_sql = Replace(Consulta_sql, "#FechaInicio#", Format(_Fecha_Desde_Rot_Vta, "yyyyMMdd"))
+                Consulta_sql = Replace(Consulta_sql, "#FechaTermino#", Format(_Fecha_Hasta_Rot_vta, "yyyyMMdd"))
+                Consulta_sql = Replace(Consulta_sql, "#Filtro_Codigo#", "AND KOPRCT In (Select Codigo From #TablaPaso#)")
+                Consulta_sql = Replace(Consulta_sql, "#Filtro_Bodega#", _Filtro_Bodega)
+                Consulta_sql = Replace(Consulta_sql, "#Entidades_Excluidas#", _EntExcluidas)
+                Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", _TblPasoInforme)
+
+                Consulta_sql = Replace(Consulta_sql, "#Codigo_Revision#", "Codigo")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd1Mes#", "RotMensualUd1_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd2Mes#", "RotMensualUd2_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd1Dia#", "RotDiariaUd1_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd2Dia#", "RotDiariaUd2_Prod")
+
+                Consulta_sql = Replace(Consulta_sql, "#MediaCal#", "#MediaMes")
+
+                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud1Mes#", "Promedio_MensualUd1_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud2Mes#", "Promedio_MensualUd2_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud1Dia#", "Promedio_Ud1_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud2Dia#", "Promedio_Ud2_Prod")
+
+                Consulta_sql = Replace(Consulta_sql, "#Incluir_Sabado#", Convert.ToInt32(Chk_Sabado.Checked))
+                Consulta_sql = Replace(Consulta_sql, "#Incluir_Domingo#", Convert.ToInt32(Chk_Domingo.Checked))
+                Consulta_sql = Replace(Consulta_sql, "#Filtro_Documentos#", _Filtro_Documentos)
+
+                Me.Refresh()
+
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+#End Region
+
+#Region "ROTACION POR AGRUPACION CODIGO MADRE"
+
+                Rdb_RotMeses.Checked = True
+
+                Me.Refresh()
+                Lbl_Status.Text = "Calculando rotación por productos por Agrupación de código madre, esto puede tardar algunos minutos..."
 
                 Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Sacar_la_velocidad_de_venta_mensual_Media2
                 Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
@@ -2105,20 +2150,27 @@ Public Class Frm_00_Asis_Compra_Menu
                 Consulta_sql = Replace(Consulta_sql, "#Incluir_Sabado#", Convert.ToInt32(Chk_Sabado.Checked))
                 Consulta_sql = Replace(Consulta_sql, "#Incluir_Domingo#", Convert.ToInt32(Chk_Domingo.Checked))
 
-                Dim _Filtro_Documentos As String
+                'Dim _Filtro_Documentos As String
 
-                If Chk_Incluir_Salidas_GDI_OT.Checked Then
-                    _Filtro_Documentos = "And (TIDO IN ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV','GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV') Or " &
-                                          "TIDO In ('GDI','GRI') And ARCHIRST = 'POTD')"
-                Else
-                    _Filtro_Documentos = "And TIDO IN ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV','GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV')"
-                End If
+                'If Chk_Incluir_Salidas_GDI_OT.Checked Then
+                '    _Filtro_Documentos = "And (TIDO IN ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV','GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV') Or " &
+                '                          "TIDO In ('GDI','GRI') And ARCHIRST = 'POTD')"
+                'Else
+                '    _Filtro_Documentos = "And TIDO IN ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV','GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV')"
+                'End If
 
                 Consulta_sql = Replace(Consulta_sql, "#Filtro_Documentos#", _Filtro_Documentos)
 
                 Me.Refresh()
 
                 _Sql.Ej_consulta_IDU(Consulta_sql)
+
+#End Region
+
+
+#Region "CALCULO DE ROTACION Y PROMEDIO DE VENTA DE LOS ULTIMOS 3 MESES"
+
+#Region "AGRIPACION POR CODIGO MADRE"
 
                 Dim _Fecha_Desde_3M As DateTime
                 Dim _Fecha_Hasta_3M As DateTime = FechaDelServidor()
@@ -2130,6 +2182,45 @@ Public Class Frm_00_Asis_Compra_Menu
                 Me.Refresh()
                 Lbl_Status.Text = "Calculando rotación por productos, esto puede tardar algunos minutos..."
 
+                Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Sacar_la_velocidad_de_venta_mensual_Media2
+                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+                Consulta_sql = Replace(Consulta_sql, "#Funcionario#", FUNCIONARIO)
+                Consulta_sql = Replace(Consulta_sql, "#FechaInicio#", Format(_Fecha_Desde_3M, "yyyyMMdd"))
+                Consulta_sql = Replace(Consulta_sql, "#FechaTermino#", Format(_Fecha_Hasta_3M, "yyyyMMdd"))
+                Consulta_sql = Replace(Consulta_sql, "#Filtro_Codigo#", "AND KOPRCT In (Select Codigo From #TablaPaso#)")
+                Consulta_sql = Replace(Consulta_sql, "#Filtro_Bodega#", _Filtro_Bodega)
+                Consulta_sql = Replace(Consulta_sql, "#Entidades_Excluidas#", _EntExcluidas)
+                Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", _TblPasoInforme)
+
+                Consulta_sql = Replace(Consulta_sql, "#Codigo_Revision#", "Codigo_Nodo_Madre")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd1Mes#", "RotMensualUd1_Ult_3Mes")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd2Mes#", "RotMensualUd2_Ult_3Mes")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd1Dia#", "RotDiariaUd1_Ult_3Mes")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd2Dia#", "RotDiariaUd2_Ult_3Mes")
+                Consulta_sql = Replace(Consulta_sql, "#MediaCal#", "#MediaMes")
+
+                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud1Mes#", "PromMensualUd1_Ul3Mes")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud2Mes#", "PromMensualUd2_Ul3Mes")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud1Dia#", "PromDiariaUd1_Ul3Mes")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud2Dia#", "PromDiariaUd2_Ul3Mes")
+
+                Consulta_sql = Replace(Consulta_sql, "#Incluir_Sabado#", Convert.ToInt32(Chk_Sabado.Checked))
+                Consulta_sql = Replace(Consulta_sql, "#Incluir_Domingo#", Convert.ToInt32(Chk_Domingo.Checked))
+
+                Consulta_sql = Replace(Consulta_sql, "#Filtro_Documentos#", _Filtro_Documentos)
+
+                Me.Refresh()
+
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+#End Region
+
+#Region "AGRUPACION POR PRODUCTO"
+
+                           ' Ventas los ultimos 3 meses, para tendencia
+
+                Me.Refresh()
+                Lbl_Status.Text = "Calculando rotación por productos, esto puede tardar algunos minutos..."
 
                 Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Sacar_la_velocidad_de_venta_mensual_Media2
                 Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
@@ -2142,16 +2233,16 @@ Public Class Frm_00_Asis_Compra_Menu
                 Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", _TblPasoInforme)
 
                 Consulta_sql = Replace(Consulta_sql, "#Codigo_Revision#", "Codigo")
-                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd1Mes#", "RotMensualUd1_Prod")
-                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd2Mes#", "RotMensualUd2_Prod")
-                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd1Dia#", "RotDiariaUd1_Prod")
-                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd2Dia#", "RotDiariaUd2_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd1Mes#", "RotMensualUd1_Ult_3Mes_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd2Mes#", "RotMensualUd2_Ult_3Mes_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd1Dia#", "RotDiariaUd1_Ult_3Mes_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_RotUd2Dia#", "RotDiariaUd2_Ult_3Mes_Prod")
                 Consulta_sql = Replace(Consulta_sql, "#MediaCal#", "#MediaMes")
 
-                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud1Mes#", "Promedio_MensualUd1_Prod")
-                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud2Mes#", "Promedio_MensualUd2_Prod")
-                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud1Dia#", "Promedio_Ud1_Prod")
-                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud2Dia#", "Promedio_Ud2_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud1Mes#", "PromMensualUd1_Ul3Mes_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud2Mes#", "PromMensualUd2_Ul3Mes_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud1Dia#", "PromDiariaUd1_Ul3Mes_Prod")
+                Consulta_sql = Replace(Consulta_sql, "#Campo_Promedio_Ud2Dia#", "PromDiariaUd2_Ul3Mes_Prod")
 
                 Consulta_sql = Replace(Consulta_sql, "#Incluir_Sabado#", Convert.ToInt32(Chk_Sabado.Checked))
                 Consulta_sql = Replace(Consulta_sql, "#Incluir_Domingo#", Convert.ToInt32(Chk_Domingo.Checked))
@@ -2162,6 +2253,9 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
+#End Region
+
+#End Region
                 '''' ******************************************************
 
                 '' Actualizar stock
@@ -2233,6 +2327,11 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 Me.Refresh()
 
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                Consulta_sql = "Update " & _TblPasoInforme & " Set " & vbCrLf &
+                               "PromUlt3CioPromUlt3Meses_Ud1_Prod = (PromMensualUd1_Ul3Mes_Prod+SumTotalQtyUd1_Ult_3Cio)/2," & vbCrLf &
+                               "PromUlt3CioPromUlt3Meses_Ud2_Prod = (PromMensualUd2_Ul3Mes_Prod+SumTotalQtyUd2_Ult_3Cio)/2"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
 #End Region

@@ -26,5 +26,6 @@
     Public Property Descripcion As String
     Public Property StDispUd1 As Double
     Public Property PqteDisponible As Double
+
 End Class
 

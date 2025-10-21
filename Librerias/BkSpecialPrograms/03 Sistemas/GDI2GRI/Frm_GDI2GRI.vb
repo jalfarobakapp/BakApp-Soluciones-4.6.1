@@ -22,6 +22,8 @@ Public Class Frm_GDI2GRI
         _Empresa = Mod_Empresa
         _Sucursal = Mod_Sucursal
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
     Private Sub Frm_GDI2GRI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Call Btn_Limpiar_Click(Nothing, Nothing)

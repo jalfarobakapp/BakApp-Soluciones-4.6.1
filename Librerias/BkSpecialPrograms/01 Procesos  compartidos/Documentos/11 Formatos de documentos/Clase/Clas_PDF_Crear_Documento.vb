@@ -1023,7 +1023,7 @@ Public Class Clas_PDF_Crear_Documento
                         _Pdf_gx.DrawString("------------------  Documentos pevios ------------------------",
                                                            _Fte_Usar, _DrawBrush, 100, _Detalle_Y)
 
-                        _Detalle_Y += _Salto_Linea
+                        _Detalle_Y += _Salto_Linea + 4
                     End If
 
                     _Pdf_gx.DrawString(_DocPrevio, _Fte_Usar, _DrawBrush, 100, _Detalle_Y)

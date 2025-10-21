@@ -124,7 +124,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         _Row_Nodo = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Sb_Initialize_Grid()
-        Sb_Actualizar_SuperGrid()
+        Sb_Actualizar_SuperGrid(False)
 
         Me.WindowState = FormWindowState.Maximized
 
@@ -227,6 +227,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         If Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked Then _RotCalculo = "X"
 
         Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
+        Consulta_sql = Replace(Consulta_sql, "#MesesPreImportacion#", 6)
 
         _Ds_Proyecto = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -234,7 +235,115 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     End Function
 
-    Sub Sb_Actualizar_SuperGrid()
+    Function Fx_Generar_Informe_Ds_CreaTablaPaso() As DataSet
+
+        Dim _Ds_Proyecto As DataSet
+
+        Dim _Tbl_Asc_01_Productos As String = "Tbl_Asc_01_Productos_" & FUNCIONARIO
+        Dim _Tbl_Asc_02_Asociaciones As String = "Tbl_Asc_02_Asociaciones_" & FUNCIONARIO
+        Dim _Tbl_Asc_03_Totales As String = "Tbl_Asc_03_Totales_" & FUNCIONARIO
+        Dim _Tbl_Asc_04_DocUltComp As String = "Tbl_Asc_04_DocUltComp_" & FUNCIONARIO
+
+        Consulta_sql = "Drop Table " & _Tbl_Asc_01_Productos
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        Consulta_sql = "Drop Table " & _Tbl_Asc_02_Asociaciones
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        Consulta_sql = "Drop Table " & _Tbl_Asc_03_Totales
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        Consulta_sql = "Drop Table " & _Tbl_Asc_04_DocUltComp
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+        Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Proyeccion_Compras_30_60_120_CreaTablas
+        Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", _Tabla_Paso)
+        Consulta_sql = Replace(Consulta_sql, "#Tbl_BakApp#", _Global_BaseBk)
+        Consulta_sql = Replace(Consulta_sql, "#Ud#", _Ud)
+
+        Consulta_sql = Replace(Consulta_sql, "#Filtro_Nodos#", _Filtro_Nodos)
+
+        Consulta_sql = Replace(Consulta_sql, "#Identificador_NodoPadre#", _Identificador_NodoPadre)
+        Consulta_sql = Replace(Consulta_sql, "#Porc_Creciminto#", _Porc_Creciminto)
+        Consulta_sql = Replace(Consulta_sql, "#Dias_Proyeccion#", _Dias_Proyeccion)
+        Consulta_sql = Replace(Consulta_sql, "#Marca_Proyeccion#", _Marca_Proyeccion)
+        Consulta_sql = Replace(Consulta_sql, "#Dias_Abastecer#", _Dias_Abastecer)
+
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_01_Productos", _Tbl_Asc_01_Productos)
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_02_Asociaciones", _Tbl_Asc_02_Asociaciones)
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_03_Totales", _Tbl_Asc_03_Totales)
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_04_DocUltComp", _Tbl_Asc_04_DocUltComp)
+
+        Dim _Sql_Campos_Proyeccion = String.Empty
+        Dim _Sql_Update_Campo_Proyeccion = String.Empty
+
+        Dim _MesActual = _Fecha_Servidor.Month
+        Dim _YearActual = _Fecha_Servidor.Year
+
+        If Rdb_Proyeccion_Rotacion_Diaria.Checked Then _RotCalculo = "D"
+        If Rdb_Proyeccion_Promedio_Diario.Checked Then _RotCalculo = "P"
+        If Rdb_Proyeccion_Promedio_Ult3Meses.Checked Then _RotCalculo = "3M"
+        If Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked Then _RotCalculo = "X"
+
+        Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
+        Consulta_sql = Replace(Consulta_sql, "#MesesSobreStock#", De_Num_a_Tx_01(Input_CalcSobreStock.Value, False, 2))
+        Consulta_sql = Replace(Consulta_sql, "--FiltroProductosSoloConStock", "")
+
+        _Ds_Proyecto = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+        Return _Ds_Proyecto
+
+    End Function
+
+    Function Fx_Actualizar_Informe_Ds() As DataSet
+
+        Dim _Ds_Proyecto As DataSet
+
+        Dim _Tbl_Asc_01_Productos As String = "Tbl_Asc_01_Productos_" & FUNCIONARIO
+        Dim _Tbl_Asc_02_Asociaciones As String = "Tbl_Asc_02_Asociaciones_" & FUNCIONARIO
+        Dim _Tbl_Asc_03_Totales As String = "Tbl_Asc_03_Totales_" & FUNCIONARIO
+        Dim _Tbl_Asc_04_DocUltComp As String = "Tbl_Asc_04_DocUltComp_" & FUNCIONARIO
+
+        'Consulta_sql = "Drop Table " & _Tbl_Asc_01_Productos
+        '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+        'Consulta_sql = "Drop Table " & _Tbl_Asc_02_Asociaciones
+        '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+        'Consulta_sql = "Drop Table " & _Tbl_Asc_03_Totales
+        '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+        'Consulta_sql = "Drop Table " & _Tbl_Asc_04_DocUltComp
+        '_Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+        Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Proyeccion_Compras_30_60_120_ActualizaTablas
+        Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", _Tabla_Paso)
+        Consulta_sql = Replace(Consulta_sql, "#Tbl_BakApp#", _Global_BaseBk)
+        Consulta_sql = Replace(Consulta_sql, "#Ud#", _Ud)
+
+        Consulta_sql = Replace(Consulta_sql, "#Filtro_Nodos#", _Filtro_Nodos)
+
+        Consulta_sql = Replace(Consulta_sql, "#Identificador_NodoPadre#", _Identificador_NodoPadre)
+        Consulta_sql = Replace(Consulta_sql, "#Porc_Creciminto#", _Porc_Creciminto)
+        Consulta_sql = Replace(Consulta_sql, "#Dias_Proyeccion#", _Dias_Proyeccion)
+        Consulta_sql = Replace(Consulta_sql, "#Marca_Proyeccion#", _Marca_Proyeccion)
+        Consulta_sql = Replace(Consulta_sql, "#Dias_Abastecer#", _Dias_Abastecer)
+
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_01_Productos", _Tbl_Asc_01_Productos)
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_02_Asociaciones", _Tbl_Asc_02_Asociaciones)
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_03_Totales", _Tbl_Asc_03_Totales)
+        Consulta_sql = Replace(Consulta_sql, "Tbl_Asc_04_DocUltComp", _Tbl_Asc_04_DocUltComp)
+
+        If Rdb_Proyeccion_Rotacion_Diaria.Checked Then _RotCalculo = "D"
+        If Rdb_Proyeccion_Promedio_Diario.Checked Then _RotCalculo = "P"
+        If Rdb_Proyeccion_Promedio_Ult3Meses.Checked Then _RotCalculo = "3M"
+        If Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked Then _RotCalculo = "X"
+
+        Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
+        Consulta_sql = Replace(Consulta_sql, "#MesesSobreStock#", De_Num_a_Tx_01(Input_CalcSobreStock.Value, False, 2))
+        Consulta_sql = Replace(Consulta_sql, "--FiltroProductosSoloConStock", "")
+
+        _Ds_Proyecto = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+        Return _Ds_Proyecto
+
+    End Function
+
+    Sub Sb_Actualizar_SuperGrid(_Actualizar As Boolean)
 
         Dim Fm_Espera = New Frm_Form_Esperar
         Fm_Espera.BarraCircular.IsRunning = True
@@ -242,7 +351,13 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
         _Fecha_Servidor = FechaDelServidor()
 
-        _Ds_Informe = Fx_Generar_Informe_Ds()
+        If _Actualizar Then
+            _Ds_Informe = Fx_Actualizar_Informe_Ds() ' Fx_Generar_Informe_Ds()
+        Else
+            _Ds_Informe = Fx_Generar_Informe_Ds_CreaTablaPaso() ' Fx_Generar_Informe_Ds()
+        End If
+
+        '_Ds_Informe = Fx_Generar_Informe_Ds()
 
         Me.Text = "Informe de proyección de compras a nivel: " & _Proyeccion.ToString
 
@@ -474,7 +589,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
     End Sub
 
     Private Sub Btn_Actualizar_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar.Click
-        Sb_Actualizar_SuperGrid()
+        Sb_Actualizar_SuperGrid(True)
     End Sub
 
     Sub Sb_Revisar_Info_Producto(_Fila As Object)
@@ -623,7 +738,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         If Fm.Pro_Informe_Procesado Then
             _Clas_Asistente_Compras.Sb_Actualizar_Stock(False)
             _Clas_Asistente_Compras.Sb_Actualizar_Rotacion("", True)
-            Sb_Actualizar_SuperGrid()
+            Sb_Actualizar_SuperGrid(True)
         End If
 
     End Sub
@@ -1205,6 +1320,15 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns("Duracion_Proyeccion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            _Campo = "SobreStock"
+            .Columns("SobreStock").Width = 40
+            .Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
+            .Columns("SobreStock").ToolTip = "Productos con sobre stock disponible"
+            .Columns("SobreStock").CellStyles.Default.Alignment = Alignment.MiddleCenter
+            .Columns("SobreStock").Visible = True
+            .Columns("SobreStock").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             _Campo = "Cant_Comprar"
             .Columns("Cant_Comprar").Width = 80
             .Columns("Cant_Comprar").HeaderText = "Cantidad" & vbCrLf & "necesaria" '"Cant. Comprar"
@@ -1376,22 +1500,29 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             'UpdateDetailsFooter(_Grilla, "VANEDO", "VAIVDO", "VABRDO")
 
             Dim _Campo As String
+            Dim _DisplayIndex = 0
 
             _Campo = "Codigo"
             .Columns(_Campo).Width = 120
             .Columns(_Campo).HeaderText = "Código"
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             _Campo = "Descripcion"
-            .Columns(_Campo).Width = 300
+            .Columns(_Campo).Width = 350
             .Columns(_Campo).HeaderText = "Descripción"
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             _Campo = "Ud" & _Ud
             .Columns("Ud" & _Ud).Width = 30
             .Columns("Ud" & _Ud).HeaderText = "UN"
-            .Columns("Ud" & _Ud).CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns("Ud" & _Ud).CellStyles.Default.Alignment = Alignment.MiddleCenter
             .Columns("Ud" & _Ud).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             _Campo = "StockUd" & _Ud
             .Columns(_Campo).Width = 70
@@ -1399,6 +1530,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             _Campo = "StockEnTransitoUd" & _Ud
             .Columns(_Campo).Width = 70
@@ -1406,6 +1539,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             _Campo = "StockPedidoUd" & _Ud
             .Columns(_Campo).Width = 70
@@ -1413,6 +1548,8 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             _Campo = "StockFacSinRecepUd" & _Ud
             .Columns(_Campo).Width = 70
@@ -1420,54 +1557,72 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            Dim _CampoRD As String = String.Empty
-            Dim _CampoRM As String = String.Empty
-            Dim _CampoHT As String = String.Empty
+            _Campo = "PromUlt3CioPromUlt3Meses_Ud" & _Ud & "_Prod"
+            .Columns(_Campo).Width = 90
+            .Columns(_Campo).HeaderText = "Rotación" & vbCrLf & "Ult.Mes mas " & vbCrLf & "Prom. Ult." & vbCrLf & "3 meses"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
+            .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns(_Campo).Visible = Rdb_Proyeccion_Promedio_Ult3MesesMasUltMes.Checked
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            If Rdb_Proyeccion_Rotacion_Diaria.Checked Then
-                _CampoRD = "RotDiariaUd" & _Ud & "_Prod"
-                _CampoRM = "RotMensualUd" & _Ud & "_Prod"
-                _CampoHT = "R.Media"
-            End If
+            _Campo = "RotMensualUd" & _Ud & "_Prod"
+            .Columns(_Campo).Width = 80
+            .Columns(_Campo).HeaderText = "Rotación" & vbCrLf & "mensual" & vbCrLf & "(Mediana)"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
+            .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns(_Campo).Visible = Rdb_Proyeccion_Rotacion_Diaria.Checked
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            If Rdb_Proyeccion_Promedio_Diario.Checked Then
-                _CampoRD = "Promedio_Ud" & _Ud & "_Prod"
-                _CampoRM = "Promedio_MensualUd" & _Ud & "_Prod"
-                _CampoHT = "R.Promedio"
-            End If
+            _Campo = "Promedio_MensualUd" & _Ud & "_Prod"
+            .Columns(_Campo).Width = 80
+            .Columns(_Campo).HeaderText = "Promedio" & vbCrLf & "mensual"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
+            .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns(_Campo).Visible = Rdb_Proyeccion_Promedio_Diario.Checked
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '_Campo = "RotDiariaUd" & _Ud & "_Prod"
-            .Columns(_CampoRD).Width = 70
-            .Columns(_CampoRD).HeaderText = _CampoHT & vbCrLf & "diaria"
-            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
+            _Campo = "PromMensualUd" & _Ud & "_Ul3Mes_Prod"
+            .Columns(_Campo).Width = 100
+            .Columns(_Campo).HeaderText = "Promedio Ventas" & vbCrLf & "últimos 3 meses"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
             .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
             .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '_Campo = "RotMensualUd" & _Ud & "_Prod"
-            .Columns(_CampoRM).Width = 70
-            .Columns(_CampoRM).HeaderText = _CampoHT & vbCrLf & "mensual"
-            DirectCast(.Columns(_CampoRM).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
-            .Columns(_CampoRM).CellStyles.Default.Alignment = Alignment.MiddleRight
-            .Columns(_CampoRM).Visible = True
+            _Campo = "SumTotalQtyUd" & _Ud & "_Ult_3Cio"
+            .Columns(_Campo).Width = 80
+            .Columns(_Campo).HeaderText = "Ventas" & vbCrLf & "Ventas último" & vbCrLf & "mes"
+            DirectCast(.Columns(_Campo).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
+            .Columns(_Campo).CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns(_Campo).Visible = True
+            .Columns(_Campo).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("RotEfectivaUd" & _Ud).Width = 70
-            '.Columns("RotEfectivaUd" & _Ud).HeaderText = "Rotación" & vbCrLf & "efectiva"
-            'DirectCast(.Columns("RotEfectivaUd" & _Ud).RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
-            '.Columns("RotEfectivaUd" & _Ud).CellStyles.Default.Alignment = Alignment.MiddleRight
-            '.Columns("RotEfectivaUd" & _Ud).Visible = True
+            _Campo = "Duracion_Proyeccion"
+            .Columns("Duracion_Proyeccion").Width = 80
+            .Columns("Duracion_Proyeccion").HeaderText = "Duración" & vbCrLf & _Duracion & vbCrLf & "Según stock"
+            DirectCast(.Columns("Duracion_Proyeccion").RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##.##"
+            .Columns("Duracion_Proyeccion").CellStyles.Default.Alignment = Alignment.MiddleRight
+            .Columns("Duracion_Proyeccion").Visible = True
+            .Columns("Duracion_Proyeccion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("Duracion_Proyeccion").Width = 70
-            '.Columns("Duracion_Proyeccion").HeaderText = "Duración" & vbCrLf & _Duracion
-            'DirectCast(.Columns("Duracion_Proyeccion").RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
-            '.Columns("Duracion_Proyeccion").CellStyles.Default.Alignment = Alignment.MiddleRight
-            '.Columns("Duracion_Proyeccion").Visible = True
+            _Campo = "SobreStock"
+            .Columns("SobreStock").Width = 40
+            .Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
+            .Columns("SobreStock").ToolTip = "Productos con sobre stock disponible"
+            .Columns("SobreStock").CellStyles.Default.Alignment = Alignment.MiddleCenter
+            .Columns("SobreStock").Visible = True
+            .Columns("SobreStock").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("Cant_Comprar_Sug").Width = 70
-            '.Columns("Cant_Comprar_Sug").HeaderText = "Cantidad" & vbCrLf & "sugerida" & vbCrLf & "comprar"
-            'DirectCast(.Columns("Cant_Comprar_Sug").RenderControl, GridDoubleInputEditControl).DisplayFormat = "###,##"
-            '.Columns("Cant_Comprar_Sug").CellStyles.Default.Alignment = Alignment.MiddleRight
-            '.Columns("Cant_Comprar_Sug").Visible = True
 
         End With
 
@@ -1718,7 +1873,7 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     Private Sub Sb_Rdb_Rotacion_CheckedChanged(sender As Object, e As EventArgs)
         If sender.Checked Then
-            Sb_Actualizar_SuperGrid()
+            Sb_Actualizar_SuperGrid(True)
         End If
     End Sub
 
@@ -1738,4 +1893,23 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         Me.Enabled = True
 
     End Sub
+
+    Private Sub Frm_AsisCompra_Proyeccion_Informe_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+
+        Dim _Tbl_Asc_01_Productos As String = "Tbl_Asc_01_Productos_" & FUNCIONARIO
+        Dim _Tbl_Asc_02_Asociaciones As String = "Tbl_Asc_02_Asociaciones_" & FUNCIONARIO
+        Dim _Tbl_Asc_03_Totales As String = "Tbl_Asc_03_Totales_" & FUNCIONARIO
+        Dim _Tbl_Asc_04_DocUltComp As String = "Tbl_Asc_04_DocUltComp_" & FUNCIONARIO
+
+        Consulta_sql = "Drop Table " & _Tbl_Asc_01_Productos
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        Consulta_sql = "Drop Table " & _Tbl_Asc_02_Asociaciones
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        Consulta_sql = "Drop Table " & _Tbl_Asc_03_Totales
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+        Consulta_sql = "Drop Table " & _Tbl_Asc_04_DocUltComp
+        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+    End Sub
+
 End Class

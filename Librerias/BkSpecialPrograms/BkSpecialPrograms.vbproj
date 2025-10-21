@@ -503,6 +503,7 @@
       <DependentUpon>Recuros_ListaSuperior.resx</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Permisos Asociados\Cl_Permisos_Asociados.vb" />
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Permisos Asociados\Cl_RemotasEnCadena.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Pre-Venta\Frm_Cantidades_PreVenta.Designer.vb">
       <DependentUpon>Frm_Cantidades_PreVenta.vb</DependentUpon>
     </Compile>
@@ -915,6 +916,10 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Productos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Prod_Asociacion.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Ftp_Conexiones.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Prod_SobreStock.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Remotas_En_Cadena_01_Enc.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Remotas_En_Cadena_02_Det.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Remotas_En_Cadena_03_Usu.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_SQL_Querys.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Areas.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Stk_Tickets.vb" />
@@ -944,6 +949,12 @@
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\PreImpo\Frm_PreImpo.Designer.vb">
+      <DependentUpon>Frm_PreImpo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\PreImpo\Frm_PreImpo.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Contenedores\Cl_Contenedor.vb" />
     <Compile Include="03 Sistemas\Contenedores\Frm_Contenedores.Designer.vb">
       <DependentUpon>Frm_Contenedores.vb</DependentUpon>
@@ -955,6 +966,13 @@
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\PDARandomMovil\Cl_PDARandomMovil.vb" />
+    <Compile Include="03 Sistemas\PDARandomMovil\Frm_PreVentasPDA.Designer.vb">
+      <DependentUpon>Frm_PreVentasPDA.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\PDARandomMovil\Frm_PreVentasPDA.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_IngDet.Designer.vb">
@@ -1045,6 +1063,19 @@
       <DependentUpon>Frm_RevMayMin.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\MayoristaMinoristas\Frm_RevMayMin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sobre Stock\Cl_SobreStock.vb" />
+    <Compile Include="03 Sistemas\Sobre Stock\Frm_SobreStock_IngDet.Designer.vb">
+      <DependentUpon>Frm_SobreStock_IngDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sobre Stock\Frm_SobreStock_IngDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Sobre Stock\Frm_SobreStock_Productos.Designer.vb">
+      <DependentUpon>Frm_SobreStock_Productos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Sobre Stock\Frm_SobreStock_Productos.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Puntos Venta\Cl_Puntos.vb" />
@@ -4926,11 +4957,17 @@
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Frm_AsisCompra_CambioPrecioDet.resx">
       <DependentUpon>Frm_AsisCompra_CambioPrecioDet.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\PreImpo\Frm_PreImpo.resx">
+      <DependentUpon>Frm_PreImpo.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_Contenedores.resx">
       <DependentUpon>Frm_Contenedores.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_CrearContenedor.resx">
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\PDARandomMovil\Frm_PreVentasPDA.resx">
+      <DependentUpon>Frm_PreVentasPDA.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\PreVenta SobreStock\Frm_PreVenta_IngDet.resx">
       <DependentUpon>Frm_PreVenta_IngDet.vb</DependentUpon>
@@ -4970,6 +5007,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\MayoristaMinoristas\Frm_RevMayMin.resx">
       <DependentUpon>Frm_RevMayMin.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sobre Stock\Frm_SobreStock_IngDet.resx">
+      <DependentUpon>Frm_SobreStock_IngDet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Sobre Stock\Frm_SobreStock_Productos.resx">
+      <DependentUpon>Frm_SobreStock_Productos.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Puntos Venta\Frm_ConfPuntosVta.resx">
       <DependentUpon>Frm_ConfPuntosVta.vb</DependentUpon>
@@ -8467,6 +8510,8 @@
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Informe Ventas x Perido Nivel Detalle Cubo Actualizacion3 Clasificaciones.sql" />
     <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Reabastecer entre bodegas.sql" />
     <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Cambio precio\Sql\SQLQuery_RevCambioPrecioXCodMadre.sql" />
+    <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Recursos Proyeccion SeaGarden\SQLQuery_Proyeccion_Compras_30_60_120_CreaTablas.sql" />
+    <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Recursos Proyeccion SeaGarden\SQLQuery_Proyeccion_Compras_30_60_120_ActualizaTablas.sql" />
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Html\Crear Html Proveedores Con Productos Sin Stock.htm" />
     <Content Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Info Estadistica X Producto Compra.sql" />
     <None Include="03 Sistemas\Compras\Asistente de compras 2.0\Recursos\Sql\SQLQuery Sacar la velocidad de venta mensual Media2.sql" />
@@ -8483,6 +8528,7 @@
     <None Include="03 Sistemas\Informes\Ventas\Margenes venta\Sql\Margenes de venta2.sql" />
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Graficos\Inf Grafico Dinamica Ventas Mensuales Fecha.sql" />
     <None Include="03 Sistemas\Informes\Ventas\Ventas por periodo\Informe de ventas Cubo\Recursos\Sql\Informe Ventas x Perido Nivel Detalle Cubo Actualizacion3.sql" />
+    <None Include="03 Sistemas\Inventario\Inventario General\SQL Query\Inv_Invetario_Creae_Foto_Stock2.Sql" />
     <Content Include="03 Sistemas\Inventario\Inventario parcializado\Sql\Foto_StockXProducto.sql" />
     <Content Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Sql\Crear Html Facturas Cobranza.htm" />
     <Content Include="03 Sistemas\Informes\Informe de vencimientos Compras y Ventas\Sql\Crear Html Facturas Pago Proveedores.htm" />

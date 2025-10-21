@@ -460,7 +460,8 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
             Else
 
-                MessageBoxEx.Show(Me, "Usted no posee permiso para realizar esta acción", "Validación",
+                MessageBoxEx.Show(Me, "Usted no posee permiso para realizar esta acción" & vbCrLf &
+                                  "Permiso: " & _CodPermiso, "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
 
                 Return

@@ -2001,24 +2001,21 @@ Public Class Clase_Crear_Documento
                 Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
                 Dim _TipoEstacion = _Global_Row_EstacionBk.Item("TipoEstacion")
                 Dim _Modalidad As String = _Row_Encabezado.Item("Modalidad")
-                Dim _Pickear As Integer
+                Dim _Pickear As Boolean = False
+                Dim _PdaRMovil As Boolean = _Row_Encabezado.Item("PdaRMovil")
+                Dim _Idpdaenca As Integer = _Row_Encabezado.Item("Idpdaenca")
+                Dim _ConservaNudo As Boolean = _Row_Encabezado.Item("ConservaNudo")
 
                 If _Tido = "NVV" Then
-
-                    _Pickear = Convert.ToInt32(_Row_Encabezado.Item("Pickear")) 'Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_NVVTodas"))
-
-                    'If CBool(_Pickear) AndAlso
-                    '    Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_ProdPesoVariable")) AndAlso
-                    '    Not CBool(_Items_RtuVariable) Then
-                    '    _Pickear = 0
-                    'End If
-
+                    _Pickear = _Row_Encabezado.Item("Pickear")
                 End If
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
-                               "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta) Values " &
+                               "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca) Values " &
                                "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad & "'" &
-                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & _Pickear & "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(_PreVenta) & ")"
+                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
+                               "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(_PreVenta) &
+                               "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
@@ -3114,7 +3111,7 @@ Public Class Clase_Crear_Documento
                 _TipoDoc = .Item("TipoDoc")
                 _SubTido = .Item("Subtido")
 
-                If _TipoDoc = "NVV" Then
+                If _TipoDoc = "NVV" And Not .Item("ConservaNudo") Then
 
                     Dim letras As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     Dim numeros As String = "0123456789"
@@ -3137,11 +3134,13 @@ Public Class Clase_Crear_Documento
 
                 Else
 
-                    _NroDocumento = Traer_Numero_Documento(_Tido, .Item("NroDocumento"), _Modalidad)
+                    If .Item("ConservaNudo") Then
+                        _NroDocumento = .Item("NroDocumento")
+                    Else
+                        _NroDocumento = Traer_Numero_Documento(_Tido, .Item("NroDocumento"), _Modalidad)
+                    End If
 
                 End If
-
-
 
                 If String.IsNullOrEmpty(_NroDocumento) Then
                     Return 0
@@ -3764,9 +3763,14 @@ Public Class Clase_Crear_Documento
 
                 For Each _Fila As DataRow In _Tbl_Permisos.Rows
 
+                    Dim _Necesita_Permiso = Convert.ToInt32(_Fila.Item("Necesita_Permiso"))
+
+                    If Not _Necesita_Permiso Then
+                        Continue For
+                    End If
+
                     Dim _CodPermiso_ = _Fila.Item("CodPermiso")
                     Dim _DescripcionPermiso = _Fila.Item("DescripcionPermiso")
-                    Dim _Necesita_Permiso = Convert.ToInt32(_Fila.Item("Necesita_Permiso"))
                     Dim _Autorizado = Convert.ToInt32(_Fila.Item("Autorizado"))
                     Dim _CodFuncionario_Autoriza = _Fila.Item("CodFuncionario_Autoriza")
                     Dim _NomFuncionario_Autoriza = _Fila.Item("NomFuncionario_Autoriza")
@@ -3774,21 +3778,21 @@ Public Class Clase_Crear_Documento
                     Dim _Permiso_Presencial = Convert.ToInt32(_Fila.Item("Permiso_Presencial"))
                     Dim _Solicitado_Por_Cadena = Convert.ToInt32(_Fila.Item("Solicitado_Por_Cadena"))
 
-                    If _Necesita_Permiso Then
-
-                        Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_Casi_DocPer (Id_DocEnc,CodPermiso,DescripcionPermiso,Necesita_Permiso,Autorizado," &
+                    Consulta_sql += "Insert Into " & _Global_BaseBk & "Zw_Casi_DocPer (Id_DocEnc,CodPermiso,DescripcionPermiso,Necesita_Permiso,Autorizado," &
                                     "CodFuncionario_Autoriza,NomFuncionario_Autoriza,NroRemota,Permiso_Presencial,Solicitado_Por_Cadena) Values 
-                                (" & _Id_DocEnc & ",'" & _CodPermiso_ & "','" & _DescripcionPermiso & "'," & _Necesita_Permiso & "," & _Autorizado & "," &
+                                                        (" & _Id_DocEnc & ",'" & _CodPermiso_ & "','" & _DescripcionPermiso & "'," & _Necesita_Permiso & "," & _Autorizado & "," &
                                     "'" & _CodFuncionario_Autoriza & "','" & _NomFuncionario_Autoriza &
                                     "','" & _NroRemota & "'," & _Permiso_Presencial & "," & _Solicitado_Por_Cadena & ")" & Environment.NewLine
 
-                    End If
-
                 Next
 
-                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                Comando.Transaction = myTrans
-                Comando.ExecuteNonQuery()
+                If Not String.IsNullOrEmpty(Consulta_sql) Then
+
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                End If
 
                 Consulta_sql = Fx_Referencias_DTE(_Id_DocEnc, _Tbl_Referencias_DTE, True)
 

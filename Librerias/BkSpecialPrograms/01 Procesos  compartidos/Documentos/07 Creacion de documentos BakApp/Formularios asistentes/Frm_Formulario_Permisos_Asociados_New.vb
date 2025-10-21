@@ -385,7 +385,6 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                                 _Stock_Disponible = 1 + _Cantidad
                             End If
 
-
                             Dim _Stock As Double = _Sql.Fx_Trae_Dato("MAEST", "STFI" & _UnTrans, "EMPRESA = '" & Mod_Empresa &
                                                                      "' AND KOSU = '" & _Sucursal &
                                                                      "' AND KOBO = '" & _Bodega &
@@ -411,7 +410,6 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                 Dim _Motivo_Rechazo As String = Environment.NewLine &
                                                 "Puede ser que esta validación no fue solicitada en su momento, pero al momento de reevaluar la situación" & vbCrLf &
                                                 "se encontro este problema."
-                '& vbCrLf & "La solicitud se devolverá al usuario de origen para que vuelva a reenviar el documento."
 
                 Dim _Info As New TaskDialogInfo("Validación del sistema",
                               eTaskDialogIcon.ShieldStop,
@@ -430,7 +428,6 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                 Return
 
             End If
-
 
             For Each _Row As DataRow In _Tbl_Permisos_Doc.Rows
 

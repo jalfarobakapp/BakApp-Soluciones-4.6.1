@@ -2188,6 +2188,17 @@ Public Module Modulo_Precios_Costos
             _Ecuacion = String.Empty
         Else
             _Ecuacion = NuloPorNro(_RowPrecio.Item(_Campo_Ecuacion), "").ToString.Trim()
+
+            If _Campo_Precio.Contains("PP0") AndAlso String.IsNullOrEmpty(_Ecuacion.Trim) Then
+
+                If Not _Ecuacion.Contains("2") Then
+                    _Ecuacion = _Sql.Fx_Trae_Dato("TABPP", "ECUDEF01UD", "KOLT = '" & _Kolt & "'").ToString.Trim
+                Else
+                    _Ecuacion = _Sql.Fx_Trae_Dato("TABPP", "ECUDEF02UD", "KOLT = '" & _Kolt & "'").ToString.Trim
+                End If
+
+            End If
+
         End If
 
         Dim _Tiene_Cor As Boolean = InStr(1, _Ecuacion, "[")
@@ -6659,7 +6670,9 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Function Fx_EntidadEnGrupoVendedores(_Row_Entidad As DataRow, _CodFuncionario As String) As LsValiciones.Mensajes
+    Function Fx_EntidadEnGrupoVendedores(_Row_Entidad As DataRow,
+                                         _CodFuncionario As String,
+                                         _Revisar_Kofu_Kogru As Boolean) As LsValiciones.Mensajes
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -6673,7 +6686,7 @@ Public Module Crear_Documentos_Desde_Otro
             If Fx_Tiene_Permiso(Nothing, "NO00022",, False) Then
 
                 Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & _CodFuncionario & "'")
-                Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru = '" & FUNCIONARIO & "'")
+                Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru Like '%" & FUNCIONARIO & "%'")
 
                 Dim _TienePermiso As Boolean
 
@@ -6681,11 +6694,13 @@ Public Module Crear_Documentos_Desde_Otro
                     _Kogru = "'" & _Kogru & "'"
                 End If
 
-                If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
-                    If String.IsNullOrEmpty(_Kogru) Then
-                        _Kogru = _Kofu_Kogru
-                    Else
-                        _Kogru += "," & _Kofu_Kogru
+                If _Revisar_Kofu_Kogru Then
+                    If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+                        If String.IsNullOrEmpty(_Kogru) Then
+                            _Kogru = _Kofu_Kogru
+                        Else
+                            _Kogru += "," & _Kofu_Kogru
+                        End If
                     End If
                 End If
 

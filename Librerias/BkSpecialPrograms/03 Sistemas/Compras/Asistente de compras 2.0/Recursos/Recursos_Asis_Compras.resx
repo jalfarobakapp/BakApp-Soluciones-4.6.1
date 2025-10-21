@@ -157,6 +157,12 @@
   <data name="SQLQuery_Proyeccion_Compras_30_60_120" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\proyeccion compras agrupados (seagarden)\recursos proyeccion seagarden\sqlquery_proyeccion_compras_30_60_120.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="SQLQuery_Proyeccion_Compras_30_60_120_ActualizaTablas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Proyeccion Compras Agrupados (SeaGarden)\Recursos Proyeccion SeaGarden\SQLQuery_Proyeccion_Compras_30_60_120_ActualizaTablas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="SQLQuery_Proyeccion_Compras_30_60_120_CreaTablas" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Proyeccion Compras Agrupados (SeaGarden)\Recursos Proyeccion SeaGarden\SQLQuery_Proyeccion_Compras_30_60_120_CreaTablas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
   <data name="SQLQuery_Reabastecer_entre_bodegas" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sql\sqlquery reabastecer entre bodegas.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>

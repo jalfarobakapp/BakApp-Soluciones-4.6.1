@@ -69,12 +69,26 @@ Public Class Frm_Crear_Entidad_Mt
         Cmb_Lven.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Lven.SelectedValue = Mod_ListaPrecioVenta
 
+        Dim _Filtro_Vendedores = String.Empty
+
+        If Fx_Tiene_Permiso(Nothing, "NO00022",, False) Then
+
+            Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+
+            If Not _Kogru.Contains("'") Then
+                _Kogru = "'" & _Kogru & "'"
+            End If
+
+            _Filtro_Vendedores = "Where TABFU.KOFU In (Select d.KOFU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & "))"
+
+        End If
+
 
         caract_combo(Cmb_Kofuen)
         Consulta_sql = "Select '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
                        "Select TABFU.KOFU AS Padre,TABFU.KOFU+'-'+NOKOFU AS Hijo" & vbCrLf &
                        "From TABFU" & vbCrLf &
-                       "Inner Join TABFUEM On TABFUEM.KOFU=TABFU.KOFU And TABFUEM.EMPRESA='" & Mod_Empresa & "'" & vbCrLf &
+                       "Inner Join TABFUEM On TABFUEM.KOFU=TABFU.KOFU And TABFUEM.EMPRESA='" & Mod_Empresa & "'" & vbCrLf & _Filtro_Vendedores & vbCrLf &
                        "Order BY Hijo"
         Cmb_Kofuen.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 

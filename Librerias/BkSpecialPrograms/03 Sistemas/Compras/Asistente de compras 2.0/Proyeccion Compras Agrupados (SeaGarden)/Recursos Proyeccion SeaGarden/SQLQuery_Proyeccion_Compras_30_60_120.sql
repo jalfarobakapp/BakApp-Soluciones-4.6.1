@@ -5,6 +5,7 @@ Declare @Dias_Abastecer Int
 Declare @Marca_Proyeccion Int = #Marca_Proyeccion#
 Declare @RotCalculo varchar(2) = '#RotCalculo#'
 Declare @Fecha_Actual Date = GetDate()
+Declare @MesesPreImportacion Int = #MesesPreImportacion#
 
 Set @Porc_Creciminto = @Porc_Creciminto /100.0 + 1        
 Set @Dias_Abastecer = #Dias_Abastecer#--@Dias_Proyeccion * 4
@@ -28,8 +29,11 @@ SELECT  Codigo,
         RotMensualUd#Ud#, 
         RotDiariaUd#Ud#_Prod, 
         RotMensualUd#Ud#_Prod,
-        Promedio_Ud1_Prod,
-		Promedio_MensualUd1_Prod,
+        Promedio_Ud#Ud#_Prod,
+		Promedio_MensualUd#Ud#_Prod,
+        RotMensualUd#Ud#_Ult_3Mes_Prod,
+		PromMensualUd#Ud#_Ul3Mes_Prod,
+        PromUlt3CioPromUlt3Meses_Ud#Ud#_Prod,
 
         SUM(SumTotalQtyUd#Ud#) AS SumTotalQtyUd#Ud#,
 		Fecha_Inicio,
@@ -66,9 +70,10 @@ Where Codigo In (SELECT Codigo FROM #Tbl_BakApp#Zw_Prod_Asociacion
 				 Where Codigo_Nodo In #Filtro_Nodos#))
 And Es_Agrupador = 0	
 
-Group by UD1,Rtu,Codigo,Descripcion,Codigo_Nodo,Codigo_Nodo_Madre,Descripcion_Madre,
-         Stock_CriticoUd1_Rd,RotDiariaUd1,RotDiariaUd1_Prod,RotMensualUd1,RotMensualUd1_Prod,Fecha_Inicio,Fecha_Fin,
-         Promedio_Ud1_Prod,Promedio_MensualUd1_Prod
+Group by UD#Ud#,Rtu,Codigo,Descripcion,Codigo_Nodo,Codigo_Nodo_Madre,Descripcion_Madre,
+         Stock_CriticoUd#Ud#_Rd,RotDiariaUd#Ud#,RotDiariaUd#Ud#_Prod,RotMensualUd#Ud#,RotMensualUd#Ud#_Prod,Fecha_Inicio,Fecha_Fin,
+         Promedio_Ud#Ud#_Prod,Promedio_MensualUd#Ud#_Prod,RotMensualUd#Ud#_Ult_3Mes_Prod,
+         PromMensualUd#Ud#_Ul3Mes_Prod,PromUlt3CioPromUlt3Meses_Ud#Ud#_Prod
 
 Update #Tbl_Paso_Proyecto Set Dias_Fecha = DATEDIFF(D,Fecha_Inicio,Fecha_Fin)                                  
 Update #Tbl_Paso_Proyecto Set Meses_Fecha = DATEDIFF(M,Fecha_Inicio,Fecha_Fin)                                      
@@ -113,46 +118,47 @@ Update #Tbl_Paso_Proyecto Set Proyeccion_Abastecer = CEILING(ROUND(Dias_Abastece
 SELECT  Codigo_Nodo,
 		Codigo_Nodo_Madre,
         Producto,
-        Sum(StockUd#Ud#) As StockUd#Ud#, 
-        SUM(StockEnTransitoUd#Ud#) As StockEnTransitoUd#Ud#, 
-        Sum(StockPedidoUd#Ud#) As StockPedidoUd#Ud#, 
+        Sum(StockUd#Ud#) As 'StockUd#Ud#', 
+        SUM(StockEnTransitoUd#Ud#) As 'StockEnTransitoUd#Ud#', 
+        Sum(StockPedidoUd#Ud#) As 'StockPedidoUd#Ud#', 
         RotDiariaUd#Ud#, 
         RotMensualUd#Ud#, 
-		Sum(StockFacSinRecepUd#Ud#) As StockFacSinRecepUd#Ud#,
+		Sum(StockFacSinRecepUd#Ud#) As 'StockFacSinRecepUd#Ud#',
         Stock_CriticoUd#Ud#_Rd,
-        SUM(RotCalculo) As RotCalculo, --
-        CAST(0 As Float) As Venta_Periodo, 
+        SUM(RotCalculo) As 'RotCalculo', --
+        CAST(0 As Float) As 'Venta_Periodo', 
 
-        SUM(SumTotalQtyUd1) AS SumTotalQtyUd1,
-        CAST(0 As Float) AS Promedio_Diario,
-		CAST(0 As Float) AS Promedio_Mensual,
+        SUM(SumTotalQtyUd1) As 'SumTotalQtyUd1',
+        CAST(0 As Float) As 'Promedio_Diario',
+		CAST(0 As Float) As 'Promedio_Mensual',
 
-        CAST(0 As Float) AS 'Promedio_DiarioUltMMU3Mes',
-		CAST(0 As Float) AS 'Promedio_UltMesMasPromUlt3Mes',
+        CAST(0 As Float) As 'Promedio_DiarioUltMMU3Mes',
+		CAST(0 As Float) As 'Promedio_UltMesMasPromUlt3Mes',
 
 		Fecha_Inicio,
 		Fecha_Fin,
 		Dias_Fecha,
 		Meses_Fecha,
 
-        SUM(SumTotalQtyUd#Ud#_Ult_3Mes) AS SumTotalQtyUd#Ud#_Ult_3Mes,
-        CAST(0 As Float) AS Promedio_Diario3Mes,
-		CAST(0 As Float) AS Promedio_3Mes,
+        SUM(SumTotalQtyUd#Ud#_Ult_3Mes) AS 'SumTotalQtyUd#Ud#_Ult_3Mes',
+        CAST(0 As Float) As 'Promedio_Diario3Mes',
+		CAST(0 As Float) As 'Promedio_3Mes',
 
-        CAST(0 As Float) AS Venta_Ult_3Cio,
-		SUM(SumTotalQtyUd#Ud#_Ult_3Cio) AS SumTotalQtyUd#Ud#_Ult_3Cio,
-		CAST(0 As Float) As Tendencia,
+        CAST(0 As Float) As 'Venta_Ult_3Cio',
+		SUM(SumTotalQtyUd#Ud#_Ult_3Cio) AS 'SumTotalQtyUd#Ud#_Ult_3Cio',
+		CAST(0 As Float) As 'Tendencia',
 
-        CAST(0 As Float) As Stock_Asegurado_Dias,--SUM(Stock_Asegurado_Dias) As Stock_Asegurado_Dias, 
-        CAST(0 As Float) As Stock_Asegurado_Proyeccion,--SUM(Stock_Asegurado_Proyeccion) As Stock_Asegurado_Proyeccion,      
-        CAST(0 As Float) As Duracion_Dias,--SUM(Duracion_Dias) As Duracion_Dias, 
-        CAST(0 As Float) As Duracion_Proyeccion,--SUM(Duracion_Proyeccion) As Duracion_Proyeccion, 
-        CAST(0 As Float) As Duracion_Proyeccion_Recepcion,--SUM(Duracion_Proyeccion_Recepcion) As Duracion_Proyeccion_Recepcion, 
-        SUM(Cant_Comprar) As Cant_Comprar,
-        SUM(Cant_Comprar_Sug) AS Cant_Comprar_Sug,
-        SUM(Cant_Comprar_Sug_Red) AS Cant_Comprar_Sug_Red,
+        CAST(0 As Float) As 'Stock_Asegurado_Dias',--SUM(Stock_Asegurado_Dias) As Stock_Asegurado_Dias, 
+        CAST(0 As Float) As 'Stock_Asegurado_Proyeccion',--SUM(Stock_Asegurado_Proyeccion) As Stock_Asegurado_Proyeccion,      
+        CAST(0 As Float) As 'Duracion_Dias',--SUM(Duracion_Dias) As Duracion_Dias, 
+        CAST(0 As Float) As 'Duracion_Proyeccion',--SUM(Duracion_Proyeccion) As Duracion_Proyeccion, 
+        CAST(0 As Float) As 'Duracion_Proyeccion_Recepcion',--SUM(Duracion_Proyeccion_Recepcion) As Duracion_Proyeccion_Recepcion, 
+        SUM(Cant_Comprar) As 'Cant_Comprar',
+        SUM(Cant_Comprar_Sug) As 'Cant_Comprar_Sug',
+        SUM(Cant_Comprar_Sug_Red) As 'Cant_Comprar_Sug_Red',
 	    Dias_Abastecer,
 	    Proyeccion_Abastecer,
+        Cast('No' As varchar(2)) As 'PreImportacion',
         CAST(0 As int) As 'Idmaeedo_ProxRC',
 		CAST('' As char(3)) As 'Tido_ProxRC',
 		CAST('' As char(10)) As 'Nudo_ProxRC',
@@ -242,7 +248,6 @@ Where RotCalculo > 0
 Update #Tbl_Paso_Proyecto_01 Set Duracion_Dias = ROUND((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#)/RotCalculo,0)
 Where RotCalculo > 0 													
 						
---SELECT 57600/350.5													
 
 Update #Tbl_Paso_Proyecto_01 Set Duracion_Proyeccion = 
 		ROUND((((StockUd1+StockPedidoUd1+StockFacSinRecepUd1+StockEnTransitoUd1)/RotCalculo) * @Porc_Creciminto)/@Dias_Proyeccion,2)
@@ -252,14 +257,8 @@ Update #Tbl_Paso_Proyecto_01 Set Duracion_Proyeccion_Recepcion =
 		ROUND(((StockPedidoUd1+StockFacSinRecepUd1)/ RotCalculo * @Porc_Creciminto)/@Dias_Proyeccion,2)
 Where RotCalculo > 0 
 
---Update #Tbl_Paso_Proyecto_01 Set Duracion_Proyeccion = 
---		ROUND((((StockUd1+StockPedidoUd1+StockFacSinRecepUd1+StockEnTransitoUd1)/RotCalculo) * @Porc_Creciminto),2)
---Where RotCalculo > 0 
-
---Update #Tbl_Paso_Proyecto_01 Set Duracion_Proyeccion_Recepcion = 
---		ROUND(((StockPedidoUd1+StockFacSinRecepUd1)/ RotCalculo * @Porc_Creciminto),2)
---Where RotCalculo > 0 
-
+-- PRE IMPORTACION
+Update #Tbl_Paso_Proyecto_01 Set PreImportacion = 'Si' Where Duracion_Proyeccion > @MesesPreImportacion
 --
 
 Update #Tbl_Paso_Proyecto_01 Set Stock_Asegurado_Dias = ROUND((StockUd#Ud#+StockEnTransitoUd#Ud#)/1,0)

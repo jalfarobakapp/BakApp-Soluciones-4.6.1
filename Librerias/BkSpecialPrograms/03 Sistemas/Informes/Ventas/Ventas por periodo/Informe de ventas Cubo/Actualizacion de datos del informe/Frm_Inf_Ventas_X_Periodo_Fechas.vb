@@ -530,6 +530,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                 _Sql.Fx_Exite_Campo(_Nombre_Tabla_Paso, "NOKOGRUDT") Then
                 _ExistenCamposKogru = True
             End If
+
             If CBool(_TblFechas.Rows.Count) Then
 
                 _Cronometro.Sb_Iniciar()
@@ -648,10 +649,10 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                 Consulta_Sql = Replace(Consulta_Sql, "#Filtro_Externo#", "")
                                 Consulta_Sql = Replace(Consulta_Sql, "(#Idmaeedo#)", _Filtro_Idmaeedo2)
 
-                                If _ExistenCamposKogru Then
-                                    Consulta_Sql = Replace(Consulta_Sql, "/*--KOGRU", "")
-                                    Consulta_Sql = Replace(Consulta_Sql, "*/--KOGRU", "")
-                                End If
+                                'If _ExistenCamposKogru Then
+                                '    Consulta_Sql = Replace(Consulta_Sql, "/*--KOGRU", "")
+                                '    Consulta_Sql = Replace(Consulta_Sql, "*/--KOGRU", "")
+                                'End If
 
                                 _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
 
@@ -660,6 +661,12 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                 Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3_Clasificaciones
                                 Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
                                 Consulta_Sql = Replace(Consulta_Sql, "(#Idmaeedo#)", _Filtro_Idmaeedo2)
+                                Consulta_Sql = Replace(Consulta_Sql, "#Global_BaseBk#", _Global_BaseBk)
+                                If _ExistenCamposKogru Then
+                                    Consulta_Sql = Replace(Consulta_Sql, "/*--KOGRU", "")
+                                    Consulta_Sql = Replace(Consulta_Sql, "*/--KOGRU", "")
+                                End If
+
                                 _Sql.Ej_consulta_IDU(Consulta_Sql)
 
                             End If
@@ -691,7 +698,13 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                                         Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3_Clasificaciones
                                         Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
                                         Consulta_Sql = Replace(Consulta_Sql, "#Idmaeedo#", _Idmaeedo)
+                                        Consulta_Sql = Replace(Consulta_Sql, "#Global_BaseBk#", _Global_BaseBk)
+                                        If _ExistenCamposKogru Then
+                                            Consulta_Sql = Replace(Consulta_Sql, "/*--KOGRU", "")
+                                            Consulta_Sql = Replace(Consulta_Sql, "*/--KOGRU", "")
+                                        End If
                                         _Sql.Ej_consulta_IDU(Consulta_Sql)
+
                                     End If
 
                                     Progreso_Cont_Productos.Value += 1
@@ -1018,6 +1031,15 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                 _Meses = 1
             End If
 
+            Dim _ExistenCamposKogru As Boolean = False
+
+            If _Sql.Fx_Exite_Campo(_Nombre_Tabla_Paso, "KOGRU") And
+                _Sql.Fx_Exite_Campo(_Nombre_Tabla_Paso, "KOGRUDT") AndAlso
+                _Sql.Fx_Exite_Campo(_Nombre_Tabla_Paso, "NOKOGRU") AndAlso
+                _Sql.Fx_Exite_Campo(_Nombre_Tabla_Paso, "NOKOGRUDT") Then
+                _ExistenCamposKogru = True
+            End If
+
             For _Mes = 1 To _Meses
 
                 Dim _Fecha_Primer_Dia = Primerdiadelmes(_Fecha)
@@ -1038,9 +1060,16 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
                     Dim _Filtro_Idmaeedo As String = Generar_Filtro_IN(_Tbl_Idmaeedo, "", "Idmaeedo", False, False, "")
                     Lbl_Doc_Insert.Text = "Actualizando filtros..."
                     Application.DoEvents()
+
                     Consulta_Sql = My.Resources.Recursos_Inf_Ventas.Informe_Ventas_x_Perido_Nivel_Detalle_Cubo_Actualizacion3_Clasificaciones
                     Consulta_Sql = Replace(Consulta_Sql, "#Tabla_Paso#", _Nombre_Tabla_Paso)
                     Consulta_Sql = Replace(Consulta_Sql, "(#Idmaeedo#)", _Filtro_Idmaeedo)
+                    Consulta_Sql = Replace(Consulta_Sql, "#Global_BaseBk#", _Global_BaseBk)
+                    If _ExistenCamposKogru Then
+                        Consulta_Sql = Replace(Consulta_Sql, "/*--KOGRU", "")
+                        Consulta_Sql = Replace(Consulta_Sql, "*/--KOGRU", "")
+                    End If
+
                     _Sql.Ej_consulta_IDU(Consulta_Sql)
 
                 End If
