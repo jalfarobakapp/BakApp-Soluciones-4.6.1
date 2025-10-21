@@ -2001,24 +2001,21 @@ Public Class Clase_Crear_Documento
                 Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
                 Dim _TipoEstacion = _Global_Row_EstacionBk.Item("TipoEstacion")
                 Dim _Modalidad As String = _Row_Encabezado.Item("Modalidad")
-                Dim _Pickear As Integer
+                Dim _Pickear As Boolean = False
+                Dim _PdaRMovil As Boolean = _Row_Encabezado.Item("PdaRMovil")
+                Dim _Idpdaenca As Integer = _Row_Encabezado.Item("Idpdaenca")
+                Dim _ConservaNudo As Boolean = _Row_Encabezado.Item("ConservaNudo")
 
                 If _Tido = "NVV" Then
-
-                    _Pickear = Convert.ToInt32(_Row_Encabezado.Item("Pickear")) 'Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_NVVTodas"))
-
-                    'If CBool(_Pickear) AndAlso
-                    '    Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_ProdPesoVariable")) AndAlso
-                    '    Not CBool(_Items_RtuVariable) Then
-                    '    _Pickear = 0
-                    'End If
-
+                    _Pickear = _Row_Encabezado.Item("Pickear")
                 End If
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
-                               "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta) Values " &
+                               "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca) Values " &
                                "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad & "'" &
-                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & _Pickear & "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(_PreVenta) & ")"
+                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
+                               "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(_PreVenta) &
+                               "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
@@ -3114,7 +3111,7 @@ Public Class Clase_Crear_Documento
                 _TipoDoc = .Item("TipoDoc")
                 _SubTido = .Item("Subtido")
 
-                If _TipoDoc = "NVV" Then
+                If _TipoDoc = "NVV" And Not .Item("ConservaNudo") Then
 
                     Dim letras As String = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
                     Dim numeros As String = "0123456789"
@@ -3137,11 +3134,13 @@ Public Class Clase_Crear_Documento
 
                 Else
 
-                    _NroDocumento = Traer_Numero_Documento(_Tido, .Item("NroDocumento"), _Modalidad)
+                    If .Item("ConservaNudo") Then
+                        _NroDocumento = .Item("NroDocumento")
+                    Else
+                        _NroDocumento = Traer_Numero_Documento(_Tido, .Item("NroDocumento"), _Modalidad)
+                    End If
 
                 End If
-
-
 
                 If String.IsNullOrEmpty(_NroDocumento) Then
                     Return 0

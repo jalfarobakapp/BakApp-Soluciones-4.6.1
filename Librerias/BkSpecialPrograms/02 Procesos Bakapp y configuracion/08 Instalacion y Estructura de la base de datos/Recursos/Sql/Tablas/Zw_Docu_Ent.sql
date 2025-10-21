@@ -19,6 +19,9 @@ CREATE TABLE [dbo].[Zw_Docu_Ent](
     [PreVenta]          [bit]			NOT NULL DEFAULT (0),
     [IdCont]            [int]			NOT NULL DEFAULT (0),
     [Contenedor]        [varchar](20)   NOT NULL DEFAULT (0),
+    [SobreStock]        [bit]			NOT NULL DEFAULT (0),
+    [PdaRMovil]         [bit]			NOT NULL DEFAULT (0),
+    [Idpdaenca]         [Int]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Docu_Ent] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

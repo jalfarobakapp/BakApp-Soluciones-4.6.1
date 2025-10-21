@@ -347,20 +347,16 @@ Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA = {_Idpdaenca}"
             Fm.Sb_Crear_Documento_Interno_Con_Tabla(Nothing, _Tbl_Productos, _FechaEmision,
                                                     "Codigo", "Cantidad", "Precio", "Observacion",
                                                     False, False, _Nudo,,,,,, False, False,, False, True)
-            'CodFuncionario_Autoriza
+
             Dim _Mensaje_RevPermisos As LsValiciones.Mensajes = Fm.Fx_Revisar_Permisos_Necesarios_Del_Documento_NVVAuto(_CodFuncionario, False)
 
-            If _Mensaje_RevPermisos.EsCorrecto Then
+            Dim _Cl_RemotasEnCadena As Cl_RemotasEnCadena
+            Dim _Ds_Matriz_Documentos As Ds_Matriz_Documentos
 
-                Dim _Mensaje2 As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False,, False)
-                Fm.Dispose()
+            If Not IsNothing(_Mensaje_RevPermisos.Tag) Then
 
-                Return _Mensaje2
-
-            Else
-
-                Dim _Cl_RemotasEnCadena As Cl_RemotasEnCadena = _Mensaje_RevPermisos.Tag
-                Dim _Ds_Matriz_Documentos As Ds_Matriz_Documentos = _Cl_RemotasEnCadena.Ds_Matriz_Documentos
+                _Cl_RemotasEnCadena = _Mensaje_RevPermisos.Tag
+                _Ds_Matriz_Documentos = _Cl_RemotasEnCadena.Ds_Matriz_Documentos
 
                 Dim _Tbl_Encabezado As DataTable = _Ds_Matriz_Documentos.Tables(4)
 
@@ -370,6 +366,16 @@ Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA = {_Idpdaenca}"
                     .Item("ConservaNudo") = True
                 End With
 
+            End If
+
+            If _Mensaje_RevPermisos.EsCorrecto Then
+
+                Dim _Mensaje2 As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False,, False)
+                Fm.Dispose()
+
+                Return _Mensaje2
+
+            Else
 
                 ' CREAMOS EL DOCUMENTO DE PASO
                 Dim _Crear_Doc As New Clase_Crear_Documento
