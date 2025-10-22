@@ -26,4 +26,5 @@
     'Public Property Descripcion As String
     Public Property StDispUd1 As Double
     Public Property PqteDisponible As Double
+    Public Property Precio_DigSobreStock As Double
 End Class

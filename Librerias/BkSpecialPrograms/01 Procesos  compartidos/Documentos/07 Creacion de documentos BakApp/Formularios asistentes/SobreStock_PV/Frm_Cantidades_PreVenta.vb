@@ -23,6 +23,8 @@ Public Class Frm_Cantidades_PreVenta
     Public Property Ud1XPqte As Double
     Public Property Aceptado As Boolean
     Public Property CantidadDisponible As Double
+    Public Property PrecioXUd1 As Double
+    Public Property Precio_DigSobreStock As Double
 
     Private _RowProducto As DataRow
     Private _Fr_Alerta_Stock As New DevComponents.DotNetBar.Balloon
@@ -33,7 +35,6 @@ Public Class Frm_Cantidades_PreVenta
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-
 
     End Sub
 
@@ -49,6 +50,8 @@ Public Class Frm_Cantidades_PreVenta
 
         Txt_CantidadPreVenta.Text = Cantidad ' Zw_PreVenta_StockProd.Cantidad
         Txt_CantidadPreVenta.Tag = Cantidad ' Zw_PreVenta_StockProd.Cantidad
+
+        DInput_PrecioXUd1.Value = Precio_DigSobreStock
 
         If RevisarRtuVariable Then
 
@@ -87,6 +90,7 @@ Public Class Frm_Cantidades_PreVenta
         End If
 
         Txt_CantidadDisponible.Text = FormatNumber(PqteDisponible, 0)
+        Txt_Ud1XPqte.Text = FormatNumber(Ud1XPqte, 0)
         Txt_CantMinFormato.Text = CantMinFormato
 
         Img_RtuAPI.Visible = _ValidarApiWMSBosOne
@@ -169,7 +173,7 @@ Public Class Frm_Cantidades_PreVenta
 
 
         If Txt_CantidadPreVenta.Tag < CantMinFormato Then
-            MessageBoxEx.Show(Me, "La cantidad no puede ser menor a " & CantMinFormato & " " & FormatoPqte,
+            MessageBoxEx.Show(Me, "La cantidad mínima para la venta es de " & CantMinFormato & " " & FormatoPqte,
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_CantidadPreVenta.SelectAll()
             Txt_CantidadPreVenta.Focus()
@@ -190,13 +194,27 @@ Public Class Frm_Cantidades_PreVenta
         '    Return
         'End If
 
-        If Cantidad > PqteDisponible Then
-            MessageBoxEx.Show(Me, "No puede vender mas de " & PqteDisponible & " " & FormatoPqte & vbCrLf &
-                              "En su defecto " & Ud1XPqte * Cantidad & " " & _RowProducto.Item("UD01PR"),
-                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        If PqteDisponible <= 0 Then
+
+            MessageBoxEx.Show(Me, "Producto sin stock disponble", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_CantidadPreVenta.Focus()
             Return
+
         End If
+
+        If Cantidad > PqteDisponible Then
+
+            Dim _Msj = "No puede vender mas de " & PqteDisponible & " " & FormatoPqte & vbCrLf &
+                              "En su defecto " & Ud1XPqte * Cantidad & " " & _RowProducto.Item("UD01PR")
+            _Msj = "Límite disponible: " & PqteDisponible & " " & FormatoPqte &
+                   " o " & FormatNumber(Ud1XPqte * PqteDisponible, 0) & " " & _RowProducto.Item("UD01PR") & ". Verifique antes de continuar."
+            MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_CantidadPreVenta.Focus()
+            Return
+
+        End If
+
+        Precio_DigSobreStock = DInput_PrecioXUd1.Value
 
         Aceptado = True
 

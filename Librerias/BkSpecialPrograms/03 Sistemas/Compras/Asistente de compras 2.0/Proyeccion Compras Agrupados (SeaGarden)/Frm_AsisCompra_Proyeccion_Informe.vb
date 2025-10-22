@@ -284,7 +284,10 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
         Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
         Consulta_sql = Replace(Consulta_sql, "#MesesSobreStock#", De_Num_a_Tx_01(Input_CalcSobreStock.Value, False, 2))
-        Consulta_sql = Replace(Consulta_sql, "--FiltroProductosSoloConStock", "")
+
+        If Chk_MostrarSoloProdConStockEnDetalle.Checked Then
+            Consulta_sql = Replace(Consulta_sql, "--FiltroProductosSoloConStock", "")
+        End If
 
         _Ds_Proyecto = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -335,7 +338,10 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
         Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
         Consulta_sql = Replace(Consulta_sql, "#MesesSobreStock#", De_Num_a_Tx_01(Input_CalcSobreStock.Value, False, 2))
-        Consulta_sql = Replace(Consulta_sql, "--FiltroProductosSoloConStock", "")
+
+        If Chk_MostrarSoloProdConStockEnDetalle.Checked Then
+            Consulta_sql = Replace(Consulta_sql, "--FiltroProductosSoloConStock", "")
+        End If
 
         _Ds_Proyecto = _Sql.Fx_Get_DataSet(Consulta_sql)
 

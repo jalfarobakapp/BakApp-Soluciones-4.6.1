@@ -4157,6 +4157,8 @@ Partial Public Class Ds_Matriz_Documentos
         
         Private columnQty_SobreStock As Global.System.Data.DataColumn
         
+        Private columnPrecio_DigSobreStock As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub New()
@@ -5305,6 +5307,14 @@ Partial Public Class Ds_Matriz_Documentos
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property Precio_DigSobreStockColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnPrecio_DigSobreStock
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -5479,9 +5489,10 @@ Partial Public Class Ds_Matriz_Documentos
                     ByVal Id_SobreStock As Integer,  _
                     ByVal Moneda_SobreStock As String,  _
                     ByVal Precio_SobreStock As Double,  _
-                    ByVal Qty_SobreStock As Double) As Detalle_DocRow
+                    ByVal Qty_SobreStock As Double,  _
+                    ByVal Precio_DigSobreStock As Double) As Detalle_DocRow
             Dim rowDetalle_DocRow As Detalle_DocRow = CType(Me.NewRow,Detalle_DocRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, Id_DocDet, Id_Det, Empresa, Sucursal, Bodega, CodFuncionario, UnTrans, Lincondest, Codigo, CodigoProv, UdTrans, Cantidad, TipoValor, Precio, DescuentoPorc, DescuentoValor, DescuentoValor_Anterior, RecargoValor, Descripcion, Descripcion_Ori, PrecioNetoUd, PrecioNetoUdLista, PrecioBrutoUd, PrecioBrutoUdLista, Rtu, Ud01PR, CantUd1, CodVendedor, Prct, Tipr, Tict, DsctoNeto, DsctoBruto, CDespUd1, Ud02PR, CantUd2, CDespUd2, ValVtaDescMax, ValVtaStockInf, CodLista, Melt, PrecioListaUd1, PrecioListaUd2, DescMaximo, NroDscto, NroImpuestos, PorIva, PorIla, ValIvaLinea, ValIlaLinea, ValSubNetoLinea, ValNetoLinea, ValBrutoLinea, PmLinea, PmSucLinea, PmIFRS, PrecioNetoRealUd1, PrecioNetoRealUd2, Idmaeedo_Dori, Idmaeddo_Dori, CantUd1_Dori, CantUd2_Dori, Estado, Emprepa, Tidopa, NudoPa, Endopa, Nulidopa, FechaEmision, FechaRecepcion, SubTotal, StockBodega, UbicacionBod, DsctoRealPorc, DsctoRealValor, DsctoGlobalSuperado, Tiene_Dscto, CantidadCalculo, Operacion, Potencia, PrecioCalculo, OCCGenerada, Bloqueapr, Observa, CodFunAutoriza, CodPermiso, Nuevo_Producto, Solicitado_bodega, Moneda, Tipo_Moneda, Tipo_Cambio, Ecuacion, Stock_desde_WMS, Total_Costo, Margen_Valor, Margen_Porc, Visado_Dscto, Visado_Stock, Crear_CPr, Id_CPr, Proyecto, Centro_Costo, Consolidar_Stock, No_Aplica_Redondeo, Id_Oferta, Es_Padre_Oferta, Oferta, Padre_Oferta, Aplica_Oferta, Hijo_Oferta, Cantidad_Oferta, Porcdesc_Oferta, Tasadorig, FunValida_Compra, Recargo_Campo, Recargo_Valor, Recargo_Distribuido, TieneOccPdte, PrecioListaUd1_Prov, PrecioListaUd2_Prov, Pesoubic, SumaKilos, CostoLista, Id_OtSvr, Semilla_Svr, Nmarca, RtuVariable, Espuntosvta, ModFechVto, Condicionado, EsPallet, DesacRazTransf, Grupo, SobreStock, Id_SobreStock, Moneda_SobreStock, Precio_SobreStock, Qty_SobreStock}
+            Dim columnValuesArray() As Object = New Object() {Nothing, Id_DocDet, Id_Det, Empresa, Sucursal, Bodega, CodFuncionario, UnTrans, Lincondest, Codigo, CodigoProv, UdTrans, Cantidad, TipoValor, Precio, DescuentoPorc, DescuentoValor, DescuentoValor_Anterior, RecargoValor, Descripcion, Descripcion_Ori, PrecioNetoUd, PrecioNetoUdLista, PrecioBrutoUd, PrecioBrutoUdLista, Rtu, Ud01PR, CantUd1, CodVendedor, Prct, Tipr, Tict, DsctoNeto, DsctoBruto, CDespUd1, Ud02PR, CantUd2, CDespUd2, ValVtaDescMax, ValVtaStockInf, CodLista, Melt, PrecioListaUd1, PrecioListaUd2, DescMaximo, NroDscto, NroImpuestos, PorIva, PorIla, ValIvaLinea, ValIlaLinea, ValSubNetoLinea, ValNetoLinea, ValBrutoLinea, PmLinea, PmSucLinea, PmIFRS, PrecioNetoRealUd1, PrecioNetoRealUd2, Idmaeedo_Dori, Idmaeddo_Dori, CantUd1_Dori, CantUd2_Dori, Estado, Emprepa, Tidopa, NudoPa, Endopa, Nulidopa, FechaEmision, FechaRecepcion, SubTotal, StockBodega, UbicacionBod, DsctoRealPorc, DsctoRealValor, DsctoGlobalSuperado, Tiene_Dscto, CantidadCalculo, Operacion, Potencia, PrecioCalculo, OCCGenerada, Bloqueapr, Observa, CodFunAutoriza, CodPermiso, Nuevo_Producto, Solicitado_bodega, Moneda, Tipo_Moneda, Tipo_Cambio, Ecuacion, Stock_desde_WMS, Total_Costo, Margen_Valor, Margen_Porc, Visado_Dscto, Visado_Stock, Crear_CPr, Id_CPr, Proyecto, Centro_Costo, Consolidar_Stock, No_Aplica_Redondeo, Id_Oferta, Es_Padre_Oferta, Oferta, Padre_Oferta, Aplica_Oferta, Hijo_Oferta, Cantidad_Oferta, Porcdesc_Oferta, Tasadorig, FunValida_Compra, Recargo_Campo, Recargo_Valor, Recargo_Distribuido, TieneOccPdte, PrecioListaUd1_Prov, PrecioListaUd2_Prov, Pesoubic, SumaKilos, CostoLista, Id_OtSvr, Semilla_Svr, Nmarca, RtuVariable, Espuntosvta, ModFechVto, Condicionado, EsPallet, DesacRazTransf, Grupo, SobreStock, Id_SobreStock, Moneda_SobreStock, Precio_SobreStock, Qty_SobreStock, Precio_DigSobreStock}
             rowDetalle_DocRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowDetalle_DocRow)
             Return rowDetalle_DocRow
@@ -5643,6 +5654,7 @@ Partial Public Class Ds_Matriz_Documentos
             Me.columnMoneda_SobreStock = MyBase.Columns("Moneda_SobreStock")
             Me.columnPrecio_SobreStock = MyBase.Columns("Precio_SobreStock")
             Me.columnQty_SobreStock = MyBase.Columns("Qty_SobreStock")
+            Me.columnPrecio_DigSobreStock = MyBase.Columns("Precio_DigSobreStock")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -5926,6 +5938,8 @@ Partial Public Class Ds_Matriz_Documentos
             MyBase.Columns.Add(Me.columnPrecio_SobreStock)
             Me.columnQty_SobreStock = New Global.System.Data.DataColumn("Qty_SobreStock", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnQty_SobreStock)
+            Me.columnPrecio_DigSobreStock = New Global.System.Data.DataColumn("Precio_DigSobreStock", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnPrecio_DigSobreStock)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnId}, false))
             Me.columnId.AutoIncrement = true
             Me.columnId.AutoIncrementSeed = 1
@@ -13399,6 +13413,22 @@ Partial Public Class Ds_Matriz_Documentos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property Precio_DigSobreStock() As Double
+            Get
+                Try 
+                    Return CType(Me(Me.tableDetalle_Doc.Precio_DigSobreStockColumn),Double)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'Precio_DigSobreStock' de la tabla 'Detalle_Doc' es DBNull"& _ 
+                            ".", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableDetalle_Doc.Precio_DigSobreStockColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Function IsIdNull() As Boolean
             Return Me.IsNull(Me.tableDetalle_Doc.IdColumn)
         End Function
@@ -14991,6 +15021,18 @@ Partial Public Class Ds_Matriz_Documentos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetQty_SobreStockNull()
             Me(Me.tableDetalle_Doc.Qty_SobreStockColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsPrecio_DigSobreStockNull() As Boolean
+            Return Me.IsNull(Me.tableDetalle_Doc.Precio_DigSobreStockColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetPrecio_DigSobreStockNull()
+            Me(Me.tableDetalle_Doc.Precio_DigSobreStockColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

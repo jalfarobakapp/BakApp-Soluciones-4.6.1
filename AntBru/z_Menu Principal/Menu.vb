@@ -1583,6 +1583,16 @@ Public Class Menu
     End Sub
     Private Sub Btn_SobreStockNVV_Click(sender As Object, e As EventArgs) Handles Btn_SobreStockNVV.Click
 
+        Dim _Cl_SobreStock As New Cl_SobreStock
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = _Cl_SobreStock.Fx_Tomar_SobreStock()
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            Return
+        End If
+
         Modulo_Documentos.Sb_Generar_Documento(_Fm_Menu_Padre,
                                                "NVV",
                                                True,

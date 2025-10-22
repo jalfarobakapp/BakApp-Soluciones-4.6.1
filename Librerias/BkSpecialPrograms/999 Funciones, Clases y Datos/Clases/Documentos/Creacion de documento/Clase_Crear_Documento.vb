@@ -169,7 +169,12 @@ Public Class Clase_Crear_Documento
     Dim _Nuliprod As String
 
     Dim _Customizable As Boolean
-    Dim _PreVenta As Boolean
+
+    'Dim _PreVenta As Boolean
+    'Dim _SobreStock As Boolean
+
+    Public Property PreVenta As Boolean
+    Public Property SobreStock As Boolean
 
     Dim _IdCont As Integer
     Dim _Contenedor As String
@@ -189,6 +194,7 @@ Public Class Clase_Crear_Documento
 #End Region
 
     Public Property Ls_Cl_PreVenta As New List(Of Zw_PreVenta_StockProd)
+    Public Property Ls_Cl_SobreStock As New List(Of Zw_Prod_SobreStock)
 
 #Region "FUNCION CREAR DOCUMENTO RANDOM DEFINITIVO"
 
@@ -406,7 +412,9 @@ Public Class Clase_Crear_Documento
                 '------------------------------------------------------------------------------------------------------------
 
                 _Customizable = NuloPorNro(.Item("Customizable"), False)
-                _PreVenta = NuloPorNro(.Item("PreVenta"), False)
+
+                '_PreVenta = NuloPorNro(.Item("PreVenta"), False)
+                '_SobreStock = NuloPorNro(.Item("SobreStock"), False)
 
                 _Contacto_Ent = .Item("Contacto_Ent")
 
@@ -1308,7 +1316,7 @@ Public Class Clase_Crear_Documento
                             End While
                             dfd1.Close()
 
-                            If _PreVenta Then
+                            If PreVenta Then
 
                                 Dim _Zw_PreVenta_StockProd As Zw_PreVenta_StockProd = Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
 
@@ -1326,6 +1334,35 @@ Public Class Clase_Crear_Documento
                                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
                                                "IdCont = " & _Zw_PreVenta_StockProd.IdCont & ",Contenedor = '" & _Zw_PreVenta_StockProd.Contenedor & "'" & vbCrLf &
                                                "Where Id = " & _Id
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                            End If
+
+                            If SobreStock Then
+
+                                Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
+
+                                Dim _Id_SobreStock As Integer = _Zw_Prod_SobreStock.Id
+                                Dim _Moneda_SobreStock As String = _Zw_Prod_SobreStock.Moneda
+                                Dim _PqteComprometido As Double = _Zw_Prod_SobreStock.Cantidad
+                                Dim _Precio_SobreStock As Double = _Zw_Prod_SobreStock.PrecioXUd1
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
+                                               "SobreStock = 1" &
+                                               ",Id_SobreStock = " & _Id_SobreStock &
+                                               ",Moneda_SobreStock = '" & _Moneda_SobreStock & "'" & vbCrLf &
+                                               ",Precio_SobreStock = " & De_Num_a_Tx_01(_Precio_SobreStock, False, 5) & vbCrLf &
+                                               ",Qty_SobreStock = " & De_Num_a_Tx_01(_PqteComprometido, False, 5) & vbCrLf &
+                                               "Where Id = " & _Id
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
+                                               "PqteComprometido = PqteComprometido+" & De_Num_a_Tx_01(_PqteComprometido, False, 5) & vbCrLf &
+                                               "Where Id = " & _Id_SobreStock
                                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                 Comando.Transaction = myTrans
                                 Comando.ExecuteNonQuery()
@@ -2011,11 +2048,11 @@ Public Class Clase_Crear_Documento
                 End If
 
                 Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
-                               "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca) Values " &
+                               "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca,SobreStock) Values " &
                                "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad & "'" &
                                ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
-                               "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(_PreVenta) &
-                               "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & ")"
+                               "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(PreVenta) &
+                               "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) & ")"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans

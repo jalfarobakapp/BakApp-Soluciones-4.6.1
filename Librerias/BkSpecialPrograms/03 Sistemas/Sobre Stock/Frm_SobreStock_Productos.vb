@@ -359,6 +359,7 @@ Public Class Frm_SobreStock_Productos
                 .CantMinFormato = _Fila.Cells("CantMinFormato").Value
                 .Moneda = _Fila.Cells("Moneda").Value
                 .PrecioXUd1 = _Fila.Cells("PrecioXUd1").Value
+                .Precio_DigSobreStock = _Fila.Cells("PrecioXUd1").Value
                 .StSobStockUd1 = _Fila.Cells("StSobStockUd1").Value
                 .StSobStockUd2 = _Fila.Cells("StSobStockUd2").Value
                 .StSbCompStock1 = _Fila.Cells("StSbCompStock1").Value
