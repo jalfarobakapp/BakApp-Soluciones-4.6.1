@@ -426,6 +426,15 @@ Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA = {_Idpdaenca}"
 
                     _Det1.NroRemota = _NroRemota
 
+                    _Cl_RemotasEnCadena.Fx_Cadena_Remotas_Crear_Cadena()
+
+                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Remotas Set " & vbCrLf &
+                                   "RCadena = 1" &
+                                   ",RCadena_Id_Enc = " & _Cl_RemotasEnCadena.Zw_Remotas_En_Cadena_01_Enc.Id_Enc &
+                                   ",Nro_RCadena = '" & _Cl_RemotasEnCadena.Zw_Remotas_En_Cadena_01_Enc.Nro_RCadena & "'" & vbCrLf &
+                                   "Where NroRemota = '" & _NroRemota & "'"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
                     If _Cl_RemotasEnCadena.Ls_Zw_Remotas_En_Cadena_02_Det.Count = 1 Then
 
                         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Remotas Set Crear_Doc_Def_Al_Grabar = 1" & vbCrLf &
@@ -433,8 +442,6 @@ Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA = {_Idpdaenca}"
                         _Sql.Ej_consulta_IDU(Consulta_sql)
 
                     End If
-
-                    _Cl_RemotasEnCadena.Fx_Cadena_Remotas_Crear_Cadena()
 
                 End If
 

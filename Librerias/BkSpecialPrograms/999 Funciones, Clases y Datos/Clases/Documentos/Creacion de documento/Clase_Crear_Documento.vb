@@ -278,7 +278,7 @@ Public Class Clase_Crear_Documento
                             CAPRCO1-CAPREX1 AS 'CantUd1_Dori',CAPRCO2-CAPREX2 AS 'CantUd2_Dori',
                             CASE WHEN TIDO In ('GRD','NCV') THEN CAPRCO1-CAPREX1 ELSE (CAPRAD1+CAPREX1)-CAPRNC1 END AS 'CantUd1_Dori_Ncv',
 	                        CASE WHEN TIDO In ('GRD','NCV') THEN CAPRCO2-CAPREX2 ELSE (CAPRAD2+CAPREX2)-CAPRNC2 END AS 'CantUd2_Dori_Ncv'
-                            From MAEDDO Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori
+                            From MAEDDO WITH (NOLOCK) Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori
             _Tbl_Maeddo_Dori = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         End If
@@ -288,7 +288,7 @@ Public Class Clase_Crear_Documento
 
         If Fl = "()" Then Fl = "(0)"
 
-        Consulta_sql = "SELECT DISTINCT IDMAEEDO,TIDO FROM MAEDDO WHERE IDMAEEDO IN " & Fl
+        Consulta_sql = "SELECT DISTINCT IDMAEEDO,TIDO FROM MAEDDO WITH (NOLOCK) WHERE IDMAEEDO IN " & Fl
         Dim _TblOrigen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _Contacto_Ent As String
@@ -420,7 +420,7 @@ Public Class Clase_Crear_Documento
 
             End With
 
-            Consulta_sql = "Select Top 1 * From TABTIDO Where TIDO = '" & _Tido & "'"
+            Consulta_sql = "Select Top 1 * From TABTIDO WITH (NOLOCK) Where TIDO = '" & _Tido & "'"
             Dim _Row_Tabtido As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Signo = String.Empty
@@ -450,8 +450,11 @@ Public Class Clase_Crear_Documento
 
             End If
 
-            myTrans = cn2.BeginTransaction()
+            Dim _Existe_PPPRPMSUC As Boolean = _Sql.Fx_Exite_Campo("MAEDDO", "PPPRPMSUC")
+            Dim _Existe_PMIFRS As Boolean = _Sql.Fx_Exite_Campo("MAEPREM", "PMIFRS")
+            Dim _Existe_FEERLIMODI As Boolean = _Sql.Fx_Exite_Campo("MAEDDO", "FEERLIMODI")
 
+            myTrans = cn2.BeginTransaction()
 
             If Not _Cambiar_NroDocumento And _Tido = "COV" Then
 
@@ -470,7 +473,6 @@ Public Class Clase_Crear_Documento
 
             End If
 
-
             Consulta_sql = "INSERT INTO MAEEDO ( EMPRESA,TIDO,NUDO,ENDO,SUENDO )" & vbCrLf &
                            "VALUES ( '" & _Empresa & "','" & _Tido & "','" & _Nudo &
                            "','" & _Endo & "','" & _Suendo & "')"
@@ -478,7 +480,6 @@ Public Class Clase_Crear_Documento
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
-
 
             If _Cambiar_NroDocumento Then
 
@@ -905,7 +906,7 @@ Public Class Clase_Crear_Documento
                             _CantStockAdUd1 = "0"
                             _CantStockAdUd2 = "0"
 
-                            Consulta_sql = "Select Top 1 Ddo.*,Edo.SUBTIDO From MAEDDO Ddo" & vbCrLf &
+                            Consulta_sql = "Select Top 1 Ddo.*,Edo.SUBTIDO From MAEDDO WITH (NOLOCK) Ddo" & vbCrLf &
                                            "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
                                            "Where IDMAEDDO = " & _Idrst
 
@@ -917,13 +918,13 @@ Public Class Clase_Crear_Documento
 
                                     Consulta_sql = "Select *,'" & _Endo & "' As ENDO,'OTL' As TIDO,NUMOT As NUDO,NREG As NULIDO,'' As SUBTIDO," &
                                                "Isnull((Select Top 1 OPERACION From POTPR Where POTPR.IDPOTL = POTL.IDPOTL Order By ORDEN Desc),'') As OPERACION" & vbCrLf &
-                                               "From POTL Where IDPOTL = " & _Idrst
+                                               "From POTL WITH (NOLOCK) Where IDPOTL = " & _Idrst
                                 End If
 
                                 If _Tido = "GDI" Then
 
                                     Consulta_sql = "Select *,'" & _Endo & "' As ENDO,'OTL' As TIDO,NUMOT As NUDO,NREG As NULIDO,'' As SUBTIDO" & vbCrLf &
-                                                   "From POTD Where IDPOTD = " & _Idrst
+                                                   "From POTD WITH (NOLOCK) Where IDPOTD = " & _Idrst
 
                                 End If
 
@@ -1296,80 +1297,80 @@ Public Class Clase_Crear_Documento
                         dfd1.Close()
 
 
-                        If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Det") Then
+                        'If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Det") Then
 
-                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable," &
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable," &
                                            "Empresa,Sucursal,Bodega,IdCont,Contenedor,Grupo) Values " &
                                            "(" & _Idmaeddo & "," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _Koprct & "','" & _Nokopr & "'" &
                                            "," & Convert.ToInt32(_RtuVariable) & ",'" & _Empresa & "','" & _Sulido & "','" & _Bosulido &
                                            "'," & _IdCont & ",'" & _Contenedor & "','" & _Grupo & "')"
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                        Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+                        Comando.Transaction = myTrans
+                        dfd1 = Comando.ExecuteReader()
+                        Dim _Id As Integer
+                        While dfd1.Read()
+                            _Id = dfd1("Identity")
+                        End While
+                        dfd1.Close()
+
+                        If PreVenta Then
+
+                            Dim _Zw_PreVenta_StockProd As Zw_PreVenta_StockProd = Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
+
+                            Dim _PqteComprometido As String = De_Num_a_Tx_01(_Zw_PreVenta_StockProd.Cantidad, False, 5)
+
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_PreVenta_StockProd Set " &
+                                           "PqteComprometido = PqteComprometido+" & _PqteComprometido &
+                                           ",StcCompUd1 = StcCompUd1+" & _Caprco1 &
+                                           ",StcCompUd2 = StcCompUd2+" & _Caprco2 & vbCrLf &
+                                           "Where Id = " & _Zw_PreVenta_StockProd.Id
                             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
 
-                            Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
+                                           "IdCont = " & _Zw_PreVenta_StockProd.IdCont & ",Contenedor = '" & _Zw_PreVenta_StockProd.Contenedor & "'" & vbCrLf &
+                                           "Where Id = " & _Id
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                             Comando.Transaction = myTrans
-                            dfd1 = Comando.ExecuteReader()
-                            Dim _Id As Integer
-                            While dfd1.Read()
-                                _Id = dfd1("Identity")
-                            End While
-                            dfd1.Close()
-
-                            If PreVenta Then
-
-                                Dim _Zw_PreVenta_StockProd As Zw_PreVenta_StockProd = Ls_Cl_PreVenta.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
-
-                                Dim _PqteComprometido As String = De_Num_a_Tx_01(_Zw_PreVenta_StockProd.Cantidad, False, 5)
-
-                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_PreVenta_StockProd Set " &
-                                               "PqteComprometido = PqteComprometido+" & _PqteComprometido &
-                                               ",StcCompUd1 = StcCompUd1+" & _Caprco1 &
-                                               ",StcCompUd2 = StcCompUd2+" & _Caprco2 & vbCrLf &
-                                               "Where Id = " & _Zw_PreVenta_StockProd.Id
-                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                Comando.Transaction = myTrans
-                                Comando.ExecuteNonQuery()
-
-                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
-                                               "IdCont = " & _Zw_PreVenta_StockProd.IdCont & ",Contenedor = '" & _Zw_PreVenta_StockProd.Contenedor & "'" & vbCrLf &
-                                               "Where Id = " & _Id
-                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                Comando.Transaction = myTrans
-                                Comando.ExecuteNonQuery()
-
-                            End If
-
-                            If SobreStock Then
-
-                                Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
-
-                                Dim _Id_SobreStock As Integer = _Zw_Prod_SobreStock.Id
-                                Dim _Moneda_SobreStock As String = _Zw_Prod_SobreStock.Moneda
-                                Dim _PqteComprometido As Double = _Zw_Prod_SobreStock.Cantidad
-                                Dim _Precio_SobreStock As Double = _Zw_Prod_SobreStock.PrecioXUd1
-
-                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
-                                               "SobreStock = 1" &
-                                               ",Id_SobreStock = " & _Id_SobreStock &
-                                               ",Moneda_SobreStock = '" & _Moneda_SobreStock & "'" & vbCrLf &
-                                               ",Precio_SobreStock = " & De_Num_a_Tx_01(_Precio_SobreStock, False, 5) & vbCrLf &
-                                               ",Qty_SobreStock = " & De_Num_a_Tx_01(_PqteComprometido, False, 5) & vbCrLf &
-                                               "Where Id = " & _Id
-                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                Comando.Transaction = myTrans
-                                Comando.ExecuteNonQuery()
-
-                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
-                                               "PqteComprometido = PqteComprometido+" & De_Num_a_Tx_01(_PqteComprometido, False, 5) & vbCrLf &
-                                               "Where Id = " & _Id_SobreStock
-                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                Comando.Transaction = myTrans
-                                Comando.ExecuteNonQuery()
-
-                            End If
+                            Comando.ExecuteNonQuery()
 
                         End If
+
+                        If SobreStock Then
+
+                            Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
+
+                            Dim _Id_SobreStock As Integer = _Zw_Prod_SobreStock.Id
+                            Dim _Moneda_SobreStock As String = _Zw_Prod_SobreStock.Moneda
+                            Dim _PqteComprometido As Double = _Zw_Prod_SobreStock.Cantidad
+                            Dim _Precio_SobreStock As Double = _Zw_Prod_SobreStock.PrecioXUd1
+
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
+                                           "SobreStock = 1" &
+                                           ",Id_SobreStock = " & _Id_SobreStock &
+                                           ",Moneda_SobreStock = '" & _Moneda_SobreStock & "'" & vbCrLf &
+                                           ",Precio_SobreStock = " & De_Num_a_Tx_01(_Precio_SobreStock, False, 5) & vbCrLf &
+                                           ",Qty_SobreStock = " & De_Num_a_Tx_01(_PqteComprometido, False, 5) & vbCrLf &
+                                           "Where Id = " & _Id
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                            Comando.Transaction = myTrans
+                            Comando.ExecuteNonQuery()
+
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
+                                           "PqteComprometido = PqteComprometido+" & De_Num_a_Tx_01(_PqteComprometido, False, 5) & vbCrLf &
+                                           "Where Id = " & _Id_SobreStock
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                            Comando.Transaction = myTrans
+                            Comando.ExecuteNonQuery()
+
+                        End If
+
+                        'End If
 
 
                         If _Tidopa = "OTL" Then
@@ -1433,32 +1434,21 @@ Public Class Clase_Crear_Documento
 
                         '******
 
+                        If _Existe_PPPRPMSUC Then
 
-                        ' *** PM POR SUCURSAL SI ES QUE EXISTE EL CAMPO
-                        'Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("INFORMATION_SCHEMA.COLUMNS",
-                        '                                               "COLUMN_NAME LIKE 'PPPRPMSUC' AND TABLE_NAME = 'MAEDDO'")
-
-                        'If CBool(_Reg) Then
-
-                        If _Sql.Fx_Exite_Campo("MAEDDO", "PPPRPMSUC") Then
-
-                            Consulta_sql = "UPDATE MAEDDO SET PPPRPMSUC = " & _Ppprmsuc & vbCrLf &
-                                           "WHERE IDMAEDDO = " & _Idmaeddo
+                            Consulta_sql = "UPDATE MAEDDO SET PPPRPMSUC = " & _Ppprmsuc & vbCrLf & "WHERE IDMAEDDO = " & _Idmaeddo
 
                             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
 
                         End If
+
                         '*************************************************************************************************
 
                         ' *** PMIFRS SI ES QUE EXISTE EL CAMPO
-                        '_Reg = _Sql.Fx_Cuenta_Registros("INFORMATION_SCHEMA.COLUMNS",
-                        '                                "COLUMN_NAME LIKE 'PMIFRS' AND TABLE_NAME = 'MAEPREM'")
 
-                        'If CBool(_Reg) Then
-
-                        If _Sql.Fx_Exite_Campo("MAEPREM", "PMIFRS") Then
+                        If _Existe_PMIFRS Then
 
                             Consulta_sql = "UPDATE MAEDDO SET PPPRPMIFRS = " & _Ppprpmifrs & vbCrLf &
                                            "WHERE IDMAEDDO=" & _Idmaeddo
@@ -1471,7 +1461,7 @@ Public Class Clase_Crear_Documento
 
                         '*************************************************************************************************
 
-                        If _Sql.Fx_Exite_Campo("MAEDDO", "FEERLIMODI") Then
+                        If _Existe_FEERLIMODI Then
 
                             Consulta_sql = "UPDATE MAEDDO SET FEERLIMODI = '" & _Feerli & "'" & vbCrLf &
                                            "WHERE IDMAEDDO=" & _Idmaeddo
@@ -2033,32 +2023,32 @@ Public Class Clase_Crear_Documento
 
             End If
 
-            If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Ent") Then
+            'If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Ent") Then
 
-                Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
-                Dim _TipoEstacion = _Global_Row_EstacionBk.Item("TipoEstacion")
-                Dim _Modalidad As String = _Row_Encabezado.Item("Modalidad")
-                Dim _Pickear As Boolean = False
-                Dim _PdaRMovil As Boolean = _Row_Encabezado.Item("PdaRMovil")
-                Dim _Idpdaenca As Integer = _Row_Encabezado.Item("Idpdaenca")
-                Dim _ConservaNudo As Boolean = _Row_Encabezado.Item("ConservaNudo")
+            Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
+            Dim _TipoEstacion = _Global_Row_EstacionBk.Item("TipoEstacion")
+            Dim _Modalidad_Bk As String = _Row_Encabezado.Item("Modalidad")
+            Dim _Pickear As Boolean = False
+            Dim _PdaRMovil As Boolean = _Row_Encabezado.Item("PdaRMovil")
+            Dim _Idpdaenca As Integer = _Row_Encabezado.Item("Idpdaenca")
+            Dim _ConservaNudo As Boolean = _Row_Encabezado.Item("ConservaNudo")
 
-                If _Tido = "NVV" Then
-                    _Pickear = _Row_Encabezado.Item("Pickear")
-                End If
-
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
-                               "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca,SobreStock) Values " &
-                               "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad & "'" &
-                               ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
-                               "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(PreVenta) &
-                               "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) & ")"
-
-                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                Comando.Transaction = myTrans
-                Comando.ExecuteNonQuery()
-
+            If _Tido = "NVV" Then
+                _Pickear = _Row_Encabezado.Item("Pickear")
             End If
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
+                           "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca,SobreStock) Values " &
+                           "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad_Bk & "'" &
+                           ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
+                           "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(PreVenta) &
+                           "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) & ")"
+
+            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            'End If
 
 
             If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "BLV" Or _Tido = "FCV" Or
@@ -2729,7 +2719,7 @@ Public Class Clase_Crear_Documento
                             dfd1.Close()
 
                             Consulta_sql = "UPDATE KASIDDO SET PPPRPMSUC = " & _Ppprmsuc & vbCrLf &
-                                           "WHERE IDMAEDDO = " & _Idmaeddo
+                                       "WHERE IDMAEDDO = " & _Idmaeddo
 
                             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                             Comando.Transaction = myTrans
@@ -3273,6 +3263,18 @@ Public Class Clase_Crear_Documento
             Return 0
         End Try
 
+        Dim _PdaRMovil As Boolean
+        Dim _Idpdaenca As Integer
+        Dim _ConservaNudo As Boolean
+
+        With Tbl_Encabezado.Rows(0)
+
+            _PdaRMovil = .Item("PdaRMovil")
+            _Idpdaenca = .Item("Idpdaenca")
+            _ConservaNudo = .Item("ConservaNudo")
+
+        End With
+
         Try
 
             myTrans = cn2.BeginTransaction()
@@ -3745,6 +3747,9 @@ Public Class Clase_Crear_Documento
                            ",CodTipoVenta = '" & _CodTipoVenta & "'" & Environment.NewLine &
                            ",Customizable = '" & _Customizable & "'" & Environment.NewLine &
                            ",Pickear = '" & _Pickear & "'" & Environment.NewLine &
+                           ",PdaRMovil = " & Convert.ToInt32(_PdaRMovil) & Environment.NewLine &
+                           ",Idpdaenca = " & _Idpdaenca & Environment.NewLine &
+                           ",ConservaNudo = '" & Convert.ToInt32(_ConservaNudo) & "'" & Environment.NewLine &
                            "Where Id_DocEnc = " & _Id_DocEnc
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)

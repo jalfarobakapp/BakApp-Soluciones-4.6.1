@@ -12684,6 +12684,10 @@ Public Class Frm_Formulario_Documento
 
             .Item("Pickear") = _TblEncabezado_StBy.Rows(0).Item("Pickear")
 
+            .Item("PdaRMovil") = _TblEncabezado_StBy.Rows(0).Item("PdaRMovil")
+            .Item("Idpdaenca") = _TblEncabezado_StBy.Rows(0).Item("Idpdaenca")
+            .Item("ConservaNudo") = _TblEncabezado_StBy.Rows(0).Item("ConservaNudo")
+
         End With
 
         Chk_Pickear.Visible = True
@@ -24575,15 +24579,15 @@ Public Class Frm_Formulario_Documento
 
             _TblEncabezado.Rows(0).Item("CodFuncionario") = _CodFuncionario_Autoriza
 
-            'For Each _Fl As DataRow In _TblPermisos.Rows
-            '    If Not _Fl.Item("PermisoIndependiente") Then
-            '        _Fl.Item("Autorizado") = False
-            '        _Fl.Item("Necesita_Permiso") = False
-            '        _Fl.Item("Permiso_Presencial") = False
-            '        _Fl.Item("CodFuncionario_Autoriza") = String.Empty
-            '        _Fl.Item("NomFuncionario_Autoriza") = String.Empty
-            '    End If
-            'Next
+            For Each _Fl As DataRow In _TblPermisos.Rows
+                If Not _Fl.Item("PermisoIndependiente") Then
+                    '_Fl.Item("Autorizado") = False
+                    '_Fl.Item("Necesita_Permiso") = False
+                    '_Fl.Item("Permiso_Presencial") = False
+                    _Fl.Item("CodFuncionario_Autoriza") = _CodFuncionario_Autoriza
+                    '_Fl.Item("NomFuncionario_Autoriza") = String.Empty
+                End If
+            Next
 
             Dim _Autorizado As Boolean
             Dim _Necesita_Permiso As Boolean
