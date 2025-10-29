@@ -906,7 +906,7 @@ Public Class Clase_Crear_Documento
                             _CantStockAdUd1 = "0"
                             _CantStockAdUd2 = "0"
 
-                            Consulta_sql = "Select Top 1 Ddo.*,Edo.SUBTIDO From MAEDDO WITH (NOLOCK) Ddo" & vbCrLf &
+                            Consulta_sql = "Select Top 1 Ddo.*,Edo.SUBTIDO From MAEDDO Ddo WITH (NOLOCK)" & vbCrLf &
                                            "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO" & vbCrLf &
                                            "Where IDMAEDDO = " & _Idrst
 

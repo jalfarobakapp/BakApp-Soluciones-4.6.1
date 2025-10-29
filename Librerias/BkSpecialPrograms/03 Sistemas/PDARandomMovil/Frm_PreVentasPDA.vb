@@ -22,6 +22,9 @@ Public Class Frm_PreVentasPDA
     Private Sub Frm_PreVentasPDA_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Tab_Pendientes.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_NvvGeneradas.Click, AddressOf Sb_Actualizar_Grilla
+        AddHandler Tab_SolPermiso.Click, AddressOf Sb_Actualizar_Grilla
 
         Sb_Actualizar_Grilla()
 
@@ -29,23 +32,55 @@ Public Class Frm_PreVentasPDA
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_sql = "SELECT Pda.IDPDAENCA,Pda.KOFUDO,Pda.NUDO,Pda.SUDO,Pda.VALIDO,Pda.FEEMDO,Pda.HORAFIN,Pda.ENDO,Pda.SUENDO,Ent.NOKOEN," &
-                       "Pda.VABRDO,Pda.OBS,Pda.FECULTSIN,Pda.HORULTSIN,Pda.TPOGRAB,Pda.TPOPROTRA,Pda.EMPRESA,Pda.LINEAS," & vbCrLf &
-                       "CAST(0 AS BIT) AS TRASPASAR," &
-                       "CAST(0 AS BIT) AS NOPDA," &
-                       "CAST(0 AS FLOAT) AS CRSD," &
-                       "CAST(0 AS FLOAT) AS CRLT," &
-                       "CAST(0 AS FLOAT) AS CRCH," &
-                       "CAST(0 AS FLOAT) AS CRPA," &
-                       "CAST(0 AS BIT) AS STOCKSUP," &
-                       "CAST(0 AS BIT) AS DSCTOSUP," &
-                       "CAST(0 AS BIT) AS CRDTOSUP," &
-                       "CAST(0 AS BIT) AS MOROSISUP," &
-                       "Ent.KOFUEN,Ent.RUTALUN,Ent.RUTAMAR,Ent.RUTAMIE,Ent.RUTAJUE,Ent.RUTAVIE,Ent.RUTASAB,Ent.RUTADOM" & vbCrLf &
-                       "FROM PDAENCA Pda WITH (NOLOCK)" & vbCrLf &
-                       "LEFT JOIN MAEEN Ent ON Pda.ENDO = Ent.KOEN AND Pda.SUENDO = Ent.SUEN" & vbCrLf &
-                       "WHERE VALIDO='S' AND EMPRESA='" & Mod_Empresa & "'" & vbCrLf &
-                       "ORDER BY KOFUDO,TIDO,NUDO,ENDO"
+        Consulta_sql = "Select Pda.NUDO, Pda.ENDO, Pda.SUENDO, Ent.NOKOEN, Pda.EMPRESA, Pda.SUDO,Pda.KOFUDO, GETDATE()," &
+                       " Pda.FEEMDO, Pda.VANEDO, Pda.VAIVDO, Pda.VABRDO, Pda.LINEAS, Pda.IDPDAENCA" & vbCrLf &
+                       "From PDAENCA Pda WITH (NOLOCK)" & vbCrLf &
+                       "Left Join MAEEN Ent ON Pda.ENDO = Ent.KOEN AND Pda.SUENDO = Ent.SUEN" & vbCrLf &
+                       "Where Pda.VALIDO = 'S' And Pda.EMPRESA = '" & Mod_Empresa & "'"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        If CBool(_Tbl.Rows.Count) Then
+
+            Dim _Filtro_Pdaenca As String = Generar_Filtro_IN(_Tbl, "", "IDPDAENCA", True, False, "")
+
+            If _Filtro_Pdaenca = "()" Then
+                _Filtro_Pdaenca = "(0)"
+            End If
+
+            Consulta_sql = $"Insert Into {_Global_BaseBk}Zw_Pda2NVV (
+        Numero, CodEntidad, CodSucEntidad, Nombre_Entidad, Empresa, Sucursal,
+        CodFuncionario, FechaImporta, FechaEmision, Neto, Iva, Bruto, Lineas, Idpdaenca, Estado
+    )
+    Select 
+        Pda.NUDO, Pda.ENDO, Pda.SUENDO, Ent.NOKOEN, Pda.EMPRESA, Pda.SUDO,
+        Pda.KOFUDO, GETDATE(), Pda.FEEMDO, Pda.VANEDO, Pda.VAIVDO, Pda.VABRDO,
+        Pda.LINEAS, Pda.IDPDAENCA, 'Pendiente'
+    From PDAENCA Pda WITH (NOLOCK)
+    Left Join MAEEN Ent On Pda.ENDO = Ent.KOEN AND Pda.SUENDO = Ent.SUEN
+    Where IDPDAENCA In {_Filtro_Pdaenca};
+
+    -- 2. Actualizar campo VALIDO a 'B' para los registros traspasados
+    Update PDAENCA
+    Set VALIDO = 'B'
+    Where IDPDAENCA In {_Filtro_Pdaenca}"
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+        End If
+
+        Dim _Estado As String
+        Dim _Tbas = Super_TabS.SelectedTab
+
+        Select Case _Tbas.Name
+            Case "Tab_Pendientes"
+                _Estado = "Pendiente"
+            Case "Tab_NvvGeneradas"
+                _Estado = "NVVGenerada"
+            Case "Tab_SolPermiso"
+                _Estado = "SolPermiso"
+        End Select
+
+
+        Consulta_sql = "Select Cast(0 As Bit) As 'Chk',* From " & _Global_BaseBk & "Zw_Pda2NVV Where Estado = '" & _Estado & "'"
         _Tbl_Preventas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
@@ -62,74 +97,75 @@ Public Class Frm_PreVentasPDA
             '.Columns("BtnImagen_Estado").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
 
-            .Columns("KOFUEN").Visible = True
-            .Columns("KOFUEN").HeaderText = "Ven"
-            .Columns("KOFUEN").ToolTipText = "Vendedor"
-            .Columns("KOFUEN").Width = 30
-            .Columns("KOFUEN").DisplayIndex = _DisplayIndex
+            .Columns("Chk").Visible = True
+            .Columns("Chk").HeaderText = "Sel."
+            .Columns("Chk").ToolTipText = "Selección"
+            .Columns("Chk").Width = 30
+            .Columns("Chk").ReadOnly = False
+            .Columns("Chk").Visible = (_Tbas.Name = "Tab_Pendientes")
+            .Columns("Chk").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NUDO").Visible = True
-            .Columns("NUDO").HeaderText = "Número"
-            .Columns("NUDO").Width = 70
-            .Columns("NUDO").DisplayIndex = _DisplayIndex
+            .Columns("CodFuncionario").Visible = True
+            .Columns("CodFuncionario").HeaderText = "Ven"
+            .Columns("CodFuncionario").ToolTipText = "Vendedor"
+            .Columns("CodFuncionario").Width = 30
+            .Columns("CodFuncionario").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("SUDO").Visible = True
-            .Columns("SUDO").HeaderText = "Suc"
-            .Columns("SUDO").Width = 30
-            .Columns("SUDO").DisplayIndex = _DisplayIndex
+            .Columns("Sucursal").Visible = True
+            .Columns("Sucursal").HeaderText = "Suc"
+            .Columns("Sucursal").Width = 30
+            .Columns("Sucursal").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Nudo").Visible = True
-            .Columns("Nudo").HeaderText = "Número"
-            .Columns("Nudo").Width = 90
-            .Columns("Nudo").DisplayIndex = _DisplayIndex
+            .Columns("Numero").Visible = True
+            .Columns("Numero").HeaderText = "Número"
+            .Columns("Numero").Width = 90
+            .Columns("Numero").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FEEMDO").Visible = True '(_Tbas.Name = "Tab_Completadas")
-            .Columns("FEEMDO").HeaderText = "Fecha"
-            .Columns("FEEMDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("FEEMDO").DefaultCellStyle.Format = "dd/MM/yyyy"
-            .Columns("FEEMDO").Width = 70
-            .Columns("FEEMDO").DisplayIndex = _DisplayIndex
+            .Columns("FechaEmision").Visible = True
+            .Columns("FechaEmision").HeaderText = "Fecha"
+            .Columns("FechaEmision").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("FechaEmision").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FechaEmision").Width = 70
+            .Columns("FechaEmision").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("ENDO").Visible = True
-            .Columns("ENDO").HeaderText = "Entidad"
-            .Columns("ENDO").Width = 80
-            .Columns("ENDO").DisplayIndex = _DisplayIndex
+            .Columns("CodEntidad").Visible = True
+            .Columns("CodEntidad").HeaderText = "Entidad"
+            .Columns("CodEntidad").Width = 90
+            .Columns("CodEntidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("SUENDO").Visible = True
-            .Columns("SUENDO").HeaderText = "Suc.Ent"
-            .Columns("SUENDO").ToolTipText = "Sucursal de la entidad"
-            .Columns("SUENDO").Width = 80
-            .Columns("SUENDO").DisplayIndex = _DisplayIndex
+            .Columns("CodSucEntidad").Visible = True
+            .Columns("CodSucEntidad").HeaderText = "Suc"
+            .Columns("CodSucEntidad").ToolTipText = "Sucursal de la entidad"
+            .Columns("CodSucEntidad").Width = 50
+            .Columns("CodSucEntidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NOKOEN").Visible = True
-            .Columns("NOKOEN").HeaderText = "Razón Social"
-            '.Columns("NOKOEN").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("NOKOEN").Width = 350
-            .Columns("NOKOEN").DisplayIndex = _DisplayIndex
+            .Columns("Nombre_Entidad").Visible = True
+            .Columns("Nombre_Entidad").HeaderText = "Razón Social"
+            .Columns("Nombre_Entidad").Width = 400
+            .Columns("Nombre_Entidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("VABRDO").Width = 100
-            .Columns("VABRDO").HeaderText = "Total Bruto"
-            .Columns("VABRDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("VABRDO").DefaultCellStyle.Format = "###,##0.##"
-            .Columns("VABRDO").Visible = True
-            .Columns("VABRDO").DisplayIndex = _DisplayIndex
+            .Columns("Bruto").Width = 100
+            .Columns("Bruto").HeaderText = "Total Bruto"
+            .Columns("Bruto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Bruto").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("Bruto").Visible = True
+            .Columns("Bruto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("LINEAS").Width = 50
-            .Columns("LINEAS").HeaderText = "Ítems"
-            .Columns("LINEAS").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("LINEAS").Visible = True
-            .Columns("LINEAS").DisplayIndex = _DisplayIndex
+            .Columns("Lineas").Width = 50
+            .Columns("Lineas").HeaderText = "Ítems"
+            .Columns("Lineas").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Lineas").Visible = True
+            .Columns("Lineas").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
-
 
         End With
 
@@ -145,58 +181,181 @@ Public Class Frm_PreVentasPDA
     ' 5) Usar la DataRow obtenida para leer columnas o para pasarla a la clase Cl_PDARandomMovil.
     ' 6) Manejar nulos/DBNull y casos en que la fila no exista.
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
-
-        ' 1) Validar índice
-        If e.RowIndex < 0 Then
-            Return
-        End If
-
-        ' 2) Intentar obtener DataRowView a partir de DataBoundItem
-        Dim drv As DataRowView = TryCast(Grilla.Rows(e.RowIndex).DataBoundItem, DataRowView)
-
-        Dim _FilaDataRow As DataRow = Nothing
-
-        If drv IsNot Nothing Then
-            ' 3) Sacar DataRow directamente
-            _FilaDataRow = drv.Row
-        Else
-            ' 4) Fallback: intentar obtener desde la tabla enlazada si existe y el índice es válido
-            If _Tbl_Preventas IsNot Nothing AndAlso e.RowIndex >= 0 AndAlso e.RowIndex < _Tbl_Preventas.Rows.Count Then
-                _FilaDataRow = _Tbl_Preventas.Rows(e.RowIndex)
-            End If
-        End If
-
-        ' 5) Si no se obtuvo ninguna DataRow, salir
-        If _FilaDataRow Is Nothing Then
-            Return
-        End If
-
-        '' 6) Ejemplo de uso: leer campos con manejo de DBNull y crear/usar la clase Cl_PDARandomMovil
-        'Dim _KOFUDO As String = String.Empty
-        'If Not IsDBNull(_FilaDataRow("KOFUDO")) Then
-        '    _KOFUDO = _FilaDataRow.Field(Of String)("KOFUDO")
-        'End If
+        Return
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id As Integer = _Fila.Cells("Id").Value
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-
         ' Crear instancia de la clase y pasar datos según su API
         Dim _Cl_PDARandomMovil As New Cl_PDARandomMovil
+        Dim _Zw_Pda2NVV As New Zw_Pda2NVV
 
-        '_Mensaje = _Cl_PDARandomMovil.Fx_Importar_NVV_Desde_PDARandomMOVIL_NVVAuto(_FilaDataRow)
+        _Mensaje = _Cl_PDARandomMovil.Fx_Llenar_Zw_Pda2NVV(_Id)
 
-        'If Not _Mensaje.EsCorrecto Then
-        '    MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '    Return
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(_Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        _Zw_Pda2NVV = _Mensaje.Tag
+
+        _Mensaje = _Cl_PDARandomMovil.Fx_Crear_NVV_PDARandomMOVIL(_Zw_Pda2NVV, Mod_Modalidad)
+
+        ''_Mensaje = _Cl_PDARandomMovil.Fx_RevisarSituacionComercialCliente(_FilaDataRow, Date.Now)
+
+        'If _Mensaje.EsCorrecto Then
+
+        'Else
+
         'End If
 
-        _Mensaje = _Cl_PDARandomMovil.Fx_Crear_NVV_PDARandomMOVIL(_FilaDataRow, Mod_Modalidad)
+        _Cl_PDARandomMovil.Fx_Actualizar_Estado_Zw_Pda2NVV(_Zw_Pda2NVV)
 
-        '_Mensaje = _Cl_PDARandomMovil.Fx_RevisarSituacionComercialCliente(_FilaDataRow, Date.Now)
+    End Sub
 
-        If _Mensaje.EsCorrecto Then
+    Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Chk_Marcar_Todas_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Marcar_Todas.CheckedChanged
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+            _Fila.Cells("Chk").Value = Chk_Marcar_Todas.Checked
+        Next
+
+    End Sub
+
+    Private Sub Grilla_MouseUp(sender As Object, e As MouseEventArgs) Handles Grilla.MouseUp
+        Grilla.EndEdit()
+    End Sub
+
+    Private Sub Btn_Procesar_Click(sender As Object, e As EventArgs) Handles Btn_Procesar.Click
+
+        ' Asegurar que la edición en la grilla quede comprometida
+        Try
+            Grilla.EndEdit()
+        Catch ex As Exception
+            ' Ignorar si falla EndEdit por cualquier motivo
+        End Try
+
+        Dim haySeleccion As Boolean = False
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            ' Evitar filas de nueva entrada o nulas
+            If _Fila Is Nothing OrElse _Fila.IsNewRow Then
+                Continue For
+            End If
+
+            Dim _Valor = _Fila.Cells("Chk").Value
+
+            If _Valor Is Nothing OrElse IsDBNull(_Valor) Then
+                Continue For
+            End If
+
+            Try
+                If CBool(_Valor) Then
+                    haySeleccion = True
+                    Exit For
+                End If
+            Catch ex As Exception
+                ' Si CBool falla intentar interpretar como entero (1/0) o como texto
+                Try
+                    Dim _intVal As Integer = Convert.ToInt32(_Valor)
+                    If _intVal <> 0 Then
+                        haySeleccion = True
+                        Exit For
+                    End If
+                Catch
+                    Dim _strVal As String = Convert.ToString(_Valor).ToLower().Trim()
+                    If _strVal = "true" OrElse _strVal = "1" Then
+                        haySeleccion = True
+                        Exit For
+                    End If
+                End Try
+            End Try
+
+        Next
+
+        If Not haySeleccion Then
+            MessageBoxEx.Show("No hay ninguna pre-venta seleccionada. Marque al menos una para procesar.", "Atención",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Ls_Mensajes As New List(Of LsValiciones.Mensajes)
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            ' Evitar filas de nueva entrada o nulas
+            If _Fila Is Nothing OrElse _Fila.IsNewRow Then
+                Continue For
+            End If
+            Dim _Valor = _Fila.Cells("Chk").Value
+            If _Valor Is Nothing OrElse IsDBNull(_Valor) Then
+                Continue For
+            End If
+            Dim _EstaSeleccionada As Boolean = False
+            Try
+                _EstaSeleccionada = CBool(_Valor)
+            Catch ex As Exception
+                ' Si CBool falla intentar interpretar como entero (1/0) o como texto
+                Try
+                    Dim _intVal As Integer = Convert.ToInt32(_Valor)
+                    _EstaSeleccionada = (_intVal <> 0)
+                Catch
+                    Dim _strVal As String = Convert.ToString(_Valor).ToLower().Trim()
+                    _EstaSeleccionada = (_strVal = "true" OrElse _strVal = "1")
+                End Try
+            End Try
+
+            If _EstaSeleccionada Then
+
+                Dim _Id As Integer = _Fila.Cells("Id").Value
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                ' Crear instancia de la clase y pasar datos según su API
+                Dim _Cl_PDARandomMovil As New Cl_PDARandomMovil
+                Dim _Zw_Pda2NVV As New Zw_Pda2NVV
+
+                _Mensaje = _Cl_PDARandomMovil.Fx_Llenar_Zw_Pda2NVV(_Id)
+
+                If Not _Mensaje.EsCorrecto Then
+                    MessageBoxEx.Show(_Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
+                _Zw_Pda2NVV = _Mensaje.Tag
+
+                _Mensaje = _Cl_PDARandomMovil.Fx_Crear_NVV_PDARandomMOVIL(_Zw_Pda2NVV, Mod_Modalidad)
+
+                If _Mensaje.HuboOtroError Then
+                    _Zw_Pda2NVV.Estado = "Error"
+                    _Zw_Pda2NVV.Observaciones = _Mensaje.Mensaje
+                End If
+
+                _Cl_PDARandomMovil.Fx_Actualizar_Estado_Zw_Pda2NVV(_Zw_Pda2NVV)
+                _Ls_Mensajes.Add(_Mensaje)
+
+            End If
+
+        Next
+
+        Dim ListaQr As LsValiciones.Mensajes = _Ls_Mensajes.FirstOrDefault(Function(p) p.EsCorrecto = False)
+
+        If Not IsNothing(ListaQr) Then
+
+            MessageBoxEx.Show(Me, "Hay documentos con problemas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         End If
+
+        Dim Fmv As New Frm_Validaciones
+        Fmv.ListaMensajes = _Ls_Mensajes
+        Fmv.ShowDialog(Me)
+        Fmv.Dispose()
+
+        Sb_Actualizar_Grilla()
 
     End Sub
 

@@ -17092,7 +17092,7 @@ Public Class Frm_Formulario_Documento
                     _Cambiar_NroDocumento = False
                 End If
 
-                If _TblEncabezado.Rows(0).Item("Reserva_NroOCC") Then
+                If _TblEncabezado.Rows(0).Item("Reserva_NroOCC") Or _TblEncabezado.Rows(0).Item("ConservaNudo") Then
                     _Cambiar_NroDocumento = False
                 End If
 
@@ -24659,7 +24659,6 @@ Public Class Frm_Formulario_Documento
             If _Revisar Then
                 _Autorizado = False : _Necesita_Permiso = False
                 _Autorizado = Fx_Validad_Cupo_Excedido(_Necesita_Permiso)
-                'Sb_Revisar_Permiso("Bkp00033", _Autorizado, _Necesita_Permiso)
                 If _Necesita_Permiso And Not _Autorizado Then
                     _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00033", _InsertarFuncionario)
                 End If
@@ -24667,74 +24666,21 @@ Public Class Frm_Formulario_Documento
 
             If Fx_CreditoVigenteVencido(_RowEntidad) Then
                 If Not Fx_Tiene_Permiso(Me, "Doc00098",, False) Then
-                    'Sb_Revisar_Permiso("Doc00098", False, True)
                     _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Doc00098", _InsertarFuncionario)
                 End If
             End If
 
-            'If _Tido = "NVV" Then
-
-            'If Chk_Pickear.Visible And Not Chk_Pickear.Checked Then
-
-            '    If Not Fx_Tiene_Permiso(Me, "Doc00101", FUNCIONARIO, False) Then
-            '        Sb_Revisar_Permiso("Doc00101", False, True)
-            '    End If
-
-            'End If
-
-            'Dim _PidePermiso As Boolean = False
-
-            'For Each _Fl As DataRow In _TblDetalle.Rows
-            '    If _Fl.Item("DesacRazTransf") And _Fl.Item("RtuVariable") Then
-            '        _PidePermiso = True
-            '        Exit For
-            '    End If
-            'Next
-
-            'If Not Chk_Pickear.Checked And _Global_Row_Configuracion_General.Item("NuncaPickeaDocConRTUDesactivada") Then
-            '    _PidePermiso = False
-            'End If
-
-            'If _PidePermiso Then
-
-            '    If Not Fx_Tiene_Permiso(Me, "Doc00102", FUNCIONARIO, False) Then
-            '        Sb_Revisar_Permiso("Doc00102", False, True)
-            '    End If
-
-            'End If
-
-            'End If
-
-            'If Not String.IsNullOrEmpty(_RowEntidad.Item("KOFUEN").ToString.Trim) Then
-            '    For Each _Fl As DataRow In _TblDetalle.Rows
-            '        If _Fl.Item("CodVendedor").ToString.Trim <> _RowEntidad.Item("KOFUEN").ToString.Trim Then
-            '            If Not Fx_Tiene_Permiso(Me, "Doc00161", FUNCIONARIO, False) Then
-            '                Sb_Revisar_Permiso("Doc00161", False, True)
-            '            End If
-            '            Exit For
-            '        End If
-            '    Next
-            'End If
-
             _Autorizado = False : _Necesita_Permiso = False
             _Autorizado = Fx_Validar_Descuentos(_Necesita_Permiso)
-            'Sb_Revisar_Permiso("Bkp00039", _Autorizado, _Necesita_Permiso)
             If _Necesita_Permiso And Not _Autorizado Then
                 _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00039", _InsertarFuncionario)
             End If
 
             _Autorizado = False : _Necesita_Permiso = False
             _Autorizado = Fx_Validar_Fecha_Despacho(_Necesita_Permiso)
-            'Sb_Revisar_Permiso("Bkp00057", _Autorizado, _Necesita_Permiso)
             If _Necesita_Permiso And Not _Autorizado Then
                 _Cl_RemotasEnCadena.Sb_Insertar_DetalleConUsuario("Bkp00057", _InsertarFuncionario)
             End If
-
-            'If Not IsNothing(_Cl_Despacho) Then
-            '    _Autorizado = False : _Necesita_Permiso = False
-            '    _Autorizado = Fx_Validar_Peso_Minimo_o_Valores_Por_Despacho_A_Domicilio(_Necesita_Permiso, False)
-            '    Sb_Revisar_Permiso("ODp00017", _Autorizado, _Necesita_Permiso)
-            'End If
 
             If _Cl_RemotasEnCadena.Ls_Zw_Remotas_En_Cadena_02_Det.Count > 0 Then
 

@@ -54,7 +54,7 @@ Public Class Frm_ImpMasiva
 
         With Grilla
 
-            OcultarEncabezadoGrilla(Grilla, True)
+            OcultarEncabezadoGrilla(Grilla, False)
 
             Dim _DisplayIndex = 0
 
