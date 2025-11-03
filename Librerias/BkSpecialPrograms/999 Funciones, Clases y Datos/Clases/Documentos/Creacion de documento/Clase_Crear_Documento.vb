@@ -1343,26 +1343,26 @@ Public Class Clase_Crear_Documento
 
                         If SobreStock Then
 
-                            Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
-
-                            Dim _Id_SobreStock As Integer = _Zw_Prod_SobreStock.Id
-                            Dim _Moneda_SobreStock As String = _Zw_Prod_SobreStock.Moneda
-                            Dim _PqteComprometido As Double = _Zw_Prod_SobreStock.Cantidad
-                            Dim _Precio_SobreStock As Double = _Zw_Prod_SobreStock.PrecioXUd1
+                            Dim _Id_SobreStock As Integer = .Item("Id_SobreStock")
+                            Dim _Moneda_SobreStock As String = .Item("Moneda_SobreStock")
+                            Dim _Qty_SobreStock As Double = .Item("Qty_SobreStock")
+                            Dim _PqteComprometidoSol As Double = .Item("PqteComprometidoSol")
+                            Dim _Precio_SobreStock As Double = .Item("Precio_SobreStock")
 
                             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
                                            "SobreStock = 1" &
                                            ",Id_SobreStock = " & _Id_SobreStock &
                                            ",Moneda_SobreStock = '" & _Moneda_SobreStock & "'" & vbCrLf &
                                            ",Precio_SobreStock = " & De_Num_a_Tx_01(_Precio_SobreStock, False, 5) & vbCrLf &
-                                           ",Qty_SobreStock = " & De_Num_a_Tx_01(_PqteComprometido, False, 5) & vbCrLf &
+                                           ",Qty_SobreStock = " & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
                                            "Where Id = " & _Id
                             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
 
                             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
-                                           "PqteComprometido = PqteComprometido+" & De_Num_a_Tx_01(_PqteComprometido, False, 5) & vbCrLf &
+                                           "PqteComprometido = PqteComprometido+" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
+                                           ",PqteComprometidoSol = PqteComprometidoSol-" & De_Num_a_Tx_01(_PqteComprometidoSol, False, 5) & vbCrLf &
                                            "Where Id = " & _Id_SobreStock
                             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                             Comando.Transaction = myTrans
@@ -3254,6 +3254,8 @@ Public Class Clase_Crear_Documento
                 _Customizable = Convert.ToInt32(.Item("Customizable"))
                 _Pickear = Convert.ToInt32(.Item("Pickear"))
 
+                SobreStock = .Item("SobreStock")
+
             End With
 
             '------------------------------------------------------------------------------------------------------------
@@ -3601,8 +3603,36 @@ Public Class Clase_Crear_Documento
 
                         End If
 
-                    End With
+                        'Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = Id_Linea)
 
+                        Dim _Id_SobreStock As Integer = .Item("Id_SobreStock") ' _Zw_Prod_SobreStock.Id
+                        Dim _Moneda_SobreStock As String = .Item("Moneda_SobreStock") '_Zw_Prod_SobreStock.Moneda
+                        Dim _Qty_SobreStock As Double = .Item("Qty_SobreStock") '_Zw_Prod_SobreStock.Cantidad
+                        Dim _Precio_SobreStock As Double = .Item("Precio_SobreStock") '_Zw_Prod_SobreStock.PrecioXUd1
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Casi_DocDet Set " &
+                                       "SobreStock = 1" &
+                                       ",Id_SobreStock = " & _Id_SobreStock &
+                                       ",Moneda_SobreStock = '" & _Moneda_SobreStock & "'" & vbCrLf &
+                                       ",Precio_SobreStock = " & De_Num_a_Tx_01(_Precio_SobreStock, False, 5) & vbCrLf &
+                                       ",Qty_SobreStock = " & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
+                                       "Where Id_DocDet = " & _Id_DocDet
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                        If Not _Stand_by Then
+
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
+                                           "PqteComprometidoSol = PqteComprometidoSol+" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
+                                           "Where Id = " & _Id_SobreStock
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                            Comando.Transaction = myTrans
+                            Comando.ExecuteNonQuery()
+
+                        End If
+
+                    End With
 
                     ' TABLA DE IMPUESTOS
 
@@ -3746,10 +3776,12 @@ Public Class Clase_Crear_Documento
                            ",TblTipoVenta = '" & _TblTipoVenta & "'" & Environment.NewLine &
                            ",CodTipoVenta = '" & _CodTipoVenta & "'" & Environment.NewLine &
                            ",Customizable = '" & _Customizable & "'" & Environment.NewLine &
+                           ",PreVenta = '" & Convert.ToInt32(PreVenta) & "'" & Environment.NewLine &
                            ",Pickear = '" & _Pickear & "'" & Environment.NewLine &
                            ",PdaRMovil = " & Convert.ToInt32(_PdaRMovil) & Environment.NewLine &
                            ",Idpdaenca = " & _Idpdaenca & Environment.NewLine &
                            ",ConservaNudo = '" & Convert.ToInt32(_ConservaNudo) & "'" & Environment.NewLine &
+                           ",SobreStock = '" & Convert.ToInt32(SobreStock) & "'" & Environment.NewLine &
                            "Where Id_DocEnc = " & _Id_DocEnc
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)

@@ -95,7 +95,7 @@ Public Class Cl_FacAuto_NVV
             _CondicionEspecial = vbCrLf & "And Idmaeedo Not In (Select Distinct Idmaeedo" & vbCrLf &
                                 "Where Idmaeedo In (Select Zenc.Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Zenc" & vbCrLf &
                                 "Inner Join " & _Global_BaseBk & "Zw_Docu_Det Zd On Zenc.Idmaeedo = Zd.Idmaeedo" & vbCrLf &
-                                "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And Zd.Empresa = '02' And Zenc.Empresa = '01'))"
+                                "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And Zd.Empresa = '02' And Zenc.Empresa  = '01'))"
         End If
 
         Consulta_Sql = "Select TOP 20 Idmaeedo,Id,DocEmitir,Fecha_Facturar,CodFuncionario_Factura,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga" & vbCrLf &

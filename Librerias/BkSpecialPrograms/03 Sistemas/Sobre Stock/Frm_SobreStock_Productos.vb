@@ -36,7 +36,7 @@ Public Class Frm_SobreStock_Productos
 
         Dim _Condicion As String = String.Empty
 
-        Consulta_sql = "Select Sbs.*,Sbs.PqteHabilitado-Sbs.PqteComprometido As 'PqteDisponible' ,Pst.StComp1,Pst.StComp2," &
+        Consulta_sql = "Select Sbs.*,Sbs.PqteHabilitado-(Sbs.PqteComprometido+Sbs.PqteComprometidoSol) As 'PqteDisponible' ,Pst.StComp1,Pst.StComp2," &
                        "STFI1,STFI2,Ms.STOCNV1,Ms.STOCNV2" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_SobreStock Sbs" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Prod_Stock Pst On " &
@@ -142,11 +142,19 @@ Public Class Frm_SobreStock_Productos
             _DisplayIndex += 1
 
             .Columns("PqteComprometido").Width = 70
-            .Columns("PqteComprometido").HeaderText = "Comprometido"
+            .Columns("PqteComprometido").HeaderText = "Comprom. NVV"
             .Columns("PqteComprometido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PqteComprometido").DefaultCellStyle.Format = "##,###0.##"
             .Columns("PqteComprometido").Visible = True
             .Columns("PqteComprometido").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("PqteComprometidoSol").Width = 70
+            .Columns("PqteComprometidoSol").HeaderText = "Comprom. SOL"
+            .Columns("PqteComprometidoSol").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PqteComprometidoSol").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PqteComprometidoSol").Visible = True
+            .Columns("PqteComprometidoSol").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("PqteDisponible").Width = 70
@@ -355,6 +363,7 @@ Public Class Frm_SobreStock_Productos
                 .FormatoPqte = _Fila.Cells("FormatoPqte").Value
                 .PqteHabilitado = _Fila.Cells("PqteHabilitado").Value
                 .PqteComprometido = _Fila.Cells("PqteComprometido").Value
+                .PqteComprometidoSol = _Fila.Cells("PqteComprometidoSol").Value
                 .Ud1XPqte = _Fila.Cells("Ud1XPqte").Value
                 .CantMinFormato = _Fila.Cells("CantMinFormato").Value
                 .Moneda = _Fila.Cells("Moneda").Value

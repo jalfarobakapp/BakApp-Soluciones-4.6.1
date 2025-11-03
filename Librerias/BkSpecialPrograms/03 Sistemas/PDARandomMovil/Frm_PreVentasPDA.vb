@@ -80,14 +80,17 @@ Public Class Frm_PreVentasPDA
         End Select
 
 
-        Consulta_sql = "Select Cast(0 As Bit) As 'Chk',* From " & _Global_BaseBk & "Zw_Pda2NVV Where Estado = '" & _Estado & "'"
+        Consulta_sql = "Select Cast(0 As Bit) As 'Chk',Pda.*,Isnull(Edo.TIDO,'') As 'Tido',Isnull(Edo.NUDO,'') As 'Nudo'" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Pda2NVV Pda" & vbCrLf &
+                       "Left Join MAEEDO Edo On Edo.IDMAEEDO = Pda.Idmaeedo" & vbCrLf &
+                       "Where Estado = '" & _Estado & "'"
         _Tbl_Preventas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
 
             .DataSource = _Tbl_Preventas
 
-            OcultarEncabezadoGrilla(Grilla)
+            OcultarEncabezadoGrilla(Grilla, True)
 
             Dim _DisplayIndex = 0
 
@@ -121,7 +124,7 @@ Public Class Frm_PreVentasPDA
 
             .Columns("Numero").Visible = True
             .Columns("Numero").HeaderText = "Número"
-            .Columns("Numero").Width = 90
+            .Columns("Numero").Width = 80
             .Columns("Numero").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -135,7 +138,7 @@ Public Class Frm_PreVentasPDA
 
             .Columns("CodEntidad").Visible = True
             .Columns("CodEntidad").HeaderText = "Entidad"
-            .Columns("CodEntidad").Width = 90
+            .Columns("CodEntidad").Width = 80
             .Columns("CodEntidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -148,11 +151,11 @@ Public Class Frm_PreVentasPDA
 
             .Columns("Nombre_Entidad").Visible = True
             .Columns("Nombre_Entidad").HeaderText = "Razón Social"
-            .Columns("Nombre_Entidad").Width = 400
+            .Columns("Nombre_Entidad").Width = 300
             .Columns("Nombre_Entidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Bruto").Width = 100
+            .Columns("Bruto").Width = 90
             .Columns("Bruto").HeaderText = "Total Bruto"
             .Columns("Bruto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Bruto").DefaultCellStyle.Format = "###,##0.##"
@@ -165,6 +168,20 @@ Public Class Frm_PreVentasPDA
             .Columns("Lineas").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Lineas").Visible = True
             .Columns("Lineas").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Tido").Visible = True
+            .Columns("Tido").HeaderText = "TD"
+            .Columns("Tido").Width = 30
+            .Columns("Tido").Visible = (_Tbas.Name = "Tab_NvvGeneradas")
+            .Columns("Tido").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Nudo").Visible = True
+            .Columns("Nudo").HeaderText = "Número"
+            .Columns("Nudo").Width = 80
+            .Columns("Nudo").Visible = (_Tbas.Name = "Tab_NvvGeneradas")
+            .Columns("Nudo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With

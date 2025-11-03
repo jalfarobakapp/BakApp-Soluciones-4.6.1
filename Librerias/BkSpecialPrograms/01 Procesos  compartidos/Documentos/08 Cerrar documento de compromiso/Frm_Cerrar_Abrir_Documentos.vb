@@ -403,6 +403,16 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
             End If
 
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set Qty_SobreStockD = Qty_SobreStock - Qty_SobreStockD" & vbCrLf &
+                           "Where Idmaeedo = " & _Idmaeedo
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set PqteComprometido = PqteComprometido-Qty_SobreStockD" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Prod_SobreStock St" & vbCrLf &
+                           "Inner Join " & _Global_BaseBk & "Zw_Docu_Det Det On St.Id = Det.Id_SobreStock" & vbCrLf &
+                           "Where Idmaeedo = " & _Idmaeedo
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
             Sb_Actualizar_Grillas()
             Sb_Formato_Grillas()
 
@@ -419,6 +429,14 @@ Public Class Frm_Cerrar_Abrir_Documentos
         Dim _Idmaeedo = _Row_Maeedo.Item("IDMAEEDO")
 
         If Not Fx_Revisar_Documento_Cerrado(_Idmaeedo, True) Then
+            Return
+        End If
+
+        Dim _SobreStock As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "SobreStock", "Idmaeedo = " & _Idmaeedo)
+
+        If _SobreStock Then
+            MessageBoxEx.Show(Me, "Este documento no se puede volver a reactivar, ya que es una venta Sobre Stock", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 

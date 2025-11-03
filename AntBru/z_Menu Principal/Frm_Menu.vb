@@ -1,6 +1,6 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.IO
 Imports BkSpecialPrograms
-Imports System.IO
+Imports DevComponents.DotNetBar
 Imports DevComponents.DotNetBar.Metro
 
 Public Class Frm_Menu
@@ -1101,19 +1101,19 @@ Public Class Frm_Menu
 
     Private Sub Btn_Mnu_Permisos_Remotos_NVV_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Permisos_Remotos_NVV.Click
 
-        If Fx_Tiene_Permiso(Me, "Espr0030",,, False,,,, False) Then
-
-            Notify_Menu_BakApp.Visible = False
-            csNotificaciones.Notificacion._Revisando_Permiso_Remoto = True
-
-            Dim Fm As New Frm_Cadenas_Remotas_Lista(Frm_Cadenas_Remotas_Lista.Enum_Accion.Revision_CRemotas, "NVV")
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
-            Notify_Menu_BakApp.Visible = True
-            csNotificaciones.Notificacion._Revisando_Permiso_Remoto = False
-
+        If Not Fx_Tiene_Permiso(Me, "Espr0030",,, False,,,, False) Then
+            Return
         End If
+
+        Notify_Menu_BakApp.Visible = False
+        csNotificaciones.Notificacion._Revisando_Permiso_Remoto = True
+
+        Dim Fm As New Frm_Cadenas_Remotas_Lista(Frm_Cadenas_Remotas_Lista.Enum_Accion.Revision_CRemotas, "NVV")
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        Notify_Menu_BakApp.Visible = True
+        csNotificaciones.Notificacion._Revisando_Permiso_Remoto = False
 
     End Sub
 

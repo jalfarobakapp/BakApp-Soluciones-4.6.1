@@ -247,7 +247,7 @@ Public Class Frm_Cantidades_PreVenta
 
             Txt_CantidadPreVenta.Tag = _CantidadPallet
             Txt_CantUD1.Text = Cantidad_Ud1
-            Txt_CantUD2.Text = Math.Round(Cantidad_Ud2, 3)
+            Txt_CantUD2.Text = Math.Round(Cantidad_Ud2, 5)
 
             Btn_Aceptar.Focus()
 

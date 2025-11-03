@@ -6125,6 +6125,19 @@ Public Module Crear_Documentos_Desde_Otro
                              "Where Empresa ='" & _Empresa & "' And Sucursal ='" & _Sucursal & "' And Bodega ='" & _Bodega &
                              "' And Codigo = '" & _Codigo & "'" & vbCrLf
 
+            Dim _SobreStock As Boolean = _Fila.Item("SobreStock")
+
+            If _SobreStock Then
+
+                Dim _Id_SobreStock As Integer = _Fila.Item("Id_SobreStock")
+                Dim _PqteComprometidoSol As Double = _Fila.Item("PqteComprometidoSol")
+
+                _SqlQuery += "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
+                             "PqteComprometidoSol = PqteComprometidoSol-" & De_Num_a_Tx_01(_PqteComprometidoSol, False, 5) & vbCrLf &
+                             "Where Id = " & _Id_SobreStock & vbCrLf
+
+            End If
+
         Next
 
         If Not String.IsNullOrEmpty(_SqlQuery) Then

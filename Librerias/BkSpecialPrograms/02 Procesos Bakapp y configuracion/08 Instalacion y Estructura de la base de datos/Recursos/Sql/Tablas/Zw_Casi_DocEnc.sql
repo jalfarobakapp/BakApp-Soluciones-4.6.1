@@ -63,6 +63,7 @@ CREATE TABLE [dbo].[Zw_Casi_DocEnc](
     [PdaRMovil]             [bit]			NOT NULL DEFAULT (0),
     [Idpdaenca]             [Int]			NOT NULL DEFAULT (0),
     [ConservaNudo]          [bit]			NOT NULL DEFAULT (0),
+    [SobreStock]            [bit]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Casi_DocEnc] PRIMARY KEY CLUSTERED 
 (
 	[Id_DocEnc] ASC

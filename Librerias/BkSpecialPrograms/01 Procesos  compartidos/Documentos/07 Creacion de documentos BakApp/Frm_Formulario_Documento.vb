@@ -1679,6 +1679,8 @@ Public Class Frm_Formulario_Documento
             .Item("Idpdaenca") = 0
             .Item("ConservaNudo") = False
 
+            .Item("SobreStock") = SobreStock
+
             _TblEncabezado.Rows.Add(NewFila)
 
         End With
@@ -2744,6 +2746,7 @@ Public Class Frm_Formulario_Documento
             .Item("Precio_SobreStock") = 0
             .Item("Precio_DigSobreStock") = 0
             .Item("Qty_SobreStock") = 0
+            .Item("PqteComprometidoSol") = 0
 
             Dim _RowMoneda_Det As DataRow
 
@@ -2794,6 +2797,13 @@ Public Class Frm_Formulario_Documento
             .Item("EsPallet") = False
             .Item("DesacRazTransf") = False
             .Item("Grupo") = String.Empty
+
+            .Item("SobreStock") = SobreStock
+            .Item("Id_SobreStock") = 0
+            .Item("Moneda_SobreStock") = String.Empty
+            .Item("Precio_SobreStock") = 0
+            .Item("Qty_SobreStock") = 0
+            .Item("PqteComprometidoSol") = 0
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -5115,7 +5125,8 @@ Public Class Frm_Formulario_Documento
 
     Sub Sb_Traer_Producto_A_La_Nueva_Fila(_Fila As DataGridViewRow,
                                           _RowProducto As DataRow,
-                                          _Indice As Integer)
+                                          _Indice As Integer,
+                                          Optional _Precio_Def As Double = 0)
 
         Dim _Codigo = _RowProducto.Item("KOPR")
         Dim _Tipr As String = _RowProducto.Item("TIPR")
@@ -5324,7 +5335,7 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
-            Sb_Traer_Producto_Grilla(_Fila, _RowProducto, False,,,, True)
+            Sb_Traer_Producto_Grilla(_Fila, _RowProducto, False,,,, True, _Precio_Def)
 
             Dim _Potencia As Double = _Fila.Cells("Potencia").Value
 
@@ -5720,7 +5731,8 @@ Public Class Frm_Formulario_Documento
                                  Optional _UnTrans As Integer = 1,
                                  Optional _Mostrar_Oferta As Boolean = True,
                                  Optional _CodAlternativo As String = "",
-                                 Optional _RevisarNMarca As Boolean = False)
+                                 Optional _RevisarNMarca As Boolean = False,
+                                 Optional _Precio_Def As Double = 0)
 
         Dim _Codigo As String = _RowProducto.Item("KOPR")
         Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
@@ -6078,6 +6090,10 @@ Public Class Frm_Formulario_Documento
             _PrecioLinea = _PrecioListaUd1
         ElseIf _UnTrans = 2 Then
             _PrecioLinea = _PrecioListaUd2
+        End If
+
+        If CBool(_Precio_Def) Then
+            _PrecioLinea = _Precio_Def
         End If
 
         ' PREGUNTA SI EL VALOR QUE SE TRAE DESDE LA LISTA DE PRECIOS EN NETO O BRUTO
@@ -7436,11 +7452,13 @@ Public Class Frm_Formulario_Documento
 
                 Dim _PrecioLista As Double
 
+                If _Moneda_Det.Trim <> "$" Then _Decimales = _DecimalesGl ' 2
+
                 If ChkValores.Checked Then
-                    _PrecioLista = NuloPorNro(.Cells("PrecioNetoUdLista").Value, 0)
-                    _PrecioLista = Math.Round(NuloPorNro(.Cells("PrecioNetoUdLista").Value, 0), 0)
+                    _PrecioLista = NuloPorNro(.Cells("PrecioNetoUdLista").Value, _Decimales)
+                    _PrecioLista = Math.Round(NuloPorNro(.Cells("PrecioNetoUdLista").Value, _Decimales), _Decimales)
                 Else
-                    _PrecioLista = NuloPorNro(.Cells("PrecioBrutoUdLista").Value, 0)
+                    _PrecioLista = NuloPorNro(.Cells("PrecioBrutoUdLista").Value, _Decimales)
                 End If
 
                 Dim _PrecioListaUd1 As Double = .Cells("PrecioListaUd1").Value
@@ -9294,6 +9312,11 @@ Public Class Frm_Formulario_Documento
                                         _Fila.Cells("Qty_SobreStock").Value = _Zw_Prod_SobreStock.Cantidad
                                         _Fila.Cells("Precio_DigSobreStock").Value = _Zw_Prod_SobreStock.Precio_DigSobreStock
 
+                                        '_Fila.Cells("SobreStock").Value = True
+                                        '_Fila.Cells("Id_SobreStock").Value = _Zw_Prod_SobreStock.Id
+                                        '_Fila.Cells("Moneda_SobreStock").Value = _Zw_Prod_SobreStock.Moneda
+                                        '_Fila.Cells("Precio_SobreStock").Value = _Zw_Prod_SobreStock.PrecioXUd1
+
                                     End If
 
                                     If PreVenta AndAlso _Tido = "COV" Then
@@ -9586,11 +9609,11 @@ Public Class Frm_Formulario_Documento
                                 Return
                             End If
 
-                            If SobreStock AndAlso _Tido = "NVV" Then
-                                MessageBoxEx.Show(Me, "Debe cambiar el precio desde la cantidad", "Validación, venta Sobre Stock",
-                                                  MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, True)
-                                Return
-                            End If
+                            'If SobreStock AndAlso _Tido = "NVV" Then
+                            '    MessageBoxEx.Show(Me, "Debe cambiar el precio desde la cantidad", "Validación, venta Sobre Stock",
+                            '                      MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, True)
+                            '    Return
+                            'End If
 
                             If String.IsNullOrEmpty(_Tict) Then
 
@@ -11040,15 +11063,33 @@ Public Class Frm_Formulario_Documento
                             Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Zw_Prod_SobreStock.Codigo & "'"
                             _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                            Sb_Traer_Producto_A_La_Nueva_Fila(_Fila, _RowProducto, _Indice)
+
+                            Dim _Valor_Dolar As Double = _TblEncabezado.Rows(0).Item("Valor_Dolar")
+
+                            Dim _Precio As Double
+                            Dim _PrecioListaUd1 As Double
+                            Dim _PrecioListaUd2 As Double
+                            Dim _Rtu As Double = _Fila.Cells("Rtu").Value
+
+                            If _TblEncabezado.Rows(0).Item("Moneda_Doc").ToString.Trim = "$" Then
+                                _Precio = Math.Round(_Zw_Prod_SobreStock.PrecioXUd1 * _Valor_Dolar, 5)
+                            Else
+                                _Precio = _Zw_Prod_SobreStock.PrecioXUd1
+                                _PrecioListaUd1 = _Precio
+                                _PrecioListaUd2 = Math.Round(_Precio * _Rtu, 5)
+                            End If
+
+                            Sb_Traer_Producto_A_La_Nueva_Fila(_Fila, _RowProducto, _Indice, _Precio)
 
                             If Not String.IsNullOrEmpty(_Fila.Cells("Codigo").Value) Then
 
                                 _Zw_Prod_SobreStock.IdIndex = _Fila.Cells("Id").Value
                                 _Ls_Cl_SobreStock.Add(_Zw_Prod_SobreStock)
-                                Dim _Valor_Dolar As Double = _TblEncabezado.Rows(0).Item("Valor_Dolar")
 
-                                _Fila.Cells("Precio").Value = Math.Round(_Zw_Prod_SobreStock.PrecioXUd1 * _Valor_Dolar, 5)
+
+                                _Fila.Cells("Precio").Value = _Precio
+                                _Fila.Cells("PrecioListaUd1").Value = _PrecioListaUd1
+                                _Fila.Cells("PrecioListaUd2").Value = _PrecioListaUd2
                                 _Fila.Cells("SobreStock").Value = True
                                 _Fila.Cells("Id_SobreStock").Value = _Zw_Prod_SobreStock.Id
                                 _Fila.Cells("Moneda_SobreStock").Value = _Zw_Prod_SobreStock.Moneda
@@ -11056,6 +11097,8 @@ Public Class Frm_Formulario_Documento
                                 _Fila.Cells("Precio_DigSobreStock").Value = _Zw_Prod_SobreStock.PrecioXUd1
 
                             End If
+
+                            Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(Grilla_Detalle.CurrentRow.Index).Cells("Cantidad")
 
                             Return
 
@@ -12680,7 +12723,9 @@ Public Class Frm_Formulario_Documento
             _TblEncabezado.Rows(0).Item("Customizable") = _TblEncabezado_StBy.Rows(0).Item("Customizable")
 
             PreVenta = _TblEncabezado_StBy.Rows(0).Item("PreVenta")
-            _TblEncabezado_StBy.Rows(0).Item("PreVenta") = PreVenta
+            SobreStock = _TblEncabezado_StBy.Rows(0).Item("SobreStock")
+
+            '_TblEncabezado_StBy.Rows(0).Item("PreVenta") = PreVenta
 
             .Item("Pickear") = _TblEncabezado_StBy.Rows(0).Item("Pickear")
 
@@ -13050,6 +13095,19 @@ Public Class Frm_Formulario_Documento
             _Row.Cells("CodFunAutoriza").Value = _CodFunAutoriza
             _Row.Cells("CodPermiso").Value = _CodPermiso
             _Row.Cells("Tiene_Dscto").Value = _Tiene_Dscto
+
+            Dim _SobreStock As Boolean = _Fila.Item("SobreStock")
+            Dim _Id_SobreStock As Integer = _Fila.Item("Id_SobreStock")
+            Dim _Moneda_SobreStock As String = _Fila.Item("Moneda_SobreStock")
+            Dim _Precio_SobreStock As Double = _Fila.Item("Precio_SobreStock")
+            Dim _Qty_SobreStock As Double = _Fila.Item("Qty_SobreStock")
+
+            _Row.Cells("SobreStock").Value = _SobreStock
+            _Row.Cells("Id_SobreStock").Value = _Id_SobreStock
+            _Row.Cells("Moneda_SobreStock").Value = _Moneda_SobreStock
+            _Row.Cells("Precio_SobreStock").Value = _Precio_SobreStock
+            _Row.Cells("Qty_SobreStock").Value = _Qty_SobreStock
+            _Row.Cells("PqteComprometidoSol").Value = _Qty_SobreStock
 
             _Contador += 1
 
@@ -26961,6 +27019,8 @@ Public Class Frm_Formulario_Documento
                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
                 _Cambiar_Moneda = True
                 _Komo = "$"
+                _Vamo = 1
+                _Timo = "N"
             End If
 
         Else
@@ -26984,19 +27044,24 @@ Public Class Frm_Formulario_Documento
 
         If _Cambiar_Moneda Then
 
-            Consulta_sql = "Select TOP 1 * From MAEMO 
-                            Where KOMO = '" & _Komo & "' And FEMO = '" & Format(_TblEncabezado.Rows(0).Item("FechaEmision"), "yyyyMMdd") & "' Order By IDMAEMO Desc"
+            If _Komo <> "$" Then
 
-            Dim _RowMoneda_Enc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                Consulta_sql = "Select TOP 1 * From MAEMO" & vbCrLf &
+                               "Where KOMO = '" & _Komo & "' And FEMO = '" & Format(_TblEncabezado.Rows(0).Item("FechaEmision"), "yyyyMMdd") & "'" & vbCrLf &
+                               "Order By IDMAEMO Desc"
 
-            If IsNothing(_RowMoneda_Enc) Then
-                MessageBoxEx.Show(Me, "No existe tasa de cambio para la modena " & _Komo & " para la fecha " & FormatDateTime(_TblEncabezado.Rows(0).Item("FechaEmision"), DateFormat.ShortDate),
-                                  "Validación tasa de cambio", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Return
+                Dim _RowMoneda_Enc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If IsNothing(_RowMoneda_Enc) Then
+                    MessageBoxEx.Show(Me, "No existe tasa de cambio para la modena " & _Komo & " para la fecha " & FormatDateTime(_TblEncabezado.Rows(0).Item("FechaEmision"), DateFormat.ShortDate),
+                                      "Validación tasa de cambio", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
+                _Vamo = _RowMoneda_Enc.Item("VAMO")
+                _Timo = _RowMoneda_Enc.Item("TIMO")
+
             End If
-
-            _Vamo = _RowMoneda_Enc.Item("VAMO")
-            _Timo = _RowMoneda_Enc.Item("TIMO")
 
             Consulta_sql = "Select Semilla,CodUsuario,CodPermiso,Llave,Valor_Dscto,Valor_Max_Compra,TABPP.*
                             From " & _Global_BaseBk & "ZW_PermisosVsUsuarios
@@ -27017,12 +27082,11 @@ Public Class Frm_Formulario_Documento
 
             If Fx_Cambiar_ListaPrecios(_Timo) Then
 
-                _TblEncabezado.Rows(0).Item("Tasadorig_Doc") = _RowMoneda_Enc.Item("VAMO")
+                _TblEncabezado.Rows(0).Item("Tasadorig_Doc") = _Vamo '_RowMoneda_Enc.Item("VAMO")
 
                 _TblEncabezado.Rows(0).Item("Moneda_Doc") = _Komo
                 _TblEncabezado.Rows(0).Item("Valor_Dolar") = _Vamo
                 _TblEncabezado.Rows(0).Item("TipoMoneda") = _Timo
-
 
                 Consulta_sql = "Select Top 1 * From TABMO Where KOMO = '" & _Komo & "'"
                 Dim _RowMoneda_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -29787,7 +29851,7 @@ Public Class Frm_Formulario_Documento
 
     Sub Sb_RevisarListaSuperior()
 
-        If _Cl_DocListaSuperior.UsarVencListaPrecios Then
+        If Not _Cl_DocListaSuperior.UsarVencListaPrecios Then
             Return
         End If
 
@@ -29872,8 +29936,6 @@ Public Class Frm_Formulario_Documento
             End If
 
         End If
-
-
 
     End Sub
 
