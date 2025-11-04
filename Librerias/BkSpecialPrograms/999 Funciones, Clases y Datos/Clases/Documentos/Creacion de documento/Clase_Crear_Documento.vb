@@ -2029,9 +2029,9 @@ Public Class Clase_Crear_Documento
             Dim _TipoEstacion = _Global_Row_EstacionBk.Item("TipoEstacion")
             Dim _Modalidad_Bk As String = _Row_Encabezado.Item("Modalidad")
             Dim _Pickear As Boolean = False
-            Dim _PdaRMovil As Boolean = _Row_Encabezado.Item("PdaRMovil")
-            Dim _Idpdaenca As Integer = _Row_Encabezado.Item("Idpdaenca")
-            Dim _ConservaNudo As Boolean = _Row_Encabezado.Item("ConservaNudo")
+            Dim _PdaRMovil As Boolean = NuloPorNro(_Row_Encabezado.Item("PdaRMovil"), False)
+            Dim _Idpdaenca As Integer = NuloPorNro(_Row_Encabezado.Item("Idpdaenca"), 0)
+            Dim _ConservaNudo As Boolean = NuloPorNro(_Row_Encabezado.Item("ConservaNudo"), 0)
 
             If _Tido = "NVV" Then
                 _Pickear = _Row_Encabezado.Item("Pickear")

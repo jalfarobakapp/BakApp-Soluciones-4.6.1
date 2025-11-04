@@ -20,6 +20,8 @@ CREATE TABLE [dbo].[Zw_Docu_Det](
     [Moneda_SobreStock]     [varchar](3)    NOT NULL DEFAULT (''),
     [Precio_SobreStock]     [float]			NOT NULL DEFAULT (0),
     [Qty_SobreStock]        [float]			NOT NULL DEFAULT (0),
+    [Qty_SobreStockD]       [float]			NOT NULL DEFAULT (0),
+    [Qty_SobreStockE]       [float]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Docu_Det] PRIMARY KEY CLUSTERED 
 (
 	[Idmaeddo] ASC,

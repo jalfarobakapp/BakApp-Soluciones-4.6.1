@@ -130,6 +130,11 @@ CREATE TABLE [dbo].[Zw_Casi_DocDet](
     [Condicionado]          [bit]                   NOT NULL DEFAULT (0),      
     [DesacRazTransf]        [bit]                   NOT NULL DEFAULT (0), 
     [Grupo]                 [varchar](1)            NOT NULL DEFAULT (''),
+    [SobreStock]            [bit]                   NOT NULL DEFAULT (0), 
+    [Id_SobreStock]         [int]                   NOT NULL DEFAULT (0),
+    [Moneda_SobreStock]     [varchar](3)            NOT NULL DEFAULT (''),
+    [Precio_SobreStock]     [float]                 NOT NULL DEFAULT (0),
+    [Qty_SobreStock]        [float]                 NOT NULL DEFAULT (0),
 ) ON [PRIMARY]
 
 

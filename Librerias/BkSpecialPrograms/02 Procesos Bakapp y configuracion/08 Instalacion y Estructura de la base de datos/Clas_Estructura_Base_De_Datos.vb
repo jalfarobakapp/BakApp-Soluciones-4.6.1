@@ -952,6 +952,10 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Productos
             Case "Zw_Prod_Ubicacion_IngSal"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_Ubicacion_IngSal
+            Case "Zw_Prod_SobreStock"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_SobreStock
+            Case "Zw_Prod_SobreStock_Tom"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_SobreStock_Tom
 
             Case "Zw_PtsVta_Configuracion"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_PtsVta_Configuracion

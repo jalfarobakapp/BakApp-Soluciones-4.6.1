@@ -15733,9 +15733,9 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Sb_RevListaSuperiosEntidad_VtaCurso()
 
-        'If _Tido <> "COV" And _Tido <> "NVV" Then
-        '    Return
-        'End If
+        If _Tido <> "COV" And _Tido <> "NVV" Then
+            Return
+        End If
 
         Try
 
@@ -15800,9 +15800,9 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Sb_RevListaSuperiosEntidad(_MostrarMensaje As Boolean)
 
-        'If _Tido <> "COV" And _Tido <> "NVV" Then
-        '    Return
-        'End If
+        If _Tido <> "COV" And _Tido <> "NVV" Then
+            Return
+        End If
 
         Try
 

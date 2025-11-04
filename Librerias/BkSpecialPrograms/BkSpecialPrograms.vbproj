@@ -8405,6 +8405,8 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_PrestaShop.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Ranking.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Reemplazos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_SobreStock.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_SobreStock_Tom.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_SolBodega.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_SolCompra.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_SolCompra_Resp.sql" />

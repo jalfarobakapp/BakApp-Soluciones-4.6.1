@@ -483,6 +483,7 @@ Module Mod_Imprimir
             _Mensaje.Icono = MessageBoxIcon.Stop
         Finally
             If _Errores.Count > 0 Then
+                _Mensaje.EsCorrecto = False
                 _Mensaje.Mensaje = String.Join(Environment.NewLine, _Errores)
                 _Mensaje.Icono = MessageBoxIcon.Warning
             End If

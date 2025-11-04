@@ -138,6 +138,30 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Busca una cadena traducida similar a &apos;------------------------------------------------------------------------------
+        '''&apos; &lt;auto-generated&gt;
+        '''&apos;     Este código fue generado por una herramienta.
+        '''&apos;     Versión de runtime:4.0.30319.42000
+        '''&apos;
+        '''&apos;     Los cambios en este archivo podrían causar un comportamiento incorrecto y se perderán si
+        '''&apos;     se vuelve a generar el código.
+        '''&apos; &lt;/auto-generated&gt;
+        '''&apos;------------------------------------------------------------------------------
+        '''
+        '''Option Strict On
+        '''Option Explicit On
+        '''
+        '''Imports System
+        '''
+        '''Namespace My.Reso [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Recursos_Inst_Tablas_Designer2() As String
+            Get
+                Return ResourceManager.GetString("Recursos_Inst_Tablas_Designer2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Busca una cadena traducida similar a &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         '''&lt;root&gt;
         '''  &lt;!-- 
@@ -234,6 +258,31 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Recursos_Inst_Tablas4() As String
             Get
                 Return ResourceManager.GetString("Recursos_Inst_Tablas4", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        '''&lt;root&gt;
+        '''  &lt;!-- 
+        '''    Microsoft ResX Schema 
+        '''    
+        '''    Version 2.0
+        '''    
+        '''    The primary goals of this format is to allow a simple XML format 
+        '''    that is mostly human readable. The generation and parsing of the 
+        '''    various data types are done through the TypeConverter classes 
+        '''    associated with the data types.
+        '''    
+        '''    Example:
+        '''    
+        '''    ... ado.net/XML headers &amp; schema ...
+        '''    &lt;resheader name=&quot;resmimetype&quot;&gt;text/microsoft-resx&lt;/resheader&gt;
+        '''    &lt;resheader n [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Recursos_Inst_Tablas5() As String
+            Get
+                Return ResourceManager.GetString("Recursos_Inst_Tablas5", resourceCulture)
             End Get
         End Property
         
@@ -1388,15 +1437,15 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Docu_Det](
-        '''    [Id]                [int]           IDENTITY(1,1) NOT NULL,
-        '''	[Idmaeddo]			[int]			NOT NULL DEFAULT (0),
-        '''	[Idmaeedo]			[int]			NOT NULL DEFAULT (0),
-        '''	[Tido]				[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nudo]				[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Codigo]			[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Descripcion]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[RtuVariable]		[bit]			NOT NULL DEFAULT (0),
-        '''    [Empresa]           [char](2)       NOT NULL DEFAULT ( [resto de la cadena truncado]&quot;;.
+        '''    [Id]                    [int]           IDENTITY(1,1) NOT NULL,
+        '''	[Idmaeddo]			    [int]			NOT NULL DEFAULT (0),
+        '''	[Idmaeedo]			    [int]			NOT NULL DEFAULT (0),
+        '''	[Tido]				    [varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]				    [varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]			    [varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Descripcion]		    [varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[RtuVariable]		    [bit]			NOT NULL DEFAULT (0),
+        '''    [Empresa]              [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Docu_Det() As String
             Get
@@ -3179,16 +3228,14 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_PreVenta_StockProd](
-        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[IdCont]		[int]			NOT NULL DEFAULT (0),
-        '''	[Contenedor]	[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Idmaeedo_Rela] [int]			NOT NULL DEFAULT (0),
-        '''	[Idmaeddo_Rela] [int]			NOT NULL DEFAULT (0),
-        '''	[Tido_Rela]		[char](3)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Nudo_Rela]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Codigo]		[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[StcfiUd1]		[float]			NOT NULL DEFAULT (0),
-        '''	[StcfiUd2]		[floa [resto de la cadena truncado]&quot;;.
+        '''    [Id]                    [int]           IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]		        [char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''    [Sucursal]              [varchar](3)    NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega]                [varchar](3)    NOT NULL DEFAULT (&apos;&apos;),
+        '''	[IdCont]		        [int]			NOT NULL DEFAULT (0),
+        '''	[Contenedor]	        [varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]		        [varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[StcfiUd1]		        [float [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_PreVenta_StockProd() As String
             Get
@@ -3503,6 +3550,46 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Prod_Reemplazos() As String
             Get
                 Return ResourceManager.GetString("Zw_Prod_Reemplazos", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Prod_SobreStock](
+        '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]				[char](2)           NOT NULL,
+        '''	[Sucursal]				[varchar](3)        NOT NULL,
+        '''	[Bodega]				[varchar](3)        NOT NULL,
+        '''	[Codigo]				[varchar](13)       NOT NULL,
+        '''	[Descripcion]			[varchar](50)       NOT NULL,
+        '''	[Activo]				[bit]               NOT NULL,
+        '''	[CodFuncionarioCrea]	[varchar](3)        NOT NULL,
+        '''	[FechaVigencia]			[datetime]          NULL,
+        '''	[FormatoPqte]			[varchar](10)       NOT NU [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Prod_SobreStock() As String
+            Get
+                Return ResourceManager.GetString("Zw_Prod_SobreStock", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Prod_SobreStock_Tom](
+        '''	[Id]                [int] IDENTITY(1,1) NOT NULL,
+        '''	[CodFuncionario]    [varchar](3)        NOT NULL,
+        '''	[Fecha_Hora]        [datetime]          NULL,
+        '''	[NombreEquipo]      [varchar](20)       NOT NULL
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Prod_SobreStock_Tom() As String
+            Get
+                Return ResourceManager.GetString("Zw_Prod_SobreStock_Tom", resourceCulture)
             End Get
         End Property
         
@@ -5306,15 +5393,13 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_Usuarios](
-        '''    [Id]                [int] IDENTITY(1,1) NOT NULL,
-        '''    [NombreUsuario]     [varchar](80)   NOT NULL,
-        '''	[Password]          [varchar](30)   NOT NULL,
-        '''	[CodFuncionario]    [char](3)       NOT NULL DEFAULT (&apos;&apos;),
-        '''	[NomFuncionario]    [varchar](100)  NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Rut]               [varchar](20)   NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Direccion]         [varchar](100)  NOT NULL DEFAULT (&apos;&apos;),
-        '''	[CodPais]           [char](4)       NOT NULL DEFAULT (&apos;&apos;),
-        ''' [resto de la cadena truncado]&quot;;.
+        '''    [Id]                            [int] IDENTITY(1,1) NOT NULL,
+        '''    [NombreUsuario]                 [varchar](80)   NOT NULL,
+        '''	[Password]                      [varchar](30)   NOT NULL,
+        '''	[CodFuncionario]                [char](3)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[NomFuncionario]                [varchar](100)  NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Rut]                           [varchar](20)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Direccion]                     [varchar](100)  N [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Usuarios() As String
             Get
