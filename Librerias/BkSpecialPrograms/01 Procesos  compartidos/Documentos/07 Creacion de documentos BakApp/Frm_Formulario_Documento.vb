@@ -7015,12 +7015,16 @@ Public Class Frm_Formulario_Documento
                     _Cantidad = 0
                 End If
 
-                If NuloPorNro(_Fila.Cells("RtuVariable").Value, False) Or _Facturacion_Automatica Or _Fila.Cells("DesacRazTransf").Value Then
+                Dim _CalCantidades As Boolean = True
 
-                    _CantUd1 = _Fila.Cells("CantUd1").Value
-                    _CantUd2 = _Fila.Cells("CantUd2").Value
+                If Not _Revision_Remota Then
+                    _CalCantidades = (NuloPorNro(_Fila.Cells("RtuVariable").Value, False) Or _Facturacion_Automatica Or _Fila.Cells("DesacRazTransf").Value)
+                End If
 
-                Else
+                _CantUd1 = _Fila.Cells("CantUd1").Value
+                _CantUd2 = _Fila.Cells("CantUd2").Value
+
+                If _CalCantidades Then
 
                     If _Rtu = 1 Then
                         _CantUd1 = _Cantidad

@@ -240,6 +240,7 @@ Public Class Class_Permiso_BakApp
         STEM
         TICKET
         MODELAMIENTO
+        SOBRESTOCK
     End Enum
 
     Sub Sb_Actualizar_Base_De_Permisos(_Formulario As Form, ByRef _Objeto As Object)
@@ -5114,6 +5115,31 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "ELIMINAR GRUPOS DE VENDEDORES/FUNCINARIOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.MODELAMIENTO, 6)
                 _NombreFamiliaPermiso = _Fml.MODELAMIENTO.ToString
+
+        End Select
+
+#End Region
+
+#Region "SOBRE STOCK"
+
+        Select Case _CodPermiso
+
+            Case "Sobs0001"
+                _DescripcionPermiso = "INGRESAR AL MANTENEDOR DE PRODUCTO COMO SOBRE STOCK"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SOBRESTOCK, 6)
+                _NombreFamiliaPermiso = _Fml.SOBRESTOCK.ToString
+            Case "Sobs0002"
+                _DescripcionPermiso = "CREAR PRODUCTO COMO SOBRE STOCK (AGREGAR A LA LISTA)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SOBRESTOCK, 6)
+                _NombreFamiliaPermiso = _Fml.SOBRESTOCK.ToString
+            Case "Sobs0003"
+                _DescripcionPermiso = "ELIMINAR PRODUCTO COMO SOBRE STOCK (QUITAR DEL REGISTRO)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SOBRESTOCK, 6)
+                _NombreFamiliaPermiso = _Fml.SOBRESTOCK.ToString
+            Case "Sobs0004"
+                _DescripcionPermiso = "ELIMINAR PRODUCTO COMO SOBRE STOCK (QUITAR DEL REGISTRO)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SOBRESTOCK, 6)
+                _NombreFamiliaPermiso = _Fml.SOBRESTOCK.ToString
 
         End Select
 

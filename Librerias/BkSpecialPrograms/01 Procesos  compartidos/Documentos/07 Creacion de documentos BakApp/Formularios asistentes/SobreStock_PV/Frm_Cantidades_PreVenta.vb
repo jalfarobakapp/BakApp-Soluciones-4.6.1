@@ -209,6 +209,7 @@ Public Class Frm_Cantidades_PreVenta
             _Msj = "Límite disponible: " & PqteDisponible & " " & FormatoPqte &
                    " o " & FormatNumber(Ud1XPqte * PqteDisponible, 0) & " " & _RowProducto.Item("UD01PR") & ". Verifique antes de continuar."
             MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_CantidadPreVenta.SelectAll()
             Txt_CantidadPreVenta.Focus()
             Return
 

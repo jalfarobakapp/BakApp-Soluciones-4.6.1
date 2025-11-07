@@ -760,12 +760,15 @@ Public Class Frm_Filtro_Especial_Informes
     Private Sub Sb_Grilla_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyValue = Keys.Enter Then
 
-            SendKeys.Send("{LEFT}")
-            e.Handled = True
+            'SendKeys.Send("{LEFT}")
+            'e.Handled = True
             Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
             _Fila.Cells("Chk").Value = True
             Call BtnAceptar_Click(Nothing, Nothing)
+
+            e.Handled = True
+            e.SuppressKeyPress = True
 
         End If
     End Sub

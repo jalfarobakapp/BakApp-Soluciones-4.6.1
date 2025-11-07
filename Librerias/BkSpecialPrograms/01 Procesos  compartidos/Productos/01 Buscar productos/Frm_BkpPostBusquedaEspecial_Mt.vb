@@ -1528,8 +1528,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
 
             ElseIf e.KeyValue = Keys.Enter Then
 
-                SendKeys.Send("{F2}")
-                e.Handled = True
+                'SendKeys.Send("{F2}")
+                'e.Handled = True
 
                 If _Trabajar_Alternativos Then
                     Sb_Seleccionar_Producto_doble_clic_Alternativos()
@@ -1540,6 +1540,9 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                         Sb_Seleccionar_Producto_doble_clic()
                     End If
                 End If
+
+                e.Handled = True
+                e.SuppressKeyPress = True
 
             ElseIf e.KeyValue = Keys.Space Then
 

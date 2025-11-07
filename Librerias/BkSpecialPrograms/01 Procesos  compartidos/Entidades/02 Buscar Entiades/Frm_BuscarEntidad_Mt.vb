@@ -434,26 +434,6 @@ Public Class Frm_BuscarEntidad_Mt
             _Filtro_Entidades = String.Empty
         End If
 
-        'Consulta_sql = "Select Top (50) IDMAEEN,KOEN,SUEN,NOKOEN,SIEN,DIEN," &
-        '               "Case TIEN " &
-        '               "When 'A' Then 'Ambos' " &
-        '               "When 'P' Then 'Proveedor' When 'C' Then 'Cliente' Else '' End As Tipo_Entidad," & vbCrLf &
-        '               "SUBSTRING(LCEN,6,3) As LCosto,SUBSTRING(LVEN,6,3) As LVenta," & vbCrLf &
-        '               "BLOQUEADO,BLOQENCOM," & vbCrLf &
-        '               "Case BLOQUEADO When 1 Then 'SI' Else '' End As Bloqueado_Venta," & vbCrLf &
-        '               "Case BLOQENCOM When 1 Then 'SI' Else '' End As Bloqueado_Compra," & vbCrLf &
-        '               "KOFUEN,Isnull(NOKOFU,'') As NOKOFU," & vbCrLf &
-        '               "(Select Top 1 FEEMLI From MAEDDO d With (Nolock)" &
-        '               "Where d.TIDO In ('GDV','FCV','BLV','FVX') And d.ENDO = KOEN And d.SUENDO = SUEN Order By FEEMLI Desc) As FechaUltVnta" & vbCrLf &
-        '               "From MAEEN With (Nolock)" & vbCrLf &
-        '               "Left Join TABFU Tf On KOFUEN = Tf.KOFU" & vbCrLf &
-        '               "Where KOEN+NOKOEN+SUEN+DIEN LIKE '%" & _Cadena & "%'" & vbCrLf &
-        '               _Condicion_Entidad & vbCrLf &
-        '               _Filtro_Extra & vbCrLf &
-        '               _Filtro_Entidades & vbCrLf &
-        '               _Filtro_Vendedores & vbCrLf &
-        '               "Order by KOEN"
-
         Consulta_sql = "Select Top (50) IDMAEEN,KOEN,SUEN,NOKOEN,SIEN,DIEN," &
                        "Case TIEN " &
                        "When 'A' Then 'Ambos' " &

@@ -30,11 +30,15 @@ Public Class Frm_SobreStock_Productos
 
         Btn_AgregarProducto.Visible = Not ModoSeleccion
 
+        AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
 
         Dim _Condicion As String = String.Empty
+
+        Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtrar.Text.Trim), "Sbs.Codigo+Sbs.Descripcion Like '%")
 
         Consulta_sql = "Select Sbs.*,Sbs.PqteHabilitado-(Sbs.PqteComprometido+Sbs.PqteComprometidoSol) As 'PqteDisponible' ,Pst.StComp1,Pst.StComp2," &
                        "STFI1,STFI2,Ms.STOCNV1,Ms.STOCNV2" & vbCrLf &
@@ -42,7 +46,8 @@ Public Class Frm_SobreStock_Productos
                        "Left Join " & _Global_BaseBk & "Zw_Prod_Stock Pst On " &
                        "Sbs.Empresa = Pst.Empresa And Sbs.Sucursal = Pst.Sucursal And Sbs.Bodega = Pst.Bodega And Sbs.Codigo = Pst.Codigo" & vbCrLf &
                        "Left Join MAEST Ms On Ms.EMPRESA = Sbs.Empresa And Ms.KOSU = Sbs.Sucursal And Ms.KOBO = Sbs.Bodega And Ms.KOPR = Sbs.Codigo" & vbCrLf &
-                       "Where Sbs.Empresa = '" & _Empresa & "'"
+                       "Where Sbs.Empresa = '" & _Empresa & "' And Sbs.Eliminado = 0" & vbCrLf &
+                       "And Sbs.Codigo+Sbs.Descripcion Like '%" & _Cadena & "%'"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -98,19 +103,19 @@ Public Class Frm_SobreStock_Productos
             .Columns("PrecioXUd1").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            If Not ModoSeleccion Then
+            'If Not ModoSeleccion Then
 
-                .Columns("StSobStockUd1").Width = 70
-                .Columns("StSobStockUd1").HeaderText = "Disponible Ud1"
-                .Columns("StSobStockUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                .Columns("StSobStockUd1").DefaultCellStyle.Format = "##,###0.##"
-                .Columns("StSobStockUd1").Visible = True
-                .Columns("StSobStockUd1").DisplayIndex = _DisplayIndex
-                _DisplayIndex += 1
+            '    .Columns("StSobStockUd1").Width = 70
+            '    .Columns("StSobStockUd1").HeaderText = "Disponible Ud1"
+            '    .Columns("StSobStockUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '    .Columns("StSobStockUd1").DefaultCellStyle.Format = "##,###0.##"
+            '    .Columns("StSobStockUd1").Visible = True
+            '    .Columns("StSobStockUd1").DisplayIndex = _DisplayIndex
+            '    _DisplayIndex += 1
 
-            End If
+            'End If
 
-            .Columns("FormatoPqte").Width = 80
+            .Columns("FormatoPqte").Width = 70
             .Columns("FormatoPqte").HeaderText = "Form.Vnta"
             .Columns("FormatoPqte").Visible = True
             .Columns("FormatoPqte").DisplayIndex = _DisplayIndex
@@ -369,11 +374,11 @@ Public Class Frm_SobreStock_Productos
                 .Moneda = _Fila.Cells("Moneda").Value
                 .PrecioXUd1 = _Fila.Cells("PrecioXUd1").Value
                 .Precio_DigSobreStock = _Fila.Cells("PrecioXUd1").Value
-                .StSobStockUd1 = _Fila.Cells("StSobStockUd1").Value
-                .StSobStockUd2 = _Fila.Cells("StSobStockUd2").Value
-                .StSbCompStock1 = _Fila.Cells("StSbCompStock1").Value
-                .StSbCompStock2 = _Fila.Cells("StSbCompStock2").Value
-                .StDispUd1 = _Fila.Cells("StSobStockUd1").Value - _Fila.Cells("StSbCompStock1").Value
+                '.StSobStockUd1 = _Fila.Cells("StSobStockUd1").Value
+                '.StSobStockUd2 = _Fila.Cells("StSobStockUd2").Value
+                '.StSbCompStock1 = _Fila.Cells("StSbCompStock1").Value
+                '.StSbCompStock2 = _Fila.Cells("StSbCompStock2").Value
+                '.StDispUd1 = _Fila.Cells("StSobStockUd1").Value - _Fila.Cells("StSbCompStock1").Value
 
             End With
 
@@ -385,4 +390,111 @@ Public Class Frm_SobreStock_Productos
 
     End Sub
 
+    Private Sub Grilla_KeyDown(sender As Object, e As KeyEventArgs) Handles Grilla.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            Call Grilla_CellDoubleClick(Nothing, Nothing)
+            ' Evitar el sonido por defecto y que la tecla se propague
+            e.Handled = True
+            e.SuppressKeyPress = True
+        End If
+    End Sub
+
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+            With sender
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+                    Btn_Eliminar.Visible = Not ModoSeleccion
+                    ShowContextMenu(Menu_Contextual_01)
+                End If
+            End With
+        End If
+    End Sub
+
+    Private Sub Txt_Filtrar_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Filtrar.KeyDown
+        If e.KeyValue = Keys.Space Or e.KeyValue = Keys.Enter Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
+
+    Private Sub Txt_Filtrar_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtrar.ButtonCustom2Click
+        Txt_Filtrar.Text = String.Empty
+        Sb_Actualizar_Grilla()
+    End Sub
+
+    Private Sub Btn_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Eliminar.Click
+
+        Dim _Rows_Usuario_Autoriza As DataRow = Nothing
+        Dim _CodFuncionario_Elimina As String = FUNCIONARIO
+
+        If Not Fx_Tiene_Permiso(Me, "Sobs0004",,,,,,,,, _Rows_Usuario_Autoriza) Then
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Está seguro de eliminar el producto seleccionado para sobre stock?", "Eliminar producto",
+                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Dim _Cl_SobreStock As New Cl_SobreStock
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        With Zw_Prod_SobreStock
+
+            .Id = _Fila.Cells("Id").Value
+            .Empresa = _Fila.Cells("Empresa").Value
+            .Sucursal = _Fila.Cells("Sucursal").Value
+            .Bodega = _Fila.Cells("Bodega").Value
+            .Codigo = _Fila.Cells("Codigo").Value
+            .Descripcion = _Fila.Cells("Descripcion").Value
+            .Activo = _Fila.Cells("Activo").Value
+            .CodFuncionarioCrea = _Fila.Cells("CodFuncionarioCrea").Value
+            .FechaVigencia = _Fila.Cells("FechaVigencia").Value
+            .FormatoPqte = _Fila.Cells("FormatoPqte").Value
+            .PqteHabilitado = _Fila.Cells("PqteHabilitado").Value
+            .PqteComprometido = _Fila.Cells("PqteComprometido").Value
+            .PqteComprometidoSol = _Fila.Cells("PqteComprometidoSol").Value
+            .Ud1XPqte = _Fila.Cells("Ud1XPqte").Value
+            .CantMinFormato = _Fila.Cells("CantMinFormato").Value
+            .Moneda = _Fila.Cells("Moneda").Value
+            .PrecioXUd1 = _Fila.Cells("PrecioXUd1").Value
+            .Precio_DigSobreStock = _Fila.Cells("PrecioXUd1").Value
+
+        End With
+
+        If Not IsNothing(_Rows_Usuario_Autoriza) Then
+            _CodFuncionario_Elimina = _Rows_Usuario_Autoriza.Item("KOFU").ToString.Trim
+        End If
+
+        _Mensaje = _Cl_SobreStock.Fx_Eliminar_SobreStock(_Zw_Prod_SobreStock, _CodFuncionario_Elimina)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
+        If Not _Mensaje.EsCorrecto Then
+            Return
+        End If
+
+        Sb_Actualizar_Grilla()
+
+    End Sub
+
+    Private Sub Btn_Copiar_Click(sender As Object, e As EventArgs) Handles Btn_Copiar.Click
+        With Grilla
+
+            Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
+            Dim _Texto_Cabeza = .Columns(.CurrentCell.ColumnIndex).HeaderText
+
+            Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
+            Clipboard.SetText(Copiar)
+
+        End With
+    End Sub
+
+    Private Sub Txt_Filtrar_TextChanged(sender As Object, e As EventArgs) Handles Txt_Filtrar.TextChanged
+        If String.IsNullOrWhiteSpace(Txt_Filtrar.Text) Then
+            Sb_Actualizar_Grilla()
+        End If
+    End Sub
 End Class

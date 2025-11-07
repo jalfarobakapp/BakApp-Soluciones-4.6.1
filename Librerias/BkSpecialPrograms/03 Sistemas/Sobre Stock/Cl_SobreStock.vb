@@ -186,4 +186,43 @@ Public Class Cl_SobreStock
 
     End Function
 
+    Function Fx_Eliminar_SobreStock(_Zw_Prod_SobreStock As Zw_Prod_SobreStock,
+                                    _CodFuncionario_Elimina As String) As LsValiciones.Mensajes
+
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            With _Zw_Prod_SobreStock
+
+                _Mensaje.Detalle = "Eliminar producto: " & .Codigo.Trim & ", " & .Descripcion.Trim
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set Eliminado = 1 Where Id = " & .Id
+
+                If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+                    Throw New System.Exception("Error al soltar el contenedor tomado" & vbCrLf & _Sql.Pro_Error)
+                End If
+
+                Fx_Add_Log_Gestion(_CodFuncionario_Elimina, Mod_Modalidad,
+                                   "Zw_Prod_SobreStock", .Id, "", "Elimina producto del registro de Sobre Stock",
+                                   "", .Codigo, "", "", False, "")
+
+            End With
+
+            _Mensaje.Mensaje = "Registro de sobre stock eliminado correctamente"
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
 End Class

@@ -24,7 +24,7 @@ Public Class Frm_RegistrarEquipo
         Get
             Return LblNombreEquipo.Text
         End Get
-        Set(ByVal value)
+        Set(value)
             LblNombreEquipo.Text = value
         End Set
     End Property
@@ -154,7 +154,7 @@ Public Class Frm_RegistrarEquipo
 
     End Sub
 
-    Private Sub BtnAceptar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnAceptar.Click
+    Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
 
         'Dim _Registro As New Frm_Licencia_Empresa
         'Dim _Licencia As String = _RutEmpresa & "@" & LblNombreEquipo.Text
@@ -293,11 +293,11 @@ Public Class Frm_RegistrarEquipo
 
     End Sub
 
-    Private Sub BtnxSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Private Sub BtnxSalir_Click(sender As System.Object, e As System.EventArgs)
         Me.Close()
     End Sub
 
-    Private Sub Frm_RegistrarEquipo_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_RegistrarEquipo_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
 
         If e.KeyValue = Keys.Escape Then
             Me.Close()
