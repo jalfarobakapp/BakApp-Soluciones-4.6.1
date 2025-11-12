@@ -7018,7 +7018,9 @@ Public Class Frm_Formulario_Documento
                 Dim _CalCantidades As Boolean = True
 
                 If Not _Revision_Remota Then
-                    _CalCantidades = (NuloPorNro(_Fila.Cells("RtuVariable").Value, False) Or _Facturacion_Automatica Or _Fila.Cells("DesacRazTransf").Value)
+                    If (NuloPorNro(_Fila.Cells("RtuVariable").Value, False) Or _Facturacion_Automatica Or _Fila.Cells("DesacRazTransf").Value) Then
+                        _CalCantidades = False
+                    End If
                 End If
 
                 _CantUd1 = _Fila.Cells("CantUd1").Value

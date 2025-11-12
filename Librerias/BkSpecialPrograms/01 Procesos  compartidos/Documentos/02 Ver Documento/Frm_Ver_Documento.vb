@@ -331,6 +331,8 @@ Public Class Frm_Ver_Documento
         Btn_CopiarDocOtrEmpresa.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6" Or RutEmpresa = "77634877-5" Or RutEmpresa = "77634879-1")
         Btn_CrearNVVdesdeOCCOtraEmpresa.Visible = (RutEmpresa = "79514800-0")
 
+        Btn_Firmar_Documento_DTE.Visible = False
+
         Select Case _Tipo_Apertura
 
             Case Enum_Tipo_Apertura.Desde_Random_SQL
@@ -706,7 +708,7 @@ Public Class Frm_Ver_Documento
 
         Dim _Tidoelec As Boolean = _TblEncabezado.Rows(0).Item("TIDOELEC") 'Fx_Es_Electronico(_Tido)
 
-        Btn_Firmar_Documento_DTE.Visible = _Tidoelec
+        'Btn_Firmar_Documento_DTE.Visible = _Tidoelec
 
         If _Tidoelec Then
 
@@ -1056,7 +1058,7 @@ Public Class Frm_Ver_Documento
                     Btn_Revisar_Situacion_Comercial.Visible = True
             End Select
 
-            Btn_Firmar_Documento_DTE.Visible = _Tidoelec
+            'Btn_Firmar_Documento_DTE.Visible = _Tidoelec
 
             If _Tidoelec Then
 

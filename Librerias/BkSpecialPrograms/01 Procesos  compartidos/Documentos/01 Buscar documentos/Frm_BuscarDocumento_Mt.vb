@@ -222,6 +222,8 @@ Public Class Frm_BuscarDocumento_Mt
             Btn_Enviar_Correos_Masivos.Visible = False
         End If
 
+        Btn_Firmar_Documento.Visible = False
+
     End Sub
 
     Public Sub Sb_Llenar_Grilla(Sql_Query As String)

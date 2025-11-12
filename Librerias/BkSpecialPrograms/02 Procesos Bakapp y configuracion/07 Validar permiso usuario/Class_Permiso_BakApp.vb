@@ -713,6 +713,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Ofer0008", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Dte00001", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Dte00002", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Dte00003", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Fmto0001", _Objeto, _Formulario)
 
