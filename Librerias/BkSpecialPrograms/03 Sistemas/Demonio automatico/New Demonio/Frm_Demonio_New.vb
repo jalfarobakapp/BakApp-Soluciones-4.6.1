@@ -1114,9 +1114,27 @@ Public Class Frm_Demonio_New
     End Sub
 
     Private Sub Timer_Minimizar_Tick(sender As Object, e As EventArgs) Handles Timer_Minimizar.Tick
-        If Timer_Ejecuciones.Enabled Then
-            Me.WindowState = FormWindowState.Minimized
-        End If
+        Try
+            If Timer_Ejecuciones.Enabled Then
+                Me.WindowState = FormWindowState.Minimized
+            End If
+        Catch ex As Exception
+            Dim mensaje As String = "Error en Timer_Minimizar_Tick: " & ex.Message
+            ' Intentar registrar con los métodos existentes
+            Try
+                RegistrarLog(mensaje)
+                MostrarRegistro(mensaje)
+            Catch
+                ' Fallback: escribir directamente en el archivo de log por si RegistrarLog no pudo (p. ej. ventana minimizada)
+                Try
+                    If Not String.IsNullOrWhiteSpace(logFilePath) Then
+                        System.IO.File.AppendAllText(logFilePath, mensaje & Environment.NewLine)
+                    End If
+                Catch
+                    ' No hacer nada si esto también falla
+                End Try
+            End Try
+        End Try
     End Sub
 
     Private Sub Timer_Ejecuciones_Tick(sender As Object, e As EventArgs) Handles Timer_Ejecuciones.Tick
