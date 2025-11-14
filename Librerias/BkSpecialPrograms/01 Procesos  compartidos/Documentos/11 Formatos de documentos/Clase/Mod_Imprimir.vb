@@ -741,7 +741,8 @@ Module Mod_Imprimir
         ' T_Escrito_1_Bruto As String
         _Valor = _Row_Maeedo.Item("VABRDO") '_Sql.Fx_Trae_Dato("MAEEDO", "VABRDO", "IDMAEEDO = " & _Idmaeedo)
 
-        _Palabra = UCase(Letras(_Valor))
+        '_Palabra = UCase(Letras(_Valor))
+        _Palabra = UCase(New_Letras(_Valor))
 
         _Palabra1 = Mid(_Palabra, 1, 50)
         _Palabra2 = Mid(_Palabra, 51, 100)
@@ -767,7 +768,7 @@ Module Mod_Imprimir
 
         _Valor = _Row_Maeedo.Item("VABRDO") '_Sql.Fx_Trae_Dato("MAEEDO", "VABRDO", "IDMAEEDO = " & _Idmaeedo)
 
-        _Palabra = UCase(Letras(_Valor))
+        _Palabra = UCase(New_Letras(_Valor))
 
         _Palabra1 = Mid(_Palabra, 1, 50)
         _Palabra2 = Mid(_Palabra, 51, 100)

@@ -325,6 +325,8 @@ Public Class Frm_Filtro_Especial_Informes
 
         Me.ActiveControl = Txt_Descripcion
 
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
         Return
 
     End Sub

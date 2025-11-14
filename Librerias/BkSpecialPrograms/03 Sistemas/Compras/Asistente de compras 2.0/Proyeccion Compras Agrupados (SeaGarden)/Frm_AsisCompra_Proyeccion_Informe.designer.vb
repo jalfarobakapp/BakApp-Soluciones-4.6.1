@@ -66,6 +66,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.Input_CalcSobreStock = New DevComponents.Editors.DoubleInput()
+        Me.Btn_SobreStock = New DevComponents.DotNetBar.ButtonX()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Redondeo, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -656,11 +657,24 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Input_CalcSobreStock.TabIndex = 141
         Me.Input_CalcSobreStock.Value = 6.5R
         '
+        'Btn_SobreStock
+        '
+        Me.Btn_SobreStock.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_SobreStock.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Btn_SobreStock.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_SobreStock.Location = New System.Drawing.Point(896, 499)
+        Me.Btn_SobreStock.Name = "Btn_SobreStock"
+        Me.Btn_SobreStock.Size = New System.Drawing.Size(200, 23)
+        Me.Btn_SobreStock.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_SobreStock.TabIndex = 142
+        Me.Btn_SobreStock.Text = "Ingresar productos con Sobre Stock"
+        '
         'Frm_AsisCompra_Proyeccion_Informe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1314, 576)
+        Me.Controls.Add(Me.Btn_SobreStock)
         Me.Controls.Add(Me.Input_CalcSobreStock)
         Me.Controls.Add(Me.LabelX5)
         Me.Controls.Add(Me.Input_Redondeo)
@@ -737,4 +751,5 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
     Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Input_CalcSobreStock As DevComponents.Editors.DoubleInput
+    Friend WithEvents Btn_SobreStock As DevComponents.DotNetBar.ButtonX
 End Class

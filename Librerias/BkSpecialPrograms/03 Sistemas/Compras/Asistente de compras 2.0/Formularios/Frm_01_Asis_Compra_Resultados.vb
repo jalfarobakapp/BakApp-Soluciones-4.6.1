@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Threading.Tasks
 Imports DevComponents.DotNetBar
 
 Public Class Frm_01_Asis_Compra_Resultados
@@ -3761,7 +3762,10 @@ Public Class Frm_01_Asis_Compra_Resultados
         Sb_Grilla_Actualizar_Informe(Grilla)
 
         If _MarcarGrilla Then
+
+            'Sb_Grilla_Marcar_Async(Grilla, False)
             Sb_Grilla_Marcar(Grilla, False)
+
         End If
 
         AddHandler Grilla.CellEndEdit, AddressOf Grilla_CellEndEdit
@@ -3777,6 +3781,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         If Not String.IsNullOrEmpty(Fm_Hijo.Txt_Descripcion.Text) Then
             _Dv.RowFilter = String.Format("Codigo+Descripcion Like '%{0}%'", Trim(Fm_Hijo.Txt_Descripcion.Text))
             Sb_Grilla_Marcar(Grilla, False)
+            'Sb_Grilla_Marcar_Async(Grilla, False)
         End If
 
         Fm_Hijo.Chk_Ver_Doc_Solo_Proveedor.Enabled = Not IsNothing(_RowProveedor)
@@ -4462,6 +4467,65 @@ Public Class Frm_01_Asis_Compra_Resultados
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
     End Sub
+
+
+
+    Sub Sb_Grilla_Marcar_Async(Grilla As DataGridView, _Marcar_Todo As Boolean)
+        If Accion_Automatica Then Return
+
+        ' Mejora visual y rendimiento
+        Grilla.SuspendLayout()
+        Try
+            EnableDoubleBuffering(Grilla)
+            Dim diasProyeccion = Fx_Dias_Proyeccion()
+            Dim batchSize = 200 ' ajustar según pruebas
+
+            Dim progress = New Progress(Of List(Of Integer))(Sub(indices)
+                                                                 ' Se ejecuta en UI thread
+                                                                 For Each idx In indices
+                                                                     If idx >= 0 AndAlso idx < Grilla.Rows.Count Then
+                                                                         Grilla.Rows(idx).Cells("Marcar").Value = _Marcar_Todo Or ShouldMarkRow(Grilla.Rows(idx), diasProyeccion)
+                                                                     End If
+                                                                 Next
+                                                             End Sub)
+
+            Task.Run(Sub()
+                         Dim batch As New List(Of Integer)
+                         For i = 0 To Grilla.Rows.Count - 1
+                             ' Aquí calcula si debe marcar la fila sin tocar la UI
+                             If _Marcar_Todo OrElse ShouldMarkRow(Grilla.Rows(i), diasProyeccion) Then
+                                 batch.Add(i)
+                             End If
+
+                             If batch.Count >= batchSize Then
+                                 CType(progress, IProgress(Of List(Of Integer))).Report(New List(Of Integer)(batch))
+                                 batch.Clear()
+                             End If
+                         Next
+                         If batch.Count > 0 Then
+                             CType(progress, IProgress(Of List(Of Integer))).Report(batch)
+                         End If
+                     End Sub)
+        Finally
+            Grilla.ResumeLayout()
+        End Try
+    End Sub
+
+    ' Función para decidir si marcar una fila (extrae la lógica de Sb_Marcar_Fila_Grilla)
+    Private Function ShouldMarkRow(row As DataGridViewRow, diasProyeccion As Integer) As Boolean
+        ' Implementar la misma lógica de Sb_Marcar_Fila_Grilla pero sin operaciones UI pesadas.
+        ' Ejemplo simplificado:
+        Return Convert.ToBoolean(row.Cells("AlgunaCondicion").Value)
+    End Function
+
+    Private Sub EnableDoubleBuffering(dgv As DataGridView)
+        Dim prop = dgv.GetType().GetProperty("DoubleBuffered", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.NonPublic)
+        If prop IsNot Nothing Then prop.SetValue(dgv, True, Nothing)
+    End Sub
+
+
+
+
 
     Sub Sb_Actualizar_Ult3ComprasXprodVsProveedor()
 
@@ -10556,6 +10620,8 @@ Namespace GeneraOccAuto
 
         End Function
 
+
+
     End Class
 
     Public Class Doc_Auto
@@ -10575,3 +10641,4 @@ Namespace GeneraOccAuto
     End Class
 
 End Namespace
+
