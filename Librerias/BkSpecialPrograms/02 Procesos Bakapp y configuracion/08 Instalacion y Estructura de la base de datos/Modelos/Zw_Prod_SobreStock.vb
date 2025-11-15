@@ -1,8 +1,6 @@
 ﻿Public Class Zw_Prod_SobreStock
     Public Property Id As Integer
     Public Property Empresa As String
-    Public Property Sucursal As String
-    Public Property Bodega As String
     Public Property Codigo As String
     Public Property Descripcion As String
     Public Property Activo As Boolean

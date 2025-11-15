@@ -40,12 +40,11 @@ Public Class Frm_SobreStock_Productos
 
         Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtrar.Text.Trim), "Sbs.Codigo+Sbs.Descripcion Like '%")
 
-        Consulta_sql = "Select Sbs.*,Sbs.PqteHabilitado-(Sbs.PqteComprometido+Sbs.PqteComprometidoSol) As 'PqteDisponible' ,Pst.StComp1,Pst.StComp2," &
-                       "STFI1,STFI2,Ms.STOCNV1,Ms.STOCNV2" & vbCrLf &
+        Consulta_sql = "Select Sbs.*,Sbs.PqteHabilitado-(Sbs.PqteComprometido+Sbs.PqteComprometidoSol) As 'PqteDisponible'" &
+                       "--,Pst.StComp1,Pst.StComp2,STFI1,STFI2,Ms.STOCNV1,Ms.STOCNV2" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_SobreStock Sbs" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Prod_Stock Pst On " &
-                       "Sbs.Empresa = Pst.Empresa And Sbs.Sucursal = Pst.Sucursal And Sbs.Bodega = Pst.Bodega And Sbs.Codigo = Pst.Codigo" & vbCrLf &
-                       "Left Join MAEST Ms On Ms.EMPRESA = Sbs.Empresa And Ms.KOSU = Sbs.Sucursal And Ms.KOBO = Sbs.Bodega And Ms.KOPR = Sbs.Codigo" & vbCrLf &
+                       "--Left Join " & _Global_BaseBk & "Zw_Prod_Stock Pst On Sbs.Empresa = Pst.Empresa And Sbs.Codigo = Pst.Codigo" & vbCrLf &
+                       "--Left Join MAEST Ms On Ms.EMPRESA = Sbs.Empresa And Ms.KOPR = Sbs.Codigo" & vbCrLf &
                        "Where Sbs.Empresa = '" & _Empresa & "' And Sbs.Eliminado = 0" & vbCrLf &
                        "And Sbs.Codigo+Sbs.Descripcion Like '%" & _Cadena & "%'"
 
@@ -63,18 +62,6 @@ Public Class Frm_SobreStock_Productos
             .Columns("Empresa").HeaderText = "Emp"
             .Columns("Empresa").Visible = True
             .Columns("Empresa").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Sucursal").Width = 30
-            .Columns("Sucursal").HeaderText = "Suc"
-            .Columns("Sucursal").Visible = True
-            .Columns("Sucursal").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Bodega").Width = 30
-            .Columns("Bodega").HeaderText = "Bod"
-            .Columns("Bodega").Visible = True
-            .Columns("Bodega").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Codigo").Width = 100
@@ -147,7 +134,7 @@ Public Class Frm_SobreStock_Productos
             _DisplayIndex += 1
 
             .Columns("PqteComprometido").Width = 70
-            .Columns("PqteComprometido").HeaderText = "Comprom. NVV"
+            .Columns("PqteComprometido").HeaderText = "Comprom. Venta"
             .Columns("PqteComprometido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PqteComprometido").DefaultCellStyle.Format = "##,###0.##"
             .Columns("PqteComprometido").Visible = True
@@ -195,18 +182,16 @@ Public Class Frm_SobreStock_Productos
             Return
         End If
 
-        Dim _Row_Bodega As DataRow = Fx_Seleccionar_Bodega()
+        'Dim _Row_Bodega As DataRow = Fx_Seleccionar_Bodega()
 
-        If IsNothing(_Row_Bodega) Then
-            Return
-        End If
+        'If IsNothing(_Row_Bodega) Then
+        '    Return
+        'End If
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_SobreStock",
-                                                        "Empresa = '" & _Row_Bodega.Item("EMPRESA") & "' And " &
-                                                        "Sucursal = '" & _Row_Bodega.Item("KOSU") & "' And " &
-                                                        "Bodega = '" & _Row_Bodega.Item("KOBO") & "' And " &
+                                                        "Empresa = '" & Mod_Empresa & "' And " &
                                                         "Codigo = '" & _RowProducto.Item("KOPR") & "' And " &
-                                                        "Activo = 1")
+                                                        "Activo = 1 And Eliminado = 0")
 
         If _Reg > 0 Then
             MessageBoxEx.Show(Me, "El producto ya se encuentra ingresado en la bodega seleccionada", "Validación",
@@ -216,23 +201,35 @@ Public Class Frm_SobreStock_Productos
 
         Dim _Zw_Prod_SobreStock As New Zw_Prod_SobreStock
 
-        Consulta_sql = "Select Ms.EMPRESA,Ms.KOSU,Ms.KOBO,Ms.STFI1,Ms.STFI2,Ms.STTR1,Ms.STTR2,Ms.STOCNV1,Ms.STOCNV2" & vbCrLf &
-                       ",Isnull(St.StComp1,0) As 'StComp1',Isnull(St.StComp2,0) As 'StComp2'" & vbCrLf &
-                       "--,Isnull(St.StSbCompStock1,0) As 'StSbCompStock1',Isnull(St.StSbCompStock2,0) As 'StSbCompStock2'" & vbCrLf &
-                       "--,Isnull(St.StSobStockUd1,0) As 'StSobStockUd1',Isnull(St.StSobStockUd2,0) As 'StSobStockUd2'" & vbCrLf &
+        'Consulta_sql = "Select Ms.EMPRESA,Ms.KOSU,Ms.KOBO,Ms.STFI1,Ms.STFI2,Ms.STTR1,Ms.STTR2,Ms.STOCNV1,Ms.STOCNV2" & vbCrLf &
+        '               ",Isnull(St.StComp1,0) As 'StComp1',Isnull(St.StComp2,0) As 'StComp2'" & vbCrLf &
+        '               "--,Isnull(St.StSbCompStock1,0) As 'StSbCompStock1',Isnull(St.StSbCompStock2,0) As 'StSbCompStock2'" & vbCrLf &
+        '               "--,Isnull(St.StSobStockUd1,0) As 'StSobStockUd1',Isnull(St.StSobStockUd2,0) As 'StSobStockUd2'" & vbCrLf &
+        '               ",Cast(0 As Float) As StDispUd1,Cast(0 As Float) As StockDisponibleUd2" & vbCrLf &
+        '               "Into #Paso" & vbCrLf &
+        '               "From MAEST Ms" & vbCrLf &
+        '               "Left Join " & _Global_BaseBk & "Zw_Prod_Stock St On " &
+        '               "St.Empresa = Ms.EMPRESA And St.Codigo = Ms.KOPR" & vbCrLf &
+        '               "Where Ms.EMPRESA = '" & Mod_Empresa & "'" &
+        '               "And Ms.KOPR = '" & _RowProducto.Item("KOPR") & "'" & vbCrLf &
+        '               "Update #Paso Set StDispUd1 = STFI1-(STOCNV1+StComp1+STTR1)," &
+        '               "StockDisponibleUd2 = STFI2-(STOCNV2+StComp2+STTR2)" & vbCrLf &
+        '               "Select  * From #Paso" & vbCrLf &
+        '               "Drop Table #Paso"
+
+        Consulta_sql = "Select Ms.EMPRESA,Sum(Ms.STFI1) As 'STFI1',Sum(Ms.STFI2) As 'STFI2',Sum(Ms.STTR1) As 'STTR1'" & vbCrLf &
+                       ",Sum(Ms.STTR2) As 'STTR2',Sum(Ms.STOCNV1) As 'STOCNV1',Sum(Ms.STOCNV2) As 'STOCNV2'" & vbCrLf &
+                       ",Sum(Isnull(St.StComp1,0)) As 'StComp1',Sum(Isnull(St.StComp2,0)) As 'StComp2'" & vbCrLf &
                        ",Cast(0 As Float) As StDispUd1,Cast(0 As Float) As StockDisponibleUd2" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From MAEST Ms" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Prod_Stock St On " &
-                       "St.Empresa = Ms.EMPRESA And St.Sucursal = Ms.KOSU And St.Bodega = Ms.KOBO And St.Codigo = Ms.KOPR" & vbCrLf &
-                       "Where Ms.EMPRESA = '" & _Row_Bodega.Item("EMPRESA") & "' " &
-                       "And Ms.KOSU = '" & _Row_Bodega.Item("KOSU") & "' " &
-                       "And Ms.KOBO = '" & _Row_Bodega.Item("KOBO") & "' " &
-                       "And Ms.KOPR = '" & _RowProducto.Item("KOPR") & "'" & vbCrLf &
-                       "Update #Paso Set StDispUd1 = STFI1-(STOCNV1+StComp1+STTR1)," &
-                       "StockDisponibleUd2 = STFI2-(STOCNV2+StComp2+STTR2)" & vbCrLf &
-                       "Select  * From #Paso" & vbCrLf &
+                       "Left Join BAKAPP_SG.dbo.Zw_Prod_Stock St On St.Empresa = Ms.EMPRESA And St.Codigo = Ms.KOPR" & vbCrLf &
+                       "Where Ms.EMPRESA = '" & Mod_Empresa & "' And Ms.KOPR = '" & _RowProducto.Item("KOPR") & "'" & vbCrLf &
+                       "Group By Ms.EMPRESA" & vbCrLf &
+                       "Update #Paso Set StDispUd1 = STFI1-(STOCNV1+StComp1+STTR1),StockDisponibleUd2 = STFI2-(STOCNV2+StComp2+STTR2)" & vbCrLf &
+                       "Select * From #Paso" & vbCrLf &
                        "Drop Table #Paso"
+
         Dim _Row_Stock As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_Stock) Then
@@ -244,13 +241,11 @@ Public Class Frm_SobreStock_Productos
 
             .Id = 0
             .Empresa = Mod_Empresa
-            .Sucursal = _Row_Bodega.Item("KOSU")
-            .Bodega = _Row_Bodega.Item("KOBO")
             .Codigo = _RowProducto.Item("KOPR")
             .Descripcion = _RowProducto.Item("NOKOPR")
             .CantMinFormato = 0
             .FormatoPqte = "Pallet"
-            .StSobStockUd1 = _Row_Stock.Item("StDispUd1")
+            .StDispUd1 = _Row_Stock.Item("StDispUd1")
             .PqteHabilitado = 0
             .Ud1XPqte = 1
             .CantMinFormato = 0
@@ -285,41 +280,41 @@ Public Class Frm_SobreStock_Productos
 
     End Sub
 
-    Function Fx_Seleccionar_Bodega() As DataRow
+    'Function Fx_Seleccionar_Bodega() As DataRow
 
-        Dim _Row As DataRow = Nothing
+    '    Dim _Row As DataRow = Nothing
 
-        Do
+    '    Do
 
-            Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-            Fm_b.Pro_Empresa = Mod_Empresa
-            Fm_b.Pro_Sucursal = String.Empty
-            Fm_b.Pro_Bodega = String.Empty
-            Fm_b.RevisarPermisosBodega = False
-            Fm_b.Pedir_Permiso = False
-            Fm_b.ShowDialog(Me)
+    '        Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
+    '        Fm_b.Pro_Empresa = Mod_Empresa
+    '        Fm_b.Pro_Sucursal = String.Empty
+    '        Fm_b.Pro_Bodega = String.Empty
+    '        Fm_b.RevisarPermisosBodega = False
+    '        Fm_b.Pedir_Permiso = False
+    '        Fm_b.ShowDialog(Me)
 
-            _Row = Fm_b.Pro_RowBodega
-            Dim _BodegaSeleccionada As Boolean = Fm_b.Pro_Seleccionado
-            Fm_b.Dispose()
+    '        _Row = Fm_b.Pro_RowBodega
+    '        Dim _BodegaSeleccionada As Boolean = Fm_b.Pro_Seleccionado
+    '        Fm_b.Dispose()
 
-            If Not _BodegaSeleccionada Then
+    '        If Not _BodegaSeleccionada Then
 
-                _Row = Nothing
+    '            _Row = Nothing
 
-                If MessageBoxEx.Show(Me, "Debe seleccionar una bodega por obligación" & vbCrLf & "¿Desea continuar con la acción?", "Validación",
-                                    MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
-                    'Me.Close()
-                    Exit Function
-                End If
+    '            If MessageBoxEx.Show(Me, "Debe seleccionar una bodega por obligación" & vbCrLf & "¿Desea continuar con la acción?", "Validación",
+    '                                MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+    '                'Me.Close()
+    '                Exit Function
+    '            End If
 
-            End If
+    '        End If
 
-        Loop While IsNothing(_Row)
+    '    Loop While IsNothing(_Row)
 
-        Return _Row
+    '    Return _Row
 
-    End Function
+    'End Function
 
     Private Sub Btn_Salir_Click(sender As Object, e As EventArgs) Handles Btn_Salir.Click
         Me.Close()
@@ -358,8 +353,6 @@ Public Class Frm_SobreStock_Productos
 
                 .Id = _Fila.Cells("Id").Value
                 .Empresa = _Fila.Cells("Empresa").Value
-                .Sucursal = _Fila.Cells("Sucursal").Value
-                .Bodega = _Fila.Cells("Bodega").Value
                 .Codigo = _Fila.Cells("Codigo").Value
                 .Descripcion = _Fila.Cells("Descripcion").Value
                 .Activo = _Fila.Cells("Activo").Value
@@ -446,8 +439,6 @@ Public Class Frm_SobreStock_Productos
 
             .Id = _Fila.Cells("Id").Value
             .Empresa = _Fila.Cells("Empresa").Value
-            .Sucursal = _Fila.Cells("Sucursal").Value
-            .Bodega = _Fila.Cells("Bodega").Value
             .Codigo = _Fila.Cells("Codigo").Value
             .Descripcion = _Fila.Cells("Descripcion").Value
             .Activo = _Fila.Cells("Activo").Value

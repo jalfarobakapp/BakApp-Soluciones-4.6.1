@@ -331,7 +331,7 @@ Partial Class Frm_SobreStock_IngDet
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 293)
+        Me.Bar1.Location = New System.Drawing.Point(0, 250)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(558, 41)
         Me.Bar1.Stretch = True
@@ -344,7 +344,7 @@ Partial Class Frm_SobreStock_IngDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(558, 334)
+        Me.ClientSize = New System.Drawing.Size(558, 291)
         Me.Controls.Add(Me.Input_CantMinFormato)
         Me.Controls.Add(Me.Input_PqteHabilitado)
         Me.Controls.Add(Me.Lbl_StcfiUd1)
@@ -365,6 +365,7 @@ Partial Class Frm_SobreStock_IngDet
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False

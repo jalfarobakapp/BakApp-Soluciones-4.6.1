@@ -34,10 +34,10 @@ Public Class Cl_SobreStock
 
             With _Zw_Prod_SobreStock
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_SobreStock (Empresa,Sucursal,Bodega,Codigo,Descripcion,Activo," &
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_SobreStock (Empresa,Codigo,Descripcion,Activo," &
                                "CodFuncionarioCrea,FechaVigencia,FormatoPqte,PqteHabilitado,Ud1XPqte,CantMinFormato,Moneda," &
                                "PrecioXUd1,StSobStockUd1,StSobStockUd2)" & vbCrLf &
-                               "Values ('" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & .Codigo & "','" & .Descripcion & "',1," &
+                               "Values ('" & .Empresa & "','" & .Codigo & "','" & .Descripcion & "',1," &
                                "'" & .CodFuncionarioCrea & "',Getdate(),'" & .FormatoPqte & "'," & De_Num_a_Tx_01(.PqteHabilitado, False, 5) &
                                "," & De_Num_a_Tx_01(.Ud1XPqte, False, 5) & "," & De_Num_a_Tx_01(.CantMinFormato, False, 5) &
                                ",'" & .Moneda & "'," & De_Num_a_Tx_01(.PrecioXUd1, False, 5) &
