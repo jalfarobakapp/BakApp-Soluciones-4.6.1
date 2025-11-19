@@ -1,5 +1,4 @@
 ﻿Imports DevComponents.DotNetBar
-Imports Org.BouncyCastle.Math.EC
 
 Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
@@ -78,7 +77,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
         Sb_InsertarBotonenGrilla(Grilla_Maedpce, "Btn_Ico", "Ico", "Inf.", 0, _Tipo_Boton.Imagen)
 
-        Sb_Tabla_Maedpce()
+        Sb_Actualizar_Grilla()
         Sb_Nueva_Linea_De_Pago()
 
         AddHandler Chk_Seleccionar_Todo.CheckedChanged, AddressOf Chk_Seleccionar_Todo_CheckedChanged
@@ -86,7 +85,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
     End Sub
 
-    Sub Sb_Tabla_Maedpce()
+    Sub Sb_Actualizar_Grilla()
 
         Consulta_Sql = "Select Top 1 Cast(0 As Int) As Id,Cast(0 As Bit) As Chk,IDMAEDPCE,EMPRESA,SUREDP,CJREDP,TIDP,NUDP,ENDP,EMDP,Cast('' As Varchar(50)) As RAZON,SUEMDP,CUDP,NUCUDP,FEEMDP,FEVEDP,MODP," & vbCrLf &
                        "TIMODP,TAMODP,VADP,VAABDP,VAASDP,VAVUDP,ESPGDP,REFANTI,KOTU,NUTRANSMI,DOCUENANTI,KOFUDP,KOTNDP,SUTNDP,ESASDP,CUOTAS," &
@@ -1015,7 +1014,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
         If Not IsNothing(_Tbl_Resultado) Then
 
-            Sb_Tabla_Maedpce()
+            Sb_Actualizar_Grilla()
 
             _Filas = _Tbl_Resultado.Rows.Count
 
@@ -1326,7 +1325,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
             If Grilla_Maedpce.Rows.Count = 0 Then
 
-                Sb_Tabla_Maedpce()
+                Sb_Actualizar_Grilla()
                 Sb_Nueva_Linea_De_Pago()
 
             End If
@@ -1511,7 +1510,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
                              "Limpiar documento", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, Me.TopMost)
 
             If dlg = System.Windows.Forms.DialogResult.Yes Then
-                Sb_Tabla_Maedpce()
+                Sb_Actualizar_Grilla()
                 Sb_Nueva_Linea_De_Pago()
             End If
 

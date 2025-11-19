@@ -95,7 +95,7 @@ Public Module Modulo_Documentos
                         _PreVenta = True
                     End If
 
-                    If _Tido = "NVV" And _SubTido = "STK" Then
+                    If _Tido = "COV" And _SubTido = "STK" Then
                         _SubTido = String.Empty
                         _SobreStock = True
                     End If

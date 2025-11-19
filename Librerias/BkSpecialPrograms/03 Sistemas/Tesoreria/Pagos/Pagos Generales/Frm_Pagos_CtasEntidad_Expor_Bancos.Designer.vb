@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Ôªø<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -24,9 +24,9 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Pagos_CtasEntidad_Expor_Bancos))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
@@ -36,8 +36,8 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Btn_Editar_Pago = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar_Pago = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Doc_Asociado_Ver = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Doc_Asociado_Ver = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_AnticipoNVV = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CruceDocParaPago = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Doc_Asociado_Quitar = New DevComponents.DotNetBar.ButtonItem()
@@ -178,12 +178,6 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem2, Me.Btn_Doc_Asociado_Ver, Me.Btn_AnticipoNVV, Me.Btn_CruceDocParaPago, Me.Btn_Doc_Asociado_Quitar})
         Me.Menu_Contextual_02.Text = "Asociar documentos"
         '
-        'Btn_Doc_Asociado_Ver
-        '
-        Me.Btn_Doc_Asociado_Ver.Image = CType(resources.GetObject("Btn_Doc_Asociado_Ver.Image"), System.Drawing.Image)
-        Me.Btn_Doc_Asociado_Ver.Name = "Btn_Doc_Asociado_Ver"
-        Me.Btn_Doc_Asociado_Ver.Text = "Ver documento asociado (NVV-0000000000)"
-        '
         'LabelItem2
         '
         Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
@@ -197,6 +191,12 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
         Me.LabelItem2.Text = "Opciones"
         '
+        'Btn_Doc_Asociado_Ver
+        '
+        Me.Btn_Doc_Asociado_Ver.Image = CType(resources.GetObject("Btn_Doc_Asociado_Ver.Image"), System.Drawing.Image)
+        Me.Btn_Doc_Asociado_Ver.Name = "Btn_Doc_Asociado_Ver"
+        Me.Btn_Doc_Asociado_Ver.Text = "Ver documento asociado (NVV-0000000000)"
+        '
         'Btn_AnticipoNVV
         '
         Me.Btn_AnticipoNVV.Image = CType(resources.GetObject("Btn_AnticipoNVV.Image"), System.Drawing.Image)
@@ -207,7 +207,7 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         '
         Me.Btn_CruceDocParaPago.Image = CType(resources.GetObject("Btn_CruceDocParaPago.Image"), System.Drawing.Image)
         Me.Btn_CruceDocParaPago.Name = "Btn_CruceDocParaPago"
-        Me.Btn_CruceDocParaPago.Text = "Ingresar documento ('FCV','BLV') cruce de pago autom·tico" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Btn_CruceDocParaPago.Text = "Ingresar documento ('FCV','BLV') cruce de pago autom√°tico" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'Btn_Doc_Asociado_Quitar
         '
@@ -220,36 +220,36 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Grilla_Maedpce.AllowUserToAddRows = False
         Me.Grilla_Maedpce.AllowUserToDeleteRows = False
         Me.Grilla_Maedpce.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Maedpce.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Maedpce.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla_Maedpce.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Maedpce.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Maedpce.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla_Maedpce.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Maedpce.EnableHeadersVisualStyles = False
         Me.Grilla_Maedpce.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Maedpce.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Maedpce.Name = "Grilla_Maedpce"
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Maedpce.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Maedpce.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla_Maedpce.Size = New System.Drawing.Size(1130, 336)
         Me.Grilla_Maedpce.StandardTab = True
         Me.Grilla_Maedpce.TabIndex = 53
@@ -305,7 +305,7 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Btn_SugerirNVVRefAuto.ImageAlt = CType(resources.GetObject("Btn_SugerirNVVRefAuto.ImageAlt"), System.Drawing.Image)
         Me.Btn_SugerirNVVRefAuto.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_SugerirNVVRefAuto.Name = "Btn_SugerirNVVRefAuto"
-        Me.Btn_SugerirNVVRefAuto.Tooltip = "Sugerir NVV/Ref. Autom·ticamente en forma masiva"
+        Me.Btn_SugerirNVVRefAuto.Tooltip = "Sugerir NVV/Ref. Autom√°ticamente en forma masiva"
         '
         'Btn_SugerirFCVBLVRefAuto
         '
@@ -315,7 +315,7 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         Me.Btn_SugerirFCVBLVRefAuto.ImageAlt = CType(resources.GetObject("Btn_SugerirFCVBLVRefAuto.ImageAlt"), System.Drawing.Image)
         Me.Btn_SugerirFCVBLVRefAuto.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_SugerirFCVBLVRefAuto.Name = "Btn_SugerirFCVBLVRefAuto"
-        Me.Btn_SugerirFCVBLVRefAuto.Tooltip = "Sugerir documentos ('FCV','BLV') cruce de pago autom·tico en forma masiva"
+        Me.Btn_SugerirFCVBLVRefAuto.Tooltip = "Sugerir documentos ('FCV','BLV') cruce de pago autom√°tico en forma masiva"
         '
         'GroupPanel3
         '
@@ -356,7 +356,7 @@ Partial Class Frm_Pagos_CtasEntidad_Expor_Bancos
         '
         Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel3.TabIndex = 49
-        Me.GroupPanel3.Text = "InformaciÛn adicional del docmento de pago"
+        Me.GroupPanel3.Text = "Informaci√≥n adicional del docmento de pago"
         '
         'TableLayoutPanel1
         '

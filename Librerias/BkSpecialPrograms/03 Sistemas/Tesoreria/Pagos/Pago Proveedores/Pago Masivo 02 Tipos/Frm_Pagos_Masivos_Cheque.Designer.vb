@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Pagos_Masivos_Cheque
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -85,7 +85,7 @@ Partial Class Frm_Pagos_Masivos_Cheque
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 39
-        Me.GroupPanel1.Text = "Identificación de documento de pago"
+        Me.GroupPanel1.Text = "IdentificaciÃ³n de documento de pago"
         '
         'TableLayoutPanel1
         '
@@ -131,7 +131,7 @@ Partial Class Frm_Pagos_Masivos_Cheque
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(114, 19)
         Me.LabelX6.TabIndex = 4
-        Me.LabelX6.Text = "Fecha emisión"
+        Me.LabelX6.Text = "Fecha emisiÃ³n"
         Me.LabelX6.TextAlignment = System.Drawing.StringAlignment.Far
         '
         'Dtp_Fecha_Vencimiento
@@ -289,7 +289,7 @@ Partial Class Frm_Pagos_Masivos_Cheque
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(114, 19)
         Me.LabelX3.TabIndex = 4
-        Me.LabelX3.Text = "Número de cheque"
+        Me.LabelX3.Text = "NÃºmero de cheque"
         Me.LabelX3.TextAlignment = System.Drawing.StringAlignment.Far
         '
         'Txt_Nro_Cheque
@@ -404,7 +404,7 @@ Partial Class Frm_Pagos_Masivos_Cheque
         Me.Btn_Trae_Ultimo_Nro_Cheque.ForeColor = System.Drawing.Color.Black
         Me.Btn_Trae_Ultimo_Nro_Cheque.Image = CType(resources.GetObject("Btn_Trae_Ultimo_Nro_Cheque.Image"), System.Drawing.Image)
         Me.Btn_Trae_Ultimo_Nro_Cheque.Name = "Btn_Trae_Ultimo_Nro_Cheque"
-        Me.Btn_Trae_Ultimo_Nro_Cheque.Tooltip = "Traer ultimo número de cheque"
+        Me.Btn_Trae_Ultimo_Nro_Cheque.Tooltip = "Traer ultimo nÃºmero de cheque"
         '
         'Frm_Pagos_Masivos_Cheque
         '

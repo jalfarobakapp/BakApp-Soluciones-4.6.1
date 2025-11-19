@@ -9291,7 +9291,7 @@ Public Class Frm_Formulario_Documento
                                         _RevisarRtuVariable = False
                                     End If
 
-                                    If SobreStock AndAlso _Tido = "NVV" Then
+                                    If SobreStock AndAlso _Tido = "COV" Then
 
                                         Dim _Mensaje As New LsValiciones.Mensajes
                                         Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = _Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = _Id)
@@ -9373,7 +9373,7 @@ Public Class Frm_Formulario_Documento
                                     Fm.IdCont = _TblEncabezado.Rows(0).Item("IdCont")
                                     Fm.Chk_DesacRazTransf.Checked = _Fila.Cells("DesacRazTransf").Value
 
-                                    If (PreVenta AndAlso _Tido = "COV") Or (SobreStock AndAlso _Tido = "NVV") Then
+                                    If (PreVenta AndAlso _Tido = "COV") Or (SobreStock AndAlso _Tido = "COV") Then
                                         Fm.Aceptado = True
                                     Else
                                         Fm.ShowDialog(Me)
@@ -11054,7 +11054,7 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-                        If SobreStock And _Tido = "NVV" Then
+                        If SobreStock And _Tido = "COV" Then
 
                             Dim _Mensaje As New LsValiciones.Mensajes
                             _Mensaje = Fx_CargarProductoDesdeSobreStock()

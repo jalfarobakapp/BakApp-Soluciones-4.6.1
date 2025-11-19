@@ -1594,10 +1594,17 @@ Public Class Menu
         End If
 
         Modulo_Documentos.Sb_Generar_Documento(_Fm_Menu_Padre,
-                                               "NVV",
+                                               "COV",
                                                True,
                                                csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta, "STK")
 
     End Sub
 
+    Private Sub Btn_CrucePagoMasivos_Click(sender As Object, e As EventArgs) Handles Btn_CrucePagoMasivos.Click
+
+        Dim Fm As New Frm_CruceAntiNoVinculados_Filtro
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class
