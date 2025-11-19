@@ -982,25 +982,31 @@ Public Class Frm_Demonio_New
 
     Private Sub timerHora_Tick(sender As Object, e As EventArgs) Handles timerHora.Tick
 
-        Me.Text = "Demonio para acciones automatizadas, V: [" & _Version_BkSpecialPrograms & "] " & DateTime.Now.ToString("HH:mm:ss")
+        Try
 
-        If _Cl_Prestashop_Prod.Procesando Then
-            Sb_ActualizarDetalleListview("Prestashop Web", _Cl_Prestashop_Prod.Etiqueta2.Text)
-        End If
+            Me.Text = "Demonio para acciones automatizadas, V: [" & _Version_BkSpecialPrograms & "] " & DateTime.Now.ToString("HH:mm:ss")
 
-        If _Cl_Hefesto_Dte_Libro.Procesando Then
-            Sb_ActualizarDetalleListview("Importar DTE SII", _Cl_Hefesto_Dte_Libro.Estatus.Text)
-        End If
+            If _Cl_Prestashop_Prod.Procesando Then
+                Sb_ActualizarDetalleListview("Prestashop Web", _Cl_Prestashop_Prod.Etiqueta2.Text)
+            End If
 
-        If _Cl_Correos.Procesando Then
-            Sb_ActualizarDetalleListview("Envio de correos", _Cl_Correos.Lbl_Estado)
-        End If
+            If _Cl_Hefesto_Dte_Libro.Procesando Then
+                Sb_ActualizarDetalleListview("Importar DTE SII", _Cl_Hefesto_Dte_Libro.Estatus.Text)
+            End If
 
-        If _Cl_FacturacionAuto.Procesando Then
-            Sb_ActualizarDetalleListview("Facturación automática", _Cl_FacturacionAuto.Log_Registro)
-        End If
+            If _Cl_Correos.Procesando Then
+                Sb_ActualizarDetalleListview("Envio de correos", _Cl_Correos.Lbl_Estado)
+            End If
 
-        Me.Refresh()
+            If _Cl_FacturacionAuto.Procesando Then
+                Sb_ActualizarDetalleListview("Facturación automática", _Cl_FacturacionAuto.Log_Registro)
+            End If
+
+            Me.Refresh()
+
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 
@@ -1269,61 +1275,81 @@ Public Class Frm_Demonio_New
 
 #Region "FACTURACION AUTOMATICA"
 
-            If _Cl_FacturacionAuto.Ejecutar Then
+            Try
 
-                If Not _Cl_FacturacionAuto.Procesando AndAlso Not _Cl_Imprimir_Documentos.Procesando Then
+                If _Cl_FacturacionAuto.Ejecutar Then
 
-                    _Cl_FacturacionAuto.Procesando = True
+                    If Not _Cl_FacturacionAuto.Procesando AndAlso Not _Cl_Imprimir_Documentos.Procesando Then
 
-                    _Cl_FacturacionAuto.Log_Registro = String.Empty
-                    _Cl_FacturacionAuto.Fecha_Revision = DtpFecharevision.Value
-                    _Cl_FacturacionAuto.Nombre_Equipo = _NombreEquipo
-                    _Cl_FacturacionAuto.Log_Registro = String.Empty
+                        _Cl_FacturacionAuto.Procesando = True
 
-                    Dim _Empresa_Ori = Mod_Empresa
-                    Dim _Modalidad_Ori = Mod_Modalidad
+                        _Cl_FacturacionAuto.Log_Registro = String.Empty
+                        _Cl_FacturacionAuto.Fecha_Revision = DtpFecharevision.Value
+                        _Cl_FacturacionAuto.Nombre_Equipo = _NombreEquipo
+                        _Cl_FacturacionAuto.Log_Registro = String.Empty
 
-                    If RutEmpresa = "76095906-5" Then
-                        'MessageBox.Show("Se cambiará la empresa y modalidad a la de facturación automática", "Atención",
-                        '                MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        _Cl_FacturacionAuto.Sb_Cambiar_EmpSucBod()
-                        'Me.Close()
-                        'Return
+                        Dim _Empresa_Ori = Mod_Empresa
+                        Dim _Modalidad_Ori = Mod_Modalidad
+
+                        If RutEmpresa = "76095906-5" Then
+                            'MessageBox.Show("Se cambiará la empresa y modalidad a la de facturación automática", "Atención",
+                            '                MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            _Cl_FacturacionAuto.Sb_Cambiar_EmpSucBod()
+                            'Me.Close()
+                            'Return
+                        End If
+
+                        _Cl_FacturacionAuto.Sb_Traer_NVV_De_NVVAuto_A_Facturar()
+                        _Cl_FacturacionAuto.Sb_Traer_NVV_A_Facturar()
+                        _Cl_FacturacionAuto.Sb_Traer_NVV_De_Picking_A_Facturar()
+
+                        _Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV_New(Me, Nothing)
+                        _Cl_FacturacionAuto.Sb_Pagar_Documentos()
+
+                        Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
+
+                        If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
+                            registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
+                        End If
+
+
+                        If RutEmpresa = "76095906-5" Then
+                            Dim _Mod As New Clas_Modalidades
+                            _Mod.Sb_Actualiza_Formatos_X_Modalidad(False)
+                            _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "", False, _Empresa_Ori)
+                            _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, _Modalidad_Ori, False, _Empresa_Ori)
+                            _Mod.Sb_Actualizar_Variables_Modalidad(_Modalidad_Ori, False, _Empresa_Ori)
+                        End If
+
+                        RegistrarLog(registro)
+                        MostrarRegistro(registro)
+
+                        _Cl_FacturacionAuto.Procesando = False
+                        _Cl_FacturacionAuto.Ejecutar = False
+
+                        Sb_ActualizarDetalleListview("Facturación automática", _DProgramaciones.Sp_FacturacionAuto.Resumen)
+
                     End If
-
-                    _Cl_FacturacionAuto.Sb_Traer_NVV_De_NVVAuto_A_Facturar()
-                    _Cl_FacturacionAuto.Sb_Traer_NVV_A_Facturar()
-                    _Cl_FacturacionAuto.Sb_Traer_NVV_De_Picking_A_Facturar()
-
-                    _Cl_FacturacionAuto.Sb_Facturar_Automaticamente_NVV_New(Me, Nothing)
-                    _Cl_FacturacionAuto.Sb_Pagar_Documentos()
-
-                    Dim registro As String = "Tarea ejecutada (Facturación automática) a las: " & DateTime.Now.ToString()
-
-                    If Not String.IsNullOrWhiteSpace(_Cl_FacturacionAuto.Log_Registro) Then
-                        registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
-                    End If
-
-
-                    If RutEmpresa = "76095906-5" Then
-                        Dim _Mod As New Clas_Modalidades
-                        _Mod.Sb_Actualiza_Formatos_X_Modalidad(False)
-                        _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "", False, _Empresa_Ori)
-                        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, _Modalidad_Ori, False, _Empresa_Ori)
-                        _Mod.Sb_Actualizar_Variables_Modalidad(_Modalidad_Ori, False, _Empresa_Ori)
-                    End If
-
-                    RegistrarLog(registro)
-                    MostrarRegistro(registro)
-
-                    _Cl_FacturacionAuto.Procesando = False
-                    _Cl_FacturacionAuto.Ejecutar = False
-
-                    Sb_ActualizarDetalleListview("Facturación automática", _DProgramaciones.Sp_FacturacionAuto.Resumen)
 
                 End If
-
-            End If
+            Catch ex As Exception
+                _Cl_FacturacionAuto.Procesando = False
+                Dim mensaje As String = "Error en FACTURACION AUTOMATICA: " & ex.Message
+                ' Intentar registrar con los métodos existentes
+                Try
+                    RegistrarLog(mensaje)
+                    MostrarRegistro(mensaje)
+                Catch
+                    ' Fallback: escribir directamente en el archivo de log por si RegistrarLog no pudo (p. ej. ventana minimizada)
+                    Try
+                        If Not String.IsNullOrWhiteSpace(logFilePath) Then
+                            System.IO.File.AppendAllText(logFilePath, mensaje & Environment.NewLine)
+                        End If
+                    Catch
+                        ' No hacer nada si esto también falla
+                    End Try
+                End Try
+            End Try
 
 #End Region
 
@@ -1817,6 +1843,16 @@ Public Class Frm_Demonio_New
 
         Catch ex As Exception
             Dim mensaje As String = "Error en Timer_Ejecuciones_Tick: " & ex.Message
+            '_Cl_Imprimir_Documentos.Procesando = False
+            '_Cl_Correos.Procesando = False
+            '_Cl_Consolidacion_Stock.Procesando = False
+            '_Cl_FacturacionAuto.Procesando = False
+            '_Cl_CerrarDocumentos.Procesando = False
+            '_Cl_Prestashop_Prod.Procesando = False
+            '_Cl_Asistente_Compras.Procesando = False
+            '_Cl_Enviar_Doc_SinRecepcion.Precesando = False
+            '_Cl_NVVAutoExterna.Procesando = False
+            '_Cl_RecalculoPPP.Procesando = False
         Finally
             Timer_Ejecuciones.Start()
         End Try

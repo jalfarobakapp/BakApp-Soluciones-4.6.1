@@ -194,7 +194,7 @@ Public Class Cl_FacAuto_NVV
     ''' Por el momento solo es para la empresa 02 MeatGarden de SeaGarden
     ''' </summary>
     Sub Sb_Cambiar_EmpSucBod()
-
+        'Throw New InvalidOperationException("The operation is not valid for the current state.")
         Consulta_Sql = "Select Distinct Idmaeedo,Tido,Nudo,Empresa,Sucursal,Bodega From " & _Global_BaseBk & "Zw_Docu_Det" & vbCrLf &
                        "Where Idmaeedo In (Select Zenc.Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Zenc" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Docu_Det Zd On Zenc.Idmaeedo = Zd.Idmaeedo" & vbCrLf &
