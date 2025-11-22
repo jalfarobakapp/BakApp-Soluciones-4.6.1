@@ -1603,7 +1603,7 @@ Public Class Frm_00_Asis_Compra_Menu
         _Cancelar = False
 
         Dim _Nodo_Raiz_Asociados As Integer = _Global_Row_Configuracion_General.Item("Nodo_Raiz_Asociados")
-        Dim _TblProductos As DataTable = Fx_Traer_Productos()
+        Dim _TblProductos As DataTable
         Dim _TblProductos_Con_Reemplazo As DataTable
 
         Dim _Filtro_Pro As String
@@ -1612,6 +1612,8 @@ Public Class Frm_00_Asis_Compra_Menu
 
         Dim _Mostrar_Informe As Boolean
         Dim _Productos_Encontrados As Boolean
+
+        _TblProductos = Fx_Traer_Productos()
 
         If Not (_TblProductos Is Nothing) Then
             _Productos_Encontrados = CBool(_TblProductos.Rows.Count)
@@ -2217,7 +2219,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
 #Region "AGRUPACION POR PRODUCTO"
 
-                           ' Ventas los ultimos 3 meses, para tendencia
+                ' Ventas los ultimos 3 meses, para tendencia
 
                 Me.Refresh()
                 Lbl_Status.Text = "Calculando rotación por productos, esto puede tardar algunos minutos..."
@@ -2392,6 +2394,44 @@ Public Class Frm_00_Asis_Compra_Menu
                     _Sql.Ej_consulta_IDU(Consulta_sql)
 
                 End If
+
+                If Rdb_Productos_Proveedor.Checked AndAlso Chk_SoloConPrecioListaProveedor.Checked Then
+
+                    Dim _Proveedor As String = _RowProveedor.Item("KOEN")
+                    Dim _Sucursal As String = _RowProveedor.Item("SUEN")
+
+                    Consulta_sql = "Update " & _TblPasoInforme & " Set TienePrecioListasProv = 1 Where Codigo In (Select Codigo" & vbCrLf &
+                                   "From " & _Global_BaseBk & "Zw_ListaPreCosto Ld" & vbCrLf &
+                                   "Inner Join " & _Global_BaseBk & "Zw_ListaPreCosto_Enc Le On Le.Id = Ld.Id_Padre" & vbCrLf &
+                                   "Where Le.Proveedor = '" & _Proveedor & "' And Le.Sucursal = '" & _Sucursal & "' And CostoUd1 > 0)"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                End If
+
+                Consulta_sql = "Update " & _TblPasoInforme & " Set " &
+                               "Idmaeedo_Ult_GRCFCC = Isnull(D.IDMAEEDO,0)" &
+                               ",Tido_Ult_GRCFCC = Isnull(D.TIDO,'')" &
+                               ",Nudo_Ult_GRCFCC = Isnull(D.NUDO,'')" &
+                               ",Endo_Ult_GRCFCC = Isnull(D.ENDO,'')" &
+                               ",Suendo_Ult_GRCFCC = Isnull(D.SUENDO,'')" & vbCrLf &
+                               "From " & _TblPasoInforme & " P" & vbCrLf &
+                               "OUTER APPLY (" & vbCrLf &
+                               "SELECT TOP 1 D.IDMAEEDO,D.IDMAEDDO,D.ENDO,D.SUENDO,D.TIDO,D.NUDO, D.FEEMLI" & vbCrLf &
+                               "FROM MAEDDO D" & vbCrLf &
+                               "WHERE D.KOPRCT = P.Codigo" & vbCrLf &
+                               "AND D.TIDO IN ('GRC', 'FCC')" & vbCrLf &
+                               "ORDER BY D.FEEMLI DESC" & vbCrLf &
+                               ") D" & vbCrLf &
+                               "Left Join MAEDDO Ddo On Ddo.IDMAEDDO = D.IDMAEDDO"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                Consulta_sql = "Update T1" & vbCrLf &
+                               "Set T1.TieneStockBosExt = 1" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Prod_Stock T2" & vbCrLf &
+                               "Inner Join " & _TblPasoInforme & " T1" & vbCrLf &
+                               "On T1.Codigo = T2.Codigo" & vbCrLf &
+                               "Where T2.Empresa = '" & Mod_Empresa & "' AND T2.StfiBodExt1 > 0;"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
 
                 Me.Enabled = True
                 Fm_Espera.Close()
@@ -2931,9 +2971,9 @@ Public Class Frm_00_Asis_Compra_Menu
                     '_Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
                     '_Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
                     '_Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+
                     If Not _Filtro_Productos_Todos Then
                         _Algunos_Productos = Generar_Filtro_IN(_TblFiltroProductos_Proveedor, "Chk", "Codigo", False, True, "'")
-                        '_Algunos_Productos = "And KOPR In " & _Algunos_Productos
                     End If
 
                 End If

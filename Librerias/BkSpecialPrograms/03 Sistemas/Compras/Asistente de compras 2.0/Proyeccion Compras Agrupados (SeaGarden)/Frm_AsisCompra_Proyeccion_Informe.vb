@@ -1920,9 +1920,13 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
     Private Sub Btn_SobreStock_Click(sender As Object, e As EventArgs) Handles Btn_SobreStock.Click
 
-        Dim Fm As New Frm_SobreStock_Productos
+        Dim Fm As New Frm_SobreStockXClas
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+        'Dim Fm As New Frm_SobreStock_Productos
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
 
     End Sub
 

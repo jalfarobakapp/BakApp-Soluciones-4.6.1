@@ -173,9 +173,20 @@ CREATE TABLE [dbo].[#TablaPaso#](
 	[IdOCC]                     [VarChar](20)  DEFAULT '',
 	[IdGRC]                     [VarChar](20)  DEFAULT '',
 	[IdGDD]                     [VarChar](20)  DEFAULT '',
-	[Id_Ult_Compra]             [Int]          DEFAULT (0),
+	
+    [Id_Ult_Compra]             [Int]          DEFAULT (0),
 	[Endo_Utl_Compra]           [Char](13)     DEFAULT '',
 	[Suendo_Utl_Compra]         [Char](10)     DEFAULT '',
+
+    [Idmaeedo_Ult_GRCFCC]       [Int]          DEFAULT (0),
+	[Tido_Ult_GRCFCC]       [Char](3)      DEFAULT '',
+	[Nudo_Ult_GRCFCC]       [Char](10)     DEFAULT '',
+	[Endo_Ult_GRCFCC]       [Char](13)     DEFAULT '',
+	[Suendo_Ult_GRCFCC]         [Char](10)     DEFAULT '',
+	
+    [TienePrecioListasProv]     [Bit]          DEFAULT (0),
+    [TieneStockBosExt]          [Bit]          DEFAULT (0),
+
 	[Costo_Ult_Compra_RealUd1]  [Float]        DEFAULT (0),
 	[Costo_Ult_Compra_RealUd2]  [Float]        DEFAULT (0),
 	[Costo_Ult_Compra]          [Float]        DEFAULT (0),

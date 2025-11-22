@@ -12,6 +12,7 @@ WHERE     (dbo.MAEDPCE.TIDP = 'CHV') AND (dbo.MAEDPCE.FEVEDP > GETDATE())
 ORDER BY CODIGO
 */
 -- CARTERA DETALLE
+DECLARE @Empresa AS CHAR(2) = '#Empresa#'
 
 SELECT   dbo.MAEEN.KOEN AS CODIGO, 
          dbo.MAEEN.NOKOEN AS CLIENTE, 
@@ -24,7 +25,8 @@ SELECT   dbo.MAEEN.KOEN AS CODIGO,
          Into #Paso_Cartera_Det
 FROM     dbo.MAEDPCE RIGHT OUTER JOIN
                       dbo.MAEEN ON dbo.MAEDPCE.ENDP = dbo.MAEEN.KOEN
-WHERE dbo.MAEDPCE.TIDP In ('CHV') AND (dbo.MAEDPCE.FEVEDP > GETDATE() Or dbo.MAEDPCE.ESPGDP In ('P','R') ) 
+WHERE dbo.MAEDPCE.TIDP In ('CHV') AND (dbo.MAEDPCE.FEVEDP > GETDATE() Or dbo.MAEDPCE.ESPGDP In ('P','R')) 
+And dbo.MAEDPCE.EMPRESA = @Empresa -- NUEVO
 
 GROUP BY dbo.MAEEN.KOEN, dbo.MAEEN.NOKOEN, dbo.MAEEN.CRCH, dbo.MAEEN.SUEN, dbo.MAEEN.CRSD, dbo.MAEEN.CRTO, dbo.MAEEN.CPEN
 ORDER BY CARTERA DESC
@@ -82,6 +84,8 @@ FROM         dbo.MAEEDO Edo FULL OUTER JOIN
              dbo.MAEEN Mae ON Edo.SUENDO = Mae.SUEN AND Edo.ENDO = Mae.KOEN
 WHERE     Edo.TIDO In ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV',
 	                   'FVL','FVT','FVX','FVZ','NCE','NCV','NCX','NCZ','NEV','RIN') --And Mae.KOEN = '05058413' 
+          And Edo.EMPRESA = @Empresa -- NUEVO	
+
 Group By Ct.CARTERA,Mae.KOEN,Mae.SUEN,Mae.NOKOEN,Mae.CRSD, Mae.CRCH, Mae.CRTO, Mae.CPEN
 ORDER BY Mae.KOEN
 

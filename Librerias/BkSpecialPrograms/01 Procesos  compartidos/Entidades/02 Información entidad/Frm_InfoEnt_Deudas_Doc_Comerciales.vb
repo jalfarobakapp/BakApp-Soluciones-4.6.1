@@ -674,6 +674,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Consulta_Sql = My.Resources.Sql_Entidad.SqlQuery_deuda_doc_comerciales
         Consulta_Sql = Replace(Consulta_Sql, "#CodEntidad#", _CodEntidad)
         Consulta_Sql = Replace(Consulta_Sql, "#Fecha#", _Fecha)
+        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
 
         _TblDeuda = _Sql.Fx_Get_DataTable(Consulta_Sql)
 

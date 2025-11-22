@@ -63,6 +63,7 @@ BEGIN
         Stock_Asegurado_Dias FLOAT,
         Stock_Asegurado_Proyeccion FLOAT,
         Duracion_Dias FLOAT,
+        Duracion_Stock FLOAT,
         Duracion_Proyeccion FLOAT,
         Duracion_Proyeccion_Recepcion FLOAT,
         Cant_Comprar FLOAT,
@@ -116,6 +117,7 @@ BEGIN
         Stock_Asegurado_Dias FLOAT,
         Stock_Asegurado_Proyeccion FLOAT,
         Duracion_Dias FLOAT,
+        Duracion_Stock FLOAT,
         Duracion_Proyeccion FLOAT,
         Duracion_Proyeccion_Recepcion FLOAT,
         Cant_Comprar FLOAT,
@@ -205,7 +207,7 @@ INSERT INTO dbo.Tbl_Asc_01_Productos (
     PromUlt3CioPromUlt3Meses_Ud#Ud#_Prod, SumTotalQtyUd#Ud#, Fecha_Inicio, Fecha_Fin,
     Dias_Fecha, Meses_Fecha, SumTotalQtyUd#Ud#_Ult_3Mes, SumTotalQtyUd#Ud#_Ult_3Cio,
     Promedio_3Meses, Tendencia, RotCalculo, Stock_Asegurado_Dias,
-    Stock_Asegurado_Proyeccion, Duracion_Dias, Duracion_Proyeccion,
+    Stock_Asegurado_Proyeccion, Duracion_Dias, Duracion_Stock, Duracion_Proyeccion,
     Duracion_Proyeccion_Recepcion, Cant_Comprar, Cant_Comprar_Sug,
     Cant_Comprar_Sug_Red, Dias_Abastecer, Proyeccion_Abastecer, MesesSobreStock, SobreStock,
     Idmaeedo, Tido, Nudo, Fecha_Recep
@@ -244,6 +246,7 @@ SELECT
     CAST(0 As Float) As Stock_Asegurado_Dias, 
     CAST(0 As Float) As Stock_Asegurado_Proyeccion, 
     CAST(0 As Float) As Duracion_Dias, 
+    CAST(0 As Float) As Duracion_Stock,
     CAST(0 As Float) As Duracion_Proyeccion, 
     CAST(0 As Float) As Duracion_Proyeccion_Recepcion, 
     CAST(0 As Float) As Cant_Comprar,
@@ -308,7 +311,7 @@ INSERT INTO dbo.Tbl_Asc_02_Asociaciones (
     Promedio_UltMesMasPromUlt3Mes, Fecha_Inicio, Fecha_Fin, Dias_Fecha, Meses_Fecha,
     SumTotalQtyUd#Ud#_Ult_3Mes, Promedio_Diario3Mes, Promedio_3Mes, Venta_Ult_3Cio,
     SumTotalQtyUd#Ud#_Ult_3Cio, Tendencia, Stock_Asegurado_Dias, Stock_Asegurado_Proyeccion,
-    Duracion_Dias, Duracion_Proyeccion, Duracion_Proyeccion_Recepcion, Cant_Comprar,
+    Duracion_Dias, Duracion_Stock, Duracion_Proyeccion, Duracion_Proyeccion_Recepcion, Cant_Comprar,
     Cant_Comprar_Sug, Cant_Comprar_Sug_Red, Dias_Abastecer, Proyeccion_Abastecer, MesesSobreStock,
     SobreStock, Idmaeedo_ProxRC, Tido_ProxRC, Nudo_ProxRC, Feerli_ProxRC,
     Dias_ProxRC, Meses_ProxRC, RotDiaria_NoQuiebra, RotMensual_NoQuiebra, SugCmbPrecio,
@@ -345,6 +348,7 @@ SELECT
     CAST(0 As Float) As Stock_Asegurado_Dias,
     CAST(0 As Float) As Stock_Asegurado_Proyeccion,
     CAST(0 As Float) As Duracion_Dias,
+    CAST(0 As Float) As Duracion_Stock,
     CAST(0 As Float) As Duracion_Proyeccion,
     CAST(0 As Float) As Duracion_Proyeccion_Recepcion,
     SUM(Cant_Comprar) As Cant_Comprar,
@@ -439,6 +443,10 @@ WHERE RotCalculo > 0;
 UPDATE dbo.Tbl_Asc_02_Asociaciones Set Duracion_Dias = Isnull(ROUND((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#)/NULLIF(RotCalculo,1),0),0)
 WHERE RotCalculo > 0;
 
+UPDATE dbo.Tbl_Asc_02_Asociaciones Set Duracion_Stock = 
+    Isnull(ROUND((((StockUd#Ud#+StockEnTransitoUd#Ud#)/NULLIF(RotCalculo,1)) * @Porc_Creciminto)/@Dias_Proyeccion,2),0)
+WHERE RotCalculo > 0;
+
 UPDATE dbo.Tbl_Asc_02_Asociaciones Set Duracion_Proyeccion = 
     Isnull(ROUND((((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#)/NULLIF(RotCalculo,1)) * @Porc_Creciminto)/@Dias_Proyeccion,2),0)
 WHERE RotCalculo > 0;
@@ -447,6 +455,9 @@ UPDATE dbo.Tbl_Asc_02_Asociaciones Set Duracion_Proyeccion_Recepcion =
     Isnull(ROUND(((StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#)/ NULLIF(RotCalculo,1) * @Porc_Creciminto)/@Dias_Proyeccion,2),0)
 WHERE RotCalculo > 0;
 
+UPDATE dbo.Tbl_Asc_01_Productos Set Duracion_Stock = 
+    Isnull(ROUND((((StockUd#Ud#+StockEnTransitoUd#Ud#)/NULLIF(RotCalculo,1)) * @Porc_Creciminto),2),0)
+WHERE RotCalculo > 0;
 
 UPDATE dbo.Tbl_Asc_01_Productos Set Duracion_Proyeccion = 
     Isnull(ROUND((((StockUd#Ud#+StockPedidoUd#Ud#+StockFacSinRecepUd#Ud#+StockEnTransitoUd#Ud#)/NULLIF(RotCalculo,1)) * @Porc_Creciminto),2),0)
@@ -459,8 +470,8 @@ WHERE RotCalculo > 0;
 
 
 -- Sobre Stock
-UPDATE dbo.Tbl_Asc_01_Productos Set SobreStock = 'Si' Where Duracion_Proyeccion >= MesesSobreStock;
-UPDATE dbo.Tbl_Asc_02_Asociaciones Set SobreStock = 'Si' Where Duracion_Proyeccion >= MesesSobreStock;
+UPDATE dbo.Tbl_Asc_01_Productos Set SobreStock = 'Si' Where Duracion_Stock >= MesesSobreStock;
+UPDATE dbo.Tbl_Asc_02_Asociaciones Set SobreStock = 'Si' Where Duracion_Stock >= MesesSobreStock;
 
 -- Casos RotCalculo = 0
 UPDATE dbo.Tbl_Asc_02_Asociaciones Set Stock_Asegurado_Dias = ROUND((StockUd#Ud#+StockEnTransitoUd#Ud#)/1,0) Where RotCalculo = 0;

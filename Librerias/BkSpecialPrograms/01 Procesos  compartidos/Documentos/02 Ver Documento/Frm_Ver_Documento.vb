@@ -2203,6 +2203,9 @@ Public Class Frm_Ver_Documento
         If Fm.Pro_Grabar Then
             ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.save,
                                   1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+            Consulta_sql = "Select Top 1 * From MAEEDOOB WITH (NOLOCK) Where IDMAEEDO = " & _Idmaeedo
+            _TblObservaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
 
         Fm.Dispose()
