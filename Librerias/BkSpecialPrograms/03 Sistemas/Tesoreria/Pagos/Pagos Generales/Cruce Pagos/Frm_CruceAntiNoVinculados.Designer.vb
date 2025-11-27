@@ -24,9 +24,9 @@ Partial Class Frm_CruceAntiNoVinculados
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_CruceAntiNoVinculados))
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Imagenes_20x20 = New System.Windows.Forms.ImageList(Me.components)
         Me.Btn_SugerirFCVBLVRefAuto = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -43,7 +43,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.MetroStatusBar1 = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Barra_Progreso = New DevComponents.DotNetBar.ProgressBarItem()
         Me.Lbl_Status = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_SugerirNVVRefAuto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_MacthDocumentos = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_Seleccionar_Todo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -330,15 +330,15 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Lbl_Status.Name = "Lbl_Status"
         Me.Lbl_Status.Text = "Status..."
         '
-        'Btn_SugerirNVVRefAuto
+        'Btn_MacthDocumentos
         '
-        Me.Btn_SugerirNVVRefAuto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_SugerirNVVRefAuto.ForeColor = System.Drawing.Color.Black
-        Me.Btn_SugerirNVVRefAuto.Image = CType(resources.GetObject("Btn_SugerirNVVRefAuto.Image"), System.Drawing.Image)
-        Me.Btn_SugerirNVVRefAuto.ImageAlt = CType(resources.GetObject("Btn_SugerirNVVRefAuto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_SugerirNVVRefAuto.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_SugerirNVVRefAuto.Name = "Btn_SugerirNVVRefAuto"
-        Me.Btn_SugerirNVVRefAuto.Tooltip = "Sugerir NVV/Ref. Automáticamente en forma masiva"
+        Me.Btn_MacthDocumentos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_MacthDocumentos.ForeColor = System.Drawing.Color.Black
+        Me.Btn_MacthDocumentos.Image = CType(resources.GetObject("Btn_MacthDocumentos.Image"), System.Drawing.Image)
+        Me.Btn_MacthDocumentos.ImageAlt = CType(resources.GetObject("Btn_MacthDocumentos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_MacthDocumentos.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_MacthDocumentos.Name = "Btn_MacthDocumentos"
+        Me.Btn_MacthDocumentos.Tooltip = "Sugerir NVV/Ref. Automáticamente en forma masiva"
         '
         'Chk_Seleccionar_Todo
         '
@@ -515,36 +515,36 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Grilla_Maedpce.AllowUserToAddRows = False
         Me.Grilla_Maedpce.AllowUserToDeleteRows = False
         Me.Grilla_Maedpce.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Maedpce.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Maedpce.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla_Maedpce.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Maedpce.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Maedpce.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla_Maedpce.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Maedpce.EnableHeadersVisualStyles = False
         Me.Grilla_Maedpce.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Maedpce.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Maedpce.Name = "Grilla_Maedpce"
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Maedpce.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Maedpce.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla_Maedpce.Size = New System.Drawing.Size(1130, 336)
         Me.Grilla_Maedpce.StandardTab = True
         Me.Grilla_Maedpce.TabIndex = 53
@@ -554,7 +554,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Autorizacion, Me.Btn_Importar_Pagos, Me.Btn_Limpiar, Me.Btn_SugerirNVVRefAuto, Me.Btn_SugerirFCVBLVRefAuto})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Autorizacion, Me.Btn_Importar_Pagos, Me.Btn_Limpiar, Me.Btn_MacthDocumentos, Me.Btn_SugerirFCVBLVRefAuto})
         Me.Bar1.Location = New System.Drawing.Point(0, 523)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(1158, 41)
@@ -624,7 +624,7 @@ Partial Class Frm_CruceAntiNoVinculados
     Friend WithEvents MetroStatusBar1 As DevComponents.DotNetBar.Metro.MetroStatusBar
     Friend WithEvents Barra_Progreso As DevComponents.DotNetBar.ProgressBarItem
     Friend WithEvents Lbl_Status As DevComponents.DotNetBar.LabelItem
-    Public WithEvents Btn_SugerirNVVRefAuto As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_MacthDocumentos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_Seleccionar_Todo As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Btn_Limpiar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel

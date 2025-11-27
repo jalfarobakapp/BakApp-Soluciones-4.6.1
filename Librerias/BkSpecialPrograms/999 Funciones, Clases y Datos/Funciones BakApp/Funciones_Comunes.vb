@@ -513,7 +513,11 @@ Error_Numero:
 
         For Each _Fila In _Lista
 
-            Vcampo = _Fila.Codigo
+            Try
+                Vcampo = _Fila.Codigo
+            Catch ex As Exception
+                Vcampo = _Fila
+            End Try
 
             If String.IsNullOrEmpty(Vcampo) Then
                 Vcampo = "%%"

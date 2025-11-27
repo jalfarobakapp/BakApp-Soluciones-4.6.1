@@ -42,6 +42,11 @@ Public Class Frm_CruceAntiNoVinculados_Filtro
             Return
         End If
 
+        Dim Fm As New Frm_CruceAntiNoVinculados()
+        Fm.Lista_Idmaedpce = CType(_Mensaje.Tag, List(Of Integer))
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Rdb_Entidades_Algunas_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_Entidades_Algunas.CheckedChanged
@@ -78,17 +83,16 @@ Public Class Frm_CruceAntiNoVinculados_Filtro
 				'NOMBRE'=( SELECT TOP 1 EN.NOKOEN FROM MAEEN EN WITH ( NOLOCK ) WHERE EN.KOEN=DPCE.ENDP AND EN.TIPOSUC='P' ), NUCUDP
 				INTO #INFANTIC  
 				FROM MAEDPCE DPCE WITH ( NOLOCK )  
-				WHERE DPCE.TIDP IN ( 'EFV','CHV','TJV','LTV','PAV','ncv','fcv','fdv','DEP','CRV','ATB' ) 
+				WHERE DPCE.TIDP IN ('EFV','CHV','TJV','LTV','PAV','DEP','CRV','ATB','ncv','fcv','fdv')
 				AND DPCE.FEEMDP BETWEEN '{ Format(Dtp_FechaDesde.Value, "yyyyMMdd")}' And '{ Format(Dtp_FechaHasta.Value, "yyyyMMdd")}'
 				AND DPCE.EMPRESA='{Mod_Empresa}' AND DPCE.ESASDP='P' AND ROUND(DPCE.VADP,2)-ROUND(DPCE.VAASDP,2)-ROUND(DPCE.VAVUDP,2)<>0.0  
-				AND DPCE.IDRSD = 0
+				--AND DPCE.IDRSD = 0
 				
 				DELETE FROM #INFANTIC WHERE VALOR = 0.0 AND VALORD = 0.0 
 
 				Select * From #INFANTIC
-				Where 
-				ENTIDAD In (Select ENDO From MAEEDO Where TIDO In ('FCV','BLV') And VAABDO < VABRDO And ENDO In (Select ENTIDAD From #INFANTIC))
-				--ENTIDAD = '76087827'
+				--Where ENTIDAD = '78074915'
+                Where ENTIDAD In (Select ENDO From MAEEDO Where EMPRESA = '{Mod_Empresa}' AND TIDO In ('FCV','BLV') And VAABDO < VABRDO And ENDO In (Select ENTIDAD From #INFANTIC))
 				Order By ENTIDAD
 				Drop Table #INFANTIC"
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)

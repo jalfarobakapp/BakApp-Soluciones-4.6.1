@@ -964,6 +964,12 @@
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStockXClas.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Grafico.Designer.vb">
+      <DependentUpon>Frm_SobreStock_Grafico.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Grafico.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Contenedores\Cl_Contenedor.vb" />
     <Compile Include="03 Sistemas\Contenedores\Frm_Contenedores.Designer.vb">
       <DependentUpon>Frm_Contenedores.vb</DependentUpon>
@@ -2675,6 +2681,7 @@
     </Compile>
     <Compile Include="03 Sistemas\Tesoreria\Pagos\Pago Proveedores\Pago Masivo 02 Tipos\Clases\Clas_Pago_Banco_De_Chile_F400.vb" />
     <Compile Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Cl_Imprimir_CompPagoClientes.vb" />
+    <Compile Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Cruce Pagos\Cl_MaeedoItem.vb" />
     <Compile Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Cruce Pagos\Frm_CruceAntiNoVinculados.Designer.vb">
       <DependentUpon>Frm_CruceAntiNoVinculados.vb</DependentUpon>
     </Compile>
@@ -4983,6 +4990,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStockXClas.resx">
       <DependentUpon>Frm_SobreStockXClas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Grafico.resx">
+      <DependentUpon>Frm_SobreStock_Grafico.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_Contenedores.resx">
       <DependentUpon>Frm_Contenedores.vb</DependentUpon>

@@ -1,4 +1,6 @@
-﻿Public Class Frm_SobreStockXClas
+﻿Imports DevComponents.DotNetBar
+
+Public Class Frm_SobreStockXClas
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -15,11 +17,17 @@
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Sb_Formato_Generico_Grilla(Grilla_Clasificaciones, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Productos, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+
     End Sub
 
     Private Sub Frm_SobreStockXClas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Sb_Actualizar_Grilla()
+
+        AddHandler Grilla_Clasificaciones.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla_Productos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
     End Sub
 
@@ -34,7 +42,7 @@
 
         End With
 
-        Consulta_sql = "Select * From " & _Cl_SobreStockXClas.TablaPasoRotacion
+        Consulta_sql = "Select * From " & _Cl_SobreStockXClas.TablaPasoRotacion_Clasificacion
         Dim _Tbl_Clasificaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Clasificaciones
@@ -100,37 +108,37 @@
             .Columns("StockPedidoUd1").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("RotM1").Width = _AnchoClValores
-            '.Columns("RotM1").HeaderText = "Rot1"
-            '.Columns("RotM1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("RotM1").DefaultCellStyle.Format = "###,##0.##"
-            '.Columns("RotM1").Visible = True
-            '.Columns("RotM1").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("RotM1").Width = _AnchoClValores
+            .Columns("RotM1").HeaderText = "Rot1"
+            .Columns("RotM1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("RotM1").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("RotM1").Visible = True
+            .Columns("RotM1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("RotM2").Width = _AnchoClValores
-            '.Columns("RotM2").HeaderText = "Rot2"
-            '.Columns("RotM2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("RotM2").DefaultCellStyle.Format = "###,##0.##"
-            '.Columns("RotM2").Visible = True
-            '.Columns("RotM2").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("RotM2").Width = _AnchoClValores
+            .Columns("RotM2").HeaderText = "Rot2"
+            .Columns("RotM2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("RotM2").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("RotM2").Visible = True
+            .Columns("RotM2").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("RotM3").Width = _AnchoClValores
-            '.Columns("RotM3").HeaderText = "Rot3"
-            '.Columns("RotM3").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("RotM3").DefaultCellStyle.Format = "###,##0.##"
-            '.Columns("RotM3").Visible = True
-            '.Columns("RotM3").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("RotM3").Width = _AnchoClValores
+            .Columns("RotM3").HeaderText = "Rot3"
+            .Columns("RotM3").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("RotM3").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("RotM3").Visible = True
+            .Columns("RotM3").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("RotM4").Width = _AnchoClValores
-            '.Columns("RotM4").HeaderText = "Rot4"
-            '.Columns("RotM4").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("RotM4").DefaultCellStyle.Format = "###,##0.##"
-            '.Columns("RotM4").Visible = True
-            '.Columns("RotM4").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("RotM4").Width = _AnchoClValores
+            .Columns("RotM4").HeaderText = "Rot4"
+            .Columns("RotM4").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("RotM4").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("RotM4").Visible = True
+            .Columns("RotM4").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("RotCalculo").Width = _AnchoClValores
             .Columns("RotCalculo").Visible = True
@@ -161,6 +169,14 @@
             .Columns("Duracion_Stock_Meses").DefaultCellStyle.Format = "###,##0.##"
             .Columns("Duracion_Stock_Meses").Visible = True
             .Columns("Duracion_Stock_Meses").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("MesesSobreStock").Width = _AnchoClValores
+            .Columns("MesesSobreStock").HeaderText = "M/S"
+            .Columns("MesesSobreStock").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("MesesSobreStock").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("MesesSobreStock").Visible = True
+            .Columns("MesesSobreStock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Syncro").Width = _AnchoClValores
@@ -260,45 +276,45 @@
             .Columns("StockEnTransitoUd1").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("StockPedidoUd1").Width = _AnchoClValores
-            '.Columns("StockPedidoUd1").HeaderText = "Stock Pedido"
-            '.Columns("StockPedidoUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("StockPedidoUd1").DefaultCellStyle.Format = "###,##0.##"
-            '.Columns("StockPedidoUd1").Visible = True
-            '.Columns("StockPedidoUd1").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("StockPedidoUd1").Width = _AnchoClValores
+            .Columns("StockPedidoUd1").HeaderText = "Stock Pedido"
+            .Columns("StockPedidoUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StockPedidoUd1").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("StockPedidoUd1").Visible = True
+            .Columns("StockPedidoUd1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("RotM1").Width = _AnchoClValores
-            '.Columns("RotM1").HeaderText = "Rot1"
-            '.Columns("RotM1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("RotM1").DefaultCellStyle.Format = "###,##0.##"
-            '.Columns("RotM1").Visible = True
-            '.Columns("RotM1").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("RotM1").Width = _AnchoClValores
+            .Columns("RotM1").HeaderText = "Rot1"
+            .Columns("RotM1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("RotM1").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("RotM1").Visible = True
+            .Columns("RotM1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("RotM2").Width = _AnchoClValores
-            '.Columns("RotM2").HeaderText = "Rot2"
-            '.Columns("RotM2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("RotM2").DefaultCellStyle.Format = "###,##0.##"
-            '.Columns("RotM2").Visible = True
-            '.Columns("RotM2").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("RotM2").Width = _AnchoClValores
+            .Columns("RotM2").HeaderText = "Rot2"
+            .Columns("RotM2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("RotM2").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("RotM2").Visible = True
+            .Columns("RotM2").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("RotM3").Width = _AnchoClValores
-            '.Columns("RotM3").HeaderText = "Rot3"
-            '.Columns("RotM3").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("RotM3").DefaultCellStyle.Format = "###,##0.##"
-            '.Columns("RotM3").Visible = True
-            '.Columns("RotM3").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("RotM3").Width = _AnchoClValores
+            .Columns("RotM3").HeaderText = "Rot3"
+            .Columns("RotM3").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("RotM3").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("RotM3").Visible = True
+            .Columns("RotM3").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("RotM4").Width = _AnchoClValores
-            '.Columns("RotM4").HeaderText = "Rot4"
-            '.Columns("RotM4").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("RotM4").DefaultCellStyle.Format = "###,##0.##"
-            '.Columns("RotM4").Visible = True
-            '.Columns("RotM4").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("RotM4").Width = _AnchoClValores
+            .Columns("RotM4").HeaderText = "Rot4"
+            .Columns("RotM4").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("RotM4").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("RotM4").Visible = True
+            .Columns("RotM4").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("RotCalculo").Width = _AnchoClValores
             .Columns("RotCalculo").Visible = True
@@ -329,6 +345,14 @@
             .Columns("Duracion_Stock_Meses").DefaultCellStyle.Format = "###,##0.##"
             .Columns("Duracion_Stock_Meses").Visible = True
             .Columns("Duracion_Stock_Meses").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("MesesSobreStock").Width = _AnchoClValores
+            .Columns("MesesSobreStock").HeaderText = "M/S"
+            .Columns("MesesSobreStock").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("MesesSobreStock").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("MesesSobreStock").Visible = True
+            .Columns("MesesSobreStock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Syncro").Width = _AnchoClValores
@@ -368,4 +392,36 @@
 
     End Sub
 
+    Private Sub Grilla_Clasificaciones_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Clasificaciones.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = Grilla_Clasificaciones.CurrentRow
+        Dim _Codigo_Nodo As Integer = _Fila.Cells("Codigo_Nodo").Value
+        Dim _Codigo_Nodo_Madre As String = _Fila.Cells("Codigo_Nodo_Madre").Value
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = _Cl_SobreStockXClas.Fx_CrearTablaPaso_TablaCalendarioMesesSemanasProductos
+        _Mensaje = _Cl_SobreStockXClas.Fx_CrearTablaPaso_TablaCalendarioMesesSemanasClasificacion
+
+        _Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasProductos(_Codigo_Nodo_Madre)
+        _Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasClasificacion(_Codigo_Nodo_Madre)
+
+        MessageBoxEx.Show(_Mensaje.Mensaje, "Sobre stock", MessageBoxButtons.OK, _Mensaje.Icono)
+
+        Dim Fm As New Frm_SobreStock_Grafico("", _Codigo_Nodo_Madre)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Grilla_Productos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Productos.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = Grilla_Productos.CurrentRow
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+        Dim Fm As New Frm_SobreStock_Grafico(_Codigo, "")
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

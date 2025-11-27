@@ -44,6 +44,12 @@ Partial Class Frm_EstadisticaProducto
         Dim Series7 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
         Dim Title3 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
         Dim Title4 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -53,12 +59,6 @@ Partial Class Frm_EstadisticaProducto
         Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -146,6 +146,19 @@ Partial Class Frm_EstadisticaProducto
         Me.Btn_Dimensiones = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_Pr_Editar_Producto = New DevComponents.DotNetBar.ButtonItem()
         Me.Tabs = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01_Opciones_Documento = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Ver_documento = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Rev_Cumpl_Proveedor = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_02_Opciones_Arbol = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.Mnu_Btn_Ver_Clasificaciones_Arbol = New DevComponents.DotNetBar.ButtonItem()
+        Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ver_Info_Ult_Compras = New DevComponents.DotNetBar.ButtonX()
+        Me.GrillaCompras = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Tab_01_Ultimas_Compras = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Chk_Mostrar_Venta_Por_Dia = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
@@ -178,19 +191,6 @@ Partial Class Frm_EstadisticaProducto
         Me.Btn_Ver_Info_Ult_VentasTodos = New DevComponents.DotNetBar.ButtonX()
         Me.GrillaVentas = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Tab_02_Ultimas_Ventas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
-        Me.Menu_Contextual_01_Opciones_Documento = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_Ver_documento = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Rev_Cumpl_Proveedor = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_02_Opciones_Arbol = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
-        Me.Mnu_Btn_Ver_Clasificaciones_Arbol = New DevComponents.DotNetBar.ButtonItem()
-        Me.Mnu_Btn_Mantencion_Clasificaciones_Arbol = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Ver_Info_Ult_Compras = New DevComponents.DotNetBar.ButtonX()
-        Me.GrillaCompras = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.Tab_01_Ultimas_Compras = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel7 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Tab_07_Informacion_Del_Producto = New DevComponents.DotNetBar.SuperTabItem()
@@ -215,6 +215,9 @@ Partial Class Frm_EstadisticaProducto
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Tabs, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Tabs.SuspendLayout()
+        Me.SuperTabControlPanel1.SuspendLayout()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.GrillaCompras, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel4.SuspendLayout()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
@@ -235,9 +238,6 @@ Partial Class Frm_EstadisticaProducto
         CType(Me.Grilla_Entidad, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel2.SuspendLayout()
         CType(Me.GrillaVentas, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuperTabControlPanel1.SuspendLayout()
-        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GrillaCompras, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel7.SuspendLayout()
         Me.GroupPanel3.SuspendLayout()
         Me.SuperTabControlPanel6.SuspendLayout()
@@ -957,7 +957,7 @@ Partial Class Frm_EstadisticaProducto
         Me.Chk_Stock_Minimo.CheckValue = "Y"
         Me.Chk_Stock_Minimo.FocusCuesEnabled = False
         Me.Chk_Stock_Minimo.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Stock_Minimo.Location = New System.Drawing.Point(147, 3)
+        Me.Chk_Stock_Minimo.Location = New System.Drawing.Point(146, 3)
         Me.Chk_Stock_Minimo.Name = "Chk_Stock_Minimo"
         Me.Chk_Stock_Minimo.Size = New System.Drawing.Size(143, 19)
         Me.Chk_Stock_Minimo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -972,7 +972,7 @@ Partial Class Frm_EstadisticaProducto
         Me.Chk_Stock_Salidas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_Stock_Salidas.FocusCuesEnabled = False
         Me.Chk_Stock_Salidas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Stock_Salidas.Location = New System.Drawing.Point(147, 28)
+        Me.Chk_Stock_Salidas.Location = New System.Drawing.Point(146, 28)
         Me.Chk_Stock_Salidas.Name = "Chk_Stock_Salidas"
         Me.Chk_Stock_Salidas.Size = New System.Drawing.Size(103, 19)
         Me.Chk_Stock_Salidas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -989,7 +989,7 @@ Partial Class Frm_EstadisticaProducto
         Me.Chk_Stock_Ingresos.ForeColor = System.Drawing.Color.Black
         Me.Chk_Stock_Ingresos.Location = New System.Drawing.Point(81, 28)
         Me.Chk_Stock_Ingresos.Name = "Chk_Stock_Ingresos"
-        Me.Chk_Stock_Ingresos.Size = New System.Drawing.Size(60, 19)
+        Me.Chk_Stock_Ingresos.Size = New System.Drawing.Size(59, 19)
         Me.Chk_Stock_Ingresos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Stock_Ingresos.TabIndex = 34
         Me.Chk_Stock_Ingresos.Text = "Ingresos"
@@ -1178,7 +1178,7 @@ Partial Class Frm_EstadisticaProducto
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 28.4264!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 71.5736!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80.0!))
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 386.0!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 389.0!))
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX15, 0, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.LblZona, 0, 3)
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX8, 0, 0)
@@ -1226,9 +1226,9 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblZona.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblZona.ForeColor = System.Drawing.Color.Black
-        Me.LblZona.Location = New System.Drawing.Point(111, 74)
+        Me.LblZona.Location = New System.Drawing.Point(110, 74)
         Me.LblZona.Name = "LblZona"
-        Me.LblZona.Size = New System.Drawing.Size(256, 15)
+        Me.LblZona.Size = New System.Drawing.Size(254, 15)
         Me.LblZona.TabIndex = 45
         Me.LblZona.Text = "Zona"
         '
@@ -1268,9 +1268,9 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblFamilia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblFamilia.ForeColor = System.Drawing.Color.Black
-        Me.LblFamilia.Location = New System.Drawing.Point(111, 28)
+        Me.LblFamilia.Location = New System.Drawing.Point(110, 28)
         Me.LblFamilia.Name = "LblFamilia"
-        Me.LblFamilia.Size = New System.Drawing.Size(256, 15)
+        Me.LblFamilia.Size = New System.Drawing.Size(254, 15)
         Me.LblFamilia.TabIndex = 36
         Me.LblFamilia.Text = "LblFamilia"
         '
@@ -1282,9 +1282,9 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblSuperFamilia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblSuperFamilia.ForeColor = System.Drawing.Color.Black
-        Me.LblSuperFamilia.Location = New System.Drawing.Point(111, 5)
+        Me.LblSuperFamilia.Location = New System.Drawing.Point(110, 5)
         Me.LblSuperFamilia.Name = "LblSuperFamilia"
-        Me.LblSuperFamilia.Size = New System.Drawing.Size(256, 15)
+        Me.LblSuperFamilia.Size = New System.Drawing.Size(254, 15)
         Me.LblSuperFamilia.TabIndex = 34
         Me.LblSuperFamilia.Text = "LblSuperFamilia"
         '
@@ -1296,7 +1296,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblMarca.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblMarca.ForeColor = System.Drawing.Color.Black
-        Me.LblMarca.Location = New System.Drawing.Point(457, 28)
+        Me.LblMarca.Location = New System.Drawing.Point(454, 28)
         Me.LblMarca.Name = "LblMarca"
         Me.LblMarca.Size = New System.Drawing.Size(357, 15)
         Me.LblMarca.TabIndex = 40
@@ -1310,7 +1310,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LabelX10.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX10.ForeColor = System.Drawing.Color.Black
-        Me.LabelX10.Location = New System.Drawing.Point(375, 28)
+        Me.LabelX10.Location = New System.Drawing.Point(372, 28)
         Me.LabelX10.Name = "LabelX10"
         Me.LabelX10.Size = New System.Drawing.Size(57, 15)
         Me.LabelX10.TabIndex = 38
@@ -1324,7 +1324,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX11.ForeColor = System.Drawing.Color.Black
-        Me.LabelX11.Location = New System.Drawing.Point(375, 51)
+        Me.LabelX11.Location = New System.Drawing.Point(372, 51)
         Me.LabelX11.Name = "LabelX11"
         Me.LabelX11.Size = New System.Drawing.Size(57, 15)
         Me.LabelX11.TabIndex = 42
@@ -1338,7 +1338,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblClasLibre.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblClasLibre.ForeColor = System.Drawing.Color.Black
-        Me.LblClasLibre.Location = New System.Drawing.Point(457, 5)
+        Me.LblClasLibre.Location = New System.Drawing.Point(454, 5)
         Me.LblClasLibre.Name = "LblClasLibre"
         Me.LblClasLibre.Size = New System.Drawing.Size(357, 15)
         Me.LblClasLibre.TabIndex = 41
@@ -1352,7 +1352,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblRubro.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblRubro.ForeColor = System.Drawing.Color.Black
-        Me.LblRubro.Location = New System.Drawing.Point(457, 51)
+        Me.LblRubro.Location = New System.Drawing.Point(454, 51)
         Me.LblRubro.Name = "LblRubro"
         Me.LblRubro.Size = New System.Drawing.Size(357, 15)
         Me.LblRubro.TabIndex = 39
@@ -1366,7 +1366,7 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX12.ForeColor = System.Drawing.Color.Black
-        Me.LabelX12.Location = New System.Drawing.Point(375, 5)
+        Me.LabelX12.Location = New System.Drawing.Point(372, 5)
         Me.LabelX12.Name = "LabelX12"
         Me.LabelX12.Size = New System.Drawing.Size(57, 15)
         Me.LabelX12.TabIndex = 43
@@ -1380,9 +1380,9 @@ Partial Class Frm_EstadisticaProducto
         '
         Me.LblSubFamilia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblSubFamilia.ForeColor = System.Drawing.Color.Black
-        Me.LblSubFamilia.Location = New System.Drawing.Point(111, 51)
+        Me.LblSubFamilia.Location = New System.Drawing.Point(110, 51)
         Me.LblSubFamilia.Name = "LblSubFamilia"
-        Me.LblSubFamilia.Size = New System.Drawing.Size(256, 15)
+        Me.LblSubFamilia.Size = New System.Drawing.Size(254, 15)
         Me.LblSubFamilia.TabIndex = 44
         Me.LblSubFamilia.Text = "LblSubFamilia"
         '
@@ -1819,10 +1819,10 @@ Partial Class Frm_EstadisticaProducto
         Me.Tabs.ControlBox.MenuBox.Visible = False
         Me.Tabs.ControlBox.Name = ""
         Me.Tabs.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tabs.ControlBox.MenuBox, Me.Tabs.ControlBox.CloseBox})
-        Me.Tabs.Controls.Add(Me.SuperTabControlPanel1)
         Me.Tabs.Controls.Add(Me.SuperTabControlPanel4)
         Me.Tabs.Controls.Add(Me.SuperTabControlPanel3)
         Me.Tabs.Controls.Add(Me.SuperTabControlPanel2)
+        Me.Tabs.Controls.Add(Me.SuperTabControlPanel1)
         Me.Tabs.Controls.Add(Me.SuperTabControlPanel7)
         Me.Tabs.Controls.Add(Me.SuperTabControlPanel6)
         Me.Tabs.Controls.Add(Me.SuperTabControlPanel5)
@@ -1838,568 +1838,6 @@ Partial Class Frm_EstadisticaProducto
         Me.Tabs.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tab_01_Ultimas_Compras, Me.Tab_02_Ultimas_Ventas, Me.Tab_03_VtaCom_Entidad, Me.Tab_04_Grafica_Ventas_Inventario, Me.Tab_05_Movimientos_Acumulados, Me.Tab_06_Codigos_Alternativos, Me.Tab_07_Informacion_Del_Producto})
         Me.Tabs.TabStyle = DevComponents.DotNetBar.eSuperTabStyle.Office2010BackstageBlue
         Me.Tabs.Text = "SuperTabControl1"
-        '
-        'SuperTabControlPanel4
-        '
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Mostrar_Venta_Por_Dia)
-        Me.SuperTabControlPanel4.Controls.Add(Me.SuperTabControl1)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Btn_Guardar_Vista)
-        Me.SuperTabControlPanel4.Controls.Add(Me.GroupPanel1)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Rotacion_Con_Ent_Excluidas)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Btn_Actualizar_Grafico)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Grafica_Ventas_Solo_Entidad)
-        Me.SuperTabControlPanel4.Controls.Add(Me.BtnFiltroBodegas)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Rdb_Ud1)
-        Me.SuperTabControlPanel4.Controls.Add(Me.Rdb_Ud2)
-        Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(889, 473)
-        Me.SuperTabControlPanel4.TabIndex = 0
-        Me.SuperTabControlPanel4.TabItem = Me.Tab_04_Grafica_Ventas_Inventario
-        '
-        'Chk_Mostrar_Venta_Por_Dia
-        '
-        Me.Chk_Mostrar_Venta_Por_Dia.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Mostrar_Venta_Por_Dia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Mostrar_Venta_Por_Dia.CheckBoxImageChecked = CType(resources.GetObject("Chk_Mostrar_Venta_Por_Dia.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Mostrar_Venta_Por_Dia.FocusCuesEnabled = False
-        Me.Chk_Mostrar_Venta_Por_Dia.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Mostrar_Venta_Por_Dia.Location = New System.Drawing.Point(649, 343)
-        Me.Chk_Mostrar_Venta_Por_Dia.Name = "Chk_Mostrar_Venta_Por_Dia"
-        Me.Chk_Mostrar_Venta_Por_Dia.Size = New System.Drawing.Size(218, 40)
-        Me.Chk_Mostrar_Venta_Por_Dia.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Mostrar_Venta_Por_Dia.TabIndex = 39
-        Me.Chk_Mostrar_Venta_Por_Dia.Text = "<b>Mostrar grafica de ventas diarias</b><br/>(<i>solo para 120 días de estudio o " &
-    "menos</i>)"
-        '
-        'SuperTabControl1
-        '
-        Me.SuperTabControl1.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        '
-        '
-        '
-        Me.SuperTabControl1.ControlBox.CloseBox.Name = ""
-        '
-        '
-        '
-        Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
-        Me.SuperTabControl1.ControlBox.Name = ""
-        Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel8)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel12)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel11)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel10)
-        Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
-        Me.SuperTabControl1.Location = New System.Drawing.Point(6, 9)
-        Me.SuperTabControl1.Name = "SuperTabControl1"
-        Me.SuperTabControl1.ReorderTabsEnabled = True
-        Me.SuperTabControl1.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.SuperTabControl1.SelectedTabIndex = 3
-        Me.SuperTabControl1.Size = New System.Drawing.Size(877, 328)
-        Me.SuperTabControl1.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.SuperTabControl1.TabIndex = 7
-        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2, Me.SuperTabItem3, Me.SuperTabItem4, Me.SuperTabItem5})
-        Me.SuperTabControl1.Text = "Tendencias (proyección)"
-        '
-        'SuperTabControlPanel8
-        '
-        Me.SuperTabControlPanel8.Controls.Add(Me.TableLayoutPanel5)
-        Me.SuperTabControlPanel8.Controls.Add(Me.Grafico_Ventas_Periodo)
-        Me.SuperTabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel8.Name = "SuperTabControlPanel8"
-        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(877, 301)
-        Me.SuperTabControlPanel8.TabIndex = 1
-        Me.SuperTabControlPanel8.TabItem = Me.SuperTabItem1
-        '
-        'TableLayoutPanel5
-        '
-        Me.TableLayoutPanel5.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel5.ColumnCount = 2
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142.0!))
-        Me.TableLayoutPanel5.Controls.Add(Me.Label1, 1, 0)
-        Me.TableLayoutPanel5.Controls.Add(Me.Lbl_PromedioLbl, 0, 0)
-        Me.TableLayoutPanel5.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 275)
-        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
-        Me.TableLayoutPanel5.RowCount = 1
-        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel5.Size = New System.Drawing.Size(264, 23)
-        Me.TableLayoutPanel5.TabIndex = 21
-        '
-        'Label1
-        '
-        Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(125, 0)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(76, 23)
-        Me.Label1.TabIndex = 15
-        Me.Label1.Text = "Lbl_Promedio"
-        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'Lbl_PromedioLbl
-        '
-        Me.Lbl_PromedioLbl.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_PromedioLbl.Location = New System.Drawing.Point(3, 0)
-        Me.Lbl_PromedioLbl.Name = "Lbl_PromedioLbl"
-        Me.Lbl_PromedioLbl.Size = New System.Drawing.Size(115, 23)
-        Me.Lbl_PromedioLbl.TabIndex = 14
-        Me.Lbl_PromedioLbl.Text = "Promedio mensual"
-        Me.Lbl_PromedioLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
-        '
-        'SuperTabItem1
-        '
-        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel8
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "Grafica con valores"
-        '
-        'SuperTabControlPanel9
-        '
-        Me.SuperTabControlPanel9.Controls.Add(Me.Grafico_Desviacion_Estandar)
-        Me.SuperTabControlPanel9.Controls.Add(Me.TableLayoutPanel3)
-        Me.SuperTabControlPanel9.Controls.Add(Me.TableLayoutPanel2)
-        Me.SuperTabControlPanel9.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel9.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel9.Name = "SuperTabControlPanel9"
-        Me.SuperTabControlPanel9.Size = New System.Drawing.Size(877, 328)
-        Me.SuperTabControlPanel9.TabIndex = 0
-        Me.SuperTabControlPanel9.TabItem = Me.SuperTabItem2
-        '
-        'TableLayoutPanel3
-        '
-        Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel3.ColumnCount = 2
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 145.0!))
-        Me.TableLayoutPanel3.Controls.Add(Me.LblMedia, 1, 0)
-        Me.TableLayoutPanel3.Controls.Add(Me.label6, 0, 0)
-        Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel3.Location = New System.Drawing.Point(656, 271)
-        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 1
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(200, 27)
-        Me.TableLayoutPanel3.TabIndex = 21
-        '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel2.ColumnCount = 2
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.LblDesviacionStandar, 1, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.Label7, 0, 0)
-        Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 275)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 1
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(264, 23)
-        Me.TableLayoutPanel2.TabIndex = 20
-        '
-        'SuperTabItem2
-        '
-        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel9
-        Me.SuperTabItem2.GlobalItem = False
-        Me.SuperTabItem2.Name = "SuperTabItem2"
-        Me.SuperTabItem2.Text = "Grafica muestra desviación estandar"
-        '
-        'SuperTabControlPanel12
-        '
-        Me.SuperTabControlPanel12.Controls.Add(Me.GroupPanel5)
-        Me.SuperTabControlPanel12.Controls.Add(Me.GroupPanel4)
-        Me.SuperTabControlPanel12.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel12.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel12.Name = "SuperTabControlPanel12"
-        Me.SuperTabControlPanel12.Size = New System.Drawing.Size(877, 328)
-        Me.SuperTabControlPanel12.TabIndex = 0
-        Me.SuperTabControlPanel12.TabItem = Me.SuperTabItem5
-        '
-        'GroupPanel5
-        '
-        Me.GroupPanel5.BackColor = System.Drawing.Color.White
-        Me.GroupPanel5.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel5.Controls.Add(Me.MchMensuales)
-        Me.GroupPanel5.Controls.Add(Me.Grilla_Mensual)
-        Me.GroupPanel5.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel5.Location = New System.Drawing.Point(3, 3)
-        Me.GroupPanel5.Name = "GroupPanel5"
-        Me.GroupPanel5.Size = New System.Drawing.Size(306, 289)
-        '
-        '
-        '
-        Me.GroupPanel5.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel5.Style.BackColorGradientAngle = 90
-        Me.GroupPanel5.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel5.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel5.Style.BorderBottomWidth = 1
-        Me.GroupPanel5.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel5.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel5.Style.BorderLeftWidth = 1
-        Me.GroupPanel5.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel5.Style.BorderRightWidth = 1
-        Me.GroupPanel5.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel5.Style.BorderTopWidth = 1
-        Me.GroupPanel5.Style.CornerDiameter = 4
-        Me.GroupPanel5.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel5.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel5.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel5.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel5.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel5.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel5.TabIndex = 17
-        Me.GroupPanel5.Text = "Ventas mensuales"
-        '
-        'Grilla_Mensual
-        '
-        Me.Grilla_Mensual.AllowUserToAddRows = False
-        Me.Grilla_Mensual.AllowUserToDeleteRows = False
-        Me.Grilla_Mensual.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Mensual.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
-        Me.Grilla_Mensual.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Mensual.DefaultCellStyle = DataGridViewCellStyle5
-        Me.Grilla_Mensual.EnableHeadersVisualStyles = False
-        Me.Grilla_Mensual.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.Grilla_Mensual.Location = New System.Drawing.Point(3, 60)
-        Me.Grilla_Mensual.Name = "Grilla_Mensual"
-        Me.Grilla_Mensual.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Mensual.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla_Mensual.RowHeadersVisible = False
-        Me.Grilla_Mensual.RowTemplate.Height = 25
-        Me.Grilla_Mensual.Size = New System.Drawing.Size(288, 204)
-        Me.Grilla_Mensual.TabIndex = 15
-        '
-        'GroupPanel4
-        '
-        Me.GroupPanel4.BackColor = System.Drawing.Color.White
-        Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel4.Controls.Add(Me.McsSemanales)
-        Me.GroupPanel4.Controls.Add(Me.Grilla_Semanal)
-        Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel4.Location = New System.Drawing.Point(315, 0)
-        Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(248, 292)
-        '
-        '
-        '
-        Me.GroupPanel4.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.GroupPanel4.Style.BackColorGradientAngle = 90
-        Me.GroupPanel4.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.GroupPanel4.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel4.Style.BorderBottomWidth = 1
-        Me.GroupPanel4.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
-        Me.GroupPanel4.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel4.Style.BorderLeftWidth = 1
-        Me.GroupPanel4.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel4.Style.BorderRightWidth = 1
-        Me.GroupPanel4.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.GroupPanel4.Style.BorderTopWidth = 1
-        Me.GroupPanel4.Style.CornerDiameter = 4
-        Me.GroupPanel4.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.GroupPanel4.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
-        Me.GroupPanel4.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
-        Me.GroupPanel4.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
-        '
-        '
-        '
-        Me.GroupPanel4.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        '
-        '
-        '
-        Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel4.TabIndex = 16
-        Me.GroupPanel4.Text = "Ventas Semanales"
-        '
-        'Grilla_Semanal
-        '
-        Me.Grilla_Semanal.AllowUserToAddRows = False
-        Me.Grilla_Semanal.AllowUserToDeleteRows = False
-        Me.Grilla_Semanal.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Semanal.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
-        Me.Grilla_Semanal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Semanal.DefaultCellStyle = DataGridViewCellStyle8
-        Me.Grilla_Semanal.EnableHeadersVisualStyles = False
-        Me.Grilla_Semanal.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.Grilla_Semanal.Location = New System.Drawing.Point(3, 63)
-        Me.Grilla_Semanal.Name = "Grilla_Semanal"
-        Me.Grilla_Semanal.ReadOnly = True
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Semanal.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
-        Me.Grilla_Semanal.RowHeadersVisible = False
-        Me.Grilla_Semanal.RowTemplate.Height = 25
-        Me.Grilla_Semanal.Size = New System.Drawing.Size(236, 203)
-        Me.Grilla_Semanal.TabIndex = 14
-        '
-        'SuperTabItem5
-        '
-        Me.SuperTabItem5.AttachedControl = Me.SuperTabControlPanel12
-        Me.SuperTabItem5.GlobalItem = False
-        Me.SuperTabItem5.Name = "SuperTabItem5"
-        Me.SuperTabItem5.Text = "Ventas Semanales"
-        '
-        'SuperTabControlPanel11
-        '
-        Me.SuperTabControlPanel11.Controls.Add(Me.TableLayoutPanel4)
-        Me.SuperTabControlPanel11.Controls.Add(Me.Grafico_Mov_Stock)
-        Me.SuperTabControlPanel11.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel11.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel11.Name = "SuperTabControlPanel11"
-        Me.SuperTabControlPanel11.Size = New System.Drawing.Size(877, 328)
-        Me.SuperTabControlPanel11.TabIndex = 0
-        Me.SuperTabControlPanel11.TabItem = Me.SuperTabItem4
-        '
-        'TableLayoutPanel4
-        '
-        Me.TableLayoutPanel4.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel4.ColumnCount = 3
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.28571!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.71429!))
-        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 179.0!))
-        Me.TableLayoutPanel4.Controls.Add(Me.LabelX16, 0, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Stock_Minimo, 2, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Stock_Salidas, 2, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.Input_Stock_Minimo, 1, 0)
-        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Stock_Ingresos, 1, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Stock_Movimiento, 0, 1)
-        Me.TableLayoutPanel4.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 241)
-        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
-        Me.TableLayoutPanel4.RowCount = 2
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel4.Size = New System.Drawing.Size(324, 50)
-        Me.TableLayoutPanel4.TabIndex = 37
-        '
-        'SuperTabItem4
-        '
-        Me.SuperTabItem4.AttachedControl = Me.SuperTabControlPanel11
-        Me.SuperTabItem4.GlobalItem = False
-        Me.SuperTabItem4.Name = "SuperTabItem4"
-        Me.SuperTabItem4.Text = "Grafico tiempo de reposición"
-        '
-        'SuperTabControlPanel10
-        '
-        Me.SuperTabControlPanel10.Controls.Add(Me.Grafico_Tendencias)
-        Me.SuperTabControlPanel10.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel10.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel10.Name = "SuperTabControlPanel10"
-        Me.SuperTabControlPanel10.Size = New System.Drawing.Size(877, 328)
-        Me.SuperTabControlPanel10.TabIndex = 0
-        Me.SuperTabControlPanel10.TabItem = Me.SuperTabItem3
-        '
-        'SuperTabItem3
-        '
-        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel10
-        Me.SuperTabItem3.GlobalItem = False
-        Me.SuperTabItem3.Name = "SuperTabItem3"
-        Me.SuperTabItem3.Text = "Tendencias (proyección)"
-        '
-        'Btn_Guardar_Vista
-        '
-        Me.Btn_Guardar_Vista.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Guardar_Vista.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Guardar_Vista.Image = CType(resources.GetObject("Btn_Guardar_Vista.Image"), System.Drawing.Image)
-        Me.Btn_Guardar_Vista.ImageAlt = CType(resources.GetObject("Btn_Guardar_Vista.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Guardar_Vista.Location = New System.Drawing.Point(788, 418)
-        Me.Btn_Guardar_Vista.Name = "Btn_Guardar_Vista"
-        Me.Btn_Guardar_Vista.Size = New System.Drawing.Size(95, 24)
-        Me.Btn_Guardar_Vista.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Guardar_Vista.TabIndex = 38
-        Me.Btn_Guardar_Vista.Text = "Guardar vista"
-        Me.Btn_Guardar_Vista.Tooltip = "Guardar esta vista"
-        '
-        'Tab_04_Grafica_Ventas_Inventario
-        '
-        Me.Tab_04_Grafica_Ventas_Inventario.AttachedControl = Me.SuperTabControlPanel4
-        Me.Tab_04_Grafica_Ventas_Inventario.GlobalItem = False
-        Me.Tab_04_Grafica_Ventas_Inventario.Name = "Tab_04_Grafica_Ventas_Inventario"
-        Me.Tab_04_Grafica_Ventas_Inventario.Text = "Grafica de ventas/Inventario"
-        '
-        'SuperTabControlPanel3
-        '
-        Me.SuperTabControlPanel3.Controls.Add(Me.Grilla_Entidad)
-        Me.SuperTabControlPanel3.Controls.Add(Me.Lbl_Nombre_Entidad_Documento)
-        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(889, 473)
-        Me.SuperTabControlPanel3.TabIndex = 0
-        Me.SuperTabControlPanel3.TabItem = Me.Tab_03_VtaCom_Entidad
-        '
-        'Grilla_Entidad
-        '
-        Me.Grilla_Entidad.AllowUserToAddRows = False
-        Me.Grilla_Entidad.AllowUserToDeleteRows = False
-        Me.Grilla_Entidad.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Entidad.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
-        Me.Grilla_Entidad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Entidad.DefaultCellStyle = DataGridViewCellStyle11
-        Me.Grilla_Entidad.EnableHeadersVisualStyles = False
-        Me.Grilla_Entidad.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.Grilla_Entidad.Location = New System.Drawing.Point(3, 3)
-        Me.Grilla_Entidad.Name = "Grilla_Entidad"
-        Me.Grilla_Entidad.ReadOnly = True
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Entidad.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
-        Me.Grilla_Entidad.RowHeadersVisible = False
-        Me.Grilla_Entidad.RowTemplate.Height = 25
-        Me.Grilla_Entidad.Size = New System.Drawing.Size(883, 413)
-        Me.Grilla_Entidad.TabIndex = 9
-        '
-        'Tab_03_VtaCom_Entidad
-        '
-        Me.Tab_03_VtaCom_Entidad.AttachedControl = Me.SuperTabControlPanel3
-        Me.Tab_03_VtaCom_Entidad.GlobalItem = False
-        Me.Tab_03_VtaCom_Entidad.Name = "Tab_03_VtaCom_Entidad"
-        Me.Tab_03_VtaCom_Entidad.Text = "SuperTabItem3"
-        '
-        'SuperTabControlPanel2
-        '
-        Me.SuperTabControlPanel2.Controls.Add(Me.Btn_Ver_Info_Ult_VentasTodos)
-        Me.SuperTabControlPanel2.Controls.Add(Me.GrillaVentas)
-        Me.SuperTabControlPanel2.Controls.Add(Me.LblEntFisicaVentas)
-        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(889, 473)
-        Me.SuperTabControlPanel2.TabIndex = 0
-        Me.SuperTabControlPanel2.TabItem = Me.Tab_02_Ultimas_Ventas
-        '
-        'Btn_Ver_Info_Ult_VentasTodos
-        '
-        Me.Btn_Ver_Info_Ult_VentasTodos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Ver_Info_Ult_VentasTodos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Ver_Info_Ult_VentasTodos.Location = New System.Drawing.Point(722, 419)
-        Me.Btn_Ver_Info_Ult_VentasTodos.Name = "Btn_Ver_Info_Ult_VentasTodos"
-        Me.Btn_Ver_Info_Ult_VentasTodos.Size = New System.Drawing.Size(164, 23)
-        Me.Btn_Ver_Info_Ult_VentasTodos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Ver_Info_Ult_VentasTodos.TabIndex = 9
-        Me.Btn_Ver_Info_Ult_VentasTodos.Text = "Ver información"
-        Me.Btn_Ver_Info_Ult_VentasTodos.Tooltip = "Muestra las ventas de todos los vendedores, no solo las del vendedor activo"
-        '
-        'GrillaVentas
-        '
-        Me.GrillaVentas.AllowUserToAddRows = False
-        Me.GrillaVentas.AllowUserToDeleteRows = False
-        Me.GrillaVentas.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaVentas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
-        Me.GrillaVentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle14.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle14.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GrillaVentas.DefaultCellStyle = DataGridViewCellStyle14
-        Me.GrillaVentas.EnableHeadersVisualStyles = False
-        Me.GrillaVentas.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.GrillaVentas.Location = New System.Drawing.Point(3, 3)
-        Me.GrillaVentas.Name = "GrillaVentas"
-        Me.GrillaVentas.ReadOnly = True
-        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaVentas.RowHeadersDefaultCellStyle = DataGridViewCellStyle15
-        Me.GrillaVentas.RowHeadersVisible = False
-        Me.GrillaVentas.RowTemplate.Height = 25
-        Me.GrillaVentas.Size = New System.Drawing.Size(883, 410)
-        Me.GrillaVentas.TabIndex = 8
-        '
-        'Tab_02_Ultimas_Ventas
-        '
-        Me.Tab_02_Ultimas_Ventas.AttachedControl = Me.SuperTabControlPanel2
-        Me.Tab_02_Ultimas_Ventas.GlobalItem = False
-        Me.Tab_02_Ultimas_Ventas.Name = "Tab_02_Ultimas_Ventas"
-        Me.Tab_02_Ultimas_Ventas.Text = "Ultimas Ventas"
         '
         'SuperTabControlPanel1
         '
@@ -2513,36 +1951,36 @@ Partial Class Frm_EstadisticaProducto
         Me.GrillaCompras.AllowUserToAddRows = False
         Me.GrillaCompras.AllowUserToDeleteRows = False
         Me.GrillaCompras.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaCompras.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaCompras.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
         Me.GrillaCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GrillaCompras.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GrillaCompras.DefaultCellStyle = DataGridViewCellStyle14
         Me.GrillaCompras.EnableHeadersVisualStyles = False
         Me.GrillaCompras.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.GrillaCompras.Location = New System.Drawing.Point(3, 3)
         Me.GrillaCompras.Name = "GrillaCompras"
         Me.GrillaCompras.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaCompras.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaCompras.RowHeadersDefaultCellStyle = DataGridViewCellStyle15
         Me.GrillaCompras.RowHeadersVisible = False
         Me.GrillaCompras.RowTemplate.Height = 25
         Me.GrillaCompras.Size = New System.Drawing.Size(883, 410)
@@ -2554,6 +1992,568 @@ Partial Class Frm_EstadisticaProducto
         Me.Tab_01_Ultimas_Compras.GlobalItem = False
         Me.Tab_01_Ultimas_Compras.Name = "Tab_01_Ultimas_Compras"
         Me.Tab_01_Ultimas_Compras.Text = "Ultimas Compras"
+        '
+        'SuperTabControlPanel4
+        '
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Mostrar_Venta_Por_Dia)
+        Me.SuperTabControlPanel4.Controls.Add(Me.SuperTabControl1)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Btn_Guardar_Vista)
+        Me.SuperTabControlPanel4.Controls.Add(Me.GroupPanel1)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Rotacion_Con_Ent_Excluidas)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Btn_Actualizar_Grafico)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Grafica_Ventas_Solo_Entidad)
+        Me.SuperTabControlPanel4.Controls.Add(Me.BtnFiltroBodegas)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Rdb_Ud1)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Rdb_Ud2)
+        Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 25)
+        Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(889, 448)
+        Me.SuperTabControlPanel4.TabIndex = 0
+        Me.SuperTabControlPanel4.TabItem = Me.Tab_04_Grafica_Ventas_Inventario
+        '
+        'Chk_Mostrar_Venta_Por_Dia
+        '
+        Me.Chk_Mostrar_Venta_Por_Dia.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Mostrar_Venta_Por_Dia.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Mostrar_Venta_Por_Dia.CheckBoxImageChecked = CType(resources.GetObject("Chk_Mostrar_Venta_Por_Dia.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Mostrar_Venta_Por_Dia.FocusCuesEnabled = False
+        Me.Chk_Mostrar_Venta_Por_Dia.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Mostrar_Venta_Por_Dia.Location = New System.Drawing.Point(649, 343)
+        Me.Chk_Mostrar_Venta_Por_Dia.Name = "Chk_Mostrar_Venta_Por_Dia"
+        Me.Chk_Mostrar_Venta_Por_Dia.Size = New System.Drawing.Size(218, 40)
+        Me.Chk_Mostrar_Venta_Por_Dia.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Mostrar_Venta_Por_Dia.TabIndex = 39
+        Me.Chk_Mostrar_Venta_Por_Dia.Text = "<b>Mostrar grafica de ventas diarias</b><br/>(<i>solo para 120 días de estudio o " &
+    "menos</i>)"
+        '
+        'SuperTabControl1
+        '
+        Me.SuperTabControl1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        '
+        '
+        '
+        Me.SuperTabControl1.ControlBox.CloseBox.Name = ""
+        '
+        '
+        '
+        Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
+        Me.SuperTabControl1.ControlBox.Name = ""
+        Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel11)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel10)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel8)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel12)
+        Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
+        Me.SuperTabControl1.Location = New System.Drawing.Point(6, 9)
+        Me.SuperTabControl1.Name = "SuperTabControl1"
+        Me.SuperTabControl1.ReorderTabsEnabled = True
+        Me.SuperTabControl1.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.SuperTabControl1.SelectedTabIndex = 3
+        Me.SuperTabControl1.Size = New System.Drawing.Size(877, 328)
+        Me.SuperTabControl1.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.SuperTabControl1.TabIndex = 7
+        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2, Me.SuperTabItem3, Me.SuperTabItem4, Me.SuperTabItem5})
+        Me.SuperTabControl1.Text = "Tendencias (proyección)"
+        '
+        'SuperTabControlPanel8
+        '
+        Me.SuperTabControlPanel8.Controls.Add(Me.TableLayoutPanel5)
+        Me.SuperTabControlPanel8.Controls.Add(Me.Grafico_Ventas_Periodo)
+        Me.SuperTabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel8.Name = "SuperTabControlPanel8"
+        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(877, 301)
+        Me.SuperTabControlPanel8.TabIndex = 1
+        Me.SuperTabControlPanel8.TabItem = Me.SuperTabItem1
+        '
+        'TableLayoutPanel5
+        '
+        Me.TableLayoutPanel5.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel5.ColumnCount = 2
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel5.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142.0!))
+        Me.TableLayoutPanel5.Controls.Add(Me.Label1, 1, 0)
+        Me.TableLayoutPanel5.Controls.Add(Me.Lbl_PromedioLbl, 0, 0)
+        Me.TableLayoutPanel5.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel5.Location = New System.Drawing.Point(3, 275)
+        Me.TableLayoutPanel5.Name = "TableLayoutPanel5"
+        Me.TableLayoutPanel5.RowCount = 1
+        Me.TableLayoutPanel5.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel5.Size = New System.Drawing.Size(264, 23)
+        Me.TableLayoutPanel5.TabIndex = 21
+        '
+        'Label1
+        '
+        Me.Label1.ForeColor = System.Drawing.Color.Black
+        Me.Label1.Location = New System.Drawing.Point(125, 0)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(76, 23)
+        Me.Label1.TabIndex = 15
+        Me.Label1.Text = "Lbl_Promedio"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'Lbl_PromedioLbl
+        '
+        Me.Lbl_PromedioLbl.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_PromedioLbl.Location = New System.Drawing.Point(3, 0)
+        Me.Lbl_PromedioLbl.Name = "Lbl_PromedioLbl"
+        Me.Lbl_PromedioLbl.Size = New System.Drawing.Size(115, 23)
+        Me.Lbl_PromedioLbl.TabIndex = 14
+        Me.Lbl_PromedioLbl.Text = "Promedio mensual"
+        Me.Lbl_PromedioLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
+        '
+        'SuperTabItem1
+        '
+        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel8
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "Grafica con valores"
+        '
+        'SuperTabControlPanel9
+        '
+        Me.SuperTabControlPanel9.Controls.Add(Me.Grafico_Desviacion_Estandar)
+        Me.SuperTabControlPanel9.Controls.Add(Me.TableLayoutPanel3)
+        Me.SuperTabControlPanel9.Controls.Add(Me.TableLayoutPanel2)
+        Me.SuperTabControlPanel9.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel9.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel9.Name = "SuperTabControlPanel9"
+        Me.SuperTabControlPanel9.Size = New System.Drawing.Size(877, 301)
+        Me.SuperTabControlPanel9.TabIndex = 0
+        Me.SuperTabControlPanel9.TabItem = Me.SuperTabItem2
+        '
+        'TableLayoutPanel3
+        '
+        Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel3.ColumnCount = 2
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 145.0!))
+        Me.TableLayoutPanel3.Controls.Add(Me.LblMedia, 1, 0)
+        Me.TableLayoutPanel3.Controls.Add(Me.label6, 0, 0)
+        Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel3.Location = New System.Drawing.Point(656, 271)
+        Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
+        Me.TableLayoutPanel3.RowCount = 1
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(200, 27)
+        Me.TableLayoutPanel3.TabIndex = 21
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel2.ColumnCount = 2
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.LblDesviacionStandar, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Label7, 0, 0)
+        Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 275)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 1
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(264, 23)
+        Me.TableLayoutPanel2.TabIndex = 20
+        '
+        'SuperTabItem2
+        '
+        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel9
+        Me.SuperTabItem2.GlobalItem = False
+        Me.SuperTabItem2.Name = "SuperTabItem2"
+        Me.SuperTabItem2.Text = "Grafica muestra desviación estandar"
+        '
+        'SuperTabControlPanel12
+        '
+        Me.SuperTabControlPanel12.Controls.Add(Me.GroupPanel5)
+        Me.SuperTabControlPanel12.Controls.Add(Me.GroupPanel4)
+        Me.SuperTabControlPanel12.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel12.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel12.Name = "SuperTabControlPanel12"
+        Me.SuperTabControlPanel12.Size = New System.Drawing.Size(877, 328)
+        Me.SuperTabControlPanel12.TabIndex = 0
+        Me.SuperTabControlPanel12.TabItem = Me.SuperTabItem5
+        '
+        'GroupPanel5
+        '
+        Me.GroupPanel5.BackColor = System.Drawing.Color.White
+        Me.GroupPanel5.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel5.Controls.Add(Me.MchMensuales)
+        Me.GroupPanel5.Controls.Add(Me.Grilla_Mensual)
+        Me.GroupPanel5.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel5.Location = New System.Drawing.Point(3, 3)
+        Me.GroupPanel5.Name = "GroupPanel5"
+        Me.GroupPanel5.Size = New System.Drawing.Size(306, 289)
+        '
+        '
+        '
+        Me.GroupPanel5.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel5.Style.BackColorGradientAngle = 90
+        Me.GroupPanel5.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel5.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel5.Style.BorderBottomWidth = 1
+        Me.GroupPanel5.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel5.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel5.Style.BorderLeftWidth = 1
+        Me.GroupPanel5.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel5.Style.BorderRightWidth = 1
+        Me.GroupPanel5.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel5.Style.BorderTopWidth = 1
+        Me.GroupPanel5.Style.CornerDiameter = 4
+        Me.GroupPanel5.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel5.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel5.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel5.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel5.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel5.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel5.TabIndex = 17
+        Me.GroupPanel5.Text = "Ventas mensuales"
+        '
+        'Grilla_Mensual
+        '
+        Me.Grilla_Mensual.AllowUserToAddRows = False
+        Me.Grilla_Mensual.AllowUserToDeleteRows = False
+        Me.Grilla_Mensual.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Mensual.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.Grilla_Mensual.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Mensual.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Grilla_Mensual.EnableHeadersVisualStyles = False
+        Me.Grilla_Mensual.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Grilla_Mensual.Location = New System.Drawing.Point(3, 60)
+        Me.Grilla_Mensual.Name = "Grilla_Mensual"
+        Me.Grilla_Mensual.ReadOnly = True
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Mensual.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grilla_Mensual.RowHeadersVisible = False
+        Me.Grilla_Mensual.RowTemplate.Height = 25
+        Me.Grilla_Mensual.Size = New System.Drawing.Size(288, 204)
+        Me.Grilla_Mensual.TabIndex = 15
+        '
+        'GroupPanel4
+        '
+        Me.GroupPanel4.BackColor = System.Drawing.Color.White
+        Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.McsSemanales)
+        Me.GroupPanel4.Controls.Add(Me.Grilla_Semanal)
+        Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel4.Location = New System.Drawing.Point(315, 0)
+        Me.GroupPanel4.Name = "GroupPanel4"
+        Me.GroupPanel4.Size = New System.Drawing.Size(248, 292)
+        '
+        '
+        '
+        Me.GroupPanel4.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel4.Style.BackColorGradientAngle = 90
+        Me.GroupPanel4.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel4.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderBottomWidth = 1
+        Me.GroupPanel4.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel4.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderLeftWidth = 1
+        Me.GroupPanel4.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderRightWidth = 1
+        Me.GroupPanel4.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderTopWidth = 1
+        Me.GroupPanel4.Style.CornerDiameter = 4
+        Me.GroupPanel4.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel4.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel4.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel4.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel4.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel4.TabIndex = 16
+        Me.GroupPanel4.Text = "Ventas Semanales"
+        '
+        'Grilla_Semanal
+        '
+        Me.Grilla_Semanal.AllowUserToAddRows = False
+        Me.Grilla_Semanal.AllowUserToDeleteRows = False
+        Me.Grilla_Semanal.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Semanal.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        Me.Grilla_Semanal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Semanal.DefaultCellStyle = DataGridViewCellStyle5
+        Me.Grilla_Semanal.EnableHeadersVisualStyles = False
+        Me.Grilla_Semanal.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Grilla_Semanal.Location = New System.Drawing.Point(3, 63)
+        Me.Grilla_Semanal.Name = "Grilla_Semanal"
+        Me.Grilla_Semanal.ReadOnly = True
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Semanal.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        Me.Grilla_Semanal.RowHeadersVisible = False
+        Me.Grilla_Semanal.RowTemplate.Height = 25
+        Me.Grilla_Semanal.Size = New System.Drawing.Size(236, 203)
+        Me.Grilla_Semanal.TabIndex = 14
+        '
+        'SuperTabItem5
+        '
+        Me.SuperTabItem5.AttachedControl = Me.SuperTabControlPanel12
+        Me.SuperTabItem5.GlobalItem = False
+        Me.SuperTabItem5.Name = "SuperTabItem5"
+        Me.SuperTabItem5.Text = "Ventas Semanales"
+        '
+        'SuperTabControlPanel11
+        '
+        Me.SuperTabControlPanel11.Controls.Add(Me.TableLayoutPanel4)
+        Me.SuperTabControlPanel11.Controls.Add(Me.Grafico_Mov_Stock)
+        Me.SuperTabControlPanel11.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel11.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel11.Name = "SuperTabControlPanel11"
+        Me.SuperTabControlPanel11.Size = New System.Drawing.Size(877, 301)
+        Me.SuperTabControlPanel11.TabIndex = 0
+        Me.SuperTabControlPanel11.TabItem = Me.SuperTabItem4
+        '
+        'TableLayoutPanel4
+        '
+        Me.TableLayoutPanel4.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel4.ColumnCount = 3
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.28571!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.71429!))
+        Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180.0!))
+        Me.TableLayoutPanel4.Controls.Add(Me.LabelX16, 0, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Stock_Minimo, 2, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Stock_Salidas, 2, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.Input_Stock_Minimo, 1, 0)
+        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Stock_Ingresos, 1, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.Chk_Stock_Movimiento, 0, 1)
+        Me.TableLayoutPanel4.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel4.Location = New System.Drawing.Point(3, 241)
+        Me.TableLayoutPanel4.Name = "TableLayoutPanel4"
+        Me.TableLayoutPanel4.RowCount = 2
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel4.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel4.Size = New System.Drawing.Size(324, 50)
+        Me.TableLayoutPanel4.TabIndex = 37
+        '
+        'SuperTabItem4
+        '
+        Me.SuperTabItem4.AttachedControl = Me.SuperTabControlPanel11
+        Me.SuperTabItem4.GlobalItem = False
+        Me.SuperTabItem4.Name = "SuperTabItem4"
+        Me.SuperTabItem4.Text = "Grafico tiempo de reposición"
+        '
+        'SuperTabControlPanel10
+        '
+        Me.SuperTabControlPanel10.Controls.Add(Me.Grafico_Tendencias)
+        Me.SuperTabControlPanel10.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel10.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel10.Name = "SuperTabControlPanel10"
+        Me.SuperTabControlPanel10.Size = New System.Drawing.Size(877, 301)
+        Me.SuperTabControlPanel10.TabIndex = 0
+        Me.SuperTabControlPanel10.TabItem = Me.SuperTabItem3
+        '
+        'SuperTabItem3
+        '
+        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel10
+        Me.SuperTabItem3.GlobalItem = False
+        Me.SuperTabItem3.Name = "SuperTabItem3"
+        Me.SuperTabItem3.Text = "Tendencias (proyección)"
+        '
+        'Btn_Guardar_Vista
+        '
+        Me.Btn_Guardar_Vista.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Guardar_Vista.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Guardar_Vista.Image = CType(resources.GetObject("Btn_Guardar_Vista.Image"), System.Drawing.Image)
+        Me.Btn_Guardar_Vista.ImageAlt = CType(resources.GetObject("Btn_Guardar_Vista.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Guardar_Vista.Location = New System.Drawing.Point(788, 418)
+        Me.Btn_Guardar_Vista.Name = "Btn_Guardar_Vista"
+        Me.Btn_Guardar_Vista.Size = New System.Drawing.Size(95, 24)
+        Me.Btn_Guardar_Vista.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Guardar_Vista.TabIndex = 38
+        Me.Btn_Guardar_Vista.Text = "Guardar vista"
+        Me.Btn_Guardar_Vista.Tooltip = "Guardar esta vista"
+        '
+        'Tab_04_Grafica_Ventas_Inventario
+        '
+        Me.Tab_04_Grafica_Ventas_Inventario.AttachedControl = Me.SuperTabControlPanel4
+        Me.Tab_04_Grafica_Ventas_Inventario.GlobalItem = False
+        Me.Tab_04_Grafica_Ventas_Inventario.Name = "Tab_04_Grafica_Ventas_Inventario"
+        Me.Tab_04_Grafica_Ventas_Inventario.Text = "Grafica de ventas/Inventario"
+        '
+        'SuperTabControlPanel3
+        '
+        Me.SuperTabControlPanel3.Controls.Add(Me.Grilla_Entidad)
+        Me.SuperTabControlPanel3.Controls.Add(Me.Lbl_Nombre_Entidad_Documento)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 25)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(889, 448)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.Tab_03_VtaCom_Entidad
+        '
+        'Grilla_Entidad
+        '
+        Me.Grilla_Entidad.AllowUserToAddRows = False
+        Me.Grilla_Entidad.AllowUserToDeleteRows = False
+        Me.Grilla_Entidad.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Entidad.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        Me.Grilla_Entidad.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Entidad.DefaultCellStyle = DataGridViewCellStyle8
+        Me.Grilla_Entidad.EnableHeadersVisualStyles = False
+        Me.Grilla_Entidad.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Grilla_Entidad.Location = New System.Drawing.Point(3, 3)
+        Me.Grilla_Entidad.Name = "Grilla_Entidad"
+        Me.Grilla_Entidad.ReadOnly = True
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Entidad.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        Me.Grilla_Entidad.RowHeadersVisible = False
+        Me.Grilla_Entidad.RowTemplate.Height = 25
+        Me.Grilla_Entidad.Size = New System.Drawing.Size(883, 413)
+        Me.Grilla_Entidad.TabIndex = 9
+        '
+        'Tab_03_VtaCom_Entidad
+        '
+        Me.Tab_03_VtaCom_Entidad.AttachedControl = Me.SuperTabControlPanel3
+        Me.Tab_03_VtaCom_Entidad.GlobalItem = False
+        Me.Tab_03_VtaCom_Entidad.Name = "Tab_03_VtaCom_Entidad"
+        Me.Tab_03_VtaCom_Entidad.Text = "SuperTabItem3"
+        '
+        'SuperTabControlPanel2
+        '
+        Me.SuperTabControlPanel2.Controls.Add(Me.Btn_Ver_Info_Ult_VentasTodos)
+        Me.SuperTabControlPanel2.Controls.Add(Me.GrillaVentas)
+        Me.SuperTabControlPanel2.Controls.Add(Me.LblEntFisicaVentas)
+        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 25)
+        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(889, 448)
+        Me.SuperTabControlPanel2.TabIndex = 0
+        Me.SuperTabControlPanel2.TabItem = Me.Tab_02_Ultimas_Ventas
+        '
+        'Btn_Ver_Info_Ult_VentasTodos
+        '
+        Me.Btn_Ver_Info_Ult_VentasTodos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Ver_Info_Ult_VentasTodos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Ver_Info_Ult_VentasTodos.Location = New System.Drawing.Point(722, 419)
+        Me.Btn_Ver_Info_Ult_VentasTodos.Name = "Btn_Ver_Info_Ult_VentasTodos"
+        Me.Btn_Ver_Info_Ult_VentasTodos.Size = New System.Drawing.Size(164, 23)
+        Me.Btn_Ver_Info_Ult_VentasTodos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Ver_Info_Ult_VentasTodos.TabIndex = 9
+        Me.Btn_Ver_Info_Ult_VentasTodos.Text = "Ver información"
+        Me.Btn_Ver_Info_Ult_VentasTodos.Tooltip = "Muestra las ventas de todos los vendedores, no solo las del vendedor activo"
+        '
+        'GrillaVentas
+        '
+        Me.GrillaVentas.AllowUserToAddRows = False
+        Me.GrillaVentas.AllowUserToDeleteRows = False
+        Me.GrillaVentas.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaVentas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
+        Me.GrillaVentas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GrillaVentas.DefaultCellStyle = DataGridViewCellStyle11
+        Me.GrillaVentas.EnableHeadersVisualStyles = False
+        Me.GrillaVentas.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.GrillaVentas.Location = New System.Drawing.Point(3, 3)
+        Me.GrillaVentas.Name = "GrillaVentas"
+        Me.GrillaVentas.ReadOnly = True
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaVentas.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        Me.GrillaVentas.RowHeadersVisible = False
+        Me.GrillaVentas.RowTemplate.Height = 25
+        Me.GrillaVentas.Size = New System.Drawing.Size(883, 410)
+        Me.GrillaVentas.TabIndex = 8
+        '
+        'Tab_02_Ultimas_Ventas
+        '
+        Me.Tab_02_Ultimas_Ventas.AttachedControl = Me.SuperTabControlPanel2
+        Me.Tab_02_Ultimas_Ventas.GlobalItem = False
+        Me.Tab_02_Ultimas_Ventas.Name = "Tab_02_Ultimas_Ventas"
+        Me.Tab_02_Ultimas_Ventas.Text = "Ultimas Ventas"
         '
         'SuperTabControlPanel7
         '
@@ -2857,6 +2857,9 @@ Partial Class Frm_EstadisticaProducto
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Tabs, System.ComponentModel.ISupportInitialize).EndInit()
         Me.Tabs.ResumeLayout(False)
+        Me.SuperTabControlPanel1.ResumeLayout(False)
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GrillaCompras, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel4.ResumeLayout(False)
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
@@ -2877,9 +2880,6 @@ Partial Class Frm_EstadisticaProducto
         CType(Me.Grilla_Entidad, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel2.ResumeLayout(False)
         CType(Me.GrillaVentas, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.SuperTabControlPanel1.ResumeLayout(False)
-        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GrillaCompras, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel7.ResumeLayout(False)
         Me.GroupPanel3.ResumeLayout(False)
         Me.SuperTabControlPanel6.ResumeLayout(False)
