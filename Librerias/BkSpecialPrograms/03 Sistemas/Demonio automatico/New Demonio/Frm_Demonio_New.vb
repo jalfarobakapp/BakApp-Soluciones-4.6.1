@@ -1188,46 +1188,67 @@ Public Class Frm_Demonio_New
 
             If _Cl_Correos.Ejecutar Then
 
-                Sb_ActualizarDetalleListview("Envio de correos", "A la espera de procesar los envíos...")
+                Try
 
-                If Not _Cl_Correos.Procesando Then
+                    Sb_ActualizarDetalleListview("Envio de correos", "A la espera de procesar los envíos...")
 
-                    If _Global_Row_Configuracion_General.Item("UsarVencListaPrecios") Then
+                    If Not _Cl_Correos.Procesando Then
 
-                        If _Cl_Correos.ActualizarListaMayoristaMinorista Then
+                        If _Global_Row_Configuracion_General.Item("UsarVencListaPrecios") Then
 
-                            Dim _Cl_ListaMayoristaMinorista As New Cl_ListaMayoristaMinorista
-                            _Cl_ListaMayoristaMinorista.Sb_LlenarCorreosNuevosMayoristas(_Cl_Correos.CorreoMayoristaMinorista, DtpFecharevision.Value)
+                            If _Cl_Correos.ActualizarListaMayoristaMinorista Then
+
+                                Dim _Cl_ListaMayoristaMinorista As New Cl_ListaMayoristaMinorista
+                                _Cl_ListaMayoristaMinorista.Sb_LlenarCorreosNuevosMayoristas(_Cl_Correos.CorreoMayoristaMinorista, DtpFecharevision.Value)
+
+                            End If
 
                         End If
 
-                    End If
+                        _Cl_Correos.Procesando = True
+                        _Cl_Correos.Fecha_Revision = DtpFecharevision.Value
+                        _Cl_Correos.Nombre_Equipo = _NombreEquipo
+                        _Cl_Correos.Sb_Procedimiento_Correos()
 
-                    _Cl_Correos.Procesando = True
-                    _Cl_Correos.Fecha_Revision = DtpFecharevision.Value
-                    _Cl_Correos.Nombre_Equipo = _NombreEquipo
-                    _Cl_Correos.Sb_Procedimiento_Correos()
+                        Dim registro As String
 
-                    Dim registro As String
+                        If Not String.IsNullOrEmpty(_Cl_Correos.Lbl_Estado) Then
 
-                    If Not String.IsNullOrEmpty(_Cl_Correos.Lbl_Estado) Then
+                            registro = _Cl_Correos.Lbl_Estado
+                            RegistrarLog(registro)
 
-                        registro = _Cl_Correos.Lbl_Estado
+                        End If
+
+                        registro = "Tarea ejecutada (Correo) a las: " & DateTime.Now.ToString()
+
                         RegistrarLog(registro)
+                        MostrarRegistro(registro)
+
+                        _Cl_Correos.Ejecutar = False
+                        _Cl_Correos.Procesando = False
+
+                        Sb_ActualizarDetalleListview("Envio de correos", _DProgramaciones.Sp_EnvioCorreo.Resumen)
 
                     End If
 
-                    registro = "Tarea ejecutada (Correo) a las: " & DateTime.Now.ToString()
-
-                    RegistrarLog(registro)
-                    MostrarRegistro(registro)
-
-                    _Cl_Correos.Ejecutar = False
+                Catch ex As Exception
                     _Cl_Correos.Procesando = False
-
-                    Sb_ActualizarDetalleListview("Envio de correos", _DProgramaciones.Sp_EnvioCorreo.Resumen)
-
-                End If
+                    Dim mensaje As String = "Error en ENVIO DE CORREOS: " & ex.Message
+                    ' Intentar registrar con los métodos existentes
+                    Try
+                        RegistrarLog(mensaje)
+                        MostrarRegistro(mensaje)
+                    Catch
+                        ' Fallback: escribir directamente en el archivo de log por si RegistrarLog no pudo (p. ej. ventana minimizada)
+                        Try
+                            If Not String.IsNullOrWhiteSpace(logFilePath) Then
+                                System.IO.File.AppendAllText(logFilePath, mensaje & Environment.NewLine)
+                            End If
+                        Catch
+                            ' No hacer nada si esto también falla
+                        End Try
+                    End Try
+                End Try
 
             End If
 

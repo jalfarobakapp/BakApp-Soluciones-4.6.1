@@ -28,7 +28,6 @@ Partial Class Frm_CruceAntiNoVinculados
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Imagenes_20x20 = New System.Windows.Forms.ImageList(Me.components)
-        Me.Btn_SugerirFCVBLVRefAuto = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Lbl_Referencia = New DevComponents.DotNetBar.LabelX()
@@ -45,7 +44,6 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Lbl_Status = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_MacthDocumentos = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_Seleccionar_Todo = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_Limpiar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
@@ -63,6 +61,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Grilla_Maedpce = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar_Autorizacion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Importar_Pagos = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel3.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
@@ -88,16 +87,6 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Imagenes_20x20.Images.SetKeyName(9, "delete.png")
         Me.Imagenes_20x20.Images.SetKeyName(10, "delete_button_error.png")
         Me.Imagenes_20x20.Images.SetKeyName(11, "bank-error.png")
-        '
-        'Btn_SugerirFCVBLVRefAuto
-        '
-        Me.Btn_SugerirFCVBLVRefAuto.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_SugerirFCVBLVRefAuto.ForeColor = System.Drawing.Color.Black
-        Me.Btn_SugerirFCVBLVRefAuto.Image = CType(resources.GetObject("Btn_SugerirFCVBLVRefAuto.Image"), System.Drawing.Image)
-        Me.Btn_SugerirFCVBLVRefAuto.ImageAlt = CType(resources.GetObject("Btn_SugerirFCVBLVRefAuto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_SugerirFCVBLVRefAuto.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_SugerirFCVBLVRefAuto.Name = "Btn_SugerirFCVBLVRefAuto"
-        Me.Btn_SugerirFCVBLVRefAuto.Tooltip = "Sugerir documentos ('FCV','BLV') cruce de pago automático en forma masiva"
         '
         'GroupPanel3
         '
@@ -352,20 +341,10 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Chk_Seleccionar_Todo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Seleccionar_Todo.Location = New System.Drawing.Point(12, 366)
         Me.Chk_Seleccionar_Todo.Name = "Chk_Seleccionar_Todo"
-        Me.Chk_Seleccionar_Todo.Size = New System.Drawing.Size(139, 23)
+        Me.Chk_Seleccionar_Todo.Size = New System.Drawing.Size(116, 23)
         Me.Chk_Seleccionar_Todo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Seleccionar_Todo.TabIndex = 84
         Me.Chk_Seleccionar_Todo.Text = "Seleccionar todo"
-        '
-        'Btn_Limpiar
-        '
-        Me.Btn_Limpiar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Limpiar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Limpiar.Image = CType(resources.GetObject("Btn_Limpiar.Image"), System.Drawing.Image)
-        Me.Btn_Limpiar.ImageAlt = CType(resources.GetObject("Btn_Limpiar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Limpiar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_Limpiar.Name = "Btn_Limpiar"
-        Me.Btn_Limpiar.Tooltip = "Nuevo, limpiar documento"
         '
         'GroupPanel1
         '
@@ -554,7 +533,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Autorizacion, Me.Btn_Importar_Pagos, Me.Btn_Limpiar, Me.Btn_MacthDocumentos, Me.Btn_SugerirFCVBLVRefAuto})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Autorizacion, Me.Btn_Actualizar, Me.Btn_MacthDocumentos, Me.Btn_Importar_Pagos})
         Me.Bar1.Location = New System.Drawing.Point(0, 523)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(1158, 41)
@@ -572,6 +551,16 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Btn_Grabar_Autorizacion.ImageAlt = CType(resources.GetObject("Btn_Grabar_Autorizacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Grabar_Autorizacion.Name = "Btn_Grabar_Autorizacion"
         Me.Btn_Grabar_Autorizacion.Tooltip = "Grabar pagos"
+        '
+        'Btn_Actualizar
+        '
+        Me.Btn_Actualizar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Actualizar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Actualizar.Image = CType(resources.GetObject("Btn_Actualizar.Image"), System.Drawing.Image)
+        Me.Btn_Actualizar.ImageAlt = CType(resources.GetObject("Btn_Actualizar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Actualizar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Actualizar.Name = "Btn_Actualizar"
+        Me.Btn_Actualizar.Tooltip = "Refrescar datos"
         '
         'Btn_Importar_Pagos
         '
@@ -609,7 +598,6 @@ Partial Class Frm_CruceAntiNoVinculados
     End Sub
 
     Friend WithEvents Imagenes_20x20 As ImageList
-    Public WithEvents Btn_SugerirFCVBLVRefAuto As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
     Friend WithEvents Lbl_Referencia As DevComponents.DotNetBar.LabelX
@@ -626,7 +614,6 @@ Partial Class Frm_CruceAntiNoVinculados
     Friend WithEvents Lbl_Status As DevComponents.DotNetBar.LabelItem
     Public WithEvents Btn_MacthDocumentos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_Seleccionar_Todo As DevComponents.DotNetBar.Controls.CheckBoxX
-    Public WithEvents Btn_Limpiar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
@@ -645,4 +632,5 @@ Partial Class Frm_CruceAntiNoVinculados
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_Grabar_Autorizacion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Importar_Pagos As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -555,6 +555,148 @@ Error_Numero:
 
     End Function
 
+    ' PSEUDOCÓDIGO (plan detallado):
+    ' 1. Crear una sobrecarga de la función Generar_Filtro_IN_Lista que reciba un ProgressBar opcional.
+    ' 2. Calcular el total de elementos en _Lista para asignarlo a progressBar.Maximum (si progressBar no es Nothing).
+    ' 3. Inicializar progressBar.Minimum = 0 y progressBar.Value = 0 de forma segura (Invoke si es necesario).
+    ' 4. Recorrer _Lista con For Each, conservar la lógica original para formar la cadena (mismos reemplazos y reglas).
+    ' 5. En cada iteración incrementar un contador de progreso e intentar actualizar progressBar.Value de forma segura.
+    ' 6. Al finalizar, fijar progressBar.Value = progressBar.Maximum (o 0 si lista vacía) y devolver la cadena formateada.
+    ' 7. Manejar gracefully progressBar = Nothing y cualquier excepción de invocación sin interrumpir la construcción del filtro.
+    '
+    ' NOTA: El cuerpo mantiene idéntica la lógica de generación del filtro de la función original para asegurar compatibilidad.
+
+    Public Function Generar_Filtro_IN_Lista(_Lista As Object,
+                                       _EsNumero As Boolean,
+                                       _Separador As String,
+                                       Optional progressBar As Object = Nothing) As String
+
+        Dim Cadena As String = String.Empty
+        Dim Vcampo As String = String.Empty
+        Dim Separador As String = ""
+
+        If _EsNumero Then
+            Separador = "#"
+        Else
+            Separador = "@"
+        End If
+
+        If (_Lista Is Nothing) Then
+            ' Aseguramos que la barra de progreso quede en cero si existe
+            If progressBar IsNot Nothing Then
+                Try
+                    progressBar.Invoke(Sub()
+                                           progressBar.Minimum = 0
+                                           progressBar.Maximum = 0
+                                           progressBar.Value = 0
+                                       End Sub)
+                Catch ex As Exception
+                End Try
+            End If
+            Return "()"
+        End If
+
+        ' Determinar cantidad total de elementos de _Lista (compatible con ICollection o enumerable genérico)
+        Dim total As Integer = 0
+        Dim col As System.Collections.ICollection = TryCast(_Lista, System.Collections.ICollection)
+        If col IsNot Nothing Then
+            total = col.Count
+        Else
+            Try
+                For Each _elem In _Lista
+                    total += 1
+                Next
+            Catch ex As Exception
+                total = 0
+            End Try
+        End If
+
+        ' Inicializar progressBar de forma segura
+        If progressBar IsNot Nothing Then
+            Try
+                progressBar.Invoke(Sub()
+                                       progressBar.Minimum = 0
+                                       progressBar.Maximum = If(total > 0, total, 1)
+                                       progressBar.Value = 0
+                                   End Sub)
+            Catch ex As Exception
+            End Try
+        End If
+
+        Dim i As Integer = 0
+        Dim progreso As Integer = 0
+
+        For Each _Fila In _Lista
+
+            Try
+                Vcampo = _Fila.Codigo
+            Catch ex As Exception
+                Vcampo = _Fila
+            End Try
+
+            If String.IsNullOrEmpty(Vcampo) Then
+                Vcampo = "%%"
+            End If
+
+            Dim _Encadenar As Boolean = False
+
+            If Not String.IsNullOrEmpty(Trim(Vcampo)) Then _Encadenar = True
+
+            If Vcampo.Contains(Separador) Then
+                Vcampo = Replace(Vcampo, Separador, "|")
+            End If
+
+            If _Encadenar Then
+                Cadena = Cadena & Separador & Vcampo & Separador '& Coma
+            End If
+
+            i += 1
+
+            ' Actualizar barra de progreso de forma segura
+            If progressBar IsNot Nothing Then
+                progreso = i
+                Try
+                    progressBar.Invoke(Sub()
+                                           If progreso <= progressBar.Maximum Then
+                                               progressBar.Value = progreso
+                                           Else
+                                               progressBar.Value = progressBar.Maximum
+                                           End If
+                                       End Sub)
+                Catch ex As Exception
+                End Try
+            End If
+
+        Next
+
+        If _EsNumero Then
+            Cadena = Replace(Cadena, "##", ",")
+            Cadena = Replace(Cadena, "#", "")
+        Else
+            Cadena = Replace(Cadena, "@@", "@,@")
+            Cadena = Replace(Cadena, "@", _Separador)
+            Cadena = Replace(Cadena, "%%", "")
+        End If
+
+        Cadena = Replace(Cadena, "|", Separador)
+
+        Cadena = "(" & Cadena & ")"
+
+        ' Dejar la barra de progreso en máximo al terminar
+        If progressBar IsNot Nothing Then
+            Try
+                progressBar.Invoke(Sub()
+                                       progressBar.Value = progressBar.Maximum
+                                   End Sub)
+            Catch ex As Exception
+            End Try
+        End If
+
+        Return Cadena
+
+    End Function
+
+
     Function Generar_Filtro_IN_Lista2(_Lista As List(Of String),
                                      _EsNumero As Boolean,
                                      _Separador As String)

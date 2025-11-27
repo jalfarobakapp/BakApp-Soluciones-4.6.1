@@ -39,12 +39,17 @@
 
     Dim _Ver_Codigo As Boolean = True
 
+    ' Nueva lista con Codigo y Descripcion
+    Dim _ListaCodigoDescripcion As List(Of CodigoDescripcionItem)
+
     Public Property Pro_Tbl_Filtro() As DataTable
         Get
             Return _Tbl_Filtro
         End Get
         Set(value As DataTable)
             _Tbl_Filtro = value
+            ' Invalidate cached list when source table changes
+            _ListaCodigoDescripcion = Nothing
         End Set
     End Property
     Public Property Pro_Filtro_Todas() As Boolean
@@ -112,6 +117,83 @@
         _Nombre_Encabezado_Informe = "FILTRO INFORME"
     End Sub
 
+    ' Propiedad pública que expone la lista Codigo/Descripcion
+    Public Property Pro_Lista_CodigoDescripcion As List(Of CodigoDescripcionItem)
+        Get
+            If _ListaCodigoDescripcion Is Nothing Then
+                _ListaCodigoDescripcion = Fx_Llenar_Lista_CodigoDescripcion()
+            End If
+            Return _ListaCodigoDescripcion
+        End Get
+        Set(value As List(Of CodigoDescripcionItem))
+            _ListaCodigoDescripcion = value
+        End Set
+    End Property
+
+    ' Función que rellena la lista a partir de _Tbl_Filtro
+    Public Function Fx_Llenar_Lista_CodigoDescripcion(Optional CodigoFieldName As String = "Codigo", Optional DescripcionFieldName As String = "Descripcion") As List(Of CodigoDescripcionItem)
+        Dim lista As New List(Of CodigoDescripcionItem)
+
+        If _Tbl_Filtro Is Nothing Then
+            Return lista
+        End If
+
+        ' Determinar nombres de columna a usar
+        Dim colCodigo As String = Nothing
+        Dim colDescripcion As String = Nothing
+
+        If _Tbl_Filtro.Columns.Contains(CodigoFieldName) Then
+            colCodigo = CodigoFieldName
+        End If
+
+        If _Tbl_Filtro.Columns.Contains(DescripcionFieldName) Then
+            colDescripcion = DescripcionFieldName
+        End If
+
+        ' Si no existen las columnas solicitadas, usar columnas por posición
+        If String.IsNullOrEmpty(colCodigo) Then
+            If _Tbl_Filtro.Columns.Count >= 1 Then
+                colCodigo = _Tbl_Filtro.Columns(0).ColumnName
+            End If
+        End If
+
+        If String.IsNullOrEmpty(colDescripcion) Then
+            If _Tbl_Filtro.Columns.Count >= 2 Then
+                colDescripcion = _Tbl_Filtro.Columns(1).ColumnName
+            ElseIf _Tbl_Filtro.Columns.Count >= 1 Then
+                ' Si sólo hay una columna, usarla también para descripción
+                colDescripcion = _Tbl_Filtro.Columns(0).ColumnName
+            End If
+        End If
+
+        ' Si aún no se resolvieron columnas, devolver lista vacía
+        If String.IsNullOrEmpty(colCodigo) Or String.IsNullOrEmpty(colDescripcion) Then
+            Return lista
+        End If
+
+        ' Recorrer filas y agregar a la lista
+        For Each row As DataRow In _Tbl_Filtro.Rows
+            Dim valCodigo As String = String.Empty
+            Dim valDescripcion As String = String.Empty
+
+            If _Tbl_Filtro.Columns.Contains(colCodigo) Then
+                If Not IsDBNull(row(colCodigo)) Then
+                    valCodigo = Convert.ToString(row(colCodigo))
+                End If
+            End If
+
+            If _Tbl_Filtro.Columns.Contains(colDescripcion) Then
+                If Not IsDBNull(row(colDescripcion)) Then
+                    valDescripcion = Convert.ToString(row(colDescripcion))
+                End If
+            End If
+
+            lista.Add(New CodigoDescripcionItem With {.Codigo = valCodigo, .Descripcion = valDescripcion})
+        Next
+
+        Return lista
+    End Function
+
     Function Fx_Filtrar(Tbl_Filtro As DataTable,
                    Tabla_Fl As Enum_Tabla_Fl,
                    Sql_Filtro_Condicion_Extra As String,
@@ -171,4 +253,10 @@
 
     End Function
 
+End Class
+
+' Clase simple para almacenar pares Codigo/Descripcion
+Public Class CodigoDescripcionItem
+    Public Property Codigo As String
+    Public Property Descripcion As String
 End Class

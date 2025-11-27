@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_CruceAntiNoVinculados_Filtro
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_CruceAntiNoVinculados_Filtro))
         Me.Dtp_FechaHasta = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
@@ -35,6 +35,12 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
         Me.Rdb_Entidades_Algunas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Entidades_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Chk_SoloClienteConDocPendientesPago = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SinCruceAutomatico = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SoloPagosPesos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.MetroStatusBar1 = New DevComponents.DotNetBar.Metro.MetroStatusBar()
+        Me.Barra_Progreso = New DevComponents.DotNetBar.ProgressBarItem()
+        Me.Lbl_Status = New DevComponents.DotNetBar.LabelItem()
         CType(Me.Dtp_FechaHasta, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaDesde, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -224,7 +230,7 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Procesar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 114)
+        Me.Bar1.Location = New System.Drawing.Point(0, 167)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(629, 41)
         Me.Bar1.Stretch = True
@@ -348,22 +354,116 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
         Me.GroupPanel2.TabIndex = 202
         Me.GroupPanel2.Text = "Criterio de selección"
         '
+        'Chk_SoloClienteConDocPendientesPago
+        '
+        Me.Chk_SoloClienteConDocPendientesPago.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SoloClienteConDocPendientesPago.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SoloClienteConDocPendientesPago.CheckBoxImageChecked = CType(resources.GetObject("Chk_SoloClienteConDocPendientesPago.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SoloClienteConDocPendientesPago.FocusCuesEnabled = False
+        Me.Chk_SoloClienteConDocPendientesPago.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SoloClienteConDocPendientesPago.Location = New System.Drawing.Point(12, 96)
+        Me.Chk_SoloClienteConDocPendientesPago.Name = "Chk_SoloClienteConDocPendientesPago"
+        Me.Chk_SoloClienteConDocPendientesPago.Size = New System.Drawing.Size(424, 23)
+        Me.Chk_SoloClienteConDocPendientesPago.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SoloClienteConDocPendientesPago.TabIndex = 203
+        Me.Chk_SoloClienteConDocPendientesPago.Text = "Mostrar solo registros de clientes con documentos pendientes (facturas/boletas)"
+        '
+        'Chk_SinCruceAutomatico
+        '
+        Me.Chk_SinCruceAutomatico.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SinCruceAutomatico.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SinCruceAutomatico.CheckBoxImageChecked = CType(resources.GetObject("Chk_SinCruceAutomatico.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SinCruceAutomatico.FocusCuesEnabled = False
+        Me.Chk_SinCruceAutomatico.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SinCruceAutomatico.Location = New System.Drawing.Point(12, 119)
+        Me.Chk_SinCruceAutomatico.Name = "Chk_SinCruceAutomatico"
+        Me.Chk_SinCruceAutomatico.Size = New System.Drawing.Size(464, 23)
+        Me.Chk_SinCruceAutomatico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SinCruceAutomatico.TabIndex = 204
+        Me.Chk_SinCruceAutomatico.Text = "Excluir pagos vinculados a documentos en cruce automático"
+        '
+        'Chk_SoloPagosPesos
+        '
+        Me.Chk_SoloPagosPesos.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SoloPagosPesos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SoloPagosPesos.CheckBoxImageChecked = CType(resources.GetObject("Chk_SoloPagosPesos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SoloPagosPesos.FocusCuesEnabled = False
+        Me.Chk_SoloPagosPesos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SoloPagosPesos.Location = New System.Drawing.Point(12, 144)
+        Me.Chk_SoloPagosPesos.Name = "Chk_SoloPagosPesos"
+        Me.Chk_SoloPagosPesos.Size = New System.Drawing.Size(464, 18)
+        Me.Chk_SoloPagosPesos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SoloPagosPesos.TabIndex = 205
+        Me.Chk_SoloPagosPesos.Text = "Solo pagos en $ pesos"
+        '
+        'MetroStatusBar1
+        '
+        Me.MetroStatusBar1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.MetroStatusBar1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.MetroStatusBar1.ContainerControlProcessDialogKey = True
+        Me.MetroStatusBar1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.MetroStatusBar1.DragDropSupport = True
+        Me.MetroStatusBar1.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MetroStatusBar1.ForeColor = System.Drawing.Color.Black
+        Me.MetroStatusBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Barra_Progreso, Me.Lbl_Status})
+        Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 208)
+        Me.MetroStatusBar1.Name = "MetroStatusBar1"
+        Me.MetroStatusBar1.Size = New System.Drawing.Size(629, 22)
+        Me.MetroStatusBar1.TabIndex = 206
+        Me.MetroStatusBar1.Text = "MetroStatusBar1"
+        '
+        'Barra_Progreso
+        '
+        '
+        '
+        '
+        Me.Barra_Progreso.BackStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Barra_Progreso.ChunkGradientAngle = 0!
+        Me.Barra_Progreso.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways
+        Me.Barra_Progreso.Name = "Barra_Progreso"
+        Me.Barra_Progreso.RecentlyUsed = False
+        Me.Barra_Progreso.Visible = False
+        '
+        'Lbl_Status
+        '
+        Me.Lbl_Status.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.Lbl_Status.Name = "Lbl_Status"
+        Me.Lbl_Status.Text = "Status..."
+        '
         'Frm_CruceAntiNoVinculados_Filtro
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(629, 155)
+        Me.ClientSize = New System.Drawing.Size(629, 230)
+        Me.Controls.Add(Me.Chk_SoloPagosPesos)
+        Me.Controls.Add(Me.Chk_SinCruceAutomatico)
+        Me.Controls.Add(Me.Chk_SoloClienteConDocPendientesPago)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel1)
+        Me.Controls.Add(Me.MetroStatusBar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_CruceAntiNoVinculados_Filtro"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "Informe de situación de anticipos de clientes "
         CType(Me.Dtp_FechaHasta, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_FechaDesde, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
@@ -386,4 +486,10 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
     Friend WithEvents Rdb_Entidades_Algunas As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_Entidades_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Chk_SoloClienteConDocPendientesPago As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SinCruceAutomatico As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SoloPagosPesos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents MetroStatusBar1 As DevComponents.DotNetBar.Metro.MetroStatusBar
+    Friend WithEvents Barra_Progreso As DevComponents.DotNetBar.ProgressBarItem
+    Friend WithEvents Lbl_Status As DevComponents.DotNetBar.LabelItem
 End Class

@@ -2927,11 +2927,11 @@ Public Module Modulo_Precios_Costos
                                 _Funcionario_Autoriza As String,
                                 Optional _PermisoRemoto As Boolean = False,
                                 Optional _Id_Rem As Integer = 0,
-                                Optional _NroRemota As String = "") As Integer
+                                Optional _NroRemota As String = "",
+                                Optional _Tido As String = "",
+                                Optional _Nudo As String = "") As Integer
 
         Dim _Id As Integer
-        Dim _Tido As String
-        Dim _Nudo As String
 
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
