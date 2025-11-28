@@ -66,7 +66,15 @@ Public Class Frm_Notificaciones
         If Environment.GetCommandLineArgs.Length > 1 Then
             Cadena_ConexionSQL_Server = Environment.GetCommandLineArgs(1)
             'MessageBoxEx.Show(Me, Cadena_ConexionSQL_Server, "Cadena", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Cadena_ConexionSQL_Server = Replace(Cadena_ConexionSQL_Server, "@", " ")
+
+            'data@source@=@MARYTIERRA_PRB;@initial@catalog@=@MARYTIERRA;@user@id@=@MARYTIERRA_BKP;@password@=M@ryTi3rr@2025
+
+            'Cadena_ConexionSQL_Server = Replace(Cadena_ConexionSQL_Server, "data@source@=@", "data source = ")
+            'Cadena_ConexionSQL_Server = Replace(Cadena_ConexionSQL_Server, "@initial@catalog@=@", " initial catalog = ")
+            'Cadena_ConexionSQL_Server = Replace(Cadena_ConexionSQL_Server, "@user@id@=@", " user id = ")
+            'Cadena_ConexionSQL_Server = Replace(Cadena_ConexionSQL_Server, "@password@=", "password = ")
+
+            Cadena_ConexionSQL_Server = Replace(Cadena_ConexionSQL_Server, "@@", " ")
             'MessageBoxEx.Show(Me, Cadena_ConexionSQL_Server, "Cadena", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             _Ejecutar_Notificaciones = True

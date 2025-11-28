@@ -1534,6 +1534,7 @@ Public Module Funciones_Especiales_BakApp
                 Cadena = Replace(Cadena, "#BD#", BD)
                 Cadena = Replace(Cadena, "#US#", US)
                 Cadena = Replace(Cadena, "#PW#", PW)
+                Exit For
             End If
 
         Next

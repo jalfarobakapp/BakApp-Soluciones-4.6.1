@@ -545,7 +545,7 @@ Public Class Frm_Crear_Entidad_Mt
                 Txt_Suen.SelectAll()
                 Txt_Koen.Focus()
 
-                Exit Sub
+                Return
 
             End If
 
@@ -596,6 +596,13 @@ Public Class Frm_Crear_Entidad_Mt
 
             If String.IsNullOrEmpty(Cl_Maeen_Edit.PAEN.Trim) Or String.IsNullOrEmpty(Cl_Maeen_Edit.CIEN.Trim) Or String.IsNullOrEmpty(Cl_Maeen_Edit.CMEN.Trim) Then Return
 
+        End If
+
+        If Not VerificaDigito(Txt_Rten.Text) Then
+            MessageBoxEx.Show(Me, "Rut invalido", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Rten.SelectAll()
+            Txt_Rten.Focus()
+            Return
         End If
 
         If Not String.IsNullOrEmpty(Txt_Email.Text) Then

@@ -42,7 +42,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.MetroStatusBar1 = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Barra_Progreso = New DevComponents.DotNetBar.ProgressBarItem()
         Me.Lbl_Status = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_MacthDocumentos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_MatchDocumentos = New DevComponents.DotNetBar.ButtonItem()
         Me.Chk_Seleccionar_Todo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
@@ -319,15 +319,15 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Lbl_Status.Name = "Lbl_Status"
         Me.Lbl_Status.Text = "Status..."
         '
-        'Btn_MacthDocumentos
+        'Btn_MatchDocumentos
         '
-        Me.Btn_MacthDocumentos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_MacthDocumentos.ForeColor = System.Drawing.Color.Black
-        Me.Btn_MacthDocumentos.Image = CType(resources.GetObject("Btn_MacthDocumentos.Image"), System.Drawing.Image)
-        Me.Btn_MacthDocumentos.ImageAlt = CType(resources.GetObject("Btn_MacthDocumentos.ImageAlt"), System.Drawing.Image)
-        Me.Btn_MacthDocumentos.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
-        Me.Btn_MacthDocumentos.Name = "Btn_MacthDocumentos"
-        Me.Btn_MacthDocumentos.Tooltip = "Sugerir NVV/Ref. Automáticamente en forma masiva"
+        Me.Btn_MatchDocumentos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_MatchDocumentos.ForeColor = System.Drawing.Color.Black
+        Me.Btn_MatchDocumentos.Image = CType(resources.GetObject("Btn_MatchDocumentos.Image"), System.Drawing.Image)
+        Me.Btn_MatchDocumentos.ImageAlt = CType(resources.GetObject("Btn_MatchDocumentos.ImageAlt"), System.Drawing.Image)
+        Me.Btn_MatchDocumentos.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_MatchDocumentos.Name = "Btn_MatchDocumentos"
+        Me.Btn_MatchDocumentos.Tooltip = "Sugerir NVV/Ref. Automáticamente en forma masiva"
         '
         'Chk_Seleccionar_Todo
         '
@@ -533,7 +533,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Autorizacion, Me.Btn_Actualizar, Me.Btn_MacthDocumentos, Me.Btn_Importar_Pagos})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Autorizacion, Me.Btn_Actualizar, Me.Btn_MatchDocumentos, Me.Btn_Importar_Pagos})
         Me.Bar1.Location = New System.Drawing.Point(0, 523)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(1158, 41)
@@ -583,6 +583,10 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Controls.Add(Me.MetroStatusBar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "Frm_CruceAntiNoVinculados"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -612,7 +616,7 @@ Partial Class Frm_CruceAntiNoVinculados
     Friend WithEvents MetroStatusBar1 As DevComponents.DotNetBar.Metro.MetroStatusBar
     Friend WithEvents Barra_Progreso As DevComponents.DotNetBar.ProgressBarItem
     Friend WithEvents Lbl_Status As DevComponents.DotNetBar.LabelItem
-    Public WithEvents Btn_MacthDocumentos As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_MatchDocumentos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_Seleccionar_Todo As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar

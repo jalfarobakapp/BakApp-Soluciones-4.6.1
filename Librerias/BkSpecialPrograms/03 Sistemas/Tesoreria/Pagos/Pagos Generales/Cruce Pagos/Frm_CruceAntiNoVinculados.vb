@@ -89,7 +89,10 @@ Public Class Frm_CruceAntiNoVinculados
     Cast(0 As Bit) As Error,
     Cast(0 As Bit) As Exclamacion,
     Cast('' As Varchar(100)) As Observacion,
-    Cast(0 As Bit) As CruzarPagoAuto
+    Cast(0 As Bit) As PagoCruzado,
+    Cast(0 As Bit) As CruzarPagoAuto,
+    Cast(0 As Bit) As MatchExacto,
+    Cast(0 As Bit) As MatchParcial
 FROM MAEDPCE c WITH (NOLOCK)
 OUTER APPLY (
     SELECT TOP 1 NOKOEN
@@ -151,25 +154,25 @@ Order By c.ENDP,c.FEEMDP"
             .Columns("FEEMDP").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FEVEDP").HeaderText = "F.venci."
-            .Columns("FEVEDP").Width = 65
-            .Columns("FEVEDP").Visible = True
-            .Columns("FEVEDP").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("FEVEDP").DefaultCellStyle.Format = "dd/MM/yyyy"
-            .Columns("FEVEDP").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '.Columns("FEVEDP").HeaderText = "F.venci."
+            '.Columns("FEVEDP").Width = 65
+            '.Columns("FEVEDP").Visible = True
+            '.Columns("FEVEDP").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            '.Columns("FEVEDP").DefaultCellStyle.Format = "dd/MM/yyyy"
+            '.Columns("FEVEDP").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
-            .Columns("CUDP").HeaderText = "Mon"
-            .Columns("CUDP").Width = 30
-            .Columns("CUDP").Visible = True
-            .Columns("CUDP").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '.Columns("CUDP").HeaderText = "Mon"
+            '.Columns("CUDP").Width = 30
+            '.Columns("CUDP").Visible = True
+            '.Columns("CUDP").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
-            .Columns("CUDP").HeaderText = "Cuenta"
-            .Columns("CUDP").Width = 100
-            .Columns("CUDP").Visible = True
-            .Columns("CUDP").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '.Columns("CUDP").HeaderText = "Cuenta"
+            '.Columns("CUDP").Width = 100
+            '.Columns("CUDP").Visible = True
+            '.Columns("CUDP").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
             .Columns("NUCUDP").HeaderText = "Número doc."
             .Columns("NUCUDP").Width = 80
@@ -194,7 +197,7 @@ Order By c.ENDP,c.FEEMDP"
             _DisplayIndex += 1
 
             .Columns("REFANTI").HeaderText = "Referencia (REFANTI)"
-            .Columns("REFANTI").Width = 220
+            .Columns("REFANTI").Width = 300
             .Columns("REFANTI").Visible = True
             .Columns("REFANTI").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -207,6 +210,22 @@ Order By c.ENDP,c.FEEMDP"
             .Columns("CruzarPagoAuto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("MatchExacto").HeaderText = "M.E."
+            .Columns("MatchExacto").ToolTipText = "Match Exacto"
+            .Columns("MatchExacto").Width = 30
+            '.Columns("CruzarPagoAuto").ReadOnly = False
+            .Columns("MatchExacto").Visible = True
+            .Columns("MatchExacto").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("MatchParcial").HeaderText = "M.P."
+            .Columns("MatchParcial").ToolTipText = "Match Parcial"
+            .Columns("MatchParcial").Width = 30
+            '.Columns("CruzarPagoAuto").ReadOnly = False
+            .Columns("MatchParcial").Visible = True
+            .Columns("MatchParcial").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("Doc_Anticipo").HeaderText = "Doc.Asoc.Anticipo"
             .Columns("Doc_Anticipo").Width = 110
             .Columns("Doc_Anticipo").Visible = True
@@ -217,41 +236,78 @@ Order By c.ENDP,c.FEEMDP"
 
     End Sub
 
-    Private Sub Btn_MacthDocumentos_Click(sender As Object, e As EventArgs) Handles Btn_MacthDocumentos.Click
+    Private Sub Btn_MatchDocumentos_Click(sender As Object, e As EventArgs) Handles Btn_MatchDocumentos.Click
 
         Dim _Ls_MaeedoItem As New List(Of Cl_MaeedoItem)
         Dim _Cl_MaeedoItem As New Cl_MaeedoItem
 
         _CacheMaeedoPorEndp.Clear()
 
-        For Each _Fila As DataRow In _Tbl_Maedpce.Rows
+        ' Listas para resumen
+        Dim exactMatches As New List(Of String)
+        Dim partialMatches As New List(Of String)
+        Dim noMatches As New List(Of String)
 
-            Dim _Idmaedpce As Integer = _Fila.Item("IDMAEDPCE")
-            Dim _Endp As String = _Fila.Item("ENDP").ToString.Trim
-            Dim _Saldo_Pg As Double = _Fila.Item("SALDO_PG")
-            Dim _Modp As String = _Fila.Item("MODP")
+        ' Inicializar progreso y estado
+        Try
+            Me.Enabled = False
+            Cursor = Cursors.WaitCursor
 
-            If _Modp.ToString.Trim <> "$" Then
-                Continue For
+            If _Tbl_Maedpce Is Nothing OrElse _Tbl_Maedpce.Rows.Count = 0 Then
+                Barra_Progreso.Minimum = 0
+                Barra_Progreso.Maximum = 1
+                Barra_Progreso.Value = 1
+                Lbl_Status.Text = "No hay filas para procesar."
+                Application.DoEvents()
+                Return
             End If
 
-            If String.IsNullOrEmpty(_Endp) Then
-                Continue For
-            End If
+            Barra_Progreso.Minimum = 0
+            Barra_Progreso.Maximum = _Tbl_Maedpce.Rows.Count
+            Barra_Progreso.Value = 0
+            Barra_Progreso.Visible = True
+            Me.Refresh()
+            Lbl_Status.Text = "Iniciando búsqueda de documentos..."
+            Application.DoEvents()
 
-            If _Endp = "21276350" Then
-                Dim _Acato = 1
-            End If
+            Dim _contador As Integer = 0
 
-            Dim _Ls As List(Of Cl_MaeedoItem) = Nothing
-            Dim _CargaDesdeBD As Boolean = False
+            For Each _Fila As DataRow In _Tbl_Maedpce.Rows
 
-            ' Comprobar caché
-            If _CacheMaeedoPorEndp.ContainsKey(_Endp) Then
-                _Ls = _CacheMaeedoPorEndp(_Endp)
-            Else
-                ' No está en caché: consultar BD y añadir al caché
-                Consulta_Sql = $"SELECT CAST(0 AS INT) AS ID,CAST(0 AS INT) AS ID_PADRE,CAST(0 AS INT) AS ID_PAGO,
+                _contador += 1
+
+                Dim _Idmaedpce As Integer = _Fila.Item("IDMAEDPCE")
+                Dim _Endp As String = _Fila.Item("ENDP").ToString.Trim
+                Dim _Saldo_Pg As Double = _Fila.Item("SALDO_PG")
+                Dim _Modp As String = _Fila.Item("MODP")
+
+                ' Actualizar estado por fila
+                Lbl_Status.Text = String.Format("Procesando {0} de {1}. ENDP: {2} - IDMAEDPCE: {3}", _contador, Barra_Progreso.Maximum, _Endp, _Idmaedpce)
+                If _contador <= Barra_Progreso.Maximum Then
+                    Barra_Progreso.Value = _contador
+                End If
+                Application.DoEvents()
+
+                If _Modp.ToString.Trim <> "$" Then
+                    ' Considerar como no procesado por moneda diferente: aquí no se añade a noMatches
+                    Continue For
+                End If
+
+                If String.IsNullOrEmpty(_Endp) Then
+                    ' No hay cliente/endp: registrar como sin match
+                    noMatches.Add(String.Format("IDMAEDPCE: {0}, ENDP vacío, SaldoPago: {1}", _Idmaedpce, FormatNumber(_Saldo_Pg, 2)))
+                    Continue For
+                End If
+
+                Dim _Ls As List(Of Cl_MaeedoItem) = Nothing
+                Dim _CargaDesdeBD As Boolean = False
+
+                ' Comprobar caché
+                If _CacheMaeedoPorEndp.ContainsKey(_Endp) Then
+                    _Ls = _CacheMaeedoPorEndp(_Endp)
+                Else
+                    ' No está en caché: consultar BD y añadir al caché
+                    Consulta_Sql = $"SELECT CAST(0 AS INT) AS ID,CAST(0 AS INT) AS ID_PADRE,CAST(0 AS INT) AS ID_PAGO,
        CAST(0 AS INT) AS IDMAEDPCE,
        EDO.IDMAEEDO AS IDRST,
        'MAEEDO' AS ARCHIRST,
@@ -287,105 +343,212 @@ Order By c.ENDP,c.FEEMDP"
 		EDO.EMPRESA = '{Mod_Empresa}'
 ORDER BY Orden,FEVEDP"
 
-                Dim _Tbl_Maeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+                    Dim _Tbl_Maeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
-                _Ls = _Cl_MaeedoItem.ListFromDataTable(_Tbl_Maeedo)
+                    _Ls = _Cl_MaeedoItem.ListFromDataTable(_Tbl_Maeedo)
 
-                If _Ls Is Nothing Then
-                    _Ls = New List(Of Cl_MaeedoItem)
+                    If _Ls Is Nothing Then
+                        _Ls = New List(Of Cl_MaeedoItem)
+                    End If
+
+                    ' Añadir a caché (aunque lista esté vacía para evitar múltiples consultas)
+                    _CacheMaeedoPorEndp.Add(_Endp, _Ls)
+
+                    ' Añadir los items encontrados a la lista acumulada solo si hay items
+                    If _Ls IsNot Nothing AndAlso _Ls.Count > 0 Then
+                        _Ls_MaeedoItem.AddRange(_Ls)
+                    End If
+
+                    _CargaDesdeBD = True
                 End If
 
-                ' Añadir a caché (aunque lista esté vacía para evitar múltiples consultas)
-                _CacheMaeedoPorEndp.Add(_Endp, _Ls)
+                Dim _Match = False
+                Dim matchedExact As Boolean = False
 
-                ' Añadir los items encontrados a la lista acumulada solo si hay items
+                ' Si la lista tiene elementos, intentar hacer match reutilizando SaldoAct/Abono ya actualizados
                 If _Ls IsNot Nothing AndAlso _Ls.Count > 0 Then
-                    _Ls_MaeedoItem.AddRange(_Ls)
-                End If
+                    Try
+                        Dim _Tolerancia As Double = 0.01
 
-                _CargaDesdeBD = True
-            End If
-
-            Dim _Match = False
-
-            ' Si la lista tiene elementos, intentar hacer match reutilizando SaldoAct/Abono ya actualizados
-            If _Ls IsNot Nothing AndAlso _Ls.Count > 0 Then
-                Try
-                    Dim _Tolerancia As Double = 0.01
-
-                    ' 1) Intento de match exacto por SaldoAct == SaldoPago (con tolerancia)
-                    For Each _Item As Cl_MaeedoItem In _Ls
-                        Try
-                            If Math.Abs(_Item.SaldoAct - _Saldo_Pg) <= _Tolerancia Then
-                                Try
-                                    _Fila("CruzarPagoAuto") = True
-                                    _Fila("IDMAEEDO") = _Item.IdRst
-                                    _Match = True
-
-                                    ' Actualizar abono y saldo en el item (afectará al caché y a _Ls_MaeedoItem porque son mismas referencias)
-                                    If Double.IsNaN(_Item.Abono) Then
-                                        _Item.Abono = 0
-                                    End If
-
-                                    _Item.Abono = Math.Round(_Item.Abono + _Saldo_Pg, 2)
-                                    _Item.SaldoAct = Math.Round(Math.Max(0, _Item.SaldoAct - _Saldo_Pg), 2)
-                                    _Fila("REFANTI") = "Match con: " & _Item.Tido & " - " & _Item.Nudo & ", Saldo: " & FormatNumber(_Item.SaldoAct, 0)
-
-
-                                Catch ex As Exception
-                                    ' Ignorar si no se puede escribir en la fila
-                                End Try
-
-                                Exit For
-                            End If
-                        Catch ex As Exception
-                            ' Ignorar errores por valores nulos o conversiones inesperadas
-                        End Try
-                    Next
-
-                    ' 2) Si no hubo match exacto, buscar el primer documento con saldo suficiente
-                    If Not _Match Then
+                        ' 1) Intento de match exacto por SaldoAct == SaldoPago (con tolerancia)
                         For Each _Item As Cl_MaeedoItem In _Ls
                             Try
-                                'If _Item.SaldoAct >= _Saldo_Pg Then
-                                Try
-                                    _Fila("CruzarPagoAuto") = True
-                                    _Fila("IDMAEEDO") = _Item.IdRst
-                                    _Match = True
+                                If Math.Abs(_Item.SaldoAct - _Saldo_Pg) <= _Tolerancia Then
+                                    Try
 
-                                    If Double.IsNaN(_Item.Abono) Then
-                                        _Item.Abono = 0
-                                    End If
+                                        ' Actualizar abono y saldo en el item (afectará al caché y a _Ls_MaeedoItem porque son mismas referencias)
+                                        If Double.IsNaN(_Item.Abono) Then
+                                            _Item.Abono = 0
+                                        End If
 
-                                    _Item.Abono = Math.Round(_Item.Abono + _Saldo_Pg, 2)
-                                    _Item.SaldoAct = Math.Round(Math.Max(0, _Item.SaldoAct - _Saldo_Pg), 2)
-                                    _Fila("REFANTI") = "Match con: " & _Item.Tido & " - " & _Item.Nudo & ", Saldo: " & FormatNumber(_Item.SaldoAct, 0)
+                                        _Item.Abono = Math.Round(_Item.Abono + _Saldo_Pg, 2)
+                                        _Item.SaldoAct = Math.Round(Math.Max(0, _Item.SaldoAct - _Saldo_Pg), 2)
+                                        _Fila("REFANTI") = "Match con: " & _Item.Tido & " - " & _Item.Nudo & ", Saldo: " & FormatNumber(_Item.SaldoAct, 0)
 
-                                    Dim _Utilizado As Double = _Saldo_Pg - _Item.SaldoAct
+                                        ' Agregar al resumen de matches exactos
+                                        exactMatches.Add(String.Format("Pago ID:{0}, ENDP:{1}, SaldoPago:{2} -> {3}-{4} (IDRST:{5})",
+                                                                       _Idmaedpce, _Endp, FormatNumber(_Saldo_Pg, 2),
+                                                                       _Item.Tido, _Item.Nudo, _Item.IdRst))
 
-                                Catch ex As Exception
-                                    ' Ignorar si no se puede escribir en la fila
-                                End Try
+                                        _Fila("CruzarPagoAuto") = True
+                                        _Fila("IDMAEEDO") = _Item.IdRst
+                                        _Fila("MatchExacto") = True
+                                        _Match = True
+                                        matchedExact = True
 
-                                Exit For
-                                'End If
+                                    Catch ex As Exception
+                                        ' Ignorar si no se puede escribir en la fila
+                                    End Try
+
+                                    Exit For
+                                End If
                             Catch ex As Exception
                                 ' Ignorar errores por valores nulos o conversiones inesperadas
                             End Try
                         Next
-                    End If
 
-                Catch ex As Exception
-                    ' Por seguridad, ignorar errores al escribir en la fila (si columna no existe por ejemplo)
-                End Try
-            End If
+                        ' 2) Si no hubo match exacto, buscar el primer documento con saldo suficiente
+                        If Not _Match Then
+                            For Each _Item As Cl_MaeedoItem In _Ls
+                                Try
+                                    'If _Item.SaldoAct >= _Saldo_Pg Then
+                                    Try
 
-            ' Si no hubo match y la lista estaba vacía, ya se cargó y no hay documentos.
-            ' Si hubiera lógica para distribuir pagos en varios documentos (split), implementarla aquí.
+                                        matchedExact = False
 
-        Next
+                                        If Double.IsNaN(_Item.Abono) Then
+                                            _Item.Abono = 0
+                                        End If
 
-        ' Opcional: si desea usar _Ls_MaeedoItem más adelante, ya contiene referencias cuyo Abono y SaldoAct fueron actualizados.
+                                        If _Item.SaldoAct = 0 Then
+                                            Continue For
+                                        End If
+
+                                        _Item.Abono = Math.Round(_Item.Abono + _Saldo_Pg, 2)
+                                        _Item.SaldoAct = Math.Round(Math.Max(0, _Item.SaldoAct - _Saldo_Pg), 2)
+                                        _Fila("REFANTI") = "Match con: " & _Item.Tido & " - " & _Item.Nudo & ", Saldo: " & FormatNumber(_Item.SaldoAct, 0)
+
+                                        ' Agregar al resumen de matches parciales/no exactos
+                                        partialMatches.Add(String.Format("Pago ID:{0}, ENDP:{1}, SaldoPago:{2} -> {3}-{4} (IDRST:{5})",
+                                                                         _Idmaedpce, _Endp, FormatNumber(_Saldo_Pg, 2),
+                                                                         _Item.Tido, _Item.Nudo, _Item.IdRst))
+
+                                        _Fila("CruzarPagoAuto") = True
+                                        _Fila("IDMAEEDO") = _Item.IdRst
+                                        _Fila("MatchParcial") = True
+                                        _Match = True
+
+                                        Dim _Utilizado As Double = _Saldo_Pg - _Item.SaldoAct
+
+                                    Catch ex As Exception
+                                        ' Ignorar si no se puede escribir en la fila
+                                    End Try
+
+                                    Exit For
+                                    'End If
+                                Catch ex As Exception
+                                    ' Ignorar errores por valores nulos o conversiones inesperadas
+                                End Try
+                            Next
+                        End If
+
+                    Catch ex As Exception
+                        ' Por seguridad, ignorar errores al escribir en la fila (si columna no existe por ejemplo)
+                    End Try
+                End If
+
+                ' Si no hubo match y la lista estaba vacía, o no se encontró documento adecuado
+                If Not _Match Then
+                    noMatches.Add(String.Format("Pago ID:{0}, ENDP:{1}, SaldoPago:{2}", _Idmaedpce, _Endp, FormatNumber(_Saldo_Pg, 2)))
+                End If
+
+                ' Actualizar barra después de procesar la fila (asegurar que se muestre al final de la iteración)
+                Lbl_Status.Text = String.Format("Procesadas {0} de {1}", _contador, Barra_Progreso.Maximum)
+                If _contador <= Barra_Progreso.Maximum Then
+                    Barra_Progreso.Value = _contador
+                End If
+                Application.DoEvents()
+
+            Next
+
+            ' Construir y mostrar resumen al finalizar el proceso
+            Try
+                Dim totalIterados As Integer = _contador
+                Dim totalExactos As Integer = exactMatches.Count
+                Dim totalParciales As Integer = partialMatches.Count
+                Dim totalSinMatch As Integer = noMatches.Count
+
+                Dim resumen As New System.Text.StringBuilder()
+                resumen.AppendLine("Proceso finalizado.")
+                resumen.AppendLine()
+                resumen.AppendLine(String.Format("Total filas iteradas: {0}", totalIterados))
+                resumen.AppendLine(String.Format("Matches exactos: {0}", totalExactos))
+                resumen.AppendLine(String.Format("Matches parciales/no exactos: {0}", totalParciales))
+                resumen.AppendLine(String.Format("Sin match: {0}", totalSinMatch))
+                resumen.AppendLine()
+
+                ' Añadir listados (limitar para no mostrar un cuadro gigantesco)
+                Dim maxDetalle As Integer = 50
+
+                'If totalExactos > 0 Then
+                '    resumen.AppendLine("Detalle - Matches exactos:")
+                '    For i As Integer = 0 To Math.Min(totalExactos - 1, maxDetalle - 1)
+                '        resumen.AppendLine("  - " & exactMatches(i))
+                '    Next
+                '    If totalExactos > maxDetalle Then
+                '        resumen.AppendLine(String.Format("  ... y {0} más", totalExactos - maxDetalle))
+                '    End If
+                '    resumen.AppendLine()
+                'End If
+
+                'If totalParciales > 0 Then
+                '    resumen.AppendLine("Detalle - Matches parciales:")
+                '    For i As Integer = 0 To Math.Min(totalParciales - 1, maxDetalle - 1)
+                '        resumen.AppendLine("  - " & partialMatches(i))
+                '    Next
+                '    If totalParciales > maxDetalle Then
+                '        resumen.AppendLine(String.Format("  ... y {0} más", totalParciales - maxDetalle))
+                '    End If
+                '    resumen.AppendLine()
+                'End If
+
+                'If totalSinMatch > 0 Then
+                '    resumen.AppendLine("Detalle - Sin match:")
+                '    For i As Integer = 0 To Math.Min(totalSinMatch - 1, maxDetalle - 1)
+                '        resumen.AppendLine("  - " & noMatches(i))
+                '    Next
+                '    If totalSinMatch > maxDetalle Then
+                '        resumen.AppendLine(String.Format("  ... y {0} más", totalSinMatch - maxDetalle))
+                '    End If
+                '    resumen.AppendLine()
+                'End If
+
+                ' Mostrar resumen al usuario
+                MessageBoxEx.Show(Me, resumen.ToString(), "Resumen de cruce automático", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Catch ex As Exception
+                ' En caso de error al construir el resumen, no interrumpir el flujo
+            End Try
+
+            ' Opcional: si desea usar _Ls_MaeedoItem más adelante, ya contiene referencias cuyo Abono y SaldoAct fueron actualizados
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, "Error al realizar match de documentos: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Try
+                Barra_Progreso.Value = Barra_Progreso.Maximum
+                Lbl_Status.Text = "Proceso finalizado"
+                Application.DoEvents()
+            Catch
+            End Try
+
+            Cursor = Cursors.Default
+            Me.Refresh()
+            Me.Enabled = True
+
+            ' Deshabilitar el botón al finalizar tal como se pidió
+            Btn_MatchDocumentos.Enabled = False
+        End Try
 
     End Sub
 
@@ -435,7 +598,20 @@ ORDER BY Orden,FEVEDP"
     End Sub
 
     Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
+
+        If Not Btn_MatchDocumentos.Enabled Then
+
+            If MessageBoxEx.Show(Me, "Si actualiza se perdera el Match que que acaba de realizar" & vbCrLf &
+                                 "¿Confirma su decición?", "Actualizar",
+                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                Return
+            End If
+
+        End If
+
         Sb_Actualizar_Grilla()
+        Btn_MatchDocumentos.Enabled = True
+
     End Sub
 
 
@@ -463,6 +639,7 @@ ORDER BY Orden,FEVEDP"
             If Not _HayFilasParaCruzar Then
                 MessageBoxEx.Show("No hay filas seleccionadas y marcadas para cruce automático. No se realizará ninguna acción.", "Validación",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Chk_Seleccionar_Todo.Checked = False
                 Return
             End If
 
@@ -509,6 +686,17 @@ ORDER BY Orden,FEVEDP"
 
                 _Mensaje = Fx_Pagar_Documentos(_Fila)
 
+                If _Mensaje.EsCorrecto Then
+                    _Fila.Item("Error") = False
+                    _Fila.Item("Exclamacion") = False
+                    _Fila.Item("Observacion") = String.Empty
+                    _Fila.Item("PagoCruzado") = True
+                Else
+                    _Fila.Item("Error") = True
+                    _Fila.Item("Exclamacion") = False
+                    _Fila.Item("Observacion") = _Mensaje.Mensaje
+                End If
+
                 _Ls_Mensajes.Add(_Mensaje)
 
             End If
@@ -532,7 +720,7 @@ ORDER BY Orden,FEVEDP"
 
     Function Fx_Pagar_Documentos(_Fila As DataRow) As LsValiciones.Mensajes
 
-        Dim _Mensaje As LsValiciones.Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
 
@@ -551,64 +739,34 @@ ORDER BY Orden,FEVEDP"
             Consulta_Sql = "Select *,VABRDO-VAABDO As 'TOTSALDO' From MAEEDO Where IDMAEEDO = " & _Idmaeedo
             Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
+            If IsNothing(_Row_Maeedo) Then
+                Throw New InvalidOperationException($"No se encontro el documentos en la tabla MAEEDO, IDMAEEDO = {_Idmaeedo}")
+            End If
+
             Dim _Tido As String = _Row_Maeedo.Item("TIDO")
             Dim _Nudo As String = _Row_Maeedo.Item("NUDO")
 
-            'If IsNothing(_Row_Maeedo) Then
-
-            '    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
-            '       "Error_Paga = 1,PagarAuto = 0,Pagada = 0,Informacion_Paga = 'No se encontro el documentos en la tabla MAEEDO, IDMAEEDO =  " & _Idmaeedo & "'" & vbCrLf &
-            '       "Where Id = " & _Id
-            '    If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
-            '        Log_Registro += _Sql.Pro_Error
-            '    End If
-            '    Continue For
-
-            'End If
-
             Dim _Saldo As Double = _Row_Maeedo.Item("TOTSALDO")
 
-            'If _Saldo <= 0 Then
-
-            '    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
-            '                       "Error_Paga = 1,PagarAuto = 0,Pagada = 0,Informacion_Paga = 'La " & _Notido & " no tiene saldo a pagar'" & vbCrLf &
-            '                       "Where Id = " & _Id
-            '    If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
-            '        Log_Registro += _Sql.Pro_Error
-            '    End If
-            '    Continue For
-
-            'End If
+            If _Saldo <= 0 Then
+                Throw New InvalidOperationException($"El documento {_Tido}-{_Nudo} no tiene saldo a pagar")
+            End If
 
             Consulta_Sql = "Select TOP 1 * From MAEDPCE Where IDMAEDPCE = " & _Idmaedpce
             Dim _Row_Maedpce As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
 
-            'If IsNothing(_Row_Maedpce) Then
-
-            '    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
-            '       "Error_Paga = 1,PagarAuto = 0,Pagada = 0,Informacion_Paga = 'No se encontro el documentos en la tabla MAEDPCE, IDMAEDPCE =  " & _Idmaedpce_Paga & "'" & vbCrLf &
-            '       "Where Id = " & _Id
-            '    If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
-            '        Log_Registro += _Sql.Pro_Error
-            '    End If
-            '    Continue For
-
-            'End If
+            If IsNothing(_Row_Maedpce) Then
+                Throw New InvalidOperationException($"No se encontro el documentos en la tabla MAEDPCE, IDMAEDPCE = {_Idmaedpce}")
+            End If
 
             Dim _Vadp As Double = _Row_Maedpce.Item("VADP")
             Dim _Vaasdpce As Double = _Row_Maedpce.Item("VAASDP")
 
             Dim _SaldoPago As Double = _Row_Maedpce.Item("VADP") - _Row_Maedpce.Item("VAASDP")
 
-            'If _SaldoPago <= 0 Then
-            '    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
-            '                       "Error_Paga = 1,PagarAuto = 0,Pagada = 0,Informacion_Paga = 'El documento de pago no tiene saldo para pagar'" & vbCrLf &
-            '                       "Where Id = " & _Id
-            '    If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
-            '        Log_Registro += _Sql.Pro_Error
-            '    End If
-            '    Continue For
-            'End If
+            If _SaldoPago <= 0 Then
+                Throw New InvalidOperationException($"El documento de pago no tiene saldo para pagar")
+            End If
 
             If _Saldo > _SaldoPago Then
                 _Saldo = _SaldoPago
@@ -640,8 +798,8 @@ ORDER BY Orden,FEVEDP"
                 .KOTU = _Row_Maedpce.Item("KOTU"),
                 .VAABDP = _Row_Maedpce.Item("VAABDP"),
                 .CUOTAS = _Row_Maedpce.Item("CUOTAS"),
-                .ARCHIRSD = _Row_Maedpce.Item("ARCHIRSD"),
-                .IDRSD = _Row_Maedpce.Item("IDRSD"),
+                .ARCHIRSD = NuloPorNro(_Row_Maedpce.Item("ARCHIRSD"), ""),
+                .IDRSD = NuloPorNro(_Row_Maedpce.Item("IDRSD"), 0),
                 .KOTNDP = _Row_Maedpce.Item("KOTNDP"),
                 .SUTNDP = _Row_Maedpce.Item("SUTNDP")
                 }
@@ -655,35 +813,18 @@ ORDER BY Orden,FEVEDP"
 
             If _Mensaje.EsCorrecto Then
 
-                Dim _Row_Maedpcd As DataRow = _Mensaje.Tag
+                Dim _Maedpcd As MAEDPCD = _Mensaje.Tag
 
                 Dim _Archirst = "MAEDPCD"
-                Dim _Idrst = _Row_Maedpcd.Item("IDMAEDPCD")
-                Dim _Accion = "PAGO DOCUMENTO CON SALDO DE ANTICIPO DE FORMA MASIVA DESDE BAKAPP"
+                Dim _Idrst = _Maedpcd.IDMAEDPCD
+                Dim _Accion = "Procesamiento masivo: cruce de documentos con saldo de anticipo (Bakapp)"
 
                 Dim _Id = Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, _Archirst, _Idrst, "", _Accion,
                                      "", "", "", "", False, FUNCIONARIO,,,, _Tido, _Nudo)
 
-                'Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Pagada = 1 Where Id = " & _Id
-                '_Sql.Ej_consulta_IDU(Consulta_Sql, False)
-
-                'If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
-                '    Log_Registro += _Sql.Pro_Error
-                'End If
-
             Else
 
                 _Mensaje.Mensaje = Replace(_Mensaje.Mensaje, " '", "''")
-                'Log_Registro += _Mensaje.Mensaje & vbCrLf
-                'Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
-                '                   ",PagarAuto = 0" &
-                '                   ",Pagada = 0" &
-                '                   ",Error_Paga = 1" &
-                '                   ",Informacion_Paga = '" & _Mensaje.Mensaje & "'" & vbCrLf &
-                '                   "Where Id = " & _Id
-                'If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
-                '    Log_Registro += _Sql.Pro_Error
-                'End If
 
             End If
 

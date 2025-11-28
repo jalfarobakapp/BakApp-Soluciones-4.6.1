@@ -2011,24 +2011,43 @@ Public Class Frm_01_Asis_Compra_Resultados
             End If
         End If
 
+        If Chk_SoloConPrecioListaProveedor.Checked AndAlso Not IsNothing(_RowProveedor) Then
+
+            Dim _Proveedor As String = _RowProveedor.Item("KOEN")
+            Dim _Sucursal As String = _RowProveedor.Item("SUEN")
+
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set TienePrecioListasProv = 0"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set TienePrecioListasProv = 1 Where Codigo In (Select Codigo" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_ListaPreCosto Ld" & vbCrLf &
+                           "Inner Join " & _Global_BaseBk & "Zw_ListaPreCosto_Enc Le On Le.Id = Ld.Id_Padre And Le.Vigente = 1" & vbCrLf &
+                           "Where Le.Proveedor = '" & _Proveedor & "' And Le.Sucursal = '" & _Sucursal & "' And CostoUd1 > 0)"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            _Condicion += vbCrLf & "And TienePrecioListasProv = 1"
+
+        End If
+
+        If Chk_CompradoUltVezProveedor.Checked AndAlso Not IsNothing(_RowProveedor) Then
+
+            Dim _Proveedor As String = _RowProveedor.Item("KOEN")
+            Dim _Sucursal As String = _RowProveedor.Item("SUEN")
+
+            _Condicion += vbCrLf & $"And Endo_Ult_GRCFCC = '{_Proveedor}' And Suendo_Ult_GRCFCC = '{_Sucursal}'"
+
+        End If
+
+        If Chk_SoloProdBodExterna.Checked Then
+
+            _Condicion += vbCrLf & $"And TieneStockBosExt = 1"
+
+        End If
+
         Consulta_sql = My.Resources.Recursos_Asis_Compras.SQLQuery_Actualizar_Informe_Principal
 
         Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", _Nombre_Tbl_Paso_Informe)
         Consulta_sql = Replace(Consulta_sql, "#Condicion#", _Condicion)
-
-        If _Con_Proveedor_Desde_Estudio Then
-
-            Dim _Koen = _RowProveedor.Item("KOEN")
-            Dim _Suen = _RowProveedor.Item("SUEN")
-
-            If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Entidades_ProdExcluidos") Then
-                Dim _BloqueaProductosPorProveedor = "Update " & _Nombre_Tbl_Paso_Informe & " Set Bloqueapr = 'C' " & vbCrLf &
-                                                    "Where Codigo In (Select Codigo From " & _Global_BaseBk & "Zw_Entidades_ProdExcluidos " &
-                                                    "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "' And Chk = 1)"
-                Consulta_sql = Replace(Consulta_sql, "--#BloqueaProductosPorProveedor#", _BloqueaProductosPorProveedor)
-            End If
-
-        End If
 
         Dim _Campo_Orden As String
 
@@ -3760,6 +3779,7 @@ Public Class Frm_01_Asis_Compra_Resultados
         'Sb_Actualizar_Ult3ComprasXprodVsProveedor()
 
         Sb_Grilla_Actualizar_Informe(Grilla)
+
 
         If _MarcarGrilla Then
 
@@ -7006,7 +7026,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         If Chk_MostrarFlete.Checked Then
 
-            Consulta_sql = "Select Top " & _Top & " IDMAEDDO,IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,FEEMLI,BOSULIDO,UDTRPR,UD0" & Ud & "PR As UDTRANS,UD01PR,UD02PR,
+            Consulta_sql = $"Select Top " & _Top & " IDMAEDDO,IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,FEEMLI,BOSULIDO,UDTRPR,UD0" & Ud & "PR As UDTRANS,UD01PR,UD02PR,
                         RLUDPR,CAPRCO1,CAPRCO2,MOPPPR,
                         Round(PODTGLLI/100,4) As PODTGLLI,
                         PPPRNERE1+POTENCIA As PPPRNEUd1,
@@ -7014,7 +7034,7 @@ Public Class Frm_01_Asis_Compra_Resultados
                         Case When " & _CostoUd1 & " = 0.0000 then 0 Else Round((" & _CostoUd1 & "-((VABRLI/CAPRCO1)+POTENCIA))/" & _CostoUd1 & ",2) End As Porc_Dif_Precios_Bruto,
                         PPPRNERE2+(POTENCIA*RLUDPR) As PPPRNEUd2,
                         (VABRLI/CAPRCO1)+POTENCIA As VABRUTOUd1,
-                        Round((VABRLI/CAPRCO2)+(POTENCIA*RLUDPR),0) As VABRUTOUd2,
+                        Round((VABRLI/NULLIF(CAPRCO2,0))+(POTENCIA*RLUDPR),0) As VABRUTOUd2,
                         PPPRNERE1,
                         PPPRNERE2,
                         VANELI,
