@@ -22,6 +22,8 @@ Public Class Frm_Cadenas_Remotas_Det
         End Get
     End Property
 
+    Public Property ModoSoloLectura As Boolean
+
     Public Sub New(ByVal RowRemotas_En_Cadena_01_Enc As DataRow)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -218,6 +220,10 @@ Public Class Frm_Cadenas_Remotas_Det
     End Sub
 
     Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+
+        If ModoSoloLectura Then
+            Return
+        End If
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
