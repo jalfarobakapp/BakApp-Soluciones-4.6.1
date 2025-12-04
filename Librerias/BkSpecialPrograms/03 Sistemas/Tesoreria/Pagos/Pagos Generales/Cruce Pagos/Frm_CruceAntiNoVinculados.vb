@@ -6,12 +6,20 @@ Public Class Frm_CruceAntiNoVinculados
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
     Private _Tbl_Maedpce As DataTable
-
+    Private _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
     Public Property Lista_Idmaedpce As List(Of Integer)
 
     ' Caché por ENDP para reutilizar listas de documentos y que se actualicen Abono/SaldoAct
     Private _CacheMaeedoPorEndp As New Dictionary(Of String, List(Of Cl_MaeedoItem))(StringComparer.OrdinalIgnoreCase)
     Private _Filtro_Idmaedpce As String
+
+    ' Bandera para evitar reentrada en el manejo de cambio de check
+    Private _SuppressChkChanged As Boolean = False
+
+    ' ==========================
+    ' INSERTAR CAMPO A NIVEL DE CLASE
+    ' ==========================
+    Private _PaymentsCountPorIdRst As New Dictionary(Of Integer, Integer)
 
     Public Sub New(_Filtro_Idmaedpce As String)
 
@@ -33,6 +41,10 @@ Public Class Frm_CruceAntiNoVinculados
 
         AddHandler Grilla_Maedpce.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
+        ' Manejar cambios en celdas tipo checkbox para procesar selección en cadena
+        AddHandler Grilla_Maedpce.CurrentCellDirtyStateChanged, AddressOf Grilla_Maedpce_CurrentCellDirtyStateChanged
+        AddHandler Grilla_Maedpce.CellValueChanged, AddressOf Grilla_Maedpce_CellValueChanged
+
         Sb_Actualizar_Grilla()
 
     End Sub
@@ -49,6 +61,7 @@ Public Class Frm_CruceAntiNoVinculados
     c.SUREDP,
     c.CJREDP,
     c.TIDP,
+    Isnull(Tc.NombreTabla,'') As 'NOTIDP',
     c.NUDP,
     c.ENDP,
     c.EMDP,
@@ -84,7 +97,6 @@ Public Class Frm_CruceAntiNoVinculados
     CAST(0 AS FLOAT) AS SALDO,
     Cast(0 As Float) As LEY20956,
     Cast('' As Varchar(14)) As Doc_Anticipo,
-    Cast('' As Varchar(30)) As NOTIDP,
     Cast('' As Varchar(30)) As NOKOENDP,
     Cast(0 As Bit) As Error,
     Cast(0 As Bit) As Exclamacion,
@@ -101,6 +113,7 @@ OUTER APPLY (
     ORDER BY e.KOEN -- aquí puedes cambiar el criterio de orden si quieres
 ) e
 Left Join MAEEDO Edo On Edo.IDMAEEDO = c.IDRSD And c.ARCHIRSD = 'MAEEDO'
+Left Join {_Global_BaseBk}Zw_TablaDeCaracterizaciones Tc On Tc.Tabla = 'TIDP_Cli' And Tc.CodigoTabla = c.TIDP
 WHERE IDMAEDPCE In {_Filtro_Idmaedpce}
 And (c.VADP-c.VAASDP) > 0
 Order By c.ENDP,c.FEEMDP"
@@ -126,6 +139,13 @@ Order By c.ENDP,c.FEEMDP"
             .Columns("Chk").ReadOnly = False
             .Columns("Chk").Visible = True
             .Columns("Chk").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("PagoCruzado").HeaderText = "PGX"
+            .Columns("PagoCruzado").ToolTipText = "Pago cruzado"
+            .Columns("PagoCruzado").Width = 30
+            .Columns("PagoCruzado").Visible = True
+            .Columns("PagoCruzado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("TIDP").HeaderText = "TD"
@@ -238,10 +258,40 @@ Order By c.ENDP,c.FEEMDP"
 
     Private Sub Btn_MatchDocumentos_Click(sender As Object, e As EventArgs) Handles Btn_MatchDocumentos.Click
 
+        If Not Fx_Tiene_Permiso(Me, "Pcli0003") Then
+            Return
+        End If
+
+        Consulta_Sql = $"Select Top 1 *,Isnull(NOKOFU,'') As Funcionario From {_Global_BaseBk}Zw_CrucePAuto_Tom 
+Left Join TABFU On KOFU = CodFuncionario
+Where NombreEquipo <> '{_NombreEquipo}'-- And CodFuncionario <> '{FUNCIONARIO}'"
+        Dim _Row_CruceTom As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        If Not IsNothing(_Row_CruceTom) Then
+
+            Dim _Funcionario = _Row_CruceTom.Item("Funcionario")
+            Dim _NombreEquipo2 = _Row_CruceTom.Item("NombreEquipo")
+
+            MessageBoxEx.Show(Me, "El proceso se encuentra tomado por: " & _Funcionario & vbCrLf &
+                              "En el equipo: " & _NombreEquipo2,
+                              "No puede hacer gestión mientras esto este ocurriendo", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+            Return
+
+        End If
+
+        Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_CrucePAuto_Tom" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_CrucePAuto_Tom (CodFuncionario,FechaToma,NombreEquipo) " &
+                       "Values ('" & FUNCIONARIO & "',Getdate(),'" & _NombreEquipo & "')"
+        _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+
         Dim _Ls_MaeedoItem As New List(Of Cl_MaeedoItem)
         Dim _Cl_MaeedoItem As New Cl_MaeedoItem
 
         _CacheMaeedoPorEndp.Clear()
+
+        ' Limpiar contador de pagos por documento
+        _PaymentsCountPorIdRst.Clear()
 
         ' Listas para resumen
         Dim exactMatches As New List(Of String)
@@ -321,10 +371,10 @@ Order By c.ENDP,c.FEEMDP"
        EDO.TIMODO AS TIMODP, EDO.TAMODO AS TAMODP, 
        ROUND(EDO.VABRDO,2) AS VADP, 
        ROUND(EDO.VAABDO,2) AS VAABDP,
-       ROUND(EDO.VABRDO,2) -  ROUND(EDO.VAABDO,2) as SALDO,
+       ROUND(EDO.VABRDO,2) -  ROUND(EDO.VAABDO,2) As SALDO,
        CAST(0 AS FLOAT) AS ABONO,
        CAST(0 AS FLOAT) AS ABONO2,
-       ROUND(EDO.VABRDO,2) -  ROUND(EDO.VAABDO,2) as SALDO_ACT,
+       ROUND(EDO.VABRDO,2) -  ROUND(EDO.VAABDO,2) As SALDO_ACT,
        0 As Orden,
        Cast('' As Varchar(30)) As Fevedp_Str,	    
        Cast('' As Varchar(30)) As Modp_Str,	    
@@ -363,7 +413,6 @@ ORDER BY Orden,FEVEDP"
                 End If
 
                 Dim _Match = False
-                Dim matchedExact As Boolean = False
 
                 ' Si la lista tiene elementos, intentar hacer match reutilizando SaldoAct/Abono ya actualizados
                 If _Ls IsNot Nothing AndAlso _Ls.Count > 0 Then
@@ -375,6 +424,18 @@ ORDER BY Orden,FEVEDP"
                             Try
                                 If Math.Abs(_Item.SaldoAct - _Saldo_Pg) <= _Tolerancia Then
                                     Try
+                                        ' Calcular id del documento destino
+                                        Dim _IdRst As Integer = _Item.IdRst
+
+                                        ' Incrementar contador de pagos que se aplican a este documento
+                                        If _PaymentsCountPorIdRst.ContainsKey(_IdRst) Then
+                                            _PaymentsCountPorIdRst(_IdRst) += 1
+                                        Else
+                                            _PaymentsCountPorIdRst.Add(_IdRst, 1)
+                                        End If
+
+                                        ' Obtener saldo original del documento (si existe la propiedad Saldo)
+                                        Dim originalSaldo As Double = _Item.Saldo
 
                                         ' Actualizar abono y saldo en el item (afectará al caché y a _Ls_MaeedoItem porque son mismas referencias)
                                         If Double.IsNaN(_Item.Abono) Then
@@ -385,16 +446,31 @@ ORDER BY Orden,FEVEDP"
                                         _Item.SaldoAct = Math.Round(Math.Max(0, _Item.SaldoAct - _Saldo_Pg), 2)
                                         _Fila("REFANTI") = "Match con: " & _Item.Tido & " - " & _Item.Nudo & ", Saldo: " & FormatNumber(_Item.SaldoAct, 0)
 
-                                        ' Agregar al resumen de matches exactos
-                                        exactMatches.Add(String.Format("Pago ID:{0}, ENDP:{1}, SaldoPago:{2} -> {3}-{4} (IDRST:{5})",
-                                                                       _Idmaedpce, _Endp, FormatNumber(_Saldo_Pg, 2),
-                                                                       _Item.Tido, _Item.Nudo, _Item.IdRst))
+                                        ' Determinar si es MatchExacto: solo si el pago cubre exactamente el saldo original
+                                        ' y además este documento solo ha recibido un pago (contador = 1)
+                                        Dim pagosAplicados As Integer = _PaymentsCountPorIdRst(_IdRst)
 
-                                        _Fila("CruzarPagoAuto") = True
-                                        _Fila("IDMAEEDO") = _Item.IdRst
-                                        _Fila("MatchExacto") = True
+                                        If pagosAplicados = 1 AndAlso Math.Abs(originalSaldo - _Saldo_Pg) <= _Tolerancia Then
+                                            ' Es un match exacto (factura cruzada por un único pago que la cubre)
+                                            exactMatches.Add(String.Format("Pago ID:{0}, ENDP:{1}, SaldoPago:{2} -> {3}-{4} (IDRST:{5})",
+                                                                           _Idmaedpce, _Endp, FormatNumber(_Saldo_Pg, 2),
+                                                                           _Item.Tido, _Item.Nudo, _Item.IdRst))
+
+                                            _Fila("CruzarPagoAuto") = True
+                                            _Fila("IDMAEEDO") = _Item.IdRst
+                                            _Fila("MatchExacto") = True
+                                        Else
+                                            ' No es match exacto (o se ha aplicado mas de un pago): marcar como parcial/no exacto
+                                            partialMatches.Add(String.Format("Pago ID:{0}, ENDP:{1}, SaldoPago:{2} -> {3}-{4} (IDRST:{5})",
+                                                                         _Idmaedpce, _Endp, FormatNumber(_Saldo_Pg, 2),
+                                                                         _Item.Tido, _Item.Nudo, _Item.IdRst))
+
+                                            _Fila("CruzarPagoAuto") = True
+                                            _Fila("IDMAEEDO") = _Item.IdRst
+                                            _Fila("MatchParcial") = True
+                                        End If
+
                                         _Match = True
-                                        matchedExact = True
 
                                     Catch ex As Exception
                                         ' Ignorar si no se puede escribir en la fila
@@ -411,44 +487,46 @@ ORDER BY Orden,FEVEDP"
                         If Not _Match Then
                             For Each _Item As Cl_MaeedoItem In _Ls
                                 Try
-                                    'If _Item.SaldoAct >= _Saldo_Pg Then
-                                    Try
+                                    ' Si el documento ya no tiene saldo, continuar
+                                    If _Item.SaldoAct = 0 Then
+                                        Continue For
+                                    End If
 
-                                        matchedExact = False
+                                    ' Calcular id del documento destino
+                                    Dim _IdRst As Integer = _Item.IdRst
 
-                                        If Double.IsNaN(_Item.Abono) Then
-                                            _Item.Abono = 0
-                                        End If
+                                    ' Incrementar contador de pagos que se aplican a este documento
+                                    If _PaymentsCountPorIdRst.ContainsKey(_IdRst) Then
+                                        _PaymentsCountPorIdRst(_IdRst) += 1
+                                    Else
+                                        _PaymentsCountPorIdRst.Add(_IdRst, 1)
+                                    End If
 
-                                        If _Item.SaldoAct = 0 Then
-                                            Continue For
-                                        End If
+                                    If Double.IsNaN(_Item.Abono) Then
+                                        _Item.Abono = 0
+                                    End If
 
-                                        _Item.Abono = Math.Round(_Item.Abono + _Saldo_Pg, 2)
-                                        _Item.SaldoAct = Math.Round(Math.Max(0, _Item.SaldoAct - _Saldo_Pg), 2)
-                                        _Fila("REFANTI") = "Match con: " & _Item.Tido & " - " & _Item.Nudo & ", Saldo: " & FormatNumber(_Item.SaldoAct, 0)
+                                    _Item.Abono = Math.Round(_Item.Abono + _Saldo_Pg, 2)
+                                    _Item.SaldoAct = Math.Round(Math.Max(0, _Item.SaldoAct - _Saldo_Pg), 2)
+                                    _Fila("REFANTI") = "Match con: " & _Item.Tido & " - " & _Item.Nudo & ", Saldo: " & FormatNumber(_Item.SaldoAct, 0)
 
-                                        ' Agregar al resumen de matches parciales/no exactos
-                                        partialMatches.Add(String.Format("Pago ID:{0}, ENDP:{1}, SaldoPago:{2} -> {3}-{4} (IDRST:{5})",
-                                                                         _Idmaedpce, _Endp, FormatNumber(_Saldo_Pg, 2),
-                                                                         _Item.Tido, _Item.Nudo, _Item.IdRst))
+                                    ' Agregar al resumen de matches parciales/no exactos
+                                    partialMatches.Add(String.Format("Pago ID:{0}, ENDP:{1}, SaldoPago:{2} -> {3}-{4} (IDRST:{5})",
+                                                                     _Idmaedpce, _Endp, FormatNumber(_Saldo_Pg, 2),
+                                                                     _Item.Tido, _Item.Nudo, _Item.IdRst))
 
-                                        _Fila("CruzarPagoAuto") = True
-                                        _Fila("IDMAEEDO") = _Item.IdRst
-                                        _Fila("MatchParcial") = True
-                                        _Match = True
+                                    _Fila("CruzarPagoAuto") = True
+                                    _Fila("IDMAEEDO") = _Item.IdRst
+                                    _Fila("MatchParcial") = True
+                                    _Match = True
 
-                                        Dim _Utilizado As Double = _Saldo_Pg - _Item.SaldoAct
+                                    Dim _Utilizado As Double = _Saldo_Pg - _Item.SaldoAct
 
-                                    Catch ex As Exception
-                                        ' Ignorar si no se puede escribir en la fila
-                                    End Try
-
-                                    Exit For
-                                    'End If
                                 Catch ex As Exception
-                                    ' Ignorar errores por valores nulos o conversiones inesperadas
+                                    ' Ignorar si no se puede escribir en la fila
                                 End Try
+
+                                Exit For
                             Next
                         End If
 
@@ -490,39 +568,6 @@ ORDER BY Orden,FEVEDP"
                 ' Añadir listados (limitar para no mostrar un cuadro gigantesco)
                 Dim maxDetalle As Integer = 50
 
-                'If totalExactos > 0 Then
-                '    resumen.AppendLine("Detalle - Matches exactos:")
-                '    For i As Integer = 0 To Math.Min(totalExactos - 1, maxDetalle - 1)
-                '        resumen.AppendLine("  - " & exactMatches(i))
-                '    Next
-                '    If totalExactos > maxDetalle Then
-                '        resumen.AppendLine(String.Format("  ... y {0} más", totalExactos - maxDetalle))
-                '    End If
-                '    resumen.AppendLine()
-                'End If
-
-                'If totalParciales > 0 Then
-                '    resumen.AppendLine("Detalle - Matches parciales:")
-                '    For i As Integer = 0 To Math.Min(totalParciales - 1, maxDetalle - 1)
-                '        resumen.AppendLine("  - " & partialMatches(i))
-                '    Next
-                '    If totalParciales > maxDetalle Then
-                '        resumen.AppendLine(String.Format("  ... y {0} más", totalParciales - maxDetalle))
-                '    End If
-                '    resumen.AppendLine()
-                'End If
-
-                'If totalSinMatch > 0 Then
-                '    resumen.AppendLine("Detalle - Sin match:")
-                '    For i As Integer = 0 To Math.Min(totalSinMatch - 1, maxDetalle - 1)
-                '        resumen.AppendLine("  - " & noMatches(i))
-                '    Next
-                '    If totalSinMatch > maxDetalle Then
-                '        resumen.AppendLine(String.Format("  ... y {0} más", totalSinMatch - maxDetalle))
-                '    End If
-                '    resumen.AppendLine()
-                'End If
-
                 ' Mostrar resumen al usuario
                 MessageBoxEx.Show(Me, resumen.ToString(), "Resumen de cruce automático", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
@@ -550,6 +595,127 @@ ORDER BY Orden,FEVEDP"
             Btn_MatchDocumentos.Enabled = False
         End Try
 
+    End Sub
+
+    ' Cuando el usuario hace clic en el checkbox, el DataGridView queda en estado sucio.
+    ' Commit para que CellValueChanged se dispare inmediatamente.
+    Private Sub Grilla_Maedpce_CurrentCellDirtyStateChanged(sender As Object, e As EventArgs)
+        Try
+            If Grilla_Maedpce Is Nothing Then
+                Return
+            End If
+
+            If Grilla_Maedpce.IsCurrentCellDirty Then
+                Dim col = Grilla_Maedpce.CurrentCell.OwningColumn
+                If col IsNot Nothing AndAlso col.Name = "Chk" Then
+                    Grilla_Maedpce.CommitEdit(DataGridViewDataErrorContexts.Commit)
+                End If
+            End If
+        Catch ex As Exception
+            ' Ignorar
+        End Try
+    End Sub
+
+    ' Manejo centralizado cuando cambia el valor de la columna "Chk"
+    Private Sub Grilla_Maedpce_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs)
+        If e Is Nothing Then
+            Return
+        End If
+
+        Try
+            If _SuppressChkChanged Then
+                Return
+            End If
+
+            If e.RowIndex < 0 OrElse e.ColumnIndex < 0 Then
+                Return
+            End If
+
+            Dim colName As String = Grilla_Maedpce.Columns(e.ColumnIndex).Name
+
+            If Not String.Equals(colName, "Chk", StringComparison.OrdinalIgnoreCase) Then
+                Return
+            End If
+
+            _SuppressChkChanged = True
+
+            Dim filaGrid As DataGridViewRow = Grilla_Maedpce.Rows(e.RowIndex)
+
+            ' Obtener nuevo valor de checkbox (con tolerancia a DBNull)
+            Dim nuevoValor As Boolean = False
+            Try
+                If filaGrid.Cells("Chk").Value IsNot Nothing AndAlso Not IsDBNull(filaGrid.Cells("Chk").Value) Then
+                    nuevoValor = Convert.ToBoolean(filaGrid.Cells("Chk").Value)
+                End If
+            Catch ex As Exception
+                nuevoValor = False
+            End Try
+
+            ' Comprobar que la fila tenga CruzarPagoAuto = True si se intenta chequear
+            Dim puedeCruzar As Boolean = False
+            Try
+                If filaGrid.Cells("CruzarPagoAuto").Value IsNot Nothing AndAlso Not IsDBNull(filaGrid.Cells("CruzarPagoAuto").Value) Then
+                    puedeCruzar = Convert.ToBoolean(filaGrid.Cells("CruzarPagoAuto").Value)
+                End If
+            Catch ex As Exception
+                puedeCruzar = False
+            End Try
+
+            If nuevoValor AndAlso Not puedeCruzar Then
+                MessageBoxEx.Show(Me, "No se puede seleccionar este registro porque 'Cruzar Pago Automáticamente' no está marcado.",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                ' Revertir el cambio
+                filaGrid.Cells("Chk").Value = False
+                Return
+            End If
+
+            ' Propagar el mismo cambio a todas las filas del mismo ENDP que además tengan CruzarPagoAuto = True
+            Dim endp As String = String.Empty
+            Try
+                If filaGrid.Cells("ENDP").Value IsNot Nothing AndAlso Not IsDBNull(filaGrid.Cells("ENDP").Value) Then
+                    endp = filaGrid.Cells("ENDP").Value.ToString().Trim()
+                End If
+            Catch ex As Exception
+                endp = String.Empty
+            End Try
+
+            If String.IsNullOrEmpty(endp) Then
+                Return
+            End If
+
+            ' Recorremos las filas de la tabla de datos para mantener consistencia y disparar UI automáticamente
+            If _Tbl_Maedpce Is Nothing Then
+                Return
+            End If
+
+            For Each dr As DataRow In _Tbl_Maedpce.Rows
+                Try
+                    Dim rEndp As String = String.Empty
+                    If dr.Table.Columns.Contains("ENDP") AndAlso dr.Item("ENDP") IsNot Nothing AndAlso Not IsDBNull(dr.Item("ENDP")) Then
+                        rEndp = dr.Item("ENDP").ToString().Trim()
+                    End If
+
+                    Dim rCruzar As Boolean = False
+                    If dr.Table.Columns.Contains("CruzarPagoAuto") AndAlso dr.Item("CruzarPagoAuto") IsNot Nothing AndAlso Not IsDBNull(dr.Item("CruzarPagoAuto")) Then
+                        rCruzar = Convert.ToBoolean(dr.Item("CruzarPagoAuto"))
+                    End If
+
+                    If String.Equals(endp, rEndp, StringComparison.OrdinalIgnoreCase) AndAlso rCruzar Then
+                        ' Solo actualizar si hay diferencia para evitar escrituras innecesarias
+                        If dr.Item("Chk") Is Nothing OrElse IsDBNull(dr.Item("Chk")) OrElse Convert.ToBoolean(dr.Item("Chk")) <> nuevoValor Then
+                            dr.Item("Chk") = nuevoValor
+                        End If
+                    End If
+                Catch ex As Exception
+                    ' Ignorar fila con problemas y continuar
+                End Try
+            Next
+
+        Catch ex As Exception
+            ' Ignorar errores en el proceso para no interrumpir la UI
+        Finally
+            _SuppressChkChanged = False
+        End Try
     End Sub
 
     Private Sub Grilla_Maedpce_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Maedpce.CellEnter
@@ -716,6 +882,10 @@ ORDER BY Orden,FEVEDP"
         Fmv.ShowDialog(Me)
         Fmv.Dispose()
 
+        Btn_Grabar_Autorizacion.Enabled = False
+        Btn_CruceDocParaPago.Enabled = False
+        Btn_Actualizar.Enabled = False
+
     End Sub
 
     Function Fx_Pagar_Documentos(_Fila As DataRow) As LsValiciones.Mensajes
@@ -815,12 +985,14 @@ ORDER BY Orden,FEVEDP"
 
                 Dim _Maedpcd As MAEDPCD = _Mensaje.Tag
 
-                Dim _Archirst = "MAEDPCD"
-                Dim _Idrst = _Maedpcd.IDMAEDPCD
-                Dim _Accion = "Procesamiento masivo: cruce de documentos con saldo de anticipo (Bakapp)"
+                Dim _Idmaedpcd As Integer = _Maedpcd.IDMAEDPCD
+                Dim _Vaasdp As Double = _Maedpcd.VAASDP
+                Dim _Archirst As String = "MAEEDO"
+                Dim _Idrst As Integer = _Idmaeedo
+                Dim _Accion As String = $"Procesamiento masivo: cruce de documentos con saldo de anticipo (Bakapp). " &
+                                        $"IDMAEDPCE: {_Idmaedpce},IDMAEDPCD: {_Idmaedpcd},Valor asignado: {FormatNumber(_Vaasdp, 2)}"
 
-                Dim _Id = Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, _Archirst, _Idrst, "", _Accion,
-                                     "", "", "", "", False, FUNCIONARIO,,,, _Tido, _Nudo)
+                Dim _Id = Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, _Archirst, _Idrst, "", _Accion, "", "", "", "", False, FUNCIONARIO,,,, _Tido, _Nudo)
 
             Else
 
@@ -840,5 +1012,237 @@ ORDER BY Orden,FEVEDP"
 
     End Function
 
+    Private Sub Chk_Seleccionar_MatchExacto_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Seleccionar_MatchExacto.CheckedChanged
+
+        Dim _HayFilasParaCruzar As Boolean = False
+
+        For Each _Fila As DataRow In _Tbl_Maedpce.Rows
+
+            If Chk_Seleccionar_MatchExacto.Checked Then
+                If _Fila.Item("CruzarPagoAuto") And _Fila.Item("MatchExacto") Then
+                    _Fila.Item("Chk") = True
+                    _HayFilasParaCruzar = True
+                Else
+                    _Fila.Item("Chk") = False
+                End If
+            Else
+                _Fila.Item("Chk") = Chk_Seleccionar_MatchExacto.Checked
+            End If
+
+        Next
+
+        If Chk_Seleccionar_MatchExacto.Checked AndAlso Not _HayFilasParaCruzar Then
+
+            If Not _HayFilasParaCruzar Then
+                MessageBoxEx.Show("No hay filas seleccionadas y marcadas para cruce automático. No se realizará ninguna acción.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Chk_Seleccionar_MatchExacto.Checked = False
+                Chk_Seleccionar_Todo.Checked = False
+                Return
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Ver_Cta_Cte_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Cta_Cte.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Maedpce.CurrentRow
+        Dim _Koen = _Fila.Cells("ENDP").Value
+        Dim _Razon = _Fila.Cells("RAZON").Value
+
+        Dim Fm As New Frm_Pagos_Generales(Frm_Pagos_Generales.Enum_Tipo_Pago.Clientes)
+        Fm.Koen = _Koen
+        Fm.BtnActualizarLista.Visible = False
+        Fm.ModoLectura = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Grilla_Maedpce_MouseDown(sender As Object, e As MouseEventArgs) Handles Grilla_Maedpce.MouseDown
+
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+
+            With sender
+
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+
+                    Dim _Fila As DataGridViewRow = Grilla_Maedpce.Rows(Grilla_Maedpce.CurrentRow.Index)
+
+                    Dim _Idmaedpce As Boolean = _Fila.Cells("IDMAEDPCE").Value
+                    Dim _Idrsd As Boolean = _Fila.Cells("IDRSD").Value
+                    Dim _Endp As Boolean = Not String.IsNullOrEmpty(_Fila.Cells("ENDP").Value)
+
+                    Dim _Cabeza = Grilla_Maedpce.Columns(Grilla_Maedpce.CurrentCell.ColumnIndex).Name
+
+                    If String.IsNullOrEmpty(_Fila.Cells("TIDP").Value) Then
+                        Return
+                    End If
+
+                    If _Idmaedpce Then
+
+                        Btn_Ver_Cta_Cte.Enabled = True
+                        ShowContextMenu(Menu_Contextual_01)
+                        Return
+
+                    End If
+
+                End If
+
+            End With
+
+        End If
+
+    End Sub
+
+    Private Sub Grilla_Maedpce_CellMouseUp(sender As Object, e As DataGridViewCellMouseEventArgs) Handles Grilla_Maedpce.CellMouseUp
+        Grilla_Maedpce.EndEdit()
+    End Sub
+
+    Private Sub Chk_MostrarSoloMatchExactos_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_MostrarSoloMatchExactos.CheckedChanged
+        Try
+            If _Tbl_Maedpce Is Nothing Then
+                Return
+            End If
+
+            If Chk_MostrarSoloMatchExactos.Checked Then
+                ' Mostrar solo filas con Chk = True
+                Try
+                    _Tbl_Maedpce.DefaultView.RowFilter = "MatchExacto = True"
+                Catch
+                    ' En caso de que la columna no exista o tipo diferente, intentar con 1
+                    Try
+                        _Tbl_Maedpce.DefaultView.RowFilter = "MatchExacto = 1"
+                    Catch ex As Exception
+                        MessageBoxEx.Show(Me, "No se pudo aplicar el filtro: " & ex.Message, "Filtro",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Return
+                    End Try
+                End Try
+            Else
+                ' Mostrar todas las filas
+                _Tbl_Maedpce.DefaultView.RowFilter = String.Empty
+            End If
+
+            ' Asegurar que el DataGridView muestre la vista actualizada
+            Grilla_Maedpce.DataSource = _Tbl_Maedpce.DefaultView
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, "Error al aplicar el filtro de selección: " & ex.Message, "Error",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub Btn_Importar_Pagos_Click(sender As Object, e As EventArgs) Handles Btn_Importar_Pagos.Click
+        ShowContextMenu(Menu_Contextual_Exportar_Excel)
+    End Sub
+
+    Private Sub Btn_Mnu_ExportarExcelVistaActual_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_ExportarExcelVistaActual.Click
+
+        Dim _Tbl As DataTable = CrearTablaPasoFiltrada()
+
+        ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Pagos no vinculados - Cruce automatico - Vista actual")
+
+    End Sub
+
+    ''' <summary>
+    ''' Crea una tabla de paso con las filas que actualmente pasan el filtro aplicado en _Tbl_Maedpce.DefaultView.
+    ''' Esta versión es la más directa y rápida (usa DataView.ToTable()).
+    ''' </summary>
+    Private Function CrearTablaPasoFiltrada() As DataTable
+
+        If _Tbl_Maedpce Is Nothing Then
+            Return New DataTable()
+        End If
+
+        Try
+            ' Devuelve una nueva DataTable con las filas que cumple el RowFilter actual
+            Return _Tbl_Maedpce.DefaultView.ToTable()
+        Catch ex As Exception
+            ' En caso de error devolver tabla vacía
+            Return New DataTable()
+        End Try
+
+    End Function
+
+    ''' <summary>
+    ''' Crea una tabla de paso con las filas filtradas pero preservando el esquema (tipos, restricciones, PK).
+    ''' Esta versión clona el esquema y luego importa las filas visibles.
+    ''' </summary>
+    Private Function CrearTablaPasoFiltradaPreservandoEsquema() As DataTable
+
+        If _Tbl_Maedpce Is Nothing Then
+            Return New DataTable()
+        End If
+
+        Dim dtPaso As DataTable = _Tbl_Maedpce.Clone()
+
+        Try
+            For Each drv As DataRowView In _Tbl_Maedpce.DefaultView
+                dtPaso.ImportRow(drv.Row)
+            Next
+        Catch ex As Exception
+            ' Si falla, devolver la versión rápida como fallback
+            Return CrearTablaPasoFiltrada()
+        End Try
+
+        Return dtPaso
+
+    End Function
+
+    ' Ejemplos de uso:
+    ' Dim dt1 As DataTable = CrearTablaPasoFiltrada()
+    ' Dim dt2 As DataTable = CrearTablaPasoFiltradaPreservandoEsquema()
+
+    Private Sub Btn_Mnu_ExportarExcelTodo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_ExportarExcelTodo.Click
+        ExportarTabla_JetExcel_Tabla(_Tbl_Maedpce, Me, "Pagos no vinculados - Cruce automatico")
+    End Sub
+
+    Private Sub Chk_MostrarSoloSeleccionados_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_MostrarSoloSeleccionados.CheckedChanged
+        Try
+            If _Tbl_Maedpce Is Nothing Then
+                Return
+            End If
+
+            If Chk_MostrarSoloSeleccionados.Checked Then
+                ' Mostrar solo filas con Chk = True
+                Try
+                    _Tbl_Maedpce.DefaultView.RowFilter = "Chk = True"
+                Catch
+                    ' En caso de que la columna no exista o tipo diferente, intentar con 1
+                    Try
+                        _Tbl_Maedpce.DefaultView.RowFilter = "Chk = 1"
+                    Catch ex As Exception
+                        MessageBoxEx.Show(Me, "No se pudo aplicar el filtro: " & ex.Message, "Filtro",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                        Return
+                    End Try
+                End Try
+            Else
+                ' Mostrar todas las filas
+                _Tbl_Maedpce.DefaultView.RowFilter = String.Empty
+            End If
+
+            ' Asegurar que el DataGridView muestre la vista actualizada
+            Grilla_Maedpce.DataSource = _Tbl_Maedpce.DefaultView
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, "Error al aplicar el filtro de selección: " & ex.Message, "Error",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub Frm_CruceAntiNoVinculados_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+
+        Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_CrucePAuto_Tom" & vbCrLf &
+                       $"Where NombreEquipo = '{_NombreEquipo}'"
+        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+    End Sub
 
 End Class

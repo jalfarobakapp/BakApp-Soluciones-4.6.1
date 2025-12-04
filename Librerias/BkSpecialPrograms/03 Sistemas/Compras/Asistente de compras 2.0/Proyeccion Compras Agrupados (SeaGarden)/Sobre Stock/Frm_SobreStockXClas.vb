@@ -17,8 +17,8 @@ Public Class Frm_SobreStockXClas
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla_Clasificaciones, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
-        Sb_Formato_Generico_Grilla(Grilla_Productos, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Clasificaciones, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+        Sb_Formato_Generico_Grilla(Grilla_Productos, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
     End Sub
 
@@ -203,7 +203,7 @@ Public Class Frm_SobreStockXClas
             .Columns("PalletSY").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("SobreStock").Width = 30
+            .Columns("SobreStock").Width = 40
             .Columns("SobreStock").Visible = True
             .Columns("SobreStock").HeaderText = "Sobre Stock"
             '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"
@@ -247,13 +247,13 @@ Public Class Frm_SobreStockXClas
 
             Dim _AnchoClValores = 60
 
-            .Columns("Codigo").Width = 80
+            .Columns("Codigo").Width = 100
             .Columns("Codigo").Visible = True
             .Columns("Codigo").HeaderText = "Código"
             .Columns("Codigo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Descripcion").Width = 250
+            .Columns("Descripcion").Width = 280
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripción"
             '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"
@@ -331,7 +331,7 @@ Public Class Frm_SobreStockXClas
             .Columns("Rotacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("StockDisponible").Width = _AnchoClValores
+            .Columns("StockDisponible").Width = _AnchoClValores + 10
             .Columns("StockDisponible").HeaderText = "Stock Disponible"
             .Columns("StockDisponible").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("StockDisponible").DefaultCellStyle.Format = "###,##0.##"
@@ -379,7 +379,7 @@ Public Class Frm_SobreStockXClas
             .Columns("PalletSY").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("SobreStock").Width = 30
+            .Columns("SobreStock").Width = 40
             .Columns("SobreStock").Visible = True
             .Columns("SobreStock").HeaderText = "Sobre Stock"
             '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"

@@ -804,6 +804,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Not0007", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Pcli0001", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pcli0002", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pcli0003", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Cdro0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Cdro0002", _Objeto, _Formulario)
@@ -3546,6 +3548,14 @@ Public Class Class_Permiso_BakApp
 
             Case "Pcli0001"
                 _DescripcionPermiso = "INGRESAR PAGO A DOCUMENTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PAGO_CLIENTES, 6)
+                _NombreFamiliaPermiso = _Fml.PAGO_CLIENTES.ToString
+            Case "Pcli0002"
+                _DescripcionPermiso = "VER ANTICIPOS DE CLIENTES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PAGO_CLIENTES, 6)
+                _NombreFamiliaPermiso = _Fml.PAGO_CLIENTES.ToString
+            Case "Pcli0003"
+                _DescripcionPermiso = "CRUZAR PAGOS DE FORMA MASIVA EN ANTICIPOS DE CLIENTES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PAGO_CLIENTES, 6)
                 _NombreFamiliaPermiso = _Fml.PAGO_CLIENTES.ToString
 

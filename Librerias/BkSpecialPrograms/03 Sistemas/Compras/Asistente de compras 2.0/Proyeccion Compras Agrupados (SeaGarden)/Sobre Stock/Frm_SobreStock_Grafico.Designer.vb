@@ -23,15 +23,22 @@ Partial Class Frm_SobreStock_Grafico
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_SobreStock_Grafico))
-        Dim ChartArea2 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
-        Dim Series3 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Series4 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
-        Dim Title3 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
-        Dim Title4 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
+        Dim ChartArea4 As System.Windows.Forms.DataVisualization.Charting.ChartArea = New System.Windows.Forms.DataVisualization.Charting.ChartArea()
+        Dim Series7 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Series8 As System.Windows.Forms.DataVisualization.Charting.Series = New System.Windows.Forms.DataVisualization.Charting.Series()
+        Dim Title7 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
+        Dim Title8 As System.Windows.Forms.DataVisualization.Charting.Title = New System.Windows.Forms.DataVisualization.Charting.Title()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grafico_Mov_Stock = New System.Windows.Forms.DataVisualization.Charting.Chart()
+        Me.Rdb_Proyeccion_Semanas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_Proyeccion_Meses = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_Serie4 = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Serie3 = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Serie2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Serie1 = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grafico_Mov_Stock, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -77,90 +84,219 @@ Partial Class Frm_SobreStock_Grafico
         Me.Grafico_Mov_Stock.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
         Me.Grafico_Mov_Stock.BorderlineWidth = 2
         Me.Grafico_Mov_Stock.BorderSkin.PageColor = System.Drawing.Color.Empty
-        ChartArea2.Area3DStyle.Inclination = 15
-        ChartArea2.Area3DStyle.IsClustered = True
-        ChartArea2.Area3DStyle.IsRightAngleAxes = False
-        ChartArea2.Area3DStyle.Perspective = 10
-        ChartArea2.Area3DStyle.Rotation = 10
-        ChartArea2.Area3DStyle.WallWidth = 0
-        ChartArea2.AxisX.LabelAutoFitStyle = CType(((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.IncreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont) _
+        ChartArea4.Area3DStyle.Inclination = 15
+        ChartArea4.Area3DStyle.IsClustered = True
+        ChartArea4.Area3DStyle.IsRightAngleAxes = False
+        ChartArea4.Area3DStyle.Perspective = 10
+        ChartArea4.Area3DStyle.Rotation = 10
+        ChartArea4.Area3DStyle.WallWidth = 0
+        ChartArea4.AxisX.LabelAutoFitStyle = CType(((System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.IncreaseFont Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.DecreaseFont) _
             Or System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles.WordWrap), System.Windows.Forms.DataVisualization.Charting.LabelAutoFitStyles)
-        ChartArea2.AxisX.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        ChartArea2.AxisX.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea2.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea2.AxisX.ScrollBar.LineColor = System.Drawing.Color.Black
-        ChartArea2.AxisX.ScrollBar.Size = 10.0R
-        ChartArea2.AxisY.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
-        ChartArea2.AxisY.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea2.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea2.AxisY.ScrollBar.LineColor = System.Drawing.Color.Black
-        ChartArea2.AxisY.ScrollBar.Size = 10.0R
-        ChartArea2.BackColor = System.Drawing.Color.White
-        ChartArea2.BackSecondaryColor = System.Drawing.Color.White
-        ChartArea2.BorderColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
-        ChartArea2.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
-        ChartArea2.CursorX.IsUserEnabled = True
-        ChartArea2.CursorX.IsUserSelectionEnabled = True
-        ChartArea2.CursorY.IsUserEnabled = True
-        ChartArea2.CursorY.IsUserSelectionEnabled = True
-        ChartArea2.Name = "Default"
-        ChartArea2.ShadowColor = System.Drawing.Color.Transparent
-        Me.Grafico_Mov_Stock.ChartAreas.Add(ChartArea2)
+        ChartArea4.AxisX.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        ChartArea4.AxisX.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea4.AxisX.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea4.AxisX.ScrollBar.LineColor = System.Drawing.Color.Black
+        ChartArea4.AxisX.ScrollBar.Size = 10.0R
+        ChartArea4.AxisY.LabelStyle.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold)
+        ChartArea4.AxisY.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea4.AxisY.MajorGrid.LineColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea4.AxisY.ScrollBar.LineColor = System.Drawing.Color.Black
+        ChartArea4.AxisY.ScrollBar.Size = 10.0R
+        ChartArea4.BackColor = System.Drawing.Color.White
+        ChartArea4.BackSecondaryColor = System.Drawing.Color.White
+        ChartArea4.BorderColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer), CType(CType(64, Byte), Integer))
+        ChartArea4.BorderDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid
+        ChartArea4.CursorX.IsUserEnabled = True
+        ChartArea4.CursorX.IsUserSelectionEnabled = True
+        ChartArea4.CursorY.IsUserEnabled = True
+        ChartArea4.CursorY.IsUserSelectionEnabled = True
+        ChartArea4.Name = "Default"
+        ChartArea4.ShadowColor = System.Drawing.Color.Transparent
+        Me.Grafico_Mov_Stock.ChartAreas.Add(ChartArea4)
         Me.Grafico_Mov_Stock.Location = New System.Drawing.Point(12, 12)
         Me.Grafico_Mov_Stock.Name = "Grafico_Mov_Stock"
-        Series3.BorderColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
-        Series3.ChartArea = "Default"
-        Series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine
-        Series3.Color = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(176, Byte), Integer))
-        Series3.IsVisibleInLegend = False
-        Series3.Legend = "Default"
-        Series3.LegendText = "Stock consolidado..."
-        Series3.MarkerBorderColor = System.Drawing.Color.Red
-        Series3.MarkerColor = System.Drawing.Color.Red
-        Series3.MarkerSize = 8
-        Series3.Name = "Series1"
-        Series3.ShadowColor = System.Drawing.Color.Black
-        Series3.ShadowOffset = 2
-        Series3.YValuesPerPoint = 2
-        Series4.BorderColor = System.Drawing.Color.FromArgb(CType(CType(220, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Series4.ChartArea = "Default"
-        Series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
-        Series4.Color = System.Drawing.Color.FromArgb(CType(CType(220, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Series4.IsValueShownAsLabel = True
-        Series4.IsVisibleInLegend = False
-        Series4.Legend = "Default"
-        Series4.LegendText = "Venta mueve Stock..."
-        Series4.MarkerColor = System.Drawing.Color.Brown
-        Series4.MarkerSize = 4
-        Series4.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Star5
-        Series4.Name = "Series2"
-        Me.Grafico_Mov_Stock.Series.Add(Series3)
-        Me.Grafico_Mov_Stock.Series.Add(Series4)
+        Series7.BorderColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
+        Series7.ChartArea = "Default"
+        Series7.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.StepLine
+        Series7.Color = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(103, Byte), Integer), CType(CType(176, Byte), Integer))
+        Series7.IsVisibleInLegend = False
+        Series7.Legend = "Default"
+        Series7.LegendText = "Stock consolidado..."
+        Series7.MarkerBorderColor = System.Drawing.Color.Red
+        Series7.MarkerColor = System.Drawing.Color.Red
+        Series7.MarkerSize = 8
+        Series7.Name = "Series1"
+        Series7.ShadowColor = System.Drawing.Color.Black
+        Series7.ShadowOffset = 2
+        Series7.YValuesPerPoint = 2
+        Series8.BorderColor = System.Drawing.Color.FromArgb(CType(CType(220, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Series8.ChartArea = "Default"
+        Series8.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Point
+        Series8.Color = System.Drawing.Color.FromArgb(CType(CType(220, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Series8.IsValueShownAsLabel = True
+        Series8.IsVisibleInLegend = False
+        Series8.Legend = "Default"
+        Series8.LegendText = "Venta mueve Stock..."
+        Series8.MarkerColor = System.Drawing.Color.Brown
+        Series8.MarkerSize = 4
+        Series8.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Star5
+        Series8.Name = "Series2"
+        Me.Grafico_Mov_Stock.Series.Add(Series7)
+        Me.Grafico_Mov_Stock.Series.Add(Series8)
         Me.Grafico_Mov_Stock.Size = New System.Drawing.Size(1147, 448)
         Me.Grafico_Mov_Stock.TabIndex = 198
         Me.Grafico_Mov_Stock.TabStop = False
-        Title3.Font = New System.Drawing.Font("Trebuchet MS", 12.0!, System.Drawing.FontStyle.Bold)
-        Title3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(105, Byte), Integer))
-        Title3.Name = "Title1"
-        Title3.ShadowColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
-        Title3.ShadowOffset = 3
-        Title3.Text = "Ventas y Movimiento de Stock"
-        Title4.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Title4.Name = "Title2"
-        Title4.Text = "Tiempo de reposición"
-        Me.Grafico_Mov_Stock.Titles.Add(Title3)
-        Me.Grafico_Mov_Stock.Titles.Add(Title4)
+        Title7.Font = New System.Drawing.Font("Trebuchet MS", 12.0!, System.Drawing.FontStyle.Bold)
+        Title7.ForeColor = System.Drawing.Color.FromArgb(CType(CType(26, Byte), Integer), CType(CType(59, Byte), Integer), CType(CType(105, Byte), Integer))
+        Title7.Name = "Title1"
+        Title7.ShadowColor = System.Drawing.Color.FromArgb(CType(CType(32, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
+        Title7.ShadowOffset = 3
+        Title7.Text = "Ventas y Movimiento de Stock"
+        Title8.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Title8.Name = "Title2"
+        Title8.Text = "Tiempo de reposición"
+        Me.Grafico_Mov_Stock.Titles.Add(Title7)
+        Me.Grafico_Mov_Stock.Titles.Add(Title8)
+        '
+        'Rdb_Proyeccion_Semanas
+        '
+        Me.Rdb_Proyeccion_Semanas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Proyeccion_Semanas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Proyeccion_Semanas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Proyeccion_Semanas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Proyeccion_Semanas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Proyeccion_Semanas.FocusCuesEnabled = False
+        Me.Rdb_Proyeccion_Semanas.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Proyeccion_Semanas.Location = New System.Drawing.Point(217, 466)
+        Me.Rdb_Proyeccion_Semanas.Name = "Rdb_Proyeccion_Semanas"
+        Me.Rdb_Proyeccion_Semanas.Size = New System.Drawing.Size(70, 23)
+        Me.Rdb_Proyeccion_Semanas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Proyeccion_Semanas.TabIndex = 201
+        Me.Rdb_Proyeccion_Semanas.Text = "Semanas"
+        '
+        'Rdb_Proyeccion_Meses
+        '
+        Me.Rdb_Proyeccion_Meses.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_Proyeccion_Meses.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Proyeccion_Meses.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Proyeccion_Meses.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Proyeccion_Meses.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_Proyeccion_Meses.Checked = True
+        Me.Rdb_Proyeccion_Meses.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_Proyeccion_Meses.CheckValue = "Y"
+        Me.Rdb_Proyeccion_Meses.FocusCuesEnabled = False
+        Me.Rdb_Proyeccion_Meses.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Proyeccion_Meses.Location = New System.Drawing.Point(149, 466)
+        Me.Rdb_Proyeccion_Meses.Name = "Rdb_Proyeccion_Meses"
+        Me.Rdb_Proyeccion_Meses.Size = New System.Drawing.Size(62, 23)
+        Me.Rdb_Proyeccion_Meses.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Proyeccion_Meses.TabIndex = 200
+        Me.Rdb_Proyeccion_Meses.Text = "Meses"
+        '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(12, 466)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(142, 23)
+        Me.LabelX1.TabIndex = 199
+        Me.LabelX1.Text = "Ver gráfico proyectado en:"
+        '
+        'Chk_Serie4
+        '
+        Me.Chk_Serie4.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Serie4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Serie4.FocusCuesEnabled = False
+        Me.Chk_Serie4.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Serie4.Location = New System.Drawing.Point(557, 495)
+        Me.Chk_Serie4.Name = "Chk_Serie4"
+        Me.Chk_Serie4.Size = New System.Drawing.Size(284, 19)
+        Me.Chk_Serie4.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Serie4.TabIndex = 205
+        Me.Chk_Serie4.Text = "Stock Necesario n MenosXMese"
+        '
+        'Chk_Serie3
+        '
+        Me.Chk_Serie3.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Serie3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Serie3.FocusCuesEnabled = False
+        Me.Chk_Serie3.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Serie3.Location = New System.Drawing.Point(557, 470)
+        Me.Chk_Serie3.Name = "Chk_Serie3"
+        Me.Chk_Serie3.Size = New System.Drawing.Size(216, 19)
+        Me.Chk_Serie3.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Serie3.TabIndex = 204
+        Me.Chk_Serie3.Text = "Stock Necesario n"
+        '
+        'Chk_Serie2
+        '
+        Me.Chk_Serie2.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Serie2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Serie2.FocusCuesEnabled = False
+        Me.Chk_Serie2.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Serie2.Location = New System.Drawing.Point(382, 495)
+        Me.Chk_Serie2.Name = "Chk_Serie2"
+        Me.Chk_Serie2.Size = New System.Drawing.Size(169, 19)
+        Me.Chk_Serie2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Serie2.TabIndex = 203
+        Me.Chk_Serie2.Text = "Stock Proyectado"
+        '
+        'Chk_Serie1
+        '
+        Me.Chk_Serie1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Serie1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Serie1.FocusCuesEnabled = False
+        Me.Chk_Serie1.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Serie1.Location = New System.Drawing.Point(382, 470)
+        Me.Chk_Serie1.Name = "Chk_Serie1"
+        Me.Chk_Serie1.Size = New System.Drawing.Size(169, 19)
+        Me.Chk_Serie1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Serie1.TabIndex = 202
+        Me.Chk_Serie1.Text = "Stock Mes"
         '
         'Frm_SobreStock_Grafico
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1187, 579)
+        Me.Controls.Add(Me.Chk_Serie4)
+        Me.Controls.Add(Me.Chk_Serie3)
+        Me.Controls.Add(Me.Chk_Serie2)
+        Me.Controls.Add(Me.Chk_Serie1)
+        Me.Controls.Add(Me.Rdb_Proyeccion_Semanas)
+        Me.Controls.Add(Me.Rdb_Proyeccion_Meses)
+        Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Grafico_Mov_Stock)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "Frm_SobreStock_Grafico"
+        Me.ShowInTaskbar = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "MetroForm"
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grafico_Mov_Stock, System.ComponentModel.ISupportInitialize).EndInit()
@@ -172,4 +308,11 @@ Partial Class Frm_SobreStock_Grafico
     Friend WithEvents Btn_Exportar_Excel As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
     Private WithEvents Grafico_Mov_Stock As DataVisualization.Charting.Chart
+    Public WithEvents Rdb_Proyeccion_Semanas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Rdb_Proyeccion_Meses As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_Serie4 As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_Serie3 As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_Serie2 As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_Serie1 As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

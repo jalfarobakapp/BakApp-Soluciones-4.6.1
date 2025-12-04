@@ -135,8 +135,8 @@ Partial Class Modulo_Tesoreria
         Me.Btn_Pago_Clientes.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_Pago_Clientes.Name = "Btn_Pago_Clientes"
         Me.Btn_Pago_Clientes.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Pago_Clientes.Text = "<font size=""+4"">CLIENTES</font><br/><font size=""-1"">Pagos generales<br/>...</font" &
-    ">"
+        Me.Btn_Pago_Clientes.Text = "<font size=""+4""><b>CLIENTES" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "</b></font><br/><font size=""-1"">Pagos generales<br/>" &
+    " </font>"
         Me.Btn_Pago_Clientes.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Blueish
         Me.Btn_Pago_Clientes.TileSize = New System.Drawing.Size(190, 100)
         '

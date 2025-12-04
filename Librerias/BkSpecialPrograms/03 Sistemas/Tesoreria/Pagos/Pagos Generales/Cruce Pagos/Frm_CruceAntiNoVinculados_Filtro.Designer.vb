@@ -41,12 +41,16 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
         Me.MetroStatusBar1 = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Barra_Progreso = New DevComponents.DotNetBar.ProgressBarItem()
         Me.Lbl_Status = New DevComponents.DotNetBar.LabelItem()
+        Me.Chk_MayorMenorQue = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Cmb_MayorMenorQue = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Input_MayorMenorQue = New DevComponents.Editors.IntegerInput()
         CType(Me.Dtp_FechaHasta, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaDesde, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel6.SuspendLayout()
         Me.GroupPanel2.SuspendLayout()
+        CType(Me.Input_MayorMenorQue, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Dtp_FechaHasta
@@ -230,7 +234,7 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Procesar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 167)
+        Me.Bar1.Location = New System.Drawing.Point(0, 198)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(629, 41)
         Me.Bar1.Stretch = True
@@ -419,7 +423,7 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
         Me.MetroStatusBar1.ForeColor = System.Drawing.Color.Black
         Me.MetroStatusBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Barra_Progreso, Me.Lbl_Status})
         Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 208)
+        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 239)
         Me.MetroStatusBar1.Name = "MetroStatusBar1"
         Me.MetroStatusBar1.Size = New System.Drawing.Size(629, 22)
         Me.MetroStatusBar1.TabIndex = 206
@@ -443,11 +447,62 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
         Me.Lbl_Status.Name = "Lbl_Status"
         Me.Lbl_Status.Text = "Status..."
         '
+        'Chk_MayorMenorQue
+        '
+        Me.Chk_MayorMenorQue.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_MayorMenorQue.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MayorMenorQue.CheckBoxImageChecked = CType(resources.GetObject("Chk_MayorMenorQue.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MayorMenorQue.FocusCuesEnabled = False
+        Me.Chk_MayorMenorQue.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MayorMenorQue.Location = New System.Drawing.Point(12, 168)
+        Me.Chk_MayorMenorQue.Name = "Chk_MayorMenorQue"
+        Me.Chk_MayorMenorQue.Size = New System.Drawing.Size(72, 22)
+        Me.Chk_MayorMenorQue.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MayorMenorQue.TabIndex = 208
+        Me.Chk_MayorMenorQue.Text = "Solo pagos"
+        '
+        'Cmb_MayorMenorQue
+        '
+        Me.Cmb_MayorMenorQue.DisplayMember = "Text"
+        Me.Cmb_MayorMenorQue.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_MayorMenorQue.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_MayorMenorQue.FormattingEnabled = True
+        Me.Cmb_MayorMenorQue.ItemHeight = 16
+        Me.Cmb_MayorMenorQue.Location = New System.Drawing.Point(90, 168)
+        Me.Cmb_MayorMenorQue.Name = "Cmb_MayorMenorQue"
+        Me.Cmb_MayorMenorQue.Size = New System.Drawing.Size(204, 22)
+        Me.Cmb_MayorMenorQue.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_MayorMenorQue.TabIndex = 210
+        '
+        'Input_MayorMenorQue
+        '
+        Me.Input_MayorMenorQue.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_MayorMenorQue.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_MayorMenorQue.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_MayorMenorQue.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_MayorMenorQue.ForeColor = System.Drawing.Color.Black
+        Me.Input_MayorMenorQue.Location = New System.Drawing.Point(306, 168)
+        Me.Input_MayorMenorQue.MinValue = 1
+        Me.Input_MayorMenorQue.Name = "Input_MayorMenorQue"
+        Me.Input_MayorMenorQue.ShowUpDown = True
+        Me.Input_MayorMenorQue.Size = New System.Drawing.Size(71, 22)
+        Me.Input_MayorMenorQue.TabIndex = 211
+        Me.Input_MayorMenorQue.Value = 1000
+        '
         'Frm_CruceAntiNoVinculados_Filtro
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(629, 230)
+        Me.ClientSize = New System.Drawing.Size(629, 261)
+        Me.Controls.Add(Me.Input_MayorMenorQue)
+        Me.Controls.Add(Me.Cmb_MayorMenorQue)
+        Me.Controls.Add(Me.Chk_MayorMenorQue)
         Me.Controls.Add(Me.Chk_SoloPagosPesos)
         Me.Controls.Add(Me.Chk_SinCruceAutomatico)
         Me.Controls.Add(Me.Chk_SoloClienteConDocPendientesPago)
@@ -471,6 +526,7 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel6.ResumeLayout(False)
         Me.GroupPanel2.ResumeLayout(False)
+        CType(Me.Input_MayorMenorQue, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -493,4 +549,7 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
     Friend WithEvents MetroStatusBar1 As DevComponents.DotNetBar.Metro.MetroStatusBar
     Friend WithEvents Barra_Progreso As DevComponents.DotNetBar.ProgressBarItem
     Friend WithEvents Lbl_Status As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Chk_MayorMenorQue As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Cmb_MayorMenorQue As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Friend WithEvents Input_MayorMenorQue As DevComponents.Editors.IntegerInput
 End Class

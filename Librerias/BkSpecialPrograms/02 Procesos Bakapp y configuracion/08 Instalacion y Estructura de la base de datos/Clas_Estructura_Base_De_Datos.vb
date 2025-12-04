@@ -677,6 +677,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Correos_Cuentas
             Case "Zw_CRV_Viajes"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_CRV_Viajes
+            Case "Zw_CrucePAuto_Tom"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_CrucePAuto_Tom
 
             Case "Zw_DbExt_Conexion"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DbExt_Conexion

@@ -21,19 +21,19 @@ Public Class Tesoreria_Clientes
 
     Private Sub Btn_Subir_Pagos_Click(sender As Object, e As EventArgs) Handles Btn_Subir_Pagos.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ppro0012") Then
-
-            Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
-
-            If Not _Msj_Tsc.EsCorrecto Then
-                Return
-            End If
-
-            Dim Fm As New Frm_Pagos_CtasEntidad_Expor_Bancos
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Ppro0012") Then
+            Return
         End If
+
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
+        End If
+
+        Dim Fm As New Frm_Pagos_CtasEntidad_Expor_Bancos
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
@@ -89,4 +89,15 @@ Public Class Tesoreria_Clientes
 
     End Sub
 
+    Private Sub Btn_Anticipos_Click(sender As Object, e As EventArgs) Handles Btn_Anticipos.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pcli0002") Then
+            Return
+        End If
+
+        Dim Fm As New Frm_CruceAntiNoVinculados_Filtro
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

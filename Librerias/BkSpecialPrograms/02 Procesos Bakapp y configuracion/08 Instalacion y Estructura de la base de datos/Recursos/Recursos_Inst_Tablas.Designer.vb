@@ -776,6 +776,24 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_CrucePAuto_Tom](
+        '''	[CodFuncionario]	[varchar](3)    NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FechaToma]			[datetime]      NULL,
+        '''	[NombreEquipo]		[varchar](50)   NOT NULL DEFAULT (&apos;&apos;)
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_CrucePAuto_Tom() As String
+            Get
+                Return ResourceManager.GetString("Zw_CrucePAuto_Tom", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''CREATE TABLE [dbo].[Zw_CRV_Viajes](
         '''	[Id_CRV]				[int] IDENTITY(1,1) NOT NULL,
         '''	[Nro_CRV]				[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),

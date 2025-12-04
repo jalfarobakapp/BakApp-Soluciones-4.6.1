@@ -283,9 +283,9 @@ Public Class Frm_Ver_Documento
                     Me.Left += 10
                 End If
 
-                Dim Fm As New Frm_Ver_Documentos_Permisos(_Idmaeedo)
-                Btn_Permisos_Asociados.Enabled = Convert.ToBoolean(Fm.Pro_Tbl_Remotas.Rows.Count)
-                Fm.Dispose()
+                'Dim Fm As New Frm_Ver_Documentos_Permisos(_Idmaeedo)
+                'Btn_Permisos_Asociados.Enabled = Convert.ToBoolean(Fm.Tbl_Remotas.Rows.Count)
+                'Fm.Dispose()
 
             Case Enum_Tipo_Apertura.Desde_Arcvhivador_XML, Enum_Tipo_Apertura.Desde_Bakapp_Kasi
 
@@ -352,9 +352,9 @@ Public Class Frm_Ver_Documento
                 AddHandler GrillaDetalleDoc.CellEnter, AddressOf GrillaDetalleDoc_CellEnter
                 AddHandler GrillaDetalleDoc.CellDoubleClick, AddressOf Sb_Ver_Documento_Origen
 
-                Dim Fm As New Frm_Ver_Documentos_Permisos(_Idmaeedo)
-                Btn_Permisos_Asociados.Enabled = Convert.ToBoolean(Fm.Pro_Tbl_Remotas.Rows.Count)
-                Fm.Dispose()
+                'Dim Fm As New Frm_Ver_Documentos_Permisos(_Idmaeedo)
+                'Btn_Permisos_Asociados.Enabled = (Convert.ToBoolean(Fm.Tbl_Remotas.Rows.Count) Or Convert.ToBoolean(Fm.Tbl_OtrosPermisos.Rows.Count))
+                'Fm.Dispose()
 
             Case Enum_Tipo_Apertura.Desde_Arcvhivador_XML
 
@@ -3012,7 +3012,7 @@ Public Class Frm_Ver_Documento
     Private Sub Btn_Permisos_Asociados_Click(sender As Object, e As EventArgs) Handles Btn_Permisos_Asociados.Click
 
         Dim Fm As New Frm_Ver_Documentos_Permisos(_Idmaeedo)
-        If Convert.ToBoolean(Fm.Pro_Tbl_Remotas.Rows.Count) Then
+        If Convert.ToBoolean(Fm.Tbl_Remotas.Rows.Count) Then
             Fm.ShowDialog(Me)
         Else
             MessageBoxEx.Show(Me, "No se encontraron permisos asociados", "Permisos asociados", MessageBoxButtons.OK,

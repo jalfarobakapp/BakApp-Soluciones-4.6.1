@@ -49,20 +49,24 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Ver_Cta_Cte = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Cambiar_Entidad = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Editar_Pago = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Eliminar_Pago = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Doc_Asociado_Ver = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_AnticipoNVV = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CruceDocParaPago = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Doc_Asociado_Quitar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem10 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Mnu_ExportarExcelVistaActual = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_ExportarExcelTodo = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Maedpce = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar_Autorizacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Importar_Pagos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_Seleccionar_MatchExacto = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_MostrarSoloMatchExactos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_MostrarSoloSeleccionados = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel3.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
@@ -95,7 +99,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.GroupPanel3.Controls.Add(Me.TableLayoutPanel1)
         Me.GroupPanel3.Controls.Add(Me.Lbl_Informacion)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel3.Location = New System.Drawing.Point(12, 383)
+        Me.GroupPanel3.Location = New System.Drawing.Point(12, 397)
         Me.GroupPanel3.Name = "GroupPanel3"
         Me.GroupPanel3.Size = New System.Drawing.Size(1136, 131)
         '
@@ -295,7 +299,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.MetroStatusBar1.ForeColor = System.Drawing.Color.Black
         Me.MetroStatusBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Barra_Progreso, Me.Lbl_Status})
         Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 564)
+        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 575)
         Me.MetroStatusBar1.Name = "MetroStatusBar1"
         Me.MetroStatusBar1.Size = New System.Drawing.Size(1158, 22)
         Me.MetroStatusBar1.TabIndex = 88
@@ -327,7 +331,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Btn_MatchDocumentos.ImageAlt = CType(resources.GetObject("Btn_MatchDocumentos.ImageAlt"), System.Drawing.Image)
         Me.Btn_MatchDocumentos.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_MatchDocumentos.Name = "Btn_MatchDocumentos"
-        Me.Btn_MatchDocumentos.Tooltip = "Sugerir NVV/Ref. Automáticamente en forma masiva"
+        Me.Btn_MatchDocumentos.Tooltip = "Sugerir FCV/Ref. Automáticamente en forma masiva"
         '
         'Chk_Seleccionar_Todo
         '
@@ -341,7 +345,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Chk_Seleccionar_Todo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Seleccionar_Todo.Location = New System.Drawing.Point(12, 366)
         Me.Chk_Seleccionar_Todo.Name = "Chk_Seleccionar_Todo"
-        Me.Chk_Seleccionar_Todo.Size = New System.Drawing.Size(116, 23)
+        Me.Chk_Seleccionar_Todo.Size = New System.Drawing.Size(106, 23)
         Me.Chk_Seleccionar_Todo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Seleccionar_Todo.TabIndex = 84
         Me.Chk_Seleccionar_Todo.Text = "Seleccionar todo"
@@ -391,10 +395,10 @@ Partial Class Frm_CruceAntiNoVinculados
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_02})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01, Me.Menu_Contextual_02, Me.Menu_Contextual_Exportar_Excel})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(42, 48)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
-        Me.ContextMenuBar1.Size = New System.Drawing.Size(408, 25)
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(472, 25)
         Me.ContextMenuBar1.Stretch = True
         Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ContextMenuBar1.TabIndex = 46
@@ -405,7 +409,7 @@ Partial Class Frm_CruceAntiNoVinculados
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Ver_Cta_Cte, Me.Btn_Cambiar_Entidad, Me.Btn_Editar_Pago, Me.Btn_Eliminar_Pago})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Ver_Cta_Cte})
         Me.Menu_Contextual_01.Text = "Opciones documento"
         '
         'LabelItem1
@@ -426,24 +430,6 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Btn_Ver_Cta_Cte.Image = CType(resources.GetObject("Btn_Ver_Cta_Cte.Image"), System.Drawing.Image)
         Me.Btn_Ver_Cta_Cte.Name = "Btn_Ver_Cta_Cte"
         Me.Btn_Ver_Cta_Cte.Text = "Ver Cta.Cte. entidad (saldos a favor)"
-        '
-        'Btn_Cambiar_Entidad
-        '
-        Me.Btn_Cambiar_Entidad.Image = CType(resources.GetObject("Btn_Cambiar_Entidad.Image"), System.Drawing.Image)
-        Me.Btn_Cambiar_Entidad.Name = "Btn_Cambiar_Entidad"
-        Me.Btn_Cambiar_Entidad.Text = "Cambiar entidad"
-        '
-        'Btn_Editar_Pago
-        '
-        Me.Btn_Editar_Pago.Image = CType(resources.GetObject("Btn_Editar_Pago.Image"), System.Drawing.Image)
-        Me.Btn_Editar_Pago.Name = "Btn_Editar_Pago"
-        Me.Btn_Editar_Pago.Text = "Editar pago"
-        '
-        'Btn_Eliminar_Pago
-        '
-        Me.Btn_Eliminar_Pago.Image = CType(resources.GetObject("Btn_Eliminar_Pago.Image"), System.Drawing.Image)
-        Me.Btn_Eliminar_Pago.Name = "Btn_Eliminar_Pago"
-        Me.Btn_Eliminar_Pago.Text = "Eliminar pago (quitar fila)"
         '
         'Menu_Contextual_02
         '
@@ -488,6 +474,40 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Btn_Doc_Asociado_Quitar.Image = CType(resources.GetObject("Btn_Doc_Asociado_Quitar.Image"), System.Drawing.Image)
         Me.Btn_Doc_Asociado_Quitar.Name = "Btn_Doc_Asociado_Quitar"
         Me.Btn_Doc_Asociado_Quitar.Text = "Quitar documento asociado al anticipo" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Menu_Contextual_Exportar_Excel
+        '
+        Me.Menu_Contextual_Exportar_Excel.AutoExpandOnClick = True
+        Me.Menu_Contextual_Exportar_Excel.Name = "Menu_Contextual_Exportar_Excel"
+        Me.Menu_Contextual_Exportar_Excel.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem10, Me.Btn_Mnu_ExportarExcelVistaActual, Me.Btn_Mnu_ExportarExcelTodo})
+        Me.Menu_Contextual_Exportar_Excel.Text = "Opciones Exportar Excel"
+        '
+        'LabelItem10
+        '
+        Me.LabelItem10.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem10.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem10.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem10.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem10.Name = "LabelItem10"
+        Me.LabelItem10.PaddingBottom = 1
+        Me.LabelItem10.PaddingLeft = 10
+        Me.LabelItem10.PaddingTop = 1
+        Me.LabelItem10.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem10.Text = "Exportar lista"
+        '
+        'Btn_Mnu_ExportarExcelVistaActual
+        '
+        Me.Btn_Mnu_ExportarExcelVistaActual.Image = CType(resources.GetObject("Btn_Mnu_ExportarExcelVistaActual.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_ExportarExcelVistaActual.ImageAlt = CType(resources.GetObject("Btn_Mnu_ExportarExcelVistaActual.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_ExportarExcelVistaActual.Name = "Btn_Mnu_ExportarExcelVistaActual"
+        Me.Btn_Mnu_ExportarExcelVistaActual.Text = "Exportar vista actual"
+        '
+        'Btn_Mnu_ExportarExcelTodo
+        '
+        Me.Btn_Mnu_ExportarExcelTodo.Image = CType(resources.GetObject("Btn_Mnu_ExportarExcelTodo.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_ExportarExcelTodo.ImageAlt = CType(resources.GetObject("Btn_Mnu_ExportarExcelTodo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_ExportarExcelTodo.Name = "Btn_Mnu_ExportarExcelTodo"
+        Me.Btn_Mnu_ExportarExcelTodo.Text = "Exportar todo"
         '
         'Grilla_Maedpce
         '
@@ -534,7 +554,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Autorizacion, Me.Btn_Actualizar, Me.Btn_MatchDocumentos, Me.Btn_Importar_Pagos})
-        Me.Bar1.Location = New System.Drawing.Point(0, 523)
+        Me.Bar1.Location = New System.Drawing.Point(0, 534)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(1158, 41)
         Me.Bar1.Stretch = True
@@ -571,11 +591,65 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Btn_Importar_Pagos.Name = "Btn_Importar_Pagos"
         Me.Btn_Importar_Pagos.Tooltip = "Importar pagos"
         '
+        'Chk_Seleccionar_MatchExacto
+        '
+        Me.Chk_Seleccionar_MatchExacto.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Seleccionar_MatchExacto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Seleccionar_MatchExacto.CheckBoxImageChecked = CType(resources.GetObject("Chk_Seleccionar_MatchExacto.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Seleccionar_MatchExacto.FocusCuesEnabled = False
+        Me.Chk_Seleccionar_MatchExacto.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Seleccionar_MatchExacto.Location = New System.Drawing.Point(117, 366)
+        Me.Chk_Seleccionar_MatchExacto.Name = "Chk_Seleccionar_MatchExacto"
+        Me.Chk_Seleccionar_MatchExacto.Size = New System.Drawing.Size(143, 23)
+        Me.Chk_Seleccionar_MatchExacto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Seleccionar_MatchExacto.TabIndex = 89
+        Me.Chk_Seleccionar_MatchExacto.Text = "Seleccionar Match Exacto"
+        '
+        'Chk_MostrarSoloMatchExactos
+        '
+        Me.Chk_MostrarSoloMatchExactos.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_MostrarSoloMatchExactos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MostrarSoloMatchExactos.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSoloMatchExactos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MostrarSoloMatchExactos.FocusCuesEnabled = False
+        Me.Chk_MostrarSoloMatchExactos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MostrarSoloMatchExactos.Location = New System.Drawing.Point(266, 366)
+        Me.Chk_MostrarSoloMatchExactos.Name = "Chk_MostrarSoloMatchExactos"
+        Me.Chk_MostrarSoloMatchExactos.Size = New System.Drawing.Size(138, 23)
+        Me.Chk_MostrarSoloMatchExactos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MostrarSoloMatchExactos.TabIndex = 90
+        Me.Chk_MostrarSoloMatchExactos.Text = "Ver solo Match Exactos"
+        '
+        'Chk_MostrarSoloSeleccionados
+        '
+        Me.Chk_MostrarSoloSeleccionados.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_MostrarSoloSeleccionados.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MostrarSoloSeleccionados.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSoloSeleccionados.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MostrarSoloSeleccionados.FocusCuesEnabled = False
+        Me.Chk_MostrarSoloSeleccionados.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MostrarSoloSeleccionados.Location = New System.Drawing.Point(410, 366)
+        Me.Chk_MostrarSoloSeleccionados.Name = "Chk_MostrarSoloSeleccionados"
+        Me.Chk_MostrarSoloSeleccionados.Size = New System.Drawing.Size(166, 23)
+        Me.Chk_MostrarSoloSeleccionados.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MostrarSoloSeleccionados.TabIndex = 91
+        Me.Chk_MostrarSoloSeleccionados.Text = "Ver solo Seleccionados"
+        '
         'Frm_CruceAntiNoVinculados
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1158, 586)
+        Me.ClientSize = New System.Drawing.Size(1158, 597)
+        Me.Controls.Add(Me.Chk_MostrarSoloSeleccionados)
+        Me.Controls.Add(Me.Chk_MostrarSoloMatchExactos)
+        Me.Controls.Add(Me.Chk_Seleccionar_MatchExacto)
         Me.Controls.Add(Me.GroupPanel3)
         Me.Controls.Add(Me.Chk_Seleccionar_Todo)
         Me.Controls.Add(Me.GroupPanel1)
@@ -590,7 +664,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Name = "Frm_CruceAntiNoVinculados"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "Informe de situación de Anticipos de Clientes"
         Me.GroupPanel3.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
@@ -623,9 +697,6 @@ Partial Class Frm_CruceAntiNoVinculados
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Ver_Cta_Cte As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Cambiar_Entidad As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Editar_Pago As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Eliminar_Pago As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Menu_Contextual_02 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Doc_Asociado_Ver As DevComponents.DotNetBar.ButtonItem
@@ -637,4 +708,11 @@ Partial Class Frm_CruceAntiNoVinculados
     Friend WithEvents Btn_Grabar_Autorizacion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Importar_Pagos As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Chk_Seleccionar_MatchExacto As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_MostrarSoloMatchExactos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Menu_Contextual_Exportar_Excel As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem10 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Mnu_ExportarExcelVistaActual As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_ExportarExcelTodo As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Chk_MostrarSoloSeleccionados As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

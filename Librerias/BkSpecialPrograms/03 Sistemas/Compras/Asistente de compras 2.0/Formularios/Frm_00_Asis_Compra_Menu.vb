@@ -2395,18 +2395,18 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 End If
 
-                If Rdb_Productos_Proveedor.Checked AndAlso Chk_SoloConPrecioListaProveedor.Checked Then
+                'If Rdb_Productos_Proveedor.Checked AndAlso Chk_SoloConPrecioListaProveedor.Checked Then
 
-                    Dim _Proveedor As String = _RowProveedor.Item("KOEN")
-                    Dim _Sucursal As String = _RowProveedor.Item("SUEN")
+                '    Dim _Proveedor As String = _RowProveedor.Item("KOEN")
+                '    Dim _Sucursal As String = _RowProveedor.Item("SUEN")
 
-                    Consulta_sql = "Update " & _TblPasoInforme & " Set TienePrecioListasProv = 1 Where Codigo In (Select Codigo" & vbCrLf &
-                                   "From " & _Global_BaseBk & "Zw_ListaPreCosto Ld" & vbCrLf &
-                                   "Inner Join " & _Global_BaseBk & "Zw_ListaPreCosto_Enc Le On Le.Id = Ld.Id_Padre" & vbCrLf &
-                                   "Where Le.Proveedor = '" & _Proveedor & "' And Le.Sucursal = '" & _Sucursal & "' And CostoUd1 > 0)"
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
+                '    Consulta_sql = "Update " & _TblPasoInforme & " Set TienePrecioListasProv = 1 Where Codigo In (Select Codigo" & vbCrLf &
+                '                   "From " & _Global_BaseBk & "Zw_ListaPreCosto Ld" & vbCrLf &
+                '                   "Inner Join " & _Global_BaseBk & "Zw_ListaPreCosto_Enc Le On Le.Id = Ld.Id_Padre" & vbCrLf &
+                '                   "Where Le.Proveedor = '" & _Proveedor & "' And Le.Sucursal = '" & _Sucursal & "' And CostoUd1 > 0)"
+                '    _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                End If
+                'End If
 
                 Consulta_sql = "Update " & _TblPasoInforme & " Set " &
                                "Idmaeedo_Ult_GRCFCC = Isnull(D.IDMAEEDO,0)" &

@@ -23,6 +23,15 @@ Public Class Frm_CruceAntiNoVinculados_Filtro
 
     Private Sub Frm_CruceAntiNoVinculados_Filtro_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Cmb_MayorMenorQue.Enabled = False
+        Input_MayorMenorQue.Enabled = False
+
+        Dim _Arr_MayorMenorQue(,) As String = {{"", ""},
+                                              {"MYQ", "Mayor o igual que ->"},
+                                              {"MNQ", "Menor o igual que ->"}}
+        Sb_Llenar_Combos(_Arr_MayorMenorQue, Cmb_MayorMenorQue)
+        Cmb_MayorMenorQue.SelectedValue = ""
+
         Dim _Fecha As Date = FechaDelServidor()
 
         'Dim _PrimerDiaMes As Date = DateSerial(Year(_Fecha), Month(_Fecha), 1)
@@ -34,6 +43,13 @@ Public Class Frm_CruceAntiNoVinculados_Filtro
     End Sub
 
     Private Sub Btn_Procesar_Click(sender As Object, e As EventArgs) Handles Btn_Procesar.Click
+
+
+        If Chk_MayorMenorQue.Checked AndAlso Cmb_MayorMenorQue.SelectedValue.ToString = "" Then
+            MessageBoxEx.Show(Me, "Debe seleccionar una opción en el filtro 'Mayor/Menor que'", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -119,6 +135,7 @@ Public Class Frm_CruceAntiNoVinculados_Filtro
             Dim _SoloClienteConDocPendientesPago As String = String.Empty
             Dim _SinCruceAutomatico As String = String.Empty
             Dim _SoloPagosPesos As String = String.Empty
+            Dim _SoloMayorMenorQue As String = String.Empty
 
             If Rdb_Entidades_Algunas.Checked AndAlso Lista_Entidades IsNot Nothing AndAlso Lista_Entidades.Count > 0 Then
                 _Filtro_Entidad = Generar_Filtro_IN_Lista(Lista_Entidades, False, "'")
@@ -137,6 +154,15 @@ Public Class Frm_CruceAntiNoVinculados_Filtro
                 _SoloPagosPesos = "And DPCE.MODP = '$'"
             End If
 
+            If Chk_MayorMenorQue.Checked Then
+                Dim _Valor As Double = NuloPorNro(Input_MayorMenorQue.Value, 0)
+                If Cmb_MayorMenorQue.SelectedValue.ToString = "MYQ" Then
+                    _SoloMayorMenorQue = $"And (CASE DPCE.TIMODP WHEN 'E' THEN 0 ELSE DPCE.VADP-DPCE.VAASDP-DPCE.VAVUDP END) >= {_Valor}"
+                ElseIf Cmb_MayorMenorQue.SelectedValue.ToString = "MNQ" Then
+                    _SoloMayorMenorQue = $"And (CASE DPCE.TIMODP WHEN 'E' THEN 0 ELSE DPCE.VADP-DPCE.VAASDP-DPCE.VAVUDP END) <= {_Valor}"
+                End If
+            End If
+
             Consulta_Sql = $"Select IDMAEDPCE,ESASDP,VAVUDP,'TIPO'=DPCE.TIDP,'NUMERO'=DPCE.NUDP,'ENTIDAD'=DPCE.ENDP,'EMISION'=DPCE.FEEMDP,'VENCIM'=DPCE.FEVEDP,'GLOSA'=DPCE.REFANTI,DPCE.TIMODP,DPCE.TAMODP AS TC,
 				DPCE.MODP,DPCE.VADP,DPCE.VAASDP,'VALOR' =CASE DPCE.TIMODP WHEN 'E' THEN 0 ELSE DPCE.VADP-DPCE.VAASDP-DPCE.VAVUDP END,
 				'VALORD'=CASE DPCE.TIMODP WHEN 'E' THEN DPCE.VADP-DPCE.VAASDP-DPCE.VAVUDP ELSE 0 END--,
@@ -149,6 +175,7 @@ Public Class Frm_CruceAntiNoVinculados_Filtro
 				{_SinCruceAutomatico}      
                 {_SoloPagosPesos}
                 {_Filtro_Entidad}
+                {_SoloMayorMenorQue}
                 
 				DELETE FROM #INFANTIC WHERE VALOR = 0.0 AND VALORD = 0.0 
 
@@ -265,4 +292,8 @@ Public Class Frm_CruceAntiNoVinculados_Filtro
 
     End Function
 
+    Private Sub Chk_MayorMenorQue_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_MayorMenorQue.CheckedChanged
+        Cmb_MayorMenorQue.Enabled = Chk_MayorMenorQue.Checked
+        Input_MayorMenorQue.Enabled = Chk_MayorMenorQue.Checked
+    End Sub
 End Class

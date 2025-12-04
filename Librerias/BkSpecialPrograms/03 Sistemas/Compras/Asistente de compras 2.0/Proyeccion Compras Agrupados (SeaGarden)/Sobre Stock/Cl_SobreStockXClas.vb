@@ -138,7 +138,7 @@ SELECT
                   (Promedio_UltMesMasPromUlt3Mes), (Promedio_3Mes)) AS value(v)
     ) AS Rotacion,
     Duracion_Stock AS Duracion_Stock_Meses,
-    MesesSobreStock+2,
+    MesesSobreStock,
     SobreStock,
 	600
 FROM {_Tbl_Asc_02_Asociaciones}
@@ -314,7 +314,7 @@ SELECT
                   (Promedio_MensualUd1_Prod), (PromMensualUd1_Ul3Mes_Prod)) AS value(v)
     ) AS Rotacion,
     Duracion_Stock AS Duracion_Stock_Meses,
-    MesesSobreStock + 2,
+    MesesSobreStock,
     SobreStock,
     600
 FROM {_Tbl_Asc_01_Productos}
@@ -1147,7 +1147,7 @@ SELECT
 
 FROM {TablaPasoRotacion_Clasificacion} p
 CROSS JOIN Semanas s
-Where p.Codigo_Nodo_Madre = 'CAMAR10'
+Where p.Codigo_Nodo_Madre = '{_Codigo_Nodo_Madre}'
 
 
 --🔹 3. Poblar stock inicial, ventas y llegadas

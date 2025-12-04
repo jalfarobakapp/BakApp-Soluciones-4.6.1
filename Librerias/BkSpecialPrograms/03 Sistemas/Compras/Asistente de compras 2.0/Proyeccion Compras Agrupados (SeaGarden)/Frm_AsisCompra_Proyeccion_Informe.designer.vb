@@ -655,7 +655,7 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Input_CalcSobreStock.ShowUpDown = True
         Me.Input_CalcSobreStock.Size = New System.Drawing.Size(54, 22)
         Me.Input_CalcSobreStock.TabIndex = 141
-        Me.Input_CalcSobreStock.Value = 6.5R
+        Me.Input_CalcSobreStock.Value = 6.0R
         '
         'Btn_SobreStock
         '
@@ -664,10 +664,10 @@ Partial Class Frm_AsisCompra_Proyeccion_Informe
         Me.Btn_SobreStock.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_SobreStock.Location = New System.Drawing.Point(896, 499)
         Me.Btn_SobreStock.Name = "Btn_SobreStock"
-        Me.Btn_SobreStock.Size = New System.Drawing.Size(200, 23)
+        Me.Btn_SobreStock.Size = New System.Drawing.Size(184, 23)
         Me.Btn_SobreStock.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_SobreStock.TabIndex = 142
-        Me.Btn_SobreStock.Text = "Ingresar productos con Sobre Stock"
+        Me.Btn_SobreStock.Text = "ASISTENTE DE SOBRE STOCK"
         '
         'Frm_AsisCompra_Proyeccion_Informe
         '

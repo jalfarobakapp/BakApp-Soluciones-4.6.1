@@ -103,6 +103,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Correos_Cuentas", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_CorreosEnvioRecepcion", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_CRV_Viajes", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_CrucePAuto_Tom", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_DbExt_Conexion", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DbExt_Maest", _Modificar, Lbl_Eventos)

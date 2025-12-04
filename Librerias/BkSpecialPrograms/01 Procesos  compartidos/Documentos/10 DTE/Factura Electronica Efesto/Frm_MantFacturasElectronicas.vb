@@ -1075,6 +1075,9 @@ Public Class Frm_MantFacturasElectronicas
         Dim _Row_TidDoc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row_TidDoc) Then
+            MessageBoxEx.Show(Me, "No se encontro el archivo XML en la tabla [Zw_DTE_Documentos]" & vbCrLf &
+                              "Puede ser también que ese documento se haya enviado desde Random", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
             '_Errores.Add("No se encontro el archivo XML en la tabla [Zw_DTE_Documentos]")
             Return
         End If

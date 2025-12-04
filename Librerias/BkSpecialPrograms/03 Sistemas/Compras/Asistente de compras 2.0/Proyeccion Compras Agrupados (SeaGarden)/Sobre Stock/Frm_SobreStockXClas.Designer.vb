@@ -72,7 +72,7 @@ Partial Class Frm_SobreStockXClas
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(1134, 393)
+        Me.GroupPanel3.Size = New System.Drawing.Size(1249, 349)
         '
         '
         '
@@ -202,7 +202,7 @@ Partial Class Frm_SobreStockXClas
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Clasificaciones.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla_Clasificaciones.Size = New System.Drawing.Size(1128, 370)
+        Me.Grilla_Clasificaciones.Size = New System.Drawing.Size(1243, 326)
         Me.Grilla_Clasificaciones.StandardTab = True
         Me.Grilla_Clasificaciones.TabIndex = 27
         '
@@ -212,9 +212,9 @@ Partial Class Frm_SobreStockXClas
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_Excel, Me.Btn_Actualizar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 633)
+        Me.Bar2.Location = New System.Drawing.Point(0, 569)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(1158, 41)
+        Me.Bar2.Size = New System.Drawing.Size(1273, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 196
@@ -254,9 +254,9 @@ Partial Class Frm_SobreStockXClas
         Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 674)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 610)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
-        Me.Metro_Bar_Color.Size = New System.Drawing.Size(1158, 22)
+        Me.Metro_Bar_Color.Size = New System.Drawing.Size(1273, 22)
         Me.Metro_Bar_Color.TabIndex = 197
         Me.Metro_Bar_Color.Text = "MetroStatusBar1"
         '
@@ -275,9 +275,9 @@ Partial Class Frm_SobreStockXClas
         Me.GroupPanel1.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel1.Controls.Add(Me.Grilla_Productos)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 411)
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 367)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1134, 168)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1249, 168)
         '
         '
         '
@@ -407,7 +407,7 @@ Partial Class Frm_SobreStockXClas
         DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Productos.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
-        Me.Grilla_Productos.Size = New System.Drawing.Size(1128, 145)
+        Me.Grilla_Productos.Size = New System.Drawing.Size(1243, 145)
         Me.Grilla_Productos.StandardTab = True
         Me.Grilla_Productos.TabIndex = 27
         '
@@ -422,7 +422,7 @@ Partial Class Frm_SobreStockXClas
         Me.Chk_SumarStockDisponible.CheckBoxImageChecked = CType(resources.GetObject("Chk_SumarStockDisponible.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_SumarStockDisponible.FocusCuesEnabled = False
         Me.Chk_SumarStockDisponible.ForeColor = System.Drawing.Color.Black
-        Me.Chk_SumarStockDisponible.Location = New System.Drawing.Point(12, 582)
+        Me.Chk_SumarStockDisponible.Location = New System.Drawing.Point(12, 541)
         Me.Chk_SumarStockDisponible.Name = "Chk_SumarStockDisponible"
         Me.Chk_SumarStockDisponible.Size = New System.Drawing.Size(249, 22)
         Me.Chk_SumarStockDisponible.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -433,7 +433,7 @@ Partial Class Frm_SobreStockXClas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1158, 696)
+        Me.ClientSize = New System.Drawing.Size(1273, 632)
         Me.Controls.Add(Me.Chk_SumarStockDisponible)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.GroupPanel3)

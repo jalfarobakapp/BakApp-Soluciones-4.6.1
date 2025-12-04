@@ -1442,7 +1442,6 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
                     Dim _Idmaedpce As Boolean = _Fila.Cells("IDMAEDPCE").Value
                     Dim _Idrsd As Boolean = _Fila.Cells("IDRSD").Value
                     Dim _Endp As Boolean = Not String.IsNullOrEmpty(_Fila.Cells("ENDP").Value)
-                    'Dim _Tidp As Boolean = Not String.IsNullOrEmpty(_Fila.Cells("TIDP").Value)
 
                     Dim _Cabeza = Grilla_Maedpce.Columns(Grilla_Maedpce.CurrentCell.ColumnIndex).Name
 
