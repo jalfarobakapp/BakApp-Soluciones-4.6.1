@@ -201,7 +201,7 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
             {"StockMes", "Stock Mes"},
             {"StockNecesarioNMeses", "Stock Necesario n Meses"},
             {"StockProyectadoMensual", "Stock Proyectado Mensual"},
-            {"StockNecesarioNMenosXMeses", "Stock Necesario n MenosXMeses"}
+            {"StockNecesarioNMenosXMeses", "Stock Necesario 2 MenosXMeses"}
         }
 
         ' Crear series con formato base
@@ -209,13 +209,12 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
             Dim s As Series = Grafico_Mov_Stock.Series.Add(kvp.Key)
             s.ChartType = SeriesChartType.Line
             s.XValueType = ChartValueType.String
+            s.BorderWidth = 2
 
             If s.Name = "StockMes" Or s.Name = "StockProyectadoMensual" Then
-                s.BorderWidth = 2
                 s.MarkerStyle = MarkerStyle.Circle
                 s.MarkerSize = 5
             Else
-                s.BorderWidth = 1
                 s.MarkerStyle = MarkerStyle.None
                 s.MarkerSize = 0
             End If
@@ -335,7 +334,7 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
             {"StockSemanal", "Stock Semanal"},
             {"StockNecesarioNSemanas", "Stock Necesario n Semanas"},
             {"StockProyectadoSemanal", "Stock Proyectado Semanal"},
-            {"StockNecesarioNMenosXSemanas", "Stock Necesario n MenosXSemanas"}
+            {"StockNecesarioNMenosXSemanas", "Stock Necesario 8 MenosXSemanas"}
         }
 
         ' Crear series con formato base
@@ -343,13 +342,12 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
             Dim s As Series = Grafico_Mov_Stock.Series.Add(kvp.Key)
             s.ChartType = SeriesChartType.Line
             s.XValueType = ChartValueType.String
+            s.BorderWidth = 2
 
             If s.Name = "StockSemanal" Or s.Name = "StockProyectadoSemanal" Then
-                s.BorderWidth = 2
                 s.MarkerStyle = MarkerStyle.Circle
                 s.MarkerSize = 5
             Else
-                s.BorderWidth = 1
                 s.MarkerStyle = MarkerStyle.None
                 s.MarkerSize = 0
             End If
@@ -473,4 +471,17 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
             Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion()
         End If
     End Sub
+
+    Private Sub Btn_Exportar_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Excel.Click
+        Try
+            If Rdb_Proyeccion_Meses.Checked Then
+                ExportarTabla_JetExcel_Tabla(_Tbl_Mensual, Me, "Proyeccion_Mensual")
+            ElseIf Rdb_Proyeccion_Semanas.Checked Then
+                ExportarTabla_JetExcel_Tabla(_Tbl_Semanal, Me, "Proyeccion_Semanal")
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
 End Class

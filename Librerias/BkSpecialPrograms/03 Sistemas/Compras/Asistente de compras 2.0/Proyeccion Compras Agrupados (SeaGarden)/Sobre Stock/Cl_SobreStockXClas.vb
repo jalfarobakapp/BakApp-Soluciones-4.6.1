@@ -520,7 +520,7 @@ JOIN (
            DATEPART(WEEK, FEERLI) AS Semana,
            YEAR(FEERLI) AS Periodo,
            SUM(Saldo) AS LlegadasSem
-    FROM Tbl_Asc_04_DocUltComp_RDF
+    FROM Tbl_Asc_04_DocUltComp_{FUNCIONARIO}
     GROUP BY Codigo_Nodo_Madre, DATEPART(WEEK, FEERLI), YEAR(FEERLI)
 ) agg
 ON c.Codigo_Nodo_Madre = agg.Codigo_Nodo_Madre
@@ -536,7 +536,7 @@ JOIN (
            MONTH(FEERLI) AS Mes,
            YEAR(FEERLI) AS Periodo,
            SUM(Saldo) AS LlegadasMes
-    FROM Tbl_Asc_04_DocUltComp_RDF
+    FROM Tbl_Asc_04_DocUltComp_{FUNCIONARIO}
     GROUP BY Codigo_Nodo_Madre, MONTH(FEERLI), YEAR(FEERLI)
 ) agg
 ON c.Codigo_Nodo_Madre = agg.Codigo_Nodo_Madre
@@ -813,14 +813,25 @@ FROM {TablaCalendarioMesesSemanasProductos} c
 JOIN {TablaPasoRotacion_Productos} p ON c.Codigo = p.Codigo;
 
 -- Poblar llegadas futuras en semanas y meses
+
 UPDATE c
-SET c.LlegadaSemanal = ISNULL(c.LlegadaSemanal,0) + d.Saldo,
-    c.LlegadasMes = ISNULL(c.LlegadasMes,0) + d.Saldo
+SET c.LlegadaSemanal = ISNULL(c.LlegadaSemanal,0) + d.TotalSaldo,
+    c.LlegadasMes   = ISNULL(c.LlegadasMes,0) + d.TotalSaldo
 FROM {TablaCalendarioMesesSemanasProductos} c
-JOIN Tbl_Asc_04_DocUltComp_RDF d
-     ON c.Codigo = d.Codigo
-    AND c.Semana = DATEPART(WEEK, d.FEERLI)
-    AND c.Periodo = YEAR(d.FEERLI);
+JOIN (
+    SELECT Codigo,
+           DATEPART(WEEK, FEERLI) AS Semana,
+           YEAR(FEERLI) AS Periodo,
+           SUM(Saldo) AS TotalSaldo
+    FROM Tbl_Asc_04_DocUltComp_{FUNCIONARIO}
+    WHERE TIDO = 'OCC'
+    GROUP BY Codigo, DATEPART(WEEK, FEERLI), YEAR(FEERLI)
+) d
+    ON c.Codigo = d.Codigo
+   AND c.Semana = d.Semana
+   AND c.Periodo = d.Periodo;
+
+
 
 --🔹 4. Recalcular stock semana a semana
 
@@ -933,7 +944,7 @@ UPDATE c
 SET c.StockNecesarioNMeses = p.Rotacion * @NMes,
     c.StockNecesarioNMenosXMeses = p.Rotacion * (@NMes - @XMeses)
 FROM {TablaCalendarioMesesSemanasProductos} c
-JOIN TablaPasoRotacion_ProductosRDF p ON c.Codigo = p.Codigo;
+JOIN {TablaPasoRotacion_Productos} p ON c.Codigo = p.Codigo;
 
 
 
@@ -958,7 +969,7 @@ BEGIN
     -- Recorrer meses en orden
     DECLARE mesCur CURSOR FOR
     SELECT Mes, Periodo
-    FROM TablaCalendarioMesesSemanasProductosRDF
+    FROM {TablaCalendarioMesesSemanasProductos}
     WHERE Codigo = @Codigo
     GROUP BY Mes, Periodo
     ORDER BY Periodo, Mes;
@@ -1167,14 +1178,23 @@ FROM {TablaCalendarioMesesSemanasClasificacion} c
 JOIN {TablaPasoRotacion_Clasificacion} p ON c.Codigo_Nodo_Madre = p.Codigo_Nodo_Madre;
 
 -- Poblar llegadas futuras en semanas y meses
+
 UPDATE c
-SET c.LlegadaSemanal = ISNULL(c.LlegadaSemanal,0) + d.Saldo,
-    c.LlegadasMes = ISNULL(c.LlegadasMes,0) + d.Saldo
+SET c.LlegadaSemanal = ISNULL(c.LlegadaSemanal,0) + d.TotalSaldo,
+    c.LlegadasMes   = ISNULL(c.LlegadasMes,0) + d.TotalSaldo
 FROM {TablaCalendarioMesesSemanasClasificacion} c
-JOIN Tbl_Asc_04_DocUltComp_RDF d
-     ON c.Codigo_Nodo_Madre = d.Codigo_Nodo_Madre
-    AND c.Semana = DATEPART(WEEK, d.FEERLI)
-    AND c.Periodo = YEAR(d.FEERLI);
+JOIN (
+    SELECT Codigo_Nodo_Madre,
+           DATEPART(WEEK, FEERLI) AS Semana,
+           YEAR(FEERLI) AS Periodo,
+           SUM(Saldo) AS TotalSaldo
+    FROM Tbl_Asc_04_DocUltComp_{FUNCIONARIO}
+    WHERE TIDO = 'OCC'
+    GROUP BY Codigo_Nodo_Madre, DATEPART(WEEK, FEERLI), YEAR(FEERLI)
+) d
+    ON c.Codigo_Nodo_Madre = d.Codigo_Nodo_Madre
+   AND c.Semana = d.Semana
+   AND c.Periodo = d.Periodo;
 
 --🔹 4. Recalcular stock semana a semana
 

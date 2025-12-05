@@ -10,6 +10,8 @@ Public Class Frm_SobreStockXClas
     Dim _Tbl_Asc_01_Productos As String = "Tbl_Asc_01_Productos_" & FUNCIONARIO
     Dim _Tbl_Asc_02_Asociaciones As String = "Tbl_Asc_02_Asociaciones_" & FUNCIONARIO
 
+    Dim _Codigo_Nodo_Madre As String
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -80,7 +82,7 @@ Public Class Frm_SobreStockXClas
             .Columns("Producto").Visible = True
             .Columns("Producto").HeaderText = "Producto"
             '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"
-            .Columns("Producto").Width = 250
+            .Columns("Producto").Width = 200
             .Columns("Producto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -171,7 +173,7 @@ Public Class Frm_SobreStockXClas
             .Columns("Duracion_Stock_Meses").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("MesesSobreStock").Width = _AnchoClValores
+            .Columns("MesesSobreStock").Width = _AnchoClValores - 30
             .Columns("MesesSobreStock").HeaderText = "M/S"
             .Columns("MesesSobreStock").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("MesesSobreStock").DefaultCellStyle.Format = "###,##0.##"
@@ -205,7 +207,7 @@ Public Class Frm_SobreStockXClas
 
             .Columns("SobreStock").Width = 40
             .Columns("SobreStock").Visible = True
-            .Columns("SobreStock").HeaderText = "Sobre Stock"
+            .Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
             '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"
             .Columns("SobreStock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -231,10 +233,10 @@ Public Class Frm_SobreStockXClas
         Dim _Fila As DataGridViewRow = Grilla_Clasificaciones.CurrentRow
 
         Dim _Codigo_Nodo As Integer = _Fila.Cells("Codigo_Nodo").Value
-        Dim _Codigo_Nodo_Madre As String = _Fila.Cells("Codigo_Nodo_Madre").Value
+        Dim _Codigo_Nodo_Madre2 = _Fila.Cells("Codigo_Nodo_Madre").Value
 
         Consulta_sql = "Select * From " & _Cl_SobreStockXClas.TablaPasoRotacion_Productos & vbCrLf &
-                       "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "' And Codigo_Nodo = " & _Codigo_Nodo
+                       "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre2 & "' And Codigo_Nodo = " & _Codigo_Nodo
         Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Productos
@@ -253,7 +255,7 @@ Public Class Frm_SobreStockXClas
             .Columns("Codigo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Descripcion").Width = 280
+            .Columns("Descripcion").Width = 200
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripción"
             '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"
@@ -347,7 +349,7 @@ Public Class Frm_SobreStockXClas
             .Columns("Duracion_Stock_Meses").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("MesesSobreStock").Width = _AnchoClValores
+            .Columns("MesesSobreStock").Width = _AnchoClValores - 30
             .Columns("MesesSobreStock").HeaderText = "M/S"
             .Columns("MesesSobreStock").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("MesesSobreStock").DefaultCellStyle.Format = "###,##0.##"
@@ -363,7 +365,7 @@ Public Class Frm_SobreStockXClas
             .Columns("Syncro").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("KilosXPallet").Width = _AnchoClValores
+            .Columns("KilosXPallet").Width = _AnchoClValores - 10
             .Columns("KilosXPallet").HeaderText = "Kg X Pallet"
             .Columns("KilosXPallet").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("KilosXPallet").DefaultCellStyle.Format = "###,##0.##"
@@ -394,23 +396,45 @@ Public Class Frm_SobreStockXClas
 
     Private Sub Grilla_Clasificaciones_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Clasificaciones.CellDoubleClick
 
-        Dim _Fila As DataGridViewRow = Grilla_Clasificaciones.CurrentRow
-        Dim _Codigo_Nodo As Integer = _Fila.Cells("Codigo_Nodo").Value
-        Dim _Codigo_Nodo_Madre As String = _Fila.Cells("Codigo_Nodo_Madre").Value
+        Dim Fm_Espera As New Frm_Form_Esperar
+        Fm_Espera.BarraCircular.IsRunning = True
+        Fm_Espera.Show()
 
-        Dim _Mensaje As LsValiciones.Mensajes
+        Try
 
-        _Mensaje = _Cl_SobreStockXClas.Fx_CrearTablaPaso_TablaCalendarioMesesSemanasProductos
-        _Mensaje = _Cl_SobreStockXClas.Fx_CrearTablaPaso_TablaCalendarioMesesSemanasClasificacion
+            Me.Enabled = False
 
-        _Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasProductos(_Codigo_Nodo_Madre)
-        _Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasClasificacion(_Codigo_Nodo_Madre)
+            Dim _Fila As DataGridViewRow = Grilla_Clasificaciones.CurrentRow
+            Dim _Codigo_Nodo As Integer = _Fila.Cells("Codigo_Nodo").Value
+            Dim _Producto As String = _Fila.Cells("Producto").Value
+            _Codigo_Nodo_Madre = _Fila.Cells("Codigo_Nodo_Madre").Value
 
-        MessageBoxEx.Show(_Mensaje.Mensaje, "Sobre stock", MessageBoxButtons.OK, _Mensaje.Icono)
+            Dim _Mensaje As LsValiciones.Mensajes
 
-        Dim Fm As New Frm_SobreStock_Grafico("", _Codigo_Nodo_Madre)
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+            _Mensaje = _Cl_SobreStockXClas.Fx_CrearTablaPaso_TablaCalendarioMesesSemanasProductos
+            _Mensaje = _Cl_SobreStockXClas.Fx_CrearTablaPaso_TablaCalendarioMesesSemanasClasificacion
+
+            _Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasProductos(_Codigo_Nodo_Madre)
+            _Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasClasificacion(_Codigo_Nodo_Madre)
+
+            Fm_Espera.Close()
+            Fm_Espera = Nothing
+
+            ' MessageBoxEx.Show(_Mensaje.Mensaje, "Sobre stock", MessageBoxButtons.OK, _Mensaje.Icono)
+
+            Dim Fm As New Frm_SobreStock_Grafico("", _Codigo_Nodo_Madre)
+            Fm.Text = "CLASIFICACION: " & _Codigo_Nodo_Madre.ToString.Trim & " - " & _Producto
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        Catch ex As Exception
+        Finally
+            If Not IsNothing(Fm_Espera) Then
+                Fm_Espera.Close()
+                Fm_Espera = Nothing
+            End If
+            Me.Enabled = True
+        End Try
 
     End Sub
 
@@ -418,8 +442,24 @@ Public Class Frm_SobreStockXClas
 
         Dim _Fila As DataGridViewRow = Grilla_Productos.CurrentRow
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
+        Dim _Codigo_Nodo_Madre2 As String = _Fila.Cells("Codigo_Nodo_Madre").Value
+        Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
+
+        If String.IsNullOrEmpty(_Codigo_Nodo_Madre) Then
+            MessageBoxEx.Show(Me, "Debe seleccionar primero una clasificación", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If _Codigo_Nodo_Madre2 <> _Codigo_Nodo_Madre Then
+            MessageBoxEx.Show("El código seleccionado no pertenece a la clasificación seleccionada." & vbCrLf &
+                              "Por favor seleccione un código de la clasificación: " & _Codigo_Nodo_Madre,
+                              "Sobre stock", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim Fm As New Frm_SobreStock_Grafico(_Codigo, "")
+        Fm.Text = "PRODUCTO: " & _Codigo & " - " & _Descripcion.ToString.Trim
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

@@ -348,6 +348,7 @@ Public Class Frm_Filtro_Especial_Informes
 
             Case _Tabla_Fl._Bodegas
                 _Tabla = "TABBO" : _Campo = "EMPRESA+KOSU+KOBO" : _Descripcion = "NOKOBO"
+                _Condicion_Extra = $"And EMPRESA = '{Mod_Empresa}'"
             Case _Tabla_Fl._Sucursales
                 _Tabla = "TABSU" : _Campo = "KOSU" : _Descripcion = "NOKOSU"
             Case _Tabla_Fl._Entidades
