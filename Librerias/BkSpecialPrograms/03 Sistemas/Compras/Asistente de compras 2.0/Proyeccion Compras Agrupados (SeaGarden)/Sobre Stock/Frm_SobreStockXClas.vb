@@ -407,6 +407,7 @@ Public Class Frm_SobreStockXClas
             Dim _Fila As DataGridViewRow = Grilla_Clasificaciones.CurrentRow
             Dim _Codigo_Nodo As Integer = _Fila.Cells("Codigo_Nodo").Value
             Dim _Producto As String = _Fila.Cells("Producto").Value
+            Dim _StockUd1 As Double = _Fila.Cells("StockUd1").Value
             _Codigo_Nodo_Madre = _Fila.Cells("Codigo_Nodo_Madre").Value
 
             Dim _Mensaje As LsValiciones.Mensajes
@@ -424,6 +425,7 @@ Public Class Frm_SobreStockXClas
 
             Dim Fm As New Frm_SobreStock_Grafico("", _Codigo_Nodo_Madre)
             Fm.Text = "CLASIFICACION: " & _Codigo_Nodo_Madre.ToString.Trim & " - " & _Producto
+            Fm.StockInicial = _StockUd1
             Fm.ShowDialog(Me)
             Fm.Dispose()
 
@@ -444,6 +446,7 @@ Public Class Frm_SobreStockXClas
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
         Dim _Codigo_Nodo_Madre2 As String = _Fila.Cells("Codigo_Nodo_Madre").Value
         Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
+        Dim _StockUd1 As Double = _Fila.Cells("StockUd1").Value
 
         If String.IsNullOrEmpty(_Codigo_Nodo_Madre) Then
             MessageBoxEx.Show(Me, "Debe seleccionar primero una clasificación", "Validación",
@@ -460,6 +463,7 @@ Public Class Frm_SobreStockXClas
 
         Dim Fm As New Frm_SobreStock_Grafico(_Codigo, "")
         Fm.Text = "PRODUCTO: " & _Codigo & " - " & _Descripcion.ToString.Trim
+        Fm.StockInicial = _StockUd1
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
