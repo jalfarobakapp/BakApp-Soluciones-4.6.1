@@ -31,6 +31,7 @@ Public Class Frm_SobreStockXClas
     Private Sub Frm_SobreStockXClas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Me.Text = "SOBRE STOCK"
+        Chk_SumarStockDisponible.Checked = True
 
         Sb_Actualizar_Grilla()
 
@@ -71,12 +72,13 @@ Public Class Frm_SobreStockXClas
 
             .Columns("Producto").Visible = True
             .Columns("Producto").HeaderText = "Producto"
-            .Columns("Producto").Width = 200
+            .Columns("Producto").Width = 190
             .Columns("Producto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("StockUd1").Width = _AnchoClValores
             .Columns("StockUd1").HeaderText = "Stock Físico"
+            .Columns("StockUd1").ToolTipText = "Stock Físico en Bodegas"
             .Columns("StockUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("StockUd1").DefaultCellStyle.Format = "###,##0.##"
             .Columns("StockUd1").Visible = True
@@ -85,6 +87,7 @@ Public Class Frm_SobreStockXClas
 
             .Columns("StockEnTransitoUd1").Width = _AnchoClValores
             .Columns("StockEnTransitoUd1").HeaderText = "Stock Transito"
+            .Columns("StockEnTransitoUd1").ToolTipText = "Stock Transito hacia bodegas"
             .Columns("StockEnTransitoUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("StockEnTransitoUd1").DefaultCellStyle.Format = "###,##0.##"
             .Columns("StockEnTransitoUd1").Visible = True
@@ -93,10 +96,20 @@ Public Class Frm_SobreStockXClas
 
             .Columns("StockPedidoUd1").Width = _AnchoClValores
             .Columns("StockPedidoUd1").HeaderText = "Stock Pedido"
+            .Columns("StockFacSinRecepUd1").ToolTipText = "Stock Pedido Ordenes De Compra por llegar"
             .Columns("StockPedidoUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("StockPedidoUd1").DefaultCellStyle.Format = "###,##0.##"
             .Columns("StockPedidoUd1").Visible = True
             .Columns("StockPedidoUd1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("StockFacSinRecepUd1").Width = _AnchoClValores
+            .Columns("StockFacSinRecepUd1").HeaderText = "Stock FacS/R"
+            .Columns("StockFacSinRecepUd1").ToolTipText = "Stock Facturado Sin Recepcionar"
+            .Columns("StockFacSinRecepUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StockFacSinRecepUd1").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("StockFacSinRecepUd1").Visible = True
+            .Columns("StockFacSinRecepUd1").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("RotM1").Width = _AnchoClValores
@@ -172,12 +185,12 @@ Public Class Frm_SobreStockXClas
             .Columns("Syncro").Width = _AnchoClValores
             .Columns("Syncro").HeaderText = "Syncro"
             .Columns("Syncro").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Syncro").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("Syncro").DefaultCellStyle.Format = "###,##0"
             .Columns("Syncro").Visible = True
             .Columns("Syncro").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("KilosXPallet").Width = _AnchoClValores
+            .Columns("KilosXPallet").Width = _AnchoClValores - 20
             .Columns("KilosXPallet").HeaderText = "Kg X Pallet"
             .Columns("KilosXPallet").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("KilosXPallet").DefaultCellStyle.Format = "###,##0.##"
@@ -185,7 +198,7 @@ Public Class Frm_SobreStockXClas
             .Columns("KilosXPallet").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("PalletSY").Width = 50
+            .Columns("PalletSY").Width = 40
             .Columns("PalletSY").HeaderText = "Pallet SY"
             .Columns("PalletSY").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PalletSY").DefaultCellStyle.Format = "###,##0.##"
@@ -195,7 +208,8 @@ Public Class Frm_SobreStockXClas
 
             .Columns("SobreStock").Width = 40
             .Columns("SobreStock").Visible = True
-            .Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
+            .Columns("SobreStock").HeaderText = "S/S"
+            .Columns("SobreStock").ToolTipText = "Sobre Stock"
             .Columns("SobreStock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -273,6 +287,15 @@ Public Class Frm_SobreStockXClas
             .Columns("StockPedidoUd1").DefaultCellStyle.Format = "###,##0.##"
             .Columns("StockPedidoUd1").Visible = True
             .Columns("StockPedidoUd1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("StockFacSinRecepUd1").Width = _AnchoClValores
+            .Columns("StockFacSinRecepUd1").HeaderText = "Stock FacS/R"
+            '.Columns("StockFacSinRecepUd1").ToolTipText = "Stock Facturado Sin Recepcionar"
+            .Columns("StockFacSinRecepUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("StockFacSinRecepUd1").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("StockFacSinRecepUd1").Visible = True
+            .Columns("StockFacSinRecepUd1").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("RotM1").Width = _AnchoClValores

@@ -33,7 +33,8 @@ CREATE TABLE {TablaPasoRotacion_Clasificacion}(
     StockUd1 Float,
     StockEnTransitoUd1 Float,
     StockPedidoUd1 Float,
-    StockDisponible Float,
+    StockFacSinRecepUd1 Float,
+    StockDisponible Float,    
     RotM1 FLOAT,
     RotM2 FLOAT,
     RotM3 FLOAT,
@@ -92,7 +93,8 @@ INSERT INTO {TablaPasoRotacion_Clasificacion} (
     StockUd1,
     StockEnTransitoUd1,
     StockPedidoUd1,
-    StockDisponible,
+    StockFacSinRecepUd1,
+    StockDisponible,    
     RotM1,
     RotM2,
     RotM3,
@@ -111,24 +113,25 @@ SELECT
     StockUd1,
     StockEnTransitoUd1,
     StockPedidoUd1,
+    StockFacSinRecepUd1,
     StockUd1 + StockEnTransitoUd1{_StockPedidoUd1} AS StockDisponible,
     RotMensualUd1 AS RotM1,
     Promedio_Mensual AS RotM2,
-    Promedio_UltMesMasPromUlt3Mes AS RotM3,
-    Promedio_3Mes AS RotM4,
+    Promedio_3Mes AS RotM3,
+    Promedio_UltMesMasPromUlt3Mes AS RotM4,
     -- Nombre del campo que resultó mayor
     CASE 
         WHEN RotMensualUd1 >= Promedio_Mensual 
+             AND RotMensualUd1 >= Promedio_3Mes
              AND RotMensualUd1 >= Promedio_UltMesMasPromUlt3Mes 
-             AND RotMensualUd1 >= Promedio_3Mes 
         THEN 'RotM1'
         WHEN Promedio_Mensual >= RotMensualUd1 
+             AND Promedio_Mensual >= Promedio_3Mes
              AND Promedio_Mensual >= Promedio_UltMesMasPromUlt3Mes 
-             AND Promedio_Mensual >= Promedio_3Mes 
         THEN 'RotM2'
-        WHEN Promedio_UltMesMasPromUlt3Mes >= RotMensualUd1 
-             AND Promedio_UltMesMasPromUlt3Mes >= Promedio_Mensual 
-             AND Promedio_UltMesMasPromUlt3Mes >= Promedio_3Mes 
+        WHEN Promedio_3Mes >= RotMensualUd1 
+             AND Promedio_3Mes >= Promedio_Mensual 
+             AND Promedio_3Mes >= Promedio_UltMesMasPromUlt3Mes 
         THEN 'RotM3'
         ELSE 'RotM4'
     END AS RotCalculo,
@@ -146,9 +149,9 @@ FROM {_Tbl_Asc_02_Asociaciones}
 
 Update {_TablaPasoRotacion_Clasificacion} Set Duracion_Stock_Meses = Round(StockDisponible/NULLIF(Rotacion,0),0)
 Update {_TablaPasoRotacion_Clasificacion} Set Syncro = (Duracion_Stock_Meses-MesesSobreStock)*Rotacion
-Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'No' Where Duracion_Stock_Meses <= MesesSobreStock
-Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'Si' Where Duracion_Stock_Meses > MesesSobreStock
 Update {_TablaPasoRotacion_Clasificacion} Set PalletSY = Floor(Syncro/NULLIF(KilosXPallet,0))
+Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'No' Where PalletSY <= 0 --Duracion_Stock_Meses <= MesesSobreStock
+Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'Si' Where PalletSY > 0 --Duracion_Stock_Meses > MesesSobreStock
 "
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 ' Lanzar error aquí con información útil para depuración
@@ -203,6 +206,7 @@ Update {_TablaPasoRotacion_Clasificacion} Set PalletSY = Floor(Syncro/NULLIF(Kil
     StockUd1 Float,
     StockEnTransitoUd1 Float,
     StockPedidoUd1 Float,
+    StockFacSinRecepUd1 Float,
     StockDisponible Float,
     RotM1 FLOAT,
     RotM2 FLOAT,
@@ -266,6 +270,7 @@ INSERT INTO {TablaPasoRotacion_Productos} (
     StockUd1,
     StockEnTransitoUd1,
     StockPedidoUd1,
+    StockFacSinRecepUd1,
     StockDisponible,
     RotM1,
     RotM2,
@@ -289,28 +294,29 @@ SELECT
     StockUd1,
     StockEnTransitoUd1,
     StockPedidoUd1,
-    StockUd1 + StockEnTransitoUd1 AS StockDisponible,
-    RotMensualUd1 AS RotM1,
-    RotMensualUd1_Prod AS RotM2,
-    Promedio_MensualUd1_Prod AS RotM3,
-    PromMensualUd1_Ul3Mes_Prod AS RotM4,
+    StockFacSinRecepUd1,
+    StockUd1 + StockEnTransitoUd1{_StockPedidoUd1} AS StockDisponible,
+    RotMensualUd1_Prod AS RotM1,
+    Promedio_MensualUd1_Prod AS RotM2,
+    PromMensualUd1_Ul3Mes_Prod AS RotM3,
+    PromUlt3CioPromUlt3Meses_Ud1_Prod AS RotM4,
     CASE
-        WHEN RotMensualUd1 >= RotMensualUd1_Prod
-             AND RotMensualUd1 >= Promedio_MensualUd1_Prod
-             AND RotMensualUd1 >= PromMensualUd1_Ul3Mes_Prod
-        THEN 'RotM1'
-        WHEN RotMensualUd1_Prod >= RotMensualUd1
-             AND RotMensualUd1_Prod >= Promedio_MensualUd1_Prod
+        WHEN RotMensualUd1_Prod >= Promedio_MensualUd1_Prod
              AND RotMensualUd1_Prod >= PromMensualUd1_Ul3Mes_Prod
-        THEN 'RotM2'
-        WHEN Promedio_MensualUd1_Prod >= RotMensualUd1
-             AND Promedio_MensualUd1_Prod >= RotMensualUd1_Prod
+             AND RotMensualUd1_Prod >= PromUlt3CioPromUlt3Meses_Ud1_Prod
+        THEN 'RotM1'
+        WHEN Promedio_MensualUd1_Prod >= RotMensualUd1_Prod
              AND Promedio_MensualUd1_Prod >= PromMensualUd1_Ul3Mes_Prod
+             AND Promedio_MensualUd1_Prod >= PromUlt3CioPromUlt3Meses_Ud1_Prod
+        THEN 'RotM2'
+        WHEN PromMensualUd1_Ul3Mes_Prod >= RotMensualUd1_Prod
+             AND PromMensualUd1_Ul3Mes_Prod >= Promedio_MensualUd1_Prod
+             AND PromMensualUd1_Ul3Mes_Prod >= PromUlt3CioPromUlt3Meses_Ud1_Prod
         THEN 'RotM3'
         ELSE 'RotM4'
     END AS RotCalculo,
     (SELECT MAX(v)
-     FROM (VALUES (RotMensualUd1), (RotMensualUd1_Prod),
+     FROM (VALUES (RotMensualUd1_Prod), (RotMensualUd1_Prod),
                   (Promedio_MensualUd1_Prod), (PromMensualUd1_Ul3Mes_Prod)) AS value(v)
     ) AS Rotacion,
     Duracion_Stock AS Duracion_Stock_Meses,
@@ -328,18 +334,12 @@ SET Duracion_Stock_Meses = Round(StockDisponible / NULLIF(Rotacion,0),0);
 UPDATE {TablaPasoRotacion_Productos}
 SET Syncro = (Duracion_Stock_Meses - MesesSobreStock) * Rotacion;
 
--- SobreStock
-UPDATE {TablaPasoRotacion_Productos}
-SET SobreStock = 'No'
-WHERE Duracion_Stock_Meses <= MesesSobreStock;
-
-UPDATE {TablaPasoRotacion_Productos}
-SET SobreStock = 'Si'
-WHERE Duracion_Stock_Meses > MesesSobreStock;
-
 -- Pallets calculados hacia abajo
-UPDATE {TablaPasoRotacion_Productos}
-SET PalletSY = FLOOR(Syncro / NULLIF(KilosXPallet,0));
+UPDATE {TablaPasoRotacion_Productos} SET PalletSY = FLOOR(Syncro / NULLIF(KilosXPallet,0));
+
+-- SobreStock
+UPDATE {TablaPasoRotacion_Productos} SET SobreStock = 'No' WHERE PalletSY <= 0 -- Duracion_Stock_Meses <= MesesSobreStock;
+UPDATE {TablaPasoRotacion_Productos} SET SobreStock = 'Si' WHERE PalletSY > 0 -- Duracion_Stock_Meses > MesesSobreStock;
 "
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 ' Lanzar error aquí con información útil para depuración
@@ -824,7 +824,7 @@ JOIN (
            YEAR(FEERLI) AS Periodo,
            SUM(Saldo) AS TotalSaldo
     FROM Tbl_Asc_04_DocUltComp_{FUNCIONARIO}
-    WHERE TIDO = 'OCC'
+    WHERE TIDO In ('OCC','FCC')
     GROUP BY Codigo, DATEPART(WEEK, FEERLI), YEAR(FEERLI)
 ) d
     ON c.Codigo = d.Codigo
@@ -1189,7 +1189,7 @@ JOIN (
            YEAR(FEERLI) AS Periodo,
            SUM(Saldo) AS TotalSaldo
     FROM Tbl_Asc_04_DocUltComp_{FUNCIONARIO}
-    WHERE TIDO = 'OCC'
+    WHERE TIDO In ('OCC','FCC')
     GROUP BY Codigo_Nodo_Madre, DATEPART(WEEK, FEERLI), YEAR(FEERLI)
 ) d
     ON c.Codigo_Nodo_Madre = d.Codigo_Nodo_Madre

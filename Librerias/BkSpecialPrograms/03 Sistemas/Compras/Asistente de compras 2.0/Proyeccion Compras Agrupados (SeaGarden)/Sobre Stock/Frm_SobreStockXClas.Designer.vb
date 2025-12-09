@@ -44,13 +44,13 @@ Partial Class Frm_SobreStockXClas
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
-        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
-        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
-        Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Productos = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Chk_SumarStockDisponible = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Menu_Contextual_Productos = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Estadisticas_Producto = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Ver_documento_origen = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel3.SuspendLayout()
         CType(Me.ContextMenuBar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Clasificaciones, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -313,7 +313,7 @@ Partial Class Frm_SobreStockXClas
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ButtonItem1})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Productos})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(33, 33)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(412, 25)
@@ -322,54 +322,6 @@ Partial Class Frm_SobreStockXClas
         Me.ContextMenuBar1.TabIndex = 48
         Me.ContextMenuBar1.TabStop = False
         Me.ContextMenuBar1.Text = "ContextMenuBar1"
-        '
-        'ButtonItem1
-        '
-        Me.ButtonItem1.AutoExpandOnClick = True
-        Me.ButtonItem1.Name = "ButtonItem1"
-        Me.ButtonItem1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.ButtonItem2, Me.LabelItem2, Me.ButtonItem3})
-        Me.ButtonItem1.Text = "Opciones"
-        '
-        'LabelItem1
-        '
-        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem1.Name = "LabelItem1"
-        Me.LabelItem1.PaddingBottom = 1
-        Me.LabelItem1.PaddingLeft = 10
-        Me.LabelItem1.PaddingTop = 1
-        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "Opciones del producto"
-        '
-        'ButtonItem2
-        '
-        Me.ButtonItem2.Image = CType(resources.GetObject("ButtonItem2.Image"), System.Drawing.Image)
-        Me.ButtonItem2.ImageAlt = CType(resources.GetObject("ButtonItem2.ImageAlt"), System.Drawing.Image)
-        Me.ButtonItem2.Name = "ButtonItem2"
-        Me.ButtonItem2.Text = "Ver Ticket"
-        '
-        'LabelItem2
-        '
-        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem2.ImageTextSpacing = 1
-        Me.LabelItem2.Name = "LabelItem2"
-        Me.LabelItem2.PaddingBottom = 1
-        Me.LabelItem2.PaddingLeft = 10
-        Me.LabelItem2.PaddingTop = 1
-        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem2.Text = "-------------------------------------------"
-        '
-        'ButtonItem3
-        '
-        Me.ButtonItem3.Image = CType(resources.GetObject("ButtonItem3.Image"), System.Drawing.Image)
-        Me.ButtonItem3.ImageAlt = CType(resources.GetObject("ButtonItem3.ImageAlt"), System.Drawing.Image)
-        Me.ButtonItem3.Name = "ButtonItem3"
-        Me.ButtonItem3.Text = "Copiar (portapapeles)"
         '
         'Grilla_Productos
         '
@@ -429,6 +381,51 @@ Partial Class Frm_SobreStockXClas
         Me.Chk_SumarStockDisponible.TabIndex = 200
         Me.Chk_SumarStockDisponible.Text = "Sumar stock disponible para el calculo"
         '
+        'Menu_Contextual_Productos
+        '
+        Me.Menu_Contextual_Productos.AutoExpandOnClick = True
+        Me.Menu_Contextual_Productos.Name = "Menu_Contextual_Productos"
+        Me.Menu_Contextual_Productos.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem3, Me.Btn_Estadisticas_Producto, Me.LabelItem4, Me.Btn_Ver_documento_origen})
+        Me.Menu_Contextual_Productos.Text = "Opciones productos"
+        '
+        'LabelItem3
+        '
+        Me.LabelItem3.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem3.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem3.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem3.Name = "LabelItem3"
+        Me.LabelItem3.PaddingBottom = 1
+        Me.LabelItem3.PaddingLeft = 10
+        Me.LabelItem3.PaddingTop = 1
+        Me.LabelItem3.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem3.Text = "Opciones del producto"
+        '
+        'Btn_Estadisticas_Producto
+        '
+        Me.Btn_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Estadisticas_Producto.Image"), System.Drawing.Image)
+        Me.Btn_Estadisticas_Producto.Name = "Btn_Estadisticas_Producto"
+        Me.Btn_Estadisticas_Producto.Text = "Ver estadísticas del producto/información adicional"
+        '
+        'LabelItem4
+        '
+        Me.LabelItem4.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem4.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem4.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem4.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem4.Name = "LabelItem4"
+        Me.LabelItem4.PaddingBottom = 1
+        Me.LabelItem4.PaddingLeft = 10
+        Me.LabelItem4.PaddingTop = 1
+        Me.LabelItem4.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem4.Text = "Edicion"
+        '
+        'Btn_Ver_documento_origen
+        '
+        Me.Btn_Ver_documento_origen.Image = CType(resources.GetObject("Btn_Ver_documento_origen.Image"), System.Drawing.Image)
+        Me.Btn_Ver_documento_origen.Name = "Btn_Ver_documento_origen"
+        Me.Btn_Ver_documento_origen.Text = "Copiar"
+        '
         'Frm_SobreStockXClas
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -475,11 +472,11 @@ Partial Class Frm_SobreStockXClas
     Friend WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
-    Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
-    Friend WithEvents ButtonItem2 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
-    Friend WithEvents ButtonItem3 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla_Productos As DevComponents.DotNetBar.Controls.DataGridViewX
     Public WithEvents Chk_SumarStockDisponible As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Menu_Contextual_Productos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem3 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Estadisticas_Producto As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem4 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Ver_documento_origen As DevComponents.DotNetBar.ButtonItem
 End Class
