@@ -92,16 +92,19 @@ Public Class Frm_Informe_Compr_No_Despachados
         Dtp_Fecha_Recepcion_Desde.Value = _Fecha_Hoy
         Dtp_Fecha_Recepcion_Hasta.Value = _Fecha_Hoy
 
-        Chk_NVVHabilitadasFacturar.Visible = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
-        Chk_NVVHabilitadasFacturar.Checked = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
+        Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            _LasNVVDebenSerHabilitadasParaFacturar = True
+        End If
+
+        Chk_NVVHabilitadasFacturar.Visible = _LasNVVDebenSerHabilitadasParaFacturar
+        Chk_NVVHabilitadasFacturar.Checked = _LasNVVDebenSerHabilitadasParaFacturar
 
         If Chk_NVVHabilitadasFacturar.Visible Then
             AddHandler Chk_NVVHabilitadasFacturar.CheckedChanged, AddressOf Chk_NVVHabilitadasFacturar_CheckedChanged
         End If
-
-        'If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
-        '    Rdb_NVV.Text = "Notas de venta (NVV) Solo Habilitadas"
-        'End If
 
         VerSoloEntidadesDelVendedor = Fx_Tiene_Permiso(Me, "NO00021",, False)
 

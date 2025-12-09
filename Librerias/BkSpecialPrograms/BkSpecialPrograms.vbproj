@@ -936,6 +936,9 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TblArbol_Asociaciones.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Sector.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Picking_Det.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Picking_DetPick.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Picking_Enc.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Ubicaciones_Mapa_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Ubicaciones_Sectores.vb" />
     <Compile Include="03 Sistemas\BodOne\Cl_Api_BodOne.vb" />
@@ -1080,6 +1083,7 @@
     <Compile Include="03 Sistemas\MayoristaMinoristas\Frm_RevMayMin.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Cl_Wms.vb" />
     <Compile Include="03 Sistemas\Sobre Stock\Cl_SobreStock.vb" />
     <Compile Include="03 Sistemas\Sobre Stock\Frm_SobreStock_IngDet.Designer.vb">
       <DependentUpon>Frm_SobreStock_IngDet.vb</DependentUpon>

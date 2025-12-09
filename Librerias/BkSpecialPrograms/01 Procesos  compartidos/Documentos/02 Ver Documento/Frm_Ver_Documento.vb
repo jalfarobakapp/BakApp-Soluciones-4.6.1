@@ -833,13 +833,24 @@ Public Class Frm_Ver_Documento
 
         If Not IsNothing(_Row_Docu_Ent) AndAlso _Tido = "NVV" Then
 
-            Dim _Revisar_HbilitarNVVFAc As Boolean = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
+            'Dim _Revisar_HbilitarNVVFAc As Boolean = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
 
-            If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
-                _Revisar_HbilitarNVVFAc = False
+            'If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
+            '    _Revisar_HbilitarNVVFAc = False
+            'End If
+
+            Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                _LasNVVDebenSerHabilitadasParaFacturar = True
             End If
 
-            If _Revisar_HbilitarNVVFAc Then
+            If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
+                _LasNVVDebenSerHabilitadasParaFacturar = False
+            End If
+
+            If _LasNVVDebenSerHabilitadasParaFacturar Then
 
                 Btn_HabilitarFacturacion.Visible = True
 

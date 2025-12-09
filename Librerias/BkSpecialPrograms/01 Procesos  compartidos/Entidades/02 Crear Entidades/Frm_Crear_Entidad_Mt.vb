@@ -1480,8 +1480,17 @@ Public Class Frm_Crear_Entidad_Mt
     End Sub
 
     Private Sub BtnModVendedor_Click(sender As System.Object, e As System.EventArgs) Handles BtnModVendedor.Click
+
         Cmb_Kofuen.Enabled = Fx_Tiene_Permiso(Me, "CfEnt006",,,,, Txt_Koen.Text, Txt_Suen.Text)
         BtnModVendedor.Enabled = Not Cmb_Kofuen.Enabled
+
+        If Cmb_Kofuen.Enabled Then
+            If Fx_Tiene_Permiso(Nothing, "NO00022",, False) Then
+                MessageBoxEx.Show(Me, "Solo se mostraran vendedores asosiados a sus Grupos de vendedores", "Información",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
+        End If
+
     End Sub
 
     Private Sub BtnModListas_Click(sender As System.Object, e As System.EventArgs) Handles BtnModListas.Click

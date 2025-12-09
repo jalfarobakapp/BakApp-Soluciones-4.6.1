@@ -1224,7 +1224,7 @@ Public Class Frm_BuscarDocumento_Mt
 
             End If
 
-            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") And _Fila.Cells("TIDO").Value = "NVV" Then
+            If HabilitarNVVParaFacturar And _Fila.Cells("TIDO").Value = "NVV" Then
 
                 Dim _Autorizado = False
 

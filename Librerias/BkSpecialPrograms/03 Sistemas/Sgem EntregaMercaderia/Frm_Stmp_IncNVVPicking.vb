@@ -336,7 +336,14 @@ Public Class Frm_Stmp_IncNVVPicking
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
 
-        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") AndAlso
+        Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            _LasNVVDebenSerHabilitadasParaFacturar = True
+        End If
+
+        If _LasNVVDebenSerHabilitadasParaFacturar AndAlso
             (_Cabeza = "Facturar" Or _Cabeza = "EnvPickeo") AndAlso
             _Fila.Cells(_Cabeza).Value AndAlso
             Not _Fila.Cells("HabilitadaFac").Value Then
@@ -395,13 +402,20 @@ Public Class Frm_Stmp_IncNVVPicking
             Dim _Marcar As Boolean
             Dim _SinHabilitar = 0
 
+            Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+                       _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                _LasNVVDebenSerHabilitadasParaFacturar = True
+            End If
+
             For Each _Fila As DataGridViewRow In Grilla.Rows
 
                 If Not _Fila.Cells("EnvPickeo").Value Then
 
                     _Marcar = True
 
-                    If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                    If _LasNVVDebenSerHabilitadasParaFacturar Then
 
                         If Not _Fila.Cells("HabilitadaFac").Value Then
 
@@ -421,7 +435,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
             Next
 
-            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            If _LasNVVDebenSerHabilitadasParaFacturar Then
 
                 If Chk_PickearTodo.Checked AndAlso CBool(_SinHabilitar) Then
 
@@ -455,13 +469,20 @@ Public Class Frm_Stmp_IncNVVPicking
         Dim _Marcar As Boolean
         Dim _SinHabilitar = 0
 
+        Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+                       _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            _LasNVVDebenSerHabilitadasParaFacturar = True
+        End If
+
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
             If Not _Fila.Cells("Facturar").Value Then
 
                 _Marcar = True
 
-                If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                If _LasNVVDebenSerHabilitadasParaFacturar Then
 
                     If Not _Fila.Cells("HabilitadaFac").Value Then
 
@@ -478,7 +499,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Next
 
-        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+        If _LasNVVDebenSerHabilitadasParaFacturar Then
 
             If Not Chk_FacturarTodo.Checked Then
 

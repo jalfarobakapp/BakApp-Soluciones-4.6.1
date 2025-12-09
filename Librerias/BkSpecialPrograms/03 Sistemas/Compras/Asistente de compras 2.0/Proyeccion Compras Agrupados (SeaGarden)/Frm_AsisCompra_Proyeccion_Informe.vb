@@ -1326,14 +1326,14 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns("Duracion_Proyeccion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            _Campo = "SobreStock"
-            .Columns("SobreStock").Width = 40
-            .Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
-            .Columns("SobreStock").ToolTip = "Productos con sobre stock disponible"
-            .Columns("SobreStock").CellStyles.Default.Alignment = Alignment.MiddleCenter
-            .Columns("SobreStock").Visible = True
-            .Columns("SobreStock").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '_Campo = "SobreStock"
+            '.Columns("SobreStock").Width = 40
+            '.Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
+            '.Columns("SobreStock").ToolTip = "Productos con sobre stock disponible"
+            '.Columns("SobreStock").CellStyles.Default.Alignment = Alignment.MiddleCenter
+            '.Columns("SobreStock").Visible = True
+            '.Columns("SobreStock").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
             _Campo = "Cant_Comprar"
             .Columns("Cant_Comprar").Width = 80
@@ -1620,15 +1620,14 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns("Duracion_Proyeccion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            _Campo = "SobreStock"
-            .Columns("SobreStock").Width = 40
-            .Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
-            .Columns("SobreStock").ToolTip = "Productos con sobre stock disponible"
-            .Columns("SobreStock").CellStyles.Default.Alignment = Alignment.MiddleCenter
-            .Columns("SobreStock").Visible = True
-            .Columns("SobreStock").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
+            '_Campo = "SobreStock"
+            '.Columns("SobreStock").Width = 40
+            '.Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
+            '.Columns("SobreStock").ToolTip = "Productos con sobre stock disponible"
+            '.Columns("SobreStock").CellStyles.Default.Alignment = Alignment.MiddleCenter
+            '.Columns("SobreStock").Visible = True
+            '.Columns("SobreStock").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
         End With
 

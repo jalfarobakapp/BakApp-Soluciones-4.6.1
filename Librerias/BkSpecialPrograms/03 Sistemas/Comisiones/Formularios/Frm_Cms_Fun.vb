@@ -131,7 +131,6 @@ Public Class Frm_Cms_Fun
 
         End If
 
-
     End Sub
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick

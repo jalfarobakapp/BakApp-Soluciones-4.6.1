@@ -1,4 +1,6 @@
 ﻿Imports DevComponents.DotNetBar
+Imports System.Drawing
+Imports System.Windows.Forms
 
 Public Class Frm_SobreStockXClas
 
@@ -19,12 +21,16 @@ Public Class Frm_SobreStockXClas
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla_Clasificaciones, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+        Sb_Formato_Generico_Grilla(Grilla_Clasificaciones, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         Sb_Formato_Generico_Grilla(Grilla_Productos, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+
+        Sb_Color_Botones_Barra(Bar2)
 
     End Sub
 
     Private Sub Frm_SobreStockXClas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Me.Text = "SOBRE STOCK"
 
         Sb_Actualizar_Grilla()
 
@@ -55,33 +61,16 @@ Public Class Frm_SobreStockXClas
 
             Dim _DisplayIndex = 0
 
-            '.Columns("BtnImagen_Estado").Width = 30
-            '.Columns("BtnImagen_Estado").HeaderText = "Est."
-            '.Columns("BtnImagen_Estado").Visible = _MostrarImagenes
-            '.Columns("BtnImagen_Estado").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            '.Columns("Chk").Visible = True
-            '.Columns("Chk").HeaderText = "Sel."
-            '.Columns("Chk").ToolTipText = "Selección"
-            '.Columns("Chk").Width = 30
-            '.Columns("Chk").ReadOnly = False
-            '.Columns("Chk").Visible = True
-            '.Columns("Chk").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
             Dim _AnchoClValores = 60
 
             .Columns("Codigo_Nodo_Madre").Visible = True
             .Columns("Codigo_Nodo_Madre").HeaderText = "Codigo_Nodo_Madre"
-            '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"
             .Columns("Codigo_Nodo_Madre").Width = 80
             .Columns("Codigo_Nodo_Madre").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Producto").Visible = True
             .Columns("Producto").HeaderText = "Producto"
-            '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"
             .Columns("Producto").Width = 200
             .Columns("Producto").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -145,7 +134,6 @@ Public Class Frm_SobreStockXClas
             .Columns("RotCalculo").Width = _AnchoClValores
             .Columns("RotCalculo").Visible = True
             .Columns("RotCalculo").HeaderText = "Rotación Calculo"
-            '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"
             .Columns("RotCalculo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -208,11 +196,13 @@ Public Class Frm_SobreStockXClas
             .Columns("SobreStock").Width = 40
             .Columns("SobreStock").Visible = True
             .Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
-            '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"
             .Columns("SobreStock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
+
+        ' Aplicar coloreo según la columna SobreStock
+        Sb_ColorearFilasSobreStock(Grilla_Clasificaciones)
 
         Me.Cursor = Cursors.Default
 
@@ -258,7 +248,6 @@ Public Class Frm_SobreStockXClas
             .Columns("Descripcion").Width = 200
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripción"
-            '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -321,7 +310,6 @@ Public Class Frm_SobreStockXClas
             .Columns("RotCalculo").Width = _AnchoClValores
             .Columns("RotCalculo").Visible = True
             .Columns("RotCalculo").HeaderText = "Rotación Calculo"
-            '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"
             .Columns("RotCalculo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -384,11 +372,13 @@ Public Class Frm_SobreStockXClas
             .Columns("SobreStock").Width = 40
             .Columns("SobreStock").Visible = True
             .Columns("SobreStock").HeaderText = "Sobre Stock"
-            '.Columns("Codigo_Nodo_Madre").ToolTipText = "Vendedor"
             .Columns("SobreStock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
+
+        ' Aplicar coloreo según la columna SobreStock en la grilla de productos
+        Sb_ColorearFilasSobreStock(Grilla_Productos)
 
         Me.Cursor = Cursors.Default
 
@@ -420,8 +410,6 @@ Public Class Frm_SobreStockXClas
 
             Fm_Espera.Close()
             Fm_Espera = Nothing
-
-            ' MessageBoxEx.Show(_Mensaje.Mensaje, "Sobre stock", MessageBoxButtons.OK, _Mensaje.Icono)
 
             Dim Fm As New Frm_SobreStock_Grafico("", _Codigo_Nodo_Madre)
             Fm.Text = "CLASIFICACION: " & _Codigo_Nodo_Madre.ToString.Trim & " - " & _Producto
@@ -468,4 +456,57 @@ Public Class Frm_SobreStockXClas
         Fm.Dispose()
 
     End Sub
+
+    ' Método para colorear filas cuando SobreStock = "Si"
+    Private Sub Sb_ColorearFilasSobreStock(ByVal Grilla As DataGridView)
+
+        Try
+            If IsNothing(Grilla) Then
+                Return
+            End If
+
+            ' Evitar excepciones si la columna no existe
+            If Not Grilla.Columns.Contains("SobreStock") Then
+                Return
+            End If
+
+            For Each row As DataGridViewRow In Grilla.Rows
+                If row.IsNewRow Then
+                    Continue For
+                End If
+
+                Dim cellValue As String = String.Empty
+
+                Try
+                    cellValue = If(row.Cells("SobreStock").Value, String.Empty).ToString()
+                Catch ex As Exception
+                    cellValue = String.Empty
+                End Try
+
+                If cellValue.Trim().ToUpper() = "SI" Then
+                    ' Colores para filas con sobre stock
+                    row.DefaultCellStyle.BackColor = Color.LightGreen
+                    row.DefaultCellStyle.ForeColor = Color.Black
+                Else
+                    ' Restaurar colores por defecto
+                    row.DefaultCellStyle.BackColor = Color.White
+                    row.DefaultCellStyle.ForeColor = Color.Black
+                End If
+            Next
+        Catch ex As Exception
+            ' No propagamos la excepción para no interrumpir la UI
+        End Try
+
+    End Sub
+
+    Private Sub Btn_Exportar_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Excel.Click
+
+        Consulta_sql = "Select * From " & _Cl_SobreStockXClas.TablaPasoRotacion_Clasificacion & vbCrLf &
+                       "Select * From " & _Cl_SobreStockXClas.TablaPasoRotacion_Productos
+        Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+        ExportarTabla_JetExcel_DataSet(_Ds, Me, "Sobre Stock")
+
+    End Sub
+
 End Class

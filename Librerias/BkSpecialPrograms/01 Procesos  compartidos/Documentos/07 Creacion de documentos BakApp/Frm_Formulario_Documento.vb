@@ -1090,9 +1090,17 @@ Public Class Frm_Formulario_Documento
             End If
 
             If _Tido = "NVV" And _DemarcarPickeo Then
-                Chk_Pickear.Checked = _Global_Row_Configuracion_General.Item("Pickear_NVVTodas")
-                Chk_Pickear.Visible = _Global_Row_Configuracion_General.Item("Pickear_NVVTodas")
+
+                Dim _Pickear As Boolean = False
+
+                If _Global_Row_Configuracion_General.Item("Pickear_NVVTodas") Or _Global_Row_Configuracion_Estacion.Item("Pickear_NVVTodas") Then
+                    _Pickear = True
+                End If
+
+                Chk_Pickear.Checked = _Pickear
+                Chk_Pickear.Visible = _Pickear
                 Chk_Pickear.Enabled = True
+
             End If
 
         End If
@@ -14896,36 +14904,6 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-                        'If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") And _Tido_Relacionado = "NVV" Then
-
-                        '    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent WITH (NOLOCK) Where Idmaeedo = " & _Row_Doc_Relacionado.Item("IDMAEEDO")
-                        '    Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-                        '    Dim _HabilitadaFac = False
-
-                        '    If Not IsNothing(_Row_Docu_Ent) Then
-                        '        _HabilitadaFac = _Row_Docu_Ent.Item("HabilitadaFac")
-                        '    End If
-
-                        '    If Not _HabilitadaFac Then
-                        '        If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
-                        '            _HabilitadaFac = True
-                        '        End If
-                        '    End If
-
-                        '    If Not _HabilitadaFac Then
-                        '        _Fila.Cells("CodEntidad").Value = String.Empty
-                        '        MessageBoxEx.Show(Me, "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
-                        '              "Según la configuración General las notas de venta deben ser habilitadas para que se puedan facturar",
-                        '              "Validación NVV: " & _Nudo_Relacionado, MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        '        If _Cerrar_Al_Grabar Then
-                        '            Me.Close()
-                        '        End If
-                        '        Return
-                        '    End If
-
-                        'End If
-
                         _CodEntidad = _Row_Doc_Relacionado.Item("ENDO")
                         _CodSucEntidad = _Row_Doc_Relacionado.Item("SUENDO")
                         _Idmaeedo_Relacionado = _Row_Doc_Relacionado.Item("IDMAEEDO")
@@ -19259,7 +19237,14 @@ Public Class Frm_Formulario_Documento
 
                             End If
 
-                            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                            Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+                            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+                               _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                                _LasNVVDebenSerHabilitadasParaFacturar = True
+                            End If
+
+                            If _LasNVVDebenSerHabilitadasParaFacturar Then ' _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
 
                                 Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent WITH (NOLOCK) Where Idmaeedo = " & _IdMaeedo
                                 Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -29489,7 +29474,14 @@ Public Class Frm_Formulario_Documento
 
         If _Revisar_Fincred And _Tido = "NVV" Then
 
-            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                _LasNVVDebenSerHabilitadasParaFacturar = True
+            End If
+
+            If _LasNVVDebenSerHabilitadasParaFacturar Then '_Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
 
                 MessageBoxEx.Show(Me, "Esta nota de venta sera evaluada por FINCRED al momento de ser habilitada para poder ser facturada" & vbCrLf &
                                   "Recuerde que las condiciones de venta podrian cambiar durante esta validación",
@@ -30516,9 +30508,15 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Chk_Pickear_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Pickear.CheckedChanged
 
+        Dim _Pickear As Boolean = False
+
+        If _Global_Row_Configuracion_General.Item("Pickear_NVVTodas") Or _Global_Row_Configuracion_Estacion.Item("Pickear_NVVTodas") Then
+            _Pickear = True
+        End If
+
         If Not _RevisandoBotonesActivos AndAlso
             Not Chk_Pickear.Checked AndAlso
-            _Global_Row_Configuracion_General.Item("Pickear_NVVTodas") Then
+            _Pickear Then
 
             Dim _Msj As String = "Si no cuenta con el permiso para grabar un documento sin Pickear, " &
                                  "este será solicitado al finalizar el documento para completar la acción."

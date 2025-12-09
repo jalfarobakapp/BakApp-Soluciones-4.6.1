@@ -7168,15 +7168,24 @@ Public Module Crear_Documentos_Desde_Otro
 
         Dim _Msj As String
 
-        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") And _Tido = "NVV" Then
+        Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            _LasNVVDebenSerHabilitadasParaFacturar = True
+        End If
+
+        If _LasNVVDebenSerHabilitadasParaFacturar And _Tido = "NVV" Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent Where Idmaeedo = " & _Idmaeedo
             Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _HabilitadaFac = False
 
-            _Msj = "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
-                   "Según la configuración General las notas de venta deben ser habilitadas para que se puedan facturar"
+            _Msj = "Esta nota de venta no esta habilitada para ser facturada. " &
+                   "Según la configuración General o de la modalidad las notas de venta deben ser habilitadas para que se puedan facturar"
+
+            _Msj = Fx_AjustarTexto(_Msj, 80)
 
             If Not IsNothing(_Row_Docu_Ent) Then
                 _HabilitadaFac = _Row_Docu_Ent.Item("HabilitadaFac")

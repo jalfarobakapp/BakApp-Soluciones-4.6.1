@@ -712,11 +712,18 @@ Public Class Frm_Facturacion_Masiva
 
         Dim _Tbl As DataTable = _Dv.Table
 
+        Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            _LasNVVDebenSerHabilitadasParaFacturar = True
+        End If
+
         For Each _Fila As DataGridViewRow In Grilla.Rows
             If Not _Fila.Cells("Facturado").Value Then
 
                 _Marcar = True
-                If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                If _LasNVVDebenSerHabilitadasParaFacturar Then
                     If Not _Fila.Cells("HabilitadaFac").Value Then
                         _Fila.Cells("Chk").Value = False
                         _Marcar = False
@@ -740,7 +747,7 @@ Public Class Frm_Facturacion_Masiva
 
         Lbl_Total_Facturar.Text = FormatCurrency(Lbl_Total_Facturar.Tag, 0)
 
-        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+        If _LasNVVDebenSerHabilitadasParaFacturar Then
             If Not Chk_Marcar_todo.Checked Then
                 If CBool(_SinHabilitar) Then
                     MessageBoxEx.Show(Me, "Existente " & _SinHabilitar & " documento(s) sin habilitar para ser facturado(s)" & vbCrLf &
@@ -1016,7 +1023,14 @@ Public Class Frm_Facturacion_Masiva
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
-        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+        Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            _LasNVVDebenSerHabilitadasParaFacturar = True
+        End If
+
+        If _LasNVVDebenSerHabilitadasParaFacturar Then
 
             If _Fila.Cells("Chk").Value Then
 

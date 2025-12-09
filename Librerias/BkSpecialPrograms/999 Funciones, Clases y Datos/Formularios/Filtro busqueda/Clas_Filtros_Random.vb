@@ -227,6 +227,7 @@
         Fm.MostrarNumeracionDeRegistros = _MostrarNumeracionDeRegistros
         Fm.SonProductos = SonProductos
         Fm.ReemplazarComillaspor = _ReemplazarComillaspor
+        Fm.Sb_Cargar_Datos()
         Fm.ShowDialog(_Formulario)
 
         If Fm.Pro_Filtrar Then

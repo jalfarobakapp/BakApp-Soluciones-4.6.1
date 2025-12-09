@@ -43,6 +43,8 @@ CREATE TABLE [dbo].[Zw_Stmp_Enc](
     [PagarAuto]                     [bit]           NOT NULL DEFAULT (0),
     [Idmaedpce_Paga]                [int]           NOT NULL DEFAULT (0),
     [CodFuncionario_Paga]           [char](3)       NOT NULL DEFAULT (''),
+    [CodFuncionario_Pickea]         [char](3)       NOT NULL DEFAULT (''),
+    [NombreEquipo_Pickea]           [varchar](50)   NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Stmp_Enc] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

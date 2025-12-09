@@ -277,9 +277,16 @@ Public Class Modulo_Programas_Especiales
 
     Private Sub Btn_Habilitar_Nvv_Para_Facturar_Click(sender As Object, e As EventArgs) Handles Btn_Habilitar_Nvv_Para_Facturar.Click
 
-        If Not _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+        Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            _LasNVVDebenSerHabilitadasParaFacturar = True
+        End If
+
+        If Not _LasNVVDebenSerHabilitadasParaFacturar Then
             MessageBoxEx.Show(Me, "Esta opción no esta habilitada." & vbCrLf &
-                              "Para poder habilitar esta opción debe hacerlo desde la Modalidad General",
+                              "Para poder habilitar esta opción debe hacerlo desde la Modalidad General o bien desde la modalidad " & Mod_Modalidad,
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If

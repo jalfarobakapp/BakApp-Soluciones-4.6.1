@@ -51,6 +51,11 @@ Public Class Frm_Stmp_Listado
 
         Timer_Monitoreo.Interval = 1000 * 5
 
+        If _Global_Row_Configuracion_General.Item("Pickear_DesdeBkWMS") Or
+                        _Global_Row_Configuracion_Estacion.Item("Pickear_DesdeBkWMS") Then
+            Chk_VerIngresadas.Checked = True
+        End If
+
     End Sub
     Sub Sb_Actualizar_Grilla()
 
@@ -1093,9 +1098,18 @@ Public Class Frm_Stmp_Listado
 
                     Btn_Mnu_EntregarMercaderia.Visible = (Super_TabS.SelectedTab.Name = "Tab_Facturadas")
                     Btn_CerrarTicket.Visible = (Super_TabS.SelectedTab.Name = "Tab_Entregadas")
-                    Btn_Mnu_Preparacion.Visible = (Super_TabS.SelectedTab.Name = "Tab_Ingresadas")
+
                     Btn_ReenviaFacturar.Visible = (Super_TabS.SelectedTab.Name = "Tab_Completadas")
                     Btn_ReenviaFacturar.Enabled = _Error_FacAuto
+
+                    If _Global_Row_Configuracion_General.Item("Pickear_DesdeBkWMS") Or
+                        _Global_Row_Configuracion_Estacion.Item("Pickear_DesdeBkWMS") Then
+                        Btn_Mnu_PreparacionPickear.Visible = (Super_TabS.SelectedTab.Name = "Tab_Ingresadas")
+                        Btn_Mnu_Preparacion.Visible = False
+                    Else
+                        Btn_Mnu_Preparacion.Visible = (Super_TabS.SelectedTab.Name = "Tab_Ingresadas")
+                        Btn_Mnu_PreparacionPickear.Visible = False
+                    End If
 
                     ShowContextMenu(Menu_Contextual_01_Opciones_Documento)
 
@@ -1911,6 +1925,60 @@ Public Class Frm_Stmp_Listado
         End If
 
     End Sub
+
+    Private Sub Btn_Mnu_PreparacionPickear_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_PreparacionPickear.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+
+        Dim _Cl_Stmp As New Cl_Stmp
+        _Cl_Stmp.Fx_Llenar_Encabezado(_Id)
+
+        _Cl_Stmp.Zw_Stmp_Enc.Estado = "PREPA"
+        _Cl_Stmp.Zw_Stmp_Enc.Planificada = True
+        _Cl_Stmp.Zw_Stmp_Enc.CodFuncionario_Pickea = Fx_BuscarFuncionario_Pickeo()
+        _Cl_Stmp.Zw_Stmp_Enc.NombreEquipo_Pickea = ""
+
+        If String.IsNullOrWhiteSpace(_Cl_Stmp.Zw_Stmp_Enc.CodFuncionario_Pickea) Then
+            MessageBoxEx.Show(Me, "No se ha seleccionado un funcionario para pickear el documento", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = _Cl_Stmp.Fx_EnviarAPerparacionPlanificarPicking
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If Not _Mensaje.EsCorrecto Then
+            Return
+        End If
+
+        Sb_Actualizar_Grilla()
+
+    End Sub
+
+    Function Fx_BuscarFuncionario_Pickeo() As String
+
+        Dim _CodFuncionario As String = String.Empty
+
+        Dim _Sql_Filtro_Condicion_Extra = $"And KOFU In (Select Usuario_X_Defecto From {_Global_BaseBk}Zw_EstacionesBkp " &
+                                           "Where TipoEstacion = 'B4A')"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            _CodFuncionario = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+
+        End If
+
+        Return _CodFuncionario
+
+    End Function
+
 
 End Class
 

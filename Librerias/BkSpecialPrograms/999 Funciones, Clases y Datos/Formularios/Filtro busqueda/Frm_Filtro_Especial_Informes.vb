@@ -265,7 +265,9 @@ Public Class Frm_Filtro_Especial_Informes
 
         Btn_MarcarMasiva_Excel.Visible = Not _Seleccionar_Solo_Uno
 
-        Sb_Cargar_Datos()
+        If IsNothing(_Ds_Filtros_Busqueda) OrElse Not CBool(_Ds_Filtros_Busqueda.Tables(0).Rows.Count) Then
+            Sb_Cargar_Datos()
+        End If
 
         With Grilla
 
