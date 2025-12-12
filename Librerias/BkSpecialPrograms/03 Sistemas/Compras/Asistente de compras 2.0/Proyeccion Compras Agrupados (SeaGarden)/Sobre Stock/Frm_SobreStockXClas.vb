@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Windows.Forms
+Imports BkSpecialPrograms.Cl_Fincred_Bakapp.Cl_Fincred_SQL
 Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
@@ -38,6 +39,9 @@ Public Class Frm_SobreStockXClas
 
         AddHandler Grilla_Clasificaciones.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Productos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        AddHandler Grilla_Clasificaciones.MouseDown, AddressOf Sb_Grilla_MouseDown
+        AddHandler Grilla_Productos.MouseDown, AddressOf Sb_Grilla_MouseDown
 
     End Sub
 
@@ -260,7 +264,7 @@ Public Class Frm_SobreStockXClas
             .Columns("Codigo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Descripcion").Width = 200
+            .Columns("Descripcion").Width = 190
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
@@ -377,7 +381,7 @@ Public Class Frm_SobreStockXClas
             .Columns("Syncro").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("KilosXPallet").Width = _AnchoClValores - 10
+            .Columns("KilosXPallet").Width = _AnchoClValores - 20
             .Columns("KilosXPallet").HeaderText = "Kg X Pallet"
             .Columns("KilosXPallet").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("KilosXPallet").DefaultCellStyle.Format = "###,##0.##"
@@ -385,7 +389,7 @@ Public Class Frm_SobreStockXClas
             .Columns("KilosXPallet").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("PalletSY").Width = 50
+            .Columns("PalletSY").Width = 40
             .Columns("PalletSY").HeaderText = "Pallet SY"
             .Columns("PalletSY").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PalletSY").DefaultCellStyle.Format = "###,##0.##"
@@ -426,15 +430,15 @@ Public Class Frm_SobreStockXClas
 
             Dim _Mensaje As LsValiciones.Mensajes
 
-            _Mensaje = _Cl_SobreStockXClas.Fx_CrearTablaPaso_TablaCalendarioMesesSemanasProductos
-            _Mensaje = _Cl_SobreStockXClas.Fx_CrearTablaPaso_TablaCalendarioMesesSemanasClasificacion
-
-            '_Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasProductos(_Codigo_Nodo_Madre)
             _Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasClasificaciones_VB(_Codigo_Nodo_Madre)
-            '_Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasClasificacion(_Codigo_Nodo_Madre)
 
             Fm_Espera.Close()
             Fm_Espera = Nothing
+
+            If Not _Mensaje.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
             Dim Fm As New Frm_SobreStock_Grafico("", _Codigo_Nodo_Madre)
             Fm.Text = "CLASIFICACION: " & _Codigo_Nodo_Madre.ToString.Trim & " - " & _Producto
@@ -470,21 +474,13 @@ Public Class Frm_SobreStockXClas
             Dim _Mensaje As LsValiciones.Mensajes
             _Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasProductos_VB(_Codigo_Nodo_Madre2, _Codigo)
 
-            'If String.IsNullOrEmpty(_Codigo_Nodo_Madre) Then
-            '    MessageBoxEx.Show(Me, "Debe seleccionar primero una clasificación", "Validación",
-            '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            '    Return
-            'End If
-
-            'If _Codigo_Nodo_Madre2 <> _Codigo_Nodo_Madre Then
-            '    MessageBoxEx.Show("El código seleccionado no pertenece a la clasificación seleccionada." & vbCrLf &
-            '                      "Por favor seleccione un código de la clasificación: " & _Codigo_Nodo_Madre,
-            '                      "Sobre stock", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            '    Return
-            'End If
-
             Fm_Espera.Close()
             Fm_Espera = Nothing
+
+            If Not _Mensaje.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
 
             Dim Fm As New Frm_SobreStock_Grafico(_Codigo, "")
             Fm.Text = "PRODUCTO: " & _Codigo & " - " & _Descripcion.ToString.Trim
@@ -555,4 +551,279 @@ Public Class Frm_SobreStockXClas
 
     End Sub
 
+    Private Sub Btn_MostrarGraficoXClasificacion_Click(sender As Object, e As EventArgs) Handles Btn_MostrarGraficoXClasificacion.Click
+        Call Grilla_Clasificaciones_CellDoubleClick(Nothing, Nothing)
+    End Sub
+
+    Private Sub Btn_VerDocPdtesXClasificacion_Click(sender As Object, e As EventArgs) Handles Btn_VerDocPdtesXClasificacion.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Clasificaciones.CurrentRow
+        Dim _Codigo_Nodo_Madre = _Fila.Cells("Codigo_Nodo_Madre").Value
+        Dim _Producto = _Fila.Cells("Producto").Value
+
+        Dim _Condicion As String = String.Empty
+
+        If Not String.IsNullOrEmpty(_Codigo_Nodo_Madre) Then
+            _Condicion = "Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "'"
+        End If
+
+        Dim _Reg = _Sql.Fx_Cuenta_Registros($"Tbl_Asc_04_DocUltComp_{FUNCIONARIO}", _Condicion)
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No hay documentos pendientes de compra para mostrar",
+                              "Ver documentos pendientes de compra", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_SobreStock_Llegadas(_Codigo_Nodo_Madre, "")
+        Fm.Text = "CLASIFICACION: " & _Codigo_Nodo_Madre.ToString.Trim & " - " & _Producto
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_CopiarXClasificacion_Click(sender As Object, e As EventArgs) Handles Btn_CopiarXClasificacion.Click
+
+        ' Reutiliza el método genérico que copia la celda activa al portapapeles.
+        ' Si se quiere forzar copiar desde la grilla de clasificaciones pasarla como parámetro.
+        Fx_CopiarCeldaActivaAlPortapapeles(Grilla_Clasificaciones)
+
+    End Sub
+
+    ' Ejemplo de handler para un posible botón "Copiar" de productos.
+    ' Si ya existe en el diseñador, reemplace o añada el Handles correspondiente.
+    Private Sub Btn_CopiarXProducto_Click(sender As Object, e As EventArgs) Handles Btn_CopiarXProducto.Click
+
+        ' Reutiliza el mismo método y fuerza la grilla de productos.
+        Fx_CopiarCeldaActivaAlPortapapeles(Grilla_Productos)
+
+    End Sub
+
+    ' Método reutilizable que copia el valor de la celda actual de la grilla indicada (o de la grilla con foco)
+    ' al portapapeles. Devuelve True si la operación fue exitosa.
+    Private Function Fx_CopiarCeldaActivaAlPortapapeles(Optional ByVal dgv As DataGridView = Nothing) As Boolean
+
+        Try
+            ' Determinar la grilla si no se especificó
+            If dgv Is Nothing Then
+                If Grilla_Productos.ContainsFocus Then
+                    dgv = Grilla_Productos
+                ElseIf Grilla_Clasificaciones.ContainsFocus Then
+                    dgv = Grilla_Clasificaciones
+                ElseIf Grilla_Clasificaciones.CurrentCell IsNot Nothing Then
+                    dgv = Grilla_Clasificaciones
+                ElseIf Grilla_Productos.CurrentCell IsNot Nothing Then
+                    dgv = Grilla_Productos
+                End If
+            End If
+
+            If dgv Is Nothing Then
+                MessageBoxEx.Show(Me, "No hay ninguna celda activa en las grillas para copiar.", "Copiar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return False
+            End If
+
+            Dim celda As DataGridViewCell = dgv.CurrentCell
+
+            If celda Is Nothing Then
+                MessageBoxEx.Show(Me, "No hay ninguna celda seleccionada.", "Copiar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return False
+            End If
+
+            Dim texto As String = String.Empty
+
+            Try
+                texto = If(celda.Value, String.Empty).ToString().Trim()
+            Catch ex As Exception
+                texto = String.Empty
+            End Try
+
+            If String.IsNullOrEmpty(texto) Then
+                Clipboard.Clear()
+            Else
+                Clipboard.SetText(texto)
+            End If
+
+            MessageBoxEx.Show(Me, "Valor copiado al portapapeles." & If(String.IsNullOrEmpty(texto), String.Empty, vbCrLf & texto), "Copiar", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Return True
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, "Ocurrió un error al copiar al portapapeles:" & vbCrLf & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            Return False
+        End Try
+
+    End Function
+
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+
+            With sender
+
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+
+                    Dim Dg As DataGridView = sender
+
+                    If Not IsNothing(sender) Then
+                        If Dg.Name = "Grilla_Productos" Then
+                            ShowContextMenu(Menu_Contextual_Productos)
+                        ElseIf Dg.Name = "Grilla_Clasificaciones" Then
+                            ShowContextMenu(Menu_Contextual_Clasificaciones)
+                        End If
+                    End If
+
+                End If
+
+            End With
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Estadisticas_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Estadisticas_Producto.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Productos.CurrentRow
+        Dim _Codigo = _Fila.Cells("Codigo").Value
+
+        Dim Fm As New Frm_EstadisticaProducto(_Codigo)
+
+        Fm.Pro_Agrupar_Reemplazos = True
+        Fm.Input_Stock_Minimo.Enabled = False
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_MostrarGraficoXProducto_Click(sender As Object, e As EventArgs) Handles Btn_MostrarGraficoXProducto.Click
+        Call Grilla_Productos_CellDoubleClick(Nothing, Nothing)
+    End Sub
+
+    Private Sub Btn_VerDocPdtesXProductos_Click(sender As Object, e As EventArgs) Handles Btn_VerDocPdtesXProductos.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Productos.CurrentRow
+        Dim _Codigo = _Fila.Cells("Codigo").Value
+        Dim _Descripcion = _Fila.Cells("Descripcion").Value
+
+        Dim _Condicion As String = String.Empty
+
+        If Not String.IsNullOrEmpty(_Codigo) Then
+            _Condicion += "Codigo = '" & _Codigo & "'"
+        End If
+
+        Dim _Reg = _Sql.Fx_Cuenta_Registros($"Tbl_Asc_04_DocUltComp_{FUNCIONARIO}", _Condicion)
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No hay documentos pendientes de compra para mostrar",
+                              "Ver documentos pendientes de compra", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_SobreStock_Llegadas("", _Codigo)
+        Fm.Text = "PRODUCTO: " & _Codigo & " - " & _Descripcion
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Grilla_Productos_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Productos.CellEnter
+
+        Try
+
+            Dim _Fila As DataGridViewRow = Grilla_Productos.CurrentRow
+            Dim _Codigo As String = _Fila.Cells("Codigo").Value
+            Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
+
+            Lbl_Producto.Text = "Producto: " & _Codigo & " - " & _Descripcion
+
+        Catch ex As Exception
+            Lbl_Producto.Text = String.Empty
+        End Try
+
+    End Sub
+
+    Private Sub Btn_EnviarProdSobreStock_Click(sender As Object, e As EventArgs) Handles Btn_EnviarProdSobreStock.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Productos.CurrentRow
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+        Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
+        Dim _KilosXPallet As Double = _Fila.Cells("KilosXPallet").Value
+        Dim _PalletSY As Double = IIf(_Fila.Cells("PalletSY").Value > 0, _Fila.Cells("PalletSY").Value, 0)
+
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_SobreStock",
+                                                     "Empresa = '" & Mod_Empresa & "' And " &
+                                                     "Codigo = '" & _Codigo & "' And " &
+                                                     "Activo = 1 And Eliminado = 0")
+
+        If _Reg > 0 Then
+            MessageBoxEx.Show(Me, "El producto ya se encuentra ingresado para la venta de Sobre/Stock", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Zw_Prod_SobreStock As New Zw_Prod_SobreStock
+
+        Consulta_sql = "Select Ms.EMPRESA,Sum(Ms.STFI1) As 'STFI1',Sum(Ms.STFI2) As 'STFI2',Sum(Ms.STTR1) As 'STTR1'" & vbCrLf &
+                       ",Sum(Ms.STTR2) As 'STTR2',Sum(Ms.STOCNV1) As 'STOCNV1',Sum(Ms.STOCNV2) As 'STOCNV2'" & vbCrLf &
+                       ",Sum(Isnull(St.StComp1,0)) As 'StComp1',Sum(Isnull(St.StComp2,0)) As 'StComp2'" & vbCrLf &
+                       ",Cast(0 As Float) As StDispUd1,Cast(0 As Float) As StockDisponibleUd2" & vbCrLf &
+                       "Into #Paso" & vbCrLf &
+                       "From MAEST Ms" & vbCrLf &
+                       "Left Join BAKAPP_SG.dbo.Zw_Prod_Stock St On St.Empresa = Ms.EMPRESA And St.Codigo = Ms.KOPR" & vbCrLf &
+                       "Where Ms.EMPRESA = '" & Mod_Empresa & "' And Ms.KOPR = '" & _Codigo & "'" & vbCrLf &
+                       "Group By Ms.EMPRESA" & vbCrLf &
+                       "Update #Paso Set StDispUd1 = STFI1-(STOCNV1+StComp1+STTR1),StockDisponibleUd2 = STFI2-(STOCNV2+StComp2+STTR2)" & vbCrLf &
+                       "Select * From #Paso" & vbCrLf &
+                       "Drop Table #Paso"
+
+        Dim _Row_Stock As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Stock) Then
+            MessageBoxEx.Show(Me, "No tiene stock suficiente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        With _Zw_Prod_SobreStock
+
+            .Id = 0
+            .Empresa = Mod_Empresa
+            .Codigo = _Codigo
+            .Descripcion = _Descripcion
+            .FormatoPqte = "Pallet"
+            .StDispUd1 = _Row_Stock.Item("StDispUd1")
+            .PqteHabilitado = _PalletSY
+            .Ud1XPqte = _KilosXPallet
+            .CantMinFormato = 0
+            .Moneda = String.Empty
+            .PrecioXUd1 = 0
+
+        End With
+
+        Dim _Grabar As Boolean
+
+        Dim Fm As New Frm_SobreStock_IngDet(_Zw_Prod_SobreStock)
+        Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
+        _Zw_Prod_SobreStock = Fm.Zw_Prod_SobreStock
+        Fm.Dispose()
+
+        If Not _Grabar Then
+            Return
+        End If
+
+        Dim _Cl_SobreStock As New Cl_SobreStock
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = _Cl_SobreStock.Fx_Grabar_Producto_Para_SobreStock(_Zw_Prod_SobreStock)
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Validación", MessageBoxButtons.OK, _Mensaje.Icono)
+        If Not _Mensaje.EsCorrecto Then
+            Return
+        End If
+
+    End Sub
 End Class

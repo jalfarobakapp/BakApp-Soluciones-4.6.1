@@ -973,6 +973,12 @@
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Grafico.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Llegadas.Designer.vb">
+      <DependentUpon>Frm_SobreStock_Llegadas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Llegadas.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Contenedores\Cl_Contenedor.vb" />
     <Compile Include="03 Sistemas\Contenedores\Frm_Contenedores.Designer.vb">
       <DependentUpon>Frm_Contenedores.vb</DependentUpon>
@@ -4997,6 +5003,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Grafico.resx">
       <DependentUpon>Frm_SobreStock_Grafico.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Llegadas.resx">
+      <DependentUpon>Frm_SobreStock_Llegadas.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_Contenedores.resx">
       <DependentUpon>Frm_Contenedores.vb</DependentUpon>

@@ -1,4 +1,6 @@
 ﻿Imports System.Windows.Forms.DataVisualization.Charting
+Imports BkSpecialPrograms.Cl_Fincred_Bakapp.Cl_Fincred_SQL
+Imports DevComponents.DotNetBar
 
 Public Class Frm_SobreStock_Grafico
 
@@ -44,10 +46,10 @@ Public Class Frm_SobreStock_Grafico
     Private Sub Frm_SobreStock_Grafico_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         If Not String.IsNullOrEmpty(_Codigo_Nodo_Madre) Then
-            Sb_Actualizar_Clasificaciones_Mensual()
+            'Sb_Actualizar_Clasificaciones_Mensual()
             Sb_Actualizar_Clasificaciones_Semanal()
         Else
-            Sb_Actualizar_Productos_Mensual()
+            'Sb_Actualizar_Productos_Mensual()
             Sb_Actualizar_Productos_Semanal()
         End If
 
@@ -125,7 +127,6 @@ ORDER BY Periodo, Mes, Semana;"
         _Tbl_Semanal = _Sql.Fx_Get_DataTable(Consulta_sql)
 
     End Sub
-
 
     Sub Sb_Actualizar_Clasificaciones_Mensual()
 
@@ -748,4 +749,29 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
         End Try
     End Sub
 
+    Private Sub Btn_VerDocPdtes_Click(sender As Object, e As EventArgs) Handles Btn_VerDocPdtes.Click
+
+        Dim _Condicion As String = String.Empty
+
+        If Not String.IsNullOrEmpty(_Codigo_Nodo_Madre) Then
+            _Condicion = "Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre & "'"
+        End If
+
+        If Not String.IsNullOrEmpty(_Codigo) Then
+            _Condicion += "Codigo = '" & _Codigo & "'"
+        End If
+
+        Dim _Reg = _Sql.Fx_Cuenta_Registros($"Tbl_Asc_04_DocUltComp_{FUNCIONARIO}", _Condicion)
+
+        If Not CBool(_Reg) Then
+            MessageBoxEx.Show(Me, "No hay documentos pendientes de compra para mostrar",
+                              "Ver documentos pendientes de compra", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_SobreStock_Llegadas(_Codigo_Nodo_Madre, _Codigo)
+        Fm.Text = Me.Text
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+    End Sub
 End Class

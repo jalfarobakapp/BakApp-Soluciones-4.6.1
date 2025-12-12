@@ -3621,7 +3621,7 @@ Public Class Clase_Crear_Documento
                         Comando.Transaction = myTrans
                         Comando.ExecuteNonQuery()
 
-                        If Not _Stand_by Then
+                        If SobreStock AndAlso Not _Stand_by Then
 
                             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
                                            "PqteComprometidoSol = PqteComprometidoSol+" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &

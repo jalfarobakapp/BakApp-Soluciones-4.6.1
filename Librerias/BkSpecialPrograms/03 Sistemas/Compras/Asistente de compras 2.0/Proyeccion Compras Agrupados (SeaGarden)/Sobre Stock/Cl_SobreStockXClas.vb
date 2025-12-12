@@ -2078,7 +2078,7 @@ DEALLOCATE cur;
 
             If dtProductos Is Nothing OrElse dtProductos.Rows.Count = 0 Then
                 ' Nada que insertar
-                _Mensaje.EsCorrecto = True
+                _Mensaje.EsCorrecto = False
                 _Mensaje.Mensaje = "No hay productos para la clasificación indicada."
                 _Mensaje.Icono = MessageBoxIcon.Information
                 Return _Mensaje
@@ -2433,6 +2433,13 @@ DEALLOCATE cur;
             _Mensaje.Icono = MessageBoxIcon.Information
             _Mensaje.Detalle = "Insertar detalle en tabla de paso (VB): " & TablaCalendarioMesesSemanasProductos
 
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(TablaCalendarioMesesSemanasProductos)
+
+            If Not CBool(_Reg) Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Mensaje = "No existe información para generar el grafíco"
+            End If
+
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
             _Mensaje.Mensaje = ex.Message
@@ -2469,7 +2476,7 @@ DEALLOCATE cur;
 
             If dtClasificacion Is Nothing OrElse dtClasificacion.Rows.Count = 0 Then
                 ' Nada que insertar
-                _Mensaje.EsCorrecto = True
+                _Mensaje.EsCorrecto = False
                 _Mensaje.Mensaje = "No hay productos para la clasificación indicada."
                 _Mensaje.Icono = MessageBoxIcon.Information
                 Return _Mensaje
@@ -2822,7 +2829,14 @@ DEALLOCATE cur;
             _Mensaje.EsCorrecto = True
             _Mensaje.Mensaje = "Datos insertados y calculados correctamente en la tabla temporal (VB.NET)."
             _Mensaje.Icono = MessageBoxIcon.Information
-            _Mensaje.Detalle = "Insertar detalle en tabla de paso (VB): " & TablaCalendarioMesesSemanasProductos
+            _Mensaje.Detalle = "Insertar detalle en tabla de paso (VB): " & TablaCalendarioMesesSemanasClasificacion
+
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(TablaCalendarioMesesSemanasClasificacion)
+
+            If Not CBool(_Reg) Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Mensaje = "No existe información para generar el grafíco"
+            End If
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False

@@ -3023,7 +3023,7 @@ Public Class Frm_Ver_Documento
     Private Sub Btn_Permisos_Asociados_Click(sender As Object, e As EventArgs) Handles Btn_Permisos_Asociados.Click
 
         Dim Fm As New Frm_Ver_Documentos_Permisos(_Idmaeedo)
-        If Convert.ToBoolean(Fm.Tbl_Remotas.Rows.Count) Then
+        If CBool(Fm.Tbl_Remotas.Rows.Count) Or CBool(Fm.Tbl_OtrosPermisos.Rows.Count) Then
             Fm.ShowDialog(Me)
         Else
             MessageBoxEx.Show(Me, "No se encontraron permisos asociados", "Permisos asociados", MessageBoxButtons.OK,
