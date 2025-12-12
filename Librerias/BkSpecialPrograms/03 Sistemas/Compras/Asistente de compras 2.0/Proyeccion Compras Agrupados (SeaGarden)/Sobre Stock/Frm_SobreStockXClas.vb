@@ -1,6 +1,7 @@
-﻿Imports DevComponents.DotNetBar
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports System.Windows.Forms
+Imports BkSpecialPrograms.LsValiciones
+Imports DevComponents.DotNetBar
 
 Public Class Frm_SobreStockXClas
 
@@ -428,8 +429,9 @@ Public Class Frm_SobreStockXClas
             _Mensaje = _Cl_SobreStockXClas.Fx_CrearTablaPaso_TablaCalendarioMesesSemanasProductos
             _Mensaje = _Cl_SobreStockXClas.Fx_CrearTablaPaso_TablaCalendarioMesesSemanasClasificacion
 
-            _Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasProductos(_Codigo_Nodo_Madre)
-            _Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasClasificacion(_Codigo_Nodo_Madre)
+            '_Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasProductos(_Codigo_Nodo_Madre)
+            _Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasClasificaciones_VB(_Codigo_Nodo_Madre)
+            '_Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasClasificacion(_Codigo_Nodo_Madre)
 
             Fm_Espera.Close()
             Fm_Espera = Nothing
@@ -453,30 +455,51 @@ Public Class Frm_SobreStockXClas
 
     Private Sub Grilla_Productos_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Productos.CellDoubleClick
 
-        Dim _Fila As DataGridViewRow = Grilla_Productos.CurrentRow
-        Dim _Codigo As String = _Fila.Cells("Codigo").Value
-        Dim _Codigo_Nodo_Madre2 As String = _Fila.Cells("Codigo_Nodo_Madre").Value
-        Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
-        Dim _StockUd1 As Double = _Fila.Cells("StockUd1").Value
+        Dim Fm_Espera As New Frm_Form_Esperar
+        Fm_Espera.BarraCircular.IsRunning = True
+        Fm_Espera.Show()
 
-        If String.IsNullOrEmpty(_Codigo_Nodo_Madre) Then
-            MessageBoxEx.Show(Me, "Debe seleccionar primero una clasificación", "Validación",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
+        Try
 
-        If _Codigo_Nodo_Madre2 <> _Codigo_Nodo_Madre Then
-            MessageBoxEx.Show("El código seleccionado no pertenece a la clasificación seleccionada." & vbCrLf &
-                              "Por favor seleccione un código de la clasificación: " & _Codigo_Nodo_Madre,
-                              "Sobre stock", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
+            Dim _Fila As DataGridViewRow = Grilla_Productos.CurrentRow
+            Dim _Codigo As String = _Fila.Cells("Codigo").Value
+            Dim _Codigo_Nodo_Madre2 As String = _Fila.Cells("Codigo_Nodo_Madre").Value
+            Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
+            Dim _StockUd1 As Double = _Fila.Cells("StockUd1").Value
 
-        Dim Fm As New Frm_SobreStock_Grafico(_Codigo, "")
-        Fm.Text = "PRODUCTO: " & _Codigo & " - " & _Descripcion.ToString.Trim
-        Fm.StockInicial = _StockUd1
-        Fm.ShowDialog(Me)
-        Fm.Dispose()
+            Dim _Mensaje As LsValiciones.Mensajes
+            _Mensaje = _Cl_SobreStockXClas.Fx_InsertarDetalleEn_TablaCalendarioMesesSemanasProductos_VB(_Codigo_Nodo_Madre2, _Codigo)
+
+            'If String.IsNullOrEmpty(_Codigo_Nodo_Madre) Then
+            '    MessageBoxEx.Show(Me, "Debe seleccionar primero una clasificación", "Validación",
+            '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '    Return
+            'End If
+
+            'If _Codigo_Nodo_Madre2 <> _Codigo_Nodo_Madre Then
+            '    MessageBoxEx.Show("El código seleccionado no pertenece a la clasificación seleccionada." & vbCrLf &
+            '                      "Por favor seleccione un código de la clasificación: " & _Codigo_Nodo_Madre,
+            '                      "Sobre stock", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '    Return
+            'End If
+
+            Fm_Espera.Close()
+            Fm_Espera = Nothing
+
+            Dim Fm As New Frm_SobreStock_Grafico(_Codigo, "")
+            Fm.Text = "PRODUCTO: " & _Codigo & " - " & _Descripcion.ToString.Trim
+            Fm.StockInicial = _StockUd1
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        Catch ex As Exception
+        Finally
+            If Not IsNothing(Fm_Espera) Then
+                Fm_Espera.Close()
+                Fm_Espera = Nothing
+            End If
+            Me.Enabled = True
+        End Try
 
     End Sub
 

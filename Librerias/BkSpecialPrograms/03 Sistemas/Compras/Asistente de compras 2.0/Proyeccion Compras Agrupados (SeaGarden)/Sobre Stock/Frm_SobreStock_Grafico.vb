@@ -51,22 +51,21 @@ Public Class Frm_SobreStock_Grafico
             Sb_Actualizar_Productos_Semanal()
         End If
 
-        If Rdb_Proyeccion_Meses.Checked Then
-            Sb_Poblar_Grafico_Mensual()
-        ElseIf Rdb_Proyeccion_Semanas.Checked Then
-            Sb_Poblar_Grafico_Semanal()
-        End If
+        'If Rdb_Proyeccion_Meses.Checked Then
+        'Sb_Poblar_Grafico_Mensual()
+        'ElseIf Rdb_Proyeccion_Semanas.Checked Then
+        Sb_Poblar_Grafico_Semanal()
+        'End If
 
-        AddHandler Chk_Serie1.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
-        AddHandler Chk_Serie2.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
-        AddHandler Chk_Serie3.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
-        AddHandler Chk_Serie4.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
-        AddHandler Chk_Serie5.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
-        AddHandler Chk_Serie6.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
+        AddHandler Chk_StockSemanal.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
+        AddHandler Chk_StockProyectadoMensual.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
+        AddHandler Chk_StockNecesarioNMeses.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
+        AddHandler Chk_StockNecesarioNMenosXMeses.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
+        AddHandler Chk_LlegadasMes.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
+        AddHandler Chk_StockInicial.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
+        AddHandler Chk_StockMes.CheckedChanged, AddressOf Sb_Ver_Etiquetas_Grafico_Tiempo_Reposicion
 
-        Chk_Serie1.Checked = True
-        Chk_Serie2.Checked = True
-        Chk_Serie6.Checked = True
+        Chk_StockMes.Checked = True
 
     End Sub
 
@@ -111,10 +110,12 @@ SELECT
     MAX(StockSemanal) AS StockSemanal,              -- stock al cierre de la semana
     MAX(VentaSemanal) AS VentaSemanal,              -- rotación semanal
     SUM(LlegadaSemanal) AS LlegadasSemanal,         -- total llegadas de la semana
-    MIN(StockMes) AS StockMes,          -- stock al cierre del mes    
-    MAX(StockNecesarioNSemanas) AS StockNecesarioNSemanas,
-    MAX(StockProyectadoSemanal) AS StockProyectadoSemanal,
-    MAX(StockNecesarioNMenosXMeses) As StockNecesarioNMenosXSemanas
+    MIN(StockMes) AS StockMes,                      -- stock al cierre del mes    
+    MAX(StockNecesarioNMeses) AS StockNecesarioNMeses,
+	MAX(StockProyectadoMensual) AS StockProyectadoMensual,
+	MAX(StockNecesarioNMenosXMeses) AS StockNecesarioNMenosXSemanas,
+    MAX(StockNecesarioNMeses) AS StockNecesarioNSemanas,
+    MAX(StockProyectadoSemanal) AS StockProyectadoSemanal
 
 FROM {_Cl_SobreStockXClas.TablaCalendarioMesesSemanasProductos}
 Where Codigo = '{_Codigo}'
@@ -165,7 +166,7 @@ SELECT
     MAX(VentaSemanal) AS VentaSemanal,              -- rotación semanal
     SUM(LlegadaSemanal) AS LlegadasSemanal,         -- total llegadas de la semana
     MIN(StockMes) AS StockMes,          -- stock al cierre del mes
-    MAX(StockNecesarioNSemanas) AS StockNecesarioNSemanas,
+    MAX(StockNecesarioNMeses) AS StockNecesarioNSemanas,
     MAX(StockProyectadoSemanal) AS StockProyectadoSemanal,
     MAX(StockNecesarioNMenosXMeses) As StockNecesarioNMenosXSemanas
 FROM {_Cl_SobreStockXClas.TablaCalendarioMesesSemanasClasificacion}
@@ -277,6 +278,7 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
 
         ' Recorrer filas y agregar puntos
         Dim isFirstMes As Boolean = True
+        Dim UltProyectado As Boolean = False
 
         For Each row As DataRow In _Tbl_Mensual.Rows
 
@@ -332,8 +334,19 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
                 Grafico_Mov_Stock.Series("StockNecesarioNMeses").Points.AddXY(labelX, stockNecesario)
             End If
 
-            If Grafico_Mov_Stock.Series.IndexOf("StockProyectadoMensual") > 0 Then
-                Grafico_Mov_Stock.Series("StockProyectadoMensual").Points.AddXY(labelX, stockProyectado)
+            If Grafico_Mov_Stock.Series.IndexOf("StockProyectadoMensual") >= 0 Then
+                ' Siempre usar labelX para alinear en el eje X.
+                ' Si hay valor positivo y no se ha marcado UltProyectado, añadir el valor.
+                ' Si no, añadir Double.NaN con el mismo labelX para mantener la secuencia sin dibujar marcador.
+                If stockProyectado > 0 AndAlso Not UltProyectado Then
+                    Grafico_Mov_Stock.Series("StockProyectadoMensual").Points.AddXY(labelX, stockProyectado)
+                Else
+                    Grafico_Mov_Stock.Series("StockProyectadoMensual").Points.AddXY(labelX, Double.NaN)
+                End If
+
+                If stockProyectado <= 0 Then
+                    UltProyectado = True
+                End If
             End If
 
             If Grafico_Mov_Stock.Series.IndexOf("StockNecesarioNMenosXMeses") >= 0 Then
@@ -364,10 +377,10 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
             ca.AxisY.Minimum = 0
         End If
 
-        Chk_Serie1.Text = seriesConfig("StockMes")
-        Chk_Serie2.Text = seriesConfig("StockProyectadoMensual")
-        Chk_Serie3.Text = seriesConfig("StockNecesarioNMeses")
-        Chk_Serie4.Text = seriesConfig("StockNecesarioNMenosXMeses")
+        Chk_StockSemanal.Text = seriesConfig("StockMes")
+        Chk_StockProyectadoMensual.Text = seriesConfig("StockProyectadoMensual")
+        Chk_StockNecesarioNMeses.Text = seriesConfig("StockNecesarioNMeses")
+        Chk_StockNecesarioNMenosXMeses.Text = seriesConfig("StockNecesarioNMenosXMeses")
 
         ' Forzar refresh del control
         Grafico_Mov_Stock.Invalidate()
@@ -377,19 +390,37 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
     ' Pseudocódigo detallado:
     ' 1. Recorrer cada fila de _Tbl_Semanal.
     ' 2. Calcular labelX igual que antes para mantener la posición en el eje X.
-    ' 3. Obtener y redondear los valores numéricos (stockSemanal, stockNecesario, stockProyectado, stockNecesarioMenos, llegadasSemanal).
+    ' 3. Obtener y redondear los valores numéricos (stockSemanal, stockNecesario, stockProyectado, stockNecesarioMenos, llegadasSemanal, stockMes).
     ' 4. Para mantener la secuencia de puntos en el tiempo sin mostrar ceros:
     '    - Siempre añadir un punto en la serie "LlegadasSemanal" por cada iteración.
     '    - Si llegadasSemanal > 0 -> añadir el valor real.
     '    - Si llegadasSemanal = 0 -> añadir Double.NaN (punto vacío) usando el mismo labelX.
     '    - De este modo la serie avanza en el tiempo (misma cantidad de puntos/x) pero no dibuja marcadores para ceros.
     ' 5. Comprobar que la serie exista antes de usarla para evitar excepciones.
-    ' 6. Conservar el resto del comportamiento (StockInicial, StockSemanal, etc.).
+    ' 6. Añadir una nueva serie de tipo Point llamada "StockMes" que representará el stock mensual,
+    '    - Solo agregar el punto a "StockMes" cuando labelX <> String.Empty (según requisito).
+    ' 7. Conservar el resto del comportamiento (StockInicial, StockSemanal, etc.).
     '
-    ' Resultado: la serie "LlegadasSemanal" tendrá un punto por periodo; los ceros son puntos vacíos (NaN) no dibujados,
-    ' pero la posición temporal de las llegadas se mantiene alineada con las demás series.
+    ' Resultado: la serie "StockMes" aparecerá como puntos en el gráfico semanal alineados con semanas,
+    ' pero solo en las entradas donde labelX no está vacío.
 
     Sub Sb_Poblar_Grafico_Semanal()
+
+        ' Pseudocódigo detallado:
+        ' 1. Verificar existencia de datos.
+        ' 2. Asegurar ChartArea y limpiar series/leyendas.
+        ' 3. Crear series (ya implementado).
+        ' 4. Antes de iterar, construir un primer punto "inicio" para StockSemanal:
+        '    - Leer la primera fila de _Tbl_Semanal y extraer LlegadasSemanal (comprobando DBNull).
+        '    - Calcular initialStock = StockInicial + llegadasPrimeraFila (si llegadas > 0), redondeado a 2 decimales.
+        '    - Agregar un punto inicial en la serie "StockSemanal" con label "" y valor initialStock (si la serie existe).
+        '    - Agregar Double.NaN en las demás series (cuando existan) para mantener la alineación temporal.
+        ' 5. Continuar con el bucle existente: cada fila añade sus puntos normales.
+        ' 6. Mantener la lógica de agregar StockInicial dentro del primer registro del bucle (con su propia serie).
+        ' 7. Formatear ejes y forzar refresh.
+        '
+        ' Resultado: el gráfico semanal comienza con un punto inicial que representa StockInicial + primera llegada,
+        ' y luego sigue el consumo a lo largo de las semanas.
 
         ' Verificar datos
         If _Tbl_Semanal Is Nothing OrElse _Tbl_Semanal.Rows.Count = 0 Then
@@ -418,6 +449,7 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
             {"StockProyectadoSemanal", "Stock Proyectado Semanal"},
             {"StockNecesarioNMenosXSemanas", "Stock Necesario 8 MenosXSemanas"},
             {"LlegadasSemanal", "Llegadas Semanal"},
+            {"StockMes", "Stock Mes"}, ' Nueva serie de puntos con valor mensual (mostrar solo cuando labelX <> "")
             {"StockInicial", "Stock Inicial"}
         }
 
@@ -432,6 +464,16 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
                 s.MarkerStyle = MarkerStyle.Circle
                 s.MarkerSize = 7
                 s.Color = Color.FromArgb(255, 220, 80, 0)
+                s.IsValueShownAsLabel = False
+                s.LabelFormat = "N2"
+            ElseIf kvp.Key = "StockMes" Then
+                ' Serie nueva: stock mensual mostrada como puntos en el gráfico semanal
+                s.ChartType = SeriesChartType.Point
+                s.XValueType = ChartValueType.String
+                s.BorderWidth = 0
+                s.MarkerStyle = MarkerStyle.Diamond
+                s.MarkerSize = 7
+                s.Color = Color.FromArgb(255, 0, 120, 215)
                 s.IsValueShownAsLabel = False
                 s.LabelFormat = "N2"
             ElseIf kvp.Key = "StockInicial" Then
@@ -464,6 +506,34 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
             s.LegendText = kvp.Value
         Next
 
+        ''' --- Nuevo: agregar primer registro que representa el stock inicial + primera llegada ---
+        ''Try
+        ''    Dim primeraLlegada As Double = 0
+        ''    If _Tbl_Semanal.Columns.Contains("LlegadasSemanal") AndAlso Not IsDBNull(_Tbl_Semanal.Rows(0)("LlegadasSemanal")) Then
+        ''        Double.TryParse(_Tbl_Semanal.Rows(0)("LlegadasSemanal").ToString(), primeraLlegada)
+        ''    End If
+
+        ''    Dim stockInicialMasLlegada As Double = Math.Round(Me.StockInicial + If(primeraLlegada > 0, primeraLlegada, 0), 2)
+
+        ''    ' Agregar punto inicial en StockSemanal con label vacío para que quede como primer punto
+        ''    If Grafico_Mov_Stock.Series.IndexOf("StockSemanal") >= 0 Then
+        ''        Grafico_Mov_Stock.Series("StockSemanal").Points.AddXY("", stockInicialMasLlegada)
+        ''    End If
+
+        ''    ' Mantener la alineación temporal: agregar Double.NaN en las otras series (si existen)
+        ''    Dim keysParaNaN As String() = {"StockNecesarioNSemanas", "StockProyectadoSemanal", "StockNecesarioNMenosXSemanas", "LlegadasSemanal", "StockMes"}
+        ''    For Each k In keysParaNaN
+        ''        If Grafico_Mov_Stock.Series.IndexOf(k) >= 0 Then
+        ''            Grafico_Mov_Stock.Series(k).Points.AddXY("", Double.NaN)
+        ''        End If
+        ''    Next
+        ''    ' No agregar aquí StockInicial (se añade en el primer ciclo para mantener consistencia actual)
+        ''Catch ex As Exception
+        ''    ' No interrumpir si ocurre algo al construir el punto inicial
+        ''End Try
+        ''' --- Fin nuevo bloque ---
+
+
         Dim labelX As String
 
         Dim stockSemanal As Double = 0
@@ -471,11 +541,25 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
         Dim stockProyectado As Double = 0
         Dim stockNecesarioMenos As Double = 0
         Dim llegadasSemanal As Double = 0
+        Dim stockMes As Double = 0
 
         ' Recorrer filas y agregar puntos
         Dim isFirstSemana As Boolean = True
         Dim UltlabelX As String = String.Empty
         Dim UltProyectado As Boolean = False
+
+        '' Agregar punto stock inicial en el primer registro
+        'If isFirstSemana AndAlso Grafico_Mov_Stock.Series.IndexOf("StockInicial") >= 0 Then
+        '    Grafico_Mov_Stock.Series("StockSemanal").Points.AddXY("Stock Inicial", Math.Round(Me.StockInicial, 2))
+        '    'isFirstSemana = False
+        'End If
+
+        'Grafico_Mov_Stock.Series("StockSemanal").Points.AddXY("", Double.NaN)
+        'Grafico_Mov_Stock.Series("StockNecesarioNSemanas").Points.AddXY("", Double.NaN)
+        'Grafico_Mov_Stock.Series("StockProyectadoSemanal").Points.AddXY("", Double.NaN)
+        'Grafico_Mov_Stock.Series("StockNecesarioNMenosXSemanas").Points.AddXY("", Double.NaN)
+        'Grafico_Mov_Stock.Series("llegadasSemanal").Points.AddXY("", Double.NaN)
+        'Grafico_Mov_Stock.Series("StockMes").Points.AddXY("", Double.NaN)
 
         For Each row As DataRow In _Tbl_Semanal.Rows
 
@@ -524,14 +608,23 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
                 llegadasSemanal = 0
             End If
 
+            ' Leer StockMes si está presente (valor mensual asociado a la fila semanal)
+            If row.Table.Columns.Contains("StockMes") AndAlso Not IsDBNull(row("StockMes")) Then
+                Double.TryParse(row("StockMes").ToString(), stockMes)
+                stockMes = stockSemanal
+            Else
+                stockMes = 0
+            End If
+
             ' Redondear valores
             stockSemanal = Math.Round(stockSemanal, 2)
             stockNecesario = Math.Round(stockNecesario, 2)
             stockProyectado = Math.Round(stockProyectado, 2)
             stockNecesarioMenos = Math.Round(stockNecesarioMenos, 2)
             llegadasSemanal = Math.Round(llegadasSemanal, 2)
+            'stockMes = Math.Round(stockMes, 2)
 
-            ' Agregar punto stock inicial en el primer registro
+            ' Agregar punto stock inicial en el primer registro (serie StockInicial)
             If isFirstSemana AndAlso Grafico_Mov_Stock.Series.IndexOf("StockInicial") >= 0 Then
                 Grafico_Mov_Stock.Series("StockInicial").Points.AddXY("", Math.Round(Me.StockInicial, 2))
                 isFirstSemana = False
@@ -550,6 +643,7 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
                 If Not UltProyectado Then
                     Grafico_Mov_Stock.Series("StockProyectadoSemanal").Points.AddXY("", stockProyectado)
                 End If
+
                 If stockProyectado <= 0 Then
                     UltProyectado = True
                 End If
@@ -564,6 +658,13 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
                 Dim valorLlegada As Double = If(llegadasSemanal > 0, llegadasSemanal, Double.NaN)
                 ' Usar el mismo labelX para alinear con StockSemanal en el eje X
                 Grafico_Mov_Stock.Series("LlegadasSemanal").Points.AddXY(labelX, valorLlegada)
+            End If
+
+            '' Añadir punto de stock mensual como punto (solo cuando labelX no es vacío)
+            If UltlabelX = labelX Then ' labelX <> String.Empty AndAlso Grafico_Mov_Stock.Series.IndexOf("StockMes") >= 0 Then
+                Grafico_Mov_Stock.Series("StockMes").Points.AddXY(labelX, stockMes)
+            Else
+                Grafico_Mov_Stock.Series("StockMes").Points.AddXY(labelX, Double.NaN)
             End If
 
         Next
@@ -585,10 +686,10 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
             ca.AxisY.Minimum = 0
         End If
 
-        Chk_Serie1.Text = seriesConfig("StockSemanal")
-        Chk_Serie2.Text = seriesConfig("StockProyectadoSemanal")
-        Chk_Serie3.Text = seriesConfig("StockNecesarioNSemanas")
-        Chk_Serie4.Text = seriesConfig("StockNecesarioNMenosXSemanas")
+        Chk_StockSemanal.Text = seriesConfig("StockSemanal")
+        Chk_StockProyectadoMensual.Text = seriesConfig("StockProyectadoSemanal")
+        Chk_StockNecesarioNMeses.Text = seriesConfig("StockNecesarioNSemanas")
+        Chk_StockNecesarioNMenosXMeses.Text = seriesConfig("StockNecesarioNMenosXSemanas")
 
         ' Forzar refresh del control
         Grafico_Mov_Stock.Invalidate()
@@ -599,19 +700,21 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
 
         Try
             If Rdb_Proyeccion_Meses.Checked Then
-                Grafico_Mov_Stock.Series("StockMes").IsValueShownAsLabel = Chk_Serie1.Checked
-                Grafico_Mov_Stock.Series("StockNecesarioNMeses").IsValueShownAsLabel = Chk_Serie3.Checked
-                Grafico_Mov_Stock.Series("StockProyectadoMensual").IsValueShownAsLabel = Chk_Serie2.Checked
-                Grafico_Mov_Stock.Series("StockNecesarioNMenosXMeses").IsValueShownAsLabel = Chk_Serie4.Checked
-                Grafico_Mov_Stock.Series("LlegadasMes").IsValueShownAsLabel = Chk_Serie5.Checked
-                Grafico_Mov_Stock.Series("StockInicial").IsValueShownAsLabel = Chk_Serie6.Checked
+                Grafico_Mov_Stock.Series("StockMes").IsValueShownAsLabel = Chk_StockMes.Checked
+                Grafico_Mov_Stock.Series("StockSemanal").IsValueShownAsLabel = Chk_StockSemanal.Checked
+                Grafico_Mov_Stock.Series("StockNecesarioNMeses").IsValueShownAsLabel = Chk_StockNecesarioNMeses.Checked
+                Grafico_Mov_Stock.Series("StockProyectadoMensual").IsValueShownAsLabel = Chk_StockProyectadoMensual.Checked
+                Grafico_Mov_Stock.Series("StockNecesarioNMenosXMeses").IsValueShownAsLabel = Chk_StockNecesarioNMenosXMeses.Checked
+                Grafico_Mov_Stock.Series("LlegadasMes").IsValueShownAsLabel = Chk_LlegadasMes.Checked
+                Grafico_Mov_Stock.Series("StockInicial").IsValueShownAsLabel = Chk_StockInicial.Checked
             ElseIf Rdb_Proyeccion_Semanas.Checked Then
-                Grafico_Mov_Stock.Series("StockSemanal").IsValueShownAsLabel = Chk_Serie1.Checked
-                Grafico_Mov_Stock.Series("StockNecesarioNSemanas").IsValueShownAsLabel = Chk_Serie3.Checked
-                Grafico_Mov_Stock.Series("StockProyectadoSemanal").IsValueShownAsLabel = Chk_Serie2.Checked
-                Grafico_Mov_Stock.Series("StockNecesarioNMenosXSemanas").IsValueShownAsLabel = Chk_Serie4.Checked
-                Grafico_Mov_Stock.Series("LlegadasSemanal").IsValueShownAsLabel = Chk_Serie5.Checked
-                Grafico_Mov_Stock.Series("StockInicial").IsValueShownAsLabel = Chk_Serie6.Checked
+                Grafico_Mov_Stock.Series("StockMes").IsValueShownAsLabel = Chk_StockMes.Checked
+                Grafico_Mov_Stock.Series("StockSemanal").IsValueShownAsLabel = Chk_StockSemanal.Checked
+                Grafico_Mov_Stock.Series("StockNecesarioNSemanas").IsValueShownAsLabel = Chk_StockNecesarioNMeses.Checked
+                Grafico_Mov_Stock.Series("StockProyectadoSemanal").IsValueShownAsLabel = Chk_StockProyectadoMensual.Checked
+                Grafico_Mov_Stock.Series("StockNecesarioNMenosXSemanas").IsValueShownAsLabel = Chk_StockNecesarioNMenosXMeses.Checked
+                Grafico_Mov_Stock.Series("LlegadasSemanal").IsValueShownAsLabel = Chk_LlegadasMes.Checked
+                Grafico_Mov_Stock.Series("StockInicial").IsValueShownAsLabel = Chk_StockInicial.Checked
             End If
         Catch ex As Exception
 
