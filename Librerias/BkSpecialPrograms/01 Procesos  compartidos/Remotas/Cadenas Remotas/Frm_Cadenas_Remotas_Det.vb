@@ -22,6 +22,8 @@ Public Class Frm_Cadenas_Remotas_Det
         End Get
     End Property
 
+    Public Property ModoSoloLectura As Boolean
+
     Public Sub New(ByVal RowRemotas_En_Cadena_01_Enc As DataRow)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -273,6 +275,11 @@ Public Class Frm_Cadenas_Remotas_Det
         ElseIf _Otorga = "Enviado" Then
 
             If Not String.IsNullOrEmpty(_NroRemota) Then
+
+                If ModoSoloLectura Then
+                    Beep()
+                    Return
+                End If
 
                 If Fx_Tiene_Permiso(Me, _CodPermiso, FUNCIONARIO, , False,,,, False,,,,,,,,,,, True) Then
 

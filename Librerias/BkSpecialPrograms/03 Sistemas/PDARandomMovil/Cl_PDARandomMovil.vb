@@ -1,4 +1,6 @@
-﻿Public Class Cl_PDARandomMovil
+﻿Imports BkSpecialPrograms.LsValiciones
+
+Public Class Cl_PDARandomMovil
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -268,6 +270,39 @@ Update PDAENCA Set VALIDO = 'b' Where IDPDAENCA = {_Idpdaenca}"
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
         End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Crear_NVV_PDARandomMOVIL(_Zw_Pda2NVV As Zw_Pda2NVV, _Modalidad As String, _Prueba_DocGenerado As Boolean) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        If _Prueba_DocGenerado Then
+            'Documento generado
+            _Zw_Pda2NVV.Idmaeedo = 0
+            _Zw_Pda2NVV.Estado = "NVVGenerada"
+            _Zw_Pda2NVV.NVVGenerada = True
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Documento creado correctamente"
+            _Mensaje.Mensaje = "NVV Generada"
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Tag = _Zw_Pda2NVV
+            '' poner un time lapse
+        Else
+            'Documento no generado, necesita permiso
+            _Zw_Pda2NVV.RCadena_Id_Enc = 12345
+            _Zw_Pda2NVV.RCadena = True
+            _Zw_Pda2NVV.Nro_RCadena = "NRO123456"
+            _Zw_Pda2NVV.Estado = "SolPermiso"
+            _Zw_Pda2NVV.NecesitaPermiso = True
+
+            _Mensaje.Detalle = "Se envia a solicitud de permisos remotos"
+            _Mensaje.Mensaje = "Pre-Venta con observaciones"
+            _Mensaje.Tag = _Zw_Pda2NVV
+        End If
 
         Return _Mensaje
 
