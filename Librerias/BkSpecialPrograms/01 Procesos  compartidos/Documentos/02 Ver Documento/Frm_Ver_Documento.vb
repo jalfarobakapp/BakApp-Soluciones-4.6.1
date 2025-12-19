@@ -2225,7 +2225,23 @@ Public Class Frm_Ver_Documento
 
     Private Sub GrillaEncabezado_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaEncabezado.CellDoubleClick
 
-        Dim _Cabeza = GrillaEncabezado.Columns(GrillaEncabezado.CurrentCell.ColumnIndex).Name
+        ' Evitar cabecera o celda inválida
+        If e.RowIndex < 0 Or e.ColumnIndex < 0 Then
+            Return
+        End If
+
+        If _TblEncabezado Is Nothing OrElse _TblEncabezado.Rows.Count = 0 Then
+            Return
+        End If
+
+        Dim _Cabeza As String = Nothing
+
+        Try
+            _Cabeza = GrillaEncabezado.Columns(e.ColumnIndex).Name
+        Catch ex As Exception
+            Return
+        End Try
+
         Dim _RowEncabezado As DataRow = _TblEncabezado.Rows(0)
 
 

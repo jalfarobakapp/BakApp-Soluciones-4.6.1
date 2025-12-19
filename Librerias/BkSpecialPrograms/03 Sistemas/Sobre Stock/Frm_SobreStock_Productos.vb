@@ -9,6 +9,7 @@ Public Class Frm_SobreStock_Productos
 
     Public Property Seleccionado As Boolean
     Public Property ModoSeleccion As Boolean
+    Public Property ModoSoloLectrura As Boolean
     Public Property Zw_Prod_SobreStock As New Zw_Prod_SobreStock
     Public Property Ls_ListaProductos As New List(Of String)
     Public Sub New()
@@ -29,6 +30,10 @@ Public Class Frm_SobreStock_Productos
         Sb_Actualizar_Grilla()
 
         Btn_AgregarProducto.Visible = Not ModoSeleccion
+
+        'If ModoSoloLectrura Then
+        '    Btn_AgregarProducto.Visible = False
+        'End If
 
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
@@ -201,29 +206,13 @@ Public Class Frm_SobreStock_Productos
 
         Dim _Zw_Prod_SobreStock As New Zw_Prod_SobreStock
 
-        'Consulta_sql = "Select Ms.EMPRESA,Ms.KOSU,Ms.KOBO,Ms.STFI1,Ms.STFI2,Ms.STTR1,Ms.STTR2,Ms.STOCNV1,Ms.STOCNV2" & vbCrLf &
-        '               ",Isnull(St.StComp1,0) As 'StComp1',Isnull(St.StComp2,0) As 'StComp2'" & vbCrLf &
-        '               "--,Isnull(St.StSbCompStock1,0) As 'StSbCompStock1',Isnull(St.StSbCompStock2,0) As 'StSbCompStock2'" & vbCrLf &
-        '               "--,Isnull(St.StSobStockUd1,0) As 'StSobStockUd1',Isnull(St.StSobStockUd2,0) As 'StSobStockUd2'" & vbCrLf &
-        '               ",Cast(0 As Float) As StDispUd1,Cast(0 As Float) As StockDisponibleUd2" & vbCrLf &
-        '               "Into #Paso" & vbCrLf &
-        '               "From MAEST Ms" & vbCrLf &
-        '               "Left Join " & _Global_BaseBk & "Zw_Prod_Stock St On " &
-        '               "St.Empresa = Ms.EMPRESA And St.Codigo = Ms.KOPR" & vbCrLf &
-        '               "Where Ms.EMPRESA = '" & Mod_Empresa & "'" &
-        '               "And Ms.KOPR = '" & _RowProducto.Item("KOPR") & "'" & vbCrLf &
-        '               "Update #Paso Set StDispUd1 = STFI1-(STOCNV1+StComp1+STTR1)," &
-        '               "StockDisponibleUd2 = STFI2-(STOCNV2+StComp2+STTR2)" & vbCrLf &
-        '               "Select  * From #Paso" & vbCrLf &
-        '               "Drop Table #Paso"
-
         Consulta_sql = "Select Ms.EMPRESA,Sum(Ms.STFI1) As 'STFI1',Sum(Ms.STFI2) As 'STFI2',Sum(Ms.STTR1) As 'STTR1'" & vbCrLf &
                        ",Sum(Ms.STTR2) As 'STTR2',Sum(Ms.STOCNV1) As 'STOCNV1',Sum(Ms.STOCNV2) As 'STOCNV2'" & vbCrLf &
                        ",Sum(Isnull(St.StComp1,0)) As 'StComp1',Sum(Isnull(St.StComp2,0)) As 'StComp2'" & vbCrLf &
                        ",Cast(0 As Float) As StDispUd1,Cast(0 As Float) As StockDisponibleUd2" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From MAEST Ms" & vbCrLf &
-                       "Left Join BAKAPP_SG.dbo.Zw_Prod_Stock St On St.Empresa = Ms.EMPRESA And St.Codigo = Ms.KOPR" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & " Zw_Prod_Stock St On St.Empresa = Ms.EMPRESA And St.Sucursal = Ms.KOSU And St.Bodega = Ms.KOBO And St.Codigo = Ms.KOPR" & vbCrLf &
                        "Where Ms.EMPRESA = '" & Mod_Empresa & "' And Ms.KOPR = '" & _RowProducto.Item("KOPR") & "'" & vbCrLf &
                        "Group By Ms.EMPRESA" & vbCrLf &
                        "Update #Paso Set StDispUd1 = STFI1-(STOCNV1+StComp1+STTR1),StockDisponibleUd2 = STFI2-(STOCNV2+StComp2+STTR2)" & vbCrLf &

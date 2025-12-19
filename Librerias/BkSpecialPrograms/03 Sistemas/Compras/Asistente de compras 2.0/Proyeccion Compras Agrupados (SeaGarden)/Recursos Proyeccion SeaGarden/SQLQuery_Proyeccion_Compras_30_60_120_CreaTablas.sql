@@ -263,10 +263,10 @@ SELECT
 FROM #TablaPaso#
 WHERE Codigo IN (
     SELECT Codigo
-    FROM BAKAPP_SG.dbo.Zw_Prod_Asociacion 
+    FROM #Tbl_BakApp#Zw_Prod_Asociacion 
     WHERE Codigo_Nodo IN (
         SELECT DISTINCT Codigo_Nodo
-        FROM BAKAPP_SG.dbo.Zw_TblArbol_Asociaciones 
+        FROM #Tbl_BakApp#Zw_TblArbol_Asociaciones 
         WHERE Identificacdor_NodoPadre = @Identificador_NodoPadre
     )
 )

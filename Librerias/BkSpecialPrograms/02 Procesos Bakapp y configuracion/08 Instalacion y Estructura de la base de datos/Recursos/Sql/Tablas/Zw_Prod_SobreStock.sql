@@ -3,8 +3,6 @@ USE [#Base#]
 CREATE TABLE [dbo].[Zw_Prod_SobreStock](
 	[Id]					[int] IDENTITY(1,1) NOT NULL,
 	[Empresa]				[char](2)           NOT NULL,
-	[Sucursal]				[varchar](3)        NOT NULL,
-	[Bodega]				[varchar](3)        NOT NULL,
 	[Codigo]				[varchar](13)       NOT NULL,
 	[Descripcion]			[varchar](50)       NOT NULL,
 	[Activo]				[bit]               NOT NULL,
@@ -18,6 +16,9 @@ CREATE TABLE [dbo].[Zw_Prod_SobreStock](
 	[CantMinFormato]		[float]             NOT NULL,
 	[Moneda]				[varchar](3)        NOT NULL,
 	[PrecioXUd1]			[float]             NOT NULL,
+    [Eliminado]             [bit]               NOT NULL,
+    [StSobStockUd1]         [float]             NOT NULL,
+    [StSobStockUd2]         [float]             NOT NULL,
  CONSTRAINT [PK_Zw_Prod_SobreStock_1] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

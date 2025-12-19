@@ -143,15 +143,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
         End Set
     End Property
 
-    'Public Property Pro_Fl_Entidades_Edo() As String
-    '    Get
-    '        Return _Fl_Entidades_Edo
-    '    End Get
-    '    Set(ByVal value As String)
-    '        _Fl_Entidades_Edo = value
-    '    End Set
-    'End Property
-
+    Public Property Tido As String
     Public Property FechaDesde As Date
     Public Property FechaHasta As Date
 
@@ -658,6 +650,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp
                                                                                 _Tabla_Paso,
                                                                                 _Filtro_Sql,
                                                                                 _Unidada)
+        Fm.Tido = Tido
         Fm.Sb_Actualizar_Grillas()
         Fm.ShowDialog(Me)
         Fm.Dispose()

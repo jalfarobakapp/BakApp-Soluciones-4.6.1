@@ -1972,6 +1972,7 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
                                    "From MAEEDO Edo" & vbCrLf &
                                    "Inner Join MAEEN Ent On Ent.KOEN = Edo.ENDO And Ent.SUEN = Edo.SUENDO" & vbCrLf &
                                    "Where TIDO In ('FCV','BLV') And ENDO In " & _FiltroEndo &
+                                   "And EMPRESA = '" & Mod_Empresa & "' " &
                                    "And VAABDO = 0 " &
                                    "And ESPGDO = 'P' " &
                                    "And NUDONODEFI = 0 " &

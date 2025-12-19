@@ -34,6 +34,7 @@ Public Class Frm_SobreStockXClas
 
         Me.Text = "SOBRE STOCK"
         Chk_SumarStockDisponible.Checked = True
+        Chk_MostrarSoloProdConStockEnDetalle.Checked = True
 
         Sb_Actualizar_Grilla()
 
@@ -241,11 +242,21 @@ Public Class Frm_SobreStockXClas
 
         Dim _Fila As DataGridViewRow = Grilla_Clasificaciones.CurrentRow
 
+        If IsNothing(_Fila) Then
+            Return
+        End If
+
         Dim _Codigo_Nodo As Integer = _Fila.Cells("Codigo_Nodo").Value
         Dim _Codigo_Nodo_Madre2 = _Fila.Cells("Codigo_Nodo_Madre").Value
 
+        Dim _Condicion As String = String.Empty
+
+        If Chk_MostrarSoloProdConStockEnDetalle.Checked Then
+            _Condicion = vbCrLf & "And (StockUd1+StockEnTransitoUd1+StockPedidoUd1+StockFacSinRecepUd1) <> 0"
+        End If
+
         Consulta_sql = "Select * From " & _Cl_SobreStockXClas.TablaPasoRotacion_Productos & vbCrLf &
-                       "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre2 & "' And Codigo_Nodo = " & _Codigo_Nodo
+                       "Where Codigo_Nodo_Madre = '" & _Codigo_Nodo_Madre2 & "' And Codigo_Nodo = " & _Codigo_Nodo & _Condicion
         Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla_Productos
@@ -258,13 +269,13 @@ Public Class Frm_SobreStockXClas
 
             Dim _AnchoClValores = 60
 
-            .Columns("Codigo").Width = 100
+            .Columns("Codigo").Width = 90
             .Columns("Codigo").Visible = True
             .Columns("Codigo").HeaderText = "Código"
             .Columns("Codigo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Descripcion").Width = 190
+            .Columns("Descripcion").Width = 180
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
@@ -335,9 +346,9 @@ Public Class Frm_SobreStockXClas
             .Columns("RotM4").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("RotCalculo").Width = _AnchoClValores
+            .Columns("RotCalculo").Width = _AnchoClValores - 10
             .Columns("RotCalculo").Visible = True
-            .Columns("RotCalculo").HeaderText = "Rotación Calculo"
+            .Columns("RotCalculo").HeaderText = "Rot. Calculo"
             .Columns("RotCalculo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -751,7 +762,7 @@ Public Class Frm_SobreStockXClas
         Dim _Codigo As String = _Fila.Cells("Codigo").Value
         Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
         Dim _KilosXPallet As Double = _Fila.Cells("KilosXPallet").Value
-        Dim _PalletSY As Double = IIf(_Fila.Cells("PalletSY").Value > 0, _Fila.Cells("PalletSY").Value, 0)
+        Dim _PalletSY As Double = IIf(NuloPorNro(_Fila.Cells("PalletSY").Value, 0) > 0, _Fila.Cells("PalletSY").Value, 0)
 
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_SobreStock",
@@ -760,7 +771,8 @@ Public Class Frm_SobreStockXClas
                                                      "Activo = 1 And Eliminado = 0")
 
         If _Reg > 0 Then
-            MessageBoxEx.Show(Me, "El producto ya se encuentra ingresado para la venta de Sobre/Stock", "Validación",
+            MessageBoxEx.Show(Me, "El producto ya se encuentra ingresado para la venta de Sobre/Stock" & vbCrLf &
+                              $"Producto: {_Codigo.ToString.Trim} - {_Descripcion.ToString.Trim}", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
@@ -773,7 +785,7 @@ Public Class Frm_SobreStockXClas
                        ",Cast(0 As Float) As StDispUd1,Cast(0 As Float) As StockDisponibleUd2" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From MAEST Ms" & vbCrLf &
-                       "Left Join BAKAPP_SG.dbo.Zw_Prod_Stock St On St.Empresa = Ms.EMPRESA And St.Codigo = Ms.KOPR" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Prod_Stock St On St.Empresa = Ms.EMPRESA And St.Sucursal = Ms.KOSU And St.Bodega = Ms.KOBO And St.Codigo = Ms.KOPR" & vbCrLf &
                        "Where Ms.EMPRESA = '" & Mod_Empresa & "' And Ms.KOPR = '" & _Codigo & "'" & vbCrLf &
                        "Group By Ms.EMPRESA" & vbCrLf &
                        "Update #Paso Set StDispUd1 = STFI1-(STOCNV1+StComp1+STTR1),StockDisponibleUd2 = STFI2-(STOCNV2+StComp2+STTR2)" & vbCrLf &
@@ -806,6 +818,7 @@ Public Class Frm_SobreStockXClas
         Dim _Grabar As Boolean
 
         Dim Fm As New Frm_SobreStock_IngDet(_Zw_Prod_SobreStock)
+        Fm.Text = "SUBIR PRODUCTOS CON SOBRE STOCK"
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         _Zw_Prod_SobreStock = Fm.Zw_Prod_SobreStock
@@ -825,5 +838,22 @@ Public Class Frm_SobreStockXClas
             Return
         End If
 
+    End Sub
+
+    Private Sub Btn_VerProdSobreStock_Click(sender As Object, e As EventArgs) Handles Btn_VerProdSobreStock.Click
+
+        Dim Fm As New Frm_SobreStock_Productos
+        Fm.Btn_AgregarProducto.Visible = False
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Chk_SumarStockDisponible_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_SumarStockDisponible.CheckedChanged
+        Call Btn_Actualizar_Click(Nothing, Nothing)
+    End Sub
+
+    Private Sub Chk_MostrarSoloProdConStockEnDetalle_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_MostrarSoloProdConStockEnDetalle.CheckedChanged
+        Call Grilla_Clasificaciones_CellEnter(Nothing, Nothing)
     End Sub
 End Class

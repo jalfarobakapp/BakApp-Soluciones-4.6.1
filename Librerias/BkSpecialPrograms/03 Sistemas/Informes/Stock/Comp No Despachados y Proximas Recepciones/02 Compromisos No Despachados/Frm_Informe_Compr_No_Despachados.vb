@@ -247,6 +247,7 @@ Public Class Frm_Informe_Compr_No_Despachados
             _Ud = 2
         End If
 
+        Dim _Tido As String = String.Empty
         Dim _Filtro_Detalle As String
         Dim _Filtro_Productos As String = Fx_Filtros_Productos()
 
@@ -280,7 +281,7 @@ Public Class Frm_Informe_Compr_No_Despachados
             _Filtro_Documentos = "AND ED.TIDO='NCV'" & vbCrLf
         ElseIf Rdb_NVV.Checked Then
             _Filtro_Documentos = "AND ED.TIDO='NVV'" & vbCrLf
-
+            _Tido = "NVV"
             If Chk_NVVHabilitadasFacturar.Visible Then
 
                 If Chk_NVVHabilitadasFacturar.Checked Then
@@ -293,6 +294,7 @@ Public Class Frm_Informe_Compr_No_Despachados
 
         ElseIf Rdb_NVI.Checked Then
             _Filtro_Documentos = "AND ED.TIDO='NVI'" & vbCrLf
+            _Tido = "NVI"
         ElseIf Rdb_COV.Checked Then
             _Filtro_Documentos = "AND ED.TIDO='COV'" & vbCrLf
         ElseIf Rdb_Todos.Checked Then
@@ -387,6 +389,7 @@ Public Class Frm_Informe_Compr_No_Despachados
                                                     Frm_Informe_Prox_Recep_Y_Comp_No_Desp.Enum_Informe.Sucursal,
                                                     _Tabla_Paso,
                                                     _Ud, False)
+            Fm.Tido = _Tido
             Fm.FechaDesde = Dtp_Fecha_Emision_Desde.Value
             Fm.FechaHasta = Dtp_Fecha_Emision_Hasta.Value
             Fm.ShowDialog(Me)

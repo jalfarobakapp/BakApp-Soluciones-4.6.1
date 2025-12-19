@@ -35,12 +35,12 @@ Partial Class Frm_SobreStock_Llegadas
         Me.ButtonItem5 = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem6 = New DevComponents.DotNetBar.LabelItem()
         Me.ButtonItem6 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Grilla_Clasificaciones = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Lbl_Producto = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
         CType(Me.ContextMenuBar2, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Grilla_Clasificaciones, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar2
@@ -75,7 +75,7 @@ Partial Class Frm_SobreStock_Llegadas
         Me.GroupPanel3.BackColor = System.Drawing.Color.White
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel3.Controls.Add(Me.ContextMenuBar2)
-        Me.GroupPanel3.Controls.Add(Me.Grilla_Clasificaciones)
+        Me.GroupPanel3.Controls.Add(Me.Grilla)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(8, 5)
         Me.GroupPanel3.Name = "GroupPanel3"
@@ -173,11 +173,11 @@ Partial Class Frm_SobreStock_Llegadas
         Me.ButtonItem6.Name = "ButtonItem6"
         Me.ButtonItem6.Text = "Copiar (portapapeles)"
         '
-        'Grilla_Clasificaciones
+        'Grilla
         '
-        Me.Grilla_Clasificaciones.AllowUserToAddRows = False
-        Me.Grilla_Clasificaciones.AllowUserToDeleteRows = False
-        Me.Grilla_Clasificaciones.BackgroundColor = System.Drawing.Color.White
+        Me.Grilla.AllowUserToAddRows = False
+        Me.Grilla.AllowUserToDeleteRows = False
+        Me.Grilla.BackgroundColor = System.Drawing.Color.White
         DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -185,8 +185,8 @@ Partial Class Frm_SobreStock_Llegadas
         DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Clasificaciones.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
-        Me.Grilla_Clasificaciones.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
         DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
         DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -194,13 +194,13 @@ Partial Class Frm_SobreStock_Llegadas
         DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Clasificaciones.DefaultCellStyle = DataGridViewCellStyle2
-        Me.Grilla_Clasificaciones.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.Grilla_Clasificaciones.EnableHeadersVisualStyles = False
-        Me.Grilla_Clasificaciones.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.Grilla_Clasificaciones.Location = New System.Drawing.Point(0, 0)
-        Me.Grilla_Clasificaciones.Name = "Grilla_Clasificaciones"
-        Me.Grilla_Clasificaciones.ReadOnly = True
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Grilla.EnableHeadersVisualStyles = False
+        Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Grilla.Location = New System.Drawing.Point(0, 0)
+        Me.Grilla.Name = "Grilla"
+        Me.Grilla.ReadOnly = True
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -208,17 +208,19 @@ Partial Class Frm_SobreStock_Llegadas
         DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Clasificaciones.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla_Clasificaciones.Size = New System.Drawing.Size(969, 236)
-        Me.Grilla_Clasificaciones.StandardTab = True
-        Me.Grilla_Clasificaciones.TabIndex = 27
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grilla.Size = New System.Drawing.Size(969, 236)
+        Me.Grilla.StandardTab = True
+        Me.Grilla.TabIndex = 27
         '
         'Lbl_Producto
         '
+        Me.Lbl_Producto.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.Lbl_Producto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Producto.ForeColor = System.Drawing.Color.Black
         Me.Lbl_Producto.Location = New System.Drawing.Point(8, 270)
         Me.Lbl_Producto.Name = "Lbl_Producto"
         Me.Lbl_Producto.Size = New System.Drawing.Size(975, 23)
@@ -246,7 +248,7 @@ Partial Class Frm_SobreStock_Llegadas
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel3.ResumeLayout(False)
         CType(Me.ContextMenuBar2, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Grilla_Clasificaciones, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -260,6 +262,6 @@ Partial Class Frm_SobreStock_Llegadas
     Friend WithEvents ButtonItem5 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem6 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents ButtonItem6 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Grilla_Clasificaciones As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Lbl_Producto As DevComponents.DotNetBar.LabelX
 End Class

@@ -254,9 +254,9 @@ Public Class Cl_CambiarFechaVencimiento
 
             If Not IsNothing(_RowFincred) Then
 
-                _Autorizacion = _RowFincred.Item("Autorizacion")
+                _Autorizacion = _RowFincred.Item("Autorizacion").ToString.ToUpper
 
-                If _Autorizacion <> "Rechazado" Then
+                If _Autorizacion <> "RECHAZADO" Then
 
                     _Fecha_vencimiento = _RowFincred.Item("Fecha_vencimiento")
 

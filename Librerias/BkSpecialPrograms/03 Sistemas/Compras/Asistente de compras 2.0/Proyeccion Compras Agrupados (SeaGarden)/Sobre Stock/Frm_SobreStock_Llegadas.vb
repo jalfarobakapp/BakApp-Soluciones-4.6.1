@@ -20,7 +20,7 @@ Public Class Frm_SobreStock_Llegadas
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla_Clasificaciones, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
     End Sub
 
@@ -46,11 +46,11 @@ Public Class Frm_SobreStock_Llegadas
                        $"Where 1>0 {_Condicion}"
         _Tbl_Llegadas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-        With Grilla_Clasificaciones
+        With Grilla
 
             .DataSource = _Tbl_Llegadas
 
-            OcultarEncabezadoGrilla(Grilla_Clasificaciones, True)
+            OcultarEncabezadoGrilla(Grilla, True)
 
             Dim _DisplayIndex = 0
 
@@ -106,10 +106,10 @@ Public Class Frm_SobreStock_Llegadas
 
     End Sub
 
-    Private Sub Grilla_Clasificaciones_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Clasificaciones.CellEnter
+    Private Sub Grilla_Clasificaciones_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
 
         Try
-            Dim _Fila As DataGridViewRow = Grilla_Clasificaciones.Rows(e.RowIndex)
+            Dim _Fila As DataGridViewRow = Grilla.Rows(e.RowIndex)
             Dim _Producto As String = _Fila.Cells("Codigo").Value & " - " & _Fila.Cells("Descripcion").Value
 
             Lbl_Producto.Text = _Producto
@@ -123,4 +123,14 @@ Public Class Frm_SobreStock_Llegadas
         ExportarTabla_JetExcel_Tabla(_Tbl_Llegadas, Me, "Llegadas")
     End Sub
 
+    Private Sub Grilla_Clasificaciones_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(e.RowIndex)
+        Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+
+        Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

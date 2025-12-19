@@ -669,6 +669,8 @@ Public Class Cl_Stmp
             If .Secueven.Contains("NB") Then .DocEmitir = "BLV"
             If .Secueven.Contains("NF") Then .DocEmitir = "FCV"
 
+            If .Tido = "NVI" Then .DocEmitir = "GTI"
+
             .PagarAuto = _PagarAuto
             .Idmaedpce_Paga = _Idmaedpce_Paga
             .CodFuncionario_Paga = _CodFuncionario_Paga

@@ -2033,7 +2033,7 @@ Public Class Clase_Crear_Documento
             Dim _Idpdaenca As Integer = NuloPorNro(_Row_Encabezado.Item("Idpdaenca"), 0)
             Dim _ConservaNudo As Boolean = NuloPorNro(_Row_Encabezado.Item("ConservaNudo"), 0)
 
-            If _Tido = "NVV" Then
+            If _Tido = "NVV" Or _Tido = "NVI" Then
                 _Pickear = _Row_Encabezado.Item("Pickear")
             End If
 
@@ -3837,11 +3837,11 @@ Public Class Clase_Crear_Documento
 
                 For Each _Fila As DataRow In _Tbl_Permisos.Rows
 
-                    Dim _Necesita_Permiso = Convert.ToInt32(_Fila.Item("Necesita_Permiso"))
-
-                    If Not _Necesita_Permiso Then
+                    If Not _Fila.Item("Necesita_Permiso") Then
                         Continue For
                     End If
+
+                    Dim _Necesita_Permiso = Convert.ToInt32(_Fila.Item("Necesita_Permiso"))
 
                     Dim _CodPermiso_ = _Fila.Item("CodPermiso")
                     Dim _DescripcionPermiso = _Fila.Item("DescripcionPermiso")

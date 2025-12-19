@@ -21,7 +21,7 @@
                        "Isnull(FxmD.NombreFormato,'') As 'NombreFormato_Modalidad_Documento',Isnull(FxmM.NombreFormato,'') As 'NombreFormato_Modalidad'" & vbCrLf &
                        "From MAEEDO e" & vbCrLf &
                        "Left Join MAEEN r On e.ENDO = r.KOEN And e.SUENDO = r.SUEN" & vbCrLf &
-                       "Left Join BAKAPP_SG.dbo.Zw_Docu_Ent DEnt On DEnt.Idmaeedo = e.IDMAEEDO" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Docu_Ent DEnt On DEnt.Idmaeedo = e.IDMAEEDO" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad FxmD On FxmD.Modalidad = DEnt.Modalidad And FxmD.TipoDoc = e.TIDO And FxmD.Empresa = e.EMPRESA" & vbCrLf &
                        "Left Join " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad FxmM On FxmM.Modalidad = '" & Mod_Modalidad & "' And FxmM.TipoDoc = e.TIDO And FxmM.Empresa = e.EMPRESA" & vbCrLf &
                        "Where IDMAEEDO = " & _Idmaeedo

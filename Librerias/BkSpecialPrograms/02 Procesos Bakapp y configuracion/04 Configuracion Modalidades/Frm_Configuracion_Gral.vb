@@ -256,6 +256,7 @@ Public Class Frm_Configuracion_Gral
             Chk_ConservaListaDocOrigen.Checked = .Item("ConservaListaDocOrigen")
 
             Chk_Pickear_DesdeBkWMS.Checked = .Item("Pickear_DesdeBkWMS")
+            Chk_Pickear_NVITodas.Checked = .Item("Pickear_NVITodas")
 
         End With
 
@@ -347,6 +348,7 @@ Public Class Frm_Configuracion_Gral
         Chk_BloqueaZonaProductos.Enabled = _Modalidad_General
 
         Chk_Pickear_NVVTodas.Enabled = True '_Modalidad_General
+        Chk_Pickear_NVITodas.Enabled = True
         Chk_Pickear_DesdeBkWMS.Enabled = True
 
         Chk_Pickear_ProdPesoVariable.Enabled = _Modalidad_General
@@ -587,6 +589,7 @@ Public Class Frm_Configuracion_Gral
                        ",SelectOtrosClientesPedirPermiso = " & Convert.ToInt32(Chk_SelectOtrosClientesPedirPermiso.Checked) & vbCrLf &
                        ",ConservaListaDocOrigen = " & Convert.ToInt32(Chk_ConservaListaDocOrigen.Checked) & vbCrLf &
                        ",Pickear_DesdeBkWMS = " & Convert.ToInt32(Chk_Pickear_DesdeBkWMS.Checked) & vbCrLf &
+                       ",Pickear_NVITodas = " & Convert.ToInt32(Chk_Pickear_NVITodas.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

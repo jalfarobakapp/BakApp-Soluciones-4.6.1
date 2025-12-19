@@ -1,5 +1,4 @@
 ﻿Imports DevComponents.DotNetBar
-Imports MySql.Data.Authentication
 
 Public Class Frm_BuscarDocumento_Mt
 
@@ -1696,12 +1695,43 @@ Public Class Frm_BuscarDocumento_Mt
 
         Dim _Fincred_Respuesta As New Fincred_API.Respuesta
 
+        'Dim _vFec_primer_venc As Date
+        'Dim _Feemdo As Date = _RowMaeedo.Item("FEEMDO")
+        'Dim _Fe01vedo As Date = _RowMaeedo.Item("FE01VEDO")
+        'Dim _FechaHoy As Date = Now.Date
+
+        Dim _vFec_primer_venc As Date
+
+        ' Obtener FEEMDO y FE01VEDO con manejo de DBNull para evitar excepciones
+        Dim _Feemdo As Date
+        If IsDBNull(_RowMaeedo.Item("FEEMDO")) Then
+            _Feemdo = Now.Date
+        Else
+            _Feemdo = Convert.ToDateTime(_RowMaeedo.Item("FEEMDO"))
+        End If
+
+        Dim _Fe01vedo As Date
+        If IsDBNull(_RowMaeedo.Item("FE01VEDO")) Then
+            _Fe01vedo = Now.Date
+        Else
+            _Fe01vedo = Convert.ToDateTime(_RowMaeedo.Item("FE01VEDO"))
+        End If
+
+        Dim _FechaHoy As Date = Now.Date
+
+        ' Calcular diferencia en días entre la fecha de hoy y FEEMDO
+        Dim _DiasDiff As Integer = DateDiff(DateInterval.Day, _Feemdo, _FechaHoy)
+
+        ' Sumar esos días a la fecha _Fe01vedo y guardar en _vFec_primer_venc
+        _vFec_primer_venc = DateAdd(DateInterval.Day, _DiasDiff, _Fe01vedo)
+
+
         _Fincred_Respuesta = Fx_Vaidar_Fincred(_Idmaeedo,
                                                _RowMaeedo.Item("TIDO"),
                                                _RowMaeedo.Item("NUDO"),
                                                _RowEntidad.Item("Rut"),
                                                _RowMaeedo.Item("VABRDO"),
-                                               _RowMaeedo.Item("FE01VEDO"),
+                                               _vFec_primer_venc,
                                                _RowEntidad.Item("FOEN").ToString.Trim)
 
         If _Fincred_Respuesta.EsCorrecto Then
@@ -1713,6 +1743,10 @@ Public Class Frm_BuscarDocumento_Mt
                                "Where Id = " & _RowFincred.Item("Id")
                 _Sql.Ej_consulta_IDU(Consulta_Sql)
             End If
+
+            Consulta_Sql = "Update MAEEDO Set FE01VEDO = '" & Format(_vFec_primer_venc, "yyyyMMdd") & "'," &
+                           "FEULVEDO = '" & Format(_vFec_primer_venc, "yyyyMMdd") & "',NUVEDO = 1 Where IDMAEEDO = " & _Idmaeedo
+            _Sql.Ej_consulta_IDU(Consulta_Sql)
 
             MessageBoxEx.Show(Me, _Fincred_Respuesta.TramaRespuesta.descripcion_negacion & vbCrLf &
                                   "Código de autorización: " & _Fincred_Respuesta.TramaRespuesta.documentos(0).autorizacion,
@@ -1928,5 +1962,197 @@ Public Class Frm_BuscarDocumento_Mt
         ToastNotification.Show(Me, "IDMAEEDO del documento esta en el portapapeles", Btn_Copiar.Image,
                                    2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
     End Sub
+
+    Function Fx_Crear_NVV_Desde_COVSobreStock_Automaticamente(_Formulario As Form,
+                                                              _TidoDocEmitir As String,
+                                                              _Idmaeedo_Origen As Integer,
+                                                              _Fecha_Emision As DateTime,
+                                                              _Empresa As String,
+                                                              _Modalidad As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            If _TidoDocEmitir <> "NVV" Then
+                _Mensaje.Mensaje = "Error"
+                Throw New System.Exception("El Tido Destino esta vacío o no corresponde: (" & _TidoDocEmitir & "), solo puede ser: NVV")
+            End If
+
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("CONFIEST", "EMPRESA = '" & _Empresa & "' And MODALIDAD = '" & _Modalidad & "'", False)
+
+            If _Reg = 0 Then
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+            Dim _RowFormato As DataRow = Fx_Formato_Modalidad(_Formulario, _Empresa, _Modalidad, _TidoDocEmitir, False)
+
+            If IsNothing(_RowFormato) Then
+
+                _Mensaje.Mensaje = "Información"
+                Throw New System.Exception("Debe configurar el formato de salida en la configuración por modalidad de trabajo")
+
+            End If
+
+            Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen
+            Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                _Mensaje.Mensaje = "Error"
+                Throw New System.Exception(_Sql.Pro_Error)
+            End If
+
+            If Not IsNothing(_Row_Documento) Then
+
+                Dim _Meardo = _Row_Documento.Item("MEARDO")
+                Dim _Tido = _Row_Documento.Item("TIDO")
+                Dim _Nudo = _Row_Documento.Item("NUDO")
+
+                Dim _Msj_Tsc As LsValiciones.Mensajes
+
+                _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Nothing, _Fecha_Emision,, False)
+
+                If Not _Msj_Tsc.EsCorrecto Then
+
+                    _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
+                    Throw New System.Exception(_Msj_Tsc.Mensaje)
+
+                End If
+
+                Consulta_Sql = "SELECT IDMAEEDO FROM MAEDDO WHERE IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''"
+
+                Dim _Tbl_Saldo_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    _Mensaje.Mensaje = "Error"
+                    Throw New System.Exception(_Sql.Pro_Error)
+                End If
+
+                If CBool(_Tbl_Saldo_Facturar.Rows.Count) Then
+
+                    Dim _CampoPrecio As String
+
+                    If _Meardo = "N" Then
+                        ' Neto
+                        _CampoPrecio = "PPPRNE"
+                    Else
+                        ' Bruto
+                        _CampoPrecio = "PPPRBR"
+                    End If
+
+                    Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                   vbCrLf &
+                                   "Select Distinct Ddo.*," & vbCrLf &
+                                   "Case TIPR" & vbCrLf &
+                                   "When 'SSN' Then Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End" & vbCrLf &
+                                   "Else Case PRCT" & vbCrLf &
+                                   "When 0 Then Case When UDTRPR = 1 Then Det.Caprco1_Real Else Det.Caprco2_Real End" & vbCrLf &
+                                   "Else Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End" & vbCrLf &
+                                   "End" & vbCrLf &
+                                   "End As 'Cantidad'," & vbCrLf &
+                                   "Case PRCT When 0 Then Det.Caprco1_Real Else CAPRCO1-CAPREX1 End As 'CantUd1_Pickea'," & vbCrLf &
+                                   "Case PRCT When 0 Then Det.Caprco2_Real Else CAPRCO1-CAPREX1 End As 'CantUd2_Pickea'," & vbCrLf &
+                                   "Cast(1 As Bit) As DesdePickeo," & vbCrLf &
+                                   "CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori'," & vbCrLf &
+                                   "PPPRNE AS 'Precio'," & vbCrLf &
+                                   "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta," & vbCrLf &
+                                   "Isnull(Det.RtuVariable,0) As 'RtuVariable'" & vbCrLf &
+                                   "From MAEDDO Ddo With ( NOLOCK )" & vbCrLf &
+                                   "Left Join " & _Global_BaseBk & "Zw_Stmp_Det Det On Ddo.IDMAEDDO = Det.Idmaeddo" & vbCrLf &
+                                   "Where IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) --AND TICT = ''" & vbCrLf &
+                                   "Order by IDMAEEDO,IDMAEDDO " & vbCrLf &
+                                   vbCrLf &
+                                   "Select * From MAEIMLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                   vbCrLf &
+                                   "Select * From MAEDTLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
+                                   vbCrLf &
+                                   "Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
+
+
+                    Dim _Msj_GrabarDoc As New LsValiciones.Mensajes
+
+                    Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql, True, False)
+
+                    If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                        _Mensaje.Mensaje = "Error"
+                        Throw New System.Exception(_Sql.Pro_Error)
+                    End If
+
+                    Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
+                                                                csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
+
+
+                    Fm_Post.ModEmpresa_Doc = _Empresa
+                    Fm_Post.ModModalidad_Doc = _Modalidad
+                    Dim _Msj_Limpiar As LsValiciones.Mensajes
+
+                    _Msj_Limpiar = Fm_Post.Fx_Limpiar(_Modalidad)
+
+                    If _Msj_Limpiar.EsCorrecto Then
+
+                        Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
+
+                        _Msj_GrabarDoc = Fm_Post.Fx_Grabar_Documento(False,
+                                                                     csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,
+                                                                     True, False,,, False)
+
+                        If CBool(_Msj_GrabarDoc.Id) Then
+                            Fm_Post.Sb_Activar_Orden_De_Despacho(_Msj_GrabarDoc.Id)
+                        End If
+                        Fm_Post.Dispose()
+
+                    Else
+
+                        Throw New System.Exception(_Msj_Limpiar.Mensaje)
+
+                    End If
+
+                    If Not _Msj_GrabarDoc.EsCorrecto Then
+
+                        _Mensaje.Mensaje = _Msj_GrabarDoc.Mensaje.Replace(vbCrLf, ". ")
+                        _Mensaje.Mensaje = "No fue posible realizar la grabación de la Factura. " & _Mensaje.Mensaje
+                        _Mensaje.Detalle = "Error al grabar documento"
+                        Throw New System.Exception(_Mensaje.Mensaje)
+
+                    End If
+
+                    Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Msj_GrabarDoc.Id
+                    Dim _Row_Maeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+                    _Tido = String.Empty
+                    _Nudo = String.Empty
+
+                    If Not IsNothing(_Row_Maeedo) Then
+
+                    End If
+
+                    _Mensaje.EsCorrecto = True
+                    _Mensaje.Id = _Msj_GrabarDoc.Id
+                    _Mensaje.Fecha = FechaDelServidor()
+                    _Mensaje.Mensaje = "Documento creado correctamente"
+                    _Mensaje.Detalle = "Se crea el documento: " & _Tido & "-" & _Nudo
+                    _Mensaje.Tag = _Row_Maeedo
+
+                Else
+
+                    _Mensaje.Mensaje = "Documento cerrado"
+                    Throw New System.Exception("Nota de venta Nro: " & _Nudo & " se encuentra cerrado completamente")
+
+                End If
+
+                'End If
+            End If
+
+
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
 
 End Class

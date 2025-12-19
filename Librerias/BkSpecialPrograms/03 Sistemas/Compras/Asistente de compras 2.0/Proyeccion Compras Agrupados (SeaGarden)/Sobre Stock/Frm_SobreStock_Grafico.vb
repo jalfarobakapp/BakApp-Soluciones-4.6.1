@@ -573,6 +573,8 @@ ORDER BY Codigo_Nodo_Madre, Periodo, Mes, Semana;
                     UltlabelX = labelX
                 Else
                     labelX = String.Empty
+                    Dim semana As String = If(IsDBNull(row("Semana")), String.Empty, row("Semana").ToString().Trim())
+                    labelX = $"{semana}"
                 End If
             Else
                 Dim semana As String = If(IsDBNull(row("Semana")), String.Empty, row("Semana").ToString().Trim())

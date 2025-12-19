@@ -1089,11 +1089,17 @@ Public Class Frm_Formulario_Documento
                 Me.MinimizeBox = Not _Cerrar_Al_Grabar
             End If
 
-            If _Tido = "NVV" And _DemarcarPickeo Then
+            If (_Tido = "NVV" Or _Tido = "NVI") And _DemarcarPickeo Then
 
                 Dim _Pickear As Boolean = False
 
-                If _Global_Row_Configuracion_General.Item("Pickear_NVVTodas") Or _Global_Row_Configuracion_Estacion.Item("Pickear_NVVTodas") Then
+                If _Tido = "NVV" AndAlso (_Global_Row_Configuracion_General.Item("Pickear_NVVTodas") Or
+                                            _Global_Row_Configuracion_Estacion.Item("Pickear_NVVTodas")) Then
+                    _Pickear = True
+                End If
+
+                If _Tido = "NVI" AndAlso (_Global_Row_Configuracion_General.Item("Pickear_NVITodas") Or
+                                            _Global_Row_Configuracion_Estacion.Item("Pickear_NVITodas")) Then
                     _Pickear = True
                 End If
 
@@ -13588,6 +13594,9 @@ Public Class Frm_Formulario_Documento
             Dim _UltCompraLinea As Double
             Dim _Costo_Lista As Double
 
+            Dim _Tipo_Moneda As String = _Fila.Cells("Tipo_Moneda").Value
+            Dim _Tipo_Cambio As Double = _Fila.Cells("Tipo_Cambio").Value
+
             Dim _i = 1
 
             If String.IsNullOrEmpty(_Tict) And Not String.IsNullOrEmpty(_Tipr) And Not _Prct Then
@@ -13620,6 +13629,14 @@ Public Class Frm_Formulario_Documento
 
             End If
 
+            If _Tipo_Moneda = "E" Then
+                If IsNothing(_Tipo_Cambio) OrElse Convert.IsDBNull(_Tipo_Cambio) OrElse _Tipo_Cambio <= 0 Then
+                    _Costo = Math.Round(_Costo, 5)
+                Else
+                    _Costo = Math.Round(_Costo / _Tipo_Cambio, 5)
+                End If
+            End If
+
             Dim _Total_Costo_Linea As Double = _Costo * _Cantidad
             Dim _Margen_Porc, _Margen_Valor As Double
 
@@ -13643,8 +13660,8 @@ Public Class Frm_Formulario_Documento
 
             If Convert.ToBoolean(_ValNetoLinea) Then
 
-                _Margen_Valor = (_ValNetoLinea - _Total_Costo_Linea) * _i
-                _Margen_Porc = ((_ValNetoLinea - _Total_Costo_Linea) / _ValNetoLinea) * _i
+                _Margen_Valor = Math.Round((_ValNetoLinea - _Total_Costo_Linea) * _i, 5)
+                _Margen_Porc = Math.Round(((_ValNetoLinea - _Total_Costo_Linea) / _ValNetoLinea) * _i, 5)
 
             End If
 
@@ -18161,7 +18178,9 @@ Public Class Frm_Formulario_Documento
                                  Optional _Solicitar_Pago As Boolean = True,
                                  Optional ByRef _Grabar_e_Imprimir As Boolean = False,
                                  Optional _Grabar_Y_Pagar_Vale As Boolean = False,
-                                 Optional _Mostrar_Mensaje As Boolean = True) As LsValiciones.Mensajes
+                                 Optional _Mostrar_Mensaje As Boolean = True,
+                                 Optional _ConvertirAPesos As Boolean = False,
+                                 Optional _ListaPrecios As String = "") As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -23953,7 +23972,12 @@ Public Class Frm_Formulario_Documento
             Sb_Suma_Kilos()
 
             Dim _TotalNetoDoc As Double = _TblEncabezado.Rows(0).Item("TotalNetoDoc")
-            Dim TotalKilos As Double = _TblEncabezado.Rows(0).Item("TotalKilos")
+            Dim _TotalKilos As Double = _TblEncabezado.Rows(0).Item("TotalKilos")
+            Dim _SobreStock As Boolean = _TblEncabezado.Rows(0).Item("SobreStock")
+
+            If _SobreStock Then
+                Return True
+            End If
 
             _TblEncabezado.Rows(0).Item("MinKgDesp") = _Peso_Min_Despacho
             _TblEncabezado.Rows(0).Item("MinNetoDesp") = _Valor_Min_Despacho
@@ -23968,7 +23992,7 @@ Public Class Frm_Formulario_Documento
 
             If _Peso_Min_Despacho > 0 AndAlso _Valor_Min_Despacho > 0 Then
 
-                If TotalKilos < _Peso_Min_Despacho And _TotalNetoDoc < _Valor_Min_Despacho Then
+                If _TotalKilos < _Peso_Min_Despacho And _TotalNetoDoc < _Valor_Min_Despacho Then
 
                     _Tiene_X_07_Min_Despacho = True
 
@@ -23976,7 +24000,7 @@ Public Class Frm_Formulario_Documento
 
                         MessageBoxEx.Show(Me, "Para poder hacer un despacho a domicilio debe cumplir con ciertos requisitos mínimos." & vbCrLf & vbCrLf &
                                       "Mínimo en Kg: " & FormatNumber(_Peso_Min_Despacho, 1) & ", mínimo de total neto: " & FormatCurrency(_Valor_Min_Despacho, 0) & vbCrLf &
-                                      "Valores del documento: Kg " & FormatNumber(TotalKilos, 1) & ", total neto: " & FormatCurrency(_TotalNetoDoc, 0) & vbCrLf & vbCrLf &
+                                      "Valores del documento: Kg " & FormatNumber(_TotalKilos, 1) & ", total neto: " & FormatCurrency(_TotalNetoDoc, 0) & vbCrLf & vbCrLf &
                                       "¡Se necesitara permiso para poder grabar el documento!",
                                       "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
@@ -24630,11 +24654,7 @@ Public Class Frm_Formulario_Documento
 
             For Each _Fl As DataRow In _TblPermisos.Rows
                 If Not _Fl.Item("PermisoIndependiente") Then
-                    '_Fl.Item("Autorizado") = False
-                    '_Fl.Item("Necesita_Permiso") = False
-                    '_Fl.Item("Permiso_Presencial") = False
                     _Fl.Item("CodFuncionario_Autoriza") = _CodFuncionario_Autoriza
-                    '_Fl.Item("NomFuncionario_Autoriza") = String.Empty
                 End If
             Next
 
@@ -24749,6 +24769,58 @@ Public Class Frm_Formulario_Documento
                     .Total_Documento = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
 
                 End With
+
+                ' --- INICIO: marcar en _TblPermisos las entradas que necesitan permiso comparando con la lista remota ---
+                Try
+                    If _TblPermisos IsNot Nothing Then
+
+                        ' Asegurar columna "NecesitaPermiso" (boolean) en la tabla de permisos
+                        If Not _TblPermisos.Columns.Contains("Necesita_Permiso") Then
+                            _TblPermisos.Columns.Add("Necesita_Permiso", GetType(Boolean))
+                            ' Inicializar a False
+                            For Each _r As DataRow In _TblPermisos.Rows
+                                _r.Item("Necesita_Permiso") = False
+                            Next
+                        End If
+
+                        If _Cl_RemotasEnCadena IsNot Nothing AndAlso _Cl_RemotasEnCadena.Ls_Zw_Remotas_En_Cadena_02_Det IsNot Nothing Then
+
+                            For Each _Det In _Cl_RemotasEnCadena.Ls_Zw_Remotas_En_Cadena_02_Det
+
+                                Dim _CodPermisoRemota As String = String.Empty
+
+                                ' Intentar obtener la propiedad CodPermiso del objeto de la lista remota
+                                Try
+                                    _CodPermisoRemota = If(_Det Is Nothing, String.Empty, _Det.CodPermiso)
+                                Catch
+                                    ' Si no existe la propiedad, continuar con siguiente
+                                    Continue For
+                                End Try
+
+                                If String.IsNullOrWhiteSpace(_CodPermisoRemota) Then
+                                    Continue For
+                                End If
+
+                                ' Comparar con cada fila de _TblPermisos y marcar NecesitaPermiso = True si coinciden
+                                For Each _FlPerm As DataRow In _TblPermisos.Rows
+                                    If Not IsDBNull(_FlPerm.Item("CodPermiso")) Then
+                                        Dim _CodPermisoFila As String = _FlPerm.Item("CodPermiso").ToString
+                                        If String.Equals(_CodPermisoFila.Trim(), _CodPermisoRemota.Trim(), StringComparison.OrdinalIgnoreCase) Then
+                                            _FlPerm.Item("Necesita_Permiso") = True
+                                        End If
+                                    End If
+                                Next
+
+                            Next
+
+                        End If
+
+                    End If
+                Catch exRem As Exception
+                    ' En caso de error no romper la validación principal; registrar o ignorar según convenga.
+                End Try
+                ' --- FIN: marcado de permisos necesarios ---
+
 
                 _Mensaje.EsCorrecto = False
                 _Mensaje.Mensaje = "Documento necesita permisos"
@@ -30510,9 +30582,16 @@ Public Class Frm_Formulario_Documento
 
         Dim _Pickear As Boolean = False
 
-        If _Global_Row_Configuracion_General.Item("Pickear_NVVTodas") Or _Global_Row_Configuracion_Estacion.Item("Pickear_NVVTodas") Then
+        If _Tido = "NVV" AndAlso (_Global_Row_Configuracion_General.Item("Pickear_NVVTodas") Or
+                                            _Global_Row_Configuracion_Estacion.Item("Pickear_NVVTodas")) Then
             _Pickear = True
         End If
+
+        If _Tido = "NVI" AndAlso (_Global_Row_Configuracion_General.Item("Pickear_NVITodas") Or
+                                            _Global_Row_Configuracion_Estacion.Item("Pickear_NVITodas")) Then
+            _Pickear = True
+        End If
+
 
         If Not _RevisandoBotonesActivos AndAlso
             Not Chk_Pickear.Checked AndAlso

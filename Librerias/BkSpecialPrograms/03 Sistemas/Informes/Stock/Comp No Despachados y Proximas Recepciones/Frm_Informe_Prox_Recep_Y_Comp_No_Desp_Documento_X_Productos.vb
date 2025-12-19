@@ -20,6 +20,8 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
     Dim _Informe_Padre As Enum_Informe_Padre
 
+    Public Property Tido As String
+
     Public Sub New(_Informe_Padre As Enum_Informe_Padre,
                    _Nombre_Tabla_Paso As String,
                    _SqlFiltro As String,
@@ -69,12 +71,8 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
         If CBool(Grilla_Documentos.RowCount) Then
 
-            Dim _Fila As DataGridViewRow = Grilla_Documentos.Rows(0)
-            Dim _Tido = _Fila.Cells("TIDO").Value
-
-            If _Tido = "NVV" Then
-                Btn_Facturacion_Masiva.Visible = True
-            End If
+            Btn_Facturacion_Masiva.Visible = (Tido = "NVV" Or Tido = "NVI")
+            Btn_Facturacion_Masiva.Tooltip = "Gestionar acción de documentos"
 
         End If
 
@@ -360,6 +358,9 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
     End Sub
 
     Private Sub Btn_Facturacion_Masiva_Click(sender As Object, e As EventArgs) Handles Btn_Facturacion_Masiva.Click
+        Dim _Fila As DataGridViewRow = Grilla_Documentos.Rows(0)
+        Dim _Tido = _Fila.Cells("TIDO").Value
+        Btn_Mnu_Facturacion_Masiva.Visible = _Tido = "NVV"
         ShowContextMenu(Menu_Contextual_FacMasiva)
     End Sub
 
@@ -442,6 +443,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
 
         Dim Fm As New Frm_Stmp_IncNVVPicking
+        Fm.Tido = Tido
         Fm.FiltroDoc = _Filtro_Doc
         Fm.ShowDialog(Me)
         Fm.Dispose()
