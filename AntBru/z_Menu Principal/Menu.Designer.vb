@@ -85,6 +85,7 @@ Partial Class Menu
         Me.Btn_SobreStock = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_SobreStockCrear = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_SobreStockNVV = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CrucePagoMasivos = New DevComponents.DotNetBar.ButtonItem()
         Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
@@ -107,7 +108,7 @@ Partial Class Menu
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
-        Me.Btn_CrucePagoMasivos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ConvertirCOVNVV = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -955,7 +956,7 @@ Partial Class Menu
         '
         Me.Btn_SobreStock.GlobalItem = False
         Me.Btn_SobreStock.Name = "Btn_SobreStock"
-        Me.Btn_SobreStock.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_SobreStockCrear, Me.Btn_SobreStockNVV})
+        Me.Btn_SobreStock.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_SobreStockCrear, Me.Btn_SobreStockNVV, Me.Btn_ConvertirCOVNVV})
         Me.Btn_SobreStock.Text = "Sobre Stock"
         '
         'Btn_SobreStockCrear
@@ -967,6 +968,12 @@ Partial Class Menu
         '
         Me.Btn_SobreStockNVV.Name = "Btn_SobreStockNVV"
         Me.Btn_SobreStockNVV.Text = "COV Sobre Stock"
+        '
+        'Btn_CrucePagoMasivos
+        '
+        Me.Btn_CrucePagoMasivos.GlobalItem = False
+        Me.Btn_CrucePagoMasivos.Name = "Btn_CrucePagoMasivos"
+        Me.Btn_CrucePagoMasivos.Text = "Cruce pagos masivos sin vincular"
         '
         'Tiempo_Actualizar_BakApp
         '
@@ -1208,11 +1215,10 @@ Partial Class Menu
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
         '
-        'Btn_CrucePagoMasivos
+        'Btn_ConvertirCOVNVV
         '
-        Me.Btn_CrucePagoMasivos.GlobalItem = False
-        Me.Btn_CrucePagoMasivos.Name = "Btn_CrucePagoMasivos"
-        Me.Btn_CrucePagoMasivos.Text = "Cruce pagos masivos sin vincular"
+        Me.Btn_ConvertirCOVNVV.Name = "Btn_ConvertirCOVNVV"
+        Me.Btn_ConvertirCOVNVV.Text = "Convertir COV en NVV Sobre Stock"
         '
         'Menu
         '
@@ -1316,4 +1322,5 @@ Partial Class Menu
     Friend WithEvents Btn_SobreStockCrear As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_SobreStockNVV As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_CrucePagoMasivos As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ConvertirCOVNVV As DevComponents.DotNetBar.ButtonItem
 End Class

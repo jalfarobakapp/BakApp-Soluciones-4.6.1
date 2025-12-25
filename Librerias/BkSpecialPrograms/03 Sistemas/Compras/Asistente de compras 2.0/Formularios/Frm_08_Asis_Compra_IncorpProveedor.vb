@@ -124,9 +124,7 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                            "From " & _Tabla_Paso & " Tpaso" & vbCrLf &
                            "Inner Join " & _Global_BaseBk & "Zw_Prod_Log_Compras Zlog On Tpaso.Codigo = Zlog.Codigo" & vbCrLf &
                            "Where NombreEquipo = '" & _NombreEquipo & "' And CodFuncionario = '" & FUNCIONARIO & "'"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-
-
+            _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
             '   Costos desde ultimo documento segun seleccion
             _Sql.Sb_Parametro_Informe_Sql(Rd_Costo_Lista_Proveedor, "Compras_Asistente",
@@ -140,7 +138,6 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
             '   Costos de la lista del proveedor
             _Sql.Sb_Parametro_Informe_Sql(Dtp_Fecha_Tope_Proveedores_Automaticos, "Compras_Asistente",
                                                  Dtp_Fecha_Tope_Proveedores_Automaticos.Name, Class_SQLite.Enum_Type._Date, Dtp_Fecha_Tope_Proveedores_Automaticos.Value, True)
-
 
             Me.Close()
         End If
@@ -453,7 +450,22 @@ Public Class Frm_08_Asis_Compra_IncorpProveedor
                            "Where Comprar = 1"
 
             If Not String.IsNullOrEmpty(_SqlQuery_2) Then
+
                 _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery_2)
+
+                Consulta_sql = $"-- Actualiza el CodAlternativo de los productos con proveedor
+Update {_Tabla_Paso} Set CodAlternativo = Isnull(Tc.KOPRAL,'')
+FROM {_Tabla_Paso} c
+OUTER APPLY (
+    SELECT TOP 1 *
+    FROM TABCODAL Tc
+    WHERE Tc.KOEN = c.CodProveedor
+      AND Tc.KOPR = c.Codigo
+    ORDER BY Tc.KOPR  -- o el campo que defina prioridad
+) Tc"
+
+                _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
             End If
 
             If Not _Accion_Automatica Then

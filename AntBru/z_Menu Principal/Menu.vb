@@ -1607,4 +1607,26 @@ Public Class Menu
         Fm.Dispose()
 
     End Sub
+
+    Private Sub Btn_ConvertirCOVNVV_Click(sender As Object, e As EventArgs) Handles Btn_ConvertirCOVNVV.Click
+
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
+        End If
+
+        Dim Fm As New Frm_BusquedaDocumento_Filtro(False)
+        Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "COV", "Where TIDO = 'COV'")
+        Fm.Rdb_Estado_Todas.Enabled = False
+        Fm.Rdb_Estado_Vigente.Checked = True
+        Fm.Rdb_Estado_Cerrado.Enabled = False
+        Fm.Rdb_FEmision_EmitidosEntre.Checked = True
+        Fm.Chk_Mostrar_Vales_Transitorios.Checked = False
+        Fm.Chk_Mostrar_Vales_Transitorios.Enabled = False
+        Fm.SobreStock = True
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
+
+    End Sub
 End Class

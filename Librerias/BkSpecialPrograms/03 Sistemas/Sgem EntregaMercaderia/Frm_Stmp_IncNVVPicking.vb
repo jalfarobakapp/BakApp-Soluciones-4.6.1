@@ -60,9 +60,9 @@ Public Class Frm_Stmp_IncNVVPicking
         AddHandler Txt_Observaciones.KeyDown, AddressOf Txt_KeyDown
         AddHandler Txt_Ocdo.KeyDown, AddressOf Txt_KeyDown
 
-        Chk_FacturarTodo.Enabled = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
-
         If Tido = "NVV" Then
+            Chk_FacturarTodo.Enabled = (_Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas") Or
+                                        _Global_Row_Configuracion_Estacion.Item("Pickear_FacturarAutoCompletas"))
             Chk_FactConFDespVencida.Text = "Facturar notas de venta con fecha de despacho vencida"
             Chk_FacturarTodo.Text = "Facturar todo"
             Rdb_FechaFacFechaManual.Text = "Fecha de facturación"
@@ -70,6 +70,8 @@ Public Class Frm_Stmp_IncNVVPicking
         End If
 
         If Tido = "NVI" Then
+            Chk_FacturarTodo.Enabled = (_Global_Row_Configuracion_General.Item("Pickear_CrearGuiasAutoCompletas") Or
+                                        _Global_Row_Configuracion_Estacion.Item("Pickear_CrearGuiasAutoCompletas"))
             Chk_FactConFDespVencida.Text = "Crear Guías de Traslado con fecha de despacho vencida"
             Chk_FacturarTodo.Text = "Guías a todo"
             Chk_Pagar_Documentos.Enabled = False

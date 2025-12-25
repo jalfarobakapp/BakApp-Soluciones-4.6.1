@@ -586,6 +586,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         _Filtro_Vendedores_Todas = True
         _Filtro_Vendedores_Asignados_Todas = True
 
+
         If Fx_Tiene_Permiso(Me, "Inf00025", , False) Then
 
             _Filtro_Vendedores_Asignados_Todas = True

@@ -13,6 +13,9 @@ Public Class Frm_ImpMasiva
     Private _Tido As String
     Private _Cancelar As Boolean
 
+    ' Estado que indica si los controles están bloqueados (True = bloqueados)
+    Private _ControlesBloqueados As Boolean = True
+
     Public Sub New(_Tido As String, _Ls_Idmaeedo As List(Of String))
 
         ' Esta llamada es exigida por el diseñador.
@@ -40,6 +43,10 @@ Public Class Frm_ImpMasiva
         Sb_ActualizarGrilla()
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        ' Al cargar el formulario dejar los controles de selección/descripción deshabilitados
+        Sb_HabilitarDeshabilitarControles(False, True)
+        _ControlesBloqueados = True
 
     End Sub
 
@@ -204,7 +211,7 @@ Public Class Frm_ImpMasiva
         _Cancelar = False
 
         Try
-            Sb_HabilitarDeshabilitarControles(False)
+            Sb_HabilitarDeshabilitarControles(False, False)
 
             For Each _Row As ImpMasiva.ImpDocumentos In ListaDocumentos
 
@@ -290,7 +297,7 @@ Public Class Frm_ImpMasiva
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
-            Sb_HabilitarDeshabilitarControles(True)
+            Sb_HabilitarDeshabilitarControles(False, True)
             Barra_Progreso.Minimum = 0
             Barra_Progreso.Value = 0
             Lbl_Status.Text = String.Empty
@@ -392,17 +399,59 @@ Public Class Frm_ImpMasiva
         _Cancelar = True
     End Sub
 
-    Sub Sb_HabilitarDeshabilitarControles(_Habilitar As Boolean)
+    Sub Sb_HabilitarDeshabilitarControles(_Habilitar As Boolean,
+                                          _HabilitarImprimir As Boolean)
 
-        Grilla.Enabled = _Habilitar
+        ' Controles principales
+        'Grilla.Enabled = _Habilitar
         Txt_Impresora.Enabled = _Habilitar
         Txt_NombreFormato.Enabled = _Habilitar
-        Btn_Imprimir.Enabled = _Habilitar
-        Btn_Cancelar.Enabled = Not _Habilitar
-        Btn_Cancelar.Visible = Not _Habilitar
+        Btn_Imprimir.Enabled = _HabilitarImprimir
+        Btn_Cancelar.Enabled = Not _HabilitarImprimir
+        Btn_Cancelar.Visible = Not _HabilitarImprimir
         Chk_ImprimirCedible.Enabled = _Habilitar
         Chk_Marcar_Todas.Enabled = _Habilitar
 
+        ' RadioButtons de selección de formato
+        Try
+            Rdb_ImpFormatoModalidad.Enabled = _Habilitar
+            Rdb_ImpFormatoModalidadDoc.Enabled = _Habilitar
+            Rdb_ImpFormatoSeleccionado.Enabled = _Habilitar
+        Catch ex As Exception
+            ' Ignorar si algún control no existe en tiempo de diseño
+        End Try
+
+        ' Mantener siempre habilitado el botón que permite cambiar la configuración
+        Try
+            Btn_CambiarConfiguracion.Enabled = True
+        Catch ex As Exception
+        End Try
+
     End Sub
 
+    Private Sub Btn_CambiarConfiguracion_Click(sender As Object, e As EventArgs) Handles Btn_CambiarConfiguracion.Click
+
+        If _ControlesBloqueados Then
+            If Not Fx_Tiene_Permiso(Me, "Doc00167") Then
+                Return
+            End If
+        End If
+
+        ' Alterna el estado de bloqueo de los controles
+        _ControlesBloqueados = Not _ControlesBloqueados
+
+        ' Si _ControlesBloqueados = True => controles deben estar deshabilitados
+        Sb_HabilitarDeshabilitarControles(Not _ControlesBloqueados, True)
+
+        ' Actualizar texto del botón para indicar estado (opcional)
+        Try
+            If _ControlesBloqueados Then
+                Btn_CambiarConfiguracion.Text = "Editar configuración"
+            Else
+                Btn_CambiarConfiguracion.Text = "Bloquear configuración"
+            End If
+        Catch ex As Exception
+            ' Ignorar si no se puede cambiar el texto
+        End Try
+    End Sub
 End Class

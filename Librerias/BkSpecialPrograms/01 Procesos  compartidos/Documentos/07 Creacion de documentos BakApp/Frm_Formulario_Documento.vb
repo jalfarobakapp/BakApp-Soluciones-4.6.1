@@ -1970,61 +1970,6 @@ Public Class Frm_Formulario_Documento
                            "Where Koct Not In (Select KOCT From TABCT)"
             _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
-            'If Not _Revision_Remota Then
-
-            '    If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Casi_DocArc") Then
-
-            '        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1"
-            '        _Sql.Ej_consulta_IDU(Consulta_sql)
-
-            '    End If
-
-            'End If
-
-            'If _Global_Row_Configuracion_General.Item("BuscarProdConCodRapido") Then
-            '    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,DescripcionBusqueda)" & vbCrLf &
-            '                   "Select KOPR,KOPRRA From MAEPR" & vbCrLf &
-            '                   "Where KOPRRA Not In (Select DescripcionBusqueda From " & _Global_BaseBk & "Zw_Prod_Asociacion)"
-            '    _Sql.Ej_consulta_IDU(Consulta_sql)
-            'End If
-
-            'If _Global_Row_Configuracion_General.Item("BuscarProdConCodTecnico") Then
-            '    Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Asociacion (Codigo,DescripcionBusqueda)" & vbCrLf &
-            '                   "Select KOPR,KOPRTE From MAEPR" & vbCrLf &
-            '                   "Where KOPRTE Not In (Select DescripcionBusqueda From " & _Global_BaseBk & "Zw_Prod_Asociacion)"
-            '    _Sql.Ej_consulta_IDU(Consulta_sql)
-            'End If
-
-
-            'Consulta_sql = "Select Modalidad, TipoDoc, NombreFormato, Grabar_Con_Huella
-            '            From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad Where Empresa = '" & ModEmpresa_Doc & "' And Modalidad = '" & Modalidad & "' And TipoDoc = '" & _Tido & "'"
-            'Dim _RowFormato_Mod As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-            'Dim _Grabar_Con_Huella As Boolean = _RowFormato_Mod.Item("Grabar_Con_Huella")
-
-            'Btn_Huella.Visible = _Grabar_Con_Huella
-
-            'If _Grabar_Con_Huella Then
-
-            '    If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_EstacionesBkp", "Tiene_Lector_Huella") And
-            '       _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_EstacionesBkp", "Lector_Huella") Then
-
-            '        Dim _Tiene_Lector_Huella As Boolean = _Global_Row_EstacionBk.Item("Tiene_Lector_Huella")
-
-            '        _Global_Row_EstacionBk.Item("Lector_Huella") = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_EstacionesBkp", "Lector_Huella", "NombreEquipo = '" & _NombreEquipo & "'")
-
-            '        If _Tiene_Lector_Huella Then
-            '            Lbl_Version.Text = "Versión: " & _Global_Version_BakApp & ", DOCUMENTO SE TIENE QUE GRABAR CON LECTOR DE HUELLAS: " & _Global_Row_EstacionBk.Item("Lector_Huella")
-            '            Btn_Huella.Tag = 1
-            '        End If
-
-            '    Else
-            '        Btn_Huella.Tag = 0
-            '        Btn_Huella.Tooltip = Lbl_Version.Text = "Versión: " & _Global_Version_BakApp & "Falta configuración de huella para este equipo"
-            '    End If
-
-            'End If
-
             _Id_DocEnc_Arc = 0
 
             '_No_Puede_Ver_Precios = Fx_Tiene_Permiso(Me, "NO00001", , False)
@@ -2035,27 +1980,6 @@ Public Class Frm_Formulario_Documento
             Table_Metodo_Costeo_Comercial.Visible = False
 
             Dim _Aplicar_Venciminetos = True
-
-            'LabelX2.Text = "Funcionario activo"
-
-            'If Not _Post_Venta Then
-
-            '    Me.Text = _Sql.Fx_Trae_Dato("TABTIDO", "NOTIDO", "TIDO = '" & _Tido & "'").ToString.Trim
-            '    Lbl_Tido.Text = Me.Text
-
-            '    If _Es_Ajuste Then
-            '        Me.Text += Space(1) & "(AJUSTE)"
-            '        Lbl_Tido.Text += Space(1) & "(AJUSTE)"
-            '        Lbl_Tido.ForeColor = Color.Yellow
-            '    End If
-
-            '    If _SubTido = "IMP" Then Me.Text += " PROVEEDOR EXTRANJERO"
-
-            'Else
-
-            '    Lbl_Tido.Text = "Post-Venta"
-
-            'End If
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Configuracion_Formatos_X_Modalidad" & vbCrLf &
                            "Where Empresa = '" & ModEmpresa_Doc & "' And Modalidad = '" & ModModalidad_Doc & "' And TipoDoc = '" & _Tido & "'"
@@ -6923,7 +6847,6 @@ Public Class Frm_Formulario_Documento
 
             Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
             Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
 
             .Cells("CantidadCalculo").Value = NuloPorNro(.Cells("Cantidad").Value, 0)
             Dim _Cantidad As Double = NuloPorNro(.Cells("CantidadCalculo").Value, 0)
@@ -14285,32 +14208,6 @@ Public Class Frm_Formulario_Documento
 
             _Ruta_Documento_Bkp = AppPath() & "\Data\" & RutEmpresa & "\BkPost\DC_En_Construccion\Modalidad " & ModModalidad_Doc & "\DC_" & _Tido & ".xml"
 
-            'If CBool(_Idmaeedo_Origen) Then
-
-            '    Dim Cerrar_Doc As New Clas_Cerrar_Documento
-
-            '    Consulta_sql = "Select * From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
-            '    Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
-
-            '    Cerrar_Doc.Fx_Abrir_Documento(_Idmaeedo_Origen, _Tbl_Origen)
-
-            'End If
-
-            'If Not IsNothing(_TblPermisos) Then
-            '    For Each _Fl As DataRow In _TblPermisos.Rows
-
-            '        Dim _PermisoIndependiente As Boolean = _Fl.Item("PermisoIndependiente")
-            '        Dim _NroRemota As String = NuloPorNro(_Fl.Item("NroRemota"), "")
-
-            '        If _PermisoIndependiente And Not String.IsNullOrEmpty(_NroRemota) Then
-            '            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Remotas Set Eliminada = 1, Observaciones = 'El documento no se grabo'" & vbCrLf &
-            '                           "Where NroRemota = '" & _NroRemota & "' And Idmaeedo = 0"
-            '            _Sql.Ej_consulta_IDU(Consulta_sql)
-            '        End If
-
-            '    Next
-            'End If
-
             _Idmaeedo_Origen = 0
             _Editar_documento = False
 
@@ -20096,7 +19993,6 @@ Public Class Frm_Formulario_Documento
 
                     Dim _ChkXDefecto = 0
 
-
                     If _Feemdo_Origen <> _Fecha_Del_Servidor Then
 
                         Dim _CriterioFechaGDVconFechaDistintaDocOrigen As Integer
@@ -20219,7 +20115,7 @@ Public Class Frm_Formulario_Documento
                 Dim _Cantidad As Double = _Fila.Item("Cantidad")
 
                 Dim _UnTrans As Integer = _Fila.Item("UDTRPR")
-                Dim _Precio As Double = _Fila.Item("Precio")
+                Dim _Precio As Double = Math.Round(_Fila.Item("Precio"), 5)
 
                 Dim _PrecioNetoUdLista As Double
                 Dim _PrecioBrutoUdLista As Double

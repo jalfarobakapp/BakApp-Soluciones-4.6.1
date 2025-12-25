@@ -1934,6 +1934,28 @@ Public Class Frm_Stmp_Listado
         Dim _Cl_Stmp As New Cl_Stmp
         _Cl_Stmp.Fx_Llenar_Encabezado(_Id)
 
+
+        Consulta_sql = $"Select Top 1 Id, Empresa, Id_Enc, Idmaeedo, Tido, Nudo, Ruta, OrdenRuta" & vbCrLf &
+                       $"From {_Global_BaseBk}Zw_WMS_RutaXDoc" & vbCrLf &
+                       $"Where Idmaeedo = {_Cl_Stmp.Zw_Stmp_Enc.Idmaeedo} And Id_Enc = 0"
+        Dim _Row_Ruta As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _ActualizarRuta As Boolean = False
+
+        If IsNothing(_Row_Ruta) Then
+            MessageBoxEx.Show(Me, "No se ha encontrado una Ruta/Camión asignad@ para este documento" & vbCrLf &
+                              "Documento: " & _Cl_Stmp.Zw_Stmp_Enc.Tido & " - " & _Cl_Stmp.Zw_Stmp_Enc.Nudo & vbCrLf & vbCrLf &
+                              "Informe de esta situación al administrador del sistema" & vbCrLf &
+                              "No se encontro registro en la tabla [Zw_WMS_RutaXDoc]", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        Else
+
+            _ActualizarRuta = True
+            _Cl_Stmp.Zw_Stmp_Enc.Ruta = _Row_Ruta.Item("Ruta")
+            _Cl_Stmp.Zw_Stmp_Enc.OrdenRuta = _Row_Ruta.Item("OrdenRuta")
+
+        End If
+
         _Cl_Stmp.Zw_Stmp_Enc.Estado = "PREPA"
         _Cl_Stmp.Zw_Stmp_Enc.Planificada = True
         _Cl_Stmp.Zw_Stmp_Enc.CodFuncionario_Pickea = Fx_BuscarFuncionario_Pickeo()
@@ -1945,6 +1967,26 @@ Public Class Frm_Stmp_Listado
             Return
         End If
 
+        If MessageBoxEx.Show(Me, "¿Desea agregar una observación al documento?", "Agregar observación",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+            Dim _Observacion As String = String.Empty
+            Dim _Aceptar As Boolean
+
+            _Aceptar = InputBox_Bk(Me, "Agregar observación al documento que va a Picking", "Observación",
+                                   _Observacion,, _Tipo_Mayus_Minus.Mayusculas, 200, True)
+
+            If Not _Aceptar Then
+                If MessageBoxEx.Show(Me, "¿Confirmar enviar documento sin observación?", "Observación",
+                                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
+                    Return
+                End If
+            End If
+
+            _Cl_Stmp.Zw_Stmp_Enc.Observacion = _Observacion
+
+        End If
+
         Dim _Mensaje As LsValiciones.Mensajes
 
         _Mensaje = _Cl_Stmp.Fx_EnviarAPerparacionPlanificarPicking
@@ -1953,6 +1995,12 @@ Public Class Frm_Stmp_Listado
 
         If Not _Mensaje.EsCorrecto Then
             Return
+        End If
+
+        If _ActualizarRuta Then
+            Consulta_sql = $"Update {_Global_BaseBk}Zw_WMS_RutaXDoc Set Id_Enc = {_Cl_Stmp.Zw_Stmp_Enc.Id}" & vbCrLf &
+                           $"Where Id = {_Row_Ruta.Item("Id")}"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
         Sb_Actualizar_Grilla()

@@ -113,6 +113,9 @@ UPDATE dbo.Tbl_Asc_02_Asociaciones Set Cant_Comprar = 0 Where Cant_Comprar < 0;
 UPDATE dbo.Tbl_Asc_02_Asociaciones Set Cant_Comprar_Sug = 0 Where Cant_Comprar_Sug < 0;
 UPDATE dbo.Tbl_Asc_02_Asociaciones Set Cant_Comprar_Sug_Red = 0 Where Cant_Comprar_Sug_Red < 0;
 
+Truncate Table dbo.Tbl_Asc_03_Totales;
+Truncate Table dbo.Tbl_Asc_04_DocUltComp;
+
 -- Totales en Tbl_Asc_03_Totales (antes INTO #Tbl_Asc_03_Totales)
 INSERT INTO dbo.Tbl_Asc_03_Totales (StockUd, StockPedidoUd, StockFacSinRecepUd, RotDiariaUd, RotMensualUd, Prom_Pond, Cant_Comprar_Sug, Cant_Comprar_Sug2)
 SELECT

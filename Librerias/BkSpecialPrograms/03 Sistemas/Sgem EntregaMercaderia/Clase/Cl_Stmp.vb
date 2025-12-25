@@ -1282,9 +1282,12 @@ Public Class Cl_Stmp
 
                 Consulta_sql = $"Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
                                $"Estado = '{ .Estado}'" &
+                               $",Ruta = '{ .Ruta}'" &
+                               $",OrdenRuta = { .OrdenRuta}" &
                                $",Planificada = {Convert.ToInt32(.Planificada)}" &
                                $",FechaPlanificacion = Getdate()" &
-                               $",CodFuncionario_Pickea = '{ .CodFuncionario_Pickea}'" & vbCrLf &
+                               $",CodFuncionario_Pickea = '{ .CodFuncionario_Pickea}'" &
+                               $",Observacion = '{ .Observacion}'" & vbCrLf &
                                $"Where Id = { .Id}"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)

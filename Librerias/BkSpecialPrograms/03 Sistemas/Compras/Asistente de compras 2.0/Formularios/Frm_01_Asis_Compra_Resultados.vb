@@ -3402,7 +3402,7 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     Sub Sb_Informacion_Fila_activa(_Fila As DataGridViewRow)
 
-        Dim _Informacion_Fila As String
+        Dim _Informacion_Fila As String = String.Empty
 
         'Dim _Ud
         'If Rdb_Ud1_Compra.Checked Then : _Ud = 1 : Else : _Ud = 2 : End If
@@ -3413,31 +3413,49 @@ Public Class Frm_01_Asis_Compra_Resultados
 
         Dim _RazonProveedor As String
 
-        Dim _Endo = Trim(NuloPorNro(_Fila.Cells("CodProveedor").Value, ""))
-        Dim _Suendo = Trim(NuloPorNro(_Fila.Cells("CodSucProveedor").Value, ""))
+        Dim _Endo As String = NuloPorNro(_Fila.Cells("CodProveedor").Value, "").ToString.Trim
+        Dim _Suendo As String = NuloPorNro(_Fila.Cells("CodSucProveedor").Value, "").ToString.Trim
 
         _RazonProveedor = Trim(_Sql.Fx_Trae_Dato("MAEEN", "NOKOEN", "KOEN = '" & _Endo & "' And SUEN = '" & _Suendo & "'"))
 
         If String.IsNullOrEmpty(_Endo) Then
             _Informacion_Fila = "SIN PROVEEDOR, " & _Descripcion
         Else
-            _Informacion_Fila = _RazonProveedor & ", Código Proveedor: [" & _CodAlternativo & "], " & _Descripcion
+            If String.IsNullOrWhiteSpace(_CodAlternativo) Then
+                _Informacion_Fila = _Endo & " - " & _Suendo & ": " & _RazonProveedor
+            Else
+                _Informacion_Fila = _Endo & " - " & _Suendo & ": " & _RazonProveedor & ", SKU Proveedor: [" & _CodAlternativo & "], " & _Descripcion
+            End If
         End If
 
         Dim _Refleo As Boolean = _Fila.Cells("Refleo").Value
         Dim _Sospecha_Baja_Rotacion As Boolean = _Fila.Cells("Sospecha_Baja_Rotacion").Value
-        Dim _IdGDD As Integer = NuloPorNro(_Fila.Cells("IdGDD").Value, 0)
 
+        Dim _ValorIdGDD = _Fila.Cells("IdGDD").Value
+        Dim _IdGDD As Integer
+        If IsDBNull(_ValorIdGDD) OrElse _ValorIdGDD Is Nothing Then
+            _IdGDD = 0
+        ElseIf TypeOf _ValorIdGDD Is String AndAlso String.IsNullOrWhiteSpace(CStr(_ValorIdGDD)) Then
+            _IdGDD = 0
+        Else
+            _IdGDD = NuloPorNro(_ValorIdGDD, 0)
+        End If
 
-        Dim CodAlternativo = Trim(_Sql.Fx_Trae_Dato("TABCODAL", "KOPRAL", "KOPR = '" & _Codigo & "' And KOEN = '" & _Endo & "'"))
-        Dim Descripcion_Alternativo = Trim(_Sql.Fx_Trae_Dato("TABCODAL", "NOKOPRAL", "KOPR = '" & _Codigo & "' And KOEN = '" & _Endo & "' And KOPRAL = '" & _CodAlternativo & "'"))
+        Dim _Kopral = Trim(_Sql.Fx_Trae_Dato("TABCODAL", "KOPRAL", "KOPR = '" & _Codigo & "' And KOEN = '" & _Endo & "'"))
+        Dim _Nokopral = Trim(_Sql.Fx_Trae_Dato("TABCODAL", "NOKOPRAL", "KOPR = '" & _Codigo & "' And KOEN = '" & _Endo & "' And KOPRAL = '" & _Kopral & "'"))
 
         Dim _Nokoen As String = Trim(_Sql.Fx_Trae_Dato("MAEEN", "NOKOEN", "KOEN = '" & _Endo & "' And SUEN = '" & _Suendo & "'"))
 
         If String.IsNullOrEmpty(_Endo) Then
             _Informacion_Fila = "SIN PROVEEDOR, " & _Descripcion
         Else
-            _Informacion_Fila = _Nokoen & ", Código Proveedor: [" & _CodAlternativo & "], " & Descripcion_Alternativo
+            _Informacion_Fila = _Nokoen & ", Código Proveedor: [" & _CodAlternativo & "], " & _Nokopral
+
+            If String.IsNullOrWhiteSpace(_Kopral) Then
+                _Informacion_Fila = _Endo & " - " & _Suendo & ": " & _RazonProveedor
+            Else
+                _Informacion_Fila = _Endo & " - " & _Suendo & ": " & _RazonProveedor & ", SKU Proveedor: [" & _Kopral & "], " & _Nokopral
+            End If
         End If
 
         If _Refleo Then
@@ -3448,7 +3466,7 @@ Public Class Frm_01_Asis_Compra_Resultados
             _Informacion_Fila += Space(1) & " ***** [PRODUCTO SOSPECHOSO DE BAJA ROTACION] ****"
         End If
 
-        If _IdGDD Then
+        If CBool(_IdGDD) Then
             _Informacion_Fila += Space(1) & " ***** [TIENE GUIA DE DESPACHO POR DEVOLUCION PENDIENTE DE NCC] ****"
         End If
 
@@ -4772,10 +4790,12 @@ Public Class Frm_01_Asis_Compra_Resultados
         Fm.Dispose()
 
         If _Proceso_Automatico_Ejecutado Then
+
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, False, (Not Modo_NVI And Not Modo_OCC))
             If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Codigo.Text)) Then Sb_Buscar_X_Codigo()
             If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Descripcion.Text)) Then Sb_Buscar_X_Descripcion()
             BtnProceso_Prov_Auto.Enabled = False
+
         End If
 
     End Sub
@@ -8651,6 +8671,10 @@ Public Class Frm_01_Asis_Compra_Resultados
                 _Condicion += "And Sospecha_Baja_Rotacion = 0" & vbCrLf
             End If
 
+            If Chk_Quitar_Bloqueados_Compra.Checked Then
+                _Condicion += "And Bloqueapr In ('V','')" & vbCrLf
+            End If
+
             Fm.Pro_Conficion_Adicional = _Condicion
             Fm.Chk_Solo_Proveedores_CodAlternativo.Enabled = False
             Fm.Rd_Costo_Lista_Proveedor.Enabled = False
@@ -8658,11 +8682,55 @@ Public Class Frm_01_Asis_Compra_Resultados
             Fm.ShowDialog(Me)
 
             If Not (Fm.Pro_RowProveedor Is Nothing) Then
+
                 _RowProveedor = Fm.Pro_RowProveedor
+
+                If _Global_Row_Configuracion_Estacion.Item("Actualizar_Lista_De_Costos_Random_Desde_Bakapp") Then
+
+                    Dim _Koen = _RowProveedor.Item("KOEN")
+                    Dim _Suen = _RowProveedor.Item("SUEN")
+
+                    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaPreCosto_Enc" & vbCrLf &
+                                   "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And Vigente = 1"
+                    Dim _RowListaPreCosto_Enc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    If IsNothing(_RowListaPreCosto_Enc) Then
+
+                        If MessageBoxEx.Show(Me, "Falta una la lista de costos vigente para el proveedor en BakApp" & vbCrLf & vbCrLf &
+                                            "¿Desde continuar sin revisar esta situación?", "Validación",
+                                                                                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
+                            If Fx_Tiene_Permiso(Me, "Comp0097") Then
+                                Return
+                            End If
+                        End If
+
+                        Return
+
+                    End If
+
+                    Dim _Id_Padre As Integer = _RowListaPreCosto_Enc.Item("Id")
+
+                    If Not Fx_Actualizar_Lista_De_Costos_Random_Desde_Bakapp(Me, _Koen, _Suen, True) Then
+                        MessageBoxEx.Show(Me, "No es posible realizar el proceso" & vbCrLf & vbCrLf &
+                           "Para poder actualizar la información de la lista de costos del proveedor debe hacer lo siguiente:" & vbCrLf & vbCrLf &
+                           "1.- Ir al menú de inicio" & vbCrLf &
+                           "2.- Opción [PRECIOS Y COSTOS]" & vbCrLf &
+                           "3.- Opción [LISTA DE PROVEEDORES]" & vbCrLf &
+                           "4.- Buscar al proveedor" & vbCrLf &
+                           "5.- Realizar la gestión de mantenimiento de lista de costos de ese proveedor" & vbCrLf &
+                           " * Dejar una lista de costos vigente" & vbCrLf &
+                           " * Fecha de vencimiento mayor a la fecha actual", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                        Return
+                    End If
+
+                End If
+
                 Sb_Grilla_Actualizar_Informe(Fm_Hijo.Grilla)
                 Sb_Grilla_Marcar(Fm_Hijo.Grilla, False)
+
                 Fm_Hijo.Btn_Quitar_Filtro_Proveedor.Enabled = True
                 Btn_Quitar_Filtro_Proveedor_Ribon.Enabled = True
+
             End If
 
             Fm_Hijo.Chk_Ver_Doc_Solo_Proveedor.Enabled = Not (Fm.Pro_RowProveedor Is Nothing)

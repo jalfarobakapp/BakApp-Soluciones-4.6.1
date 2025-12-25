@@ -953,9 +953,9 @@ Public Class Cl_FacAuto_NVV
 
         Try
 
-            If _TidoDocEmitir <> "GDV" And _TidoDocEmitir <> "FCV" And _TidoDocEmitir <> "BLV" Then
+            If _TidoDocEmitir <> "GDV" And _TidoDocEmitir <> "FCV" And _TidoDocEmitir <> "BLV" And _TidoDocEmitir <> "GTI" Then
                 _Mensaje.Mensaje = "Error"
-                Throw New System.Exception("El Tido Destino esta vacío o no corresponde: (" & _TidoDocEmitir & "), solo puede ser: BLV, FCV y GDV")
+                Throw New System.Exception("El Tido Destino esta vacío o no corresponde: (" & _TidoDocEmitir & "), solo puede ser: BLV, FCV, GDV o GTI")
             End If
 
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -1073,7 +1073,7 @@ Public Class Cl_FacAuto_NVV
 
                         Fm_Post.ModEmpresa_Doc = _Empresa
                         Fm_Post.ModModalidad_Doc = _Modalidad
-                        'If Fm_Post.MensajeRevFolio.EsCorrecto Then
+
                         Dim _Msj_Limpiar As LsValiciones.Mensajes
 
                         _Msj_Limpiar = Fm_Post.Fx_Limpiar(_Modalidad)
@@ -1097,7 +1097,7 @@ Public Class Cl_FacAuto_NVV
 
                         End If
 
-                        If Not _Msj_GrabarDoc.EsCorrecto Then 'Not CBool(_New_Idmaeedo) Then
+                        If Not _Msj_GrabarDoc.EsCorrecto Then
 
                             _Mensaje.Mensaje = _Msj_GrabarDoc.Mensaje.Replace(vbCrLf, ". ")
                             _Mensaje.Mensaje = "No fue posible realizar la grabación de la Factura. " & _Mensaje.Mensaje

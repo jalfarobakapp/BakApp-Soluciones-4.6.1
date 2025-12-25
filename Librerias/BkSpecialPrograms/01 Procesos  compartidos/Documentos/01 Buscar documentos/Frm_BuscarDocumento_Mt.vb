@@ -133,6 +133,8 @@ Public Class Frm_BuscarDocumento_Mt
         End Set
     End Property
 
+    Public Property SobreStock As Boolean
+
     Public Sub New()
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -223,6 +225,12 @@ Public Class Frm_BuscarDocumento_Mt
 
         Btn_Firmar_Documento.Visible = False
 
+        If SobreStock Then
+            Btn_ConvertirCOVenNVV.Visible = True
+            Btn_Enviar_Correos_Masivos.Visible = False
+        End If
+
+
     End Sub
 
     Public Sub Sb_Llenar_Grilla(Sql_Query As String)
@@ -252,7 +260,7 @@ Public Class Frm_BuscarDocumento_Mt
             If HabilitarNVVParaFacturar Then .Columns("Chk").HeaderText = "Hab"
 
             .Columns("Chk").Width = 30
-            .Columns("Chk").Visible = (_Enviar_Correos_Masivamente Or _Seleccion_Multiple Or Abrir_Cerrar_Documentos_Compromiso Or HabilitarNVVParaFacturar)
+            .Columns("Chk").Visible = (SobreStock OrElse _Enviar_Correos_Masivamente OrElse _Seleccion_Multiple OrElse Abrir_Cerrar_Documentos_Compromiso OrElse HabilitarNVVParaFacturar)
             .Columns("Chk").ReadOnly = False
             .Columns("Chk").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -288,15 +296,21 @@ Public Class Frm_BuscarDocumento_Mt
             _DisplayIndex += 1
 
             .Columns("RAZON").HeaderText = "Razón Social"
-            .Columns("RAZON").Width = IIf(.Columns("Chk").Visible, 300, 330)
+            .Columns("RAZON").Width = IIf(.Columns("Chk").Visible, 270, 300)
             .Columns("RAZON").Visible = True
             .Columns("RAZON").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("MODO").HeaderText = "MD"
+            .Columns("MODO").Width = 30
+            .Columns("MODO").Visible = True
+            .Columns("MODO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("VABRDO").Width = 80
             .Columns("VABRDO").HeaderText = "Monto"
             .Columns("VABRDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("VABRDO").DefaultCellStyle.Format = "$ ###,##0.##"
+            .Columns("VABRDO").DefaultCellStyle.Format = "###,##0.##"
             .Columns("VABRDO").Visible = True
             .Columns("VABRDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -1963,6 +1977,107 @@ Public Class Frm_BuscarDocumento_Mt
                                    2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
     End Sub
 
+
+    Sub Sb_Transformar_COCSobreStocnEnNVV()
+
+        Dim _Registros_Marcados = 0
+        Dim _Cancelar = False
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            _Fila.Cells("Chk").Value = NuloPorNro(_Fila.Cells("Chk").Value, False)
+
+            If _Fila.Cells("Chk").Value Then
+                _Registros_Marcados += 1
+            End If
+
+        Next
+
+        If _Registros_Marcados = 0 Then
+
+            MessageBoxEx.Show(Me, "No hay ningún registro seleccionado", "Habilitar notas de venta para facturar.",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+
+        End If
+
+        Dim _Habilitado = 0
+        Dim _Contador = 1
+
+        Sb_Habilitar_Desabilitar_Controles(False)
+
+        Barra_Progreso.Maximum = 100
+        Barra_Progreso.Value = 0
+        Barra_Progreso.Visible = True
+
+        Dim _HayRegistrosSinHabilitar As Boolean
+
+        For Each _Fila As DataRow In _Tbl_Documentos.Rows
+
+            If _Fila.Item("Chk") Then
+
+                Dim _Idmaeedo As Integer = _Fila.Item("IDMAEEDO")
+                Dim _Empresa As String = _Fila.Item("EMPRESA")
+
+
+                If _Fila.Item("Chk") Then
+
+                    Dim _Mensaje As New LsValiciones.Mensajes
+
+                    _Mensaje = Fx_Crear_NVV_Desde_COVSobreStock_Automaticamente(Me,
+                                                                                "NVV",
+                                                                                _Idmaeedo,
+                                                                                DateTime.Now,
+                                                                                Mod_Empresa,
+                                                                                Mod_Modalidad)
+
+                    _Habilitado += 1
+
+                End If
+
+                Barra_Progreso.Value = ((_Contador * 100) / _Registros_Marcados)
+                _Contador += 1
+
+                Lbl_Status.Text = "(" & Barra_Progreso.Value & "%) - " & Lbl_Status.Text
+
+                If _Cancelar Then
+                    Lbl_Status.Text = "Status..."
+                    Barra_Progreso.Visible = Not _Cancelar
+                End If
+
+                Application.DoEvents()
+
+                If _Cancelar Then
+                    Sb_Habilitar_Desabilitar_Controles(True)
+                    Lbl_Status.Text = "Status..."
+                    Me.Enabled = True
+                    Me.Refresh()
+                    Return
+                End If
+
+            End If
+
+        Next
+
+        Barra_Progreso.Value = 0
+        Barra_Progreso.Visible = False
+        Me.Refresh()
+
+        Sb_Habilitar_Desabilitar_Controles(True)
+
+        If CBool(_Habilitado) Then
+            MessageBoxEx.Show(Me, "Documento(s) habilitado(s) " & _Habilitado, "Habilitar documentos",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+            If _HayRegistrosSinHabilitar Then
+                Sb_Actualizar()
+            Else
+                Me.Close()
+            End If
+        End If
+
+    End Sub
+
+
     Function Fx_Crear_NVV_Desde_COVSobreStock_Automaticamente(_Formulario As Form,
                                                               _TidoDocEmitir As String,
                                                               _Idmaeedo_Origen As Integer,
@@ -2042,34 +2157,21 @@ Public Class Frm_BuscarDocumento_Mt
                         _CampoPrecio = "PPPRBR"
                     End If
 
-                    Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
-                                   vbCrLf &
-                                   "Select Distinct Ddo.*," & vbCrLf &
-                                   "Case TIPR" & vbCrLf &
-                                   "When 'SSN' Then Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End" & vbCrLf &
-                                   "Else Case PRCT" & vbCrLf &
-                                   "When 0 Then Case When UDTRPR = 1 Then Det.Caprco1_Real Else Det.Caprco2_Real End" & vbCrLf &
-                                   "Else Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End" & vbCrLf &
-                                   "End" & vbCrLf &
-                                   "End As 'Cantidad'," & vbCrLf &
-                                   "Case PRCT When 0 Then Det.Caprco1_Real Else CAPRCO1-CAPREX1 End As 'CantUd1_Pickea'," & vbCrLf &
-                                   "Case PRCT When 0 Then Det.Caprco2_Real Else CAPRCO1-CAPREX1 End As 'CantUd2_Pickea'," & vbCrLf &
-                                   "Cast(1 As Bit) As DesdePickeo," & vbCrLf &
-                                   "CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori'," & vbCrLf &
-                                   "PPPRNE AS 'Precio'," & vbCrLf &
-                                   "0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta," & vbCrLf &
-                                   "Isnull(Det.RtuVariable,0) As 'RtuVariable'" & vbCrLf &
-                                   "From MAEDDO Ddo With ( NOLOCK )" & vbCrLf &
-                                   "Left Join " & _Global_BaseBk & "Zw_Stmp_Det Det On Ddo.IDMAEDDO = Det.Idmaeddo" & vbCrLf &
-                                   "Where IDMAEEDO = " & _Idmaeedo_Origen & " AND ( ESLIDO<>'C' OR ESFALI='I' ) --AND TICT = ''" & vbCrLf &
-                                   "Order by IDMAEEDO,IDMAEDDO " & vbCrLf &
-                                   vbCrLf &
-                                   "Select * From MAEIMLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
-                                   vbCrLf &
-                                   "Select * From MAEDTLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
-                                   vbCrLf &
-                                   "Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
+                    Consulta_Sql = $"
+Select * From MAEEDO Where IDMAEEDO = {_Idmaeedo_Origen}
 
+Select Ddo.*,Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
+CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori',
+Case WHEN UDTRPR = 1 Then {_CampoPrecio}*Edo.TAMODO Else ({_CampoPrecio}*RLUDPR)*Edo.TAMODO End AS 'Precio',
+0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
+From MAEDDO Ddo With ( NOLOCK )
+Left Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
+Where Ddo.IDMAEEDO = {_Idmaeedo_Origen} AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''
+Order by IDMAEEDO,IDMAEDDO 
+
+Select * From MAEIMLI Where IDMAEEDO = {_Idmaeedo_Origen}
+Select * From MAEDTLI Where IDMAEEDO = {_Idmaeedo_Origen}
+Select TOP 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}"
 
                     Dim _Msj_GrabarDoc As New LsValiciones.Mensajes
 
@@ -2080,10 +2182,30 @@ Public Class Frm_BuscarDocumento_Mt
                         Throw New System.Exception(_Sql.Pro_Error)
                     End If
 
+                    '-- MODO = '$',TIMODO = 'N, TAMODO = DolarHoy'
+                    '-- MOPPPR = '$', TIMOPPPR = 'E', TAMOPPPR = DolarHoy
+
+                    Consulta_Sql = "Select TOP 1 * From TABMO Where KOMO = 'US$'"
+                    Dim _RowMoneda_Doc As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+                    Dim _Moneda As String = _RowMoneda_Doc.Item("KOMO").ToString.Trim
+                    Dim _Tasadorig_Doc As Double = _RowMoneda_Doc.Item("VAMO")
+                    Dim _Tipo_Moneda As String = _RowMoneda_Doc.Item("TIMO")
+
+                    _Ds_Maeedo_Origen.Tables(0).Rows(0).Item("MODO") = "$"
+                    _Ds_Maeedo_Origen.Tables(0).Rows(0).Item("TIMODO") = "N"
+                    _Ds_Maeedo_Origen.Tables(0).Rows(0).Item("TAMODO") = _Tasadorig_Doc
+
+                    For Each _Fila_Dd As DataRow In _Ds_Maeedo_Origen.Tables(1).Rows
+                        _Fila_Dd.Item("MOPPPR") = "$"
+                        _Fila_Dd.Item("TIMOPPPR") = "N"
+                        _Fila_Dd.Item("TAMOPPPR") = 1
+                    Next
+
                     Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
                                                                 csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
 
-
+                    Fm_Post.SobreStock = True
                     Fm_Post.ModEmpresa_Doc = _Empresa
                     Fm_Post.ModModalidad_Doc = _Modalidad
                     Dim _Msj_Limpiar As LsValiciones.Mensajes
@@ -2092,6 +2214,7 @@ Public Class Frm_BuscarDocumento_Mt
 
                     If _Msj_Limpiar.EsCorrecto Then
 
+                        Fm_Post.DecimalesGl = 0
                         Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
 
                         _Msj_GrabarDoc = Fm_Post.Fx_Grabar_Documento(False,
@@ -2155,4 +2278,7 @@ Public Class Frm_BuscarDocumento_Mt
 
     End Function
 
+    Private Sub Btn_ConvertirCOVenNVV_Click(sender As Object, e As EventArgs) Handles Btn_ConvertirCOVenNVV.Click
+        Sb_Transformar_COCSobreStocnEnNVV()
+    End Sub
 End Class

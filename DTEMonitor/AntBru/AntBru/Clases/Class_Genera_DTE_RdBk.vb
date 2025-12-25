@@ -1500,8 +1500,8 @@ Public Class Class_Genera_DTE_RdBk
                         "<QtyItem>" & _QtyItem_Str & "</QtyItem>" & vbCrLf &
                         "<UnmdItem>" & _UnmdItem & "</UnmdItem>" & vbCrLf &
                         "<PrcItem>" & _PrcItem & "</PrcItem>" &
-                        _CodImpAdic &
                         _Str_DescuentoMonto & vbCrLf &
+                        _CodImpAdic &
                         "<MontoItem>" & _MontoItem & "</MontoItem>" & vbCrLf &
                         "</Detalle>"
 

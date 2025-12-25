@@ -74,18 +74,6 @@ Public Class Modulo_Programas_Especiales
 
     End Sub
 
-    'Private Sub BtnCreditoNegocios_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCreditoNegocios.Click
-
-    '    If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Scn00001") Then
-
-    '        Dim NewPanel As CreditosNegociosMnu = Nothing
-    '        NewPanel = New CreditosNegociosMnu(_Fm_Menu_Padre)
-    '        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
-
-    '    End If
-
-    'End Sub
-
     Private Sub BtnCorreos_SMTP_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCorreos_SMTP.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Mail0001") Then
@@ -137,102 +125,50 @@ Public Class Modulo_Programas_Especiales
 
     Private Sub BtnCrearFormatos_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCrearFormatos.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Fmto0001") Then
-
-            Dim Fm As New Frm_ImpresionDoc_Lista
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Fmto0001") Then
+            Return
         End If
+
+        Dim Fm As New Frm_ImpresionDoc_Lista
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
     Private Sub Btn_DTE_Respuestas_XML_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_DTE_Respuestas_XML.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Mail0005") Then
-
-            Dim Fm As New Frm_Recibir_Correos_DTE
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Mail0005") Then
+            Return
         End If
+
+        Dim Fm As New Frm_Recibir_Correos_DTE
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
     Private Sub Btn_Precios_PrestaShop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Precios_PrestaShop.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pshop001") Then
-
-            Dim NewPanel As Modulo_Prestashop = Nothing
-            NewPanel = New Modulo_Prestashop(_Fm_Menu_Padre)
-            _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pshop001") Then
+            Return
         End If
+
+        Dim NewPanel As Modulo_Prestashop = Nothing
+        NewPanel = New Modulo_Prestashop(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
     End Sub
 
 
     Private Sub Btn_Huella_Click(sender As Object, e As EventArgs) Handles Btn_Huella.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Espr0031") Then
-
-            'Dim NewPanel As Modulo_Huellas = Nothing
-            'NewPanel = New Modulo_Huellas(_Fm_Menu_Padre)
-            '_Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
-
-            Dim Fm As New Frm_Huellas_Menu
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Espr0031") Then
+            Return
         End If
 
-        'Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
-        'Dim Consulta_Sql As String
-
-
-
-        'Return
-
-        'Dim _Verificado As Boolean
-        'Dim _Registrado As Boolean
-
-        'Dim _Msg = MessageBoxEx.Show(Me, "(YES) = Registrar" & vbCrLf &
-        '                             "(NO) = Verificar", "Lector de huellas", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
-
-        'Dim Fm As Frm_Huella_Identificar
-        'If _Msg = DialogResult.Yes Then
-        '    _Huella = String.Empty
-        '    Fm = New Frm_Huella_Identificar(_Fm_Menu_Padre, _Huella, False, False, Frm_Huella_Identificar.Enum_Accion.Registrar)
-        'ElseIf _Msg = DialogResult.No Then
-        '    If Not String.IsNullOrEmpty(_Huella) Then
-        '        Fm = New Frm_Huella_Identificar(_Fm_Menu_Padre, _Huella, False, False, Frm_Huella_Identificar.Enum_Accion.Verificar)
-        '    Else
-        '        MessageBoxEx.Show(Me, "Debe registrar una huella", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        '        Return
-        '    End If
-        'Else
-        '    Return
-        'End If
-        ''Dim Fm As New Frm_Huella_Identificar(_Huella, False, False, Frm_Huella_Identificar.Enum_Accion.Registrar)
-        'Fm.ShowDialog(Me)
-        '_Verificado = Fm.Pro_Verificado
-        '_Registrado = Fm.Pro_Registrado
-        'If _Registrado Then _Huella = Fm.Pro_Huella
-        'Fm.Dispose()
-
-        'If _Registrado Then
-        '    Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Usuarios_Huellas Where Funcionario = '" & FUNCIONARIO & "'" & vbCrLf &
-        '                   "Insert Into " & _Global_BaseBk & "Zw_Usuarios_Huellas (Funcionario,Huella) Values ('" & FUNCIONARIO & "','" & _Huella & "')"
-        '    _Sql.Ej_consulta_IDU(Consulta_Sql)
-        '    MessageBox.Show(Me, "Huella registrada correctamente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        'End If
-        'If _Verificado Then
-        '    MessageBox.Show(Me, "La huella es correcta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        'End If
-
-        ''If _Registrado Then
-        ''MessageBoxEx.Show(Me, "Registro guardado correctamente", "Lector de huella", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        ''End If
+        Dim Fm As New Frm_Huellas_Menu
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
@@ -261,27 +197,37 @@ Public Class Modulo_Programas_Especiales
 
     Private Sub Btn_Cierre_Reactivacion_Documentos_Click(sender As Object, e As EventArgs) Handles Btn_Cierre_Reactivacion_Documentos.Click
 
-        If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Doc00011") Then
-
-            Dim _Fm As New Frm_BusquedaDocumento_Filtro(True)
-            _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "NVV", "Where TIDO In ('COV','NVI','NVV','OCC')")
-            _Fm.Rdb_Estado_Todas.Enabled = False
-            _Fm.Rdb_Estado_Vigente.Checked = True
-            _Fm.Abrir_Cerrar_Documentos_Compromiso = True
-            _Fm.ShowDialog(_Fm_Menu_Padre)
-            _Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Doc00011") Then
+            Return
         End If
+
+        Dim _Fm As New Frm_BusquedaDocumento_Filtro(True)
+        _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "NVV", "Where TIDO In ('COV','NVI','NVV','OCC')")
+        _Fm.Rdb_Estado_Todas.Enabled = False
+        _Fm.Rdb_Estado_Vigente.Checked = True
+        _Fm.Abrir_Cerrar_Documentos_Compromiso = True
+        _Fm.ShowDialog(_Fm_Menu_Padre)
+        _Fm.Dispose()
 
     End Sub
 
     Private Sub Btn_Habilitar_Nvv_Para_Facturar_Click(sender As Object, e As EventArgs) Handles Btn_Habilitar_Nvv_Para_Facturar.Click
 
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
         Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+        Dim _LasNVVDebenSerHabilitadasParaFacturarCP As Boolean = False
 
         If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
             _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
             _LasNVVDebenSerHabilitadasParaFacturar = True
+        End If
+
+        If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "LasNVVDebenSerHabilitadasParaFacturarCP") Then
+            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturarCP") OrElse
+            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturarCP") Then
+                _LasNVVDebenSerHabilitadasParaFacturarCP = True
+            End If
         End If
 
         If Not _LasNVVDebenSerHabilitadasParaFacturar Then
@@ -291,13 +237,23 @@ Public Class Modulo_Programas_Especiales
             Return
         End If
 
+        If _LasNVVDebenSerHabilitadasParaFacturarCP Then
+            If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Doc00166") Then
+                Return
+            End If
+        End If
+
         Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
         _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "NVV", "Where TIDO = 'NVV'")
         _Fm.Rdb_Estado_Todas.Enabled = False
         _Fm.Rdb_Estado_Vigente.Checked = True
         _Fm.Rdb_Estado_Cerrado.Enabled = False
         _Fm.HabilitarNVVParaFacturar = True
-        _Fm.Rdb_Funcionarios_Uno.Checked = True
+
+        If Not _LasNVVDebenSerHabilitadasParaFacturarCP Then
+            _Fm.Rdb_Funcionarios_Uno.Checked = True
+        End If
+
         _Fm.Rdb_FEmision_EmitidosEntre.Checked = True
         _Fm.Chk_Mostrar_Vales_Transitorios.Checked = False
         _Fm.Chk_Mostrar_Vales_Transitorios.Enabled = False

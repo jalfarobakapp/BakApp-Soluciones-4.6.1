@@ -6199,7 +6199,10 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Function Fx_Actualizar_Lista_De_Costos_Random_Desde_Bakapp(_Formulario As Form, _Koen As String, _Suen As String) As Boolean
+    Function Fx_Actualizar_Lista_De_Costos_Random_Desde_Bakapp(_Formulario As Form,
+                                                               _Koen As String,
+                                                               _Suen As String,
+                                                               Optional _SiempreActualizaListaDeCostos As Boolean = False) As Boolean
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -6232,6 +6235,7 @@ Public Module Crear_Documentos_Desde_Otro
         If _FechaActual < _FechaVigenciaDesde Or _FechaActual > _FechaVigenciaHasta Then
 
             Dim _MsgError As String
+            Dim _Sigue As Boolean = False
 
             If _FechaActual < _FechaVigenciaDesde Then
                 _MsgError = "La <fecha desde> de la lista vigente es mayor a la fecha:" & _FechaActual
@@ -6246,15 +6250,19 @@ Public Module Crear_Documentos_Desde_Otro
                                 "Fecha vigencia desde :" & _FechaVigenciaDesde & " hasta: " & _FechaVigenciaHasta & vbCrLf & vbCrLf &
                                 "¿Desde continuar sin revisar esta situación?", "Validación", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
                 If Fx_Tiene_Permiso(_Formulario, "Comp0098") Then
-                    Return True
+                    If _SiempreActualizaListaDeCostos Then
+                        _Sigue = True
+                    Else
+                        Return True
+                    End If
                 End If
             End If
 
-            Return False
+            If Not _Sigue Then Return False
 
         End If
 
-        Dim _ErrorLPC As String = Fx_ActualizarListaRandomDesdeBakApp(_Koen, _Suen, _Id_Padre)
+            Dim _ErrorLPC As String = Fx_ActualizarListaRandomDesdeBakApp(_Koen, _Suen, _Id_Padre)
 
         If String.IsNullOrEmpty(_ErrorLPC) Then
             MessageBoxEx.Show(_Formulario, "Costos levantados correctamente en lista " & _Lista, "Actualización de costos del proveedor",

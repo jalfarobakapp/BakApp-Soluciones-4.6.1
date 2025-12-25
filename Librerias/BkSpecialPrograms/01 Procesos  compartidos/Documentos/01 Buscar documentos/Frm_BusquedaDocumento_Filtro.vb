@@ -233,6 +233,7 @@ Public Class Frm_BusquedaDocumento_Filtro
     End Property
 
     Public Property HabilitarNVVParaFacturar As Boolean
+    Public Property SobreStock As Boolean
 
 #End Region
 
@@ -785,6 +786,14 @@ Buscar:
             _Campo_SUENDOFI = String.Empty
         End If
 
+        If SobreStock Then
+
+            _Usar_Otro_Filtros = True
+            _Sql_Filtro_Otro_Filtro = $"And Edo.IDMAEEDO In (Select Idmaeedo From {_Global_BaseBk}Zw_Docu_Ent WITH ( NOLOCK ) " &
+                                       "Where Tido = 'COV' And SobreStock = 1)" & vbCrLf
+
+        End If
+
 
         Consulta_sql = My.Resources._24_Recursos.SQLQuery_Buscar_Docmuento
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
@@ -799,7 +808,6 @@ Buscar:
         Consulta_sql = Replace(Consulta_sql, "#SucursalDocumento#", _Sql_Filtro_Sucursal_Doc)
         Consulta_sql = Replace(Consulta_sql, "#Orden#", _Sql_Orden)
         Consulta_sql = Replace(Consulta_sql, "#Observaciones#", _Filtro_Observaciones)
-
 
         Consulta_sql = Replace(Consulta_sql, "#Left_Join_MAEEN_ENDOFI_SUENDOFI#", _Left_Join_MAEEN_ENDOFI_SUENDOFI)
         Consulta_sql = Replace(Consulta_sql, "#Campo_SUENDOFI#", _Campo_SUENDOFI)
@@ -904,8 +912,9 @@ Buscar:
             Fm.Abrir_Documentos = Rdb_Estado_Cerrado.Checked
             Fm.Cerrar_Documentos = Rdb_Estado_Vigente.Checked
             Fm.HabilitarNVVParaFacturar = HabilitarNVVParaFacturar
+            Fm.SobreStock = SobreStock
 
-            If HabilitarNVVParaFacturar Then
+            If HabilitarNVVParaFacturar OrElse SobreStock Then
                 Fm.Pro_Abrir_Seleccionado = True
             End If
 
