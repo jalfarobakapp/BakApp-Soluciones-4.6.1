@@ -66,7 +66,8 @@ Public Class Demonio
 
             Cadena_ConexionSQL_Server = Environment.GetCommandLineArgs(1)
             'MessageBoxEx.Show(Me, Cadena_ConexionSQL_Server, "Cadena", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            Cadena_ConexionSQL_Server = Replace(Cadena_ConexionSQL_Server, "@", " ")
+            'Cadena_ConexionSQL_Server = Replace(Cadena_ConexionSQL_Server, "@", " ")
+            Cadena_ConexionSQL_Server = Replace(Cadena_ConexionSQL_Server, "@@", " ")
             'MessageBoxEx.Show(Me, Cadena_ConexionSQL_Server, "Cadena", MessageBoxButtons.OK, MessageBoxIcon.Information)
             '_Ejecutar_Demonio = True
             '_Ejecutar_Demonio_DTE = True

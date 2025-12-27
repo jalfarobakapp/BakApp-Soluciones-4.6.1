@@ -143,6 +143,7 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [Pickear_NVITodas]                                      [bit]           NOT NULL DEFAULT (0),
 [LasNVVDebenSerHabilitadasParaFacturarCP]               [bit]           NOT NULL DEFAULT (0),
 [Pickear_CrearGuiasAutoCompletas]                       [bit]           NOT NULL DEFAULT (0),
+[AgregarTransporteNVIparaGTI]                           [bit]           NOT NULL DEFAULT (0),
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Empresa] ASC,

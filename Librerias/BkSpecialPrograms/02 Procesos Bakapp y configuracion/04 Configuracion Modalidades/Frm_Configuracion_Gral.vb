@@ -261,6 +261,8 @@ Public Class Frm_Configuracion_Gral
             Chk_LasNVVDebenSerHabilitadasParaFacturarCP.Checked = .Item("LasNVVDebenSerHabilitadasParaFacturarCP")
             Chk_Pickear_CrearGuiasAutoCompletas.Checked = .Item("Pickear_CrearGuiasAutoCompletas")
 
+            Chk_AgregarTransporteNVIparaGTI.Checked = .Item("AgregarTransporteNVIparaGTI")
+
         End With
 
         Chk_VendeUD2DesacUD1soloRTUD.Enabled = _Modalidad_General
@@ -600,6 +602,7 @@ Public Class Frm_Configuracion_Gral
                        ",Pickear_NVITodas = " & Convert.ToInt32(Chk_Pickear_NVITodas.Checked) & vbCrLf &
                        ",LasNVVDebenSerHabilitadasParaFacturarCP = " & Convert.ToInt32(Chk_LasNVVDebenSerHabilitadasParaFacturarCP.Checked) & vbCrLf &
                        ",Pickear_CrearGuiasAutoCompletas = " & Convert.ToInt32(Chk_Pickear_CrearGuiasAutoCompletas.Checked) & vbCrLf &
+                       ",AgregarTransporteNVIparaGTI = " & Convert.ToInt32(Chk_AgregarTransporteNVIparaGTI.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

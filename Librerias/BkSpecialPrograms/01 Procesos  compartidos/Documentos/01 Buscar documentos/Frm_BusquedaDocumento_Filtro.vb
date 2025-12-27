@@ -1258,14 +1258,105 @@ Buscar:
 
     Private Sub Txt_Funcionarios_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Funcionarios.ButtonCustomClick
 
+        Dim _Sql_Filtro_Condicion_Extra As String = String.Empty
+
+        If Chk_MostrarSoloDocClientesDelVendedor.Checked Then
+
+            Dim _Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+            Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru = '" & FUNCIONARIO & "'")
+
+            If String.IsNullOrEmpty(_Kogru) Then
+                _Sql_Filtro_Condicion_Extra += vbCrLf & " And KOFU = '" & FUNCIONARIO & "'"
+            Else
+
+                If Not _Kogru.Contains("'") Then
+                    _Kogru = "'" & _Kogru & "'"
+                End If
+
+                If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+                    If String.IsNullOrEmpty(_Kogru) Then
+                        _Kogru = _Kofu_Kogru
+                    Else
+                        _Kogru += "," & _Kofu_Kogru
+                    End If
+                End If
+
+                Consulta_sql = "Select KOFU From TABFUGD Where KOGRU In (" & _Kogru & ")" & vbCrLf &
+                               "Union Select '" & FUNCIONARIO & "' As KOFU"
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                Dim _Fl_Entidades = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")
+                _Fl_Entidades = "And KOFU In " & _Fl_Entidades
+
+                _Sql_Filtro_Condicion_Extra += vbCrLf & _Fl_Entidades
+
+            End If
+
+        End If
+
+
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 
         If _Filtrar.Fx_Filtrar(Nothing,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, "", False, False, True) Then
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra, False, False, True) Then
 
             Dim _Fl As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
             Txt_Funcionarios.Tag = _Fl.Item("Codigo")
             Txt_Funcionarios.Text = _Fl.Item("Codigo") & " - " & _Fl.Item("Descripcion")
+
+        End If
+
+    End Sub
+
+    Private Sub Rdb_Funcionarios_Algunos_CheckedChanged(sender As Object, e As EventArgs) Handles Rdb_Funcionarios_Algunos.CheckedChanged
+
+        If Not Rdb_Funcionarios_Algunos.Checked Then
+            Return
+        End If
+
+        Dim _Sql_Filtro_Condicion_Extra As String = String.Empty
+
+        If Chk_MostrarSoloDocClientesDelVendedor.Checked Then
+
+            Dim _Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
+            Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru = '" & FUNCIONARIO & "'")
+
+            If String.IsNullOrEmpty(_Kogru) Then
+                _Sql_Filtro_Condicion_Extra += vbCrLf & " And KOFU = '" & FUNCIONARIO & "'"
+            Else
+
+                If Not _Kogru.Contains("'") Then
+                    _Kogru = "'" & _Kogru & "'"
+                End If
+
+                If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+                    If String.IsNullOrEmpty(_Kogru) Then
+                        _Kogru = _Kofu_Kogru
+                    Else
+                        _Kogru += "," & _Kofu_Kogru
+                    End If
+                End If
+
+                Consulta_sql = "Select KOFU From TABFUGD Where KOGRU In (" & _Kogru & ")" & vbCrLf &
+                               "Union Select '" & FUNCIONARIO & "' As KOFU"
+                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                Dim _Fl_Entidades = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")
+                _Fl_Entidades = "And KOFU In " & _Fl_Entidades
+
+                _Sql_Filtro_Condicion_Extra += vbCrLf & _Fl_Entidades
+
+            End If
+
+        End If
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(_Tbl_Filtro_Funcionarios,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
+                               False, False) Then
+
+            _Tbl_Filtro_Funcionarios = _Filtrar.Pro_Tbl_Filtro
 
         End If
 

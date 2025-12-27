@@ -1468,8 +1468,11 @@ Public Class Frm_Demonio_DTEMonitor
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
+        'Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Firmar" & vbCrLf &
+        '               "Where Id = 20936"
+
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_DTE_Firmar" & vbCrLf &
-                       "Where Id = 20936"
+                       "Where Firmar = 1 And AmbienteCertificacion = " & _AmbienteCertificacion
 
         Dim _RowFirmar As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 

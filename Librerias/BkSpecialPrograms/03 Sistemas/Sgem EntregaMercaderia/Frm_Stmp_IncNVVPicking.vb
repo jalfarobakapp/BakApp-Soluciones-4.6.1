@@ -48,9 +48,6 @@ Public Class Frm_Stmp_IncNVVPicking
         Dtp_BuscaXFechaEmision.Value = #1/1/0001 12:00:00 AM#
         Dtp_BuscaXFechaDespacho.Value = #1/1/0001 12:00:00 AM#
 
-        Sb_Actualizar_Grilla()
-        Sb_Color_Botones_Barra(Bar1)
-
         Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
         Me.ActiveControl = Txt_BuscaXNudoNVV
@@ -63,6 +60,7 @@ Public Class Frm_Stmp_IncNVVPicking
         If Tido = "NVV" Then
             Chk_FacturarTodo.Enabled = (_Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas") Or
                                         _Global_Row_Configuracion_Estacion.Item("Pickear_FacturarAutoCompletas"))
+            Chk_FacturarTodo.Checked = Chk_FacturarTodo.Enabled
             Chk_FactConFDespVencida.Text = "Facturar notas de venta con fecha de despacho vencida"
             Chk_FacturarTodo.Text = "Facturar todo"
             Rdb_FechaFacFechaManual.Text = "Fecha de facturación"
@@ -72,12 +70,15 @@ Public Class Frm_Stmp_IncNVVPicking
         If Tido = "NVI" Then
             Chk_FacturarTodo.Enabled = (_Global_Row_Configuracion_General.Item("Pickear_CrearGuiasAutoCompletas") Or
                                         _Global_Row_Configuracion_Estacion.Item("Pickear_CrearGuiasAutoCompletas"))
+            Chk_FacturarTodo.Checked = Chk_FacturarTodo.Enabled
             Chk_FactConFDespVencida.Text = "Crear Guías de Traslado con fecha de despacho vencida"
             Chk_FacturarTodo.Text = "Guías a todo"
             Chk_Pagar_Documentos.Enabled = False
             Rdb_FechaFacFechaManual.Text = "F. de Guía de Traslado"
             Rdb_FechaFacFechaDespachoNVV.Text = "F. de Guía de Traslado, fecha de despacho de las NVI."
         End If
+
+        Sb_Actualizar_Grilla()
 
     End Sub
 
@@ -126,9 +127,10 @@ Public Class Frm_Stmp_IncNVVPicking
 
         ' DEBO ENLAZAR LA TABLA Zw_Docu_Det a esta consulta para poner la RtuVariale por productos para las CARNES...
 
-        Dim _Pickear_FacturarAutoCompletas As Integer = Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas"))
+        Dim _Pickear_FacturarAutoCompletas As Boolean = (_Global_Row_Configuracion_General.Item("Pickear_CrearGuiasAutoCompletas") Or
+                                                         _Global_Row_Configuracion_Estacion.Item("Pickear_CrearGuiasAutoCompletas"))
 
-        Consulta_sql = "Select Cast(0 As Bit) As EnvPickeo,Cast(" & _Pickear_FacturarAutoCompletas & " As Bit) As Facturar,Edo.IDMAEEDO,Edo.EMPRESA,Edo.SUDO,TIDO,Edo.NUDO," & vbCrLf &
+        Consulta_sql = "Select Cast(0 As Bit) As EnvPickeo,Cast(" & Convert.ToInt32(_Pickear_FacturarAutoCompletas) & " As Bit) As Facturar,Edo.IDMAEEDO,Edo.EMPRESA,Edo.SUDO,TIDO,Edo.NUDO," & vbCrLf &
                        "Cast(ENDO As Varchar(10)) As ENDO,Cast(SUENDO As Varchar(10)) As SUENDO," & vbCrLf &
                        "Cast('' As Varchar(15)) As Rut,NOKOEN,FEEMDO,FEER,FE01VEDO,FEULVEDO," & vbCrLf &
                        "Case When FEEMDO < FE01VEDO Then 'Credito' Else 'Contado' End As TipoVenta," & vbCrLf &
@@ -397,6 +399,18 @@ Public Class Frm_Stmp_IncNVVPicking
                 MessageBoxEx.Show(Me, "Esta nota de venta esta completamente cerrada", "Validación",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
+            End If
+
+        End If
+
+        If _Cabeza = "Facturar" And Tido = "NVI" And Not Chk_FacturarTodo.Enabled Then
+
+            Dim _Facturar As Boolean = _Fila.Cells("Facturar").Value
+
+            If _Facturar Then
+                _Fila.Cells("Facturar").Value = False
+                MessageBoxEx.Show(Me, "Esta acción debe ejecutarse directamente desde el sistema de entrega de mercadería.", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
 
         End If

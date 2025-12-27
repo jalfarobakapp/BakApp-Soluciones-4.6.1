@@ -410,7 +410,7 @@ Public Class Frm_ImpMasiva
         Btn_Cancelar.Enabled = Not _HabilitarImprimir
         Btn_Cancelar.Visible = Not _HabilitarImprimir
         Chk_ImprimirCedible.Enabled = _Habilitar
-        Chk_Marcar_Todas.Enabled = _Habilitar
+        Chk_Marcar_Todas.Enabled = _HabilitarImprimir
 
         ' RadioButtons de selección de formato
         Try

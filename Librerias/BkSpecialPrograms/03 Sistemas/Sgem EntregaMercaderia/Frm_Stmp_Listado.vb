@@ -1092,6 +1092,7 @@ Public Class Frm_Stmp_Listado
                     Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
                     Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
                     Dim _Estado As String = _Fila.Cells("Estado").Value
+                    Dim _Tido As String = _Fila.Cells("Tido").Value
                     Dim _Error_FacAuto As Boolean = _Fila.Cells("Error_FacAuto").Value
 
                     LabelItem1.Text = "Opciones (Id: " & _Idmaeedo & ")"
@@ -1100,7 +1101,13 @@ Public Class Frm_Stmp_Listado
                     Btn_CerrarTicket.Visible = (Super_TabS.SelectedTab.Name = "Tab_Entregadas")
 
                     Btn_ReenviaFacturar.Visible = (Super_TabS.SelectedTab.Name = "Tab_Completadas")
-                    Btn_ReenviaFacturar.Enabled = _Error_FacAuto
+                    Btn_ReenviaFacturar.Enabled = (_Error_FacAuto Or _Tido = "NVI")
+
+                    If _Tido = "NVI" Then
+                        Btn_ReenviaFacturar.Text = "Volver a generar la guía de traslado automáticamente."
+                    Else
+                        Btn_ReenviaFacturar.Text = "Volver a enviar a facturar automáticamente"
+                    End If
 
                     If _Global_Row_Configuracion_General.Item("Pickear_DesdeBkWMS") Or
                         _Global_Row_Configuracion_Estacion.Item("Pickear_DesdeBkWMS") Then
@@ -1883,6 +1890,20 @@ Public Class Frm_Stmp_Listado
     Private Sub Btn_ReenviaFacturar_Click(sender As Object, e As EventArgs) Handles Btn_ReenviaFacturar.Click
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
+        Dim _Facturar As Boolean = _Fila.Cells("Facturar").Value
+
+        If _Facturar Then
+            Sb_Reenviar_Factruracion(_Fila)
+        Else
+            Sb_Marcar_Para_Facturar(_Fila)
+        End If
+
+    End Sub
+
+    Sub Sb_Reenviar_Factruracion(_Fila As DataGridViewRow)
+
         Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Idmaeedo_NVV = " & _Idmaeedo
@@ -1923,6 +1944,122 @@ Public Class Frm_Stmp_Listado
             _Fila.Cells("BtnImagen_Estado").Value = _Imagenes_List.Images.Item("ok.png")
 
         End If
+
+    End Sub
+
+    Sub Sb_Marcar_Para_Facturar(_Fila As DataGridViewRow)
+
+        Dim _Id_Enc As Integer = _Fila.Cells("Id").Value
+        Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
+        Dim _Tido As String = _Fila.Cells("Tido").Value
+        Dim _Nudo As String = _Fila.Cells("Nudo").Value
+        Dim _GrabarTransporte As Boolean = False
+
+        Dim _SqlQuery As String = "Update " & _Global_BaseBk & "Zw_Stmp_Enc" & vbCrLf &
+                                  "Set Facturar = 1" & vbCrLf &
+                                  "Where Id = " & _Id_Enc
+
+        Dim _Msj As String = String.Empty
+
+        If _Tido = "NVI" Then
+
+            _Msj = "La NVI se envió a generar guía al diablito."
+
+            Dim _AgregarTransporteNVIparaGTI As Boolean = (_Global_Row_Configuracion_General.Item("AgregarTransporteNVIparaGTI") Or
+                                                               _Global_Row_Configuracion_Estacion.Item("AgregarTransporteNVIparaGTI"))
+
+            If _AgregarTransporteNVIparaGTI Then
+
+                Dim _Grabar As Boolean
+                Dim _Zw_Transporte_Dte As New Zw_Transporte_Dte
+
+                With _Zw_Transporte_Dte
+                    .Id = 0
+                    .Idmaeedo = _Idmaeedo
+                    .Tido = _Tido
+                    .Nudo = _Nudo
+                    .Empresa = Mod_Empresa
+                End With
+
+                Consulta_sql = "Select ENDO,SUENDO,Isnull(NOKOEN,'') As 'NOKOEN',Isnull(DIEN,'') As 'DIEN',Isnull(PAEN,'') As 'PAEN'," &
+                               "Isnull(p.NOKOPA,'') As 'NOKOPA',Isnull(CIEN,'') As 'CIEN'," &
+                               "Isnull(c.NOKOCI,'') As 'NOKOCI',Isnull(CMEN,'') As 'CMEN',Isnull(cm.NOKOCM,'') As 'NOKOCM'" & vbCrLf &
+                               "From MAEEDO Edo" & vbCrLf &
+                               "Left Join MAEEN En On En.KOEN = Edo.ENDO And En.SUEN = Edo.SUENDO" & vbCrLf &
+                               "Left Join TABPA p On p.KOPA = En.PAEN" & vbCrLf &
+                               "Left Join TABCI c On c.KOPA = En.PAEN And c.KOCI = En.CIEN" & vbCrLf &
+                               "Left Join TABCM cm On cm.KOPA = En.PAEN And cm.KOCI = En.CIEN And cm.KOCM = En.CMEN" & vbCrLf &
+                               "Where IDMAEEDO = " & _Idmaeedo
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If Not IsNothing(_Row) Then
+                    With _Zw_Transporte_Dte
+                        .DirDest = If(IsDBNull(_Row.Item("DIEN")), String.Empty, _Row.Item("DIEN").ToString().Trim)
+
+                        ' Obtener el valor seguro de NOKOCI
+                        Dim _Ciudad As String = If(IsDBNull(_Row.Item("NOKOCI")), String.Empty, _Row.Item("NOKOCI").ToString().Trim)
+                        Dim _Comuna As String = If(IsDBNull(_Row.Item("NOKOCM")), String.Empty, _Row.Item("NOKOCM").ToString().Trim)
+
+                        ' Recortar a un máximo de 30 caracteres
+                        If _Ciudad.Length > 20 Then _Ciudad = _Ciudad.Substring(0, 20)
+                        If _Comuna.Length > 20 Then _Ciudad = _Comuna.Substring(0, 20)
+
+                        .CiudadDest = _Ciudad.Trim
+                        .CmnaDest = _Comuna.Trim
+                    End With
+                End If
+
+                Dim Fm As New Frm_Transporte_DTE
+                Fm.Zw_Transporte_Dte = _Zw_Transporte_Dte
+                Fm.ShowDialog(Me)
+                If Fm.DialogResult = DialogResult.OK Then
+                    _Grabar = True
+                    _Zw_Transporte_Dte = Fm.Zw_Transporte_Dte
+                End If
+                Fm.Dispose()
+
+                If Not _Grabar Then
+                    MessageBoxEx.Show(Me, "No se agregó el transporte a la NVI." & vbCrLf &
+                                      "Por lo tanto no se podrá generar automáticamente la guía de despacho GTI.",
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
+                _GrabarTransporte = True
+                With _Zw_Transporte_Dte
+
+                    _SqlQuery += vbCrLf & vbCrLf &
+                                 "Insert Into " & _Global_BaseBk & "Zw_Transporte_Dte (Empresa,Idmaeedo,Tido,Nudo," &
+                                 "Patente,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest)" & vbCrLf &
+                                $"Values ({ .Empresa},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
+                                $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}')"
+
+                End With
+
+            End If
+
+        Else
+            _Msj = "La NVV se envió a facturar al diablito."
+        End If
+
+        If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery) Then
+            MessageBoxEx.Show(Me, "Error al marcar para facturar." & vbCrLf & _Sql.Pro_Error, "Error",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        MessageBoxEx.Show(Me, _Msj, "Información",
+                   MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Dim _Imagenes_List As ImageList
+        If Global_Thema = Enum_Themas.Oscuro Then
+            _Imagenes_List = Imagenes_16x16_Dark
+        Else
+            _Imagenes_List = Imagenes_16x16
+        End If
+
+        _Fila.Cells("Facturar").Value = True
+        _Fila.Cells("BtnImagen_Estado").Value = _Imagenes_List.Images.Item("ok.png")
 
     End Sub
 
