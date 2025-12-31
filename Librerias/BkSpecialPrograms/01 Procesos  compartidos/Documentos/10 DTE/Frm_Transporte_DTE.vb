@@ -8,6 +8,7 @@ Public Class Frm_Transporte_DTE
     Dim Consulta_sql As String
 
     Public Property Zw_Transporte_Dte As New Zw_Transporte_Dte
+    Public Property UltimoTransporte As Zw_Transporte_Dte
 
     Public Property Grabar As Boolean
 
@@ -18,6 +19,8 @@ Public Class Frm_Transporte_DTE
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -34,6 +37,10 @@ Public Class Frm_Transporte_DTE
             Txt_CiudadDest.Text = If(.CiudadDest, String.Empty)
 
         End With
+
+        Txt_DirDest.ReadOnly = True
+        Txt_CmnaDest.ReadOnly = True
+        Txt_CiudadDest.ReadOnly = True
 
         Me.ActiveControl = Txt_Patente
 
@@ -154,6 +161,27 @@ Public Class Frm_Transporte_DTE
         Me.DialogResult = DialogResult.OK
         Grabar = True
         Me.Close()
+
+    End Sub
+
+    Private Sub Btn_UltTransporte_Click(sender As Object, e As EventArgs) Handles Btn_UltTransporte.Click
+
+        If IsNothing(UltimoTransporte) Then
+            MessageBoxEx.Show(Me, "No hay un último transporte registrado.", "Información",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+
+        With UltimoTransporte
+
+            Txt_Patente.Text = If(.Patente, String.Empty)
+            Txt_RUTTrans.Text = If(.RUTTrans, String.Empty)
+            Txt_Chofer.Text = If(.Chofer, String.Empty)
+            Txt_RUTChofer.Text = If(.RUTChofer, String.Empty)
+
+        End With
+
+        Txt_Chofer.Focus()
 
     End Sub
 End Class

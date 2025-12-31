@@ -3577,14 +3577,14 @@ Namespace My.Resources
         '''CREATE TABLE [dbo].[Zw_Prod_SobreStock](
         '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
         '''	[Empresa]				[char](2)           NOT NULL,
-        '''	[Sucursal]				[varchar](3)        NOT NULL,
-        '''	[Bodega]				[varchar](3)        NOT NULL,
         '''	[Codigo]				[varchar](13)       NOT NULL,
         '''	[Descripcion]			[varchar](50)       NOT NULL,
         '''	[Activo]				[bit]               NOT NULL,
         '''	[CodFuncionarioCrea]	[varchar](3)        NOT NULL,
         '''	[FechaVigencia]			[datetime]          NULL,
-        '''	[FormatoPqte]			[varchar](10)       NOT NU [resto de la cadena truncado]&quot;;.
+        '''	[FormatoPqte]			[varchar](10)       NOT NULL,
+        '''	[PqteHabilitado]		[float]             NOT NULL,
+        '''	[PqteComprometido]		[float]        [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Prod_SobreStock() As String
             Get
@@ -5356,6 +5356,27 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_TmpInv_InvParcialConf() As String
             Get
                 Return ResourceManager.GetString("Zw_TmpInv_InvParcialConf", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Transporte_Dte](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Idmaeedo]		[int]			NOT NULL DEFAULT (0),
+        '''	[Tido]			[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]			[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Patente]		[varchar](8)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[RUTTrans]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Chofer]		[varchar](40)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[RUTChofer]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[DirDest]		[varchar](70)	NOT N [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Transporte_Dte() As String
+            Get
+                Return ResourceManager.GetString("Zw_Transporte_Dte", resourceCulture)
             End Get
         End Property
         

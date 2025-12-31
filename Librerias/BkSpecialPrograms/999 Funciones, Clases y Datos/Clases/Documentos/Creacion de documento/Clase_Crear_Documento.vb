@@ -195,6 +195,7 @@ Public Class Clase_Crear_Documento
 
     Public Property Ls_Cl_PreVenta As New List(Of Zw_PreVenta_StockProd)
     Public Property Ls_Cl_SobreStock As New List(Of Zw_Prod_SobreStock)
+    Public Property Zw_Transporte_Dte As Zw_Transporte_Dte
 
 #Region "FUNCION CREAR DOCUMENTO RANDOM DEFINITIVO"
 
@@ -2099,6 +2100,34 @@ Public Class Clase_Crear_Documento
                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
                 Comando.ExecuteNonQuery()
+
+            End If
+
+            If Not IsNothing(Zw_Transporte_Dte) Then
+
+                With Zw_Transporte_Dte
+
+                    .Idmaeedo = _Idmaeedo
+                    .Tido = _Tido
+                    .Nudo = _Nudo
+
+                    Consulta_sql = $"Insert Into {_Global_BaseBk}Zw_Transporte_Dte (Empresa,Id_Enc,Idmaeedo,Tido,Nudo," &
+                                   "Patente,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest)" & vbCrLf &
+                                   $"Values ({ .Empresa},{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
+                                   $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}')"
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                    Consulta_sql = $"Update MAEEDOOB Set TEXTO1 = '{ .Patente}',TEXTO2 = '{ .RUTTrans}'," &
+                                   $"TEXTO3 = '{ .RUTChofer}',TEXTO4 = '{ .Chofer}',TEXTO5 = '{ .DirDest}'," &
+                                   $"TEXTO6 = '{ .CiudadDest}',TEXTO7 = '{ .CmnaDest}'" & vbCrLf &
+                                   "Where IDMAEEDO = " & _Idmaeedo
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                End With
 
             End If
 

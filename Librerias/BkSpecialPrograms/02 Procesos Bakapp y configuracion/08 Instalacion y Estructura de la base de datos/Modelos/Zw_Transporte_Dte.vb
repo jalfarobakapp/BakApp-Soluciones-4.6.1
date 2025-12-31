@@ -1,6 +1,7 @@
 ﻿Public Class Zw_Transporte_Dte
     Public Property Id As Integer
     Public Property Empresa As String
+    Public Property Id_Enc As Integer
     Public Property Idmaeedo As Integer
     Public Property Tido As String
     Public Property Nudo As String

@@ -67,12 +67,18 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Chk_Seleccionar_MatchExacto = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_MostrarSoloMatchExactos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_MostrarSoloSeleccionados = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Lbl_TotalSeleccion = New DevComponents.DotNetBar.LabelX()
+        Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Lbl_TotalAnticipos = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel3.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Maedpce, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupPanel2.SuspendLayout()
+        Me.GroupPanel4.SuspendLayout()
         Me.SuspendLayout()
         '
         'Imagenes_20x20
@@ -101,7 +107,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(12, 397)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(1136, 131)
+        Me.GroupPanel3.Size = New System.Drawing.Size(961, 131)
         '
         '
         '
@@ -642,11 +648,127 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Chk_MostrarSoloSeleccionados.TabIndex = 91
         Me.Chk_MostrarSoloSeleccionados.Text = "Ver solo Seleccionados"
         '
+        'GroupPanel2
+        '
+        Me.GroupPanel2.BackColor = System.Drawing.Color.White
+        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Lbl_TotalSeleccion)
+        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel2.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.GroupPanel2.Location = New System.Drawing.Point(995, 395)
+        Me.GroupPanel2.Name = "GroupPanel2"
+        Me.GroupPanel2.Size = New System.Drawing.Size(153, 58)
+        '
+        '
+        '
+        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel2.Style.BackColorGradientAngle = 90
+        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderBottomWidth = 1
+        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderLeftWidth = 1
+        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderRightWidth = 1
+        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderTopWidth = 1
+        Me.GroupPanel2.Style.CornerDiameter = 4
+        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel2.TabIndex = 138
+        Me.GroupPanel2.Text = "Total a selección"
+        '
+        'Lbl_TotalSeleccion
+        '
+        Me.Lbl_TotalSeleccion.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_TotalSeleccion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_TotalSeleccion.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_TotalSeleccion.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_TotalSeleccion.Location = New System.Drawing.Point(3, 3)
+        Me.Lbl_TotalSeleccion.Name = "Lbl_TotalSeleccion"
+        Me.Lbl_TotalSeleccion.Size = New System.Drawing.Size(141, 23)
+        Me.Lbl_TotalSeleccion.TabIndex = 34
+        Me.Lbl_TotalSeleccion.Text = "0"
+        Me.Lbl_TotalSeleccion.TextAlignment = System.Drawing.StringAlignment.Far
+        '
+        'GroupPanel4
+        '
+        Me.GroupPanel4.BackColor = System.Drawing.Color.White
+        Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.Lbl_TotalAnticipos)
+        Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel4.Font = New System.Drawing.Font("Segoe UI", 12.0!)
+        Me.GroupPanel4.Location = New System.Drawing.Point(995, 463)
+        Me.GroupPanel4.Name = "GroupPanel4"
+        Me.GroupPanel4.Size = New System.Drawing.Size(153, 58)
+        '
+        '
+        '
+        Me.GroupPanel4.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel4.Style.BackColorGradientAngle = 90
+        Me.GroupPanel4.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel4.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderBottomWidth = 1
+        Me.GroupPanel4.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel4.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderLeftWidth = 1
+        Me.GroupPanel4.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderRightWidth = 1
+        Me.GroupPanel4.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderTopWidth = 1
+        Me.GroupPanel4.Style.CornerDiameter = 4
+        Me.GroupPanel4.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel4.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel4.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel4.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel4.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel4.TabIndex = 139
+        Me.GroupPanel4.Text = "Total Anticipos"
+        '
+        'Lbl_TotalAnticipos
+        '
+        Me.Lbl_TotalAnticipos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_TotalAnticipos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_TotalAnticipos.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_TotalAnticipos.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_TotalAnticipos.Location = New System.Drawing.Point(3, 3)
+        Me.Lbl_TotalAnticipos.Name = "Lbl_TotalAnticipos"
+        Me.Lbl_TotalAnticipos.Size = New System.Drawing.Size(141, 23)
+        Me.Lbl_TotalAnticipos.TabIndex = 34
+        Me.Lbl_TotalAnticipos.Text = "0"
+        Me.Lbl_TotalAnticipos.TextAlignment = System.Drawing.StringAlignment.Far
+        '
         'Frm_CruceAntiNoVinculados
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1158, 597)
+        Me.Controls.Add(Me.GroupPanel4)
+        Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Chk_MostrarSoloSeleccionados)
         Me.Controls.Add(Me.Chk_MostrarSoloMatchExactos)
         Me.Controls.Add(Me.Chk_Seleccionar_MatchExacto)
@@ -671,6 +793,8 @@ Partial Class Frm_CruceAntiNoVinculados
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla_Maedpce, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupPanel2.ResumeLayout(False)
+        Me.GroupPanel4.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -715,4 +839,8 @@ Partial Class Frm_CruceAntiNoVinculados
     Friend WithEvents Btn_Mnu_ExportarExcelVistaActual As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_ExportarExcelTodo As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_MostrarSoloSeleccionados As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Lbl_TotalSeleccion As DevComponents.DotNetBar.LabelX
+    Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Lbl_TotalAnticipos As DevComponents.DotNetBar.LabelX
 End Class

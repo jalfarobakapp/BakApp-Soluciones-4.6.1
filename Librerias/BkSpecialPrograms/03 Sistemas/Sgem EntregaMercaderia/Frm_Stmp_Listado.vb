@@ -11,6 +11,16 @@ Public Class Frm_Stmp_Listado
 
     Dim _Dv As New DataView
 
+    ' Colocar este campo cerca de las otras variables de clase (por ejemplo junto a _Dv)
+    Private _UltimoTransporte As Zw_Transporte_Dte
+
+    ' Propiedad de solo lectura para acceder desde otras partes si es necesario
+    Public ReadOnly Property UltimoTransporte As Zw_Transporte_Dte
+        Get
+            Return _UltimoTransporte
+        End Get
+    End Property
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -1094,6 +1104,7 @@ Public Class Frm_Stmp_Listado
                     Dim _Estado As String = _Fila.Cells("Estado").Value
                     Dim _Tido As String = _Fila.Cells("Tido").Value
                     Dim _Error_FacAuto As Boolean = _Fila.Cells("Error_FacAuto").Value
+                    Dim _Facturar As Boolean = _Fila.Cells("Facturar").Value
 
                     LabelItem1.Text = "Opciones (Id: " & _Idmaeedo & ")"
 
@@ -1104,7 +1115,11 @@ Public Class Frm_Stmp_Listado
                     Btn_ReenviaFacturar.Enabled = (_Error_FacAuto Or _Tido = "NVI")
 
                     If _Tido = "NVI" Then
-                        Btn_ReenviaFacturar.Text = "Volver a generar la guía de traslado automáticamente."
+                        If _Facturar Then
+                            Btn_ReenviaFacturar.Text = "Volver a generar la guía de traslado automáticamente."
+                        Else
+                            Btn_ReenviaFacturar.Text = "Marcar para generar la guía de traslado automáticamente."
+                        End If
                     Else
                         Btn_ReenviaFacturar.Text = "Volver a enviar a facturar automáticamente"
                     End If
@@ -1975,9 +1990,10 @@ Public Class Frm_Stmp_Listado
 
                 With _Zw_Transporte_Dte
                     .Id = 0
-                    .Idmaeedo = _Idmaeedo
-                    .Tido = _Tido
-                    .Nudo = _Nudo
+                    .Id_Enc = _Id_Enc
+                    .Idmaeedo = 0
+                    .Tido = String.Empty
+                    .Nudo = String.Empty
                     .Empresa = Mod_Empresa
                 End With
 
@@ -2011,6 +2027,7 @@ Public Class Frm_Stmp_Listado
 
                 Dim Fm As New Frm_Transporte_DTE
                 Fm.Zw_Transporte_Dte = _Zw_Transporte_Dte
+                Fm.UltimoTransporte = _UltimoTransporte
                 Fm.ShowDialog(Me)
                 If Fm.DialogResult = DialogResult.OK Then
                     _Grabar = True
@@ -2025,13 +2042,15 @@ Public Class Frm_Stmp_Listado
                     Return
                 End If
 
+                _UltimoTransporte = ClonarTransporte(_Zw_Transporte_Dte)
+
                 _GrabarTransporte = True
                 With _Zw_Transporte_Dte
 
                     _SqlQuery += vbCrLf & vbCrLf &
-                                 "Insert Into " & _Global_BaseBk & "Zw_Transporte_Dte (Empresa,Idmaeedo,Tido,Nudo," &
+                                 "Insert Into " & _Global_BaseBk & "Zw_Transporte_Dte (Empresa,Id_Enc,Idmaeedo,Tido,Nudo," &
                                  "Patente,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest)" & vbCrLf &
-                                $"Values ({ .Empresa},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
+                                $"Values ({ .Empresa},{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
                                 $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}')"
 
                 End With
@@ -2165,6 +2184,38 @@ Public Class Frm_Stmp_Listado
     End Function
 
 
+    ' Función auxiliar para clonar (copiar) un registro de transporte
+    Private Function ClonarTransporte(ByVal origen As Zw_Transporte_Dte) As Zw_Transporte_Dte
+        If origen Is Nothing Then
+            Return Nothing
+        End If
+
+        Dim copia As New Zw_Transporte_Dte
+
+        Try
+            ' Copiar campos conocidos utilizados en este formulario
+            copia.Id = origen.Id
+            copia.Id_Enc = origen.Id_Enc
+            copia.Idmaeedo = origen.Idmaeedo
+            copia.Tido = origen.Tido
+            copia.Nudo = origen.Nudo
+            copia.Empresa = origen.Empresa
+
+            copia.Patente = origen.Patente
+            copia.RUTTrans = origen.RUTTrans
+            copia.Chofer = origen.Chofer
+            copia.RUTChofer = origen.RUTChofer
+            copia.DirDest = origen.DirDest
+            copia.CmnaDest = origen.CmnaDest
+            copia.CiudadDest = origen.CiudadDest
+
+        Catch ex As Exception
+            ' Si hay propiedades nuevas que no existen, ignorarlas para no romper la copia
+        End Try
+
+        Return copia
+    End Function
+
 End Class
 
 Namespace Stmp_Configuracion
@@ -2177,3 +2228,4 @@ Namespace Stmp_Configuracion
     End Class
 
 End Namespace
+

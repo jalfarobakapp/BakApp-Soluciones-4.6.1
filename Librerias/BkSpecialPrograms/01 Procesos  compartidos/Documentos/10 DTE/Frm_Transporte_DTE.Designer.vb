@@ -42,6 +42,9 @@ Partial Class Frm_Transporte_DTE
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_RUTTrans = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Line1 = New DevComponents.DotNetBar.Controls.Line()
+        Me.Btn_UltTransporte = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         Me.SuspendLayout()
@@ -51,7 +54,7 @@ Partial Class Frm_Transporte_DTE
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_UltTransporte})
         Me.Bar1.Location = New System.Drawing.Point(0, 262)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(539, 41)
@@ -74,6 +77,8 @@ Partial Class Frm_Transporte_DTE
         '
         Me.GroupPanel2.BackColor = System.Drawing.Color.White
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.LabelX9)
+        Me.GroupPanel2.Controls.Add(Me.LabelX8)
         Me.GroupPanel2.Controls.Add(Me.LabelX7)
         Me.GroupPanel2.Controls.Add(Me.Txt_RUTChofer)
         Me.GroupPanel2.Controls.Add(Me.Txt_Chofer)
@@ -370,6 +375,43 @@ Partial Class Frm_Transporte_DTE
         Me.Line1.TabIndex = 47
         Me.Line1.Text = "Line1"
         '
+        'Btn_UltTransporte
+        '
+        Me.Btn_UltTransporte.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_UltTransporte.ForeColor = System.Drawing.Color.Black
+        Me.Btn_UltTransporte.Image = CType(resources.GetObject("Btn_UltTransporte.Image"), System.Drawing.Image)
+        Me.Btn_UltTransporte.ImageAlt = CType(resources.GetObject("Btn_UltTransporte.ImageAlt"), System.Drawing.Image)
+        Me.Btn_UltTransporte.Name = "Btn_UltTransporte"
+        Me.Btn_UltTransporte.Tooltip = "Usar los datos del ultimo transporte"
+        '
+        'LabelX8
+        '
+        Me.LabelX8.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX8.ForeColor = System.Drawing.Color.Black
+        Me.LabelX8.Location = New System.Drawing.Point(189, 31)
+        Me.LabelX8.Name = "LabelX8"
+        Me.LabelX8.Size = New System.Drawing.Size(219, 23)
+        Me.LabelX8.TabIndex = 50
+        Me.LabelX8.Text = "(Sin puntos y con guión)"
+        '
+        'LabelX9
+        '
+        Me.LabelX9.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX9.ForeColor = System.Drawing.Color.Black
+        Me.LabelX9.Location = New System.Drawing.Point(189, 56)
+        Me.LabelX9.Name = "LabelX9"
+        Me.LabelX9.Size = New System.Drawing.Size(219, 23)
+        Me.LabelX9.TabIndex = 51
+        Me.LabelX9.Text = "(Sin puntos y con guión)"
+        '
         'Frm_Transporte_DTE
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -412,4 +454,7 @@ Partial Class Frm_Transporte_DTE
     Friend WithEvents Line1 As DevComponents.DotNetBar.Controls.Line
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_RUTChofer As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Btn_UltTransporte As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelX9 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
 End Class

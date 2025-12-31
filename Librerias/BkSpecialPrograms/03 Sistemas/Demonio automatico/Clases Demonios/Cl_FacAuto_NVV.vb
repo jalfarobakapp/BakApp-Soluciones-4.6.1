@@ -947,7 +947,7 @@ Public Class Cl_FacAuto_NVV
                                                                   _Empresa As String,
                                                                   _Modalidad As String,
                                                                   _CerrarDespFact As Boolean,
-                                                                  _Id_Pickeo As Integer) As LsValiciones.Mensajes
+                                                                  _Id_Enc As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -1067,6 +1067,26 @@ Public Class Cl_FacAuto_NVV
                             Throw New System.Exception(_Sql.Pro_Error)
                         End If
 
+                        Dim _Zw_Transporte_Dte As New Zw_Transporte_Dte
+
+                        Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Transporte_Dte Where Id_Enc = " & _Id_Enc
+                        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                        If Not IsNothing(_Row) Then
+                            With _Zw_Transporte_Dte
+                                .Id_Enc = _Row.Item("Id_Enc")
+                                .Empresa = _Row.Item("Empresa")
+                                .Patente = _Row.Item("Patente")
+                                .Chofer = _Row.Item("Chofer")
+                                .RUTChofer = _Row.Item("RUTChofer")
+                                .RUTTrans = _Row.Item("RUTTrans")
+                                .DirDest = _Row.Item("DirDest")
+                                .CiudadDest = _Row.Item("CiudadDest")
+                                .CmnaDest = _Row.Item("CmnaDest")
+                            End With
+
+                        End If
+
                         Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
                                                                     csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
 
@@ -1081,6 +1101,7 @@ Public Class Cl_FacAuto_NVV
                         If _Msj_Limpiar.EsCorrecto Then
 
                             Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
+                            Fm_Post.Zw_Transporte_Dte = _Zw_Transporte_Dte
 
                             _Msj_GrabarDoc = Fm_Post.Fx_Grabar_Documento(False,
                                                                          csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,
@@ -1105,7 +1126,7 @@ Public Class Cl_FacAuto_NVV
                             Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
                                            "ProblemaFac = 1" &
                                            ",Log_Error = '" & _Mensaje.Mensaje & "'" & vbCrLf &
-                                           "Where Id = " & _Id_Pickeo
+                                           "Where Id = " & _Id_Enc
                             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
                             _Mensaje.Detalle = "Error al grabar documento"
@@ -1149,7 +1170,7 @@ Public Class Cl_FacAuto_NVV
                                            ",IdmaeedoGen = " & _Msj_GrabarDoc.Id &
                                            ",TidoGen = '" & _Tido &
                                            "',NudoGen = '" & _Nudo & "'" & vbCrLf &
-                                           "Where Id = " & _Id_Pickeo
+                                           "Where Id = " & _Id_Enc
                             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
                         End If

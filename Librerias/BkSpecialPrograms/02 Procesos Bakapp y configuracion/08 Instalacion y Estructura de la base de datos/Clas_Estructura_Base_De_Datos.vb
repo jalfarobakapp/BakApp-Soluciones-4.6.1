@@ -755,6 +755,11 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_DTE_ListaEventosDoc"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_ListaEventosDoc
 
+            Case "Zw_Referencias_Dte"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Referencias_Dte
+            Case "Zw_Transporte_Dte"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Transporte_Dte
+
             Case "Zw_Empresas"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Empresas
 
@@ -1015,8 +1020,7 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_Remotas_Notif"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Remotas_Notif
 
-            Case "Zw_Referencias_Dte"
-                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Referencias_Dte
+
 
             Case "ZW_SOC_Detalle"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.ZW_SOC_Detalle

@@ -21,6 +21,10 @@ Public Class Frm_CruceAntiNoVinculados
     ' ==========================
     Private _PaymentsCountPorIdRst As New Dictionary(Of Integer, Integer)
 
+    ' Totales
+    Private _TotalAnticipos As Double = 0
+    Private _TotalAnticiposCalculado As Boolean = False
+
     Public Sub New(_Filtro_Idmaedpce As String)
 
 
@@ -204,7 +208,7 @@ Order By c.ENDP,c.FEEMDP"
             .Columns("MODP").ToolTipText = "Moneda"
             .Columns("MODP").Width = 30
             .Columns("MODP").Visible = True
-            .Columns("SALDO_PG").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("MODP").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("MODP").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -253,6 +257,63 @@ Order By c.ENDP,c.FEEMDP"
             _DisplayIndex += 1
 
         End With
+
+        ' Calcular totales: total de anticipos (solo la primera vez) y total seleccionado (inicialmente 0)
+        Sb_Actualizar_Totales(True)
+
+    End Sub
+
+    ''' <summary>
+    ''' Actualiza Lbl_TotalSeleccion y Lbl_TotalAnticipos.
+    ''' Si RecalcularTotalAnticipos = True o no se ha calculado antes, calcula el total de todos los SALDO_PG una vez.
+    ''' </summary>
+    Private Sub Sb_Actualizar_Totales(Optional ByVal RecalcularTotalAnticipos As Boolean = False)
+
+        Try
+            If _Tbl_Maedpce Is Nothing Then
+                Lbl_TotalSeleccion.Text = FormatCurrency(0, 0)
+                Lbl_TotalAnticipos.Text = FormatCurrency(0, 0)
+                Return
+            End If
+
+            If RecalcularTotalAnticipos OrElse Not _TotalAnticiposCalculado Then
+                Dim totalAnt As Double = 0
+                For Each dr As DataRow In _Tbl_Maedpce.Rows
+                    Try
+                        If dr.Table.Columns.Contains("SALDO_PG") AndAlso dr.Item("SALDO_PG") IsNot Nothing AndAlso Not IsDBNull(dr.Item("SALDO_PG")) Then
+                            totalAnt += Convert.ToDouble(dr.Item("SALDO_PG"))
+                        End If
+                    Catch
+                        ' ignorar fila problemática
+                    End Try
+                Next
+                _TotalAnticipos = Math.Round(totalAnt, 2)
+                _TotalAnticiposCalculado = True
+            End If
+
+            Dim totalSel As Double = 0
+            For Each dr As DataRow In _Tbl_Maedpce.Rows
+                Try
+                    Dim chk As Boolean = False
+                    If dr.Table.Columns.Contains("Chk") AndAlso dr.Item("Chk") IsNot Nothing AndAlso Not IsDBNull(dr.Item("Chk")) Then
+                        chk = Convert.ToBoolean(dr.Item("Chk"))
+                    End If
+
+                    If chk Then
+                        If dr.Table.Columns.Contains("SALDO_PG") AndAlso dr.Item("SALDO_PG") IsNot Nothing AndAlso Not IsDBNull(dr.Item("SALDO_PG")) Then
+                            totalSel += Convert.ToDouble(dr.Item("SALDO_PG"))
+                        End If
+                    End If
+                Catch
+                    ' ignorar fila problemática
+                End Try
+            Next
+
+            Lbl_TotalSeleccion.Text = FormatCurrency(Math.Round(totalSel, 0), 0)
+            Lbl_TotalAnticipos.Text = FormatCurrency(Math.Round(_TotalAnticipos, 0), 0)
+        Catch ex As Exception
+            ' En caso de error no interrumpir UI
+        End Try
 
     End Sub
 
@@ -662,7 +723,7 @@ ORDER BY Orden,FEVEDP"
             End Try
 
             If nuevoValor AndAlso Not puedeCruzar Then
-                MessageBoxEx.Show(Me, "No se puede seleccionar este registro porque 'Cruzar Pago Automáticamente' no está marcado.",
+                MessageBoxEx.Show(Me, "No se puede seleccionar este registro porque la columna [CPA] ('Cruzar Pago Automáticamente') no está marcado.",
                                   "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 ' Revertir el cambio
                 filaGrid.Cells("Chk").Value = False
@@ -714,6 +775,12 @@ ORDER BY Orden,FEVEDP"
         Catch ex As Exception
             ' Ignorar errores en el proceso para no interrumpir la UI
         Finally
+            ' Actualizar totales después de cualquier cambio de selección
+            Try
+                Sb_Actualizar_Totales(False)
+            Catch
+            End Try
+
             _SuppressChkChanged = False
         End Try
     End Sub
@@ -806,10 +873,17 @@ ORDER BY Orden,FEVEDP"
                 MessageBoxEx.Show("No hay filas seleccionadas y marcadas para cruce automático. No se realizará ninguna acción.", "Validación",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Chk_Seleccionar_Todo.Checked = False
+
+                ' Actualizar totales tras revertir la selección
+                Sb_Actualizar_Totales(False)
+
                 Return
             End If
 
         End If
+
+        ' Actualizar totales después de cambiar selección en bloque
+        Sb_Actualizar_Totales(False)
 
     End Sub
 
@@ -885,6 +959,9 @@ ORDER BY Orden,FEVEDP"
         Btn_Grabar_Autorizacion.Enabled = False
         Btn_CruceDocParaPago.Enabled = False
         Btn_Actualizar.Enabled = False
+
+        ' Actualizar totales por si cambió algo relevante
+        Sb_Actualizar_Totales(False)
 
     End Sub
 
@@ -1038,10 +1115,17 @@ ORDER BY Orden,FEVEDP"
                                 MessageBoxButtons.OK, MessageBoxIcon.Error)
                 Chk_Seleccionar_MatchExacto.Checked = False
                 Chk_Seleccionar_Todo.Checked = False
+
+                ' Actualizar totales tras revertir la selección
+                Sb_Actualizar_Totales(False)
+
                 Return
             End If
 
         End If
+
+        ' Actualizar totales después de cambiar selección en bloque
+        Sb_Actualizar_Totales(False)
 
     End Sub
 
@@ -1131,6 +1215,9 @@ ORDER BY Orden,FEVEDP"
 
             ' Asegurar que el DataGridView muestre la vista actualizada
             Grilla_Maedpce.DataSource = _Tbl_Maedpce.DefaultView
+
+            ' Actualizar totales (la selección no cambia pero actualiza visualmente)
+            Sb_Actualizar_Totales(False)
 
         Catch ex As Exception
             MessageBoxEx.Show(Me, "Error al aplicar el filtro de selección: " & ex.Message, "Error",
@@ -1230,6 +1317,9 @@ ORDER BY Orden,FEVEDP"
 
             ' Asegurar que el DataGridView muestre la vista actualizada
             Grilla_Maedpce.DataSource = _Tbl_Maedpce.DefaultView
+
+            ' Actualizar totales visuales
+            Sb_Actualizar_Totales(False)
 
         Catch ex As Exception
             MessageBoxEx.Show(Me, "Error al aplicar el filtro de selección: " & ex.Message, "Error",

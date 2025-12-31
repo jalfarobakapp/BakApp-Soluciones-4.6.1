@@ -177,6 +177,8 @@ Public Class Frm_Formulario_Documento
     Dim _Ls_Cl_PreVenta As New List(Of Zw_PreVenta_StockProd)
     Dim _Ls_Cl_SobreStock As New List(Of Zw_Prod_SobreStock)
 
+    Public Property Zw_Transporte_Dte As Zw_Transporte_Dte
+
 #Region "PROPIEDADES"
 
     Public ReadOnly Property Pro_Idmaeedo() As Integer
@@ -18391,6 +18393,8 @@ Public Class Frm_Formulario_Documento
             _New_Doc.SobreStock = SobreStock
             _New_Doc.Ls_Cl_SobreStock = _Ls_Cl_SobreStock
         End If
+
+        _New_Doc.Zw_Transporte_Dte = Zw_Transporte_Dte
 
         For Each _Fl As DataRow In _TblDetalle.Rows
             _Fl.Item("Grupo") = _Sql.Fx_Trae_Dato("TABFUGD", "KOGRU", "KOFU = '" & _Fl.Item("CodVendedor") & "'",, False)
