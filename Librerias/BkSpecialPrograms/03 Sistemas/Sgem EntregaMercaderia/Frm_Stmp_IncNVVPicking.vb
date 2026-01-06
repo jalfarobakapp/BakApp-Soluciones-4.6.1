@@ -139,8 +139,17 @@ Public Class Frm_Stmp_IncNVVPicking
 
         ' DEBO ENLAZAR LA TABLA Zw_Docu_Det a esta consulta para poner la RtuVariale por productos para las CARNES...
 
-        Dim _Pickear_FacturarAutoCompletas As Boolean = (_Global_Row_Configuracion_General.Item("Pickear_CrearGuiasAutoCompletas") Or
-                                                         _Global_Row_Configuracion_Estacion.Item("Pickear_CrearGuiasAutoCompletas"))
+        Dim _Pickear_FacturarAutoCompletas As Boolean
+
+        If Tido = "NVV" Then
+            _Pickear_FacturarAutoCompletas = (_Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas") Or
+                                              _Global_Row_Configuracion_Estacion.Item("Pickear_FacturarAutoCompletas"))
+        End If
+
+        If Tido = "NVI" Then
+            Chk_FacturarTodo.Enabled = (_Global_Row_Configuracion_General.Item("Pickear_CrearGuiasAutoCompletas") Or
+                                        _Global_Row_Configuracion_Estacion.Item("Pickear_CrearGuiasAutoCompletas"))
+        End If
 
         Consulta_sql = "Select Cast(0 As Bit) As EnvPickeo,Cast(" & Convert.ToInt32(_Pickear_FacturarAutoCompletas) & " As Bit) As Facturar,Edo.IDMAEEDO,Edo.EMPRESA,Edo.SUDO,TIDO,Edo.NUDO," & vbCrLf &
                        "Cast(ENDO As Varchar(10)) As ENDO,Cast(SUENDO As Varchar(10)) As SUENDO," & vbCrLf &
@@ -382,6 +391,7 @@ Public Class Frm_Stmp_IncNVVPicking
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+        Dim _Nudo As String = _Fila.Cells("NUDO").Value
 
         Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
 
@@ -411,6 +421,36 @@ Public Class Frm_Stmp_IncNVVPicking
                 MessageBoxEx.Show(Me, "Esta nota de venta esta completamente cerrada", "Validación",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
+            End If
+
+            If Chk_NotfStockInsuficiente_Stmp.Checked Then
+
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                _Mensaje = Fx_Revisar_NVVNVI_StockInsufuciente(_Idmaeedo)
+
+                If Not _Mensaje.EsCorrecto Then
+                    If MessageBoxEx.Show(Me, _Mensaje.Detalle & vbCrLf & vbCrLf &
+                                      "¿Desea igualmente enviar a pickear este documento?",
+                                      _Mensaje.Mensaje, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
+                        _Fila.Cells("EnvPickeo").Value = False
+                        Return
+                    End If
+                End If
+
+                Dim _Msg1 = $"¿CONFIRMA ENVIAR {Tido}-{_Nudo} A PICKEO?"
+                Dim _Msg2 = vbCrLf & $"Favor confirme para continuar"
+
+                _Mensaje = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.Help,,,, False)
+
+                If _Mensaje.Resultado <> "Yes" Then
+                    _Fila.Cells(_Cabeza).Value = False
+                    Return
+                End If
+
+                Call Btn_EnviarPickear_Click(Nothing, Nothing)
+                Return
+
             End If
 
         End If
@@ -869,6 +909,9 @@ BEGIN
         Temp.BOSULIDO,
         Temp.KOPRCT,
         Temp.UDTRPR,
+		Temp.TICT,
+		Temp.PRCT,
+		Temp.TIPR,
         Temp.CAPRCO1, 
         Temp.CAPRCO2,
         Temp.Sum_INGRE_Caprco1_Ori,
@@ -887,6 +930,9 @@ BEGIN
             M.BOSULIDO,
             M.KOPRCT,
             M.UDTRPR,
+            M.TICT,
+			M.PRCT,
+			M.TIPR,
             M.CAPRCO1, 
             M.CAPRCO2,
             ISNULL((SELECT SUM(det.Caprco1_Ori) 
@@ -920,7 +966,7 @@ BEGIN
                     WHERE Enc.Estado = 'PREPA' 
                       AND det.Codigo = M.KOPRCT), 0) AS 'Sum_PREPA_Caprco2_Ori'
         FROM MAEDDO M
-        WHERE M.IDMAEEDO = @Idmaeedo
+        WHERE M.IDMAEEDO = @Idmaeedo AND M.TIPR In ('FPN')
     ) AS Temp 
 END"
 
@@ -932,6 +978,8 @@ END"
                 _Mensaje.Mensaje = "No se encontraron registros para revisar stock."
                 Return _Mensaje
             End If
+
+            _Mensaje.Detalle = String.Empty
 
             ' Recorrer filas y verificar Saldo_Caprco1
             For Each _Fila As DataRow In _Tbl.Rows
@@ -945,19 +993,23 @@ END"
                 If _Saldo < 0 Then
                     ' Advertencia: stock insuficiente
                     _Mensaje.EsCorrecto = False
-                    _Mensaje.Mensaje = "Stock insuficiente: Saldo_Caprco1 negativo."
-                    _Mensaje.Detalle = String.Format("Documento: {0} - {1}, Producto: {2}, Sucursal: {3}, Bodega: {4}, Saldo_Caprco1: {5}",
-                                                    If(IsDBNull(_Fila.Item("TIDO")), String.Empty, _Fila.Item("TIDO").ToString),
-                                                    If(IsDBNull(_Fila.Item("NUDO")), String.Empty, _Fila.Item("NUDO").ToString),
+                    _Mensaje.Mensaje = $"Stock insuficiente: {_Fila.Item("TIDO")}-{_Fila.Item("NUDO")}"
+                    If Not String.IsNullOrEmpty(_Mensaje.Detalle) Then
+                        _Mensaje.Detalle += vbCrLf
+                    End If
+                    _Mensaje.Detalle += String.Format("Producto: {0}, Sucursal: {1}, Bodega: {2}, Saldo: {3}",
                                                     If(IsDBNull(_Fila.Item("KOPRCT")), String.Empty, _Fila.Item("KOPRCT").ToString),
                                                     If(IsDBNull(_Fila.Item("SULIDO")), String.Empty, _Fila.Item("SULIDO").ToString),
                                                     If(IsDBNull(_Fila.Item("BOSULIDO")), String.Empty, _Fila.Item("BOSULIDO").ToString),
                                                     _Saldo.ToString("N2"))
                     _Mensaje.Tag = _Tbl
-                    Return _Mensaje
                 End If
 
             Next
+
+            If Not IsNothing(_Mensaje.Tag) Then
+                Return _Mensaje
+            End If
 
             ' Si llegamos aquí, no hay saldos negativos
             _Mensaje.EsCorrecto = True

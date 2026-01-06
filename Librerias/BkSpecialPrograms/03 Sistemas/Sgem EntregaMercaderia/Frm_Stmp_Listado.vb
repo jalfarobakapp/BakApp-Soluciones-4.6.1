@@ -665,6 +665,81 @@ Public Class Frm_Stmp_Listado
 
     End Function
 
+    Function Fx_AnularTicket_Paquetes(_CodFuncionario_Cierra As String, _NumeroTicket As String) As LsValiciones.Mensajes
+
+        Timer_Monitoreo.Stop()
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _Aceptar As Boolean
+
+            If Not String.IsNullOrEmpty(_NumeroTicket) Then
+                _Aceptar = True
+            End If
+
+            If Not _Aceptar Then
+                _Aceptar = InputBox_Bk(Me, "Ingrese el número del ticket que desea Anular.",
+                                       "Anular Ticket", _NumeroTicket, False, _Tipo_Mayus_Minus.Normal, 15, True, _Tipo_Imagen.Barra,,,,,,, False)
+            End If
+
+            If Not _Aceptar Then
+                _Mensaje.Detalle = "Acción cancelada"
+                _Mensaje.Cancelado = True
+                Throw New System.Exception("An exception has occurred.")
+            End If
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Numero = '" & _NumeroTicket & "'"
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If IsNothing(_Row) Then
+
+                _Mensaje.Detalle = "Validación"
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
+                Else
+                    Throw New System.Exception("No existe Ticket número " & _NumeroTicket & " En el sistema de Ticket de entrega")
+                End If
+
+            End If
+
+            If MessageBoxEx.Show(Me, "¿Confirma Anular el Ticket " & _NumeroTicket & "?",
+                                 "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                _Mensaje.Detalle = "Validación"
+                _Mensaje.Cancelado = True
+                Throw New System.Exception("Acción cancelada por el usuario")
+            End If
+
+            Dim _Id_Enc As Integer = _Row.Item("Id")
+
+            Dim _Cl_Stmp As New Cl_Stmp
+            _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
+
+            _Cl_Stmp.Zw_Stmp_Enc.Estado = "NULA"
+            _Cl_Stmp.Zw_Stmp_Enc.CodFuncionario_Anula = _CodFuncionario_Cierra
+
+            _Mensaje = _Cl_Stmp.Fx_Anular_Ticket_Paquetes
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        Finally
+            If Chk_Monitorear.Checked Then
+                Timer_Monitoreo.Start()
+            End If
+        End Try
+
+        If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            _Mensaje = Fx_Entregar(_CodFuncionario_Cierra, "")
+        End If
+
+        Return _Mensaje
+
+    End Function
+
     Function Fx_Cargar_NVV_FechaDespachoHoy() As List(Of LsValiciones.Mensajes)
 
         Dim _Lista As New List(Of LsValiciones.Mensajes)
@@ -1100,19 +1175,23 @@ Public Class Frm_Stmp_Listado
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
 
                     Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+                    Dim _Id_Enc As Integer = _Fila.Cells("Id").Value
                     Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
                     Dim _Estado As String = _Fila.Cells("Estado").Value
                     Dim _Tido As String = _Fila.Cells("Tido").Value
                     Dim _Error_FacAuto As Boolean = _Fila.Cells("Error_FacAuto").Value
                     Dim _Facturar As Boolean = _Fila.Cells("Facturar").Value
 
-                    LabelItem1.Text = "Opciones (Id: " & _Idmaeedo & ")"
+                    LabelItem1.Text = $"Opciones (Id_Enc: {_Id_Enc}, Idmaeedo: {_Idmaeedo})"
 
                     Btn_Mnu_EntregarMercaderia.Visible = (Super_TabS.SelectedTab.Name = "Tab_Facturadas")
                     Btn_CerrarTicket.Visible = (Super_TabS.SelectedTab.Name = "Tab_Entregadas")
 
                     Btn_ReenviaFacturar.Visible = (Super_TabS.SelectedTab.Name = "Tab_Completadas")
                     Btn_ReenviaFacturar.Enabled = (_Error_FacAuto Or _Tido = "NVI")
+
+                    Btn_AnularTicket.Enabled = (Super_TabS.SelectedTab.Name = "Tab_Completadas")
 
                     If _Tido = "NVI" Then
                         If _Facturar Then
@@ -1147,7 +1226,9 @@ Public Class Frm_Stmp_Listado
 
         Try
 
-            If Not Fx_Tiene_Permiso(Me, "Stem0004") Then Return
+            If Not Fx_Tiene_Permiso(Me, "Stem0004") Then
+                Return
+            End If
 
             Timer_Monitoreo.Stop()
 
@@ -2246,6 +2327,33 @@ Public Class Frm_Stmp_Listado
         Return copia
     End Function
 
+    Private Sub Btn_AnularTicket_Click(sender As Object, e As EventArgs) Handles Btn_AnularTicket.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Stem0006") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _Numero = _Fila.Cells("Numero").Value
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_AnularTicket_Paquetes(FUNCIONARIO, _Numero)
+
+        If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            Return
+        End If
+
+        If _Mensaje.Cancelado Then
+            Return
+        End If
+
+        Grilla.Rows.Remove(_Fila)
+
+    End Sub
 End Class
 
 Namespace Stmp_Configuracion

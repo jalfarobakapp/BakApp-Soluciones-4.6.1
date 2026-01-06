@@ -1678,6 +1678,12 @@ Public Class Class_Genera_DTE_RdBk
             Dim _CmnaDest As String = _Rows.Item("CmnaDest").ToString.Trim
             Dim _CiudadDest As String = _Rows.Item("CiudadDest").ToString.Trim
 
+            Fx_Caracter_Raro_Quitar(_Patente)
+            Fx_Caracter_Raro_Quitar(_Chofer)
+            Fx_Caracter_Raro_Quitar(_DirDest)
+            Fx_Caracter_Raro_Quitar(_CmnaDest)
+            Fx_Caracter_Raro_Quitar(_CiudadDest)
+
             If _RUTTrans = _RUTChofer Then
                 _RUTTrans = String.Empty
             End If

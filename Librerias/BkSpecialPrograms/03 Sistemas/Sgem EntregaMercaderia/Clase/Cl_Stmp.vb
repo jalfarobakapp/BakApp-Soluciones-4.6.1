@@ -1378,6 +1378,87 @@ Public Class Cl_Stmp
 
     End Function
 
+    Function Fx_Anular_Ticket_Paquetes() As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = String.Empty
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With _Zw_Stmp_Enc
+
+                Consulta_sql = $"
+    Update {_Global_BaseBk}Zw_Stmp_Det
+    Set 
+        Caprco1_Real = 0,
+        Caprco2_Real = 0,
+        Rlud_Real = 0,
+        Pickeado = 0,
+        CodFuncionario_Pickea = '', 
+        EnProceso = 0 
+    Where Id_Enc = { .Id}
+
+    Update {_Global_BaseBk}Zw_Stmp_Enc 
+    Set 
+        Estado = '{ .Estado}'
+        ,FechaAnula = Getdate()
+        ,ConfirmadoWMS = 0
+        ,Observacion = 'Documento anulado desde Bakapp, Anula Ticket devuelve Paquetes'
+        ,CodFuncionario_Anula = '{ .CodFuncionario_Anula}'
+    Where Id = { .Id}
+
+	Update  {_Global_BaseBk}Zw_WMS_Paquetes 
+	set 
+	    Id_Enc = 0,
+	    Idmaeedo =0,
+	    Reservado = 0,
+        Tido = '',
+        Nudo = ''
+	Where Id_Enc = { .Id}
+"
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End With
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje_Stem.EsCorrecto = True
+            _Mensaje_Stem.Detalle = "Documento anulado correctamente"
+            _Mensaje_Stem.Mensaje = "Documento anulado"
+            _Mensaje_Stem.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = ex.Message
+            _Mensaje_Stem.Icono = MessageBoxIcon.Stop
+            _Zw_Stmp_Enc.Id = 0
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Stem
+
+    End Function
+
     Function Fx_Grabar_Permiso(Zw_Stmp_Enc_Permisos As Zw_Stmp_Enc_Permisos) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
