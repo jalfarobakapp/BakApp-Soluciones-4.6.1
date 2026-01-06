@@ -76,7 +76,19 @@ Public Class Frm_Stmp_IncNVVPicking
             Chk_Pagar_Documentos.Enabled = False
             Rdb_FechaFacFechaManual.Text = "F. de Guía de Traslado"
             Rdb_FechaFacFechaDespachoNVV.Text = "F. de Guía de Traslado, fecha de despacho de las NVI."
+
+            If Not Chk_FacturarTodo.Enabled Then
+                Rdb_FechaFacFechaManual.Enabled = False
+                Rdb_FechaFacFechaDespachoNVV.Enabled = False
+                Dtp_FechaParaFacturacion.Enabled = False
+            End If
+
         End If
+
+        Chk_NotfStockInsuficiente_Stmp.Checked = (_Global_Row_Configuracion_General.Item("NotfStockInsuficiente_Stmp") Or
+                                        _Global_Row_Configuracion_Estacion.Item("NotfStockInsuficiente_Stmp"))
+
+        Chk_PickearTodo.Enabled = Not Chk_NotfStockInsuficiente_Stmp.Checked
 
         Sb_Actualizar_Grilla()
 
@@ -835,6 +847,132 @@ Public Class Frm_Stmp_IncNVVPicking
 
     End Function
 
+    Function Fx_Revisar_NVVNVI_StockInsufuciente(_Idmaeedo As Integer) As LsValiciones.Mensajes
+        'Notificar stock insuficiente al enviar una NVV/NVI al Sistema de Entrega de Mercadería.
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Tbl As DataTable
+
+        Try
+
+            Consulta_sql = $"DECLARE @Idmaeedo Int
+
+SET @Idmaeedo = {_Idmaeedo};
+
+BEGIN
+    SELECT 
+		Temp.IDMAEEDO,
+        Temp.TIDO,
+        Temp.NUDO,
+		Temp.FEEMLI,
+        Temp.SULIDO,
+        Temp.BOSULIDO,
+        Temp.KOPRCT,
+        Temp.UDTRPR,
+        Temp.CAPRCO1, 
+        Temp.CAPRCO2,
+        Temp.Sum_INGRE_Caprco1_Ori,
+        Temp.Sum_PREPA_Caprco1_Ori,
+        Temp.STFI1,
+		Temp.STFI2,
+        (Temp.STFI1 - (Temp.Sum_PREPA_Caprco1_Ori + Temp.Sum_INGRE_Caprco1_Ori + Temp.CAPRCO1)) AS 'Saldo_Caprco1',
+		(Temp.STFI2 - (Temp.Sum_PREPA_Caprco2_Ori + Temp.Sum_INGRE_Caprco2_Ori + Temp.CAPRCO2)) AS 'Saldo_Caprco2'
+    FROM (
+        SELECT 
+			M.IDMAEEDO,
+            M.TIDO,
+            M.NUDO,
+			M.FEEMLI,
+            M.SULIDO,
+            M.BOSULIDO,
+            M.KOPRCT,
+            M.UDTRPR,
+            M.CAPRCO1, 
+            M.CAPRCO2,
+            ISNULL((SELECT SUM(det.Caprco1_Ori) 
+                    FROM {_Global_BaseBk}Zw_Stmp_Det det 
+                    INNER JOIN {_Global_BaseBk}[Zw_Stmp_Enc] Enc ON det.Id_Enc = Enc.Id 
+                    WHERE Enc.Estado = 'INGRE' 
+                      AND det.Codigo = M.KOPRCT), 0) AS 'Sum_INGRE_Caprco1_Ori', 
+            ISNULL((SELECT SUM(det.Caprco1_Ori) 
+                    FROM {_Global_BaseBk}Zw_Stmp_Det det 
+                    INNER JOIN {_Global_BaseBk}[Zw_Stmp_Enc] Enc ON det.Id_Enc = Enc.Id 
+                    WHERE Enc.Estado = 'PREPA' 
+                      AND det.Codigo = M.KOPRCT), 0) AS 'Sum_PREPA_Caprco1_Ori',      
+            ISNULL((SELECT S.STFI1 
+                    FROM MAEST S 
+                    WHERE S.KOSU = M.SULIDO 
+                      AND S.KOBO = M.BOSULIDO 
+                      AND S.KOPR = M.KOPRCT), 0) AS 'STFI1',
+			 ISNULL((SELECT S.STFI2
+                    FROM MAEST S 
+                    WHERE S.KOSU = M.SULIDO 
+                      AND S.KOBO = M.BOSULIDO 
+                      AND S.KOPR = M.KOPRCT), 0) AS 'STFI2',
+			ISNULL((SELECT SUM(det.Caprco2_Ori) 
+                    FROM {_Global_BaseBk}Zw_Stmp_Det det 
+                    INNER JOIN {_Global_BaseBk}[Zw_Stmp_Enc] Enc ON det.Id_Enc = Enc.Id 
+                    WHERE Enc.Estado = 'INGRE' 
+                      AND det.Codigo = M.KOPRCT), 0) AS 'Sum_INGRE_Caprco2_Ori', 
+			ISNULL((SELECT SUM(det.Caprco2_Ori) 
+                    FROM {_Global_BaseBk}Zw_Stmp_Det det 
+                    INNER JOIN {_Global_BaseBk}[Zw_Stmp_Enc] Enc ON det.Id_Enc = Enc.Id 
+                    WHERE Enc.Estado = 'PREPA' 
+                      AND det.Codigo = M.KOPRCT), 0) AS 'Sum_PREPA_Caprco2_Ori'
+        FROM MAEDDO M
+        WHERE M.IDMAEEDO = @Idmaeedo
+    ) AS Temp 
+END"
+
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            ' Si no hay filas, consideramos que no hay problema de stock
+            If _Tbl Is Nothing OrElse _Tbl.Rows.Count = 0 Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = "No se encontraron registros para revisar stock."
+                Return _Mensaje
+            End If
+
+            ' Recorrer filas y verificar Saldo_Caprco1
+            For Each _Fila As DataRow In _Tbl.Rows
+
+                Dim _Saldo As Double = 0
+
+                If Not IsDBNull(_Fila.Item("Saldo_Caprco1")) Then
+                    Double.TryParse(_Fila.Item("Saldo_Caprco1").ToString, _Saldo)
+                End If
+
+                If _Saldo < 0 Then
+                    ' Advertencia: stock insuficiente
+                    _Mensaje.EsCorrecto = False
+                    _Mensaje.Mensaje = "Stock insuficiente: Saldo_Caprco1 negativo."
+                    _Mensaje.Detalle = String.Format("Documento: {0} - {1}, Producto: {2}, Sucursal: {3}, Bodega: {4}, Saldo_Caprco1: {5}",
+                                                    If(IsDBNull(_Fila.Item("TIDO")), String.Empty, _Fila.Item("TIDO").ToString),
+                                                    If(IsDBNull(_Fila.Item("NUDO")), String.Empty, _Fila.Item("NUDO").ToString),
+                                                    If(IsDBNull(_Fila.Item("KOPRCT")), String.Empty, _Fila.Item("KOPRCT").ToString),
+                                                    If(IsDBNull(_Fila.Item("SULIDO")), String.Empty, _Fila.Item("SULIDO").ToString),
+                                                    If(IsDBNull(_Fila.Item("BOSULIDO")), String.Empty, _Fila.Item("BOSULIDO").ToString),
+                                                    _Saldo.ToString("N2"))
+                    _Mensaje.Tag = _Tbl
+                    Return _Mensaje
+                End If
+
+            Next
+
+            ' Si llegamos aquí, no hay saldos negativos
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Revisión de stock correcta. No se detectaron Saldos negativos."
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Error revisando stock: " & ex.Message
+            _Mensaje.Detalle = ex.ToString
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Private Sub Btn_ActualizarLista_Click(sender As Object, e As EventArgs) Handles Btn_ActualizarLista.Click
         Sb_Actualizar_Grilla()
     End Sub
@@ -986,6 +1124,22 @@ Public Class Frm_Stmp_IncNVVPicking
             Case "VADP", "SALDOAFAVOR", "NUDO", "NUDO_FCV"
                 Sb_Ver_Documento()
             Case "FechaParaFacturacion"
+
+                If Not Chk_FacturarTodo.Enabled Then
+
+                    Dim _Msj As String = String.Empty
+
+                    If Tido = "NVV" Then
+                        _Msj = "La facturación se realizará con la misma fecha en que la NVV sea habilitada desde el sistema de entrega de mercadería."
+                    End If
+                    If Tido = "NVI" Then
+                        _Msj = "La guía de traslado se emitirá con la misma fecha en que la NVI sea habilitada desde el sistema de entrega de mercadería."
+                    End If
+
+                    MessageBoxEx.Show(Me, Fx_AjustarTexto(_Msj, 80), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+
+                End If
 
                 Dim _Grabar As Boolean
                 Dim _FechaSeleccionada As DateTime

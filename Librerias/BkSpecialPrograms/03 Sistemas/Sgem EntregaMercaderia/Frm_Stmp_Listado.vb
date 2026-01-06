@@ -1971,7 +1971,7 @@ Public Class Frm_Stmp_Listado
         Dim _GrabarTransporte As Boolean = False
 
         Dim _SqlQuery As String = "Update " & _Global_BaseBk & "Zw_Stmp_Enc" & vbCrLf &
-                                  "Set Facturar = 1" & vbCrLf &
+                                  "Set Facturar = 1, Fecha_Facturar = DATEADD(day, DATEDIFF(day, 0, GETDATE()), 0)" & vbCrLf &
                                   "Where Id = " & _Id_Enc
 
         Dim _Msj As String = String.Empty
@@ -1986,15 +1986,35 @@ Public Class Frm_Stmp_Listado
             If _AgregarTransporteNVIparaGTI Then
 
                 Dim _Grabar As Boolean
+                Dim _Tiene_Transporte As Boolean = False
                 Dim _Zw_Transporte_Dte As New Zw_Transporte_Dte
 
+                Consulta_sql = $"Select Top 1 * From {_Global_BaseBk}Zw_Transporte_Dte Where Idmaeedo = {_Idmaeedo} --And Id_Enc = {_Id_Enc}"
+                Dim _Row_Td As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
                 With _Zw_Transporte_Dte
-                    .Id = 0
-                    .Id_Enc = _Id_Enc
-                    .Idmaeedo = 0
-                    .Tido = String.Empty
-                    .Nudo = String.Empty
-                    .Empresa = Mod_Empresa
+
+                    If IsNothing(_Row_Td) Then
+                        .Id = 0
+                        .Id_Enc = _Id_Enc
+                        .Idmaeedo = 0
+                        .Tido = String.Empty
+                        .Nudo = String.Empty
+                        .Empresa = Mod_Empresa
+                    Else
+                        .Id = _Row_Td.Item("Id")
+                        .Id_Enc = _Row_Td.Item("Id_Enc")
+                        .Idmaeedo = _Row_Td.Item("Idmaeedo")
+                        .Tido = _Row_Td.Item("Tido")
+                        .Nudo = _Row_Td.Item("Nudo")
+                        .Empresa = _Row_Td.Item("Empresa")
+                        .Patente = _Row_Td.Item("Patente")
+                        .RUTTrans = _Row_Td.Item("RUTTrans")
+                        .RUTChofer = _Row_Td.Item("RUTChofer")
+                        .Chofer = _Row_Td.Item("Chofer")
+                        _Tiene_Transporte = True
+                    End If
+
                 End With
 
                 Consulta_sql = "Select ENDO,SUENDO,Isnull(NOKOEN,'') As 'NOKOEN',Isnull(DIEN,'') As 'DIEN',Isnull(PAEN,'') As 'PAEN'," &
@@ -2047,11 +2067,21 @@ Public Class Frm_Stmp_Listado
                 _GrabarTransporte = True
                 With _Zw_Transporte_Dte
 
-                    _SqlQuery += vbCrLf & vbCrLf &
-                                 "Insert Into " & _Global_BaseBk & "Zw_Transporte_Dte (Empresa,Id_Enc,Idmaeedo,Tido,Nudo," &
-                                 "Patente,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest)" & vbCrLf &
-                                $"Values ({ .Empresa},{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
-                                $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}')"
+                    If _Tiene_Transporte Then
+                        _SqlQuery += vbCrLf & vbCrLf &
+                                    $"Update {_Global_BaseBk}Zw_Transporte_Dte Set " &
+                                    $"Patente = '{ .Patente}'" &
+                                    $",RUTTrans = '{ .RUTTrans}'" &
+                                    $",Chofer = '{ .Chofer}'" &
+                                    $",RUTChofer = '{ .RUTChofer}'" & vbCrLf &
+                                    $"Where Id = { .Id}"
+                    Else
+                        _SqlQuery += vbCrLf & vbCrLf &
+                                     "Insert Into " & _Global_BaseBk & "Zw_Transporte_Dte (Empresa,Id_Enc,Idmaeedo,Tido,Nudo," &
+                                     "Patente,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest)" & vbCrLf &
+                                    $"Values ({ .Empresa},{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
+                                    $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}')"
+                    End If
 
                 End With
 

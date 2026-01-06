@@ -459,6 +459,7 @@ Public Class Cl_FacAuto_NVV
                                    ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                                    ",FechaHoraFacturado = Getdate()" & vbCrLf &
                                    ",IpEquipo = '" & _IpEquipo & "'" & vbCrLf &
+                                   ",TidoGen = '" & _Row_Factura.Item("TIDO") & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                         Log_Registro += "NVV: " & _Nudo_Nvv & " facturada correctamente. " & _Row_Factura.Item("TIDO") & "-" & _Row_Factura.Item("NUDO") & vbCrLf

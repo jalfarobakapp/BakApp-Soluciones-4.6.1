@@ -354,9 +354,9 @@ Public Class Frm_MantFacturasElectronicas
 
         Consulta_sql = My.Resources.Recursos_Dte_Hefesto.SQLQuery_Estado_de_avance_de_envios_de_DTE_vs_Trackid
 
-        If _AmbienteCertificacion Then
-            Consulta_sql = Replace(Consulta_sql, "Left Join #Global_BaseBk#Zw_DTE_Documentos", "Inner Join #Global_BaseBk#Zw_DTE_Documentos")
-        End If
+        'If _AmbienteCertificacion Then
+        '    Consulta_sql = Replace(Consulta_sql, "Left Join #Global_BaseBk#Zw_DTE_Documentos", "Inner Join #Global_BaseBk#Zw_DTE_Documentos")
+        'End If
 
         Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
         Consulta_sql = Replace(Consulta_sql, "#Filtros#", _Filtros)

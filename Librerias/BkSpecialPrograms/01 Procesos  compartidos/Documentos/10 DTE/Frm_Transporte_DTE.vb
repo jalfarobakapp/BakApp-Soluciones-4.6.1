@@ -93,6 +93,13 @@ Public Class Frm_Transporte_DTE
             Return
         End If
 
+        If Txt_Patente.Text.ToString.Trim.Length < 5 Then
+            MessageBoxEx.Show(Me, "La patente debe tener al menos 5 caracteres para motocicletas y 6 caracteres para autos y camiones.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Patente.Focus()
+            Return
+        End If
+
         If String.IsNullOrEmpty(Txt_RUTTrans.Text.Trim) Then
             MessageBoxEx.Show(Me, "El Rut del Transportista no puede estar vacía", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_RUTTrans.Focus()
@@ -141,6 +148,25 @@ Public Class Frm_Transporte_DTE
             Return
         End If
 
+        Dim _Msg1 = "¿CONFIRMA LOS DATOS?"
+        Dim _Msg2 = vbCrLf & $"Patente: {Txt_Patente.Text}" & vbCrLf &
+                    $"Rut Transporte: {Txt_RUTTrans.Text}" & vbCrLf &
+                    $"Rut Chofer: {Txt_RUTChofer.Text}" & vbCrLf &
+                    $"Nombre Chofer: {Txt_Chofer.Text}"
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        ' Si los datos actuales son iguales a UltimoTransporte, no pedir confirmación.
+        Dim skipConfirmation As Boolean = ValoresIgualesAUltimo()
+
+        If Not skipConfirmation Then
+            _Mensaje = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.Help,,,, False)
+
+            If _Mensaje.Resultado <> "Yes" Then
+                Return
+            End If
+        End If
+
         With Zw_Transporte_Dte
 
             .Patente = Txt_Patente.Text
@@ -154,8 +180,8 @@ Public Class Frm_Transporte_DTE
         End With
 
         ' Si todo está bien, confirmar y cerrar formulario (o ajustar según necesidad)
-        MessageBoxEx.Show(Me, "Datos guardados correctamente.", "Información",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'MessageBoxEx.Show(Me, "Datos guardados correctamente.", "Información",
+        '                MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         ' Si se desea cerrar el formulario:
         Me.DialogResult = DialogResult.OK
@@ -163,6 +189,36 @@ Public Class Frm_Transporte_DTE
         Me.Close()
 
     End Sub
+
+    Private Function ValoresIgualesAUltimo() As Boolean
+        If UltimoTransporte Is Nothing Then
+            Return False
+        End If
+
+        Dim patenteActual As String = If(Txt_Patente.Text, String.Empty).Trim()
+        Dim rutTransActual As String = If(Txt_RUTTrans.Text, String.Empty).Trim()
+        Dim rutChoferActual As String = If(Txt_RUTChofer.Text, String.Empty).Trim()
+        Dim choferActual As String = If(Txt_Chofer.Text, String.Empty).Trim()
+        Dim dirDestActual As String = If(Txt_DirDest.Text, String.Empty).Trim()
+        Dim cmnaDestActual As String = If(Txt_CmnaDest.Text, String.Empty).Trim()
+        Dim ciudadDestActual As String = If(Txt_CiudadDest.Text, String.Empty).Trim()
+
+        Dim patenteUlt As String = If(UltimoTransporte.Patente, String.Empty).Trim()
+        Dim rutTransUlt As String = If(UltimoTransporte.RUTTrans, String.Empty).Trim()
+        Dim rutChoferUlt As String = If(UltimoTransporte.RUTChofer, String.Empty).Trim()
+        Dim choferUlt As String = If(UltimoTransporte.Chofer, String.Empty).Trim()
+        Dim dirDestUlt As String = If(UltimoTransporte.DirDest, String.Empty).Trim()
+        Dim cmnaDestUlt As String = If(UltimoTransporte.CmnaDest, String.Empty).Trim()
+        Dim ciudadDestUlt As String = If(UltimoTransporte.CiudadDest, String.Empty).Trim()
+
+        Dim iguales As Boolean = String.Equals(patenteActual, patenteUlt, StringComparison.OrdinalIgnoreCase) AndAlso
+                                 String.Equals(rutTransActual, rutTransUlt, StringComparison.OrdinalIgnoreCase) AndAlso
+                                 String.Equals(rutChoferActual, rutChoferUlt, StringComparison.OrdinalIgnoreCase) AndAlso
+                                 String.Equals(choferActual, choferUlt, StringComparison.OrdinalIgnoreCase)
+
+        Return iguales
+    End Function
+
 
     Private Sub Btn_UltTransporte_Click(sender As Object, e As EventArgs) Handles Btn_UltTransporte.Click
 

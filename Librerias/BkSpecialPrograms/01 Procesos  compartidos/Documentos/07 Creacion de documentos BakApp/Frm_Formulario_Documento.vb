@@ -19814,7 +19814,7 @@ Public Class Frm_Formulario_Documento
             Dim _Traer_Solo_Produtos_Bod_Suc = False
             Dim _Solo_Detalle_Bodegas_Con_Permiso_Usuario = Fx_Tiene_Permiso("NO00012", FUNCIONARIO)
 
-            If _Tido.Contains("G") Or _Solo_Detalle_Bodegas_Con_Permiso_Usuario Then
+            If Not _Facturacion_Automatica AndAlso _Tido.Contains("G") Or _Solo_Detalle_Bodegas_Con_Permiso_Usuario Then
                 _Traer_Solo_Produtos_Bod_Suc = (_Tido <> "GRD") ' True)
                 _Mantener_Bodega_Origen = False
             End If

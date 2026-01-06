@@ -262,6 +262,7 @@ Public Class Frm_Configuracion_Gral
             Chk_Pickear_CrearGuiasAutoCompletas.Checked = .Item("Pickear_CrearGuiasAutoCompletas")
 
             Chk_AgregarTransporteNVIparaGTI.Checked = .Item("AgregarTransporteNVIparaGTI")
+            Chk_NotfStockInsuficiente_Stmp.Checked = .Item("NotfStockInsuficiente_Stmp")
 
         End With
 
@@ -603,6 +604,7 @@ Public Class Frm_Configuracion_Gral
                        ",LasNVVDebenSerHabilitadasParaFacturarCP = " & Convert.ToInt32(Chk_LasNVVDebenSerHabilitadasParaFacturarCP.Checked) & vbCrLf &
                        ",Pickear_CrearGuiasAutoCompletas = " & Convert.ToInt32(Chk_Pickear_CrearGuiasAutoCompletas.Checked) & vbCrLf &
                        ",AgregarTransporteNVIparaGTI = " & Convert.ToInt32(Chk_AgregarTransporteNVIparaGTI.Checked) & vbCrLf &
+                       ",NotfStockInsuficiente_Stmp = " & Convert.ToInt32(Chk_NotfStockInsuficiente_Stmp.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
