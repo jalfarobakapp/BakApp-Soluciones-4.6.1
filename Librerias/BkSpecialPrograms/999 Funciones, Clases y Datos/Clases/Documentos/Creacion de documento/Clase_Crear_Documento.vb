@@ -2107,25 +2107,29 @@ Public Class Clase_Crear_Documento
 
                 With Zw_Transporte_Dte
 
-                    .Idmaeedo = _Idmaeedo
-                    .Tido = _Tido
-                    .Nudo = _Nudo
+                    If Not IsNothing(.Patente) Then
 
-                    Consulta_sql = $"Insert Into {_Global_BaseBk}Zw_Transporte_Dte (Empresa,Id_Enc,Idmaeedo,Tido,Nudo," &
-                                   "Patente,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest)" & vbCrLf &
-                                   $"Values ({ .Empresa},{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
-                                   $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}')"
-                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                    Comando.Transaction = myTrans
-                    Comando.ExecuteNonQuery()
+                        .Idmaeedo = _Idmaeedo
+                        .Tido = _Tido
+                        .Nudo = _Nudo
 
-                    Consulta_sql = $"Update MAEEDOOB Set TEXTO1 = '{ .Patente}',TEXTO2 = '{ .RUTTrans}'," &
-                                   $"TEXTO3 = '{ .RUTChofer}',TEXTO4 = '{ .Chofer}',TEXTO5 = '{ .DirDest}'," &
-                                   $"TEXTO6 = '{ .CiudadDest}',TEXTO7 = '{ .CmnaDest}'" & vbCrLf &
-                                   "Where IDMAEEDO = " & _Idmaeedo
-                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                    Comando.Transaction = myTrans
-                    Comando.ExecuteNonQuery()
+                        Consulta_sql = $"Insert Into {_Global_BaseBk}Zw_Transporte_Dte (Empresa,Id_Enc,Idmaeedo,Tido,Nudo," &
+                                       "Patente,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest)" & vbCrLf &
+                                       $"Values ({ .Empresa},{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
+                                       $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}')"
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                        Consulta_sql = $"Update MAEEDOOB Set TEXTO1 = '{ .Patente}',TEXTO2 = '{ .RUTTrans}'," &
+                                       $"TEXTO3 = '{ .RUTChofer}',TEXTO4 = '{ .Chofer}',TEXTO5 = '{ .DirDest}'," &
+                                       $"TEXTO6 = '{ .CiudadDest}',TEXTO7 = '{ .CmnaDest}'" & vbCrLf &
+                                       "Where IDMAEEDO = " & _Idmaeedo
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                    End If
 
                 End With
 

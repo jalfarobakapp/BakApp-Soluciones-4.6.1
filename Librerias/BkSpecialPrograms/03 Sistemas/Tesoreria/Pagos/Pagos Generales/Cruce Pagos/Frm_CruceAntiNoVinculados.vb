@@ -51,6 +51,8 @@ Public Class Frm_CruceAntiNoVinculados
 
         Sb_Actualizar_Grilla()
 
+        Dtp_FEmisionOtra.Value = Now.Date
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
@@ -889,6 +891,16 @@ ORDER BY Orden,FEVEDP"
 
     Private Sub Btn_Grabar_Autorizacion_Click(sender As Object, e As EventArgs) Handles Btn_Grabar_Autorizacion.Click
 
+        If Rdb_FechaAsignacionOtraFecha.Checked Then
+            If Dtp_FEmisionOtra.Value.Date > Now.Date Then
+                MessageBoxEx.Show(Me, "La fecha de emisión no puede ser mayor a la fecha actual." & vbCrLf &
+                                  "Corrija la fecha para poder continuar.", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Dtp_FEmisionOtra.Focus()
+                Return
+            End If
+        End If
+
         Dim _Ls_Mensajes As New List(Of LsValiciones.Mensajes)
 
         ' 1) Comprobar si hay al menos una fila seleccionada y marcada para cruce automático
@@ -1053,6 +1065,17 @@ ORDER BY Orden,FEVEDP"
 
             Dim _Fecha_Asignacion_Pago As Date = FechaDelServidor()
             Dim _Ls_Maedpce As New List(Of MAEDPCE)
+
+            If Rdb_FechaAsignacionFActual.Checked Then
+                _Fecha_Asignacion_Pago = FechaDelServidor()
+            End If
+            If Rdb_FechaAsignacionFPago.Checked Then
+                _Fecha_Asignacion_Pago = _Row_Maedpce.Item("FEEMDP")
+            End If
+            If Rdb_FechaAsignacionOtraFecha.Checked Then
+                _Fecha_Asignacion_Pago = Dtp_FEmisionOtra.Value.Date
+            End If
+
 
             _Ls_Maedpce.Add(_Maedpce)
 

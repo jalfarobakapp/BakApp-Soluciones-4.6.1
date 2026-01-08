@@ -1924,8 +1924,8 @@ Public Class Frm_Crear_Entidad_Mt
         If MessageBoxEx.Show(Me, "¿Desea agregar un comentario con respecto al " & _Palabra & "?", "Comentario",
                              MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
-            _Observacion = InputBox_Bk(Me, "Ingrese una observación",
-                                                 "Observación", "", True, _Tipo_Mayus_Minus.Mayusculas)
+            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese una observación",
+                                                 "Observación", _Observacion, True, _Tipo_Mayus_Minus.Mayusculas, 200 - _BloDes.Length)
 
 
             If Not String.IsNullOrEmpty(Trim(_Observacion)) Then
@@ -1935,7 +1935,14 @@ Public Class Frm_Crear_Entidad_Mt
             End If
         End If
 
+        ' Concatenar prefijo y observación, eliminar saltos de línea y limitar a 200 caracteres
         _Observacion = _BloDes & _Observacion
+        _Observacion = Replace(_Observacion, vbCrLf, " ")
+        _Observacion = _Observacion.Trim()
+
+        If _Observacion.Length > 200 Then
+            _Observacion = _Observacion.Substring(0, 200)
+        End If
 
         _Sql_BlocDesb_VtayCmp = "Insert Into MAEENOBS (KOEN,SUEN,KOFU,FECHA,HORAGRAB,POSIT) Values " & vbCrLf &
                                 "('" & Txt_Koen.Text & "','" & Txt_Suen.Text & "','" & FUNCIONARIO & "','" & Format(FechaDelServidor, "yyyyMMdd") &

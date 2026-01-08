@@ -3114,7 +3114,7 @@ Error_Numero:
 
         texto = texto.Replace("  ", "")
         texto = texto.Replace(Str(13), " ")
-        ' texto = texto.Replace(vbCrLf, " ")  ' Reemplazar saltos de línea por espacios
+        texto = texto.Replace(vbCrLf, " ")  ' Reemplazar saltos de línea por espacios
 
         _Palabras = Split(texto, " ") ' Separar el texto por espacios
 

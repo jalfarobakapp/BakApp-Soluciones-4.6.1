@@ -16127,7 +16127,8 @@ Public Class Frm_Formulario_Documento
 
                 Case csGlobales.Enum_Tipo_Documento.Compra,
                      csGlobales.Enum_Tipo_Documento.Guia_Recepcion,
-                     csGlobales.Enum_Tipo_Documento.Guia_Traslado_Interno
+                     csGlobales.Enum_Tipo_Documento.Guia_Traslado_Interno,
+                     csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Consignaciones_GPD_CON
 
                     Fm = New Frm_SeleccionarListaPrecios(Frm_SeleccionarListaPrecios.Enum_Tipo_Lista.Costo, False, True)
 
@@ -16758,7 +16759,22 @@ Public Class Frm_Formulario_Documento
                     Fm_Obs.Dispose()
 
                     If _Grabar_Obs Then
+
+                        Dim _Mensaje As New LsValiciones.Mensajes
+
+                        _Mensaje = Fx_AgregarTransporteNVIparaGTI()
+
+                        If Not _Mensaje.EsCorrecto Then
+                            If MessageBoxEx.Show(Me, _Mensaje.Detalle & vbCrLf & vbCrLf & "¿Confirma grabar el documento sin datos del transporte?", "Validación",
+                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+                                Return
+                            End If
+                        End If
+
+                        Zw_Transporte_Dte = _Mensaje.Tag
+
                         _Solicitar_Observaciones_Al_Grabar = False
+
                     Else
 
                         If Not IsNothing(_Cl_Despacho) Then
@@ -17295,6 +17311,107 @@ Public Class Frm_Formulario_Documento
         End Try
 
     End Sub
+
+    Function Fx_AgregarTransporteNVIparaGTI() As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        If _Tido <> "GTI" Then
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Tag = Nothing
+            Return _Mensaje
+        End If
+
+        Dim _Zw_Transporte_Dte As New Zw_Transporte_Dte
+
+        Dim _AgregarTransporteNVIparaGTI As Boolean = (_Global_Row_Configuracion_General.Item("AgregarTransporteNVIparaGTI") Or
+                                                   _Global_Row_Configuracion_Estacion.Item("AgregarTransporteNVIparaGTI"))
+
+        If Not _AgregarTransporteNVIparaGTI Then
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Tag = Nothing
+            Return _Mensaje
+        End If
+
+        Try
+
+
+            Dim _Grabar As Boolean
+            Dim _Tiene_Transporte As Boolean = False
+
+            With _Zw_Transporte_Dte
+
+                .Id = 0
+                .Id_Enc = 0
+                .Idmaeedo = 0
+                .Tido = String.Empty
+                .Nudo = String.Empty
+                .Empresa = Mod_Empresa
+
+            End With
+
+            Dim _Koen As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+            Dim _Suen As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+
+            Consulta_sql = "Select KOEN,SUEN,Isnull(NOKOEN,'') As 'NOKOEN',Isnull(DIEN,'') As 'DIEN',Isnull(PAEN,'') As 'PAEN'," &
+                           "Isnull(p.NOKOPA,'') As 'NOKOPA',Isnull(CIEN,'') As 'CIEN'," &
+                           "Isnull(c.NOKOCI,'') As 'NOKOCI',Isnull(CMEN,'') As 'CMEN',Isnull(cm.NOKOCM,'') As 'NOKOCM'" & vbCrLf &
+                           "From MAEEN En" & vbCrLf &
+                           "Left Join TABPA p On p.KOPA = En.PAEN" & vbCrLf &
+                           "Left Join TABCI c On c.KOPA = En.PAEN And c.KOCI = En.CIEN" & vbCrLf &
+                           "Left Join TABCM cm On cm.KOPA = En.PAEN And cm.KOCI = En.CIEN And cm.KOCM = En.CMEN" & vbCrLf &
+                           $"Where KOEN = '{_Koen}' And SUEN = '{_Suen}'"
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row) Then
+                With _Zw_Transporte_Dte
+                    .DirDest = If(IsDBNull(_Row.Item("DIEN")), String.Empty, _Row.Item("DIEN").ToString().Trim)
+
+                    ' Obtener el valor seguro de NOKOCI
+                    Dim _Ciudad As String = If(IsDBNull(_Row.Item("NOKOCI")), String.Empty, _Row.Item("NOKOCI").ToString().Trim)
+                    Dim _Comuna As String = If(IsDBNull(_Row.Item("NOKOCM")), String.Empty, _Row.Item("NOKOCM").ToString().Trim)
+
+                    ' Recortar a un máximo de 30 caracteres
+                    If _Ciudad.Length > 20 Then _Ciudad = _Ciudad.Substring(0, 20)
+                    If _Comuna.Length > 20 Then _Ciudad = _Comuna.Substring(0, 20)
+
+                    .CiudadDest = _Ciudad.Trim
+                    .CmnaDest = _Comuna.Trim
+                End With
+            End If
+
+            Dim Fm As New Frm_Transporte_DTE
+            Fm.Zw_Transporte_Dte = _Zw_Transporte_Dte
+            Fm.ShowDialog(Me)
+            If Fm.DialogResult = DialogResult.OK Then
+                _Grabar = True
+                _Zw_Transporte_Dte = Fm.Zw_Transporte_Dte
+            End If
+            Fm.Dispose()
+
+            If Not _Grabar Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Detalle = "No se agregó el transporte a la GTI." & vbCrLf &
+                                  "Por lo tanto no se podrá generar la guía de despacho GTI."
+                _Mensaje.Tag = Nothing
+                _Mensaje.Icono = MessageBoxIcon.Stop
+                Return _Mensaje
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Tag = _Zw_Transporte_Dte
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Detalle = "Transporte agregado correctamente a la GTI."
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = ex.Message
+            _Mensaje.Tag = Nothing
+        End Try
+
+        Return _Mensaje
+
+    End Function
 
     Private Sub Sb_EliminarFilaPuntos()
 

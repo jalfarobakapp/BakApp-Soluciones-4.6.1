@@ -933,13 +933,13 @@ namespace HefestoCesionV12
                 ////
                 //// Normalice la declaracion jurada 
                 string Declaracion_Jurada = "";
-                Declaracion_Jurada += "Yo " + Nombre_cn + ", RUT " + this.Configuracion.Certificado.Rut + ", en representacion de , ";
+                Declaracion_Jurada += "Yo " + this.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.RUTAutorizado.Nombre + ", RUT " + this.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.RUTAutorizado.RUT + ", en representacion de " + this.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.RazonSocial + ", ";
                 Declaracion_Jurada += "RUT " + this.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.RUT + ", declaro bajo juramento que se ha puesto a disposicion del ";
                 Declaracion_Jurada += "cesionario " + Nombre_cesionario + ", RUT " + this.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cesionario.RUT + ", el (los) documento(s) donde ";
                 Declaracion_Jurada += "constan los recibos de la recepcion de las mercaderias entregadas o servicios prestados, ";
-                Declaracion_Jurada += "entregados por parte del deudor de la factura " + rut_receptor + ", Rut " + rut_receptor + ", ";
+                Declaracion_Jurada += "entregados por parte del deudor de la factura " + this.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.IdDTE.Folio + ", Rut " + rut_receptor + ", ";
                 Declaracion_Jurada += "de acuerdo a lo establecido en la Ley N 19.983";
-
+            
                 ////
                 //// Agregar la declaracion jurada
                 this.DocumentoAEC.Cesiones.Cesion.DocumentoCesion.Cedente.DeclaracionJurada = Declaracion_Jurada;

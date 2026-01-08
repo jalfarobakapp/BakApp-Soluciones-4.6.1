@@ -2160,7 +2160,7 @@ Public Class Frm_Stmp_Listado
                         _SqlQuery += vbCrLf & vbCrLf &
                                      "Insert Into " & _Global_BaseBk & "Zw_Transporte_Dte (Empresa,Id_Enc,Idmaeedo,Tido,Nudo," &
                                      "Patente,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest)" & vbCrLf &
-                                    $"Values ({ .Empresa},{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
+                                    $"Values ('{ .Empresa}',{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
                                     $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}')"
                     End If
 

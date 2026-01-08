@@ -459,7 +459,7 @@ Public Class Cl_FacAuto_NVV
                                    ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                                    ",FechaHoraFacturado = Getdate()" & vbCrLf &
                                    ",IpEquipo = '" & _IpEquipo & "'" & vbCrLf &
-                                   ",TidoGen = '" & _Row_Factura.Item("TIDO") & "'" & vbCrLf &
+                                   ",TidoGene = '" & _Row_Factura.Item("TIDO") & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                         Log_Registro += "NVV: " & _Nudo_Nvv & " facturada correctamente. " & _Row_Factura.Item("TIDO") & "-" & _Row_Factura.Item("NUDO") & vbCrLf
@@ -1068,12 +1068,13 @@ Public Class Cl_FacAuto_NVV
                             Throw New System.Exception(_Sql.Pro_Error)
                         End If
 
-                        Dim _Zw_Transporte_Dte As New Zw_Transporte_Dte
+                        Dim _Zw_Transporte_Dte As Zw_Transporte_Dte
 
                         Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Transporte_Dte Where Id_Enc = " & _Id_Enc
                         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                         If Not IsNothing(_Row) Then
+                            _Zw_Transporte_Dte = New Zw_Transporte_Dte
                             With _Zw_Transporte_Dte
                                 .Id_Enc = _Row.Item("Id_Enc")
                                 .Empresa = _Row.Item("Empresa")
@@ -1085,7 +1086,6 @@ Public Class Cl_FacAuto_NVV
                                 .CiudadDest = _Row.Item("CiudadDest")
                                 .CmnaDest = _Row.Item("CmnaDest")
                             End With
-
                         End If
 
                         Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
@@ -1103,6 +1103,7 @@ Public Class Cl_FacAuto_NVV
 
                             Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
                             Fm_Post.Zw_Transporte_Dte = _Zw_Transporte_Dte
+                            Fm_Post.NoConsolidarNuncaStock = True
 
                             _Msj_GrabarDoc = Fm_Post.Fx_Grabar_Documento(False,
                                                                          csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,

@@ -32,7 +32,7 @@ Public Class Frm_Crear_Entidad_Mt_Obs_CtaCte
         Dim _Observacion As String
 
         _Aceptado = InputBox_Bk(Me, "Ingrese una observación",
-                               "Observación", _Observacion, True, _Tipo_Mayus_Minus.Mayusculas, 100, True)
+                               "Observación", _Observacion, True, _Tipo_Mayus_Minus.Mayusculas, 200, True)
 
         If _Aceptado Then
 

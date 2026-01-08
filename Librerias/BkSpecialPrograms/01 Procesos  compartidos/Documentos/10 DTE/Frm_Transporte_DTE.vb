@@ -42,6 +42,10 @@ Public Class Frm_Transporte_DTE
         Txt_CmnaDest.ReadOnly = True
         Txt_CiudadDest.ReadOnly = True
 
+        Txt_DirDest.Enabled = False
+        Txt_CmnaDest.Enabled = False
+        Txt_CiudadDest.Enabled = False
+
         Me.ActiveControl = Txt_Patente
 
     End Sub

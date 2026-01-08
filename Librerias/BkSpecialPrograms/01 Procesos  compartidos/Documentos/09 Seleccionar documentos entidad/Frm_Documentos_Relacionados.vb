@@ -606,9 +606,26 @@ Public Class Frm_Documentos_Relacionados
 
         Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
         Dim _Tido = _Fila.Cells("TIDO").Value
+        Dim _Nudo = _Fila.Cells("NUDO").Value
 
         If Not Fx_NvvHabilitada_Fac(Me, _Idmaeedo, _Tido) Then
             e.Cancel = True
+        End If
+
+        If _Tido = "NVI" Then
+
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Stmp_Enc", $"Idmaeedo = {_Idmaeedo} And Estado In ('INGRE','PREPA','COMPL')")
+
+            If CBool(_Reg) Then
+
+                Dim _Msj As String = "Este documento se encuentra en Picking, no puede se puede generar la guía desde acá" & vbCrLf &
+                                    $"Documento: {_Tido}-{_Nudo}"
+
+                MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                e.Cancel = True
+
+            End If
+
         End If
 
     End Sub

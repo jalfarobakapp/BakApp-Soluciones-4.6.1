@@ -745,7 +745,7 @@ Buscar:
         If Chk_MostrarSoloDocClientesDelVendedor.Checked Then
 
             Dim _Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
-            Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru = '" & FUNCIONARIO & "'")
+            Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru like '%" & FUNCIONARIO & "%'")
 
             If String.IsNullOrEmpty(_Kogru) Then
                 _Sql_Filtro_Entidades += vbCrLf & " And Mae1.KOFUEN = '" & FUNCIONARIO & "'"
@@ -1319,7 +1319,7 @@ Buscar:
         If Chk_MostrarSoloDocClientesDelVendedor.Checked Then
 
             Dim _Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & FUNCIONARIO & "'")
-            Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru = '" & FUNCIONARIO & "'")
+            Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kofu_Kogru", "CodFuncionario = '" & FUNCIONARIO & "'")
 
             If String.IsNullOrEmpty(_Kogru) Then
                 _Sql_Filtro_Condicion_Extra += vbCrLf & " And KOFU = '" & FUNCIONARIO & "'"
@@ -1330,15 +1330,11 @@ Buscar:
                 End If
 
                 If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
-                    If String.IsNullOrEmpty(_Kogru) Then
-                        _Kogru = _Kofu_Kogru
-                    Else
-                        _Kogru += "," & _Kofu_Kogru
-                    End If
+                    _Kofu_Kogru = vbCrLf & "Union Select " & _Kofu_Kogru & " As KOFU"
                 End If
 
                 Consulta_sql = "Select KOFU From TABFUGD Where KOGRU In (" & _Kogru & ")" & vbCrLf &
-                               "Union Select '" & FUNCIONARIO & "' As KOFU"
+                               "Union Select '" & FUNCIONARIO & "' As KOFU" & _Kofu_Kogru
                 Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Fl_Entidades = Generar_Filtro_IN(_Tbl, "", "KOFU", False, False, "'")

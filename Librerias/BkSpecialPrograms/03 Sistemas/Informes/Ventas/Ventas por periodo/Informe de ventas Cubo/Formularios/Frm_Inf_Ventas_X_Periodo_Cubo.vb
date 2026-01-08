@@ -4494,7 +4494,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
 
-                _Kofu_Kogru = _Kofu_Kogru & " - " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Kofu_Kogru & "'").ToString.Trim
+                _Kofu_Kogru = "Usuario(s): " & _Kofu_Kogru
 
                 Sb_Confirmar_Lectura("Aun tiene su grupo de vendedores asociado a otro usuario." & vbCrLf &
                                      _Kofu_Kogru, "Debe quitarlo desde su ficha de usuario.", eTaskDialogIcon.Exclamation, Nothing)
