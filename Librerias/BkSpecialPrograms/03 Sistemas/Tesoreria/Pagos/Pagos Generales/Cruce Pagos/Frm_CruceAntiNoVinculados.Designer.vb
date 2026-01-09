@@ -71,11 +71,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Lbl_TotalSeleccion = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Lbl_TotalAnticipos = New DevComponents.DotNetBar.LabelX()
-        Me.Rdb_FechaAsignacionFActual = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_FechaAsignacionFPago = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_FechaAsignacionOtraFecha = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
-        Me.Dtp_FEmisionOtra = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Chk_Fecha_Asignacion = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel3.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
@@ -84,7 +80,6 @@ Partial Class Frm_CruceAntiNoVinculados
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         Me.GroupPanel4.SuspendLayout()
-        CType(Me.Dtp_FEmisionOtra, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Imagenes_20x20
@@ -768,140 +763,32 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Lbl_TotalAnticipos.Text = "0"
         Me.Lbl_TotalAnticipos.TextAlignment = System.Drawing.StringAlignment.Far
         '
-        'Rdb_FechaAsignacionFActual
+        'Chk_Fecha_Asignacion
         '
-        Me.Rdb_FechaAsignacionFActual.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Rdb_FechaAsignacionFActual.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_FechaAsignacionFActual.CheckBoxImageChecked = CType(resources.GetObject("Rdb_FechaAsignacionFActual.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_FechaAsignacionFActual.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_FechaAsignacionFActual.Checked = True
-        Me.Rdb_FechaAsignacionFActual.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_FechaAsignacionFActual.CheckValue = "Y"
-        Me.Rdb_FechaAsignacionFActual.FocusCuesEnabled = False
-        Me.Rdb_FechaAsignacionFActual.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_FechaAsignacionFActual.Location = New System.Drawing.Point(751, 366)
-        Me.Rdb_FechaAsignacionFActual.Name = "Rdb_FechaAsignacionFActual"
-        Me.Rdb_FechaAsignacionFActual.Size = New System.Drawing.Size(79, 25)
-        Me.Rdb_FechaAsignacionFActual.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_FechaAsignacionFActual.TabIndex = 140
-        Me.Rdb_FechaAsignacionFActual.Text = "Fecha actual"
-        '
-        'Rdb_FechaAsignacionFPago
-        '
-        Me.Rdb_FechaAsignacionFPago.BackColor = System.Drawing.Color.White
+        Me.Chk_Fecha_Asignacion.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Rdb_FechaAsignacionFPago.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_FechaAsignacionFPago.CheckBoxImageChecked = CType(resources.GetObject("Rdb_FechaAsignacionFPago.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_FechaAsignacionFPago.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_FechaAsignacionFPago.FocusCuesEnabled = False
-        Me.Rdb_FechaAsignacionFPago.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_FechaAsignacionFPago.Location = New System.Drawing.Point(836, 366)
-        Me.Rdb_FechaAsignacionFPago.Name = "Rdb_FechaAsignacionFPago"
-        Me.Rdb_FechaAsignacionFPago.Size = New System.Drawing.Size(163, 25)
-        Me.Rdb_FechaAsignacionFPago.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_FechaAsignacionFPago.TabIndex = 141
-        Me.Rdb_FechaAsignacionFPago.Text = "Fecha de emisión del pago"
-        '
-        'Rdb_FechaAsignacionOtraFecha
-        '
-        Me.Rdb_FechaAsignacionOtraFecha.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Rdb_FechaAsignacionOtraFecha.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_FechaAsignacionOtraFecha.CheckBoxImageChecked = CType(resources.GetObject("Rdb_FechaAsignacionOtraFecha.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_FechaAsignacionOtraFecha.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_FechaAsignacionOtraFecha.FocusCuesEnabled = False
-        Me.Rdb_FechaAsignacionOtraFecha.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_FechaAsignacionOtraFecha.Location = New System.Drawing.Point(988, 366)
-        Me.Rdb_FechaAsignacionOtraFecha.Name = "Rdb_FechaAsignacionOtraFecha"
-        Me.Rdb_FechaAsignacionOtraFecha.Size = New System.Drawing.Size(72, 25)
-        Me.Rdb_FechaAsignacionOtraFecha.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_FechaAsignacionOtraFecha.TabIndex = 142
-        Me.Rdb_FechaAsignacionOtraFecha.Text = "Otra fecha" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
-        '
-        'LabelX4
-        '
-        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(588, 366)
-        Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(155, 23)
-        Me.LabelX4.TabIndex = 143
-        Me.LabelX4.Text = "Fecha de asignación del pago"
-        '
-        'Dtp_FEmisionOtra
-        '
-        Me.Dtp_FEmisionOtra.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Dtp_FEmisionOtra.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_FEmisionOtra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FEmisionOtra.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_FEmisionOtra.ButtonDropDown.Visible = True
-        Me.Dtp_FEmisionOtra.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_FEmisionOtra.IsPopupCalendarOpen = False
-        Me.Dtp_FEmisionOtra.Location = New System.Drawing.Point(1066, 369)
-        '
-        '
-        '
-        Me.Dtp_FEmisionOtra.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_FEmisionOtra.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FEmisionOtra.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_FEmisionOtra.MonthCalendar.ClearButtonVisible = True
-        '
-        '
-        '
-        Me.Dtp_FEmisionOtra.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_FEmisionOtra.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_FEmisionOtra.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_FEmisionOtra.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_FEmisionOtra.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_FEmisionOtra.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_FEmisionOtra.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FEmisionOtra.MonthCalendar.DisplayMonth = New Date(2025, 1, 1, 0, 0, 0, 0)
-        Me.Dtp_FEmisionOtra.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_FEmisionOtra.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_FEmisionOtra.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_FEmisionOtra.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_FEmisionOtra.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_FEmisionOtra.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_FEmisionOtra.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FEmisionOtra.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_FEmisionOtra.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_FEmisionOtra.Name = "Dtp_FEmisionOtra"
-        Me.Dtp_FEmisionOtra.Size = New System.Drawing.Size(79, 22)
-        Me.Dtp_FEmisionOtra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_FEmisionOtra.TabIndex = 196
-        Me.Dtp_FEmisionOtra.Value = New Date(2025, 1, 30, 12, 12, 50, 0)
+        Me.Chk_Fecha_Asignacion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Fecha_Asignacion.CheckBoxImageChecked = CType(resources.GetObject("Chk_Fecha_Asignacion.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Fecha_Asignacion.Checked = True
+        Me.Chk_Fecha_Asignacion.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_Fecha_Asignacion.CheckValue = "Y"
+        Me.Chk_Fecha_Asignacion.FocusCuesEnabled = False
+        Me.Chk_Fecha_Asignacion.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Fecha_Asignacion.Location = New System.Drawing.Point(611, 366)
+        Me.Chk_Fecha_Asignacion.Name = "Chk_Fecha_Asignacion"
+        Me.Chk_Fecha_Asignacion.Size = New System.Drawing.Size(237, 23)
+        Me.Chk_Fecha_Asignacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Fecha_Asignacion.TabIndex = 197
+        Me.Chk_Fecha_Asignacion.Text = "Fecha de asignación del pago. Fecha actual"
         '
         'Frm_CruceAntiNoVinculados
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1158, 604)
-        Me.Controls.Add(Me.Rdb_FechaAsignacionOtraFecha)
-        Me.Controls.Add(Me.Rdb_FechaAsignacionFPago)
-        Me.Controls.Add(Me.Dtp_FEmisionOtra)
-        Me.Controls.Add(Me.Rdb_FechaAsignacionFActual)
-        Me.Controls.Add(Me.LabelX4)
+        Me.Controls.Add(Me.Chk_Fecha_Asignacion)
         Me.Controls.Add(Me.GroupPanel4)
         Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.Chk_MostrarSoloSeleccionados)
@@ -930,7 +817,6 @@ Partial Class Frm_CruceAntiNoVinculados
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
         Me.GroupPanel4.ResumeLayout(False)
-        CType(Me.Dtp_FEmisionOtra, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -979,9 +865,5 @@ Partial Class Frm_CruceAntiNoVinculados
     Friend WithEvents Lbl_TotalSeleccion As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Lbl_TotalAnticipos As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Rdb_FechaAsignacionFActual As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents Rdb_FechaAsignacionFPago As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents Rdb_FechaAsignacionOtraFecha As DevComponents.DotNetBar.Controls.CheckBoxX
-    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Dtp_FEmisionOtra As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Chk_Fecha_Asignacion As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -351,7 +351,14 @@ Public Class Cl_FacAuto_NVV
             _Orden = "Order By CantItem"
         End If
 
-        Consulta_Sql = "Select Top " & CantDocFacturanXProceso & " * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Facturar = 1" & vbCrLf & _Orden
+        'Consulta_Sql = "Select Top " & CantDocFacturanXProceso & " * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Facturar = 1" & vbCrLf & _Orden
+
+        Consulta_Sql = $"Select Top {CantDocFacturanXProceso} Fa.*,Case De.Empresa_Ori When '' Then De.Empresa Else De.Empresa_Ori End As 'Empresa_Ori',Edo.EMPRESA As 'Empresa'   
+From {_Global_BaseBk}Zw_Demonio_FacAuto Fa
+Inner Join MAEEDO Edo On Edo.IDMAEEDO = Fa.Idmaeedo_NVV
+Inner Join {_Global_BaseBk}Zw_Docu_Ent De On Fa.Idmaeedo_NVV = De.Idmaeedo
+Where Facturar = 1"
+
         Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
@@ -386,7 +393,29 @@ Public Class Cl_FacAuto_NVV
                 Dim _Modalidad_Fac As String = _Fila.Item("Modalidad_Fac")
 
                 Dim _Nudo_Nvv As String = _Fila.Item("Nudo_Nvv")
-                Dim _Empresa_Fac As String = _Sql.Fx_Trae_Dato("MAEEDO", "EMPRESA", "IDMAEEDO = " & _Idmaeedo,, False)
+                Dim _Empresa As String = _Fila.Item("Empresa")
+                Dim _Empresa_Ori As String = _Fila.Item("Empresa_Ori")
+                Dim _Empresa_Fac As String = _Fila.Item("Empresa_Ori")
+
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                If _Empresa <> _Empresa_Ori Then
+
+                    _Mensaje.Mensaje = $"Documento con Empresa = {_Empresa} y Empresa_Ori = {_Empresa_Ori}, No se cumplio la secuencia esperada."
+
+                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
+                                   " NombreEquipo = '" & _Nombre_Equipo & "'" &
+                                   ",Facturando = 0" &
+                                   ",Facturado = 0" &
+                                   ",ErrorGrabar = 1" &
+                                   ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
+                                   "Where Id = " & _Id
+                    If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                        Log_Registro += _Sql.Pro_Error
+                    End If
+
+                    Continue For
+                End If
 
                 If Not IsNothing(Lbl_FacAuto) Then
                     Lbl_FacAuto.Text = "Facturando Nota de venta Nro: " & _Nudo_Nvv
@@ -402,7 +431,6 @@ Public Class Cl_FacAuto_NVV
                     _DocEmitir = "FCV"
                 End If
 
-                Dim _Mensaje As LsValiciones.Mensajes
 
                 If _DesdePickeo Then
                     _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente_Pickeo(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Empresa_Fac, _Modalidad_Fac, _CerrarDespFact, _Id_Pickeo)

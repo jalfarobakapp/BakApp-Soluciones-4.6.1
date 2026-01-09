@@ -22,6 +22,7 @@ CREATE TABLE [dbo].[Zw_Docu_Ent](
     [SobreStock]        [bit]			NOT NULL DEFAULT (0),
     [PdaRMovil]         [bit]			NOT NULL DEFAULT (0),
     [Idpdaenca]         [Int]			NOT NULL DEFAULT (0),
+	[Empresa_Ori]       [char](2)		NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Docu_Ent] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
