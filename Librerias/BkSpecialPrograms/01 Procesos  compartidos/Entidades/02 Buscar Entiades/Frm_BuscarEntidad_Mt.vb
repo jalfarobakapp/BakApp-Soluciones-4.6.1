@@ -148,6 +148,7 @@ Public Class Frm_BuscarEntidad_Mt
 
         AddHandler Chk_Solo_Clientes_Del_Vendedor.CheckedChanged, AddressOf Chk_Solo_Clientes_Del_Vendedor_CheckedChanged
 
+        Btn_ConsultaExistenciaEntidad.Visible = Chk_Solo_Clientes_Del_Vendedor.Checked
 
     End Sub
 
@@ -923,7 +924,44 @@ Public Class Frm_BuscarEntidad_Mt
             End If
         End If
 
+        Btn_ConsultaExistenciaEntidad.Visible = Chk_Solo_Clientes_Del_Vendedor.Checked
         Sb_Bucar_Entidades()
+
+    End Sub
+
+    Private Sub Btn_ConsultaExistenciaEntidad_Click(sender As Object, e As EventArgs) Handles Btn_ConsultaExistenciaEntidad.Click
+
+        Dim _Aceptar As Boolean
+        Dim _CodEntidad As String = String.Empty
+
+        _Aceptar = InputBox_Bk(Me, "Ingrese código de entidad a consultar",
+                               "Consulta existencia entidad", _CodEntidad, False, _Tipo_Mayus_Minus.Mayusculas, 10, True, _Tipo_Imagen.Texto)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        _TblEntidad = Fx_Traer_Datos_Entidad_Tabla(_CodEntidad, "")
+
+        If Not CBool(_TblEntidad.Rows.Count) Then
+            MessageBoxEx.Show(Me, "La entidad con código " & _CodEntidad & " no existe",
+                              "Consulta existencia entidad", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Call Btn_ConsultaExistenciaEntidad_Click(Nothing, Nothing)
+            Return
+        End If
+
+        If CBool(_TblEntidad.Rows.Count) Then
+
+            MessageBoxEx.Show(Me, $"Se encontraron {_TblEntidad.Rows.Count} entidad(es) asociada(s) a este código",
+                              "Entidad encontrada", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            Dim Fm_S As New Frm_BuscarEntidad_MtSuc
+            Fm_S._CodEntidad = _CodEntidad
+            Fm_S._Seleccionar = False
+            Fm_S.ShowDialog(Me)
+            Fm_S.Dispose()
+
+        End If
 
     End Sub
 

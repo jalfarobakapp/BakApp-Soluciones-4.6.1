@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_BuscarEntidad_MtSuc
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -42,7 +42,7 @@ Partial Class Frm_BuscarEntidad_MtSuc
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCrearUser, Me.BtnEditarEntidad})
         Me.Bar2.Location = New System.Drawing.Point(0, 181)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(616, 41)
+        Me.Bar2.Size = New System.Drawing.Size(735, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 10
@@ -104,7 +104,7 @@ Partial Class Frm_BuscarEntidad_MtSuc
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(600, 167)
+        Me.Grilla.Size = New System.Drawing.Size(719, 167)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
         '
@@ -112,7 +112,7 @@ Partial Class Frm_BuscarEntidad_MtSuc
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(616, 222)
+        Me.ClientSize = New System.Drawing.Size(735, 222)
         Me.Controls.Add(Me.Grilla)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True

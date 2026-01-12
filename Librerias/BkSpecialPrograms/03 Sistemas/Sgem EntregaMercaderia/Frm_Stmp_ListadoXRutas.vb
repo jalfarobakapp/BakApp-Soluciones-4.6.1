@@ -460,23 +460,30 @@ Public Class Frm_Stmp_ListadoXRutas
         End If
 
         Dim _Ls_Idmaeedo As New List(Of String)
+        Dim _Ls_TiposTidoGen As New List(Of String)
 
         For Each _Row As DataRowView In _Dv
 
             Dim _Estado As String = _Row.Item("Estado")
+            Dim _TidoGen As String = String.Empty
+
+            If Not IsDBNull(_Row.Item("TidoGen")) Then
+                _TidoGen = _Row.Item("TidoGen").ToString.Trim
+            End If
 
             If _Estado = "FACTU" Then
 
                 If CBool(_Row.Item("IdmaeedoGen")) Then
-                    _Ls_Idmaeedo.Add(_Row.Item("IdmaeedoGen"))
+                    _Ls_Idmaeedo.Add(_Row.Item("IdmaeedoGen").ToString)
+                    _Ls_TiposTidoGen.Add(_TidoGen)
                 End If
 
             End If
 
         Next
 
-        ' Ordenar la lista por OrdenRuta
-        _Ls_Idmaeedo = _Ls_Idmaeedo.OrderBy(Function(id) _Tbl_Tickets_Stem.Select("IdmaeedoGen = " & id)(0).Item("OrdenRuta")).ToList()
+        ' Obtener tipos distintos
+        Dim _TiposDistintos = _Ls_TiposTidoGen.Distinct(StringComparer.OrdinalIgnoreCase).ToList()
 
         If Not CBool(_Ls_Idmaeedo.Count) Then
             MessageBoxEx.Show(Me, "No hay documentos facturados para imprimir", "Validación",
@@ -484,7 +491,28 @@ Public Class Frm_Stmp_ListadoXRutas
             Return
         End If
 
-        Dim Fm As New Frm_ImpMasiva("FCV", _Ls_Idmaeedo)
+        ' Si hay más de un tipo de documento distinto, impedir la impresión
+        If _TiposDistintos.Count > 1 Then
+
+            Dim _ListaTipos As String = String.Join(", ", _TiposDistintos)
+            MessageBoxEx.Show(Me, "Se encontraron múltiples tipos de documento para imprimir: " & _ListaTipos & "." & vbCrLf &
+                              "Solo se permite imprimir un único tipo de documento a la vez.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+
+        End If
+
+        ' Verificar que el tipo sea permitido
+        Dim _TipoSeleccionado As String = _TiposDistintos(0).ToUpper.Trim
+
+        ' Ordenar la lista por OrdenRuta (manteniendo lógica original)
+        Try
+            _Ls_Idmaeedo = _Ls_Idmaeedo.OrderBy(Function(id) CInt(_Tbl_Tickets_Stem.Select("IdmaeedoGen = " & id)(0).Item("OrdenRuta"))).ToList()
+        Catch ex As Exception
+            ' Si no se puede ordenar por OrdenRuta por algún motivo, mantener el orden original sin fallar
+        End Try
+
+        Dim Fm As New Frm_ImpMasiva(_TipoSeleccionado, _Ls_Idmaeedo)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

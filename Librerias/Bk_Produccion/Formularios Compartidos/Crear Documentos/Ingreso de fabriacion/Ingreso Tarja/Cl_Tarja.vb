@@ -29,6 +29,14 @@ Public Class Cl_Tarja
 
         myTrans = cn2.BeginTransaction()
 
+        Dim _Qty As Double
+        Dim _Qty2 As Double
+        Dim _SacosXPallet As Double
+        Dim _CantidadFab As Double
+        Dim _Formato As Double
+        Dim _CantidadTipo As Double
+        Dim _Tipo As String
+
         Try
 
             With Zw_Pdp_CPT_Tarja
@@ -44,6 +52,21 @@ Public Class Cl_Tarja
                                "'," & De_Num_a_Tx_01(.CantidadTipo, False, 5) &
                                "," & De_Num_a_Tx_01(.CantidadFab, False, 5) &
                                ",'" & .Descripcion_Kopral & "'," & .Idpote & "," & .Idpotl & ",'" & .Tolva & "','" & .BodegaDesde & "')"
+
+                _Tipo = .Tipo
+
+                If _Tipo = "MAXI-SACO" Then
+                    _Qty = _CantidadFab
+                    _Qty2 = 1
+                Else
+                    _SacosXPallet = .SacosXPallet
+                    _CantidadFab = .CantidadFab
+                    _Formato = .Formato
+                    _CantidadTipo = .CantidadTipo
+
+                    _Qty = _CantidadFab / _CantidadTipo
+                    _Qty2 = _Formato
+                End If
 
             End With
 
@@ -79,11 +102,34 @@ Public Class Cl_Tarja
                     .Id_CPT = Zw_Pdp_CPT_Tarja.Id
                     .Nro_CPT = Zw_Pdp_CPT_Tarja.Nro_CPT
                     .Nro = _Nro
-                    .Nro_Tipo = Fx_NvoNro_Tipo(Comando, cn2, myTrans, .Tipo, "PLT")
+
+                    Dim _CodPaquete As String = String.Empty
+                    Dim _Sku As String = .Codigo
+                    Dim _Empresa As String = Mod_Empresa
+                    Dim _Sucursal As String = Mod_Sucursal
+                    Dim _Bodega As String = Mod_Bodega
+                    Dim _Pallet As String = String.Empty
+
+                    If _Tipo = "MAXI-SACO" Then
+                        .Nro_Tipo = Fx_NvoNro_Tipo(Comando, cn2, myTrans, .Tipo, "MXS")
+                    Else
+                        .Nro_Tipo = Fx_NvoNro_Tipo(Comando, cn2, myTrans, .Tipo, "PLT")
+                        _Pallet = .Nro_Tipo
+                    End If
+
+                    _CodPaquete = .Nro_Tipo
 
                     Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det (Id_CPT,Nro_Tipo,Idmaeddo,Nro_CPT,Lote,Tipo,Nro,Codigo,CodAlternativo,CodAlternativo_Pallet)" & vbCrLf &
                                    "Values (" & .Id_CPT & ",'" & .Nro_Tipo & "'," & .Idmaeddo & ",'" & .Nro_CPT & "','" & .Lote & "','" & .Tipo & "'" &
                                    "," & .Nro & ",'" & .Codigo & "','" & .CodAlternativo & "','" & .CodAlternativo_Pallet & "')"
+
+                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                    Comando.Transaction = myTrans
+                    Comando.ExecuteNonQuery()
+
+                    Consulta_sql = $"Insert Into {_Global_BaseBk}Zw_WMS_Paquetes (CodPaquete,Sku, Empresa,Sucursal,Bodega,Ubicacion,Pallet,Qty,Qty2)" & vbCrLf &
+                                   $"Values ('{_CodPaquete}','{_Sku}','{_Empresa}','{_Sucursal}','{_Bodega}','A01'," &
+                                   $"'{_Pallet}',{De_Num_a_Tx_01(_Qty, False, 5)},{De_Num_a_Tx_01(_Qty2, False, 5)})"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                     Comando.Transaction = myTrans
@@ -156,6 +202,10 @@ Public Class Cl_Tarja
             _Ult_Nro_Tipo = dfd1("Nro")
         End While
         dfd1.Close()
+
+        If _Tipo = "MAXI-SACO" And _Ult_Nro_Tipo.Contains("PLT") Then
+            _Ult_Nro_Tipo = _Sufijo & "0000000"
+        End If
 
         _Nro_CPT = Fx_Proximo_NroDocumento(_Ult_Nro_Tipo, 10)
 

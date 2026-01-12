@@ -255,7 +255,11 @@ Public Class Frm_Crear_Entidad_Mt
                 Me.ActiveControl = Txt_Koen
             Else
                 Me.Text += " CREAR SUCURSAL"
-                Me.ActiveControl = Txt_Dien
+                If String.IsNullOrEmpty(Txt_Suen.Text) Then
+                    Me.ActiveControl = Txt_Suen
+                Else
+                    Me.ActiveControl = Txt_Dien
+                End If
             End If
 
             Btn_Asociar_Marcas.Enabled = False
@@ -308,6 +312,8 @@ Public Class Frm_Crear_Entidad_Mt
         AddHandler Grilla_Cuentas.MouseDown, AddressOf Sb_Grilla_Cuentas_MouseDown
         AddHandler Grilla_Maeenmail.MouseDown, AddressOf Sb_Grilla_Maennmail_MouseDown
         AddHandler Chk_Libera_NVV.CheckedChanged, AddressOf Chk_Libera_NVV_CheckedChanged
+
+        AddHandler Txt_Dien.Validating, AddressOf TxtxDireccion_Validating
 
         Btn_Direcciones_Despachos.Visible = True
 
@@ -1458,7 +1464,7 @@ Public Class Frm_Crear_Entidad_Mt
         End If
     End Sub
 
-    Private Sub TxtxDireccion_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs) Handles Txt_Dien.Validating
+    Private Sub TxtxDireccion_Validating(sender As System.Object, e As System.ComponentModel.CancelEventArgs)
         If String.IsNullOrEmpty(Trim(Txt_Dien.Text)) Then
             MessageBoxEx.Show("La dirección no puede estar vacía", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             e.Cancel = True
@@ -1821,15 +1827,25 @@ Public Class Frm_Crear_Entidad_Mt
 
         Dim _TblEnt As DataTable
 
-        Consulta_sql = "Select KOEN,SUEN,TIPOSUC,RTEN,NOKOEN,TIEN,GIEN FROM MAEEN" & vbCrLf &
-                       "Where KOEN = '" & Txt_Koen.Text & "'" & vbCrLf &
-                       "Order by TIPOSUC"
+        'Consulta_sql = "Select * FROM MAEEN" & vbCrLf &
+        '               "Where KOEN = '" & Txt_Koen.Text & "'" & vbCrLf &
+        '               "Order by TIPOSUC"
+
+        Consulta_sql = $"Select En.*,Pa.NOKOPA,Ci.NOKOCI,Cm.NOKOCM
+                        From MAEEN En
+                        Left Join TABPA Pa On Pa.KOPA = En.PAEN
+                        Left Join TABCI Ci On Ci.KOPA = En.PAEN And Ci.KOCI = En.CIEN
+                        Left Join TABCM Cm On Cm.KOPA = En.PAEN And Cm.KOCI = En.CIEN And Cm.KOCM = En.CMEN
+                        Where KOEN = '{Txt_Koen.Text}'
+                        Order by TIPOSUC"
 
         _TblEnt = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If CBool(_TblEnt.Rows.Count) Then
 
-            Dim Rut As String = _TblEnt.Rows(0).Item("RTEN").ToString
+            Dim _Row_Entidad As DataRow = _TblEnt.Rows(0)
+
+            Dim Rut As String = _Row_Entidad.Item("RTEN").ToString
             Txt_Rten.Text = Trim(Rut) & "-" & RutDigito(Rut)
             Txt_Rten.Enabled = False
 
@@ -1850,18 +1866,45 @@ Public Class Frm_Crear_Entidad_Mt
                                            "And SUEN = '" & Txt_Suen.Text & "'"))
             Loop While (_Existe_Suc)
 
-            'If MessageBoxEx.Show(Me, "¿Desea dejar el código de la sucursal como " & TxtxSucursal.Text & "?", "Sucursal", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.No Then
-            '    TxtxSucursal.Text = String.Empty
-            'End If
+            Txt_Nokoen.Text = _Row_Entidad.Item("NOKOEN").ToString.Trim
+            Txt_Nokoenamp.Text = _Row_Entidad.Item("NOKOEN").ToString.Trim
+            Cmb_Tiposuc.SelectedValue = _Row_Entidad.Item("TIEN").ToString.Trim
+            Txt_Gien.Text = _Row_Entidad.Item("GIEN").ToString.Trim
 
-            Txt_Nokoen.Text = Trim(_TblEnt.Rows(0).Item("NOKOEN").ToString)
-            Txt_Nokoenamp.Text = Trim(_TblEnt.Rows(0).Item("NOKOEN").ToString)
-            Cmb_Tiposuc.SelectedValue = Trim(_TblEnt.Rows(0).Item("TIEN").ToString)
-            Txt_Gien.Text = Trim(_TblEnt.Rows(0).Item("GIEN").ToString)
+            If MessageBoxEx.Show(Me, "¿Desea cargar todos los datos desde la empresa principal en esta sucursal?",
+                                 "Llenar datos", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+                Txt_Dien.Text = _Row_Entidad.Item("DIEN").ToString.Trim
+
+                Cl_Maeen_Edit.PAEN = _Row_Entidad.Item("PAEN")
+                Cl_Maeen_Edit.CIEN = _Row_Entidad.Item("CIEN")
+                Cl_Maeen_Edit.CMEN = _Row_Entidad.Item("CMEN")
+
+                Dim _NPais = _Row_Entidad.Item("NOKOPA")
+                Dim _NCiudad = _Row_Entidad.Item("NOKOCI")
+                Dim _NComuna = _Row_Entidad.Item("NOKOCM")
+
+                Txt_Comuna.Text = _NComuna.Trim & ", " & _NCiudad.Trim & " - " & _NPais
+
+                Cmb_Actien.SelectedValue = _Row_Entidad.Item("ACTIEN")
+                Cmb_Lcen.SelectedValue = _Row_Entidad.Item("LCEN")
+                Cmb_Lven.SelectedValue = _Row_Entidad.Item("LVEN")
+                Cmb_Ruen.SelectedValue = _Row_Entidad.Item("RUEN")
+                Cmb_Tamaen.SelectedValue = _Row_Entidad.Item("TAMAEN")
+                Cmb_Transpoen.SelectedValue = _Row_Entidad.Item("TRANSPOEN")
+                Cmb_Tien.SelectedValue = _Row_Entidad.Item("TIPOEN")
+
+            End If
+
+
+
             Txt_Koen.Enabled = False
 
             If MessageBoxEx.Show(Me, "¿Confirma el código sugerido para la sucursal?" & vbCrLf & vbCrLf &
-                                 "Código sugerido: " & Txt_Suen.Text, "Sucursal", MessageBoxButtons.YesNo) = DialogResult.No Then
+                             "Código sugerido: " & Txt_Suen.Text, "Sucursal",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question,
+                             MessageBoxDefaultButton.Button1, True) <> DialogResult.Yes Then
+                Txt_Suen.Text = String.Empty
                 Txt_Suen.Focus()
             Else
                 Txt_Dien.Focus()
@@ -1872,9 +1915,10 @@ Public Class Frm_Crear_Entidad_Mt
 
         Else
             MessageBoxEx.Show(Me, "Alguien elimino la entidad", "Validación",
-                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Me.Close()
         End If
+
     End Sub
 
     Private Sub BtnContactosEntidad_Click(sender As System.Object, e As System.EventArgs) Handles BtnContactosEntidad.Click
@@ -2789,7 +2833,7 @@ Public Class Frm_Crear_Entidad_Mt
         _Filtrar.Tabla = "TABIM"
         _Filtrar.Campo = "KOIM"
         _Filtrar.Descripcion = "NOKOIM"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+
         If _Filtrar.Fx_Filtrar(Nothing,
                                Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "",
                                Nothing, False, True) Then

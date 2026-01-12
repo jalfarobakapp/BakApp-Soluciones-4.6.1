@@ -6,7 +6,15 @@ Case Estado
 When 'PREPA' Then 'Preparación'
 When 'COMPL' Then 'Completada'
 When 'HABIL' Then 'Habilitada para ser facturada.'
-When 'FACTU' Then Case Enc.TidoGen When 'FCV' Then 'Facturada' When 'BLV' Then 'Boleteada' When 'GDV' Then 'Guía generada' When 'GDP' Then 'Guía generada' Else '???' End
+When 'FACTU' Then 
+    Case Enc.TidoGen 
+        When 'FCV' Then 'Facturada' 
+        When 'BLV' Then 'Boleteada' 
+        When 'GDV' Then 'Guía generada' 
+        When 'GDP' Then 'Guía generada' 
+        When 'GTI' Then 'Guía generada' 
+        Else '???' 
+    End
 When 'ENTRE' Then 'Entregado por: '+CodFuncionario_Entrega+' - '+FEnt.NOKOFU
 When 'CERRA' Then 'Cerrada'
 When 'NULO' Then 'Nula'
