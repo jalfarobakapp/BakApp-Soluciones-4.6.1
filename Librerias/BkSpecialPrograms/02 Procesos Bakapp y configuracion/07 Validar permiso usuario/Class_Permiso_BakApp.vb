@@ -240,6 +240,7 @@ Public Class Class_Permiso_BakApp
         STEM
         TICKET
         MODELAMIENTO
+        SOBRESTOCK
     End Enum
 
     Sub Sb_Actualizar_Base_De_Permisos(_Formulario As Form, ByRef _Objeto As Object)
@@ -663,7 +664,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00163", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00164", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00165", _Objeto, _Formulario)
-
+        _SqlQuery += Fx_Insertar_Permiso("Doc00166", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00167", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -712,6 +714,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Ofer0008", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Dte00001", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Dte00002", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Dte00003", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Fmto0001", _Objeto, _Formulario)
 
@@ -801,6 +805,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Not0007", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Pcli0001", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pcli0002", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Pcli0003", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Cdro0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Cdro0002", _Objeto, _Formulario)
@@ -1138,6 +1144,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Stem0003", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Stem0004", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Stem0005", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Stem0006", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Tkts0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Tkts0002", _Objeto, _Formulario)
@@ -2930,7 +2937,14 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "ASOCIAR PRODUCTOS A PRE-VENTA DESDE CONTENEDOR"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
-
+            Case "Doc00166"
+                _DescripcionPermiso = "HABILITAR NOTAS DE VENTA PARA SER FACTURADAS (CON PERMISO ADICIONAL)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00167"
+                _DescripcionPermiso = "EDITAR CONFIGURACION EN IMPRESION MASIVA DE DOCUMENTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
         End Select
 
 #End Region
@@ -3543,6 +3557,14 @@ Public Class Class_Permiso_BakApp
 
             Case "Pcli0001"
                 _DescripcionPermiso = "INGRESAR PAGO A DOCUMENTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PAGO_CLIENTES, 6)
+                _NombreFamiliaPermiso = _Fml.PAGO_CLIENTES.ToString
+            Case "Pcli0002"
+                _DescripcionPermiso = "VER ANTICIPOS DE CLIENTES"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.PAGO_CLIENTES, 6)
+                _NombreFamiliaPermiso = _Fml.PAGO_CLIENTES.ToString
+            Case "Pcli0003"
+                _DescripcionPermiso = "CRUZAR PAGOS DE FORMA MASIVA EN ANTICIPOS DE CLIENTES"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PAGO_CLIENTES, 6)
                 _NombreFamiliaPermiso = _Fml.PAGO_CLIENTES.ToString
 
@@ -5028,24 +5050,24 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "INGRESAR AL SISTEMA DE TICKET DE ENTREGA DE MERCADERIA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
                 _NombreFamiliaPermiso = _Fml.STEM.ToString
-
             Case "Stem0002"
                 _DescripcionPermiso = "AGREGAR ENTREGA DE FORMA MANUAL"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
                 _NombreFamiliaPermiso = _Fml.STEM.ToString
-
             Case "Stem0003"
                 _DescripcionPermiso = "DAR DOCUMENTOS DE ALTA, MARCAR COMO ENTREGADOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
                 _NombreFamiliaPermiso = _Fml.STEM.ToString
-
             Case "Stem0004"
                 _DescripcionPermiso = "MARCAR DOCUMENTO FACTURAR AL COMPLETAR"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
                 _NombreFamiliaPermiso = _Fml.STEM.ToString
-
             Case "Stem0005"
                 _DescripcionPermiso = "INGRESAR AL SISTEMA DE TICKET DE ENTREGA DE MERCADERIA (RUTAS)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
+                _NombreFamiliaPermiso = _Fml.STEM.ToString
+            Case "Stem0006"
+                _DescripcionPermiso = "ANULAR TICKET"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.STEM, 6)
                 _NombreFamiliaPermiso = _Fml.STEM.ToString
 
@@ -5114,6 +5136,31 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "ELIMINAR GRUPOS DE VENDEDORES/FUNCINARIOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.MODELAMIENTO, 6)
                 _NombreFamiliaPermiso = _Fml.MODELAMIENTO.ToString
+
+        End Select
+
+#End Region
+
+#Region "SOBRE STOCK"
+
+        Select Case _CodPermiso
+
+            Case "Sobs0001"
+                _DescripcionPermiso = "INGRESAR AL MANTENEDOR DE PRODUCTO COMO SOBRE STOCK"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SOBRESTOCK, 6)
+                _NombreFamiliaPermiso = _Fml.SOBRESTOCK.ToString
+            Case "Sobs0002"
+                _DescripcionPermiso = "CREAR PRODUCTO COMO SOBRE STOCK (AGREGAR A LA LISTA)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SOBRESTOCK, 6)
+                _NombreFamiliaPermiso = _Fml.SOBRESTOCK.ToString
+            Case "Sobs0003"
+                _DescripcionPermiso = "ELIMINAR PRODUCTO COMO SOBRE STOCK (QUITAR DEL REGISTRO)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SOBRESTOCK, 6)
+                _NombreFamiliaPermiso = _Fml.SOBRESTOCK.ToString
+            Case "Sobs0004"
+                _DescripcionPermiso = "ELIMINAR PRODUCTO COMO SOBRE STOCK (QUITAR DEL REGISTRO)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SOBRESTOCK, 6)
+                _NombreFamiliaPermiso = _Fml.SOBRESTOCK.ToString
 
         End Select
 

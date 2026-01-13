@@ -27,8 +27,8 @@ Public Class Frm_Infor_Ent_Comportamiento_De_Pago
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla_Documento, 15, New Font("Tahoma", 7), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
-        Sb_Formato_Generico_Grilla(Grilla_Detalle, 15, New Font("Tahoma", 7), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Documento, 15, New Font("Tahoma", 7), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Detalle, 15, New Font("Tahoma", 7), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         If Global_Thema = Enum_Themas.Oscuro Then
             TxtDescripcion.FocusHighlightEnabled = False
@@ -39,8 +39,13 @@ Public Class Frm_Infor_Ent_Comportamiento_De_Pago
     Private Sub Frm_Infor_Ent_Comportamiento_De_Pago_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
         Sb_Actualiar_Grilla()
+
         AddHandler TxtDescripcion.KeyDown, AddressOf TxtDescripcion_KeyDown
         AddHandler Super_Tab.SelectedTabChanged, AddressOf Sb_Super_Tab_SelectedTabChanged
+
+        AddHandler Grilla_Documento.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla_Detalle.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
         Me.Refresh()
 
     End Sub
@@ -59,10 +64,10 @@ Public Class Frm_Infor_Ent_Comportamiento_De_Pago
         Consulta_sql = My.Resources.Recursos_Inf.SQLQuery_Informe_de_comportamiento_de_pagos
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Entidad#", "And ENDO = '" & _Koen & "'")
         Consulta_sql = Replace(Consulta_sql, "#Filtro_2#", _Mostrar_NCV)
-
-        '_Tbl_Informe = _Sql.Fx_Get_Tablas(Consulta_sql)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
         Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
         _Dv_Documentos.Table = _Ds.Tables(0)
         _Dv_Detalle.Table = _Ds.Tables(1)
 

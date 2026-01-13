@@ -103,6 +103,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Correos_Cuentas", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_CorreosEnvioRecepcion", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_CRV_Viajes", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_CrucePAuto_Tom", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_DbExt_Conexion", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DbExt_Maest", _Modificar, Lbl_Eventos)
@@ -148,7 +149,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Docu_Det", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Docu_Det_Cust", _Modificar, Lbl_Eventos)
 
-
+            ' SISTEMA DE DOCUMENTOS TRIBUTARIOS ELECTRONICOS DTE
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_Aec", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_Caf", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_Configuracion", _Modificar, Lbl_Eventos)
@@ -160,6 +161,9 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_ReccDet", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_ListaEventosDoc", _Modificar, Lbl_Eventos)
 
+            .Sb_Revisar_Tabla2(Me, "Zw_Referencias_Dte", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Transporte_Dte", _Modificar, Lbl_Eventos)
+
 
             .Sb_Revisar_Tabla2(Me, "Zw_Empresas", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades", _Modificar, Lbl_Eventos)
@@ -168,7 +172,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades_ProdMinCompra", _Modificar, Lbl_Eventos)
 
 
-            'CNFIGURACION DE ESTACIONES DE TRABAJO
+            'CONFIGURACION DE ESTACIONES DE TRABAJO
             .Sb_Revisar_Tabla2(Me, "Zw_Estaciones_Poswi", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Estaciones_CashDro", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_EstacionesBkp", _Modificar, Lbl_Eventos)
@@ -266,6 +270,8 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_ImpAdicional", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Productos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_Ubicacion_IngSal", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Prod_SobreStock", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Prod_SobreStock_Tom", _Modificar, Lbl_Eventos)
 
             'SISTEMA DE PUNTOS POR VENTAS
             .Sb_Revisar_Tabla2(Me, "Zw_PtsVta_Configuracion", _Modificar, Lbl_Eventos)
@@ -292,8 +298,6 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Reclamo_Estados", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Reclamo_Preguntas", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Reclamo_Resolucion", _Modificar, Lbl_Eventos)
-
-            .Sb_Revisar_Tabla2(Me, "Zw_Referencias_Dte", _Modificar, Lbl_Eventos)
 
             ' PERMISOS REMOTOS
             .Sb_Revisar_Tabla2(Me, "Zw_Remotas", _Modificar, Lbl_Eventos)

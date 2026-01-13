@@ -117,6 +117,10 @@ Public Class Frm_Consolidacion_Stock_PP
                         _consolidado = True
                         _Consolidar_Stock.Fx_Consolidar_Stock_x_producto_Unico_Bakapp(_Empresa, _Sucursal, _Bodega, _Fila)
 
+                        Dim _Mensaje As New LsValiciones.Mensajes
+
+                        _Consolidar_Stock.Fx_Consolidar_SobreStock(_Empresa, _Sucursal, _Bodega, _Fila)
+
                     Else
 
                         _consolidado = False

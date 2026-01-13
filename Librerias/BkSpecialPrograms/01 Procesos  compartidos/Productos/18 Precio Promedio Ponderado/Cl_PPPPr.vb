@@ -407,6 +407,7 @@ Public Class Cl_PPPPr
 
                 Pm = Pm_Maeprem
                 Fepm = Fepm_Maeprem
+                _ActualizarPPP = False
 
             End If
 

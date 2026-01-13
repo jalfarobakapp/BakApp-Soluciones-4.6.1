@@ -1534,6 +1534,7 @@ Public Module Funciones_Especiales_BakApp
                 Cadena = Replace(Cadena, "#BD#", BD)
                 Cadena = Replace(Cadena, "#US#", US)
                 Cadena = Replace(Cadena, "#PW#", PW)
+                Exit For
             End If
 
         Next
@@ -2927,11 +2928,11 @@ Public Module Modulo_Precios_Costos
                                 _Funcionario_Autoriza As String,
                                 Optional _PermisoRemoto As Boolean = False,
                                 Optional _Id_Rem As Integer = 0,
-                                Optional _NroRemota As String = "") As Integer
+                                Optional _NroRemota As String = "",
+                                Optional _Tido As String = "",
+                                Optional _Nudo As String = "") As Integer
 
         Dim _Id As Integer
-        Dim _Tido As String
-        Dim _Nudo As String
 
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -6125,6 +6126,19 @@ Public Module Crear_Documentos_Desde_Otro
                              "Where Empresa ='" & _Empresa & "' And Sucursal ='" & _Sucursal & "' And Bodega ='" & _Bodega &
                              "' And Codigo = '" & _Codigo & "'" & vbCrLf
 
+            Dim _SobreStock As Boolean = _Fila.Item("SobreStock")
+
+            If _SobreStock Then
+
+                Dim _Id_SobreStock As Integer = _Fila.Item("Id_SobreStock")
+                Dim _PqteComprometidoSol As Double = _Fila.Item("PqteComprometidoSol")
+
+                _SqlQuery += "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
+                             "PqteComprometidoSol = PqteComprometidoSol-" & De_Num_a_Tx_01(_PqteComprometidoSol, False, 5) & vbCrLf &
+                             "Where Id = " & _Id_SobreStock & vbCrLf
+
+            End If
+
         Next
 
         If Not String.IsNullOrEmpty(_SqlQuery) Then
@@ -6185,7 +6199,10 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Function Fx_Actualizar_Lista_De_Costos_Random_Desde_Bakapp(_Formulario As Form, _Koen As String, _Suen As String) As Boolean
+    Function Fx_Actualizar_Lista_De_Costos_Random_Desde_Bakapp(_Formulario As Form,
+                                                               _Koen As String,
+                                                               _Suen As String,
+                                                               Optional _SiempreActualizaListaDeCostos As Boolean = False) As Boolean
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
@@ -6218,6 +6235,7 @@ Public Module Crear_Documentos_Desde_Otro
         If _FechaActual < _FechaVigenciaDesde Or _FechaActual > _FechaVigenciaHasta Then
 
             Dim _MsgError As String
+            Dim _Sigue As Boolean = False
 
             If _FechaActual < _FechaVigenciaDesde Then
                 _MsgError = "La <fecha desde> de la lista vigente es mayor a la fecha:" & _FechaActual
@@ -6232,15 +6250,19 @@ Public Module Crear_Documentos_Desde_Otro
                                 "Fecha vigencia desde :" & _FechaVigenciaDesde & " hasta: " & _FechaVigenciaHasta & vbCrLf & vbCrLf &
                                 "¿Desde continuar sin revisar esta situación?", "Validación", MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
                 If Fx_Tiene_Permiso(_Formulario, "Comp0098") Then
-                    Return True
+                    If _SiempreActualizaListaDeCostos Then
+                        _Sigue = True
+                    Else
+                        Return True
+                    End If
                 End If
             End If
 
-            Return False
+            If Not _Sigue Then Return False
 
         End If
 
-        Dim _ErrorLPC As String = Fx_ActualizarListaRandomDesdeBakApp(_Koen, _Suen, _Id_Padre)
+            Dim _ErrorLPC As String = Fx_ActualizarListaRandomDesdeBakApp(_Koen, _Suen, _Id_Padre)
 
         If String.IsNullOrEmpty(_ErrorLPC) Then
             MessageBoxEx.Show(_Formulario, "Costos levantados correctamente en lista " & _Lista, "Actualización de costos del proveedor",
@@ -7062,6 +7084,24 @@ Public Module Crear_Documentos_Desde_Otro
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
             Dim _Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "CodFuncionario = '" & _CodFuncionario & "'")
+            Dim _Kofu_Kogru = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kogru_Ventas", "Kofu_Kogru like '%" & FUNCIONARIO & "%'")
+
+            If Not String.IsNullOrEmpty(_Kogru) Then
+
+                If Not _Kogru.Contains("'") Then
+                    _Kogru = "'" & _Kogru & "'"
+                End If
+
+                If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+                    If String.IsNullOrEmpty(_Kogru) Then
+                        _Kogru = _Kofu_Kogru
+                    Else
+                        _Kogru += "," & _Kofu_Kogru
+                    End If
+                End If
+
+            End If
+
             Dim _KogruList As List(Of String) = _Kogru.Split(","c).ToList()
 
             Dim _VerDocumento As Boolean = False
@@ -7154,15 +7194,24 @@ Public Module Crear_Documentos_Desde_Otro
 
         Dim _Msj As String
 
-        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") And _Tido = "NVV" Then
+        Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            _LasNVVDebenSerHabilitadasParaFacturar = True
+        End If
+
+        If _LasNVVDebenSerHabilitadasParaFacturar And _Tido = "NVV" Then
 
             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Docu_Ent Where Idmaeedo = " & _Idmaeedo
             Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _HabilitadaFac = False
 
-            _Msj = "Esta nota de venta no esta habilitada para ser facturada." & vbCrLf &
-                   "Según la configuración General las notas de venta deben ser habilitadas para que se puedan facturar"
+            _Msj = "Esta nota de venta no esta habilitada para ser facturada. " &
+                   "Según la configuración General o de la modalidad las notas de venta deben ser habilitadas para que se puedan facturar"
+
+            _Msj = Fx_AjustarTexto(_Msj, 80)
 
             If Not IsNothing(_Row_Docu_Ent) Then
                 _HabilitadaFac = _Row_Docu_Ent.Item("HabilitadaFac")

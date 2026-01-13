@@ -1,4 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
+Imports System.Linq
 
 Public Class Frm_Cantidades_Ud_Disintas
 
@@ -449,11 +450,21 @@ Public Class Frm_Cantidades_Ud_Disintas
 
     ''' <summary>
     ''' Itera sobre las bodegas para consultar la API hasta obtener una respuesta válida
+    ''' PSEUDOCÓDIGO:
+    ''' 1. Obtener la URL base por defecto.
+    ''' 2. Intentar leer una URL alternativa desde la tabla de caracterizaciones:
+    '''    - Si existe y no está vacía, usarla.
+    ''' 3. Validar que la URL sea correcta (TryCreate + esquema http/https).
+    '''    - Si no es válida, devolver mensaje de error y salir.
+    ''' 4. Obtener token de autorización y lista de bodegas.
+    ''' 5. Convertir la lista de bodegas a array de enteros (ignorar espacios).
+    ''' 6. Iterar por cada bodega:
+    '''    - Construir el cuerpo del request con SKU y bodega.
+    '''    - Ejecutar POST y recibir 'mensaje'.
+    '''    - Si 'mensaje' es correcto y resultado válido (no nulo y distinto de -1), añadir detalle indicando bodega y devolverlo.
+    ''' 7. Si se recorren todas y no hay resultado válido, devolver mensaje indicando fallo.
+    ''' 8. Capturar excepciones y devolver mensaje con detalle del error.
     ''' </summary>
-    ''' <param name="apiUrl">URL de la API</param>
-    ''' <param name="authorizationToken">Token de autorización</param>
-    ''' <param name="_Codigo">SKU del producto</param>
-    ''' <returns>Un objeto de tipo Mensajes con el resultado de la operación</returns>
     Private Function Fx_Consultar_RTU_xBodegas(_Bodega As String, _Codigo As String) As LsValiciones.Mensajes
 
         Dim mensaje As LsValiciones.Mensajes
@@ -461,21 +472,51 @@ Public Class Frm_Cantidades_Ud_Disintas
         Try
 
             Dim apiUrl As String = "http://190.151.101.156:82/BodONEWSR/Api/ConsultarRTU"
+
+            ' Intentar leer una URL alternativa desde la tabla de caracterizaciones
+            Dim apiUrlOverride As Object = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "NombreTabla",
+                                             "Tabla = 'BODONE_CONF' And CodigoTabla = 'APIUrl_Rtu'")
+
+            If apiUrlOverride IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(apiUrlOverride.ToString) Then
+                apiUrl = apiUrlOverride.ToString.Trim()
+            End If
+
+            ' Validar que apiUrl sea una URL absoluta y con esquema HTTP/HTTPS
+            If Not Fx_ValidarUrl(apiUrl) Then
+                mensaje = New LsValiciones.Mensajes With {
+                    .EsCorrecto = False,
+                    .Detalle = "API URL inválida: " & apiUrl,
+                    .Mensaje = "La URL de la API no es válida o no tiene esquema http/https.",
+                    .Icono = MessageBoxIcon.Warning
+                }
+                Return mensaje
+            End If
+
             Dim authorizationToken As String = "Token 06389de2-5ed5-11ed-9b6a-0242ac120002"
             Dim bodegas As String = Fx_Bodegas(_Bodega) '= "1, 2, 3, 4, 5, 8, 10, 41, 42, 21, 22, 23, 24, 25, 26"
 
             Dim apiClient As New Cl_Api_BodOne()
 
+            ' Validar cadena de bodegas
+            If String.IsNullOrWhiteSpace(bodegas) Then
+                mensaje = New LsValiciones.Mensajes With {
+                    .EsCorrecto = False,
+                    .Detalle = "Lista de bodegas vacía para la bodega origen: " & _Bodega,
+                    .Mensaje = "No se pudieron obtener las bodegas a consultar.",
+                    .Icono = MessageBoxIcon.Warning
+                }
+                Return mensaje
+            End If
 
             ' Lista de bodegas a iterar obtenida del TextBox
-            Dim bodegasArray As Integer() = bodegas.Split(",").Select(Function(b) Convert.ToInt32(b.Trim())).ToArray()
+            Dim bodegasArray As Integer() = bodegas.Split(","c).Select(Function(b) Convert.ToInt32(b.Trim())).ToArray()
 
             ' Itera sobre las bodegas definidas
             For Each bodega In bodegasArray
                 Dim requestBody As New Dictionary(Of String, Object) From {
-                {"SKU", _Codigo},
-                {"Bodega", bodega}
-            }
+                    {"SKU", _Codigo},
+                    {"Bodega", bodega}
+                }
 
                 ' Realiza la consulta a la API
                 mensaje = apiClient.Post(Of Decimal)(apiUrl, requestBody, authorizationToken)
@@ -490,21 +531,41 @@ Public Class Frm_Cantidades_Ud_Disintas
 
             ' Si no se encontró un resultado válido, retorna un mensaje de error
             mensaje = New LsValiciones.Mensajes With {
-            .EsCorrecto = False,
-            .Detalle = "No se encontró un resultado válido después de consultar todas las bodegas.",
-            .Mensaje = "Consulta fallida en todas las bodegas.",
-            .Icono = MessageBoxIcon.Warning
-        }
+                .EsCorrecto = False,
+                .Detalle = "No se encontró un resultado válido después de consultar todas las bodegas.",
+                .Mensaje = "Consulta fallida en todas las bodegas.",
+                .Icono = MessageBoxIcon.Warning
+            }
 
         Catch ex As Exception
             mensaje = New LsValiciones.Mensajes With {
-            .EsCorrecto = False,
-            .Detalle = "Error inesperado",
-            .Mensaje = ex.Message,
-            .Icono = MessageBoxIcon.Stop}
+                .EsCorrecto = False,
+                .Detalle = "Error inesperado",
+                .Mensaje = ex.Message,
+                .Icono = MessageBoxIcon.Stop}
         End Try
 
         Return mensaje
+    End Function
+
+    ' Valida que una cadena sea una URL absoluta y con esquema http/https
+    Private Function Fx_ValidarUrl(ByVal url As String) As Boolean
+        Try
+            If String.IsNullOrWhiteSpace(url) Then
+                Return False
+            End If
+
+            Dim uriResult As Uri = Nothing
+            If Uri.TryCreate(url, UriKind.Absolute, uriResult) Then
+                If uriResult.Scheme = Uri.UriSchemeHttp Or uriResult.Scheme = Uri.UriSchemeHttps Then
+                    Return True
+                End If
+            End If
+
+            Return False
+        Catch
+            Return False
+        End Try
     End Function
 
     Function Fx_Bodegas(_Bodega As String) As String

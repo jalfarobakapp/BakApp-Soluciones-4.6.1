@@ -58,7 +58,8 @@ Public Class DteMonitor
         If Environment.GetCommandLineArgs.Length > 1 Then
 
             Cadena_ConexionSQL_Server = Environment.GetCommandLineArgs(1)
-            Cadena_ConexionSQL_Server = Replace(Cadena_ConexionSQL_Server, "@", " ")
+            'Cadena_ConexionSQL_Server = Replace(Cadena_ConexionSQL_Server, "@", " ")
+            Cadena_ConexionSQL_Server = Replace(Cadena_ConexionSQL_Server, "@@", " ")
 
             Sb_Sistema_Demonio_DTE(Me)
 
@@ -120,6 +121,8 @@ Public Class DteMonitor
             Cadena_ConexionSQL_Server = _Cadena
 
             _Class_BaseBk = New Class_Conectar_Base_BakApp(Me)
+
+            'Dim _Cadena_ConexionSQL_Server_Actual As String = Replace(Cadena_ConexionSQL_Server, " ", "@@")
 
             If _Class_BaseBk.Pro_Existe_Base Then
 

@@ -1315,45 +1315,51 @@ Public Class Class_Genera_DTE_RdBk
 
         If _Tido.ToString.Contains("G") Then
 
-            ' Retirador de mercaderia
-            Dim _Koreti As String = NuloPorNro(_Row_Maeedoob.Item("DIENDESP").ToString.Trim, "")
-            Dim _Rureti As String = _Sql.Fx_Trae_Dato("TABRETI", "RURETI", "KORETI = '" & _Koreti & "'",, False).ToString.Trim
-            Dim _Nokoreti As String = _Sql.Fx_Trae_Dato("TABRETI", "NORETI", "KORETI = '" & _Koreti & "'",, False).ToString.Trim
-            Dim _Placapat As String = NuloPorNro(_Row_Maeedoob.Item("PLACAPAT"), "").ToString.Trim
+            _Transporte = Fx_Transporte(_Idmaeedo)
 
-            Dim _Patente = String.Empty
-            Dim _Chofer = String.Empty
+            If String.IsNullOrEmpty(_Transporte) Then
 
-            If Not String.IsNullOrEmpty(_Rureti.Trim & _Nokoreti.Trim) Or
+                ' Retirador de mercaderia
+                Dim _Koreti As String = NuloPorNro(_Row_Maeedoob.Item("DIENDESP").ToString.Trim, "")
+                Dim _Rureti As String = _Sql.Fx_Trae_Dato("TABRETI", "RURETI", "KORETI = '" & _Koreti & "'",, False).ToString.Trim
+                Dim _Nokoreti As String = _Sql.Fx_Trae_Dato("TABRETI", "NORETI", "KORETI = '" & _Koreti & "'",, False).ToString.Trim
+                Dim _Placapat As String = NuloPorNro(_Row_Maeedoob.Item("PLACAPAT"), "").ToString.Trim
+
+                Dim _Patente = String.Empty
+                Dim _Chofer = String.Empty
+
+                If Not String.IsNullOrEmpty(_Rureti.Trim & _Nokoreti.Trim) Or
                Not String.IsNullOrEmpty(_Placapat) Then
 
-                If Not String.IsNullOrEmpty(_Placapat) Then
-                    _Patente = "<Patente>" & _Placapat & "</Patente>" & vbCrLf
-                End If
-
-                If Not String.IsNullOrEmpty(_Rureti.Trim & _Nokoreti.Trim) Then
-
-                    Dim _Rut As String = _Rureti.ToString.Trim
-
-                    If _Rut.Contains("-") Then
-                        Dim _Rt = Split(_Rut, "-")
-                        _Rut = _Rt(0)
+                    If Not String.IsNullOrEmpty(_Placapat) Then
+                        _Patente = "<Patente>" & _Placapat & "</Patente>" & vbCrLf
                     End If
 
-                    _Rut = Convert.ToInt32(_Rut) & "-" & RutDigito(_Rut)
-                    _Rureti = _Rut
+                    If Not String.IsNullOrEmpty(_Rureti.Trim & _Nokoreti.Trim) Then
 
-                    _Chofer = "<Chofer>" & vbCrLf &
+                        Dim _Rut As String = _Rureti.ToString.Trim
+
+                        If _Rut.Contains("-") Then
+                            Dim _Rt = Split(_Rut, "-")
+                            _Rut = _Rt(0)
+                        End If
+
+                        _Rut = Convert.ToInt32(_Rut) & "-" & RutDigito(_Rut)
+                        _Rureti = _Rut
+
+                        _Chofer = "<Chofer>" & vbCrLf &
                               "<RUTChofer>" & _Rureti & "</RUTChofer>" & vbCrLf &
                               "<NombreChofer>" & _Nokoreti & "</NombreChofer>" & vbCrLf &
                               "</Chofer>" & vbCrLf
-                End If
+                    End If
 
-                _Transporte = vbCrLf &
+                    _Transporte = vbCrLf &
                               "<Transporte>" & vbCrLf &
                               _Patente &
                               _Chofer &
                               "</Transporte>"
+
+                End If
 
             End If
 
@@ -1500,8 +1506,8 @@ Public Class Class_Genera_DTE_RdBk
                         "<QtyItem>" & _QtyItem_Str & "</QtyItem>" & vbCrLf &
                         "<UnmdItem>" & _UnmdItem & "</UnmdItem>" & vbCrLf &
                         "<PrcItem>" & _PrcItem & "</PrcItem>" &
-                        _CodImpAdic &
                         _Str_DescuentoMonto & vbCrLf &
+                        _CodImpAdic &
                         "<MontoItem>" & _MontoItem & "</MontoItem>" & vbCrLf &
                         "</Detalle>"
 
@@ -1655,6 +1661,75 @@ Public Class Class_Genera_DTE_RdBk
 
     End Function
 
+    Function Fx_Transporte(_Idmaeedo As Integer) As String
+
+        Dim _Transporte As String = String.Empty
+
+        Consulta_sql = $"Select * From {_Global_BaseBk}Zw_Transporte_Dte Where Idmaeedo = {_Idmaeedo}"
+        Dim _Rows As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Rows) Then
+
+            Dim _Patente As String = _Rows.Item("Patente").ToString.Trim
+            Dim _RUTTrans As String = _Rows.Item("RUTTrans").ToString.Trim
+            Dim _RUTChofer As String = _Rows.Item("RUTChofer").ToString.Trim
+            Dim _Chofer As String = _Rows.Item("Chofer").ToString.Trim
+            Dim _DirDest As String = _Rows.Item("DirDest").ToString.Trim
+            Dim _CmnaDest As String = _Rows.Item("CmnaDest").ToString.Trim
+            Dim _CiudadDest As String = _Rows.Item("CiudadDest").ToString.Trim
+
+            Fx_Caracter_Raro_Quitar(_Patente)
+            Fx_Caracter_Raro_Quitar(_Chofer)
+            Fx_Caracter_Raro_Quitar(_DirDest)
+            Fx_Caracter_Raro_Quitar(_CmnaDest)
+            Fx_Caracter_Raro_Quitar(_CiudadDest)
+
+            If _RUTTrans = _RUTChofer Then
+                _RUTTrans = String.Empty
+            End If
+
+            If Not String.IsNullOrEmpty(_Patente) Then
+                _Patente = "<Patente>" & _Patente & "</Patente>" & vbCrLf
+            End If
+            If Not String.IsNullOrEmpty(_RUTTrans) Then
+                _RUTTrans = "<RUTTrans>" & _RUTTrans & "</RUTTrans>" & vbCrLf
+            End If
+
+            If Not String.IsNullOrEmpty(_Chofer) Then
+
+                _Chofer = "<Chofer>" & vbCrLf &
+                           vbTab & "<RUTChofer>" & _RUTChofer & "</RUTChofer>" & vbCrLf &
+                           vbTab & "<NombreChofer>" & _Chofer & "</NombreChofer>" & vbCrLf &
+                           "</Chofer>" & vbCrLf
+
+            End If
+
+            If Not String.IsNullOrEmpty(_DirDest) Then
+                _DirDest = "<DirDest>" & _DirDest & "</DirDest>" & vbCrLf
+            End If
+            If Not String.IsNullOrEmpty(_CmnaDest) Then
+                _CmnaDest = "<CmnaDest>" & _CmnaDest & "</CmnaDest>" & vbCrLf
+            End If
+            If Not String.IsNullOrEmpty(_CiudadDest) Then
+                _CiudadDest = "<CiudadDest>" & _CiudadDest & "</CiudadDest>" & vbCrLf
+            End If
+
+
+            _Transporte = vbCrLf &
+              "<Transporte>" & vbCrLf &
+              _Patente &
+              _RUTTrans &
+              _Chofer &
+              _DirDest &
+              _CmnaDest &
+              _CiudadDest &
+              "</Transporte>"
+
+        End If
+
+        Return _Transporte
+
+    End Function
 
 
     Function Fx_Crear_Timbre_Electronico(Optional _Mnt As String = Nothing) As String

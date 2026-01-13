@@ -504,10 +504,10 @@
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Permisos Asociados\Cl_Permisos_Asociados.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Permisos Asociados\Cl_RemotasEnCadena.vb" />
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Pre-Venta\Frm_Cantidades_PreVenta.Designer.vb">
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\SobreStock_PV\Frm_Cantidades_PreVenta.Designer.vb">
       <DependentUpon>Frm_Cantidades_PreVenta.vb</DependentUpon>
     </Compile>
-    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Pre-Venta\Frm_Cantidades_PreVenta.vb">
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\SobreStock_PV\Frm_Cantidades_PreVenta.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Reservar numero OCC\Clas_Imprimir_Reserva_OCC.vb" />
@@ -589,6 +589,12 @@
       <DependentUpon>Frm_Referencia_DTE_Enc.vb</DependentUpon>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Frm_Referencia_DTE_Enc.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Frm_Transporte_DTE.Designer.vb">
+      <DependentUpon>Frm_Transporte_DTE.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Frm_Transporte_DTE.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Recursos\Recursos_DTE.Designer.vb">
@@ -895,6 +901,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_DocTom.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pda2NVV.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_PreVenta_StockProd.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_Conf_Correo.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_Conf_Cerrar_Documentos.vb" />
@@ -917,6 +924,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Prod_Asociacion.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Ftp_Conexiones.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Prod_SobreStock.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Prod_SobreStock_Tom.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Remotas_En_Cadena_01_Enc.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Remotas_En_Cadena_02_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Remotas_En_Cadena_03_Usu.vb" />
@@ -934,6 +942,10 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_TblArbol_Asociaciones.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Inventario.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Inv_Sector.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Transporte_Dte.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Picking_Det.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Picking_DetPick.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Picking_Enc.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Ubicaciones_Mapa_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_WMS_Ubicaciones_Sectores.vb" />
     <Compile Include="03 Sistemas\BodOne\Cl_Api_BodOne.vb" />
@@ -953,6 +965,25 @@
       <DependentUpon>Frm_PreImpo.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\PreImpo\Frm_PreImpo.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Cl_SobreStockXClas.vb" />
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStockXClas.Designer.vb">
+      <DependentUpon>Frm_SobreStockXClas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStockXClas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Grafico.Designer.vb">
+      <DependentUpon>Frm_SobreStock_Grafico.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Grafico.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Llegadas.Designer.vb">
+      <DependentUpon>Frm_SobreStock_Llegadas.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Llegadas.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Contenedores\Cl_Contenedor.vb" />
@@ -1065,6 +1096,7 @@
     <Compile Include="03 Sistemas\MayoristaMinoristas\Frm_RevMayMin.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Sistema WMS\Gestión WMS\Cl_Wms.vb" />
     <Compile Include="03 Sistemas\Sobre Stock\Cl_SobreStock.vb" />
     <Compile Include="03 Sistemas\Sobre Stock\Frm_SobreStock_IngDet.Designer.vb">
       <DependentUpon>Frm_SobreStock_IngDet.vb</DependentUpon>
@@ -2666,6 +2698,19 @@
     </Compile>
     <Compile Include="03 Sistemas\Tesoreria\Pagos\Pago Proveedores\Pago Masivo 02 Tipos\Clases\Clas_Pago_Banco_De_Chile_F400.vb" />
     <Compile Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Cl_Imprimir_CompPagoClientes.vb" />
+    <Compile Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Cruce Pagos\Cl_MaeedoItem.vb" />
+    <Compile Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Cruce Pagos\Frm_CruceAntiNoVinculados.Designer.vb">
+      <DependentUpon>Frm_CruceAntiNoVinculados.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Cruce Pagos\Frm_CruceAntiNoVinculados.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Cruce Pagos\Frm_CruceAntiNoVinculados_Filtro.Designer.vb">
+      <DependentUpon>Frm_CruceAntiNoVinculados_Filtro.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Cruce Pagos\Frm_CruceAntiNoVinculados_Filtro.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Frm_Pagos_CtasEntidades_Expor_Banco_ImpExcel.Designer.vb">
       <DependentUpon>Frm_Pagos_CtasEntidades_Expor_Banco_ImpExcel.vb</DependentUpon>
     </Compile>
@@ -4762,7 +4807,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recuros_ListaSuperior.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Pre-Venta\Frm_Cantidades_PreVenta.resx">
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\SobreStock_PV\Frm_Cantidades_PreVenta.resx">
       <DependentUpon>Frm_Cantidades_PreVenta.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Retiradores de mercaderia\Frm_Retirador_Mercaderia.resx">
@@ -4810,6 +4855,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Frm_Referencia_DTE_Enc.resx">
       <DependentUpon>Frm_Referencia_DTE_Enc.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Frm_Transporte_DTE.resx">
+      <DependentUpon>Frm_Transporte_DTE.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\12 Adjuntar archivos al documento\Frm_Adjuntar_Archivos.resx">
       <DependentUpon>Frm_Adjuntar_Archivos.vb</DependentUpon>
@@ -4959,6 +5007,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\PreImpo\Frm_PreImpo.resx">
       <DependentUpon>Frm_PreImpo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStockXClas.resx">
+      <DependentUpon>Frm_SobreStockXClas.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Grafico.resx">
+      <DependentUpon>Frm_SobreStock_Grafico.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Compras\Asistente de compras 2.0\Proyeccion Compras Agrupados %28SeaGarden%29\Sobre Stock\Frm_SobreStock_Llegadas.resx">
+      <DependentUpon>Frm_SobreStock_Llegadas.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_Contenedores.resx">
       <DependentUpon>Frm_Contenedores.vb</DependentUpon>
@@ -6196,6 +6253,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tesoreria\Frm_Seleccionar_Emisor_Doc_Pago.resx">
       <DependentUpon>Frm_Seleccionar_Emisor_Doc_Pago.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Cruce Pagos\Frm_CruceAntiNoVinculados.resx">
+      <DependentUpon>Frm_CruceAntiNoVinculados.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Cruce Pagos\Frm_CruceAntiNoVinculados_Filtro.resx">
+      <DependentUpon>Frm_CruceAntiNoVinculados_Filtro.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Tesoreria\Pagos\Pagos Generales\Frm_Pagos_CtasEntidades_Expor_Banco_ImpExcel.resx">
       <DependentUpon>Frm_Pagos_CtasEntidades_Expor_Banco_ImpExcel.vb</DependentUpon>
@@ -8245,6 +8308,7 @@
     <Content Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Recursos\Sql\SQLQuery Calculo de cumplimiento de entregas por parte de un proveedor por Producto.sql" />
     <Content Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Recursos especiales\MAEERES_Hist.sql" />
     <Content Include="01 Procesos  compartidos\Remotas\Cadenas Remotas\Recursos\Sql\SQLQuery Reenviar Solicitud De Permiso.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CrucePAuto_Tom.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CashDro_Operaciones.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CashDro_Transbank_Cierre.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CashDro_Transbank_Log.sql" />
@@ -8403,6 +8467,8 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_PrestaShop.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Ranking.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_Reemplazos.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_SobreStock.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_SobreStock_Tom.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_SolBodega.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_SolCompra.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Prod_SolCompra_Resp.sql" />
@@ -8483,6 +8549,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_TmpInv_InvParcial_Inventarios.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Tmp_Filtros_Busqueda.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Tmp_Prm_Informes.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Transporte_Dte.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Turnos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_UnificadosHitory.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Usuarios.sql" />

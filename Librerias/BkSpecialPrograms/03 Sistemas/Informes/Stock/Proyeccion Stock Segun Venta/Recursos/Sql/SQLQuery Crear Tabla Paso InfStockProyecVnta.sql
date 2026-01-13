@@ -100,30 +100,13 @@ Update #PasoVentas Set CantUd1 = Isnull((Select ROUND(SUM(
 Update  #PasoVentas Set Codigo_Nodo = Asoc.Codigo_Nodo,
 				  Identificacdor_NodoPadre = Arb1.Identificacdor_NodoPadre,
 				  Descripcion_NP = Arb2.Descripcion, Codigo_Madre = Arb1.Codigo_Madre,Descripcion_Consolid = Arb1.Descripcion
-From BAKAPP_SG.dbo.Zw_Prod_Asociacion Asoc
-Left Join BAKAPP_SG.dbo.Zw_TblArbol_Asociaciones Arb1 On Asoc.Codigo_Nodo = Arb1.Codigo_Nodo
-Left Join BAKAPP_SG.dbo.Zw_TblArbol_Asociaciones Arb2 On Arb1.Identificacdor_NodoPadre = Arb2.Codigo_Nodo
-Where Asoc.Codigo_Nodo In (Select Codigo_Nodo From BAKAPP_SG.dbo.Zw_TblArbol_Asociaciones Where Nodo_Raiz = 1 And Es_Seleccionable = 1)
+From #Global_BaseBk#"Zw_Prod_Asociacion Asoc
+Left Join #Global_BaseBk#"Zw_TblArbol_Asociaciones Arb1 On Asoc.Codigo_Nodo = Arb1.Codigo_Nodo
+Left Join #Global_BaseBk#"Zw_TblArbol_Asociaciones Arb2 On Arb1.Identificacdor_NodoPadre = Arb2.Codigo_Nodo
+Where Asoc.Codigo_Nodo In (Select Codigo_Nodo From #Global_BaseBk#"Zw_TblArbol_Asociaciones Where Nodo_Raiz = 1 And Es_Seleccionable = 1)
 And Asoc.Codigo = #PasoVentas.Codigo
 
 
---Update #PasoVentas Set CantUd1 = Isnull((Select ROUND(SUM(
---            CASE WHEN TIDO IN ('NCE','NCV','NCX','NCZ','NEV') THEN - 1 * Isnull(CAPRCO1,0)
---	        WHEN TIDO IN ('GDV','GDP') THEN Isnull(CAPRCO1-CAPREX1,0)
---	       	ELSE Isnull(CAPRCO1,0) END	       	
---	       	),2) From MAEDDO Ddo Where 
---			#PasoVentas.Empresa = Ddo.EMPRESA And #PasoVentas.Sucursal = Ddo.SULIDO And #PasoVentas.Bodega = Ddo.BOSULIDO And #PasoVentas.Codigo = Ddo.KOPRCT And
---			TIDO In ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV',
---	         'GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV') And FEEMLI BETWEEN @Fecha1 And @Fecha2 ),0)
-
---Update  #PasoVentas Set Codigo_Nodo = Asoc.Codigo_Nodo,
---				  Identificacdor_NodoPadre = Arb1.Identificacdor_NodoPadre,
---				  Descripcion_NP = Arb2.Descripcion, Codigo_Madre = Arb1.Codigo_Madre,Descripcion_Consolid = Arb1.Descripcion
---From BAKAPP_SG.dbo.Zw_Prod_Asociacion Asoc
---Left Join BAKAPP_SG.dbo.Zw_TblArbol_Asociaciones Arb1 On Asoc.Codigo_Nodo = Arb1.Codigo_Nodo
---Left Join BAKAPP_SG.dbo.Zw_TblArbol_Asociaciones Arb2 On Arb1.Identificacdor_NodoPadre = Arb2.Codigo_Nodo
---Where Asoc.Codigo_Nodo In (Select Codigo_Nodo From BAKAPP_SG.dbo.Zw_TblArbol_Asociaciones Where Nodo_Raiz = 1 And Es_Seleccionable = 1)
---And Asoc.Codigo = #PasoVentas.Codigo
 
 Update #PasoVentas Set CantUd1_Consolid = (Select Sum(CantUd1) From #PasoVentas Z1 Where Z1.Codigo_Madre = Z2.Codigo_Madre)
 From #PasoVentas Z2

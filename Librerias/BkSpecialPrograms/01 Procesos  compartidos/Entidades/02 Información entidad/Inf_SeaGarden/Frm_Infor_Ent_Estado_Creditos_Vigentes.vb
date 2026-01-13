@@ -63,9 +63,7 @@ Public Class Frm_Infor_Ent_Estado_Creditos_Vigentes
     Sub Sb_Actualiar_Grilla()
 
         Consulta_sql = My.Resources.Recursos_Inf.SQLQuery_Informe_de_estado_de_creditos_vigentes_on_line
-
-        ',,,,,,,
-        ',,,,
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
         Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
         _dv.Table = _Ds.Tables(0)
@@ -157,22 +155,6 @@ Public Class Frm_Infor_Ent_Estado_Creditos_Vigentes
             .Columns("DISPONIBLE").Visible = True
             .Columns("DISPONIBLE").DefaultCellStyle.Format = "$ ###,##"
             .Columns("DISPONIBLE").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-
-
-            'For Each _Fila As DataGridViewRow In .Rows
-
-            'Dim _TipoCredito As String = _Fila.Cells("TipoCredito").Value
-            'Dim _Disponible As Double = _Fila.Cells("Disponible").Value
-
-            'If _Disponible < 0 Then
-            '_Fila.Cells("Disponible").Style.ForeColor = Color.Red
-            'Else
-            'If _TipoCredito = "Max. crédito" Then
-            '_Fila.Cells("Disponible").Style.ForeColor = Color.DarkGreen
-            'End If
-            'End If
-
-            'Next
 
         End With
 

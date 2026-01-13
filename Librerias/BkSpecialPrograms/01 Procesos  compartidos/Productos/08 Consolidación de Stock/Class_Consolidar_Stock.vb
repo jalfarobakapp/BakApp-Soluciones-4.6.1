@@ -626,6 +626,62 @@
 
     End Function
 
+    Function Fx_Consolidar_SobreStock(_Empresa As String,
+                                      _Sucursal As String,
+                                      _Bodega As String,
+                                      _RowProducto As DataRow) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim _Codigo = _RowProducto.Item("KOPR")
+        Dim _Descripcion = _RowProducto.Item("NOKOPR")
+
+        Try
+
+            Dim _Id_SobreStock As Integer
+            Dim _Saldo_Qty_SobreStock As Double = 0
+
+            Consulta_sql = "Select Id_SobreStock,Codigo,Empresa,Sucursal,Bodega, Sum(Qty_SobreStock) - (Sum(Qty_SobreStockD) + Sum(Qty_SobreStockE)) As 'Saldo_Qty_SobreStock'" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_Docu_Det" & vbCrLf &
+                           "Where (SobreStock = 1) And Codigo = '" & _Codigo & "' And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "'" & vbCrLf &
+                           "Group By Id_SobreStock,Codigo,Empresa,Sucursal,Bodega"
+
+            Dim _Row_Prod_Stock As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not (_Row_Prod_Stock Is Nothing) Then
+
+                _Id_SobreStock = _Row_Prod_Stock.Item("Id_SobreStock")
+                _Saldo_Qty_SobreStock = _Row_Prod_Stock.Item("Saldo_Qty_SobreStock")
+
+            End If
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock SET" & vbCrLf &
+                           "PqteComprometido = " & De_Num_a_Tx_01(_Saldo_Qty_SobreStock, False, 5) & vbCrLf &
+                           "Where Id = " & _Id_SobreStock & vbCrLf & vbCrLf
+
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = "OK"
+                _Mensaje.Detalle = String.Empty
+                _Mensaje.Icono = MessageBoxIcon.Information
+            Else
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Mensaje = "Error al actualizar el sobre stock del producto " & _Codigo & " - " & _Descripcion
+                _Mensaje.Detalle = String.Empty
+                _Mensaje.Icono = MessageBoxIcon.Error
+            End If
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Error al actualizar el sobre stock del producto " & _Codigo & " - " & _Descripcion
+            _Mensaje.Detalle = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Private Function Stock_A_Una_Fecha_X_Producto(_Row_Producto As DataRow,
                                                   _Empresa As String,
                                                   _Sucursal As String,

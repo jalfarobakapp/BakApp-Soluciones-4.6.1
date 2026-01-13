@@ -54,6 +54,7 @@
 
         Consulta_sql = My.Resources.Recursos_InfProyStXVnta.SQLQuery_Crear_Tabla_Paso_InfStockProyecVnta
         Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
+        Consulta_sql = Replace(Consulta_sql, "#Tbl_BakApp#", _Global_BaseBk)
         Consulta_sql = Replace(Consulta_sql, "#MesesProyeccion#", Input_MesesProyeccion)
         Consulta_sql = Replace(Consulta_sql, "#MesesEstudio#", Input_MesesEstudio)
         Consulta_sql = Replace(Consulta_sql, "#TblPs#", NombreTablaPaso)

@@ -107,9 +107,10 @@ Public Class Frm_Formulario_Permisos_Asociados_New
 
         Dim _Row_Encabezado As DataRow = _Ds_Matriz_Documentos.Tables("Encabezado_Doc").Rows(0)
 
-        Dim _Tido = _Row_Encabezado.Item("TipoDoc")
+        Dim _Tido As String = _Row_Encabezado.Item("TipoDoc")
+        Dim _SobreStock As Boolean = _Row_Encabezado.Item("SobreStock")
 
-        Btn_Enviar_Solicitudes_Cadenas_Remotas.Visible = (_Tido = "NVV" Or _Tido = "OCC")
+        Btn_Enviar_Solicitudes_Cadenas_Remotas.Visible = (_Tido = "NVV" Or _Tido = "OCC" Or (_Tido = "COV" And _SobreStock))
 
     End Sub
 
@@ -214,9 +215,10 @@ Public Class Frm_Formulario_Permisos_Asociados_New
 
                 Dim _Row_Encabezado As DataRow = _Ds_Matriz_Documentos.Tables("Encabezado_Doc").Rows(0)
 
-                Dim _Tido = _Row_Encabezado.Item("TipoDoc")
+                Dim _Tido As String = _Row_Encabezado.Item("TipoDoc")
+                Dim _SobreStock As Boolean = _Row_Encabezado.Item("SobreStock")
 
-                Btn_Seleccionar_Funcionarios.Enabled = ((_Tido = "NVV") Or (_Tido = "OCC"))
+                Btn_Seleccionar_Funcionarios.Enabled = ((_Tido = "NVV") Or (_Tido = "OCC") Or (_Tido = "COV" And _SobreStock))
 
                 ShowContextMenu(Menu_Contextual_01)
 
@@ -321,13 +323,14 @@ Public Class Frm_Formulario_Permisos_Asociados_New
         Dim _Orden = 0
 
         Dim _Row_Encabezado As DataRow = _Ds_Matriz_Documentos.Tables("Encabezado_Doc").Rows(0)
-        Dim _Tido = _Row_Encabezado.Item("TipoDoc")
+        Dim _Tido As String = _Row_Encabezado.Item("TipoDoc")
+        Dim _SobreStock As Boolean = _Row_Encabezado.Item("SobreStock")
 
-        If _Tido = "NVV" Then
+        If (_Tido = "NVV") Or (_Tido = "COV" And _SobreStock) Then
 
             Dim _Revisar_Nuevamente_por_Stock As Boolean
 
-            If IsNothing(_Tbl_Funcionarios_X_01_Stock) Then
+            If IsNothing(_Tbl_Funcionarios_X_01_Stock) And Not _SobreStock Then
 
                 Dim _TblDetalle As DataTable = _Ds_Matriz_Documentos.Tables("Detalle_Doc")
 

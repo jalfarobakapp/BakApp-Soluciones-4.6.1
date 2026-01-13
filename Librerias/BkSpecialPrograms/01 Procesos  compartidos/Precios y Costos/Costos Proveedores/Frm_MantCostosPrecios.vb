@@ -2066,6 +2066,7 @@ Public Class Frm_MantCostosPrecios
         Tbl_Excel = _Dv.Table
 
         ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NomArch.Trim)
+
     End Sub
 
     Private Sub Btn_Mnu_ExportarExcelTodo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_ExportarExcelTodo.Click
@@ -2079,6 +2080,7 @@ Public Class Frm_MantCostosPrecios
         Tbl_Excel = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NomArch.Trim)
+
     End Sub
 
 

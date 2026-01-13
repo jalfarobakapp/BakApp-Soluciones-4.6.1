@@ -19,7 +19,8 @@ Module Modulo_Notificaciones
 
         If System.IO.File.Exists(Application.StartupPath & "\" & _Global_Nombre_BakApp_Notificaciones & ".exe") Then
 
-            Dim _Cadena_ConexionSQL_Server_Actual As String = Replace(Cadena_ConexionSQL_Server, " ", "@")
+            ' Dim _Cadena_ConexionSQL_Server_Actual As String = Replace(Cadena_ConexionSQL_Server, " ", "@")
+            Dim _Cadena_ConexionSQL_Server_Actual As String = Replace(Cadena_ConexionSQL_Server, " ", "@@")
             Dim _Ejecutar As String = Application.StartupPath & "\" & _Global_Nombre_BakApp_Notificaciones & ".exe" & Space(1) &
                                     _Cadena_ConexionSQL_Server_Actual
 

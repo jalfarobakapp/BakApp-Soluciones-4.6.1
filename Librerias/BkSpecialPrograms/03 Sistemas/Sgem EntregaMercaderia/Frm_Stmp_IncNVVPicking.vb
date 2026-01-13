@@ -9,7 +9,7 @@ Public Class Frm_Stmp_IncNVVPicking
     Dim _RowEntidadBuscar As DataRow
 
     Public Property FiltroDoc As String
-
+    Public Property Tido As String
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -48,9 +48,6 @@ Public Class Frm_Stmp_IncNVVPicking
         Dtp_BuscaXFechaEmision.Value = #1/1/0001 12:00:00 AM#
         Dtp_BuscaXFechaDespacho.Value = #1/1/0001 12:00:00 AM#
 
-        Sb_Actualizar_Grilla()
-        Sb_Color_Botones_Barra(Bar1)
-
         Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
         Me.ActiveControl = Txt_BuscaXNudoNVV
@@ -60,7 +57,40 @@ Public Class Frm_Stmp_IncNVVPicking
         AddHandler Txt_Observaciones.KeyDown, AddressOf Txt_KeyDown
         AddHandler Txt_Ocdo.KeyDown, AddressOf Txt_KeyDown
 
-        Chk_FacturarTodo.Enabled = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
+        If Tido = "NVV" Then
+            Chk_FacturarTodo.Enabled = (_Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas") Or
+                                        _Global_Row_Configuracion_Estacion.Item("Pickear_FacturarAutoCompletas"))
+            Chk_FacturarTodo.Checked = Chk_FacturarTodo.Enabled
+            Chk_FactConFDespVencida.Text = "Facturar notas de venta con fecha de despacho vencida"
+            Chk_FacturarTodo.Text = "Facturar todo"
+            Rdb_FechaFacFechaManual.Text = "Fecha de facturación"
+            Rdb_FechaFacFechaDespachoNVV.Text = "Fecha de facturación, fecha de despacho de las notas de venta."
+        End If
+
+        If Tido = "NVI" Then
+            Chk_FacturarTodo.Enabled = (_Global_Row_Configuracion_General.Item("Pickear_CrearGuiasAutoCompletas") Or
+                                        _Global_Row_Configuracion_Estacion.Item("Pickear_CrearGuiasAutoCompletas"))
+            Chk_FacturarTodo.Checked = Chk_FacturarTodo.Enabled
+            Chk_FactConFDespVencida.Text = "Crear Guías de Traslado con fecha de despacho vencida"
+            Chk_FacturarTodo.Text = "Guías a todo"
+            Chk_Pagar_Documentos.Enabled = False
+            Rdb_FechaFacFechaManual.Text = "F. de Guía de Traslado"
+            Rdb_FechaFacFechaDespachoNVV.Text = "F. de Guía de Traslado, fecha de despacho de las NVI."
+
+            If Not Chk_FacturarTodo.Enabled Then
+                Rdb_FechaFacFechaManual.Enabled = False
+                Rdb_FechaFacFechaDespachoNVV.Enabled = False
+                Dtp_FechaParaFacturacion.Enabled = False
+            End If
+
+        End If
+
+        Chk_NotfStockInsuficiente_Stmp.Checked = (_Global_Row_Configuracion_General.Item("NotfStockInsuficiente_Stmp") Or
+                                        _Global_Row_Configuracion_Estacion.Item("NotfStockInsuficiente_Stmp"))
+
+        Chk_PickearTodo.Enabled = Not Chk_NotfStockInsuficiente_Stmp.Checked
+
+        Sb_Actualizar_Grilla()
 
     End Sub
 
@@ -109,9 +139,19 @@ Public Class Frm_Stmp_IncNVVPicking
 
         ' DEBO ENLAZAR LA TABLA Zw_Docu_Det a esta consulta para poner la RtuVariale por productos para las CARNES...
 
-        Dim _Pickear_FacturarAutoCompletas As Integer = Convert.ToInt32(_Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas"))
+        Dim _Pickear_FacturarAutoCompletas As Boolean
 
-        Consulta_sql = "Select Cast(0 As Bit) As EnvPickeo,Cast(" & _Pickear_FacturarAutoCompletas & " As Bit) As Facturar,Edo.IDMAEEDO,Edo.EMPRESA,Edo.SUDO,TIDO,Edo.NUDO," & vbCrLf &
+        If Tido = "NVV" Then
+            _Pickear_FacturarAutoCompletas = (_Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas") Or
+                                              _Global_Row_Configuracion_Estacion.Item("Pickear_FacturarAutoCompletas"))
+        End If
+
+        If Tido = "NVI" Then
+            Chk_FacturarTodo.Enabled = (_Global_Row_Configuracion_General.Item("Pickear_CrearGuiasAutoCompletas") Or
+                                        _Global_Row_Configuracion_Estacion.Item("Pickear_CrearGuiasAutoCompletas"))
+        End If
+
+        Consulta_sql = "Select Cast(0 As Bit) As EnvPickeo,Cast(" & Convert.ToInt32(_Pickear_FacturarAutoCompletas) & " As Bit) As Facturar,Edo.IDMAEEDO,Edo.EMPRESA,Edo.SUDO,TIDO,Edo.NUDO," & vbCrLf &
                        "Cast(ENDO As Varchar(10)) As ENDO,Cast(SUENDO As Varchar(10)) As SUENDO," & vbCrLf &
                        "Cast('' As Varchar(15)) As Rut,NOKOEN,FEEMDO,FEER,FE01VEDO,FEULVEDO," & vbCrLf &
                        "Case When FEEMDO < FE01VEDO Then 'Credito' Else 'Contado' End As TipoVenta," & vbCrLf &
@@ -199,8 +239,16 @@ Public Class Frm_Stmp_IncNVVPicking
             .Columns("NUDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Facturar").HeaderText = "F.C."
-            .Columns("Facturar").ToolTipText = "Facturar automáticamente una vez completado el picking"
+            If Tido = "NVV" Then
+                .Columns("Facturar").HeaderText = "F.C."
+                .Columns("Facturar").ToolTipText = "Facturar automáticamente una vez completado el picking"
+            End If
+
+            If Tido = "NVI" Then
+                .Columns("Facturar").HeaderText = "G.C."
+                .Columns("Facturar").ToolTipText = "Generar Guía automáticamente una vez completado el picking"
+            End If
+
             .Columns("Facturar").Width = 30
             .Columns("Facturar").Visible = _Global_Row_Configuracion_General.Item("Pickear_FacturarAutoCompletas")
             .Columns("Facturar").ReadOnly = False
@@ -210,26 +258,26 @@ Public Class Frm_Stmp_IncNVVPicking
             .Columns("HabilitadaFac").HeaderText = "H.F."
             .Columns("HabilitadaFac").ToolTipText = "Habilitada ser facturada"
             .Columns("HabilitadaFac").Width = 30
-            .Columns("HabilitadaFac").Visible = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
+            .Columns("HabilitadaFac").Visible = (_Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") AndAlso Tido = "NVV")
             .Columns("HabilitadaFac").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("ENDO").HeaderText = "Entidad"
-            .Columns("ENDO").Width = 60
+            .Columns("ENDO").Width = 80
             .Columns("ENDO").Visible = True
             .Columns("ENDO").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("KOFUDO").HeaderText = "Resp"
-            .Columns("KOFUDO").Width = 35
-            .Columns("KOFUDO").Visible = True
-            .Columns("KOFUDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("SUENDO").HeaderText = "Suc."
             .Columns("SUENDO").Width = 40
             .Columns("SUENDO").Visible = True
             .Columns("SUENDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("KOFUDO").HeaderText = "Resp"
+            .Columns("KOFUDO").Width = 35
+            .Columns("KOFUDO").Visible = True
+            .Columns("KOFUDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NOKOEN").HeaderText = "Razón Social"
@@ -302,7 +350,15 @@ Public Class Frm_Stmp_IncNVVPicking
             .Columns("FEER").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FechaParaFacturacion").HeaderText = "F.Facturar"
+
+            If Tido = "NVV" Then
+                .Columns("FechaParaFacturacion").HeaderText = "F.Facturar"
+            End If
+
+            If Tido = "NVI" Then
+                .Columns("FechaParaFacturacion").HeaderText = "F.Guía T."
+            End If
+
             .Columns("FechaParaFacturacion").Width = 70
             .Columns("FechaParaFacturacion").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("FechaParaFacturacion").Visible = True
@@ -335,8 +391,16 @@ Public Class Frm_Stmp_IncNVVPicking
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+        Dim _Nudo As String = _Fila.Cells("NUDO").Value
 
-        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") AndAlso
+        Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            _LasNVVDebenSerHabilitadasParaFacturar = True
+        End If
+
+        If Tido = "NVV" AndAlso _LasNVVDebenSerHabilitadasParaFacturar AndAlso
             (_Cabeza = "Facturar" Or _Cabeza = "EnvPickeo") AndAlso
             _Fila.Cells(_Cabeza).Value AndAlso
             Not _Fila.Cells("HabilitadaFac").Value Then
@@ -357,6 +421,48 @@ Public Class Frm_Stmp_IncNVVPicking
                 MessageBoxEx.Show(Me, "Esta nota de venta esta completamente cerrada", "Validación",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
+            End If
+
+            If Chk_NotfStockInsuficiente_Stmp.Checked Then
+
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                _Mensaje = Fx_Revisar_NVVNVI_StockInsufuciente(_Idmaeedo)
+
+                If Not _Mensaje.EsCorrecto Then
+                    If MessageBoxEx.Show(Me, _Mensaje.Detalle & vbCrLf & vbCrLf &
+                                      "¿Desea igualmente enviar a pickear este documento?",
+                                      _Mensaje.Mensaje, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
+                        _Fila.Cells("EnvPickeo").Value = False
+                        Return
+                    End If
+                End If
+
+                Dim _Msg1 = $"¿CONFIRMA ENVIAR {Tido}-{_Nudo} A PICKEO?"
+                Dim _Msg2 = vbCrLf & $"Favor confirme para continuar"
+
+                _Mensaje = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.Help,,,, False)
+
+                If _Mensaje.Resultado <> "Yes" Then
+                    _Fila.Cells(_Cabeza).Value = False
+                    Return
+                End If
+
+                Call Btn_EnviarPickear_Click(Nothing, Nothing)
+                Return
+
+            End If
+
+        End If
+
+        If _Cabeza = "Facturar" And Tido = "NVI" And Not Chk_FacturarTodo.Enabled Then
+
+            Dim _Facturar As Boolean = _Fila.Cells("Facturar").Value
+
+            If _Facturar Then
+                _Fila.Cells("Facturar").Value = False
+                MessageBoxEx.Show(Me, "Esta acción debe ejecutarse directamente desde el sistema de entrega de mercadería.", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
             End If
 
         End If
@@ -395,13 +501,20 @@ Public Class Frm_Stmp_IncNVVPicking
             Dim _Marcar As Boolean
             Dim _SinHabilitar = 0
 
+            Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+                       _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                _LasNVVDebenSerHabilitadasParaFacturar = True
+            End If
+
             For Each _Fila As DataGridViewRow In Grilla.Rows
 
                 If Not _Fila.Cells("EnvPickeo").Value Then
 
                     _Marcar = True
 
-                    If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                    If Tido = "NVV" AndAlso _LasNVVDebenSerHabilitadasParaFacturar Then
 
                         If Not _Fila.Cells("HabilitadaFac").Value Then
 
@@ -421,7 +534,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
             Next
 
-            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            If Tido = "NVV" AndAlso _LasNVVDebenSerHabilitadasParaFacturar Then
 
                 If Chk_PickearTodo.Checked AndAlso CBool(_SinHabilitar) Then
 
@@ -455,13 +568,20 @@ Public Class Frm_Stmp_IncNVVPicking
         Dim _Marcar As Boolean
         Dim _SinHabilitar = 0
 
+        Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+                       _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+            _LasNVVDebenSerHabilitadasParaFacturar = True
+        End If
+
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
             If Not _Fila.Cells("Facturar").Value Then
 
                 _Marcar = True
 
-                If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                If Tido = "NVV" And _LasNVVDebenSerHabilitadasParaFacturar Then
 
                     If Not _Fila.Cells("HabilitadaFac").Value Then
 
@@ -478,9 +598,9 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Next
 
-        If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+        If Tido = "NVV" And _LasNVVDebenSerHabilitadasParaFacturar Then
 
-            If Not Chk_FacturarTodo.Checked Then
+            If Chk_FacturarTodo.Checked Then
 
                 If CBool(_SinHabilitar) Then
                     MessageBoxEx.Show(Me, "Existente " & _SinHabilitar & " documento(s) sin habilitar para ser facturado(s)",
@@ -516,18 +636,6 @@ Public Class Frm_Stmp_IncNVVPicking
             Return
         End If
 
-        'If Rdb_FechaFacFechaManual.Checked Then
-
-        '    Dim _Msj_Tsc As LsValiciones.Mensajes
-
-        '    _Msj_Tsc = Fx_Revisar_Tasa_Cambio(Me, Dtp_FechaParaFacturacion.Value)
-
-        '    If Not _Msj_Tsc.EsCorrecto Then
-        '        Return
-        '    End If
-
-        'End If
-
         Dim _ListaFFac As New List(Of LsValiciones.Mensajes)
 
         For Each _Fila As DataRow In _Tbl_Documentos.Rows
@@ -542,7 +650,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
                 Dim _Msj_Feer As New LsValiciones.Mensajes
 
-                If _FechaParaFacturacion.Date < Date.Now.Date Then
+                If _Tido = "NVV" AndAlso _FechaParaFacturacion.Date < Date.Now.Date Then
                     _Msj_Feer.EsCorrecto = False
                     _Msj_Feer.Detalle = "Documento: " & _Tido & " - " & _Nudo & ", Fecha despacho: " & _FechaParaFacturacion.ToShortDateString
                     _Msj_Feer.Mensaje = "La fecha de facturación no puede ser menos que la fecha de hoy"
@@ -615,25 +723,16 @@ Public Class Frm_Stmp_IncNVVPicking
                 Fmf.Dispose()
 
                 MessageBoxEx.Show(Me, "Para enviar a picking y facturar los documentos con fecha de despacho vencida, " & vbCrLf &
-                                  "debe marcar la opción: ""'Facturar notas de venta con fecha de despacho vencida'.""" & vbCrLf &
+                                  "debe marcar la opción: ""'" & Chk_FactConFDespVencida.Text & "'.""" & vbCrLf &
                                   "¡Requiere autorización!", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
-
-                'If MessageBoxEx.Show(Me, "¿Desea enviar a picking igualmente estas notas de venta?", "Validación",
-                '                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-                '    If Not Fx_Tiene_Permiso(Me, "Doc00163") Then
-                '        Return
-                '    End If
-                'End If
-
-                'Return
 
             End If
 
         End If
 
-        Dim _Lista As List(Of LsValiciones.Mensajes) = Fx_Cargar_NVV_FechaDespachoHoy()
+        Dim _Lista As List(Of LsValiciones.Mensajes) = Fx_Enviar_NVVNVI_SisEntregaMercaderia()
 
         Dim ListaQr As LsValiciones.Mensajes = _Lista.FirstOrDefault(Function(p) p.EsCorrecto = False)
 
@@ -652,7 +751,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
     End Sub
 
-    Function Fx_Cargar_NVV_FechaDespachoHoy() As List(Of LsValiciones.Mensajes)
+    Function Fx_Enviar_NVVNVI_SisEntregaMercaderia() As List(Of LsValiciones.Mensajes)
 
         Dim _Lista As New List(Of LsValiciones.Mensajes)
         Dim _FechaHoy As DateTime = FechaDelServidor()
@@ -759,7 +858,7 @@ Public Class Frm_Stmp_IncNVVPicking
             Consulta_sql = "Select Tabla, DescripcionTabla, CodigoTabla, NombreTabla" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                            "Where Tabla = 'SEA2MEATGARDEN' And NombreTabla = '" & EmpSucBod & "'"
-                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row) Then
                 _Mensaje.EsCorrecto = False
@@ -779,12 +878,151 @@ Public Class Frm_Stmp_IncNVVPicking
                            "Update " & _Global_BaseBk & "Zw_Despachos Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "',Bodega = '" & _Bodega &
                                 "' Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))" & vbCrLf &
                            "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa_Ori = Empresa Where Idmaeedo = @Idmaeedo" & vbCrLf &
                            "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa = '" & _Empresa & "' Where Idmaeedo = @Idmaeedo"
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False)
 
         Catch ex As Exception
 
         End Try
+
+    End Function
+
+    Function Fx_Revisar_NVVNVI_StockInsufuciente(_Idmaeedo As Integer) As LsValiciones.Mensajes
+        'Notificar stock insuficiente al enviar una NVV/NVI al Sistema de Entrega de Mercadería.
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Tbl As DataTable
+
+        Try
+
+            Consulta_sql = $"DECLARE @Idmaeedo Int
+
+SET @Idmaeedo = {_Idmaeedo};
+
+BEGIN
+    SELECT 
+		Temp.IDMAEEDO,
+        Temp.TIDO,
+        Temp.NUDO,
+		Temp.FEEMLI,
+        Temp.SULIDO,
+        Temp.BOSULIDO,
+        Temp.KOPRCT,
+        Temp.UDTRPR,
+		Temp.TICT,
+		Temp.PRCT,
+		Temp.TIPR,
+        Temp.CAPRCO1, 
+        Temp.CAPRCO2,
+        Temp.Sum_INGRE_Caprco1_Ori,
+        Temp.Sum_PREPA_Caprco1_Ori,
+        Temp.STFI1,
+		Temp.STFI2,
+        (Temp.STFI1 - (Temp.Sum_PREPA_Caprco1_Ori + Temp.Sum_INGRE_Caprco1_Ori + Temp.CAPRCO1)) AS 'Saldo_Caprco1',
+		(Temp.STFI2 - (Temp.Sum_PREPA_Caprco2_Ori + Temp.Sum_INGRE_Caprco2_Ori + Temp.CAPRCO2)) AS 'Saldo_Caprco2'
+    FROM (
+        SELECT 
+			M.IDMAEEDO,
+            M.TIDO,
+            M.NUDO,
+			M.FEEMLI,
+            M.SULIDO,
+            M.BOSULIDO,
+            M.KOPRCT,
+            M.UDTRPR,
+            M.TICT,
+			M.PRCT,
+			M.TIPR,
+            M.CAPRCO1, 
+            M.CAPRCO2,
+            ISNULL((SELECT SUM(det.Caprco1_Ori) 
+                    FROM {_Global_BaseBk}Zw_Stmp_Det det 
+                    INNER JOIN {_Global_BaseBk}[Zw_Stmp_Enc] Enc ON det.Id_Enc = Enc.Id 
+                    WHERE Enc.Estado = 'INGRE' 
+                      AND det.Codigo = M.KOPRCT), 0) AS 'Sum_INGRE_Caprco1_Ori', 
+            ISNULL((SELECT SUM(det.Caprco1_Ori) 
+                    FROM {_Global_BaseBk}Zw_Stmp_Det det 
+                    INNER JOIN {_Global_BaseBk}[Zw_Stmp_Enc] Enc ON det.Id_Enc = Enc.Id 
+                    WHERE Enc.Estado = 'PREPA' 
+                      AND det.Codigo = M.KOPRCT), 0) AS 'Sum_PREPA_Caprco1_Ori',      
+            ISNULL((SELECT S.STFI1 
+                    FROM MAEST S 
+                    WHERE S.KOSU = M.SULIDO 
+                      AND S.KOBO = M.BOSULIDO 
+                      AND S.KOPR = M.KOPRCT), 0) AS 'STFI1',
+			 ISNULL((SELECT S.STFI2
+                    FROM MAEST S 
+                    WHERE S.KOSU = M.SULIDO 
+                      AND S.KOBO = M.BOSULIDO 
+                      AND S.KOPR = M.KOPRCT), 0) AS 'STFI2',
+			ISNULL((SELECT SUM(det.Caprco2_Ori) 
+                    FROM {_Global_BaseBk}Zw_Stmp_Det det 
+                    INNER JOIN {_Global_BaseBk}[Zw_Stmp_Enc] Enc ON det.Id_Enc = Enc.Id 
+                    WHERE Enc.Estado = 'INGRE' 
+                      AND det.Codigo = M.KOPRCT), 0) AS 'Sum_INGRE_Caprco2_Ori', 
+			ISNULL((SELECT SUM(det.Caprco2_Ori) 
+                    FROM {_Global_BaseBk}Zw_Stmp_Det det 
+                    INNER JOIN {_Global_BaseBk}[Zw_Stmp_Enc] Enc ON det.Id_Enc = Enc.Id 
+                    WHERE Enc.Estado = 'PREPA' 
+                      AND det.Codigo = M.KOPRCT), 0) AS 'Sum_PREPA_Caprco2_Ori'
+        FROM MAEDDO M
+        WHERE M.IDMAEEDO = @Idmaeedo AND M.TIPR In ('FPN')
+    ) AS Temp 
+END"
+
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            ' Si no hay filas, consideramos que no hay problema de stock
+            If _Tbl Is Nothing OrElse _Tbl.Rows.Count = 0 Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = "No se encontraron registros para revisar stock."
+                Return _Mensaje
+            End If
+
+            _Mensaje.Detalle = String.Empty
+
+            ' Recorrer filas y verificar Saldo_Caprco1
+            For Each _Fila As DataRow In _Tbl.Rows
+
+                Dim _Saldo As Double = 0
+
+                If Not IsDBNull(_Fila.Item("Saldo_Caprco1")) Then
+                    Double.TryParse(_Fila.Item("Saldo_Caprco1").ToString, _Saldo)
+                End If
+
+                If _Saldo < 0 Then
+                    ' Advertencia: stock insuficiente
+                    _Mensaje.EsCorrecto = False
+                    _Mensaje.Mensaje = $"Stock insuficiente: {_Fila.Item("TIDO")}-{_Fila.Item("NUDO")}"
+                    If Not String.IsNullOrEmpty(_Mensaje.Detalle) Then
+                        _Mensaje.Detalle += vbCrLf
+                    End If
+                    _Mensaje.Detalle += String.Format("Producto: {0}, Sucursal: {1}, Bodega: {2}, Saldo: {3}",
+                                                    If(IsDBNull(_Fila.Item("KOPRCT")), String.Empty, _Fila.Item("KOPRCT").ToString),
+                                                    If(IsDBNull(_Fila.Item("SULIDO")), String.Empty, _Fila.Item("SULIDO").ToString),
+                                                    If(IsDBNull(_Fila.Item("BOSULIDO")), String.Empty, _Fila.Item("BOSULIDO").ToString),
+                                                    _Saldo.ToString("N2"))
+                    _Mensaje.Tag = _Tbl
+                End If
+
+            Next
+
+            If Not IsNothing(_Mensaje.Tag) Then
+                Return _Mensaje
+            End If
+
+            ' Si llegamos aquí, no hay saldos negativos
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Revisión de stock correcta. No se detectaron Saldos negativos."
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Error revisando stock: " & ex.Message
+            _Mensaje.Detalle = ex.ToString
+        End Try
+
+        Return _Mensaje
 
     End Function
 
@@ -939,6 +1177,22 @@ Public Class Frm_Stmp_IncNVVPicking
             Case "VADP", "SALDOAFAVOR", "NUDO", "NUDO_FCV"
                 Sb_Ver_Documento()
             Case "FechaParaFacturacion"
+
+                If Not Chk_FacturarTodo.Enabled Then
+
+                    Dim _Msj As String = String.Empty
+
+                    If Tido = "NVV" Then
+                        _Msj = "La facturación se realizará con la misma fecha en que la NVV sea habilitada desde el sistema de entrega de mercadería."
+                    End If
+                    If Tido = "NVI" Then
+                        _Msj = "La guía de traslado se emitirá con la misma fecha en que la NVI sea habilitada desde el sistema de entrega de mercadería."
+                    End If
+
+                    MessageBoxEx.Show(Me, Fx_AjustarTexto(_Msj, 80), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+
+                End If
 
                 Dim _Grabar As Boolean
                 Dim _FechaSeleccionada As DateTime

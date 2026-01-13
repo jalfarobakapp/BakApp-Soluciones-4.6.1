@@ -503,7 +503,6 @@ Public Module Mod_Variables
 
     Function Fx_Row_Sesion_Star(ByVal _Formulario As Form) As DataRow
 
-
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
         Dim Consulta_Sql As String
 

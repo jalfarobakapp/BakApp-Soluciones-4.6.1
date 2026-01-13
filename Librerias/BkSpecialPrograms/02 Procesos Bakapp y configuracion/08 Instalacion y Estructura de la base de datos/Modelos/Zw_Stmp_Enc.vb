@@ -45,5 +45,9 @@ Public Class Zw_Stmp_Enc
     Public Property PagarAuto As Boolean
     Public Property Idmaedpce_Paga As Integer
     Public Property CodFuncionario_Paga As String
+    Public Property CodFuncionario_Pickea As String
+    Public Property NombreEquipo_Pickea As String
+    Public Property CodFuncionario_Anula As String
+    Public Property FechaAnula As DateTime?
 
 End Class

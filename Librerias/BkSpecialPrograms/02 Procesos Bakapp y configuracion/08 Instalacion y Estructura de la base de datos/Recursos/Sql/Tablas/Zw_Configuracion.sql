@@ -139,6 +139,12 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [VendeUD2DesacUD1soloRTUD]                              [bit]           NOT NULL DEFAULT (0),
 [SelectOtrosClientesPedirPermiso]                       [bit]           NOT NULL DEFAULT (0),
 [ConservaListaDocOrigen]                                [bit]           NOT NULL DEFAULT (0),
+[Pickear_DesdeBkWMS]                                    [bit]           NOT NULL DEFAULT (0),
+[Pickear_NVITodas]                                      [bit]           NOT NULL DEFAULT (0),
+[LasNVVDebenSerHabilitadasParaFacturarCP]               [bit]           NOT NULL DEFAULT (0),
+[Pickear_CrearGuiasAutoCompletas]                       [bit]           NOT NULL DEFAULT (0),
+[AgregarTransporteNVIparaGTI]                           [bit]           NOT NULL DEFAULT (0),
+[NotfStockInsuficiente_Stmp]                            [bit]           NOT NULL DEFAULT (0),
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Empresa] ASC,

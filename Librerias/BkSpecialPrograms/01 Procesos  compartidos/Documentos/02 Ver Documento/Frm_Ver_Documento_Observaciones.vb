@@ -162,12 +162,18 @@ Public Class Frm_Ver_Documento_Observaciones
         Fm.Btn_Editar_Observaciones.Enabled = Not (_Esdo = "N")
         Fm.ShowDialog(Me)
 
-        If Fm.Pro_Grabar Then
-            ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.save,
-                                  1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
-        End If
+        _Grabar = Fm.Pro_Grabar
+
+        'If Fm.Pro_Grabar Then
+        '    ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.save,
+        '                          1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+        'End If
 
         Fm.Dispose()
+
+        If _Grabar Then
+            Me.Close()
+        End If
 
     End Sub
 

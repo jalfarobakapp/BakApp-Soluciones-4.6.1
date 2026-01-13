@@ -22,6 +22,8 @@ Public Class Frm_Cadenas_Remotas_Det
         End Get
     End Property
 
+    Public Property ModoSoloLectura As Boolean
+
     Public Sub New(ByVal RowRemotas_En_Cadena_01_Enc As DataRow)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -274,6 +276,11 @@ Public Class Frm_Cadenas_Remotas_Det
 
             If Not String.IsNullOrEmpty(_NroRemota) Then
 
+                If ModoSoloLectura Then
+                    Beep()
+                    Return
+                End If
+
                 If Fx_Tiene_Permiso(Me, _CodPermiso, FUNCIONARIO, , False,,,, False,,,,,,,,,,, True) Then
 
                     Dim _Id_Casi_DocEnc = _Row_Remota.Item("Id_Casi_DocEnc")
@@ -434,58 +441,66 @@ Public Class Frm_Cadenas_Remotas_Det
         Dim _Id_Enc = _RowRemotas_En_Cadena_01_Enc.Item("Id_Enc")
         Dim _Id_DocEnc = _RowRemotas_En_Cadena_01_Enc.Item("Id_DocEnc")
 
-
         Dim _CodFuncionario_Tom = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Casi_DocTom", "CodFuncionario", " Id_DocEnc = " & _Id_DocEnc)
 
-        If String.IsNullOrEmpty(_CodFuncionario_Tom) Then
-
-            Dim _Mensaje = MessageBoxEx.Show(Me, "Al eliminar y reciclar la solicitud NO se perderá el documento de referencia." & vbCrLf &
-                                             "Este podrá ser rescatado desde los documentos en Stand-By" & vbCrLf & vbCrLf &
-                                             "¿Está seguro de eliminar la solicitud?", "Eliminar y reciclar solicitud",
-                                             MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, Me.TopMost)
-
-            If _Mensaje = Windows.Forms.DialogResult.Yes Then
-
-                Dim _Tido As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Casi_DocEnc", "TipoDoc", "Id_DocEnc = " & _Id_DocEnc)
-
-                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Casi_DocDet Where Id_DocEnc = " & _Id_DocEnc
-                Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Casi_DocEnc Set" & Space(1) &
-                               "Stand_by = 1,Fun_Auto_Deuda_Ven = '',Fun_Auto_Stock_Ins = '',Fun_Auto_Cupo_Exe = '',Vizado = 0," & Space(1) &
-                               "Fun_Auto_Fecha_Des = '',Fun_Auto_Sol_Compra = ''" & Environment.NewLine &
-                               "Where Id_DocEnc =" & _Id_DocEnc & Environment.NewLine &
-                               "Update " & _Global_BaseBk & "Zw_Casi_DocDet Set CodFunAutoriza = 'xyz' Where Id_DocEnc =" & _Id_DocEnc & Environment.NewLine &
-                               "Delete " & _Global_BaseBk & "Zw_Remotas_En_Cadena_01_Enc Where Id_Enc = " & _Id_Enc & Environment.NewLine &
-                               "Delete " & _Global_BaseBk & "Zw_Remotas_En_Cadena_02_Det Where Id_Enc = " & _Id_Enc & Environment.NewLine & Environment.NewLine &
-                               "Delete " & _Global_BaseBk & "Zw_Remotas_En_Cadena_03_Usu Where Id_Enc = " & _Id_Enc & Environment.NewLine &
-                               "Delete " & _Global_BaseBk & "Zw_Notificaciones Where RCadena_Id_Enc = " & _Id_Enc & Environment.NewLine &
-                               "Delete " & _Global_BaseBk & "Zw_Remotas Where RCadena_Id_Enc = " & _Id_Enc
-
-                If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
-
-                    If _Estado <> "R" Then
-                        Sb_Reestablecer_Stock_En_Zw_Prod_Stock(_Tido, _TblDetalle)
-                    End If
-
-                    Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Remotas_Notif Where NroRemota Not In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas)"
-                    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                    MessageBoxEx.Show(Me, "La Solicitud ha sido eliminada, pero el documento podrá ser rescatado nuevamente" & vbCrLf &
-                                  "desde el formulario de generación de notas de venta en la opción Stand-By",
-                                  "Documento Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
-                    _Actualizar = True
-                    Me.Close()
-
-                End If
-
-            End If
-
-        Else
+        If Not String.IsNullOrEmpty(_CodFuncionario_Tom) Then
 
             Dim _Revisa = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _CodFuncionario_Tom & "'")
             MessageBoxEx.Show(Me, "El documento está siendo revisado por: " & Trim(_Revisa), "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            Return
+
+        End If
+
+
+        Dim _SobreStock As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Casi_DocEnc", "SobreStock", "Id_DocEnc = " & _Id_DocEnc)
+
+        If _SobreStock Then
+            MessageBoxEx.Show(Me, "Esto documento no se puede dejar en Stand-By ya que es una venta de Sobre Stock", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Mensaje = MessageBoxEx.Show(Me, "Al eliminar y reciclar la solicitud NO se perderá el documento de referencia." & vbCrLf &
+                                         "Este podrá ser rescatado desde los documentos en Stand-By" & vbCrLf & vbCrLf &
+                                         "¿Está seguro de eliminar la solicitud?", "Eliminar y reciclar solicitud",
+                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, Me.TopMost)
+
+        If _Mensaje = Windows.Forms.DialogResult.Yes Then
+
+            Dim _Tido As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Casi_DocEnc", "TipoDoc", "Id_DocEnc = " & _Id_DocEnc)
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Casi_DocDet Where Id_DocEnc = " & _Id_DocEnc
+            Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Casi_DocEnc Set" & Space(1) &
+                           "Stand_by = 1,Fun_Auto_Deuda_Ven = '',Fun_Auto_Stock_Ins = '',Fun_Auto_Cupo_Exe = '',Vizado = 0," & Space(1) &
+                           "Fun_Auto_Fecha_Des = '',Fun_Auto_Sol_Compra = ''" & Environment.NewLine &
+                           "Where Id_DocEnc =" & _Id_DocEnc & Environment.NewLine &
+                           "Update " & _Global_BaseBk & "Zw_Casi_DocDet Set CodFunAutoriza = 'xyz' Where Id_DocEnc =" & _Id_DocEnc & Environment.NewLine &
+                           "Delete " & _Global_BaseBk & "Zw_Remotas_En_Cadena_01_Enc Where Id_Enc = " & _Id_Enc & Environment.NewLine &
+                           "Delete " & _Global_BaseBk & "Zw_Remotas_En_Cadena_02_Det Where Id_Enc = " & _Id_Enc & Environment.NewLine & Environment.NewLine &
+                           "Delete " & _Global_BaseBk & "Zw_Remotas_En_Cadena_03_Usu Where Id_Enc = " & _Id_Enc & Environment.NewLine &
+                           "Delete " & _Global_BaseBk & "Zw_Notificaciones Where RCadena_Id_Enc = " & _Id_Enc & Environment.NewLine &
+                           "Delete " & _Global_BaseBk & "Zw_Remotas Where RCadena_Id_Enc = " & _Id_Enc
+
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+
+                If _Estado <> "R" Then
+                    Sb_Reestablecer_Stock_En_Zw_Prod_Stock(_Tido, _TblDetalle)
+                End If
+
+                Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Remotas_Notif Where NroRemota Not In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas)"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                MessageBoxEx.Show(Me, "La Solicitud ha sido eliminada, pero el documento podrá ser rescatado nuevamente" & vbCrLf &
+                              "desde el formulario de generación de notas de venta en la opción Stand-By",
+                              "Documento Eliminado", MessageBoxButtons.OK, MessageBoxIcon.Information, MessageBoxDefaultButton.Button1, Me.TopMost)
+                _Actualizar = True
+                Me.Close()
+
+            End If
 
         End If
 

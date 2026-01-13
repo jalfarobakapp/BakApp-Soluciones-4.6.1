@@ -1583,11 +1583,50 @@ Public Class Menu
     End Sub
     Private Sub Btn_SobreStockNVV_Click(sender As Object, e As EventArgs) Handles Btn_SobreStockNVV.Click
 
+        Dim _Cl_SobreStock As New Cl_SobreStock
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje = _Cl_SobreStock.Fx_Tomar_SobreStock()
+
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            Return
+        End If
+
         Modulo_Documentos.Sb_Generar_Documento(_Fm_Menu_Padre,
-                                               "NVV",
+                                               "COV",
                                                True,
                                                csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta, "STK")
 
     End Sub
 
+    Private Sub Btn_CrucePagoMasivos_Click(sender As Object, e As EventArgs) Handles Btn_CrucePagoMasivos.Click
+
+        Dim Fm As New Frm_CruceAntiNoVinculados_Filtro
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_ConvertirCOVNVV_Click(sender As Object, e As EventArgs) Handles Btn_ConvertirCOVNVV.Click
+
+        Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
+
+        If Not _Msj_Tsc.EsCorrecto Then
+            Return
+        End If
+
+        Dim Fm As New Frm_BusquedaDocumento_Filtro(False)
+        Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "COV", "Where TIDO = 'COV'")
+        Fm.Rdb_Estado_Todas.Enabled = False
+        Fm.Rdb_Estado_Vigente.Checked = True
+        Fm.Rdb_Estado_Cerrado.Enabled = False
+        Fm.Rdb_FEmision_EmitidosEntre.Checked = True
+        Fm.Chk_Mostrar_Vales_Transitorios.Checked = False
+        Fm.Chk_Mostrar_Vales_Transitorios.Enabled = False
+        Fm.SobreStock = True
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
+
+    End Sub
 End Class

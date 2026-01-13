@@ -64,7 +64,7 @@ Public Class Frm_04_Asis_Compra_Proveedores
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(GrillaProveedores, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        Sb_Formato_Generico_Grilla(GrillaProveedores, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
         Me._Tipo_De_Busqueda = _Tipo_De_Busqueda
         Me._Codigo = _Codigo
@@ -189,7 +189,7 @@ Public Class Frm_04_Asis_Compra_Proveedores
 
             If _Tipo_De_Busqueda = Frm_04_Asis_Compra_Proveedores.TipoBusqueda.Proveedores_del_producto Then
 
-                .Columns("RAZON").Width = 345
+                .Columns("RAZON").Width = 345 - 30
 
                 .Columns("Ud1").Width = 80
                 .Columns("Ud1").HeaderText = "$ Ud1"
@@ -203,7 +203,7 @@ Public Class Frm_04_Asis_Compra_Proveedores
 
             ElseIf _Tipo_De_Busqueda = Frm_04_Asis_Compra_Proveedores.TipoBusqueda.Proveedores_Seleccionados Then
 
-                .Columns("RAZON").Width = 390
+                .Columns("RAZON").Width = 390 - 30
 
                 .Columns("Productos").Width = 100
                 .Columns("Productos").HeaderText = "Productos"
@@ -220,9 +220,12 @@ Public Class Frm_04_Asis_Compra_Proveedores
         AddHandler Chk_Solo_Proveedores_CodAlternativo.CheckedChanged, AddressOf Rd_CheckedChanged
         AddHandler Btn_Actualizar.Click, AddressOf Rd_CheckedChanged
 
+        AddHandler GrillaProveedores.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
         Sb_Actualizar_Grilla("", _Tipo_De_Busqueda)
 
         Me.ActiveControl = Txtdescripcion
+        BtnExcel.Visible = False
 
     End Sub
 

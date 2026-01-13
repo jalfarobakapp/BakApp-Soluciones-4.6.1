@@ -283,9 +283,9 @@ Public Class Frm_Ver_Documento
                     Me.Left += 10
                 End If
 
-                Dim Fm As New Frm_Ver_Documentos_Permisos(_Idmaeedo)
-                Btn_Permisos_Asociados.Enabled = Convert.ToBoolean(Fm.Pro_Tbl_Remotas.Rows.Count)
-                Fm.Dispose()
+                'Dim Fm As New Frm_Ver_Documentos_Permisos(_Idmaeedo)
+                'Btn_Permisos_Asociados.Enabled = Convert.ToBoolean(Fm.Tbl_Remotas.Rows.Count)
+                'Fm.Dispose()
 
             Case Enum_Tipo_Apertura.Desde_Arcvhivador_XML, Enum_Tipo_Apertura.Desde_Bakapp_Kasi
 
@@ -331,6 +331,8 @@ Public Class Frm_Ver_Documento
         Btn_CopiarDocOtrEmpresa.Visible = (RutEmpresa = "77458040-9" Or RutEmpresa = "07251245-6" Or RutEmpresa = "77634877-5" Or RutEmpresa = "77634879-1")
         Btn_CrearNVVdesdeOCCOtraEmpresa.Visible = (RutEmpresa = "79514800-0")
 
+        Btn_Firmar_Documento_DTE.Visible = False
+
         Select Case _Tipo_Apertura
 
             Case Enum_Tipo_Apertura.Desde_Random_SQL
@@ -350,9 +352,9 @@ Public Class Frm_Ver_Documento
                 AddHandler GrillaDetalleDoc.CellEnter, AddressOf GrillaDetalleDoc_CellEnter
                 AddHandler GrillaDetalleDoc.CellDoubleClick, AddressOf Sb_Ver_Documento_Origen
 
-                Dim Fm As New Frm_Ver_Documentos_Permisos(_Idmaeedo)
-                Btn_Permisos_Asociados.Enabled = Convert.ToBoolean(Fm.Pro_Tbl_Remotas.Rows.Count)
-                Fm.Dispose()
+                'Dim Fm As New Frm_Ver_Documentos_Permisos(_Idmaeedo)
+                'Btn_Permisos_Asociados.Enabled = (Convert.ToBoolean(Fm.Tbl_Remotas.Rows.Count) Or Convert.ToBoolean(Fm.Tbl_OtrosPermisos.Rows.Count))
+                'Fm.Dispose()
 
             Case Enum_Tipo_Apertura.Desde_Arcvhivador_XML
 
@@ -571,7 +573,7 @@ Public Class Frm_Ver_Documento
 
             End If
 
-            Chk_Pickear.Visible = _Tido = "NVV"
+            Chk_Pickear.Visible = (_Tido = "NVV" Or _Tido = "NVI")
             Chk_Pickear.Checked = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Pickear", "Idmaeedo = " & _Idmaeedo, True, False)
 
             _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
@@ -706,7 +708,7 @@ Public Class Frm_Ver_Documento
 
         Dim _Tidoelec As Boolean = _TblEncabezado.Rows(0).Item("TIDOELEC") 'Fx_Es_Electronico(_Tido)
 
-        Btn_Firmar_Documento_DTE.Visible = _Tidoelec
+        'Btn_Firmar_Documento_DTE.Visible = _Tidoelec
 
         If _Tidoelec Then
 
@@ -831,13 +833,24 @@ Public Class Frm_Ver_Documento
 
         If Not IsNothing(_Row_Docu_Ent) AndAlso _Tido = "NVV" Then
 
-            Dim _Revisar_HbilitarNVVFAc As Boolean = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
+            'Dim _Revisar_HbilitarNVVFAc As Boolean = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
 
-            If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
-                _Revisar_HbilitarNVVFAc = False
+            'If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
+            '    _Revisar_HbilitarNVVFAc = False
+            'End If
+
+            Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+
+            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                _LasNVVDebenSerHabilitadasParaFacturar = True
             End If
 
-            If _Revisar_HbilitarNVVFAc Then
+            If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
+                _LasNVVDebenSerHabilitadasParaFacturar = False
+            End If
+
+            If _LasNVVDebenSerHabilitadasParaFacturar Then
 
                 Btn_HabilitarFacturacion.Visible = True
 
@@ -1056,7 +1069,7 @@ Public Class Frm_Ver_Documento
                     Btn_Revisar_Situacion_Comercial.Visible = True
             End Select
 
-            Btn_Firmar_Documento_DTE.Visible = _Tidoelec
+            'Btn_Firmar_Documento_DTE.Visible = _Tidoelec
 
             If _Tidoelec Then
 
@@ -2201,6 +2214,9 @@ Public Class Frm_Ver_Documento
         If Fm.Pro_Grabar Then
             ToastNotification.Show(Me, "DATOS ACTUALIZADOS CORRECTAMENTE", My.Resources.save,
                                   1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+            Consulta_sql = "Select Top 1 * From MAEEDOOB WITH (NOLOCK) Where IDMAEEDO = " & _Idmaeedo
+            _TblObservaciones = _Sql.Fx_Get_DataTable(Consulta_sql)
         End If
 
         Fm.Dispose()
@@ -2209,7 +2225,23 @@ Public Class Frm_Ver_Documento
 
     Private Sub GrillaEncabezado_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaEncabezado.CellDoubleClick
 
-        Dim _Cabeza = GrillaEncabezado.Columns(GrillaEncabezado.CurrentCell.ColumnIndex).Name
+        ' Evitar cabecera o celda inválida
+        If e.RowIndex < 0 Or e.ColumnIndex < 0 Then
+            Return
+        End If
+
+        If _TblEncabezado Is Nothing OrElse _TblEncabezado.Rows.Count = 0 Then
+            Return
+        End If
+
+        Dim _Cabeza As String = Nothing
+
+        Try
+            _Cabeza = GrillaEncabezado.Columns(e.ColumnIndex).Name
+        Catch ex As Exception
+            Return
+        End Try
+
         Dim _RowEncabezado As DataRow = _TblEncabezado.Rows(0)
 
 
@@ -3007,7 +3039,7 @@ Public Class Frm_Ver_Documento
     Private Sub Btn_Permisos_Asociados_Click(sender As Object, e As EventArgs) Handles Btn_Permisos_Asociados.Click
 
         Dim Fm As New Frm_Ver_Documentos_Permisos(_Idmaeedo)
-        If Convert.ToBoolean(Fm.Pro_Tbl_Remotas.Rows.Count) Then
+        If CBool(Fm.Tbl_Remotas.Rows.Count) Or CBool(Fm.Tbl_OtrosPermisos.Rows.Count) Then
             Fm.ShowDialog(Me)
         Else
             MessageBoxEx.Show(Me, "No se encontraron permisos asociados", "Permisos asociados", MessageBoxButtons.OK,

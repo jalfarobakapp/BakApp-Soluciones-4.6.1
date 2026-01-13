@@ -95,19 +95,19 @@ Public Module Modulo_Documentos
                         _PreVenta = True
                     End If
 
-                    If _Tido = "NVV" And _SubTido = "STK" Then
+                    If _Tido = "COV" And _SubTido = "STK" Then
                         _SubTido = String.Empty
                         _SobreStock = True
                     End If
 
                     _Minimizar = False
 
-                    Dim Fm_Post As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False, _Cerrar_Al_Grabar,, _Es_Ajuste)
+                    Dim Fm_Post As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False, _Cerrar_Al_Grabar,, _Es_Ajuste,,,, _PreVenta, _SobreStock)
                     If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True
                     Fm_Post.MinimizeBox = _Minimizar
                     Fm_Post.Pro_SubTido = _SubTido
-                    Fm_Post.PreVenta = _PreVenta
-                    Fm_Post.SobreStock = _SobreStock
+                    'Fm_Post.PreVenta = _PreVenta
+                    'Fm_Post.SobreStock = _SobreStock
                     Fm_Post.ShowDialog(_Fm_Menu_Padre)
                     Fm_Post.Dispose()
 

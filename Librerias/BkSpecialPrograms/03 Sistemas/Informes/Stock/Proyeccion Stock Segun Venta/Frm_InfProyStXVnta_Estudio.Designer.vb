@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_InfProyStXVnta_Estudio
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -81,7 +81,7 @@ Partial Class Frm_InfProyStXVnta_Estudio
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(98, 23)
         Me.LabelX3.TabIndex = 128
-        Me.LabelX3.Text = "Meses proyecci�n"
+        Me.LabelX3.Text = "Meses proyección"
         '
         'Input_MesesEstudio
         '

@@ -284,7 +284,10 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
         Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
         Consulta_sql = Replace(Consulta_sql, "#MesesSobreStock#", De_Num_a_Tx_01(Input_CalcSobreStock.Value, False, 2))
-        Consulta_sql = Replace(Consulta_sql, "--FiltroProductosSoloConStock", "")
+
+        If Chk_MostrarSoloProdConStockEnDetalle.Checked Then
+            Consulta_sql = Replace(Consulta_sql, "--FiltroProductosSoloConStock", "")
+        End If
 
         _Ds_Proyecto = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -335,7 +338,10 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
 
         Consulta_sql = Replace(Consulta_sql, "#RotCalculo#", _RotCalculo)
         Consulta_sql = Replace(Consulta_sql, "#MesesSobreStock#", De_Num_a_Tx_01(Input_CalcSobreStock.Value, False, 2))
-        Consulta_sql = Replace(Consulta_sql, "--FiltroProductosSoloConStock", "")
+
+        If Chk_MostrarSoloProdConStockEnDetalle.Checked Then
+            Consulta_sql = Replace(Consulta_sql, "--FiltroProductosSoloConStock", "")
+        End If
 
         _Ds_Proyecto = _Sql.Fx_Get_DataSet(Consulta_sql)
 
@@ -1320,14 +1326,14 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns("Duracion_Proyeccion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            _Campo = "SobreStock"
-            .Columns("SobreStock").Width = 40
-            .Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
-            .Columns("SobreStock").ToolTip = "Productos con sobre stock disponible"
-            .Columns("SobreStock").CellStyles.Default.Alignment = Alignment.MiddleCenter
-            .Columns("SobreStock").Visible = True
-            .Columns("SobreStock").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
+            '_Campo = "SobreStock"
+            '.Columns("SobreStock").Width = 40
+            '.Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
+            '.Columns("SobreStock").ToolTip = "Productos con sobre stock disponible"
+            '.Columns("SobreStock").CellStyles.Default.Alignment = Alignment.MiddleCenter
+            '.Columns("SobreStock").Visible = True
+            '.Columns("SobreStock").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
             _Campo = "Cant_Comprar"
             .Columns("Cant_Comprar").Width = 80
@@ -1614,15 +1620,14 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
             .Columns("Duracion_Proyeccion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            _Campo = "SobreStock"
-            .Columns("SobreStock").Width = 40
-            .Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
-            .Columns("SobreStock").ToolTip = "Productos con sobre stock disponible"
-            .Columns("SobreStock").CellStyles.Default.Alignment = Alignment.MiddleCenter
-            .Columns("SobreStock").Visible = True
-            .Columns("SobreStock").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
+            '_Campo = "SobreStock"
+            '.Columns("SobreStock").Width = 40
+            '.Columns("SobreStock").HeaderText = "Sobre" & vbCrLf & "Stock"
+            '.Columns("SobreStock").ToolTip = "Productos con sobre stock disponible"
+            '.Columns("SobreStock").CellStyles.Default.Alignment = Alignment.MiddleCenter
+            '.Columns("SobreStock").Visible = True
+            '.Columns("SobreStock").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
 
         End With
 
@@ -1909,6 +1914,18 @@ Public Class Frm_AsisCompra_Proyeccion_Informe
         _Sql.Ej_consulta_IDU(Consulta_sql, False)
         Consulta_sql = "Drop Table " & _Tbl_Asc_04_DocUltComp
         _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+    End Sub
+
+    Private Sub Btn_SobreStock_Click(sender As Object, e As EventArgs) Handles Btn_SobreStock.Click
+
+        Dim Fm As New Frm_SobreStockXClas
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+        'Dim Fm As New Frm_SobreStock_Productos
+        'Fm.ShowDialog(Me)
+        'Fm.Dispose()
 
     End Sub
 

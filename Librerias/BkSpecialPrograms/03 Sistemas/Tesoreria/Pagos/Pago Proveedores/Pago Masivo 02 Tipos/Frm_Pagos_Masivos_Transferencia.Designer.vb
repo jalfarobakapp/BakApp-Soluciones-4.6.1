@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Pagos_Masivos_Transferencia
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -73,7 +73,7 @@ Partial Class Frm_Pagos_Masivos_Transferencia
         Me.Btn_Generar_Archivo.ForeColor = System.Drawing.Color.Black
         Me.Btn_Generar_Archivo.Image = CType(resources.GetObject("Btn_Generar_Archivo.Image"), System.Drawing.Image)
         Me.Btn_Generar_Archivo.Name = "Btn_Generar_Archivo"
-        Me.Btn_Generar_Archivo.Text = "Generar archivo de exportación"
+        Me.Btn_Generar_Archivo.Text = "Generar archivo de exportaciÃ³n"
         '
         'GroupPanel1
         '
@@ -113,7 +113,7 @@ Partial Class Frm_Pagos_Masivos_Transferencia
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 37
-        Me.GroupPanel1.Text = "Identificación de documento de pago"
+        Me.GroupPanel1.Text = "IdentificaciÃ³n de documento de pago"
         '
         'TableLayoutPanel1
         '
@@ -235,7 +235,7 @@ Partial Class Frm_Pagos_Masivos_Transferencia
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(195, 20)
         Me.LabelX3.TabIndex = 4
-        Me.LabelX3.Text = "Número de la transferencia"
+        Me.LabelX3.Text = "NÃºmero de la transferencia"
         Me.LabelX3.TextAlignment = System.Drawing.StringAlignment.Far
         '
         'Cmb_Emdp

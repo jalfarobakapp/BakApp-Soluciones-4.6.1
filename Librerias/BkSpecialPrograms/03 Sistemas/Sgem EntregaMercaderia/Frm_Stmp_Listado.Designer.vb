@@ -51,6 +51,7 @@ Partial Class Frm_Stmp_Listado
         Me.Btn_VerDocumento = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Imprimir = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_Preparacion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_PreparacionPickear = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_EntregarMercaderia = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CerrarTicket = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ReenviaFacturar = New DevComponents.DotNetBar.ButtonItem()
@@ -73,6 +74,7 @@ Partial Class Frm_Stmp_Listado
         Me.Chk_VerIngresadas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Informacion = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_AnularTicket = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -107,7 +109,7 @@ Partial Class Frm_Stmp_Listado
         Me.Super_TabS.Name = "Super_TabS"
         Me.Super_TabS.ReorderTabsEnabled = True
         Me.Super_TabS.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.Super_TabS.SelectedTabIndex = 2
+        Me.Super_TabS.SelectedTabIndex = 0
         Me.Super_TabS.Size = New System.Drawing.Size(592, 27)
         Me.Super_TabS.TabCloseButtonHot = Nothing
         Me.Super_TabS.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -310,7 +312,7 @@ Partial Class Frm_Stmp_Listado
         '
         Me.Menu_Contextual_01_Opciones_Documento.AutoExpandOnClick = True
         Me.Menu_Contextual_01_Opciones_Documento.Name = "Menu_Contextual_01_Opciones_Documento"
-        Me.Menu_Contextual_01_Opciones_Documento.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_VerDocumento, Me.Btn_Imprimir, Me.Btn_Mnu_Preparacion, Me.Btn_Mnu_EntregarMercaderia, Me.Btn_CerrarTicket, Me.Btn_ReenviaFacturar, Me.LabelItem3, Me.Btn_Copiar})
+        Me.Menu_Contextual_01_Opciones_Documento.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_VerDocumento, Me.Btn_Imprimir, Me.Btn_Mnu_Preparacion, Me.Btn_Mnu_PreparacionPickear, Me.Btn_Mnu_EntregarMercaderia, Me.Btn_CerrarTicket, Me.Btn_ReenviaFacturar, Me.Btn_AnularTicket, Me.LabelItem3, Me.Btn_Copiar})
         Me.Menu_Contextual_01_Opciones_Documento.Text = "Opciones documento"
         '
         'LabelItem1
@@ -346,6 +348,13 @@ Partial Class Frm_Stmp_Listado
         Me.Btn_Mnu_Preparacion.ImageAlt = CType(resources.GetObject("Btn_Mnu_Preparacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_Preparacion.Name = "Btn_Mnu_Preparacion"
         Me.Btn_Mnu_Preparacion.Text = "Enviar a preparación "
+        '
+        'Btn_Mnu_PreparacionPickear
+        '
+        Me.Btn_Mnu_PreparacionPickear.Image = CType(resources.GetObject("Btn_Mnu_PreparacionPickear.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_PreparacionPickear.ImageAlt = CType(resources.GetObject("Btn_Mnu_PreparacionPickear.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_PreparacionPickear.Name = "Btn_Mnu_PreparacionPickear"
+        Me.Btn_Mnu_PreparacionPickear.Text = "Enviar a preparación y Pickear"
         '
         'Btn_Mnu_EntregarMercaderia
         '
@@ -665,6 +674,13 @@ Partial Class Frm_Stmp_Listado
         Me.Lbl_Informacion.TabIndex = 177
         Me.Lbl_Informacion.Text = "..."
         '
+        'Btn_AnularTicket
+        '
+        Me.Btn_AnularTicket.Image = CType(resources.GetObject("Btn_AnularTicket.Image"), System.Drawing.Image)
+        Me.Btn_AnularTicket.ImageAlt = CType(resources.GetObject("Btn_AnularTicket.ImageAlt"), System.Drawing.Image)
+        Me.Btn_AnularTicket.Name = "Btn_AnularTicket"
+        Me.Btn_AnularTicket.Text = "Anular Ticket"
+        '
         'Frm_Stmp_Listado
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -683,7 +699,6 @@ Partial Class Frm_Stmp_Listado
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -748,4 +763,6 @@ Partial Class Frm_Stmp_Listado
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_Informacion As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_ReenviaFacturar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_PreparacionPickear As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_AnularTicket As DevComponents.DotNetBar.ButtonItem
 End Class

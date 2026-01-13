@@ -1,5 +1,7 @@
 -- COMPORTAMIENTO DE PAGO
 
+Declare @Empresa As Char(2) = '#Empresa#'
+
 SELECT  Edo.IDMAEEDO, 
         Edo.TIDO AS TIPO_DOC, 
         Edo.NUDO AS NO_DOC, 
@@ -39,8 +41,9 @@ FROM     dbo.MAEEN Me FULL OUTER JOIN
 						Me.KOEN = Edo.ENDO AND 
                       Me.SUEN = Edo.SUENDO
 WHERE  
+      Edo.EMPRESA = @Empresa And
       Edo.ESDO <> 'N'
-	   #Filtro_Entidad#
+	  #Filtro_Entidad#
 	  AND Edo.TIDO IN ('FCV','FDV','NCV')
 	  --ORDER BY CODIGO, Edo.ESDO
 

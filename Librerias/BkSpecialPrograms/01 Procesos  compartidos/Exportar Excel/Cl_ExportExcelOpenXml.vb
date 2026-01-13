@@ -290,9 +290,14 @@ Public Class Cl_ExportExcelOpenXml
 
                             ElseIf TipoDeDato = "DateTime" Then
 
-                                Dim dateValue As DateTime = NuloPorNro(dr(dc.ColumnName), "01/01/1900")
-                                cell = New Cell() With {.CellValue = New CellValue(dateValue.ToOADate().ToString()), .DataType = CellValues.Number, .StyleIndex = 1}
-
+                                'Dim dateValue As Date = NuloPorNro(dr(dc.ColumnName), "01/01/1900")
+                                'Cell = New Cell() With {.CellValue = New CellValue(dateValue.ToOADate()), .DataType = CellValues.Date, .StyleIndex = 1}
+                                Dim dateValue As Date = NuloPorNro(dr(dc.ColumnName), "01/01/1900")
+                                cell = New Cell() With {
+                                    .CellValue = New CellValue(dateValue.ToOADate().ToString(System.Globalization.CultureInfo.InvariantCulture)),
+                                    .DataType = Nothing, ' No se especifica para fechas, así Excel lo interpreta como fecha si el estilo es correcto
+                                    .StyleIndex = 1
+                                }
                             ElseIf TipoDeDato = "Boolean" Then
 
                                 Dim _Boolean As Boolean
@@ -304,6 +309,10 @@ Public Class Cl_ExportExcelOpenXml
                             Else
 
                                 Dim _ValorXml As String = CStr(dr(dc.ColumnName).ToString)
+
+                                If _ValorXml = "0000346137" Then
+                                    Dim _aca = 0
+                                End If
 
                                 ' Limpieza de valores ASCII
                                 For _i = 0 To 31

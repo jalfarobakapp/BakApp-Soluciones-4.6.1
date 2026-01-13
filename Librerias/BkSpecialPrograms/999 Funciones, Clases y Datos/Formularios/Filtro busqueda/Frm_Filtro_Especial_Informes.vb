@@ -265,7 +265,9 @@ Public Class Frm_Filtro_Especial_Informes
 
         Btn_MarcarMasiva_Excel.Visible = Not _Seleccionar_Solo_Uno
 
-        Sb_Cargar_Datos()
+        If IsNothing(_Ds_Filtros_Busqueda) OrElse Not CBool(_Ds_Filtros_Busqueda.Tables(0).Rows.Count) Then
+            Sb_Cargar_Datos()
+        End If
 
         With Grilla
 
@@ -325,6 +327,8 @@ Public Class Frm_Filtro_Especial_Informes
 
         Me.ActiveControl = Txt_Descripcion
 
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
         Return
 
     End Sub
@@ -346,6 +350,7 @@ Public Class Frm_Filtro_Especial_Informes
 
             Case _Tabla_Fl._Bodegas
                 _Tabla = "TABBO" : _Campo = "EMPRESA+KOSU+KOBO" : _Descripcion = "NOKOBO"
+                _Condicion_Extra = $"And EMPRESA = '{Mod_Empresa}'"
             Case _Tabla_Fl._Sucursales
                 _Tabla = "TABSU" : _Campo = "KOSU" : _Descripcion = "NOKOSU"
             Case _Tabla_Fl._Entidades
@@ -760,12 +765,15 @@ Public Class Frm_Filtro_Especial_Informes
     Private Sub Sb_Grilla_KeyDown(sender As Object, e As KeyEventArgs)
         If e.KeyValue = Keys.Enter Then
 
-            SendKeys.Send("{LEFT}")
-            e.Handled = True
+            'SendKeys.Send("{LEFT}")
+            'e.Handled = True
             Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
             _Fila.Cells("Chk").Value = True
             Call BtnAceptar_Click(Nothing, Nothing)
+
+            e.Handled = True
+            e.SuppressKeyPress = True
 
         End If
     End Sub

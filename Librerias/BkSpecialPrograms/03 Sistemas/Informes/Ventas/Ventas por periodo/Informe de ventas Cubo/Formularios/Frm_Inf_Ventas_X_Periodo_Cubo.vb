@@ -586,6 +586,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
         _Filtro_Vendedores_Todas = True
         _Filtro_Vendedores_Asignados_Todas = True
 
+
         If Fx_Tiene_Permiso(Me, "Inf00025", , False) Then
 
             _Filtro_Vendedores_Asignados_Todas = True
@@ -799,6 +800,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             Tiempo.Enabled = False
             Tiempo_revisa_actualizacion.Enabled = True
+            Me.Enabled = False
 
         End If
 
@@ -891,6 +893,10 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         Try
 
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Me.Refresh()
+
             If Comisiones Then
                 Dtp_Fecha_Desde.Value = FechaDesdeFd
                 Dtp_Fecha_Hasta.Value = FechaHastaFh
@@ -925,10 +931,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                     "   Botón [Mantención de informe] - >[Actualizar datos del informe]")
             End If
 
-
-            Me.Cursor = Cursors.WaitCursor
-            Me.Enabled = False
-            Me.Refresh()
 
             If _Actualizar_Datos_Informe Then
 
@@ -3723,7 +3725,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                    Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
                                    _Filtro_Vendedores_Todas, False) Then
 
-            _Tbl_Filtro_Vendedores = _Filtrar.Pro_Tbl_Filtro
+            _Tbl_Filtro_Vendedores_Asignados = _Filtrar.Pro_Tbl_Filtro
 
             If Not _SoloAlgunosVendedores Then
                 _Filtro_Vendedores_Asignados_Todas = _Filtrar.Pro_Filtro_Todas
@@ -4492,7 +4494,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
 
-                _Kofu_Kogru = _Kofu_Kogru & " - " & _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Kofu_Kogru & "'").ToString.Trim
+                _Kofu_Kogru = "Usuario(s): " & _Kofu_Kogru
 
                 Sb_Confirmar_Lectura("Aun tiene su grupo de vendedores asociado a otro usuario." & vbCrLf &
                                      _Kofu_Kogru, "Debe quitarlo desde su ficha de usuario.", eTaskDialogIcon.Exclamation, Nothing)
@@ -4621,8 +4623,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         Try
 
-            Me.Enabled = True
-
+            Me.Enabled = False
 
             ToastNotification.Show(Me, "BUSCANDO ACTUALIZACIONES...", Imagenes_32x32.Images.Item("cloud.png"),
                                1 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)

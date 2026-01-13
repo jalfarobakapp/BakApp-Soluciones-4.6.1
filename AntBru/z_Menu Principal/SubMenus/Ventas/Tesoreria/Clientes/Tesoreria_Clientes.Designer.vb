@@ -32,6 +32,7 @@ Partial Class Tesoreria_Clientes
         Me.Btn_Buscar_Documento = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Pago_Documentos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Liquidacion_TJV_Credito = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Anticipos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -100,7 +101,7 @@ Partial Class Tesoreria_Clientes
         Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(700, 300)
         Me.MnuEspecialOtros.MultiLine = True
         Me.MnuEspecialOtros.Name = "MnuEspecialOtros"
-        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Subir_Pagos, Me.Btn_Buscar_Documento, Me.Btn_Pago_Documentos, Me.Btn_Liquidacion_TJV_Credito})
+        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Subir_Pagos, Me.Btn_Buscar_Documento, Me.Btn_Pago_Documentos, Me.Btn_Liquidacion_TJV_Credito, Me.Btn_Anticipos})
         '
         '
         '
@@ -215,6 +216,33 @@ Partial Class Tesoreria_Clientes
         Me.Btn_Liquidacion_TJV_Credito.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Liquidacion_TJV_Credito.TitleTextColor = System.Drawing.Color.White
         '
+        'Btn_Anticipos
+        '
+        Me.Btn_Anticipos.Image = CType(resources.GetObject("Btn_Anticipos.Image"), System.Drawing.Image)
+        Me.Btn_Anticipos.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Anticipos.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Anticipos.Name = "Btn_Anticipos"
+        Me.Btn_Anticipos.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Anticipos.Text = "<font size=""+4""><b>ANTICIPOS</b></font><br/><font size=""-1"">Cruce de pagos en for" &
+    "ma masiva</font>"
+        Me.Btn_Anticipos.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.DarkBlue
+        Me.Btn_Anticipos.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Anticipos.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_Anticipos.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_Anticipos.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Anticipos.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_Anticipos.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_Anticipos.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Anticipos.TileStyle.PaddingBottom = 4
+        Me.Btn_Anticipos.TileStyle.PaddingLeft = 4
+        Me.Btn_Anticipos.TileStyle.PaddingRight = 4
+        Me.Btn_Anticipos.TileStyle.PaddingTop = 4
+        Me.Btn_Anticipos.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Anticipos.TitleTextColor = System.Drawing.Color.White
+        '
         'Tesoreria_Clientes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -238,4 +266,5 @@ Partial Class Tesoreria_Clientes
     Private WithEvents Btn_Buscar_Documento As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Pago_Documentos As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Liquidacion_TJV_Credito As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Anticipos As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

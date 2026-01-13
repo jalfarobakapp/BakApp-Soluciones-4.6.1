@@ -907,4 +907,22 @@
   <data name="Zw_PreVenta_StockProd" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Sql\Tablas\Zw_PreVenta_StockProd.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Recursos_Inst_Tablas5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Recursos_Inst_Tablas.resx;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Recursos_Inst_Tablas_Designer2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Recursos_Inst_Tablas.Designer.vb;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="Zw_Prod_SobreStock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Prod_SobreStock.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Prod_SobreStock_Tom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Prod_SobreStock_Tom.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_CrucePAuto_Tom" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_CrucePAuto_Tom.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_Transporte_Dte" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Transporte_Dte.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

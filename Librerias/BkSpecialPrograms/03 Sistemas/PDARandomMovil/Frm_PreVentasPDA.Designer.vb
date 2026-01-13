@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_PreVentasPDA
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,8 +20,9 @@ Partial Class Frm_PreVentasPDA
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_PreVentasPDA))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -35,14 +36,31 @@ Partial Class Frm_PreVentasPDA
         Me.Btn_Mnu_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_Procesar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Actualizar = New DevComponents.DotNetBar.ButtonItem()
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
+        Me.Progress_Bar_Estado = New DevComponents.DotNetBar.ProgressBarItem()
+        Me.Lbl_Progress_B = New DevComponents.DotNetBar.LabelItem()
+        Me.Super_TabS = New DevComponents.DotNetBar.SuperTabStrip()
+        Me.Tab_Pendientes = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Tab_NvvGeneradas = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Tab_SolPermiso = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Chk_Marcar_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Dtp_Fecha_Emision_Hasta = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Lbl_FE_hasta = New DevComponents.DotNetBar.LabelX()
+        Me.Dtp_Fecha_Emision_Desde = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Lbl_FE_desde = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_Fecha_Emision_Hasta, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_Fecha_Emision_Desde, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupPanel1
@@ -55,9 +73,9 @@ Partial Class Frm_PreVentasPDA
         Me.GroupPanel1.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 45)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1039, 576)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1039, 503)
         '
         '
         '
@@ -87,7 +105,7 @@ Partial Class Frm_PreVentasPDA
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 184
-        Me.GroupPanel1.Text = "Tickets"
+        Me.GroupPanel1.Text = "Pre-Ventas"
         '
         'Menu_Contextual
         '
@@ -178,7 +196,6 @@ Partial Class Frm_PreVentasPDA
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        Me.Grilla.ReadOnly = True
         DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
         DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
         DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -187,7 +204,7 @@ Partial Class Frm_PreVentasPDA
         DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(1033, 553)
+        Me.Grilla.Size = New System.Drawing.Size(1033, 480)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 27
         '
@@ -196,8 +213,8 @@ Partial Class Frm_PreVentasPDA
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_Excel, Me.Btn_Actualizar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 594)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Procesar, Me.Btn_Exportar_Excel, Me.Btn_Actualizar})
+        Me.Bar2.Location = New System.Drawing.Point(0, 578)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1061, 41)
         Me.Bar2.Stretch = True
@@ -205,6 +222,16 @@ Partial Class Frm_PreVentasPDA
         Me.Bar2.TabIndex = 189
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
+        '
+        'Btn_Procesar
+        '
+        Me.Btn_Procesar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Procesar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Procesar.Image = CType(resources.GetObject("Btn_Procesar.Image"), System.Drawing.Image)
+        Me.Btn_Procesar.ImageAlt = CType(resources.GetObject("Btn_Procesar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Procesar.Name = "Btn_Procesar"
+        Me.Btn_Procesar.Text = "Procesar"
+        Me.Btn_Procesar.Tooltip = "Procesar"
         '
         'Btn_Exportar_Excel
         '
@@ -237,9 +264,9 @@ Partial Class Frm_PreVentasPDA
         Me.Metro_Bar_Color.DragDropSupport = True
         Me.Metro_Bar_Color.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
-        Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
+        Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus, Me.Progress_Bar_Estado, Me.Lbl_Progress_B})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 635)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 619)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
         Me.Metro_Bar_Color.Size = New System.Drawing.Size(1061, 22)
         Me.Metro_Bar_Color.TabIndex = 190
@@ -249,30 +276,284 @@ Partial Class Frm_PreVentasPDA
         '
         Me.Lbl_Estatus.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Lbl_Estatus.Name = "Lbl_Estatus"
-        Me.Lbl_Estatus.Text = "LabelItem2"
+        Me.Lbl_Estatus.Text = "Bakapp"
+        '
+        'Progress_Bar_Estado
+        '
+        '
+        '
+        '
+        Me.Progress_Bar_Estado.BackStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Progress_Bar_Estado.ChunkGradientAngle = 0!
+        Me.Progress_Bar_Estado.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways
+        Me.Progress_Bar_Estado.Name = "Progress_Bar_Estado"
+        Me.Progress_Bar_Estado.RecentlyUsed = False
+        '
+        'Lbl_Progress_B
+        '
+        Me.Lbl_Progress_B.Name = "Lbl_Progress_B"
+        Me.Lbl_Progress_B.Text = "En Espera"
+        '
+        'Super_TabS
+        '
+        Me.Super_TabS.AutoSelectAttachedControl = False
+        Me.Super_TabS.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Super_TabS.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Super_TabS.ContainerControlProcessDialogKey = True
+        '
+        '
+        '
+        '
+        '
+        '
+        Me.Super_TabS.ControlBox.CloseBox.Name = ""
+        '
+        '
+        '
+        Me.Super_TabS.ControlBox.MenuBox.Name = ""
+        Me.Super_TabS.ControlBox.Name = ""
+        Me.Super_TabS.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Super_TabS.ControlBox.MenuBox, Me.Super_TabS.ControlBox.CloseBox})
+        Me.Super_TabS.ForeColor = System.Drawing.Color.Black
+        Me.Super_TabS.Location = New System.Drawing.Point(12, 12)
+        Me.Super_TabS.Name = "Super_TabS"
+        Me.Super_TabS.ReorderTabsEnabled = True
+        Me.Super_TabS.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.Super_TabS.SelectedTabIndex = 0
+        Me.Super_TabS.Size = New System.Drawing.Size(307, 27)
+        Me.Super_TabS.TabCloseButtonHot = Nothing
+        Me.Super_TabS.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Super_TabS.TabIndex = 191
+        Me.Super_TabS.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tab_Pendientes, Me.Tab_NvvGeneradas, Me.Tab_SolPermiso})
+        Me.Super_TabS.Text = "Nulas"
+        '
+        'Tab_Pendientes
+        '
+        Me.Tab_Pendientes.GlobalItem = False
+        Me.Tab_Pendientes.Name = "Tab_Pendientes"
+        Me.Tab_Pendientes.Text = "Pendientes"
+        '
+        'Tab_NvvGeneradas
+        '
+        Me.Tab_NvvGeneradas.GlobalItem = False
+        Me.Tab_NvvGeneradas.Name = "Tab_NvvGeneradas"
+        Me.Tab_NvvGeneradas.Text = "NVV Generadas"
+        '
+        'Tab_SolPermiso
+        '
+        Me.Tab_SolPermiso.GlobalItem = False
+        Me.Tab_SolPermiso.Name = "Tab_SolPermiso"
+        Me.Tab_SolPermiso.Text = "En Permiso"
+        '
+        'Chk_Marcar_Todas
+        '
+        Me.Chk_Marcar_Todas.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Marcar_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Marcar_Todas.CheckBoxImageChecked = CType(resources.GetObject("Chk_Marcar_Todas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Marcar_Todas.FocusCuesEnabled = False
+        Me.Chk_Marcar_Todas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Marcar_Todas.Location = New System.Drawing.Point(12, 554)
+        Me.Chk_Marcar_Todas.Name = "Chk_Marcar_Todas"
+        Me.Chk_Marcar_Todas.Size = New System.Drawing.Size(100, 20)
+        Me.Chk_Marcar_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Marcar_Todas.TabIndex = 192
+        Me.Chk_Marcar_Todas.Text = "Marcar todas"
+        '
+        'Dtp_Fecha_Emision_Hasta
+        '
+        Me.Dtp_Fecha_Emision_Hasta.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_Fecha_Emision_Hasta.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_Fecha_Emision_Hasta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Emision_Hasta.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_Fecha_Emision_Hasta.ButtonDropDown.Visible = True
+        Me.Dtp_Fecha_Emision_Hasta.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_Fecha_Emision_Hasta.IsPopupCalendarOpen = False
+        Me.Dtp_Fecha_Emision_Hasta.Location = New System.Drawing.Point(970, 17)
+        '
+        '
+        '
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_Fecha_Emision_Hasta.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_Fecha_Emision_Hasta.Name = "Dtp_Fecha_Emision_Hasta"
+        Me.Dtp_Fecha_Emision_Hasta.Size = New System.Drawing.Size(81, 22)
+        Me.Dtp_Fecha_Emision_Hasta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_Fecha_Emision_Hasta.TabIndex = 196
+        Me.Dtp_Fecha_Emision_Hasta.Value = New Date(2016, 7, 8, 16, 33, 0, 0)
+        '
+        'Lbl_FE_hasta
+        '
+        Me.Lbl_FE_hasta.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Lbl_FE_hasta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_FE_hasta.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_FE_hasta.Location = New System.Drawing.Point(936, 20)
+        Me.Lbl_FE_hasta.Name = "Lbl_FE_hasta"
+        Me.Lbl_FE_hasta.Size = New System.Drawing.Size(34, 19)
+        Me.Lbl_FE_hasta.TabIndex = 197
+        Me.Lbl_FE_hasta.Text = "Hasta"
+        '
+        'Dtp_Fecha_Emision_Desde
+        '
+        Me.Dtp_Fecha_Emision_Desde.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_Fecha_Emision_Desde.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_Fecha_Emision_Desde.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Emision_Desde.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_Fecha_Emision_Desde.ButtonDropDown.Visible = True
+        Me.Dtp_Fecha_Emision_Desde.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_Fecha_Emision_Desde.IsPopupCalendarOpen = False
+        Me.Dtp_Fecha_Emision_Desde.Location = New System.Drawing.Point(852, 17)
+        '
+        '
+        '
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_Fecha_Emision_Desde.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_Fecha_Emision_Desde.Name = "Dtp_Fecha_Emision_Desde"
+        Me.Dtp_Fecha_Emision_Desde.Size = New System.Drawing.Size(79, 22)
+        Me.Dtp_Fecha_Emision_Desde.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_Fecha_Emision_Desde.TabIndex = 194
+        Me.Dtp_Fecha_Emision_Desde.Value = New Date(2016, 7, 8, 16, 32, 31, 0)
+        '
+        'Lbl_FE_desde
+        '
+        Me.Lbl_FE_desde.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Lbl_FE_desde.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_FE_desde.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_FE_desde.Location = New System.Drawing.Point(817, 20)
+        Me.Lbl_FE_desde.Name = "Lbl_FE_desde"
+        Me.Lbl_FE_desde.Size = New System.Drawing.Size(38, 19)
+        Me.Lbl_FE_desde.TabIndex = 195
+        Me.Lbl_FE_desde.Text = "Desde"
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(726, 20)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(95, 19)
+        Me.LabelX4.TabIndex = 193
+        Me.LabelX4.Text = "Fecha de emisión"
+        '
+        'Imagenes_16x16
+        '
+        Me.Imagenes_16x16.ImageStream = CType(resources.GetObject("Imagenes_16x16.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.Imagenes_16x16.TransparentColor = System.Drawing.Color.Transparent
+        Me.Imagenes_16x16.Images.SetKeyName(0, "warning.png")
+        Me.Imagenes_16x16.Images.SetKeyName(1, "ok.png")
+        Me.Imagenes_16x16.Images.SetKeyName(2, "cancel.png")
+        Me.Imagenes_16x16.Images.SetKeyName(3, "delete_button_error.png")
+        Me.Imagenes_16x16.Images.SetKeyName(4, "clock.png")
+        Me.Imagenes_16x16.Images.SetKeyName(5, "clock-import.png")
+        Me.Imagenes_16x16.Images.SetKeyName(6, "clock-info.png")
+        Me.Imagenes_16x16.Images.SetKeyName(7, "tag_green.png")
+        Me.Imagenes_16x16.Images.SetKeyName(8, "note_text.png")
+        Me.Imagenes_16x16.Images.SetKeyName(9, "note.png")
         '
         'Frm_PreVentasPDA
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1061, 657)
+        Me.ClientSize = New System.Drawing.Size(1061, 641)
+        Me.Controls.Add(Me.Dtp_Fecha_Emision_Hasta)
+        Me.Controls.Add(Me.Lbl_FE_hasta)
+        Me.Controls.Add(Me.Dtp_Fecha_Emision_Desde)
+        Me.Controls.Add(Me.Lbl_FE_desde)
+        Me.Controls.Add(Me.LabelX4)
+        Me.Controls.Add(Me.Chk_Marcar_Todas)
+        Me.Controls.Add(Me.Super_TabS)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_PreVentasPDA"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "Traspasar PreVentas Móviles Hacia Notas de Venta Desde Random Móvil"
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Super_TabS, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_Fecha_Emision_Hasta, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_Fecha_Emision_Desde, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -289,4 +570,18 @@ Partial Class Frm_PreVentasPDA
     Public WithEvents Btn_Actualizar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Metro_Bar_Color As DevComponents.DotNetBar.Metro.MetroStatusBar
     Friend WithEvents Lbl_Estatus As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Super_TabS As DevComponents.DotNetBar.SuperTabStrip
+    Friend WithEvents Tab_Pendientes As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents Tab_NvvGeneradas As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents Tab_SolPermiso As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents Chk_Marcar_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Btn_Procesar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Dtp_Fecha_Emision_Hasta As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Lbl_FE_hasta As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Dtp_Fecha_Emision_Desde As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Lbl_FE_desde As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Imagenes_16x16 As ImageList
+    Friend WithEvents Progress_Bar_Estado As DevComponents.DotNetBar.ProgressBarItem
+    Friend WithEvents Lbl_Progress_B As DevComponents.DotNetBar.LabelItem
 End Class

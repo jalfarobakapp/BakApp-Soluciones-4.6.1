@@ -23,22 +23,21 @@ Partial Class Frm_SobreStock_Productos
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_SobreStock_Productos))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_VerInventario = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_EditarInventario = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_EliminarInventario = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem3 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Copiar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_AgregarProducto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Salir = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Filtrar = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -52,9 +51,9 @@ Partial Class Frm_SobreStock_Productos
         Me.GroupPanel1.Controls.Add(Me.Menu_Contextual)
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 41)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(1271, 464)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1156, 435)
         '
         '
         '
@@ -104,42 +103,15 @@ Partial Class Frm_SobreStock_Productos
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_VerInventario, Me.LabelItem1, Me.Btn_EditarInventario, Me.Btn_EliminarInventario, Me.LabelItem3, Me.Btn_Copiar})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Eliminar, Me.LabelItem3, Me.Btn_Copiar})
         Me.Menu_Contextual_01.Text = "Opciones documento"
         '
-        'Btn_VerInventario
+        'Btn_Eliminar
         '
-        Me.Btn_VerInventario.Image = CType(resources.GetObject("Btn_VerInventario.Image"), System.Drawing.Image)
-        Me.Btn_VerInventario.ImageAlt = CType(resources.GetObject("Btn_VerInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_VerInventario.Name = "Btn_VerInventario"
-        Me.Btn_VerInventario.Text = "Ingresar al inventario"
-        '
-        'LabelItem1
-        '
-        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem1.Name = "LabelItem1"
-        Me.LabelItem1.PaddingBottom = 1
-        Me.LabelItem1.PaddingLeft = 10
-        Me.LabelItem1.PaddingTop = 1
-        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "Opciones"
-        '
-        'Btn_EditarInventario
-        '
-        Me.Btn_EditarInventario.Image = CType(resources.GetObject("Btn_EditarInventario.Image"), System.Drawing.Image)
-        Me.Btn_EditarInventario.ImageAlt = CType(resources.GetObject("Btn_EditarInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EditarInventario.Name = "Btn_EditarInventario"
-        Me.Btn_EditarInventario.Text = "Editar"
-        '
-        'Btn_EliminarInventario
-        '
-        Me.Btn_EliminarInventario.Image = CType(resources.GetObject("Btn_EliminarInventario.Image"), System.Drawing.Image)
-        Me.Btn_EliminarInventario.ImageAlt = CType(resources.GetObject("Btn_EliminarInventario.ImageAlt"), System.Drawing.Image)
-        Me.Btn_EliminarInventario.Name = "Btn_EliminarInventario"
-        Me.Btn_EliminarInventario.Text = "Eliminar"
+        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
+        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Eliminar.Name = "Btn_Eliminar"
+        Me.Btn_Eliminar.Text = "Eliminar (Quitar producto para venta sobre-stock)"
         '
         'LabelItem3
         '
@@ -165,37 +137,37 @@ Partial Class Frm_SobreStock_Productos
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle11
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
-        Me.Grilla.Size = New System.Drawing.Size(1265, 441)
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        Me.Grilla.Size = New System.Drawing.Size(1150, 412)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
         '
@@ -207,7 +179,7 @@ Partial Class Frm_SobreStock_Productos
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_AgregarProducto, Me.Btn_Salir})
         Me.Bar1.Location = New System.Drawing.Point(0, 495)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(1295, 41)
+        Me.Bar1.Size = New System.Drawing.Size(1183, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar1.TabIndex = 162
@@ -232,11 +204,50 @@ Partial Class Frm_SobreStock_Productos
         Me.Btn_Salir.Name = "Btn_Salir"
         Me.Btn_Salir.Tooltip = "Grabar  - ( Sin imprimir )"
         '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Image = CType(resources.GetObject("LabelX1.Image"), System.Drawing.Image)
+        Me.LabelX1.ImagePosition = DevComponents.DotNetBar.eImagePosition.Right
+        Me.LabelX1.ImageTextSpacing = 3
+        Me.LabelX1.Location = New System.Drawing.Point(12, 12)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(67, 23)
+        Me.LabelX1.TabIndex = 168
+        Me.LabelX1.Text = "BUSCAR"
+        '
+        'Txt_Filtrar
+        '
+        Me.Txt_Filtrar.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Filtrar.Border.Class = "TextBoxBorder"
+        Me.Txt_Filtrar.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Filtrar.ButtonCustom2.Image = CType(resources.GetObject("Txt_Filtrar.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Filtrar.ButtonCustom2.Visible = True
+        Me.Txt_Filtrar.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Filtrar.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Filtrar.Location = New System.Drawing.Point(85, 12)
+        Me.Txt_Filtrar.Name = "Txt_Filtrar"
+        Me.Txt_Filtrar.PreventEnterBeep = True
+        Me.Txt_Filtrar.Size = New System.Drawing.Size(556, 22)
+        Me.Txt_Filtrar.TabIndex = 167
+        Me.Txt_Filtrar.WatermarkText = "Ingrese algo del código o la descripción para la búsqueda"
+        '
         'Frm_SobreStock_Productos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1295, 536)
+        Me.ClientSize = New System.Drawing.Size(1183, 536)
+        Me.Controls.Add(Me.LabelX1)
+        Me.Controls.Add(Me.Txt_Filtrar)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
@@ -247,7 +258,7 @@ Partial Class Frm_SobreStock_Productos
         Me.Name = "Frm_SobreStock_Productos"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "PRODUCTOS DISPONIBLES PARA VENTA SOBRE-STOCK (PRE-IMPORTACION)"
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
@@ -258,14 +269,13 @@ Partial Class Frm_SobreStock_Productos
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_VerInventario As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
-    Friend WithEvents Btn_EditarInventario As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_EliminarInventario As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem3 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_AgregarProducto As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Salir As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Filtrar As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

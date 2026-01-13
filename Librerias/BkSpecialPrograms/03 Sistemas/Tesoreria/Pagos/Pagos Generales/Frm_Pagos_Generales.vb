@@ -148,6 +148,11 @@ Public Class Frm_Pagos_Generales
 
         Chk_Fecha_Asignacion.Enabled = Not ModoLectura
 
+        If ModoLectura Then
+            Me.Text += " (MODO SOLO LECTURA)"
+            BtnGrabar.Enabled = False
+        End If
+
     End Sub
 
     Sub Sb_Traer_Entidad(_Koen As String, _Suen As String)
@@ -658,7 +663,7 @@ Public Class Frm_Pagos_Generales
 
     Private Sub Grilla_Estado_de_Cuentas_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles Grilla_Estado_de_Cuentas.KeyDown
 
-        If Fx_ModoLectura() Then Return
+        'If Fx_ModoLectura() Then Return
 
         Try
 

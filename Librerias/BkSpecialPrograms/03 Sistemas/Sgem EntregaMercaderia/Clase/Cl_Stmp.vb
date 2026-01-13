@@ -669,6 +669,8 @@ Public Class Cl_Stmp
             If .Secueven.Contains("NB") Then .DocEmitir = "BLV"
             If .Secueven.Contains("NF") Then .DocEmitir = "FCV"
 
+            If .Tido = "NVI" Then .DocEmitir = "GTI"
+
             .PagarAuto = _PagarAuto
             .Idmaedpce_Paga = _Idmaedpce_Paga
             .CodFuncionario_Paga = _CodFuncionario_Paga
@@ -1257,6 +1259,68 @@ Public Class Cl_Stmp
         Return _Mensaje_Stem
 
     End Function
+
+    Function Fx_EnviarAPerparacionPlanificarPicking() As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = String.Empty
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With _Zw_Stmp_Enc
+
+                Consulta_sql = $"Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
+                               $"Estado = '{ .Estado}'" &
+                               $",Ruta = '{ .Ruta}'" &
+                               $",OrdenRuta = { .OrdenRuta}" &
+                               $",Planificada = {Convert.ToInt32(.Planificada)}" &
+                               $",FechaPlanificacion = Getdate()" &
+                               $",CodFuncionario_Pickea = '{ .CodFuncionario_Pickea}'" &
+                               $",Observacion = '{ .Observacion}'" & vbCrLf &
+                               $"Where Id = { .Id}"
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End With
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje_Stem.EsCorrecto = True
+            _Mensaje_Stem.Detalle = "Planificar/Preparar"
+            _Mensaje_Stem.Mensaje = "Documento en preparación"
+            _Mensaje_Stem.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = ex.Message
+            _Mensaje_Stem.Icono = MessageBoxIcon.Stop
+            _Zw_Stmp_Enc.Id = 0
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Stem
+
+    End Function
+
     Function Fx_Cerrar_Ticket() As LsValiciones.Mensajes
 
         Dim _Mensaje_Stem As New LsValiciones.Mensajes
@@ -1295,6 +1359,87 @@ Public Class Cl_Stmp
             _Mensaje_Stem.EsCorrecto = True
             _Mensaje_Stem.Detalle = "Documento entrega correctamente"
             _Mensaje_Stem.Mensaje = "Documento cerrado y entrega correctamente"
+            _Mensaje_Stem.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Mensaje = ex.Message
+            _Mensaje_Stem.Icono = MessageBoxIcon.Stop
+            _Zw_Stmp_Enc.Id = 0
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_Anular_Ticket_Paquetes() As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = String.Empty
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With _Zw_Stmp_Enc
+
+                Consulta_sql = $"
+    Update {_Global_BaseBk}Zw_Stmp_Det
+    Set 
+        Caprco1_Real = 0,
+        Caprco2_Real = 0,
+        Rlud_Real = 0,
+        Pickeado = 0,
+        CodFuncionario_Pickea = '', 
+        EnProceso = 0 
+    Where Id_Enc = { .Id}
+
+    Update {_Global_BaseBk}Zw_Stmp_Enc 
+    Set 
+        Estado = '{ .Estado}'
+        ,FechaAnula = Getdate()
+        ,ConfirmadoWMS = 0
+        ,Observacion = 'Documento anulado desde Bakapp, Anula Ticket devuelve Paquetes'
+        ,CodFuncionario_Anula = '{ .CodFuncionario_Anula}'
+    Where Id = { .Id}
+
+	Update  {_Global_BaseBk}Zw_WMS_Paquetes 
+	set 
+	    Id_Enc = 0,
+	    Idmaeedo =0,
+	    Reservado = 0,
+        Tido = '',
+        Nudo = ''
+	Where Id_Enc = { .Id}
+"
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+            End With
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje_Stem.EsCorrecto = True
+            _Mensaje_Stem.Detalle = "Documento anulado correctamente"
+            _Mensaje_Stem.Mensaje = "Documento anulado"
             _Mensaje_Stem.Icono = MessageBoxIcon.Information
 
         Catch ex As Exception

@@ -11,6 +11,16 @@ Public Class Frm_Stmp_Listado
 
     Dim _Dv As New DataView
 
+    ' Colocar este campo cerca de las otras variables de clase (por ejemplo junto a _Dv)
+    Private _UltimoTransporte As Zw_Transporte_Dte
+
+    ' Propiedad de solo lectura para acceder desde otras partes si es necesario
+    Public ReadOnly Property UltimoTransporte As Zw_Transporte_Dte
+        Get
+            Return _UltimoTransporte
+        End Get
+    End Property
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -50,6 +60,11 @@ Public Class Frm_Stmp_Listado
         AddHandler Chk_Monitorear.CheckedChanged, AddressOf Chk_Monitorear_CheckedChanged
 
         Timer_Monitoreo.Interval = 1000 * 5
+
+        If _Global_Row_Configuracion_General.Item("Pickear_DesdeBkWMS") Or
+                        _Global_Row_Configuracion_Estacion.Item("Pickear_DesdeBkWMS") Then
+            Chk_VerIngresadas.Checked = True
+        End If
 
     End Sub
     Sub Sb_Actualizar_Grilla()
@@ -650,6 +665,81 @@ Public Class Frm_Stmp_Listado
 
     End Function
 
+    Function Fx_AnularTicket_Paquetes(_CodFuncionario_Cierra As String, _NumeroTicket As String) As LsValiciones.Mensajes
+
+        Timer_Monitoreo.Stop()
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _Aceptar As Boolean
+
+            If Not String.IsNullOrEmpty(_NumeroTicket) Then
+                _Aceptar = True
+            End If
+
+            If Not _Aceptar Then
+                _Aceptar = InputBox_Bk(Me, "Ingrese el número del ticket que desea Anular.",
+                                       "Anular Ticket", _NumeroTicket, False, _Tipo_Mayus_Minus.Normal, 15, True, _Tipo_Imagen.Barra,,,,,,, False)
+            End If
+
+            If Not _Aceptar Then
+                _Mensaje.Detalle = "Acción cancelada"
+                _Mensaje.Cancelado = True
+                Throw New System.Exception("An exception has occurred.")
+            End If
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Numero = '" & _NumeroTicket & "'"
+            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If IsNothing(_Row) Then
+
+                _Mensaje.Detalle = "Validación"
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
+                Else
+                    Throw New System.Exception("No existe Ticket número " & _NumeroTicket & " En el sistema de Ticket de entrega")
+                End If
+
+            End If
+
+            If MessageBoxEx.Show(Me, "¿Confirma Anular el Ticket " & _NumeroTicket & "?",
+                                 "Confirmación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                _Mensaje.Detalle = "Validación"
+                _Mensaje.Cancelado = True
+                Throw New System.Exception("Acción cancelada por el usuario")
+            End If
+
+            Dim _Id_Enc As Integer = _Row.Item("Id")
+
+            Dim _Cl_Stmp As New Cl_Stmp
+            _Cl_Stmp.Fx_Llenar_Encabezado(_Id_Enc)
+
+            _Cl_Stmp.Zw_Stmp_Enc.Estado = "NULA"
+            _Cl_Stmp.Zw_Stmp_Enc.CodFuncionario_Anula = _CodFuncionario_Cierra
+
+            _Mensaje = _Cl_Stmp.Fx_Anular_Ticket_Paquetes
+
+        Catch ex As Exception
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        Finally
+            If Chk_Monitorear.Checked Then
+                Timer_Monitoreo.Start()
+            End If
+        End Try
+
+        If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            _Mensaje = Fx_Entregar(_CodFuncionario_Cierra, "")
+        End If
+
+        Return _Mensaje
+
+    End Function
+
     Function Fx_Cargar_NVV_FechaDespachoHoy() As List(Of LsValiciones.Mensajes)
 
         Dim _Lista As New List(Of LsValiciones.Mensajes)
@@ -1085,17 +1175,42 @@ Public Class Frm_Stmp_Listado
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
 
                     Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+                    Dim _Id_Enc As Integer = _Fila.Cells("Id").Value
                     Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
                     Dim _Estado As String = _Fila.Cells("Estado").Value
+                    Dim _Tido As String = _Fila.Cells("Tido").Value
                     Dim _Error_FacAuto As Boolean = _Fila.Cells("Error_FacAuto").Value
+                    Dim _Facturar As Boolean = _Fila.Cells("Facturar").Value
 
-                    LabelItem1.Text = "Opciones (Id: " & _Idmaeedo & ")"
+                    LabelItem1.Text = $"Opciones (Id_Enc: {_Id_Enc}, Idmaeedo: {_Idmaeedo})"
 
                     Btn_Mnu_EntregarMercaderia.Visible = (Super_TabS.SelectedTab.Name = "Tab_Facturadas")
                     Btn_CerrarTicket.Visible = (Super_TabS.SelectedTab.Name = "Tab_Entregadas")
-                    Btn_Mnu_Preparacion.Visible = (Super_TabS.SelectedTab.Name = "Tab_Ingresadas")
+
                     Btn_ReenviaFacturar.Visible = (Super_TabS.SelectedTab.Name = "Tab_Completadas")
-                    Btn_ReenviaFacturar.Enabled = _Error_FacAuto
+                    Btn_ReenviaFacturar.Enabled = (_Error_FacAuto Or _Tido = "NVI")
+
+                    Btn_AnularTicket.Enabled = (Super_TabS.SelectedTab.Name = "Tab_Completadas")
+
+                    If _Tido = "NVI" Then
+                        If _Facturar Then
+                            Btn_ReenviaFacturar.Text = "Volver a generar la guía de traslado automáticamente."
+                        Else
+                            Btn_ReenviaFacturar.Text = "Marcar para generar la guía de traslado automáticamente."
+                        End If
+                    Else
+                        Btn_ReenviaFacturar.Text = "Volver a enviar a facturar automáticamente"
+                    End If
+
+                    If _Global_Row_Configuracion_General.Item("Pickear_DesdeBkWMS") Or
+                        _Global_Row_Configuracion_Estacion.Item("Pickear_DesdeBkWMS") Then
+                        Btn_Mnu_PreparacionPickear.Visible = (Super_TabS.SelectedTab.Name = "Tab_Ingresadas")
+                        Btn_Mnu_Preparacion.Visible = False
+                    Else
+                        Btn_Mnu_Preparacion.Visible = (Super_TabS.SelectedTab.Name = "Tab_Ingresadas")
+                        Btn_Mnu_PreparacionPickear.Visible = False
+                    End If
 
                     ShowContextMenu(Menu_Contextual_01_Opciones_Documento)
 
@@ -1111,7 +1226,9 @@ Public Class Frm_Stmp_Listado
 
         Try
 
-            If Not Fx_Tiene_Permiso(Me, "Stem0004") Then Return
+            If Not Fx_Tiene_Permiso(Me, "Stem0004") Then
+                Return
+            End If
 
             Timer_Monitoreo.Stop()
 
@@ -1869,6 +1986,20 @@ Public Class Frm_Stmp_Listado
     Private Sub Btn_ReenviaFacturar_Click(sender As Object, e As EventArgs) Handles Btn_ReenviaFacturar.Click
 
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
+        Dim _Facturar As Boolean = _Fila.Cells("Facturar").Value
+
+        If _Facturar Then
+            Sb_Reenviar_Factruracion(_Fila)
+        Else
+            Sb_Marcar_Para_Facturar(_Fila)
+        End If
+
+    End Sub
+
+    Sub Sb_Reenviar_Factruracion(_Fila As DataGridViewRow)
+
         Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Idmaeedo_NVV = " & _Idmaeedo
@@ -1912,6 +2043,317 @@ Public Class Frm_Stmp_Listado
 
     End Sub
 
+    Sub Sb_Marcar_Para_Facturar(_Fila As DataGridViewRow)
+
+        Dim _Id_Enc As Integer = _Fila.Cells("Id").Value
+        Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
+        Dim _Tido As String = _Fila.Cells("Tido").Value
+        Dim _Nudo As String = _Fila.Cells("Nudo").Value
+        Dim _GrabarTransporte As Boolean = False
+
+        Dim _SqlQuery As String = "Update " & _Global_BaseBk & "Zw_Stmp_Enc" & vbCrLf &
+                                  "Set Facturar = 1, Fecha_Facturar = DATEADD(day, DATEDIFF(day, 0, GETDATE()), 0)" & vbCrLf &
+                                  "Where Id = " & _Id_Enc
+
+        Dim _Msj As String = String.Empty
+
+        If _Tido = "NVI" Then
+
+            _Msj = "La NVI se envió a generar guía al diablito."
+
+            Dim _AgregarTransporteNVIparaGTI As Boolean = (_Global_Row_Configuracion_General.Item("AgregarTransporteNVIparaGTI") Or
+                                                               _Global_Row_Configuracion_Estacion.Item("AgregarTransporteNVIparaGTI"))
+
+            If _AgregarTransporteNVIparaGTI Then
+
+                Dim _Grabar As Boolean
+                Dim _Tiene_Transporte As Boolean = False
+                Dim _Zw_Transporte_Dte As New Zw_Transporte_Dte
+
+                Consulta_sql = $"Select Top 1 * From {_Global_BaseBk}Zw_Transporte_Dte Where Idmaeedo = {_Idmaeedo} --And Id_Enc = {_Id_Enc}"
+                Dim _Row_Td As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                With _Zw_Transporte_Dte
+
+                    If IsNothing(_Row_Td) Then
+                        .Id = 0
+                        .Id_Enc = _Id_Enc
+                        .Idmaeedo = 0
+                        .Tido = String.Empty
+                        .Nudo = String.Empty
+                        .Empresa = Mod_Empresa
+                    Else
+                        .Id = _Row_Td.Item("Id")
+                        .Id_Enc = _Row_Td.Item("Id_Enc")
+                        .Idmaeedo = _Row_Td.Item("Idmaeedo")
+                        .Tido = _Row_Td.Item("Tido")
+                        .Nudo = _Row_Td.Item("Nudo")
+                        .Empresa = _Row_Td.Item("Empresa")
+                        .Patente = _Row_Td.Item("Patente")
+                        .RUTTrans = _Row_Td.Item("RUTTrans")
+                        .RUTChofer = _Row_Td.Item("RUTChofer")
+                        .Chofer = _Row_Td.Item("Chofer")
+                        _Tiene_Transporte = True
+                    End If
+
+                End With
+
+                Consulta_sql = "Select ENDO,SUENDO,Isnull(NOKOEN,'') As 'NOKOEN',Isnull(DIEN,'') As 'DIEN',Isnull(PAEN,'') As 'PAEN'," &
+                               "Isnull(p.NOKOPA,'') As 'NOKOPA',Isnull(CIEN,'') As 'CIEN'," &
+                               "Isnull(c.NOKOCI,'') As 'NOKOCI',Isnull(CMEN,'') As 'CMEN',Isnull(cm.NOKOCM,'') As 'NOKOCM'" & vbCrLf &
+                               "From MAEEDO Edo" & vbCrLf &
+                               "Left Join MAEEN En On En.KOEN = Edo.ENDO And En.SUEN = Edo.SUENDO" & vbCrLf &
+                               "Left Join TABPA p On p.KOPA = En.PAEN" & vbCrLf &
+                               "Left Join TABCI c On c.KOPA = En.PAEN And c.KOCI = En.CIEN" & vbCrLf &
+                               "Left Join TABCM cm On cm.KOPA = En.PAEN And cm.KOCI = En.CIEN And cm.KOCM = En.CMEN" & vbCrLf &
+                               "Where IDMAEEDO = " & _Idmaeedo
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If Not IsNothing(_Row) Then
+                    With _Zw_Transporte_Dte
+                        .DirDest = If(IsDBNull(_Row.Item("DIEN")), String.Empty, _Row.Item("DIEN").ToString().Trim)
+
+                        ' Obtener el valor seguro de NOKOCI
+                        Dim _Ciudad As String = If(IsDBNull(_Row.Item("NOKOCI")), String.Empty, _Row.Item("NOKOCI").ToString().Trim)
+                        Dim _Comuna As String = If(IsDBNull(_Row.Item("NOKOCM")), String.Empty, _Row.Item("NOKOCM").ToString().Trim)
+
+                        ' Recortar a un máximo de 30 caracteres
+                        If _Ciudad.Length > 20 Then _Ciudad = _Ciudad.Substring(0, 20)
+                        If _Comuna.Length > 20 Then _Ciudad = _Comuna.Substring(0, 20)
+
+                        .CiudadDest = _Ciudad.Trim
+                        .CmnaDest = _Comuna.Trim
+                    End With
+                End If
+
+                Dim Fm As New Frm_Transporte_DTE
+                Fm.Zw_Transporte_Dte = _Zw_Transporte_Dte
+                Fm.UltimoTransporte = _UltimoTransporte
+                Fm.ShowDialog(Me)
+                If Fm.DialogResult = DialogResult.OK Then
+                    _Grabar = True
+                    _Zw_Transporte_Dte = Fm.Zw_Transporte_Dte
+                End If
+                Fm.Dispose()
+
+                If Not _Grabar Then
+                    MessageBoxEx.Show(Me, "No se agregó el transporte a la NVI." & vbCrLf &
+                                      "Por lo tanto no se podrá generar automáticamente la guía de despacho GTI.",
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
+                _UltimoTransporte = ClonarTransporte(_Zw_Transporte_Dte)
+
+                _GrabarTransporte = True
+                With _Zw_Transporte_Dte
+
+                    If _Tiene_Transporte Then
+                        _SqlQuery += vbCrLf & vbCrLf &
+                                    $"Update {_Global_BaseBk}Zw_Transporte_Dte Set " &
+                                    $"Patente = '{ .Patente}'" &
+                                    $",RUTTrans = '{ .RUTTrans}'" &
+                                    $",Chofer = '{ .Chofer}'" &
+                                    $",RUTChofer = '{ .RUTChofer}'" & vbCrLf &
+                                    $"Where Id = { .Id}"
+                    Else
+                        _SqlQuery += vbCrLf & vbCrLf &
+                                     "Insert Into " & _Global_BaseBk & "Zw_Transporte_Dte (Empresa,Id_Enc,Idmaeedo,Tido,Nudo," &
+                                     "Patente,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest)" & vbCrLf &
+                                    $"Values ('{ .Empresa}',{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
+                                    $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}')"
+                    End If
+
+                End With
+
+            End If
+
+        Else
+            _Msj = "La NVV se envió a facturar al diablito."
+        End If
+
+        If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery) Then
+            MessageBoxEx.Show(Me, "Error al marcar para facturar." & vbCrLf & _Sql.Pro_Error, "Error",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        MessageBoxEx.Show(Me, _Msj, "Información",
+                   MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Dim _Imagenes_List As ImageList
+        If Global_Thema = Enum_Themas.Oscuro Then
+            _Imagenes_List = Imagenes_16x16_Dark
+        Else
+            _Imagenes_List = Imagenes_16x16
+        End If
+
+        _Fila.Cells("Facturar").Value = True
+        _Fila.Cells("BtnImagen_Estado").Value = _Imagenes_List.Images.Item("ok.png")
+
+    End Sub
+
+    Private Sub Btn_Mnu_PreparacionPickear_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_PreparacionPickear.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+
+        Dim _Cl_Stmp As New Cl_Stmp
+        _Cl_Stmp.Fx_Llenar_Encabezado(_Id)
+
+
+        Consulta_sql = $"Select Top 1 Id, Empresa, Id_Enc, Idmaeedo, Tido, Nudo, Ruta, OrdenRuta" & vbCrLf &
+                       $"From {_Global_BaseBk}Zw_WMS_RutaXDoc" & vbCrLf &
+                       $"Where Idmaeedo = {_Cl_Stmp.Zw_Stmp_Enc.Idmaeedo} And Id_Enc = 0"
+        Dim _Row_Ruta As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        Dim _ActualizarRuta As Boolean = False
+
+        If IsNothing(_Row_Ruta) Then
+            MessageBoxEx.Show(Me, "No se ha encontrado una Ruta/Camión asignad@ para este documento" & vbCrLf &
+                              "Documento: " & _Cl_Stmp.Zw_Stmp_Enc.Tido & " - " & _Cl_Stmp.Zw_Stmp_Enc.Nudo & vbCrLf & vbCrLf &
+                              "Informe de esta situación al administrador del sistema" & vbCrLf &
+                              "No se encontro registro en la tabla [Zw_WMS_RutaXDoc]", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        Else
+
+            _ActualizarRuta = True
+            _Cl_Stmp.Zw_Stmp_Enc.Ruta = _Row_Ruta.Item("Ruta")
+            _Cl_Stmp.Zw_Stmp_Enc.OrdenRuta = _Row_Ruta.Item("OrdenRuta")
+
+        End If
+
+        _Cl_Stmp.Zw_Stmp_Enc.Estado = "PREPA"
+        _Cl_Stmp.Zw_Stmp_Enc.Planificada = True
+        _Cl_Stmp.Zw_Stmp_Enc.CodFuncionario_Pickea = Fx_BuscarFuncionario_Pickeo()
+        _Cl_Stmp.Zw_Stmp_Enc.NombreEquipo_Pickea = ""
+
+        If String.IsNullOrWhiteSpace(_Cl_Stmp.Zw_Stmp_Enc.CodFuncionario_Pickea) Then
+            MessageBoxEx.Show(Me, "No se ha seleccionado un funcionario para pickear el documento", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Desea agregar una observación al documento?", "Agregar observación",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+
+            Dim _Observacion As String = String.Empty
+            Dim _Aceptar As Boolean
+
+            _Aceptar = InputBox_Bk(Me, "Agregar observación al documento que va a Picking", "Observación",
+                                   _Observacion,, _Tipo_Mayus_Minus.Mayusculas, 200, True)
+
+            If Not _Aceptar Then
+                If MessageBoxEx.Show(Me, "¿Confirmar enviar documento sin observación?", "Observación",
+                                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) <> DialogResult.Yes Then
+                    Return
+                End If
+            End If
+
+            _Cl_Stmp.Zw_Stmp_Enc.Observacion = _Observacion
+
+        End If
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = _Cl_Stmp.Fx_EnviarAPerparacionPlanificarPicking
+
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        If Not _Mensaje.EsCorrecto Then
+            Return
+        End If
+
+        If _ActualizarRuta Then
+            Consulta_sql = $"Update {_Global_BaseBk}Zw_WMS_RutaXDoc Set Id_Enc = {_Cl_Stmp.Zw_Stmp_Enc.Id}" & vbCrLf &
+                           $"Where Id = {_Row_Ruta.Item("Id")}"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End If
+
+        Sb_Actualizar_Grilla()
+
+    End Sub
+
+    Function Fx_BuscarFuncionario_Pickeo() As String
+
+        Dim _CodFuncionario As String = String.Empty
+
+        Dim _Sql_Filtro_Condicion_Extra = $"And KOFU In (Select Usuario_X_Defecto From {_Global_BaseBk}Zw_EstacionesBkp " &
+                                           "Where TipoEstacion = 'B4A')"
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            _CodFuncionario = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+
+        End If
+
+        Return _CodFuncionario
+
+    End Function
+
+
+    ' Función auxiliar para clonar (copiar) un registro de transporte
+    Private Function ClonarTransporte(ByVal origen As Zw_Transporte_Dte) As Zw_Transporte_Dte
+        If origen Is Nothing Then
+            Return Nothing
+        End If
+
+        Dim copia As New Zw_Transporte_Dte
+
+        Try
+            ' Copiar campos conocidos utilizados en este formulario
+            copia.Id = origen.Id
+            copia.Id_Enc = origen.Id_Enc
+            copia.Idmaeedo = origen.Idmaeedo
+            copia.Tido = origen.Tido
+            copia.Nudo = origen.Nudo
+            copia.Empresa = origen.Empresa
+
+            copia.Patente = origen.Patente
+            copia.RUTTrans = origen.RUTTrans
+            copia.Chofer = origen.Chofer
+            copia.RUTChofer = origen.RUTChofer
+            copia.DirDest = origen.DirDest
+            copia.CmnaDest = origen.CmnaDest
+            copia.CiudadDest = origen.CiudadDest
+
+        Catch ex As Exception
+            ' Si hay propiedades nuevas que no existen, ignorarlas para no romper la copia
+        End Try
+
+        Return copia
+    End Function
+
+    Private Sub Btn_AnularTicket_Click(sender As Object, e As EventArgs) Handles Btn_AnularTicket.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Stem0006") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _Numero = _Fila.Cells("Numero").Value
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_AnularTicket_Paquetes(FUNCIONARIO, _Numero)
+
+        If Not _Mensaje.EsCorrecto And Not _Mensaje.Cancelado Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+            Return
+        End If
+
+        If _Mensaje.Cancelado Then
+            Return
+        End If
+
+        Grilla.Rows.Remove(_Fila)
+
+    End Sub
 End Class
 
 Namespace Stmp_Configuracion
@@ -1924,3 +2366,4 @@ Namespace Stmp_Configuracion
     End Class
 
 End Namespace
+

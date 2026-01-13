@@ -39,7 +39,7 @@ Public Class Frm_SQL2Excel_Consultas
         Consulta_sql = "SELECT *, Case When Consulta_Personal = 1 Then 'Personal' Else 'Global' End As Tipo_Consulta" & vbCrLf &
                        "FROM " & _Global_BaseBk & "Zw_SQL_Querys" & Space(1) &
                        "WHERE Funcionario = '" & FUNCIONARIO & "' Or Consulta_Global = 1" & vbCrLf &
-                       "Order by Nombre_Query"
+                       "Order by Id-- Nombre_Query"
 
         Dim _Ds As New DataSet
         _Ds = _Sql.Fx_Get_DataSet(Consulta_sql)
@@ -50,7 +50,7 @@ Public Class Frm_SQL2Excel_Consultas
 
             Grilla.DataSource = _dv
 
-            OcultarEncabezadoGrilla(Grilla, True)
+            OcultarEncabezadoGrilla(Grilla)
 
             .Columns("Nombre_Query").HeaderText = "Nombre Consulta"
             .Columns("Nombre_Query").Visible = True

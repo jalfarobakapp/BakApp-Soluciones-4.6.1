@@ -114,7 +114,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
                            "Where Zp.CodPermiso = Zr.CodPermiso) As 'Nombre_Permiso',Descripcion_Adicional," &
                            "Permiso_Otorgado,Otorga,Id_Casi_DocEnc," &
                            "(Select Top 1 TipoDoc From " & _Global_BaseBk & "Zw_Casi_DocEnc Where Id_DocEnc = Id_Casi_DocEnc) As TipoDoc," &
-                           "CONVERT(VARCHAR, Fecha_Solicita, 103) Fecha,CONVERT(VARCHAR, Fecha_Solicita, 108) Hora," &
+                           "CONVERT(VARCHAR, Fecha_Solicita, 103) Fecha,CONVERT(VARCHAR, Fecha_Solicita, 108) Hora,Fecha_Solicita," &
                            "CodEntidad,CodSucEntidad,NomEntidad,TotalBruto,Espera_En_Linea,Monto_Aprobacion" & vbCrLf &
                            "Into #Paso" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_Remotas Zr" & vbCrLf &
@@ -136,7 +136,7 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
                             Or NroRemota In (Select NroRemota From " & _Global_BaseBk & "Zw_Remotas_Notif Where CodFuncionario_Destino = '" & FUNCIONARIO & "')
                           
                             Select * From #Paso Where Empresa = '" & Mod_Empresa & "'
-                            Order by Fecha,Hora
+                            --Order by Fecha_Solicita
                             Drop Table #Paso"
 
             _TblRemotas = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -150,11 +150,11 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
                            "Where Zp.CodPermiso = Zr.CodPermiso) As 'Nombre_Permiso',Descripcion_Adicional," &
                            "Permiso_Otorgado,Otorga,Id_Casi_DocEnc," &
                            "(Select Top 1 TipoDoc From " & _Global_BaseBk & "Zw_Casi_DocEnc Where Id_DocEnc = Id_Casi_DocEnc) As TipoDoc," &
-                           "CONVERT(VARCHAR, Fecha_Solicita, 103) Fecha,CONVERT(VARCHAR, Fecha_Solicita, 108) Hora," &
+                           "CONVERT(VARCHAR, Fecha_Solicita, 103) Fecha,CONVERT(VARCHAR, Fecha_Solicita, 108) Hora,Fecha_Solicita," &
                            "CodEntidad,CodSucEntidad,NomEntidad,TotalBruto,Espera_En_Linea" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_Remotas Zr" & vbCrLf &
                            "Where Empresa = '" & Mod_Empresa & "' And CodFuncionario_Autoriza = '' And Eliminada = 0 
-                           Order by Fecha,Hora"
+                           Order by Fecha_Solicita"
 
             _TblRemotas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -164,7 +164,8 @@ Public Class Frm_Remotas_Lista_Permisos_Solicitados
 
             .DataSource = _TblRemotas
 
-            OcultarEncabezadoGrilla(Grilla, True)
+            'OcultarEncabezadoGrilla(Grilla, True)
+            OcultarEncabezadoGrilla(Grilla)
 
             Dim _DisplayIndex = 0
 

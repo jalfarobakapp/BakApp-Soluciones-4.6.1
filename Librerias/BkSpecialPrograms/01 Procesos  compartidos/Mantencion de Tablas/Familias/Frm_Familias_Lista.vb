@@ -995,9 +995,63 @@ Public Class Frm_Familias_Lista
     End Sub
 
     Private Sub Chk_Seleccionar_Todos_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Seleccionar_Todos.CheckedChanged
+
+        Dim _Chk As Boolean = Chk_Seleccionar_Todos.Checked
+
         For Each _Fila As DataGridViewRow In Grilla.Rows
-            _Fila.Cells("Chk").Value = Chk_Seleccionar_Todos.Checked
+
+            _Fila.Cells("Chk").Value = _Chk
+
+            Select Case _Tipo_Vista_Familias
+
+                Case Enum_Tipo_Vista_Familias.Super_Familias
+
+                    If _Chk Then
+                        Dim _SelSuperFamilias As New SelSuperFamilias
+                        _SelSuperFamilias.Kofm = _Fila.Cells("KOFM").Value.ToString.Trim
+                        _SelSuperFamilias.Nokofm = _Fila.Cells("NOKOFM").Value.ToString.Trim
+                        Ls_SelSuperFamilias.Add(_SelSuperFamilias)
+                    Else
+                        Ls_SelSuperFamilias.RemoveAll(Function(sf) sf.Kofm = _Fila.Cells("KOFM").Value.ToString.Trim)
+                        Ls_SelFamilias.RemoveAll(Function(sf) sf.Kofm = _Fila.Cells("KOFM").Value.ToString.Trim)
+                        Ls_SelSubFamilias.RemoveAll(Function(sf) sf.Kofm = _Fila.Cells("KOFM").Value.ToString.Trim)
+                    End If
+
+                Case Enum_Tipo_Vista_Familias.Familias
+
+                    _Kopf = _Fila.Cells("KOPF").Value.ToString.Trim
+
+                    If _Chk Then
+                        Dim _SelFamilias As New SelFamilias
+                        _SelFamilias.Kofm = _Kofm
+                        _SelFamilias.Kopf = _Kopf
+                        _SelFamilias.Nokopf = _Fila.Cells("NOKOPF").Value.ToString.Trim
+                        Ls_SelFamilias.Add(_SelFamilias)
+                    Else
+                        Ls_SelFamilias.RemoveAll(Function(sf) sf.Kofm = _Kofm AndAlso sf.Kopf = _Kopf)
+                        Ls_SelSubFamilias.RemoveAll(Function(sf) sf.Kofm = _Kofm AndAlso sf.Kopf = _Kopf)
+                    End If
+
+                Case Enum_Tipo_Vista_Familias.Sub_Familias
+
+                    _Kopf = _Fila.Cells("KOPF").Value.ToString.Trim
+                    _Kohf = _Fila.Cells("KOHF").Value.ToString.Trim
+
+                    If _Chk Then
+                        Dim _SelSubFamilias As New SelSubFamilias
+                        _SelSubFamilias.Kofm = _Kofm
+                        _SelSubFamilias.Kopf = _Kopf
+                        _SelSubFamilias.Kohf = _Kohf
+                        _SelSubFamilias.Nokohf = _Fila.Cells("NOKOHF").Value.ToString.Trim
+                        Ls_SelSubFamilias.Add(_SelSubFamilias)
+                    Else
+                        Ls_SelSubFamilias.RemoveAll(Function(sf) sf.Kofm = _Kofm AndAlso sf.Kopf = _Kopf AndAlso sf.Kohf = _Kohf)
+                    End If
+
+            End Select
+
         Next
+
     End Sub
 End Class
 

@@ -95,7 +95,7 @@ Public Class Cl_FacAuto_NVV
             _CondicionEspecial = vbCrLf & "And Idmaeedo Not In (Select Distinct Idmaeedo" & vbCrLf &
                                 "Where Idmaeedo In (Select Zenc.Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Zenc" & vbCrLf &
                                 "Inner Join " & _Global_BaseBk & "Zw_Docu_Det Zd On Zenc.Idmaeedo = Zd.Idmaeedo" & vbCrLf &
-                                "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And Zd.Empresa = '02' And Zenc.Empresa = '01'))"
+                                "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And Zd.Empresa = '02' And Zenc.Empresa  = '01'))"
         End If
 
         Consulta_Sql = "Select TOP 20 Idmaeedo,Id,DocEmitir,Fecha_Facturar,CodFuncionario_Factura,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga" & vbCrLf &
@@ -194,7 +194,7 @@ Public Class Cl_FacAuto_NVV
     ''' Por el momento solo es para la empresa 02 MeatGarden de SeaGarden
     ''' </summary>
     Sub Sb_Cambiar_EmpSucBod()
-
+        'Throw New InvalidOperationException("The operation is not valid for the current state.")
         Consulta_Sql = "Select Distinct Idmaeedo,Tido,Nudo,Empresa,Sucursal,Bodega From " & _Global_BaseBk & "Zw_Docu_Det" & vbCrLf &
                        "Where Idmaeedo In (Select Zenc.Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Zenc" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Docu_Det Zd On Zenc.Idmaeedo = Zd.Idmaeedo" & vbCrLf &
@@ -351,7 +351,14 @@ Public Class Cl_FacAuto_NVV
             _Orden = "Order By CantItem"
         End If
 
-        Consulta_Sql = "Select Top " & CantDocFacturanXProceso & " * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Facturar = 1" & vbCrLf & _Orden
+        'Consulta_Sql = "Select Top " & CantDocFacturanXProceso & " * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Facturar = 1" & vbCrLf & _Orden
+
+        Consulta_Sql = $"Select Top {CantDocFacturanXProceso} Fa.*,Case De.Empresa_Ori When '' Then De.Empresa Else De.Empresa_Ori End As 'Empresa_Ori',Edo.EMPRESA As 'Empresa'   
+From {_Global_BaseBk}Zw_Demonio_FacAuto Fa
+Inner Join MAEEDO Edo On Edo.IDMAEEDO = Fa.Idmaeedo_NVV
+Inner Join {_Global_BaseBk}Zw_Docu_Ent De On Fa.Idmaeedo_NVV = De.Idmaeedo
+Where Facturar = 1"
+
         Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
@@ -386,7 +393,29 @@ Public Class Cl_FacAuto_NVV
                 Dim _Modalidad_Fac As String = _Fila.Item("Modalidad_Fac")
 
                 Dim _Nudo_Nvv As String = _Fila.Item("Nudo_Nvv")
-                Dim _Empresa_Fac As String = _Sql.Fx_Trae_Dato("MAEEDO", "EMPRESA", "IDMAEEDO = " & _Idmaeedo,, False)
+                Dim _Empresa As String = _Fila.Item("Empresa")
+                Dim _Empresa_Ori As String = _Fila.Item("Empresa_Ori")
+                Dim _Empresa_Fac As String = _Fila.Item("Empresa_Ori")
+
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                If _Empresa <> _Empresa_Ori Then
+
+                    _Mensaje.Mensaje = $"Documento con Empresa = {_Empresa} y Empresa_Ori = {_Empresa_Ori}, No se cumplio la secuencia esperada."
+
+                    Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set " &
+                                   " NombreEquipo = '" & _Nombre_Equipo & "'" &
+                                   ",Facturando = 0" &
+                                   ",Facturado = 0" &
+                                   ",ErrorGrabar = 1" &
+                                   ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
+                                   "Where Id = " & _Id
+                    If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                        Log_Registro += _Sql.Pro_Error
+                    End If
+
+                    Continue For
+                End If
 
                 If Not IsNothing(Lbl_FacAuto) Then
                     Lbl_FacAuto.Text = "Facturando Nota de venta Nro: " & _Nudo_Nvv
@@ -402,7 +431,6 @@ Public Class Cl_FacAuto_NVV
                     _DocEmitir = "FCV"
                 End If
 
-                Dim _Mensaje As LsValiciones.Mensajes
 
                 If _DesdePickeo Then
                     _Mensaje = Fx_Crear_Documento_Desde_Otro_Automaticamente_Pickeo(_Formulario, _DocEmitir, _Idmaeedo, _Fecha_Emision, _Empresa_Fac, _Modalidad_Fac, _CerrarDespFact, _Id_Pickeo)
@@ -459,6 +487,7 @@ Public Class Cl_FacAuto_NVV
                                    ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                                    ",FechaHoraFacturado = Getdate()" & vbCrLf &
                                    ",IpEquipo = '" & _IpEquipo & "'" & vbCrLf &
+                                   ",TidoGene = '" & _Row_Factura.Item("TIDO") & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                         Log_Registro += "NVV: " & _Nudo_Nvv & " facturada correctamente. " & _Row_Factura.Item("TIDO") & "-" & _Row_Factura.Item("NUDO") & vbCrLf
@@ -947,15 +976,15 @@ Public Class Cl_FacAuto_NVV
                                                                   _Empresa As String,
                                                                   _Modalidad As String,
                                                                   _CerrarDespFact As Boolean,
-                                                                  _Id_Pickeo As Integer) As LsValiciones.Mensajes
+                                                                  _Id_Enc As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
 
-            If _TidoDocEmitir <> "GDV" And _TidoDocEmitir <> "FCV" And _TidoDocEmitir <> "BLV" Then
+            If _TidoDocEmitir <> "GDV" And _TidoDocEmitir <> "FCV" And _TidoDocEmitir <> "BLV" And _TidoDocEmitir <> "GTI" Then
                 _Mensaje.Mensaje = "Error"
-                Throw New System.Exception("El Tido Destino esta vacío o no corresponde: (" & _TidoDocEmitir & "), solo puede ser: BLV, FCV y GDV")
+                Throw New System.Exception("El Tido Destino esta vacío o no corresponde: (" & _TidoDocEmitir & "), solo puede ser: BLV, FCV, GDV o GTI")
             End If
 
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -1067,13 +1096,33 @@ Public Class Cl_FacAuto_NVV
                             Throw New System.Exception(_Sql.Pro_Error)
                         End If
 
+                        Dim _Zw_Transporte_Dte As Zw_Transporte_Dte
+
+                        Consulta_Sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Transporte_Dte Where Id_Enc = " & _Id_Enc
+                        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                        If Not IsNothing(_Row) Then
+                            _Zw_Transporte_Dte = New Zw_Transporte_Dte
+                            With _Zw_Transporte_Dte
+                                .Id_Enc = _Row.Item("Id_Enc")
+                                .Empresa = _Row.Item("Empresa")
+                                .Patente = _Row.Item("Patente")
+                                .Chofer = _Row.Item("Chofer")
+                                .RUTChofer = _Row.Item("RUTChofer")
+                                .RUTTrans = _Row.Item("RUTTrans")
+                                .DirDest = _Row.Item("DirDest")
+                                .CiudadDest = _Row.Item("CiudadDest")
+                                .CmnaDest = _Row.Item("CmnaDest")
+                            End With
+                        End If
+
                         Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
                                                                     csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
 
 
                         Fm_Post.ModEmpresa_Doc = _Empresa
                         Fm_Post.ModModalidad_Doc = _Modalidad
-                        'If Fm_Post.MensajeRevFolio.EsCorrecto Then
+
                         Dim _Msj_Limpiar As LsValiciones.Mensajes
 
                         _Msj_Limpiar = Fm_Post.Fx_Limpiar(_Modalidad)
@@ -1081,6 +1130,8 @@ Public Class Cl_FacAuto_NVV
                         If _Msj_Limpiar.EsCorrecto Then
 
                             Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
+                            Fm_Post.Zw_Transporte_Dte = _Zw_Transporte_Dte
+                            Fm_Post.NoConsolidarNuncaStock = True
 
                             _Msj_GrabarDoc = Fm_Post.Fx_Grabar_Documento(False,
                                                                          csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,
@@ -1097,7 +1148,7 @@ Public Class Cl_FacAuto_NVV
 
                         End If
 
-                        If Not _Msj_GrabarDoc.EsCorrecto Then 'Not CBool(_New_Idmaeedo) Then
+                        If Not _Msj_GrabarDoc.EsCorrecto Then
 
                             _Mensaje.Mensaje = _Msj_GrabarDoc.Mensaje.Replace(vbCrLf, ". ")
                             _Mensaje.Mensaje = "No fue posible realizar la grabación de la Factura. " & _Mensaje.Mensaje
@@ -1105,7 +1156,7 @@ Public Class Cl_FacAuto_NVV
                             Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " &
                                            "ProblemaFac = 1" &
                                            ",Log_Error = '" & _Mensaje.Mensaje & "'" & vbCrLf &
-                                           "Where Id = " & _Id_Pickeo
+                                           "Where Id = " & _Id_Enc
                             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
                             _Mensaje.Detalle = "Error al grabar documento"
@@ -1149,7 +1200,7 @@ Public Class Cl_FacAuto_NVV
                                            ",IdmaeedoGen = " & _Msj_GrabarDoc.Id &
                                            ",TidoGen = '" & _Tido &
                                            "',NudoGen = '" & _Nudo & "'" & vbCrLf &
-                                           "Where Id = " & _Id_Pickeo
+                                           "Where Id = " & _Id_Enc
                             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
                         End If

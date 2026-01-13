@@ -43,6 +43,11 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_CantMinFormato = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_CantidadDisponible = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Ud1XPqte = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
+        Me.DInput_PrecioXUd1 = New DevComponents.Editors.DoubleInput()
+        CType(Me.DInput_PrecioXUd1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Img_RtuAPI
@@ -261,7 +266,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Line2.ForeColor = System.Drawing.Color.Black
         Me.Line2.Location = New System.Drawing.Point(12, 204)
         Me.Line2.Name = "Line2"
-        Me.Line2.Size = New System.Drawing.Size(240, 23)
+        Me.Line2.Size = New System.Drawing.Size(243, 23)
         Me.Line2.TabIndex = 141
         Me.Line2.Text = "Line2"
         '
@@ -273,7 +278,7 @@ Partial Class Frm_Cantidades_PreVenta
         '
         Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(12, 224)
+        Me.LabelX5.Location = New System.Drawing.Point(12, 257)
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.Size = New System.Drawing.Size(101, 36)
         Me.LabelX5.TabIndex = 143
@@ -289,7 +294,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_CantMinFormato.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_CantMinFormato.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_CantMinFormato.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CantMinFormato.Location = New System.Drawing.Point(119, 233)
+        Me.Txt_CantMinFormato.Location = New System.Drawing.Point(122, 266)
         Me.Txt_CantMinFormato.Name = "Txt_CantMinFormato"
         Me.Txt_CantMinFormato.PreventEnterBeep = True
         Me.Txt_CantMinFormato.ReadOnly = True
@@ -306,7 +311,7 @@ Partial Class Frm_Cantidades_PreVenta
         '
         Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX6.ForeColor = System.Drawing.Color.Black
-        Me.LabelX6.Location = New System.Drawing.Point(12, 266)
+        Me.LabelX6.Location = New System.Drawing.Point(11, 296)
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(102, 23)
         Me.LabelX6.TabIndex = 144
@@ -322,7 +327,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_CantidadDisponible.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_CantidadDisponible.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_CantidadDisponible.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CantidadDisponible.Location = New System.Drawing.Point(119, 266)
+        Me.Txt_CantidadDisponible.Location = New System.Drawing.Point(122, 299)
         Me.Txt_CantidadDisponible.Name = "Txt_CantidadDisponible"
         Me.Txt_CantidadDisponible.PreventEnterBeep = True
         Me.Txt_CantidadDisponible.ReadOnly = True
@@ -331,11 +336,80 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_CantidadDisponible.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.Txt_CantidadDisponible.WatermarkText = "0"
         '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(12, 233)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(101, 18)
+        Me.LabelX4.TabIndex = 147
+        Me.LabelX4.Text = "Kilos por Pallet" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
+        'Txt_Ud1XPqte
+        '
+        Me.Txt_Ud1XPqte.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Ud1XPqte.Border.Class = "TextBoxBorder"
+        Me.Txt_Ud1XPqte.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Ud1XPqte.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Ud1XPqte.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Ud1XPqte.Location = New System.Drawing.Point(122, 233)
+        Me.Txt_Ud1XPqte.Name = "Txt_Ud1XPqte"
+        Me.Txt_Ud1XPqte.PreventEnterBeep = True
+        Me.Txt_Ud1XPqte.ReadOnly = True
+        Me.Txt_Ud1XPqte.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_Ud1XPqte.TabIndex = 146
+        Me.Txt_Ud1XPqte.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.Txt_Ud1XPqte.WatermarkText = "0"
+        '
+        'LabelX7
+        '
+        Me.LabelX7.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.ForeColor = System.Drawing.Color.Black
+        Me.LabelX7.Location = New System.Drawing.Point(12, 325)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(102, 23)
+        Me.LabelX7.TabIndex = 148
+        Me.LabelX7.Text = "Precio de venta"
+        '
+        'DInput_PrecioXUd1
+        '
+        Me.DInput_PrecioXUd1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.DInput_PrecioXUd1.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.DInput_PrecioXUd1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.DInput_PrecioXUd1.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.DInput_PrecioXUd1.ForeColor = System.Drawing.Color.Black
+        Me.DInput_PrecioXUd1.Increment = 0.1R
+        Me.DInput_PrecioXUd1.Location = New System.Drawing.Point(122, 327)
+        Me.DInput_PrecioXUd1.MinValue = 0R
+        Me.DInput_PrecioXUd1.Name = "DInput_PrecioXUd1"
+        Me.DInput_PrecioXUd1.ShowUpDown = True
+        Me.DInput_PrecioXUd1.Size = New System.Drawing.Size(100, 22)
+        Me.DInput_PrecioXUd1.TabIndex = 172
+        '
         'Frm_Cantidades_PreVenta
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(270, 295)
+        Me.ClientSize = New System.Drawing.Size(270, 358)
+        Me.Controls.Add(Me.DInput_PrecioXUd1)
+        Me.Controls.Add(Me.LabelX7)
+        Me.Controls.Add(Me.LabelX4)
+        Me.Controls.Add(Me.Txt_Ud1XPqte)
         Me.Controls.Add(Me.Txt_CantidadDisponible)
         Me.Controls.Add(Me.LabelX6)
         Me.Controls.Add(Me.LabelX5)
@@ -367,6 +441,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Cantidades PRE-VENTA"
+        CType(Me.DInput_PrecioXUd1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -392,4 +467,8 @@ Partial Class Frm_Cantidades_PreVenta
     Friend WithEvents Txt_CantMinFormato As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_CantidadDisponible As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Ud1XPqte As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents DInput_PrecioXUd1 As DevComponents.Editors.DoubleInput
 End Class

@@ -102,7 +102,7 @@ Public Class Frm_Usuarios_Random
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
-            _Fila.Cells("ClaveDC").Value = DecryptClaveRD(NuloPorNro(_Fila.Cells("PWFU").Value, ""))
+            _Fila.Cells("ClaveDC").Value = "*****" 'DecryptClaveRD(NuloPorNro(_Fila.Cells("PWFU").Value, ""))
 
             If _Fila.Cells("INACTIVO").Value Then
                 _Fila.DefaultCellStyle.ForeColor = Color.Gray
@@ -140,6 +140,17 @@ Public Class Frm_Usuarios_Random
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
         Dim _Kofu = _Fila.Cells("KOFU").Value
         Dim _Grabar As Boolean
+
+        Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
+
+        If _Cabeza = "ClaveDC" Then
+            If _Fila.Cells("ClaveDC").Value = "*****" Then
+                _Fila.Cells("ClaveDC").Value = DecryptClaveRD(NuloPorNro(_Fila.Cells("PWFU").Value, ""))
+            Else
+                _Fila.Cells("ClaveDC").Value = "*****"
+            End If
+            Return
+        End If
 
         Dim Frm As New Frm_Usuarios_Random_Ficha(_Kofu)
         Frm.ShowDialog()

@@ -78,6 +78,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Rdb_FechaFacFechaManual = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_FechaFacFechaDespachoNVV = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_FactConFDespVencida = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_NotfStockInsuficiente_Stmp = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.Dtp_FechaParaFacturacion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
         CType(Me.Dtp_BuscaXFechaDespacho, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -559,7 +560,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Input_Monto_Max_CRV_FacMasiva.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Monto_Max_CRV_FacMasiva.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Monto_Max_CRV_FacMasiva.ForeColor = System.Drawing.Color.Black
-        Me.Input_Monto_Max_CRV_FacMasiva.Location = New System.Drawing.Point(691, 566)
+        Me.Input_Monto_Max_CRV_FacMasiva.Location = New System.Drawing.Point(691, 573)
         Me.Input_Monto_Max_CRV_FacMasiva.MaxValue = 10000
         Me.Input_Monto_Max_CRV_FacMasiva.MinValue = 1
         Me.Input_Monto_Max_CRV_FacMasiva.Name = "Input_Monto_Max_CRV_FacMasiva"
@@ -578,7 +579,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Chk_Pagar_Documentos.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pagar_Documentos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Pagar_Documentos.FocusCuesEnabled = False
         Me.Chk_Pagar_Documentos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pagar_Documentos.Location = New System.Drawing.Point(9, 571)
+        Me.Chk_Pagar_Documentos.Location = New System.Drawing.Point(9, 576)
         Me.Chk_Pagar_Documentos.Name = "Chk_Pagar_Documentos"
         Me.Chk_Pagar_Documentos.Size = New System.Drawing.Size(415, 17)
         Me.Chk_Pagar_Documentos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -595,9 +596,9 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Chk_Pagar_Saldos_CRV.CheckBoxImageChecked = CType(resources.GetObject("Chk_Pagar_Saldos_CRV.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Pagar_Saldos_CRV.FocusCuesEnabled = False
         Me.Chk_Pagar_Saldos_CRV.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pagar_Saldos_CRV.Location = New System.Drawing.Point(431, 566)
+        Me.Chk_Pagar_Saldos_CRV.Location = New System.Drawing.Point(431, 576)
         Me.Chk_Pagar_Saldos_CRV.Name = "Chk_Pagar_Saldos_CRV"
-        Me.Chk_Pagar_Saldos_CRV.Size = New System.Drawing.Size(254, 27)
+        Me.Chk_Pagar_Saldos_CRV.Size = New System.Drawing.Size(254, 17)
         Me.Chk_Pagar_Saldos_CRV.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Pagar_Saldos_CRV.TabIndex = 128
         Me.Chk_Pagar_Saldos_CRV.Text = "Pagar saldos con CRV. monto máximo CRV $ ->"
@@ -625,7 +626,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_EnviarPickear, Me.Btn_ActualizarLista, Me.Btn_Cancelar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 594)
+        Me.Bar1.Location = New System.Drawing.Point(0, 603)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(1384, 41)
         Me.Bar1.Stretch = True
@@ -710,7 +711,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01_Opciones_Documento, Me.Menu_Contextual_Opciones_Especiales, Me.Menu_Contextual_Opciones_InfoEntidad})
-        Me.ContextMenuBar1.Location = New System.Drawing.Point(369, 167)
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(156, 40)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(529, 25)
         Me.ContextMenuBar1.Stretch = True
@@ -875,7 +876,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.MetroStatusBar1.ForeColor = System.Drawing.Color.Black
         Me.MetroStatusBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Status})
         Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 635)
+        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 644)
         Me.MetroStatusBar1.Name = "MetroStatusBar1"
         Me.MetroStatusBar1.Size = New System.Drawing.Size(1384, 22)
         Me.MetroStatusBar1.TabIndex = 127
@@ -1017,11 +1018,31 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Chk_FactConFDespVencida.TabIndex = 140
         Me.Chk_FactConFDespVencida.Text = "Facturar notas de venta con fecha de despacho vencida"
         '
+        'Chk_NotfStockInsuficiente_Stmp
+        '
+        Me.Chk_NotfStockInsuficiente_Stmp.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_NotfStockInsuficiente_Stmp.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NotfStockInsuficiente_Stmp.CheckBoxImageChecked = CType(resources.GetObject("Chk_NotfStockInsuficiente_Stmp.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NotfStockInsuficiente_Stmp.Enabled = False
+        Me.Chk_NotfStockInsuficiente_Stmp.FocusCuesEnabled = False
+        Me.Chk_NotfStockInsuficiente_Stmp.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NotfStockInsuficiente_Stmp.Location = New System.Drawing.Point(500, 553)
+        Me.Chk_NotfStockInsuficiente_Stmp.Name = "Chk_NotfStockInsuficiente_Stmp"
+        Me.Chk_NotfStockInsuficiente_Stmp.Size = New System.Drawing.Size(450, 17)
+        Me.Chk_NotfStockInsuficiente_Stmp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NotfStockInsuficiente_Stmp.TabIndex = 141
+        Me.Chk_NotfStockInsuficiente_Stmp.Text = "Notificar stock insuficiente al enviar una NVV/NVI al Sistema de Entrega de Merca" &
+    "dería."
+        '
         'Frm_Stmp_IncNVVPicking
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1384, 657)
+        Me.ClientSize = New System.Drawing.Size(1384, 666)
+        Me.Controls.Add(Me.Chk_NotfStockInsuficiente_Stmp)
         Me.Controls.Add(Me.Chk_FactConFDespVencida)
         Me.Controls.Add(Me.Rdb_FechaFacFechaDespachoNVV)
         Me.Controls.Add(Me.Rdb_FechaFacFechaManual)
@@ -1113,4 +1134,5 @@ Partial Class Frm_Stmp_IncNVVPicking
     Friend WithEvents Rdb_FechaFacFechaManual As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_FechaFacFechaDespachoNVV As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_FactConFDespVencida As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_NotfStockInsuficiente_Stmp As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

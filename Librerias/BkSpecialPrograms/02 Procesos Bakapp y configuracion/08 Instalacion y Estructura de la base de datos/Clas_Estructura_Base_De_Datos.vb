@@ -677,6 +677,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Correos_Cuentas
             Case "Zw_CRV_Viajes"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_CRV_Viajes
+            Case "Zw_CrucePAuto_Tom"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_CrucePAuto_Tom
 
             Case "Zw_DbExt_Conexion"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DbExt_Conexion
@@ -752,6 +754,11 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_ReccDet
             Case "Zw_DTE_ListaEventosDoc"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_ListaEventosDoc
+
+            Case "Zw_Referencias_Dte"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Referencias_Dte
+            Case "Zw_Transporte_Dte"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Transporte_Dte
 
             Case "Zw_Empresas"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Empresas
@@ -952,6 +959,10 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Productos
             Case "Zw_Prod_Ubicacion_IngSal"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_Ubicacion_IngSal
+            Case "Zw_Prod_SobreStock"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_SobreStock
+            Case "Zw_Prod_SobreStock_Tom"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Prod_SobreStock_Tom
 
             Case "Zw_PtsVta_Configuracion"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_PtsVta_Configuracion
@@ -1009,8 +1020,7 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_Remotas_Notif"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Remotas_Notif
 
-            Case "Zw_Referencias_Dte"
-                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Referencias_Dte
+
 
             Case "ZW_SOC_Detalle"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.ZW_SOC_Detalle

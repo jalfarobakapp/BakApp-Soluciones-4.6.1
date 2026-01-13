@@ -255,6 +255,15 @@ Public Class Frm_Configuracion_Gral
             Chk_SelectOtrosClientesPedirPermiso.Checked = .Item("SelectOtrosClientesPedirPermiso")
             Chk_ConservaListaDocOrigen.Checked = .Item("ConservaListaDocOrigen")
 
+            Chk_Pickear_DesdeBkWMS.Checked = .Item("Pickear_DesdeBkWMS")
+            Chk_Pickear_NVITodas.Checked = .Item("Pickear_NVITodas")
+
+            Chk_LasNVVDebenSerHabilitadasParaFacturarCP.Checked = .Item("LasNVVDebenSerHabilitadasParaFacturarCP")
+            Chk_Pickear_CrearGuiasAutoCompletas.Checked = .Item("Pickear_CrearGuiasAutoCompletas")
+
+            Chk_AgregarTransporteNVIparaGTI.Checked = .Item("AgregarTransporteNVIparaGTI")
+            Chk_NotfStockInsuficiente_Stmp.Checked = .Item("NotfStockInsuficiente_Stmp")
+
         End With
 
         Chk_VendeUD2DesacUD1soloRTUD.Enabled = _Modalidad_General
@@ -333,7 +342,10 @@ Public Class Frm_Configuracion_Gral
         Line1.Enabled = _Modalidad_General
 
         Chk_AlertaRevNVVConVtasMismoDia.Enabled = Not _Modalidad_General
-        Chk_LasNVVDebenSerHabilitadasParaFacturar.Enabled = _Modalidad_General
+
+        Chk_LasNVVDebenSerHabilitadasParaFacturar.Enabled = True
+        Chk_LasNVVDebenSerHabilitadasParaFacturarCP.Enabled = True
+
         Chk_B4A_DespachoSimple.Enabled = Not _Modalidad_General
 
         Chk_Patentes_rvm.Enabled = _Modalidad_General
@@ -344,9 +356,14 @@ Public Class Frm_Configuracion_Gral
         Chk_BloqueaRubros.Enabled = _Modalidad_General
         Chk_BloqueaZonaProductos.Enabled = _Modalidad_General
 
-        Chk_Pickear_NVVTodas.Enabled = _Modalidad_General
+        Chk_Pickear_NVVTodas.Enabled = True '_Modalidad_General
+        Chk_Pickear_NVITodas.Enabled = True
+        Chk_Pickear_DesdeBkWMS.Enabled = True
+
         Chk_Pickear_ProdPesoVariable.Enabled = _Modalidad_General
-        Chk_Pickear_FacturarAutoCompletas.Enabled = _Modalidad_General
+        Chk_Pickear_FacturarAutoCompletas.Enabled = True ' _Modalidad_General
+        Chk_Pickear_CrearGuiasAutoCompletas.Enabled = True '_Modalidad_General
+
         Chk_Pickear_SinoEstaEnWMSIgualPickear.Enabled = _Modalidad_General
 
         Chk_SoloprodEnDoc_CLALIBPR.Enabled = Not _Modalidad_General
@@ -582,6 +599,12 @@ Public Class Frm_Configuracion_Gral
                        ",VendeUD2DesacUD1soloRTUD = " & Convert.ToInt32(Chk_VendeUD2DesacUD1soloRTUD.Checked) & vbCrLf &
                        ",SelectOtrosClientesPedirPermiso = " & Convert.ToInt32(Chk_SelectOtrosClientesPedirPermiso.Checked) & vbCrLf &
                        ",ConservaListaDocOrigen = " & Convert.ToInt32(Chk_ConservaListaDocOrigen.Checked) & vbCrLf &
+                       ",Pickear_DesdeBkWMS = " & Convert.ToInt32(Chk_Pickear_DesdeBkWMS.Checked) & vbCrLf &
+                       ",Pickear_NVITodas = " & Convert.ToInt32(Chk_Pickear_NVITodas.Checked) & vbCrLf &
+                       ",LasNVVDebenSerHabilitadasParaFacturarCP = " & Convert.ToInt32(Chk_LasNVVDebenSerHabilitadasParaFacturarCP.Checked) & vbCrLf &
+                       ",Pickear_CrearGuiasAutoCompletas = " & Convert.ToInt32(Chk_Pickear_CrearGuiasAutoCompletas.Checked) & vbCrLf &
+                       ",AgregarTransporteNVIparaGTI = " & Convert.ToInt32(Chk_AgregarTransporteNVIparaGTI.Checked) & vbCrLf &
+                       ",NotfStockInsuficiente_Stmp = " & Convert.ToInt32(Chk_NotfStockInsuficiente_Stmp.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
