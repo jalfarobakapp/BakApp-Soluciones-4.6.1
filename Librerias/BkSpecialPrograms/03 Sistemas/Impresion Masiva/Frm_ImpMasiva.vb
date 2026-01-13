@@ -155,8 +155,6 @@ Public Class Frm_ImpMasiva
 
     Private Sub Btn_Imprimir_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir.Click
 
-        Dim _Subtido = String.Empty
-
         Dim hayFilaChecada As Boolean = ListaDocumentos.Any(Function(doc) doc.Chk)
 
         If Not hayFilaChecada Then
@@ -195,7 +193,7 @@ Public Class Frm_ImpMasiva
         End If
 
         '_NombreFormato = CType(Txt_NombreFormato.Tag, DataRow).Item("NombreFormato")
-        _Subtido = CType(Txt_NombreFormato.Tag, DataRow).Item("SubTido")
+        '_Subtido = CType(Txt_NombreFormato.Tag, DataRow).Item("SubTido")
 
         Dim _Lista As New List(Of LsValiciones.Mensajes)
 
@@ -219,6 +217,7 @@ Public Class Frm_ImpMasiva
 
                     Dim _Idmaeedo As Integer = _Row.Idmaeedo
                     Dim _Nudo As String = _Row.Nudo
+                    Dim _Subtido As String = _Row.Subtido
                     Dim _NombreFormato As String
 
                     If Rdb_ImpFormatoSeleccionado.Checked Then
