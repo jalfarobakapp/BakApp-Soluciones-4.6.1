@@ -160,7 +160,9 @@ Public Class Cl_Correos
 
         Dim _Consulta_sql = String.Empty
 
+        Dim _FechaElinminaMail As Date = DateAdd(DateInterval.Day, -30, _Fecha_Revision)
         Dim _Fecha = Format(_Fecha_Revision, "yyyyMMdd")
+        Dim _FechaEliMail = Format(_FechaElinminaMail, "yyyyMMdd")
         Dim _Tbl_Correos As DataTable
 
         Dim Dia_1 As String = numero_(_Fecha_Revision.Day, 2)
@@ -172,7 +174,7 @@ Public Class Cl_Correos
                       "AND CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102)"
 
         _Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
-                        "Where Fecha < '" & _Fecha & "' And NombreEquipo In ('" & _Nombre_Equipo & "','') And Enviado = 1"
+                        "Where Fecha < '" & _FechaEliMail & "' And NombreEquipo In ('" & _Nombre_Equipo & "','') And Enviado = 1"
         _Sql.Ej_consulta_IDU(_Consulta_sql)
 
         _Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo_Adjuntos 
