@@ -1172,6 +1172,10 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_WMS_Ingreso_Det
             Case "Zw_WMS_Ingreso_Enc"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_WMS_Ingreso_Enc
+
+            Case "Zw_WMS_Paquetes"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_WMS_Paquetes
+
             Case "Zw_WMS_Ubicaciones_Bodega"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_WMS_Ubicaciones_Bodega
             Case "Zw_WMS_Ubicaciones_Sectores"
@@ -1182,6 +1186,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_WMS_Ubicaciones_Mapa_Enc
             Case "Zw_WMS_Ubicaciones_Stock_X_Producto"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_WMS_Ubicaciones_Stock_X_Producto
+
+
 
             Case "Zw_Wordpress"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Wordpress

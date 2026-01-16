@@ -1217,13 +1217,12 @@ Public Class Frm_BuscarDocumento_Mt
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
         Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+        Dim _Tido = _Fila.Cells("TIDO").Value
+        Dim _Koen = _Fila.Cells("ENDO").Value
 
         If _Fila.Cells("Chk").Value Then
 
             If _Enviar_Correos_Masivamente Then
-
-                Dim _Tido = _Fila.Cells("TIDO").Value
-                Dim _Koen = _Fila.Cells("ENDO").Value
 
                 Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("MAEENMAIL", "KOEN = '" & _Koen & "' And KOMAIL = '001'"))
 
@@ -1257,6 +1256,47 @@ Public Class Frm_BuscarDocumento_Mt
                     Dim _FunAutorizaFac = FUNCIONARIO
 
                     _Fila.Cells("FunAutoriza").Value = String.Empty
+
+                    Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Docu_Ent Where Idmaeedo = {_Idmaeedo}"
+                    Dim _Row_Docu_Ent As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                    If Not IsNothing(_Row_Docu_Ent) Then
+
+                        If _Row_Docu_Ent.Item("SobreStock") Then
+
+                            Dim _EmpresaDoc As String = _Row_Docu_Ent.Item("Empresa")
+                            Dim _ModalidadDoc As String = _Row_Docu_Ent.Item("Modalidad")
+
+                            Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Configuracion_Formatos_X_Modalidad 
+                                        Where Empresa = '{_EmpresaDoc}' And Modalidad = '{_ModalidadDoc}' And TipoDoc = '" & _Tido & "'"
+                            Dim _Row_Formato_Modalidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+                            If Not IsNothing(_Row_Formato_Modalidad) Then
+
+                                Dim _Obliga_Despacho As Boolean = _Row_Formato_Modalidad.Item("Obliga_Despacho")
+
+                                If _Obliga_Despacho Then
+
+                                    Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Despachos_Doc",
+                                                                                         "Idrst = " & _Idmaeedo & " And Activo = 1"))
+
+                                    If Not _Reg Then
+                                        MessageBoxEx.Show(Me, "Este documento no tiene despacho asociado." & vbCrLf &
+                                                          "Debe ingresar un despacho para poder habilitar la nota de venta", "Validación",
+                                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                        _Fila.Cells("Chk").Value = False
+                                        Return
+                                    End If
+
+                                End If
+
+                            End If
+
+                        End If
+
+                    End If
+
+
 
                     If Not _Autorizado Then
 

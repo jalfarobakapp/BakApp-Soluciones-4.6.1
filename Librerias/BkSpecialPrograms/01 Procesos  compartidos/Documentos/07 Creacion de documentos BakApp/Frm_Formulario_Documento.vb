@@ -7474,14 +7474,16 @@ Public Class Frm_Formulario_Documento
 
                                 If _Dscto_Real > _Valor_Dscto Then
 
-                                    If _Tido = "COV" Then
+                                    If _Tido = "COV" AndAlso Not SobreStock Then
                                         _Mensaje = vbCrLf & vbCrLf & "¡SE SOLICITARA PERMISO AL GRABAR OTRO DOCUMENTO QUE DEPENDA DE ESTA COTIZACION!"
                                         _MsIcono = MessageBoxIcon.Warning
                                     Else
                                         _Mensaje = vbCrLf & vbCrLf & "¡SE SOLICITARA PERMISO AL GRABAR EL DOCUMENTO!"
                                         _MsIcono = MessageBoxIcon.Stop
                                     End If
+
                                     .Cells("ValVtaDescMax").Value = False
+
                                 Else
 
                                     _CodFunAutoriza_Dscto = _CodFunAutoriza
@@ -8870,11 +8872,12 @@ Public Class Frm_Formulario_Documento
     Private Sub Grilla_Detalle_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
 
         Dim _DatosDeGrillaProcesados As Boolean = False
+        Dim _Fila As DataGridViewRow = Nothing
 
         Try
 
             Dim _Cabeza = Grilla_Detalle.Columns(Grilla_Detalle.CurrentCell.ColumnIndex).Name
-            Dim _Fila As DataGridViewRow = Grilla_Detalle.CurrentRow
+            _Fila = Grilla_Detalle.CurrentRow
 
             Dim _Codigo As String = NuloPorNro(_Fila.Cells("Codigo").Value, "")
             Dim _Descripcion As String = NuloPorNro(_Fila.Cells("Descripcion").Value, "")
@@ -10259,8 +10262,31 @@ Public Class Frm_Formulario_Documento
 
         Catch ex As Exception
         Finally
+
+            ' Si se procesaron datos, asegurar que el foco quede en la grilla y en la celda "Cantidad" de la fila actual.
             If _DatosDeGrillaProcesados Then
+                Try
+                    If Not IsNothing(_Fila) AndAlso Not IsNothing(Grilla_Detalle) AndAlso Grilla_Detalle.Rows.Count > 0 Then
+                        Dim _idx As Integer = _Fila.Index
+                        If _idx >= 0 AndAlso _idx < Grilla_Detalle.Rows.Count Then
+                            If Grilla_Detalle.Columns.Contains("Cantidad") Then
+                                Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_idx).Cells("Cantidad")
+                                Grilla_Detalle.Focus()
+                                ' Iniciar edición para que el cursor quede en el campo Cantidad
+                                'Grilla_Detalle.BeginEdit(True)
+                            End If
+                        End If
+                    End If
+                Catch ex As Exception
+                    ' No interrumpir el flujo por error al establecer foco
+                End Try
+
+                ' Mantener comportamiento original: revisar lista superior si corresponde
                 Sb_RevisarListaSuperior()
+
+                If _DatosDeGrillaProcesados Then
+                    Sb_RevisarListaSuperior()
+                End If
             End If
         End Try
 
@@ -10279,7 +10305,7 @@ Public Class Frm_Formulario_Documento
             'Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = _Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = _IdIndex)
             'Dim _CantidadPallet As Double = _Zw_Prod_SobreStock.Cantidad
 
-            _Zw_Prod_SobreStock.PqteDisponible = _Zw_Prod_SobreStock.PqteHabilitado - _Zw_Prod_SobreStock.PqteComprometido
+            _Zw_Prod_SobreStock.PqteDisponible = _Zw_Prod_SobreStock.PqteHabilitado - _Zw_Prod_SobreStock.PqteComprometido - _Zw_Prod_SobreStock.PqteComprometidoSol
 
 
             Dim Fm As New Frm_Cantidades_PreVenta
@@ -10705,6 +10731,12 @@ Public Class Frm_Formulario_Documento
             MessageBoxEx.Show(Me, "Los vencimientos originales se volvieron a reestablecer", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
         End If
 
+        ' Eliminar registro correspondiente en _Ls_Cl_SobreStock si existe en la misma posición
+        If _Ls_Cl_SobreStock IsNot Nothing AndAlso _Ls_Cl_SobreStock.Count > 0 Then
+            If _Index >= 0 AndAlso _Index < _Ls_Cl_SobreStock.Count Then
+                _Ls_Cl_SobreStock.RemoveAt(_Index)
+            End If
+        End If
 
         Grilla_Detalle.Rows.RemoveAt(_Index)
 
@@ -11030,7 +11062,6 @@ Public Class Frm_Formulario_Documento
 
                                 _Zw_Prod_SobreStock.IdIndex = _Fila.Cells("Id").Value
                                 _Ls_Cl_SobreStock.Add(_Zw_Prod_SobreStock)
-
 
                                 _Fila.Cells("Precio").Value = _Precio
                                 _Fila.Cells("PrecioListaUd1").Value = _PrecioListaUd1
@@ -15590,6 +15621,10 @@ Public Class Frm_Formulario_Documento
                                   "desde el cual se extraerán los productos.",
                                   "Contenedor", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Call Btn_Contenedor_Asociar_Click(Nothing, Nothing)
+            End If
+
+            If _Cabeza = "CodEntidad" AndAlso _Tido = "COV" AndAlso SobreStock Then
+                Call Btn_Cambiar_Moneda_Click(Nothing, Nothing)
             End If
 
         Catch ex As Exception
@@ -24417,7 +24452,7 @@ Public Class Frm_Formulario_Documento
 
                 Dim _Insertar_Permiso As Boolean
 
-                If _Tido = "COV" Then
+                If _Tido = "COV" AndAlso Not SobreStock Then
                     _CodPermisoFlPre = _CodPermisoFlCOV
                     If _Fl.Item("CodPermiso") = _CodPermisoFlDoc Then
                         If _Fl.Item("Autorizado") Or _Fl.Item("Solicitar_Permiso_Al_Final") Then
@@ -24472,7 +24507,7 @@ Public Class Frm_Formulario_Documento
 
         End If
 
-        If _Tido = "COV" Then
+        If _Tido = "COV" AndAlso Not SobreStock Then
 
             If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "Las_Cotizaciones_No_Revisan_Permisos") Then
 
@@ -24508,9 +24543,9 @@ Public Class Frm_Formulario_Documento
 
         Else
 
-            If _Tido <> "COV" Then
+            If _Tido <> "COV" Or (_Tido = "COV" AndAlso SobreStock) Then
 
-                If (_Tido = "BLV" Or _Tido = "FCV") And Not _Revisar_Stock_FcvBlv Then
+                If ((_Tido = "BLV" Or _Tido = "FCV") And Not _Revisar_Stock_FcvBlv) Or (_Tido = "COV" AndAlso SobreStock) Then
                     Sb_Revisar_Permiso("Bkp00015", False, False)
                 Else
                     _Autorizado = False : _Necesita_Permiso = False
@@ -24527,7 +24562,7 @@ Public Class Frm_Formulario_Documento
                 '_Autorizado = Fx_Tiene_Permiso(Me, "Doc00103",, False)
                 'Sb_Revisar_Permiso("Doc00103", _Autorizado, _Necesita_Permiso)
 
-                If _Tido = "NVV" Or _Tido = "GDV" Or _Tido = "GDP" Then
+                If _Tido = "NVV" Or _Tido = "GDV" Or _Tido = "GDP" Or (_Tido = "COV" AndAlso SobreStock) Then
 
                     _Autorizado = False : _Necesita_Permiso = False
                     _Autorizado = Fx_Validad_MinimoVenta(_Necesita_Permiso)
@@ -24591,7 +24626,7 @@ Public Class Frm_Formulario_Documento
 
                 End If
 
-                If _Tido = "NVV" Then
+                If _Tido = "NVV" Or (_Tido = "COV" AndAlso SobreStock) Then
 
                     If Chk_Pickear.Visible And Not Chk_Pickear.Checked Then
 
@@ -30523,6 +30558,9 @@ Public Class Frm_Formulario_Documento
 
                     Try
                         Dim _codigoObj = _Fl.Cells("Codigo").Value
+                        Dim _Nuevo_Producto As Boolean = _Fl.Cells("Nuevo_Producto").Value
+                        If _Nuevo_Producto Then Continue For
+
                         If _codigoObj IsNot Nothing Then
                             Dim _codigo As String = _codigoObj.ToString().Trim()
                             If _codigo <> String.Empty AndAlso Not listaProductos.Contains(_codigo) Then

@@ -847,6 +847,7 @@
     <Compile Include="01 Procesos  compartidos\Productos\22 Media y promedio de venta\Frm_MediaYPromedioXProd_Estudio.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos compartidos\Documentos\07 Creacion de documentos BakApp\Frm_Formulario_Documento.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\01 Actualizacion BakApp\Clas_Actualiza_BakApp_Sql.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.Designer.vb">
       <DependentUpon>Frm_Usuarios_Random.vb</DependentUpon>
@@ -8562,6 +8563,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Version.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_WMS_Ingreso_Det.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_WMS_Ingreso_Enc.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_WMS_Paquetes.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_WMS_Ubicaciones_Bodega.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_WMS_Ubicaciones_Mapa_Det.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_WMS_Ubicaciones_Mapa_Enc.sql" />

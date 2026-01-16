@@ -6100,31 +6100,39 @@ Public Module Crear_Documentos_Desde_Otro
     Sub Sb_Reestablecer_Stock_En_Zw_Prod_Stock(_Tido As String, _TblDetalle As DataTable)
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
-        Dim _SqlQuery As String
 
-        Dim _CampoUd1, _CampoUd2 As String
+        Dim _SqlQuery As String = String.Empty
+        Dim _CampoUd1 As String = String.Empty
+        Dim _CampoUd2 As String = String.Empty
+        Dim _RecalculaStock As Boolean = False
 
         If _Tido = "NVV" Then
             _CampoUd1 = "StComp1" : _CampoUd2 = "StComp2"
+            _RecalculaStock = True
         ElseIf _Tido = "OCC" Then
             _CampoUd1 = "StPedi1" : _CampoUd2 = "StPedi2"
+            _RecalculaStock = True
         End If
 
         For Each _Fila As DataRow In _TblDetalle.Rows
 
-            Dim _CantUd1 As String = De_Num_a_Tx_01(_Fila.Item("CantUd1"), True, 5)
-            Dim _CantUd2 As String = De_Num_a_Tx_01(_Fila.Item("CantUd2"), True, 5)
+            If _RecalculaStock = True Then
 
-            Dim _Empresa As String = _Fila.Item("Empresa")
-            Dim _Sucursal As String = _Fila.Item("Sucursal")
-            Dim _Bodega As String = _Fila.Item("Bodega")
-            Dim _Codigo As String = _Fila.Item("Codigo")
+                Dim _CantUd1 As String = De_Num_a_Tx_01(_Fila.Item("CantUd1"), True, 5)
+                Dim _CantUd2 As String = De_Num_a_Tx_01(_Fila.Item("CantUd2"), True, 5)
 
-            _SqlQuery += "Update " & _Global_BaseBk & "Zw_Prod_Stock Set" & vbCrLf &
-                            _CampoUd1 & " = " & _CampoUd1 & " - " & _CantUd1 & "," &
-                            _CampoUd2 & " = " & _CampoUd2 & " - " & _CantUd2 & vbCrLf &
-                             "Where Empresa ='" & _Empresa & "' And Sucursal ='" & _Sucursal & "' And Bodega ='" & _Bodega &
-                             "' And Codigo = '" & _Codigo & "'" & vbCrLf
+                Dim _Empresa As String = _Fila.Item("Empresa")
+                Dim _Sucursal As String = _Fila.Item("Sucursal")
+                Dim _Bodega As String = _Fila.Item("Bodega")
+                Dim _Codigo As String = _Fila.Item("Codigo")
+
+                _SqlQuery += "Update " & _Global_BaseBk & "Zw_Prod_Stock Set" & vbCrLf &
+                                _CampoUd1 & " = " & _CampoUd1 & " - " & _CantUd1 & "," &
+                                _CampoUd2 & " = " & _CampoUd2 & " - " & _CantUd2 & vbCrLf &
+                                 "Where Empresa ='" & _Empresa & "' And Sucursal ='" & _Sucursal & "' And Bodega ='" & _Bodega &
+                                 "' And Codigo = '" & _Codigo & "'" & vbCrLf
+
+            End If
 
             Dim _SobreStock As Boolean = _Fila.Item("SobreStock")
 

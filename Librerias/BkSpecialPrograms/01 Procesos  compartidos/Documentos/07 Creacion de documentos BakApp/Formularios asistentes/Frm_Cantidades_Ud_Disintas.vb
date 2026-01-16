@@ -478,7 +478,7 @@ Public Class Frm_Cantidades_Ud_Disintas
                                              "Tabla = 'BODONE_CONF' And CodigoTabla = 'APIUrl_Rtu'")
 
             If apiUrlOverride IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(apiUrlOverride.ToString) Then
-                apiUrl = apiUrlOverride.ToString.Trim()
+                apiUrl = apiUrlOverride.ToString.Trim() '& "/Api/ConsultarRTU"
             End If
 
             ' Validar que apiUrl sea una URL absoluta y con esquema HTTP/HTTPS

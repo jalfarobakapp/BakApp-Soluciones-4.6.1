@@ -1,9 +1,6 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
-Imports BkSpecialPrograms.PreVenta
 Imports DevComponents.DotNetBar
-Imports MySql.Data.Authentication
-Imports OfficeOpenXml.FormulaParsing.LexicalAnalysis
 Imports PdfSharp
 Imports PdfSharp.Drawing
 Imports PdfSharp.Drawing.Layout
@@ -833,46 +830,44 @@ Public Class Frm_Ver_Documento
 
         If Not IsNothing(_Row_Docu_Ent) AndAlso _Tido = "NVV" Then
 
-            'Dim _Revisar_HbilitarNVVFAc As Boolean = _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar")
+            If _Tido = "NVV" Then
 
-            'If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
-            '    _Revisar_HbilitarNVVFAc = False
-            'End If
+                Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
 
-            Dim _LasNVVDebenSerHabilitadasParaFacturar As Boolean = False
+                If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
+                _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
+                    _LasNVVDebenSerHabilitadasParaFacturar = True
+                End If
 
-            If _Global_Row_Configuracion_General.Item("LasNVVDebenSerHabilitadasParaFacturar") OrElse
-            _Global_Row_Configuracion_Estacion.Item("LasNVVDebenSerHabilitadasParaFacturar") Then
-                _LasNVVDebenSerHabilitadasParaFacturar = True
-            End If
+                If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
+                    _LasNVVDebenSerHabilitadasParaFacturar = False
+                End If
 
-            If _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables") And Not _Row_Docu_Ent.Item("Customizable") Then
-                _LasNVVDebenSerHabilitadasParaFacturar = False
-            End If
+                If _LasNVVDebenSerHabilitadasParaFacturar Then
 
-            If _LasNVVDebenSerHabilitadasParaFacturar Then
+                    Btn_HabilitarFacturacion.Visible = True
 
-                Btn_HabilitarFacturacion.Visible = True
+                    If _Row_Docu_Ent.Item("HabilitadaFac") Then
 
-                If _Row_Docu_Ent.Item("HabilitadaFac") Then
+                        If Global_Thema = Enum_Themas.Oscuro Then
+                            Btn_HabilitarFacturacion.ImageAlt = My.Resources.Recursos_Documento.invoice_ok___copia
+                        Else
+                            Btn_HabilitarFacturacion.Image = My.Resources.Recursos_Documento.invoice_ok
+                        End If
+                        Btn_HabilitarFacturacion.Tooltip = "Nota de venta habilitada para ser facturada"
+                        Me.Text += " (*** HABILITADA PARA SER FACTURADA ***)"
 
-                    If Global_Thema = Enum_Themas.Oscuro Then
-                        Btn_HabilitarFacturacion.ImageAlt = My.Resources.Recursos_Documento.invoice_ok___copia
                     Else
-                        Btn_HabilitarFacturacion.Image = My.Resources.Recursos_Documento.invoice_ok
-                    End If
-                    Btn_HabilitarFacturacion.Tooltip = "Nota de venta habilitada para ser facturada"
-                    Me.Text += " (*** HABILITADA PARA SER FACTURADA ***)"
 
-                Else
+                        If Global_Thema = Enum_Themas.Oscuro Then
+                            Btn_HabilitarFacturacion.ImageAlt = My.Resources.Recursos_Documento.invoice_forbidden___copia
+                        Else
+                            Btn_HabilitarFacturacion.Image = My.Resources.Recursos_Documento.invoice_forbidden
+                        End If
+                        Btn_HabilitarFacturacion.Tooltip = "Habilitar nota de venta para ser facturada"
+                        Me.Text += " (*** NO ESTA HABILITADA PARA SER FACTURADA ***)"
 
-                    If Global_Thema = Enum_Themas.Oscuro Then
-                        Btn_HabilitarFacturacion.ImageAlt = My.Resources.Recursos_Documento.invoice_forbidden___copia
-                    Else
-                        Btn_HabilitarFacturacion.Image = My.Resources.Recursos_Documento.invoice_forbidden
                     End If
-                    Btn_HabilitarFacturacion.Tooltip = "Habilitar nota de venta para ser facturada"
-                    Me.Text += " (*** NO ESTA HABILITADA PARA SER FACTURADA ***)"
 
                 End If
 
@@ -915,6 +910,13 @@ Public Class Frm_Ver_Documento
                 Btn_Mnu_Eliminar_Reciclar.Text = "Eliminar y reciclar"
             End If
 
+        End If
+
+        If _Tido = "COV" Then
+            If _Row_Docu_Ent.Item("SobreStock") Then
+                Lbl_Tido.Text += " (SOBRE STOCK)"
+                Btn_Eliminar_Anular.Visible = False
+            End If
         End If
 
         Me.Refresh()
@@ -2821,16 +2823,6 @@ Public Class Frm_Ver_Documento
             ShowContextMenu(Menu_Contextual_DTE_Hefesto)
         End If
 
-        'Try
-        '    If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Then
-        '        ShowContextMenu(Menu_Contextual_DTE_Hefesto)
-        '    Else
-        '        ShowContextMenu(Menu_Contextual_DTE)
-        '    End If
-        'Catch ex As Exception
-        '    ShowContextMenu(Menu_Contextual_DTE)
-        'End Try
-
     End Sub
 
     Private Sub Btn_Revisar_Situacion_Comercial_Click(sender As Object, e As EventArgs) Handles Btn_Revisar_Situacion_Comercial.Click
@@ -3579,6 +3571,9 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Ver_Orden_de_despacho_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Orden_de_despacho.Click
 
+        ShowContextMenu(Menu_Contextual_Orden_Despacho)
+        Return
+
         Dim _Filtro_Idmaeddo_Dori = Generar_Filtro_IN(_TblDetalle, "", "IDRST", True, False, "")
 
         If _Filtro_Idmaeddo_Dori = "()" Then
@@ -3633,13 +3628,25 @@ Public Class Frm_Ver_Documento
 
         Else
 
+            Dim _NoTieneOrdenDespacho As Boolean = False
+
             Dim Fm As New Frm_DespachoSimple(0, _Idmaeedo)
             If Not IsNothing(Fm.RowDepachoSimple) Then
                 Fm.ShowDialog(Me)
             Else
-                MessageBoxEx.Show(Me, "No existen datos que mostrar", "Buscar Orden de despacho", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                _NoTieneOrdenDespacho = True
             End If
             Fm.Dispose()
+
+            If _NoTieneOrdenDespacho Then
+
+                If MessageBoxEx.Show(Me, "No existen datos que mostrar" & vbCrLf & "¿Desea ingresar una orden de despacho para este documento?",
+                                  "Buscar Orden de despacho", MessageBoxButtons.YesNo, MessageBoxIcon.Information) <> DialogResult.Yes Then
+                    Me.Enabled = True
+                    Return
+                End If
+
+            End If
 
         End If
 
@@ -4483,7 +4490,7 @@ Public Class Frm_Ver_Documento
         Sb_ReGuargar_PDF_Automaticamente_Por_Doc_Modalidad(Me, _Idmaeedo)
     End Sub
 
-    Private Sub Btn_Mnu_Firmar_Documento_DTE_Hefesto_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Firmar_Documento_DTE_Hefesto.Click
+    Private Sub Btn_Mnu_Firmar_Documento_DTE_Hefesto_Click(sender As Object, e As EventArgs)
 
         If Not Fx_TienePermiso_EnDoc(Me, "Dte00001", _Idmaeedo) Then
             Return
@@ -4592,7 +4599,7 @@ Public Class Frm_Ver_Documento
     End Sub
 
 
-    Private Sub Btn_Mnu_Exportar_XML_Hefesto_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Exportar_XML_Hefesto.Click
+    Private Sub Btn_Mnu_Exportar_XML_Hefesto_Click(sender As Object, e As EventArgs)
         Call Btn_Mnu_Exportar_XML_Click(Nothing, Nothing)
     End Sub
 
@@ -5300,6 +5307,138 @@ Public Class Frm_Ver_Documento
         Fm.Cl_Contenedor = _Cl_Contenedor
         Fm.ModoPreVenta = True
         Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Mnu_VerOrdenDeDespacho_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_VerOrdenDeDespacho.Click
+
+        Dim _Filtro_Idmaeddo_Dori = Generar_Filtro_IN(_TblDetalle, "", "IDRST", True, False, "")
+
+        If _Filtro_Idmaeddo_Dori = "()" Then
+            _Filtro_Idmaeddo_Dori = "(-1)"
+        End If
+
+        _Filtro_Idmaeddo_Dori = _Filtro_Idmaeddo_Dori.ToString.Replace("%%", "0")
+
+        Consulta_sql = "Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det 
+                        Where Idmaeedo In (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where IDMAEDDO In " & _Filtro_Idmaeddo_Dori & ") Or Idmaeedo = " & _Idmaeedo
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        If IsNothing(_Tbl) Then
+            MessageBoxEx.Show(Me, "No existen datos que mostrar", "Buscar Orden de despacho", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Me.Enabled = False
+
+        For Each _Fl As DataRow In _Tbl.Rows
+
+            Dim _Id_Despacho = _Fl.Item("Id_Despacho")
+
+            Dim _Cl_Despacho As New Clas_Despacho_Fx
+            _Cl_Despacho.Sb_Actualizar_Despachos(_Id_Despacho)
+
+        Next
+
+        Dim _Filtro_Documento
+
+        Select Case _Tipo_Apertura
+            Case Enum_Tipo_Apertura.Desde_Bakapp_Kasi
+                _Filtro_Documento = "And Desp.Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc Where Archidrst = 'Zw_Casi_DocEnc' And Idrst = " & _Idmaeedo & ")" & vbCrLf
+            Case Enum_Tipo_Apertura.Desde_Random_SQL
+                _Filtro_Documento = "And Desp.Nro_Despacho In (Select Nro_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc Where Archidrst = 'MAEEDO' And Idrst = " & _Idmaeedo & ")" & vbCrLf
+        End Select
+
+        Dim _Clas_Despacho_Fx As New Clas_Despacho_Fx
+
+        Dim _Ds = _Clas_Despacho_Fx.Fx_Buscar_Ordenes_De_Despacho(Nothing, Nothing, "", Clas_Despacho_Fx.Enum_Ver.Buscar, _Filtro_Documento, False)
+
+        If CBool(_Ds.Tables(0).Rows.Count) Then
+
+            Dim Fm_Fl As New Frm_Despacho_Ordenes(Frm_Despacho_Ordenes.Enum_Ver.Buscar)
+            Fm_Fl.Ds = _Ds
+            Fm_Fl._Correr_a_la_derecha = True
+            Fm_Fl.Btn_Buscar_Despacho.Visible = False
+            Fm_Fl.Btn_Nuevo_Despacho.Visible = False
+            Fm_Fl.Btn_Actualizar.Visible = False
+            Fm_Fl.ShowDialog(Me)
+            Fm_Fl.Dispose()
+
+        Else
+
+            Dim _NoTieneOrdenDespacho As Boolean = False
+
+            Dim Fm As New Frm_DespachoSimple(0, _Idmaeedo)
+            If Not IsNothing(Fm.RowDepachoSimple) Then
+                Fm.ShowDialog(Me)
+            Else
+                _NoTieneOrdenDespacho = True
+            End If
+            Fm.Dispose()
+
+            If _NoTieneOrdenDespacho Then
+
+                MessageBoxEx.Show(Me, "No existen datos que mostrar", "Buscar Orden de despacho",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            End If
+
+        End If
+
+        Me.Enabled = True
+
+    End Sub
+
+    Private Sub Btn_Mnu_CrearOrdenDeDespacho_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_CrearOrdenDeDespacho.Click
+
+        Dim _Filtro_Idmaeddo_Dori = Generar_Filtro_IN(_TblDetalle, "", "IDRST", True, False, "")
+
+        If _Filtro_Idmaeddo_Dori = "()" Then
+            _Filtro_Idmaeddo_Dori = "(-1)"
+        End If
+
+        _Filtro_Idmaeddo_Dori = _Filtro_Idmaeddo_Dori.ToString.Replace("%%", "0")
+
+        Consulta_sql = $"
+Select Id_Despacho From {_Global_BaseBk}Zw_Despachos_Doc_Det 
+Where Idmaeedo In (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where IDMAEDDO In {_Filtro_Idmaeddo_Dori}) Or Idmaeedo = {_Idmaeedo}"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        If CBool(_Tbl.Rows.Count) Then
+            MessageBoxEx.Show(Me, "Este documento ya tiene una Orden de Despacho", "Validacion", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+
+        Dim _Grabar As Boolean = False
+
+        Dim _Cl_Despacho As New Clas_Despacho(False)
+        _Cl_Despacho.Sb_Nuevo_Despacho()
+
+        _Cl_Despacho.Tbl_Despacho.Rows(0).Item("Empresa") = Mod_Empresa
+        _Cl_Despacho.Tbl_Despacho.Rows(0).Item("Sucursal") = Mod_Sucursal
+
+        _Cl_Despacho.Row_Entidad = _RowEntidad
+        _Cl_Despacho.Tbl_Despacho_Doc.Clear()
+
+        _Row_Maeedo_Doc = _TblEncabezado.Rows(0)
+
+        ' _Idmaeedo = _Row_Maeedo_Doc.Item("IDMAEEDO")
+        Dim _Tido = _Row_Maeedo_Doc.Item("TIDO")
+        Dim _Nudo = _Row_Maeedo_Doc.Item("NUDO")
+        Dim _CantC = _Row_Maeedo_Doc.Item("CAPRCO")
+        Dim _CantD = _Row_Maeedo_Doc.Item("CAPRAD")
+        Dim _CantE = _Row_Maeedo_Doc.Item("CAPREX")
+        Dim _CantR = 0
+        Dim _Nudonodefi = _Row_Maeedo_Doc.Item("NUDONODEFI")
+
+        _Cl_Despacho.Fx_Nuevo_Documento("MAEEDO", _Idmaeedo, _Tido, _Nudo, _CantC, _CantD, _CantE, _CantR, _Nudonodefi)
+
+        Dim Fm As New Frm_Desp_01_Ingreso
+        Fm.Cl_Despacho = _Cl_Despacho
+        Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
         Fm.Dispose()
 
     End Sub

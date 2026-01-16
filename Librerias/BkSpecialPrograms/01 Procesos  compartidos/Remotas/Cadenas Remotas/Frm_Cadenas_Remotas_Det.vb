@@ -453,7 +453,6 @@ Public Class Frm_Cadenas_Remotas_Det
 
         End If
 
-
         Dim _SobreStock As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Casi_DocEnc", "SobreStock", "Id_DocEnc = " & _Id_DocEnc)
 
         If _SobreStock Then
@@ -471,19 +470,23 @@ Public Class Frm_Cadenas_Remotas_Det
 
             Dim _Tido As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Casi_DocEnc", "TipoDoc", "Id_DocEnc = " & _Id_DocEnc)
 
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Casi_DocDet Where Id_DocEnc = " & _Id_DocEnc
+            Consulta_sql = $"Select * From {_Global_BaseBk}Zw_Casi_DocDet Where Id_DocEnc = {_Id_DocEnc}"
             Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Casi_DocEnc Set" & Space(1) &
-                           "Stand_by = 1,Fun_Auto_Deuda_Ven = '',Fun_Auto_Stock_Ins = '',Fun_Auto_Cupo_Exe = '',Vizado = 0," & Space(1) &
-                           "Fun_Auto_Fecha_Des = '',Fun_Auto_Sol_Compra = ''" & Environment.NewLine &
-                           "Where Id_DocEnc =" & _Id_DocEnc & Environment.NewLine &
-                           "Update " & _Global_BaseBk & "Zw_Casi_DocDet Set CodFunAutoriza = 'xyz' Where Id_DocEnc =" & _Id_DocEnc & Environment.NewLine &
-                           "Delete " & _Global_BaseBk & "Zw_Remotas_En_Cadena_01_Enc Where Id_Enc = " & _Id_Enc & Environment.NewLine &
-                           "Delete " & _Global_BaseBk & "Zw_Remotas_En_Cadena_02_Det Where Id_Enc = " & _Id_Enc & Environment.NewLine & Environment.NewLine &
-                           "Delete " & _Global_BaseBk & "Zw_Remotas_En_Cadena_03_Usu Where Id_Enc = " & _Id_Enc & Environment.NewLine &
-                           "Delete " & _Global_BaseBk & "Zw_Notificaciones Where RCadena_Id_Enc = " & _Id_Enc & Environment.NewLine &
-                           "Delete " & _Global_BaseBk & "Zw_Remotas Where RCadena_Id_Enc = " & _Id_Enc
+            Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Casi_DocEnc Set
+Stand_by = 1,Fun_Auto_Deuda_Ven = '',Fun_Auto_Stock_Ins = '',Fun_Auto_Cupo_Exe = '',Vizado = 0,
+Fun_Auto_Fecha_Des = '',Fun_Auto_Sol_Compra = ''
+Where Id_DocEnc ={_Id_DocEnc}
+Update {_Global_BaseBk}Zw_Casi_DocDet Set CodFunAutoriza = 'xyz' Where Id_DocEnc ={_Id_DocEnc}
+Delete {_Global_BaseBk}Zw_Remotas_En_Cadena_01_Enc Where Id_Enc = {_Id_Enc}
+Delete {_Global_BaseBk}Zw_Remotas_En_Cadena_02_Det Where Id_Enc = {_Id_Enc}
+
+Delete {_Global_BaseBk}Zw_Remotas_En_Cadena_03_Usu Where Id_Enc = {_Id_Enc}
+Delete {_Global_BaseBk}Zw_Notificaciones Where RCadena_Id_Enc = {_Id_Enc}
+Delete {_Global_BaseBk}Zw_Remotas Where RCadena_Id_Enc = {_Id_Enc}
+Delete {_Global_BaseBk}Zw_Casi_DocPer Where Id_DocEnc = {_Id_DocEnc}"
+
 
             If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 

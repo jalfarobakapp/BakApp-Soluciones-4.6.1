@@ -170,7 +170,15 @@ Public Class Frm_Cadenas_Remotas_Lista
 
             ElseIf _Accion = Enum_Accion.Revision_CRemotas Then
 
-                _Filtro += "And Tido = '" & _Tido & "' And ((Z1.Estado In " & _Filtro_Estado & " Or 
+                Dim _Tidos As String
+
+                If _Tido = "NVV" Then
+                    _Tidos = "('NVV','COV')"
+                Else
+                    _Tidos = "('" & _Tido & "')"
+                End If
+
+                _Filtro += "And Tido In " & _Tidos & " And ((Z1.Estado In " & _Filtro_Estado & " Or 
                         (Id_Enc In (Select RCadena_Id_Enc From " & _Global_BaseBk & "Zw_Remotas" & Space(1) &
                             "Where Z1.Estado In ('A','R') And 
                           Fecha_Otorga Between Convert(Datetime, '" & _Fecha_Desde & " 00:00:00',102) And Convert(Datetime, '" & _Fecha_Hasta & " 23:59:59',102) ))))"
@@ -278,7 +286,7 @@ Public Class Frm_Cadenas_Remotas_Lista
 
                 .Columns("Nombre_Entidad").Visible = True
                 .Columns("Nombre_Entidad").HeaderText = "Razón Social"
-                .Columns("Nombre_Entidad").Width = 195 + _Ancho
+                .Columns("Nombre_Entidad").Width = 185 + _Ancho
                 .Columns("Nombre_Entidad").DisplayIndex = _DisplayIndex
                 _DisplayIndex += 1
 
@@ -291,7 +299,7 @@ Public Class Frm_Cadenas_Remotas_Lista
 
                 .Columns("Nudo").Visible = True
                 .Columns("Nudo").HeaderText = "Número"
-                .Columns("Nudo").Width = 70
+                .Columns("Nudo").Width = 80
                 .Columns("Nudo").DisplayIndex = _DisplayIndex
                 _DisplayIndex += 1
 

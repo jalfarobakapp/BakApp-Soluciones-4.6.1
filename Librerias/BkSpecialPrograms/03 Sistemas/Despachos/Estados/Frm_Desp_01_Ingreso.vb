@@ -131,7 +131,12 @@ Public Class Frm_Desp_01_Ingreso
             Txt_Nombre_Cliente.Text = _Cl_Despacho.Row_Entidad.Item("Rut") & " - " & _Cl_Despacho.Row_Entidad.Item("NOKOEN")
             Txt_Referencia.Text = _Row_Despacho.Item("Referencia")
 
-            Dtp_Fecha_Despacho.Value = Ds_Matriz_Documentos.Tables("Encabezado_Doc").Rows(0).Item("FechaRecepcion") 'FechaDelServidor()
+            Dtp_Fecha_Despacho.Value = Now.Date
+
+            If Not IsNothing(Ds_Matriz_Documentos) Then
+                Dtp_Fecha_Despacho.Value = Ds_Matriz_Documentos.Tables("Encabezado_Doc").Rows(0).Item("FechaRecepcion") 'FechaDelServidor()
+            End If
+
             Sb_Habilitar_Controles(True)
 
             Me.ActiveControl = Txt_Referencia

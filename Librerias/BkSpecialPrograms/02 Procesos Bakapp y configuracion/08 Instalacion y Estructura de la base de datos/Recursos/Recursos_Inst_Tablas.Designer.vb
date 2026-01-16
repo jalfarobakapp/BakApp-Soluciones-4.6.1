@@ -5365,14 +5365,14 @@ Namespace My.Resources
         '''CREATE TABLE [dbo].[Zw_Transporte_Dte](
         '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
         '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Id_Enc]        [int]			NOT NULL DEFAULT (0),
         '''	[Idmaeedo]		[int]			NOT NULL DEFAULT (0),
         '''	[Tido]			[char](3)		NOT NULL DEFAULT (&apos;&apos;),
         '''	[Nudo]			[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Patente]		[varchar](8)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[RUTTrans]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Chofer]		[varchar](40)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[RUTChofer]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[DirDest]		[varchar](70)	NOT N [resto de la cadena truncado]&quot;;.
+        '''	[RUTChofer]		[varchar](10)	NOT NUL [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Transporte_Dte() As String
             Get
@@ -5631,6 +5631,27 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_WMS_Ingreso_Enc() As String
             Get
                 Return ResourceManager.GetString("Zw_WMS_Ingreso_Enc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_WMS_Paquetes](
+        '''	[Id]				[int]			IDENTITY(1,1) NOT NULL,
+        '''	[CodPaquete]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sku]				[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Empresa]			[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]			[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega]			[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Ubicacion]			[varchar](30)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Pallet]			[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Qty]				[float]			NOT NULL DEFAULT (0),
+        '''	[Qty2]				[float]		 [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_WMS_Paquetes() As String
+            Get
+                Return ResourceManager.GetString("Zw_WMS_Paquetes", resourceCulture)
             End Get
         End Property
         
