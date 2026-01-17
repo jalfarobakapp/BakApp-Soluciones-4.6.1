@@ -1361,18 +1361,18 @@ Public Class Clase_Crear_Documento
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
 
-                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
-                                           "PqteComprometido = PqteComprometido+" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
-                                           ",PqteComprometidoSol = PqteComprometidoSol-" & De_Num_a_Tx_01(_PqteComprometidoSol, False, 5) & vbCrLf &
-                                           "Where Id = " & _Id_SobreStock
-                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                            Comando.Transaction = myTrans
-                            Comando.ExecuteNonQuery()
+                            If _Tido = "COV" Then
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
+                                               "PqteComprometido = PqteComprometido+" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
+                                               ",PqteComprometidoSol = PqteComprometidoSol-" & De_Num_a_Tx_01(_PqteComprometidoSol, False, 5) & vbCrLf &
+                                               "Where Id = " & _Id_SobreStock
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+
+                            End If
 
                         End If
-
-                        'End If
-
 
                         If _Tidopa = "OTL" Then
 

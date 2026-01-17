@@ -576,6 +576,8 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Frm_Formulario_Documento_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
+        Me.Enabled = Not Pro_Revision_Remota
+
         If _Correr_a_la_derecha Then
             Me.Top += 10
             Me.Left += 10
@@ -20672,6 +20674,23 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
+                    If SobreStock Then
+
+                        Consulta_sql = $"Select * From {_Global_BaseBk}Zw_Docu_Det Where Idmaeddo = {_Idmaeddo_Dori}"
+                        Dim _Row_Zw_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                        If Not IsNothing(_Row_Zw_Docu_Det) Then
+
+                            _New_Fila.Cells("SobreStock").Value = True
+                            _New_Fila.Cells("Id_SobreStock").Value = _Row_Zw_Docu_Det.Item("Id_SobreStock")
+                            _New_Fila.Cells("Moneda_SobreStock").Value = _Row_Zw_Docu_Det.Item("Moneda_SobreStock")
+                            _New_Fila.Cells("Precio_SobreStock").Value = _Row_Zw_Docu_Det.Item("Precio_SobreStock")
+                            _New_Fila.Cells("Qty_SobreStock").Value = _Row_Zw_Docu_Det.Item("Qty_SobreStock")
+
+                        End If
+
+                    End If
+
                     If _Stock_desde_WMS Then
 
                         Dim _Condicion_WMS As String = " Update #Paso1 Set Chk = 1 Where Idmaeddo_Reserva = " & _Idmaeddo_Dori
@@ -23036,6 +23055,9 @@ Public Class Frm_Formulario_Documento
 
             Warning_Visado.Visible = False
             Btn_Desbloquear_Visado.Visible = False
+
+            Btn_Aceptar_Documento.Enabled = True
+            Btn_Rechazar_Documento.Enabled = True
 
         Else
 

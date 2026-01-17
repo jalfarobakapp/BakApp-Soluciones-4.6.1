@@ -87,28 +87,54 @@ Public Class Frm_Documentos_Relacionados
 
     Sub Sb_Generar_Informe_Crear_Dataset()
 
-        Consulta_sql = "Select Cast(0 As Bit) As Chk,EDO.IDMAEEDO,EDO.EMPRESA,EDO.TIDO,EDO.SUBTIDO,EDO.NUDO,EDO.ENDO,EDO.SUENDO,EDO.SUDO,
-                        EDO.FEEMDO,EDO.CAPRCO,EDO.CAPRAD,EDO.MEARDO,EDO.CAPREX,EDO.CAPRNC,EDO.MODO,EDO.TAMODO,
-                        EDO.VABRDO,EDO.FEULVEDO,EDO.VAABDO,EDO.VABRDO-EDO.VAABDO As SALDO,EDO.ESFADO,EDO.KOFUAUDO,EDO.KOOPDO,EDO.ENDOFI,EDO.BODESTI,
-                        EDO.PROYECTO,EDO.NUMOPERVEN,EDO.POIVARET,EDO.VAIVARET,OB.OBDO,OB.OCDO,EN.RUEN
-                        Into #Paso
-                        From MAEEDO EDO With ( Nolock )
-                        Left Join MAEEDOOB As OB On OB.IDMAEEDO=EDO.IDMAEEDO
-                        Left Join MAEEN AS EN On EN.KOEN=EDO.ENDO And EN.SUEN=EDO.SUENDO
-                        Where 1 > 0" & vbCrLf &
-                       Fx_Condicion_Informe() & vbCrLf &
-                       "
-                        Delete #Paso Where IDMAEEDO Not In (Select IDMAEEDO From MAEDDO Where IDMAEEDO In (Select IDMAEEDO From #Paso) And ESLIDO = '' And CAPRCO1-(CAPRAD1+CAPREX1) > 0) And TIDO = 'NVV'
-                        --Select ESLIDO,CAPRCO1,CAPRAD1,CAPREX1,CAPRCO1-(CAPRAD1+CAPREX1) As Saldo,* From MAEDDO Where IDMAEEDO In (Select IDMAEEDO From #Paso) And ESLIDO = '' And CAPRCO1-(CAPRAD1+CAPREX1) > 0
+        Dim _Condicion_Informe As String = String.Empty
+        Dim _Condicion_Adicional As String = String.Empty
+
+        _Condicion_Informe = Fx_Condicion_Informe()
+
+        If _Tido = "NVV" Then
+            _Condicion_Adicional = $"
+Delete P
+From #Paso P
+Where P.IDMAEEDO In (
+    Select Re.IDMAEEDO
+    From {_Global_BaseBk}Zw_Docu_Ent Be
+    Inner Join MAEEDO Re 
+        On Re.TIDO = Be.Tido
+       And Re.ENDO = P.ENDO
+       And Re.SUENDO = P.SUENDO
+    Where Be.Tido = 'COV'
+      And Be.SobreStock = 1
+)"
+        End If
+
+        Consulta_sql = $"
+Select Cast(0 As Bit) As Chk,EDO.IDMAEEDO,EDO.EMPRESA,EDO.TIDO,EDO.SUBTIDO,EDO.NUDO,EDO.ENDO,EDO.SUENDO,EDO.SUDO,
+EDO.FEEMDO,EDO.CAPRCO,EDO.CAPRAD,EDO.MEARDO,EDO.CAPREX,EDO.CAPRNC,EDO.MODO,EDO.TAMODO,
+EDO.VABRDO,EDO.FEULVEDO,EDO.VAABDO,EDO.VABRDO-EDO.VAABDO As SALDO,EDO.ESFADO,EDO.KOFUAUDO,EDO.KOOPDO,EDO.ENDOFI,EDO.BODESTI,
+EDO.PROYECTO,EDO.NUMOPERVEN,EDO.POIVARET,EDO.VAIVARET,OB.OBDO,OB.OCDO,EN.RUEN
+Into #Paso
+From MAEEDO EDO With ( Nolock )
+Left Join MAEEDOOB As OB On OB.IDMAEEDO=EDO.IDMAEEDO
+Left Join MAEEN AS EN On EN.KOEN=EDO.ENDO And EN.SUEN=EDO.SUENDO
+Where 1 > 0
+{_Condicion_Informe}
+
+Delete #Paso 
+    Where IDMAEEDO Not In (Select IDMAEEDO From MAEDDO Where IDMAEEDO In (Select IDMAEEDO From #Paso) 
+        And ESLIDO = '' 
+            And CAPRCO1-(CAPRAD1+CAPREX1) > 0) 
+                And TIDO = 'NVV'
+{_Condicion_Adicional}
                         
-                        Update #Paso Set VAABDO = Isnull((Select Sum(VABRLI) As FCV_NVV From MAEDDO Where IDRST In (Select IDMAEDDO From MAEDDO Where IDMAEEDO = #Paso.IDMAEEDO)),0)
-                        Where TIDO = 'NVV'
-                        Update #Paso Set SALDO = ROUND(VABRDO - VAABDO,2)
-                        Where TIDO = 'NVV'
+Update #Paso Set VAABDO = Isnull((Select Sum(VABRLI) As FCV_NVV From MAEDDO Where IDRST In (Select IDMAEDDO From MAEDDO Where IDMAEEDO = #Paso.IDMAEEDO)),0)
+Where TIDO = 'NVV'
 
-                        Select * From #Paso
-
-                        Drop Table #Paso"
+Update #Paso Set SALDO = ROUND(VABRDO - VAABDO,2)
+Where TIDO = 'NVV'
+                        
+Select * From #Paso
+Drop Table #Paso"
 
         _Ds = _Sql.Fx_Get_DataSet(Consulta_sql)
 
