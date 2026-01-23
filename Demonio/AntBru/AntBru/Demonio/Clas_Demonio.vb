@@ -91,7 +91,11 @@ Public Module Clas_Demonio
 
             FUNCIONARIO = _Global_Row_EstacionBk.Item("Usuario_X_Defecto")
             Mod_Modalidad = _Global_Row_EstacionBk.Item("Modalidad_X_Defecto")
-            Mod_Empresa = "01" '_Global_Row_EstacionBk.Item("Empresa_X_Defecto")
+            Mod_Empresa = NuloPorNro(_Global_Row_EstacionBk.Item("Empresa_X_Defecto"), "")
+
+            If String.IsNullOrWhiteSpace(Mod_Empresa) Then
+                Mod_Empresa = "01"
+            End If
 
             If String.IsNullOrWhiteSpace(Mod_Empresa) Then
                 FUNCIONARIO = String.Empty

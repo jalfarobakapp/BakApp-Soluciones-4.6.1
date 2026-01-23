@@ -6270,7 +6270,7 @@ Public Module Crear_Documentos_Desde_Otro
 
         End If
 
-            Dim _ErrorLPC As String = Fx_ActualizarListaRandomDesdeBakApp(_Koen, _Suen, _Id_Padre)
+        Dim _ErrorLPC As String = Fx_ActualizarListaRandomDesdeBakApp(_Koen, _Suen, _Id_Padre)
 
         If String.IsNullOrEmpty(_ErrorLPC) Then
             MessageBoxEx.Show(_Formulario, "Costos levantados correctamente en lista " & _Lista, "Actualización de costos del proveedor",

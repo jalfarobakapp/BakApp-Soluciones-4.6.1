@@ -182,11 +182,23 @@ Public Class Frm_Impor_Prod_Masivamente
             Dim _Bodega As String
 
             Try
+
                 _Codigo = NuloPorNro(_Arreglo(i, 0), "")
                 _Cantidad = NuloPorNro(_Arreglo(i, 1), 0)
                 _UdTrans = NuloPorNro(_Arreglo(i, 2), 0)
-                _Precio = NuloPorNro(_Arreglo(i, 3), 0)
-                _Bodega = NuloPorNro(_Arreglo(i, 4), "")
+
+                If Rdb_Precio_Lista.Checked Then
+                    _Precio = 0
+                Else
+                    _Precio = NuloPorNro(_Arreglo(i, 3), 0)
+                End If
+
+                If Rdb_Bodega_Documento.Checked Then
+                    _Bodega = String.Empty
+                Else
+                    _Bodega = NuloPorNro(_Arreglo(i, 4), "")
+                End If
+
             Catch ex As Exception
                 _Error = ex.Message
             End Try

@@ -4194,7 +4194,11 @@ Public Class Frm_Formulario_Documento
         Dim _Koen_Xdefecto = _Global_Row_Configuracion_Estacion.Item("Vnta_EntidadXdefecto")
         Dim _Suen_Xdefecto = _Global_Row_Configuracion_Estacion.Item("Vnta_SucEntXdefecto")
 
-        If String.IsNullOrEmpty(_Kofuen) Then
+        If String.IsNullOrEmpty(_Kofuen) OrElse
+            _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra OrElse
+            _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna OrElse
+            _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna OrElse
+            _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Traslado_Interno Then
             _Kofuen = FUNCIONARIO
         End If
 
@@ -28721,98 +28725,106 @@ Public Class Frm_Formulario_Documento
             Return
         End If
 
-        Dim _Fila As DataRow = _TblDetalle.Rows(0)
+        Try
 
-        Dim _CodSucursal = _Fila.Item("Sucursal")
-        Dim _CodBodega = _Fila.Item("Bodega")
-        Dim _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
+            Dim _Fila As DataRow = _TblDetalle.Rows(0)
 
-        Dim _Tbl_Productos_Levantar As DataTable
+            Dim _CodSucursal = _Fila.Item("Sucursal")
+            Dim _CodBodega = _Fila.Item("Bodega")
+            Dim _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
 
-        Dim Fm As New Frm_Impor_Prod_Masivamente(_CodSucursal, _CodBodega, _CodLista, Frm_Impor_Prod_Masivamente.Enum_Tipo_Doc.Excel)
-        Fm.NetoBruto = _TblEncabezado.Rows(0).Item("DocEn_Neto_Bruto")
-        Fm.ShowDialog(Me)
-        _Tbl_Productos_Levantar = Fm.Tbl_Productos_Levantar
-        Fm.Dispose()
+            Dim _Tbl_Productos_Levantar As DataTable
 
-        If CBool(_Tbl_Productos_Levantar.Rows.Count) Then
+            Dim Fm As New Frm_Impor_Prod_Masivamente(_CodSucursal, _CodBodega, _CodLista, Frm_Impor_Prod_Masivamente.Enum_Tipo_Doc.Excel)
+            Fm.NetoBruto = _TblEncabezado.Rows(0).Item("DocEn_Neto_Bruto")
+            Fm.ShowDialog(Me)
+            _Tbl_Productos_Levantar = Fm.Tbl_Productos_Levantar
+            Fm.Dispose()
 
-            Dim _Contador = 0
+            If CBool(_Tbl_Productos_Levantar.Rows.Count) Then
 
-            Barra_Progreso.Maximum = 100
-            Barra_Progreso.Visible = True
-            Lbl_Progreso.Visible = True
+                Dim _Contador = 0
 
-            Me.Refresh()
+                Barra_Progreso.Maximum = 100
+                Barra_Progreso.Visible = True
+                Lbl_Progreso.Visible = True
 
-            For Each Fila As DataRow In _Tbl_Productos_Levantar.Rows
+                Me.Refresh()
 
-                Application.DoEvents()
+                For Each Fila As DataRow In _Tbl_Productos_Levantar.Rows
 
-                Dim _Codigo As String = Fila.Item("Codigo")
+                    Application.DoEvents()
 
-                Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
-                Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                    Dim _Codigo As String = Fila.Item("Codigo")
 
-                Dim _Cantidad As Double = Fila.Item("Cantidad")
+                    Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
+                    Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                Dim _UnTrans As Integer = 1
-                Dim _Precio As Double = Fila.Item("Precio")
+                    Dim _Cantidad As Double = Fila.Item("Cantidad")
 
-                Dim _Observa As String
-                Dim _DescuentoPorc As Double
+                    Dim _UnTrans As Integer = 1
+                    Dim _Precio As Double = Fila.Item("Precio")
 
-                Dim _Bodega As String = Fila.Item("Bodega")
+                    Dim _Observa As String
+                    Dim _DescuentoPorc As Double
 
-                _DescuentoPorc = 0
+                    Dim _Bodega As String = Fila.Item("Bodega")
 
-                Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(_Contador)
+                    _DescuentoPorc = 0
 
-                Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True)
+                    Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(_Contador)
 
-                Lbl_Progreso.Text = "Insertando producto: " & _Codigo.Trim & " - " & _New_Fila.Cells("Descripcion").Value
+                    Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True)
 
-                _New_Fila.Cells("Codigo").Value = _Codigo
-                _New_Fila.Cells("Cantidad").Value = _Cantidad
+                    Lbl_Progreso.Text = "Insertando producto: " & _Codigo.Trim & " - " & _New_Fila.Cells("Descripcion").Value
 
-                If Not String.IsNullOrWhiteSpace(_Bodega) Then
-                    _New_Fila.Cells("Bodega").Value = _Bodega
-                End If
+                    _New_Fila.Cells("Codigo").Value = _Codigo
+                    _New_Fila.Cells("Cantidad").Value = _Cantidad
 
-                Dim _Precio_Old As Double = _New_Fila.Cells("Precio").Value
-
-                _New_Fila.Cells("Precio").Value = _Precio
-
-                If _New_Fila.Cells("Precio").Value = 0 Then
-                    _New_Fila.Cells("Precio").Value = 1
-                End If
-
-                _New_Fila.Cells("Observa").Value = _Observa
-
-                _New_Fila.Cells("Potencia").Value = 0
-                _New_Fila.Cells("Operacion").Value = String.Empty
-
-                If _New_Fila.Cells("Precio").Value > 0 And CBool(_Cantidad) Then
-                    Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", True, True)
-                    If _DescuentoPorc > 0 Then
-                        _New_Fila.Cells("DescuentoPorc").Value = Math.Round(_DescuentoPorc, 2)
-                        Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", True, True)
+                    If Not String.IsNullOrWhiteSpace(_Bodega) Then
+                        _New_Fila.Cells("Bodega").Value = _Bodega
                     End If
-                End If
 
-                _Contador += 1
-                Barra_Progreso.Value = ((_Contador * 100) / _Tbl_Productos_Levantar.Rows.Count)
+                    Dim _Precio_Old As Double = _New_Fila.Cells("Precio").Value
 
-                Sb_Nueva_Linea(_CodLista)
+                    _New_Fila.Cells("Precio").Value = _Precio
 
-            Next
+                    If _New_Fila.Cells("Precio").Value = 0 Then
+                        _New_Fila.Cells("Precio").Value = 1
+                    End If
 
+                    _New_Fila.Cells("Observa").Value = _Observa
+
+                    _New_Fila.Cells("Potencia").Value = 0
+                    _New_Fila.Cells("Operacion").Value = String.Empty
+
+                    If _New_Fila.Cells("Precio").Value > 0 And CBool(_Cantidad) Then
+                        Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", True, True)
+                        If _DescuentoPorc > 0 Then
+                            _New_Fila.Cells("DescuentoPorc").Value = Math.Round(_DescuentoPorc, 2)
+                            Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", True, True)
+                        End If
+                    End If
+
+                    _Contador += 1
+                    Barra_Progreso.Value = ((_Contador * 100) / _Tbl_Productos_Levantar.Rows.Count)
+
+                    Sb_Nueva_Linea(_CodLista)
+
+                Next
+
+                Sb_Marcar_Grilla()
+
+            End If
+
+        Catch ex As Exception
+        Finally
+            Lbl_Progreso.Text = String.Empty
             Barra_Progreso.Visible = False
             Lbl_Progreso.Visible = False
+        End Try
 
-            Sb_Marcar_Grilla()
-
-        End If
+        Me.Refresh()
 
     End Sub
 

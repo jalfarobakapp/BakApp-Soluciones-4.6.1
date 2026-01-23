@@ -318,7 +318,7 @@ Public Class Frm_GDI2GRI
         Dtp_FechaEmision.Value = FechaDelServidor()
 
         Dim _Bod_GDI As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
-                                    "NombreTabla", "Tabla = 'GDI2GRI' And CodigoTabla = 'BodGDI'")
+                                 "NombreTabla", "Tabla = 'GDI2GRI' And CodigoTabla = 'BodGDI' And Padre_Tabla = '" & Mod_Modalidad & "'")
 
         If Not String.IsNullOrEmpty(_Bod_GDI) Then
 
@@ -340,7 +340,7 @@ Public Class Frm_GDI2GRI
         End If
 
         Dim _Bod_GRI As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
-                            "NombreTabla", "Tabla = 'GDI2GRI' And CodigoTabla = 'BodGRI'")
+                                 "NombreTabla", "Tabla = 'GDI2GRI' And CodigoTabla = 'BodGRI' And Padre_Tabla = '" & Mod_Modalidad & "'")
 
         If Not String.IsNullOrEmpty(_Bod_GRI) Then
 

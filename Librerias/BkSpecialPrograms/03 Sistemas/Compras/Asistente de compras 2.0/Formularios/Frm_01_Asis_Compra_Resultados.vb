@@ -8,6 +8,7 @@ Public Class Frm_01_Asis_Compra_Resultados
     Dim Consulta_sql As String
 
     Dim _Nombre_Tbl_Paso_Informe As String
+    Dim _Nombre_Tbl_Paso_Costos As String
 
     Dim _Proceso_Automatico_Ejecutado As Boolean
     Dim _Tbl_Informe As DataTable
@@ -217,6 +218,15 @@ Public Class Frm_01_Asis_Compra_Resultados
             _Nombre_Tbl_Paso_Informe = value
         End Set
     End Property
+    Public Property Pro_Nombre_Tbl_Paso_Costos() As String
+        Get
+            Return _Nombre_Tbl_Paso_Costos
+        End Get
+        Set(value As String)
+            _Nombre_Tbl_Paso_Costos = value
+        End Set
+    End Property
+
 
     Public Property Input_DiasMarcarProvQueNoTiene As Integer
 
@@ -315,7 +325,12 @@ Public Class Frm_01_Asis_Compra_Resultados
         Sb_Llenar_Combos(_Arr_Tipo_Documento, Fm_Hijo.Cmb_Documento_Compra)
         Fm_Hijo.Cmb_Documento_Compra.SelectedValue = "GRC"
 
-        Consulta_sql = "Select '' As Padre,'' As Hijo Union Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
+        Consulta_sql = "
+Select '' As Padre,'' As Hijo 
+Union 
+Select 'BKP' As Padre,'Lista Proveedores en BAKAPP' As Hijo 
+Union 
+Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
         Dim _Tbl_LCosto As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Tmp_Prm_Informes
@@ -465,6 +480,8 @@ Public Class Frm_01_Asis_Compra_Resultados
             If Fr_Alerta_Stock.Visible Then
                 Fr_Alerta_Stock.Close()
             End If
+            Consulta_sql = $"Delete {_Nombre_Tbl_Paso_Costos}"
+            _Sql.Ej_consulta_IDU(Consulta_sql, False)
         End If
 
     End Sub
@@ -3781,8 +3798,30 @@ Public Class Frm_01_Asis_Compra_Resultados
         Input_Tiempo_Reposicion.Enabled = True
 
         Sb_Actualizar_Ranking()
-
         Sb_Actualizar_Costos()
+
+        ' Actualizacion de precios para comparativo de compras entre Mayorista/Supermercado y proveedor
+
+        If False Then
+
+            If Not IsNothing(_RowProveedor) Then
+                Sb_Actualizar_Costos_ListaProveedor(_RowProveedor.Item("KOEN"), _RowProveedor.Item("SUEN"), "ENERO 26")
+            End If
+
+            Dim _CodProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                  "Valor",
+                                  "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                  "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
+            Dim _CodSucProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                         "Valor",
+                                         "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                         "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
+
+            If Not String.IsNullOrEmpty(_CodProveedor_Pstar) Then
+                Sb_Actualizar_Costos_ListaProveedor(_CodProveedor_Pstar, _CodSucProveedor_Pstar, "CCU")
+            End If
+
+        End If
 
         If _Actualizar_Stock Then
             Sb_Actualizar_Stock()
@@ -4483,6 +4522,124 @@ Public Class Frm_01_Asis_Compra_Resultados
         '                             (1 - (_Desc5 / 100.0))
         '                             )
         '                             )
+
+    End Sub
+
+    Sub Sb_Actualizar_Costos_ListaProveedor(_CodEntidad As String, _CodSucEntidad As String, _NombreLista As String)
+
+        'ENERO 26'
+
+        Consulta_sql = $"Delete {_Nombre_Tbl_Paso_Costos} Where Proveedor = '{_CodEntidad}' And Sucursal = '{_CodSucEntidad}'"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        '        Consulta_sql = $"
+        'Insert Into {_Nombre_Tbl_Paso_Costos} (Lista,Proveedor,Sucursal,CodAlternativo,Codigo,Descripcion,Descripcion_Alt,CostoUd1,CostoUd2,
+        'Rtu,FechaVigencia,Desc1,Desc2,Desc3,Desc4,Desc5,DescSuma,Flete,Iva,Ila,Impuestos,CostoFinalUd1,CostoFinalUd2)
+        'Select Pd.Lista,Pe.Proveedor,Pe.Sucursal,Pd.CodAlternativo,Pd.Codigo,Pd.Descripcion,Descripcion_Alt,CostoUd1,CostoUd2,Pd.Rtu,FechaVigencia,
+        'Desc1,Desc2,Desc3,Desc4,Desc5,DescSuma,Flete,Isnull(Inf.Iva,0),Isnull(Inf.Ila,0),Isnull(Inf.Iva,0)+Isnull(Inf.Ila ,0),0,0
+        'From {_Global_BaseBk}Zw_ListaPreCosto Pd
+        'Inner Join {_Global_BaseBk}Zw_ListaPreCosto_Enc Pe On Pe.Id = Pd.Id_Padre
+        'Left Join {_Nombre_Tbl_Paso_Informe} Inf On Inf.Codigo = Pd.Codigo And Inf.CodProveedor = Pd.Proveedor And Inf.CodSucProveedor = Pd.Sucursal
+        'Where Pe.Proveedor = '{_CodEntidad}' And Pe.Sucursal = '{_CodSucEntidad}' And NombreLista = '{_NombreLista}'"
+
+        Consulta_sql = $"
+INSERT INTO {_Nombre_Tbl_Paso_Costos} 
+(
+    Lista,Proveedor,Sucursal,CodAlternativo,Codigo,Descripcion,Descripcion_Alt,
+    CostoUd1,CostoUd2,Rtu,FechaVigencia,
+    Desc1,Desc2,Desc3,Desc4,Desc5,DescSuma,
+    Flete,
+    Iva, Ila, Impuestos,
+    CostoFinalUd1,CostoFinalUd2
+)
+SELECT 
+    Pd.Lista,
+    Pe.Proveedor,
+    Pe.Sucursal,
+    Pd.CodAlternativo,
+    Pd.Codigo,
+    Pd.Descripcion,
+    Pd.Descripcion_Alt,
+    Pd.CostoUd1,
+    Pd.CostoUd2,
+    Pd.Rtu,
+    Pd.FechaVigencia,
+    Pd.Desc1,
+    Pd.Desc2,
+    Pd.Desc3,
+    Pd.Desc4,
+    Pd.Desc5,
+    Pd.DescSuma,
+    Pd.Flete,
+    0,0,0,
+    0, -- CostoFinalUd1 (se recalcula después)
+    0  -- CostoFinalUd2 (se recalcula después)
+FROM {_Global_BaseBk}Zw_ListaPreCosto Pd
+INNER JOIN {_Global_BaseBk}Zw_ListaPreCosto_Enc Pe 
+    ON Pe.Id = Pd.Id_Padre
+WHERE 
+    Pe.Proveedor = '{_CodEntidad}'
+    AND Pe.Sucursal = '{_CodSucEntidad}'
+    AND Pe.NombreLista = '{_NombreLista}'"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = $"
+UPDATE Lp
+SET 
+    Lp.Iva = ISNULL(Inf.Iva,0),
+    Lp.Ila = ISNULL(Inf.Ila,0),
+    Lp.Impuestos = ISNULL(Inf.Iva,0) + ISNULL(Inf.Ila,0)
+FROM {_Nombre_Tbl_Paso_Costos} Lp
+INNER JOIN {_Nombre_Tbl_Paso_Informe} Inf 
+    ON Inf.Codigo = Lp.Codigo"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = $"
+Update {_Nombre_Tbl_Paso_Costos} Set Flete = RECARGO --,Costo_FleteNeto = RECARGO/1.19
+From {_Nombre_Tbl_Paso_Costos}
+Inner Join TABRECPR On KOEN = '{_CodEntidad}' And KOPR = Codigo
+Where Proveedor = '{_CodEntidad}'"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+
+        Consulta_sql = $"
+UPDATE {_Nombre_Tbl_Paso_Costos}
+SET 
+    CostoFinalUd1 =
+        ROUND(
+            (
+                CostoUd1
+                * (1 - ISNULL(Desc1,0) / 100.0)
+                * (1 - ISNULL(Desc2,0) / 100.0)
+                * (1 - ISNULL(Desc3,0) / 100.0)
+                * (1 - ISNULL(Desc4,0) / 100.0)
+                * (1 - ISNULL(Desc5,0) / 100.0)
+            )
+            * CASE 
+                  WHEN Impuestos > 1 THEN 1 + (Impuestos / 100.0)
+                  ELSE Impuestos
+              END
+            + ISNULL(Flete,0)
+        , 0),
+
+    CostoFinalUd2 =
+        ROUND(
+            (
+                CostoUd2
+                * (1 - ISNULL(Desc1,0) / 100.0)
+                * (1 - ISNULL(Desc2,0) / 100.0)
+                * (1 - ISNULL(Desc3,0) / 100.0)
+                * (1 - ISNULL(Desc4,0) / 100.0)
+                * (1 - ISNULL(Desc5,0) / 100.0)
+            )
+            * CASE 
+                  WHEN Impuestos > 1 THEN 1 + (Impuestos / 100.0)
+                  ELSE Impuestos
+              END
+            + ISNULL(Flete*Rtu,0)
+        , 0);
+"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
 
     End Sub
 

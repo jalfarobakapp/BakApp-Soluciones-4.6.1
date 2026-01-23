@@ -11,7 +11,9 @@ Public Class Frm_00_Asis_Compra_Menu
     Dim _DstCompras As New DatosCompra
     Public Tipo_Informe As String
 
-    Dim _TblPasoInforme = "Zw_InfCompras01" & FUNCIONARIO
+    Dim _TblPasoInforme As String = "Zw_InfCompras01" & FUNCIONARIO
+    Dim _TblPasoCostos As String
+
     Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
     Dim Cancelar As Boolean
@@ -47,6 +49,9 @@ Public Class Frm_00_Asis_Compra_Menu
     Dim _RowProveedor As DataRow
     Dim _RowProveedor_Especial As DataRow
     Dim _RowProveedor_NVVExterna As DataRow
+
+    Dim _RowProveedor2Compara As DataRow
+
     Dim _RowParametros As DataRow
 
     Dim _Cmb_Padre_Asociacion_Productos As String
@@ -240,187 +245,6 @@ Public Class Frm_00_Asis_Compra_Menu
             SendKeys.Send("")
         End If
     End Sub
-
-    'Sub Sb_Parametros_Revisar_Sqlite(_Eliminar_Todo As Boolean)
-
-    '    'Consulta_sql = "Select * From Tbl_Prm_Informes"
-    '    'Dim _Tbl As DataTable ='_LiteSql.Fx_Get_Tablas(Consulta_sql)
-
-    '    If _Eliminar_Todo Then
-    '        Consulta_sql = "Delete From Tbl_Prm_Informes Where Informe = 'Compras_Asistente'"
-    '        '_LiteSql.Ej_consulta_IDU(Consulta_sql)
-    '    End If
-
-    '    Dim _FechaHoy As Date = FormatDateTime(FechaDelServidor, DateFormat.ShortDate)
-    '    Dim _Fecha_Hoy = Format(_FechaHoy, "dd-MM-yyyy")
-    '    With _RowParametros
-
-
-    '        'SELECCIONAR PRODUCTOS
-    '        '   Todos
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rdb_Productos_Todos, "Compras_Asistente", Rdb_Productos_Todos.Name,
-    '        'Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Todos.Checked)
-
-    '        '   Vendidos los ultimos, 7, 30 ,60 dias. etc
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rdb_Productos_Vendidos_Los_Ultimos_Dias, "Compras_Asistente",
-    '        ' Rdb_Productos_Vendidos_Los_Ultimos_Dias.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Vendidos_Los_Ultimos_Dias.Checked)
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Cmb_Cantidad_Dias_Ultima_Venta, "Compras_Asistente",
-    '        'Cmb_Cantidad_Dias_Ultima_Venta.Name, Class_SQLite.Enum_Type._ComboBox, Cmb_Cantidad_Dias_Ultima_Venta.SelectedValue)
-
-    '        '   Productos con mov. venta entre fechas
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rdb_Productos_Con_Movimientos_De_Venta, "Compras_Asistente",
-    '        'Rdb_Productos_Con_Movimientos_De_Venta.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Con_Movimientos_De_Venta.Checked)
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Dtp_Fecha_Movimientos_Desde, "Compras_Asistente",
-    '        'Dtp_Fecha_Movimientos_Desde.Name, Class_SQLite.Enum_Type._Date, Dtp_Fecha_Movimientos_Desde.Value)
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Dtp_Fecha_Movimientos_Hasta, "Compras_Asistente",
-    '        'Dtp_Fecha_Movimientos_Hasta.Name, Class_SQLite.Enum_Type._Date, Dtp_Fecha_Movimientos_Hasta.Value)
-
-    '        '   Seleccionar productos
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rdb_Productos_Seleccionar, "Compras_Asistente",
-    '        'Rdb_Productos_Seleccionar.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Seleccionar.Checked)
-
-    '        '   Seleccionar productos por familias, marcas, etc...
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rdb_Productos_Familias_Marcas_Etc, "Compras_Asistente",
-    '        'Rdb_Productos_Familias_Marcas_Etc.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Familias_Marcas_Etc.Checked)
-
-    '        '   Productos del Ranking
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rdb_Productos_Ranking, "Compras_Asistente",
-    '        'Rdb_Productos_Ranking.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Ranking.Checked)
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Input_Productos_Ranking, "Compras_Asistente",
-    '        'Input_Productos_Ranking.Name, Class_SQLite.Enum_Type._Double, Input_Productos_Ranking.Value)
-
-    '        '   Productos comprados a un proveedor en especifico
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rdb_Productos_Proveedor, "Compras_Asistente",
-    '        'Rdb_Productos_Proveedor.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Productos_Proveedor.Checked)
-
-    '        Dim _Koen As String
-    '        Dim _Suen As String
-
-    '        If (_RowProveedor Is Nothing) Then
-
-    '            '_Koen ='_LiteSql.Fx_Trae_Dato("Tbl_Prm_Informes", "Valor", "Informe = 'Compras_Asistente' And Campo = 'Koen'")
-    '            '_Suen ='_LiteSql.Fx_Trae_Dato("Tbl_Prm_Informes", "Valor", "Informe = 'Compras_Asistente' And Campo = 'Suen'")
-
-    '            Txt_Proveedor.Text = String.Empty
-    '            _RowProveedor = Fx_Traer_Datos_Entidad(_Koen, _Suen)
-
-    '        End If
-
-    '        If Not (_RowProveedor Is Nothing) Then
-    '            _Koen = Trim(_RowProveedor.Item("KOEN"))
-    '            _Suen = Trim(_RowProveedor.Item("SUEN"))
-    '            Txt_Proveedor.Text = Trim(_RowProveedor.Item("KOEN")) & " - " & Trim(_RowProveedor.Item("NOKOEN"))
-    '            '_LiteSql.Sb_Parametro_Informe_Sqlite(Nothing, "Compras_Asistente", "Koen", Class_SQLite.Enum_Type._String, _Koen)
-    '            '_LiteSql.Sb_Parametro_Informe_Sqlite(Nothing, "Compras_Asistente", "Suen", Class_SQLite.Enum_Type._String, _Suen)
-    '        End If
-
-    '        '   Seleccionar si el proveedor es entidad fisica
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Chk_Ent_Fisica, "Compras_Asistente",
-    '        'Chk_Ent_Fisica.Name, Class_SQLite.Enum_Type._Boolean, Chk_Ent_Fisica.Checked)
-
-    '        '   Seleccionar si el proveedor es entidad fisica
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Chk_Traer_Productos_De_Reemplazo, "Compras_Asistente",
-    '        'Chk_Traer_Productos_De_Reemplazo.Name, Class_SQLite.Enum_Type._Boolean, Chk_Traer_Productos_De_Reemplazo.Checked)
-
-    '        '   Tipo de compra, Nacional / Comercio Exterior
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Cmb_Tipo_de_compra, "Compras_Asistente",
-    '        'Cmb_Tipo_de_compra.Name, Class_SQLite.Enum_Type._ComboBox, Cmb_Tipo_de_compra.SelectedValue)
-
-    '        '   Tiempo para aprobicionamiento
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Cmb_Metodo_Abastecer_Dias_Meses, "Compras_Asistente", Cmb_Metodo_Abastecer_Dias_Meses.Name,
-    '        'Class_SQLite.Enum_Type._ComboBox, Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue)
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Input_Dias_a_Abastecer, "Compras_Asistente",
-    '        'Input_Dias_a_Abastecer.Name, Class_SQLite.Enum_Type._Double, Input_Dias_a_Abastecer.Value)
-
-    '        '   Tiempo de reposición (Lead Time)
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Cmb_Tiempo_Reposicion_Dias_Meses, "Compras_Asistente",
-    '        'Cmb_Tiempo_Reposicion_Dias_Meses.Name, Class_SQLite.Enum_Type._ComboBox, Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue)
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Input_Tiempo_Reposicion, "Compras_Asistente",
-    '        'Input_Tiempo_Reposicion.Name, Class_SQLite.Enum_Type._Double, Input_Tiempo_Reposicion.Value)
-
-    '        '   Considera Sabado
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Chk_Sabado, "Compras_Asistente",
-    '        'Chk_Sabado.Name, Class_SQLite.Enum_Type._Boolean, Chk_Sabado.Checked)
-    '        '   Considera Domingo
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Chk_Domingo, "Compras_Asistente",
-    '        'Chk_Domingo.Name, Class_SQLite.Enum_Type._Boolean, Chk_Domingo.Checked)
-
-    '        '   Unidad de compra UD1
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rdb_Ud1_Compra, "Compras_Asistente",
-    '        'Rdb_Ud1_Compra.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Ud1_Compra.Checked)
-    '        '   Unidad de compra UD1
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rdb_Ud2_Compra, "Compras_Asistente",
-    '        'Rdb_Ud2_Compra.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Ud2_Compra.Checked)
-
-
-    '        '   Costos desde ultimo documento segun seleccion
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rd_Costo_Lista_Proveedor, "Compras_Asistente",
-    '        'Rd_Costo_Lista_Proveedor.Name, Class_SQLite.Enum_Type._Boolean, Rd_Costo_Lista_Proveedor.Checked)
-    '        '   Costos desde ultimo documento segun seleccion
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rd_Costo_Ultimo_Documento_Seleccionado, "Compras_Asistente",
-    '        'Rd_Costo_Ultimo_Documento_Seleccionado.Name, Class_SQLite.Enum_Type._Boolean, Rd_Costo_Ultimo_Documento_Seleccionado.Checked)
-    '        '   Costos de la lista del proveedor
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Cmb_Documento_Compra, "Compras_Asistente",
-    '        'Cmb_Documento_Compra.Name, Class_SQLite.Enum_Type._ComboBox, Cmb_Documento_Compra.SelectedValue)
-    '        '   Costos de la lista del proveedor
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Dtp_Fecha_Tope_Proveedores_Automaticos, "Compras_Asistente",
-    '        'Dtp_Fecha_Tope_Proveedores_Automaticos.Name, Class_SQLite.Enum_Type._Date, Dtp_Fecha_Tope_Proveedores_Automaticos.Value)
-
-
-
-    '        '   Ticket Quitar Productos sin rotacion 
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Chk_Sacar_Productos_Sin_Rotacion, "Compras_Asistente",
-    '        'Chk_Sacar_Productos_Sin_Rotacion.Name, Class_SQLite.Enum_Type._Boolean, Chk_Sacar_Productos_Sin_Rotacion.Checked)
-    '        '   Ticket Restar Stock bodega
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Chk_Restar_Stok_Bodega, "Compras_Asistente",
-    '        'Chk_Restar_Stok_Bodega.Name, Class_SQLite.Enum_Type._Boolean, Chk_Restar_Stok_Bodega.Checked)
-    '        '   Ticket Quitar bloqueados compra
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Chk_Quitar_Bloqueados_Compra, "Compras_Asistente",
-    '        'Chk_Quitar_Bloqueados_Compra.Name, Class_SQLite.Enum_Type._Boolean, Chk_Quitar_Bloqueados_Compra.Checked)
-    '        '   Ticket Quitar con OCC o NVI
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Chk_No_Considera_Con_Stock_Pedido_OCC_NVI, "Compras_Asistente",
-    '        'Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Name, Class_SQLite.Enum_Type._Boolean, Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked)
-    '        '   Ticket Solo Stock critico
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Chk_Mostrar_Solo_Stock_Critico, "Compras_Asistente",
-    '        'Chk_Mostrar_Solo_Stock_Critico.Name, Class_SQLite.Enum_Type._Boolean, Chk_Mostrar_Solo_Stock_Critico.Checked)
-
-
-    '        '_Filtro_Bodegas_Est_Vta_Todas = True
-
-    '        '   Venta promedio entre fechas
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rdb_Rango_Fechas_Vta_Promedio, "Compras_Asistente",
-    '        'Rdb_Rango_Fechas_Vta_Promedio.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Rango_Fechas_Vta_Promedio.Checked)
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Dtp_Fecha_Vta_Desde, "Compras_Asistente",
-    '        'Dtp_Fecha_Vta_Desde.Name, Class_SQLite.Enum_Type._Date, Dtp_Fecha_Vta_Desde.Value)
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Dtp_Fecha_Vta_Hasta, "Compras_Asistente",
-    '        'Dtp_Fecha_Vta_Hasta.Name, Class_SQLite.Enum_Type._Date, Dtp_Fecha_Vta_Hasta.Value)
-
-    '        '   Venta promedio en meses
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Rdb_Rango_Meses_Vta_Promedio, "Compras_Asistente",
-    '        'Rdb_Rango_Meses_Vta_Promedio.Name, Class_SQLite.Enum_Type._Boolean, Rdb_Rango_Meses_Vta_Promedio.Checked)
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Input_Ultimos_Meses_Vta_Promedio, "Compras_Asistente",
-    '        'Input_Ultimos_Meses_Vta_Promedio.Name, Class_SQLite.Enum_Type._Double, Input_Ultimos_Meses_Vta_Promedio.Value)
-
-    '        '   Sumar Rotacion Hermanos, agrupar las rotaciones en un solo producto
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Chk_Sumar_Rotacion_Hermanos, "Compras_Asistente",
-    '        'Chk_Sumar_Rotacion_Hermanos.Name, Class_SQLite.Enum_Type._Boolean, Chk_Sumar_Rotacion_Hermanos.Checked)
-
-    '        '   Rotacion con entidades excluidas
-    '        '_LiteSql.Sb_Parametro_Informe_Sqlite(Chk_Rotacion_Con_Ent_Excluidas, "Compras_Asistente",
-    '        'Chk_Rotacion_Con_Ent_Excluidas.Name, Class_SQLite.Enum_Type._Boolean, Chk_Rotacion_Con_Ent_Excluidas.Checked)
-
-
-    '        'If Not _Eliminar_Todo Then
-    '        'Consulta_sql = "Select Chk,Codigo,Descripcion From Tbl_Filtros_Busqueda Where Informe = 'Compras_Asistente' And Filtro = 'Bodegas_Stock'"
-    '        '_TblBodCompra ='_LiteSql.Fx_Get_Tablas(Consulta_sql)
-
-    '        'Consulta_sql = "Select Chk,Codigo,Descripcion From Tbl_Filtros_Busqueda Where Informe = 'Compras_Asistente' And Filtro = 'Bodegas_Rotacion_Vta'"
-    '        '_TblBodVenta ='_LiteSql.Fx_Get_Tablas(Consulta_sql)
-    '        'End If
-
-    '    End With
-
-    'End Sub
 
     Sub Sb_Parametros_Informe_Sql(_Actualizar As Boolean)
 
@@ -1064,400 +888,6 @@ Public Class Frm_00_Asis_Compra_Menu
 
     End Sub
 
-    'Sub Sb_Actualizar_Revisar_Sqlite()
-
-    '    Me.Enabled = False
-
-
-    '    Dim _SqlQ As String
-
-    '    'SELECCIONAR PRODUCTOS
-    '    '   Todos
-    '    _SqlQ = Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rdb_Productos_Todos.Name, Rdb_Productos_Todos.Checked)
-
-    '    '   Vendidos los ultimos, 7, 30 ,60 dias. etc
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rdb_Productos_Vendidos_Los_Ultimos_Dias.Name, CBool(Rdb_Productos_Vendidos_Los_Ultimos_Dias.Checked) * -1)
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Cmb_Cantidad_Dias_Ultima_Venta.Name, Cmb_Cantidad_Dias_Ultima_Venta.SelectedValue)
-
-    '    '   Productos con mov. venta entre fechas
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rdb_Productos_Con_Movimientos_De_Venta.Name, Rdb_Productos_Con_Movimientos_De_Venta.Checked)
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Dtp_Fecha_Movimientos_Desde.Name, Dtp_Fecha_Movimientos_Desde.Value)
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Dtp_Fecha_Movimientos_Hasta.Name, Dtp_Fecha_Movimientos_Hasta.Value)
-
-    '    '   Seleccionar productos
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rdb_Productos_Seleccionar.Name, Rdb_Productos_Seleccionar.Checked)
-
-    '    '   Seleccionar productos por familias, marcas, etc...
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rdb_Productos_Familias_Marcas_Etc.Name, Rdb_Productos_Familias_Marcas_Etc.Checked)
-
-    '    '   Productos del Ranking
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rdb_Productos_Ranking.Name, Rdb_Productos_Ranking.Checked)
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Input_Productos_Ranking.Name, Input_Productos_Ranking.Value)
-
-    '    '   Productos comprados a un proveedor en especifico
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rdb_Productos_Proveedor.Name, Rdb_Productos_Proveedor.Checked)
-    '    If Not (_RowProveedor Is Nothing) Then
-    '        _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", "Koen", _RowProveedor.Item("KOEN"))
-    '        _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", "Suen", _RowProveedor.Item("SUEN"))
-    '    End If
-
-    '    '   Seleccionar si el proveedor es entidad fisica
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Chk_Ent_Fisica.Name, Chk_Ent_Fisica.Checked)
-
-    '    '   Seleccionar si el proveedor es entidad fisica
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Chk_Traer_Productos_De_Reemplazo.Name, Chk_Traer_Productos_De_Reemplazo.Checked)
-
-    '    '   Tipo de compra, Nacional / Comercio Exterior
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Cmb_Tipo_de_compra.Name, Cmb_Tipo_de_compra.SelectedValue)
-
-    '    '   Tiempo para aprobicionamiento
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Cmb_Metodo_Abastecer_Dias_Meses.Name, Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue)
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Input_Dias_a_Abastecer.Name, Input_Dias_a_Abastecer.Value)
-
-    '    '   Tiempo de reposición (Lead Time)
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Cmb_Tiempo_Reposicion_Dias_Meses.Name, Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue)
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Input_Tiempo_Reposicion.Name, Input_Tiempo_Reposicion.Value)
-
-    '    '   Considera Sabado
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Chk_Sabado.Name, Chk_Sabado.Checked)
-    '    '   Considera Domingo
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Chk_Domingo.Name, Chk_Domingo.Checked)
-
-    '    '   Unidad de compra UD1
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rdb_Ud1_Compra.Name, Rdb_Ud1_Compra.Checked)
-    '    '   Unidad de compra UD1
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rdb_Ud2_Compra.Name, Rdb_Ud2_Compra.Checked)
-
-
-    '    '   Costos desde ultimo documento segun seleccion
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rd_Costo_Lista_Proveedor.Name, Rd_Costo_Lista_Proveedor.Checked)
-    '    '   Costos desde ultimo documento segun seleccion
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rd_Costo_Ultimo_Documento_Seleccionado.Name, Rd_Costo_Ultimo_Documento_Seleccionado.Checked)
-    '    '   Costos de la lista del proveedor
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Cmb_Documento_Compra.Name, Cmb_Documento_Compra.SelectedValue)
-    '    '   Costos de la lista del proveedor
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Dtp_Fecha_Tope_Proveedores_Automaticos.Name, Dtp_Fecha_Tope_Proveedores_Automaticos.Value)
-
-
-
-    '    '   Ticket Quitar Productos sin rotacion 
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Chk_Sacar_Productos_Sin_Rotacion.Name, Chk_Sacar_Productos_Sin_Rotacion.Checked)
-    '    '   Ticket Restar Stock bodega
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Chk_Restar_Stok_Bodega.Name, Chk_Restar_Stok_Bodega.Checked)
-    '    '   Ticket Quitar bloqueados compra
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Chk_Quitar_Bloqueados_Compra.Name, Chk_Quitar_Bloqueados_Compra.Checked)
-    '    '   Ticket Quitar con OCC o NVI
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Name, Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked)
-    '    '   Ticket Solo Stock critico
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Chk_Mostrar_Solo_Stock_Critico.Name, Chk_Mostrar_Solo_Stock_Critico.Checked)
-
-
-    '    _Filtro_Bodegas_Est_Vta_Todas += True
-
-    '    '   Venta promedio entre fechas
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rdb_Rango_Fechas_Vta_Promedio.Name, Rdb_Rango_Fechas_Vta_Promedio.Checked)
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Dtp_Fecha_Vta_Desde.Name, Dtp_Fecha_Vta_Desde.Value)
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Dtp_Fecha_Vta_Hasta.Name, Dtp_Fecha_Vta_Hasta.Value)
-
-    '    '   Venta promedio en meses
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Rdb_Rango_Meses_Vta_Promedio.Name, Rdb_Rango_Meses_Vta_Promedio.Checked)
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Input_Ultimos_Meses_Vta_Promedio.Name, Input_Ultimos_Meses_Vta_Promedio.Value)
-
-    '    '   Sumar Rotacion Hermanos, agrupar las rotaciones en un solo producto
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Chk_Sumar_Rotacion_Hermanos.Name, Chk_Sumar_Rotacion_Hermanos.Checked)
-
-    '    '   Rotacion con entidades excluidas
-    '    _SqlQ += Fx_Actualizar_Parametro_Informe_Sqlite("Compras_Asistente", Chk_Rotacion_Con_Ent_Excluidas.Name, Chk_Rotacion_Con_Ent_Excluidas.Checked)
-
-    '    '_LiteSql.Ej_consulta_IDU(_SqlQ)
-
-    '    Sb_Actualizar_Filtro_Tbl_Sqlite(_TblBodCompra, "Compras_Asistente", "Bodegas_Stock")
-    '    Sb_Actualizar_Filtro_Tbl_Sqlite(_TblBodVenta, "Compras_Asistente", "Bodegas_Rotacion_Vta")
-
-    '    Me.Enabled = True
-
-    'End Sub
-
-    'Sub Sb_Actualizar_Filtro_Tbl_Sqlite(_Tbl As DataTable, _Informe As String, _Filtro As String)
-
-    '    If Not _Tbl Is Nothing Then
-    '        If _Tbl.Rows.Count Then
-
-    '            Consulta_sql = "Delete From Tbl_Filtros_Busqueda Where Informe = '" & _Informe & "' And Filtro = '" & _Filtro & "';" & vbCrLf
-    '            For Each _Fila As DataRow In _Tbl.Rows
-    '                Dim _Chk = CInt(_Fila.Item("Chk")) * -1
-    '                Dim _Codigo = _Fila.Item("Codigo")
-    '                Dim _Descripcion = _Fila.Item("Descripcion")
-    '                Consulta_sql += "INSERT INTO Tbl_Filtros_Busqueda (Informe,Filtro,Chk,Codigo,Descripcion) VALUES" & Space(1) &
-    '                                "('" & _Informe & "','" & _Filtro & "'," & _Chk & ",'" & _Codigo & "','" & _Descripcion & "');" & vbCrLf
-    '            Next
-
-    '            '_LiteSql.Ej_consulta_IDU(Consulta_sql)
-
-    '        End If
-    '    End If
-
-    'End Sub
-
-    'Function Fx_Actualizar_Parametro_Informe_Sqlite(_Informe As String,
-    '                                                _Campo As String,
-    '                                                _NewValor As String) As String
-    '    Dim Consulta_sql As String
-
-    '    Consulta_sql = "Update Tbl_Prm_Informes Set Valor = '" & _NewValor & "' Where Informe = '" & _Informe & "' And Campo = '" & _Campo & "';" & vbCrLf
-    '    Return Consulta_sql
-
-    'End Function
-
-    'Sub Sb_Parametros_Actualizar_New(_Row As DataRow)
-
-    '    _DstCompras.Clear()
-
-    '    Dim _Koen, _Suen As String
-    '    Dim _RdProveedor As Boolean = Rdb_Productos_Proveedor.Checked
-
-    '    If Not (_RowProveedor Is Nothing) Then
-    '        If _RdProveedor Then
-    '            _Koen = _RowProveedor.Item("KOEN") : _Suen = _RowProveedor.Item("SUEN")
-    '        Else
-    '            _Koen = String.Empty : _Suen = String.Empty ': Rdb_Productos_Todos.Checked = True
-    '        End If
-    '    Else
-    '        _Koen = String.Empty : _Suen = String.Empty
-    '        If _RdProveedor Then
-    '            Rdb_Productos_Todos.Checked = True
-    '        End If
-    '    End If
-
-    '    Dim NewFila As DataRow
-    '    NewFila = _DstCompras.Tables("Parametros_Inf_2").NewRow
-    '    With NewFila
-
-    '        .Item("CodFuncionario") = FUNCIONARIO
-
-    '        .Item("Koen") = _Row.Item("Koen")
-    '        .Item("Suen") = _Row.Item("Suen")
-
-    '        .Item("Rdb_Productos_Todos") = .Item("Rdb_Productos_Todos")
-    '        .Item("Rdb_Productos_Vendidos_Los_Ultimos_Dias") = .Item("Rdb_Productos_Vendidos_Los_Ultimos_Dias")
-    '        .Item("Cmb_Cantidad_Dias_Ultima_Venta") = .Item("Cmb_Cantidad_Dias_Ultima_Venta")
-
-    '        .Item("Rdb_Productos_Con_Movimientos_De_Venta") = .Item("Rdb_Productos_Con_Movimientos_De_Venta")
-    '        .Item("Dtp_Fecha_Movimientos_Desde") = .Item("Dtp_Fecha_Movimientos_Desde")
-    '        .Item("Dtp_Fecha_Movimientos_Hasta") = .Item("Dtp_Fecha_Movimientos_Hasta")
-
-    '        .Item("Rdb_Productos_Seleccionar") = .Item("Rdb_Productos_Seleccionar")
-
-    '        .Item("Rdb_Productos_Ranking") = .Item("Rdb_Productos_Ranking")
-    '        .Item("Input_Productos_Ranking") = .Item("Input_Productos_Ranking")
-
-    '        .Item("Rdb_Productos_Proveedor") = .Item("Rdb_Productos_Proveedor")
-
-    '        .Item("Chk_Traer_Productos_De_Reemplazo") = .Item("Chk_Traer_Productos_De_Reemplazo")
-    '        .Item("Chk_Ent_Fisica") = .Item("Chk_Ent_Fisica")
-
-
-    '        .Item("Input_Tiempo_Reposicion") = .Item("Input_Tiempo_Reposicion")
-    '        .Item("Input_Dias_a_Abastecer") = .Item("Input_Dias_a_Abastecer")
-    '        .Item("Chk_Mostrar_Solo_Stock_Critico") = .Item("Chk_Mostrar_Solo_Stock_Critico")
-    '        .Item("Chk_Sabado") = .Item("Chk_Sabado")
-    '        .Item("Chk_Domingo") = .Item("Chk_Domingo")
-
-
-    '        .Item("Rd_Costo_Lista_Proveedor") = .Item("Rd_Costo_Lista_Proveedor")
-    '        .Item("Rd_Costo_Ultima_GRC") = .Item("Rd_Costo_Ultima_GRC")
-    '        .Item("Rdb_Ud1_Compra") = .Item("Rdb_Ud1_Compra")
-    '        .Item("Rdb_Ud2_Compra") = .Item("Rdb_Ud2_Compra")
-
-    '        .Item("Chk_Cargar_Rotacion_Estacional") = .Item("Chk_Cargar_Rotacion_Estacional")
-    '        .Item("Dtp_Fecha_Estacional_Desde") = .Item("Dtp_Fecha_Estacional_Desde")
-    '        .Item("Dtp_Fecha_Estacional_Hasta") = .Item("Dtp_Fecha_Estacional_Hasta")
-
-
-    '        .Item("Chk_Restar_Stok_Bodega") = .Item("Chk_Restar_Stok_Bodega")
-    '        .Item("Chk_Sacar_Productos_Sin_Rotacion") = .Item("Chk_Sacar_Productos_Sin_Rotacion")
-    '        .Item("Chk_No_Considera_Con_Stock_Pedido_OCC_NVI") = .Item("Chk_No_Considera_Con_Stock_Pedido_OCC_NVI")
-    '        .Item("Chk_Quitar_Bloqueados_Compra") = .Item("Chk_Quitar_Bloqueados_Compra")
-
-    '        .Item("Dtp_Fecha_Tope_Proveedores_Automaticos") = .Item("Dtp_Fecha_Tope_Proveedores_Automaticos")
-
-    '        .Item("Input_Dias_Advertencia_Rotacion") = .Item("Input_Dias_Advertencia_Rotacion")
-    '        .Item("Chk_Advertir_Rotacion") = .Item("Chk_Advertir_Rotacion")
-
-    '        .Item("Cmb_Padre_Asociacion_Productos") = .Item("Cmb_Padre_Asociacion_Productos")
-    '        .Item("Cmb_Proyeccion_Metodo_Abastecer") = .Item("Cmb_Proyeccion_Metodo_Abastecer")
-    '        .Item("Input_Proyeccion_Tiempo_a_Abastecer") = .Item("Input_Proyeccion_Tiempo_a_Abastecer")
-
-    '        .Item("Cmb_Proyeccion_Tiempo_Reposicion") = .Item("Cmb_Proyeccion_Tiempo_Reposicion")
-
-    '        .Item("Input_Proyeccion_Tiempo_Reposicion") = .Item("Input_Proyeccion_Tiempo_Reposicion")
-    '        .Item("Rdb_Proyeccion_Rotacion_Diaria") = _Rdb_Proyeccion_Rotacion_Diaria
-    '        .Item("Rdb_Proyeccion_Rotacion_Efectiva") = _Rdb_Proyeccion_Rotacion_Efectiva
-    '        .Item("Input_Proyeccion_Redondeo") = _Input_Proyeccion_Redondeo
-    '        .Item("Chk_Rotacion_Con_Ent_Excluidas") = Chk_Rotacion_Con_Ent_Excluidas.Checked
-
-    '        .Item("Chk_Quitar_Ventas_Calzadas") = _Chk_Quitar_Ventas_Calzadas
-
-    '        .Item("Rdb_Agrupar_x_Asociados") = _Rdb_Agrupar_x_Asociados
-    '        .Item("Rdb_Agrupar_x_Reemplazos") = _Rdb_Agrupar_x_Reemplazos
-    '        .Item("Cmb_Nodo_Raiz_Asociados") = _Cmb_Nodo_Raiz_Asociados
-
-    '        _DstCompras.Tables("Parametros_Inf_2").Rows.Add(NewFila)
-
-    '    End With
-    '    ' Dim exists = File.Exists(_Directorio_Informe & "\Parametros_Inf.xml")
-    '    _DstCompras.WriteXml(_Directorio_Informe & "\Parametros_Inf.xml")
-
-    'End Sub
-
-    'Sub Sb_Parametros_Informe_Conf_Local(_Abrir As Boolean)
-
-    '    If _Abrir Then
-
-    '        With My.Settings
-
-    '            Rdb_Productos_Todos.Checked = .Asis_Compra_Productos_Todos
-    '            Rdb_Productos_Vendidos_Los_Ultimos_Dias.Checked = .Asis_Compra_Productos_Vendidos_Los_Ultimos_Dias
-    '            Cmb_Cantidad_Dias_Ultima_Venta.SelectedValue = .Asis_Compra_Cantidad_Dias_Ultima_Venta
-    '            Rdb_Productos_Con_Movimientos_De_Venta.Checked = .Asis_Compra_Productos_Con_Movimientos_De_Venta
-    '            Dtp_Fecha_Movimientos_Desde.Value = .Asis_Compra_Fecha_Movimientos_Desde
-    '            Dtp_Fecha_Movimientos_Hasta.Value = .Asis_Compra_Fecha_Movimientos_Hasta
-    '            Rdb_Productos_Seleccionar.Checked = .Asis_Compra_Productos_Seleccionar
-    '            Rdb_Productos_Familias_Marcas_Etc.Checked = .Asis_Compra_Productos_Familias_Marcas_Etc
-    '            Rdb_Productos_Ranking.Checked = .Asis_Compra_Productos_Ranking
-    '            Input_Productos_Ranking.Value = .Asis_Compra_Productos_Ranking_Input
-    '            Rdb_Productos_Proveedor.Checked = .Asis_Compra_Productos_Proveedor
-
-    '            If Not String.IsNullOrEmpty(.Asis_Compra_Koen_p) Then
-
-    '                _RowProveedor = Fx_Traer_Datos_Entidad(.Asis_Compra_Koen_p, .Asis_Compra_Suen_p)
-
-    '                Txt_Proveedor.Text = _RowProveedor.Item("KOEN").ToString.Trim & " - " & _RowProveedor.Item("NOKOEN").ToString.Trim
-
-    '            End If
-
-    '            Chk_Ent_Fisica.Checked = .Asis_Compra_Ent_Fisica
-    '            Chk_Traer_Productos_De_Reemplazo.Checked = .Asis_Compra_Traer_Productos_De_Reemplazo
-    '            Cmb_Tipo_de_compra.SelectedValue = .Asis_Compra_Tipo_de_compra
-    '            Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue = .Asis_Compra_Metodo_Abastecer_Dias_Meses
-    '            Input_Dias_a_Abastecer.Value = .Asis_Compra_Dias_a_Abastecer
-    '            Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue = .Asis_Compra_Tiempo_Reposicion_Dias_Meses
-    '            Input_Tiempo_Reposicion.Value = .Asis_Compra_Tiempo_Reposicion
-    '            Chk_Sabado.Checked = .Asis_Compra_Sabado
-    '            Chk_Domingo.Checked = .Asis_Compra_Domingo
-    '            Rdb_Ud1_Compra.Checked = .Asis_Compra_Ud1_Compra
-    '            Rdb_Ud2_Compra.Checked = .Asis_Compra_Ud2_Compra
-    '            Rd_Costo_Lista_Proveedor.Checked = .Asis_Compra_Costo_Lista_Proveedor
-    '            Rd_Costo_Ultimo_Documento_Seleccionado.Checked = .Asis_Compra_Costo_Ultimo_Documento_Seleccionado
-    '            Cmb_Documento_Compra.SelectedValue = .Asis_Compra_Documento_Compra
-    '            Dtp_Fecha_Tope_Proveedores_Automaticos.Value = .Asis_Compra_Fecha_Tope_Proveedores_Automaticos
-    '            Chk_Sacar_Productos_Sin_Rotacion.Checked = .Asis_Compra_Sacar_Productos_Sin_Rotacion
-    '            Chk_Restar_Stok_Bodega.Checked = .Asis_Compra_Restar_Stok_Bodega
-    '            Chk_Quitar_Bloqueados_Compra.Checked = .Asis_Compra_Quitar_Bloqueados_Compra
-    '            Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked = .Asis_Compra_No_Considera_Con_Stock_Pedido_OCC_NVI
-    '            Chk_Mostrar_Solo_Stock_Critico.Checked = .Asis_Compra_Mostrar_Solo_Stock_Critico
-    '            Chk_Procesar_Uno_A_Uno.Checked = .Asis_Compra_Procesar_Uno_A_Uno
-    '            Rdb_Rango_Fechas_Vta_Promedio.Checked = .Asis_Compra_Rango_Fechas_Vta_Promedio
-    '            Dtp_Fecha_Vta_Desde.Value = .Asis_Compra_Fecha_Vta_Desde
-    '            Dtp_Fecha_Vta_Hasta.Value = .Asis_Compra_Fecha_Vta_Hasta
-    '            Rdb_Rango_Meses_Vta_Promedio.Checked = .Asis_Compra_Rango_Meses_Vta_Promedio
-    '            Input_Ultimos_Meses_Vta_Promedio.Value = .Asis_Compra_Ultimos_Meses_Vta_Promedio
-    '            Chk_Sumar_Rotacion_Hermanos.Checked = .Asis_Compra_Sumar_Rotacion_Hermanos
-    '            Chk_Rotacion_Con_Ent_Excluidas.Checked = .Asis_Compra_Rotacion_Con_Ent_Excluidas
-
-    '            If IsNothing(.Asis_Compra_TblBodCompra) Then
-
-    '                Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
-    '                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
-    '                           "And Filtro = 'Bodegas_Stock' And NombreEquipo = '" & _NombreEquipo & "'"
-    '                .Asis_Compra_TblBodCompra = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-    '            End If
-
-    '            If IsNothing(.Asis_Compra_TblBodVenta) Then
-
-    '                Consulta_sql = "Select Chk,Codigo,Descripcion From " & _Global_BaseBk & "Zw_Tmp_Filtros_Busqueda" & vbCrLf &
-    '                           "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
-    '                           "And Filtro = 'Bodegas_Rotacion_Vta' And NombreEquipo = '" & _NombreEquipo & "'"
-    '                .Asis_Compra_TblBodVenta = _Sql.Fx_Get_Tablas(Consulta_sql)
-
-    '            End If
-
-    '            _TblBodCompra = .Asis_Compra_TblBodCompra
-    '            _TblBodVenta = .Asis_Compra_TblBodVenta
-
-    '        End With
-
-    '    Else
-
-    '        With My.Settings
-
-    '            .Asis_Compra_Productos_Todos = Rdb_Productos_Todos.Checked
-    '            .Asis_Compra_Productos_Vendidos_Los_Ultimos_Dias = Rdb_Productos_Vendidos_Los_Ultimos_Dias.Checked
-    '            .Asis_Compra_Cantidad_Dias_Ultima_Venta = Cmb_Cantidad_Dias_Ultima_Venta.SelectedValue
-    '            .Asis_Compra_Productos_Con_Movimientos_De_Venta = Rdb_Productos_Con_Movimientos_De_Venta.Checked
-    '            .Asis_Compra_Fecha_Movimientos_Desde = Dtp_Fecha_Movimientos_Desde.Value
-    '            .Asis_Compra_Fecha_Movimientos_Hasta = Dtp_Fecha_Movimientos_Hasta.Value
-    '            .Asis_Compra_Productos_Seleccionar = Rdb_Productos_Seleccionar.Checked
-    '            .Asis_Compra_Productos_Familias_Marcas_Etc = Rdb_Productos_Familias_Marcas_Etc.Checked
-    '            .Asis_Compra_Productos_Ranking = Rdb_Productos_Ranking.Checked
-    '            .Asis_Compra_Productos_Ranking_Input = Input_Productos_Ranking.Value
-    '            .Asis_Compra_Productos_Proveedor = Rdb_Productos_Proveedor.Checked
-
-    '            If Not IsNothing(_RowProveedor) And Rdb_Productos_Proveedor.Checked Then
-
-    '                .Asis_Compra_Koen_p = _RowProveedor.Item("KOEN")
-    '                .Asis_Compra_Suen_p = _RowProveedor.Item("SUEN")
-
-    '            Else
-
-    '                .Asis_Compra_Koen_p = String.Empty
-    '                .Asis_Compra_Suen_p = String.Empty
-
-    '            End If
-
-    '            .Asis_Compra_Ent_Fisica = Chk_Ent_Fisica.Checked
-    '            .Asis_Compra_Traer_Productos_De_Reemplazo = Chk_Traer_Productos_De_Reemplazo.Checked
-    '            .Asis_Compra_Tipo_de_compra = Cmb_Tipo_de_compra.SelectedValue
-    '            .Asis_Compra_Metodo_Abastecer_Dias_Meses = Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue
-    '            .Asis_Compra_Dias_a_Abastecer = Input_Dias_a_Abastecer.Value
-    '            .Asis_Compra_Tiempo_Reposicion_Dias_Meses = Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue
-    '            .Asis_Compra_Tiempo_Reposicion = Input_Tiempo_Reposicion.Value
-    '            .Asis_Compra_Sabado = Chk_Sabado.Checked
-    '            .Asis_Compra_Domingo = Chk_Domingo.Checked
-    '            .Asis_Compra_Ud1_Compra = Rdb_Ud1_Compra.Checked
-    '            .Asis_Compra_Ud2_Compra = Rdb_Ud2_Compra.Checked
-    '            .Asis_Compra_Costo_Lista_Proveedor = Rd_Costo_Lista_Proveedor.Checked
-    '            .Asis_Compra_Costo_Ultimo_Documento_Seleccionado = Rd_Costo_Ultimo_Documento_Seleccionado.Checked
-    '            .Asis_Compra_Documento_Compra = Cmb_Documento_Compra.SelectedValue
-    '            .Asis_Compra_Fecha_Tope_Proveedores_Automaticos = Dtp_Fecha_Tope_Proveedores_Automaticos.Value
-    '            .Asis_Compra_Sacar_Productos_Sin_Rotacion = Chk_Sacar_Productos_Sin_Rotacion.Checked
-    '            .Asis_Compra_Restar_Stok_Bodega = Chk_Restar_Stok_Bodega.Checked
-    '            .Asis_Compra_Quitar_Bloqueados_Compra = Chk_Quitar_Bloqueados_Compra.Checked
-    '            .Asis_Compra_No_Considera_Con_Stock_Pedido_OCC_NVI = Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked
-    '            .Asis_Compra_Mostrar_Solo_Stock_Critico = Chk_Mostrar_Solo_Stock_Critico.Checked
-    '            .Asis_Compra_Procesar_Uno_A_Uno = Chk_Procesar_Uno_A_Uno.Checked
-    '            .Asis_Compra_Rango_Fechas_Vta_Promedio = Rdb_Rango_Fechas_Vta_Promedio.Checked
-    '            .Asis_Compra_Fecha_Vta_Desde = Dtp_Fecha_Vta_Desde.Value
-    '            .Asis_Compra_Fecha_Vta_Hasta = Dtp_Fecha_Vta_Hasta.Value
-    '            .Asis_Compra_Rango_Meses_Vta_Promedio = Rdb_Rango_Meses_Vta_Promedio.Checked
-    '            .Asis_Compra_Ultimos_Meses_Vta_Promedio = Input_Ultimos_Meses_Vta_Promedio.Value
-    '            .Asis_Compra_Sumar_Rotacion_Hermanos = Chk_Sumar_Rotacion_Hermanos.Checked
-    '            .Asis_Compra_Rotacion_Con_Ent_Excluidas = Chk_Rotacion_Con_Ent_Excluidas.Checked
-
-    '            .Asis_Compra_TblBodCompra = _TblBodCompra
-    '            .Asis_Compra_TblBodVenta = _TblBodVenta
-
-    '            .Save()
-
-    '        End With
-
-    '    End If
-
-
-
-    'End Sub
-
 #End Region
 
     Private Sub BtnProveedor_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Buscar_Proveedor.Click
@@ -1675,6 +1105,11 @@ Public Class Frm_00_Asis_Compra_Menu
             End If
 
             _Sql.Sb_Eliminar_Tabla_De_Paso(_TblPasoInforme)
+
+            Dim _Mensaje As LsValiciones.Mensajes
+            _Mensaje = Fx_CrearTablaPaso_CostosProductos(FUNCIONARIO)
+
+            _TblPasoCostos = _Mensaje.Resultado
 
             If Not _Accion_Automatica Then
 
@@ -2395,19 +1830,6 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 End If
 
-                'If Rdb_Productos_Proveedor.Checked AndAlso Chk_SoloConPrecioListaProveedor.Checked Then
-
-                '    Dim _Proveedor As String = _RowProveedor.Item("KOEN")
-                '    Dim _Sucursal As String = _RowProveedor.Item("SUEN")
-
-                '    Consulta_sql = "Update " & _TblPasoInforme & " Set TienePrecioListasProv = 1 Where Codigo In (Select Codigo" & vbCrLf &
-                '                   "From " & _Global_BaseBk & "Zw_ListaPreCosto Ld" & vbCrLf &
-                '                   "Inner Join " & _Global_BaseBk & "Zw_ListaPreCosto_Enc Le On Le.Id = Ld.Id_Padre" & vbCrLf &
-                '                   "Where Le.Proveedor = '" & _Proveedor & "' And Le.Sucursal = '" & _Sucursal & "' And CostoUd1 > 0)"
-                '    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                'End If
-
                 Consulta_sql = "Update " & _TblPasoInforme & " Set " &
                                "Idmaeedo_Ult_GRCFCC = Isnull(D.IDMAEEDO,0)" &
                                ",Tido_Ult_GRCFCC = Isnull(D.TIDO,'')" &
@@ -2550,6 +1972,7 @@ Public Class Frm_00_Asis_Compra_Menu
         Dim Fm As New Frm_01_Asis_Compra_Resultados(Modalidad_Estudio)
 
         Fm.Pro_Nombre_Tbl_Paso_Informe = _TblPasoInforme
+        Fm.Pro_Nombre_Tbl_Paso_Costos = _TblPasoCostos
 
         Fm.Pro_Filtro_Clalibpr_Todas = _Filtro_Clalibpr_Todas
         Fm.Pro_Filtro_Marcas_Todas = _Filtro_Marcas_Todas
@@ -4203,4 +3626,81 @@ Public Class Frm_00_Asis_Compra_Menu
 
     End Sub
 
+    Function Fx_CrearTablaPaso_CostosProductos(_Funcionario As String) As LsValiciones.Mensajes
+
+        Dim _NombreTabla As String = "Zw_InfCompras01_Lp" & _Funcionario
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            _Sql.Sb_Eliminar_Tabla_De_Paso(_NombreTabla)
+
+            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+
+            End If
+
+            Consulta_sql = $"
+CREATE TABLE [dbo].[{_NombreTabla}](
+	[Id]					[int] IDENTITY(1,1) NOT NULL,
+	[Lista]					[char](3)		NOT NULL,
+	[Proveedor]				[varchar](13)	NOT NULL,
+	[Sucursal]				[varchar](10)	NOT NULL,
+	[CodAlternativo]		[varchar](20)	NOT NULL,
+	[Codigo]				[varchar](13)	NOT NULL,
+	[Descripcion]			[varchar](50)	NOT NULL,
+	[Descripcion_Alt]		[varchar](100)	NOT NULL,
+	[CostoUd1]				[float]			NOT NULL,
+	[CostoUd2]				[float]			NOT NULL,
+	[Rtu]					[float]			NOT NULL,
+	[FechaVigencia]			[datetime]		NULL,
+	[Desc1]					[float]			NOT NULL,
+	[Desc2]					[float]			NOT NULL,
+	[Desc3]					[float]			NOT NULL,
+	[Desc4]					[float]			NOT NULL,
+	[Desc5]					[float]			NOT NULL,
+	[DescSuma]				[float]			NOT NULL,
+	[Flete]					[float]			NOT NULL,
+	[Iva]					[float]			NOT NULL,
+	[Ila]                   [float]			NOT NULL,
+	[Impuestos]             [float]			NOT NULL,
+    [CostoFinalUd1]         [float]			NOT NULL,
+    [CostoFinalUd2]         [float]			NOT NULL,
+
+) ON [PRIMARY]
+"
+            If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Mensaje = "Error al crear la tabla de paso " & _NombreTabla
+                Return _Mensaje
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Tabla de paso " & _NombreTabla & " creada correctamente."
+            _Mensaje.Resultado = _NombreTabla
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Error al crear la tabla de paso " & _NombreTabla & vbCrLf & ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Private Sub Txt_Proveedor2Comp_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Proveedor2Comp.ButtonCustomClick
+
+        Dim Fm As New Frm_BuscarEntidad_Mt(False)
+        Fm.ShowInTaskbar = False
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Entidad_Seleccionada Then
+
+            _RowProveedor2Compara = Fm.Pro_RowEntidad
+            Txt_Proveedor2Comp.Text = _RowProveedor2Compara.Item("KOEN").ToString.Trim & " - " & _RowProveedor2Compara.Item("NOKOEN").ToString.Trim
+
+        End If
+
+        Fm.Dispose()
+
+    End Sub
 End Class
