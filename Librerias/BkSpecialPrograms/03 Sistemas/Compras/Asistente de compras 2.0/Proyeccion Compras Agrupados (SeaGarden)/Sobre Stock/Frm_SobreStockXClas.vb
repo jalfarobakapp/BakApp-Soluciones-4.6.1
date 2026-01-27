@@ -52,8 +52,9 @@ Public Class Frm_SobreStockXClas
 
             .Fx_CrearTablaPaso_TablaPasoRotacionXClasificaciones()
             .Fx_CrearTablaPaso_TablaPasoRotacionXProductos()
-            .Fx_InsertarDetalleEn_TablaPasoRotacionXClasificaciones(_Tbl_Asc_02_Asociaciones, Chk_SumarStockDisponible.Checked)
+
             .Fx_InsertarDetalleEn_TablaPasoRotacionXProductos(_Tbl_Asc_01_Productos, Chk_SumarStockDisponible.Checked)
+            .Fx_InsertarDetalleEn_TablaPasoRotacionXClasificaciones(_Tbl_Asc_02_Asociaciones, Chk_SumarStockDisponible.Checked)
 
         End With
 

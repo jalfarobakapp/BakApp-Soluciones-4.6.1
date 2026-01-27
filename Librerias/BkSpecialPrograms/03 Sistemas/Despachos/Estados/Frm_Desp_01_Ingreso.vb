@@ -280,9 +280,13 @@ Public Class Frm_Desp_01_Ingreso
 
             _Row_Direccion_Despacho = Fm.Row_Direccion
 
-            _Cl_Despacho.Row_Despacho.Item("Pais") = _Row_Direccion_Despacho.Item("NOKOPA")
-            _Cl_Despacho.Row_Despacho.Item("Ciudad") = _Row_Direccion_Despacho.Item("NOKOCI")
-            _Cl_Despacho.Row_Despacho.Item("Comuna") = _Row_Direccion_Despacho.Item("NOKOCM")
+            _Cl_Despacho.Row_Despacho.Item("CodPais") = _Row_Direccion_Despacho.Item("Pais").ToString
+            _Cl_Despacho.Row_Despacho.Item("CodCiudad") = _Row_Direccion_Despacho.Item("Ciudad").ToString
+            _Cl_Despacho.Row_Despacho.Item("CodComuna") = _Row_Direccion_Despacho.Item("Comuna").ToString
+
+            _Cl_Despacho.Row_Despacho.Item("Pais") = _Row_Direccion_Despacho.Item("NOKOPA").ToString.Trim
+            _Cl_Despacho.Row_Despacho.Item("Ciudad") = _Row_Direccion_Despacho.Item("NOKOCI").ToString.Trim
+            _Cl_Despacho.Row_Despacho.Item("Comuna") = _Row_Direccion_Despacho.Item("NOKOCM").ToString.Trim
 
             _Cl_Despacho.Row_Despacho.Item("Telefono") = _Row_Direccion_Despacho.Item("Telefono")
             _Cl_Despacho.Row_Despacho.Item("Email") = _Row_Direccion_Despacho.Item("Email")

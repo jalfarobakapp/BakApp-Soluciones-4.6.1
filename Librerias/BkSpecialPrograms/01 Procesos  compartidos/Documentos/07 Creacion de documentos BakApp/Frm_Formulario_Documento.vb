@@ -9334,7 +9334,7 @@ Public Class Frm_Formulario_Documento
                                     _Fila.Cells("RtuVariable").Value = _RtuVariable
                                     _Fila.Cells("DesacRazTransf").Value = _DesacRazTransf
 
-                                    If _DesacRazTransf Then
+                                    If _DesacRazTransf AndAlso (_Tido = "NVV" Or _Tido = "NVI") Then
 
                                         Dim _Msj As String = "Si no dispone del permiso necesario para guardar un documento con pesos " &
                                                              "variables y modificar la condición para desactivar la razón de transformación, " &
@@ -9357,7 +9357,7 @@ Public Class Frm_Formulario_Documento
 
                                     End If
 
-                                    If _RtuVariable And CBool(Fm.Cantidad_Ud1 + Fm.Cantidad_Ud2) Then
+                                    If (_RtuVariable Or _DesacRazTransf) AndAlso CBool(Fm.Cantidad_Ud1 + Fm.Cantidad_Ud2) Then
                                         _Fila.Cells("Rtu").Value = Math.Round(Fm.Cantidad_Ud1 / Fm.Cantidad_Ud2, 5)
                                     End If
 
@@ -28725,6 +28725,11 @@ Public Class Frm_Formulario_Documento
             Return
         End If
 
+        If PreVenta Or SobreStock Then
+            MessageBoxEx.Show(Me, "Este tipo de documento no permite esta acción", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Try
 
             Dim _Fila As DataRow = _TblDetalle.Rows(0)
@@ -28733,15 +28738,19 @@ Public Class Frm_Formulario_Documento
             Dim _CodBodega = _Fila.Item("Bodega")
             Dim _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
 
-            Dim _Tbl_Productos_Levantar As DataTable
+            'Dim _Tbl_Productos_Levantar As DataTable
+            Dim _Ls_ProductoLevantar As New List(Of Frm_Impor_Prod_Masivamente.ProductoLevantar)
 
             Dim Fm As New Frm_Impor_Prod_Masivamente(_CodSucursal, _CodBodega, _CodLista, Frm_Impor_Prod_Masivamente.Enum_Tipo_Doc.Excel)
             Fm.NetoBruto = _TblEncabezado.Rows(0).Item("DocEn_Neto_Bruto")
             Fm.ShowDialog(Me)
-            _Tbl_Productos_Levantar = Fm.Tbl_Productos_Levantar
+            '_Tbl_Productos_Levantar = Fm.Tbl_Productos_Levantar
+            _Ls_ProductoLevantar = Fm.Ls_ProductoLevantar
             Fm.Dispose()
 
-            If CBool(_Tbl_Productos_Levantar.Rows.Count) Then
+            Dim _DesacRazTransfDoc As Boolean = False
+
+            If CBool(_Ls_ProductoLevantar.Count) Then
 
                 Dim _Contador = 0
 
@@ -28751,24 +28760,43 @@ Public Class Frm_Formulario_Documento
 
                 Me.Refresh()
 
-                For Each Fila As DataRow In _Tbl_Productos_Levantar.Rows
+                For Each Fila As Frm_Impor_Prod_Masivamente.ProductoLevantar In _Ls_ProductoLevantar
 
                     Application.DoEvents()
 
-                    Dim _Codigo As String = Fila.Item("Codigo")
+                    Dim _Codigo As String = Fila.Codigo
 
                     Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
                     Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                    Dim _Cantidad As Double = Fila.Item("Cantidad")
+                    Dim _Cantidad As Double = Fila.Cantidad
+                    Dim _CantUd1 As Double = Fila.CantUd1
+                    Dim _CantUd2 As Double = Fila.CantUd2
 
-                    Dim _UnTrans As Integer = 1
-                    Dim _Precio As Double = Fila.Item("Precio")
+                    Dim _UnTrans As Integer = Fila.UnTrans ' Fila.Item("UdTrans") '1
+
+                    If _UnTrans = 1 Then
+                        _Cantidad = _CantUd1
+                    ElseIf _UnTrans = 2 Then
+                        _Cantidad = _CantUd2
+                    End If
+
+                    Dim _RtuCalc As Double = Math.Round(_CantUd1 / _CantUd2, 5)
+                    Dim _Rtu As Double = _RowProducto.Item("RLUD")
+                    Dim _DesacRazTransf As Boolean = False
+
+                    If _RtuCalc <> _Rtu Then
+                        _DesacRazTransf = True
+                        _Rtu = _RtuCalc
+                        _DesacRazTransfDoc = True
+                    End If
+
+                    Dim _Precio As Double = Fila.Precio
 
                     Dim _Observa As String
                     Dim _DescuentoPorc As Double
 
-                    Dim _Bodega As String = Fila.Item("Bodega")
+                    Dim _Bodega As String = Fila.Bodega
 
                     _DescuentoPorc = 0
 
@@ -28776,10 +28804,19 @@ Public Class Frm_Formulario_Documento
 
                     Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True)
 
+                    Sb_Cambiar_Unidad_De_Medida(_New_Fila, _UnTrans)
+
                     Lbl_Progreso.Text = "Insertando producto: " & _Codigo.Trim & " - " & _New_Fila.Cells("Descripcion").Value
 
                     _New_Fila.Cells("Codigo").Value = _Codigo
                     _New_Fila.Cells("Cantidad").Value = _Cantidad
+                    _New_Fila.Cells("UnTrans").Value = _UnTrans
+
+                    _New_Fila.Cells("CantUd1").Value = _CantUd1
+                    _New_Fila.Cells("CantUd2").Value = _CantUd2
+
+                    _New_Fila.Cells("Rtu").Value = _Rtu
+                    _New_Fila.Cells("DesacRazTransf").Value = _DesacRazTransf
 
                     If Not String.IsNullOrWhiteSpace(_Bodega) Then
                         _New_Fila.Cells("Bodega").Value = _Bodega
@@ -28807,7 +28844,7 @@ Public Class Frm_Formulario_Documento
                     End If
 
                     _Contador += 1
-                    Barra_Progreso.Value = ((_Contador * 100) / _Tbl_Productos_Levantar.Rows.Count)
+                    Barra_Progreso.Value = ((_Contador * 100) / _Ls_ProductoLevantar.Count)
 
                     Sb_Nueva_Linea(_CodLista)
 
@@ -28815,7 +28852,33 @@ Public Class Frm_Formulario_Documento
 
                 Sb_Marcar_Grilla()
 
+                If _DesacRazTransfDoc AndAlso (_Tido = "NVV" Or _Tido = "NVI") Then
+
+                    Dim _Msj As String = "Si no dispone del permiso necesario para guardar un documento con pesos " &
+                                         "variables y modificar la condición para desactivar la razón de transformación, " &
+                                         "se solicitará dicho permiso al finalizar el documento para completar la acción."
+
+                    Chk_Pickear.Checked = False
+
+                    If _Global_Row_Configuracion_General.Item("NuncaPickeaDocConRTUDesactivada") And Chk_Pickear.Enabled Then
+                        Chk_Pickear.Enabled = False
+                        _Msj += vbCrLf & vbCrLf & "Según la configuración General el sistema no permite Pickear documentos que " &
+                                                  "tengan productos que tengan razón de transformación desactivada." & vbCrLf &
+                                                  "El checkbox de ""Pickear documento"" será deshabilitado."
+                    End If
+
+                    _Msj = Fx_AjustarTexto(_Msj, 80)
+
+                    If Not _AvisoCambioRTUVariable Then
+                        MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    End If
+
+                    _AvisoCambioRTUVariable = True
+
+                End If
+
             End If
+
 
         Catch ex As Exception
         Finally

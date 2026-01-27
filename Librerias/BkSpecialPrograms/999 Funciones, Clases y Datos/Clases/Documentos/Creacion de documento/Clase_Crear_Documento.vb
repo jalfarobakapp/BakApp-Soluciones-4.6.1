@@ -1369,6 +1369,7 @@ Public Class Clase_Crear_Documento
                                                "Where Id = " & _Id_SobreStock
                                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                 Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
 
                             End If
 

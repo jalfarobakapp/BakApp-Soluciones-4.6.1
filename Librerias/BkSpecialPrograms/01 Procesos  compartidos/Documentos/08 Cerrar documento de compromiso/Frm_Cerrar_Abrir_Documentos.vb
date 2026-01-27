@@ -403,15 +403,32 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
             End If
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set Qty_SobreStockD = Qty_SobreStock - Qty_SobreStockD" & vbCrLf &
-                           "Where Idmaeedo = " & _Idmaeedo
-            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+            Dim _Tido As String = _Row_Maeedo.Item("TIDO")
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set PqteComprometido = PqteComprometido-Qty_SobreStockD" & vbCrLf &
+            If _Tido = "COV" Then
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set Qty_SobreStockD = Qty_SobreStock - Qty_SobreStockD" & vbCrLf &
+                           "Where Idmaeedo = " & _Idmaeedo
+                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set PqteComprometido = PqteComprometido-Qty_SobreStockD" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_Prod_SobreStock St" & vbCrLf &
                            "Inner Join " & _Global_BaseBk & "Zw_Docu_Det Det On St.Id = Det.Id_SobreStock" & vbCrLf &
                            "Where Idmaeedo = " & _Idmaeedo
-            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+            End If
+
+            If _Tido = "NVV" Then
+
+                Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Prod_SobreStock Set PqteDevuelto = PqteDevuelto+Qty_SobreStock
+From {_Global_BaseBk}Zw_Prod_SobreStock St
+Inner Join {_Global_BaseBk}Zw_Docu_Det Det On St.Id = Det.Id_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+            End If
 
             Sb_Actualizar_Grillas()
             Sb_Formato_Grillas()
@@ -536,7 +553,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
             Dim _Id As Integer
 
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Estado Not In ('NULO','NULA','CERRA')"
-            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If Not IsNothing(_Row) Then
 

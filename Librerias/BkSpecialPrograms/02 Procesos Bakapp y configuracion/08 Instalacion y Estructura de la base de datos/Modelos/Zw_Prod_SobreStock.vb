@@ -10,6 +10,7 @@
     Public Property PqteHabilitado As Double
     Public Property PqteComprometido As Double
     Public Property PqteComprometidoSol As Double
+    Public Property PqteDevuelto As Double
     Public Property Ud1XPqte As Double
     Public Property CantMinFormato As Double
     Public Property Moneda As String

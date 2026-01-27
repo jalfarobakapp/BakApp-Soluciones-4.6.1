@@ -27,6 +27,19 @@ Public Class Frm_Impor_Prod_Masivamente
 
     Dim _NetoBruto As String
 
+    Public Class ProductoLevantar
+        Public Property Codigo As String
+        Public Property Descripcion As String
+        Public Property Cantidad As Double
+        Public Property CantUd1 As Double
+        Public Property CantUd2 As Double
+        Public Property UnTrans As Integer
+        Public Property Precio As Double
+        Public Property Bodega As String
+    End Class
+
+    Public Property Ls_ProductoLevantar As List(Of ProductoLevantar)
+
     Public Property Tbl_Productos_Levantar As DataTable
         Get
             Return _Tbl_Productos_Levantar
@@ -87,6 +100,9 @@ Public Class Frm_Impor_Prod_Masivamente
         Consulta_sql = "Select KOPR As Codigo,NOKOPR As Descripcion,Cast(0 As Float) As Cantidad,Cast(1 As Int) As UdTrans,Cast(0 As Float) As Precio,Cast('' As Varchar(3)) As Bodega From MAEPR Where 1<0"
         _Tbl_Productos_Levantar = _Sql.Fx_Get_DataTable(Consulta_sql)
 
+        ' Ahora: inicializar lista vacía de objetos ProductoLevantar.
+        Ls_ProductoLevantar = New List(Of ProductoLevantar)
+
         Sb_Color_Botones_Barra(Bar1)
 
         Btn_Archivo_Ayuda_Excel.Visible = (_Tipo_Doc = Enum_Tipo_Doc.Excel)
@@ -137,6 +153,7 @@ Public Class Frm_Impor_Prod_Masivamente
             End If
         End With
 
+        Ls_ProductoLevantar.Clear()
         _Tbl_Productos_Levantar.Clear()
 
         Txt_Nombre_Archivo.Text = _Ubic_Archivo
@@ -174,29 +191,41 @@ Public Class Frm_Impor_Prod_Masivamente
 
             System.Windows.Forms.Application.DoEvents()
 
-            Dim _Codigo As String
-            Dim _Descripcion As String
+            Dim _Codigo As String = String.Empty
+            Dim _Descripcion As String = String.Empty
             Dim _Cantidad As Double
-            Dim _UdTrans As Integer
+            Dim _CantUd1 As Double
+            Dim _CantUd2 As Double
+            Dim _UnTrans As Integer
             Dim _Precio As Double
-            Dim _Bodega As String
+            Dim _Bodega As String = String.Empty
 
             Try
 
                 _Codigo = NuloPorNro(_Arreglo(i, 0), "")
-                _Cantidad = NuloPorNro(_Arreglo(i, 1), 0)
-                _UdTrans = NuloPorNro(_Arreglo(i, 2), 0)
+                '_Cantidad = NuloPorNro(_Arreglo(i, 1), 0)
+
+                _CantUd1 = NuloPorNro(_Arreglo(i, 1), 0)
+                _CantUd2 = NuloPorNro(_Arreglo(i, 2), 0)
+
+                _UnTrans = NuloPorNro(_Arreglo(i, 3), 0)
+
+                If _UnTrans = 1 Then
+                    _Cantidad = _CantUd1
+                Else
+                    _Cantidad = _CantUd2
+                End If
 
                 If Rdb_Precio_Lista.Checked Then
                     _Precio = 0
                 Else
-                    _Precio = NuloPorNro(_Arreglo(i, 3), 0)
+                    _Precio = NuloPorNro(_Arreglo(i, 4), 0)
                 End If
 
                 If Rdb_Bodega_Documento.Checked Then
                     _Bodega = String.Empty
                 Else
-                    _Bodega = NuloPorNro(_Arreglo(i, 4), "")
+                    _Bodega = NuloPorNro(_Arreglo(i, 5), "")
                 End If
 
             Catch ex As Exception
@@ -212,7 +241,7 @@ Public Class Frm_Impor_Prod_Masivamente
 
                     _Descripcion = _RowProducto.Item("NOKOPR")
 
-                    _Error = Fx_Agregar_Producto(_RowProducto, _Cantidad, _UdTrans, _Precio, _Bodega)
+                    _Error = Fx_Agregar_Producto(_RowProducto, _Cantidad, _CantUd1, _CantUd2, _UnTrans, _Precio, _Bodega)
 
                     If String.IsNullOrEmpty(_Error) Then
                         _SinProbremas += 1
@@ -301,6 +330,7 @@ Public Class Frm_Impor_Prod_Masivamente
                 Fm.ShowDialog(Me)
                 Fm.Dispose()
 
+                Ls_ProductoLevantar.Clear()
                 _Tbl_Productos_Levantar.Clear()
 
                 'CrearArchivoTxt(AppPath() & "\Data\" & RutEmpresa & "\Temp\", "Error_LevLista.txt", _Txt_Log.Text, False)
@@ -308,7 +338,7 @@ Public Class Frm_Impor_Prod_Masivamente
 
             End If
 
-            If CBool(_Tbl_Productos_Levantar.Rows.Count) Then
+            If CBool(Ls_ProductoLevantar.Count) Then ' CBool(_Tbl_Productos_Levantar.Rows.Count) Then
                 Me.Close()
             End If
 
@@ -440,7 +470,7 @@ Public Class Frm_Impor_Prod_Masivamente
 
                     _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
 
-                    _Error = Fx_Agregar_Producto(_RowProducto, _Cantidad, _UdTrans, _Precio, _Bodega)
+                    _Error = Fx_Agregar_Producto(_RowProducto, _Cantidad, _Cantidad, _Cantidad, _UdTrans, _Precio, _Bodega)
 
                     If String.IsNullOrEmpty(_Error) Then
                         _SinProbremas += 1
@@ -560,6 +590,8 @@ Public Class Frm_Impor_Prod_Masivamente
 
     Function Fx_Agregar_Producto(_RowProducto As DataRow,
                                  _Cantidad As Double,
+                                 _CantUd1 As Double,
+                                 _CantUd2 As Double,
                                  _UdTrans As Integer,
                                  _Precio As Double,
                                  _Bodega As String) As String
@@ -574,10 +606,10 @@ Public Class Frm_Impor_Prod_Masivamente
                 _Bodega = _CodBodega
             End If
 
-            Dim _Existe As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABBO", "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & _Codsucursal & "' And KOBO = '" & _CodBodega & "'"))
+            Dim _Existe As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABBO", "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & _Codsucursal & "' And KOBO = '" & _Bodega & "'"))
 
             If Not _Existe Then
-                Throw New System.Exception("No existe la bodega: " & _CodBodega)
+                Throw New System.Exception("No existe la bodega: " & _Bodega)
             End If
 
             _Existe = CBool(_Sql.Fx_Cuenta_Registros("TABPRE", "KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'"))
@@ -623,6 +655,19 @@ Public Class Frm_Impor_Prod_Masivamente
                 End If
 
             End If
+
+            Dim nuevoProducto As New ProductoLevantar With {
+                .Codigo = _Codigo,
+                .Descripcion = _Descripcion,
+                .Cantidad = _Cantidad,
+                .CantUd1 = _CantUd1,
+                .CantUd2 = _CantUd2,
+                .UnTrans = _UdTrans,
+                .Precio = _Precio,
+                .Bodega = _Bodega
+            }
+
+            Ls_ProductoLevantar.Add(nuevoProducto)
 
             Dim NewFila As DataRow
             NewFila = _Tbl_Productos_Levantar.NewRow
@@ -678,7 +723,7 @@ Public Class Frm_Impor_Prod_Masivamente
 
         Dim _Nom_Excel As String
 
-        Consulta_sql = "Select 'Caracter [13]' As 'Código','Númerico' As 'Cantidad'," &
+        Consulta_sql = "Select 'Caracter [13]' As 'Código','Númerico' As 'Cantidad Ud1','Númerico' As 'Cantidad Ud2'," &
                        "'1 o 2' As 'Unidad transacción','Númerico' As 'Precio','Caracter [3]' As 'Bodega'"
 
         _Nom_Excel = "Ejemplo levantamiento productos masivamente"

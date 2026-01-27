@@ -125,6 +125,23 @@ Public Class Cl_FacAuto_NVV
             Log_Registro += _Sql.Pro_Error & vbCrLf
         End If
 
+        Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Demonio_FacAuto Where Informacion Like '%No se cumplio la secuencia esperada.' And ErrorGrabar = 1 And Idmaeedo_NVV <> 0"
+        Dim _Tbl_Err As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
+
+        For Each _Fila As DataRow In _Tbl_Err.Rows
+
+            Dim _Id As Integer = _Fila.Item("Id")
+            Dim _Id_Pickeo As Integer = _Fila.Item("Id_Pickeo")
+
+            Consulta_Sql = $"Update {_Global_BaseBk}Zw_Demonio_FacAuto Set Idmaeedo_NVV = 0,Facturar = 0 Where Id = {_Id}" & vbCrLf &
+                           $"Update {_Global_BaseBk}Zw_Stmp_Enc Set EnvFacAutoBk = 0 Where Id = {_Id_Pickeo}"
+
+            If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+                Log_Registro += _Sql.Pro_Error & vbCrLf
+            End If
+
+        Next
+
     End Sub
 
     Sub Sb_Traer_NVV_De_NVVAuto_A_Facturar()

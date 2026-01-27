@@ -77,10 +77,10 @@ CREATE TABLE {TablaPasoRotacion_Clasificacion}(
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        Dim _StockPedidoUd1 = String.Empty
+        Dim _StockPedidoMasStockFacSinRecep = String.Empty
 
         If _SumarStockDisponible Then
-            _StockPedidoUd1 = " + StockPedidoUd1"
+            _StockPedidoMasStockFacSinRecep = " + StockPedidoUd1 + StockFacSinRecepUd1"
         End If
 
         Try
@@ -114,7 +114,7 @@ SELECT
     StockEnTransitoUd1,
     StockPedidoUd1,
     StockFacSinRecepUd1,
-    StockUd1 + StockEnTransitoUd1{_StockPedidoUd1} AS StockDisponible,
+    StockUd1 + StockEnTransitoUd1{_StockPedidoMasStockFacSinRecep} AS StockDisponible,
     RotMensualUd1 AS RotM1,
     Promedio_Mensual AS RotM2,
     Promedio_3Mes AS RotM3,
@@ -250,10 +250,10 @@ Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'Si' Where PalletSY >
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        Dim _StockPedidoUd1 = String.Empty
+        Dim _StockPedidoMasStockFacSinRecep = String.Empty
 
         If _SumarStockDisponible Then
-            _StockPedidoUd1 = " + StockPedidoUd1"
+            _StockPedidoMasStockFacSinRecep = " + StockPedidoUd1 + StockFacSinRecepUd1"
         End If
 
         Try
@@ -295,7 +295,7 @@ SELECT
     StockEnTransitoUd1,
     StockPedidoUd1,
     StockFacSinRecepUd1,
-    StockUd1 + StockEnTransitoUd1{_StockPedidoUd1} AS StockDisponible,
+    StockUd1 + StockEnTransitoUd1{_StockPedidoMasStockFacSinRecep} AS StockDisponible,
     RotMensualUd1_Prod AS RotM1,
     Promedio_MensualUd1_Prod AS RotM2,
     PromMensualUd1_Ul3Mes_Prod AS RotM3,
@@ -316,13 +316,13 @@ SELECT
         ELSE 'RotM4'
     END AS RotCalculo,
     (SELECT MAX(v)
-     FROM (VALUES (RotMensualUd1_Prod), (RotMensualUd1_Prod),
+     FROM (VALUES (RotMensualUd1_Prod), (PromUlt3CioPromUlt3Meses_Ud1_Prod),
                   (Promedio_MensualUd1_Prod), (PromMensualUd1_Ul3Mes_Prod)) AS value(v)
     ) AS Rotacion,
     Duracion_Stock AS Duracion_Stock_Meses,
     MesesSobreStock,
     SobreStock,
-    600
+    Isnull((Select Top 1 MULTIPLO From TABCODAL Where KOPR = Codigo And TXTMULTI = 'PALLET'),600) 
 FROM {_Tbl_Asc_01_Productos}
 --WHERE StockUd1 + StockEnTransitoUd1 > 0;
 
