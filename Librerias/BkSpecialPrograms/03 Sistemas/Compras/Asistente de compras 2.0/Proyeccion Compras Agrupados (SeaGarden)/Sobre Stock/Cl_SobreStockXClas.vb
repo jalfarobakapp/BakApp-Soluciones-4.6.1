@@ -73,7 +73,8 @@ CREATE TABLE {TablaPasoRotacion_Clasificacion}(
     End Function
 
     Function Fx_InsertarDetalleEn_TablaPasoRotacionXClasificaciones(_Tbl_Asc_02_Asociaciones As String,
-                                                    _SumarStockDisponible As Boolean) As LsValiciones.Mensajes
+                                                                    _Tbl_Asc_01_Productos As String,
+                                                                   _SumarStockDisponible As Boolean) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -144,14 +145,27 @@ SELECT
     MesesSobreStock,
     SobreStock,
 	600
-FROM {_Tbl_Asc_02_Asociaciones}
+FROM {_Tbl_Asc_02_Asociaciones};
 --WHERE StockUd1 + StockEnTransitoUd1 > 0
 
-Update {_TablaPasoRotacion_Clasificacion} Set Duracion_Stock_Meses = Round(StockDisponible/NULLIF(Rotacion,0),0)
-Update {_TablaPasoRotacion_Clasificacion} Set Syncro = (Duracion_Stock_Meses-MesesSobreStock)*Rotacion
-Update {_TablaPasoRotacion_Clasificacion} Set PalletSY = Floor(Syncro/NULLIF(KilosXPallet,0))
-Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'No' Where PalletSY <= 0 --Duracion_Stock_Meses <= MesesSobreStock
-Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'Si' Where PalletSY > 0 --Duracion_Stock_Meses > MesesSobreStock
+UPDATE C
+SET C.KilosXPallet = ISNULL(ROUND(T.KilosXPalletPonderado, 0), 600)
+FROM {TablaPasoRotacion_Clasificacion} C
+INNER JOIN (
+    SELECT 
+        P.Codigo_Nodo,
+        SUM(P.KilosXPallet * P.StockDisponible) * 1.0 
+            / NULLIF(SUM(P.StockDisponible), 0) AS KilosXPalletPonderado
+    FROM {TablaPasoRotacion_Productos} P
+    GROUP BY P.Codigo_Nodo
+) T
+    ON C.Codigo_Nodo = T.Codigo_Nodo;
+
+Update {_TablaPasoRotacion_Clasificacion} Set Duracion_Stock_Meses = Round(StockDisponible/NULLIF(Rotacion,0),0);
+Update {_TablaPasoRotacion_Clasificacion} Set Syncro = (Duracion_Stock_Meses-MesesSobreStock)*Rotacion;
+Update {_TablaPasoRotacion_Clasificacion} Set PalletSY = Floor(Syncro/NULLIF(KilosXPallet,0));
+Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'No' Where PalletSY <= 0; --Duracion_Stock_Meses <= MesesSobreStock
+Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'Si' Where PalletSY > 0; --Duracion_Stock_Meses > MesesSobreStock
 "
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 ' Lanzar error aquí con información útil para depuración

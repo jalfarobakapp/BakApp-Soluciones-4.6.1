@@ -395,10 +395,14 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
             If Not IsNothing(_Msj.Tag) Then
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'NULA',Idmaeedo = 0,Observacion = 'Usuario " & FUNCIONARIO & " - " & Nombre_funcionario_activo.ToLower.Trim & " solicita cerrar documento'" & vbCrLf &
-                               "Where Id = " & _Msj.Id & vbCrLf &
-                               "Update " & _Global_BaseBk & "Zw_Stmp_Det Set Idmaeedo = 0,Idmaeddo = 0 Where Id_Enc = " & _Msj.Id & vbCrLf &
-                               "Update " & _Global_BaseBk & "Zw_Stmp_DetPick Set Idmaeedo = 0,Idmaeddo = 0 Where Id_Enc = " & _Msj.Id
+                Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Stmp_Enc Set 
+Estado = 'NULA'
+,Idmaeedo = 0
+,Observacion = 'Usuario {FUNCIONARIO} - {Nombre_funcionario_activo.ToLower.Trim} solicita cerrar documento'
+Where Id = {_Msj.Id}
+Update {_Global_BaseBk}Zw_Stmp_Det Set Idmaeedo = 0,Idmaeddo = 0 Where Id_Enc = {_Msj.Id}
+Update {_Global_BaseBk}Zw_Stmp_DetPick Set Idmaeedo = 0,Idmaeddo = 0 Where Id_Enc = {_Msj.Id}"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
             End If
@@ -407,14 +411,16 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
             If _Tido = "COV" Then
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set Qty_SobreStockD = Qty_SobreStock - Qty_SobreStockD" & vbCrLf &
-                           "Where Idmaeedo = " & _Idmaeedo
+                Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Docu_Det Set Qty_SobreStockD = Qty_SobreStock - Qty_SobreStockD
+Where Idmaeedo = {_Idmaeedo}"
                 _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set PqteComprometido = PqteComprometido-Qty_SobreStockD" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_Prod_SobreStock St" & vbCrLf &
-                           "Inner Join " & _Global_BaseBk & "Zw_Docu_Det Det On St.Id = Det.Id_SobreStock" & vbCrLf &
-                           "Where Idmaeedo = " & _Idmaeedo
+                Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Prod_SobreStock Set PqteComprometido = PqteComprometido-Qty_SobreStockD
+From {_Global_BaseBk}Zw_Prod_SobreStock St
+Inner Join {_Global_BaseBk}Zw_Docu_Det Det On St.Id = Det.Id_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
                 _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
             End If
@@ -422,7 +428,12 @@ Public Class Frm_Cerrar_Abrir_Documentos
             If _Tido = "NVV" Then
 
                 Consulta_sql = $"
-Update {_Global_BaseBk}Zw_Prod_SobreStock Set PqteDevuelto = PqteDevuelto+Qty_SobreStock
+Update {_Global_BaseBk}Zw_Docu_Det Set Qty_SobreStockDv = Qty_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Prod_SobreStock Set PqteDevuelto = PqteDevuelto+Qty_SobreStockDv
 From {_Global_BaseBk}Zw_Prod_SobreStock St
 Inner Join {_Global_BaseBk}Zw_Docu_Det Det On St.Id = Det.Id_SobreStock
 Where Idmaeedo = {_Idmaeedo}"

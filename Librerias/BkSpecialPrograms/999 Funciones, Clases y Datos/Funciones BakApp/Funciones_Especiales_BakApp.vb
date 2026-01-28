@@ -6828,7 +6828,40 @@ Public Module Crear_Documentos_Desde_Otro
         Dim Generator As System.Random = New System.Random()
 
         Dim _Rut_comprador As String
-        Dim _Numero_transaccion_cliente As Integer = Generator.Next(10000, 99999)
+        'Dim _Numero_transaccion_cliente As Integer = Generator.Next(10000, 99999)
+
+        Dim _Numero_transaccion_cliente As Integer
+
+        ' Intentar extraer el número que termina en _Nudo (sufijo numérico)
+        Try
+            Dim _sufijoNumerico As String = String.Empty
+            Dim _match = System.Text.RegularExpressions.Regex.Match(If(_Nudo, String.Empty), "\d+$")
+            If _match.Success Then
+                _sufijoNumerico = _match.Value
+            End If
+
+            If Not String.IsNullOrEmpty(_sufijoNumerico) Then
+                ' Proteger contra overflow: truncar a un tamaño razonable (ej. últimos 9 dígitos)
+                If _sufijoNumerico.Length > 9 Then
+                    _sufijoNumerico = _sufijoNumerico.Substring(_sufijoNumerico.Length - 9)
+                End If
+
+                Try
+                    _Numero_transaccion_cliente = Convert.ToInt32(_sufijoNumerico)
+                Catch ex As Exception
+                    ' En caso de error en conversión, usar valor aleatorio como respaldo
+                    _Numero_transaccion_cliente = Generator.Next(10000, 99999)
+                End Try
+            Else
+                ' No hay sufijo numérico: generar aleatorio como respaldo
+                _Numero_transaccion_cliente = Generator.Next(10000, 99999)
+            End If
+        Catch ex As Exception
+            ' Cualquier excepción: usar respaldo aleatorio
+            _Numero_transaccion_cliente = Generator.Next(10000, 99999)
+        End Try
+
+
         Dim _Numero_documento_transaccion As String = "XXXXXXXXX"
         Dim _Producto As Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto = Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto.Facturas
         Dim _Banco As Integer = 0

@@ -54,7 +54,7 @@ Public Class Frm_SobreStockXClas
             .Fx_CrearTablaPaso_TablaPasoRotacionXProductos()
 
             .Fx_InsertarDetalleEn_TablaPasoRotacionXProductos(_Tbl_Asc_01_Productos, Chk_SumarStockDisponible.Checked)
-            .Fx_InsertarDetalleEn_TablaPasoRotacionXClasificaciones(_Tbl_Asc_02_Asociaciones, Chk_SumarStockDisponible.Checked)
+            .Fx_InsertarDetalleEn_TablaPasoRotacionXClasificaciones(_Tbl_Asc_02_Asociaciones, _Tbl_Asc_01_Productos, Chk_SumarStockDisponible.Checked)
 
         End With
 
@@ -811,7 +811,7 @@ Public Class Frm_SobreStockXClas
             .PqteHabilitado = _PalletSY
             .Ud1XPqte = _KilosXPallet
             .CantMinFormato = 0
-            .Moneda = String.Empty
+            .Moneda = "US$" 'String.Empty
             .PrecioXUd1 = 0
 
         End With

@@ -105,10 +105,10 @@ Public Class Frm_Consolidacion_Stock_PP
             Consulta_sql = $"
 Update {_Global_BaseBk}Zw_Prod_SobreStock Set 
 PqteComprometido = 0, 
-PqteComprometidoSol = 0 
-Where Codigo = '{_Codigo}' And Empresa = '{_Empresa}' And Eliminado = 0"
+PqteComprometidoSol = 0,
+PqteDevuelto = 0
+Where Codigo = '{_Codigo}' And Empresa = '{_Empresa}' And Eliminado = 0 And Activo = 1"
             _Sql.Ej_consulta_IDU(Consulta_sql)
-
 
             If CBool(_TblBodegasPP.Rows.Count) Then
 

@@ -45,13 +45,12 @@ Public Class Frm_SobreStock_Productos
 
         Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtrar.Text.Trim), "Sbs.Codigo+Sbs.Descripcion Like '%")
 
-        Consulta_sql = "Select Sbs.*,Sbs.PqteHabilitado+Sbs.PqteDevuelto-(Sbs.PqteComprometido+Sbs.PqteComprometidoSol) As 'PqteDisponible'" &
-                       "--,Pst.StComp1,Pst.StComp2,STFI1,STFI2,Ms.STOCNV1,Ms.STOCNV2" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Prod_SobreStock Sbs" & vbCrLf &
-                       "--Left Join " & _Global_BaseBk & "Zw_Prod_Stock Pst On Sbs.Empresa = Pst.Empresa And Sbs.Codigo = Pst.Codigo" & vbCrLf &
-                       "--Left Join MAEST Ms On Ms.EMPRESA = Sbs.Empresa And Ms.KOPR = Sbs.Codigo" & vbCrLf &
-                       "Where Sbs.Empresa = '" & _Empresa & "' And Sbs.Eliminado = 0" & vbCrLf &
-                       "And Sbs.Codigo+Sbs.Descripcion Like '%" & _Cadena & "%'"
+        Consulta_sql = $"
+Select Sbs.*,Sbs.PqteComprometido - Sbs.PqteDevuelto As PqteComprometido2,
+Sbs.PqteHabilitado+Sbs.PqteDevuelto-(Sbs.PqteComprometido+Sbs.PqteComprometidoSol) As 'PqteDisponible'
+From {_Global_BaseBk}Zw_Prod_SobreStock Sbs
+Where Sbs.Empresa = '{_Empresa}' And Sbs.Eliminado = 0
+And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -138,12 +137,12 @@ Public Class Frm_SobreStock_Productos
             .Columns("PqteHabilitado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("PqteComprometido").Width = 70
-            .Columns("PqteComprometido").HeaderText = "Comprom. Venta"
-            .Columns("PqteComprometido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("PqteComprometido").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("PqteComprometido").Visible = True
-            .Columns("PqteComprometido").DisplayIndex = _DisplayIndex
+            .Columns("PqteComprometido2").Width = 70
+            .Columns("PqteComprometido2").HeaderText = "Comprom. Venta"
+            .Columns("PqteComprometido2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PqteComprometido2").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PqteComprometido2").Visible = True
+            .Columns("PqteComprometido2").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("PqteComprometidoSol").Width = 70

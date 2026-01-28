@@ -637,29 +637,59 @@
         Dim _Descripcion = _RowProducto.Item("NOKOPR")
         Dim _SqlQuery As String = String.Empty
 
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros($"{_Global_BaseBk}Zw_Prod_SobreStock", $"Codigo = '{_Codigo}' And Empresa = '{_Empresa}' And Activo = 1")
+
+        If Not CBool(_Reg) Then
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "No existen datos en Zw_Prod_SobreStock"
+            Return _Mensaje
+        End If
+
         Try
 
             Dim _Id_SobreStock As Integer
             Dim _PqteComprometido As Double = 0
             Dim _PqteComprometidoSol As Double = 0
+            Dim _PqteDevuelto As Double = 0
 
             Consulta_sql = $"
-Select Id_SobreStock,Codigo,Empresa,Sucursal,Bodega, Sum(Qty_SobreStock) - (Sum(Qty_SobreStockD) + Sum(Qty_SobreStockE)) As 'PqteComprometido'
-From {_Global_BaseBk}Zw_Docu_Det
-Where (SobreStock = 1) And Codigo = '{_Codigo}' And Empresa = '{_Empresa}' And Sucursal = '{_Sucursal}' And Bodega = '{_Bodega}'
-Group By Id_SobreStock,Codigo,Empresa,Sucursal,Bodega"
+SELECT 
+    Id_SobreStock,Codigo,Empresa,Sucursal,Bodega,
+    SUM(CASE WHEN Tido = 'COV' 
+             THEN Qty_SobreStock - (Qty_SobreStockD + Qty_SobreStockE) 
+             ELSE 0 
+        END) AS PqteComprometido,
+    SUM(CASE WHEN Tido = 'NVV' 
+             THEN Qty_SobreStockDv 
+             ELSE 0 
+        END) AS PqteDevuelto
 
-            'Dim _Row_Prod_Stock As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+FROM {_Global_BaseBk}Zw_Docu_Det
+WHERE SobreStock = 1 
+  AND Codigo = '{_Codigo}' 
+  AND Empresa = '{_Empresa}' 
+  AND Sucursal = '{_Sucursal}' 
+  AND Bodega = '{_Bodega}'
+GROUP BY 
+    Id_SobreStock,
+    Codigo,
+    Empresa,
+    Sucursal,
+    Bodega;
+"
+
             Dim _Tbl_Prod_Stock As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             For Each _Row_Prod_Stock As DataRow In _Tbl_Prod_Stock.Rows
 
                 _Id_SobreStock = _Row_Prod_Stock.Item("Id_SobreStock")
                 _PqteComprometido = _Row_Prod_Stock.Item("PqteComprometido")
+                _PqteDevuelto = _Row_Prod_Stock.Item("PqteDevuelto")
 
                 _SqlQuery += $"
 Update {_Global_BaseBk}Zw_Prod_SobreStock Set
-PqteComprometido = {De_Num_a_Tx_01(_PqteComprometido, False, 5)}
+PqteComprometido = {De_Num_a_Tx_01(_PqteComprometido, False, 5)},
+PqteDevuelto = {De_Num_a_Tx_01(_PqteDevuelto, False, 5)}
 Where Id = {_Id_SobreStock}" & vbCrLf & vbCrLf
 
             Next
