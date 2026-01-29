@@ -2586,12 +2586,20 @@ DEALLOCATE cur;
 
             Dim dtLlegadas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
+            Dim _PeriodoMin As Integer = _Sql.Fx_Trae_Dato($"{TablaCalendarioMesesSemanasClasificacion}", "Min(Periodo)", "")
+            Dim _SemanaMin As Integer = _Sql.Fx_Trae_Dato($"{TablaCalendarioMesesSemanasClasificacion}", "Min(Semana)", "Periodo = '" & _PeriodoMin & "'")
+
             If dtLlegadas IsNot Nothing AndAlso dtLlegadas.Rows.Count > 0 Then
                 For Each dr As DataRow In dtLlegadas.Rows
                     Dim codigo_Nodo_Madre As String = dr("Codigo_Nodo_Madre").ToString().Replace("'", "''")
                     Dim semana As Integer = Convert.ToInt32(dr("Semana"))
                     Dim periodo As Integer = Convert.ToInt32(dr("Periodo"))
                     Dim totalSaldo As Double = Convert.ToDouble(dr("TotalSaldo"))
+
+                    If semana < _SemanaMin Then
+                        semana = _SemanaMin
+                    End If
+
                     Consulta_sql = $"UPDATE {TablaCalendarioMesesSemanasClasificacion} SET LlegadaSemanal = ISNULL(LlegadaSemanal,0) + {totalSaldo.ToString.Replace(",", ".")}, LlegadasMes = ISNULL(LlegadasMes,0) + {totalSaldo.ToString.Replace(",", ".")} WHERE Semana = {semana} AND Periodo = {periodo}"
                     _Sql.Ej_consulta_IDU(Consulta_sql, False)
                 Next
