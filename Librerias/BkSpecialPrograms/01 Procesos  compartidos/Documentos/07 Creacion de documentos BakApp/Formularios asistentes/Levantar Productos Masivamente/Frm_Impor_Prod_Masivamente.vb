@@ -36,6 +36,8 @@ Public Class Frm_Impor_Prod_Masivamente
         Public Property UnTrans As Integer
         Public Property Precio As Double
         Public Property Bodega As String
+        Public Property Calc_RTU As Boolean
+        Public Property UnLevanta As Integer
     End Class
 
     Public Property Ls_ProductoLevantar As List(Of ProductoLevantar)
@@ -199,6 +201,8 @@ Public Class Frm_Impor_Prod_Masivamente
             Dim _UnTrans As Integer
             Dim _Precio As Double
             Dim _Bodega As String = String.Empty
+            Dim _Calc_RTU As Boolean = False
+            Dim _UnLevanta As Integer
 
             Try
 
@@ -228,6 +232,9 @@ Public Class Frm_Impor_Prod_Masivamente
                     _Bodega = NuloPorNro(_Arreglo(i, 5), "")
                 End If
 
+                _Calc_RTU = NuloPorNro(_Arreglo(i, 6), False)
+                _UnLevanta = NuloPorNro(_Arreglo(i, 7), _UnTrans)
+
             Catch ex As Exception
                 _Error = ex.Message
             End Try
@@ -241,7 +248,7 @@ Public Class Frm_Impor_Prod_Masivamente
 
                     _Descripcion = _RowProducto.Item("NOKOPR")
 
-                    _Error = Fx_Agregar_Producto(_RowProducto, _Cantidad, _CantUd1, _CantUd2, _UnTrans, _Precio, _Bodega)
+                    _Error = Fx_Agregar_Producto(_RowProducto, _Cantidad, _CantUd1, _CantUd2, _UnTrans, _Precio, _Bodega, _Calc_RTU, _UnLevanta)
 
                     If String.IsNullOrEmpty(_Error) Then
                         _SinProbremas += 1
@@ -470,7 +477,7 @@ Public Class Frm_Impor_Prod_Masivamente
 
                     _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
 
-                    _Error = Fx_Agregar_Producto(_RowProducto, _Cantidad, _Cantidad, _Cantidad, _UdTrans, _Precio, _Bodega)
+                    _Error = Fx_Agregar_Producto(_RowProducto, _Cantidad, _Cantidad, _Cantidad, _UdTrans, _Precio, _Bodega, False, _UdTrans)
 
                     If String.IsNullOrEmpty(_Error) Then
                         _SinProbremas += 1
@@ -592,13 +599,17 @@ Public Class Frm_Impor_Prod_Masivamente
                                  _Cantidad As Double,
                                  _CantUd1 As Double,
                                  _CantUd2 As Double,
-                                 _UdTrans As Integer,
+                                 _UnTrans As Integer,
                                  _Precio As Double,
-                                 _Bodega As String) As String
+                                 _Bodega As String,
+                                 _Calc_RTU As Boolean,
+                                 _UnLevanta As Integer) As String
 
-        Dim _Error = String.Empty
-        Dim _Codigo = _RowProducto.Item("KOPR")
-        Dim _Descripcion = _RowProducto.Item("NOKOPR")
+        Dim _Error As String = String.Empty
+        Dim _Codigo As String = _RowProducto.Item("KOPR")
+        Dim _Descripcion As String = _RowProducto.Item("NOKOPR")
+        Dim _Nmarca As String = _RowProducto.Item("NMARCA")
+        Dim _Rtu As Double = _RowProducto.Item("RLUD")
 
         Try
 
@@ -627,14 +638,14 @@ Public Class Frm_Impor_Prod_Masivamente
                 Dim _Ecuacion As String
                 Dim _Melt As String = _RowPrecios.Item("MELT")
 
-                If _UdTrans = 1 Then _Ecuacion = _RowPrecios.Item("ECUACION").ToString.Trim
-                If _UdTrans = 2 Then _Ecuacion = _RowPrecios.Item("ECUACIONU2").ToString.Trim
+                If _UnTrans = 1 Then _Ecuacion = _RowPrecios.Item("ECUACION").ToString.Trim
+                If _UnTrans = 2 Then _Ecuacion = _RowPrecios.Item("ECUACIONU2").ToString.Trim
 
-                If _UdTrans <> 1 And _UdTrans <> 2 Then
+                If _UnTrans <> 1 And _UnTrans <> 2 Then
                     Throw New System.Exception("La Unidad de transacción debe ser 1 o 2")
                 End If
 
-                _Precio = Fx_Funcion_Ecuacion_Random(Me, "", _Ecuacion, _Codigo, _UdTrans, _RowPrecios, 0, 0, 0)
+                _Precio = Fx_Funcion_Ecuacion_Random(Me, "", _Ecuacion, _Codigo, _UnTrans, _RowPrecios, 0, 0, 0)
 
                 If _NetoBruto = "B" And _Melt = "N" Then
 
@@ -656,38 +667,122 @@ Public Class Frm_Impor_Prod_Masivamente
 
             End If
 
+            If _Calc_RTU Then
+
+                If _Nmarca = "¡" Then
+
+                    'RTU VARIABLE
+                    Dim _ValidarApiWMSBosOne As Boolean = CBool(_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "Valor",
+                                                          "Tabla = 'BODONE_CONF' And CodigoTabla = 'Habpesovariable'", True, False, 0))
+
+                    If _ValidarApiWMSBosOne Then
+
+                        Dim _Mensaje As New LsValiciones.Mensajes
+
+                        _Mensaje = Fx_Rtu_WMSBodOne(Mod_Empresa, _Codsucursal, _Bodega, _Codigo)
+
+                        If _Mensaje.EsCorrecto Then
+                            _Rtu = De_Txt_a_Num_01(_Mensaje.Resultado, 5)
+                        End If
+
+                    End If
+
+                End If
+
+                If _UnLevanta <> _UnTrans Then
+                    If _UnLevanta = 1 Then
+                        _CantUd2 = Math.Round(_CantUd1 / _Rtu, 0)
+                    Else
+                        _CantUd1 = Math.Round(_CantUd2 * _Rtu, 5)
+                    End If
+                Else
+                    If _UnTrans = 1 Then
+                        _CantUd2 = Math.Round(_CantUd1 / _Rtu, 0)
+                    ElseIf _UnTrans = 2 Then
+                        _CantUd1 = Math.Round(_CantUd2 * _Rtu, 5)
+                    End If
+                End If
+
+            End If
+
             Dim nuevoProducto As New ProductoLevantar With {
                 .Codigo = _Codigo,
                 .Descripcion = _Descripcion,
                 .Cantidad = _Cantidad,
                 .CantUd1 = _CantUd1,
                 .CantUd2 = _CantUd2,
-                .UnTrans = _UdTrans,
+                .UnTrans = _UnTrans,
                 .Precio = _Precio,
-                .Bodega = _Bodega
+                .Bodega = _Bodega,
+                .Calc_RTU = _Calc_RTU
             }
 
             Ls_ProductoLevantar.Add(nuevoProducto)
 
-            Dim NewFila As DataRow
-            NewFila = _Tbl_Productos_Levantar.NewRow
-            With NewFila
+            'Dim NewFila As DataRow
+            'NewFila = _Tbl_Productos_Levantar.NewRow
+            'With NewFila
 
-                .Item("Codigo") = _Codigo
-                .Item("Descripcion") = _Descripcion
-                .Item("Cantidad") = _Cantidad
-                .Item("UdTrans") = _UdTrans
-                .Item("Precio") = _Precio
-                .Item("Bodega") = _Bodega
+            '    .Item("Codigo") = _Codigo
+            '    .Item("Descripcion") = _Descripcion
+            '    .Item("Cantidad") = _Cantidad
+            '    .Item("UdTrans") = _UdTrans
+            '    .Item("Precio") = _Precio
+            '    .Item("Bodega") = _Bodega
 
-                _Tbl_Productos_Levantar.Rows.Add(NewFila)
+            '    _Tbl_Productos_Levantar.Rows.Add(NewFila)
 
-            End With
+            'End With
         Catch ex As Exception
             _Error = ex.Message
         End Try
 
         Return _Error
+
+    End Function
+
+    Function Fx_Rtu_WMSBodOne(_Empresa As String,
+                              _Sucursal As String,
+                              _Bodega As String,
+                              _Codigo As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+
+            Dim _BodegaRevWMS As String = _Bodega
+
+            '_NecesitaPermisoCambiarRTU = True
+            'Chk_RtuVariable.Enabled = False
+            If RutEmpresa = "77988832-0" Then
+                Try
+                    Dim EmpSucBod As String = _Empresa & ";" & _Empresa & ";" & _Bodega
+
+                    Consulta_sql = "Select Tabla, DescripcionTabla, CodigoTabla, NombreTabla" & vbCrLf &
+                                   "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                                   "Where Tabla = 'SEA2MEATGARDEN' And NombreTabla = '" & EmpSucBod & "'"
+                    Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    If Not IsNothing(_Row) Then
+                        Dim _ESB = _Row.Item("CodigoTabla").ToString.Split(";"c)
+                        _BodegaRevWMS = _ESB(2).Trim
+                    End If
+                Catch ex As Exception
+                    _BodegaRevWMS = _Bodega
+                End Try
+            End If
+
+            ' Llama a la función para encontrar el producto en las bodegas
+            Dim _RtuBodegas As LsValiciones.Mensajes = Fx_Consultar_RTU_xBodegas(_BodegaRevWMS, _Codigo)
+
+            _Mensaje = _RtuBodegas
+
+        Catch ex As Exception
+
+        End Try
+
+        Return _Mensaje
 
     End Function
 
@@ -722,9 +817,26 @@ Public Class Frm_Impor_Prod_Masivamente
     Private Sub Btn_Archivo_Ayuda_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Archivo_Ayuda_Excel.Click
 
         Dim _Nom_Excel As String
+        Dim _Msj As String
+
+        _Msj = $"Código: Identificador del producto.
+Cantidad Ud1: Cantidad correspondiente a la primera unidad.
+Cantidad Ud2: Cantidad correspondiente a la segunda unidad.
+Unidad de la transacción: Unidad que se mostrará en el documento. Solo admite los valores 1 o 2.
+Precio: Precio del producto.
+Bodega: Bodega asociada a la línea.
+Calcula RTU: Indica si se debe calcular la RTU en función de la unidad levantada.
+• 	0: No calcula RTU
+• 	1: Sí calcula RTU
+Unidad levantada: Unidad que se utilizará para el levantamiento de esta planilla.
+Ejemplo: Si la unidad de la transacción es 1, pero la unidad levantada es 2, el sistema tomará la Unidad 2 como referencia para calcular la Unidad 1.
+"
+
+        MessageBoxEx.Show(Me, _Msj, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Consulta_sql = "Select 'Caracter [13]' As 'Código','Númerico' As 'Cantidad Ud1','Númerico' As 'Cantidad Ud2'," &
-                       "'1 o 2' As 'Unidad transacción','Númerico' As 'Precio','Caracter [3]' As 'Bodega'"
+                       "'1 o 2' As 'Unidad transacción','Númerico' As 'Precio','Caracter [3]' As 'Bodega'," &
+                       "'0 o 1 (0 = No, 1 = Si)' As [Calcula RTU],'1 o 2' As 'Unidad levantada'"
 
         _Nom_Excel = "Ejemplo levantamiento productos masivamente"
 

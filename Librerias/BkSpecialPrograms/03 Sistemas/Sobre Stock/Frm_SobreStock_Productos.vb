@@ -36,6 +36,7 @@ Public Class Frm_SobreStock_Productos
         'End If
 
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
     End Sub
 

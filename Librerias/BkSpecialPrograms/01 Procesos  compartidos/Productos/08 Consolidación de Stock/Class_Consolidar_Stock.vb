@@ -645,6 +645,30 @@
             Return _Mensaje
         End If
 
+        Consulta_sql = $"
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1
+            FROM {_Global_BaseBk}Zw_Docu_Det
+            WHERE SobreStock = 1
+              AND Empresa = '{_Empresa}'
+              AND Sucursal = '{_Sucursal}'
+              AND Bodega = '{_Bodega}'
+        ) 
+        THEN CAST(1 AS bit)
+        ELSE CAST(0 AS bit)
+    END AS HaySobreStock;
+"
+
+        Dim _Row_HaySobreStock As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not CBool(_Row_HaySobreStock.Item("HaySobreStock")) Then
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "No existen documentos con sobre stock"
+            Return _Mensaje
+        End If
+
         Try
 
             Dim _Id_SobreStock As Integer

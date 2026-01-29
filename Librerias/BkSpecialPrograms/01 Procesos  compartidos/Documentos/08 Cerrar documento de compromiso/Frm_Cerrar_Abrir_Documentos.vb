@@ -374,6 +374,8 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
         Dim _Idmaeedo = _Row_Maeedo.Item("IDMAEEDO")
         Dim _Tbl = _Tbl_Maeddo.Select("IDMAEEDO = " & _Idmaeedo)
+        Dim _SobreStock As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "SobreStock", "Idmaeedo = " & _Idmaeedo)
+        Dim _CodPermiso As String = "Doc00011"
 
         If Not Fx_Revisar_Documento_Cerrado(_Idmaeedo, False) Then
             Return
@@ -385,7 +387,11 @@ Public Class Frm_Cerrar_Abrir_Documentos
             Return
         End If
 
-        If Not Fx_TienePermiso_EnDoc(Me, "Doc00011", _Idmaeedo) Then
+        If _SobreStock Then
+            _CodPermiso = "Doc00168"
+        End If
+
+        If Not Fx_TienePermiso_EnDoc(Me, _CodPermiso, _Idmaeedo) Then
             Return
         End If
 

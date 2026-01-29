@@ -2204,6 +2204,8 @@ Public Class Frm_Ver_Documento
 
     Private Sub Btn_Observaciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Observaciones.Click
 
+        Dim _SobreStock As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "SobreStock", "Idmaeedo = " & _Idmaeedo, True, False)
+
         Dim Fm As New Frm_Ver_Documento_Observaciones(_TblEncabezado.Rows(0), _TblObservaciones.Rows(0),
                                                       (_Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL Or
                                                        _Tipo_Apertura = Enum_Tipo_Apertura.Desde_Arcvhivador_XML))
@@ -2211,6 +2213,8 @@ Public Class Frm_Ver_Documento
         Fm.Pro_Class_Referencias_DTE = _Class_Referencias_DTE
         Fm.Btn_Editar_Fecha.Visible = (_Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL)
         Fm.Btn_Editar_Observaciones.Visible = (_Tipo_Apertura = Enum_Tipo_Apertura.Desde_Random_SQL)
+        Fm.PedirPermisoParaCambiaFechaDespachoRetiro = _SobreStock
+        Fm.SobreStock = _SobreStock
         Fm.ShowDialog(Me)
 
         If Fm.Pro_Grabar Then

@@ -16769,6 +16769,23 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
+                        If _Tido = "COV" And SobreStock Then
+
+                            Dim _FechaRecepcion As Date = Now.Date
+
+                            Dim _Aceptar As Boolean
+
+                            _Aceptar = InputBox_Bk_Fecha(Me, "Ingrese la fecha de despacho", "Fecha de despacho", _FechaRecepcion, Now.Date, True)
+
+                            If Not _Aceptar Then
+                                Return
+                            End If
+
+                            _TblEncabezado.Rows(0).Item("FechaRecepcion") = _FechaRecepcion
+                            Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
+
+                        End If
+
                     End If
 
                     Dim _Grabar_Obs As Boolean
@@ -23862,6 +23879,62 @@ Public Class Frm_Formulario_Documento
             _Tiene_X_05_Fecha_Despacho = True
 
         End If
+
+    End Function
+
+    Function Fx_Validar_Fecha_Despacho2() As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Dim _Fun_Auto_Fecha_Des = NuloPorNro(_TblEncabezado.Rows(0).Item("Fun_Auto_Fecha_Des"), "")
+            Dim _FechaRecepcion As Date = _TblEncabezado.Rows(0).Item("FechaRecepcion")
+
+            Dim _Dias_Max_Fecha_Despacho = _Global_Row_Configuracion_Estacion.Item("Dias_Max_Fecha_Despacho")
+            Dim _Dias_Max_Fecha_Despacho_Sab = _Global_Row_Configuracion_Estacion.Item("Dias_Max_Fecha_Despacho_Sab")
+            Dim _Dias_Max_Fecha_Despacho_Dom = _Global_Row_Configuracion_Estacion.Item("Dias_Max_Fecha_Despacho_Dom")
+
+            Dim _Fecha_Server As Date = FechaDelServidor()
+            Dim _Fecha_Max_Despacho As Date = DateAdd(DateInterval.Day, _Dias_Max_Fecha_Despacho, _Fecha_Server)
+
+            Dim _Dias_Habiles = Fx_Cuenta_Dias(_Fecha_Server, _FechaRecepcion, Opcion_Dias.Habiles)
+            Dim _Dias_Sabado = Fx_Cuenta_Dias(_Fecha_Server, _FechaRecepcion, Opcion_Dias.Sabado)
+            Dim _Dias_Domingo = Fx_Cuenta_Dias(_Fecha_Server, _FechaRecepcion, Opcion_Dias.Domingo)
+
+            Dim _Total_Dias As Integer = _Dias_Habiles - 1
+
+            _Fecha_Max_Despacho = DateAdd(DateInterval.Day, _Total_Dias, _Fecha_Server)
+
+            If _Dias_Max_Fecha_Despacho_Sab Then _Total_Dias += _Dias_Sabado
+            If _Dias_Max_Fecha_Despacho_Dom Then _Total_Dias += _Dias_Domingo
+
+            _TblEncabezado.Rows(0).Item("FechaMaxRecepcion") = FormatDateTime(_Fecha_Max_Despacho, DateFormat.ShortDate)
+
+            If _Total_Dias > _Dias_Max_Fecha_Despacho Then
+
+                _Mensaje.CodPermiso = "Bkp00057"
+                _Mensaje.Detalle = "Fecha de despacho: " & FormatDateTime(_FechaRecepcion, DateFormat.ShortDate) & vbCrLf &
+                                   "Fecha máxima permitida: " & FormatDateTime(_Fecha_Max_Despacho, DateFormat.ShortDate)
+                Throw New ArgumentNullException("La fecha de despacho excede el máximo permitido de " & _Dias_Max_Fecha_Despacho & " días." & vbCrLf &
+                                   "Fecha de despacho: " & FormatDateTime(_FechaRecepcion, DateFormat.ShortDate) & vbCrLf &
+                                   "Fecha máxima permitida: " & FormatDateTime(_Fecha_Max_Despacho, DateFormat.ShortDate))
+
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Fecha de despacho dentro de los parámetros permitidos."
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.CodPermiso = String.Empty
+            _Mensaje.Detalle = String.Empty
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
 
     End Function
 

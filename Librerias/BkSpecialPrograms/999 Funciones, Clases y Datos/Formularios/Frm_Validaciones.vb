@@ -241,6 +241,7 @@ Namespace LsValiciones
         Public Property ErrorDeConexionSQL As Boolean
         Public Property HuboOtroError As Boolean
         Public Property ConsultaSQLEjecutada As String
+        Public Property CodPermiso As String
 
     End Class
 

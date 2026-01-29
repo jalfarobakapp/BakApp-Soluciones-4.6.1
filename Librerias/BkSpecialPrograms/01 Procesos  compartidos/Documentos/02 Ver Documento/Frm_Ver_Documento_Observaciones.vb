@@ -31,6 +31,9 @@ Public Class Frm_Ver_Documento_Observaciones
         End Set
     End Property
 
+    Public Property PedirPermisoParaCambiaFechaDespachoRetiro As Boolean
+    Public Property SobreStock As Boolean
+
     Public Sub New(Row_Maeedo As DataRow, Row_Maeedoob As DataRow, Doc_Random As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -93,10 +96,14 @@ Public Class Frm_Ver_Documento_Observaciones
 
         Me.Text = "Observaciones " & _Tido & "-" & _Nudo
 
-        If _Tido = "NVV" Then
+        If _Tido = "NVV" Or PedirPermisoParaCambiaFechaDespachoRetiro Then
             Btn_Editar_Fecha.Visible = True
         Else
             Btn_Editar_Fecha.Visible = False
+        End If
+
+        If _Tido = "COV" Then
+            Btn_Referencias_DTE.Visible = False
         End If
 
         Btn_Editar_Fecha.Enabled = False
@@ -104,6 +111,8 @@ Public Class Frm_Ver_Documento_Observaciones
         Dim _Esdo As String = _Row_Maeedo.Item("ESDO")
 
         Btn_Editar_Observaciones.Enabled = Not (_Esdo = "N")
+
+        Me.Refresh()
 
     End Sub
 
@@ -218,6 +227,13 @@ Public Class Frm_Ver_Documento_Observaciones
             End If
 
             Btn_Editar_Fecha.Enabled = True
+
+            If _Esdo Then
+                If PedirPermisoParaCambiaFechaDespachoRetiro Then
+                    _Esdo = False
+                End If
+            End If
+
             Dtp_Fecha_Entrega_Recepcion.Enabled = _Esdo
 
             ToastNotification.Show(Me, "AHORA ES POSIBLE EDITAR LAS OBSERVACIONES", My.Resources.ok_button,
@@ -232,7 +248,23 @@ Public Class Frm_Ver_Documento_Observaciones
     End Sub
 
     Private Sub Btn_Editar_Fecha_Click(sender As Object, e As EventArgs) Handles Btn_Editar_Fecha.Click
-        Dtp_Fecha_Entrega_Recepcion.Enabled = Fx_Tiene_Permiso(Me, "Bkp00057")
+
+        Dim _Idmaeedo As Integer = _Row_Maeedo.Item("IDMAEEDO")
+        Dim _EditarFecha As Boolean = False
+
+        _EditarFecha = Fx_Tiene_Permiso(Me, "Bkp00057",,,,,,,,,,,,,,,,, _Idmaeedo)
+
+        Dtp_Fecha_Entrega_Recepcion.Enabled = _EditarFecha
+        Btn_Editar_Fecha.Enabled = Not _EditarFecha
+
+        If _EditarFecha Then
+
+            ToastNotification.Show(Me, "AHORA ES POSIBLE EDITAR LA FECHA", My.Resources.ok_button,
+                       2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+            Dtp_Fecha_Entrega_Recepcion.Focus()
+
+        End If
+
     End Sub
 
     Private Sub Btn_Referencias_DTE_Click(sender As Object, e As EventArgs) Handles Btn_Referencias_DTE.Click
@@ -252,7 +284,7 @@ Public Class Frm_Ver_Documento_Observaciones
 
     Private Sub Btn_Grabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar.Click
 
-        Dim _Feer As String = Format(Dtp_Fecha_Entrega_Recepcion.Value, "yyyyMMdd")
+        Dim _Feer As Date = _Row_Maeedo.Item("FEER") 'Format(Dtp_Fecha_Entrega_Recepcion.Value, "yyyyMMdd")
         Dim _Esdo As Boolean = String.IsNullOrEmpty(Trim(_Row_Maeedo.Item("ESDO")))
 
         Dim _Idmaeedo As Integer = _Row_Maeedo.Item("IDMAEEDO")
@@ -262,12 +294,40 @@ Public Class Frm_Ver_Documento_Observaciones
         Dim _Feemdo As Date = FormatDateTime(_Row_Maeedo.Item("FEEMDO"), DateFormat.ShortDate)
         Dim _Fecha_Recepcion As Date = FormatDateTime(Dtp_Fecha_Entrega_Recepcion.Value, DateFormat.ShortDate)
 
-
-        If _Fecha_Recepcion < _Feemdo Then
+        If _Fecha_Recepcion.Date < _Feemdo.Date Then
             MessageBoxEx.Show(Me, "La fecha de despacho/recepción no puede ser menor que la fecha de emisión del documento",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Dtp_Fecha_Entrega_Recepcion.Value = _Row_Maeedo.Item("FEER")
             Return
+        End If
+
+        If PedirPermisoParaCambiaFechaDespachoRetiro Then
+
+            ' Comprobación: ¿_Feer (string "yyyyMMdd") es distinta a _Fecha_Recepcion (Date)?
+            Dim _FeerDate As Date
+            Dim _FechaCambiada As Boolean = False
+
+            If Date.TryParseExact(_Feer, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, _FeerDate) Then
+                If _FeerDate <> _Fecha_Recepcion Then
+                    _FechaCambiada = True
+                End If
+            Else
+                If _Feer.Date <> _Fecha_Recepcion.Date Then
+                    _FechaCambiada = True
+                End If
+            End If
+
+            If _FechaCambiada Then
+
+                If _Fecha_Recepcion.Date < Now.Date Then
+                    MessageBoxEx.Show(Me, "La fecha de despacho/recepción no puede ser menor a la fecha de hoy",
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Dtp_Fecha_Entrega_Recepcion.Value = _Row_Maeedo.Item("FEER")
+                    Return
+                End If
+
+            End If
+
         End If
 
         If _Esdo Then
@@ -275,15 +335,13 @@ Public Class Frm_Ver_Documento_Observaciones
             Dim _Consulta = MessageBoxEx.Show(Me, "¿Desea cambiar la fecha de recepción en las filas igualmente?", "Grabar",
                                  MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
 
-
             If _Consulta = Windows.Forms.DialogResult.Yes Then
 
                 _Sql_Cambiar_Feerli = "Update MAEDDO Set FEERLI = '" & _Feer & "' Where IDMAEEDO = " & _Idmaeedo & vbCrLf
 
             ElseIf _Consulta = Windows.Forms.DialogResult.No Then
 
-                MessageBoxEx.Show(Me, "La fecha solo se cambiara en el documento", "Acción",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                MessageBoxEx.Show(Me, "La fecha solo se cambiara en el documento", "Acción", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
             Else
                 Return
@@ -291,15 +349,23 @@ Public Class Frm_Ver_Documento_Observaciones
 
         End If
 
+        'Consulta_sql = "Update MAEEDO Set FEER = '" & Format(_Fecha_Recepcion, "yyyyMMdd") & "'" & Space(1) &
+        '               "Where IDMAEEDO = " & _Idmaeedo & vbCrLf &
+        '               _Sql_Cambiar_Feerli & vbCrLf &
+        '               "Update MAEEDOOB Set" & Space(1) &
+        '               "OBDO = '" & Trim(Txt_Observaciones.Text) &
+        '               "',CPDO = '" & Trim(Txt_Forma_de_pago.Text) &
+        '               "',OCDO = '" & Txt_Orden_de_compra.Text & "'" & vbCrLf &
+        '               "Where IDMAEEDO = " & _Idmaeedo
 
-        Consulta_sql = "Update MAEEDO Set FEER = '" & _Feer & "'" & Space(1) &
-                       "Where IDMAEEDO = " & _Idmaeedo & vbCrLf &
-                       _Sql_Cambiar_Feerli & vbCrLf &
-                       "Update MAEEDOOB Set" & Space(1) &
-                       "OBDO = '" & Trim(Txt_Observaciones.Text) &
-                       "',CPDO = '" & Trim(Txt_Forma_de_pago.Text) &
-                       "',OCDO = '" & Txt_Orden_de_compra.Text & "'" & vbCrLf &
-                       "Where IDMAEEDO = " & _Idmaeedo
+        Consulta_sql = $"
+Update MAEEDO Set FEER = '{Format(_Fecha_Recepcion, "yyyyMMdd")}' Where IDMAEEDO = {_Idmaeedo}
+{_Sql_Cambiar_Feerli}
+Update MAEEDOOB Set 
+    OBDO = '{Txt_Observaciones.Text.Trim}'
+   ,CPDO = '{Txt_Forma_de_pago.Text.Trim}'
+   ,OCDO = '{Txt_Orden_de_compra.Text.Trim}
+Where IDMAEEDO = {_Idmaeedo}"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
 

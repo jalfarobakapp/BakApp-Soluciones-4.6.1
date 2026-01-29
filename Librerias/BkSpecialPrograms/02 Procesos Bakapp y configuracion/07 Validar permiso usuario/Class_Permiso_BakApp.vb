@@ -666,6 +666,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00165", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00166", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00167", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00168", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -2943,6 +2944,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00167"
                 _DescripcionPermiso = "EDITAR CONFIGURACION EN IMPRESION MASIVA DE DOCUMENTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00168"
+                _DescripcionPermiso = "CIERRE DE DOCUMENTOS DE COMPROMISO (SOBRE STOCK)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
         End Select
