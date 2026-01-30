@@ -3695,6 +3695,7 @@ Public Class Frm_Formulario_Documento
         Dim _Crear_CPr = _Fila.Cells("Crear_CPr").Value
         Dim _Es_Padre_Oferta As Boolean = _Fila.Cells("Es_Padre_Oferta").Value
         Dim _Aplica_Oferta As Boolean = _Fila.Cells("Aplica_Oferta").Value
+        Dim _SobreStock As Boolean = _Fila.Cells("SobreStock").Value
 
         If _Tipo_Documento = csGlobales.Enum_Tipo_Documento.Venta Or
            _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Traslado_Interno Or
@@ -3796,6 +3797,22 @@ Public Class Frm_Formulario_Documento
 
                                 Sb_Revisar_Stock_Fila(_Fila, _Stock_Suficiente, _Stock, _Stock_Disponible, False)
 
+                                If _SobreStock Then
+
+                                    Dim _Id = _Fila.Cells("Id").Value
+                                    Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = _Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = _Id)
+
+                                    With _Zw_Prod_SobreStock
+                                        .PqteDisponible = .PqteStock - .PqteComprometido - .PqteComprometidoSol
+                                        If .Cantidad > .PqteDisponible Then
+                                            _Fila.Cells("Cantidad").Style.ForeColor = Rojo
+                                            _Fila.Cells("UdTrans").Style.ForeColor = Rojo
+                                        End If
+                                        _Cantidad = 0
+                                    End With
+
+                                End If
+
                                 If _Stock <> _Stock_Disponible Then
                                     _Stock = _Stock_Disponible
                                     _Usar_Stock_Disponible = True
@@ -3812,11 +3829,6 @@ Public Class Frm_Formulario_Documento
                                 If _Stock - _Cantidad < 0 Or _Stock <= 0 Then
 
                                     If Not _ValVtaStockInf Then
-
-                                        'If _Usar_Stock_Disponible Then
-                                        '    '   MessageBoxEx.Show(Me, "Está sacando más cantidad de lo disponible en bodega según programación." & Environment.NewLine & _
-                                        '    '                    "Stock disponible en " & _UdTrans & " " & FormatNumber(_Stock_Disponible, 2), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                        'End If
 
                                         .Cells("StockBodega").Value = _Stock
 
@@ -10311,8 +10323,19 @@ Public Class Frm_Formulario_Documento
             'Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = _Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = _IdIndex)
             'Dim _CantidadPallet As Double = _Zw_Prod_SobreStock.Cantidad
 
-            _Zw_Prod_SobreStock.PqteDisponible = _Zw_Prod_SobreStock.PqteHabilitado - _Zw_Prod_SobreStock.PqteComprometido - _Zw_Prod_SobreStock.PqteComprometidoSol
+            With _Zw_Prod_SobreStock
 
+                Consulta_sql = "Select PqteStock,PqteComprometido,PqteComprometidoSol" & vbCrLf &
+                               "From " & _Global_BaseBk & "Zw_Prod_SobreStock Where Id = " & .Id
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                .PqteStock = _Row.Item("PqteStock")
+                .PqteComprometido = _Row.Item("PqteComprometido")
+                .PqteComprometidoSol = _Row.Item("PqteComprometidoSol")
+
+                .PqteDisponible = .PqteStock - .PqteComprometido - .PqteComprometidoSol
+
+            End With
 
             Dim Fm As New Frm_Cantidades_PreVenta
             Fm.Codigo = _Zw_Prod_SobreStock.Codigo
@@ -16771,7 +16794,7 @@ Public Class Frm_Formulario_Documento
 
                         If _Tido = "COV" And SobreStock Then
 
-                            Dim _FechaRecepcion As Date = Now.Date
+                            Dim _FechaRecepcion As Date = _TblEncabezado.Rows(0).Item("FechaRecepcion")
 
                             Dim _Aceptar As Boolean
 
@@ -17147,10 +17170,15 @@ Public Class Frm_Formulario_Documento
 
                 ' GRABAR PERMISOS AUTORIZADOS PRECENCIALMENTE EN TABAL REMOTAS
 
+                If Not _Mensaje.EsCorrecto Then
+                    Sb_Marcar_Grilla()
+                End If
+
                 If _Mensaje.EsCorrecto Then ' Convert.ToBoolean(_Idmaeedo) Then
 
                     Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
                     Dim _Row_NeDocEnc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
 
                     ' Graba archivos adjuntos
 
@@ -17159,9 +17187,9 @@ Public Class Frm_Formulario_Documento
                         ' Traspasamos los archivos adjuntos desde el documento Casi_Bakapp hacia el documento definitivo en Random
 
                         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Archivos (Idmaeedo, Nombre_Archivo, Archivo, Fecha, CodFuncionario)" & vbCrLf &
-                                       "Select " & _Idmaeedo & ",Nombre_Archivo,Archivo,Fecha,CodFuncionario " & vbCrLf &
-                                       "From " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1" & vbCrLf &
-                                       "Delete " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1"
+                                   "Select " & _Idmaeedo & ",Nombre_Archivo,Archivo,Fecha,CodFuncionario " & vbCrLf &
+                                   "From " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1" & vbCrLf &
+                                   "Delete " & _Global_BaseBk & "Zw_Casi_DocArc Where NombreEquipo = '" & _NombreEquipo & "' And En_Construccion = 1"
                         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
                     End If
@@ -17173,8 +17201,8 @@ Public Class Frm_Formulario_Documento
                             If Not IsNothing(_Cl_Pallet) AndAlso _Cl_Pallet.Pallet Then
                                 Dim _Horagrab As String = Hora_Grab_fx(False)
                                 Consulta_sql = "Insert Into MEVENTO (ARCHIRVE,IDRVE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC,HORAGRAB) Values " &
-                                               "('MAEEDO'," & _Idmaeedo & ",'" & _Row_NeDocEnc.Item("KOFUDO") & "'" &
-                                               ",Getdate(),'PALLETS','01'," & _Cl_Pallet.Cantidad & "," & _Horagrab & ")"
+                                           "('MAEEDO'," & _Idmaeedo & ",'" & _Row_NeDocEnc.Item("KOFUDO") & "'" &
+                                           ",Getdate(),'PALLETS','01'," & _Cl_Pallet.Cantidad & "," & _Horagrab & ")"
                                 _Sql.Ej_consulta_IDU(Consulta_sql)
                             End If
                         End If
@@ -17208,7 +17236,7 @@ Public Class Frm_Formulario_Documento
                             End If
 
                             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Chilexpress_Env Set IdDespacho = " & _Cl_Despacho.Id_Despacho_Padre & vbCrLf &
-                                           "Where IdDespacho = " & _Id_Despacho
+                                       "Where IdDespacho = " & _Id_Despacho
                             _Sql.Fx_Ejecutar_Consulta(Consulta_sql)
                         End If
 
@@ -17257,7 +17285,7 @@ Public Class Frm_Formulario_Documento
                                 Dim _Tido = _Row_NeDocEnc.Item("TIDO")
                                 Dim _Nudo = _Row_NeDocEnc.Item("NUDO")
                                 MessageBoxEx.Show(Me, _Tido & " - " & _Nudo & vbCrLf & vbCrLf &
-                                                  "Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                              "Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                             End If
 
@@ -17271,27 +17299,27 @@ Public Class Frm_Formulario_Documento
                         If _Post_Venta Or _Editar_documento Then
                             Dim _CAE_Doc As New Clas_Cerrar_Anular_Eliminar_Documento_Origen
                             If (_Tido = "COV" Or _Tido = "OCC") Or
-                                    (_Editar_documento And _Tido = "NVV") Or
-                                    (_Editar_documento And _Tido = "COV") Then
+                                (_Editar_documento And _Tido = "NVV") Or
+                                (_Editar_documento And _Tido = "COV") Then
 
                                 If _Editar_documento And _Tido = "COV" Then
 
                                     _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
-                                                                            Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar,
-                                                                            _TblDocumentos_Dori,
-                                                                            _Idmaeedo)
+                                                                        Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar,
+                                                                        _TblDocumentos_Dori,
+                                                                        _Idmaeedo)
                                 Else
 
                                     _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
-                                                                            Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Anular,
-                                                                            _TblDocumentos_Dori,
-                                                                            _Idmaeedo)
+                                                                        Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Anular,
+                                                                        _TblDocumentos_Dori,
+                                                                        _Idmaeedo)
                                 End If
                             Else
                                 _CAE_Doc.Sb_Cerrar_Documentos_De_Origen(Me,
-                                                                            Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Cerrar,
-                                                                            _TblDocumentos_Dori,
-                                                                            _Idmaeedo)
+                                                                        Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Cerrar,
+                                                                        _TblDocumentos_Dori,
+                                                                        _Idmaeedo)
                             End If
 
                             If Not IsNothing(_TblDocumentos_Dori) Then
@@ -17299,7 +17327,7 @@ Public Class Frm_Formulario_Documento
                                 For Each _Fila As DataRow In _TblDocumentos_Dori.Rows
 
                                     Dim _Id_Despacho = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Despachos_Doc", "Id_Despacho",
-                                                                              "Archidrst = 'MAEEDO' And Idrst = " & _Fila.Item("IDMAEEDO"), True)
+                                                                          "Archidrst = 'MAEEDO' And Idrst = " & _Fila.Item("IDMAEEDO"), True)
 
                                     Dim _Cl_Despacho As New Clas_Despacho(False)
                                     _Cl_Despacho.Id_Despacho = _Id_Despacho
@@ -17346,7 +17374,7 @@ Public Class Frm_Formulario_Documento
                                     _TidoNudoSubTido = _Tido & " - " & _Nudo & " (" & _SubTido & ")"
                                 End If
                                 MessageBoxEx.Show(Me, _TidoNudoSubTido & vbCrLf & vbCrLf &
-                                                  "Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                              "Grabada correctamente", "Grabar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
                             End If
 
                             Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito

@@ -47,8 +47,8 @@ Public Class Frm_SobreStock_Productos
         Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtrar.Text.Trim), "Sbs.Codigo+Sbs.Descripcion Like '%")
 
         Consulta_sql = $"
-Select Sbs.*,Sbs.PqteComprometido - Sbs.PqteDevuelto As PqteComprometido2,
-Sbs.PqteHabilitado+Sbs.PqteDevuelto-(Sbs.PqteComprometido+Sbs.PqteComprometidoSol) As 'PqteDisponible'
+Select Sbs.*,
+Sbs.PqteStock-Sbs.PqteComprometido-Sbs.PqteComprometidoSol As 'PqteDisponible'
 From {_Global_BaseBk}Zw_Prod_SobreStock Sbs
 Where Sbs.Empresa = '{_Empresa}' And Sbs.Eliminado = 0
 And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
@@ -130,20 +130,20 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
             .Columns("CantMinFormato").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("PqteHabilitado").Width = 70
-            .Columns("PqteHabilitado").HeaderText = "Habilitado"
-            .Columns("PqteHabilitado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("PqteHabilitado").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("PqteHabilitado").Visible = True
-            .Columns("PqteHabilitado").DisplayIndex = _DisplayIndex
+            .Columns("PqteStock").Width = 70
+            .Columns("PqteStock").HeaderText = "Stock"
+            .Columns("PqteStock").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PqteStock").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PqteStock").Visible = True
+            .Columns("PqteStock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("PqteComprometido2").Width = 70
-            .Columns("PqteComprometido2").HeaderText = "Comprom. Venta"
-            .Columns("PqteComprometido2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("PqteComprometido2").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("PqteComprometido2").Visible = True
-            .Columns("PqteComprometido2").DisplayIndex = _DisplayIndex
+            .Columns("PqteComprometido").Width = 70
+            .Columns("PqteComprometido").HeaderText = "Comprom. Venta"
+            .Columns("PqteComprometido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PqteComprometido").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PqteComprometido").Visible = True
+            .Columns("PqteComprometido").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("PqteComprometidoSol").Width = 70
@@ -313,9 +313,9 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
                 .FechaVigencia = _Fila.Cells("FechaVigencia").Value
                 .FormatoPqte = _Fila.Cells("FormatoPqte").Value
                 .PqteHabilitado = _Fila.Cells("PqteHabilitado").Value
+                .PqteStock = _Fila.Cells("PqteStock").Value
                 .PqteComprometido = _Fila.Cells("PqteComprometido").Value
                 .PqteComprometidoSol = _Fila.Cells("PqteComprometidoSol").Value
-                .PqteDevuelto = _Fila.Cells("PqteDevuelto").Value
                 .Ud1XPqte = _Fila.Cells("Ud1XPqte").Value
                 .CantMinFormato = _Fila.Cells("CantMinFormato").Value
                 .Moneda = _Fila.Cells("Moneda").Value
@@ -400,9 +400,9 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
             .FechaVigencia = _Fila.Cells("FechaVigencia").Value
             .FormatoPqte = _Fila.Cells("FormatoPqte").Value
             .PqteHabilitado = _Fila.Cells("PqteHabilitado").Value
+            .PqteStock = _Fila.Cells("PqteStock").Value
             .PqteComprometido = _Fila.Cells("PqteComprometido").Value
             .PqteComprometidoSol = _Fila.Cells("PqteComprometidoSol").Value
-            .PqteDevuelto = _Fila.Cells("PqteDevuelto").Value
             .Ud1XPqte = _Fila.Cells("Ud1XPqte").Value
             .CantMinFormato = _Fila.Cells("CantMinFormato").Value
             .Moneda = _Fila.Cells("Moneda").Value

@@ -809,6 +809,7 @@ Public Class Frm_SobreStockXClas
             .FormatoPqte = "Pallet"
             .StDispUd1 = _Row_Stock.Item("StDispUd1")
             .PqteHabilitado = _PalletSY
+            .PqteStock = _PalletSY
             .Ud1XPqte = _KilosXPallet
             .CantMinFormato = 0
             .Moneda = "US$" 'String.Empty

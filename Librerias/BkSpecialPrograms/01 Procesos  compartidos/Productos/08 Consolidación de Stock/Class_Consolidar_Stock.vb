@@ -675,16 +675,17 @@ SELECT
             Dim _PqteComprometido As Double = 0
             Dim _PqteComprometidoSol As Double = 0
             Dim _PqteDevuelto As Double = 0
+            'Dim _PqteStock As Double = 0
 
             Consulta_sql = $"
 SELECT 
     Id_SobreStock,Codigo,Empresa,Sucursal,Bodega,
     SUM(CASE WHEN Tido = 'COV' 
-             THEN Qty_SobreStock - (Qty_SobreStockD + Qty_SobreStockE) 
+             THEN Qty_SobreStock - Qty_SobreStockD - Qty_SobreStockE 
              ELSE 0 
         END) AS PqteComprometido,
     SUM(CASE WHEN Tido = 'NVV' 
-             THEN Qty_SobreStockDv 
+             THEN Qty_SobreStock-Qty_SobreStockDv
              ELSE 0 
         END) AS PqteDevuelto
 
@@ -709,11 +710,12 @@ GROUP BY
                 _Id_SobreStock = _Row_Prod_Stock.Item("Id_SobreStock")
                 _PqteComprometido = _Row_Prod_Stock.Item("PqteComprometido")
                 _PqteDevuelto = _Row_Prod_Stock.Item("PqteDevuelto")
+                '_PqteStock = _PqteComprometido - _PqteDevuelto
 
                 _SqlQuery += $"
 Update {_Global_BaseBk}Zw_Prod_SobreStock Set
-PqteComprometido = {De_Num_a_Tx_01(_PqteComprometido, False, 5)},
-PqteDevuelto = {De_Num_a_Tx_01(_PqteDevuelto, False, 5)}
+PqteComprometido = PqteComprometido+{De_Num_a_Tx_01(_PqteComprometido, False, 5)},
+PqteStock = PqteStock+{De_Num_a_Tx_01(_PqteDevuelto, False, 5)}
 Where Id = {_Id_SobreStock}" & vbCrLf & vbCrLf
 
             Next
@@ -736,7 +738,8 @@ Group By d.Id_SobreStock"
 
                 _SqlQuery += $"
 Update {_Global_BaseBk}Zw_Prod_SobreStock Set
-PqteComprometidoSol = {De_Num_a_Tx_01(_PqteComprometidoSol, False, 5)}
+--PqteStock = PqteStock-{De_Num_a_Tx_01(_PqteComprometidoSol, False, 5)},
+PqteComprometidoSol = PqteComprometidoSol+{De_Num_a_Tx_01(_PqteComprometidoSol, False, 5)}
 Where Id = {_Id_SobreStock}" & vbCrLf & vbCrLf
 
             Next

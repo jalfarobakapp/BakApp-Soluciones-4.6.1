@@ -418,7 +418,7 @@ Update {_Global_BaseBk}Zw_Stmp_DetPick Set Idmaeedo = 0,Idmaeddo = 0 Where Id_En
             If _Tido = "COV" Then
 
                 Consulta_sql = $"
-Update {_Global_BaseBk}Zw_Docu_Det Set Qty_SobreStockD = Qty_SobreStock - Qty_SobreStockD
+Update {_Global_BaseBk}Zw_Docu_Det Set Qty_SobreStockD = Qty_SobreStock
 Where Idmaeedo = {_Idmaeedo}"
                 _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
@@ -439,7 +439,7 @@ Where Idmaeedo = {_Idmaeedo}"
                 _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
                 Consulta_sql = $"
-Update {_Global_BaseBk}Zw_Prod_SobreStock Set PqteDevuelto = PqteDevuelto+Qty_SobreStockDv
+Update {_Global_BaseBk}Zw_Prod_SobreStock Set PqteStock = PqteStock+Qty_SobreStockDv
 From {_Global_BaseBk}Zw_Prod_SobreStock St
 Inner Join {_Global_BaseBk}Zw_Docu_Det Det On St.Id = Det.Id_SobreStock
 Where Idmaeedo = {_Idmaeedo}"
