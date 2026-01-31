@@ -912,8 +912,8 @@ Public Class Frm_Ver_Documento
 
         End If
 
-        If _Tido = "COV" Then
-            If _Row_Docu_Ent.Item("SobreStock") Then
+        If _Row_Docu_Ent.Item("SobreStock") Then
+            If _Tido = "COV" OrElse _Tido = "NVV" Then
                 Lbl_Tido.Text += " (SOBRE STOCK)"
                 Btn_Eliminar_Anular.Visible = False
             End If

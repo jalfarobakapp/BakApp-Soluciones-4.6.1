@@ -1364,23 +1364,23 @@ Public Class Clase_Crear_Documento
                                                            "Disponible: " & _PqtDisponible & ", Solicitado: " & _Qty_SobreStock)
                             End If
 
+                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
+                                           "SobreStock = 1" &
+                                           ",Id_SobreStock = " & _Id_SobreStock &
+                                           ",Moneda_SobreStock = '" & _Moneda_SobreStock & "'" & vbCrLf &
+                                           ",Precio_SobreStock = " & De_Num_a_Tx_01(_Precio_SobreStock, False, 5) & vbCrLf &
+                                           ",Qty_SobreStock = " & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
+                                           "Where Id = " & _Id
+                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                            Comando.Transaction = myTrans
+                            Comando.ExecuteNonQuery()
+
                             If _Tido = "COV" Then
 
                                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
                                                "PqteComprometido = PqteComprometido+" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
                                                "--,PqteComprometidoSol = PqteComprometidoSol-" & De_Num_a_Tx_01(_PqteComprometidoSol, False, 5) & vbCrLf &
                                                "Where Id = " & _Id_SobreStock
-                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                Comando.Transaction = myTrans
-                                Comando.ExecuteNonQuery()
-
-                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
-                                               "SobreStock = 1" &
-                                               ",Id_SobreStock = " & _Id_SobreStock &
-                                               ",Moneda_SobreStock = '" & _Moneda_SobreStock & "'" & vbCrLf &
-                                               ",Precio_SobreStock = " & De_Num_a_Tx_01(_Precio_SobreStock, False, 5) & vbCrLf &
-                                               ",Qty_SobreStock = " & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
-                                               "Where Id = " & _Id
                                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                 Comando.Transaction = myTrans
                                 Comando.ExecuteNonQuery()
@@ -1399,11 +1399,6 @@ Public Class Clase_Crear_Documento
                                 Comando.ExecuteNonQuery()
 
                                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
-                                               "SobreStock = 1" &
-                                               ",Id_SobreStock = " & _Id_SobreStock &
-                                               ",Moneda_SobreStock = '" & _Moneda_SobreStock & "'" & vbCrLf &
-                                               ",Precio_SobreStock = " & De_Num_a_Tx_01(_Precio_SobreStock, False, 5) & vbCrLf &
-                                               ",Qty_SobreStock = " & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
                                                "PqteStock = PqteStock-" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
                                                ",PqteComprometido = PqteComprometido-" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
                                                "Where Id = " & _Id_SobreStock

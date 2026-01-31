@@ -2796,6 +2796,7 @@ Public Class Frm_Formulario_Documento
         _Hay_Descuentos_Globales = False
 
         Dim _Kilos As Double
+        Dim _StrSobreStock As String = String.Empty
 
         For Each row As DataGridViewRow In Grilla_Detalle.Rows
 
@@ -2895,37 +2896,47 @@ Public Class Frm_Formulario_Documento
 
             End If
 
+            'If SobreStock Then
+
+            '    If CBool(_Ls_Cl_SobreStock.Count) Then
+
+            '        Dim _Id As Integer = row.Cells("Id").Value
+            '        Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = _Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = _Id)
+
+            '        _StrSobreStock = ", " & _Zw_Prod_SobreStock.FormatoPqte & ": " & _Zw_Prod_SobreStock.Cantidad
+            '    End If
+
+            'End If
+
         Next
 
-        Dim _Suma_Flete As String
+        'Dim _Suma_Flete As String = String.Empty
 
-        If CBool(_Flete) Then
-            _Suma_Flete = ", Suma de flete: " & FormatNumber(_Flete, 0)
-        End If
+        'If CBool(_Flete) Then
+        '    _Suma_Flete = ", Suma de flete: " & FormatNumber(_Flete, 0)
+        'End If
 
-        'Dim _CUd1, _CUd2 As String
+        'Dim _Dec1 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
+        'Dim _Dec2 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
+        'Dim _DecT = Math.Round(_Cantidad, 2) - Math.Round(_Cantidad, 0)
 
-        Dim _Dec1 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
-        Dim _Dec2 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
-        Dim _DecT = Math.Round(_Cantidad, 2) - Math.Round(_Cantidad, 0)
+        'Dim _DecimT, _Decim1, _Decim2 As Integer
 
-        Dim _DecimT, _Decim1, _Decim2 As Integer
+        'If _Dec1 <> 0 Then _Decim1 = 2
+        'If _Dec2 <> 0 Then _Decim2 = 2
+        'If _DecT <> 0 Then _DecimT = 2
 
-        If _Dec1 <> 0 Then _Decim1 = 2
-        If _Dec2 <> 0 Then _Decim2 = 2
-        If _DecT <> 0 Then _DecimT = 2
+        'Dim _Kilos_Str As String = String.Empty
 
-        Dim _Kilos_Str As String
+        'If CBool(_Kilos) Then
+        '    _Kilos_Str = "Kilos: " & FormatNumber(_Kilos, 2) & ", "
+        'End If
 
-        If CBool(_Kilos) Then
-            _Kilos_Str = "Kilos: " & FormatNumber(_Kilos, 2) & ", "
-        End If
-
-        If _Ud1 = _Ud2 And _CantUd1 = _CantUd2 Then
-            Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, " & _Ud1 & ": " & FormatNumber(_CantUd1, _Decim1) & _Suma_Flete
-        Else
-            Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, " & _Ud1 & ": " & FormatNumber(_CantUd1, _Decim1) & ", " & _Ud2 & ": " & FormatNumber(_CantUd2, _Decim2) & _Suma_Flete
-        End If
+        'If _Ud1 = _Ud2 And _CantUd1 = _CantUd2 Then
+        '    Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, " & _Ud1 & ": " & FormatNumber(_CantUd1, _Decim1) & _Suma_Flete & _StrSobreStock
+        'Else
+        '    Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, " & _Ud1 & ": " & FormatNumber(_CantUd1, _Decim1) & ", " & _Ud2 & ": " & FormatNumber(_CantUd2, _Decim2) & _Suma_Flete & _StrSobreStock
+        'End If
 
         '"Trans: " & FormatNumber(_Cantidad, _DecimT) & _Suma_Flete
 
@@ -3536,13 +3547,13 @@ Public Class Frm_Formulario_Documento
 
             If ChkValores.Checked Then
                 Total = "ValNetoLinea"
-                FormatoPrecio = "$ ###,##.###"
+                FormatoPrecio = "###,##.###"
                 Precio_ = "Precio Neto "
                 Precio_Campo = "PrecioNetoUdLista"
                 Total_Str = "Total"
             Else
                 Total = "ValBrutoLinea"
-                FormatoPrecio = "$ ###,##.##"
+                FormatoPrecio = "###,##.##"
                 Precio_Campo = "PrecioBrutoUdLista"
                 Precio_ = "Precio Bruto "
                 Total_Str = "Total"
@@ -3591,6 +3602,13 @@ Public Class Frm_Formulario_Documento
             .Columns("Cantidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("Moneda").Width = 30
+            .Columns("Moneda").HeaderText = "M."
+            .Columns("Moneda").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleLeft
+            .Columns("Moneda").Visible = True
+            .Columns("Moneda").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns(Precio_Campo).Width = 80  '110 
             .Columns(Precio_Campo).HeaderText = Precio_ & "(Lista)"
             .Columns(Precio_Campo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -3634,14 +3652,14 @@ Public Class Frm_Formulario_Documento
             .Columns("DescuentoValor").Width = 70
             .Columns("DescuentoValor").HeaderText = "Descuento"
             .Columns("DescuentoValor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("DescuentoValor").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("DescuentoValor").DefaultCellStyle.Format = "###,##"
             .Columns("DescuentoValor").Visible = True
             .Columns("DescuentoValor").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns(Total).Width = 100
             .Columns(Total).HeaderText = Total_Str
-            .Columns(Total).DefaultCellStyle.Format = "$ ###,##"
+            .Columns(Total).DefaultCellStyle.Format = "###,##"
             .Columns(Total).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns(Total).ReadOnly = True
             .Columns(Total).Visible = True
@@ -3649,7 +3667,7 @@ Public Class Frm_Formulario_Documento
             _DisplayIndex += 1
 
             .Columns("ValNetoLinea").Width = 80
-            .Columns("ValNetoLinea").HeaderText = "Total Neto $"
+            .Columns("ValNetoLinea").HeaderText = "Total Neto"
             .Columns("ValNetoLinea").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("ValNetoLinea").DefaultCellStyle.Format = "###,##.##"
             .Columns("ValNetoLinea").Visible = True
@@ -3657,7 +3675,7 @@ Public Class Frm_Formulario_Documento
             _DisplayIndex += 1
 
             .Columns("Total_Costo").Width = 80
-            .Columns("Total_Costo").HeaderText = "Total Costo $"
+            .Columns("Total_Costo").HeaderText = "Total Costo"
             .Columns("Total_Costo").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Total_Costo").DefaultCellStyle.Format = "###,##.##"
             .Columns("Total_Costo").Visible = _Mostrar_Costos
@@ -3665,9 +3683,9 @@ Public Class Frm_Formulario_Documento
             _DisplayIndex += 1
 
             .Columns("Margen_Valor").Width = 80
-            .Columns("Margen_Valor").HeaderText = "Margen $"
+            .Columns("Margen_Valor").HeaderText = "Margen"
             .Columns("Margen_Valor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Margen_Valor").DefaultCellStyle.Format = "$ ###,##.##"
+            .Columns("Margen_Valor").DefaultCellStyle.Format = "###,##.##"
             .Columns("Margen_Valor").Visible = _Mostrar_Margen
             .Columns("Margen_Valor").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -11795,6 +11813,86 @@ Public Class Frm_Formulario_Documento
             Btn_Cambiar_IVA.Enabled = False
         End If
 
+        Dim _Ud1 As String
+        Dim _Ud2 As String
+        Dim _CantUd1 As Double
+        Dim _CantUd2 As Double
+        Dim _Kilos As Double
+        Dim _Flete As Double
+        Dim _Decim1 As Integer
+        Dim _Decim2 As Integer
+        Dim _Potencia As Double
+        Dim _Kilos_Str As String
+        Dim _Suma_Flete As String = String.Empty
+        Dim _StrSobreStock As String
+
+        Dim _Prct As Boolean = _Fila.Cells("Prct").Value
+
+        Lbl_Totaliza_Cantidades.Text = String.Empty
+
+        If Not _Nuevo_Producto Then
+
+            If Not _Prct Then
+
+                _CantUd1 = Math.Round(_Fila.Cells("CantUd1").Value, 5)
+                _CantUd2 = Math.Round(_Fila.Cells("CantUd2").Value, 5)
+
+                _Kilos += _Fila.Cells("Pesoubic").Value * _Fila.Cells("CantUd1").Value
+
+                _Potencia = _Fila.Cells("Potencia").Value
+                _Flete += Math.Round(_Potencia * _Fila.Cells("CantUd1").Value, 0)
+
+                Dim _Ud1New = NuloPorNro(_Fila.Cells("Ud01PR").Value, "UD1")
+                Dim _Ud2New = NuloPorNro(_Fila.Cells("Ud02PR").Value, "UD1")
+
+                If String.IsNullOrEmpty(_Ud1) Then
+
+                    _Ud1 = _Ud1New
+                    _Ud2 = _Ud2New
+
+                Else
+
+                    If _Ud1New <> _Ud1 Then _Ud1 = "UD1"
+                    If _Ud2New <> _Ud2 Then _Ud2 = "UD2"
+
+                End If
+
+            End If
+
+            If SobreStock AndAlso CBool(_Ls_Cl_SobreStock.Count) Then
+
+                Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = _Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = _Id)
+
+                _StrSobreStock = ", " & _Zw_Prod_SobreStock.FormatoPqte & ": " & _Zw_Prod_SobreStock.Cantidad
+
+            End If
+
+            If CBool(_Flete) Then
+                _Suma_Flete = ", Suma de flete: " & FormatNumber(_Flete, 0)
+            End If
+
+            'Dim _CUd1, _CUd2 As String
+
+            Dim _Dec1 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
+            Dim _Dec2 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
+
+            Dim _DecimT As Integer
+
+            If _Dec1 <> 0 Then _Decim1 = 2
+            If _Dec2 <> 0 Then _Decim2 = 2
+
+            If CBool(_Kilos) Then
+                _Kilos_Str = "Kilos: " & FormatNumber(_Kilos, 2) & ", "
+            End If
+
+            If _Ud1 = _Ud2 And _CantUd1 = _CantUd2 Then
+                Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, Ud1 (" & _Ud1 & "): " & FormatNumber(_CantUd1, _Decim1) & _Suma_Flete & _StrSobreStock
+            Else
+                Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, Ud1 (" & _Ud1 & "): " & FormatNumber(_CantUd1, _Decim1) & ", Ud2 (" & _Ud2 & "): " & FormatNumber(_CantUd2, _Decim2) & _Suma_Flete & _StrSobreStock
+            End If
+
+        End If
+
     End Sub
 
     Private Sub Grilla_Detalle_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
@@ -13114,6 +13212,44 @@ Public Class Frm_Formulario_Documento
             _Row.Cells("Qty_SobreStock").Value = _Qty_SobreStock
             _Row.Cells("PqteComprometidoSol").Value = _Qty_SobreStock
 
+            If _SobreStock Then
+
+                Dim _Zw_Prod_SobreStock As New Zw_Prod_SobreStock
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_SobreStock Where Id = " & _Id_SobreStock
+                Dim _RowSb As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If Not IsNothing(_RowSb) Then
+
+                    With _Zw_Prod_SobreStock
+
+                        .Id = _RowSb.Item("Id")
+                        .IdIndex = _Id
+                        .Empresa = _RowSb.Item("Empresa")
+                        .Codigo = _RowSb.Item("Codigo")
+                        .Descripcion = _RowSb.Item("Descripcion")
+                        .Cantidad = _Qty_SobreStock
+                        .Activo = _RowSb.Item("Activo")
+                        .CodFuncionarioCrea = _RowSb.Item("CodFuncionarioCrea")
+                        .FechaVigencia = _RowSb.Item("FechaVigencia")
+                        .FormatoPqte = _RowSb.Item("FormatoPqte")
+                        .PqteHabilitado = _RowSb.Item("PqteHabilitado")
+                        .PqteStock = _RowSb.Item("PqteStock")
+                        .PqteComprometido = _RowSb.Item("PqteComprometido")
+                        .PqteComprometidoSol = _RowSb.Item("PqteComprometidoSol")
+                        .Ud1XPqte = _RowSb.Item("Ud1XPqte")
+                        .CantMinFormato = _RowSb.Item("CantMinFormato")
+                        .Moneda = _RowSb.Item("Moneda")
+                        .PrecioXUd1 = _RowSb.Item("PrecioXUd1")
+                        .Precio_DigSobreStock = _RowSb.Item("PrecioXUd1")
+
+                    End With
+
+                    _Ls_Cl_SobreStock.Add(_Zw_Prod_SobreStock)
+
+                End If
+
+            End If
+
             _Contador += 1
 
             If _Contador <> _TblDetalle_StBy.Rows.Count Then
@@ -13654,10 +13790,38 @@ Public Class Frm_Formulario_Documento
             '_Margen = (_ValBrutoLinea - _Total_Costo_Linea) / _ValBrutoLinea
             'End If
 
+
+            ' Asignaciones seguras: comprobar que la fila no sea la fila nueva y que las columnas existan
+            If Not _Fila.IsNewRow Then
+
+                If Grilla_Detalle.Columns.Contains("Total_Costo") Then
+                    Try
+                        _Fila.Cells("Total_Costo").Value = _Total_Costo_Linea
+                    Catch ex As Exception
+                        ' Ignorar o registrar según conveniencia; evitamos que se propague la excepción.
+                    End Try
+                End If
+
+                If Grilla_Detalle.Columns.Contains("Margen_Valor") Then
+                    Try
+                        _Fila.Cells("Margen_Valor").Value = _Margen_Valor
+                    Catch ex As Exception
+                    End Try
+                End If
+
+                If Grilla_Detalle.Columns.Contains("Margen_Porc") Then
+                    Try
+                        _Fila.Cells("Margen_Porc").Value = _Margen_Porc
+                    Catch ex As Exception
+                    End Try
+                End If
+
+            End If
+
             'Total_Costo,CAST( 0 AS Float) AS Margen_Porc
-            _Fila.Cells("Total_Costo").Value = _Total_Costo_Linea
-            _Fila.Cells("Margen_Valor").Value = _Margen_Valor
-            _Fila.Cells("Margen_Porc").Value = _Margen_Porc
+            '_Fila.Cells("Total_Costo").Value = _Total_Costo_Linea
+            '_Fila.Cells("Margen_Valor").Value = _Margen_Valor
+            '_Fila.Cells("Margen_Porc").Value = _Margen_Porc
 
 
             Dim _DsctoRealPorc = _Fila.Cells("DsctoRealPorc").Value
@@ -14671,6 +14835,7 @@ Public Class Frm_Formulario_Documento
                     End If
 
                     Fm_Obs.TieneOrdenDeDespacho = Not (IsNothing(_Cl_Despacho))
+                    Fm_Obs.SobreStock = SobreStock
                     Fm_Obs.CambiarFechaEnDetalle = True
                     Fm_Obs.ShowDialog(Me)
                     Fm_Obs.Dispose()
@@ -16593,6 +16758,22 @@ Public Class Frm_Formulario_Documento
                     Return
                 End If
 
+                If _Tido = "COV" And SobreStock Then
+
+                    Dim _FechaRecepcion As Date = _TblEncabezado.Rows(0).Item("FechaRecepcion")
+
+                    Dim _Aceptar As Boolean
+
+                    _Aceptar = InputBox_Bk_Fecha(Me, "Ingrese la fecha de despacho", "Fecha de despacho", _FechaRecepcion, Now.Date, True)
+
+                    If Not _Aceptar Then
+                        Return
+                    End If
+
+                    _TblEncabezado.Rows(0).Item("FechaRecepcion") = _FechaRecepcion
+
+                End If
+
                 Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
 
                 Dim _No_Permitir_Grabar_Con_Dscto_Superado As Boolean = _Global_Row_Configuracion_General.Item("No_Permitir_Grabar_Con_Dscto_Superado")
@@ -16792,23 +16973,6 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-                        If _Tido = "COV" And SobreStock Then
-
-                            Dim _FechaRecepcion As Date = _TblEncabezado.Rows(0).Item("FechaRecepcion")
-
-                            Dim _Aceptar As Boolean
-
-                            _Aceptar = InputBox_Bk_Fecha(Me, "Ingrese la fecha de despacho", "Fecha de despacho", _FechaRecepcion, Now.Date, True)
-
-                            If Not _Aceptar Then
-                                Return
-                            End If
-
-                            _TblEncabezado.Rows(0).Item("FechaRecepcion") = _FechaRecepcion
-                            Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
-
-                        End If
-
                     End If
 
                     Dim _Grabar_Obs As Boolean
@@ -16828,6 +16992,7 @@ Public Class Frm_Formulario_Documento
                     Fm_Obs.TieneOrdenDeDespacho = Not (IsNothing(_Cl_Despacho))
                     Fm_Obs.Chk_GrabaNVVCustomizable.Visible = (_Tido = "NVV" AndAlso _Global_Row_Configuracion_General.Item("HabilitarNVVConProdCustomizables"))
                     Fm_Obs.GrabaNVVCustomizable = _TblEncabezado.Rows(0).Item("Customizable")
+                    Fm_Obs.SobreStock = SobreStock
                     Fm_Obs.ShowDialog(Me)
 
                     _Grabar_Obs = Fm_Obs.Pro_Grabar
@@ -19125,6 +19290,7 @@ Public Class Frm_Formulario_Documento
         Fm_Obs.Btn_Solo_Grabar.Visible = False
         Fm_Obs.CambiarFechaEnDetalle = True
         Fm_Obs.TieneOrdenDeDespacho = Not (IsNothing(_Cl_Despacho))
+        Fm_Obs.SobreStock = SobreStock
         Fm_Obs.ShowDialog(Me)
         Fm_Obs.Dispose()
 
