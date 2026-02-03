@@ -472,6 +472,10 @@ Public Class Frm_Demonio_New
                     '_Cl_CerrarDocumentos.DiasNVI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasNVI' And NombreEquipo = '" & _NombreEquipo & "'", True)
                     '_Cl_CerrarDocumentos.DiasNVV = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasNVV' And NombreEquipo = '" & _NombreEquipo & "'", True)
 
+                    Dim _CerrarDocEmpresas As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_CerrarDocEmpresas' And NombreEquipo = '" & _NombreEquipo & "'")
+
+                    Boolean.TryParse(_CerrarDocEmpresas, _Cl_CerrarDocumentos.CerrarDocEmpresas)
+
                     _Descripcion = _CI_Programacion.Resumen
                     _IndexImagen = 10
 

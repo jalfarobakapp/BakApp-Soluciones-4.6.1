@@ -793,7 +793,9 @@ Public Class Frm_Demonio_Configuraciones
         _Sql.Sb_Parametro_Informe_Sql(Chk_CierreDoc, "Demonio",
                                       Chk_CierreDoc.Name, Class_SQLite.Enum_Type._Boolean,
                                       Chk_CierreDoc.Checked, _Actualizar, "CierreDoc",, False)
-
+        _Sql.Sb_Parametro_Informe_Sql(Chk_CerrarDocEmpresas, "Demonio",
+                                      Chk_CerrarDocEmpresas.Name, Class_SQLite.Enum_Type._Boolean,
+                                      Chk_CerrarDocEmpresas.Checked, _Actualizar, "CierreDoc",, False)
 
         'Facturación automatica
         _Sql.Sb_Parametro_Informe_Sql(Chk_FacAuto, "Demonio",

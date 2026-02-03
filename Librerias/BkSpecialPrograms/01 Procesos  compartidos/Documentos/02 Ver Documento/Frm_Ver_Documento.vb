@@ -5438,9 +5438,19 @@ Where Idmaeedo In (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where IDMAEDDO In {
         Dim _Nudonodefi = _Row_Maeedo_Doc.Item("NUDONODEFI")
 
         _Cl_Despacho.Fx_Nuevo_Documento("MAEEDO", _Idmaeedo, _Tido, _Nudo, _CantC, _CantD, _CantE, _CantR, _Nudonodefi)
+        _Cl_Despacho.Row_Despacho.Item("Confirmado") = False
+
+        If CDate(_Row_Maeedo_Doc.Item("FEER")).Date < Now.Date Then
+            MessageBoxEx.Show(Me, "No se puede crear un orden de despacho cuando la fecha de despacho es menor a la fecha de hoy" & vbCrLf &
+                              "Debe cambiar la fecha de despacho desde las observaciones del documento.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         Dim Fm As New Frm_Desp_01_Ingreso
         Fm.Cl_Despacho = _Cl_Despacho
+        Fm.DeshabilitarFecha = True
+        Fm.Dtp_Fecha_Despacho.Value = _Row_Maeedo_Doc.Item("FEER")
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         Fm.Dispose()

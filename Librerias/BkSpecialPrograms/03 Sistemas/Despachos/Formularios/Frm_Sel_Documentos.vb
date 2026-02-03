@@ -61,6 +61,8 @@ Public Class Frm_Sel_Documentos
         End Set
     End Property
 
+    Public Property NoPermitirSeleccionarMasDocumentos As Boolean
+
     Public Sub New(Endo As String, Suendo As String)
 
         ' Esta llamada es exigida por el diseñador.
@@ -420,6 +422,15 @@ Public Class Frm_Sel_Documentos
         Dim _Tido = _Fl.Cells("TIDO").Value
         Dim _Nudo = _Fl.Cells("NUDO").Value
         Dim _Nro_Despacho = _Fl.Cells("Nro_Despacho").Value
+
+        If NoPermitirSeleccionarMasDocumentos Then
+
+            MessageBoxEx.Show(Me, "Sole debe grabar y confirmar, no se permite hacer otra gestión", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '_Fl.Cells("Chk").Value = False
+
+            e.Cancel = True
+            Return
+        End If
 
         If Not String.IsNullOrEmpty(_Nro_Despacho) Then ' And  _Fl.Cells("Chk").Value Then
 

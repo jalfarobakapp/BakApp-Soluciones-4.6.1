@@ -72,119 +72,95 @@ Public Class Cl_SobreStock
 
     End Function
 
-    Function Fx_Llenar_SobreStock_Tomado() As Zw_Prod_SobreStock_Tom
+    'Function Fx_Tomar_SobreStock() As LsValiciones.Mensajes
 
-        Dim _Zw_Prod_SobreStock_Tom As New Zw_Prod_SobreStock_Tom
+    '    Dim _Mensaje As New LsValiciones.Mensajes
 
-        Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Prod_SobreStock_Tom"
-        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+    '    _Mensaje.Detalle = "Tomar contenedor"
 
-        If IsNothing(_Row) Then
-            Return _Zw_Prod_SobreStock_Tom
-        End If
+    '    Try
 
-        With _Zw_Prod_SobreStock_Tom
+    '        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+    '        Dim _Zw_Prod_SobreStock_Tom As Zw_Prod_SobreStock_Tom = Fx_Llenar_SobreStock_Tomado()
 
-            .Id = _Row.Item("Id")
-            .CodFuncionario = _Row.Item("CodFuncionario")
-            .Fecha_Hora = _Row.Item("Fecha_Hora")
-            .NombreEquipo = _Row.Item("NombreEquipo")
+    '        If _Zw_Prod_SobreStock_Tom.Id <> 0 Then
 
-        End With
+    '            If _NombreEquipo = _Zw_Prod_SobreStock_Tom.NombreEquipo Then
 
-        Return _Zw_Prod_SobreStock_Tom
+    '                _Mensaje = Fx_Soltar_SobreStock_Tomado()
 
-    End Function
+    '                If Not _Mensaje.EsCorrecto Then
+    '                    Return _Mensaje
+    '                End If
 
-    Function Fx_Tomar_SobreStock() As LsValiciones.Mensajes
+    '            Else
+    '                Dim _Funcionario As String = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Zw_Prod_SobreStock_Tom.CodFuncionario & "'").ToString.Trim
 
-        Dim _Mensaje As New LsValiciones.Mensajes
+    '                Throw New System.Exception("El Sobre stock ya fue tomado por otro funcionario" & vbCrLf & vbCrLf &
+    '                                           "Funcionario: " & _Zw_Prod_SobreStock_Tom.CodFuncionario & " - " & _Funcionario &
+    '                                           ", Equipo: " & _Zw_Prod_SobreStock_Tom.NombreEquipo & vbCrLf &
+    '                                           "Fecha y hora: " & _Zw_Prod_SobreStock_Tom.Fecha_Hora)
+    '            End If
 
-        _Mensaje.Detalle = "Tomar contenedor"
+    '        End If
 
-        Try
+    '        With _Zw_Prod_SobreStock_Tom
 
-            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-            Dim _Zw_Prod_SobreStock_Tom As Zw_Prod_SobreStock_Tom = Fx_Llenar_SobreStock_Tomado()
+    '            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_SobreStock_Tom (CodFuncionario,Fecha_Hora,NombreEquipo) Values " &
+    '                       "('" & FUNCIONARIO & "',Getdate(),'" & _NombreEquipo & "')"
 
-            If _Zw_Prod_SobreStock_Tom.Id <> 0 Then
+    '            If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Mensaje.Id) Then
+    '                Throw New System.Exception("Error al tomar Sobre Stock" & vbCrLf & _Sql.Pro_Error)
+    '            End If
 
-                If _NombreEquipo = _Zw_Prod_SobreStock_Tom.NombreEquipo Then
+    '            _Zw_Prod_SobreStock_Tom = Fx_Llenar_SobreStock_Tomado()
 
-                    _Mensaje = Fx_Soltar_SobreStock_Tomado()
+    '        End With
 
-                    If Not _Mensaje.EsCorrecto Then
-                        Return _Mensaje
-                    End If
+    '        _Mensaje.Mensaje = "Sobre Stock Tomado Correctamente"
+    '        _Mensaje.EsCorrecto = True
+    '        _Mensaje.Tag = _Zw_Prod_SobreStock_Tom
+    '        _Mensaje.Icono = MessageBoxIcon.Information
 
-                Else
-                    Dim _Funcionario As String = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _Zw_Prod_SobreStock_Tom.CodFuncionario & "'").ToString.Trim
+    '    Catch ex As Exception
+    '        _Mensaje.Mensaje = ex.Message
+    '        _Mensaje.EsCorrecto = False
+    '        _Mensaje.Icono = MessageBoxIcon.Error
+    '    End Try
 
-                    Throw New System.Exception("El Sobre stock ya fue tomado por otro funcionario" & vbCrLf & vbCrLf &
-                                               "Funcionario: " & _Zw_Prod_SobreStock_Tom.CodFuncionario & " - " & _Funcionario &
-                                               ", Equipo: " & _Zw_Prod_SobreStock_Tom.NombreEquipo & vbCrLf &
-                                               "Fecha y hora: " & _Zw_Prod_SobreStock_Tom.Fecha_Hora)
-                End If
+    '    Return _Mensaje
 
-            End If
+    'End Function
 
-            With _Zw_Prod_SobreStock_Tom
+    'Function Fx_Soltar_SobreStock_Tomado() As LsValiciones.Mensajes
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_SobreStock_Tom (CodFuncionario,Fecha_Hora,NombreEquipo) Values " &
-                           "('" & FUNCIONARIO & "',Getdate(),'" & _NombreEquipo & "')"
+    '    Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
 
-                If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Mensaje.Id) Then
-                    Throw New System.Exception("Error al tomar Sobre Stock" & vbCrLf & _Sql.Pro_Error)
-                End If
+    '    Dim _Mensaje As New LsValiciones.Mensajes
 
-                _Zw_Prod_SobreStock_Tom = Fx_Llenar_SobreStock_Tomado()
+    '    _Mensaje.Detalle = "Soltar contenedor tomado"
 
-            End With
+    '    Try
 
-            _Mensaje.Mensaje = "Sobre Stock Tomado Correctamente"
-            _Mensaje.EsCorrecto = True
-            _Mensaje.Tag = _Zw_Prod_SobreStock_Tom
-            _Mensaje.Icono = MessageBoxIcon.Information
+    '        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_SobreStock_Tom Where NombreEquipo = '" & _NombreEquipo & "'"
 
-        Catch ex As Exception
-            _Mensaje.Mensaje = ex.Message
-            _Mensaje.EsCorrecto = False
-            _Mensaje.Icono = MessageBoxIcon.Error
-        End Try
+    '        If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
+    '            Throw New System.Exception("Error al soltar el contenedor tomado" & vbCrLf & _Sql.Pro_Error)
+    '        End If
 
-        Return _Mensaje
+    '        _Mensaje.Mensaje = "Sobre Stock Soltado Correctamente"
+    '        _Mensaje.EsCorrecto = True
+    '        _Mensaje.Icono = MessageBoxIcon.Information
 
-    End Function
+    '    Catch ex As Exception
+    '        _Mensaje.Mensaje = ex.Message
+    '        _Mensaje.EsCorrecto = False
+    '        _Mensaje.Icono = MessageBoxIcon.Error
+    '    End Try
 
-    Function Fx_Soltar_SobreStock_Tomado() As LsValiciones.Mensajes
+    '    Return _Mensaje
 
-        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-
-        Dim _Mensaje As New LsValiciones.Mensajes
-
-        _Mensaje.Detalle = "Soltar contenedor tomado"
-
-        Try
-
-            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Prod_SobreStock_Tom Where NombreEquipo = '" & _NombreEquipo & "'"
-
-            If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
-                Throw New System.Exception("Error al soltar el contenedor tomado" & vbCrLf & _Sql.Pro_Error)
-            End If
-
-            _Mensaje.Mensaje = "Sobre Stock Soltado Correctamente"
-            _Mensaje.EsCorrecto = True
-            _Mensaje.Icono = MessageBoxIcon.Information
-
-        Catch ex As Exception
-            _Mensaje.Mensaje = ex.Message
-            _Mensaje.EsCorrecto = False
-            _Mensaje.Icono = MessageBoxIcon.Error
-        End Try
-
-        Return _Mensaje
-
-    End Function
+    'End Function
 
     Function Fx_Eliminar_SobreStock(_Zw_Prod_SobreStock As Zw_Prod_SobreStock,
                                     _CodFuncionario_Elimina As String) As LsValiciones.Mensajes

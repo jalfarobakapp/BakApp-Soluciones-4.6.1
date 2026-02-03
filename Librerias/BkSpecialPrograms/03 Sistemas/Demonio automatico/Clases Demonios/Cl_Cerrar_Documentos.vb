@@ -1,7 +1,4 @@
 ﻿
-Imports System.ComponentModel.DataAnnotations
-Imports NUnrar
-
 Public Class Cl_Cerrar_Documentos
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -30,12 +27,12 @@ Public Class Cl_Cerrar_Documentos
     Public Property Fecha_Revision As DateTime
     Public Property Procesando As Boolean
     Public Property Log_Registro As String
+    Public Property CerrarDocEmpresas As Boolean
 
     'Public Property Zw_Demonio_Conf_Cerrar_Documentos As New Zw_Demonio_Conf_Cerrar_Documentos
     Public Property LS_Zw_Demonio_Conf_Cerrar_Documentos As New List(Of Zw_Demonio_Conf_Cerrar_Documentos)
 
 #End Region
-
     Public Sub New()
         Sb_Llenar_Zw_Conf_Cerrar_Documentos()
     End Sub
@@ -134,8 +131,13 @@ Public Class Cl_Cerrar_Documentos
         _Fecha = DateAdd(DateInterval.Day, -_Dias, _Fecha)
 
         Consulta_Sql = My.Resources.Recursos_Demonio.SQLQuery_Cierrer_Docmuento
-        Consulta_Sql = Replace(Consulta_Sql, "#Filtro#",
-                       "Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
+
+        If CerrarDocEmpresas Then
+            Consulta_Sql = Replace(Consulta_Sql, "#Filtro#", "Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
+        Else
+            Consulta_Sql = Replace(Consulta_Sql, "#Filtro#", "Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
+        End If
+
         Consulta_Sql = Replace(Consulta_Sql, "#Campo_SUENDOFI#", "")
         Consulta_Sql = Replace(Consulta_Sql, "#Left_Join_MAEEN_ENDOFI_SUENDOFI#", "")
         Consulta_Sql = Replace(Consulta_Sql, "Isnull(Mae2.NOKOEN,'') As RAZON_FISICA,", "")
@@ -176,7 +178,8 @@ Public Class Cl_Cerrar_Documentos
 
             If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo, _Tbl_Maeddo) Then
 
-                Fx_Add_Log_Gestion("XXX", Mod_Modalidad, "MAEEDO", _Idmaeedo, "", "CIERRE Y REACTIVACIÓN DE DOCUMENTOS DE COMPROMISO", "Doc00011", "", "", "", False, "XXX")
+                Fx_Add_Log_Gestion("XXX", Mod_Modalidad, "MAEEDO", _Idmaeedo, "", "CIERRE Y REACTIVACIÓN DE DOCUMENTOS DE COMPROMISO",
+                                   "Doc00011", "", "", "", False, "XXX")
 
                 If Not IsNothing(_Row_Stmp_Enc) Then
 
@@ -201,6 +204,39 @@ Public Class Cl_Cerrar_Documentos
                                "'CERRADO AUTOMÁTICAMENTE MEDIANTE EL PROCESO DE CIERRE MASIVO DEL SISTEMA ""DIABLITO"".',GetDate()," & _HoraGrab & ")"
                 If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                     Log_Registro += _Sql.Pro_Error & vbCrLf
+                End If
+
+
+                If _Tido = "COV" Then
+
+                    Consulta_Sql = $"
+Update {_Global_BaseBk}Zw_Docu_Det Set Qty_SobreStockD = Qty_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                    _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+
+                    Consulta_Sql = $"
+Update {_Global_BaseBk}Zw_Prod_SobreStock Set PqteComprometido = PqteComprometido-Qty_SobreStockD
+From {_Global_BaseBk}Zw_Prod_SobreStock St
+Inner Join {_Global_BaseBk}Zw_Docu_Det Det On St.Id = Det.Id_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                    _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+
+                End If
+
+                If _Tido = "NVV" Then
+
+                    Consulta_Sql = $"
+Update {_Global_BaseBk}Zw_Docu_Det Set Qty_SobreStockDv = Qty_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                    _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+
+                    Consulta_Sql = $"
+Update {_Global_BaseBk}Zw_Prod_SobreStock Set PqteStock = PqteStock+Qty_SobreStockDv
+From {_Global_BaseBk}Zw_Prod_SobreStock St
+Inner Join {_Global_BaseBk}Zw_Docu_Det Det On St.Id = Det.Id_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                    _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+
                 End If
 
             End If

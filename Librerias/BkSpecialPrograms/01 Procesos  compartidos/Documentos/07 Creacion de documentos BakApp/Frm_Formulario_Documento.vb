@@ -1172,11 +1172,6 @@ Public Class Frm_Formulario_Documento
             _Cl_Contenedor.Fx_Soltar_Contenedor_Tomado()
         End If
 
-        If SobreStock Then
-            Dim _Cl_SobreStock As New Cl_SobreStock
-            _Cl_SobreStock.Fx_Soltar_SobreStock_Tomado()
-        End If
-
     End Sub
 
     Sub Sb_Grilla_Detalle_Eventos(_Agregar As Boolean)
@@ -16758,7 +16753,7 @@ Public Class Frm_Formulario_Documento
                     Return
                 End If
 
-                If _Tido = "COV" And SobreStock Then
+                If Not _Revision_Remota AndAlso _Tido = "COV" AndAlso SobreStock Then
 
                     Dim _FechaRecepcion As Date = _TblEncabezado.Rows(0).Item("FechaRecepcion")
 
@@ -18771,15 +18766,15 @@ Public Class Frm_Formulario_Documento
         If _TipoGrab = _Tipo_de_Grabacion.Nuevo_documento Then
 
             _Mensaje = _New_Doc.Fx_Crear_Documento(_Tido,
-                                                    _Nudo,
-                                                    _Es_ValeTransitorio,
-                                                    _Es_Electronico,
-                                                    _Ds_Matriz_Documentos,
-                                                    _Es_Ajuste,
-                                                    _Cambiar_NroDocumento,
-                                                    _Origen_Modificado_Intertanto,
-                                                    _Es_TLV,
-                                                    _HoraAlFinalDelDia)
+                                                   _Nudo,
+                                                   _Es_ValeTransitorio,
+                                                   _Es_Electronico,
+                                                   _Ds_Matriz_Documentos,
+                                                   _Es_Ajuste,
+                                                   _Cambiar_NroDocumento,
+                                                   _Origen_Modificado_Intertanto,
+                                                   _Es_TLV,
+                                                   _HoraAlFinalDelDia)
 
             If Not _Mensaje.EsCorrecto Then
 
@@ -29048,9 +29043,19 @@ Public Class Frm_Formulario_Documento
                         _Cantidad = _CantUd2
                     End If
 
-                    Dim _RtuCalc As Double = Math.Round(_CantUd1 / _CantUd2, 5)
+                    Dim _RtuCalc As Double '= Math.Round(_CantUd1 / _CantUd2, 5)
                     Dim _Rtu As Double = _RowProducto.Item("RLUD")
                     Dim _DesacRazTransf As Boolean = False
+
+                    ' Calcular _RtuCalc de forma segura. Si el divisor es cero o el resultado es infinito/NaN, dejar en cero.
+                    If _CantUd2 = 0 Then
+                        _RtuCalc = 0
+                    Else
+                        _RtuCalc = Math.Round(_CantUd1 / _CantUd2, 5)
+                        If Double.IsInfinity(_RtuCalc) OrElse Double.IsNaN(_RtuCalc) Then
+                            _RtuCalc = 0
+                        End If
+                    End If
 
                     If _RtuCalc <> _Rtu Then
                         _DesacRazTransf = True
