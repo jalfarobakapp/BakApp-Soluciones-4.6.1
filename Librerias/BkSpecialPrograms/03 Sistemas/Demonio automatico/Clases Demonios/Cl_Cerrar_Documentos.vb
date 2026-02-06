@@ -132,10 +132,14 @@ Public Class Cl_Cerrar_Documentos
 
         Consulta_Sql = My.Resources.Recursos_Demonio.SQLQuery_Cierrer_Docmuento
 
+        'Consulta_Sql = Replace(Consulta_Sql, "#Filtro#", "Edo.IDMAEEDO = 893447")
+
         If CerrarDocEmpresas Then
-            Consulta_Sql = Replace(Consulta_Sql, "#Filtro#", "Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
+            Consulta_Sql = Replace(Consulta_Sql, "#Filtro#",
+                                   "Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
         Else
-            Consulta_Sql = Replace(Consulta_Sql, "#Filtro#", "Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
+            Consulta_Sql = Replace(Consulta_Sql, "#Filtro#",
+                                   "Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
         End If
 
         Consulta_Sql = Replace(Consulta_Sql, "#Campo_SUENDOFI#", "")

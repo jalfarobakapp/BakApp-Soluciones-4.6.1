@@ -2078,7 +2078,7 @@ Public Class Clase_Crear_Documento
             Dim _Idpdaenca As Integer = NuloPorNro(_Row_Encabezado.Item("Idpdaenca"), 0)
             Dim _ConservaNudo As Boolean = NuloPorNro(_Row_Encabezado.Item("ConservaNudo"), 0)
 
-            If _Tido = "NVV" Or _Tido = "NVI" Then
+            If (_Tido = "NVV" OrElse _Tido = "NVI") OrElse (_Tido = "COV" And SobreStock) Then
                 _Pickear = _Row_Encabezado.Item("Pickear")
             End If
 

@@ -3584,30 +3584,11 @@ Namespace My.Resources
         '''	[FechaVigencia]			[datetime]          NULL,
         '''	[FormatoPqte]			[varchar](10)       NOT NULL,
         '''	[PqteHabilitado]		[float]             NOT NULL,
-        '''	[PqteComprometido]		[float]        [resto de la cadena truncado]&quot;;.
+        '''	[PqteStock]             [float]    [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Prod_SobreStock() As String
             Get
                 Return ResourceManager.GetString("Zw_Prod_SobreStock", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Busca una cadena traducida similar a USE [#Base#]
-        '''
-        '''CREATE TABLE [dbo].[Zw_Prod_SobreStock_Tom](
-        '''	[Id]                [int] IDENTITY(1,1) NOT NULL,
-        '''	[CodFuncionario]    [varchar](3)        NOT NULL,
-        '''	[Fecha_Hora]        [datetime]          NULL,
-        '''	[NombreEquipo]      [varchar](20)       NOT NULL
-        ''') ON [PRIMARY]
-        '''
-        '''
-        '''.
-        '''</summary>
-        Friend Shared ReadOnly Property Zw_Prod_SobreStock_Tom() As String
-            Get
-                Return ResourceManager.GetString("Zw_Prod_SobreStock_Tom", resourceCulture)
             End Get
         End Property
         
@@ -5528,7 +5509,6 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
-        '''
         '''CREATE TABLE [dbo].[Zw_Vales_Enc](
         '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
         '''	[NroVale]				[char](10) NOT NULL DEFAULT (&apos;&apos;),
@@ -5540,7 +5520,7 @@ Namespace My.Resources
         '''	[Hora_Emision]			[datetime] NULL,
         '''	[Fecha_Activacion]		[datetime] NULL,
         '''	[Hora_Activacion]		[datetime] NULL,
-        '''	[Funcionario_Mar [resto de la cadena truncado]&quot;;.
+        '''	[Funcionario_Marca [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Vales_Enc() As String
             Get

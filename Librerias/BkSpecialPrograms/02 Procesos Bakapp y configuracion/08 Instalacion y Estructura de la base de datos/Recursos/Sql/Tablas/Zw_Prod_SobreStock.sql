@@ -10,6 +10,7 @@ CREATE TABLE [dbo].[Zw_Prod_SobreStock](
 	[FechaVigencia]			[datetime]          NULL,
 	[FormatoPqte]			[varchar](10)       NOT NULL,
 	[PqteHabilitado]		[float]             NOT NULL,
+	[PqteStock]             [float]             NOT NULL,
 	[PqteComprometido]		[float]             NOT NULL,
 	[PqteComprometidoSol]	[float]             NOT NULL,
 	[Ud1XPqte]				[float]             NOT NULL,

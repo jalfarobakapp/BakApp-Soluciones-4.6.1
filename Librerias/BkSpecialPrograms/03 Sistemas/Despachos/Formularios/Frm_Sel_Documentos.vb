@@ -62,6 +62,7 @@ Public Class Frm_Sel_Documentos
     End Property
 
     Public Property NoPermitirSeleccionarMasDocumentos As Boolean
+    Public Property DeshabilitarMenuContextual As Boolean
 
     Public Sub New(Endo As String, Suendo As String)
 
@@ -90,6 +91,10 @@ Public Class Frm_Sel_Documentos
         AddHandler Grilla.MouseUp, AddressOf Sb_Grilla_MouseUp
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        If DeshabilitarMenuContextual Then
+            RemoveHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+        End If
 
         Me.ActiveControl = Txt_Descripcion
 

@@ -965,6 +965,16 @@ Public Class Frm_Impor_Prod_Masivamente
                     End If
                 End If
 
+            Else
+
+                If _CantUd1 = 0 Then
+                    Throw New System.Exception("La cantidad de la Primera unidad no puede ser cero")
+                End If
+
+                If _CantUd2 = 0 Then
+                    Throw New System.Exception("La cantidad de la Segunda unidad no puede ser cero")
+                End If
+
             End If
 
             Dim _NuevoProducto As New ProductoLevantar With {

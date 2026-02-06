@@ -21,6 +21,7 @@ Public Class Frm_BuscarDocumento_Mt
     Dim _Abrir_Documentos As Boolean
     Dim _Cerrar_Documentos As Boolean
     Dim _Cerrar_Documentos_Automaticamente As Boolean
+    Dim _Ls_NecesitaPermiso_SinStock As List(Of String)
 
     Public Property HabilitarNVVParaFacturar As Boolean
     Public Property SoloModoSeleccion As Boolean
@@ -153,6 +154,8 @@ Public Class Frm_BuscarDocumento_Mt
             Me.Left += 20
         End If
 
+        _Ls_NecesitaPermiso_SinStock = New List(Of String)
+
         If _Pago_a_Documento Then
             Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         Else
@@ -202,7 +205,7 @@ Public Class Frm_BuscarDocumento_Mt
 
         Sb_Actualizar()
 
-        AddHandler BtnActualizarLista.Click, AddressOf Sb_Actualizar
+        'AddHandler BtnActualizarLista.Click, AddressOf Sb_Actualizar
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Detalle.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -239,13 +242,87 @@ Public Class Frm_BuscarDocumento_Mt
 
         If HabilitarNVVParaFacturar Then
 
-            Dim dc As DataColumn
-            dc = New DataColumn("FunAutoriza", Type.GetType("System.String"))
-            _Tbl_Documentos.Columns.Add(dc)
+            'Dim dc As DataColumn
+            'dc = New DataColumn("FunAutoriza", Type.GetType("System.String"))
+            '_Tbl_Documentos.Columns.Add(dc)
+
+            If Not _Tbl_Documentos.Columns.Contains("FunAutoriza") Then
+                _Tbl_Documentos.Columns.Add(New DataColumn("FunAutoriza", GetType(String)))
+            End If
 
         End If
 
-        ' Return
+        If SobreStock Then
+
+            'Dim dc As DataColumn
+            'dc = New DataColumn("FunAutoriza", Type.GetType("System.String"))
+            '_Tbl_Documentos.Columns.Add(dc)
+
+            If Not _Tbl_Documentos.Columns.Contains("FunAutoriza") Then
+                _Tbl_Documentos.Columns.Add(New DataColumn("FunAutoriza", GetType(String)))
+            End If
+
+            If Not _Tbl_Documentos.Columns.Contains("PermiteSinStock") Then
+                _Tbl_Documentos.Columns.Add(New DataColumn("PermiteSinStock", GetType(Boolean)))
+            End If
+
+            If Not _Tbl_Documentos.Columns.Contains("ProblemaStock") Then
+                _Tbl_Documentos.Columns.Add(New DataColumn("ProblemaStock", GetType(Boolean)))
+            End If
+
+        End If
+
+
+        If CBool(_Ls_NecesitaPermiso_SinStock.Count) Then
+
+            If Not IsNothing(_Tbl_Documentos) AndAlso CBool(_Tbl_Documentos.Rows.Count) Then
+
+                For Each _Fl As DataRow In _Tbl_Documentos.Rows
+
+                    Try
+                        ' Inicializar valores por defecto para evitar valores nulos
+                        If _Tbl_Documentos.Columns.Contains("ProblemaStock") Then
+                            _Fl.Item("ProblemaStock") = False
+                        End If
+
+                        If _Tbl_Documentos.Columns.Contains("PermiteSinStock") Then
+                            _Fl.Item("PermiteSinStock") = False
+                        End If
+
+                        If _Tbl_Documentos.Columns.Contains("Chk") Then
+                            _Fl.Item("Chk") = False
+                        End If
+
+                        ' Revisar lista de ids que necesitan permiso por sin stock
+                        If Not IsNothing(_Ls_NecesitaPermiso_SinStock) AndAlso _Ls_NecesitaPermiso_SinStock.Count > 0 Then
+
+                            Dim _IdMaeedoStr As String = String.Empty
+
+                            Try
+                                _IdMaeedoStr = _Fl.Item("IDMAEEDO").ToString()
+                            Catch ex As Exception
+                                _IdMaeedoStr = String.Empty
+                            End Try
+
+                            If Not String.IsNullOrEmpty(_IdMaeedoStr) Then
+                                If _Ls_NecesitaPermiso_SinStock.Contains(_IdMaeedoStr) Then
+                                    If _Tbl_Documentos.Columns.Contains("ProblemaStock") Then
+                                        _Fl.Item("ProblemaStock") = True
+                                    End If
+                                End If
+                            End If
+
+                        End If
+
+                    Catch ex As Exception
+                        ' Ignorar errores por fila para no interrumpir el llenado
+                    End Try
+
+                Next
+
+            End If
+
+        End If
 
         With Grilla
 
@@ -264,6 +341,27 @@ Public Class Frm_BuscarDocumento_Mt
             .Columns("Chk").ReadOnly = False
             .Columns("Chk").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            ' Configuración de las nuevas columnas booleanas (por defecto ocultas para no alterar la UI)
+
+            If .Columns.Contains("ProblemaStock") Then
+                .Columns("ProblemaStock").HeaderText = "P.S."
+                .Columns("ProblemaStock").ToolTipText = "Tiene problemas de Stock"
+                .Columns("ProblemaStock").Width = 40
+                .Columns("ProblemaStock").Visible = True
+                .Columns("ProblemaStock").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+            End If
+
+            If .Columns.Contains("PermiteSinStock") Then
+                .Columns("PermiteSinStock").HeaderText = "P.st"
+                .Columns("PermiteSinStock").ToolTipText = "Permite sin Stock (Necesita permiso)"
+                .Columns("PermiteSinStock").Width = 40
+                .Columns("PermiteSinStock").Visible = True
+                .Columns("PermiteSinStock").ReadOnly = False
+                .Columns("PermiteSinStock").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+            End If
 
             .Columns("SUDO").HeaderText = "SD"
             .Columns("SUDO").Width = 35
@@ -295,8 +393,17 @@ Public Class Frm_BuscarDocumento_Mt
             .Columns("SUENDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+
+            Dim _Ancho = 300
+
+            If .Columns("Chk").Visible Then _Ancho = 270
+
+            If .Columns.Contains("ProblemaStock") Then
+                If .Columns("ProblemaStock").Visible Then _Ancho = 200
+            End If
+
             .Columns("RAZON").HeaderText = "Razón Social"
-            .Columns("RAZON").Width = IIf(.Columns("Chk").Visible, 270, 300)
+            .Columns("RAZON").Width = _Ancho
             .Columns("RAZON").Visible = True
             .Columns("RAZON").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
@@ -1296,8 +1403,6 @@ Public Class Frm_BuscarDocumento_Mt
 
                     End If
 
-
-
                     If Not _Autorizado Then
 
                         Dim _Rows_Usuario_Autoriza As DataRow
@@ -1447,6 +1552,9 @@ Public Class Frm_BuscarDocumento_Mt
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
         Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
+        Dim _Chk As Boolean = _Fila.Cells("Chk").Value
+        Dim _ProblemaStock As Boolean = NuloPorNro(_Fila.Cells("ProblemaStock").Value, False)
+        Dim _PermiteSinStock As Boolean = NuloPorNro(_Fila.Cells("PermiteSinStock").Value, False)
 
         If _Cabeza = "Chk" Then
 
@@ -1458,6 +1566,50 @@ Public Class Frm_BuscarDocumento_Mt
                     Beep()
                 End If
 
+            End If
+
+            If Not _Chk AndAlso _ProblemaStock AndAlso Not _PermiteSinStock Then
+
+                MessageBoxEx.Show(Me, "Este documento necesita de permiso para poder ser seleccionado" & vbCrLf &
+                                  "Debe seleccionar la columna [P.st]", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                e.Cancel = True
+                Return
+
+            End If
+
+        End If
+
+        If _Cabeza = "PermiteSinStock" Then
+
+            If _PermiteSinStock Then
+                Dim _FunAutoriza As String = _Fila.Cells("FunAutoriza").Value
+                Dim _NomFunAutoriza As String = _Sql.Fx_Trae_Dato("TABFU", "NOKOFU", "KOFU = '" & _FunAutoriza & "'")
+                MessageBoxEx.Show(Me, "El documento ya permite despachar sin stock" & vbCrLf &
+                                  "Autorizado por: " & _FunAutoriza & " - " & _NomFunAutoriza, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                e.Cancel = True
+                Return
+            End If
+
+            'If Not _Chk Then
+            '    MessageBoxEx.Show(Me, "Debe seleccionar la fila en el primer campo (Sel)", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '    e.Cancel = True
+            '    Return
+            'End If
+
+            If Not _ProblemaStock Then
+                MessageBoxEx.Show(Me, "No necesita permiso, debe evaluar primero la situación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                e.Cancel = True
+                Return
+            End If
+
+            Dim _Row_Usuario_Autoriza As DataRow
+
+            If Not Fx_Tiene_Permiso(Me, "Bkp00015", "XXX",,,,,,,, _Row_Usuario_Autoriza) Then
+                e.Cancel = True
+            Else
+                _Fila.Cells("FunAutoriza").Value = _Row_Usuario_Autoriza.Item("KOFU")
+                _Fila.Cells("Chk").Value = True
+                _Fila.Cells("PermiteSinStock").Value = True
             End If
 
         End If
@@ -2051,6 +2203,8 @@ Public Class Frm_BuscarDocumento_Mt
         Barra_Progreso.Visible = True
 
         Dim _HayRegistrosSinHabilitar As Boolean
+        Dim _Ls_Acciones As New List(Of LsValiciones.Mensajes)
+        _Ls_NecesitaPermiso_SinStock = New List(Of String)
 
         For Each _Fila As DataRow In _Tbl_Documentos.Rows
 
@@ -2058,7 +2212,8 @@ Public Class Frm_BuscarDocumento_Mt
 
                 Dim _Idmaeedo As Integer = _Fila.Item("IDMAEEDO")
                 Dim _Empresa As String = _Fila.Item("EMPRESA")
-
+                Dim _FunAutoriza As String = NuloPorNro(_Fila.Item("FunAutoriza"), "")
+                Dim _PermiteSinStock As Boolean = NuloPorNro(_Fila.Item("PermiteSinStock"), False)
 
                 If _Fila.Item("Chk") Then
 
@@ -2069,9 +2224,21 @@ Public Class Frm_BuscarDocumento_Mt
                                                                                 _Idmaeedo,
                                                                                 DateTime.Now,
                                                                                 Mod_Empresa,
-                                                                                Mod_Modalidad)
+                                                                                Mod_Modalidad,
+                                                                                _PermiteSinStock,
+                                                                                _FunAutoriza)
 
-                    _Habilitado += 1
+                    If _Mensaje.EsCorrecto Then
+                        _Habilitado += 1
+                    Else
+                        _HayRegistrosSinHabilitar = True
+                    End If
+
+                    If _Mensaje.NecesitaPermiso Then
+                        _Ls_NecesitaPermiso_SinStock.Add(_Idmaeedo)
+                    End If
+
+                    _Ls_Acciones.Add(_Mensaje)
 
                 End If
 
@@ -2099,21 +2266,26 @@ Public Class Frm_BuscarDocumento_Mt
 
         Next
 
+        Dim Fmf As New Frm_Validaciones
+        Fmf.ListaMensajes = _Ls_Acciones
+        Fmf.ShowDialog(Me)
+        Fmf.Dispose()
+
         Barra_Progreso.Value = 0
         Barra_Progreso.Visible = False
         Me.Refresh()
 
         Sb_Habilitar_Desabilitar_Controles(True)
 
-        If CBool(_Habilitado) Then
-            MessageBoxEx.Show(Me, "Documento(s) habilitado(s) " & _Habilitado, "Habilitar documentos",
-                              MessageBoxButtons.OK, MessageBoxIcon.Information)
-            If _HayRegistrosSinHabilitar Then
-                Sb_Actualizar()
-            Else
-                Me.Close()
-            End If
+        'If CBool(_Habilitado) Then
+        'MessageBoxEx.Show(Me, "Documento(s) habilitado(s) " & _Habilitado, "Habilitar documentos",
+        '                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+        If _HayRegistrosSinHabilitar Then
+            Sb_Actualizar()
+        Else
+            Me.Close()
         End If
+        'End If
 
     End Sub
 
@@ -2123,7 +2295,9 @@ Public Class Frm_BuscarDocumento_Mt
                                                               _Idmaeedo_Origen As Integer,
                                                               _Fecha_Emision As DateTime,
                                                               _Empresa As String,
-                                                              _Modalidad As String) As LsValiciones.Mensajes
+                                                              _Modalidad As String,
+                                                              _PermiteSinStock As Boolean,
+                                                              _FunAutoriza As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -2158,6 +2332,9 @@ Public Class Frm_BuscarDocumento_Mt
                 _Mensaje.Mensaje = "Error"
                 Throw New System.Exception(_Sql.Pro_Error)
             End If
+
+            'Dim _Row_Usuario_Autoriza As DataRow
+            'Dim _AutorizadoPorStock As Boolean
 
             If Not IsNothing(_Row_Documento) Then
 
@@ -2198,20 +2375,22 @@ Public Class Frm_BuscarDocumento_Mt
                     End If
 
                     Consulta_Sql = $"
-Select * From MAEEDO Where IDMAEEDO = {_Idmaeedo_Origen}
+Select Edo.*,Ze.* From MAEEDO Edo
+Inner Join {_Global_BaseBk}Zw_Docu_Ent Ze On Ze.Idmaeedo = Edo.IDMAEEDO
+Where Edo.IDMAEEDO = {_Idmaeedo_Origen}
 
 Select Ddo.*,Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
 CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori',
 Case WHEN UDTRPR = 1 Then {_CampoPrecio}*Edo.TAMODO Else ({_CampoPrecio}*RLUDPR)*Edo.TAMODO End AS 'Precio',
 0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
 From MAEDDO Ddo With ( NOLOCK )
-Left Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
-Where Ddo.IDMAEEDO = {_Idmaeedo_Origen} AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''
+    Left Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
+        Where Ddo.IDMAEEDO = {_Idmaeedo_Origen} AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''
 Order by IDMAEEDO,IDMAEDDO 
 
 Select * From MAEIMLI Where IDMAEEDO = {_Idmaeedo_Origen}
 Select * From MAEDTLI Where IDMAEEDO = {_Idmaeedo_Origen}
-Select TOP 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}"
+Select Top 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}"
 
                     Dim _Msj_GrabarDoc As New LsValiciones.Mensajes
 
@@ -2257,13 +2436,34 @@ Select TOP 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}"
                         Fm_Post.DecimalesGl = 0
                         Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
 
+                        Dim _MsjStock As LsValiciones.Mensajes
+
+                        _MsjStock = Fm_Post.Fx_Validar_Stock2()
+
+                        If Not _MsjStock.EsCorrecto Then
+
+                            If Not _PermiteSinStock Then
+
+                                _Mensaje.Detalle = "Documento: " & _Tido & " - " & _Nudo
+                                _Mensaje.NecesitaPermiso = True
+                                _Mensaje.CodPermiso = "Bkp00015"
+
+                                Throw New System.Exception("Documento con stock negativo, necesita grabar con Permiso: Bkp00015")
+
+                            End If
+
+                        End If
+
                         _Msj_GrabarDoc = Fm_Post.Fx_Grabar_Documento(False,
                                                                      csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento,
                                                                      True, False,,, False)
 
                         If CBool(_Msj_GrabarDoc.Id) Then
+
                             Fm_Post.Sb_Activar_Orden_De_Despacho(_Msj_GrabarDoc.Id)
+
                         End If
+
                         Fm_Post.Dispose()
 
                     Else
@@ -2288,6 +2488,15 @@ Select TOP 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}"
                     _Nudo = String.Empty
 
                     If Not IsNothing(_Row_Maeedo) Then
+                        _Tido = _Row_Maeedo.Item("TIDO")
+                        _Nudo = _Row_Maeedo.Item("NUDO")
+                    End If
+
+                    If _PermiteSinStock Then
+
+                        Fx_Add_Log_Gestion("XXX", Mod_Modalidad, "MAEEDO", _Msj_GrabarDoc.Id, "",
+                                                       "AUTORIZAR A VENDER CON STOCK MENOR O IGUAL A CERO",
+                                                       "Bkp00015", "", "", "", False, _FunAutoriza,,,, _Tido, _Nudo)
 
                     End If
 
@@ -2305,10 +2514,7 @@ Select TOP 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}"
 
                 End If
 
-                'End If
             End If
-
-
 
         Catch ex As Exception
             _Mensaje.Mensaje = ex.Message
@@ -2321,4 +2527,10 @@ Select TOP 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}"
     Private Sub Btn_ConvertirCOVenNVV_Click(sender As Object, e As EventArgs) Handles Btn_ConvertirCOVenNVV.Click
         Sb_Transformar_COCSobreStocnEnNVV()
     End Sub
+
+    Private Sub BtnActualizarLista_Click(sender As Object, e As EventArgs) Handles BtnActualizarLista.Click
+        _Ls_NecesitaPermiso_SinStock = New List(Of String)
+        Sb_Actualizar()
+    End Sub
+
 End Class

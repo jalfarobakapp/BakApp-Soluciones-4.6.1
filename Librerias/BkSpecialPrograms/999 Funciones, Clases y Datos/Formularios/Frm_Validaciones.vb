@@ -242,7 +242,7 @@ Namespace LsValiciones
         Public Property HuboOtroError As Boolean
         Public Property ConsultaSQLEjecutada As String
         Public Property CodPermiso As String
-
+        Public Property NecesitaPermiso As Boolean
     End Class
 
     Public Class Columnas

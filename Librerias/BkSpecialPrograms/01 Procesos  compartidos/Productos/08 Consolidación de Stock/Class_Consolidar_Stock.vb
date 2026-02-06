@@ -637,7 +637,8 @@
         Dim _Descripcion = _RowProducto.Item("NOKOPR")
         Dim _SqlQuery As String = String.Empty
 
-        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros($"{_Global_BaseBk}Zw_Prod_SobreStock", $"Codigo = '{_Codigo}' And Empresa = '{_Empresa}' And Activo = 1")
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros($"{_Global_BaseBk}Zw_Prod_SobreStock",
+                                                       $"Codigo = '{_Codigo}' And Empresa = '{_Empresa}' And Activo = 1")
 
         If Not CBool(_Reg) Then
             _Mensaje.EsCorrecto = True
@@ -710,13 +711,12 @@ GROUP BY
                 _Id_SobreStock = _Row_Prod_Stock.Item("Id_SobreStock")
                 _PqteComprometido = _Row_Prod_Stock.Item("PqteComprometido")
                 _PqteDevuelto = _Row_Prod_Stock.Item("PqteDevuelto")
-                '_PqteStock = _PqteComprometido - _PqteDevuelto
 
                 _SqlQuery += $"
-Update {_Global_BaseBk}Zw_Prod_SobreStock Set
-PqteComprometido = PqteComprometido+{De_Num_a_Tx_01(_PqteComprometido, False, 5)},
-PqteStock = PqteStock+{De_Num_a_Tx_01(_PqteDevuelto, False, 5)}
-Where Id = {_Id_SobreStock}" & vbCrLf & vbCrLf
+                Update {_Global_BaseBk}Zw_Prod_SobreStock Set
+                PqteComprometido = PqteComprometido+{De_Num_a_Tx_01(_PqteComprometido, False, 5)},
+                PqteStock = PqteStock-{De_Num_a_Tx_01(_PqteDevuelto, False, 5)}
+                Where Id = {_Id_SobreStock}" & vbCrLf & vbCrLf
 
             Next
 

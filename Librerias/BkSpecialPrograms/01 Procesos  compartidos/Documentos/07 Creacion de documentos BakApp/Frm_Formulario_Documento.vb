@@ -1093,23 +1093,29 @@ Public Class Frm_Formulario_Documento
                 Me.MinimizeBox = Not _Cerrar_Al_Grabar
             End If
 
-            If (_Tido = "NVV" Or _Tido = "NVI") And _DemarcarPickeo Then
+            If ((_Tido = "NVV" Or _Tido = "NVI") Or (_Tido = "COV" And SobreStock)) And _DemarcarPickeo Then
 
                 Dim _Pickear As Boolean = False
+                Dim _Pickear_NVVTodas As Boolean = _Global_Row_Configuracion_General.Item("Pickear_NVVTodas") Or
+                                                   _Global_Row_Configuracion_Estacion.Item("Pickear_NVVTodas")
 
-                If _Tido = "NVV" AndAlso (_Global_Row_Configuracion_General.Item("Pickear_NVVTodas") Or
-                                            _Global_Row_Configuracion_Estacion.Item("Pickear_NVVTodas")) Then
-                    _Pickear = True
-                End If
+                'If ((_Tido = "NVV" Or _Tido = "NVI") Or (_Tido = "COV" And SobreStock)) AndAlso _Pickear_NVVTodas Then
+                '    _Pickear = True
+                'End If
 
-                If _Tido = "NVI" AndAlso (_Global_Row_Configuracion_General.Item("Pickear_NVITodas") Or
-                                            _Global_Row_Configuracion_Estacion.Item("Pickear_NVITodas")) Then
-                    _Pickear = True
-                End If
+                _Pickear = _Pickear_NVVTodas
+
+                'If _Tido = "NVI" AndAlso _Pickear_NVVTodas Then
+                '    _Pickear = True
+                'End If
 
                 Chk_Pickear.Checked = _Pickear
                 Chk_Pickear.Visible = _Pickear
                 Chk_Pickear.Enabled = True
+
+                If _Tido = "COV" And SobreStock Then
+                    Chk_Pickear.Enabled = False
+                End If
 
             End If
 
@@ -18296,6 +18302,66 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
+    Function Fx_Validar_Stock2() As LsValiciones.Mensajes
+
+        Dim _Fun_Auto_Stock_Ins = _TblEncabezado.Rows(0).Item("Fun_Auto_Stock_Ins")
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            For Each row As DataGridViewRow In Grilla_Detalle.Rows
+
+                Dim _Nuevo_Producto As Boolean = row.Cells("Nuevo_Producto").Value
+
+                If _Nuevo_Producto Then
+                    Continue For ' Salta al siguiente registro si es True
+                End If
+
+                Dim _Tipr = NuloPorNro(row.Cells("Tipr").Value, "")
+                Dim _Tict = NuloPorNro(row.Cells("Tict").Value, "_")
+                Dim _ValVtaStockInf = row.Cells("ValVtaStockInf").Value
+                Dim _Codigo = row.Cells("Codigo").Value
+                Dim _Cantidad As Double = 0
+
+                Dim _Tidopa As String = row.Cells("Tidopa").Value
+
+                If _Tidopa = "GDP" Or _Tidopa = "GDV" Then
+                    _ValVtaStockInf = True
+                End If
+
+                If String.IsNullOrEmpty(_Tict) And _Tipr <> "SSN" Then
+
+                    Dim _Stock_Disponible As Double
+                    Dim _Stock_Suficiente As Boolean = False
+                    Dim _StockBodega As Double
+
+                    Sb_Revisar_Stock_Fila(row, _Stock_Suficiente, _StockBodega, _Stock_Disponible, False, False)
+
+                    If Not _Stock_Suficiente Then
+                        Throw New Exception("Existen productos con Stock insuficiente")
+                        Exit For
+                    End If
+
+                End If
+
+            Next
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Sin problemas de stock"
+            _Mensaje.Detalle = "No hay problemas de stock"
+
+            ' _Permiso = Fx_Tiene_Permiso(Me, "Bkp00015", _Fun_Auto_Stock_Ins, False)
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Private Function Fx_Validar_Al_Grabar_Productos_Solicitados_A_Bodega() As Boolean
 
         Dim _Permiso As Boolean
@@ -29000,13 +29066,11 @@ Public Class Frm_Formulario_Documento
             Dim _CodBodega = _Fila.Item("Bodega")
             Dim _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
 
-            'Dim _Tbl_Productos_Levantar As DataTable
             Dim _Ls_ProductoLevantar As New List(Of Frm_Impor_Prod_Masivamente.ProductoLevantar)
 
             Dim Fm As New Frm_Impor_Prod_Masivamente(_CodSucursal, _CodBodega, _CodLista, Frm_Impor_Prod_Masivamente.Enum_Tipo_Doc.Excel)
             Fm.NetoBruto = _TblEncabezado.Rows(0).Item("DocEn_Neto_Bruto")
             Fm.ShowDialog(Me)
-            '_Tbl_Productos_Levantar = Fm.Tbl_Productos_Levantar
             _Ls_ProductoLevantar = Fm.Ls_ProductoLevantar
             Fm.Dispose()
 
