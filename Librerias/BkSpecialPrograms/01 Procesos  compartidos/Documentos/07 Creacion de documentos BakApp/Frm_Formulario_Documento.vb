@@ -1037,7 +1037,7 @@ Public Class Frm_Formulario_Documento
 
                     Btn_Despacho.Enabled = True
 
-                    Btn_Editar_Cotizacion.Visible = (_Tido = "COV")
+                    Btn_Editar_Cotizacion.Visible = (_Tido = "COV" AndAlso Not SobreStock)
                     Btn_Contenedor.Visible = (_Tido = "COV" And PreVenta)
 
                 Case "COV", "NVV"
@@ -15819,7 +15819,8 @@ Public Class Frm_Formulario_Documento
             End If
 
             If _Cabeza = "CodEntidad" AndAlso _Tido = "COV" AndAlso SobreStock Then
-                Call Btn_Cambiar_Moneda_Click(Nothing, Nothing)
+                Sb_Cambiar_Moneda_SobreStock()
+                'Call Btn_Cambiar_Moneda_Click(Nothing, Nothing)
             End If
 
         Catch ex As Exception
@@ -15833,6 +15834,68 @@ Public Class Frm_Formulario_Documento
         End Try
 
     End Sub
+
+    Sub Sb_Cambiar_Moneda_SobreStock()
+
+        Dim _Komo As String = "US$"
+        Dim _Nokomo As String
+        Dim _Kolt As String = "1US"
+        Dim _Vamo As Double
+        Dim _Timo As String
+
+        Consulta_sql = "Select TOP 1 * From MAEMO" & vbCrLf &
+               "Where KOMO = '" & _Komo & "' And FEMO = '" & Format(_TblEncabezado.Rows(0).Item("FechaEmision"), "yyyyMMdd") & "'" & vbCrLf &
+               "Order By IDMAEMO Desc"
+
+        Dim _RowMoneda_Enc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        _Vamo = _RowMoneda_Enc.Item("VAMO")
+        _Timo = _RowMoneda_Enc.Item("TIMO")
+        _Nokomo = _RowMoneda_Enc.Item("NOKOMO")
+
+        Grilla_Encabezado.Rows(0).Cells("ListaPrecios").Value = _Kolt
+
+        _TblEncabezado.Rows(0).Item("Tasadorig_Doc") = _Vamo '_RowMoneda_Enc.Item("VAMO")
+
+        _TblEncabezado.Rows(0).Item("Moneda_Doc") = _Komo
+        _TblEncabezado.Rows(0).Item("Valor_Dolar") = _Vamo
+        _TblEncabezado.Rows(0).Item("TipoMoneda") = _Timo
+
+        Consulta_sql = "Select Top 1 * From TABMO Where KOMO = '" & _Komo & "'"
+        Dim _RowMoneda_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        LblMoneda.Tag = _Komo
+        LblMoneda.Text = _Komo
+
+        Dim _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
+
+        Consulta_sql = "Select * From TABPP" & vbCrLf &
+                       "Inner Join TABMO On MOLT = KOMO" & vbCrLf &
+                       "Where KOLT = '" & _CodLista & "'"
+        _RowMoneda_Det = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        For Each _Fila As DataRow In _TblDetalle.Rows
+
+            Dim _Nuevo_Producto As Boolean = _Fila.Item("Nuevo_Producto")
+
+            If _Nuevo_Producto Then
+
+                _Fila.Item("CodLista") = _RowMoneda_Det.Item("KOLT")
+                _Fila.Item("Moneda") = _RowMoneda_Det.Item("KOMO")
+                _Fila.Item("Tipo_Cambio") = _RowMoneda_Det.Item("VAMO")
+                _Fila.Item("Tipo_Moneda") = _RowMoneda_Det.Item("TIMO")
+                _Fila.Item("Tasadorig") = _TblEncabezado.Rows(0).Item("Tasadorig_Doc")
+
+            End If
+
+        Next
+
+        Sb_Sumar_Totales()
+
+        MessageBoxEx.Show(Me, "Cambio de moneda del documento a " & _Komo & " - " & _Nokomo, "Venta Sobre Stock", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
 
     Private Sub Sb_Asociar_Contenedor()
 
@@ -20186,6 +20249,10 @@ Public Class Frm_Formulario_Documento
             Dim _Conservar_Responzable_Doc_Relacionado As Boolean = _Global_Row_Configuracion_General.Item("Conservar_Responzable_Doc_Relacionado")
             Dim _Preguntar_Si_Cambia_Responsable_Doc_Relacionado As Boolean = _Global_Row_Configuracion_General.Item("Preguntar_Si_Cambia_Responsable_Doc_Relacionado")
             Dim _Conservar_Responzable_Origen As Boolean
+
+            If SobreStock Then
+                _Conservar_Responzable_Doc_Relacionado = True
+            End If
 
             Select Case _Tido
 

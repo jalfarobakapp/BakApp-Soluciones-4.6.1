@@ -38,6 +38,8 @@ Public Class Frm_SobreStock_Productos
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
+        ActiveControl = Txt_Filtrar
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
@@ -134,7 +136,7 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
             .Columns("PqteStock").HeaderText = "Stock"
             .Columns("PqteStock").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PqteStock").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("PqteStock").Visible = True
+            .Columns("PqteStock").Visible = Not ModoSeleccion
             .Columns("PqteStock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -142,7 +144,7 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
             .Columns("PqteComprometido").HeaderText = "Comprom. Venta"
             .Columns("PqteComprometido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PqteComprometido").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("PqteComprometido").Visible = True
+            .Columns("PqteComprometido").Visible = Not ModoSeleccion
             .Columns("PqteComprometido").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -150,7 +152,7 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
             .Columns("PqteComprometidoSol").HeaderText = "Comprom. SOL"
             .Columns("PqteComprometidoSol").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PqteComprometidoSol").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("PqteComprometidoSol").Visible = True
+            .Columns("PqteComprometidoSol").Visible = Not ModoSeleccion
             .Columns("PqteComprometidoSol").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -167,6 +169,10 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
     End Sub
 
     Private Sub Btn_AgregarProducto_Click(sender As Object, e As EventArgs) Handles Btn_AgregarProducto.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Sobs0002") Then
+            Return
+        End If
 
         Dim _RowProducto As DataRow
 
@@ -186,12 +192,6 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
         If IsNothing(_RowProducto) Then
             Return
         End If
-
-        'Dim _Row_Bodega As DataRow = Fx_Seleccionar_Bodega()
-
-        'If IsNothing(_Row_Bodega) Then
-        '    Return
-        'End If
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_SobreStock",
                                                         "Empresa = '" & Mod_Empresa & "' And " &

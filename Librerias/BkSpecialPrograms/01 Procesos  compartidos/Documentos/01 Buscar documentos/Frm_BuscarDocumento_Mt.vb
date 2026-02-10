@@ -1484,20 +1484,26 @@ Public Class Frm_BuscarDocumento_Mt
 
     Private Sub Btn_Facturar_Click(sender As Object, e As EventArgs) Handles Btn_Facturar.Click
 
-        If Fx_Tiene_Permiso(Me, "Bkp00054") Then
+        If SobreStock Then
+            MessageBoxEx.Show(Me, "No se pueden facturar notas de venta Sobre Stock",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
-            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        If Not Fx_Tiene_Permiso(Me, "Bkp00054") Then
+            Return
+        End If
 
-            Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
-            Sb_Crear_Documento_Desde_Otro_Automaticamente(Me, "FCV", _Idmaeedo)
+        Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
 
-            If Not Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo) Then
+        Sb_Crear_Documento_Desde_Otro_Automaticamente(Me, "FCV", _Idmaeedo)
 
-                _Fila.Cells("Estado").Value = "Cerrado"
-                _Fila.Cells("ESTADO").Style.ForeColor = Color.Red
+        If Not Fx_Se_Puede_Trasladar_Para_Crear_Otro_Documento(_Idmaeedo) Then
 
-            End If
+            _Fila.Cells("Estado").Value = "Cerrado"
+            _Fila.Cells("ESTADO").Style.ForeColor = Color.Red
 
         End If
 
@@ -1553,8 +1559,13 @@ Public Class Frm_BuscarDocumento_Mt
 
         Dim _Idmaeedo = _Fila.Cells("IDMAEEDO").Value
         Dim _Chk As Boolean = _Fila.Cells("Chk").Value
-        Dim _ProblemaStock As Boolean = NuloPorNro(_Fila.Cells("ProblemaStock").Value, False)
-        Dim _PermiteSinStock As Boolean = NuloPorNro(_Fila.Cells("PermiteSinStock").Value, False)
+        Dim _ProblemaStock As Boolean
+        Dim _PermiteSinStock As Boolean
+
+        If SobreStock Then
+            _ProblemaStock = NuloPorNro(_Fila.Cells("ProblemaStock").Value, False)
+            _PermiteSinStock = NuloPorNro(_Fila.Cells("PermiteSinStock").Value, False)
+        End If
 
         If _Cabeza = "Chk" Then
 
@@ -1675,12 +1686,49 @@ Public Class Frm_BuscarDocumento_Mt
                 End If
 
                 If _Cerrar_Documentos Then
+
                     Lbl_Status.Text = "Cerrando documento: " & _Row_Maeedo.Item("TIDO") & " - " & _Row_Maeedo.Item("NUDO")
+
                     If Cerrar_Doc.Fx_Cerrar_Documento(_Idmaeedo, _Tbl_Maeddo) Then
+
                         _Fila.Item("ESTADO") = "Cerrado"
                         _Cerrado += 1
                         _Fila.Item("Chk") = False
+
+                        If _Tido = "COV" Then
+
+                            Consulta_Sql = $"
+Update {_Global_BaseBk}Zw_Docu_Det Set Qty_SobreStockD = Qty_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+
+                            Consulta_Sql = $"
+Update {_Global_BaseBk}Zw_Prod_SobreStock Set PqteComprometido = PqteComprometido-Qty_SobreStockD
+From {_Global_BaseBk}Zw_Prod_SobreStock St
+Inner Join {_Global_BaseBk}Zw_Docu_Det Det On St.Id = Det.Id_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+
+                        End If
+
+                        If _Tido = "NVV" Then
+
+                            Consulta_Sql = $"
+Update {_Global_BaseBk}Zw_Docu_Det Set Qty_SobreStockDv = Qty_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+
+                            Consulta_Sql = $"
+Update {_Global_BaseBk}Zw_Prod_SobreStock Set PqteStock = PqteStock+Qty_SobreStockDv
+From {_Global_BaseBk}Zw_Prod_SobreStock St
+Inner Join {_Global_BaseBk}Zw_Docu_Det Det On St.Id = Det.Id_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+
+                        End If
+
                     End If
+
                 End If
 
                 'Application.DoEvents()

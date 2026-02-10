@@ -957,7 +957,7 @@ Public Class Frm_Impor_Prod_Masivamente
                 If _Divisible2 = "N" Then
                     ' Comprobar si _CantUd1 tiene decimales (con tolerancia)
                     Dim tolerancia As Double = 0.000001
-                    Dim tieneDecimales As Boolean = Math.Abs(_CantUd1 - Math.Truncate(_CantUd2)) > tolerancia
+                    Dim tieneDecimales As Boolean = Math.Abs(_CantUd2 - Math.Truncate(_CantUd2)) > tolerancia
 
                     If tieneDecimales Then
                         _Mensaje.Detalle = "Fila: " & _Index & ", Codigo: " & _Codigo
