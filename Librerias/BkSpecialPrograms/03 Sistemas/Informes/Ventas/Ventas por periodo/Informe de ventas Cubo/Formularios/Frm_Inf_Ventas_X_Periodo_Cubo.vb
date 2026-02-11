@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Forms.DataVisualization.Charting
 'Imports BkSpecialPrograms.Frm_BkpPostBusquedaEspecial_Mt
 Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
 
 Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
@@ -4487,26 +4488,26 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     Private Sub Btn_Nota_de_venta_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Nota_de_venta.Click
 
-        If Fx_Tiene_Permiso(Me, "Bkp00041") Then 'Doc00150
+        If Not Fx_Tiene_Permiso(Me, "Bkp00041") Then
+            Return
+        End If
 
-            Dim _Kofu_Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kofu_Kogru",
+        Dim _Kofu_Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kofu_Kogru",
                                                           "CodFuncionario = '" & FUNCIONARIO & "'").ToString.Trim
 
-            If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+        If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
 
-                _Kofu_Kogru = "Usuario(s): " & _Kofu_Kogru
+            _Kofu_Kogru = "Usuario(s): " & _Kofu_Kogru
 
-                Sb_Confirmar_Lectura("Aun tiene su grupo de vendedores asociado a otro usuario." & vbCrLf &
-                                     _Kofu_Kogru, "Debe quitarlo desde su ficha de usuario.", eTaskDialogIcon.Exclamation, Nothing)
-
-            End If
-
-            Dim Fm_Post As New Frm_Formulario_Documento("NVV", csGlobales.Enum_Tipo_Documento.Venta, False)
-            Fm_Post.MinimizeBox = False
-            Fm_Post.ShowDialog(Me)
-            Fm_Post.Dispose()
+            Sb_Confirmar_Lectura("Aun tiene su grupo de vendedores asociado a otro usuario." & vbCrLf &
+                                 _Kofu_Kogru, "Debe quitarlo desde su ficha de usuario.", eTaskDialogIcon.Exclamation, Nothing)
 
         End If
+
+        Dim Fm_Post As New Frm_Formulario_Documento("NVV", csGlobales.Enum_Tipo_Documento.Venta, False)
+        Fm_Post.MinimizeBox = False
+        Fm_Post.ShowDialog(Me)
+        Fm_Post.Dispose()
 
     End Sub
 
@@ -5179,6 +5180,32 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             End If
 
         End If
+
+    End Sub
+
+    Private Sub Btn_CotizacionSobreStock_Click(sender As Object, e As EventArgs) Handles Btn_CotizacionSobreStock.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Sobs0006") Then
+            Return
+        End If
+
+        Dim _Kofu_Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kofu_Kogru",
+                                                      "CodFuncionario = '" & FUNCIONARIO & "'").ToString.Trim
+
+        If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+
+            _Kofu_Kogru = "Usuario(s): " & _Kofu_Kogru
+
+            Sb_Confirmar_Lectura("Aun tiene su grupo de vendedores asociado a otro usuario." & vbCrLf &
+                                 _Kofu_Kogru, "Debe quitarlo desde su ficha de usuario.", eTaskDialogIcon.Exclamation, Nothing)
+
+        End If
+
+        Dim Fm_Post As New Frm_Formulario_Documento("COV", csGlobales.Enum_Tipo_Documento.Venta, False,,,,,,,, True)
+        Fm_Post.MinimizeBox = False
+        Fm_Post.Pro_SubTido = "STK"
+        Fm_Post.ShowDialog(Me)
+        Fm_Post.Dispose()
 
     End Sub
 

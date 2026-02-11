@@ -9,7 +9,7 @@ Public Module Modulo_Documentos
                              Optional _Cerrar_Al_Grabar As Boolean = False,
                              Optional _PreguntarPorGrupoAsociado As Boolean = False)
 
-        Dim _Permiso As String = Fx_PermisoRegistroDoc(_Tido)
+        Dim _Permiso As String = Fx_PermisoRegistroDoc(_Tido, _SubTido)
 
         If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, _Permiso) Then Return
         If Not Fx_Tido_Excluido(_Fm_Menu_Padre, _Tido) Then Return
@@ -106,8 +106,6 @@ Public Module Modulo_Documentos
                     If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True
                     Fm_Post.MinimizeBox = _Minimizar
                     Fm_Post.Pro_SubTido = _SubTido
-                    'Fm_Post.PreVenta = _PreVenta
-                    'Fm_Post.SobreStock = _SobreStock
                     Fm_Post.ShowDialog(_Fm_Menu_Padre)
                     Fm_Post.Dispose()
 

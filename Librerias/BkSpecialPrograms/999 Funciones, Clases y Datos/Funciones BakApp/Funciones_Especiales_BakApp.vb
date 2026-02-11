@@ -7309,7 +7309,7 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Function Fx_PermisoRegistroDoc(_Tido As String)
+    Function Fx_PermisoRegistroDoc(_Tido As String, _Subtido As String)
 
         Dim _Permiso As String
 
@@ -7324,7 +7324,11 @@ Public Module Crear_Documentos_Desde_Otro
             Case "BSV"
                 _Permiso = "Doc00107" ' BOLETA DE VENTA SIMPLE"
             Case "COV"
-                _Permiso = "Doc00108" ' COTIZACION DE VENTA"
+                If _Subtido = "STK" Then
+                    _Permiso = "Sobs0006" ' COTIZACION DE VENTA SOBRE STOCK" 
+                Else
+                    _Permiso = "Doc00108" ' COTIZACION DE VENTA"
+                End If
             Case "DIN"
                 _Permiso = "Doc00109" ' DECLARACION DE INTERNACION"
             Case "ESC"
@@ -7490,7 +7494,7 @@ Public Module Crear_Documentos_Desde_Otro
         ' Paso 2: Filtrar por permisos
         Dim documentosPermitidos As New List(Of Ls_DocumentosPermitidos)
         For Each doc In documentos
-            Dim permiso As String = Fx_PermisoRegistroDoc(doc.Tido)
+            Dim permiso As String = Fx_PermisoRegistroDoc(doc.Tido, "")
             If Not String.IsNullOrEmpty(permiso) AndAlso Fx_Tiene_Permiso(permiso, _Kofu) Then
                 documentosPermitidos.Add(doc)
             End If

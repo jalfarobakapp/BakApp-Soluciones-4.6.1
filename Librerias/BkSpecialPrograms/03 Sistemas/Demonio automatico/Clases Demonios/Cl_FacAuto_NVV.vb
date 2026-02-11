@@ -780,18 +780,18 @@ Where Facturar = 1"
                 End If
 
                 Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & "
-                                            Select *,CAse When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
-                                            CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori',
-                                            Case WHEN UDTRPR = 1 Then " & _CampoPrecio & " Else " & _CampoPrecio & "*RLUDPR End AS 'Precio',
-                                            0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
-                                            From MAEDDO  With ( NOLOCK ) 
-                                            Where IDMAEEDO = " & _Idmaeedo_Origen & "  AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''
-                                            Order by IDMAEEDO,IDMAEDDO 
-                                            Select * From MAEIMLI
-                                            Where IDMAEEDO = " & _Idmaeedo_Origen & " 
-                                            Select * From MAEDTLI
-                                            Where IDMAEEDO = " & _Idmaeedo_Origen & " 
-                                            Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
+                                Select *,CAse When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
+                                CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori',
+                                Case WHEN UDTRPR = 1 Then " & _CampoPrecio & " Else " & _CampoPrecio & "*RLUDPR End AS 'Precio',
+                                0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
+                                From MAEDDO  With ( NOLOCK ) 
+                                Where IDMAEEDO = " & _Idmaeedo_Origen & "  AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''
+                                Order by IDMAEEDO,IDMAEDDO 
+                                Select * From MAEIMLI
+                                Where IDMAEEDO = " & _Idmaeedo_Origen & " 
+                                Select * From MAEDTLI
+                                Where IDMAEEDO = " & _Idmaeedo_Origen & " 
+                                Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
 
                 'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
                 'Falta campo FECHATRIB = Fecha de ingreso
@@ -803,11 +803,16 @@ Where Facturar = 1"
                 '-- 100 Con derecho a credito fiscal y sin documento contiene activo fijo
                 '-- '' -- No incluye este documento en el libro de compras 
                 'x
+
+                Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Docu_Ent Where Idmaeedo = {_Idmaeedo_Origen}"
+                Dim _Row_Zw_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                Dim _SobreStock As Boolean = _Row_Zw_Docu_Det.Item("SobreStock")
+
                 Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_Sql)
 
                 Mod_Modalidad = _Modalidad
 
-                Dim Fm_Post As New Frm_Formulario_Documento("FCV", csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
+                Dim Fm_Post As New Frm_Formulario_Documento("FCV", csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True,, _SobreStock)
                 Fm_Post.Sb_Limpiar(_Modalidad)
                 Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
                 Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, True, False)
@@ -1133,8 +1138,12 @@ Where Facturar = 1"
                             End With
                         End If
 
+                        Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Docu_Ent Where Idmaeedo = {_Idmaeedo_Origen}"
+                        Dim _Row_Zw_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                        Dim _SobreStock As Boolean = _Row_Zw_Docu_Det.Item("SobreStock")
+
                         Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
-                                                                    csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
+                                                                    csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True,, _SobreStock)
 
 
                         Fm_Post.ModEmpresa_Doc = _Empresa

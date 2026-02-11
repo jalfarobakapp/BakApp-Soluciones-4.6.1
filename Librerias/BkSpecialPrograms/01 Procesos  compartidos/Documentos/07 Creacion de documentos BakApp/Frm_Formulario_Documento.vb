@@ -12387,6 +12387,11 @@ Public Class Frm_Formulario_Documento
 
     Private Sub Btn_Dejar_Doc_Stand_By_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Dejar_Doc_Stand_By.Click
 
+        If SobreStock Then
+            MessageBoxEx.Show(Me, "Este tipo de documento no permite esta acción", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "Pedir_Permiso_Para_Usar_Stanby") Then
 
             Dim _Pedir_Permiso_Para_Usar_Stanby As Boolean = _Global_Row_Configuracion_General.Item("Pedir_Permiso_Para_Usar_Stanby")
@@ -20192,7 +20197,13 @@ Public Class Frm_Formulario_Documento
                     _ListaOrigen = String.Empty
                 End Try
 
-                Sb_RevListaSuperiosEntidad(True)
+                Dim _MostrarMensaje As Boolean = True
+
+                If _Tido = "NVV" And SobreStock Then
+                    _MostrarMensaje = False
+                End If
+
+                Sb_RevListaSuperiosEntidad(_MostrarMensaje)
 
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, _Revisar_Permiso_Lista_Precio, _Aplicar_Vencimientos, False,, _ListaOrigen)
 

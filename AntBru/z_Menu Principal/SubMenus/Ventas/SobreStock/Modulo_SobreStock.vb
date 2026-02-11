@@ -33,9 +33,9 @@ Public Class Modulo_SobreStock
 
     Private Sub Btn_COV_SobreStock_Click(sender As Object, e As EventArgs) Handles Btn_COV_SobreStock.Click
 
-        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Sobs0006") Then
-            Return
-        End If
+        'If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Sobs0006") Then
+        '    Return
+        'End If
 
         Modulo_Documentos.Sb_Generar_Documento(_Fm_Menu_Padre,
                                         "COV",
