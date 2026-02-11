@@ -146,6 +146,9 @@ Public Class Frm_Pagos_Generales
         AddHandler Grilla_Pagos.EditingControlShowing, AddressOf Grilla_EditingControlShowing
         AddHandler Grilla_Estado_de_Cuentas.EditingControlShowing, AddressOf Grilla_EditingControlShowing
 
+        AddHandler Grilla_Pagos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla_Estado_de_Cuentas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
         Chk_Fecha_Asignacion.Enabled = Not ModoLectura
 
         If ModoLectura Then

@@ -154,6 +154,14 @@ Order By c.ENDP,c.FEEMDP"
             .Columns("PagoCruzado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("Exclamacion").HeaderText = "!"
+            .Columns("Exclamacion").ToolTipText = "Exclamación"
+            .Columns("Exclamacion").HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter
+            .Columns("Exclamacion").Width = 30
+            .Columns("Exclamacion").Visible = True
+            .Columns("Exclamacion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("TIDP").HeaderText = "TD"
             .Columns("TIDP").Width = 30
             .Columns("TIDP").Visible = True
@@ -393,6 +401,7 @@ Where NombreEquipo <> '{_NombreEquipo}'-- And CodFuncionario <> '{FUNCIONARIO}'"
                 Dim _Endp As String = _Fila.Item("ENDP").ToString.Trim
                 Dim _Saldo_Pg As Double = _Fila.Item("SALDO_PG")
                 Dim _Modp As String = _Fila.Item("MODP")
+                Dim _Exclamacion As Boolean = _Fila.Item("Exclamacion")
 
                 ' Actualizar estado por fila
                 Lbl_Status.Text = String.Format("Procesando {0} de {1}. ENDP: {2} - IDMAEDPCE: {3}", _contador, Barra_Progreso.Maximum, _Endp, _Idmaedpce)
@@ -401,7 +410,7 @@ Where NombreEquipo <> '{_NombreEquipo}'-- And CodFuncionario <> '{FUNCIONARIO}'"
                 End If
                 Application.DoEvents()
 
-                If _Modp.ToString.Trim <> "$" Then
+                If _Modp.ToString.Trim <> "$" Or _Exclamacion Then
                     ' Considerar como no procesado por moneda diferente: aquí no se añade a noMatches
                     Continue For
                 End If
@@ -644,7 +653,7 @@ ORDER BY Orden,FEVEDP"
             MessageBoxEx.Show(Me, "Error al realizar match de documentos: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             Try
-                Barra_Progreso.Value = Barra_Progreso.Maximum
+                Barra_Progreso.Value = 0
                 Lbl_Status.Text = "Proceso finalizado"
                 Application.DoEvents()
             Catch
@@ -713,6 +722,38 @@ ORDER BY Orden,FEVEDP"
             Catch ex As Exception
                 nuevoValor = False
             End Try
+
+            ' --- NUEVA VALIDACIÓN: si Exclamacion = True no permitir marcar y mostrar Observacion ---
+            If nuevoValor Then
+                Try
+                    Dim tieneExclamacion As Boolean = False
+                    Dim observacion As String = String.Empty
+
+                    If filaGrid.Cells("Exclamacion").Value IsNot Nothing AndAlso Not IsDBNull(filaGrid.Cells("Exclamacion").Value) Then
+                        tieneExclamacion = Convert.ToBoolean(filaGrid.Cells("Exclamacion").Value)
+                    End If
+
+                    If tieneExclamacion Then
+                        If filaGrid.Cells("Observacion").Value IsNot Nothing AndAlso Not IsDBNull(filaGrid.Cells("Observacion").Value) Then
+                            observacion = filaGrid.Cells("Observacion").Value.ToString().Trim()
+                        End If
+
+                        If String.IsNullOrEmpty(observacion) Then
+                            observacion = "Registro con observación. Consulte detalles."
+                        End If
+
+                        MessageBoxEx.Show(Me, observacion, "No se puede seleccionar", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                        ' Revertir el cambio
+                        filaGrid.Cells("Chk").Value = False
+
+                        Return
+                    End If
+                Catch ex As Exception
+                    ' Si falla la validación dejar proceder con el flujo normal
+                End Try
+            End If
+            ' ---------------------------------------------------------------------------------------
 
             ' Comprobar que la fila tenga CruzarPagoAuto = True si se intenta chequear
             Dim puedeCruzar As Boolean = False
@@ -857,7 +898,7 @@ ORDER BY Orden,FEVEDP"
         For Each _Fila As DataRow In _Tbl_Maedpce.Rows
 
             If Chk_Seleccionar_Todo.Checked Then
-                If _Fila.Item("CruzarPagoAuto") Then
+                If _Fila.Item("CruzarPagoAuto") And Not _Fila.Item("Exclamacion") Then
                     _Fila.Item("Chk") = True
                     _HayFilasParaCruzar = True
                 Else
@@ -1115,7 +1156,7 @@ ORDER BY Orden,FEVEDP"
         For Each _Fila As DataRow In _Tbl_Maedpce.Rows
 
             If Chk_Seleccionar_MatchExacto.Checked Then
-                If _Fila.Item("CruzarPagoAuto") And _Fila.Item("MatchExacto") Then
+                If _Fila.Item("CruzarPagoAuto") And _Fila.Item("MatchExacto") And Not _Fila.Item("Exclamacion") Then
                     _Fila.Item("Chk") = True
                     _HayFilasParaCruzar = True
                 Else
@@ -1153,13 +1194,70 @@ ORDER BY Orden,FEVEDP"
         Dim _Fila As DataGridViewRow = Grilla_Maedpce.CurrentRow
         Dim _Koen = _Fila.Cells("ENDP").Value
         Dim _Razon = _Fila.Cells("RAZON").Value
+        Dim _Idmaedpce As Integer = _Fila.Cells("IDMAEDPCE").Value
+        Dim _Vadp As Double = _Fila.Cells("VADP").Value
+        Dim _Vaasdp As Double = _Fila.Cells("VAASDP").Value
+        Dim _Vavudp As Double = _Fila.Cells("VAVUDP").Value
+        Dim _Saldo_pg As Double = _Fila.Cells("SALDO_PG").Value
+
+        Dim _Grabar As Boolean
 
         Dim Fm As New Frm_Pagos_Generales(Frm_Pagos_Generales.Enum_Tipo_Pago.Clientes)
         Fm.Koen = _Koen
         Fm.BtnActualizarLista.Visible = False
-        Fm.ModoLectura = True
+        Fm.Cerrar_al_grabar = True
+        'Fm.ModoLectura = True
         Fm.ShowDialog(Me)
+        _Grabar = Fm.Grabar
         Fm.Dispose()
+
+        If _Grabar Then
+
+            ' Marcar todas las filas cuyo ENDP coincide con _Koen:
+            Try
+                If _Tbl_Maedpce IsNot Nothing Then
+                    For Each dr As DataRow In _Tbl_Maedpce.Rows
+                        Try
+                            Dim rEndp As String = String.Empty
+                            If dr.Table.Columns.Contains("ENDP") AndAlso dr.Item("ENDP") IsNot Nothing AndAlso Not IsDBNull(dr.Item("ENDP")) Then
+                                rEndp = dr.Item("ENDP").ToString().Trim()
+                            End If
+
+                            If String.Equals(rEndp, _Koen.ToString().Trim(), StringComparison.OrdinalIgnoreCase) Then
+                                If dr.Table.Columns.Contains("Exclamacion") Then
+                                    dr.Item("Exclamacion") = True
+                                    dr.Item("CruzarPagoAuto") = False
+                                    dr.Item("MatchExacto") = False
+                                    dr.Item("MatchParcial") = False
+                                    dr.Item("REFANTI") = String.Empty
+                                    dr.Item("Observacion") = "Se realizo gestión de pago a traves de pagos generales, el registro queda visado"
+                                End If
+                                'If dr.Table.Columns.Contains("Observacion") Then
+                                '    dr.Item("Observacion") = "Se realizo gestión de pago a traves de pagos genrales, el registro queda vizado"
+                                'End If
+                            End If
+                        Catch ex As Exception
+                            ' Ignorar fila con problemas y continuar
+                        End Try
+                    Next
+                End If
+            Catch ex As Exception
+                ' No interrumpir UI si ocurre algún error al marcar filas
+            End Try
+
+            MessageBoxEx.Show(Me, "El valor del saldo de este registro ya no corresponde a lo informado" & vbCrLf &
+                          "Esta fila ya no estara disponible para revisión, ni ninguna de los registros que pertenezcan a este cliente",
+                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+            Call Grilla_Maedpce_CellEnter(Nothing, Nothing)
+            ' Refrescar grilla y totales
+            Try
+                Grilla_Maedpce.Refresh()
+                Sb_Actualizar_Totales(False)
+            Catch
+            End Try
+
+        End If
 
     End Sub
 
