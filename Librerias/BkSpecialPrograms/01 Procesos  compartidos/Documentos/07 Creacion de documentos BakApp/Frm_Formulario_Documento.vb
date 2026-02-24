@@ -8861,7 +8861,11 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
-                    If Not Fx_Entidad_Tiene_Deudas_CtaCte(_Formulario, _RowEntidad, False, False, _Bloqueada) Then
+                    Dim Cl_Entidad As New Cl_Entidad
+
+                    Dim _Msj_Deudas As LsValiciones.Mensajes = Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False)
+
+                    If Not _Msj_Deudas.EsCorrecto Then
 
                         MessageBoxEx.Show(Me, "La entidad presenta morosidad" & Environment.NewLine &
                                           "Está situación será evaluada nuevamente al grabar el documento",

@@ -40,11 +40,11 @@ SELECT  Top #CantidadDoc#
         Edo.TIDOELEC
  Into #Paso
      FROM MAEEDO Edo WITH ( NOLOCK )    
-		Left Join TABSU Tsu On Edo.EMPRESA = Tsu.EMPRESA And Edo.SUDO = Tsu.KOSU 
-			Left Join MAEEN Mae1 On Edo.ENDO = Mae1.KOEN And Edo.SUENDO = Mae1.SUEN 
+		Left Join TABSU Tsu WITH ( NOLOCK ) On Edo.EMPRESA = Tsu.EMPRESA And Edo.SUDO = Tsu.KOSU 
+			Left Join MAEEN Mae1 WITH ( NOLOCK ) On Edo.ENDO = Mae1.KOEN And Edo.SUENDO = Mae1.SUEN 
 				--Left Join MAEEN Mae2 On Edo.ENDOFI = Mae2.KOEN 
                 #Left_Join_MAEEN_ENDOFI_SUENDOFI#
-					Left Join TABTIDO Tid On Edo.TIDO = Tid.TIDO 
+					Left Join TABTIDO Tid WITH ( NOLOCK ) On Edo.TIDO = Tid.TIDO 
         WHERE  
              Edo.EMPRESA = '#Empresa#' 
 			 #SucursalDocumento#    --AND TIDO='COV'  

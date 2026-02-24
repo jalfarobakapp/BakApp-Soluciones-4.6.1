@@ -169,7 +169,7 @@ Public Class Frm_RegistrarEquipo
 
         Dim _RutEmpresa As String = _Sql.Fx_Trae_Dato("CONFIGP", "RUT", "EMPRESA = '01'")
 
-        '_RutEmpresa = RutEmpresaActiva
+        _RutEmpresa = RutEmpresaActiva
 
         Dim _Cadena As String = UCase(_RutEmpresa.Trim & "@" & LblNombreEquipo.Text)
         Dim _Key = Encripta_md5(_Cadena)

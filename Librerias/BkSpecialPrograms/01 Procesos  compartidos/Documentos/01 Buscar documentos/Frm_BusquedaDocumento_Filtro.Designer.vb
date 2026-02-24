@@ -542,7 +542,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.TableLayoutPanel3.ColumnCount = 3
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 135.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Algunas, 2, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Todas, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.LabelX2, 0, 0)
@@ -564,7 +564,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Sucursal_Doc_Algunas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(249, 4)
+        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(248, 4)
         Me.Rdb_Sucursal_Doc_Algunas.Name = "Rdb_Sucursal_Doc_Algunas"
         Me.Rdb_Sucursal_Doc_Algunas.Size = New System.Drawing.Size(94, 17)
         Me.Rdb_Sucursal_Doc_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -584,7 +584,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Sucursal_Doc_Todas.CheckValue = "Y"
         Me.Rdb_Sucursal_Doc_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(157, 4)
+        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(156, 4)
         Me.Rdb_Sucursal_Doc_Todas.Name = "Rdb_Sucursal_Doc_Todas"
         Me.Rdb_Sucursal_Doc_Todas.Size = New System.Drawing.Size(85, 17)
         Me.Rdb_Sucursal_Doc_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1219,12 +1219,12 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Txt_CodRetirador.ButtonCustom2.Visible = True
         Me.Txt_CodRetirador.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_CodRetirador.ForeColor = System.Drawing.Color.Black
-        Me.Txt_CodRetirador.Location = New System.Drawing.Point(138, 23)
+        Me.Txt_CodRetirador.Location = New System.Drawing.Point(193, 23)
         Me.Txt_CodRetirador.MaxLength = 20
         Me.Txt_CodRetirador.Name = "Txt_CodRetirador"
         Me.Txt_CodRetirador.PreventEnterBeep = True
         Me.Txt_CodRetirador.ReadOnly = True
-        Me.Txt_CodRetirador.Size = New System.Drawing.Size(496, 22)
+        Me.Txt_CodRetirador.Size = New System.Drawing.Size(441, 22)
         Me.Txt_CodRetirador.TabIndex = 9
         '
         'LabelX4
@@ -1235,7 +1235,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(139, 3)
+        Me.LabelX4.Location = New System.Drawing.Point(193, 3)
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(161, 23)
         Me.LabelX4.TabIndex = 8
@@ -1257,7 +1257,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Txt_Ocdo.MaxLength = 20
         Me.Txt_Ocdo.Name = "Txt_Ocdo"
         Me.Txt_Ocdo.PreventEnterBeep = True
-        Me.Txt_Ocdo.Size = New System.Drawing.Size(120, 22)
+        Me.Txt_Ocdo.Size = New System.Drawing.Size(177, 22)
         Me.Txt_Ocdo.TabIndex = 3
         '
         'LabelX3

@@ -690,7 +690,8 @@ Public Class Frm_BusquedaDocumento_Filtro
         End If
 
         If Not String.IsNullOrEmpty(Txt_Ocdo.Text.Trim) Then
-            _Sql_Occ = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB WITH ( NOLOCK ) Where OCDO Like '" & Txt_Ocdo.Text.Trim & "')" & vbCrLf
+            Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Ocdo.Text.Trim), "OCDO LIKE '%")
+            _Sql_Occ = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB WITH ( NOLOCK ) Where OCDO Like '%" & _Cadena & "%')" & vbCrLf
         End If
 
         If Not String.IsNullOrEmpty(Txt_Placapat.Text) Then

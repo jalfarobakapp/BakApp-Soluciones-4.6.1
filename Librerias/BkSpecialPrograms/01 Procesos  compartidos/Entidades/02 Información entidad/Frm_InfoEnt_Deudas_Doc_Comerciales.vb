@@ -702,6 +702,8 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
     End Sub
 
+
+
     Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Deuda.CellDoubleClick
 
         Me.Enabled = False
@@ -819,7 +821,6 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
         _Crsd_Disponible = _CRSD - (_Crsd_Utilizado + _CrNvv_Utilizado) - _EnCurso_Total
         _Crch_Disponible = _CRCH - (_Crch_Utilizado + _EnCurso_Cheque)
-
         _Crlt_Disponible = _CRLT - (_Crlt_Utilizado + _EnCurso_Letra)
         _Crpa_Disponible = _CRPA - (_Crpa_Utilizado + _EnCurso_Pagare)
 
@@ -836,9 +837,7 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Fx_Nueva_Linea_Credito("En cheques", _CRCH, _Crch_Utilizado, 0, _EnCurso_Cheque, _Crch_Disponible)
         Fx_Nueva_Linea_Credito("En letras", _CRLT, _Crlt_Utilizado, 0, _EnCurso_Letra, _Crlt_Disponible)
         Fx_Nueva_Linea_Credito("En pagare", _CRPA, _Crpa_Utilizado, 0, _EnCurso_Pagare, _Crpa_Disponible)
-
         Fx_Nueva_Linea_Credito("Saldo Favor (anticipos)", _CRSF, _CrPgo_Utilizado, 0, 0, _CrPgo_Disponible) ' Nueva linea
-
         Fx_Nueva_Linea_Credito("Máximo crédito", _CRTO, _Crto_Utilizado - _CrNvv_Utilizado, _CrNvv_Utilizado, _EnCurso_Total, _Crto_Disponible)
 
         Grilla_Credito.DataSource = _DsInfCredito.Tables("Tbl_SituCredito")

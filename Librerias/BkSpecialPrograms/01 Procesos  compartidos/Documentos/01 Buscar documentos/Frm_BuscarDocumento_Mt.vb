@@ -2434,7 +2434,7 @@ Case WHEN UDTRPR = 1 Then {_CampoPrecio}*Edo.TAMODO Else ({_CampoPrecio}*RLUDPR)
 From MAEDDO Ddo With ( NOLOCK )
     Left Join MAEEDO Edo On Edo.IDMAEEDO = Ddo.IDMAEEDO
         Where Ddo.IDMAEEDO = {_Idmaeedo_Origen} AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''
-Order by IDMAEEDO,IDMAEDDO 
+Order by Ddo.IDMAEEDO,Ddo.IDMAEDDO 
 
 Select * From MAEIMLI Where IDMAEEDO = {_Idmaeedo_Origen}
 Select * From MAEDTLI Where IDMAEEDO = {_Idmaeedo_Origen}
