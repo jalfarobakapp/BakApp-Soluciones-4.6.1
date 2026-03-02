@@ -218,7 +218,7 @@ Public Class Frm_ImpMasiva
                     Dim _Idmaeedo As Integer = _Row.Idmaeedo
                     Dim _Nudo As String = _Row.Nudo
                     Dim _Subtido As String = _Row.Subtido
-                    Dim _NombreFormato As String
+                    Dim _NombreFormato As String = String.Empty
 
                     If Rdb_ImpFormatoSeleccionado.Checked Then
                         _NombreFormato = Txt_NombreFormato.Text
@@ -228,9 +228,12 @@ Public Class Frm_ImpMasiva
                         _NombreFormato = _Row.NombreFormato_ModalidadDoc
                     End If
 
-                    Dim _ImprimirDocAdjuntos = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Format_01",
-                                                                 "ImprimirDocAdjuntos",
-                                                                 "NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'",,,, True)
+                    Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Format_01" & vbCrLf &
+                                   "Where NombreFormato = '" & _NombreFormato & "' And Subtido = '" & _Subtido & "'"
+                    Dim _Row_Formato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    Dim _ImprimirDocAdjuntos As Boolean = _Row_Formato.Item("ImprimirDocAdjuntos")
+                    Dim _ImprimirCedible As Boolean = _Row_Formato.Item("ImprimirCedible")
 
                     If _ImprimirDocAdjuntos Then
                         Fx_ImprimirArchivoAdjunto(_ImprimirDocAdjuntos, _Idmaeedo, Txt_Impresora.Text)
@@ -240,7 +243,7 @@ Public Class Frm_ImpMasiva
 
                     _Mensaje = Fx_Imprimir_Documento2(_Idmaeedo, _Tido, _Nudo, _NombreFormato, False, False, False, Txt_Impresora.Text, _Subtido)
 
-                    If Chk_ImprimirCedible.Checked AndAlso _Mensaje.EsCorrecto Then
+                    If Chk_ImprimirCedible.Checked AndAlso _Mensaje.EsCorrecto AndAlso _ImprimirCedible Then
                         Fx_Imprimir_Documento2(_Idmaeedo, _Tido, _Nudo, _NombreFormato, True, False, False, Txt_Impresora.Text, _Subtido)
                     End If
 
@@ -383,11 +386,14 @@ Public Class Frm_ImpMasiva
         End If
 
         _Sql.Sb_Parametro_Informe_Sql(Rdb_ImpFormatoModalidad, _Informe, Rdb_ImpFormatoModalidad.Name,
-                                     Class_SQL.Enum_Type._Boolean, Rdb_ImpFormatoModalidad.Checked, _Actualizar, "Imprimir")
+                                      Class_SQL.Enum_Type._Boolean, Rdb_ImpFormatoModalidad.Checked, _Actualizar, "Imprimir")
         _Sql.Sb_Parametro_Informe_Sql(Rdb_ImpFormatoModalidadDoc, _Informe, Rdb_ImpFormatoModalidadDoc.Name,
-                                        Class_SQL.Enum_Type._Boolean, Rdb_ImpFormatoModalidadDoc.Checked, _Actualizar, "Imprimir")
+                                      Class_SQL.Enum_Type._Boolean, Rdb_ImpFormatoModalidadDoc.Checked, _Actualizar, "Imprimir")
         _Sql.Sb_Parametro_Informe_Sql(Rdb_ImpFormatoSeleccionado, _Informe, Rdb_ImpFormatoSeleccionado.Name,
-                                        Class_SQL.Enum_Type._Boolean, Rdb_ImpFormatoSeleccionado.Checked, _Actualizar, "Imprimir")
+                                      Class_SQL.Enum_Type._Boolean, Rdb_ImpFormatoSeleccionado.Checked, _Actualizar, "Imprimir")
+
+        _Sql.Sb_Parametro_Informe_Sql(Chk_ImprimirCedible, _Informe, Chk_ImprimirCedible.Name,
+                                      Class_SQL.Enum_Type._Boolean, Chk_ImprimirCedible.Checked, _Actualizar, "Imprimir")
 
     End Sub
     Private Sub Frm_ImpMasiva_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed

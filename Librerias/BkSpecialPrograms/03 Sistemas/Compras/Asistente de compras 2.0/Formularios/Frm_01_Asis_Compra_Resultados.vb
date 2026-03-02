@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.Threading.Tasks
 Imports DevComponents.DotNetBar
+Imports OfficeOpenXml.FormulaParsing.LexicalAnalysis
 
 Public Class Frm_01_Asis_Compra_Resultados
 
@@ -109,6 +110,8 @@ Public Class Frm_01_Asis_Compra_Resultados
     Public Property IncluirProdRefleo_ProvStar As Boolean
     Public Property IncluirProdBajaRotacion_NVI As Boolean
     Public Property IncluirProdRefleo_NVI As Boolean
+    'Public Property CompararPreciosConProveedorSeleccionado As Boolean
+    'Public Property ListaDePreciosCompara As String
 
     Public Property Pro_Tbl_Filtro_Super_Familias() As DataTable
         Get
@@ -3793,7 +3796,6 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
         RemoveHandler Grilla.CellEnter, AddressOf Grilla_CellEnter
         RemoveHandler Grilla.KeyUp, AddressOf Grilla_KeyUp
         RemoveHandler Grilla.MouseDown, AddressOf Grilla_MouseDown
-        'RemoveHandler Grilla.CellFormatting, AddressOf Grilla_CellFormatting
 
         Input_Tiempo_Reposicion.Enabled = True
 
@@ -3802,26 +3804,26 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         ' Actualizacion de precios para comparativo de compras entre Mayorista/Supermercado y proveedor
 
-        If False Then
+        'If False Then
 
-            If Not IsNothing(_RowProveedor) Then
-                Sb_Actualizar_Costos_ListaProveedor(_RowProveedor.Item("KOEN"), _RowProveedor.Item("SUEN"), "ENERO 26")
-            End If
+        '    If Not IsNothing(_RowProveedor) Then
+        '        Sb_Actualizar_Costos_ListaProveedor(_RowProveedor.Item("KOEN"), _RowProveedor.Item("SUEN"), "ENERO 26")
+        '    End If
 
-            Dim _CodProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
-                                  "Valor",
-                                  "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
-                                  "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
-            Dim _CodSucProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
-                                         "Valor",
-                                         "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
-                                         "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
+        '    Dim _CodProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+        '                              "Valor",
+        '                              "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+        '                              "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
+        '    Dim _CodSucProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+        '                                 "Valor",
+        '                                 "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+        '                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
 
-            If Not String.IsNullOrEmpty(_CodProveedor_Pstar) Then
-                Sb_Actualizar_Costos_ListaProveedor(_CodProveedor_Pstar, _CodSucProveedor_Pstar, "CCU")
-            End If
+        '    If Not String.IsNullOrEmpty(_CodProveedor_Pstar) Then
+        '        Sb_Actualizar_Costos_ListaProveedor(_CodProveedor_Pstar, _CodSucProveedor_Pstar, "CCU")
+        '    End If
 
-        End If
+        'End If
 
         If _Actualizar_Stock Then
             Sb_Actualizar_Stock()
@@ -9357,67 +9359,7 @@ Drop Table #Paso"
 
     Private Sub BtnProceso_Prov_Auto_Especial_Click(sender As Object, e As EventArgs) Handles BtnProceso_Prov_Auto_Especial.Click
 
-        Dim _CodProveedor_Pstar As String '= "76590920"
-        Dim _CodSucProveedor_Pstar As String '= String.Empty
-
-        Dim _Id = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
-                                                 "Valor",
-                                                 "Informe = 'Compras_Asistente' And Campo = 'Txt_DbExt_Nombre_Conexion' And NombreEquipo = '" & _NombreEquipo & "' " &
-                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
-
-        _CodProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
-                                                 "Valor",
-                                                 "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
-                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
-        _CodSucProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
-                                                    "Valor",
-                                                    "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
-                                                    "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
-
-        Consulta_sql = "Select * From MAEEN Where KOEN = '" & _CodProveedor_Pstar & "' And SUEN = '" & _CodSucProveedor_Pstar & "'"
-        _RowProveedor = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        If IsNothing(_RowProveedor) Then
-            MessageBoxEx.Show(Me, "No esta asignado el proveedore especial para estos fines" & vbCrLf & vbCrLf &
-                              "Revise la pestaña [Bod.Ext. Prov. Especial] en la configuración anterior.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-
-        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CodProveedor = '',CodSucProveedor = ''"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
-
-        Consulta_sql = "Select Codigo,SUM(StfiBodExt1) As StfiBodExt1,SUM(StfiBodExt2) As StfiBodExt2" & vbCrLf &
-                       "Into #Paso" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Prod_Stock TbSt" & vbCrLf &
-                       "Where Empresa+Sucursal+Bodega In (Select Empresa_Des+Sucursal_Des+Bodega_Des " &
-                            "From " & _Global_BaseBk & "Zw_DbExt_Maest Where Id_Conexion = " & Val(_Id) & ")" & vbCrLf &
-                       "And Codigo In (Select Codigo From " & _Nombre_Tbl_Paso_Informe & ")" & vbCrLf &
-                       "Group By Codigo" & vbCrLf &
-                        vbCrLf &
-                       "Update " & _Nombre_Tbl_Paso_Informe & " Set StockUd1BodStar = StfiBodExt1,StockUd2BodStar = StfiBodExt2" & vbCrLf &
-                       "From " & _Nombre_Tbl_Paso_Informe & " Tbps" & vbCrLf &
-                       "Inner Join #Paso On Tbps.Codigo = #Paso.Codigo" & vbCrLf &
-                       "Where Comprar = 1 And (StfiBodExt1+StfiBodExt2) > 0" & vbCrLf &
-                       vbCrLf &
-                       "Drop Table #Paso"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
-
-        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = Case When StockUd1BodStar > CantSugeridaTot then CantSugeridaTot Else StockUd1BodStar End" & vbCrLf &
-                       "Where StockUd1BodStar > 0"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
-
-        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & Space(1) &
-                       "Set CodProveedor = '" & _CodProveedor_Pstar & "'" & vbCrLf &
-                       ",CodSucProveedor = '" & _CodSucProveedor_Pstar & "'" & vbCrLf &
-                       "Where Comprar = 1 And CantComprar > 0 And StockUd1BodStar >= CantComprar"
-        _Sql.Ej_consulta_IDU(Consulta_sql)
-
-        'Sb_PonerMultiploDeCompraPorProveedor()
-
-        BtnProceso_Prov_Auto_Especial.Enabled = False
-        BtnProceso_Prov_Auto.Enabled = False
-
-        Call Btn_Actualizar_Informe_Click(Nothing, Nothing)
+        ShowContextMenu(ButtonItem2)
 
     End Sub
 
@@ -10059,6 +10001,187 @@ Drop Table #Paso"
         Fm.Pro_Codigo = _Codigo
         Fm.ShowDialog(Me)
         Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_CalcCantProveedoEstrellaStock_Click(sender As Object, e As EventArgs) Handles Btn_CalcCantProveedoEstrellaStock.Click
+
+        Dim _CodProveedor_Pstar As String '= "76590920"
+        Dim _CodSucProveedor_Pstar As String '= String.Empty
+
+        Dim _Id = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                 "Valor",
+                                                 "Informe = 'Compras_Asistente' And Campo = 'Txt_DbExt_Nombre_Conexion' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
+
+        _CodProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                 "Valor",
+                                                 "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
+        _CodSucProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                    "Valor",
+                                                    "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                                    "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
+
+        Consulta_sql = "Select * From MAEEN Where KOEN = '" & _CodProveedor_Pstar & "' And SUEN = '" & _CodSucProveedor_Pstar & "'"
+        _RowProveedor = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_RowProveedor) Then
+            MessageBoxEx.Show(Me, "No esta asignado el proveedore especial para estos fines" & vbCrLf & vbCrLf &
+                              "Revise la pestaña [Bod.Ext. Prov. Especial] en la configuración anterior.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CodProveedor = '',CodSucProveedor = ''"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Select Codigo,SUM(StfiBodExt1) As StfiBodExt1,SUM(StfiBodExt2) As StfiBodExt2" & vbCrLf &
+                       "Into #Paso" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Prod_Stock TbSt" & vbCrLf &
+                       "Where Empresa+Sucursal+Bodega In (Select Empresa_Des+Sucursal_Des+Bodega_Des " &
+                            "From " & _Global_BaseBk & "Zw_DbExt_Maest Where Id_Conexion = " & Val(_Id) & ")" & vbCrLf &
+                       "And Codigo In (Select Codigo From " & _Nombre_Tbl_Paso_Informe & ")" & vbCrLf &
+                       "Group By Codigo" & vbCrLf &
+                        vbCrLf &
+                       "Update " & _Nombre_Tbl_Paso_Informe & " Set StockUd1BodStar = StfiBodExt1,StockUd2BodStar = StfiBodExt2" & vbCrLf &
+                       "From " & _Nombre_Tbl_Paso_Informe & " Tbps" & vbCrLf &
+                       "Inner Join #Paso On Tbps.Codigo = #Paso.Codigo" & vbCrLf &
+                       "Where Comprar = 1 And (StfiBodExt1+StfiBodExt2) > 0" & vbCrLf &
+                       vbCrLf &
+                       "Drop Table #Paso"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set CantComprar = Case When StockUd1BodStar > CantSugeridaTot then CantSugeridaTot Else StockUd1BodStar End" & vbCrLf &
+                       "Where StockUd1BodStar > 0"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & Space(1) &
+                       "Set CodProveedor = '" & _CodProveedor_Pstar & "'" & vbCrLf &
+                       ",CodSucProveedor = '" & _CodSucProveedor_Pstar & "'" & vbCrLf &
+                       "Where Comprar = 1 And CantComprar > 0 And StockUd1BodStar >= CantComprar"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        'Sb_PonerMultiploDeCompraPorProveedor()
+
+        BtnProceso_Prov_Auto_Especial.Enabled = False
+        BtnProceso_Prov_Auto.Enabled = False
+
+        Call Btn_Actualizar_Informe_Click(Nothing, Nothing)
+
+    End Sub
+
+    Private Sub Btn_IncorporarProvEstrellaBasePrecioLista_Click(sender As Object, e As EventArgs) Handles Btn_IncorporarProvEstrellaBasePrecioLista.Click
+
+        Dim _Koen As String = _RowProveedor.Item("KOEN")
+        Dim _Suen As String = _RowProveedor.Item("SUEN")
+
+        Dim _CodProveedor_Pstar As String
+        Dim _CodSucProveedor_Pstar As String
+
+        _CodProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                 "Valor",
+                                                 "Informe = 'Compras_Asistente' And Campo = 'Koen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                                 "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
+        _CodSucProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
+                                                    "Valor",
+                                                    "Informe = 'Compras_Asistente' And Campo = 'Suen_Especial' And NombreEquipo = '" & _NombreEquipo & "' " &
+                                                    "And Funcionario = '" & FUNCIONARIO & "' And Modalidad = '" & _Modalidad_Estudio & "'")
+
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaPreCosto_Enc" & vbCrLf &
+                               "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And Vigente = 1"
+        Dim _RowListaPreCosto_Enc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_RowListaPreCosto_Enc) Then
+
+            MessageBoxEx.Show(Me, "No es posible realizar el proceso" & vbCrLf & vbCrLf &
+                                  "Para poder actualizar la información de la lista de costos del proveedor debe hacer lo siguiente:" & vbCrLf & vbCrLf &
+                                  "1.- Ir al menú de inicio" & vbCrLf &
+                                  "2.- opción [PRECIOS Y COSTOS]" & vbCrLf &
+                                  "3.- opción [LISTA DE PROVEEDORES]" & vbCrLf &
+                                  "4.- Buscar al proveedor" & vbCrLf &
+                                  "5.- Realizar la gestión de mantenimiento de lista de costos de ese proveedor" & vbCrLf &
+                                  " * Dejar una lista de costos vigente" & vbCrLf &
+                                  " * Fecha de vencimiento mayor a la fecha actual", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+
+        End If
+
+        Dim _NombreLista As String = _RowListaPreCosto_Enc.Item("NombreLista")
+
+        If Not IsNothing(_RowProveedor) Then
+            Sb_Actualizar_Costos_ListaProveedor(_RowProveedor.Item("KOEN"), _RowProveedor.Item("SUEN"), _NombreLista)
+        End If
+
+
+        Dim _CodLista As String = _Global_Row_Configuracion_General.Item("Lista_Precios_Proveedores").ToString.Trim
+        Dim _RowListaSeleccionada As DataRow
+
+        If String.IsNullOrEmpty(_CodProveedor_Pstar.ToString.Trim) Then
+            MessageBoxEx.Show(Me, "Debe seleccionar el proveedor estrella", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        MessageBoxEx.Show(Me, "Seleccione la lista de precios del proveedor estrella que desea incorporar a este tratamiento",
+                          "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Dim _RowProveedor_Especial As DataRow = Fx_Traer_Datos_Entidad(_CodProveedor_Pstar, _CodSucProveedor_Pstar)
+
+        Dim Fm As New Frm_MantCostosPrecios_LV(_RowProveedor_Especial, _CodLista)
+        Fm.Btn_CambiarProveedor.Visible = True
+        Fm.SeleccionarYCerrar = True
+        Fm.SoloSeleccionar = True
+        Fm.ShowDialog(Me)
+        _RowListaSeleccionada = Fm.RowListaSeleccionada
+        Fm.Dispose()
+
+        If IsNothing(_RowListaSeleccionada) Then
+            Return
+        End If
+
+        _NombreLista = _RowListaSeleccionada.Item("NombreLista").ToString.Trim
+
+        If Not String.IsNullOrEmpty(_CodProveedor_Pstar) Then
+            Sb_Actualizar_Costos_ListaProveedor(_CodProveedor_Pstar, _CodSucProveedor_Pstar, _NombreLista)
+        End If
+
+        Consulta_sql = $"
+SELECT 
+    G.Codigo,
+    G.Descripcion,
+    G.UD1,
+    G.UD2,
+    G.Rtu,
+    G.Iva,
+    G.Ila,
+    G.Comprar,
+    G.CantSugeridaTot,
+
+    LP.Proveedor,
+    LP.Sucursal,
+    E.NOKOEN AS [Razon Social],
+    LP.CostoFinalUd1,
+    LP.CostoFinalUd2
+
+FROM {_Nombre_Tbl_Paso_Informe} AS G
+OUTER APPLY
+(
+    SELECT TOP 1 
+        L.Proveedor,
+        L.Sucursal,
+        L.CostoFinalUd1,
+        L.CostoFinalUd2
+    FROM {_Nombre_Tbl_Paso_Costos} AS L
+    WHERE L.Codigo = G.Codigo AND L.CostoFinalUd1 > 0
+    ORDER BY L.CostoFinalUd1 ASC
+) AS LP
+LEFT JOIN MAEEN AS E 
+       ON E.KOEN = LP.Proveedor
+      AND E.SUEN = LP.Sucursal
+"
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        ExportarTabla_JetExcel_Tabla(_Tbl, Me, "ProvEstrellaBasePrecioLista")
 
     End Sub
 

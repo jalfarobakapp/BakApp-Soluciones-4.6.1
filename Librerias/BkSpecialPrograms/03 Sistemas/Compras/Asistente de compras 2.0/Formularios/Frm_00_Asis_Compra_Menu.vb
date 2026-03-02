@@ -603,6 +603,7 @@ Public Class Frm_00_Asis_Compra_Menu
                "Where Funcionario = '" & FUNCIONARIO & "' And Informe = 'Compras_Asistente'" & Space(1) &
                "And Filtro = 'Productos_Excluidos' And NombreEquipo = '" & _NombreEquipo & "' And Modalidad = '" & Modalidad_Estudio & "'"
             _TblFiltroProductosExcluidos = _Sql.Fx_Get_DataTable(Consulta_sql)
+
             Btn_ProductosExcluidos.Text = "Productos excluidos (" & FormatNumber(_TblFiltroProductosExcluidos.Rows.Count, 0) & ")"
 
             If Rdb_Productos_Seleccionar.Checked Then
@@ -762,7 +763,6 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Rdb_OccProvEnviarCorreoTodos, "Compras_Asistente",
                                       Rdb_OccProvEnviarCorreoTodos.Name, Class_SQLite.Enum_Type._Boolean, Rdb_OccProvEnviarCorreoTodos.Checked, _Actualizar)
 
-
         ' Proceso compras automatico enviar correos solo a CC
         _Sql.Sb_Parametro_Informe_Sql(Rdb_OccProvEnviarCorreoSoloCc, "Compras_Asistente",
                                       Rdb_OccProvEnviarCorreoSoloCc.Name, Class_SQLite.Enum_Type._Boolean, Rdb_OccProvEnviarCorreoSoloCc.Checked, _Actualizar)
@@ -771,8 +771,6 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Rdb_OccProvEnviarCorreoNoEnviar, "Compras_Asistente",
                                       Rdb_OccProvEnviarCorreoNoEnviar.Name, Class_SQLite.Enum_Type._Boolean, Rdb_OccProvEnviarCorreoNoEnviar.Checked, _Actualizar)
 
-
-
         ' Correo para envio de ordenes con bajo el minimo de compras
         _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoAvisoOCCMinCompra, "Compras_Asistente",
                                       Txt_CtaCorreoAvisoOCCMinCompra.Name, Class_SQLite.Enum_Type._Text, Txt_CtaCorreoAvisoOCCMinCompra.Text, _Actualizar)
@@ -780,7 +778,6 @@ Public Class Frm_00_Asis_Compra_Menu
         ' Check para envia listado minnimo de compra
         _Sql.Sb_Parametro_Informe_Sql(Chk_EnviarListadoOCCConMinimoCompraXCorreo, "Compras_Asistente",
                                       Chk_EnviarListadoOCCConMinimoCompraXCorreo.Name, Class_SQLite.Enum_Type._Boolean, Chk_EnviarListadoOCCConMinimoCompraXCorreo.Checked, _Actualizar)
-
 
         ' Correo para envio de proveedores sin stock
         _Sql.Sb_Parametro_Informe_Sql(Txt_CtaCorreoAvisoProveedoresSinStock, "Compras_Asistente",
@@ -797,7 +794,6 @@ Public Class Frm_00_Asis_Compra_Menu
         ' Observaciones para despachar
         _Sql.Sb_Parametro_Informe_Sql(Txt_DespacharA_OCC, "Compras_Asistente",
                                       Txt_DespacharA_OCC.Name, Class_SQLite.Enum_Type._Text, Txt_DespacharA_OCC.Text, _Actualizar)
-
 
         ' Check para incluir productos excluidos
         _Sql.Sb_Parametro_Informe_Sql(Chk_IncluirProdExcluidosProvStar, "Compras_Asistente",
@@ -852,7 +848,6 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Chk_QuitarDeEstudioAutomatico, "Compras_Asistente",
                                       Chk_QuitarDeEstudioAutomatico.Name, Class_SQLite.Enum_Type._Boolean, Chk_QuitarDeEstudioAutomatico.Checked, _Actualizar)
 
-
         ' Chek para que el sistema solo muestre productos asociados a las bodegas seleccionadas de compra o venta
         _Sql.Sb_Parametro_Informe_Sql(Chk_MostrarProdNoAsocBodegas, "Compras_Asistente",
                                       Chk_MostrarProdNoAsocBodegas.Name, Class_SQLite.Enum_Type._Boolean, Chk_MostrarProdNoAsocBodegas.Checked, _Actualizar)
@@ -886,84 +881,16 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Chk_CompMinXProveedores, "Compras_Asistente",
                                       Chk_CompMinXProveedores.Name, Class_SQLite.Enum_Type._Switch, Chk_CompMinXProveedores.Checked, _Actualizar)
 
+        ' Chek incluir productos con refleos para compras del proveedor Star
+        _Sql.Sb_Parametro_Informe_Sql(Chk_CompararPreciosConProveedorSeleccionado, "Compras_Asistente",
+                                      Chk_CompararPreciosConProveedorSeleccionado.Name, Class_SQLite.Enum_Type._Boolean, Chk_CompararPreciosConProveedorSeleccionado.Checked, _Actualizar)
+
+        _Sql.Sb_Parametro_Informe_Sql(Txt_ListaDePreciosCompara, "Compras_Asistente",
+                                      Txt_ListaDePreciosCompara.Name, Class_SQLite.Enum_Type._Text, Txt_ListaDePreciosCompara.Text, _Actualizar)
+
     End Sub
 
 #End Region
-
-    Private Sub BtnProveedor_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Buscar_Proveedor.Click
-
-        Dim Fm As New Frm_BuscarEntidad_Mt(False)
-        Fm.ShowInTaskbar = False
-        Fm.ShowDialog(Me)
-
-        If Fm.Pro_Entidad_Seleccionada Then
-
-            _RowProveedor = Fm.Pro_RowEntidad
-            Txt_Proveedor.Text = Trim(_RowProveedor.Item("KOEN")) & " - " & Trim(_RowProveedor.Item("NOKOEN"))
-
-            Dim _Koen = _RowProveedor.Item("KOEN")
-            Dim _Suen = _RowProveedor.Item("SUEN")
-
-            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades" & vbCrLf &
-                           "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
-            Dim _Row_Entidades As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-            _Tbl_Filtro_Productos = Nothing
-            _Tbl_Filtro_Super_Familias = Nothing
-            _Tbl_Filtro_Marcas = Nothing
-            _Tbl_Filtro_Rubro = Nothing
-            _Tbl_Filtro_Clalibpr = Nothing
-            _Tbl_Filtro_Zonas = Nothing
-
-            _Filtro_Productos_Todos = True
-            _Filtro_Marcas_Todas = True
-            _Filtro_Super_Familias_Todas = True
-            _Filtro_Rubro_Todas = True
-            _Filtro_Clalibpr_Todas = True
-            _Filtro_Zonas_Todas = True
-            _Filtro_Bodegas_Todas = True
-
-            If Not IsNothing(_Row_Entidades) Then
-
-                Dim _Metodo_Abastecer_Dias_Meses = NuloPorNro(_Row_Entidades.Item("Metodo_Abastecer_Dias_Meses"), 1)
-                Dim _Tiempo_Reposicion_Dias_Meses = NuloPorNro(_Row_Entidades.Item("Tiempo_Reposicion_Dias_Meses"), 1)
-
-                If _Metodo_Abastecer_Dias_Meses = 0 Then _Metodo_Abastecer_Dias_Meses = 1
-                If _Tiempo_Reposicion_Dias_Meses = 0 Then _Tiempo_Reposicion_Dias_Meses = 1
-
-                Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue = _Metodo_Abastecer_Dias_Meses
-                Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue = _Tiempo_Reposicion_Dias_Meses
-
-                Dim _Dias_a_Abastecer = NuloPorNro(_Row_Entidades.Item("Dias_a_Abastecer"), 30)
-                Dim _Tiempo_Reposicion = NuloPorNro(_Row_Entidades.Item("Tiempo_Reposicion"), 3)
-
-                If _Dias_a_Abastecer = 0 Then _Dias_a_Abastecer = 30
-                If _Tiempo_Reposicion = 0 Then _Tiempo_Reposicion = 3
-
-                Input_Dias_a_Abastecer.Value = _Dias_a_Abastecer
-                Input_Tiempo_Reposicion.Value = _Tiempo_Reposicion
-
-            Else
-
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Entidades (CodEntidad,CodSucEntidad,Libera_NVV) Values ('" & _Koen & "','" & _Suen & "',0)" & vbCrLf &
-                               "Select * From " & _Global_BaseBk & "Zw_Entidades where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
-                _Row_Entidades = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &
-                               "Metodo_Abastecer_Dias_Meses = " & Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue & "," &
-                               "Dias_a_Abastecer = " & Input_Dias_a_Abastecer.Value & "," &
-                               "Tiempo_Reposicion_Dias_Meses = " & Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue & "," &
-                               "Tiempo_Reposicion = " & Input_Tiempo_Reposicion.Value & vbCrLf &
-                               "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
-                _Sql.Ej_consulta_IDU(Consulta_sql)
-
-            End If
-
-        End If
-
-        Fm.Dispose()
-
-    End Sub
 
     Private Sub BtnProcesarInf_Click(sender As System.Object, e As System.EventArgs) Handles BtnProcesarInf.Click
 
@@ -2025,6 +1952,9 @@ Public Class Frm_00_Asis_Compra_Menu
             Fm.IncluirProdBajaRotacion_ProvStar = Chk_IncluirProdBajaRotacionProvStar.Checked
             Fm.IncluirProdRefleo_ProvStar = Chk_IncluirProdRefleoProvStar.Checked
 
+            'Fm.CompararPreciosConProveedorSeleccionado = Chk_CompararPreciosConProveedorSeleccionado.Checked
+            'Fm.ListaDePreciosCompara = Txt_ListaDePreciosCompara.Text
+
         End If
 
         Fm.Auto_NVVAutoExterna = Chk_NVVAutoExterna.Checked
@@ -2193,7 +2123,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
         ElseIf Rdb_Productos_Proveedor.Checked Then
 
-            Btn_Buscar_Proveedor.Enabled = True
+            'Btn_Buscar_Proveedor.Enabled = True
             Txt_Proveedor.Enabled = True
             Btn_Filtrar_ProdProveedor.Enabled = True
 
@@ -2275,7 +2205,7 @@ Public Class Frm_00_Asis_Compra_Menu
 
         Cmb_Cantidad_Dias_Ultima_Venta.Enabled = _Habilitar
 
-        Btn_Buscar_Proveedor.Enabled = _Habilitar
+        'Btn_Buscar_Proveedor.Enabled = _Habilitar
         Txt_Proveedor.Enabled = _Habilitar
 
         'Chk_IncluirUltCXprov.Enabled = _Habilitar
@@ -3701,6 +3631,108 @@ CREATE TABLE [dbo].[{_NombreTabla}](
         End If
 
         Fm.Dispose()
+
+    End Sub
+
+    Private Sub Txt_Proveedor_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Proveedor.ButtonCustomClick
+
+        Dim Fm As New Frm_BuscarEntidad_Mt(False)
+        Fm.ShowInTaskbar = False
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Entidad_Seleccionada Then
+
+            _RowProveedor = Fm.Pro_RowEntidad
+            Txt_Proveedor.Text = Trim(_RowProveedor.Item("KOEN")) & " - " & Trim(_RowProveedor.Item("NOKOEN"))
+
+            Dim _Koen = _RowProveedor.Item("KOEN")
+            Dim _Suen = _RowProveedor.Item("SUEN")
+
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Entidades" & vbCrLf &
+                           "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
+            Dim _Row_Entidades As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            _Tbl_Filtro_Productos = Nothing
+            _Tbl_Filtro_Super_Familias = Nothing
+            _Tbl_Filtro_Marcas = Nothing
+            _Tbl_Filtro_Rubro = Nothing
+            _Tbl_Filtro_Clalibpr = Nothing
+            _Tbl_Filtro_Zonas = Nothing
+
+            _Filtro_Productos_Todos = True
+            _Filtro_Marcas_Todas = True
+            _Filtro_Super_Familias_Todas = True
+            _Filtro_Rubro_Todas = True
+            _Filtro_Clalibpr_Todas = True
+            _Filtro_Zonas_Todas = True
+            _Filtro_Bodegas_Todas = True
+
+            If Not IsNothing(_Row_Entidades) Then
+
+                Dim _Metodo_Abastecer_Dias_Meses = NuloPorNro(_Row_Entidades.Item("Metodo_Abastecer_Dias_Meses"), 1)
+                Dim _Tiempo_Reposicion_Dias_Meses = NuloPorNro(_Row_Entidades.Item("Tiempo_Reposicion_Dias_Meses"), 1)
+
+                If _Metodo_Abastecer_Dias_Meses = 0 Then _Metodo_Abastecer_Dias_Meses = 1
+                If _Tiempo_Reposicion_Dias_Meses = 0 Then _Tiempo_Reposicion_Dias_Meses = 1
+
+                Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue = _Metodo_Abastecer_Dias_Meses
+                Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue = _Tiempo_Reposicion_Dias_Meses
+
+                Dim _Dias_a_Abastecer = NuloPorNro(_Row_Entidades.Item("Dias_a_Abastecer"), 30)
+                Dim _Tiempo_Reposicion = NuloPorNro(_Row_Entidades.Item("Tiempo_Reposicion"), 3)
+
+                If _Dias_a_Abastecer = 0 Then _Dias_a_Abastecer = 30
+                If _Tiempo_Reposicion = 0 Then _Tiempo_Reposicion = 3
+
+                Input_Dias_a_Abastecer.Value = _Dias_a_Abastecer
+                Input_Tiempo_Reposicion.Value = _Tiempo_Reposicion
+
+            Else
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Entidades (CodEntidad,CodSucEntidad,Libera_NVV) Values ('" & _Koen & "','" & _Suen & "',0)" & vbCrLf &
+                               "Select * From " & _Global_BaseBk & "Zw_Entidades where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
+                _Row_Entidades = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Entidades Set " & vbCrLf &
+                               "Metodo_Abastecer_Dias_Meses = " & Cmb_Metodo_Abastecer_Dias_Meses.SelectedValue & "," &
+                               "Dias_a_Abastecer = " & Input_Dias_a_Abastecer.Value & "," &
+                               "Tiempo_Reposicion_Dias_Meses = " & Cmb_Tiempo_Reposicion_Dias_Meses.SelectedValue & "," &
+                               "Tiempo_Reposicion = " & Input_Tiempo_Reposicion.Value & vbCrLf &
+                               "Where CodEntidad = '" & _Koen & "' And CodSucEntidad = '" & _Suen & "'"
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            End If
+
+        End If
+
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Txt_ListaDePreciosCompara_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_ListaDePreciosCompara.ButtonCustomClick
+
+        Dim _CodLista As String = _Global_Row_Configuracion_General.Item("Lista_Precios_Proveedores").ToString.Trim
+        Dim _RowListaSeleccionada As DataRow
+
+        If IsNothing(_RowProveedor_Especial) Then
+            MessageBoxEx.Show(Me, "Debe seleccionar el proveedor estrella", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim Fm As New Frm_MantCostosPrecios_LV(_RowProveedor_Especial, _CodLista)
+        Fm.Btn_CambiarProveedor.Visible = True
+        Fm.SeleccionarYCerrar = True
+        Fm.SoloSeleccionar = True
+        Fm.ShowDialog(Me)
+        _RowListaSeleccionada = Fm.RowListaSeleccionada
+        Fm.Dispose()
+
+        If IsNothing(_RowListaSeleccionada) Then
+            Return
+        End If
+
+        Txt_ListaDePreciosCompara.Text = _RowListaSeleccionada.Item("NombreLista").ToString.Trim
+        Txt_ListaDePreciosCompara.Tag = _RowListaSeleccionada.Item("NombreLista").ToString.Trim
 
     End Sub
 End Class

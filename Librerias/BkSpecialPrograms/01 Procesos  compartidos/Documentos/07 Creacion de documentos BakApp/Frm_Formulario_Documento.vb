@@ -8861,16 +8861,64 @@ Public Class Frm_Formulario_Documento
 
                     End If
 
-                    Dim Cl_Entidad As New Cl_Entidad
+                    Dim _RevAutomaticaMorosidadClientes As Boolean = _Global_Row_Configuracion_General.Item("RevAutomaticaMorosidadClientes")
 
-                    Dim _Msj_Deudas As LsValiciones.Mensajes = Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False)
+                    Dim _Cl_Entidad As New Cl_Entidad
+
+                    Dim _Msj_Deudas As LsValiciones.Mensajes = _Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False)
 
                     If Not _Msj_Deudas.EsCorrecto Then
 
-                        MessageBoxEx.Show(Me, "La entidad presenta morosidad" & Environment.NewLine &
+                        _Cl_Entidad = _Msj_Deudas.Tag
+
+                        Dim _ClienteMoroso As Boolean = _Cl_Entidad.ClienteMoroso
+
+                        If _Cl_Entidad.Bloqueada Then
+                            MessageBoxEx.Show(Me, _Cl_Entidad.Mensaje, "Validación",
+                                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            Return Nothing
+                        End If
+
+                        'Dim _Dimoper As Double = _RowEntidad.Item("DIMOPER")
+                        'Dim _DiasMaxMora As Double = _Dimoper + 10
+                        'Dim _MaxDiasMoraDocumentos As Double = _Cl_Entidad.MaxDiasMoraDocumentos
+
+                        'If _RevAutomaticaMorosidadClientes Then
+
+                        '    Dim _DiasMinMora As Double = _Dimoper - _MaxDiasMoraDocumentos
+
+                        '    If _DiasMinMora > 0 Then
+                        '        _ClienteMoroso = False
+                        '    End If
+
+                        'End If
+
+                        'If _MaxDiasMoraDocumentos > _DiasMaxMora Then
+                        '    MessageBoxEx.Show(Me, "No se le puede vender a este cliente hasta que no pague su deuda", "Validación",
+                        '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        '    Return Nothing
+                        'End If
+
+                        'If _ClienteMoroso AndAlso _Cl_Entidad.PromedioUltimas3FacturasPago > _Dimoper Then
+                        '    MessageBoxEx.Show(Me, "No se le puede vender a este cliente hasta que no pague su deuda" & vbCrLf &
+                        '                      "Las ultimas 3 facturas han sido pagadas en un promedio de " &
+                        '                      _Cl_Entidad.PromedioUltimas3FacturasPago & " días, solo se permiten hasta " & _Dimoper & " días.", "Validación",
+                        '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        '    Return Nothing
+                        'End If
+
+                        'If Not _ClienteMoroso AndAlso _Cl_Entidad.PromedioUltimas3FacturasPago > _Dimoper Then
+                        '    _ClienteMoroso = True
+                        'End If
+
+                        If _ClienteMoroso Then
+
+                            MessageBoxEx.Show(Me, "La entidad presenta morosidad" & Environment.NewLine &
                                           "Está situación será evaluada nuevamente al grabar el documento",
                                            "Validación",
                                             MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+
+                        End If
 
                     End If
 
@@ -11809,10 +11857,14 @@ Public Class Frm_Formulario_Documento
             Btn_Cambiar_IVA.Enabled = False
         End If
 
-        If _Id <> _Id_Activo Or String.IsNullOrEmpty(_Id_Activo) Then
-            _Id_Activo = _Id
-            Sb_Mostrar_Datos_Producto_Activo(True)
-        End If
+        'If String.IsNullOrEmpty(_Descripcion) Then
+        '    _Id_Activo = 999
+        'End If
+
+        'If _Id <> _Id_Activo Or String.IsNullOrEmpty(_Id_Activo) Then
+        _Id_Activo = _Id
+        Sb_Mostrar_Datos_Producto_Activo(True)
+        'End If
 
         If _Revision_Remota Then
             Btn_Cambiar_IVA.Enabled = False
@@ -24172,6 +24224,60 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
+    Function Fx_Validad_Morosidad2(ByRef _Tiene_Morosidad As Boolean) As Boolean
+
+        Dim _Bloqueada As Boolean
+
+        Dim _Cl_Entidad As New Cl_Entidad
+
+        Dim _Msj_Deudas As LsValiciones.Mensajes = _Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False)
+
+        'If Not _Msj_Deudas.EsCorrecto Then
+
+        _Cl_Entidad = _Msj_Deudas.Tag
+
+        'End If
+
+
+        If _Cl_Entidad.Tiene_Deudas Then
+
+            Dim _Row() = _TblPermisos.Select("CodPermiso = 'Bkp00019'")
+            Dim _Row_Permiso As DataRow = _Row(0)
+            Dim _Fun_Auto_Deuda_Ven = _Row_Permiso.Item("CodFuncionario_Autoriza")
+
+            If Not _Cl_Entidad.Tiene_Deudas_Vencidas Then
+
+                If _Cl_Entidad.Tiene_Mas_Ventas Then
+
+                    If _Cl_Entidad.PromedioUltimas3FacturasPago < _Cl_Entidad.MaxDiasMoraDocumentos Then
+                        _Tiene_Morosidad = False
+                        Fx_Validad_Morosidad2 = True
+                    Else
+
+                        If Fx_Tiene_Permiso(Me, "Bkp00019", _Fun_Auto_Deuda_Ven, False) Then
+                            Fx_Validad_Morosidad2 = True
+                        End If
+
+                    End If
+
+                Else
+
+                End If
+
+            Else
+
+                If Fx_Tiene_Permiso(Me, "Bkp00019", _Fun_Auto_Deuda_Ven, False) Then
+                    Fx_Validad_Morosidad2 = True
+                End If
+
+            End If
+
+            _Tiene_Morosidad = True
+
+        End If
+
+    End Function
+
     Function Fx_Validar_Descuentos(ByRef _Tiene_Dsctos_Superados As Boolean) As Boolean
 
         If _Hay_Descuentos_Globales Then
@@ -24989,9 +25095,21 @@ Public Class Frm_Formulario_Documento
                     Sb_Revisar_Permiso("Bkp00015", _Autorizado, _Necesita_Permiso)
                 End If
 
-                _Autorizado = False : _Necesita_Permiso = False
-                _Autorizado = Fx_Validad_Morosidad(_Necesita_Permiso)
-                Sb_Revisar_Permiso("Bkp00019", _Autorizado, _Necesita_Permiso)
+                Dim _RevAutomaticaMorosidadClientes As Boolean = _Global_Row_Configuracion_General.Item("RevAutomaticaMorosidadClientes")
+
+                If _RevAutomaticaMorosidadClientes Then
+
+                    _Autorizado = False : _Necesita_Permiso = False
+                    _Autorizado = Fx_Validad_Morosidad2(_Necesita_Permiso)
+                    Sb_Revisar_Permiso("Bkp00019", _Autorizado, _Necesita_Permiso)
+
+                Else
+
+                    _Autorizado = False : _Necesita_Permiso = False
+                    _Autorizado = Fx_Validad_Morosidad(_Necesita_Permiso)
+                    Sb_Revisar_Permiso("Bkp00019", _Autorizado, _Necesita_Permiso)
+
+                End If
 
                 '_Autorizado = False : _Necesita_Permiso = False
                 '_Necesita_Permiso = Not Fx_RevisarProtestos(False, _RowEntidad)

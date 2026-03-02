@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.My.Resources
+Imports DevComponents.DotNetBar
 
 Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
@@ -56,6 +57,8 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
     Dim _CodFuncionario_permiso As String
 
     Dim _Rojo, _Azul, _Verde As Color
+
+    Dim _RevAutomaticaMorosidadClientes As Boolean
 
     Public Property RevFincred As Boolean
     Enum Enum_Accion
@@ -231,6 +234,10 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         End Set
     End Property
 
+    Public Property Cl_Entidad() As Cl_Entidad
+
+    Private _Msj_Deudas As LsValiciones.Mensajes
+
     Public Sub New(RowEntidad As DataRow,
                    EnCurso_Total As Double,
                    EnCurso_Cheque As Double,
@@ -244,6 +251,8 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         Sb_Formato_Generico_Grilla(Grilla_Deuda, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         Sb_Formato_Generico_Grilla(Grilla_Credito, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+
+        _RevAutomaticaMorosidadClientes = _Global_Row_Configuracion_General.Item("RevAutomaticaMorosidadClientes")
 
         If Sumar_NVV Then
             Chk_Utilizar_NVV_En_Credito_X_Cliente.Checked = _Global_Row_Configuracion_General.Item("Utilizar_NVV_En_Credito_X_Cliente")
@@ -271,6 +280,16 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
         Sb_Revisar_Situacion_Credito_Entidad(EnCurso_Total, EnCurso_Cheque, EnCurso_Letra, EnCurso_Pagare)
         Sb_Revisar_Deuda_Doc_Entidad()
+
+        If _RevAutomaticaMorosidadClientes Then
+
+            Cl_Entidad = New Cl_Entidad
+
+            _Msj_Deudas = Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False)
+            Cl_Entidad = _Msj_Deudas.Tag
+            _Tiene_Deudas = Cl_Entidad.Tiene_Deudas
+
+        End If
 
         SuperTabControl1.SelectedTabIndex = 0
 
@@ -392,18 +411,56 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Warning_Box_Deuda.Visible = True
         Warning_Box_Cupo_Exedido.Visible = True
 
-        If _Tiene_Deudas Then
-            If _Autorizar_Venta_Con_Deuda_Vencida Then
-                Warning_Box_Deuda.Image = Imagenes_16x16.Images.Item("warning.png")
-                Warning_Box_Deuda.Text = "<b>  Cliente con morosidad</b><i> Venta autorizada por " & _Fun_Auto_Deuda_Ven & " </i>"
+        If _RevAutomaticaMorosidadClientes Then
+
+            If Cl_Entidad.Tiene_Deudas Then
+
+                If _Autorizar_Venta_Con_Deuda_Vencida Then
+
+                    Warning_Box_Deuda.Image = Imagenes_16x16.Images.Item("warning.png")
+                    Warning_Box_Deuda.Text = "<b>  Cliente con morosidad</b><i> Venta autorizada por " & _Fun_Auto_Deuda_Ven & " </i>"
+
+                Else
+
+                    If Cl_Entidad.Tiene_Deudas_Vencidas Then
+                        Warning_Box_Deuda.Image = Imagenes_16x16.Images.Item("delete_button_error.png")
+                        Warning_Box_Deuda.Text = "<b>  Cliente con morosidad</b> Debe solicitar permiso para realizar la venta <i></i>"
+                    Else
+                        Warning_Box_Deuda.Image = Imagenes_16x16.Images.Item("warning.png")
+                        Warning_Box_Deuda.Text = "<b>  Cliente con morosidad</b> Se evaluara situación comercial al finalizar la venta <i></i>"
+                    End If
+
+                End If
+
             Else
-                Warning_Box_Deuda.Image = Imagenes_16x16.Images.Item("delete_button_error.png")
-                Warning_Box_Deuda.Text = "<b>  Cliente con morosidad</b> Debe solicitar permiso para realizar la venta <i></i>"
+
+                Warning_Box_Deuda.Text = "<b>  Cliente sin morosidad</b><i></i>"
+                Warning_Box_Deuda.Image = Imagenes_16x16.Images.Item("ok.png")
+
             End If
+
         Else
 
-            Warning_Box_Deuda.Text = "<b>  Cliente sin morosidad</b><i></i>"
-            Warning_Box_Deuda.Image = Imagenes_16x16.Images.Item("ok.png")
+            If _Tiene_Deudas Then
+
+                If _Autorizar_Venta_Con_Deuda_Vencida Then
+
+                    Warning_Box_Deuda.Image = Imagenes_16x16.Images.Item("warning.png")
+                    Warning_Box_Deuda.Text = "<b>  Cliente con morosidad</b><i> Venta autorizada por " & _Fun_Auto_Deuda_Ven & " </i>"
+
+                Else
+
+                    Warning_Box_Deuda.Image = Imagenes_16x16.Images.Item("delete_button_error.png")
+                    Warning_Box_Deuda.Text = "<b>  Cliente con morosidad</b> Debe solicitar permiso para realizar la venta <i></i>"
+
+                End If
+
+            Else
+
+                Warning_Box_Deuda.Text = "<b>  Cliente sin morosidad</b><i></i>"
+                Warning_Box_Deuda.Image = Imagenes_16x16.Images.Item("ok.png")
+
+            End If
 
         End If
 

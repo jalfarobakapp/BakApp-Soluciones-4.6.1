@@ -206,6 +206,10 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.LabelItem6 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Rotacion_Productos_Lista = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Rotacion_Productos_Con_Rot_Vencida = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_CalcCantProveedoEstrellaStock = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_IncorporarProvEstrellaBasePrecioLista = New DevComponents.DotNetBar.ButtonItem()
         Me.Timer_Ejecucion_Automatica = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_InformeDeComprasAgrupadoporAsociacion = New System.Windows.Forms.Timer(Me.components)
         Me.ItemContainer14 = New DevComponents.DotNetBar.ItemContainer()
@@ -261,8 +265,8 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonControl1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.RibbonControl1.CaptionVisible = True
         Me.RibbonControl1.Controls.Add(Me.RibbonPanel5)
-        Me.RibbonControl1.Controls.Add(Me.RibbonPanel2)
         Me.RibbonControl1.Controls.Add(Me.RibbonPanel1)
+        Me.RibbonControl1.Controls.Add(Me.RibbonPanel2)
         Me.RibbonControl1.Controls.Add(Me.RibbonPanel8)
         Me.RibbonControl1.Controls.Add(Me.RibbonPanel7)
         Me.RibbonControl1.Dock = System.Windows.Forms.DockStyle.Top
@@ -363,7 +367,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonBar10.DragDropSupport = True
         Me.RibbonBar10.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_CorreoProvSinStock})
         Me.RibbonBar10.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar10.Location = New System.Drawing.Point(1267, 0)
+        Me.RibbonBar10.Location = New System.Drawing.Point(1230, 0)
         Me.RibbonBar10.Name = "RibbonBar10"
         Me.RibbonBar10.Size = New System.Drawing.Size(47, 103)
         Me.RibbonBar10.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -403,9 +407,9 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonBar9.DragDropSupport = True
         Me.RibbonBar9.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProceso_Prov_Auto_Especial})
         Me.RibbonBar9.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar9.Location = New System.Drawing.Point(1095, 0)
+        Me.RibbonBar9.Location = New System.Drawing.Point(1094, 0)
         Me.RibbonBar9.Name = "RibbonBar9"
-        Me.RibbonBar9.Size = New System.Drawing.Size(172, 103)
+        Me.RibbonBar9.Size = New System.Drawing.Size(136, 103)
         Me.RibbonBar9.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar9.TabIndex = 13
         Me.RibbonBar9.Text = "Proceso automático"
@@ -425,7 +429,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.BtnProceso_Prov_Auto_Especial.ImageAlt = CType(resources.GetObject("BtnProceso_Prov_Auto_Especial.ImageAlt"), System.Drawing.Image)
         Me.BtnProceso_Prov_Auto_Especial.Name = "BtnProceso_Prov_Auto_Especial"
         Me.BtnProceso_Prov_Auto_Especial.SubItemsExpandWidth = 14
-        Me.BtnProceso_Prov_Auto_Especial.Text = "Calcular auto. cant. <br/>de compra prov. especial"
+        Me.BtnProceso_Prov_Auto_Especial.Text = "Procesos <br/>proveedor estrella"
         Me.BtnProceso_Prov_Auto_Especial.Tooltip = "Calcula automaticamente las cantidades a comprar para el proveedor estrella"
         '
         'RibbonBar8
@@ -444,7 +448,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonBar8.DragDropSupport = True
         Me.RibbonBar8.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_PorcUltCompXProv})
         Me.RibbonBar8.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar8.Location = New System.Drawing.Point(967, 0)
+        Me.RibbonBar8.Location = New System.Drawing.Point(966, 0)
         Me.RibbonBar8.Name = "RibbonBar8"
         Me.RibbonBar8.Size = New System.Drawing.Size(128, 103)
         Me.RibbonBar8.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -484,7 +488,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonBar6.DragDropSupport = True
         Me.RibbonBar6.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Lista_Costos_Proveedor})
         Me.RibbonBar6.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar6.Location = New System.Drawing.Point(879, 0)
+        Me.RibbonBar6.Location = New System.Drawing.Point(878, 0)
         Me.RibbonBar6.Name = "RibbonBar6"
         Me.RibbonBar6.Size = New System.Drawing.Size(88, 103)
         Me.RibbonBar6.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -525,7 +529,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Ribon_Filtrar_Proveedor.DragDropSupport = True
         Me.Ribon_Filtrar_Proveedor.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer12})
         Me.Ribon_Filtrar_Proveedor.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Ribon_Filtrar_Proveedor.Location = New System.Drawing.Point(736, 0)
+        Me.Ribon_Filtrar_Proveedor.Location = New System.Drawing.Point(735, 0)
         Me.Ribon_Filtrar_Proveedor.Name = "Ribon_Filtrar_Proveedor"
         Me.Ribon_Filtrar_Proveedor.Size = New System.Drawing.Size(143, 103)
         Me.Ribon_Filtrar_Proveedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -585,7 +589,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Ribon_Proceso_Automatico.DragDropSupport = True
         Me.Ribon_Proceso_Automatico.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnProceso_Prov_Auto})
         Me.Ribon_Proceso_Automatico.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Ribon_Proceso_Automatico.Location = New System.Drawing.Point(477, 0)
+        Me.Ribon_Proceso_Automatico.Location = New System.Drawing.Point(476, 0)
         Me.Ribon_Proceso_Automatico.Name = "Ribon_Proceso_Automatico"
         Me.Ribon_Proceso_Automatico.Size = New System.Drawing.Size(259, 103)
         Me.Ribon_Proceso_Automatico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -631,7 +635,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Ribon_Costos.DragDropSupport = True
         Me.Ribon_Costos.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItemContainer5})
         Me.Ribon_Costos.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Ribon_Costos.Location = New System.Drawing.Point(292, 0)
+        Me.Ribon_Costos.Location = New System.Drawing.Point(291, 0)
         Me.Ribon_Costos.Name = "Ribon_Costos"
         Me.Ribon_Costos.Size = New System.Drawing.Size(185, 103)
         Me.Ribon_Costos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -732,7 +736,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Ribon_Proveedor_Proveedor_Unico.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.Ribon_Proveedor_Proveedor_Unico.Location = New System.Drawing.Point(3, 0)
         Me.Ribon_Proveedor_Proveedor_Unico.Name = "Ribon_Proveedor_Proveedor_Unico"
-        Me.Ribon_Proveedor_Proveedor_Unico.Size = New System.Drawing.Size(289, 103)
+        Me.Ribon_Proveedor_Proveedor_Unico.Size = New System.Drawing.Size(288, 103)
         Me.Ribon_Proveedor_Proveedor_Unico.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Ribon_Proveedor_Proveedor_Unico.TabIndex = 1
         Me.Ribon_Proveedor_Proveedor_Unico.Text = "Información del Proveedor"
@@ -2318,10 +2322,10 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Productos, Me.Menu_Contextual_Rotacion})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Productos, Me.Menu_Contextual_Rotacion, Me.ButtonItem2})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(264, 186)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
-        Me.ContextMenuBar1.Size = New System.Drawing.Size(370, 25)
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(479, 25)
         Me.ContextMenuBar1.Stretch = True
         Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ContextMenuBar1.TabIndex = 10019
@@ -2482,6 +2486,42 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Btn_Rotacion_Productos_Con_Rot_Vencida.Name = "Btn_Rotacion_Productos_Con_Rot_Vencida"
         Me.Btn_Rotacion_Productos_Con_Rot_Vencida.Text = "Actualizar rotación de productos con rotación desactualizada"
         '
+        'ButtonItem2
+        '
+        Me.ButtonItem2.AutoExpandOnClick = True
+        Me.ButtonItem2.Name = "ButtonItem2"
+        Me.ButtonItem2.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_CalcCantProveedoEstrellaStock, Me.Btn_IncorporarProvEstrellaBasePrecioLista})
+        Me.ButtonItem2.Text = "Opciones proveedor"
+        '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Opciones del producto"
+        '
+        'Btn_CalcCantProveedoEstrellaStock
+        '
+        Me.Btn_CalcCantProveedoEstrellaStock.Image = CType(resources.GetObject("Btn_CalcCantProveedoEstrellaStock.Image"), System.Drawing.Image)
+        Me.Btn_CalcCantProveedoEstrellaStock.ImageAlt = CType(resources.GetObject("Btn_CalcCantProveedoEstrellaStock.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CalcCantProveedoEstrellaStock.Name = "Btn_CalcCantProveedoEstrellaStock"
+        Me.Btn_CalcCantProveedoEstrellaStock.Text = "Calcular automáticamente las cantidades de compra para el proveedor estrella, con" &
+    "siderando su stock disponible como base del cálculo."
+        '
+        'Btn_IncorporarProvEstrellaBasePrecioLista
+        '
+        Me.Btn_IncorporarProvEstrellaBasePrecioLista.Image = CType(resources.GetObject("Btn_IncorporarProvEstrellaBasePrecioLista.Image"), System.Drawing.Image)
+        Me.Btn_IncorporarProvEstrellaBasePrecioLista.ImageAlt = CType(resources.GetObject("Btn_IncorporarProvEstrellaBasePrecioLista.ImageAlt"), System.Drawing.Image)
+        Me.Btn_IncorporarProvEstrellaBasePrecioLista.Name = "Btn_IncorporarProvEstrellaBasePrecioLista"
+        Me.Btn_IncorporarProvEstrellaBasePrecioLista.Text = "Incorporar al proveedor estrella determinado por el menor precio de compra según " &
+    "su lista de precios."
+        '
         'Timer_Ejecucion_Automatica
         '
         Me.Timer_Ejecucion_Automatica.Interval = 2000
@@ -2624,7 +2664,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         '
         'Frm_01_Asis_Compra_Resultados
         '
-        Me.ClientSize = New System.Drawing.Size(1473, 348)
+        Me.ClientSize = New System.Drawing.Size(1473, 344)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.RibbonControl1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -2866,4 +2906,8 @@ Partial Class Frm_01_Asis_Compra_Resultados
     Friend WithEvents Chk_CompradoUltVezProveedor As DevComponents.DotNetBar.CheckBoxItem
     Friend WithEvents Chk_SoloConPrecioListaProveedor As DevComponents.DotNetBar.CheckBoxItem
     Friend WithEvents Chk_SoloProdBodExterna As DevComponents.DotNetBar.CheckBoxItem
+    Friend WithEvents ButtonItem2 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_CalcCantProveedoEstrellaStock As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_IncorporarProvEstrellaBasePrecioLista As DevComponents.DotNetBar.ButtonItem
 End Class

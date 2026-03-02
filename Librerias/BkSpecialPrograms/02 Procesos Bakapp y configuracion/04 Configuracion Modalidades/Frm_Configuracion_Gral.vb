@@ -264,6 +264,8 @@ Public Class Frm_Configuracion_Gral
             Chk_AgregarTransporteNVIparaGTI.Checked = .Item("AgregarTransporteNVIparaGTI")
             Chk_NotfStockInsuficiente_Stmp.Checked = .Item("NotfStockInsuficiente_Stmp")
 
+            Chk_RevAutomaticaMorosidadClientes.Checked = .Item("RevAutomaticaMorosidadClientes")
+
         End With
 
         Chk_VendeUD2DesacUD1soloRTUD.Enabled = _Modalidad_General
@@ -383,6 +385,8 @@ Public Class Frm_Configuracion_Gral
 
         Chk_SelectOtrosClientesPedirPermiso.Enabled = _Modalidad_General
         Chk_ConservaListaDocOrigen.Enabled = _Modalidad_General
+
+        Chk_RevAutomaticaMorosidadClientes.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -605,6 +609,7 @@ Public Class Frm_Configuracion_Gral
                        ",Pickear_CrearGuiasAutoCompletas = " & Convert.ToInt32(Chk_Pickear_CrearGuiasAutoCompletas.Checked) & vbCrLf &
                        ",AgregarTransporteNVIparaGTI = " & Convert.ToInt32(Chk_AgregarTransporteNVIparaGTI.Checked) & vbCrLf &
                        ",NotfStockInsuficiente_Stmp = " & Convert.ToInt32(Chk_NotfStockInsuficiente_Stmp.Checked) & vbCrLf &
+                       ",RevAutomaticaMorosidadClientes = " & Convert.ToInt32(Chk_RevAutomaticaMorosidadClientes.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

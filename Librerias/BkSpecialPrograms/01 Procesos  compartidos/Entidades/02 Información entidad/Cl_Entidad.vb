@@ -13,11 +13,15 @@ Public Class Cl_Entidad
     Public Property Tiene_Deudas_Vencidas As Boolean
     Public Property Solicitar_Permiso_Remoto As Boolean
     Public Property Tbl_Deudas As DataTable
-    Public Property MaxDiasMora As Integer
+    Public Property MaxDiasMoraDocumentos As Integer
     Public Property PromedioDiasPago As Double
     Public Property PromedioUltimas3FacturasPago As Double
     Public Property Tiene_Mas_Ventas As Boolean
     Public Property Promedio_Venta_UltXMeses As Double
+    Public Property BloqueadoDebePagarDeuda As Boolean
+    Public Property UltFacPagadasEnMenosTiempoQueDimoper As Boolean
+    Public Property ClienteMoroso As Boolean
+    Public Property Mensaje As String
 
     Public Sub New()
 
@@ -30,7 +34,7 @@ Public Class Cl_Entidad
         Tiene_Deudas_Vencidas = False
         Solicitar_Permiso_Remoto = False
         Tbl_Deudas = New DataTable()
-        MaxDiasMora = 0
+        MaxDiasMoraDocumentos = 0
         PromedioDiasPago = 0.0
 
     End Sub
@@ -43,6 +47,9 @@ Public Class Cl_Entidad
         Dim _Cl_Entidad As New Cl_Entidad
 
         'Dim _DiasMoraPermitidos As Integer = 80
+
+        Dim _RevAutomaticaMorosidadClientes As Boolean = _Global_Row_Configuracion_General.Item("RevAutomaticaMorosidadClientes")
+        Dim _RestarDimoper As Boolean = Not _RevAutomaticaMorosidadClientes
 
         Try
 
@@ -96,14 +103,23 @@ Public Class Cl_Entidad
 
                         If Not _Nudonodefi Then
 
-                            Dim _DiasDeAtraso = _Dias_Atraso - _Dimoper
+                            Dim _DiasDeAtraso As Double = _Dias_Atraso
+
+                            If _RestarDimoper Then
+                                _DiasDeAtraso = _Dias_Atraso - _Dimoper
+                            End If
 
                             If _DiasDeAtraso >= 0 Then
                                 _Deudas += 1
 
+                                '' Actualizar el máximo de días de mora si corresponde
+                                'If _DiasDeAtraso > _MaxDiasDeAtraso Then
+                                '    _MaxDiasDeAtraso = _DiasDeAtraso
+                                'End If
+
                                 ' Actualizar el máximo de días de mora si corresponde
-                                If _DiasDeAtraso > _MaxDiasDeAtraso Then
-                                    _MaxDiasDeAtraso = _DiasDeAtraso
+                                If _Dias_Atraso > _MaxDiasDeAtraso Then
+                                    _MaxDiasDeAtraso = _Dias_Atraso
                                 End If
 
                             End If
@@ -135,18 +151,55 @@ Public Class Cl_Entidad
 
                     ' Guardar el mayor dias de atraso en la instancia que se devuelve
 
-                    _Cl_Entidad.MaxDiasMora = _MaxDiasDeAtraso
+                    _Cl_Entidad.MaxDiasMoraDocumentos = _MaxDiasDeAtraso
                     _Cl_Entidad.Tiene_Deudas = CBool(_Deudas)
                     _Cl_Entidad.Tbl_Deudas = Tbl_Deudas
+                    _Cl_Entidad.ClienteMoroso = _Cl_Entidad.Tiene_Deudas
 
                     Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO", $"TIDO = 'FCV' And ENDO = '{_Endo}' And SUENDO = '{_Suendo}'")
 
                     _Cl_Entidad.Tiene_Mas_Ventas = IIf(_Reg > 1, True, False)
                     _Cl_Entidad.Promedio_Venta_UltXMeses = Fx_Promedio_Venta_UltXMeses(_RowEntidad, 3)
 
+
+
+                    Dim _DiasMaxMora As Double = _Dimoper + 10
+                    Dim _MaxDiasMoraDocumentos As Double = _Cl_Entidad.MaxDiasMoraDocumentos
+
+                    If _RevAutomaticaMorosidadClientes Then
+
+                        Dim _DiasMinMora As Double = _Dimoper - _MaxDiasMoraDocumentos
+
+                        If _DiasMinMora > 0 Then
+                            _Cl_Entidad.ClienteMoroso = False
+                        End If
+
+                    End If
+
+                    If _MaxDiasMoraDocumentos > _DiasMaxMora Then
+                        _Cl_Entidad.Mensaje = "No se le puede vender a este cliente hasta que no pague su deuda"
+                        _Cl_Entidad.Bloqueada = True
+                        _Mensaje.Tag = _Cl_Entidad
+                        Throw New System.Exception("Cliente tiene documentos con deudas")
+                    End If
+
+                    If _Cl_Entidad.ClienteMoroso AndAlso _Cl_Entidad.PromedioUltimas3FacturasPago > _Dimoper Then
+
+                        _Cl_Entidad.Mensaje = "No se le puede vender a este cliente hasta que no pague su deuda" & vbCrLf &
+                                              "Las ultimas 3 facturas han sido pagadas en un promedio de " &
+                                              _Cl_Entidad.PromedioUltimas3FacturasPago & " días, solo se permiten hasta " & _Dimoper & " días."
+                        _Cl_Entidad.Bloqueada = True
+                        _Mensaje.Tag = _Cl_Entidad
+                        Throw New System.Exception("Cliente tiene documentos con deudas")
+                    End If
+
+                    If Not _Cl_Entidad.ClienteMoroso AndAlso _Cl_Entidad.PromedioUltimas3FacturasPago > _Dimoper Then
+                        _Cl_Entidad.ClienteMoroso = True
+                    End If
+
                     _Mensaje.Tag = _Cl_Entidad
 
-                    If CBool(_Deudas) Then
+                    If _Cl_Entidad.ClienteMoroso Then
                         Throw New System.Exception("Cliente tiene documentos con deudas")
                     End If
 
