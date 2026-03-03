@@ -8862,10 +8862,11 @@ Public Class Frm_Formulario_Documento
                     End If
 
                     Dim _RevAutomaticaMorosidadClientes As Boolean = _Global_Row_Configuracion_General.Item("RevAutomaticaMorosidadClientes")
+                    Dim _MontoVenta As Double = 0
 
                     Dim _Cl_Entidad As New Cl_Entidad
 
-                    Dim _Msj_Deudas As LsValiciones.Mensajes = _Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False)
+                    Dim _Msj_Deudas As LsValiciones.Mensajes = _Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False, _MontoVenta)
 
                     If Not _Msj_Deudas.EsCorrecto Then
 
@@ -8916,7 +8917,7 @@ Public Class Frm_Formulario_Documento
                             MessageBoxEx.Show(Me, "La entidad presenta morosidad" & Environment.NewLine &
                                           "Está situación será evaluada nuevamente al grabar el documento",
                                            "Validación",
-                                            MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
+                                            MessageBoxButtons.OK, _Msj_Deudas.Icono, MessageBoxDefaultButton.Button1, Me.TopMost)
 
                         End If
 
@@ -23066,9 +23067,23 @@ Public Class Frm_Formulario_Documento
 
                 If Not _Revision_Remota Then
 
-                    MessageBoxEx.Show(Me, "Los datos de la entidad se han actualizado. Sin embargo, para que los cambios se reflejen" & vbCrLf &
+                    Dim _RevAutomaticaMorosidadClientes As Boolean = _Global_Row_Configuracion_General.Item("RevAutomaticaMorosidadClientes")
+
+                    If _RevAutomaticaMorosidadClientes Then
+
+                        MessageBoxEx.Show(Me, "Los datos de la entidad se han actualizado." & vbCrLf &
+                                          "Se limpiara el documento para reevaluación la situación del cliente", "Información",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, True)
+
+                        Sb_Limpiar(ModModalidad_Doc, False)
+
+                    Else
+
+                        MessageBoxEx.Show(Me, "Los datos de la entidad se han actualizado. Sin embargo, para que los cambios se reflejen" & vbCrLf &
                                       "en el documento, debe limpiar y recargar la entidad.", "Información",
                                       MessageBoxButtons.OK, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, True)
+
+                    End If
 
                 End If
 
@@ -24226,18 +24241,19 @@ Public Class Frm_Formulario_Documento
 
     Function Fx_Validad_Morosidad2(ByRef _Tiene_Morosidad As Boolean) As Boolean
 
-        Dim _Bloqueada As Boolean
+        Dim _RevisarPermiso As Boolean
+        Dim _Validacion As Boolean
 
         Dim _Cl_Entidad As New Cl_Entidad
+        Dim _MontoVenta As Double = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
 
-        Dim _Msj_Deudas As LsValiciones.Mensajes = _Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False)
+        Dim _Msj_Deudas As LsValiciones.Mensajes = _Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False, _MontoVenta)
 
         'If Not _Msj_Deudas.EsCorrecto Then
 
         _Cl_Entidad = _Msj_Deudas.Tag
 
         'End If
-
 
         If _Cl_Entidad.Tiene_Deudas Then
 
@@ -24249,27 +24265,46 @@ Public Class Frm_Formulario_Documento
 
                 If _Cl_Entidad.Tiene_Mas_Ventas Then
 
-                    If _Cl_Entidad.PromedioUltimas3FacturasPago < _Cl_Entidad.MaxDiasMoraDocumentos Then
-                        _Tiene_Morosidad = False
-                        Fx_Validad_Morosidad2 = True
-                    Else
+                    If _Cl_Entidad.UltFacPagadasEnMenosTiempoQueDimoper Then
 
-                        If Fx_Tiene_Permiso(Me, "Bkp00019", _Fun_Auto_Deuda_Ven, False) Then
-                            Fx_Validad_Morosidad2 = True
+                        If _Cl_Entidad.SuperaCreditoDisponible Then
+                            _RevisarPermiso = True
+                        Else
+
+                            If Not _Cl_Entidad.VentaMayorPromedioUlt3Meses Then
+
+                                _Tiene_Morosidad = False
+                                _Validacion = True
+                                Return _Validacion
+
+                            Else
+
+                                If _MontoVenta > _Cl_Entidad.Promedio_Venta_UltXMeses Then   '_Cl_Entidad.PromedioUltimas3FacturasPago < _Cl_Entidad.MaxDiasMoraDocumentos Then
+                                    _RevisarPermiso = True
+                                Else
+                                    _Tiene_Morosidad = False
+                                    _Validacion = True
+                                    Return _Validacion
+                                End If
+
+                            End If
+
                         End If
 
+                    Else
+                        _RevisarPermiso = True
                     End If
-
-                Else
 
                 End If
 
             Else
+                _RevisarPermiso = True
+            End If
 
+            If _RevisarPermiso Then
                 If Fx_Tiene_Permiso(Me, "Bkp00019", _Fun_Auto_Deuda_Ven, False) Then
                     Fx_Validad_Morosidad2 = True
                 End If
-
             End If
 
             _Tiene_Morosidad = True

@@ -1,9 +1,13 @@
-﻿Imports DevComponents.DotNetBar
-
-Public Class Cl_Entidad
+﻿Public Class Cl_Entidad
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
+
+    Public Property Crsd_Disponible As Double
+    Public Property Crch_Disponible As Double
+    Public Property Crlt_Disponible As Double
+    Public Property Crpa_Disponible As Double
+    Public Property Crto_Disponible As Double
 
     Public Property RowEntidad As DataRow
     Public Property Notraedeud As Boolean
@@ -20,8 +24,11 @@ Public Class Cl_Entidad
     Public Property Promedio_Venta_UltXMeses As Double
     Public Property BloqueadoDebePagarDeuda As Boolean
     Public Property UltFacPagadasEnMenosTiempoQueDimoper As Boolean
+    Public Property VentaMayorPromedioUlt3Meses As Boolean
     Public Property ClienteMoroso As Boolean
     Public Property Mensaje As String
+    Public Property Dimoper As Integer
+    Public Property SuperaCreditoDisponible As Boolean
 
     Public Sub New()
 
@@ -41,7 +48,8 @@ Public Class Cl_Entidad
 
     Public Function Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad As DataRow,
                                                    _Mostrar_Formulario As Boolean,
-                                                   _Solicitar_Permiso_Remoto As Boolean) As LsValiciones.Mensajes
+                                                   _Solicitar_Permiso_Remoto As Boolean,
+                                                   _MontoVenta As Double) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Cl_Entidad As New Cl_Entidad
@@ -62,6 +70,7 @@ Public Class Cl_Entidad
             If _Cl_Entidad.Notraedeud Then
 
                 _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = "Cliente no afecto a revisión de cuenta corriente"
                 _Mensaje.Tag = _Cl_Entidad
 
                 Return _Mensaje
@@ -81,7 +90,7 @@ Public Class Cl_Entidad
                 Dim _Fecha As String = Format(FechaDelServidor, "yyyyMMdd")
 
                 Dim _CodEntidad As String = _RowEntidad.Item("KOEN")
-                Dim _Dimoper = _RowEntidad.Item("DIMOPER")
+                _Cl_Entidad.Dimoper = _RowEntidad.Item("DIMOPER")
 
                 Consulta_sql = My.Resources.Sql_Entidad.SqlQuery_deuda_doc_comerciales
                 Consulta_sql = Replace(Consulta_sql, "#CodEntidad#", _CodEntidad)
@@ -106,7 +115,7 @@ Public Class Cl_Entidad
                             Dim _DiasDeAtraso As Double = _Dias_Atraso
 
                             If _RestarDimoper Then
-                                _DiasDeAtraso = _Dias_Atraso - _Dimoper
+                                _DiasDeAtraso = _Dias_Atraso - _Cl_Entidad.Dimoper
                             End If
 
                             If _DiasDeAtraso >= 0 Then
@@ -163,18 +172,18 @@ Public Class Cl_Entidad
 
 
 
-                    Dim _DiasMaxMora As Double = _Dimoper + 10
+                    Dim _DiasMaxMora As Double = _Cl_Entidad.Dimoper + 10
                     Dim _MaxDiasMoraDocumentos As Double = _Cl_Entidad.MaxDiasMoraDocumentos
 
-                    If _RevAutomaticaMorosidadClientes Then
+                    'If _RevAutomaticaMorosidadClientes Then
 
-                        Dim _DiasMinMora As Double = _Dimoper - _MaxDiasMoraDocumentos
+                    '    Dim _DiasMinMora As Double = _Cl_Entidad.Dimoper - _MaxDiasMoraDocumentos
 
-                        If _DiasMinMora > 0 Then
-                            _Cl_Entidad.ClienteMoroso = False
-                        End If
+                    '    If _DiasMinMora > 0 Then
+                    '        _Cl_Entidad.ClienteMoroso = False
+                    '    End If
 
-                    End If
+                    'End If
 
                     If _MaxDiasMoraDocumentos > _DiasMaxMora Then
                         _Cl_Entidad.Mensaje = "No se le puede vender a este cliente hasta que no pague su deuda"
@@ -183,18 +192,43 @@ Public Class Cl_Entidad
                         Throw New System.Exception("Cliente tiene documentos con deudas")
                     End If
 
-                    If _Cl_Entidad.ClienteMoroso AndAlso _Cl_Entidad.PromedioUltimas3FacturasPago > _Dimoper Then
+                    If _Cl_Entidad.ClienteMoroso AndAlso
+                        _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper AndAlso
+                        _Cl_Entidad.PromedioUltimas3FacturasPago > _Cl_Entidad.Dimoper Then
 
                         _Cl_Entidad.Mensaje = "No se le puede vender a este cliente hasta que no pague su deuda" & vbCrLf &
                                               "Las ultimas 3 facturas han sido pagadas en un promedio de " &
-                                              _Cl_Entidad.PromedioUltimas3FacturasPago & " días, solo se permiten hasta " & _Dimoper & " días."
+                                              _Cl_Entidad.PromedioUltimas3FacturasPago & " días, solo se permiten hasta " & _Cl_Entidad.Dimoper & " días."
                         _Cl_Entidad.Bloqueada = True
                         _Mensaje.Tag = _Cl_Entidad
                         Throw New System.Exception("Cliente tiene documentos con deudas")
+
                     End If
 
-                    If Not _Cl_Entidad.ClienteMoroso AndAlso _Cl_Entidad.PromedioUltimas3FacturasPago > _Dimoper Then
+                    If Not _Cl_Entidad.ClienteMoroso AndAlso _Cl_Entidad.PromedioUltimas3FacturasPago > _Cl_Entidad.Dimoper Then
                         _Cl_Entidad.ClienteMoroso = True
+                    End If
+
+                    If _Cl_Entidad.Tiene_Deudas And Not _Cl_Entidad.Tiene_Deudas_Vencidas And _Cl_Entidad.PromedioUltimas3FacturasPago < _Cl_Entidad.Dimoper Then
+                        _Cl_Entidad.UltFacPagadasEnMenosTiempoQueDimoper = True
+                    End If
+
+                    If CBool(_MontoVenta) AndAlso CBool(_Cl_Entidad.Promedio_Venta_UltXMeses) Then
+                        If _MontoVenta <= _Cl_Entidad.Promedio_Venta_UltXMeses Then
+                            _Cl_Entidad.VentaMayorPromedioUlt3Meses = False
+                        Else
+                            _Cl_Entidad.VentaMayorPromedioUlt3Meses = True
+                        End If
+                    End If
+
+                    Dim _EnCurso_Total As Double = _MontoVenta
+
+                    Sb_Revisar_Situacion_Credito_Entidad(_RowEntidad, _EnCurso_Total, 0, 0, 0)
+
+                    _Cl_Entidad.Crsd_Disponible = _Crsd_Disponible
+
+                    If _Cl_Entidad.Crsd_Disponible < 0 Then
+                        _Cl_Entidad.SuperaCreditoDisponible = True
                     End If
 
                     _Mensaje.Tag = _Cl_Entidad
@@ -203,18 +237,22 @@ Public Class Cl_Entidad
                         Throw New System.Exception("Cliente tiene documentos con deudas")
                     End If
 
-                    _Mensaje.EsCorrecto = True
-                    _Mensaje.Mensaje = "Cliente sin deudas vencidas"
-                    _Mensaje.Icono = MessageBoxIcon.Information
-
                 End If
 
             End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Cliente sin deudas vencidas"
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Tag = _Cl_Entidad
 
         Catch ex As Exception
             _Mensaje.EsCorrecto = False
             _Mensaje.Mensaje = ex.Message
             _Mensaje.Icono = MessageBoxIcon.Stop
+            If _Cl_Entidad.Tiene_Deudas AndAlso Not _Cl_Entidad.Tiene_Deudas_Vencidas Then
+                _Mensaje.Icono = MessageBoxIcon.Warning
+            End If
         End Try
 
         Return _Mensaje
@@ -269,7 +307,7 @@ FROM (
                 _Filtro_Entidad = String.Empty
             Else
                 _Filtro_Entidad = "And ENDO = '" & _RowEntidad.Item("KOEN") & "'"
-                End If
+            End If
 
             Consulta_sql = My.Resources.Recursos_Reparar_Maeven.SQLQuery_Reparar_Maeven
             Consulta_sql = Replace(Consulta_sql, "#Filtro_Entidad#", _Filtro_Entidad)
@@ -338,63 +376,123 @@ FROM (
 
     End Function
 
-    'Function Fx_Revisar_Deuda_Doc_Entidad(_RowEntidad As DataRow) As LsValiciones.Mensajes
+    Sub Sb_Revisar_Situacion_Credito_Entidad(_RowEntidad As DataRow,
+                                             _EnCurso_Total As Double,
+                                             _EnCurso_Cheque As Double,
+                                             _EnCurso_Letra As Double,
+                                             _EnCurso_Pagare As Double)
+        Dim _DsInfCredito As New DataSet
 
-    '    Dim _Mensaje As New LsValiciones.Mensajes
+        Dim _Utilizar_NVV_En_Credito_X_Cliente As Boolean = False
 
-    '    Try
+        Dim _CodEntidad As String = _RowEntidad.Item("KOEN")
+        Dim _SucEntidad As String = _RowEntidad.Item("SUEN")
 
-    '        Dim _Fecha_Tope As Date = FechaDelServidor()
-    '        Dim _Fecha As String = Format(FechaDelServidor, "yyyyMMdd")
+        Dim _CRSD As Double = _RowEntidad.Item("CRSD")
+        Dim _CRCH As Double = _RowEntidad.Item("CRCH")
+        Dim _CRLT As Double = _RowEntidad.Item("CRLT")
+        Dim _CRPA As Double = _RowEntidad.Item("CRPA")
+        Dim _CRTO As Double = _RowEntidad.Item("CRTO")
+        Dim _CrNvv_Utilizado As Double
 
-    '        Dim _CodEntidad As String = _RowEntidad.Item("KOEN")
-    '        Dim _Dimoper = _RowEntidad.Item("DIMOPER")
+        Consulta_sql = My.Resources.Sql_Entidad.SqlQuery_InfoCreditoEntidad
+        Consulta_sql = Replace(Consulta_sql, "#CodEntidad#", _CodEntidad)
+        Consulta_sql = Replace(Consulta_sql, "#Base_Bakapp#", _Global_BaseBk)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
-    '        Consulta_sql = My.Resources.Sql_Entidad.SqlQuery_deuda_doc_comerciales
-    '        Consulta_sql = Replace(Consulta_sql, "#CodEntidad#", _CodEntidad)
-    '        Consulta_sql = Replace(Consulta_sql, "#Fecha#", _Fecha)
-    '        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+        Dim _DsCredito As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
-    '        Dim _TblDeuda As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+        _DsCredito.Tables(0).TableName = "SinDocumentar"
+        _DsCredito.Tables(1).TableName = "Pagos"
+        _DsCredito.Tables(2).TableName = "Cheques"
+        _DsCredito.Tables(3).TableName = "Letras"
+        _DsCredito.Tables(4).TableName = "Pagares"
+        _DsCredito.Tables(5).TableName = "Utilizado_NVV"
+        _DsCredito.Tables(6).TableName = "Totales"
 
-    '        If CBool(_TblDeuda.Rows.Count) Then
+        Dim _TblSinDocumentar As DataTable = _DsCredito.Tables("SinDocumentar")
 
-    '            Dim _Deudas As Integer
+        '_TblPagos = _DsCredito.Tables("Pagos")
+        Dim _TblCheques As DataTable = _DsCredito.Tables("Cheques")
+        Dim _TblLetras As DataTable = _DsCredito.Tables("Letras")
+        Dim _TblPagares As DataTable = _DsCredito.Tables("Pagares")
+        Dim _TblUtilizado_NVV As DataTable = _DsCredito.Tables("Utilizado_NVV")
+        Dim _TblTotales As DataTable = _DsCredito.Tables("Totales")
 
-    '            For Each _Fila As DataRow In _TblDeuda.Rows
+        Dim _Crsd_Utilizado As Double = _TblTotales.Rows(0).Item("SIN_DOCUMENTAR")
+        Dim _CrPgo_Utilizado As Double = _TblTotales.Rows(0).Item("PAGOS")
+        Dim _Crch_Utilizado As Double = _TblTotales.Rows(0).Item("CHEQUES")
+        Dim _Crlt_Utilizado As Double = _TblTotales.Rows(0).Item("LETRAS")
+        Dim _Crpa_Utilizado As Double = _TblTotales.Rows(0).Item("PAGARES")
 
-    '                Dim _Nudonodefi As Boolean = _Fila.Item("NUDONODEFI")
-    '                Dim _Dias_Atraso As Integer = _Fila.Item("DIAS_ATRASO")
+        If _Utilizar_NVV_En_Credito_X_Cliente Then
+            _CrNvv_Utilizado = _TblTotales.Rows(0).Item("NVV")
+        End If
 
-    '                If Not _Nudonodefi Then
-    '                    Dim _DiasDeAtraso = _Dias_Atraso - _Dimoper
-    '                    If _DiasDeAtraso >= 0 Then
-    '                        _Deudas += 1
-    '                    End If
-    '                End If
+        _Crsd_Disponible = _CRSD - (_Crsd_Utilizado + _CrNvv_Utilizado) - _EnCurso_Total
+        _Crch_Disponible = _CRCH - (_Crch_Utilizado + _EnCurso_Cheque)
+        _Crlt_Disponible = _CRLT - (_Crlt_Utilizado + _EnCurso_Letra)
+        _Crpa_Disponible = _CRPA - (_Crpa_Utilizado + _EnCurso_Pagare)
 
-    '            Next
+        Dim _Crto_Utilizado As Double = _Crsd_Utilizado + _CrNvv_Utilizado + _Crch_Utilizado + _Crlt_Utilizado + _Crpa_Utilizado
 
-    '            _Mensaje.Tag = _TblDeuda
+        Dim _CRSF As Double
+        Dim _CrPgo_Disponible As Double
 
-    '            If CBool(_Deudas) Then
-    '                Throw New System.Exception("Cliente tiene documentos con deudas")
-    '            End If
+        Dim _TblPagos As DataTable
 
-    '            _Mensaje.EsCorrecto = True
-    '            _Mensaje.Mensaje = "Cliente sin deudas vencidas"
-    '            _Mensaje.Icono = MessageBoxIcon.Information
+        Sb_Revisar_Saldo_Favor(_TblPagos, _CRSF, _CrPgo_Utilizado, _CrPgo_Disponible, _CodEntidad)
 
-    '        End If
+        _Crto_Disponible = _CRTO - (_Crto_Utilizado + _EnCurso_Total + _EnCurso_Cheque + _EnCurso_Letra + _EnCurso_Pagare)
+        _Crto_Disponible = _CRTO + _CrPgo_Disponible - (_Crto_Utilizado + _EnCurso_Total + _EnCurso_Cheque + _EnCurso_Letra + _EnCurso_Pagare)
 
-    '    Catch ex As Exception
-    '        _Mensaje.EsCorrecto = False
-    '        _Mensaje.Mensaje = ex.Message
-    '        _Mensaje.Icono = MessageBoxIcon.Error
-    '    End Try
+    End Sub
 
-    '    Return _Mensaje
+    Sub Sb_Revisar_Saldo_Favor(ByRef _TblPagos As DataTable,
+                               ByRef _CRSF As Double,
+                               ByRef _CrPgo_Utilizado As Double,
+                               ByRef _CrPgo_Disponible As Double,
+                               _CodEntidad As String)
 
-    'End Function
+        Consulta_sql = "SELECT
+DPCE.TIDP AS TIDP,
+DPCE.NUDP AS NUDP,
+DPCE.NUCUDP AS NUCUDP,
+DPCE.FEVEDP AS FEVEDP,
+DPCE.ENDP AS ENTIDAD,
+convert(char(10),DPCE.FEEMDP,103) AS EMISION,
+convert(char(10),DPCE.FEVEDP,103) AS VENCIM,
+DPCE.REFANTI AS GLOSA,DPCE.VADP,DPCE.VAASDP,
+Isnull((Select Top 1 NOKOENDP From TABENDP Where KOENDP = EMDP),'????') AS BANCO,
+DPCE.ESPGDP,
+'VALOR' =CASE DPCE.TIMODP WHEN 'E' THEN 0 ELSE DPCE.VADP-DPCE.VAASDP-DPCE.VAVUDP END,
+'VALORD'=CASE DPCE.TIMODP WHEN 'E' THEN DPCE.VADP-DPCE.VAASDP-DPCE.VAVUDP ELSE 0 END,
+'NOMBRE'=( SELECT TOP 1 EN.NOKOEN FROM MAEEN EN WITH ( NOLOCK ) WHERE EN.KOEN=DPCE.ENDP ) 
+Into #Paso
+FROM MAEDPCE DPCE WITH ( NOLOCK ) 
+
+WHERE DPCE.TIDP IN ( 'EFV','CHV','TJV','LTV','PAV','ncv','fcv','fdv','DEP','CRV','ATB' )
+--AND DPCE.FEEMDP  >= '2010-09-01'
+AND DPCE.EMPRESA='" & Mod_Empresa & "'  AND DPCE.ESASDP='P' 
+ AND ROUND(DPCE.VADP,2)-ROUND(DPCE.VAASDP,2)-ROUND(DPCE.VAVUDP,2)<>0.0 
+ AND DPCE.ENDP='" & _CodEntidad & "'
+
+ Select * From #Paso
+
+ Select Isnull(SUM(VADP),0) As 'CRSF',Isnull(SUM(VAASDP),0) As 'Utilizado',Isnull(Sum(VALOR),0) As 'Disponible'
+ From #Paso
+
+ Drop Table #Paso"
+
+        Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+        _TblPagos = _Ds.Tables(0)
+
+        _CRSF = _Ds.Tables(1).Rows(0).Item("CRSF")
+        _CrPgo_Utilizado = _Ds.Tables(1).Rows(0).Item("Utilizado")
+        _CrPgo_Disponible = _Ds.Tables(1).Rows(0).Item("Disponible")
+
+    End Sub
+
 
 End Class

@@ -284,8 +284,9 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         If _RevAutomaticaMorosidadClientes Then
 
             Cl_Entidad = New Cl_Entidad
+            Dim _MontoVenta As Double = EnCurso_Total
 
-            _Msj_Deudas = Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False)
+            _Msj_Deudas = Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False, _MontoVenta)
             Cl_Entidad = _Msj_Deudas.Tag
             _Tiene_Deudas = Cl_Entidad.Tiene_Deudas
 
