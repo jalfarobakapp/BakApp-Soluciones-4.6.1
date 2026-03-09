@@ -29,7 +29,8 @@
     Public Property Mensaje As String
     Public Property Dimoper As Integer
     Public Property SuperaCreditoDisponible As Boolean
-
+    Public Property DiasDeMora As Integer
+    Public Property ListaProblemas As List(Of String)
     Public Sub New()
 
         ' Inicialización por defecto de propiedades
@@ -43,6 +44,26 @@
         Tbl_Deudas = New DataTable()
         MaxDiasMoraDocumentos = 0
         PromedioDiasPago = 0.0
+        PromedioUltimas3FacturasPago = 0.0
+        Tiene_Mas_Ventas = False
+        Promedio_Venta_UltXMeses = 0.0
+        BloqueadoDebePagarDeuda = False
+        UltFacPagadasEnMenosTiempoQueDimoper = False
+        VentaMayorPromedioUlt3Meses = False
+        ClienteMoroso = False
+        Mensaje = String.Empty
+        Dimoper = 0
+        SuperaCreditoDisponible = False
+        DiasDeMora = 0
+        ListaProblemas = New List(Of String)()
+
+        ' Inicializar disponibilidades de crédito
+        Crsd_Disponible = 0.0
+        Crch_Disponible = 0.0
+        Crlt_Disponible = 0.0
+        Crpa_Disponible = 0.0
+        Crto_Disponible = 0.0
+
 
     End Sub
 
@@ -102,8 +123,9 @@
                 If CBool(Tbl_Deudas.Rows.Count) Then
 
                     Dim _Deudas As Integer
-
                     Dim _MaxDiasDeAtraso As Integer = 0
+
+                    _Cl_Entidad.ListaProblemas.Add($"Tiene {Tbl_Deudas.Rows.Count} documentos con deuda")
 
                     For Each _Fila As DataRow In Tbl_Deudas.Rows
 
@@ -137,25 +159,12 @@
 
                     Next
 
-                    Dim _Endo = _RowEntidad.Item("KOEN").ToString.Trim
-                    Dim _Suendo = _RowEntidad.Item("SUEN").ToString.Trim
+                    _Cl_Entidad.ListaProblemas.Add($"El documentos con mas días de atraso tiene {_MaxDiasDeAtraso} días de atraso")
 
-                    Consulta_sql = My.Resources.Recursos_Inf.SQLQuery_Informe_de_comportamiento_de_pagos
-                    Consulta_sql = Replace(Consulta_sql, "#Filtro_Entidad#", "And ENDO = '" & _Endo & "'")
-                    Consulta_sql = Replace(Consulta_sql, "#Filtro_2#", "And TIPO_DOC <> 'NCV'")
-                    Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
-
-                    Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
-
-                    Dim _Row As DataRow = _Ds.Tables(2).Rows(0)
-                    Dim _Row2 As DataRow = _Ds.Tables(3).Rows(0)
-
-                    If Not IsNothing(_Row) Then
-                        _Cl_Entidad.PromedioDiasPago = Math.Round(_Row.Item("PROMEDIO_DIAS_REAL_PAGO"), 2)
-                    End If
-
-                    If Not IsNothing(_Row2) Then
-                        _Cl_Entidad.PromedioUltimas3FacturasPago = Math.Round(_Row2.Item("PROMEDIO_ULTIMAS_3_FACTURAS"), 2)
+                    If CBool(_Cl_Entidad.Dimoper) Then
+                        _Cl_Entidad.ListaProblemas.Add($"El cliente tiene {_Cl_Entidad.Dimoper} días de morosidad permitida")
+                    Else
+                        _Cl_Entidad.ListaProblemas.Add($"El cliente no tiene días de morosidad permitida")
                     End If
 
                     ' Guardar el mayor dias de atraso en la instancia que se devuelve
@@ -165,15 +174,28 @@
                     _Cl_Entidad.Tbl_Deudas = Tbl_Deudas
                     _Cl_Entidad.ClienteMoroso = _Cl_Entidad.Tiene_Deudas
 
+                    Dim _Endo = _RowEntidad.Item("KOEN").ToString.Trim
+                    Dim _Suendo = _RowEntidad.Item("SUEN").ToString.Trim
+
                     Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO", $"TIDO = 'FCV' And ENDO = '{_Endo}' And SUENDO = '{_Suendo}'")
 
                     _Cl_Entidad.Tiene_Mas_Ventas = IIf(_Reg > 1, True, False)
                     _Cl_Entidad.Promedio_Venta_UltXMeses = Fx_Promedio_Venta_UltXMeses(_RowEntidad, 3)
 
+                    If _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper Then
+                        _Cl_Entidad.Tiene_Deudas_Vencidas = True
+                        _Cl_Entidad.DiasDeMora = _Cl_Entidad.MaxDiasMoraDocumentos - _Cl_Entidad.Dimoper
+                        _Cl_Entidad.ListaProblemas.Add($"Hay un documento que tiene {_Cl_Entidad.DiasDeMora} días de morosidad restando los días permitidos de mora")
+                    End If
 
-
-                    Dim _DiasMaxMora As Double = _Cl_Entidad.Dimoper + 10
+                    Dim _DiasMaxMora As Double = _Cl_Entidad.Dimoper + 5
                     Dim _MaxDiasMoraDocumentos As Double = _Cl_Entidad.MaxDiasMoraDocumentos
+
+                    If _DiasMaxMora > 5 Then
+                        _Cl_Entidad.ListaProblemas.Add($"El sistema tiene permitido como máximo 5 de mora antes de que se bloquee")
+                    End If
+
+
 
                     'If _RevAutomaticaMorosidadClientes Then
 
@@ -187,18 +209,41 @@
 
                     If _MaxDiasMoraDocumentos > _DiasMaxMora Then
                         _Cl_Entidad.Mensaje = "No se le puede vender a este cliente hasta que no pague su deuda"
+                        _Cl_Entidad.ListaProblemas.Add(_Cl_Entidad.Mensaje)
                         _Cl_Entidad.Bloqueada = True
                         _Mensaje.Tag = _Cl_Entidad
                         Throw New System.Exception("Cliente tiene documentos con deudas")
                     End If
 
+                    Consulta_sql = My.Resources.Recursos_Inf.SQLQuery_Informe_de_comportamiento_de_pagos
+                    Consulta_sql = Replace(Consulta_sql, "#Filtro_Entidad#", "And ENDO = '" & _Endo & "'")
+                    Consulta_sql = Replace(Consulta_sql, "#Filtro_2#", "And TIPO_DOC <> 'NCV'")
+                    Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+
+                    Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+                    Dim _Row As DataRow = _Ds.Tables(2).Rows(0)
+                    Dim _Row2 As DataRow = _Ds.Tables(3).Rows(0)
+
+                    If Not IsNothing(_Row) Then
+                        _Cl_Entidad.PromedioDiasPago = Math.Round(_Row.Item("PROMEDIO_DIAS_REAL_PAGO"), 2)
+                        _Cl_Entidad.ListaProblemas.Add($"El promedio de dias que demora el cliente en pagar es de {_Cl_Entidad.PromedioDiasPago} días")
+                    End If
+
+                    If Not IsNothing(_Row2) Then
+                        _Cl_Entidad.PromedioUltimas3FacturasPago = Math.Round(_Row2.Item("PROMEDIO_ULTIMAS_3_FACTURAS"), 2)
+                        _Cl_Entidad.ListaProblemas.Add($"El promedio de dias que demora el cliente en pagar las últimas 3 facturas es de {_Cl_Entidad.PromedioUltimas3FacturasPago} días")
+                    End If
+
+
                     If _Cl_Entidad.ClienteMoroso AndAlso
-                        _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper AndAlso
-                        _Cl_Entidad.PromedioUltimas3FacturasPago > _Cl_Entidad.Dimoper Then
+                    _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper AndAlso
+                    _Cl_Entidad.PromedioUltimas3FacturasPago > _Cl_Entidad.Dimoper Then
 
                         _Cl_Entidad.Mensaje = "No se le puede vender a este cliente hasta que no pague su deuda" & vbCrLf &
-                                              "Las ultimas 3 facturas han sido pagadas en un promedio de " &
-                                              _Cl_Entidad.PromedioUltimas3FacturasPago & " días, solo se permiten hasta " & _Cl_Entidad.Dimoper & " días."
+                                          "Las ultimas 3 facturas han sido pagadas en un promedio de " &
+                                          _Cl_Entidad.PromedioUltimas3FacturasPago & " días, solo se permiten hasta " & _Cl_Entidad.Dimoper & " días."
+                        _Cl_Entidad.ListaProblemas.Add(_Cl_Entidad.Mensaje)
                         _Cl_Entidad.Bloqueada = True
                         _Mensaje.Tag = _Cl_Entidad
                         Throw New System.Exception("Cliente tiene documentos con deudas")
@@ -207,17 +252,23 @@
 
                     If Not _Cl_Entidad.ClienteMoroso AndAlso _Cl_Entidad.PromedioUltimas3FacturasPago > _Cl_Entidad.Dimoper Then
                         _Cl_Entidad.ClienteMoroso = True
+                        _Cl_Entidad.ListaProblemas.Add("Cliente moroso, el promedio de pago de las ultimas 3 facturas es mayor a los días de morosidad permitida")
                     End If
 
                     If _Cl_Entidad.Tiene_Deudas And Not _Cl_Entidad.Tiene_Deudas_Vencidas And _Cl_Entidad.PromedioUltimas3FacturasPago < _Cl_Entidad.Dimoper Then
                         _Cl_Entidad.UltFacPagadasEnMenosTiempoQueDimoper = True
+                        _Cl_Entidad.ListaProblemas.Add("El promedio de pago de las ultimas 3 facturas es menor a los días de morosidad permitida")
                     End If
 
                     If CBool(_MontoVenta) AndAlso CBool(_Cl_Entidad.Promedio_Venta_UltXMeses) Then
                         If _MontoVenta <= _Cl_Entidad.Promedio_Venta_UltXMeses Then
                             _Cl_Entidad.VentaMayorPromedioUlt3Meses = False
+                            _Cl_Entidad.ListaProblemas.Add("La venta es menor al promedio de ventas realizadas los ultimos 3 meses. " &
+                                                       $"Venta:{ FormatNumber(_MontoVenta, 0)}, promedio venta: {FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}")
                         Else
                             _Cl_Entidad.VentaMayorPromedioUlt3Meses = True
+                            _Cl_Entidad.ListaProblemas.Add("La venta es mayor al promedio de ventas realizadas los ultimos 3 meses. " &
+                                                       $"Venta:{ FormatNumber(_MontoVenta, 0)}, promedio venta: {FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}")
                         End If
                     End If
 
@@ -229,6 +280,7 @@
 
                     If _Cl_Entidad.Crsd_Disponible < 0 Then
                         _Cl_Entidad.SuperaCreditoDisponible = True
+                        _Cl_Entidad.ListaProblemas.Add("El cliente supera el credito que tiene disponible con esta venta")
                     End If
 
                     _Mensaje.Tag = _Cl_Entidad

@@ -179,6 +179,8 @@ Public Class Frm_Formulario_Documento
 
     Public Property Zw_Transporte_Dte As Zw_Transporte_Dte
 
+    Dim _Cl_Entidad As New Cl_Entidad
+
 #Region "PROPIEDADES"
 
     Public ReadOnly Property Pro_Idmaeedo() As Integer
@@ -8864,7 +8866,7 @@ Public Class Frm_Formulario_Documento
                     Dim _RevAutomaticaMorosidadClientes As Boolean = _Global_Row_Configuracion_General.Item("RevAutomaticaMorosidadClientes")
                     Dim _MontoVenta As Double = 0
 
-                    Dim _Cl_Entidad As New Cl_Entidad
+
 
                     Dim _Msj_Deudas As LsValiciones.Mensajes = _Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False, _MontoVenta)
 
@@ -8874,43 +8876,34 @@ Public Class Frm_Formulario_Documento
 
                         Dim _ClienteMoroso As Boolean = _Cl_Entidad.ClienteMoroso
 
-                        If _Cl_Entidad.Bloqueada Then
-                            MessageBoxEx.Show(Me, _Cl_Entidad.Mensaje, "Validación",
-                                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                            Return Nothing
+                        If _RevAutomaticaMorosidadClientes Then
+
+                            If _Cl_Entidad.Bloqueada Then
+
+                                ' Reemplazar la comprobación original por este bloque que acumula y muestra la lista de problemas.
+                                If CBool(_Cl_Entidad.ListaProblemas.Count) Then
+                                    ' Construir mensaje acumulado con los problemas
+                                    Dim sb As New System.Text.StringBuilder()
+                                    sb.AppendLine("Se han detectado los siguientes problemas:")
+                                    sb.AppendLine()
+                                    For Each problema In _Cl_Entidad.ListaProblemas
+                                        If problema IsNot Nothing Then
+                                            sb.AppendLine(" - " & problema.ToString())
+                                        End If
+                                    Next
+                                    sb.AppendLine()
+                                    ' Mostrar MessageBoxEx con la alerta y el listado acumulado
+                                    MessageBoxEx.Show(Me, sb.ToString(), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Else
+                                    MessageBoxEx.Show(Me, _Cl_Entidad.Mensaje, "Validación",
+                                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                End If
+
+                                Return Nothing
+
+                            End If
+
                         End If
-
-                        'Dim _Dimoper As Double = _RowEntidad.Item("DIMOPER")
-                        'Dim _DiasMaxMora As Double = _Dimoper + 10
-                        'Dim _MaxDiasMoraDocumentos As Double = _Cl_Entidad.MaxDiasMoraDocumentos
-
-                        'If _RevAutomaticaMorosidadClientes Then
-
-                        '    Dim _DiasMinMora As Double = _Dimoper - _MaxDiasMoraDocumentos
-
-                        '    If _DiasMinMora > 0 Then
-                        '        _ClienteMoroso = False
-                        '    End If
-
-                        'End If
-
-                        'If _MaxDiasMoraDocumentos > _DiasMaxMora Then
-                        '    MessageBoxEx.Show(Me, "No se le puede vender a este cliente hasta que no pague su deuda", "Validación",
-                        '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        '    Return Nothing
-                        'End If
-
-                        'If _ClienteMoroso AndAlso _Cl_Entidad.PromedioUltimas3FacturasPago > _Dimoper Then
-                        '    MessageBoxEx.Show(Me, "No se le puede vender a este cliente hasta que no pague su deuda" & vbCrLf &
-                        '                      "Las ultimas 3 facturas han sido pagadas en un promedio de " &
-                        '                      _Cl_Entidad.PromedioUltimas3FacturasPago & " días, solo se permiten hasta " & _Dimoper & " días.", "Validación",
-                        '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        '    Return Nothing
-                        'End If
-
-                        'If Not _ClienteMoroso AndAlso _Cl_Entidad.PromedioUltimas3FacturasPago > _Dimoper Then
-                        '    _ClienteMoroso = True
-                        'End If
 
                         If _ClienteMoroso Then
 
@@ -17790,6 +17783,102 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
+    Function Fx_AgregarTransporteNVVparaFCV() As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        If _Tido <> "NVV" Then
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Tag = Nothing
+            Return _Mensaje
+        End If
+
+        Dim _Zw_Transporte_Dte As New Zw_Transporte_Dte
+
+        Dim _AgregarTransporteNVVparaFCV As Boolean = (_Global_Row_Configuracion_General.Item("AgregarTransporteNVVparaFCV") Or
+                                                   _Global_Row_Configuracion_Estacion.Item("AgregarTransporteNVVparaFCV"))
+
+        If Not _AgregarTransporteNVVparaFCV Then
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Tag = Nothing
+            Return _Mensaje
+        End If
+
+        Try
+
+
+            Dim _Grabar As Boolean
+            Dim _Tiene_Transporte As Boolean = False
+
+            With _Zw_Transporte_Dte
+
+                .Id = 0
+                .Id_Enc = 0
+                .Idmaeedo = 0
+                .Tido = String.Empty
+                .Nudo = String.Empty
+                .Empresa = Mod_Empresa
+
+            End With
+
+            Dim _Koen As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+            Dim _Suen As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+
+            Dim _Row As DataRow = _Cl_Despacho.Row_Despacho
+
+            If Not IsNothing(_Row) Then
+
+                With _Zw_Transporte_Dte
+
+                    .DirDest = If(IsDBNull(_Row.Item("Direccion")), String.Empty, _Row.Item("Direccion").ToString().Trim)
+
+                    ' Obtener el valor seguro de NOKOCI
+                    Dim _Ciudad As String = If(IsDBNull(_Row.Item("Ciudad")), String.Empty, _Row.Item("Ciudad").ToString().Trim)
+                    Dim _Comuna As String = If(IsDBNull(_Row.Item("Comuna")), String.Empty, _Row.Item("Comuna").ToString().Trim)
+
+                    ' Recortar a un máximo de 30 caracteres
+                    If _Ciudad.Length > 20 Then _Ciudad = _Ciudad.Substring(0, 20)
+                    If _Comuna.Length > 20 Then _Comuna = _Comuna.Substring(0, 20)
+
+                    .CiudadDest = _Ciudad.Trim
+                    .CmnaDest = _Comuna.Trim
+
+                End With
+
+            End If
+
+            Dim Fm As New Frm_Transporte_DTE
+            Fm.Zw_Transporte_Dte = _Zw_Transporte_Dte
+            Fm.ShowDialog(Me)
+            If Fm.DialogResult = DialogResult.OK Then
+                _Grabar = True
+                _Zw_Transporte_Dte = Fm.Zw_Transporte_Dte
+            End If
+            Fm.Dispose()
+
+            If Not _Grabar Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Detalle = "No se agregó el transporte a la NVV."
+                _Mensaje.Tag = Nothing
+                _Mensaje.Icono = MessageBoxIcon.Stop
+                Return _Mensaje
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Tag = _Zw_Transporte_Dte
+            _Mensaje.Icono = MessageBoxIcon.Information
+            _Mensaje.Detalle = "Transporte agregado correctamente a la NVV."
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = ex.Message
+            _Mensaje.Tag = Nothing
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Private Sub Sb_EliminarFilaPuntos()
 
         If Not _Post_Venta Then
@@ -24244,7 +24333,7 @@ Public Class Frm_Formulario_Documento
         Dim _RevisarPermiso As Boolean
         Dim _Validacion As Boolean
 
-        Dim _Cl_Entidad As New Cl_Entidad
+        _Cl_Entidad = New Cl_Entidad
         Dim _MontoVenta As Double = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
 
         Dim _Msj_Deudas As LsValiciones.Mensajes = _Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False, _MontoVenta)
@@ -24267,7 +24356,10 @@ Public Class Frm_Formulario_Documento
 
                     If _Cl_Entidad.UltFacPagadasEnMenosTiempoQueDimoper Then
 
+                        _Cl_Entidad.ListaProblemas.Add("Las últimas ventas han sido pagadas en plazos menores que los días de morosidad permitidos.")
+
                         If _Cl_Entidad.SuperaCreditoDisponible Then
+                            _Cl_Entidad.ListaProblemas.Add("Se excede el crédito disponible.")
                             _RevisarPermiso = True
                         Else
 
@@ -24275,6 +24367,7 @@ Public Class Frm_Formulario_Documento
 
                                 _Tiene_Morosidad = False
                                 _Validacion = True
+                                _Cl_Entidad.ListaProblemas.Add("Se otorga la autorización para la venta.")
                                 Return _Validacion
 
                             Else
@@ -24304,6 +24397,8 @@ Public Class Frm_Formulario_Documento
             If _RevisarPermiso Then
                 If Fx_Tiene_Permiso(Me, "Bkp00019", _Fun_Auto_Deuda_Ven, False) Then
                     Fx_Validad_Morosidad2 = True
+                Else
+                    _Cl_Entidad.ListaProblemas.Add("Pasara a evaluación de periso remoto")
                 End If
             End If
 

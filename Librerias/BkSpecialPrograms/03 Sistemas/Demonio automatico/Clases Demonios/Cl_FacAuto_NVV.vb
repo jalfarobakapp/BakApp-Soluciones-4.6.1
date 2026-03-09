@@ -1,6 +1,4 @@
-﻿Imports BkSpecialPrograms.My.Resources
-
-Public Class Cl_FacAuto_NVV
+﻿Public Class Cl_FacAuto_NVV
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_Sql As String
@@ -1228,6 +1226,19 @@ Where Facturar = 1"
                                            "',NudoGen = '" & _Nudo & "'" & vbCrLf &
                                            "Where Id = " & _Id_Enc
                             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+                            Dim _Idmaeedo_Clon As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Idmaeedo_Clon", "Idmaeedo = " & _Idmaeedo_Origen)
+
+                            If CBool(_Idmaeedo_Clon) Then
+                                Dim _Cl_Elimina_Anula As New Clas_Cerrar_Anular_Eliminar_Documento_Origen
+                                If _Cl_Elimina_Anula.Fx_EliminarAnular_Doc(Nothing, _Idmaeedo_Clon, FUNCIONARIO,
+                                                                       Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar,
+                                                                       False, True) Then
+                                    'MessageBoxEx.Show(Me, "El documento se ha eliminado correctamente", "Eliminar documento",
+                                    '                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+                                End If
+
+                            End If
 
                         End If
 

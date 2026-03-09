@@ -12,10 +12,10 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
         Cerrar
     End Enum
 
-    Sub Sb_Cerrar_Documentos_De_Origen(ByVal _Formulario As Form, _
-                                       ByVal _Accion As Enum_Accion, _
-                                       ByVal _TblDocumentos_Dori As DataTable, _
-                                       ByVal _New_Idmaeedo As Integer)
+    Sub Sb_Cerrar_Documentos_De_Origen(_Formulario As Form,
+                                        _Accion As Enum_Accion,
+                                        _TblDocumentos_Dori As DataTable,
+                                        _New_Idmaeedo As Integer)
 
         If Not (_TblDocumentos_Dori Is Nothing) Then
 
@@ -88,7 +88,7 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
 
     End Sub
 
-    Sub Sb_Consolidar_Stock(ByVal _TblConsolidar_Stock As DataTable)
+    Sub Sb_Consolidar_Stock(_TblConsolidar_Stock As DataTable)
 
         Dim _Consolidar As New Class_Consolidar_Stock()
 
@@ -270,7 +270,7 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
             Dim _Lincondesp As Boolean = _Fila.Item("LINCONDESP")
 
             If _Tido = "OCC" Then _Campo1 = "STOCNV1C" : _Campo2 = "STOCNV2C" : _Sr = "-"
-            If _Tido = "NVV" Then _Campo1 = "STOCNV1" : _Campo2 = "STOCNV1" : _Sr = "-"
+            If _Tido = "NVV" Then _Campo1 = "STOCNV1" : _Campo2 = "STOCNV2" : _Sr = "-"
 
             If _Tido = "BLV" Or _Tido = "FCV" Then
                 If _Lincondesp Then
@@ -307,10 +307,10 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
 
     End Function
 
-    Function Revisar_Si_Se_Puede_Eliminar_El_Documento(ByVal _Formulario As Form,
-                                                       ByVal _Idmaeedo As Integer,
-                                                       ByVal _Accion As Enum_Accion,
-                                                       Optional ByVal _Mostrar_Mensaje As Boolean = False) As Boolean
+    Function Revisar_Si_Se_Puede_Eliminar_El_Documento(_Formulario As Form,
+                                                       _Idmaeedo As Integer,
+                                                       _Accion As Enum_Accion,
+                                                       Optional _Mostrar_Mensaje As Boolean = False) As Boolean
 
         Consulta_sql = "Select Top 1 IDMAEEDO,TIDO,NUDO,NUDONODEFI From MAEEDO Where IDMAEEDO = " & _Idmaeedo
         Dim _Tbl_Documento As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
