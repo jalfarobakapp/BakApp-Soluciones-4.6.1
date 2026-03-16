@@ -372,10 +372,18 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
     Private Sub Btn_Cerrar_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cerrar_Documento.Click
 
-        Dim _Idmaeedo = _Row_Maeedo.Item("IDMAEEDO")
+        Dim _Idmaeedo As Integer = _Row_Maeedo.Item("IDMAEEDO")
         Dim _Tbl = _Tbl_Maeddo.Select("IDMAEEDO = " & _Idmaeedo)
-        Dim _SobreStock As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "SobreStock", "Idmaeedo = " & _Idmaeedo)
+        Dim _SobreStock As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "SobreStock", "Idmaeedo = " & _Idmaeedo,,,, True)
         Dim _CodPermiso As String = "Doc00011"
+
+        Dim _EsClon As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Idmaeedo", "Idmaeedo_Clon = " & _Idmaeedo, True)
+
+        If CBool(_EsClon) Then
+            MessageBoxEx.Show(Me, "Este documento no puede cerrarse desde aquí, ya que corresponde a un" & vbCrLf &
+                              "tratamiento especial de Picking generado en otra empresa.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         If Not Fx_Revisar_Documento_Cerrado(_Idmaeedo, False) Then
             Return
@@ -445,6 +453,18 @@ Inner Join {_Global_BaseBk}Zw_Docu_Det Det On St.Id = Det.Id_SobreStock
 Where Idmaeedo = {_Idmaeedo}"
                 _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
+                Dim _Idmaeedo_Clon As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Idmaeedo_Clon", "Idmaeedo = " & _Idmaeedo, True)
+
+                If CBool(_Idmaeedo_Clon) Then
+                    Dim _Cl_Elimina_Anula As New Clas_Cerrar_Anular_Eliminar_Documento_Origen
+                    If _Cl_Elimina_Anula.Fx_EliminarAnular_Doc2(_Idmaeedo_Clon, FUNCIONARIO,
+                                                                Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar, False) Then
+                        Sb_Cambiar_EmpSucBod(_Idmaeedo)
+                    End If
+
+                End If
+
+
             End If
 
             Sb_Actualizar_Grillas()
@@ -455,6 +475,34 @@ Where Idmaeedo = {_Idmaeedo}"
             Me.Close()
 
         End If
+
+    End Sub
+
+    Sub Sb_Cambiar_EmpSucBod(_Idmaeedo As Integer)
+
+        Consulta_sql = "Select Distinct Idmaeedo,Tido,Nudo,Empresa,Sucursal,Bodega From " & _Global_BaseBk & "Zw_Docu_Det" & vbCrLf &
+                       "Where Idmaeedo = " & _Idmaeedo
+        Dim _Tbl_Det As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+
+        For Each _Fila As DataRow In _Tbl_Det.Rows
+
+            Dim _Tido As String = _Fila.Item("Tido").ToString.Trim
+            Dim _Nudo As String = _Fila.Item("Nudo").ToString.Trim
+            Dim _Empresa As String = _Fila.Item("Empresa").ToString.Trim
+            Dim _Sucursal As String = _Fila.Item("Sucursal").ToString.Trim
+            Dim _Bodega As String = _Fila.Item("Bodega").ToString.Trim
+
+            Consulta_sql = "Declare @Idmaeedo Int = " & _Idmaeedo & vbCrLf &
+                           "Update MAEEDO Set EMPRESA = '" & _Empresa & "',SUDO = '" & _Sucursal & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
+                           "Update MAEDDO Set EMPRESA = '" & _Empresa & "',SULIDO = '" & _Sucursal & "',BOSULIDO = '" & _Bodega & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Despachos Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "',Bodega = '" & _Bodega &
+                                "' Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa = '" & _Empresa & "' Where Idmaeedo = @Idmaeedo"
+
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False)
+
+        Next
 
     End Sub
 

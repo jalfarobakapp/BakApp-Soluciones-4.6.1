@@ -1701,6 +1701,7 @@ Public Class Frm_Formulario_Documento
             .Item("ConservaNudo") = False
 
             .Item("SobreStock") = SobreStock
+            .Item("LeyendaMorosidad") = String.Empty
 
             _TblEncabezado.Rows.Add(NewFila)
 
@@ -8869,6 +8870,8 @@ Public Class Frm_Formulario_Documento
 
 
                     Dim _Msj_Deudas As LsValiciones.Mensajes = _Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False, _MontoVenta)
+                    Dim _MensajeMsj As String = "La entidad presenta morosidad" & Environment.NewLine &
+                                                "Está situación será evaluada nuevamente al grabar el documento"
 
                     If Not _Msj_Deudas.EsCorrecto Then
 
@@ -8876,28 +8879,34 @@ Public Class Frm_Formulario_Documento
 
                         Dim _ClienteMoroso As Boolean = _Cl_Entidad.ClienteMoroso
 
+                        _MensajeMsj = _Cl_Entidad.Mensaje
+
                         If _RevAutomaticaMorosidadClientes Then
+
+                            _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
 
                             If _Cl_Entidad.Bloqueada Then
 
-                                ' Reemplazar la comprobación original por este bloque que acumula y muestra la lista de problemas.
-                                If CBool(_Cl_Entidad.ListaProblemas.Count) Then
-                                    ' Construir mensaje acumulado con los problemas
-                                    Dim sb As New System.Text.StringBuilder()
-                                    sb.AppendLine("Se han detectado los siguientes problemas:")
-                                    sb.AppendLine()
-                                    For Each problema In _Cl_Entidad.ListaProblemas
-                                        If problema IsNot Nothing Then
-                                            sb.AppendLine(" - " & problema.ToString())
-                                        End If
-                                    Next
-                                    sb.AppendLine()
-                                    ' Mostrar MessageBoxEx con la alerta y el listado acumulado
-                                    MessageBoxEx.Show(Me, sb.ToString(), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                Else
-                                    MessageBoxEx.Show(Me, _Cl_Entidad.Mensaje, "Validación",
-                                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                End If
+                                '' Reemplazar la comprobación original por este bloque que acumula y muestra la lista de problemas.
+                                'If CBool(_Cl_Entidad.ListaProblemas.Count) Then
+                                '    ' Construir mensaje acumulado con los problemas
+                                '    Dim sb As New System.Text.StringBuilder()
+                                '    sb.AppendLine("Se han detectado los siguientes problemas:")
+                                '    sb.AppendLine()
+                                '    For Each problema In _Cl_Entidad.ListaProblemas
+                                '        If problema IsNot Nothing Then
+                                '            sb.AppendLine(" - " & problema.ToString())
+                                '        End If
+                                '    Next
+                                '    sb.AppendLine()
+                                '    ' Mostrar MessageBoxEx con la alerta y el listado acumulado
+                                '    MessageBoxEx.Show(Me, sb.ToString(), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                'Else
+                                '    MessageBoxEx.Show(Me, _Cl_Entidad.Mensaje, "Validación",
+                                '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                'End If
+
+                                MessageBoxEx.Show(Me, _Cl_Entidad.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                                 Return Nothing
 
@@ -8907,7 +8916,7 @@ Public Class Frm_Formulario_Documento
 
                         If _ClienteMoroso Then
 
-                            MessageBoxEx.Show(Me, "La entidad presenta morosidad" & Environment.NewLine &
+                            MessageBoxEx.Show(Me, _MensajeMsj & vbCrLf & "La entidad presenta fecha de crédito vigente vencida" & Environment.NewLine &
                                           "Está situación será evaluada nuevamente al grabar el documento",
                                            "Validación",
                                             MessageBoxButtons.OK, _Msj_Deudas.Icono, MessageBoxDefaultButton.Button1, Me.TopMost)
@@ -12891,6 +12900,7 @@ Public Class Frm_Formulario_Documento
             .Item("PdaRMovil") = _TblEncabezado_StBy.Rows(0).Item("PdaRMovil")
             .Item("Idpdaenca") = _TblEncabezado_StBy.Rows(0).Item("Idpdaenca")
             .Item("ConservaNudo") = _TblEncabezado_StBy.Rows(0).Item("ConservaNudo")
+            .Item("LeyendaMorosidad") = _TblEncabezado_StBy.Rows(0).Item("LeyendaMorosidad")
 
         End With
 
@@ -24368,6 +24378,7 @@ Public Class Frm_Formulario_Documento
                                 _Tiene_Morosidad = False
                                 _Validacion = True
                                 _Cl_Entidad.ListaProblemas.Add("Se otorga la autorización para la venta.")
+                                _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
                                 Return _Validacion
 
                             Else
@@ -24377,6 +24388,7 @@ Public Class Frm_Formulario_Documento
                                 Else
                                     _Tiene_Morosidad = False
                                     _Validacion = True
+                                    _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
                                     Return _Validacion
                                 End If
 
@@ -24393,6 +24405,8 @@ Public Class Frm_Formulario_Documento
             Else
                 _RevisarPermiso = True
             End If
+
+            _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
 
             If _RevisarPermiso Then
                 If Fx_Tiene_Permiso(Me, "Bkp00019", _Fun_Auto_Deuda_Ven, False) Then

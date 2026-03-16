@@ -285,7 +285,7 @@ Public Class Frm_Ver_Documento_Observaciones
     Private Sub Btn_Grabar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Grabar.Click
 
         Dim _Feer As Date = _Row_Maeedo.Item("FEER") 'Format(Dtp_Fecha_Entrega_Recepcion.Value, "yyyyMMdd")
-        Dim _Esdo As Boolean = String.IsNullOrEmpty(Trim(_Row_Maeedo.Item("ESDO")))
+        Dim _Esdo As Boolean = String.IsNullOrWhiteSpace(Trim(_Row_Maeedo.Item("ESDO")))
 
         Dim _Idmaeedo As Integer = _Row_Maeedo.Item("IDMAEEDO")
 
@@ -364,7 +364,7 @@ Update MAEEDO Set FEER = '{Format(_Fecha_Recepcion, "yyyyMMdd")}' Where IDMAEEDO
 Update MAEEDOOB Set 
     OBDO = '{Txt_Observaciones.Text.Trim}'
    ,CPDO = '{Txt_Forma_de_pago.Text.Trim}'
-   ,OCDO = '{Txt_Orden_de_compra.Text.Trim}
+   ,OCDO = '{Txt_Orden_de_compra.Text.Trim}'
 Where IDMAEEDO = {_Idmaeedo}"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

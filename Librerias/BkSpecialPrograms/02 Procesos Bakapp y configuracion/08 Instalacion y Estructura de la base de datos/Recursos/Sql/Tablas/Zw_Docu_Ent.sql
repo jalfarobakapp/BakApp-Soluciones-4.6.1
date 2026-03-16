@@ -23,6 +23,8 @@ CREATE TABLE [dbo].[Zw_Docu_Ent](
     [PdaRMovil]         [bit]			NOT NULL DEFAULT (0),
     [Idpdaenca]         [Int]			NOT NULL DEFAULT (0),
 	[Empresa_Ori]       [char](2)		NOT NULL DEFAULT (''),
+	[Idmaeedo_Clon]     [int]           NOT NULL DEFAULT (''),
+    [LeyendaMorosidad]  [varchar](max)  NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Docu_Ent] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

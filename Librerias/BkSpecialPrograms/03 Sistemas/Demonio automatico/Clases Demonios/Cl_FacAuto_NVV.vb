@@ -1231,9 +1231,8 @@ Where Facturar = 1"
 
                             If CBool(_Idmaeedo_Clon) Then
                                 Dim _Cl_Elimina_Anula As New Clas_Cerrar_Anular_Eliminar_Documento_Origen
-                                If _Cl_Elimina_Anula.Fx_EliminarAnular_Doc(Nothing, _Idmaeedo_Clon, FUNCIONARIO,
-                                                                       Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar,
-                                                                       False, True) Then
+                                If _Cl_Elimina_Anula.Fx_EliminarAnular_Doc2(_Idmaeedo_Clon, FUNCIONARIO,
+                                                                            Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar, False) Then
                                     'MessageBoxEx.Show(Me, "El documento se ha eliminado correctamente", "Eliminar documento",
                                     '                  MessageBoxButtons.OK, MessageBoxIcon.Information)
                                 End If

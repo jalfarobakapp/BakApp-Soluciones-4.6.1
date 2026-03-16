@@ -885,7 +885,7 @@ Public Class Frm_Stmp_IncNVVPicking
 
             If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False) Then
 
-                Consulta_sql = "Select Codigo From MAEDDO Where IDMAEEDO = " & _Idmaeedo
+                Consulta_sql = "Select KOPRCT As Codigo From MAEDDO Where IDMAEEDO = " & _Idmaeedo
                 Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                 Dim _Filtro_Productos As String = Generar_Filtro_IN(_TblDetalle, "Consolidar_Stock", "Codigo", False, False, "'")
@@ -977,8 +977,8 @@ DECLARE @New_Idmaeedo INT;              -- Nuevo ID clonado
         d.ARCHIRST, d.IDRST, d.EMPRESA, d.TIDO, d.NUDO, d.ENDO, d.SUENDO, d.ENDOFI,
         d.LILG, d.NULIDO, d.SULIDO, d.LUVTLIDO, d.BOSULIDO, d.KOFULIDO, d.NULILG,
         d.PRCT, d.TICT, d.TIPR, d.NUSEPR, d.KOPRCT, d.UDTRPR, d.RLUDPR,
-        d.CAPRCO1, d.CAPRCO1, d.CAPREX1, d.CAPRNC1,
-        d.UD01PR, d.CAPRCO2, d.CAPRCO2, d.CAPREX2, d.CAPRNC2,
+        d.CAPRCO1, d.CAPRAD1, d.CAPREX1, d.CAPRNC1,
+        d.UD01PR, d.CAPRCO2, d.CAPRAD2, d.CAPREX2, d.CAPRNC2,
         d.UD02PR, d.KOLTPR, d.MOPPPR, d.TIMOPPPR, d.TAMOPPPR, d.PPPRNELT, d.PPPRNE,
         d.PPPRBRLT, d.PPPRBR, d.NUDTLI, d.PODTGLLI, d.VADTNELI, d.VADTBRLI,
         d.POIVLI, d.VAIVLI, d.NUIMLI, d.POIMGLLI, d.VAIMLI, d.VANELI, d.VABRLI,

@@ -206,6 +206,102 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
 
     End Function
 
+    Function Fx_EliminarAnular_Doc2(_Idmaeedo As Integer,
+                                    _Cod_Func_Eliminador As String,
+                                    _Accion As Enum_Accion,
+                                    _Reversar_Stock As Boolean) As Boolean
+
+        Dim _FechaEliminacion = FechaDelServidor()
+
+        Dim _SePuedeEliminar As String = Revisar_Si_Se_Puede_Eliminar_El_Documento(_Idmaeedo, _Accion)
+
+        If Not String.IsNullOrEmpty(_SePuedeEliminar) Then
+            Return False
+        End If
+
+        Try
+
+            Dim Fecha_Elimi As String = Format(_FechaEliminacion, "yyyyMMdd")
+
+            Consulta_sql = "Select EMPRESA,SUDO,TIDO,NUDO,ENDO,SUENDO,FEEMDO,KOFUDO,VANEDO,VABRDO" & vbCrLf &
+                           "From MAEEDO" & vbCrLf &
+                           "Where IDMAEEDO = " & _Idmaeedo
+            Dim Tabla_Doc As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            With Tabla_Doc.Rows(0)
+
+                Dim _Endo As String = Trim(.Item("ENDO"))
+                Dim _Suendo As String = Trim(.Item("SUENDO"))
+                Dim _Tido As String = Trim(.Item("TIDO"))
+                Dim _Nudo As String = .Item("NUDO")
+                Dim _Fecha_Doc_Origen As Date = .Item("FEEMDO")
+                Dim _Fecha_Eliminacion As String = Fecha_Elimi
+                Dim _Funcionario_Doc_Origen As String = .Item("KOFUDO")
+                Dim _Funcionario_Eliminador As String = _Cod_Func_Eliminador
+                Dim _Empresa As String = .Item("EMPRESA")
+                Dim _Sucursal As String = .Item("SUDO")
+                Dim _Neto_Doc_Origen As String = .Item("VANEDO")
+                Dim _Bruto_Doc_Origen As String = .Item("VABRDO")
+
+                Dim _Fecha_Ori As String = Format(_Fecha_Doc_Origen, "yyyyMMdd")
+
+                If _Accion = Enum_Accion.Anular Then
+
+                    Consulta_sql = "Insert Into ELIDDO Select * From MAEDDO Where MAEDDO.IDMAEEDO = " & _Idmaeedo & vbCrLf &
+                                   "Insert Into ELIEDO Select * From MAEEDO Where MAEEDO.IDMAEEDO = " & _Idmaeedo & vbCrLf &
+                                   "Update MAEEDO Set ESDO = 'N',LIBRO = '',KOFUAUDO = '" & _Cod_Func_Eliminador & "' Where IDMAEEDO =" & _Idmaeedo & vbCrLf & vbCrLf
+
+                ElseIf _Accion = Enum_Accion.Eliminar Then
+
+                    Consulta_sql = "Insert Into MAEELIMI (EMPRESA,TIDO,NUDO,ENDO,SUENDO,FEEMDO,FEELIDO,KOFUDO,VANEDO,VABRDO)" & vbCrLf &
+                                    "Select EMPRESA,TIDO,NUDO,ENDO,SUENDO,FEEMDO,'" & _Fecha_Eliminacion & "',KOFUDO,VANEDO,VABRDO" & vbCrLf &
+                                    "From MAEEDO" & vbCrLf &
+                                    "Where IDMAEEDO =" & _Idmaeedo & vbCrLf &
+                                    "Insert Into ELIDDO Select * From MAEDDO Where MAEDDO.IDMAEEDO = " & _Idmaeedo & vbCrLf &
+                                    "Insert Into ELIEDO Select * From MAEEDO Where MAEEDO.IDMAEEDO = " & _Idmaeedo & vbCrLf &
+                                    "Delete MAEEDO Where IDMAEEDO =" & _Idmaeedo & vbCrLf
+
+                ElseIf _Accion = Enum_Accion.Modificar Then
+
+                    Consulta_sql = "Delete MAEEDO Where IDMAEEDO =" & _Idmaeedo & vbCrLf
+
+                End If
+
+                If _Reversar_Stock Then Consulta_sql += Fx_Reversar_Stock2(_Idmaeedo, _Tido)
+
+                Consulta_sql +=
+                               "Delete From MAEPOSLI" & vbCrLf &
+                               "Where MAEPOSLI.IDMAEDDO IN (Select IDMAEDDO From MAEDDO Where IDMAEEDO=" & _Idmaeedo & ")" & vbCrLf &
+                               "Delete From MEVENTO Where ARCHIRVE='MAEEDO' And IDRVE=" & _Idmaeedo & vbCrLf &
+                               "Delete From MAEIMLI Where IDMAEEDO =" & _Idmaeedo & vbCrLf &
+                               "Delete From MAEDTLI Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
+                               "Delete From MEVENTO " &
+                               "Where ARCHIRVE='MAEDDO' And IDRVE IN (Select IDMAEDDO From MAEDDO Where IDMAEEDO=" & _Idmaeedo & ")" & vbCrLf &
+                               "Delete From MAEDDO Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
+                               "Delete From MAEVEN Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
+                               "Delete From MAEEDOOB Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
+                               "Delete From TABPERMISO Where IDRST=" & _Idmaeedo & " And ARCHIRST='MAEEDO'" & vbCrLf &
+                               "Select TOP 1 * From MAEDCR WITH (NOLOCK) Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
+                               "Delete From MAEDCR Where IDMAEEDO=" & _Idmaeedo & vbCrLf & vbCrLf
+
+                Consulta_sql = Replace(Consulta_sql, "#Idmaeedo#", _Idmaeedo)
+
+                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                    Throw New System.Exception(_Sql.Pro_Error)
+                End If
+
+                Return True
+
+            End With
+
+        Catch ex As Exception
+
+        End Try
+
+    End Function
+
     Function Fx_Reversar_Stock(_Idmaeedo As Integer, _Tido As String) As String
 
         Dim _Consulta_sql = String.Empty
@@ -280,13 +376,6 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
                 End If
             End If
 
-            '_Consulta_sql += "Update MAEPREM Set " & _Campo1 & " = " & _Campo1 & " +- " & _CantUd1 & "," & _Campo2 & " = " & _Campo2 & " +-" & _CantUd2 &
-            '                 " Where EMPRESA = '" & _Empresa & "' And KOPR = '" & _Koprct & "'
-            '                 Update MAEPR Set " & _Campo1 & " = " & _Campo1 & " +-" & _CantUd1 & "," & _Campo2 & " = " & _Campo2 & " +-" & _CantUd2 &
-            '                 " Where KOPR = '" & _Koprct & "'
-            '                 Update MAEST Set " & _Campo1 & " = " & _Campo1 & " +-" & _CantUd1 & "," & _Campo2 & " = " & _Campo2 & " +-" & _CantUd2 &
-            '                 " Where EMPRESA='" & _Empresa & "' And KOSU='" & _Kosu & "' And KOBO='" & _Kobo & "' And KOPR='" & _Koprct & "'" & vbCrLf & vbCrLf
-
             _Consulta_sql += "Update MAEPREM Set " & _Campo1 & " = " & _Campo1 & _Sr & _CantUd1 & "," & _Campo2 & " = " & _Campo2 & _Sr & _CantUd2 &
                              " Where EMPRESA = '" & _Empresa & "' And KOPR = '" & _Koprct & "'
                              Update MAEPR Set " & _Campo1 & " = " & _Campo1 & _Sr & _CantUd1 & "," & _Campo2 & " = " & _Campo2 & _Sr & _CantUd2 &
@@ -349,6 +438,46 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
             Return True ' SI SE PUEDE ELIMINAR
 
         End If
+
+    End Function
+
+    Function Revisar_Si_Se_Puede_Eliminar_El_Documento(_Idmaeedo As Integer,
+                                                       _Accion As Enum_Accion) As String
+
+        Consulta_sql = "Select Top 1 IDMAEEDO,TIDO,NUDO,NUDONODEFI From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+        Dim _Tbl_Documento As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+
+        If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+            Return "Error al revisar si se puede eliminar el documento" & vbCrLf & _Sql.Pro_Error
+        End If
+
+        If CBool(_Tbl_Documento.Rows.Count) Then
+
+            Dim _Tido As String = _Tbl_Documento.Rows(0).Item("TIDO")
+            Dim _Nudonodefi As Boolean = _Tbl_Documento.Rows(0).Item("NUDONODEFI")
+
+            If _Nudonodefi Then
+                Return True
+            End If
+
+            Dim Dst_Paso As New DataSet
+
+            Consulta_sql = My.Resources.Recursos_Eliminar_Anular_Cerra_Doc.Revisar_sutentatorio
+            Consulta_sql = Replace(Consulta_sql, "#Idmaeedo#", _Idmaeedo)
+            Consulta_sql = Replace(Consulta_sql, "#Tido#", _Tido)
+
+            Dst_Paso = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+            For Each Tabla As DataTable In Dst_Paso.Tables
+                If CBool(Tabla.Rows.Count) Then
+                    Return "El documento es sustentatorio de otro documento" & vbCrLf &
+                           "No es posible " & _Accion.ToString & " documento"
+                End If
+            Next
+
+        End If
+
+        Return String.Empty ' SI SE PUEDE ELIMINAR
 
     End Function
 

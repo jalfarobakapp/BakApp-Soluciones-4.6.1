@@ -1,4 +1,6 @@
-﻿Public Class Cl_Entidad
+﻿Imports BkSpecialPrograms.My.Resources
+
+Public Class Cl_Entidad
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -102,6 +104,8 @@
                 Dim _Ms As LsValiciones.Mensajes = Fx_Reparar_Maeven(_RowEntidad)
 
                 If Not _Ms.EsCorrecto Then
+                    _Cl_Entidad.ListaProblemas.Add("Error al reparar los vencimientos de la entidad" & vbCrLf & _Ms.Mensaje)
+                    Fx_LlenarMensaje(_Cl_Entidad)
                     Throw New System.Exception("Error al reparar los vencimientos de la entidad" & vbCrLf & _Ms.Mensaje)
                 End If
 
@@ -208,10 +212,10 @@
                     'End If
 
                     If _MaxDiasMoraDocumentos > _DiasMaxMora Then
-                        _Cl_Entidad.Mensaje = "No se le puede vender a este cliente hasta que no pague su deuda"
-                        _Cl_Entidad.ListaProblemas.Add(_Cl_Entidad.Mensaje)
+                        _Cl_Entidad.ListaProblemas.Add("¡No se le puede vender a este cliente hasta que no pague su deuda!")
                         _Cl_Entidad.Bloqueada = True
                         _Mensaje.Tag = _Cl_Entidad
+                        Fx_LlenarMensaje(_Cl_Entidad)
                         Throw New System.Exception("Cliente tiene documentos con deudas")
                     End If
 
@@ -237,15 +241,15 @@
 
 
                     If _Cl_Entidad.ClienteMoroso AndAlso
-                    _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper AndAlso
-                    _Cl_Entidad.PromedioUltimas3FacturasPago > _Cl_Entidad.Dimoper Then
+                       _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper AndAlso
+                       _Cl_Entidad.PromedioUltimas3FacturasPago > _Cl_Entidad.Dimoper Then
 
-                        _Cl_Entidad.Mensaje = "No se le puede vender a este cliente hasta que no pague su deuda" & vbCrLf &
-                                          "Las ultimas 3 facturas han sido pagadas en un promedio de " &
-                                          _Cl_Entidad.PromedioUltimas3FacturasPago & " días, solo se permiten hasta " & _Cl_Entidad.Dimoper & " días."
-                        _Cl_Entidad.ListaProblemas.Add(_Cl_Entidad.Mensaje)
+                        _Cl_Entidad.ListaProblemas.Add("No se le puede vender a este cliente hasta que no pague su deuda" & vbCrLf &
+                                                       "Las ultimas 3 facturas han sido pagadas en un promedio de " &
+                                                       _Cl_Entidad.PromedioUltimas3FacturasPago & " días, solo se permiten hasta " & _Cl_Entidad.Dimoper & " días.")
                         _Cl_Entidad.Bloqueada = True
                         _Mensaje.Tag = _Cl_Entidad
+                        Fx_LlenarMensaje(_Cl_Entidad)
                         Throw New System.Exception("Cliente tiene documentos con deudas")
 
                     End If
@@ -261,6 +265,7 @@
                     End If
 
                     If CBool(_MontoVenta) AndAlso CBool(_Cl_Entidad.Promedio_Venta_UltXMeses) Then
+
                         If _MontoVenta <= _Cl_Entidad.Promedio_Venta_UltXMeses Then
                             _Cl_Entidad.VentaMayorPromedioUlt3Meses = False
                             _Cl_Entidad.ListaProblemas.Add("La venta es menor al promedio de ventas realizadas los ultimos 3 meses. " &
@@ -270,6 +275,7 @@
                             _Cl_Entidad.ListaProblemas.Add("La venta es mayor al promedio de ventas realizadas los ultimos 3 meses. " &
                                                        $"Venta:{ FormatNumber(_MontoVenta, 0)}, promedio venta: {FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}")
                         End If
+
                     End If
 
                     Dim _EnCurso_Total As Double = _MontoVenta
@@ -280,8 +286,11 @@
 
                     If _Cl_Entidad.Crsd_Disponible < 0 Then
                         _Cl_Entidad.SuperaCreditoDisponible = True
-                        _Cl_Entidad.ListaProblemas.Add("El cliente supera el credito que tiene disponible con esta venta")
+                        _Cl_Entidad.ListaProblemas.Add($"El cliente supera el credito que tiene disponible con esta venta. " &
+                                                       $"(monto diponible: { FormatNumber(_Cl_Entidad.Crsd_Disponible, 0)})")
                     End If
+
+                    Fx_LlenarMensaje(_Cl_Entidad)
 
                     _Mensaje.Tag = _Cl_Entidad
 
@@ -311,6 +320,23 @@
 
     End Function
 
+    Sub Fx_LlenarMensaje(ByRef _Cl_Entidad As Cl_Entidad)
+
+        If CBool(_Cl_Entidad.ListaProblemas.Count) Then
+            ' Construir mensaje acumulado con los problemas
+            Dim sb As New System.Text.StringBuilder()
+            sb.AppendLine("Se han detectado los siguientes problemas:")
+            sb.AppendLine()
+            For Each problema In _Cl_Entidad.ListaProblemas
+                If problema IsNot Nothing Then
+                    sb.AppendLine(" - " & problema.ToString())
+                End If
+            Next
+            sb.AppendLine()
+            _Cl_Entidad.Mensaje = sb.ToString
+        End If
+
+    End Sub
     Function Fx_Promedio_Venta_UltXMeses(_RowEntidad As DataRow, _Meses As Integer) As Double
 
         Consulta_sql = $"

@@ -208,9 +208,12 @@ Public Class Frm_ConfTidoXModal
             Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("MAEEDO",
                                         "EMPRESA = '" & Mod_Empresa & "' And TIDO In " & _Filtro_Tido & " And NUDO = '" & _Numero & "'"))
 
+            Consulta_sql = $"Select TIDO,NUDO From MAEEDO Where EMPRESA = '{Mod_Empresa}' And TIDO In {_Filtro_Tido} And NUDO = '{_Numero}'"
+            Dim _Row_Doc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
             If _Reg Then
 
-                If MessageBoxEx.Show(Me, "El documento Nro: " & _Tido & "-" & _Nudo & " ya existe en el sistema" & vbCrLf &
+                If MessageBoxEx.Show(Me, "El documento Nro: " & _Tido & "-" & _Numero & " ya existe en el sistema" & vbCrLf &
                                       "¿Confirma la grabación omitiendo la advertencia?", "Validación",
                                       MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
                     Return

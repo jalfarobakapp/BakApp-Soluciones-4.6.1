@@ -301,11 +301,13 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         _Autorizar_Venta_Con_Cupo_Exedido = Fx_Tiene_Permiso(Me, "Bkp00033", _Fun_Auto_Cupo_Exe, False)
 
         If Global_Thema = Enum_Themas.Oscuro Then
+
             Btn_CambCodPago.ForeColor = Color.White
             Txt_Cuotas.FocusHighlightEnabled = False
             Txt_Dias_1er_Vencimiento.FocusHighlightEnabled = False
             Dtp_FechaUltVencimiento.FocusHighlightEnabled = False
             Dtp_Fecha_1er_Vencimiento.FocusHighlightEnabled = False
+
         End If
 
     End Sub

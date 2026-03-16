@@ -2648,6 +2648,8 @@ Partial Public Class Ds_Matriz_Documentos
         
         Private columnSobreStock As Global.System.Data.DataColumn
         
+        Private columnLeyendaMorosidad As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub New()
@@ -3348,6 +3350,14 @@ Partial Public Class Ds_Matriz_Documentos
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property LeyendaMorosidadColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnLeyendaMorosidad
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -3467,9 +3477,10 @@ Partial Public Class Ds_Matriz_Documentos
                     ByVal PdaRMovil As Boolean,  _
                     ByVal Idpdaenca As Integer,  _
                     ByVal ConservaNudo As Boolean,  _
-                    ByVal SobreStock As Boolean) As Encabezado_DocRow
+                    ByVal SobreStock As Boolean,  _
+                    ByVal LeyendaMorosidad As String) As Encabezado_DocRow
             Dim rowEncabezado_DocRow As Encabezado_DocRow = CType(Me.NewRow,Encabezado_DocRow)
-            Dim columnValuesArray() As Object = New Object() {Id_DocEnc, Post_Venta, Tipo_Documento, Modalidad, Empresa, Sucursal, TipoDoc, NroDocumento, CodEntidad, CodSucEntidad, Nombre_Entidad, FechaEmision, Fecha_1er_Vencimiento, FechaUltVencimiento, FechaRecepcion, FechaMaxRecepcion, Cuotas, Dias_1er_Vencimiento, Dias_Vencimiento, ListaPrecios, CodEntidadFisica, CodSucEntidadFisica, Nombre_Entidad_Fisica, Contacto_Ent, CodFuncionario, NomFuncionario, Centro_Costo, Moneda_Doc, Valor_Dolar, TotalNetoDoc, TotalIvaDoc, TotalIlaDoc, TotalBrutoDoc, Valor_Abonado, CantTotal, CantDesp, DocEn_Neto_Bruto, Es_ValeTransitorio, Es_Electronico, TipoMoneda, Vizado, TotalDsctoReal_Porc, CodUsuario_Permiso_Dscto, Idmaeedo_Origen, Fun_Auto_Deuda_Ven, Total_costo, Total_Porc_Margen, Total_Valor_Margen, Total_Porc_Dscto, Total_Sub_Total_Neto, Id_DocEnc_Padre, Bloquea_Doc, Fun_Auto_Stock_Ins, Fun_Auto_Cupo_Exe, SubTido, Fun_Auto_Fecha_Des, Stand_by, Fun_Auto_Sol_Compra, Tasadorig_Doc, Reserva_NroOCC, Reserva_Idmaeedo, Bodega_Destino, Libro, Fecha_Tributaria, TotalKilos, MinKgDesp, MinNetoDesp, RevFincred, IdFincred, MontoFincred, RevFincredEnt, TblTipoVenta, CodTipoVenta, Customizable, PreVenta, IdCont, Contenedor, Pickear, NomContacto_Ent, PdaRMovil, Idpdaenca, ConservaNudo, SobreStock}
+            Dim columnValuesArray() As Object = New Object() {Id_DocEnc, Post_Venta, Tipo_Documento, Modalidad, Empresa, Sucursal, TipoDoc, NroDocumento, CodEntidad, CodSucEntidad, Nombre_Entidad, FechaEmision, Fecha_1er_Vencimiento, FechaUltVencimiento, FechaRecepcion, FechaMaxRecepcion, Cuotas, Dias_1er_Vencimiento, Dias_Vencimiento, ListaPrecios, CodEntidadFisica, CodSucEntidadFisica, Nombre_Entidad_Fisica, Contacto_Ent, CodFuncionario, NomFuncionario, Centro_Costo, Moneda_Doc, Valor_Dolar, TotalNetoDoc, TotalIvaDoc, TotalIlaDoc, TotalBrutoDoc, Valor_Abonado, CantTotal, CantDesp, DocEn_Neto_Bruto, Es_ValeTransitorio, Es_Electronico, TipoMoneda, Vizado, TotalDsctoReal_Porc, CodUsuario_Permiso_Dscto, Idmaeedo_Origen, Fun_Auto_Deuda_Ven, Total_costo, Total_Porc_Margen, Total_Valor_Margen, Total_Porc_Dscto, Total_Sub_Total_Neto, Id_DocEnc_Padre, Bloquea_Doc, Fun_Auto_Stock_Ins, Fun_Auto_Cupo_Exe, SubTido, Fun_Auto_Fecha_Des, Stand_by, Fun_Auto_Sol_Compra, Tasadorig_Doc, Reserva_NroOCC, Reserva_Idmaeedo, Bodega_Destino, Libro, Fecha_Tributaria, TotalKilos, MinKgDesp, MinNetoDesp, RevFincred, IdFincred, MontoFincred, RevFincredEnt, TblTipoVenta, CodTipoVenta, Customizable, PreVenta, IdCont, Contenedor, Pickear, NomContacto_Ent, PdaRMovil, Idpdaenca, ConservaNudo, SobreStock, LeyendaMorosidad}
             rowEncabezado_DocRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowEncabezado_DocRow)
             Return rowEncabezado_DocRow
@@ -3575,6 +3586,7 @@ Partial Public Class Ds_Matriz_Documentos
             Me.columnIdpdaenca = MyBase.Columns("Idpdaenca")
             Me.columnConservaNudo = MyBase.Columns("ConservaNudo")
             Me.columnSobreStock = MyBase.Columns("SobreStock")
+            Me.columnLeyendaMorosidad = MyBase.Columns("LeyendaMorosidad")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -3746,6 +3758,8 @@ Partial Public Class Ds_Matriz_Documentos
             MyBase.Columns.Add(Me.columnConservaNudo)
             Me.columnSobreStock = New Global.System.Data.DataColumn("SobreStock", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnSobreStock)
+            Me.columnLeyendaMorosidad = New Global.System.Data.DataColumn("LeyendaMorosidad", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnLeyendaMorosidad)
             Me.columnEmpresa.Caption = "DataColumn1"
             Me.columnListaPrecios.Caption = "DataColumn1"
             Me.columnTotalNetoDoc.DefaultValue = CType(0R,Double)
@@ -10390,6 +10404,22 @@ Partial Public Class Ds_Matriz_Documentos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property LeyendaMorosidad() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableEncabezado_Doc.LeyendaMorosidadColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'LeyendaMorosidad' de la tabla 'Encabezado_Doc' es DBNull."& _ 
+                            "", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableEncabezado_Doc.LeyendaMorosidadColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Function IsId_DocEncNull() As Boolean
             Return Me.IsNull(Me.tableEncabezado_Doc.Id_DocEncColumn)
         End Function
@@ -11382,6 +11412,18 @@ Partial Public Class Ds_Matriz_Documentos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetSobreStockNull()
             Me(Me.tableEncabezado_Doc.SobreStockColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsLeyendaMorosidadNull() As Boolean
+            Return Me.IsNull(Me.tableEncabezado_Doc.LeyendaMorosidadColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetLeyendaMorosidadNull()
+            Me(Me.tableEncabezado_Doc.LeyendaMorosidadColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

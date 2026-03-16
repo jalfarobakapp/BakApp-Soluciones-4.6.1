@@ -179,6 +179,7 @@ Public Class Clase_Crear_Documento
     Dim _IdCont As Integer
     Dim _Contenedor As String
     Dim _Grupo As String
+    Dim _LeyendaMorosidad As String
 
 #End Region
 
@@ -2079,17 +2080,18 @@ Public Class Clase_Crear_Documento
             Dim _PdaRMovil As Boolean = NuloPorNro(_Row_Encabezado.Item("PdaRMovil"), False)
             Dim _Idpdaenca As Integer = NuloPorNro(_Row_Encabezado.Item("Idpdaenca"), 0)
             Dim _ConservaNudo As Boolean = NuloPorNro(_Row_Encabezado.Item("ConservaNudo"), 0)
+            Dim _LeyendaMorosidad As String = NuloPorNro(_Row_Encabezado.Item("LeyendaMorosidad"), "")
 
             If (_Tido = "NVV" OrElse _Tido = "NVI") OrElse (_Tido = "COV" And SobreStock) Then
                 _Pickear = _Row_Encabezado.Item("Pickear")
             End If
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
-                           "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca,SobreStock,Empresa_Ori) Values " &
+                           "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad) Values " &
                            "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad_Bk & "'" &
                            ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
                            "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(PreVenta) &
-                           "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) & ",'" & _Empresa & "')"
+                           "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) & ",'" & _Empresa & "','" & _LeyendaMorosidad & "')"
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
@@ -3335,6 +3337,8 @@ Public Class Clase_Crear_Documento
 
                 SobreStock = .Item("SobreStock")
 
+                _LeyendaMorosidad = NuloPorNro(.Item("LeyendaMorosidad"), "")
+
             End With
 
             '------------------------------------------------------------------------------------------------------------
@@ -3888,8 +3892,9 @@ Public Class Clase_Crear_Documento
                            ",Pickear = '" & _Pickear & "'" & Environment.NewLine &
                            ",PdaRMovil = " & Convert.ToInt32(_PdaRMovil) & Environment.NewLine &
                            ",Idpdaenca = " & _Idpdaenca & Environment.NewLine &
-                           ",ConservaNudo = '" & Convert.ToInt32(_ConservaNudo) & "'" & Environment.NewLine &
-                           ",SobreStock = '" & Convert.ToInt32(SobreStock) & "'" & Environment.NewLine &
+                           ",ConservaNudo = " & Convert.ToInt32(_ConservaNudo) & Environment.NewLine &
+                           ",SobreStock = " & Convert.ToInt32(SobreStock) & Environment.NewLine &
+                           ",LeyendaMorosidad = '" & _LeyendaMorosidad & "'" & Environment.NewLine &
                            "Where Id_DocEnc = " & _Id_DocEnc
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
