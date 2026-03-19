@@ -207,6 +207,7 @@ Public Class Frm_Ver_Documento
     End Property
 
     Public Property VerSoloEntidadesDelVendedor As Boolean
+    Public Property CerrarFormulario As Boolean
 
     Public Sub New(Id As Integer,
                    Tipo_Apertura As Enum_Tipo_Apertura)
@@ -3466,7 +3467,13 @@ Public Class Frm_Ver_Documento
 
         Dim Fm As New Frm_Cerrar_Abrir_Documentos(_Idmaeedo)
         Fm.ShowDialog(Me)
+        CerrarFormulario = Fm.CerrarFormulario
         Fm.Dispose()
+
+        If CerrarFormulario Then
+            Me.Close()
+            Return
+        End If
 
         Sb_Abrir_Documento_Desde_Random_SQL()
 

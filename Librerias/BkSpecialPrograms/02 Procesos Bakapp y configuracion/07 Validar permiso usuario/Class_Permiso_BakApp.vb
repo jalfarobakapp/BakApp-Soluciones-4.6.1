@@ -667,6 +667,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00166", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00167", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00168", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00169", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00170", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -2956,6 +2958,14 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00168"
                 _DescripcionPermiso = "CIERRE DE DOCUMENTOS DE COMPROMISO (SOBRE STOCK)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00169"
+                _DescripcionPermiso = "VENDER CON CUPO EXEDIDO CUANDO PUEDE HABER MOROSIDAD DE DOCUMENTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00170"
+                _DescripcionPermiso = "VENDER CUANDO PUEDE HABER MOROSIDAD DE DOCUMENTOS Y ESTA VENDIENDO MAS DEL PROMEDIO DE VENTA NORMAL"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
         End Select

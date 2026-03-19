@@ -25,6 +25,7 @@ CREATE TABLE [dbo].[Zw_Docu_Ent](
 	[Empresa_Ori]       [char](2)		NOT NULL DEFAULT (''),
 	[Idmaeedo_Clon]     [int]           NOT NULL DEFAULT (''),
     [LeyendaMorosidad]  [varchar](max)  NOT NULL DEFAULT (''),
+    [B2B]               [bit]           NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Docu_Ent] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

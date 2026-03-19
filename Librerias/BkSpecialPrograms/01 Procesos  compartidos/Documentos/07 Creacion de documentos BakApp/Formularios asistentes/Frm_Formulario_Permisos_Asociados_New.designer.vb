@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Formulario_Permisos_Asociados_New
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -40,10 +40,13 @@ Partial Class Frm_Formulario_Permisos_Asociados_New
         Me.ReflectionImage1 = New DevComponents.DotNetBar.Controls.ReflectionImage()
         Me.ReflectionLabel1 = New DevComponents.DotNetBar.Controls.ReflectionLabel()
         Me.Imagenes_16x16 = New System.Windows.Forms.ImageList(Me.components)
+        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_DescripcionPermiso = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupPanel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupPanel1
@@ -179,7 +182,7 @@ Partial Class Frm_Formulario_Permisos_Asociados_New
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Enviar_Solicitudes_Cadenas_Remotas, Me.Btn_Ver_Infor_Morosidad_Cupo})
-        Me.Bar2.Location = New System.Drawing.Point(0, 285)
+        Me.Bar2.Location = New System.Drawing.Point(0, 373)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(891, 41)
         Me.Bar2.Stretch = True
@@ -250,11 +253,71 @@ Partial Class Frm_Formulario_Permisos_Asociados_New
         Me.Imagenes_16x16.Images.SetKeyName(7, "secure-user.png")
         Me.Imagenes_16x16.Images.SetKeyName(8, "key.png")
         '
+        'GroupPanel2
+        '
+        Me.GroupPanel2.BackColor = System.Drawing.Color.White
+        Me.GroupPanel2.CanvasColor = System.Drawing.SystemColors.Control
+        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Txt_DescripcionPermiso)
+        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel2.Location = New System.Drawing.Point(12, 274)
+        Me.GroupPanel2.Name = "GroupPanel2"
+        Me.GroupPanel2.Size = New System.Drawing.Size(867, 93)
+        '
+        '
+        '
+        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel2.Style.BackColorGradientAngle = 90
+        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderBottomWidth = 1
+        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderLeftWidth = 1
+        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderRightWidth = 1
+        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderTopWidth = 1
+        Me.GroupPanel2.Style.CornerDiameter = 4
+        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel2.TabIndex = 148
+        Me.GroupPanel2.Text = "Detalle del permiso"
+        '
+        'Txt_DescripcionPermiso
+        '
+        Me.Txt_DescripcionPermiso.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_DescripcionPermiso.Border.Class = "TextBoxBorder"
+        Me.Txt_DescripcionPermiso.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_DescripcionPermiso.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_DescripcionPermiso.ForeColor = System.Drawing.Color.Black
+        Me.Txt_DescripcionPermiso.Location = New System.Drawing.Point(0, 3)
+        Me.Txt_DescripcionPermiso.Multiline = True
+        Me.Txt_DescripcionPermiso.Name = "Txt_DescripcionPermiso"
+        Me.Txt_DescripcionPermiso.PreventEnterBeep = True
+        Me.Txt_DescripcionPermiso.ReadOnly = True
+        Me.Txt_DescripcionPermiso.Size = New System.Drawing.Size(861, 64)
+        Me.Txt_DescripcionPermiso.TabIndex = 0
+        '
         'Frm_Formulario_Permisos_Asociados_New
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(891, 326)
+        Me.ClientSize = New System.Drawing.Size(891, 414)
+        Me.Controls.Add(Me.GroupPanel2)
         Me.Controls.Add(Me.ReflectionImage1)
         Me.Controls.Add(Me.ReflectionLabel1)
         Me.Controls.Add(Me.GroupPanel1)
@@ -269,11 +332,12 @@ Partial Class Frm_Formulario_Permisos_Asociados_New
         Me.Name = "Frm_Formulario_Permisos_Asociados_New"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Validaci�n de permisos para grabar el documento"
+        Me.Text = "Validación de permisos para grabar el documento"
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupPanel2.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -291,4 +355,6 @@ Partial Class Frm_Formulario_Permisos_Asociados_New
     Friend WithEvents Btn_Seleccionar_Funcionarios As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_Reenviar_Evaluacion As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_Ver_Infor_Morosidad_Cupo As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Txt_DescripcionPermiso As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

@@ -6700,6 +6700,83 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
+
+    Function Fx_Confirmar_LecturaOK(_Mensaje1 As String,
+                                    _Mensaje2 As String,
+                                    _eTaskDialogIcon As eTaskDialogIcon,
+                                    Optional _TextoAlerta As String = "Alerta",
+                                    Optional _MostrarCancelar As Boolean = False,
+                                    Optional _TextoCheck As String = "CONFIRMAR LECTURA DE LA ALERTA",
+                                    Optional _TextoDePie As String = Nothing,
+                                    Optional _ImagenPie As Image = Nothing) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim Chk_Confirmar_Lectura As New Command
+        Chk_Confirmar_Lectura.Checked = False
+        Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
+        Chk_Confirmar_Lectura.Text = _TextoCheck
+
+        Dim _Opciones As Command = Chk_Confirmar_Lectura
+
+        Dim _Info As TaskDialogInfo
+
+        If _MostrarCancelar Then
+            _Info = New TaskDialogInfo(_TextoAlerta,
+                  _eTaskDialogIcon,
+                  _Mensaje1, _Mensaje2,
+                  eTaskDialogButton.Ok + eTaskDialogButton.Cancel,
+                  eTaskDialogBackgroundColor.Red, Nothing, Nothing, _Opciones, _TextoDePie, _ImagenPie)
+        Else
+            _Info = New TaskDialogInfo(_TextoAlerta,
+                  _eTaskDialogIcon,
+                  _Mensaje1, _Mensaje2,
+                  eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, Nothing, Nothing, _Opciones, _TextoDePie, _ImagenPie)
+        End If
+
+
+        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+        _Mensaje.Tag = _Resultado
+
+        If _Resultado = eTaskDialogResult.Ok OrElse _Resultado = eTaskDialogResult.Cancel OrElse _Resultado = eTaskDialogResult.None Then
+
+            If _Resultado = eTaskDialogResult.Cancel Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Cancelado = True
+                Return _Mensaje
+            End If
+
+            If Not Chk_Confirmar_Lectura.Checked Then
+
+                Beep()
+                _Mensaje = Fx_Confirmar_LecturaOK(_Mensaje1, _Mensaje2, _eTaskDialogIcon, _TextoAlerta, _MostrarCancelar, _TextoCheck, _TextoDePie, _ImagenPie)
+
+            Else
+
+                _Mensaje.Resultado = _Resultado.ToString
+                _Mensaje.EsCorrecto = True
+
+                If _Resultado = eTaskDialogResult.Ok Then
+                    _Mensaje.Icono = eTaskDialogIcon.Information
+                ElseIf _Resultado = eTaskDialogResult.No Then
+                    _Mensaje.Cerrar = False
+                    _Mensaje.Icono = eTaskDialogIcon.Stop
+                Else
+                    _Mensaje.Icono = eTaskDialogIcon.Exclamation
+                End If
+
+            End If
+
+        Else
+            _Mensaje.Tag = eTaskDialogResult.Cancel
+            _Mensaje.Cerrar = True
+        End If
+
+        Return _Mensaje
+
+    End Function
+
     Function Fx_EntidadEnGrupoVendedores(_Row_Entidad As DataRow,
                                          _CodFuncionario As String,
                                          _Revisar_Kofu_Kogru As Boolean) As LsValiciones.Mensajes

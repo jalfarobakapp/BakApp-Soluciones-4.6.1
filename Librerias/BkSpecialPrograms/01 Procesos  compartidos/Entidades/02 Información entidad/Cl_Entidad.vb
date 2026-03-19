@@ -347,7 +347,7 @@ SELECT
     ISNULL(AVG(VentaMensual), 0) AS PROMEDIO_ULT_X_MESES
 FROM (
         SELECT 
-            DATEFROMPARTS(YEAR(FEEMDO), MONTH(FEEMDO), 1) AS Mes,
+            CAST(CONVERT(VARCHAR(7), FEEMDO, 120) + '-01' AS DATE) AS Mes,
             SUM(
                 CASE 
                     WHEN TIDO = 'NCV' THEN VANEDO * -1
@@ -362,8 +362,9 @@ FROM (
             AND FEEMDO >= DATEADD(MONTH, -{_Meses}, CAST(GETDATE() AS date))
             AND TIDO IN ('FCV','FDV','NCV')
         GROUP BY 
-            DATEFROMPARTS(YEAR(FEEMDO), MONTH(FEEMDO), 1)
-    ) AS Tbl;"
+            CAST(CONVERT(VARCHAR(7), FEEMDO, 120) + '-01' AS DATE)
+    ) AS Tbl;
+"
 
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 

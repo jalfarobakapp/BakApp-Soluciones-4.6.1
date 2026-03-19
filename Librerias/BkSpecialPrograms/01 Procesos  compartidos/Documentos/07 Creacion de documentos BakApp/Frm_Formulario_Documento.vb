@@ -1781,6 +1781,8 @@ Public Class Frm_Formulario_Documento
 
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00161", False, False, "", "", False, False, False) ' Cambiar vendedor de la linea diferente al del cliente
 
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00169", False, False, "", "", False, False, False) ' Cupo exedido y con morosidad de documentos
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00170", False, False, "", "", False, False, False) ' Venta sobre promedio de venta normar y con Morosidad
         '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
         'Doc00161
 
@@ -2394,7 +2396,8 @@ Public Class Frm_Formulario_Documento
 
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00161", False, False, "", "", False, False, False) ' Cambiar vendedor de la linea diferente al del cliente
 
-            '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00169", False, False, "", "", False, False, False) ' Permitir modificar el precio de venta a 0 (cero)
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00170", False, False, "", "", False, False, False) ' Venta sobre promedio de venta normar y con Morosidad
 
             _TblPermisos = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
 
@@ -8887,39 +8890,41 @@ Public Class Frm_Formulario_Documento
 
                             If _Cl_Entidad.Bloqueada Then
 
-                                '' Reemplazar la comprobación original por este bloque que acumula y muestra la lista de problemas.
-                                'If CBool(_Cl_Entidad.ListaProblemas.Count) Then
-                                '    ' Construir mensaje acumulado con los problemas
-                                '    Dim sb As New System.Text.StringBuilder()
-                                '    sb.AppendLine("Se han detectado los siguientes problemas:")
-                                '    sb.AppendLine()
-                                '    For Each problema In _Cl_Entidad.ListaProblemas
-                                '        If problema IsNot Nothing Then
-                                '            sb.AppendLine(" - " & problema.ToString())
-                                '        End If
-                                '    Next
-                                '    sb.AppendLine()
-                                '    ' Mostrar MessageBoxEx con la alerta y el listado acumulado
-                                '    MessageBoxEx.Show(Me, sb.ToString(), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                'Else
-                                '    MessageBoxEx.Show(Me, _Cl_Entidad.Mensaje, "Validación",
-                                '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                'End If
-
                                 MessageBoxEx.Show(Me, _Cl_Entidad.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
                                 Return Nothing
 
                             End If
 
+                        Else
+
+                            _MensajeMsj = "La entidad presenta morosidad" & Environment.NewLine &
+                                 "Está situación será evaluada nuevamente al grabar el documento"
+
                         End If
 
                         If _ClienteMoroso Then
 
-                            MessageBoxEx.Show(Me, _MensajeMsj & vbCrLf & "La entidad presenta fecha de crédito vigente vencida" & Environment.NewLine &
-                                          "Está situación será evaluada nuevamente al grabar el documento",
-                                           "Validación",
-                                            MessageBoxButtons.OK, _Msj_Deudas.Icono, MessageBoxDefaultButton.Button1, Me.TopMost)
+                            If _RevAutomaticaMorosidadClientes Then
+
+                                _MensajeMsj = _MensajeMsj & "Está situación será evaluada nuevamente al grabar el documento"
+
+                                Dim _Ic As eTaskDialogIcon = eTaskDialogIcon.Stop
+
+                                If _Msj_Deudas.Icono = MessageBoxIcon.Exclamation Then
+                                    _Ic = eTaskDialogIcon.Exclamation
+                                End If
+
+                                Dim _Msg1 = "Mensaje 1"
+                                Dim _Msg2 = _MensajeMsj
+
+                                Dim _Mensaje As LsValiciones.Mensajes = Fx_Confirmar_LecturaOK(_Msg1, _Msg2, _Ic, "Alerta", False)
+
+                            Else
+
+                                MessageBoxEx.Show(Me, _MensajeMsj, "Validación", MessageBoxButtons.OK, _Msj_Deudas.Icono, MessageBoxDefaultButton.Button1, Me.TopMost)
+
+                            End If
 
                         End If
 
@@ -23633,7 +23638,7 @@ Public Class Frm_Formulario_Documento
                     Fx_Autorizar_X_Descuentos(False)
                 End If
 
-            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102", "Doc00161" ', "Doc00103"
+            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102", "Doc00161", "Doc00169", "Doc00170"
 
                 If _Crear_Doc_Def_Al_Grabar Then
 
@@ -24338,27 +24343,21 @@ Public Class Frm_Formulario_Documento
 
     End Function
 
-    Function Fx_Validad_Morosidad2(ByRef _Tiene_Morosidad As Boolean) As Boolean
+    Function Fx_Validad_Morosidad2(ByRef _Tiene_Morosidad As Boolean, ByRef _Permiso As String) As Boolean
 
         Dim _RevisarPermiso As Boolean
         Dim _Validacion As Boolean
 
         _Cl_Entidad = New Cl_Entidad
+
         Dim _MontoVenta As Double = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
-
         Dim _Msj_Deudas As LsValiciones.Mensajes = _Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False, _MontoVenta)
-
-        'If Not _Msj_Deudas.EsCorrecto Then
 
         _Cl_Entidad = _Msj_Deudas.Tag
 
-        'End If
+        _Permiso = "Bkp00019"
 
         If _Cl_Entidad.Tiene_Deudas Then
-
-            Dim _Row() = _TblPermisos.Select("CodPermiso = 'Bkp00019'")
-            Dim _Row_Permiso As DataRow = _Row(0)
-            Dim _Fun_Auto_Deuda_Ven = _Row_Permiso.Item("CodFuncionario_Autoriza")
 
             If Not _Cl_Entidad.Tiene_Deudas_Vencidas Then
 
@@ -24370,6 +24369,7 @@ Public Class Frm_Formulario_Documento
 
                         If _Cl_Entidad.SuperaCreditoDisponible Then
                             _Cl_Entidad.ListaProblemas.Add("Se excede el crédito disponible.")
+                            _Permiso = "Doc00169"
                             _RevisarPermiso = True
                         Else
 
@@ -24384,6 +24384,7 @@ Public Class Frm_Formulario_Documento
                             Else
 
                                 If _MontoVenta > _Cl_Entidad.Promedio_Venta_UltXMeses Then   '_Cl_Entidad.PromedioUltimas3FacturasPago < _Cl_Entidad.MaxDiasMoraDocumentos Then
+                                    _Permiso = "Doc00170"
                                     _RevisarPermiso = True
                                 Else
                                     _Tiene_Morosidad = False
@@ -24409,7 +24410,12 @@ Public Class Frm_Formulario_Documento
             _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
 
             If _RevisarPermiso Then
-                If Fx_Tiene_Permiso(Me, "Bkp00019", _Fun_Auto_Deuda_Ven, False) Then
+
+                Dim _Row() = _TblPermisos.Select($"CodPermiso = '{_Permiso}'") ' Bkp00019
+                Dim _Row_Permiso As DataRow = _Row(0)
+                Dim _Fun_Auto_Deuda_Ven = _Row_Permiso.Item("CodFuncionario_Autoriza")
+
+                If Fx_Tiene_Permiso(Me, _Permiso, _Fun_Auto_Deuda_Ven, False) Then
                     Fx_Validad_Morosidad2 = True
                 Else
                     _Cl_Entidad.ListaProblemas.Add("Pasara a evaluación de periso remoto")
@@ -25243,9 +25249,11 @@ Public Class Frm_Formulario_Documento
 
                 If _RevAutomaticaMorosidadClientes Then
 
+                    Dim _Permiso As String = "Bkp00019"
+
                     _Autorizado = False : _Necesita_Permiso = False
-                    _Autorizado = Fx_Validad_Morosidad2(_Necesita_Permiso)
-                    Sb_Revisar_Permiso("Bkp00019", _Autorizado, _Necesita_Permiso)
+                    _Autorizado = Fx_Validad_Morosidad2(_Necesita_Permiso, _Permiso)
+                    Sb_Revisar_Permiso(_Permiso, _Autorizado, _Necesita_Permiso)
 
                 Else
 

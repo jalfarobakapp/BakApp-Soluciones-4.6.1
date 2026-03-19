@@ -17,6 +17,8 @@ Public Class Frm_Cerrar_Abrir_Documentos
         End Get
     End Property
 
+    Public Property CerrarFormulario As Boolean
+
     Public Sub New(Idmaeedo As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -439,7 +441,7 @@ Where Idmaeedo = {_Idmaeedo}"
 
             End If
 
-            If _Tido = "NVV" Then
+            If _Tido = "NVV" Or _Tido = "NVI" Then
 
                 Consulta_sql = $"
 Update {_Global_BaseBk}Zw_Docu_Det Set Qty_SobreStockDv = Qty_SobreStock
@@ -461,7 +463,7 @@ Where Idmaeedo = {_Idmaeedo}"
                                                                 Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar, False) Then
                         Sb_Cambiar_EmpSucBod(_Idmaeedo)
                     End If
-
+                    CerrarFormulario = True
                 End If
 
 

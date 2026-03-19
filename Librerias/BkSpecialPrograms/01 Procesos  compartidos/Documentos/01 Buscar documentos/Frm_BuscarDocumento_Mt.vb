@@ -616,8 +616,11 @@ Public Class Frm_BuscarDocumento_Mt
                 Return
             End If
 
+            Dim _CerrarFormulario As Boolean
+
             Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
             Fm.ShowDialog(Me)
+            _CerrarFormulario = Fm.CerrarFormulario
             Fm.Dispose()
 
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow("Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo)
@@ -643,6 +646,10 @@ Public Class Frm_BuscarDocumento_Mt
             End If
 
             _Actualizar = (_Anulado Or _Eliminado)
+
+            If _CerrarFormulario Then
+                _Actualizar = True
+            End If
 
             If HabilitarNVVParaFacturar Then
                 _Actualizar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "HabilitadaFac", "Idmaeedo = " & _Idmaeedo,,,, True)
