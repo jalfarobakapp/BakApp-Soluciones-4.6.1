@@ -936,6 +936,11 @@ Public Class Frm_Demonio_DTEMonitor
                            "And EnviarMail = 1 " &
                            "And AmbienteCertificacion = " & _AmbienteCertificacion
 
+            'Consulta_sql = "Select Id,Id_Dte,Idmaeedo,Trackid,Informado,Aceptado,Rechazado,Reparo,Estado,Glosa,Respuesta,FechaEnvSII," &
+            '               "AmbienteCertificacion,MailToDiablito, ErrorMailToDiablito" & vbCrLf &
+            '               "From " & _Global_BaseBk & "Zw_DTE_Trackid" & vbCrLf &
+            '               "Where Id = 24803"
+
             'Consulta_sql = "Select Id,Tk.Id_Dte,Tk.Idmaeedo,Tk.Trackid,Informado,Aceptado,Rechazado,Reparo,Estado,Glosa,Tk.Respuesta,FechaEnvSII,Tk.AmbienteCertificacion,MailToDiablito, ErrorMailToDiablito,Dc.CaratulaXmlEmail
             'From BAKAPP_SG.dbo.Zw_DTE_Trackid Tk
             'Inner Join BAKAPP_SG.dbo.Zw_DTE_Documentos Dc On Dc.Id_Dte = Tk.Id_Dte

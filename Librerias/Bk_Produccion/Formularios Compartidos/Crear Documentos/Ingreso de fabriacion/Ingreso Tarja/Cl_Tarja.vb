@@ -56,8 +56,8 @@ Public Class Cl_Tarja
                 _Tipo = .Tipo
 
                 If _Tipo = "MAXI-SACO" Then
-                    _Qty = _CantidadFab
-                    _Qty2 = 1
+                    _Qty = .CantidadFab
+                    _Qty2 = .Formato
                 Else
                     _SacosXPallet = .SacosXPallet
                     _CantidadFab = .CantidadFab
@@ -65,7 +65,7 @@ Public Class Cl_Tarja
                     _CantidadTipo = .CantidadTipo
 
                     _Qty = _CantidadFab / _CantidadTipo
-                    _Qty2 = _Formato
+                    _Qty2 = _SacosXPallet
                 End If
 
             End With
@@ -127,9 +127,9 @@ Public Class Cl_Tarja
                     Comando.Transaction = myTrans
                     Comando.ExecuteNonQuery()
 
-                    Consulta_sql = $"Insert Into {_Global_BaseBk}Zw_WMS_Paquetes (CodPaquete,Sku, Empresa,Sucursal,Bodega,Ubicacion,Pallet,Qty,Qty2)" & vbCrLf &
+                    Consulta_sql = $"Insert Into {_Global_BaseBk}Zw_WMS_Paquetes (CodPaquete,Sku, Empresa,Sucursal,Bodega,Ubicacion,Pallet,Qty,Qty2,FechaIngreso)" & vbCrLf &
                                    $"Values ('{_CodPaquete}','{_Sku}','{_Empresa}','{_Sucursal}','{_Bodega}','A01'," &
-                                   $"'{_Pallet}',{De_Num_a_Tx_01(_Qty, False, 5)},{De_Num_a_Tx_01(_Qty2, False, 5)})"
+                                   $"'{_Pallet}',{De_Num_a_Tx_01(_Qty, False, 5)},{De_Num_a_Tx_01(_Qty2, False, 5)},Getdate())"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                     Comando.Transaction = myTrans
@@ -182,10 +182,10 @@ Public Class Cl_Tarja
     End Function
 
     Function Fx_NvoNro_Tipo(Comando As SqlClient.SqlCommand,
-                              cn2 As SqlConnection,
-                              myTrans As SqlClient.SqlTransaction,
-                              _Tipo As String,
-                              _Sufijo As String) As String
+                            cn2 As SqlConnection,
+                            myTrans As SqlClient.SqlTransaction,
+                            _Tipo As String,
+                            _Sufijo As String) As String
 
         Dim _Nro_CPT As String
         Dim _Ult_Nro_Tipo As String
@@ -203,9 +203,9 @@ Public Class Cl_Tarja
         End While
         dfd1.Close()
 
-        If _Tipo = "MAXI-SACO" And _Ult_Nro_Tipo.Contains("PLT") Then
-            _Ult_Nro_Tipo = _Sufijo & "0000000"
-        End If
+        'If _Tipo = "MAXI-SACO" And _Ult_Nro_Tipo.Contains("PLT") Then
+        '    _Ult_Nro_Tipo = _Sufijo & "0000000"
+        'End If
 
         _Nro_CPT = Fx_Proximo_NroDocumento(_Ult_Nro_Tipo, 10)
 

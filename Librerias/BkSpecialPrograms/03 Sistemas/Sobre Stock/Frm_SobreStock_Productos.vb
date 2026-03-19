@@ -36,6 +36,9 @@ Public Class Frm_SobreStock_Productos
         'End If
 
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        ActiveControl = Txt_Filtrar
 
     End Sub
 
@@ -45,13 +48,12 @@ Public Class Frm_SobreStock_Productos
 
         Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtrar.Text.Trim), "Sbs.Codigo+Sbs.Descripcion Like '%")
 
-        Consulta_sql = "Select Sbs.*,Sbs.PqteHabilitado-(Sbs.PqteComprometido+Sbs.PqteComprometidoSol) As 'PqteDisponible'" &
-                       "--,Pst.StComp1,Pst.StComp2,STFI1,STFI2,Ms.STOCNV1,Ms.STOCNV2" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Prod_SobreStock Sbs" & vbCrLf &
-                       "--Left Join " & _Global_BaseBk & "Zw_Prod_Stock Pst On Sbs.Empresa = Pst.Empresa And Sbs.Codigo = Pst.Codigo" & vbCrLf &
-                       "--Left Join MAEST Ms On Ms.EMPRESA = Sbs.Empresa And Ms.KOPR = Sbs.Codigo" & vbCrLf &
-                       "Where Sbs.Empresa = '" & _Empresa & "' And Sbs.Eliminado = 0" & vbCrLf &
-                       "And Sbs.Codigo+Sbs.Descripcion Like '%" & _Cadena & "%'"
+        Consulta_sql = $"
+Select Sbs.*,
+Sbs.PqteStock-Sbs.PqteComprometido-Sbs.PqteComprometidoSol As 'PqteDisponible'
+From {_Global_BaseBk}Zw_Prod_SobreStock Sbs
+Where Sbs.Empresa = '{_Empresa}' And Sbs.Eliminado = 0
+And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -130,19 +132,19 @@ Public Class Frm_SobreStock_Productos
             .Columns("CantMinFormato").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("PqteHabilitado").Width = 70
-            .Columns("PqteHabilitado").HeaderText = "Habilitado"
-            .Columns("PqteHabilitado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("PqteHabilitado").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("PqteHabilitado").Visible = True
-            .Columns("PqteHabilitado").DisplayIndex = _DisplayIndex
+            .Columns("PqteStock").Width = 70
+            .Columns("PqteStock").HeaderText = "Stock"
+            .Columns("PqteStock").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PqteStock").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PqteStock").Visible = Not ModoSeleccion
+            .Columns("PqteStock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("PqteComprometido").Width = 70
             .Columns("PqteComprometido").HeaderText = "Comprom. Venta"
             .Columns("PqteComprometido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PqteComprometido").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("PqteComprometido").Visible = True
+            .Columns("PqteComprometido").Visible = Not ModoSeleccion
             .Columns("PqteComprometido").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -150,7 +152,7 @@ Public Class Frm_SobreStock_Productos
             .Columns("PqteComprometidoSol").HeaderText = "Comprom. SOL"
             .Columns("PqteComprometidoSol").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PqteComprometidoSol").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("PqteComprometidoSol").Visible = True
+            .Columns("PqteComprometidoSol").Visible = Not ModoSeleccion
             .Columns("PqteComprometidoSol").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -167,6 +169,10 @@ Public Class Frm_SobreStock_Productos
     End Sub
 
     Private Sub Btn_AgregarProducto_Click(sender As Object, e As EventArgs) Handles Btn_AgregarProducto.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Sobs0002") Then
+            Return
+        End If
 
         Dim _RowProducto As DataRow
 
@@ -186,12 +192,6 @@ Public Class Frm_SobreStock_Productos
         If IsNothing(_RowProducto) Then
             Return
         End If
-
-        'Dim _Row_Bodega As DataRow = Fx_Seleccionar_Bodega()
-
-        'If IsNothing(_Row_Bodega) Then
-        '    Return
-        'End If
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_SobreStock",
                                                         "Empresa = '" & Mod_Empresa & "' And " &
@@ -269,42 +269,6 @@ Public Class Frm_SobreStock_Productos
 
     End Sub
 
-    'Function Fx_Seleccionar_Bodega() As DataRow
-
-    '    Dim _Row As DataRow = Nothing
-
-    '    Do
-
-    '        Dim Fm_b As New Frm_SeleccionarBodega(Frm_SeleccionarBodega.Accion.Bodega)
-    '        Fm_b.Pro_Empresa = Mod_Empresa
-    '        Fm_b.Pro_Sucursal = String.Empty
-    '        Fm_b.Pro_Bodega = String.Empty
-    '        Fm_b.RevisarPermisosBodega = False
-    '        Fm_b.Pedir_Permiso = False
-    '        Fm_b.ShowDialog(Me)
-
-    '        _Row = Fm_b.Pro_RowBodega
-    '        Dim _BodegaSeleccionada As Boolean = Fm_b.Pro_Seleccionado
-    '        Fm_b.Dispose()
-
-    '        If Not _BodegaSeleccionada Then
-
-    '            _Row = Nothing
-
-    '            If MessageBoxEx.Show(Me, "Debe seleccionar una bodega por obligación" & vbCrLf & "¿Desea continuar con la acción?", "Validación",
-    '                                MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
-    '                'Me.Close()
-    '                Exit Function
-    '            End If
-
-    '        End If
-
-    '    Loop While IsNothing(_Row)
-
-    '    Return _Row
-
-    'End Function
-
     Private Sub Btn_Salir_Click(sender As Object, e As EventArgs) Handles Btn_Salir.Click
         Me.Close()
     End Sub
@@ -349,6 +313,7 @@ Public Class Frm_SobreStock_Productos
                 .FechaVigencia = _Fila.Cells("FechaVigencia").Value
                 .FormatoPqte = _Fila.Cells("FormatoPqte").Value
                 .PqteHabilitado = _Fila.Cells("PqteHabilitado").Value
+                .PqteStock = _Fila.Cells("PqteStock").Value
                 .PqteComprometido = _Fila.Cells("PqteComprometido").Value
                 .PqteComprometidoSol = _Fila.Cells("PqteComprometidoSol").Value
                 .Ud1XPqte = _Fila.Cells("Ud1XPqte").Value
@@ -435,6 +400,7 @@ Public Class Frm_SobreStock_Productos
             .FechaVigencia = _Fila.Cells("FechaVigencia").Value
             .FormatoPqte = _Fila.Cells("FormatoPqte").Value
             .PqteHabilitado = _Fila.Cells("PqteHabilitado").Value
+            .PqteStock = _Fila.Cells("PqteStock").Value
             .PqteComprometido = _Fila.Cells("PqteComprometido").Value
             .PqteComprometidoSol = _Fila.Cells("PqteComprometidoSol").Value
             .Ud1XPqte = _Fila.Cells("Ud1XPqte").Value

@@ -27,6 +27,21 @@ Public Class Frm_Impor_Prod_Masivamente
 
     Dim _NetoBruto As String
 
+    Public Class ProductoLevantar
+        Public Property Codigo As String
+        Public Property Descripcion As String
+        Public Property Cantidad As Double
+        Public Property CantUd1 As Double
+        Public Property CantUd2 As Double
+        Public Property UnTrans As Integer
+        Public Property Precio As Double
+        Public Property Bodega As String
+        Public Property Calc_RTU As Boolean
+        Public Property UnLevanta As Integer
+    End Class
+
+    Public Property Ls_ProductoLevantar As List(Of ProductoLevantar)
+
     Public Property Tbl_Productos_Levantar As DataTable
         Get
             Return _Tbl_Productos_Levantar
@@ -87,6 +102,9 @@ Public Class Frm_Impor_Prod_Masivamente
         Consulta_sql = "Select KOPR As Codigo,NOKOPR As Descripcion,Cast(0 As Float) As Cantidad,Cast(1 As Int) As UdTrans,Cast(0 As Float) As Precio,Cast('' As Varchar(3)) As Bodega From MAEPR Where 1<0"
         _Tbl_Productos_Levantar = _Sql.Fx_Get_DataTable(Consulta_sql)
 
+        ' Ahora: inicializar lista vacía de objetos ProductoLevantar.
+        Ls_ProductoLevantar = New List(Of ProductoLevantar)
+
         Sb_Color_Botones_Barra(Bar1)
 
         Btn_Archivo_Ayuda_Excel.Visible = (_Tipo_Doc = Enum_Tipo_Doc.Excel)
@@ -137,6 +155,7 @@ Public Class Frm_Impor_Prod_Masivamente
             End If
         End With
 
+        Ls_ProductoLevantar.Clear()
         _Tbl_Productos_Levantar.Clear()
 
         Txt_Nombre_Archivo.Text = _Ubic_Archivo
@@ -144,6 +163,14 @@ Public Class Frm_Impor_Prod_Masivamente
         Dim _ImpEx As New Class_Importar_Excel
         Dim _Extencion As String = Replace(System.IO.Path.GetExtension(_Nombre_Archivo_CExtencion), ".", "")
         Dim _Arreglo = _ImpEx.Importar_Excel_Array(_Ubic_Archivo, _Extencion, 0)
+
+        If IsNothing(_Arreglo) Then
+            MessageBoxEx.Show(Me, "No es posible procesar el archivo seleccionado. Su contenido no coincide con el" & vbCrLf &
+                              "formato requerido o presenta errores en su estructura.",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
         Dim _Filas = _Arreglo.GetUpperBound(0)
 
         Dim _Arreglo_Cd(_Filas) As String
@@ -167,6 +194,7 @@ Public Class Frm_Impor_Prod_Masivamente
         Circular_Progres_Val.Maximum = _Filas
 
         Dim _Contador As Integer = 0
+        Dim _Ls_Errores As New List(Of LsValiciones.Mensajes)
 
         For i = _Desde To _Filas
 
@@ -174,69 +202,135 @@ Public Class Frm_Impor_Prod_Masivamente
 
             System.Windows.Forms.Application.DoEvents()
 
-            Dim _Codigo As String
-            Dim _Descripcion As String
+            Dim _Codigo As String = String.Empty
+            Dim _Descripcion As String = String.Empty
             Dim _Cantidad As Double
-            Dim _UdTrans As Integer
+            Dim _CantUd1 As Double
+            Dim _CantUd2 As Double
+            Dim _UnTrans As Integer
             Dim _Precio As Double
-            Dim _Bodega As String
+            Dim _Bodega As String = String.Empty
+            Dim _Calc_RTU As Boolean = False
+            Dim _UnLevanta As Integer
 
             Try
+
                 _Codigo = NuloPorNro(_Arreglo(i, 0), "")
-                _Cantidad = NuloPorNro(_Arreglo(i, 1), 0)
-                _UdTrans = NuloPorNro(_Arreglo(i, 2), 0)
-                _Precio = NuloPorNro(_Arreglo(i, 3), 0)
-                _Bodega = NuloPorNro(_Arreglo(i, 4), "")
+                '_Cantidad = NuloPorNro(_Arreglo(i, 1), 0)
+
+                _CantUd1 = NuloPorNro(_Arreglo(i, 1), 0)
+                _CantUd2 = NuloPorNro(_Arreglo(i, 2), 0)
+
+                _UnTrans = NuloPorNro(_Arreglo(i, 3), 0)
+
+                If _UnTrans = 1 Then
+                    _Cantidad = _CantUd1
+                Else
+                    _Cantidad = _CantUd2
+                End If
+
+                If Rdb_Precio_Lista.Checked Then
+                    _Precio = 0
+                Else
+                    _Precio = NuloPorNro(_Arreglo(i, 4), 0)
+                End If
+
+                If Rdb_Bodega_Documento.Checked Then
+                    _Bodega = String.Empty
+                Else
+                    _Bodega = NuloPorNro(_Arreglo(i, 5), "")
+                End If
+
+                _Calc_RTU = NuloPorNro(_Arreglo(i, 6), False)
+                _UnLevanta = NuloPorNro(_Arreglo(i, 7), _UnTrans)
+
             Catch ex As Exception
                 _Error = ex.Message
             End Try
 
-            If String.IsNullOrEmpty(_Error) Then
+            Dim _Msj_Revision As New LsValiciones.Mensajes
 
-                Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
-                Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            If Not String.IsNullOrEmpty(_Error) Then
 
-                If Not (_RowProducto Is Nothing) Then
-
-                    _Descripcion = _RowProducto.Item("NOKOPR")
-
-                    _Error = Fx_Agregar_Producto(_RowProducto, _Cantidad, _UdTrans, _Precio, _Bodega)
-
-                    If String.IsNullOrEmpty(_Error) Then
-                        _SinProbremas += 1
-                    Else
-                        Sb_AddToLog("Fila Nro :" & i + 1, "Problema: " & _Error & ", Código [" & _Codigo & "]",
-                        _Txt_Log, False)
-                        _Problemas += 1
-                    End If
-
-                Else
-
-                    If String.IsNullOrEmpty(_Codigo) Then
-                        _Descripcion = "#CODVACIO#"
-                    Else
-                        _Descripcion = "#NO EXISTE#"
-                    End If
-
-                    If _Descripcion = "#NO EXISTE#" Then
-                        Sb_AddToLog("Fila Nro :" & i + 1, "Problema: El producto no existe, Código [" & _Codigo & "]",
-                                    _Txt_Log, False)
-                        _Problemas += 1
-                    ElseIf _Descripcion = "#CODVACIO#" Then
-                        Sb_AddToLog("Fila Nro :" & i + 1, "Problema: Código en blanco",
-                                   _Txt_Log, False)
-                        _Problemas += 1
-                    End If
-
-                End If
-
-            Else
-
-                Sb_AddToLog("Fila Nro :" & i + 1, "Problema: " & _Error & "Código: [" & _Codigo & "]",
-                 _Txt_Log, False)
-                _Problemas += 1
+                _Msj_Revision.EsCorrecto = False
+                _Msj_Revision.Detalle = "Fila: " & i + 1 & " Código: " & _Codigo
+                _Msj_Revision.Mensaje = _Error
+                _Ls_Errores.Add(_Msj_Revision)
+                Continue For
 
             End If
+
+            _Msj_Revision = Fx_Agregar_Producto2(i + 1,
+                                              _Codigo,
+                                              _Cantidad,
+                                              _CantUd1,
+                                              _CantUd2,
+                                              _UnTrans,
+                                              _Precio,
+                                              _Bodega,
+                                              _Calc_RTU,
+                                              _UnLevanta)
+
+            If _Msj_Revision.EsCorrecto Then
+                Ls_ProductoLevantar.Add(_Msj_Revision.Tag)
+                _SinProbremas += 1
+            Else
+                Sb_AddToLog("Fila Nro :" & i + 1, "Problema: " & _Msj_Revision.Mensaje & ", Código [" & _Codigo & "]",
+                _Txt_Log, False)
+                _Ls_Errores.Add(_Msj_Revision)
+                _Problemas += 1
+            End If
+
+#Region "Old"
+
+            'If String.IsNullOrEmpty(_Error) Then
+
+            '    Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
+            '    Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            '    If Not (_RowProducto Is Nothing) Then
+
+            '        _Descripcion = _RowProducto.Item("NOKOPR")
+
+            '        _Error = Fx_Agregar_Producto(_RowProducto, _Cantidad, _CantUd1, _CantUd2, _UnTrans, _Precio, _Bodega, _Calc_RTU, _UnLevanta)
+
+            '        If String.IsNullOrEmpty(_Error) Then
+            '            _SinProbremas += 1
+            '        Else
+            '            Sb_AddToLog("Fila Nro :" & i + 1, "Problema: " & _Error & ", Código [" & _Codigo & "]",
+            '            _Txt_Log, False)
+            '            _Problemas += 1
+            '        End If
+
+            '    Else
+
+            '        If String.IsNullOrEmpty(_Codigo) Then
+            '            _Descripcion = "#CODVACIO#"
+            '        Else
+            '            _Descripcion = "#NO EXISTE#"
+            '        End If
+
+            '        If _Descripcion = "#NO EXISTE#" Then
+            '            Sb_AddToLog("Fila Nro :" & i + 1, "Problema: El producto no existe, Código [" & _Codigo & "]",
+            '                        _Txt_Log, False)
+            '            _Problemas += 1
+            '        ElseIf _Descripcion = "#CODVACIO#" Then
+            '            Sb_AddToLog("Fila Nro :" & i + 1, "Problema: Código en blanco",
+            '                       _Txt_Log, False)
+            '            _Problemas += 1
+            '        End If
+
+            '    End If
+
+            'Else
+
+            '    Sb_AddToLog("Fila Nro :" & i + 1, "Problema: " & _Error & "Código: [" & _Codigo & "]",
+            '     _Txt_Log, False)
+            '    _Problemas += 1
+
+            'End If
+
+#End Region
 
             If CBool(_Problemas) Then
                 Circular_Progres_Porc.ProgressColor = Color.Red
@@ -283,12 +377,20 @@ Public Class Frm_Impor_Prod_Masivamente
                                   "a continuación se mostrar una lista con los errores",
                                   "Importar datos", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
-                Dim Fm As New Frm_Archivo_TXT
-                Fm.Pro_Nombre_Archivo = "Error_LevLista_X_Codigo.txt"
-                Fm.Pro_Texto_Log = _Txt_Log.Text
-                Fm.ShowDialog(Me)
-                Fm.Dispose()
+                'Dim Fm As New Frm_Archivo_TXT
+                'Fm.Pro_Nombre_Archivo = "Error_LevLista_X_Codigo.txt"
+                'Fm.Pro_Texto_Log = _Txt_Log.Text
+                'Fm.ShowDialog(Me)
+                'Fm.Dispose()
 
+                'MessageBoxEx.Show(Me, "Hay documentos con problemas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                Dim Fmf As New Frm_Validaciones
+                Fmf.ListaMensajes = _Ls_Errores
+                Fmf.ShowDialog(Me)
+                Fmf.Dispose()
+
+                Ls_ProductoLevantar.Clear()
                 _Tbl_Productos_Levantar.Clear()
 
                 'CrearArchivoTxt(AppPath() & "\Data\" & RutEmpresa & "\Temp\", "Error_LevLista.txt", _Txt_Log.Text, False)
@@ -296,7 +398,7 @@ Public Class Frm_Impor_Prod_Masivamente
 
             End If
 
-            If CBool(_Tbl_Productos_Levantar.Rows.Count) Then
+            If CBool(Ls_ProductoLevantar.Count) Then ' CBool(_Tbl_Productos_Levantar.Rows.Count) Then
                 Me.Close()
             End If
 
@@ -428,7 +530,7 @@ Public Class Frm_Impor_Prod_Masivamente
 
                     _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
 
-                    _Error = Fx_Agregar_Producto(_RowProducto, _Cantidad, _UdTrans, _Precio, _Bodega)
+                    _Error = Fx_Agregar_Producto(_RowProducto, _Cantidad, _Cantidad, _Cantidad, _UdTrans, _Precio, _Bodega, False, _UdTrans)
 
                     If String.IsNullOrEmpty(_Error) Then
                         _SinProbremas += 1
@@ -548,13 +650,19 @@ Public Class Frm_Impor_Prod_Masivamente
 
     Function Fx_Agregar_Producto(_RowProducto As DataRow,
                                  _Cantidad As Double,
-                                 _UdTrans As Integer,
+                                 _CantUd1 As Double,
+                                 _CantUd2 As Double,
+                                 _UnTrans As Integer,
                                  _Precio As Double,
-                                 _Bodega As String) As String
+                                 _Bodega As String,
+                                 _Calc_RTU As Boolean,
+                                 _UnLevanta As Integer) As String
 
-        Dim _Error = String.Empty
-        Dim _Codigo = _RowProducto.Item("KOPR")
-        Dim _Descripcion = _RowProducto.Item("NOKOPR")
+        Dim _Error As String = String.Empty
+        Dim _Codigo As String = _RowProducto.Item("KOPR")
+        Dim _Descripcion As String = _RowProducto.Item("NOKOPR")
+        Dim _Nmarca As String = _RowProducto.Item("NMARCA")
+        Dim _Rtu As Double = _RowProducto.Item("RLUD")
 
         Try
 
@@ -562,10 +670,10 @@ Public Class Frm_Impor_Prod_Masivamente
                 _Bodega = _CodBodega
             End If
 
-            Dim _Existe As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABBO", "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & _Codsucursal & "' And KOBO = '" & _CodBodega & "'"))
+            Dim _Existe As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABBO", "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & _Codsucursal & "' And KOBO = '" & _Bodega & "'"))
 
             If Not _Existe Then
-                Throw New System.Exception("No existe la bodega: " & _CodBodega)
+                Throw New System.Exception("No existe la bodega: " & _Bodega)
             End If
 
             _Existe = CBool(_Sql.Fx_Cuenta_Registros("TABPRE", "KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'"))
@@ -583,14 +691,14 @@ Public Class Frm_Impor_Prod_Masivamente
                 Dim _Ecuacion As String
                 Dim _Melt As String = _RowPrecios.Item("MELT")
 
-                If _UdTrans = 1 Then _Ecuacion = _RowPrecios.Item("ECUACION").ToString.Trim
-                If _UdTrans = 2 Then _Ecuacion = _RowPrecios.Item("ECUACIONU2").ToString.Trim
+                If _UnTrans = 1 Then _Ecuacion = _RowPrecios.Item("ECUACION").ToString.Trim
+                If _UnTrans = 2 Then _Ecuacion = _RowPrecios.Item("ECUACIONU2").ToString.Trim
 
-                If _UdTrans <> 1 And _UdTrans <> 2 Then
+                If _UnTrans <> 1 And _UnTrans <> 2 Then
                     Throw New System.Exception("La Unidad de transacción debe ser 1 o 2")
                 End If
 
-                _Precio = Fx_Funcion_Ecuacion_Random(Me, "", _Ecuacion, _Codigo, _UdTrans, _RowPrecios, 0, 0, 0)
+                _Precio = Fx_Funcion_Ecuacion_Random(Me, "", _Ecuacion, _Codigo, _UnTrans, _RowPrecios, 0, 0, 0)
 
                 If _NetoBruto = "B" And _Melt = "N" Then
 
@@ -612,25 +720,335 @@ Public Class Frm_Impor_Prod_Masivamente
 
             End If
 
-            Dim NewFila As DataRow
-            NewFila = _Tbl_Productos_Levantar.NewRow
-            With NewFila
+            If _Calc_RTU Then
 
-                .Item("Codigo") = _Codigo
-                .Item("Descripcion") = _Descripcion
-                .Item("Cantidad") = _Cantidad
-                .Item("UdTrans") = _UdTrans
-                .Item("Precio") = _Precio
-                .Item("Bodega") = _Bodega
+                If _Nmarca = "¡" Then
 
-                _Tbl_Productos_Levantar.Rows.Add(NewFila)
+                    'RTU VARIABLE
+                    Dim _ValidarApiWMSBosOne As Boolean = CBool(_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "Valor",
+                                                          "Tabla = 'BODONE_CONF' And CodigoTabla = 'Habpesovariable'", True, False, 0))
 
-            End With
+                    If _ValidarApiWMSBosOne Then
+
+                        Dim _Mensaje As New LsValiciones.Mensajes
+
+                        _Mensaje = Fx_Rtu_WMSBodOne(Mod_Empresa, _Codsucursal, _Bodega, _Codigo)
+
+                        If _Mensaje.EsCorrecto Then
+                            _Rtu = De_Txt_a_Num_01(_Mensaje.Resultado, 5)
+                        End If
+
+                    End If
+
+                End If
+
+                If _UnLevanta <> _UnTrans Then
+                    If _UnLevanta = 1 Then
+                        _CantUd2 = Math.Round(_CantUd1 / _Rtu, 0)
+                    Else
+                        _CantUd1 = Math.Round(_CantUd2 * _Rtu, 5)
+                    End If
+                Else
+                    If _UnTrans = 1 Then
+                        _CantUd2 = Math.Round(_CantUd1 / _Rtu, 0)
+                        If _CantUd2 = 0 Then
+                            _Rtu = 0
+                        End If
+                    ElseIf _UnTrans = 2 Then
+                        _CantUd1 = Math.Round(_CantUd2 * _Rtu, 5)
+                    End If
+                End If
+
+            End If
+
+            Dim nuevoProducto As New ProductoLevantar With {
+                .Codigo = _Codigo,
+                .Descripcion = _Descripcion,
+                .Cantidad = _Cantidad,
+                .CantUd1 = _CantUd1,
+                .CantUd2 = _CantUd2,
+                .UnTrans = _UnTrans,
+                .Precio = _Precio,
+                .Bodega = _Bodega,
+                .Calc_RTU = _Calc_RTU
+            }
+
+            Ls_ProductoLevantar.Add(nuevoProducto)
+
+            'Dim NewFila As DataRow
+            'NewFila = _Tbl_Productos_Levantar.NewRow
+            'With NewFila
+
+            '    .Item("Codigo") = _Codigo
+            '    .Item("Descripcion") = _Descripcion
+            '    .Item("Cantidad") = _Cantidad
+            '    .Item("UdTrans") = _UdTrans
+            '    .Item("Precio") = _Precio
+            '    .Item("Bodega") = _Bodega
+
+            '    _Tbl_Productos_Levantar.Rows.Add(NewFila)
+
+            'End With
         Catch ex As Exception
             _Error = ex.Message
         End Try
 
         Return _Error
+
+    End Function
+
+    Function Fx_Agregar_Producto2(_Index As Integer,
+                                  _Codigo As String,
+                                  _Cantidad As Double,
+                                  _CantUd1 As Double,
+                                  _CantUd2 As Double,
+                                  _UnTrans As Integer,
+                                  _Precio As Double,
+                                  _Bodega As String,
+                                  _Calc_RTU As Boolean,
+                                  _UnLevanta As Integer) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Try
+
+            If Rdb_Bodega_Documento.Checked Then
+                _Bodega = _CodBodega
+            End If
+
+            If String.IsNullOrEmpty(_Codigo) Then
+                _Mensaje.Detalle = "Fila: " & _Index
+                Throw New System.Exception("El código del producto no puede estar vacío")
+            End If
+
+            Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
+            _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowProducto) Then
+                _Mensaje.Detalle = "Fila: " & _Index & ", Codigo: " & _Codigo
+                Throw New System.Exception("No existe el producto")
+            End If
+
+            Dim _Descripcion As String = _RowProducto.Item("NOKOPR")
+            Dim _Nmarca As String = _RowProducto.Item("NMARCA")
+            Dim _Rtu As Double = _RowProducto.Item("RLUD")
+            Dim _Divisible As String = _RowProducto.Item("DIVISIBLE")
+            Dim _Divisible2 As String = _RowProducto.Item("DIVISIBLE2")
+
+            Dim _Existe As Boolean = CBool(_Sql.Fx_Cuenta_Registros("TABBO", "EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & _Codsucursal & "' And KOBO = '" & _Bodega & "'"))
+
+            If Not _Existe Then
+                _Mensaje.Detalle = "Fila: " & _Index & ", Codigo: " & _Codigo
+                Throw New System.Exception("No existe la bodega: " & _Bodega)
+            End If
+
+            _Existe = CBool(_Sql.Fx_Cuenta_Registros("TABPRE", "KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'"))
+
+            If Not _Existe Then
+                _Mensaje.Detalle = "Fila: " & _Index & ", Codigo: " & _Codigo
+                Throw New System.Exception("No existe en lista: " & _CodLista)
+            End If
+
+            If Rdb_Precio_Lista.Checked Then
+
+                Consulta_sql = "Select Top 1 *,(Select top 1 MELT From TABPP Where KOLT = '" & _CodLista & "') as MELT From TABPRE
+                                Where KOLT = '" & _CodLista & "' And KOPR = '" & _Codigo & "'"
+                Dim _RowPrecios = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Dim _Ecuacion As String
+                Dim _Melt As String = _RowPrecios.Item("MELT")
+
+                If _UnTrans = 1 Then _Ecuacion = _RowPrecios.Item("ECUACION").ToString.Trim
+                If _UnTrans = 2 Then _Ecuacion = _RowPrecios.Item("ECUACIONU2").ToString.Trim
+
+                If _UnTrans <> 1 And _UnTrans <> 2 Then
+                    _Mensaje.Detalle = "Fila: " & _Index & "Codigo: " & _Codigo
+                    Throw New System.Exception("La Unidad de transacción debe ser 1 o 2")
+                End If
+
+                _Precio = Fx_Funcion_Ecuacion_Random(Me, "", _Ecuacion, _Codigo, _UnTrans, _RowPrecios, 0, 0, 0)
+
+                If _NetoBruto = "B" And _Melt = "N" Then
+
+                    Consulta_sql = "Select Isnull(Sum(POIM),0) As Impuesto From TABIM" & Space(1) &
+                                   "Where KOIM In (Select KOIM From TABIMPR Where KOPR = '" & _Codigo & "')"
+                    Dim _RowImpuestos = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    Dim _PorIva As Double = _RowProducto.Item("POIVPR")
+                    Dim _PorIla As Double = _RowImpuestos.Item("Impuesto")
+
+                    Dim _Iva = _PorIva / 100
+                    Dim _Ila = _PorIla / 100
+
+                    Dim _Impuestos As Double = 1 + (_Iva + _Ila)
+
+                    _Precio = Math.Round(_Precio * _Impuestos, 0)
+
+                End If
+
+            End If
+
+            If _Calc_RTU Then
+
+                If _Nmarca = "¡" Then
+
+                    'RTU VARIABLE
+                    Dim _ValidarApiWMSBosOne As Boolean = CBool(_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "Valor",
+                                                          "Tabla = 'BODONE_CONF' And CodigoTabla = 'Habpesovariable'", True, False, 0))
+
+                    If _ValidarApiWMSBosOne Then
+
+                        Dim _Msj As New LsValiciones.Mensajes
+
+                        _Msj = Fx_Rtu_WMSBodOne(Mod_Empresa, _Codsucursal, _Bodega, _Codigo)
+
+                        If _Msj.EsCorrecto Then
+                            _Rtu = De_Txt_a_Num_01(_Msj.Resultado, 5)
+                        End If
+
+                    End If
+
+                End If
+
+                If _UnLevanta <> _UnTrans Then
+                    If _UnLevanta = 1 Then
+                        _CantUd2 = Math.Round(_CantUd1 / _Rtu, 5)
+                    Else
+                        _CantUd1 = Math.Round(_CantUd2 * _Rtu, 5)
+                    End If
+                Else
+                    If _UnTrans = 1 Then
+                        _CantUd2 = Math.Round(_CantUd1 / _Rtu, 5)
+                        If _CantUd2 = 0 Then
+                            _Rtu = 0
+                        End If
+                    ElseIf _UnTrans = 2 Then
+                        _CantUd1 = Math.Round(_CantUd2 * _Rtu, 5)
+                    End If
+                End If
+
+                If _CantUd1 = 0 Then
+                    _Mensaje.Detalle = "Fila: " & _Index & ", Codigo: " & _Codigo
+                    Throw New System.Exception("La cantidad de la unidad 1 no puede ser cero")
+                End If
+
+                If _CantUd2 = 0 Then
+                    _Mensaje.Detalle = "Fila: " & _Index & ", Codigo: " & _Codigo
+                    If _Calc_RTU Then
+                        Throw New System.Exception("La cantidad de la unidad 2 no puede ser cero, se calculo a partir de " & _CantUd1 & "/" & _Rtu & " (),")
+                    Else
+                        Throw New System.Exception("La cantidad de la unidad 2 no puede ser cero")
+                    End If
+                End If
+
+                If _Divisible = "N" Then
+                    ' Comprobar si _CantUd1 tiene decimales (con tolerancia)
+                    Dim tolerancia As Double = 0.000001
+                    Dim tieneDecimales As Boolean = Math.Abs(_CantUd1 - Math.Truncate(_CantUd1)) > tolerancia
+
+                    If tieneDecimales Then
+                        _Mensaje.Detalle = "Fila: " & _Index & ", Codigo: " & _Codigo
+                        Throw New System.Exception("Primera unidad debe ser en unidades enteras")
+                    End If
+                End If
+
+                If _Divisible2 = "N" Then
+                    ' Comprobar si _CantUd1 tiene decimales (con tolerancia)
+                    Dim tolerancia As Double = 0.000001
+                    Dim tieneDecimales As Boolean = Math.Abs(_CantUd2 - Math.Truncate(_CantUd2)) > tolerancia
+
+                    If tieneDecimales Then
+                        _Mensaje.Detalle = "Fila: " & _Index & ", Codigo: " & _Codigo
+                        Throw New System.Exception("Segunda unidad debe ser en unidades enteras, Cantidad: " & _CantUd2)
+                    End If
+                End If
+
+            Else
+
+                If _CantUd1 = 0 Then
+                    Throw New System.Exception("La cantidad de la Primera unidad no puede ser cero")
+                End If
+
+                If _CantUd2 = 0 Then
+                    Throw New System.Exception("La cantidad de la Segunda unidad no puede ser cero")
+                End If
+
+            End If
+
+            Dim _NuevoProducto As New ProductoLevantar With {
+                .Codigo = _Codigo,
+                .Descripcion = _Descripcion,
+                .Cantidad = _Cantidad,
+                .CantUd1 = _CantUd1,
+                .CantUd2 = _CantUd2,
+                .UnTrans = _UnTrans,
+                .Precio = _Precio,
+                .Bodega = _Bodega,
+                .Calc_RTU = _Calc_RTU
+            }
+
+            'Ls_ProductoLevantar.Add(_NuevoProducto)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Producto agregado correctamente."
+            _Mensaje.Tag = _NuevoProducto
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Tag = Nothing
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Rtu_WMSBodOne(_Empresa As String,
+                              _Sucursal As String,
+                              _Bodega As String,
+                              _Codigo As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+
+            Dim _BodegaRevWMS As String = _Bodega
+
+            '_NecesitaPermisoCambiarRTU = True
+            'Chk_RtuVariable.Enabled = False
+            If RutEmpresa = "77988832-0" Then
+                Try
+                    Dim EmpSucBod As String = _Empresa & ";" & _Empresa & ";" & _Bodega
+
+                    Consulta_sql = "Select Tabla, DescripcionTabla, CodigoTabla, NombreTabla" & vbCrLf &
+                                   "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                                   "Where Tabla = 'SEA2MEATGARDEN' And NombreTabla = '" & EmpSucBod & "'"
+                    Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    If Not IsNothing(_Row) Then
+                        Dim _ESB = _Row.Item("CodigoTabla").ToString.Split(";"c)
+                        _BodegaRevWMS = _ESB(2).Trim
+                    End If
+                Catch ex As Exception
+                    _BodegaRevWMS = _Bodega
+                End Try
+            End If
+
+            ' Llama a la función para encontrar el producto en las bodegas
+            Dim _RtuBodegas As LsValiciones.Mensajes = Fx_Consultar_RTU_xBodegas(_BodegaRevWMS, _Codigo)
+
+            _Mensaje = _RtuBodegas
+
+        Catch ex As Exception
+
+        End Try
+
+        Return _Mensaje
 
     End Function
 
@@ -665,9 +1083,26 @@ Public Class Frm_Impor_Prod_Masivamente
     Private Sub Btn_Archivo_Ayuda_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Archivo_Ayuda_Excel.Click
 
         Dim _Nom_Excel As String
+        Dim _Msj As String
 
-        Consulta_sql = "Select 'Caracter [13]' As 'Código','Númerico' As 'Cantidad'," &
-                       "'1 o 2' As 'Unidad transacción','Númerico' As 'Precio','Caracter [3]' As 'Bodega'"
+        _Msj = $"Código: Identificador del producto.
+Cantidad Ud1: Cantidad correspondiente a la primera unidad.
+Cantidad Ud2: Cantidad correspondiente a la segunda unidad.
+Unidad de la transacción: Unidad que se mostrará en el documento. Solo admite los valores 1 o 2.
+Precio: Precio del producto.
+Bodega: Bodega asociada a la línea.
+Calcula RTU: Indica si se debe calcular la RTU en función de la unidad levantada.
+• 	0: No calcula RTU
+• 	1: Sí calcula RTU
+Unidad levantada: Unidad que se utilizará para el levantamiento de esta planilla.
+Ejemplo: Si la unidad de la transacción es 1, pero la unidad levantada es 2, el sistema tomará la Unidad 2 como referencia para calcular la Unidad 1.
+"
+
+        MessageBoxEx.Show(Me, _Msj, "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Consulta_sql = "Select 'Caracter [13]' As 'Código','Númerico' As 'Cantidad Ud1','Númerico' As 'Cantidad Ud2'," &
+                       "'1 o 2' As 'Unidad transacción','Númerico' As 'Precio','Caracter [3]' As 'Bodega'," &
+                       "'0 o 1 (0 = No, 1 = Si)' As [Calcula RTU],'1 o 2' As 'Unidad levantada'"
 
         _Nom_Excel = "Ejemplo levantamiento productos masivamente"
 

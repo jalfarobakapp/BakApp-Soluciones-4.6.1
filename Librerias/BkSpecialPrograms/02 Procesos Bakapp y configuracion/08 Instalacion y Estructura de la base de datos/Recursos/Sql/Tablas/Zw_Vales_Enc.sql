@@ -1,6 +1,5 @@
 USE [#Base#]
 
-
 CREATE TABLE [dbo].[Zw_Vales_Enc](
 	[Id]					[int] IDENTITY(1,1) NOT NULL,
 	[NroVale]				[char](10) NOT NULL DEFAULT (''),

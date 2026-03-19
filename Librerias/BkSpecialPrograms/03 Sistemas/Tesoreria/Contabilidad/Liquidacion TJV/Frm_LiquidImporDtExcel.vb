@@ -1,4 +1,22 @@
 ﻿Imports DevComponents.DotNetBar
+Imports System.Globalization
+
+' Pseudocódigo detallado (plan):
+' 1. El problema es que los índices del arreglo importado son 0-based, mientras que las filas de Excel se cuentan desde 1.
+' 2. Para mostrar correctamente las filas al usuario hay que convertir el índice del arreglo (i) a número de fila de Excel:
+'      displayRow = i + 1
+' 3. Además, el total de filas mostrado debe corresponder al último índice más 1:
+'      totalRows = _Filas + 1
+' 4. El progreso en la barra circular debe basarse en la cantidad de filas a procesar:
+'      totalToProcess = _Filas - _Desde + 1
+'    - Prevenir división por cero si totalToProcess <= 0.
+' 5. Ajustar todos los mensajes y logs:
+'    - Reemplazar "Fila Nro : i" por "Fila Nro : displayRow"
+'    - Reemplazar "primera aparición en fila dictFirstIndex(key)" por dictFirstIndex(key) + 1
+'    - Reemplazar "Leyendo fila i de _Filas" por "Leyendo fila displayRow de totalRows"
+' 6. Mantener la lógica existente de detección de duplicados y validaciones sin cambios funcionales.
+' 7. Aplicar el cambio mínimo y coherente en todos los puntos de salida/registro de fila para que el usuario vea las filas tal como están numeradas en Excel.
+
 Public Class Frm_LiquidImporDtExcel
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -72,6 +90,7 @@ Public Class Frm_LiquidImporDtExcel
         End With
 
         Txt_Nombre_Archivo.Text = _Ubic_Archivo
+        _Txt_Log.Text = String.Empty
 
         Dim _ImpEx As New Class_Importar_Excel
         Dim _Extencion As String = Replace(System.IO.Path.GetExtension(_Nombre_Archivo), ".", "")
@@ -99,44 +118,155 @@ Public Class Frm_LiquidImporDtExcel
 
         Dim _Filtro_Productos As String = Generar_Filtro_IN_Arreglo(_Arreglo_Cd, False)
 
+        ' --- Detección de duplicados en el arreglo (codigo + monto) ---
         Dim _Problemas As Integer
         Dim _Diferencias As Integer
         Dim _Diferencias1peso As Integer
         Dim _SinProbremas As Integer
 
+        Dim dictCount As New Dictionary(Of String, Integer)
+        Dim dictFirstIndex As New Dictionary(Of String, Integer)
+        Dim _FilaDuplicada(_Filas) As Boolean
+
+        ' Primera pasada: construir conteos y primera aparición usando normalización coherente
+        For i = _Desde To _Filas
+            Dim normaCod As String = String.Empty
+            Dim normaMonto As Double = 0
+
+            Try
+                normaCod = NuloPorNro(numero_(NuloPorNro(_Arreglo(i, 0), ""), 6), "").ToString.Trim
+                Dim montoStr As String = NuloPorNro(_Arreglo(i, 1), "").ToString.Trim
+
+                If Not Double.TryParse(montoStr, NumberStyles.Any, CultureInfo.InvariantCulture, normaMonto) Then
+                    ' Intentar con la conversión cultural por defecto si falla
+                    Double.TryParse(montoStr, NumberStyles.Any, CultureInfo.CurrentCulture, normaMonto)
+                End If
+            Catch ex As Exception
+                normaCod = String.Empty
+                normaMonto = 0
+            End Try
+
+            Dim key = normaCod & "|" & normaMonto.ToString("G17", CultureInfo.InvariantCulture)
+
+            If dictCount.ContainsKey(key) Then
+                dictCount(key) += 1
+            Else
+                dictCount.Add(key, 1)
+                dictFirstIndex.Add(key, i)
+            End If
+        Next
+
+        ' Marcar como duplicadas todas las filas que no sean la primera aparición
+        For i = _Desde To _Filas
+            Dim normaCod As String = String.Empty
+            Dim normaMonto As Double = 0
+
+            Try
+                normaCod = NuloPorNro(numero_(NuloPorNro(_Arreglo(i, 0), ""), 6), "").ToString.Trim
+                Dim montoStr As String = NuloPorNro(_Arreglo(i, 1), "").ToString.Trim
+
+                If Not Double.TryParse(montoStr, NumberStyles.Any, CultureInfo.InvariantCulture, normaMonto) Then
+                    Double.TryParse(montoStr, NumberStyles.Any, CultureInfo.CurrentCulture, normaMonto)
+                End If
+            Catch ex As Exception
+                normaCod = String.Empty
+                normaMonto = 0
+            End Try
+
+            Dim key = normaCod & "|" & normaMonto.ToString("G17", CultureInfo.InvariantCulture)
+
+            If dictCount.ContainsKey(key) AndAlso dictCount(key) > 1 Then
+                If dictFirstIndex.ContainsKey(key) AndAlso dictFirstIndex(key) <> i Then
+                    _FilaDuplicada(i) = True
+                    _Problemas += 1
+                    ' Mostrar fila según numeración de Excel (índice + 1)
+                    Sb_AddToLog("Fila Nro :" & (i + 1), "Problema: Duplicado (mismo código y monto) - primera aparición en fila " & (dictFirstIndex(key) + 1) & ", Key: " & key, _Txt_Log, False)
+                End If
+            End If
+        Next
+        '--- fin detección duplicados ---
+
+        If CBool(_Problemas) Then
+
+            MessageBoxEx.Show(Me, "Existen registros duplicados." & vbCrLf &
+                              "A continuación se mostrar una lista con los errores",
+                              "Validacón", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            Dim Fm As New Frm_Archivo_TXT
+            Fm.Pro_Nombre_Archivo = "Error_LevLista_X_Codigo.txt"
+            Fm.Pro_Texto_Log = _Txt_Log.Text
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+            Return
+
+        End If
+
         Sb_Habilitar_Deshabilitar_Comandos(False, True)
-        Circular_Progres_Val.Maximum = _Filas
+
+        ' Calcular total a procesar y ajustar máximos de progreso
+        Dim totalToProcess As Integer = _Filas - _Desde + 1
+        If totalToProcess <= 0 Then totalToProcess = 1
+
+        Circular_Progres_Val.Maximum = totalToProcess
 
         Dim _Contador As Integer = 0
         TotalValSelec = 0
 
+        Dim totalRows As Integer = _Filas + 1 ' número de fila Excel del último índice
+
         For i = _Desde To _Filas
+
+            Dim displayRow As Integer = i + 1 ' fila real en Excel
+
+            ' Si la fila fue marcada como duplicada, saltarla
+            If _FilaDuplicada(i) Then
+                If CBool(_Problemas) Then
+                    Circular_Progres_Porc.ProgressColor = Color.Red
+                    Circular_Progres_Val.ProgressColor = Color.Red
+                End If
+
+                _Contador += 1
+                Circular_Progres_Porc.Value = CInt((_Contador * 100) / totalToProcess)
+                If Circular_Progres_Porc.Value < 0 Then Circular_Progres_Porc.Value = 0
+                Circular_Progres_Val.Value += 1
+                Circular_Progres_Val.ProgressText = Circular_Progres_Val.Value
+
+                Lbl_Procesando.Text = "Leyendo fila " & displayRow & " de " & totalRows & ". Estado Ok: " & _SinProbremas &
+                                  ", Problemas: " & _Problemas & ", Diferencias: " & _Diferencias
+
+                Continue For
+            End If
 
             Dim _Error = String.Empty
 
             System.Windows.Forms.Application.DoEvents()
 
-            Dim _CodAutoVenta_Ori As String
-            Dim _MontoParaAbono_Ori As String
+            Dim _CodAutoVenta_Ori As String = String.Empty
+            Dim _MontoParaAbono_Ori As String = String.Empty
 
-            Dim _CodAutoVenta As String
-            Dim _MontoParaAbono As String
+            Dim _CodAutoVenta As String = String.Empty
+            Dim _MontoParaAbono As Double = 0
 
             Try
-                _CodAutoVenta_Ori = _Arreglo(i, 0).ToString.Trim
-                _MontoParaAbono_Ori = _Arreglo(i, 1)
+                _CodAutoVenta_Ori = NuloPorNro(_Arreglo(i, 0), "").ToString.Trim
+                _MontoParaAbono_Ori = NuloPorNro(_Arreglo(i, 1), "").ToString.Trim
 
                 If Not String.IsNullOrWhiteSpace(_CodAutoVenta_Ori) AndAlso Not String.IsNullOrWhiteSpace(_MontoParaAbono_Ori) Then
                     _CodAutoVenta = NuloPorNro(numero_(_CodAutoVenta_Ori, 6), "")
-                    _MontoParaAbono = NuloPorNro(_Arreglo(i, 1), 0)
+                    Dim montoStr As String = NuloPorNro(_Arreglo(i, 1), 0).ToString.Trim
+
+                    If Not Double.TryParse(montoStr, NumberStyles.Any, CultureInfo.InvariantCulture, _MontoParaAbono) Then
+                        Double.TryParse(montoStr, NumberStyles.Any, CultureInfo.CurrentCulture, _MontoParaAbono)
+                    End If
                 End If
 
             Catch ex As Exception
                 _Error = ex.Message
             End Try
 
-            If Not IsNumeric(_MontoParaAbono) Then
-                _Error = "La columna Monto debe ser un valor numérico. Valor: " & _MontoParaAbono
+            ' CORRECCIÓN: No usar TypeOf con un tipo valor (Double). Comprobar solo si es NaN.
+            If Double.IsNaN(_MontoParaAbono) Then
+                _Error = "La columna Monto debe ser un valor numérico. Valor: " & _MontoParaAbono_Ori
             End If
 
             If String.IsNullOrWhiteSpace(_CodAutoVenta_Ori) Then
@@ -156,15 +286,9 @@ Public Class Frm_LiquidImporDtExcel
                 _TieneError = False
                 _TieneDiferencia = False
 
-                Dim _MontoIgual As Boolean
-                Dim _MontoDiferencias As Boolean
                 Dim _Msg = String.Empty
                 Dim _Encontrado = False
                 Dim _Diferencia As Double
-
-                'If _CodAutoVenta = "2000007231796976" Then
-                '    Dim _aca = 0
-                'End If
 
                 Dim _Filtro As String = "(NUCUDP = '" & _CodAutoVenta & "' And VADP = " & _MontoParaAbono & ") Or (CUDP = '" & _CodAutoVenta & "' And VADP = " & _MontoParaAbono & ")"
 
@@ -245,78 +369,6 @@ Public Class Frm_LiquidImporDtExcel
 
                 End If
 
-#Region "Procedimiento antiguo"
-
-
-                'If False Then
-
-                '    For Each _Fila As DataRow In _Tbl_Liquidacion.Rows
-
-                '        Dim _Str_Nucudp As String
-                '        Dim _Str_Cudp As String
-
-                '        'Dim _Int_Nucudp As Integer
-                '        'Dim _Int_Cudp As Integer
-
-                '        Dim _Vadp As Double = _Fila.Item("VADP")
-
-                '        _MontoIgual = (_Vadp = _MontoParaAbono)
-                '        _MontoDiferencias = (_Vadp <> _MontoParaAbono)
-
-                '        _Str_Nucudp = _Fila.Item("NUCUDP").ToString.Trim
-                '        _Str_Cudp = _Fila.Item("CUDP").ToString.Trim
-
-                '        If _Str_Nucudp = "2000007292785640" Or _Str_Cudp = "2000007292785640" Then
-                '            Dim _aca = 0
-                '        End If
-
-                '        _Diferencia = _Fila.Item("VADP") - _MontoParaAbono
-
-                '        If _Str_Nucudp = _CodAutoVenta Then
-
-                '            _Encontrado = True
-
-                '            If _MontoIgual Then
-                '                _Fila.Item("Incluir") = True
-                '                TotalValSelec += _MontoParaAbono
-                '                Exit For
-                '            End If
-
-                '            If _MontoDiferencias Then
-                '                _TieneDiferencia = True
-                '                _Error = "Se encuentra el Numero Doc: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
-                '                '_Diferencias += 1
-                '                Exit For
-                '            End If
-
-                '        End If
-
-                '        If _Str_Cudp = _CodAutoVenta Then
-
-                '            _Encontrado = True
-
-                '            If _MontoIgual Then
-                '                _Fila.Item("Incluir") = True
-                '                _Error = String.Empty
-                '                TotalValSelec += _MontoParaAbono
-                '                Exit For
-                '            End If
-
-                '            If _MontoDiferencias Then
-                '                _TieneDiferencia = True
-                '                '_Diferencias += 1
-                '                _Error = "Se encuentra la cuenta: [" & _CodAutoVenta_Ori & "], pero el monto no coincide $ " & FormatNumber(_MontoParaAbono, 0) & ", Diferencia: " & _Diferencia
-                '                Exit For
-                '            End If
-
-                '        End If
-
-                '    Next
-
-                'End If
-
-#End Region
-
                 If Not _Encontrado Then
                     _TieneError = True
                 End If
@@ -332,7 +384,7 @@ Public Class Frm_LiquidImporDtExcel
                 Dim _Liquid_Transbank As New LiqTransbank.Liquid_Transbank
 
                 _Liquid_Transbank._CodAutoVenta = _CodAutoVenta
-                _Liquid_Transbank._MontoParaAbono = _MontoParaAbono
+                _Liquid_Transbank._MontoParaAbono = _MontoParaAbono.ToString(CultureInfo.InvariantCulture)
 
                 Ls_Liquid_Transbank.Add(_Liquid_Transbank)
 
@@ -344,7 +396,8 @@ Public Class Frm_LiquidImporDtExcel
                 If _TieneDiferencia Then _Diferencias += 1
                 If _TieneDiferencia1peso Then _Diferencias1peso += 1
 
-                Sb_AddToLog("Fila Nro :" & i, "Problema: " & _Error, _Txt_Log, False)
+                ' Ajustar log para mostrar fila real de Excel
+                Sb_AddToLog("Fila Nro :" & (displayRow), "Problema: " & _Error, _Txt_Log, False)
 
             End If
 
@@ -358,16 +411,17 @@ Public Class Frm_LiquidImporDtExcel
             End If
 
             _Contador += 1
-            Circular_Progres_Porc.Value = ((_Contador * 100) / _Filas)
+            Circular_Progres_Porc.Value = CInt((_Contador * 100) / totalToProcess)
+            If Circular_Progres_Porc.Value < 0 Then Circular_Progres_Porc.Value = 0
             Circular_Progres_Val.Value += 1
             Circular_Progres_Val.ProgressText = Circular_Progres_Val.Value
 
             If Chk_Dif1Peso.Checked Then
-                Lbl_Procesando.Text = "Leyendo fila " & i & " de " & _Filas & ". Estado Ok: " & _SinProbremas &
+                Lbl_Procesando.Text = "Leyendo fila " & displayRow & " de " & totalRows & ". Estado Ok: " & _SinProbremas &
                                   ", Problemas: " & _Problemas & ", Diferencias: " & _Diferencias & ", Diferencias 1 peso: " & _Diferencias1peso
 
             Else
-                Lbl_Procesando.Text = "Leyendo fila " & i & " de " & _Filas & ". Estado Ok: " & _SinProbremas &
+                Lbl_Procesando.Text = "Leyendo fila " & displayRow & " de " & totalRows & ". Estado Ok: " & _SinProbremas &
                                   ", Problemas: " & _Problemas & ", Diferencias: " & _Diferencias
 
             End If

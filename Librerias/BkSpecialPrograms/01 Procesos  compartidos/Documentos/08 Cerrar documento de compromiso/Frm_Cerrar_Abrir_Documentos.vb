@@ -17,6 +17,8 @@ Public Class Frm_Cerrar_Abrir_Documentos
         End Get
     End Property
 
+    Public Property CerrarFormulario As Boolean
+
     Public Sub New(Idmaeedo As Integer)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -372,8 +374,18 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
     Private Sub Btn_Cerrar_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cerrar_Documento.Click
 
-        Dim _Idmaeedo = _Row_Maeedo.Item("IDMAEEDO")
+        Dim _Idmaeedo As Integer = _Row_Maeedo.Item("IDMAEEDO")
         Dim _Tbl = _Tbl_Maeddo.Select("IDMAEEDO = " & _Idmaeedo)
+        Dim _SobreStock As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "SobreStock", "Idmaeedo = " & _Idmaeedo,,,, True)
+        Dim _CodPermiso As String = "Doc00011"
+
+        Dim _EsClon As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Idmaeedo", "Idmaeedo_Clon = " & _Idmaeedo, True)
+
+        If CBool(_EsClon) Then
+            MessageBoxEx.Show(Me, "Este documento no puede cerrarse desde aquí, ya que corresponde a un" & vbCrLf &
+                              "tratamiento especial de Picking generado en otra empresa.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
         If Not Fx_Revisar_Documento_Cerrado(_Idmaeedo, False) Then
             Return
@@ -385,7 +397,11 @@ Public Class Frm_Cerrar_Abrir_Documentos
             Return
         End If
 
-        If Not Fx_TienePermiso_EnDoc(Me, "Doc00011", _Idmaeedo) Then
+        If _SobreStock Then
+            _CodPermiso = "Doc00168"
+        End If
+
+        If Not Fx_TienePermiso_EnDoc(Me, _CodPermiso, _Idmaeedo) Then
             Return
         End If
 
@@ -395,23 +411,63 @@ Public Class Frm_Cerrar_Abrir_Documentos
 
             If Not IsNothing(_Msj.Tag) Then
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Estado = 'NULA',Idmaeedo = 0,Observacion = 'Usuario " & FUNCIONARIO & " - " & Nombre_funcionario_activo.ToLower.Trim & " solicita cerrar documento'" & vbCrLf &
-                               "Where Id = " & _Msj.Id & vbCrLf &
-                               "Update " & _Global_BaseBk & "Zw_Stmp_Det Set Idmaeedo = 0,Idmaeddo = 0 Where Id_Enc = " & _Msj.Id & vbCrLf &
-                               "Update " & _Global_BaseBk & "Zw_Stmp_DetPick Set Idmaeedo = 0,Idmaeddo = 0 Where Id_Enc = " & _Msj.Id
+                Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Stmp_Enc Set 
+Estado = 'NULA'
+,Idmaeedo = 0
+,Observacion = 'Usuario {FUNCIONARIO} - {Nombre_funcionario_activo.ToLower.Trim} solicita cerrar documento'
+Where Id = {_Msj.Id}
+Update {_Global_BaseBk}Zw_Stmp_Det Set Idmaeedo = 0,Idmaeddo = 0 Where Id_Enc = {_Msj.Id}
+Update {_Global_BaseBk}Zw_Stmp_DetPick Set Idmaeedo = 0,Idmaeddo = 0 Where Id_Enc = {_Msj.Id}"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
             End If
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set Qty_SobreStockD = Qty_SobreStock - Qty_SobreStockD" & vbCrLf &
-                           "Where Idmaeedo = " & _Idmaeedo
-            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+            Dim _Tido As String = _Row_Maeedo.Item("TIDO")
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set PqteComprometido = PqteComprometido-Qty_SobreStockD" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_Prod_SobreStock St" & vbCrLf &
-                           "Inner Join " & _Global_BaseBk & "Zw_Docu_Det Det On St.Id = Det.Id_SobreStock" & vbCrLf &
-                           "Where Idmaeedo = " & _Idmaeedo
-            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+            If _Tido = "COV" Then
+
+                Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Docu_Det Set Qty_SobreStockD = Qty_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Prod_SobreStock Set PqteComprometido = PqteComprometido-Qty_SobreStockD
+From {_Global_BaseBk}Zw_Prod_SobreStock St
+Inner Join {_Global_BaseBk}Zw_Docu_Det Det On St.Id = Det.Id_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+            End If
+
+            If _Tido = "NVV" Or _Tido = "NVI" Then
+
+                Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Docu_Det Set Qty_SobreStockDv = Qty_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Prod_SobreStock Set PqteStock = PqteStock+Qty_SobreStockDv
+From {_Global_BaseBk}Zw_Prod_SobreStock St
+Inner Join {_Global_BaseBk}Zw_Docu_Det Det On St.Id = Det.Id_SobreStock
+Where Idmaeedo = {_Idmaeedo}"
+                _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+                Dim _Idmaeedo_Clon As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Idmaeedo_Clon", "Idmaeedo = " & _Idmaeedo, True)
+
+                If CBool(_Idmaeedo_Clon) Then
+                    Dim _Cl_Elimina_Anula As New Clas_Cerrar_Anular_Eliminar_Documento_Origen
+                    If _Cl_Elimina_Anula.Fx_EliminarAnular_Doc2(_Idmaeedo_Clon, FUNCIONARIO,
+                                                                Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar, False) Then
+                        Sb_Cambiar_EmpSucBod(_Idmaeedo)
+                    End If
+                    CerrarFormulario = True
+                End If
+
+
+            End If
 
             Sb_Actualizar_Grillas()
             Sb_Formato_Grillas()
@@ -421,6 +477,34 @@ Public Class Frm_Cerrar_Abrir_Documentos
             Me.Close()
 
         End If
+
+    End Sub
+
+    Sub Sb_Cambiar_EmpSucBod(_Idmaeedo As Integer)
+
+        Consulta_sql = "Select Distinct Idmaeedo,Tido,Nudo,Empresa,Sucursal,Bodega From " & _Global_BaseBk & "Zw_Docu_Det" & vbCrLf &
+                       "Where Idmaeedo = " & _Idmaeedo
+        Dim _Tbl_Det As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+
+        For Each _Fila As DataRow In _Tbl_Det.Rows
+
+            Dim _Tido As String = _Fila.Item("Tido").ToString.Trim
+            Dim _Nudo As String = _Fila.Item("Nudo").ToString.Trim
+            Dim _Empresa As String = _Fila.Item("Empresa").ToString.Trim
+            Dim _Sucursal As String = _Fila.Item("Sucursal").ToString.Trim
+            Dim _Bodega As String = _Fila.Item("Bodega").ToString.Trim
+
+            Consulta_sql = "Declare @Idmaeedo Int = " & _Idmaeedo & vbCrLf &
+                           "Update MAEEDO Set EMPRESA = '" & _Empresa & "',SUDO = '" & _Sucursal & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
+                           "Update MAEDDO Set EMPRESA = '" & _Empresa & "',SULIDO = '" & _Sucursal & "',BOSULIDO = '" & _Bodega & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Despachos Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "',Bodega = '" & _Bodega &
+                                "' Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
+                           "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa = '" & _Empresa & "' Where Idmaeedo = @Idmaeedo"
+
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False)
+
+        Next
 
     End Sub
 
@@ -536,7 +620,7 @@ Public Class Frm_Cerrar_Abrir_Documentos
             Dim _Id As Integer
 
             Consulta_sql = "Select Top 1 * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Estado Not In ('NULO','NULA','CERRA')"
-            Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If Not IsNothing(_Row) Then
 

@@ -6100,31 +6100,39 @@ Public Module Crear_Documentos_Desde_Otro
     Sub Sb_Reestablecer_Stock_En_Zw_Prod_Stock(_Tido As String, _TblDetalle As DataTable)
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
-        Dim _SqlQuery As String
 
-        Dim _CampoUd1, _CampoUd2 As String
+        Dim _SqlQuery As String = String.Empty
+        Dim _CampoUd1 As String = String.Empty
+        Dim _CampoUd2 As String = String.Empty
+        Dim _RecalculaStock As Boolean = False
 
         If _Tido = "NVV" Then
             _CampoUd1 = "StComp1" : _CampoUd2 = "StComp2"
+            _RecalculaStock = True
         ElseIf _Tido = "OCC" Then
             _CampoUd1 = "StPedi1" : _CampoUd2 = "StPedi2"
+            _RecalculaStock = True
         End If
 
         For Each _Fila As DataRow In _TblDetalle.Rows
 
-            Dim _CantUd1 As String = De_Num_a_Tx_01(_Fila.Item("CantUd1"), True, 5)
-            Dim _CantUd2 As String = De_Num_a_Tx_01(_Fila.Item("CantUd2"), True, 5)
+            If _RecalculaStock = True Then
 
-            Dim _Empresa As String = _Fila.Item("Empresa")
-            Dim _Sucursal As String = _Fila.Item("Sucursal")
-            Dim _Bodega As String = _Fila.Item("Bodega")
-            Dim _Codigo As String = _Fila.Item("Codigo")
+                Dim _CantUd1 As String = De_Num_a_Tx_01(_Fila.Item("CantUd1"), True, 5)
+                Dim _CantUd2 As String = De_Num_a_Tx_01(_Fila.Item("CantUd2"), True, 5)
 
-            _SqlQuery += "Update " & _Global_BaseBk & "Zw_Prod_Stock Set" & vbCrLf &
-                            _CampoUd1 & " = " & _CampoUd1 & " - " & _CantUd1 & "," &
-                            _CampoUd2 & " = " & _CampoUd2 & " - " & _CantUd2 & vbCrLf &
-                             "Where Empresa ='" & _Empresa & "' And Sucursal ='" & _Sucursal & "' And Bodega ='" & _Bodega &
-                             "' And Codigo = '" & _Codigo & "'" & vbCrLf
+                Dim _Empresa As String = _Fila.Item("Empresa")
+                Dim _Sucursal As String = _Fila.Item("Sucursal")
+                Dim _Bodega As String = _Fila.Item("Bodega")
+                Dim _Codigo As String = _Fila.Item("Codigo")
+
+                _SqlQuery += "Update " & _Global_BaseBk & "Zw_Prod_Stock Set" & vbCrLf &
+                                _CampoUd1 & " = " & _CampoUd1 & " - " & _CantUd1 & "," &
+                                _CampoUd2 & " = " & _CampoUd2 & " - " & _CantUd2 & vbCrLf &
+                                 "Where Empresa ='" & _Empresa & "' And Sucursal ='" & _Sucursal & "' And Bodega ='" & _Bodega &
+                                 "' And Codigo = '" & _Codigo & "'" & vbCrLf
+
+            End If
 
             Dim _SobreStock As Boolean = _Fila.Item("SobreStock")
 
@@ -6262,7 +6270,7 @@ Public Module Crear_Documentos_Desde_Otro
 
         End If
 
-            Dim _ErrorLPC As String = Fx_ActualizarListaRandomDesdeBakApp(_Koen, _Suen, _Id_Padre)
+        Dim _ErrorLPC As String = Fx_ActualizarListaRandomDesdeBakApp(_Koen, _Suen, _Id_Padre)
 
         If String.IsNullOrEmpty(_ErrorLPC) Then
             MessageBoxEx.Show(_Formulario, "Costos levantados correctamente en lista " & _Lista, "Actualización de costos del proveedor",
@@ -6692,6 +6700,83 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
+
+    Function Fx_Confirmar_LecturaOK(_Mensaje1 As String,
+                                    _Mensaje2 As String,
+                                    _eTaskDialogIcon As eTaskDialogIcon,
+                                    Optional _TextoAlerta As String = "Alerta",
+                                    Optional _MostrarCancelar As Boolean = False,
+                                    Optional _TextoCheck As String = "CONFIRMAR LECTURA DE LA ALERTA",
+                                    Optional _TextoDePie As String = Nothing,
+                                    Optional _ImagenPie As Image = Nothing) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim Chk_Confirmar_Lectura As New Command
+        Chk_Confirmar_Lectura.Checked = False
+        Chk_Confirmar_Lectura.Name = "Chk_Confirmar_Lectura"
+        Chk_Confirmar_Lectura.Text = _TextoCheck
+
+        Dim _Opciones As Command = Chk_Confirmar_Lectura
+
+        Dim _Info As TaskDialogInfo
+
+        If _MostrarCancelar Then
+            _Info = New TaskDialogInfo(_TextoAlerta,
+                  _eTaskDialogIcon,
+                  _Mensaje1, _Mensaje2,
+                  eTaskDialogButton.Ok + eTaskDialogButton.Cancel,
+                  eTaskDialogBackgroundColor.Red, Nothing, Nothing, _Opciones, _TextoDePie, _ImagenPie)
+        Else
+            _Info = New TaskDialogInfo(_TextoAlerta,
+                  _eTaskDialogIcon,
+                  _Mensaje1, _Mensaje2,
+                  eTaskDialogButton.Ok, eTaskDialogBackgroundColor.Red, Nothing, Nothing, _Opciones, _TextoDePie, _ImagenPie)
+        End If
+
+
+        Dim _Resultado As eTaskDialogResult = TaskDialog.Show(_Info)
+
+        _Mensaje.Tag = _Resultado
+
+        If _Resultado = eTaskDialogResult.Ok OrElse _Resultado = eTaskDialogResult.Cancel OrElse _Resultado = eTaskDialogResult.None Then
+
+            If _Resultado = eTaskDialogResult.Cancel Then
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Cancelado = True
+                Return _Mensaje
+            End If
+
+            If Not Chk_Confirmar_Lectura.Checked Then
+
+                Beep()
+                _Mensaje = Fx_Confirmar_LecturaOK(_Mensaje1, _Mensaje2, _eTaskDialogIcon, _TextoAlerta, _MostrarCancelar, _TextoCheck, _TextoDePie, _ImagenPie)
+
+            Else
+
+                _Mensaje.Resultado = _Resultado.ToString
+                _Mensaje.EsCorrecto = True
+
+                If _Resultado = eTaskDialogResult.Ok Then
+                    _Mensaje.Icono = eTaskDialogIcon.Information
+                ElseIf _Resultado = eTaskDialogResult.No Then
+                    _Mensaje.Cerrar = False
+                    _Mensaje.Icono = eTaskDialogIcon.Stop
+                Else
+                    _Mensaje.Icono = eTaskDialogIcon.Exclamation
+                End If
+
+            End If
+
+        Else
+            _Mensaje.Tag = eTaskDialogResult.Cancel
+            _Mensaje.Cerrar = True
+        End If
+
+        Return _Mensaje
+
+    End Function
+
     Function Fx_EntidadEnGrupoVendedores(_Row_Entidad As DataRow,
                                          _CodFuncionario As String,
                                          _Revisar_Kofu_Kogru As Boolean) As LsValiciones.Mensajes
@@ -6820,7 +6905,40 @@ Public Module Crear_Documentos_Desde_Otro
         Dim Generator As System.Random = New System.Random()
 
         Dim _Rut_comprador As String
-        Dim _Numero_transaccion_cliente As Integer = Generator.Next(10000, 99999)
+        'Dim _Numero_transaccion_cliente As Integer = Generator.Next(10000, 99999)
+
+        Dim _Numero_transaccion_cliente As Integer
+
+        ' Intentar extraer el número que termina en _Nudo (sufijo numérico)
+        Try
+            Dim _sufijoNumerico As String = String.Empty
+            Dim _match = System.Text.RegularExpressions.Regex.Match(If(_Nudo, String.Empty), "\d+$")
+            If _match.Success Then
+                _sufijoNumerico = _match.Value
+            End If
+
+            If Not String.IsNullOrEmpty(_sufijoNumerico) Then
+                ' Proteger contra overflow: truncar a un tamaño razonable (ej. últimos 9 dígitos)
+                If _sufijoNumerico.Length > 9 Then
+                    _sufijoNumerico = _sufijoNumerico.Substring(_sufijoNumerico.Length - 9)
+                End If
+
+                Try
+                    _Numero_transaccion_cliente = Convert.ToInt32(_sufijoNumerico)
+                Catch ex As Exception
+                    ' En caso de error en conversión, usar valor aleatorio como respaldo
+                    _Numero_transaccion_cliente = Generator.Next(10000, 99999)
+                End Try
+            Else
+                ' No hay sufijo numérico: generar aleatorio como respaldo
+                _Numero_transaccion_cliente = Generator.Next(10000, 99999)
+            End If
+        Catch ex As Exception
+            ' Cualquier excepción: usar respaldo aleatorio
+            _Numero_transaccion_cliente = Generator.Next(10000, 99999)
+        End Try
+
+
         Dim _Numero_documento_transaccion As String = "XXXXXXXXX"
         Dim _Producto As Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto = Cl_Fincred_Bakapp.Cl_Fincred_SQL.Producto.Facturas
         Dim _Banco As Integer = 0
@@ -7268,7 +7386,7 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Function Fx_PermisoRegistroDoc(_Tido As String)
+    Function Fx_PermisoRegistroDoc(_Tido As String, _Subtido As String)
 
         Dim _Permiso As String
 
@@ -7283,7 +7401,11 @@ Public Module Crear_Documentos_Desde_Otro
             Case "BSV"
                 _Permiso = "Doc00107" ' BOLETA DE VENTA SIMPLE"
             Case "COV"
-                _Permiso = "Doc00108" ' COTIZACION DE VENTA"
+                If _Subtido = "STK" Then
+                    _Permiso = "Sobs0006" ' COTIZACION DE VENTA SOBRE STOCK" 
+                Else
+                    _Permiso = "Doc00108" ' COTIZACION DE VENTA"
+                End If
             Case "DIN"
                 _Permiso = "Doc00109" ' DECLARACION DE INTERNACION"
             Case "ESC"
@@ -7449,7 +7571,7 @@ Public Module Crear_Documentos_Desde_Otro
         ' Paso 2: Filtrar por permisos
         Dim documentosPermitidos As New List(Of Ls_DocumentosPermitidos)
         For Each doc In documentos
-            Dim permiso As String = Fx_PermisoRegistroDoc(doc.Tido)
+            Dim permiso As String = Fx_PermisoRegistroDoc(doc.Tido, "")
             If Not String.IsNullOrEmpty(permiso) AndAlso Fx_Tiene_Permiso(permiso, _Kofu) Then
                 documentosPermitidos.Add(doc)
             End If
@@ -7598,6 +7720,147 @@ Public Module Crear_Documentos_Desde_Otro
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         End If
+
+    End Function
+
+    ''' <summary>
+    ''' Itera sobre las bodegas para consultar la API hasta obtener una respuesta válida
+    ''' PSEUDOCÓDIGO:
+    ''' 1. Obtener la URL base por defecto.
+    ''' 2. Intentar leer una URL alternativa desde la tabla de caracterizaciones:
+    '''    - Si existe y no está vacía, usarla.
+    ''' 3. Validar que la URL sea correcta (TryCreate + esquema http/https).
+    '''    - Si no es válida, devolver mensaje de error y salir.
+    ''' 4. Obtener token de autorización y lista de bodegas.
+    ''' 5. Convertir la lista de bodegas a array de enteros (ignorar espacios).
+    ''' 6. Iterar por cada bodega:
+    '''    - Construir el cuerpo del request con SKU y bodega.
+    '''    - Ejecutar POST y recibir 'mensaje'.
+    '''    - Si 'mensaje' es correcto y resultado válido (no nulo y distinto de -1), añadir detalle indicando bodega y devolverlo.
+    ''' 7. Si se recorren todas y no hay resultado válido, devolver mensaje indicando fallo.
+    ''' 8. Capturar excepciones y devolver mensaje con detalle del error.
+    ''' </summary>
+    Function Fx_Consultar_RTU_xBodegas(_Bodega As String, _Codigo As String) As LsValiciones.Mensajes
+
+        Dim mensaje As LsValiciones.Mensajes
+
+        Try
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+            Dim apiUrl As String = "http://190.151.101.156:82/BodONEWSR/Api/ConsultarRTU"
+
+            ' Intentar leer una URL alternativa desde la tabla de caracterizaciones
+            Dim apiUrlOverride As Object = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "NombreTabla",
+                                             "Tabla = 'BODONE_CONF' And CodigoTabla = 'APIUrl_Rtu'")
+
+            If apiUrlOverride IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(apiUrlOverride.ToString) Then
+                apiUrl = apiUrlOverride.ToString.Trim() '& "/Api/ConsultarRTU"
+            End If
+
+            ' Validar que apiUrl sea una URL absoluta y con esquema HTTP/HTTPS
+            If Not Fx_ValidarUrl(apiUrl) Then
+                mensaje = New LsValiciones.Mensajes With {
+                    .EsCorrecto = False,
+                    .Detalle = "API URL inválida: " & apiUrl,
+                    .Mensaje = "La URL de la API no es válida o no tiene esquema http/https.",
+                    .Icono = MessageBoxIcon.Warning
+                }
+                Return mensaje
+            End If
+
+            Dim authorizationToken As String = "Token 06389de2-5ed5-11ed-9b6a-0242ac120002"
+            Dim bodegas As String = Fx_Bodegas(_Bodega) '= "1, 2, 3, 4, 5, 8, 10, 41, 42, 21, 22, 23, 24, 25, 26"
+
+            Dim apiClient As New Cl_Api_BodOne()
+
+            ' Validar cadena de bodegas
+            If String.IsNullOrWhiteSpace(bodegas) Then
+                mensaje = New LsValiciones.Mensajes With {
+                    .EsCorrecto = False,
+                    .Detalle = "Lista de bodegas vacía para la bodega origen: " & _Bodega,
+                    .Mensaje = "No se pudieron obtener las bodegas a consultar.",
+                    .Icono = MessageBoxIcon.Warning
+                }
+                Return mensaje
+            End If
+
+            ' Lista de bodegas a iterar obtenida del TextBox
+            Dim bodegasArray As Integer() = bodegas.Split(","c).Select(Function(b) Convert.ToInt32(b.Trim())).ToArray()
+
+            ' Itera sobre las bodegas definidas
+            For Each bodega In bodegasArray
+                Dim requestBody As New Dictionary(Of String, Object) From {
+                    {"SKU", _Codigo},
+                    {"Bodega", bodega}
+                }
+
+                ' Realiza la consulta a la API
+                mensaje = apiClient.Post(Of Decimal)(apiUrl, requestBody, authorizationToken)
+
+                ' Si se obtiene un resultado válido, detiene la iteración
+                If mensaje.EsCorrecto AndAlso mensaje.Resultado IsNot Nothing AndAlso Val(mensaje.Resultado) <> -1 Then
+                    mensaje.Detalle = $"Consulta exitosa en la Bodega {bodega} WMS."
+                    mensaje.Mensaje = "Se encontró un resultado válido."
+                    Return mensaje
+                End If
+            Next
+
+            ' Si no se encontró un resultado válido, retorna un mensaje de error
+            mensaje = New LsValiciones.Mensajes With {
+                .EsCorrecto = False,
+                .Detalle = "No se encontró un resultado válido después de consultar todas las bodegas.",
+                .Mensaje = "Consulta fallida en todas las bodegas.",
+                .Icono = MessageBoxIcon.Warning
+            }
+
+        Catch ex As Exception
+            mensaje = New LsValiciones.Mensajes With {
+                .EsCorrecto = False,
+                .Detalle = "Error inesperado",
+                .Mensaje = ex.Message,
+                .Icono = MessageBoxIcon.Stop}
+        End Try
+
+        Return mensaje
+    End Function
+
+    ' Valida que una cadena sea una URL absoluta y con esquema http/https
+    Function Fx_ValidarUrl(ByVal url As String) As Boolean
+        Try
+            If String.IsNullOrWhiteSpace(url) Then
+                Return False
+            End If
+
+            Dim uriResult As Uri = Nothing
+            If Uri.TryCreate(url, UriKind.Absolute, uriResult) Then
+                If uriResult.Scheme = Uri.UriSchemeHttp Or uriResult.Scheme = Uri.UriSchemeHttps Then
+                    Return True
+                End If
+            End If
+
+            Return False
+        Catch
+            Return False
+        End Try
+    End Function
+
+    Function Fx_Bodegas(_Bodega As String) As String
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Dim _Bodegas As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones", "NombreTabla",
+                                                   "Tabla = 'BODONE_BOD' And CodigoTabla = '" & _Bodega & "'")
+
+        Return _Bodegas
+
+        'Select Case _Bodega
+        '    Case "001"
+        '        Return "1, 2, 3, 4, 5, 8, 10"
+        '    Case "004"
+        '        Return "41, 42"
+        '    Case "006"
+        '        Return "21, 22, 23, 24, 25, 26"
+        'End Select
 
     End Function
 

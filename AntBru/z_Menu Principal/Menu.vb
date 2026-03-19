@@ -1583,16 +1583,6 @@ Public Class Menu
     End Sub
     Private Sub Btn_SobreStockNVV_Click(sender As Object, e As EventArgs) Handles Btn_SobreStockNVV.Click
 
-        Dim _Cl_SobreStock As New Cl_SobreStock
-        Dim _Mensaje As New LsValiciones.Mensajes
-
-        _Mensaje = _Cl_SobreStock.Fx_Tomar_SobreStock()
-
-        If Not _Mensaje.EsCorrecto Then
-            MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
-            Return
-        End If
-
         Modulo_Documentos.Sb_Generar_Documento(_Fm_Menu_Padre,
                                                "COV",
                                                True,
@@ -1629,4 +1619,18 @@ Public Class Menu
         Fm.Dispose()
 
     End Sub
+
+    Private Sub Btn_EliminarDoc_Click(sender As Object, e As EventArgs) Handles Btn_EliminarDoc.Click
+
+        Dim _Idmaeedo As Integer = 893558
+
+        Dim _Cl_Elimina_Anula As New Clas_Cerrar_Anular_Eliminar_Documento_Origen
+        If _Cl_Elimina_Anula.Fx_EliminarAnular_Doc(_Fm_Menu_Padre, _Idmaeedo, FUNCIONARIO, Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar, True, True) Then
+            MessageBoxEx.Show(Me, "El documento se ha eliminado correctamente", "Eliminar documento",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+
+
+    End Sub
+
 End Class

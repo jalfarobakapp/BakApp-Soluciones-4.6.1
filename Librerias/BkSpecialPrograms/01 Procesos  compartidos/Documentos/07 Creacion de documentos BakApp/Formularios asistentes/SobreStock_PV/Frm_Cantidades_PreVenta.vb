@@ -133,6 +133,7 @@ Public Class Frm_Cantidades_PreVenta
         Txt_CantUD1.Tag = _Cantidad_Ud1
         Txt_CantUD2.Tag = _Cantidad_Ud2
 
+        DInput_PrecioXUd1.Enabled = False
         'Sb_Ver_Alerta_Stock()
 
         'If _ValidarApiWMSBosOne And Not Chk_DesacRazTransf.Checked Then

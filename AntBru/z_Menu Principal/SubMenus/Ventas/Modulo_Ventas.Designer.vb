@@ -35,6 +35,7 @@ Partial Class Modulo_Ventas
         Me.Btn_Pago_Documentos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Documentos_Venta = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Pagos_Generales_Cliente = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_SobreStock = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -101,7 +102,7 @@ Partial Class Modulo_Ventas
         Me.ConsultaPreciosContenedor.FixedSize = New System.Drawing.Size(650, 350)
         Me.ConsultaPreciosContenedor.MultiLine = True
         Me.ConsultaPreciosContenedor.Name = "ConsultaPreciosContenedor"
-        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnPostVenta, Me.Btn_ProductoSolicitadosBodega, Me.Btn_Conf_CashDro, Me.BtnBuscarDocumento, Me.Btn_Pago_Documentos, Me.Btn_Documentos_Venta, Me.Btn_Pagos_Generales_Cliente})
+        Me.ConsultaPreciosContenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnPostVenta, Me.Btn_ProductoSolicitadosBodega, Me.Btn_Conf_CashDro, Me.BtnBuscarDocumento, Me.Btn_Pago_Documentos, Me.Btn_Documentos_Venta, Me.Btn_Pagos_Generales_Cliente, Me.Btn_SobreStock})
         '
         '
         '
@@ -278,6 +279,28 @@ Partial Class Modulo_Ventas
         Me.Btn_Pagos_Generales_Cliente.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Pagos_Generales_Cliente.TitleText = "BakApp"
         '
+        'Btn_SobreStock
+        '
+        Me.Btn_SobreStock.AutoRotateFramesInterval = 5000
+        Me.Btn_SobreStock.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_SobreStock.Image = CType(resources.GetObject("Btn_SobreStock.Image"), System.Drawing.Image)
+        Me.Btn_SobreStock.ImageIndent = New System.Drawing.Point(18, -10)
+        Me.Btn_SobreStock.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_SobreStock.Name = "Btn_SobreStock"
+        Me.Btn_SobreStock.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_SobreStock.Text = "<font size=""+4""><b>SOBRE STOCK</b></font>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Btn_SobreStock.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_SobreStock.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_SobreStock.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.Btn_SobreStock.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.Btn_SobreStock.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.Btn_SobreStock.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(244, Byte), Integer), CType(CType(181, Byte), Integer), CType(CType(69, Byte), Integer))
+        Me.Btn_SobreStock.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_SobreStock.TitleText = "Bakapp"
+        '
         'LabelX1
         '
         '
@@ -318,4 +341,5 @@ Partial Class Modulo_Ventas
     Private WithEvents Btn_Documentos_Venta As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Private WithEvents Btn_Pagos_Generales_Cliente As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_SobreStock As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

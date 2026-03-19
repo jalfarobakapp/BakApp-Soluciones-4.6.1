@@ -285,7 +285,7 @@ Public Class Frm_Informe_Compr_No_Despachados
             If Chk_NVVHabilitadasFacturar.Visible Then
 
                 If Chk_NVVHabilitadasFacturar.Checked Then
-                    _Filtro_Documentos += "AND ED.IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Ent Where HabilitadaFac = 1)" & vbCrLf
+                    _Filtro_Documentos += "AND ED.IDMAEEDO In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Docu_Ent Where HabilitadaFac = 1 And Idmaeedo_Clon = 0)" & vbCrLf
                     MessageBoxEx.Show(Me, "Se mostraran solo notas de venta habilitadas para facturar", "Información",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
                 End If

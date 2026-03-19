@@ -6,6 +6,7 @@
     Public Property Tido As String
     Public Property Nudo As String
     Public Property Patente As String
+    Public Property PatenteCarro As String
     Public Property RUTTrans As String
     Public Property Chofer As String
     Public Property RUTChofer As String

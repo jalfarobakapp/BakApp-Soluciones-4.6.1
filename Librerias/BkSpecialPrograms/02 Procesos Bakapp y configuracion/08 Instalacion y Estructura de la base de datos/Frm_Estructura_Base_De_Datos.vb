@@ -271,7 +271,6 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Productos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_Ubicacion_IngSal", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_SobreStock", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_Prod_SobreStock_Tom", _Modificar, Lbl_Eventos)
 
             'SISTEMA DE PUNTOS POR VENTAS
             .Sb_Revisar_Tabla2(Me, "Zw_PtsVta_Configuracion", _Modificar, Lbl_Eventos)
@@ -389,8 +388,12 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Vales_Enc", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Vales_Obs", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Version", _Modificar, Lbl_Eventos)
+
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Ingreso_Det", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Ingreso_Enc", _Modificar, Lbl_Eventos)
+
+            .Sb_Revisar_Tabla2(Me, "Zw_WMS_Paquetes", _Modificar, Lbl_Eventos)
+
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Ubicaciones_Bodega", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Ubicaciones_Sectores", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Ubicaciones_Mapa_Det", _Modificar, Lbl_Eventos)

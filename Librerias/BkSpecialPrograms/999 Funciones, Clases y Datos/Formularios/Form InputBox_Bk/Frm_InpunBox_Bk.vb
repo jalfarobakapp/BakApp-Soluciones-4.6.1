@@ -154,11 +154,17 @@ Public Class Frm_InpunBox_Bk
             Dim _Fecha As Date = Convert.ToDateTime(_Nueva_Descripcion)
 
             If ConFechaMinima Then
-                If FormatDateTime(_Fecha, DateFormat.ShortDate) < FormatDateTime(FechaMinima, DateFormat.ShortDate) Then
-                    MessageBoxEx.Show(Me, "La fecha no puede ser menor a " & FechaMinima.ToShortDateString, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                If _Fecha.Date < FechaMinima.Date Then
+                    MessageBoxEx.Show(Me, "La fecha no puede ser menor a " & FechaMinima.ToShortDateString,
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     TxtDescripcion.Focus()
                     Return
                 End If
+                'If FormatDateTime(_Fecha, DateFormat.ShortDate) < FormatDateTime(FechaMinima, DateFormat.ShortDate) Then
+                '    MessageBoxEx.Show(Me, "La fecha no puede ser menor a " & FechaMinima.ToShortDateString, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                '    TxtDescripcion.Focus()
+                '    Return
+                'End If
             End If
 
         End If

@@ -261,25 +261,21 @@ Public Class Frm_Demonio_New
 
         With _Sp_Programacion
 
-            Dim milisegundos As Long
-
+            Dim milisegundos As Long = 0
             Dim _IntervaloCada As Integer = .IntervaloCada
 
             If .SucedeCada Then
 
                 If .TipoIntervaloCada = "HH" Then
-                    Dim tiempo As New TimeSpan(_IntervaloCada, 0, 0)
-                    milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
+                    milisegundos = TimeSpan.FromHours(_IntervaloCada).TotalMilliseconds
                 End If
 
                 If .TipoIntervaloCada = "MM" Then
-                    Dim tiempo As New TimeSpan(0, _IntervaloCada, 0)
-                    milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
+                    milisegundos = TimeSpan.FromMinutes(_IntervaloCada).TotalMilliseconds
                 End If
 
                 If .TipoIntervaloCada = "SS" Then
-                    Dim tiempo As New TimeSpan(0, 0, _IntervaloCada)
-                    milisegundos = tiempo.TotalMilliseconds ' Convertir a milisegundos
+                    milisegundos = TimeSpan.FromSeconds(_IntervaloCada).TotalMilliseconds
                 End If
 
             End If
@@ -289,24 +285,36 @@ Public Class Frm_Demonio_New
                 Dim _Hora = .HoraUnaVez.Hour
                 Dim _Minuto = .HoraUnaVez.Minute
 
-                Dim tiempo As New TimeSpan(_Hora, _Minuto, 0)
-                Dim horaProgramada As DateTime
+                ' Usar la fecha seleccionada en el control DtpFecharevision si está disponible.
+                Dim fechaBase As DateTime
+                Try
+                    fechaBase = DtpFecharevision.Value.Date
+                Catch ex As Exception
+                    fechaBase = DateTime.Today
+                End Try
 
-                horaProgramada = DateTime.Today.AddHours(_Hora).AddMinutes(_Minuto)
+                ' Construir la fecha y hora programada usando la fecha base + hora y minuto
+                Dim horaProgramada As DateTime = fechaBase.AddHours(_Hora).AddMinutes(_Minuto)
 
-                If horaProgramada < DateTime.Now Then
-                    horaProgramada = horaProgramada.Date.AddDays(1).AddHours(_Hora).AddMinutes(_Minuto)
-                    tiempo = New TimeSpan(1, _Hora, _Minuto, 0)
+                ' Si la hora programada ya pasó respecto a Now, programar para el siguiente día
+                If horaProgramada <= DateTime.Now Then
+                    horaProgramada = horaProgramada.AddDays(1)
                 End If
 
                 Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
-
-                milisegundos = tiempoRestante.TotalMilliseconds ' Convertir a milisegundos
+                milisegundos = CLng(tiempoRestante.TotalMilliseconds) ' Convertir a milisegundos
 
             End If
 
-            _Timer.Interval = milisegundos
-            _Timer.Start()
+            If milisegundos < 1 Then milisegundos = 1
+
+            Try
+                ' Asegurar que Interval sea un Integer válido
+                _Timer.Interval = CInt(Math.Min(milisegundos, Integer.MaxValue))
+                _Timer.Start()
+            Catch ex As Exception
+                ' Manejo silencioso para mantener comportamiento previo
+            End Try
 
         End With
 
@@ -471,6 +479,10 @@ Public Class Frm_Demonio_New
                     '_Cl_CerrarDocumentos.DiasOCC = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasOCC' And NombreEquipo = '" & _NombreEquipo & "'", True)
                     '_Cl_CerrarDocumentos.DiasNVI = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasNVI' And NombreEquipo = '" & _NombreEquipo & "'", True)
                     '_Cl_CerrarDocumentos.DiasNVV = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Input_DiasNVV' And NombreEquipo = '" & _NombreEquipo & "'", True)
+
+                    Dim _CerrarDocEmpresas As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor", "Informe = 'Demonio' And Campo = 'Chk_CerrarDocEmpresas' And NombreEquipo = '" & _NombreEquipo & "'")
+
+                    Boolean.TryParse(_CerrarDocEmpresas, _Cl_CerrarDocumentos.CerrarDocEmpresas)
 
                     _Descripcion = _CI_Programacion.Resumen
                     _IndexImagen = 10

@@ -54,7 +54,8 @@ Public Class Cl_ArmaGDIConsumo
                          _Fabricado As Double,
                          _Row_Entidad As DataRow,
                          _FechaEmision As DateTime,
-                         _Observaciones As String) As LsValiciones.Mensajes
+                         _Observaciones As String,
+                         _ConsolidarStock As Boolean) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -69,6 +70,7 @@ Public Class Cl_ArmaGDIConsumo
                                                      _Tbl_Productos,
                                                      _FechaEmision,
                                                      "CODIGO", "Cantidad", "", _Observaciones, False, True, 1, "02C", "IDPOTD")
+        Fm.NoConsolidarNuncaStock = Not _ConsolidarStock
         _Mensaje = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
 

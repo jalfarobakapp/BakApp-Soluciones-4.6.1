@@ -614,7 +614,7 @@ Public Class Cl_Stmp
 
         If _Row_Documento.Item("ESDO") = "C" Then
             _Mensaje.EsCorrecto = False
-            _Mensaje.Mensaje = "Este documento se encuentra completamente cerrado"
+            _Mensaje.Mensaje = $"Este documento {_Tido}-{_Nudo} se encuentra completamente cerrado"
             _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
             Return _Mensaje
         End If

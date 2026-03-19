@@ -179,6 +179,7 @@ Public Class Clase_Crear_Documento
     Dim _IdCont As Integer
     Dim _Contenedor As String
     Dim _Grupo As String
+    Dim _LeyendaMorosidad As String
 
 #End Region
 
@@ -212,12 +213,7 @@ Public Class Clase_Crear_Documento
                                 Optional _Es_TLV As Boolean = False,
                                 Optional _HoraAlFinalDelDia As Boolean = False) As LsValiciones.Mensajes
 
-        'Optional _Tbl_Mevento_Edo As DataTable = Nothing,
-        'Optional _Tbl_Mevento_Edd As DataTable = Nothing,
-        'Optional _Tbl_Referencias_DTE As DataTable = Nothing) As Integer
-
         Dim _Mensaje As New LsValiciones.Mensajes
-
 
         If False Then
             Throw New System.Exception("An exception has occurred.")
@@ -1347,8 +1343,37 @@ Public Class Clase_Crear_Documento
                             Dim _Id_SobreStock As Integer = .Item("Id_SobreStock")
                             Dim _Moneda_SobreStock As String = .Item("Moneda_SobreStock")
                             Dim _Qty_SobreStock As Double = .Item("Qty_SobreStock")
+                            Dim _Qty_SobreStockE As Double = 0 '.Item("Qty_SobreStock")
                             Dim _PqteComprometidoSol As Double = .Item("PqteComprometidoSol")
                             Dim _Precio_SobreStock As Double = .Item("Precio_SobreStock")
+                            Dim _FormatoPqte As String = String.Empty
+                            Dim _PqtDisponible As Double
+                            Dim _Activo As Boolean
+                            Dim _Eliminado As Boolean
+
+                            Consulta_sql = "Select FormatoPqte,Activo,Eliminado,PqteStock-PqteComprometido-PqteComprometidoSol As PqtDisponible" & vbCrLf &
+                                           "From " & _Global_BaseBk & "Zw_Prod_SobreStock" & vbCrLf &
+                                           "Where Id = " & _Id_SobreStock
+                            Comando = New SqlCommand(Consulta_sql, cn2)
+                            Comando.Transaction = myTrans
+                            dfd1 = Comando.ExecuteReader()
+
+                            While dfd1.Read()
+                                _FormatoPqte = dfd1("FormatoPqte")
+                                _PqtDisponible = dfd1("PqtDisponible")
+                                _Activo = dfd1("Activo")
+                                _Eliminado = dfd1("Eliminado")
+                            End While
+                            dfd1.Close()
+
+                            If Not _Activo Or _Eliminado Then
+                                Throw New System.Exception("El producto " & _Koprct & " - " & _Nokopr & vbCrLf & "No se encuentra activo o fue eliminado de la lista Sobre Stock.")
+                            End If
+
+                            If _PqtDisponible < _Qty_SobreStock Then
+                                Throw New System.Exception("Cantidad de " & _FormatoPqte & " no disponible." & vbCrLf &
+                                                           "Disponible: " & _PqtDisponible & ", Solicitado: " & _Qty_SobreStock)
+                            End If
 
                             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
                                            "SobreStock = 1" &
@@ -1361,18 +1386,40 @@ Public Class Clase_Crear_Documento
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
 
-                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
-                                           "PqteComprometido = PqteComprometido+" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
-                                           ",PqteComprometidoSol = PqteComprometidoSol-" & De_Num_a_Tx_01(_PqteComprometidoSol, False, 5) & vbCrLf &
-                                           "Where Id = " & _Id_SobreStock
-                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                            Comando.Transaction = myTrans
-                            Comando.ExecuteNonQuery()
+                            If _Tido = "COV" Then
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
+                                               "PqteComprometido = PqteComprometido+" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
+                                               "--,PqteComprometidoSol = PqteComprometidoSol-" & De_Num_a_Tx_01(_PqteComprometidoSol, False, 5) & vbCrLf &
+                                               "Where Id = " & _Id_SobreStock
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                            End If
+
+                            If _Tido = "NVV" Then
+
+                                _Qty_SobreStockE = _Qty_SobreStock
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
+                                               "Qty_SobreStockE = " & De_Num_a_Tx_01(_Qty_SobreStockE, False, 5) & vbCrLf &
+                                               "Where Idmaeddo = " & _Idrst
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
+                                               "PqteStock = PqteStock-" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
+                                               ",PqteComprometido = PqteComprometido-" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
+                                               "Where Id = " & _Id_SobreStock
+                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                Comando.Transaction = myTrans
+                                Comando.ExecuteNonQuery()
+
+                            End If
 
                         End If
-
-                        'End If
-
 
                         If _Tidopa = "OTL" Then
 
@@ -2033,17 +2080,18 @@ Public Class Clase_Crear_Documento
             Dim _PdaRMovil As Boolean = NuloPorNro(_Row_Encabezado.Item("PdaRMovil"), False)
             Dim _Idpdaenca As Integer = NuloPorNro(_Row_Encabezado.Item("Idpdaenca"), 0)
             Dim _ConservaNudo As Boolean = NuloPorNro(_Row_Encabezado.Item("ConservaNudo"), 0)
+            Dim _LeyendaMorosidad As String = NuloPorNro(_Row_Encabezado.Item("LeyendaMorosidad"), "")
 
-            If _Tido = "NVV" Or _Tido = "NVI" Then
+            If (_Tido = "NVV" OrElse _Tido = "NVI") OrElse (_Tido = "COV" And SobreStock) Then
                 _Pickear = _Row_Encabezado.Item("Pickear")
             End If
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
-                           "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca,SobreStock,Empresa_Ori) Values " &
+                           "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad) Values " &
                            "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad_Bk & "'" &
                            ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
                            "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(PreVenta) &
-                           "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) & ",'" & _Empresa & "')"
+                           "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) & ",'" & _Empresa & "','" & _LeyendaMorosidad & "')"
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
@@ -3289,6 +3337,8 @@ Public Class Clase_Crear_Documento
 
                 SobreStock = .Item("SobreStock")
 
+                _LeyendaMorosidad = NuloPorNro(.Item("LeyendaMorosidad"), "")
+
             End With
 
             '------------------------------------------------------------------------------------------------------------
@@ -3656,6 +3706,35 @@ Public Class Clase_Crear_Documento
 
                         If SobreStock AndAlso Not _Stand_by Then
 
+                            Dim _FormatoPqte As String = String.Empty
+                            Dim _PqtDisponible As Double
+                            Dim _Activo As Boolean
+                            Dim _Eliminado As Boolean
+
+                            Consulta_sql = "Select FormatoPqte,Activo,Eliminado,PqteStock-PqteComprometido-PqteComprometidoSol As PqtDisponible" & vbCrLf &
+                                           "From " & _Global_BaseBk & "Zw_Prod_SobreStock" & vbCrLf &
+                                           "Where Id = " & _Id_SobreStock
+                            Comando = New SqlCommand(Consulta_sql, cn2)
+                            Comando.Transaction = myTrans
+                            dfd1 = Comando.ExecuteReader()
+
+                            While dfd1.Read()
+                                _FormatoPqte = dfd1("FormatoPqte")
+                                _PqtDisponible = dfd1("PqtDisponible")
+                                _Activo = dfd1("Activo")
+                                _Eliminado = dfd1("Eliminado")
+                            End While
+                            dfd1.Close()
+
+                            If Not _Activo Or _Eliminado Then
+                                Throw New System.Exception("El producto " & _Codigo & " - " & _Descripcion & vbCrLf & "No se encuentra activo o fue eliminado de la lista Sobre Stock.")
+                            End If
+
+                            If _PqtDisponible < _Qty_SobreStock Then
+                                Throw New System.Exception("Cantidad de " & _FormatoPqte & " no disponible." & vbCrLf &
+                                                           "Disponible: " & _PqtDisponible & ", Solicitado: " & _Qty_SobreStock)
+                            End If
+
                             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
                                            "PqteComprometidoSol = PqteComprometidoSol+" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
                                            "Where Id = " & _Id_SobreStock
@@ -3813,8 +3892,9 @@ Public Class Clase_Crear_Documento
                            ",Pickear = '" & _Pickear & "'" & Environment.NewLine &
                            ",PdaRMovil = " & Convert.ToInt32(_PdaRMovil) & Environment.NewLine &
                            ",Idpdaenca = " & _Idpdaenca & Environment.NewLine &
-                           ",ConservaNudo = '" & Convert.ToInt32(_ConservaNudo) & "'" & Environment.NewLine &
-                           ",SobreStock = '" & Convert.ToInt32(SobreStock) & "'" & Environment.NewLine &
+                           ",ConservaNudo = " & Convert.ToInt32(_ConservaNudo) & Environment.NewLine &
+                           ",SobreStock = " & Convert.ToInt32(SobreStock) & Environment.NewLine &
+                           ",LeyendaMorosidad = '" & _LeyendaMorosidad & "'" & Environment.NewLine &
                            "Where Id_DocEnc = " & _Id_DocEnc
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)

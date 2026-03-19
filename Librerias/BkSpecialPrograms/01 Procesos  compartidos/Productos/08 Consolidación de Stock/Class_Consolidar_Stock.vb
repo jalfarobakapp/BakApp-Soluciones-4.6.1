@@ -635,31 +635,123 @@
 
         Dim _Codigo = _RowProducto.Item("KOPR")
         Dim _Descripcion = _RowProducto.Item("NOKOPR")
+        Dim _SqlQuery As String = String.Empty
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros($"{_Global_BaseBk}Zw_Prod_SobreStock",
+                                                       $"Codigo = '{_Codigo}' And Empresa = '{_Empresa}' And Activo = 1")
+
+        If Not CBool(_Reg) Then
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "No existen datos en Zw_Prod_SobreStock"
+            Return _Mensaje
+        End If
+
+        Consulta_sql = $"
+SELECT 
+    CASE 
+        WHEN EXISTS (
+            SELECT 1
+            FROM {_Global_BaseBk}Zw_Docu_Det
+            WHERE SobreStock = 1
+              AND Empresa = '{_Empresa}'
+              AND Sucursal = '{_Sucursal}'
+              AND Bodega = '{_Bodega}'
+        ) 
+        THEN CAST(1 AS bit)
+        ELSE CAST(0 AS bit)
+    END AS HaySobreStock;
+"
+
+        Dim _Row_HaySobreStock As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not CBool(_Row_HaySobreStock.Item("HaySobreStock")) Then
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "No existen documentos con sobre stock"
+            Return _Mensaje
+        End If
 
         Try
 
             Dim _Id_SobreStock As Integer
-            Dim _Saldo_Qty_SobreStock As Double = 0
+            Dim _PqteComprometido As Double = 0
+            Dim _PqteComprometidoSol As Double = 0
+            Dim _PqteDevuelto As Double = 0
+            'Dim _PqteStock As Double = 0
 
-            Consulta_sql = "Select Id_SobreStock,Codigo,Empresa,Sucursal,Bodega, Sum(Qty_SobreStock) - (Sum(Qty_SobreStockD) + Sum(Qty_SobreStockE)) As 'Saldo_Qty_SobreStock'" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_Docu_Det" & vbCrLf &
-                           "Where (SobreStock = 1) And Codigo = '" & _Codigo & "' And Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "'" & vbCrLf &
-                           "Group By Id_SobreStock,Codigo,Empresa,Sucursal,Bodega"
+            Consulta_sql = $"
+SELECT 
+    Id_SobreStock,Codigo,Empresa,Sucursal,Bodega,
+    SUM(CASE WHEN Tido = 'COV' 
+             THEN Qty_SobreStock - Qty_SobreStockD - Qty_SobreStockE 
+             ELSE 0 
+        END) AS PqteComprometido,
+    SUM(CASE WHEN Tido = 'NVV' 
+             THEN Qty_SobreStock-Qty_SobreStockDv
+             ELSE 0 
+        END) AS PqteDevuelto
 
-            Dim _Row_Prod_Stock As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+FROM {_Global_BaseBk}Zw_Docu_Det
+WHERE SobreStock = 1 
+  AND Codigo = '{_Codigo}' 
+  AND Empresa = '{_Empresa}' 
+  AND Sucursal = '{_Sucursal}' 
+  AND Bodega = '{_Bodega}'
+GROUP BY 
+    Id_SobreStock,
+    Codigo,
+    Empresa,
+    Sucursal,
+    Bodega;
+"
 
-            If Not (_Row_Prod_Stock Is Nothing) Then
+            Dim _Tbl_Prod_Stock As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            For Each _Row_Prod_Stock As DataRow In _Tbl_Prod_Stock.Rows
 
                 _Id_SobreStock = _Row_Prod_Stock.Item("Id_SobreStock")
-                _Saldo_Qty_SobreStock = _Row_Prod_Stock.Item("Saldo_Qty_SobreStock")
+                _PqteComprometido = _Row_Prod_Stock.Item("PqteComprometido")
+                _PqteDevuelto = _Row_Prod_Stock.Item("PqteDevuelto")
+
+                _SqlQuery += $"
+                Update {_Global_BaseBk}Zw_Prod_SobreStock Set
+                PqteComprometido = PqteComprometido+{De_Num_a_Tx_01(_PqteComprometido, False, 5)},
+                PqteStock = PqteStock-{De_Num_a_Tx_01(_PqteDevuelto, False, 5)}
+                Where Id = {_Id_SobreStock}" & vbCrLf & vbCrLf
+
+            Next
+
+            Consulta_sql = $"
+Select d.Id_SobreStock,Isnull(SUM(d.Qty_SobreStock),0) As PqteComprometidoSol
+From {_Global_BaseBk}Zw_Casi_DocDet d
+Inner Join {_Global_BaseBk}Zw_Casi_DocEnc e On e.Id_DocEnc = d.Id_DocEnc
+Inner Join {_Global_BaseBk}Zw_Remotas_En_Cadena_01_Enc r On r.Id_DocEnc = e.Id_DocEnc 
+    And r.Estado Not In ('A','R')
+Where e.SobreStock = 1 And d.Codigo = '{_Codigo}' And d.Empresa = '{_Empresa}' and d.Sucursal = '{_Sucursal}' And d.Bodega = '{_Bodega}'
+Group By d.Id_SobreStock"
+            _Tbl_Prod_Stock = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+
+            For Each _Row_Prod_Stock As DataRow In _Tbl_Prod_Stock.Rows
+
+                _Id_SobreStock = _Row_Prod_Stock.Item("Id_SobreStock")
+                _PqteComprometidoSol = _Row_Prod_Stock.Item("PqteComprometidoSol")
+
+                _SqlQuery += $"
+Update {_Global_BaseBk}Zw_Prod_SobreStock Set
+--PqteStock = PqteStock-{De_Num_a_Tx_01(_PqteComprometidoSol, False, 5)},
+PqteComprometidoSol = PqteComprometidoSol+{De_Num_a_Tx_01(_PqteComprometidoSol, False, 5)}
+Where Id = {_Id_SobreStock}" & vbCrLf & vbCrLf
+
+            Next
+
+            If String.IsNullOrEmpty(_SqlQuery) Then
+
+                _Mensaje.EsCorrecto = True
+                Return _Mensaje
 
             End If
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock SET" & vbCrLf &
-                           "PqteComprometido = " & De_Num_a_Tx_01(_Saldo_Qty_SobreStock, False, 5) & vbCrLf &
-                           "Where Id = " & _Id_SobreStock & vbCrLf & vbCrLf
-
-            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery) Then
                 _Mensaje.EsCorrecto = True
                 _Mensaje.Mensaje = "OK"
                 _Mensaje.Detalle = String.Empty

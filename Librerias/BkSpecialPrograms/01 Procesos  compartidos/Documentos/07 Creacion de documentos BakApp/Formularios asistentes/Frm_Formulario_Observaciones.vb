@@ -87,6 +87,7 @@ Public Class Frm_Formulario_Observaciones
 
     Public Property TieneOrdenDeDespacho As Boolean
     Public Property CambiarFechaEnDetalle As Boolean
+    Public Property SobreStock As Boolean
 
     Public Sub New(Ds_Matriz_Documentos As DataSet,
                    Row_Entidad As DataRow,
@@ -832,11 +833,22 @@ Public Class Frm_Formulario_Observaciones
     End Sub
 
     Private Sub DtpFechaEntrega_ButtonDropDownClick(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles DtpFechaEntrega.ButtonDropDownClick
+
+        Dim _Msj As String = String.Empty
+
         If TieneOrdenDeDespacho Then
-            MessageBoxEx.Show(Me, "El documento tiene orden de despacho" & vbCrLf &
-                              "Debe cambiar este datos desde la orden de despacho", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            _Msj = "El documento tiene orden de despacho" & vbCrLf & "Debe cambiar este datos desde la orden de despacho"
+        End If
+
+        If SobreStock Then
+            _Msj = "El documento es especial" & vbCrLf & "Debe cambiar este dato desde el formulario anterior"
+        End If
+
+        If SobreStock OrElse TieneOrdenDeDespacho Then
+            MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, True)
             e.Cancel = True
         End If
+
     End Sub
 
     Private Sub Btn_GDI_GTI_Click(sender As Object, e As EventArgs) Handles Btn_GDI_GTI.Click

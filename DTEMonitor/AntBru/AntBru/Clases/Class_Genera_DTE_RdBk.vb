@@ -3427,13 +3427,13 @@ Public Class Class_Genera_DTE_RdBk
             Dim _Tido As String = _Row_Maeedo.Item("TIDO")
             Dim _Nudo As String = _Row_Maeedo.Item("NUDO")
 
-            If String.IsNullOrEmpty(_Para.Trim) Then
-                Throw New System.Exception("Falta el correo del cliente")
-            End If
+            'If String.IsNullOrEmpty(_Para.Trim) Then
+            '    Throw New System.Exception("Falta el correo del cliente")
+            'End If
 
-            If Not Fx_Validar_Email(_Para) Then
-                Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
-            End If
+            'If Not Fx_Validar_Email(_Para) Then
+            '    Throw New System.Exception("El correo para: [" & _Para & "] no es una cuenta de correos valida")
+            'End If
 
             If Not String.IsNullOrEmpty(_Cc) Then
 

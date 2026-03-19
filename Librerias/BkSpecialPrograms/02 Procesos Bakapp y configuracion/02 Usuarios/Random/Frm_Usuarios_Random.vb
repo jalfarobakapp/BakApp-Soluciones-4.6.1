@@ -31,7 +31,7 @@ Public Class Frm_Usuarios_Random
 
         Dim _Cadena As String = CADENA_A_BUSCAR(Txt_Descripcion.Text.Trim, "KOFU+NOKOFU LIKE '%")
 
-        Consulta_sql = "Select *,Cast('' As Varchar(5)) As ClaveDC,CAST(0 As Int) As Modalidades" & vbCrLf &
+        Consulta_sql = "Select *,Cast('' As Varchar(5)) As ClaveDC,Cast('' As Varchar(5)) As ClaveDC2,CAST(0 As Int) As Modalidades" & vbCrLf &
                        "Into #Paso" & vbCrLf &
                        "From TABFU" & vbCrLf &
                        "Where KOFU+NOKOFU LIKE '%" & _Cadena & "%'" & vbCrLf &
@@ -103,6 +103,7 @@ Public Class Frm_Usuarios_Random
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
             _Fila.Cells("ClaveDC").Value = "*****" 'DecryptClaveRD(NuloPorNro(_Fila.Cells("PWFU").Value, ""))
+            _Fila.Cells("ClaveDC2").Value = DecryptClaveRD(NuloPorNro(_Fila.Cells("PWFU").Value, ""))
 
             If _Fila.Cells("INACTIVO").Value Then
                 _Fila.DefaultCellStyle.ForeColor = Color.Gray

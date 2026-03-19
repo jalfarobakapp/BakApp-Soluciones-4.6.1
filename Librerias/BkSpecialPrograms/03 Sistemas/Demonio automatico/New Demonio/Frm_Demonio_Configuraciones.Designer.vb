@@ -23,10 +23,10 @@ Partial Class Frm_Demonio_Configuraciones
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Demonio_Configuraciones))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.SuperTab = New DevComponents.DotNetBar.SuperTabControl()
         Me.SuperTabControlPanel18 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.LabelX44 = New DevComponents.DotNetBar.LabelX()
@@ -246,6 +246,7 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Btn_ConfProgramacion = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_Resumen = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Chk_Ejecutar_Automaticamente = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_CerrarDocEmpresas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.SuperTab, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTab.SuspendLayout()
         Me.SuperTabControlPanel18.SuspendLayout()
@@ -315,25 +316,25 @@ Partial Class Frm_Demonio_Configuraciones
         Me.SuperTab.ControlBox.MenuBox.Name = ""
         Me.SuperTab.ControlBox.Name = ""
         Me.SuperTab.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTab.ControlBox.MenuBox, Me.SuperTab.ControlBox.CloseBox})
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel18)
-        Me.SuperTab.Controls.Add(Me.Panel_01)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel1)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel2)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel7)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel9)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel15)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel4)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel3)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel17)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel18)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel14)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel13)
+        Me.SuperTab.Controls.Add(Me.Panel_01)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel16)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel12)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel11)
         Me.SuperTab.Controls.Add(Me.Panel_02)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel10)
         Me.SuperTab.Controls.Add(Me.SuperTabControlPanel8)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel17)
-        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel3)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel7)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel9)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel15)
+        Me.SuperTab.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTab.ForeColor = System.Drawing.Color.Black
         Me.SuperTab.Location = New System.Drawing.Point(12, 12)
         Me.SuperTab.Name = "SuperTab"
@@ -763,6 +764,7 @@ Partial Class Frm_Demonio_Configuraciones
         '
         'SuperTabControlPanel1
         '
+        Me.SuperTabControlPanel1.Controls.Add(Me.Chk_CerrarDocEmpresas)
         Me.SuperTabControlPanel1.Controls.Add(Me.Btn_ConfCorreo_CierreOCC)
         Me.SuperTabControlPanel1.Controls.Add(Me.TableLayoutPanel9)
         Me.SuperTabControlPanel1.Controls.Add(Me.Btn_ConfCorreo_CierreOCI)
@@ -3199,9 +3201,9 @@ Partial Class Frm_Demonio_Configuraciones
         Me.SuperTabControlPanel17.Controls.Add(Me.Chk_NVVAuto)
         Me.SuperTabControlPanel17.Controls.Add(Me.Line18)
         Me.SuperTabControlPanel17.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel17.Location = New System.Drawing.Point(205, 0)
+        Me.SuperTabControlPanel17.Location = New System.Drawing.Point(214, 0)
         Me.SuperTabControlPanel17.Name = "SuperTabControlPanel17"
-        Me.SuperTabControlPanel17.Size = New System.Drawing.Size(410, 474)
+        Me.SuperTabControlPanel17.Size = New System.Drawing.Size(401, 474)
         Me.SuperTabControlPanel17.TabIndex = 2
         Me.SuperTabControlPanel17.TabItem = Me.Sp_NVVAuto
         '
@@ -3252,7 +3254,7 @@ Partial Class Frm_Demonio_Configuraciones
         Me.LabelX28.ForeColor = System.Drawing.Color.Black
         Me.LabelX28.Location = New System.Drawing.Point(0, 0)
         Me.LabelX28.Name = "LabelX28"
-        Me.LabelX28.Size = New System.Drawing.Size(410, 19)
+        Me.LabelX28.Size = New System.Drawing.Size(401, 19)
         Me.LabelX28.TabIndex = 180
         Me.LabelX28.Text = "NOTAS DE VENTA AUTOMATICAS"
         '
@@ -3384,37 +3386,37 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Grilla_AsistenteCompras.AllowUserToAddRows = False
         Me.Grilla_AsistenteCompras.AllowUserToDeleteRows = False
         Me.Grilla_AsistenteCompras.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_AsistenteCompras.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_AsistenteCompras.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla_AsistenteCompras.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_AsistenteCompras.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_AsistenteCompras.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla_AsistenteCompras.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_AsistenteCompras.EnableHeadersVisualStyles = False
         Me.Grilla_AsistenteCompras.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_AsistenteCompras.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_AsistenteCompras.Name = "Grilla_AsistenteCompras"
         Me.Grilla_AsistenteCompras.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_AsistenteCompras.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_AsistenteCompras.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla_AsistenteCompras.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla_AsistenteCompras.Size = New System.Drawing.Size(394, 337)
         Me.Grilla_AsistenteCompras.TabIndex = 85
@@ -3584,7 +3586,7 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Grupo_Resumen.Controls.Add(Me.Btn_ConfProgramacion)
         Me.Grupo_Resumen.Controls.Add(Me.Txt_Resumen)
         Me.Grupo_Resumen.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Resumen.Location = New System.Drawing.Point(198, 492)
+        Me.Grupo_Resumen.Location = New System.Drawing.Point(195, 492)
         Me.Grupo_Resumen.Name = "Grupo_Resumen"
         Me.Grupo_Resumen.Size = New System.Drawing.Size(432, 84)
         '
@@ -3668,6 +3670,23 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Chk_Ejecutar_Automaticamente.TabIndex = 187
         Me.Chk_Ejecutar_Automaticamente.Text = "Ejecutar automáticamente<br/>al abrir el sistema" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
+        'Chk_CerrarDocEmpresas
+        '
+        Me.Chk_CerrarDocEmpresas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CerrarDocEmpresas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CerrarDocEmpresas.CheckBoxImageChecked = CType(resources.GetObject("Chk_CerrarDocEmpresas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CerrarDocEmpresas.FocusCuesEnabled = False
+        Me.Chk_CerrarDocEmpresas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CerrarDocEmpresas.Location = New System.Drawing.Point(6, 269)
+        Me.Chk_CerrarDocEmpresas.Name = "Chk_CerrarDocEmpresas"
+        Me.Chk_CerrarDocEmpresas.Size = New System.Drawing.Size(215, 22)
+        Me.Chk_CerrarDocEmpresas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CerrarDocEmpresas.TabIndex = 10029
+        Me.Chk_CerrarDocEmpresas.Text = "Cerrar documentos de toda la empresa"
+        '
         'Frm_Demonio_Configuraciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3679,7 +3698,6 @@ Partial Class Frm_Demonio_Configuraciones
         Me.Controls.Add(Me.SuperTab)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
@@ -3962,4 +3980,5 @@ Partial Class Frm_Demonio_Configuraciones
     Friend WithEvents LabelX44 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Chk_RecalculoPPP As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Line19 As DevComponents.DotNetBar.Controls.Line
+    Friend WithEvents Chk_CerrarDocEmpresas As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

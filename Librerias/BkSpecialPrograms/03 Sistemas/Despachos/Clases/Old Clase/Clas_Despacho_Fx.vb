@@ -1102,7 +1102,7 @@ Public Class Clas_Despacho_Fx
             _Filtro_Solo_Confirmados = Space(1) & "And Desp.Confirmado In (1)" & Space(1)
         End If
 
-        Consulta_sql = "Select Doc2.CodFuncionario As CodFuncionario_Crea,Tf2.NOKOFU As Nombre_Crea,Desp.*,Case When Est_Desp.Fecha_Fijacion Is Null Then DATEDIFF(D,Desp.Fecha_Emision,Getdate()) Else DATEDIFF(D,Est_Desp.Fecha_Fijacion,Getdate()) End As Dias," &
+        Consulta_sql = "Select Top 100 Doc2.CodFuncionario As CodFuncionario_Crea,Tf2.NOKOFU As Nombre_Crea,Desp.*,Case When Est_Desp.Fecha_Fijacion Is Null Then DATEDIFF(D,Desp.Fecha_Emision,Getdate()) Else DATEDIFF(D,Est_Desp.Fecha_Fijacion,Getdate()) End As Dias," &
                        "--Case When Est_Desp.Fecha_Fijacion Is Null Then 0 Else DATEDIFF(D,Est_Desp.Fecha_Fijacion,Getdate()) End As Dias," &
                        "--DATEDIFF(D,Fecha_Ingreso,Getdate()) AS Dias," & vbCrLf &
                        "Tdesp.NombreTabla As Nom_Tipo_Despacho," &
@@ -1124,7 +1124,7 @@ Public Class Clas_Despacho_Fx
                         Left Join TABFU Tf2 On Tf2.KOFU = Doc2.CodFuncionario
                         Where 1 > 0 " & vbCrLf &
                         _Filtro_Solo_Confirmados & vbCrLf & _Condicion & vbCrLf &
-                       "Select Doc.*,Edo.FEEMDO,Edo.FEER,Edo.ESPGDO,Ent.NOKOEN As Razon,
+                       "Select Top 100 Doc.*,Edo.FEEMDO,Edo.FEER,Edo.ESPGDO,Ent.NOKOEN As Razon,
                         Rtrim(Ltrim(Str(Doc.Id_Despacho)))+Rtrim(Ltrim(Str(Doc.Idrst))) As IdD         
                         Into #Paso_Doc
                         From " & _Global_BaseBk & "Zw_Despachos_Doc Doc

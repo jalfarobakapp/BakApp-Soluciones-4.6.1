@@ -690,7 +690,8 @@ Public Class Frm_BusquedaDocumento_Filtro
         End If
 
         If Not String.IsNullOrEmpty(Txt_Ocdo.Text.Trim) Then
-            _Sql_Occ = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB WITH ( NOLOCK ) Where OCDO Like '" & Txt_Ocdo.Text.Trim & "')" & vbCrLf
+            Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Ocdo.Text.Trim), "OCDO LIKE '%")
+            _Sql_Occ = "And IDMAEEDO In (Select IDMAEEDO From MAEEDOOB WITH ( NOLOCK ) Where OCDO Like '%" & _Cadena & "%')" & vbCrLf
         End If
 
         If Not String.IsNullOrEmpty(Txt_Placapat.Text) Then
@@ -825,8 +826,21 @@ Buscar:
 
         If HabilitarNVVParaFacturar Then
 
-            Dim _SqlQr = "Update #Paso Set Chk = (Select HabilitadaFac From " & _Global_BaseBk & "Zw_Docu_Ent Z1 WITH (NOLOCK) Where Z1.Idmaeedo = #Paso.IDMAEEDO And Z1.Tido = #Paso.TIDO And Z1.Nudo = #Paso.NUDO)" & vbCrLf &
-                         "Delete #Paso Where Chk = 1"
+            Dim _SqlQr As String
+            '"Update #Paso Set Chk = (Select HabilitadaFac From " & _Global_BaseBk & "Zw_Docu_Ent Z1 WITH (NOLOCK) Where Z1.Idmaeedo = #Paso.IDMAEEDO And Z1.Tido = #Paso.TIDO And Z1.Nudo = #Paso.NUDO)" & vbCrLf &
+            '"Delete #Paso Where Chk = 1"
+
+            _SqlQr = $"UPDATE P
+SET Chk = ISNULL((
+        SELECT TOP 1 HabilitadaFac
+        FROM {_Global_BaseBk}Zw_Docu_Ent Z1 WITH (NOLOCK)
+        WHERE Z1.Idmaeedo = P.IDMAEEDO
+          AND Z1.Tido     = P.TIDO
+          AND Z1.Nudo     = P.NUDO
+    ), 1)   -- si no existe → marcar como 1 para eliminar
+FROM #Paso P
+
+DELETE FROM #Paso WHERE Chk = 1"
 
             Consulta_sql = Replace(Consulta_sql, "--#OtrasOpciones#", _SqlQr)
 

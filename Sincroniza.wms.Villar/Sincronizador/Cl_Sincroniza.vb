@@ -379,13 +379,13 @@ Public Class Cl_Sincroniza
         Dim _FechaDesde As String = Format(_FechaRevisionDesde, "yyyyMMdd")
         Dim _FechaHasta As String = Format(_FechaRevisionHasta, "yyyyMMdd")
 
-        Consulta_sql = "Select Top 10 Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO" & vbCrLf &
+        Consulta_sql = "Select Top 10 Edo.IDMAEEDO,Edo.TIDO,Edo.NUDO,Edo.ESDO" & vbCrLf &
                        "From [@WMS_GATEWAY_TRANSFERENCIA] Wms" & vbCrLf &
                        "Inner Join MAEEDO Edo On Edo.IDMAEEDO = Wms.IDMAEEDO" & vbCrLf &
                        "Where" & vbCrLf &
                        "CONVERT(varchar, FECHA_DOWNLOAD, 112) Between '" & _FechaDesde & "' And '" & _FechaHasta & "'" & vbCrLf &
                        "And Wms.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where (CONVERT(varchar, FechaCreacion, 112) Between '" & _FechaDesde & "' And '" & _FechaHasta & "'))" & vbCrLf &
-                       "And Edo.SUDO = '01' And Edo.TIDO = 'NVV'"
+                       "And Edo.SUDO = '01' And Edo.TIDO = 'NVV' And Edo.ESDO <> 'C'"
 
         Dim _Tbl_wms As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
 

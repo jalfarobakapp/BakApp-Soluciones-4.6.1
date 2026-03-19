@@ -245,4 +245,15 @@ Public Class Modulo_Ventas
 
     End Sub
 
+    Private Sub Btn_SobreStock_Click(sender As Object, e As EventArgs) Handles Btn_SobreStock.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Sobs0005") Then
+            Return
+        End If
+
+        Dim NewPanel As Modulo_SobreStock = Nothing
+        NewPanel = New Modulo_SobreStock(_Fm_Menu_Padre)
+        _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
+
+    End Sub
 End Class

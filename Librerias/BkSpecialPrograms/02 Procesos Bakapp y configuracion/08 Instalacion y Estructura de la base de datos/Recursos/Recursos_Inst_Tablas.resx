@@ -916,13 +916,13 @@
   <data name="Zw_Prod_SobreStock" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Sql\Tablas\Zw_Prod_SobreStock.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="Zw_Prod_SobreStock_Tom" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>Sql\Tablas\Zw_Prod_SobreStock_Tom.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
   <data name="Zw_CrucePAuto_Tom" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Sql\Tablas\Zw_CrucePAuto_Tom.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="Zw_Transporte_Dte" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Sql\Tablas\Zw_Transporte_Dte.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
+  <data name="Zw_WMS_Paquetes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_WMS_Paquetes.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

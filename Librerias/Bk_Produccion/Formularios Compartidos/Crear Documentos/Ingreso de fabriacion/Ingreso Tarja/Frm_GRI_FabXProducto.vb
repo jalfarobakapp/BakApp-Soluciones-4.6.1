@@ -1135,11 +1135,17 @@ Public Class Frm_GRI_FabXProducto
         'End If
         _Observaciones = String.Empty
 
+        Dim _ConsolidaStock As Boolean = True
+
+        _ConsolidaStock = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                                                      "Valor", "Tabla = 'TARJA_CONSSTOCK' And CodigoTabla = 'GRI'",, False,, True)
+
         Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
                                                False, False, False, False, False, False)
 
         Fm.Pro_RowEntidad = _Row_Entidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, _FechaEmision, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
+        Fm.NoConsolidarNuncaStock = Not _ConsolidaStock
         _Mensaje = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
 
@@ -1189,8 +1195,11 @@ Public Class Frm_GRI_FabXProducto
             Dim _Observaciones_GDI = "Documento creado automáticamente desde Bakapp al crear GRI de ingreso de producción"
             Dim _Msj_GDI As New LsValiciones.Mensajes
 
+            _ConsolidaStock = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                                                      "Valor", "Tabla = 'TARJA_CONSSTOCK' And CodigoTabla = 'GDI'",, False,, True)
+
             Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
-            _Msj_GDI = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidadv, _Row_Entidad, _FechaEmision, _Observaciones_GDI)
+            _Msj_GDI = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidadv, _Row_Entidad, _FechaEmision, _Observaciones_GDI, _ConsolidaStock)
 
             If Not _Msj_GDI.EsCorrecto Then
                 MessageBoxEx.Show(Me, _Msj_GDI.Mensaje, _Msj_GDI.Detalle, MessageBoxButtons.OK, _Msj_GDI.Icono, MessageBoxDefaultButton.Button1, True)
@@ -1353,18 +1362,17 @@ Public Class Frm_GRI_FabXProducto
         Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim
-        Dim _Observaciones As String
 
         Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
         Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-        Dim _Cantidad As Double = Txt_Cantidad.Tag
 
+        Dim _Cantidad As Double = Txt_Cantidad.Tag
         Dim _FechaEmision As DateTime = Dtp_Fecha_Ingreso.Value
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
-        _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidad, _Row_Entidad, _FechaEmision, "")
+        _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Row_Potl.Item("IDPOTL"), _Cantidad, _Row_Entidad, _FechaEmision, "", True)
         If _Mensaje.EsCorrecto Then
             MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono, MessageBoxDefaultButton.Button1, True)
         End If

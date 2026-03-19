@@ -61,6 +61,9 @@ Public Class Frm_Sel_Documentos
         End Set
     End Property
 
+    Public Property NoPermitirSeleccionarMasDocumentos As Boolean
+    Public Property DeshabilitarMenuContextual As Boolean
+
     Public Sub New(Endo As String, Suendo As String)
 
         ' Esta llamada es exigida por el diseñador.
@@ -88,6 +91,10 @@ Public Class Frm_Sel_Documentos
         AddHandler Grilla.MouseUp, AddressOf Sb_Grilla_MouseUp
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        If DeshabilitarMenuContextual Then
+            RemoveHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+        End If
 
         Me.ActiveControl = Txt_Descripcion
 
@@ -420,6 +427,15 @@ Public Class Frm_Sel_Documentos
         Dim _Tido = _Fl.Cells("TIDO").Value
         Dim _Nudo = _Fl.Cells("NUDO").Value
         Dim _Nro_Despacho = _Fl.Cells("Nro_Despacho").Value
+
+        If NoPermitirSeleccionarMasDocumentos Then
+
+            MessageBoxEx.Show(Me, "Sole debe grabar y confirmar, no se permite hacer otra gestión", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '_Fl.Cells("Chk").Value = False
+
+            e.Cancel = True
+            Return
+        End If
 
         If Not String.IsNullOrEmpty(_Nro_Despacho) Then ' And  _Fl.Cells("Chk").Value Then
 

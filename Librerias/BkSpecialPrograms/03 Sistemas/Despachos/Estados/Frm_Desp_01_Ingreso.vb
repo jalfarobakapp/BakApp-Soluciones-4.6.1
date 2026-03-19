@@ -96,6 +96,7 @@ Public Class Frm_Desp_01_Ingreso
     End Property
 
     Public Property ConfirmarLecturaDespacho As Boolean
+    Public Property DeshabilitarFecha As Boolean
 
     Public Sub New()
 
@@ -116,6 +117,8 @@ Public Class Frm_Desp_01_Ingreso
 
         Sb_Color_Botones_Barra(Bar2)
 
+        Dtp_Fecha_Despacho.Value = Now.Date
+
     End Sub
 
     Private Sub Frm_Desp_01_Ingreso_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -131,7 +134,10 @@ Public Class Frm_Desp_01_Ingreso
             Txt_Nombre_Cliente.Text = _Cl_Despacho.Row_Entidad.Item("Rut") & " - " & _Cl_Despacho.Row_Entidad.Item("NOKOEN")
             Txt_Referencia.Text = _Row_Despacho.Item("Referencia")
 
-            Dtp_Fecha_Despacho.Value = Ds_Matriz_Documentos.Tables("Encabezado_Doc").Rows(0).Item("FechaRecepcion") 'FechaDelServidor()
+            If Not IsNothing(Ds_Matriz_Documentos) Then
+                Dtp_Fecha_Despacho.Value = Ds_Matriz_Documentos.Tables("Encabezado_Doc").Rows(0).Item("FechaRecepcion") 'FechaDelServidor()
+            End If
+
             Sb_Habilitar_Controles(True)
 
             Me.ActiveControl = Txt_Referencia
@@ -275,9 +281,13 @@ Public Class Frm_Desp_01_Ingreso
 
             _Row_Direccion_Despacho = Fm.Row_Direccion
 
-            _Cl_Despacho.Row_Despacho.Item("Pais") = _Row_Direccion_Despacho.Item("NOKOPA")
-            _Cl_Despacho.Row_Despacho.Item("Ciudad") = _Row_Direccion_Despacho.Item("NOKOCI")
-            _Cl_Despacho.Row_Despacho.Item("Comuna") = _Row_Direccion_Despacho.Item("NOKOCM")
+            _Cl_Despacho.Row_Despacho.Item("CodPais") = _Row_Direccion_Despacho.Item("Pais").ToString
+            _Cl_Despacho.Row_Despacho.Item("CodCiudad") = _Row_Direccion_Despacho.Item("Ciudad").ToString
+            _Cl_Despacho.Row_Despacho.Item("CodComuna") = _Row_Direccion_Despacho.Item("Comuna").ToString
+
+            _Cl_Despacho.Row_Despacho.Item("Pais") = _Row_Direccion_Despacho.Item("NOKOPA").ToString.Trim
+            _Cl_Despacho.Row_Despacho.Item("Ciudad") = _Row_Direccion_Despacho.Item("NOKOCI").ToString.Trim
+            _Cl_Despacho.Row_Despacho.Item("Comuna") = _Row_Direccion_Despacho.Item("NOKOCM").ToString.Trim
 
             _Cl_Despacho.Row_Despacho.Item("Telefono") = _Row_Direccion_Despacho.Item("Telefono")
             _Cl_Despacho.Row_Despacho.Item("Email") = _Row_Direccion_Despacho.Item("Email")
@@ -973,6 +983,8 @@ Public Class Frm_Desp_01_Ingreso
             Fm.Cl_Despacho = _Cl_Despacho
             Fm.Tbl_Documentos_Seleccionados = _Tbl_Documentos
             Fm.Text = "SELECCIONE DOCUMENTOS PARA EL DESPACHO"
+            Fm.NoPermitirSeleccionarMasDocumentos = True
+            Fm.DeshabilitarMenuContextual = True
             If CBool(Fm.Tbl_Informe.Rows.Count) Then
                 Fm.ShowDialog(Me)
                 _Seleccionar = Fm.Seleccionar
@@ -1535,6 +1547,10 @@ Public Class Frm_Desp_01_Ingreso
         Btn_Modificar_Direccion.Enabled = _Habilitar
         Btn_Buscar_Documentos.Enabled = _Habilitar
         Dtp_Fecha_Despacho.Enabled = _Habilitar
+
+        If DeshabilitarFecha Then
+            Dtp_Fecha_Despacho.Enabled = False
+        End If
 
         Chk_Transpor_Por_Pagar.Enabled = _Habilitar
         Chk_Entregar_Con_Doc_Pagados.Enabled = _Habilitar

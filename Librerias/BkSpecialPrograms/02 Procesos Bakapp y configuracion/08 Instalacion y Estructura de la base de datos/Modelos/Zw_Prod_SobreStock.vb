@@ -8,6 +8,7 @@
     Public Property FechaVigencia As DateTime?
     Public Property FormatoPqte As String
     Public Property PqteHabilitado As Double
+    Public Property PqteStock As Double
     Public Property PqteComprometido As Double
     Public Property PqteComprometidoSol As Double
     Public Property Ud1XPqte As Double

@@ -866,6 +866,8 @@ Public Class Frm_Stmp_IncNVVPicking
                 Return _Mensaje
             End If
 
+            Sb_ClonarNVV(_Idmaeedo)
+
             Dim _ESB = _Row.Item("CodigoTabla").ToString.Split(";"c)
 
             _Empresa = _ESB(0).Trim
@@ -880,13 +882,130 @@ Public Class Frm_Stmp_IncNVVPicking
                            "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
                            "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa_Ori = Empresa Where Idmaeedo = @Idmaeedo" & vbCrLf &
                            "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa = '" & _Empresa & "' Where Idmaeedo = @Idmaeedo"
-            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False)
+
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False) Then
+
+                Consulta_sql = "Select KOPRCT As Codigo From MAEDDO Where IDMAEEDO = " & _Idmaeedo
+                Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                Dim _Filtro_Productos As String = Generar_Filtro_IN(_TblDetalle, "Consolidar_Stock", "Codigo", False, False, "'")
+
+                If _Filtro_Productos <> "()" Then
+
+                    Dim Fm As New Frm_Consolidacion_Stock_PP(_Filtro_Productos)
+                    Fm.Pro_Ejecutar_Automaticamente = True
+                    Fm.BtnCancelar.Visible = False
+                    Fm.Chk_Reservar_Ventas_Pendientes_Bakapp.Enabled = False
+                    Fm.BtnProcesar.Enabled = False
+                    Fm.ShowDialog(Me)
+                    Fm.Dispose()
+
+                End If
+
+            End If
 
         Catch ex As Exception
 
         End Try
 
     End Function
+
+    Sub Sb_ClonarNVV(_Idmaeedo As Integer)
+
+        Consulta_sql = $"
+
+DECLARE @Idmaeedo INT = {_Idmaeedo};    -- Documento original
+DECLARE @New_Idmaeedo INT;              -- Nuevo ID clonado
+
+    ---------------------------------------------------------
+    -- 1) CLONAR MAEEDO (ENCABEZADO)
+    ---------------------------------------------------------
+    INSERT INTO MAEEDO (
+        EMPRESA, TIDO, NUDO, ENDO, SUENDO, ENDOFI, TIGEDO, SUDO, LUVTDO, FEEMDO,
+        KOFUDO, ESDO, ESPGDO, CAPRCO, CAPRAD, CAPREX, CAPRNC, MEARDO, MODO, TIMODO,
+        TAMODO, NUCTAP, VACTDTNEDO, VACTDTBRDO, NUIVDO, POIVDO, VAIVDO, NUIMDO,
+        VAIMDO, VANEDO, VABRDO, POPIDO, VAPIDO, FE01VEDO, FEULVEDO, NUVEDO, VAABDO,
+        MARCA, FEER, NUTRANSMI, NUCOCO, KOTU, LIBRO, LCLV, ESFADO, KOTRPCVH, NULICO,
+        PERIODO, NUDONODEFI, TRANSMASI, POIVARET, VAIVARET, RESUMEN, LAHORA,
+        KOFUAUDO, KOOPDO, ESPRODDO, DESPACHO, HORAGRAB, RUTCONTACT, SUBTIDO,
+        TIDOELEC, ESDOIMP, CUOGASDIF, BODESTI, PROYECTO, FECHATRIB, NUMOPERVEN,
+        BLOQUEAPAG, VALORRET, FLIQUIFCV, VADEIVDO, KOCANAL, KOCRYPT, LEYZONA,
+        KOSIFIC, LISACTIVA, KOFUAUTO, SUENDOFI, VAIVDOZF, ENDOMANDA, FLUVTCALZA,
+        ARCHIXML, IDXML, SERIENUDO, VALORAJU, PODETRAC, DETRACCION, TIPOOPCOM,
+        CREFIYAF, NRODETRAC, IDPDAENCA, TIDEVE, TIDEVEFE, TIDEVEHO, RUTPORTA
+    )
+    SELECT
+        EMPRESA, TIDO, NUDO, ENDO, SUENDO, ENDOFI, TIGEDO, SUDO, LUVTDO, FEEMDO,
+        KOFUDO, ESDO, ESPGDO, CAPRCO, CAPRAD, CAPREX, CAPRNC, MEARDO, MODO, TIMODO,
+        TAMODO, NUCTAP, VACTDTNEDO, VACTDTBRDO, NUIVDO, POIVDO, VAIVDO, NUIMDO,
+        VAIMDO, VANEDO, VABRDO, POPIDO, VAPIDO, FE01VEDO, FEULVEDO, NUVEDO, VAABDO,
+        MARCA, FEER, NUTRANSMI, NUCOCO, KOTU, LIBRO, LCLV, ESFADO, KOTRPCVH, NULICO,
+        PERIODO, NUDONODEFI, TRANSMASI, POIVARET, VAIVARET, RESUMEN, LAHORA,
+        KOFUAUDO, KOOPDO, ESPRODDO, DESPACHO, HORAGRAB, RUTCONTACT, SUBTIDO,
+        TIDOELEC, ESDOIMP, CUOGASDIF, BODESTI, PROYECTO, FECHATRIB, NUMOPERVEN,
+        BLOQUEAPAG, VALORRET, FLIQUIFCV, VADEIVDO, KOCANAL, 'CLON_'+CAST(@Idmaeedo AS VARCHAR(20)),
+        LEYZONA, KOSIFIC, LISACTIVA, KOFUAUTO, SUENDOFI, VAIVDOZF, ENDOMANDA,
+        FLUVTCALZA, ARCHIXML, IDXML, SERIENUDO, VALORAJU, PODETRAC, DETRACCION,
+        TIPOOPCOM, CREFIYAF, NRODETRAC, IDPDAENCA, TIDEVE, TIDEVEFE, TIDEVEHO, RUTPORTA
+    FROM MAEEDO
+    WHERE IDMAEEDO = @Idmaeedo;
+
+    SET @New_Idmaeedo = SCOPE_IDENTITY();
+
+    ---------------------------------------------------------
+    -- 2) CLONAR MAEDDO (DETALLE) SIN OUTPUT
+    ---------------------------------------------------------
+    INSERT INTO MAEDDO (
+        IDMAEEDO, ARCHIRST, IDRST, EMPRESA, TIDO, NUDO, ENDO, SUENDO, ENDOFI,
+        LILG, NULIDO, SULIDO, LUVTLIDO, BOSULIDO, KOFULIDO, NULILG, PRCT, TICT,
+        TIPR, NUSEPR, KOPRCT, UDTRPR, RLUDPR, CAPRCO1, CAPRAD1, CAPREX1, CAPRNC1,
+        UD01PR, CAPRCO2, CAPRAD2, CAPREX2, CAPRNC2, UD02PR, KOLTPR, MOPPPR,
+        TIMOPPPR, TAMOPPPR, PPPRNELT, PPPRNE, PPPRBRLT, PPPRBR, NUDTLI, PODTGLLI,
+        VADTNELI, VADTBRLI, POIVLI, VAIVLI, NUIMLI, POIMGLLI, VAIMLI, VANELI,
+        VABRLI, TIGELI, EMPREPA, TIDOPA, NUDOPA, ENDOPA, NULIDOPA, LLEVADESP,
+        FEEMLI, FEERLI, PPPRPM, OPERACION, CODMAQ, ESLIDO, PPPRNERE1, PPPRNERE2,
+        ESFALI, CAFACO, CAFAAD, CAFAEX, CMLIDO, NULOTE, FVENLOTE, ARPROD, NULIPROD,
+        NUCOCO, NULICO, PERIODO, FCRELOTE, SUBLOTE, NOKOPR, ALTERNAT, PRENDIDO,
+        OBSERVA, KOFUAULIDO, KOOPLIDO, MGLTPR, PPOPPR, TIPOMG, ESPRODLI, CAPRODCO,
+        CAPRODAD, CAPRODEX, CAPRODRE, TASADORIG, CUOGASDIF, SEMILLA, PROYECTO,
+        POTENCIA, HUMEDAD, IDTABITPRE, IDODDGDV, LINCONDESP, PODEIVLI, VADEIVLI,
+        PRIIDETIQ, KOLORESCA, KOENVASE, PPPRPMSUC, PPPRPMIFRS, COSTOTRIB, COSTOIFRS,
+        SUENDOFI, COMISION, FLUVTCALZA, FEERLIMODI
+    )
+    SELECT
+        @New_Idmaeedo,
+        d.ARCHIRST, d.IDRST, d.EMPRESA, d.TIDO, d.NUDO, d.ENDO, d.SUENDO, d.ENDOFI,
+        d.LILG, d.NULIDO, d.SULIDO, d.LUVTLIDO, d.BOSULIDO, d.KOFULIDO, d.NULILG,
+        d.PRCT, d.TICT, d.TIPR, d.NUSEPR, d.KOPRCT, d.UDTRPR, d.RLUDPR,
+        d.CAPRCO1, d.CAPRAD1, d.CAPREX1, d.CAPRNC1,
+        d.UD01PR, d.CAPRCO2, d.CAPRAD2, d.CAPREX2, d.CAPRNC2,
+        d.UD02PR, d.KOLTPR, d.MOPPPR, d.TIMOPPPR, d.TAMOPPPR, d.PPPRNELT, d.PPPRNE,
+        d.PPPRBRLT, d.PPPRBR, d.NUDTLI, d.PODTGLLI, d.VADTNELI, d.VADTBRLI,
+        d.POIVLI, d.VAIVLI, d.NUIMLI, d.POIMGLLI, d.VAIMLI, d.VANELI, d.VABRLI,
+        d.TIGELI, d.EMPREPA, d.TIDOPA, d.NUDOPA, d.ENDOPA, d.NULIDOPA, d.LLEVADESP,
+        d.FEEMLI, d.FEERLI, d.PPPRPM, d.OPERACION, d.CODMAQ, d.ESLIDO, d.PPPRNERE1,
+        d.PPPRNERE2, d.ESFALI, d.CAFACO, d.CAFAAD, d.CAFAEX, d.CMLIDO, d.NULOTE,
+        d.FVENLOTE, d.ARPROD, d.NULIPROD, d.NUCOCO, d.NULICO, d.PERIODO, d.FCRELOTE,
+        d.SUBLOTE, d.NOKOPR, d.ALTERNAT, d.PRENDIDO, d.OBSERVA, d.KOFUAULIDO,
+        d.KOOPLIDO, d.MGLTPR, d.PPOPPR, d.TIPOMG, d.ESPRODLI, d.CAPRODCO,
+        d.CAPRODAD, d.CAPRODEX, d.CAPRODRE, d.TASADORIG, d.CUOGASDIF, d.SEMILLA,
+        d.PROYECTO, d.POTENCIA, d.HUMEDAD, d.IDTABITPRE, d.IDODDGDV, d.LINCONDESP,
+        d.PODEIVLI, d.VADEIVLI, d.PRIIDETIQ, d.KOLORESCA, d.KOENVASE, d.PPPRPMSUC,
+        d.PPPRPMIFRS, d.COSTOTRIB, d.COSTOIFRS, d.SUENDOFI, d.COMISION,
+        d.FLUVTCALZA, d.FEERLIMODI
+    FROM MAEDDO d
+    WHERE d.IDMAEEDO = @Idmaeedo;
+
+    ---------------------------------------------------------
+
+	Update {_Global_BaseBk}Zw_Docu_Ent Set Idmaeedo_Clon = @New_Idmaeedo Where Idmaeedo = @Idmaeedo
+"
+
+        If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+            Throw New System.Exception("Error al ejecutar el proceso de clonación de NVV." & vbCrLf & _Sql.Pro_Error)
+        End If
+
+    End Sub
 
     Function Fx_Revisar_NVVNVI_StockInsufuciente(_Idmaeedo As Integer) As LsValiciones.Mensajes
         'Notificar stock insuficiente al enviar una NVV/NVI al Sistema de Entrega de Mercadería.

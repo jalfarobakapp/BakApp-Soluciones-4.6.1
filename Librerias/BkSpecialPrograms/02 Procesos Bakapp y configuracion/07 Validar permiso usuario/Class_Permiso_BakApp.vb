@@ -666,6 +666,9 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00165", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00166", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00167", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00168", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00169", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00170", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -1159,6 +1162,14 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Mode0002", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Mode0003", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Mode0004", _Objeto, _Formulario)
+
+        _SqlQuery += Fx_Insertar_Permiso("Sobs0001", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Sobs0002", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Sobs0003", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Sobs0004", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Sobs0005", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Sobs0006", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Sobs0007", _Objeto, _Formulario)
 
         _SqlQuery += vbCrLf
 
@@ -2943,6 +2954,18 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00167"
                 _DescripcionPermiso = "EDITAR CONFIGURACION EN IMPRESION MASIVA DE DOCUMENTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00168"
+                _DescripcionPermiso = "CIERRE DE DOCUMENTOS DE COMPROMISO (SOBRE STOCK)"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00169"
+                _DescripcionPermiso = "VENDER CON CUPO EXEDIDO CUANDO PUEDE HABER MOROSIDAD DE DOCUMENTOS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00170"
+                _DescripcionPermiso = "VENDER CUANDO PUEDE HABER MOROSIDAD DE DOCUMENTOS Y ESTA VENDIENDO MAS DEL PROMEDIO DE VENTA NORMAL"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
         End Select
@@ -5154,13 +5177,25 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.SOBRESTOCK, 6)
                 _NombreFamiliaPermiso = _Fml.SOBRESTOCK.ToString
             Case "Sobs0003"
-                _DescripcionPermiso = "ELIMINAR PRODUCTO COMO SOBRE STOCK (QUITAR DEL REGISTRO)"
+                _DescripcionPermiso = "DESACTIVAR PRODUCTO COMO SOBRE STOCK (DEJA EN PAUSA)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.SOBRESTOCK, 6)
                 _NombreFamiliaPermiso = _Fml.SOBRESTOCK.ToString
             Case "Sobs0004"
                 _DescripcionPermiso = "ELIMINAR PRODUCTO COMO SOBRE STOCK (QUITAR DEL REGISTRO)"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.SOBRESTOCK, 6)
                 _NombreFamiliaPermiso = _Fml.SOBRESTOCK.ToString
+            Case "Sobs0005"
+                _DescripcionPermiso = "INGRESAR AL MODULO DE SOBRE STOCK"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.SOBRESTOCK, 6)
+                _NombreFamiliaPermiso = _Fml.SOBRESTOCK.ToString
+            Case "Sobs0006"
+                _DescripcionPermiso = "CREAR (COV) COTIZACIONES SOBRE STOCK"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Sobs0007"
+                _DescripcionPermiso = "CREAR (NVV) NOTAS DE VENTA DESDE (COV) COTIZACION SOBRE STOCK"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
         End Select
 

@@ -73,14 +73,15 @@ CREATE TABLE {TablaPasoRotacion_Clasificacion}(
     End Function
 
     Function Fx_InsertarDetalleEn_TablaPasoRotacionXClasificaciones(_Tbl_Asc_02_Asociaciones As String,
-                                                    _SumarStockDisponible As Boolean) As LsValiciones.Mensajes
+                                                                    _Tbl_Asc_01_Productos As String,
+                                                                   _SumarStockDisponible As Boolean) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        Dim _StockPedidoUd1 = String.Empty
+        Dim _StockPedidoMasStockFacSinRecep = String.Empty
 
         If _SumarStockDisponible Then
-            _StockPedidoUd1 = " + StockPedidoUd1"
+            _StockPedidoMasStockFacSinRecep = " + StockPedidoUd1 + StockFacSinRecepUd1"
         End If
 
         Try
@@ -114,7 +115,7 @@ SELECT
     StockEnTransitoUd1,
     StockPedidoUd1,
     StockFacSinRecepUd1,
-    StockUd1 + StockEnTransitoUd1{_StockPedidoUd1} AS StockDisponible,
+    StockUd1 + StockEnTransitoUd1{_StockPedidoMasStockFacSinRecep} AS StockDisponible,
     RotMensualUd1 AS RotM1,
     Promedio_Mensual AS RotM2,
     Promedio_3Mes AS RotM3,
@@ -144,14 +145,27 @@ SELECT
     MesesSobreStock,
     SobreStock,
 	600
-FROM {_Tbl_Asc_02_Asociaciones}
+FROM {_Tbl_Asc_02_Asociaciones};
 --WHERE StockUd1 + StockEnTransitoUd1 > 0
 
-Update {_TablaPasoRotacion_Clasificacion} Set Duracion_Stock_Meses = Round(StockDisponible/NULLIF(Rotacion,0),0)
-Update {_TablaPasoRotacion_Clasificacion} Set Syncro = (Duracion_Stock_Meses-MesesSobreStock)*Rotacion
-Update {_TablaPasoRotacion_Clasificacion} Set PalletSY = Floor(Syncro/NULLIF(KilosXPallet,0))
-Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'No' Where PalletSY <= 0 --Duracion_Stock_Meses <= MesesSobreStock
-Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'Si' Where PalletSY > 0 --Duracion_Stock_Meses > MesesSobreStock
+UPDATE C
+SET C.KilosXPallet = ISNULL(ROUND(T.KilosXPalletPonderado, 0), 600)
+FROM {TablaPasoRotacion_Clasificacion} C
+INNER JOIN (
+    SELECT 
+        P.Codigo_Nodo,
+        SUM(P.KilosXPallet * P.StockDisponible) * 1.0 
+            / NULLIF(SUM(P.StockDisponible), 0) AS KilosXPalletPonderado
+    FROM {TablaPasoRotacion_Productos} P
+    GROUP BY P.Codigo_Nodo
+) T
+    ON C.Codigo_Nodo = T.Codigo_Nodo;
+
+Update {_TablaPasoRotacion_Clasificacion} Set Duracion_Stock_Meses = Round(StockDisponible/NULLIF(Rotacion,0),0);
+Update {_TablaPasoRotacion_Clasificacion} Set Syncro = (Duracion_Stock_Meses-MesesSobreStock)*Rotacion;
+Update {_TablaPasoRotacion_Clasificacion} Set PalletSY = Floor(Syncro/NULLIF(KilosXPallet,0));
+Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'No' Where PalletSY <= 0; --Duracion_Stock_Meses <= MesesSobreStock
+Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'Si' Where PalletSY > 0; --Duracion_Stock_Meses > MesesSobreStock
 "
             If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
                 ' Lanzar error aquí con información útil para depuración
@@ -250,10 +264,10 @@ Update {_TablaPasoRotacion_Clasificacion} Set SobreStock = 'Si' Where PalletSY >
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        Dim _StockPedidoUd1 = String.Empty
+        Dim _StockPedidoMasStockFacSinRecep = String.Empty
 
         If _SumarStockDisponible Then
-            _StockPedidoUd1 = " + StockPedidoUd1"
+            _StockPedidoMasStockFacSinRecep = " + StockPedidoUd1 + StockFacSinRecepUd1"
         End If
 
         Try
@@ -295,7 +309,7 @@ SELECT
     StockEnTransitoUd1,
     StockPedidoUd1,
     StockFacSinRecepUd1,
-    StockUd1 + StockEnTransitoUd1{_StockPedidoUd1} AS StockDisponible,
+    StockUd1 + StockEnTransitoUd1{_StockPedidoMasStockFacSinRecep} AS StockDisponible,
     RotMensualUd1_Prod AS RotM1,
     Promedio_MensualUd1_Prod AS RotM2,
     PromMensualUd1_Ul3Mes_Prod AS RotM3,
@@ -316,13 +330,13 @@ SELECT
         ELSE 'RotM4'
     END AS RotCalculo,
     (SELECT MAX(v)
-     FROM (VALUES (RotMensualUd1_Prod), (RotMensualUd1_Prod),
+     FROM (VALUES (RotMensualUd1_Prod), (PromUlt3CioPromUlt3Meses_Ud1_Prod),
                   (Promedio_MensualUd1_Prod), (PromMensualUd1_Ul3Mes_Prod)) AS value(v)
     ) AS Rotacion,
     Duracion_Stock AS Duracion_Stock_Meses,
     MesesSobreStock,
     SobreStock,
-    600
+    Isnull((Select Top 1 MULTIPLO From TABCODAL Where KOPR = Codigo And TXTMULTI = 'PALLET'),600) 
 FROM {_Tbl_Asc_01_Productos}
 --WHERE StockUd1 + StockEnTransitoUd1 > 0;
 
@@ -2572,12 +2586,20 @@ DEALLOCATE cur;
 
             Dim dtLlegadas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
+            Dim _PeriodoMin As Integer = _Sql.Fx_Trae_Dato($"{TablaCalendarioMesesSemanasClasificacion}", "Min(Periodo)", "")
+            Dim _SemanaMin As Integer = _Sql.Fx_Trae_Dato($"{TablaCalendarioMesesSemanasClasificacion}", "Min(Semana)", "Periodo = '" & _PeriodoMin & "'")
+
             If dtLlegadas IsNot Nothing AndAlso dtLlegadas.Rows.Count > 0 Then
                 For Each dr As DataRow In dtLlegadas.Rows
                     Dim codigo_Nodo_Madre As String = dr("Codigo_Nodo_Madre").ToString().Replace("'", "''")
                     Dim semana As Integer = Convert.ToInt32(dr("Semana"))
                     Dim periodo As Integer = Convert.ToInt32(dr("Periodo"))
                     Dim totalSaldo As Double = Convert.ToDouble(dr("TotalSaldo"))
+
+                    If semana < _SemanaMin Then
+                        semana = _SemanaMin
+                    End If
+
                     Consulta_sql = $"UPDATE {TablaCalendarioMesesSemanasClasificacion} SET LlegadaSemanal = ISNULL(LlegadaSemanal,0) + {totalSaldo.ToString.Replace(",", ".")}, LlegadasMes = ISNULL(LlegadasMes,0) + {totalSaldo.ToString.Replace(",", ".")} WHERE Semana = {semana} AND Periodo = {periodo}"
                     _Sql.Ej_consulta_IDU(Consulta_sql, False)
                 Next

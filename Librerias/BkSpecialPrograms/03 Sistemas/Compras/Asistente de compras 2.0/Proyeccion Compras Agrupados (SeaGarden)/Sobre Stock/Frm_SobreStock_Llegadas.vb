@@ -25,7 +25,11 @@ Public Class Frm_SobreStock_Llegadas
     End Sub
 
     Private Sub Frm_SobreStock_Llegadas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
         Sb_Actualizar_Grilla()
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()
@@ -40,10 +44,12 @@ Public Class Frm_SobreStock_Llegadas
             _Condicion += "And Codigo = '" & _Codigo & "'"
         End If
 
-        Consulta_sql = $"Select t.*,Isnull(m.NOKOPR,'???') As 'Descripcion'" & vbCrLf &
-                       $"From Tbl_Asc_04_DocUltComp_{FUNCIONARIO} t" & vbCrLf &
-                       "Inner Join MAEPR m On m.KOPR = t.Codigo" & vbCrLf &
-                       $"Where 1>0 {_Condicion}"
+        Consulta_sql = $"
+Select t.*,Isnull(m.NOKOPR,'???') As 'Descripcion',DATEPART(WEEK, FEERLI) AS Semana
+From Tbl_Asc_04_DocUltComp_{FUNCIONARIO} t
+Inner Join MAEPR m On m.KOPR = t.Codigo
+Where 1>0 {_Condicion}"
+
         _Tbl_Llegadas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         With Grilla
@@ -99,6 +105,10 @@ Public Class Frm_SobreStock_Llegadas
             .Columns("FEERLI").Width = 100
             .Columns("FEERLI").HeaderText = "Fecha" & vbCrLf & "recepción"
             .Columns("FEERLI").Visible = True
+
+            .Columns("Semana").Width = 60
+            .Columns("Semana").HeaderText = "Semana"
+            .Columns("Semana").Visible = True
 
         End With
 

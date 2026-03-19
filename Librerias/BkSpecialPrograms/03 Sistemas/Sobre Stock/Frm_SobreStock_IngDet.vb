@@ -61,6 +61,7 @@ Public Class Frm_SobreStock_IngDet
             .Descripcion = Txt_Descripcion.Text
             .FormatoPqte = Txt_FormatoPqte.Text
             .PqteHabilitado = Input_PqteHabilitado.Value
+            .PqteStock = Input_PqteHabilitado.Value
             .Ud1XPqte = DInput_Ud1XPqte.Value
             .CantMinFormato = Input_CantMinFormato.Value
             .Moneda = Txt_Moneda.Text

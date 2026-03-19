@@ -89,10 +89,10 @@ Public Class Frm_Consolidacion_Stock_PP
 
             Dim _FECHA As Date = FechaDelServidor()
 
-            Consulta_sql = "SELECT EMPRESA,KOSU,KOBO FROM TABBOPR" & Space(1) &
-                           "WHERE KOPR = '" & _Codigo & "'" & vbCrLf &
-                           "AND EMPRESA+KOSU+KOBO IN (SELECT DISTINCT EMPRESA+SULIDO+BOSULIDO" & Space(1) &
-                           "FROM MAEDDO WHERE KOPRCT = '" & _Codigo & "' And EMPRESA = '" & Empresa & "')"
+            Consulta_sql = "Select EMPRESA,KOSU,KOBO From TABBOPR" & Space(1) &
+                           "Where KOPR = '" & _Codigo & "'" & vbCrLf &
+                           "And EMPRESA+KOSU+KOBO IN (Select Distinct EMPRESA+SULIDO+BOSULIDO" & Space(1) &
+                           "From MAEDDO Where KOPRCT = '" & _Codigo & "' And EMPRESA = '" & Empresa & "')"
             Dim _TblBodegasPP As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             LblEstado.Text = "Producto: " & _Codigo & " - " & _Descripcion
@@ -101,6 +101,14 @@ Public Class Frm_Consolidacion_Stock_PP
             Dim _Stock_ConsUd2 As Double = 0
 
             Dim _Con_Diferencias As Boolean
+
+            Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Prod_SobreStock Set 
+PqteStock = PqteHabilitado,
+PqteComprometido = 0, 
+PqteComprometidoSol = 0
+Where Codigo = '{_Codigo}' And Empresa = '{_Empresa}' And Eliminado = 0 And Activo = 1"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
 
             If CBool(_TblBodegasPP.Rows.Count) Then
 

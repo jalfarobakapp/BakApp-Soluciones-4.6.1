@@ -234,7 +234,7 @@ Public Class Frm_GRI_Ingreso
         Dim _Tido = "GRI"
         Dim _Old_Funcionario = FUNCIONARIO
 
-        If Not Fx_PuedeHacerDocumento(_Tido) Then
+        If Not Fx_PuedeHacerDocumento(_Tido, "") Then
             Return
         End If
 
@@ -248,7 +248,7 @@ Public Class Frm_GRI_Ingreso
         Dim _Tido = "GDI"
         Dim _Old_Funcionario = FUNCIONARIO
 
-        If Not Fx_PuedeHacerDocumento(_Tido) Then
+        If Not Fx_PuedeHacerDocumento(_Tido, "") Then
             Return
         End If
 
@@ -259,7 +259,7 @@ Public Class Frm_GRI_Ingreso
     End Sub
 
 
-    Function Fx_PuedeHacerDocumento(_Tido As String) As Boolean
+    Function Fx_PuedeHacerDocumento(_Tido As String, _Subtido As String) As Boolean
 
         Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(Me)
 
@@ -271,7 +271,7 @@ Public Class Frm_GRI_Ingreso
 
         Dim Fml As New Frm_Login
         Fml.ValidarPermiso = True
-        Fml.Permiso = Fx_PermisoRegistroDoc(_Tido)
+        Fml.Permiso = Fx_PermisoRegistroDoc(_Tido, _Subtido)
         Fml.ShowDialog()
         _Aceptar = Fml.Aceptar
         Fml.Dispose()

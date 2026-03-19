@@ -551,8 +551,13 @@ Public Class Frm_Fabricaciones
 
             Dim _Observaciones_GDI = "Documento creado automáticamente desde Bakapp al crear GRI de ingreso de producción"
 
+            Dim _ConsolidaStock As Boolean = True
+
+            _ConsolidaStock = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                                                      "Valor", "Tabla = 'TARJA_CONSSTOCK' And CodigoTabla = 'GDI'",, False,, True)
+
             Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
-            _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Idpotl, _Cantidad, _Row_Entidad, _FechaEmision, _Observaciones_GDI)
+            _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Idpotl, _Cantidad, _Row_Entidad, _FechaEmision, _Observaciones_GDI, _ConsolidaStock)
 
             If Not _Mensaje.EsCorrecto Then
                 Throw New System.Exception(_Mensaje.Mensaje)

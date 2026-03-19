@@ -523,6 +523,12 @@
     <Compile Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Sistema_Inventarios.vb">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\SobreStock\Modulo_SobreStock.Designer.vb">
+      <DependentUpon>Modulo_SobreStock.vb</DependentUpon>
+    </Compile>
+    <Compile Include="z_Menu Principal\SubMenus\Ventas\SobreStock\Modulo_SobreStock.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="z_Menu Principal\SubMenus\Ventas\Tesoreria\Clientes\Tesoreria_Clientes.Designer.vb">
       <DependentUpon>Tesoreria_Clientes.vb</DependentUpon>
     </Compile>
@@ -762,6 +768,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Stock\Inventario Stock\Sistema_Inventarios.resx">
       <DependentUpon>Sistema_Inventarios.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="z_Menu Principal\SubMenus\Ventas\SobreStock\Modulo_SobreStock.resx">
+      <DependentUpon>Modulo_SobreStock.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="z_Menu Principal\SubMenus\Ventas\Tesoreria\Clientes\Tesoreria_Clientes.resx">
       <DependentUpon>Tesoreria_Clientes.vb</DependentUpon>

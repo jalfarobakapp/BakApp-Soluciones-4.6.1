@@ -22,6 +22,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
     Dim _Tbl_Funcionarios_X_10_DocSinPickear As DataTable
     Dim _Tbl_Funcionarios_X_11_RazonTransfomDescativada As DataTable
     Dim _Tbl_Funcionarios_X_12_CambiarVendedorCliente As DataTable
+    Dim _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad As DataTable
+    Dim _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad As DataTable
 
     Dim _Id_Enc As Integer
     Dim _Id_DocEnc As Integer
@@ -284,6 +286,10 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl = _Tbl_Funcionarios_X_11_RazonTransfomDescativada
                 Case "Doc00161"
                     _Tbl = _Tbl_Funcionarios_X_12_CambiarVendedorCliente
+                Case "Doc00169"
+                    _Tbl = _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad
+                Case "Doc00170"
+                    _Tbl = _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad
 
             End Select
 
@@ -464,8 +470,11 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                         _Tbl = _Tbl_Funcionarios_X_11_RazonTransfomDescativada
                     Case "Doc00161"
                         _Tbl = _Tbl_Funcionarios_X_12_CambiarVendedorCliente
-                        'Case "Doc00103"
-                        '    _Tbl = _Tbl_Funcionarios_X_12_Protestos
+                    Case "Doc00169"
+                        _Tbl = _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad
+                    Case "Doc00170"
+                        _Tbl = _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad
+
                 End Select
 
                 If _Solicitado_Por_Cadena Then
@@ -630,8 +639,11 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                 _Tbl = _Tbl_Funcionarios_X_11_RazonTransfomDescativada
             Case "Doc00161"
                 _Tbl = _Tbl_Funcionarios_X_12_CambiarVendedorCliente
-                'Case "Doc00103"
-                '    _Tbl = _Tbl_Funcionarios_X_12_Protestos
+            Case "Doc00169"
+                _Tbl = _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad
+            Case "Doc00170"
+                _Tbl = _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad
+
         End Select
 
         Sb_Llenar_Funcionarios_Destino(_CodPermiso, _Tbl)
@@ -663,8 +675,11 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl_Funcionarios_X_11_RazonTransfomDescativada = _Tbl
                 Case "Doc00161"
                     _Tbl_Funcionarios_X_12_CambiarVendedorCliente = _Tbl
-                    'Case "Doc00103"
-                    '    _Tbl_Funcionarios_X_12_Protestos = _Tbl
+                Case "Doc00169"
+                    _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad = _Tbl
+                Case "Doc00170"
+                    _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad = _Tbl
+
             End Select
 
             _Fila.Cells("Btn_Estado").Value = Imagenes_16x16.Images.Item("secure-user.png")
@@ -803,8 +818,11 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl_Funcionarios_X_11_RazonTransfomDescativada = Nothing
                 Case "Doc00161"
                     _Tbl_Funcionarios_X_12_CambiarVendedorCliente = Nothing
-                    'Case "Doc00103"
-                    '    _Tbl_Funcionarios_X_12_Protestos = Nothing
+                Case "Doc00169"
+                    _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad = Nothing
+                Case "Doc00170"
+                    _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad = Nothing
+
             End Select
 
 
@@ -882,12 +900,6 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                             Next
 
                         Next
-
-                        'Dim _Permiso_Otorgado As Boolean = _Row_Remota.Item("Permiso_Otorgado")
-                        'Dim _CodFunAutoriza As String = _Row_Remota.Item("CodFuncionario_Autoriza")
-
-                        ' Grilla_Encabezado.Rows(0).Cells("Fun_Auto_Deuda_Ven").Value = _CodFunAutoriza
-                        ' HACER UN PROCEDIMIENTO PARA ACTUALIZAR LOS DESCUENTOS OTORGADOS REMOTAMENTE
 
                     Else
 
@@ -1070,4 +1082,14 @@ Public Class Frm_Formulario_Permisos_Asociados_New
 
     End Sub
 
+    Private Sub Grilla_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellEnter
+        Try
+            Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+            Dim _CodPermiso As String = _Fila.Cells("CodPermiso").Value
+            Dim _DescripcionPermiso As String = _Fila.Cells("DescripcionPermiso").Value
+            Txt_DescripcionPermiso.Text = _DescripcionPermiso
+        Catch ex As Exception
+
+        End Try
+    End Sub
 End Class

@@ -160,7 +160,9 @@ Public Class Cl_Correos
 
         Dim _Consulta_sql = String.Empty
 
+        Dim _FechaElinminaMail As Date = DateAdd(DateInterval.Day, -60, _Fecha_Revision)
         Dim _Fecha = Format(_Fecha_Revision, "yyyyMMdd")
+        Dim _FechaEliMail = Format(_FechaElinminaMail, "yyyyMMdd")
         Dim _Tbl_Correos As DataTable
 
         Dim Dia_1 As String = numero_(_Fecha_Revision.Day, 2)
@@ -172,7 +174,7 @@ Public Class Cl_Correos
                       "AND CONVERT(DATETIME, '" & Ano_1 & "-" & Mes_1 & "-" & Dia_1 & " 23:59:59', 102)"
 
         _Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
-                        "Where Fecha < '" & _Fecha & "' And NombreEquipo In ('" & _Nombre_Equipo & "','') And Enviado = 1"
+                        "Where Fecha < '" & _FechaEliMail & "' And NombreEquipo In ('" & _Nombre_Equipo & "','') And Enviado = 1"
         _Sql.Ej_consulta_IDU(_Consulta_sql)
 
         _Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo_Adjuntos 
@@ -306,7 +308,7 @@ Public Class Cl_Correos
         'Consulta_Sql = "Select Top " & CantMmail & " *,Isnull(NOKOFU,'Funcionario?????') As 'Nombre_Funcionario'" & vbCrLf &
         '               "From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
         '               "Left Join TABFU On KOFU = CodFuncionario" & vbCrLf &
-        '               "Where Id = 41510212"
+        '               "Where Id IN (30408,30409,30410)"
 
         _Tbl_Correos = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
@@ -1076,9 +1078,11 @@ Public Class Cl_Correos
         'ODS Envío de notificaciones por ordenes de servicio
 
         Dim _Fecha = Format(_Fecha_Revision, "yyyyMMdd")
+        Dim _FechaElinminaMail As Date = DateAdd(DateInterval.Day, -60, _Fecha_Revision)
+        Dim _FechaEliMail = Format(_FechaElinminaMail, "yyyyMMdd")
 
         Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
-                       "Where Fecha < '" & _Fecha & "' And NombreEquipo = '" & _Nombre_Equipo & "' And Enviado = 1" &
+                       "Where Fecha < '" & _FechaEliMail & "' And NombreEquipo = '" & _Nombre_Equipo & "' And Enviado = 1" &
                         vbCrLf &
                         vbCrLf &
                        "Select * From " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo" & vbCrLf &
