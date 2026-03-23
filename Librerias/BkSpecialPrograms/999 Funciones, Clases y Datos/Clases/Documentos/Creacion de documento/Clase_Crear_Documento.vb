@@ -1343,7 +1343,7 @@ Public Class Clase_Crear_Documento
                             Dim _Id_SobreStock As Integer = .Item("Id_SobreStock")
                             Dim _Moneda_SobreStock As String = .Item("Moneda_SobreStock")
                             Dim _Qty_SobreStock As Double = .Item("Qty_SobreStock")
-                            Dim _Qty_SobreStockE As Double = 0 '.Item("Qty_SobreStock")
+                            Dim _Qty_SobreStockE As Double = 0
                             Dim _PqteComprometidoSol As Double = .Item("PqteComprometidoSol")
                             Dim _Precio_SobreStock As Double = .Item("Precio_SobreStock")
                             Dim _FormatoPqte As String = String.Empty
@@ -1351,9 +1351,24 @@ Public Class Clase_Crear_Documento
                             Dim _Activo As Boolean
                             Dim _Eliminado As Boolean
 
-                            Consulta_sql = "Select FormatoPqte,Activo,Eliminado,PqteStock-PqteComprometido-PqteComprometidoSol As PqtDisponible" & vbCrLf &
+                            If _Tido = "COV" Then
+
+                                Consulta_sql = "Select FormatoPqte,Activo,Eliminado" &
+                                           ",PqteStock-PqteComprometido-PqteComprometidoSol As PqtDisponible" & vbCrLf &
                                            "From " & _Global_BaseBk & "Zw_Prod_SobreStock" & vbCrLf &
                                            "Where Id = " & _Id_SobreStock
+
+                            End If
+
+                            If _Tido = "NVV" Then
+
+                                Consulta_sql = "Select FormatoPqte,Activo,Eliminado" &
+                                           "," & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & "+PqteStock-PqteComprometido-PqteComprometidoSol As PqtDisponible" & vbCrLf &
+                                           "From " & _Global_BaseBk & "Zw_Prod_SobreStock" & vbCrLf &
+                                           "Where Id = " & _Id_SobreStock
+
+                            End If
+
                             Comando = New SqlCommand(Consulta_sql, cn2)
                             Comando.Transaction = myTrans
                             dfd1 = Comando.ExecuteReader()

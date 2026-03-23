@@ -1025,7 +1025,7 @@ Public Class Frm_Formulario_Documento
                     Btn_Informe_Ventas_X_Vendedor.Visible = _Post_Venta
                     Btn_Desde_COV_OCC.Visible = _Post_Venta
 
-                    Btn_Cadena_Remota.Visible = (_Tido = "NVV")
+                    Btn_Cadena_Remota.Visible = ((_Tido = "NVV") OrElse (_Tido = "COV" And SobreStock))
 
                     Btn_Mini_Sol_Compra.Visible = True
                     Btn_Sol_Compra.Visible = True
@@ -1115,9 +1115,9 @@ Public Class Frm_Formulario_Documento
                 Chk_Pickear.Visible = _Pickear
                 Chk_Pickear.Enabled = True
 
-                If _Tido = "COV" And SobreStock Then
-                    Chk_Pickear.Enabled = False
-                End If
+                'If _Tido = "COV" And SobreStock Then
+                '    Chk_Pickear.Enabled = False
+                'End If
 
             End If
 
@@ -8870,7 +8870,7 @@ Public Class Frm_Formulario_Documento
                     Dim _RevAutomaticaMorosidadClientes As Boolean = _Global_Row_Configuracion_General.Item("RevAutomaticaMorosidadClientes")
                     Dim _MontoVenta As Double = 0
 
-
+                    _Cl_Entidad = New Cl_Entidad
 
                     Dim _Msj_Deudas As LsValiciones.Mensajes = _Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False, _MontoVenta)
                     Dim _MensajeMsj As String = "La entidad presenta morosidad" & Environment.NewLine &
@@ -8890,7 +8890,18 @@ Public Class Frm_Formulario_Documento
 
                             If _Cl_Entidad.Bloqueada Then
 
-                                MessageBoxEx.Show(Me, _Cl_Entidad.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                'MessageBoxEx.Show(Me, _Cl_Entidad.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                                Dim _Ic As eTaskDialogIcon = eTaskDialogIcon.Stop
+
+                                If _Msj_Deudas.Icono = MessageBoxIcon.Exclamation Then
+                                    _Ic = eTaskDialogIcon.Exclamation
+                                End If
+
+                                Dim _Msg1 = "CLIENTE MOROSO"
+                                Dim _Msg2 = _MensajeMsj
+
+                                Dim _Mensaje As LsValiciones.Mensajes = Fx_Confirmar_LecturaOK(_Msg1, _Msg2, _Ic, "Alerta", False)
 
                                 Return Nothing
 
@@ -8907,18 +8918,17 @@ Public Class Frm_Formulario_Documento
 
                             If _RevAutomaticaMorosidadClientes Then
 
-                                _MensajeMsj = _MensajeMsj & "Está situación será evaluada nuevamente al grabar el documento"
-
                                 Dim _Ic As eTaskDialogIcon = eTaskDialogIcon.Stop
 
                                 If _Msj_Deudas.Icono = MessageBoxIcon.Exclamation Then
                                     _Ic = eTaskDialogIcon.Exclamation
                                 End If
 
-                                Dim _Msg1 = "Mensaje 1"
+                                Dim _Msg1 = "REVISION DE MOROSIDAD DEL CLIENTE"
                                 Dim _Msg2 = _MensajeMsj
 
-                                Dim _Mensaje As LsValiciones.Mensajes = Fx_Confirmar_LecturaOK(_Msg1, _Msg2, _Ic, "Alerta", False)
+                                Dim _Mensaje As LsValiciones.Mensajes = Fx_Confirmar_LecturaOK(_Msg1, _Msg2, _Ic, "Alerta",
+                                                                                               False,, "Está situación será evaluada nuevamente al grabar el documento")
 
                             Else
 
@@ -24368,7 +24378,7 @@ Public Class Frm_Formulario_Documento
                         _Cl_Entidad.ListaProblemas.Add("Las últimas ventas han sido pagadas en plazos menores que los días de morosidad permitidos.")
 
                         If _Cl_Entidad.SuperaCreditoDisponible Then
-                            _Cl_Entidad.ListaProblemas.Add("Se excede el crédito disponible.")
+                            _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que se excede el crédito disponible.")
                             _Permiso = "Doc00169"
                             _RevisarPermiso = True
                         Else
@@ -24378,17 +24388,20 @@ Public Class Frm_Formulario_Documento
                                 _Tiene_Morosidad = False
                                 _Validacion = True
                                 _Cl_Entidad.ListaProblemas.Add("Se otorga la autorización para la venta.")
+                                _Cl_Entidad.Fx_LlenarMensaje(_Cl_Entidad)
                                 _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
                                 Return _Validacion
 
                             Else
 
                                 If _MontoVenta > _Cl_Entidad.Promedio_Venta_UltXMeses Then   '_Cl_Entidad.PromedioUltimas3FacturasPago < _Cl_Entidad.MaxDiasMoraDocumentos Then
+                                    _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que supera el promedio de ventas de los últimos 3 meses.")
                                     _Permiso = "Doc00170"
                                     _RevisarPermiso = True
                                 Else
                                     _Tiene_Morosidad = False
                                     _Validacion = True
+                                    _Cl_Entidad.Fx_LlenarMensaje(_Cl_Entidad)
                                     _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
                                     Return _Validacion
                                 End If
@@ -24404,9 +24417,11 @@ Public Class Frm_Formulario_Documento
                 End If
 
             Else
+                _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta ya que tiene documentos vencidos")
                 _RevisarPermiso = True
             End If
 
+            _Cl_Entidad.Fx_LlenarMensaje(_Cl_Entidad)
             _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
 
             If _RevisarPermiso Then

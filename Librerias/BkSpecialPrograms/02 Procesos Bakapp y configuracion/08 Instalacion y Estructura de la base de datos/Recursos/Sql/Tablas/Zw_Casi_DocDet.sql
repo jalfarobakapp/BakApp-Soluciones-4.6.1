@@ -135,6 +135,8 @@ CREATE TABLE [dbo].[Zw_Casi_DocDet](
     [Moneda_SobreStock]     [varchar](3)            NOT NULL DEFAULT (''),
     [Precio_SobreStock]     [float]                 NOT NULL DEFAULT (0),
     [Qty_SobreStock]        [float]                 NOT NULL DEFAULT (0),
+    [Precio_DigSobreStock]  [float]                 NOT NULL DEFAULT (0),
+    [PqteComprometidoSol]   [float]                 NOT NULL DEFAULT (0),
 ) ON [PRIMARY]
 
 

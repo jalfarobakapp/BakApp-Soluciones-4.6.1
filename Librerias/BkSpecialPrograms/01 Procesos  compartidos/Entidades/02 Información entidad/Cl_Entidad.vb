@@ -163,7 +163,7 @@ Public Class Cl_Entidad
 
                     Next
 
-                    _Cl_Entidad.ListaProblemas.Add($"El documentos con mas días de atraso tiene {_MaxDiasDeAtraso} días de atraso")
+                    _Cl_Entidad.ListaProblemas.Add($"El documentos con más días de atraso tiene {_MaxDiasDeAtraso} días de atraso")
 
                     If CBool(_Cl_Entidad.Dimoper) Then
                         _Cl_Entidad.ListaProblemas.Add($"El cliente tiene {_Cl_Entidad.Dimoper} días de morosidad permitida")
@@ -194,24 +194,10 @@ Public Class Cl_Entidad
 
                     Dim _DiasMaxMora As Double = _Cl_Entidad.Dimoper + 5
                     Dim _MaxDiasMoraDocumentos As Double = _Cl_Entidad.MaxDiasMoraDocumentos
-
-                    If _DiasMaxMora > 5 Then
-                        _Cl_Entidad.ListaProblemas.Add($"El sistema tiene permitido como máximo 5 de mora antes de que se bloquee")
-                    End If
-
-
-
-                    'If _RevAutomaticaMorosidadClientes Then
-
-                    '    Dim _DiasMinMora As Double = _Cl_Entidad.Dimoper - _MaxDiasMoraDocumentos
-
-                    '    If _DiasMinMora > 0 Then
-                    '        _Cl_Entidad.ClienteMoroso = False
-                    '    End If
-
-                    'End If
+                    Dim _DiasMr As Integer = _DiasMaxMora - _MaxDiasMoraDocumentos
 
                     If _MaxDiasMoraDocumentos > _DiasMaxMora Then
+                        _Cl_Entidad.ListaProblemas.Add($"El sistema tiene permitido como máximo 5 de mora posterior a los días de morosidad permitidos antes de que se bloquee")
                         _Cl_Entidad.ListaProblemas.Add("¡No se le puede vender a este cliente hasta que no pague su deuda!")
                         _Cl_Entidad.Bloqueada = True
                         _Mensaje.Tag = _Cl_Entidad
@@ -231,7 +217,7 @@ Public Class Cl_Entidad
 
                     If Not IsNothing(_Row) Then
                         _Cl_Entidad.PromedioDiasPago = Math.Round(_Row.Item("PROMEDIO_DIAS_REAL_PAGO"), 2)
-                        _Cl_Entidad.ListaProblemas.Add($"El promedio de dias que demora el cliente en pagar es de {_Cl_Entidad.PromedioDiasPago} días")
+                        _Cl_Entidad.ListaProblemas.Add($"El promedio de días que demora el cliente en pagar es de {_Cl_Entidad.PromedioDiasPago} días")
                     End If
 
                     If Not IsNothing(_Row2) Then
@@ -268,12 +254,12 @@ Public Class Cl_Entidad
 
                         If _MontoVenta <= _Cl_Entidad.Promedio_Venta_UltXMeses Then
                             _Cl_Entidad.VentaMayorPromedioUlt3Meses = False
-                            _Cl_Entidad.ListaProblemas.Add("La venta es menor al promedio de ventas realizadas los ultimos 3 meses. " &
-                                                       $"Venta:{ FormatNumber(_MontoVenta, 0)}, promedio venta: {FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}")
+                            _Cl_Entidad.ListaProblemas.Add("La venta es menor al promedio de ventas realizadas los últimos 3 meses. " &
+                                                       $"Venta: { FormatNumber(_MontoVenta, 0)}, promedio venta: {FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}")
                         Else
                             _Cl_Entidad.VentaMayorPromedioUlt3Meses = True
-                            _Cl_Entidad.ListaProblemas.Add("La venta es mayor al promedio de ventas realizadas los ultimos 3 meses. " &
-                                                       $"Venta:{ FormatNumber(_MontoVenta, 0)}, promedio venta: {FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}")
+                            _Cl_Entidad.ListaProblemas.Add("La venta es mayor al promedio de ventas realizadas los últimos 3 meses. " &
+                                                       $"Venta: { FormatNumber(_MontoVenta, 0)}, promedio venta: {FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}")
                         End If
 
                     End If
@@ -286,8 +272,8 @@ Public Class Cl_Entidad
 
                     If _Cl_Entidad.Crsd_Disponible < 0 Then
                         _Cl_Entidad.SuperaCreditoDisponible = True
-                        _Cl_Entidad.ListaProblemas.Add($"El cliente supera el credito que tiene disponible con esta venta. " &
-                                                       $"(monto diponible: { FormatNumber(_Cl_Entidad.Crsd_Disponible, 0)})")
+                        _Cl_Entidad.ListaProblemas.Add($"El cliente supera el crédito que tiene disponible con esta venta. " &
+                                                       $"(monto disponible: { FormatNumber(_Cl_Entidad.Crsd_Disponible, 0)})")
                     End If
 
                     Fx_LlenarMensaje(_Cl_Entidad)

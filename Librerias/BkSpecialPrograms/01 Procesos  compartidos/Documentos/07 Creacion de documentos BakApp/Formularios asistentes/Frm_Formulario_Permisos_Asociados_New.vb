@@ -60,6 +60,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
         End Get
     End Property
 
+    Public Property LeyendaMorosidad As String
+
     Public Sub New(Ds_Matriz_Documentos As DataSet,
                    RowEntidad As DataRow,
                    Tipo_Documento As csGlobales.Enum_Tipo_Documento)
