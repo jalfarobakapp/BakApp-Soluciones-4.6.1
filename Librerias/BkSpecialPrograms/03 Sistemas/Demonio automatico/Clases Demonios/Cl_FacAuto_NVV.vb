@@ -1140,10 +1140,15 @@ Where Facturar = 1"
                         Dim _Row_Zw_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
                         Dim _SobreStock As Boolean = _Row_Zw_Docu_Det.Item("SobreStock")
 
+                        Dim _B2B As Boolean
+
+                        _B2B = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "B2B",
+                                                     "Idmaeedo = " & _Idmaeedo_Origen & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'")
+
                         Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
                                                                     csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True,, _SobreStock)
 
-
+                        Fm_Post.B2B = _B2B
                         Fm_Post.ModEmpresa_Doc = _Empresa
                         Fm_Post.ModModalidad_Doc = _Modalidad
 
@@ -1361,7 +1366,7 @@ Where Facturar = 1"
                             End If
 
                             Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & "
-                                            Select *,CAse When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
+                                            Select *,Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
                                             CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori',
                                             Case WHEN UDTRPR = 1 Then " & _CampoPrecio & " Else " & _CampoPrecio & "*RLUDPR End AS 'Precio',
                                             0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
@@ -1393,11 +1398,10 @@ Where Facturar = 1"
                                 Throw New System.Exception(_Sql.Pro_Error)
                             End If
 
+                            Dim _Msj_Limpiar As LsValiciones.Mensajes
+
                             Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
                                                                         csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
-
-                            'If Fm_Post.MensajeRevFolio.EsCorrecto Then
-                            Dim _Msj_Limpiar As LsValiciones.Mensajes
 
                             _Msj_Limpiar = Fm_Post.Fx_Limpiar(_Modalidad)
 
@@ -1412,7 +1416,9 @@ Where Facturar = 1"
                                 If CBool(_Msj_GrabarDoc.Id) Then
                                     Fm_Post.Sb_Activar_Orden_De_Despacho(_Msj_GrabarDoc.Id)
                                 End If
+
                                 Fm_Post.Dispose()
+
                             Else
 
                                 Throw New System.Exception(_Msj_Limpiar.Mensaje)

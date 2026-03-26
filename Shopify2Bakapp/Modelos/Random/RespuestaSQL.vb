@@ -56,17 +56,17 @@
     Public Property OCDO As String
 
     ''' <summary>
-    ''' paen = coDIGO PAIS
+    ''' PAEN = CODIGO PAIS
     ''' </summary>
     Public Property PAEN As String
 
     ''' <summary>
-    ''' cien = coDIGO CIUDAD
+    ''' CIEN = CODIGO CIUDAD
     ''' </summary>
     Public Property CIEN As String
 
     ''' <summary>
-    ''' cMEN = coDIGO COMUNA
+    ''' CMEN = CODIGO COMUNA
     ''' </summary>
     Public Property CMEN As String
 
@@ -86,9 +86,31 @@
     Public Property TEXTO3 As String
 
     Public Property Bodega As String
+
     Public Property CodFuncionario As String
 
     Public Property Valor As Integer
 
+    ' --- Nuevos campos de validación de pagos ---
+
+    ''' <summary>
+    ''' IDMAEDPCE: ID del pago asociado en Random
+    ''' </summary>
+    Public Property IDMAEDPCE As Integer
+
+    ''' <summary>
+    ''' REFANTI: Referencia del pago anticipado (ej. código de Transbank o MercadoPago)
+    ''' </summary>
+    Public Property REFANTI As String
+
+    ''' <summary>
+    ''' VADP: Valor del abono o pago recibido
+    ''' </summary>
+    Public Property VADP As Decimal
+
+    ''' <summary>
+    ''' PagoSuficiente: 1 si el pago es mayor o igual al valor del documento, 0 si es menor
+    ''' </summary>
+    Public Property PagoSuficiente As Integer
 
 End Class

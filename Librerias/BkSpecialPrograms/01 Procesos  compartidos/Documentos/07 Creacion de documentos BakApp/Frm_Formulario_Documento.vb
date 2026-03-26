@@ -178,6 +178,7 @@ Public Class Frm_Formulario_Documento
     Dim _Ls_Cl_SobreStock As New List(Of Zw_Prod_SobreStock)
 
     Public Property Zw_Transporte_Dte As Zw_Transporte_Dte
+    Public Property B2B As Boolean
 
     Dim _Cl_Entidad As New Cl_Entidad
 
@@ -2917,33 +2918,37 @@ Public Class Frm_Formulario_Documento
 
         Next
 
-        'Dim _Suma_Flete As String = String.Empty
+        If Not SobreStock Then
 
-        'If CBool(_Flete) Then
-        '    _Suma_Flete = ", Suma de flete: " & FormatNumber(_Flete, 0)
-        'End If
+            Dim _Suma_Flete As String = String.Empty
 
-        'Dim _Dec1 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
-        'Dim _Dec2 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
-        'Dim _DecT = Math.Round(_Cantidad, 2) - Math.Round(_Cantidad, 0)
+            If CBool(_Flete) Then
+                _Suma_Flete = ", Suma de flete: " & FormatNumber(_Flete, 0)
+            End If
 
-        'Dim _DecimT, _Decim1, _Decim2 As Integer
+            Dim _Dec1 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
+            Dim _Dec2 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
+            Dim _DecT = Math.Round(_Cantidad, 2) - Math.Round(_Cantidad, 0)
 
-        'If _Dec1 <> 0 Then _Decim1 = 2
-        'If _Dec2 <> 0 Then _Decim2 = 2
-        'If _DecT <> 0 Then _DecimT = 2
+            Dim _DecimT, _Decim1, _Decim2 As Integer
 
-        'Dim _Kilos_Str As String = String.Empty
+            If _Dec1 <> 0 Then _Decim1 = 2
+            If _Dec2 <> 0 Then _Decim2 = 2
+            If _DecT <> 0 Then _DecimT = 2
 
-        'If CBool(_Kilos) Then
-        '    _Kilos_Str = "Kilos: " & FormatNumber(_Kilos, 2) & ", "
-        'End If
+            Dim _Kilos_Str As String = String.Empty
 
-        'If _Ud1 = _Ud2 And _CantUd1 = _CantUd2 Then
-        '    Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, " & _Ud1 & ": " & FormatNumber(_CantUd1, _Decim1) & _Suma_Flete & _StrSobreStock
-        'Else
-        '    Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, " & _Ud1 & ": " & FormatNumber(_CantUd1, _Decim1) & ", " & _Ud2 & ": " & FormatNumber(_CantUd2, _Decim2) & _Suma_Flete & _StrSobreStock
-        'End If
+            If CBool(_Kilos) Then
+                _Kilos_Str = "Kilos: " & FormatNumber(_Kilos, 2) & ", "
+            End If
+
+            If _Ud1 = _Ud2 And _CantUd1 = _CantUd2 Then
+                Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, " & _Ud1 & ": " & FormatNumber(_CantUd1, _Decim1) & _Suma_Flete & _StrSobreStock
+            Else
+                Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, " & _Ud1 & ": " & FormatNumber(_CantUd1, _Decim1) & ", " & _Ud2 & ": " & FormatNumber(_CantUd2, _Decim2) & _Suma_Flete & _StrSobreStock
+            End If
+
+        End If
 
         '"Trans: " & FormatNumber(_Cantidad, _DecimT) & _Suma_Flete
 
@@ -9649,6 +9654,7 @@ Public Class Frm_Formulario_Documento
 
                             End If
 
+                            Call Grilla_Detalle_CellEnter(Nothing, Nothing)
 
                         Case "Precio"
 
@@ -11820,6 +11826,8 @@ Public Class Frm_Formulario_Documento
             Sb_Limpiar_Lista_CodBarras()
             Sb_Marcar_Fila_Grilla(_Fila)
 
+            Call Grilla_Detalle_CellEnter(Nothing, Nothing)
+
         Catch ex As Exception
 
         Finally
@@ -11902,6 +11910,10 @@ Public Class Frm_Formulario_Documento
         Dim _StrSobreStock As String
 
         Dim _Prct As Boolean = _Fila.Cells("Prct").Value
+
+        If Not SobreStock Then
+            Return
+        End If
 
         Lbl_Totaliza_Cantidades.Text = String.Empty
 
@@ -19064,6 +19076,8 @@ Public Class Frm_Formulario_Documento
 
         _New_Doc.Zw_Transporte_Dte = Zw_Transporte_Dte
 
+        _New_Doc.B2B = B2B
+
         For Each _Fl As DataRow In _TblDetalle.Rows
             _Fl.Item("Grupo") = _Sql.Fx_Trae_Dato("TABFUGD", "KOGRU", "KOFU = '" & _Fl.Item("CodVendedor") & "'",, False)
         Next
@@ -20375,9 +20389,7 @@ Public Class Frm_Formulario_Documento
                 End If
 
                 Sb_RevListaSuperiosEntidad(_MostrarMensaje)
-
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, _Revisar_Permiso_Lista_Precio, _Aplicar_Vencimientos, False,, _ListaOrigen)
-
                 Sb_RevListaSuperiosEntidad_VtaCurso()
 
             Else
@@ -20394,7 +20406,8 @@ Public Class Frm_Formulario_Documento
                 _TblEncabezado.Rows(0).Item("Contacto_Ent") = String.Empty
             End Try
 
-            Txt_Contacto.Text = _Sql.Fx_Trae_Dato("MAEENCON", "NOKOCON", "KOEN = '" & _RowEntidad.Item("KOEN") & "' And RUTCONTACT = '" & _TblEncabezado.Rows(0).Item("Contacto_Ent") & "'")
+            Txt_Contacto.Text = _Sql.Fx_Trae_Dato("MAEENCON", "NOKOCON",
+                                                  "KOEN = '" & _RowEntidad.Item("KOEN") & "' And RUTCONTACT = '" & _TblEncabezado.Rows(0).Item("Contacto_Ent") & "'")
 
             Dim _CodEntidadFisica As String
             Dim _CodSucEntidadFisica = String.Empty
@@ -24411,6 +24424,13 @@ Public Class Frm_Formulario_Documento
                         End If
 
                     Else
+                        If _Cl_Entidad.SuperaCreditoDisponible Then
+                            _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que se excede el crédito disponible.")
+                            _Permiso = "Doc00169"
+                        ElseIf _MontoVenta > _Cl_Entidad.Promedio_Venta_UltXMeses Then
+                            _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que supera el promedio de ventas de los últimos 3 meses.")
+                            _Permiso = "Doc00170"
+                        End If
                         _RevisarPermiso = True
                     End If
 

@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -46,6 +46,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
         Me.Btn_Crear_Venta = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Filtro_Abanzado = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Btn_CotizacionSobreStock = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -75,7 +76,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
         Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual, Me.Menu_contextual_Exportar_Excel, Me.Menu_Contextual_Ventas})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(157, 180)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
-        Me.ContextMenuBar1.Size = New System.Drawing.Size(356, 25)
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(412, 25)
         Me.ContextMenuBar1.Stretch = True
         Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.ContextMenuBar1.TabIndex = 52
@@ -107,7 +108,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
         Me.Btn_Mnu_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Mnu_Estadisticas_Producto.Image"), System.Drawing.Image)
         Me.Btn_Mnu_Estadisticas_Producto.ImageAlt = CType(resources.GetObject("Btn_Mnu_Estadisticas_Producto.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_Estadisticas_Producto.Name = "Btn_Mnu_Estadisticas_Producto"
-        Me.Btn_Mnu_Estadisticas_Producto.Text = "Ver estadísticas del producto/información adicional"
+        Me.Btn_Mnu_Estadisticas_Producto.Text = "Ver estadÃ­sticas del producto/informaciÃ³n adicional"
         '
         'Btn_Mnu_Ver_Documento
         '
@@ -121,7 +122,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
         Me.Btn_Mnu_Informeacion_Credito_Cliente.Image = CType(resources.GetObject("Btn_Mnu_Informeacion_Credito_Cliente.Image"), System.Drawing.Image)
         Me.Btn_Mnu_Informeacion_Credito_Cliente.ImageAlt = CType(resources.GetObject("Btn_Mnu_Informeacion_Credito_Cliente.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_Informeacion_Credito_Cliente.Name = "Btn_Mnu_Informeacion_Credito_Cliente"
-        Me.Btn_Mnu_Informeacion_Credito_Cliente.Text = "Ver información de créditos vigentes del cliente"
+        Me.Btn_Mnu_Informeacion_Credito_Cliente.Text = "Ver informaciÃ³n de crÃ©ditos vigentes del cliente"
         '
         'Btn_Informe_X_Documentos_Entidades
         '
@@ -142,7 +143,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
         Me.Btn_Copiar.Image = CType(resources.GetObject("Btn_Copiar.Image"), System.Drawing.Image)
         Me.Btn_Copiar.ImageAlt = CType(resources.GetObject("Btn_Copiar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Copiar.Name = "Btn_Copiar"
-        Me.Btn_Copiar.Text = "Copiar código (portapapeles)"
+        Me.Btn_Copiar.Text = "Copiar cÃ³digo (portapapeles)"
         '
         'Menu_contextual_Exportar_Excel
         '
@@ -182,7 +183,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
         '
         Me.Menu_Contextual_Ventas.AutoExpandOnClick = True
         Me.Menu_Contextual_Ventas.Name = "Menu_Contextual_Ventas"
-        Me.Menu_Contextual_Ventas.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem6, Me.Btn_Cotizacion, Me.Btn_Nota_de_venta})
+        Me.Menu_Contextual_Ventas.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem6, Me.Btn_Cotizacion, Me.Btn_Nota_de_venta, Me.Btn_CotizacionSobreStock})
         Me.Menu_Contextual_Ventas.Text = "Ventas..."
         '
         'LabelItem6
@@ -278,6 +279,13 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
         Me.Txt_Filtro_Abanzado.Size = New System.Drawing.Size(700, 22)
         Me.Txt_Filtro_Abanzado.TabIndex = 122
         '
+        'Btn_CotizacionSobreStock
+        '
+        Me.Btn_CotizacionSobreStock.Image = CType(resources.GetObject("Btn_CotizacionSobreStock.Image"), System.Drawing.Image)
+        Me.Btn_CotizacionSobreStock.ImageAlt = CType(resources.GetObject("Btn_CotizacionSobreStock.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CotizacionSobreStock.Name = "Btn_CotizacionSobreStock"
+        Me.Btn_CotizacionSobreStock.Text = "COTIZACION (SOBRE STOCK)"
+        '
         'Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -326,4 +334,5 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid
     Friend WithEvents Btn_Cotizacion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Nota_de_venta As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Copiar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_CotizacionSobreStock As DevComponents.DotNetBar.ButtonItem
 End Class

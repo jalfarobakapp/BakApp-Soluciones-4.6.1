@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyTitle("Shopify2Bakapp")>
 <Assembly: AssemblyDescription("Deamon diseñado para hacer copias de la informacion de las ventas hechas por e-comerce al sistema interno bakapp")>
 <Assembly: AssemblyCompany("Bakapp")>
-<Assembly: AssemblyProduct("Meli2Bakapp")>
+<Assembly: AssemblyProduct("Shopify2Bakapp")>
 <Assembly: AssemblyCopyright("Copyright ©  2024")>
 <Assembly: AssemblyTrademark("")>
 
@@ -29,6 +29,6 @@ Imports System.Runtime.InteropServices
 '      Revisión
 '
 
-<Assembly: AssemblyVersion("1.0.1.1")>
-<Assembly: AssemblyFileVersion("1.0.1.1")>
+<Assembly: AssemblyVersion("1.0.1.21")>
+<Assembly: AssemblyFileVersion("1.0.1.21")>
 <Assembly: NeutralResourcesLanguage("")>

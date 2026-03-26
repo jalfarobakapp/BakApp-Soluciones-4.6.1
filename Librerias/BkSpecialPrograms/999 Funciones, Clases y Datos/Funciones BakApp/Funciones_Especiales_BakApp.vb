@@ -6284,15 +6284,17 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Private Function Fx_ActualizarListaRandomDesdeBakApp(_CodProveedor As String, _SucProveedor As String, _Id_Padre As Integer) As String
+    Function Fx_ActualizarListaRandomDesdeBakApp(_CodProveedor As String, _SucProveedor As String, _Id_Padre As Integer) As String
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
         Dim _Error As String = String.Empty
 
         Try
-            Consulta_sql = "Select Id, Tabla_Random, Campo_Random, Tabla_Bakapp, Campo_Bakapp
-                        From " & _Global_BaseBk & "Zw_Tablas_Equivalentes_Rd_Bk
-                        Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
+            Consulta_sql = $"
+Select Id, Tabla_Random, Campo_Random, Tabla_Bakapp, Campo_Bakapp
+From {_Global_BaseBk}Zw_Tablas_Equivalentes_Rd_Bk
+Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
+
             Dim _Tbl_Equivalentes As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then

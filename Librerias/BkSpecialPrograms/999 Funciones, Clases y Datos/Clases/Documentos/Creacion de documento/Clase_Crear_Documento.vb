@@ -197,6 +197,7 @@ Public Class Clase_Crear_Documento
     Public Property Ls_Cl_PreVenta As New List(Of Zw_PreVenta_StockProd)
     Public Property Ls_Cl_SobreStock As New List(Of Zw_Prod_SobreStock)
     Public Property Zw_Transporte_Dte As Zw_Transporte_Dte
+    Public Property B2B As Boolean
 
 #Region "FUNCION CREAR DOCUMENTO RANDOM DEFINITIVO"
 
@@ -1294,13 +1295,11 @@ Public Class Clase_Crear_Documento
                         dfd1.Close()
 
 
-                        'If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Det") Then
-
                         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable," &
-                                           "Empresa,Sucursal,Bodega,IdCont,Contenedor,Grupo) Values " &
-                                           "(" & _Idmaeddo & "," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _Koprct & "','" & _Nokopr & "'" &
-                                           "," & Convert.ToInt32(_RtuVariable) & ",'" & _Empresa & "','" & _Sulido & "','" & _Bosulido &
-                                           "'," & _IdCont & ",'" & _Contenedor & "','" & _Grupo & "')"
+                                       "Empresa,Sucursal,Bodega,IdCont,Contenedor,Grupo) Values " &
+                                       "(" & _Idmaeddo & "," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _Koprct & "','" & _Nokopr & "'" &
+                                       "," & Convert.ToInt32(_RtuVariable) & ",'" & _Empresa & "','" & _Sulido & "','" & _Bosulido &
+                                       "'," & _IdCont & ",'" & _Contenedor & "','" & _Grupo & "')"
                         Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                         Comando.Transaction = myTrans
                         Comando.ExecuteNonQuery()
@@ -1338,7 +1337,7 @@ Public Class Clase_Crear_Documento
 
                         End If
 
-                        If SobreStock Then
+                        If SobreStock AndAlso (_Tido = "COV" OrElse _Tido = "NVV") Then
 
                             Dim _Id_SobreStock As Integer = .Item("Id_SobreStock")
                             Dim _Moneda_SobreStock As String = .Item("Moneda_SobreStock")
@@ -2086,8 +2085,6 @@ Public Class Clase_Crear_Documento
 
             End If
 
-            'If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Docu_Ent") Then
-
             Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
             Dim _TipoEstacion = _Global_Row_EstacionBk.Item("TipoEstacion")
             Dim _Modalidad_Bk As String = _Row_Encabezado.Item("Modalidad")
@@ -2096,24 +2093,22 @@ Public Class Clase_Crear_Documento
             Dim _Idpdaenca As Integer = NuloPorNro(_Row_Encabezado.Item("Idpdaenca"), 0)
             Dim _ConservaNudo As Boolean = NuloPorNro(_Row_Encabezado.Item("ConservaNudo"), 0)
             Dim _LeyendaMorosidad As String = NuloPorNro(_Row_Encabezado.Item("LeyendaMorosidad"), "")
+            'Dim _B2B As Boolean = NuloPorNro(_Row_Encabezado.Item("B2B"), False)
 
             If (_Tido = "NVV" OrElse _Tido = "NVI") OrElse (_Tido = "COV" And SobreStock) Then
                 _Pickear = _Row_Encabezado.Item("Pickear")
             End If
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
-                           "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad) Values " &
+                           "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad,B2B) Values " &
                            "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad_Bk & "'" &
                            ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
                            "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(PreVenta) &
-                           "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) & ",'" & _Empresa & "','" & _LeyendaMorosidad & "')"
-
+                           "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) &
+                           ",'" & _Empresa & "','" & _LeyendaMorosidad & "'," & Convert.ToInt32(B2B) & ")"
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
-
-            'End If
-
 
             If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "BLV" Or _Tido = "FCV" Or
                _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "NCV" Or _Tido = "GRI" Or _Tido = "GDI" Then
@@ -2200,7 +2195,7 @@ Public Class Clase_Crear_Documento
 
 
             If False Then
-                Throw New System.Exception("An exception has occurred.")
+                Throw New System.Exception("An exception has occurred. Truncado manual")
             End If
 
             myTrans.Commit()

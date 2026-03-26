@@ -79,7 +79,7 @@ Public Class Frm_Sincronizador
             Switch_Sincronizacion.Enabled = True
 
             CircularPgrs.IsRunning = True
-            Timer_Ejecutar.Interval = 1000 * 10 ' Configurado a 30 segundos (Ajustable)
+            Timer_Ejecutar.Interval = 1000 * 10 * 1 ' Configurado a 30 segundos (Ajustable)
             Timer_Ejecutar.Start()
             Timer_Limpiar.Start()
             Timer_AjustarFecha.Start()
@@ -111,8 +111,10 @@ Public Class Frm_Sincronizador
             ' Toma un Top de 50 registros por ciclo para no saturar la memoria
             '_Cl_GeneraDespachos.Sb_Procesar_Despachos_ECommerce(Txt_Log, 50)
             'Sb_AddToLog("Tick de Prueba:" & _CL_ProcesaDatos.Fx_Testear_Conexion(), 50)
-            _CL_ProcesaDatos.Sb_Procesar_Despachos_ECommerce(Txt_Log)
+            _CL_ProcesaDatos.PreCarga(Txt_Log)
 
+            _CL_ProcesaDatos.Sb_Procesar_Despachos_ECommerce(Txt_Log)
+            _CL_ProcesaDatos.GestionarCorreos(Txt_Log)
         Catch ex As Exception
             ' Evita que el programa crashee si se cae el servidor SQL momentáneamente
             Sb_AddToLog("Error Demonio", "Fallo en ejecución: " & ex.Message, Txt_Log)
@@ -145,10 +147,19 @@ Public Class Frm_Sincronizador
     Private Sub Switch_Sincronizacion_ValueChanged(sender As Object, e As EventArgs) Handles Switch_Sincronizacion.ValueChanged
         If Timer_Ejecutar.Enabled Then
             Timer_Ejecutar.Stop()
+            If Timer_Limpiar.Enabled Then
+                Timer_Limpiar.Stop()
+
+            End If
             CircularPgrs.IsRunning = False
             Sb_AddToLog("Sincronizador", "Demonio de Despachos detenido por el usuario.", Txt_Log)
-        Else
+            Else
             Timer_Ejecutar.Start()
+            If Timer_Limpiar.Enabled = False Then
+                Timer_Limpiar.Start()
+
+            End If
+
             CircularPgrs.IsRunning = True
             Sb_AddToLog("Sincronizador", "Demonio de Despachos reanudado por el usuario.", Txt_Log)
         End If

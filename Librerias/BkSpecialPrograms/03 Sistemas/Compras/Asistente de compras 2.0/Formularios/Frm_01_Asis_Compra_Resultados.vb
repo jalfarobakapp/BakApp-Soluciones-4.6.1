@@ -263,6 +263,11 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     Public Property InformeDeComprasAgrupadoporAsociacion As Boolean
 
+    Dim _Pstar As Boolean
+    Dim _CodProveedor_Pstar As String
+    Dim _CodSucProveedor_Pstar As String
+    Dim _RowListaCostos_Pstar As DataRow
+
     Public Sub New(_Modalidad_Estudio As String)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -8846,40 +8851,61 @@ SET
 
                 If _Global_Row_Configuracion_Estacion.Item("Actualizar_Lista_De_Costos_Random_Desde_Bakapp") Then
 
-                    Dim _Koen = _RowProveedor.Item("KOEN")
-                    Dim _Suen = _RowProveedor.Item("SUEN")
+                    Dim _Koen = _RowProveedor.Item("KOEN").ToString.Trim
+                    Dim _Suen = _RowProveedor.Item("SUEN").ToString.Trim
 
-                    Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaPreCosto_Enc" & vbCrLf &
-                                   "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And Vigente = 1"
-                    Dim _RowListaPreCosto_Enc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                    If (_CodProveedor_Pstar <> _Koen) Then
 
-                    If IsNothing(_RowListaPreCosto_Enc) Then
+                        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_ListaPreCosto_Enc" & vbCrLf &
+                                       "Where Proveedor = '" & _Koen & "' And Sucursal = '" & _Suen & "' And Vigente = 1"
+                        Dim _RowListaPreCosto_Enc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                        If MessageBoxEx.Show(Me, "Falta una la lista de costos vigente para el proveedor en BakApp" & vbCrLf & vbCrLf &
-                                            "¿Desde continuar sin revisar esta situación?", "Validación",
-                                                                                            MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
-                            If Fx_Tiene_Permiso(Me, "Comp0097") Then
-                                Return
+                        If IsNothing(_RowListaPreCosto_Enc) Then
+
+                            If MessageBoxEx.Show(Me, "Falta una la lista de costos vigente para el proveedor en BakApp" & vbCrLf & vbCrLf &
+                                                "¿Desde continuar sin revisar esta situación?", "Validación",
+                                                                                                MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
+                                If Fx_Tiene_Permiso(Me, "Comp0097") Then
+                                    Return
+                                End If
                             End If
-                        End If
 
-                        Return
+                            Return
+
+                        End If
 
                     End If
 
-                    Dim _Id_Padre As Integer = _RowListaPreCosto_Enc.Item("Id")
+                    If _Pstar AndAlso _CodProveedor_Pstar = _Koen Then
 
-                    If Not Fx_Actualizar_Lista_De_Costos_Random_Desde_Bakapp(Me, _Koen, _Suen, True) Then
-                        MessageBoxEx.Show(Me, "No es posible realizar el proceso" & vbCrLf & vbCrLf &
-                           "Para poder actualizar la información de la lista de costos del proveedor debe hacer lo siguiente:" & vbCrLf & vbCrLf &
-                           "1.- Ir al menú de inicio" & vbCrLf &
-                           "2.- Opción [PRECIOS Y COSTOS]" & vbCrLf &
-                           "3.- Opción [LISTA DE PROVEEDORES]" & vbCrLf &
-                           "4.- Buscar al proveedor" & vbCrLf &
-                           "5.- Realizar la gestión de mantenimiento de lista de costos de ese proveedor" & vbCrLf &
-                           " * Dejar una lista de costos vigente" & vbCrLf &
-                           " * Fecha de vencimiento mayor a la fecha actual", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
-                        Return
+                        Dim _Id_Padre As Integer = _RowListaCostos_Pstar.Item("Id")
+                        Dim _ErrorLPC As String = Fx_ActualizarListaRandomDesdeBakApp(_Koen, _Suen, _Id_Padre)
+
+                        If String.IsNullOrEmpty(_ErrorLPC) Then
+                            MessageBoxEx.Show(Me, "Costos levantados correctamente en lista " & _RowListaCostos_Pstar.Item("Lista"), "Actualización de costos del proveedor",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        Else
+                            MessageBoxEx.Show(Me, _ErrorLPC, "Error al cargar lista de proveedor" & vbCrLf &
+                                              "Los costos seguiran siendo los de la lista actual", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        End If
+
+                    Else
+
+                        If Not Fx_Actualizar_Lista_De_Costos_Random_Desde_Bakapp(Me, _Koen, _Suen, True) Then
+
+                            MessageBoxEx.Show(Me, "No es posible realizar el proceso" & vbCrLf & vbCrLf &
+                               "Para poder actualizar la información de la lista de costos del proveedor debe hacer lo siguiente:" & vbCrLf & vbCrLf &
+                               "1.- Ir al menú de inicio" & vbCrLf &
+                               "2.- Opción [PRECIOS Y COSTOS]" & vbCrLf &
+                               "3.- Opción [LISTA DE PROVEEDORES]" & vbCrLf &
+                               "4.- Buscar al proveedor" & vbCrLf &
+                               "5.- Realizar la gestión de mantenimiento de lista de costos de ese proveedor" & vbCrLf &
+                               " * Dejar una lista de costos vigente" & vbCrLf &
+                               " * Fecha de vencimiento mayor a la fecha actual", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                            Return
+
+                        End If
+
                     End If
 
                 End If
@@ -10006,9 +10032,6 @@ Drop Table #Paso"
 
     Private Sub Btn_CalcCantProveedoEstrellaStock_Click(sender As Object, e As EventArgs) Handles Btn_CalcCantProveedoEstrellaStock.Click
 
-        Dim _CodProveedor_Pstar As String '= "76590920"
-        Dim _CodSucProveedor_Pstar As String '= String.Empty
-
         Dim _Id = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
                                                  "Valor",
                                                  "Informe = 'Compras_Asistente' And Campo = 'Txt_DbExt_Nombre_Conexion' And NombreEquipo = '" & _NombreEquipo & "' " &
@@ -10075,8 +10098,8 @@ Drop Table #Paso"
         Dim _Koen As String = _RowProveedor.Item("KOEN")
         Dim _Suen As String = _RowProveedor.Item("SUEN")
 
-        Dim _CodProveedor_Pstar As String
-        Dim _CodSucProveedor_Pstar As String
+        'Dim _CodProveedor_Pstar As String
+        'Dim _CodSucProveedor_Pstar As String
 
         _CodProveedor_Pstar = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes",
                                                  "Valor",
@@ -10113,7 +10136,6 @@ Drop Table #Paso"
             Sb_Actualizar_Costos_ListaProveedor(_RowProveedor.Item("KOEN"), _RowProveedor.Item("SUEN"), _NombreLista)
         End If
 
-
         Dim _CodLista As String = _Global_Row_Configuracion_General.Item("Lista_Precios_Proveedores").ToString.Trim
         Dim _RowListaSeleccionada As DataRow
 
@@ -10144,6 +10166,45 @@ Drop Table #Paso"
         If Not String.IsNullOrEmpty(_CodProveedor_Pstar) Then
             Sb_Actualizar_Costos_ListaProveedor(_CodProveedor_Pstar, _CodSucProveedor_Pstar, _NombreLista)
         End If
+
+        _RowListaCostos_Pstar = _RowListaSeleccionada
+
+        Consulta_sql = $"
+UPDATE G
+SET 
+    G.CodAlternativo = LP.CodAlternativo,
+    G.CodProveedor   = LP.Proveedor,
+    G.CodSucProveedor = LP.Sucursal,
+	G.CantComprar = CEILING(G.CantSugeridaTot)
+ 
+FROM {_Nombre_Tbl_Paso_Informe} AS G
+OUTER APPLY
+(
+    SELECT TOP 1 
+        L.CodAlternativo,
+        L.Proveedor,
+        L.Sucursal
+    FROM {_Nombre_Tbl_Paso_Costos} AS L
+    WHERE L.Codigo = G.Codigo
+      AND L.CostoFinalUd1 > 0
+    ORDER BY L.CostoFinalUd1 ASC
+) AS LP
+WHERE LP.Proveedor IS NOT NULL;   -- evita actualizar con valores nul
+"
+
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Call Btn_Actualizar_Informe_Click(Nothing, Nothing)
+        Fm_Hijo.Btn_Filtrar_Proveedor.Enabled = True
+        Fm_Hijo.Refresh()
+        Me.Refresh()
+
+        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        _Pstar = True
+        Call Btn_Filtrar_Proveedor_Click(Nothing, Nothing)
+
+        Return
 
         Consulta_sql = $"
 SELECT 
