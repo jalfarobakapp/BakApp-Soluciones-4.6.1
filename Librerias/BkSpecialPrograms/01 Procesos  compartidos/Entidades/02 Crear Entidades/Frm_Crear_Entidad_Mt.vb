@@ -1138,6 +1138,7 @@ Public Class Frm_Crear_Entidad_Mt
                     .NoCobrarPallet = Chk_NoCobrarPallet.Checked
                     .ImpNoCobraVta = Chk_ImpNoCobraVta.Checked
                     .ImpNoCobraVtaStr = Txt_ImpNoCobraVtaStr.Tag
+                    .EsCiaSeguro = Chk_EsCiaSeguro.Checked
 
                     If _CreaNuevaEntidad Then
 
@@ -1168,6 +1169,7 @@ Public Class Frm_Crear_Entidad_Mt
                                    ",NoCobrarPallet = " & Convert.ToInt32(.NoCobrarPallet) & vbCrLf &
                                    ",ImpNoCobraVta = " & Convert.ToInt32(.ImpNoCobraVta) & vbCrLf &
                                    ",ImpNoCobraVtaStr = '" & .ImpNoCobraVtaStr & "'" & vbCrLf &
+                                   ",EsCiaSeguro = " & Convert.ToInt32(.EsCiaSeguro) & vbCrLf &
                                    "Where CodEntidad = '" & .CodEntidad & "' And CodSucEntidad = '" & .CodSucEntidad & "'"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -1740,6 +1742,7 @@ Public Class Frm_Crear_Entidad_Mt
                     Chk_NoCobrarPallet.Checked = .NoCobrarPallet
                     Chk_ImpNoCobraVta.Checked = .ImpNoCobraVta
                     Txt_ImpNoCobraVtaStr.Tag = .ImpNoCobraVtaStr
+                    Chk_EsCiaSeguro.Checked = .EsCiaSeguro
 
                     If .ImpNoCobraVta Then
                         Txt_ImpNoCobraVtaStr.Text = .ImpNoCobraVtaStr & " - " & _Sql.Fx_Trae_Dato("TABIM", "NOKOIM", "KOIM = '" & Txt_ImpNoCobraVtaStr.Tag & "'")

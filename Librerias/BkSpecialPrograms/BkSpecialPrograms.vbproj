@@ -3714,26 +3714,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Recursos_Teneduria_Pagos.resx</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\CRV Control Ruta Vehiculos\Frm_CRV.Designer.vb">
+    <Compile Include="03 Sistemas\Contenedores\CRV Control Ruta Vehiculos\Frm_CRV.Designer.vb">
       <DependentUpon>Frm_CRV.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\CRV Control Ruta Vehiculos\Frm_CRV.vb">
+    <Compile Include="03 Sistemas\Contenedores\CRV Control Ruta Vehiculos\Frm_CRV.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\CRV Control Ruta Vehiculos\Frm_CRV_Filtrar.Designer.vb">
+    <Compile Include="03 Sistemas\Contenedores\CRV Control Ruta Vehiculos\Frm_CRV_Filtrar.Designer.vb">
       <DependentUpon>Frm_CRV_Filtrar.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\CRV Control Ruta Vehiculos\Frm_CRV_Filtrar.vb">
+    <Compile Include="03 Sistemas\Contenedores\CRV Control Ruta Vehiculos\Frm_CRV_Filtrar.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\CRV Control Ruta Vehiculos\Frm_CRV_Lista.Designer.vb">
+    <Compile Include="03 Sistemas\Contenedores\CRV Control Ruta Vehiculos\Frm_CRV_Lista.Designer.vb">
       <DependentUpon>Frm_CRV_Lista.vb</DependentUpon>
     </Compile>
-    <Compile Include="03 Sistemas\CRV Control Ruta Vehiculos\Frm_CRV_Lista.vb">
+    <Compile Include="03 Sistemas\Contenedores\CRV Control Ruta Vehiculos\Frm_CRV_Lista.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="03 Sistemas\CRV Control Ruta Vehiculos\Reporte\CRV.vb" />
-    <Compile Include="03 Sistemas\CRV Control Ruta Vehiculos\Reporte\CRV1.vb">
+    <Compile Include="03 Sistemas\Contenedores\CRV Control Ruta Vehiculos\Reporte\CRV.vb" />
+    <Compile Include="03 Sistemas\Contenedores\CRV Control Ruta Vehiculos\Reporte\CRV1.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CRV.rpt</DependentUpon>
@@ -6335,16 +6335,16 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recursos_Teneduria_Pagos.Designer.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\CRV Control Ruta Vehiculos\Frm_CRV.resx">
+    <EmbeddedResource Include="03 Sistemas\Contenedores\CRV Control Ruta Vehiculos\Frm_CRV.resx">
       <DependentUpon>Frm_CRV.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\CRV Control Ruta Vehiculos\Frm_CRV_Filtrar.resx">
+    <EmbeddedResource Include="03 Sistemas\Contenedores\CRV Control Ruta Vehiculos\Frm_CRV_Filtrar.resx">
       <DependentUpon>Frm_CRV_Filtrar.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\CRV Control Ruta Vehiculos\Frm_CRV_Lista.resx">
+    <EmbeddedResource Include="03 Sistemas\Contenedores\CRV Control Ruta Vehiculos\Frm_CRV_Lista.resx">
       <DependentUpon>Frm_CRV_Lista.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="03 Sistemas\CRV Control Ruta Vehiculos\Reporte\CRV.rpt">
+    <EmbeddedResource Include="03 Sistemas\Contenedores\CRV Control Ruta Vehiculos\Reporte\CRV.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>CRV1.vb</LastGenOutput>
     </EmbeddedResource>
@@ -8793,6 +8793,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
+    <Folder Include="03 Sistemas\Cia Seguros\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />
   </ItemGroup>
   <ItemGroup>

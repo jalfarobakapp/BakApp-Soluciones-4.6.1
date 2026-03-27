@@ -24380,11 +24380,11 @@ Public Class Frm_Formulario_Documento
 
         _Permiso = "Bkp00019"
 
-        If _Cl_Entidad.Tiene_Deudas Then
+        If _Cl_Entidad.Tiene_Deudas OrElse _Cl_Entidad.VentaMayorPromedioUlt3Meses OrElse _Cl_Entidad.SuperaCreditoDisponible Then
 
             If Not _Cl_Entidad.Tiene_Deudas_Vencidas Then
 
-                If _Cl_Entidad.Tiene_Mas_Ventas Then
+                If _Cl_Entidad.Tiene_Mas_Ventas OrElse _Cl_Entidad.VentaMayorPromedioUlt3Meses OrElse _Cl_Entidad.SuperaCreditoDisponible Then
 
                     If _Cl_Entidad.UltFacPagadasEnMenosTiempoQueDimoper Then
 

@@ -21,18 +21,18 @@ Public Class Frm_InfoEnt_Ficha_Aseguradora
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Consulta_sql = "Select Top 1 RTEN As _Rut,NOKOEN As Razon," & _
-                            "CAST(0 As Float) as Monto_Asignado,CAST('' As Varchar(3)) As Moneda," & _
-                            "CAST('' As Varchar(20)) As Clascrediticia,CAST(Null As Date) As Fecha_Vigencia," & _
-                            "CAST(0 As Float) as Porc_Exposicion" & vbCrLf & _
-                            "Into #Paso1" & vbCrLf & _
-                            "FROM MAEEN WHERE RTEN = '" & Trim(Rten) & "' ORDER BY TIPOSUC" & vbCrLf & _
-                            "Update #Paso1 Set Monto_Asignado = Isnull((Select Monto_Asignado From " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros Where Rut = _Rut),0)," & vbCrLf & _
-                            "Moneda =  Isnull((Select Moneda From " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros Where Rut = _Rut),'$')," & vbCrLf & _
-                            "Clascrediticia = Isnull((Select Clascrediticia From " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros Where Rut = _Rut),'003')," & vbCrLf & _
-                            "Fecha_Vigencia = Isnull((Select Fecha_Vigencia From " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros Where Rut = _Rut),GETDATE())," & vbCrLf & _
-                            "Porc_Exposicion = Isnull((Select Porc_Exposicion From " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros Where Rut = _Rut),100)" & vbCrLf & _
-                            "Select Top 1 * From #Paso1" & vbCrLf & _
+        Consulta_sql = "Select Top 1 RTEN As _Rut,NOKOEN As Razon," &
+                            "CAST(0 As Float) as Monto_Asignado,CAST('' As Varchar(3)) As Moneda," &
+                            "CAST('' As Varchar(20)) As Clascrediticia,CAST(Null As Date) As Fecha_Vigencia," &
+                            "CAST(0 As Float) as Porc_Exposicion" & vbCrLf &
+                            "Into #Paso1" & vbCrLf &
+                            "FROM MAEEN WHERE RTEN = '" & Trim(Rten) & "' ORDER BY TIPOSUC" & vbCrLf &
+                            "Update #Paso1 Set Monto_Asignado = Isnull((Select Monto_Asignado From " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros Where Rut = _Rut),0)," & vbCrLf &
+                            "Moneda =  Isnull((Select Moneda From " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros Where Rut = _Rut),'$')," & vbCrLf &
+                            "Clascrediticia = Isnull((Select Clascrediticia From " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros Where Rut = _Rut),'003')," & vbCrLf &
+                            "Fecha_Vigencia = Isnull((Select Fecha_Vigencia From " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros Where Rut = _Rut),GETDATE())," & vbCrLf &
+                            "Porc_Exposicion = Isnull((Select Porc_Exposicion From " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros Where Rut = _Rut),100)" & vbCrLf &
+                            "Select Top 1 * From #Paso1" & vbCrLf &
                             "Drop Table #Paso1"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -45,16 +45,16 @@ Public Class Frm_InfoEnt_Ficha_Aseguradora
         Dim _Union = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "UNION" & vbCrLf
 
         caract_combo(Cmb_Clascrediticia)
-        Consulta_sql = _Union & "SELECT CodigoTabla AS Padre,NombreTabla AS Hijo" & vbCrLf & _
-                       "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf & _
-                       "WHERE Tabla = 'NEGOCIO_CLASCREDI'" & vbCrLf & _
+        Consulta_sql = _Union & "SELECT CodigoTabla AS Padre,NombreTabla AS Hijo" & vbCrLf &
+                       "FROM " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                       "WHERE Tabla = 'NEGOCIO_CLASCREDI'" & vbCrLf &
                        "ORDER BY Padre"
         Cmb_Clascrediticia.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         caract_combo(Cmb_Moneda)
-        Consulta_sql = "SELECT KOMO AS Padre,LTRIM(RTRIM(NOKOMO))+' - '+KOMO AS Hijo" & vbCrLf & _
-                       "FROM TABMO" & vbCrLf & _
-                       "Where KOMO In ('$','UF')" & vbCrLf & _
+        Consulta_sql = "SELECT KOMO AS Padre,LTRIM(RTRIM(NOKOMO))+' - '+KOMO AS Hijo" & vbCrLf &
+                       "FROM TABMO" & vbCrLf &
+                       "Where KOMO In ('$','UF')" & vbCrLf &
                        "ORDER BY Padre"
         Cmb_Moneda.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -113,10 +113,10 @@ Public Class Frm_InfoEnt_Ficha_Aseguradora
         Dim _Fecha_Vigencia = Format(Dtp_Fecha_Vigencia.Value, "yyyyMMdd")
         Dim _Porc_Exposicion = De_Num_a_Tx_01(Num_Porc_Exposicion.Value, False, 2)
 
-        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros" & vbCrLf & _
-                       "Where Rut = '" & _Rut & "'" & vbCrLf & _
-                       "Insert Into " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros" & Space(1) & _
-                       "(Rut,Monto_Asignado,Moneda,Clascrediticia, Fecha_Vigencia,Porc_Exposicion) Values" & Space(1) & _
+        Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros" & vbCrLf &
+                       "Where Rut = '" & _Rut & "'" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_Entidad_Cia_Seguros" & Space(1) &
+                       "(Rut,Monto_Asignado,Moneda,Clascrediticia, Fecha_Vigencia,Porc_Exposicion) Values" & Space(1) &
                        "('" & _Rut & "'," & _Monto_Asignado & ",'" & _Moneda & "','" & _Clascrediticia & "','" & _Fecha_Vigencia & "'," & _Porc_Exposicion & ")"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

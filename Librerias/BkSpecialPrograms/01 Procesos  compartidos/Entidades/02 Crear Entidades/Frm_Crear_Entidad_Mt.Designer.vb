@@ -23,13 +23,13 @@ Partial Class Frm_Crear_Entidad_Mt
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Crear_Entidad_Mt))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Crear_Entidad_Mt))
         Me.Txt_Koen = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Suen = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -290,6 +290,7 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Btn_Ver_Link = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ir_Ubicacion_Link = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ver_Documento = New DevComponents.DotNetBar.ButtonItem()
+        Me.Chk_EsCiaSeguro = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel6.SuspendLayout()
         Me.GroupPanel5.SuspendLayout()
         Me.GroupPanel4.SuspendLayout()
@@ -2340,10 +2341,10 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.TabControl1.BackColor = System.Drawing.Color.White
         Me.TabControl1.CanReorderTabs = True
-        Me.TabControl1.Controls.Add(Me.TabControlPanel2)
         Me.TabControl1.Controls.Add(Me.TabControlPanel4)
-        Me.TabControl1.Controls.Add(Me.TabControlPanel1)
         Me.TabControl1.Controls.Add(Me.TabControlPanel3)
+        Me.TabControl1.Controls.Add(Me.TabControlPanel2)
+        Me.TabControl1.Controls.Add(Me.TabControlPanel1)
         Me.TabControl1.Controls.Add(Me.TabControlPanel5)
         Me.TabControl1.Controls.Add(Me.TabControlPanel6)
         Me.TabControl1.Controls.Add(Me.TabControlPanel7)
@@ -2412,6 +2413,7 @@ Partial Class Frm_Crear_Entidad_Mt
         '
         Me.GroupPanel14.BackColor = System.Drawing.Color.White
         Me.GroupPanel14.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel14.Controls.Add(Me.Chk_EsCiaSeguro)
         Me.GroupPanel14.Controls.Add(Me.Btn_Modificar_RetieneImp)
         Me.GroupPanel14.Controls.Add(Me.Txt_ImpNoCobraVtaStr)
         Me.GroupPanel14.Controls.Add(Me.ContextMenuBar3)
@@ -4775,6 +4777,24 @@ Partial Class Frm_Crear_Entidad_Mt
         Me.Btn_Ver_Documento.Name = "Btn_Ver_Documento"
         Me.Btn_Ver_Documento.Text = "Ver documento (ligado a traza externa)"
         '
+        'Chk_EsCiaSeguro
+        '
+        Me.Chk_EsCiaSeguro.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_EsCiaSeguro.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_EsCiaSeguro.CheckBoxImageChecked = CType(resources.GetObject("Chk_EsCiaSeguro.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_EsCiaSeguro.FocusCuesEnabled = False
+        Me.Chk_EsCiaSeguro.ForeColor = System.Drawing.Color.Black
+        Me.Chk_EsCiaSeguro.Location = New System.Drawing.Point(6, 254)
+        Me.Chk_EsCiaSeguro.Name = "Chk_EsCiaSeguro"
+        Me.Chk_EsCiaSeguro.Size = New System.Drawing.Size(194, 15)
+        Me.Chk_EsCiaSeguro.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_EsCiaSeguro.TabIndex = 143
+        Me.Chk_EsCiaSeguro.TabStop = False
+        Me.Chk_EsCiaSeguro.Text = "Es compañia de seguros"
+        '
         'Frm_Crear_Entidad_Mt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -5100,4 +5120,5 @@ Partial Class Frm_Crear_Entidad_Mt
     Friend WithEvents Chk_ImpNoCobraVta As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_Modificar_RetieneImp As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Dtp_Fevecren As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Chk_EsCiaSeguro As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class
