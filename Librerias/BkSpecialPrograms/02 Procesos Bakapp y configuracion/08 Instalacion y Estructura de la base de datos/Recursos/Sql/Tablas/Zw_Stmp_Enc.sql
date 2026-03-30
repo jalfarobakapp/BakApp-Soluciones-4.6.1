@@ -45,6 +45,9 @@ CREATE TABLE [dbo].[Zw_Stmp_Enc](
     [CodFuncionario_Paga]           [char](3)       NOT NULL DEFAULT (''),
     [CodFuncionario_Pickea]         [char](3)       NOT NULL DEFAULT (''),
     [NombreEquipo_Pickea]           [varchar](50)   NOT NULL DEFAULT (''),
+    [NumPesada]                     [varchar](10)   NOT NULL DEFAULT (''),
+    [CodPalletAgregar]              [varchar](13)   NOT NULL DEFAULT (''),
+    [CantPalletAgregar]             [float]         NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Stmp_Enc] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

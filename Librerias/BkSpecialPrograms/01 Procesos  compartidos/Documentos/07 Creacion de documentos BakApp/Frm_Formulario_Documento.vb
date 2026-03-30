@@ -158,6 +158,9 @@ Public Class Frm_Formulario_Documento
     Dim _Cl_DocListaSuperior As New Cl_DocListaSuperior
     Dim _Cl_Pallet As New Pallet.Cl_Pallet
 
+    Public Property AgregaPallet As Boolean
+    Public Property ClPallet_Agrea As New Pallet.Cl_Pallet
+
     Public Property ForzarDecimalesEnUnidadesEnteras As Boolean
     Public Property PreVenta As Boolean
     Public Property SobreStock As Boolean
@@ -21480,6 +21483,26 @@ Public Class Frm_Formulario_Documento
 
             Next
 
+
+            If AgregaPallet Then
+
+                Consulta_sql = $"Select * From MAEPR Where KOPR = '{ClPallet_Agrea.Codigo}'"
+                Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Sb_Nueva_Linea(_TblEncabezado.Rows(0).Item("ListaPrecios"))
+
+                Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1)
+                Dim _Indice As Integer = _New_Fila.Index
+
+                _New_Fila.Cells("EsPallet").Value = True
+
+                Sb_Traer_Producto_A_La_Nueva_Fila(_New_Fila, _RowProducto, _Indice)
+                _New_Fila.Cells("Cantidad").Value = ClPallet_Agrea.Cantidad
+                Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False, True)
+
+            End If
+
+
             Sb_Borrar_Lineas_En_Blanco()
 
             If _Contador = 0 Then _Contador = 1
@@ -24380,11 +24403,14 @@ Public Class Frm_Formulario_Documento
 
         _Permiso = "Bkp00019"
 
+
         If _Cl_Entidad.Tiene_Deudas OrElse _Cl_Entidad.VentaMayorPromedioUlt3Meses OrElse _Cl_Entidad.SuperaCreditoDisponible Then
 
             If Not _Cl_Entidad.Tiene_Deudas_Vencidas Then
 
-                If _Cl_Entidad.Tiene_Mas_Ventas OrElse _Cl_Entidad.VentaMayorPromedioUlt3Meses OrElse _Cl_Entidad.SuperaCreditoDisponible Then
+                If (_Cl_Entidad.Tiene_Mas_Ventas OrElse
+                    _Cl_Entidad.VentaMayorPromedioUlt3Meses OrElse
+                    _Cl_Entidad.SuperaCreditoDisponible) Then
 
                     If _Cl_Entidad.UltFacPagadasEnMenosTiempoQueDimoper Then
 
@@ -24424,14 +24450,24 @@ Public Class Frm_Formulario_Documento
                         End If
 
                     Else
+
                         If _Cl_Entidad.SuperaCreditoDisponible Then
                             _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que se excede el crédito disponible.")
                             _Permiso = "Doc00169"
+                            _RevisarPermiso = True
                         ElseIf _MontoVenta > _Cl_Entidad.Promedio_Venta_UltXMeses Then
                             _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que supera el promedio de ventas de los últimos 3 meses.")
                             _Permiso = "Doc00170"
+                            _RevisarPermiso = True
+                        Else
+                            If _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper Then
+                                _RevisarPermiso = True
+                            Else
+                                _Tiene_Morosidad = False
+                                Return False
+                            End If
                         End If
-                        _RevisarPermiso = True
+
                     End If
 
                 End If

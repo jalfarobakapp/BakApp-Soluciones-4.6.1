@@ -265,6 +265,7 @@ Public Class Frm_Configuracion_Gral
             Chk_NotfStockInsuficiente_Stmp.Checked = .Item("NotfStockInsuficiente_Stmp")
 
             Chk_RevAutomaticaMorosidadClientes.Checked = .Item("RevAutomaticaMorosidadClientes")
+            Chk_ExigeNumPesada.Checked = .Item("ExigeNumPesada")
 
         End With
 
@@ -387,6 +388,7 @@ Public Class Frm_Configuracion_Gral
         Chk_ConservaListaDocOrigen.Enabled = _Modalidad_General
 
         Chk_RevAutomaticaMorosidadClientes.Enabled = _Modalidad_General
+        Chk_ExigeNumPesada.Enabled = Not _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -610,6 +612,7 @@ Public Class Frm_Configuracion_Gral
                        ",AgregarTransporteNVIparaGTI = " & Convert.ToInt32(Chk_AgregarTransporteNVIparaGTI.Checked) & vbCrLf &
                        ",NotfStockInsuficiente_Stmp = " & Convert.ToInt32(Chk_NotfStockInsuficiente_Stmp.Checked) & vbCrLf &
                        ",RevAutomaticaMorosidadClientes = " & Convert.ToInt32(Chk_RevAutomaticaMorosidadClientes.Checked) & vbCrLf &
+                       ",ExigeNumPesada = " & Convert.ToInt32(Chk_ExigeNumPesada.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

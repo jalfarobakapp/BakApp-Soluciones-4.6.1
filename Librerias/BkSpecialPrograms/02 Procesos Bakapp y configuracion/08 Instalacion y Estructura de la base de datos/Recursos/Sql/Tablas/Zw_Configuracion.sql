@@ -146,6 +146,7 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [AgregarTransporteNVIparaGTI]                           [bit]           NOT NULL DEFAULT (0),
 [NotfStockInsuficiente_Stmp]                            [bit]           NOT NULL DEFAULT (0),
 [RevAutomaticaMorosidadClientes]                        [bit]           NOT NULL DEFAULT (0),
+[ExigeNumPesada]                                        [bit]           NOT NULL DEFAULT (0),
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Empresa] ASC,

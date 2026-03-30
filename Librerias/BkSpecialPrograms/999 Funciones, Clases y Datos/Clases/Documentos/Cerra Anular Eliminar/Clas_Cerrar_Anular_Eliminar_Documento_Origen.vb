@@ -197,9 +197,6 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
 
         Catch ex As Exception
 
-            'My.Computer.FileSystem.WriteAllText("Archivo_Salida_Error.Log", ex.Message & vbCrLf & ex.StackTrace, False)
-            'MessageBoxEx.Show(_Formulario, ex.Message, "Error", _
-            '                  Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
             MessageBoxEx.Show(_Formulario, "Transaccion desecha" & vbCrLf & vbCrLf & "Error: " & ex.Message, "Problema",
                               Windows.Forms.MessageBoxButtons.OK, Windows.Forms.MessageBoxIcon.Stop)
         End Try

@@ -1137,6 +1137,7 @@ Where Facturar = 1"
                         End If
 
                         Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Docu_Ent Where Idmaeedo = {_Idmaeedo_Origen}"
+
                         Dim _Row_Zw_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
                         Dim _SobreStock As Boolean = _Row_Zw_Docu_Det.Item("SobreStock")
 
@@ -1152,11 +1153,23 @@ Where Facturar = 1"
                         Fm_Post.ModEmpresa_Doc = _Empresa
                         Fm_Post.ModModalidad_Doc = _Modalidad
 
+                        Consulta_Sql = $"Select top 1 * From {_Global_BaseBk}Zw_Stmp_Enc Where Id = " & _Id_Enc
+                        Dim _Zw_Stmp_Enc As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
                         Dim _Msj_Limpiar As LsValiciones.Mensajes
 
                         _Msj_Limpiar = Fm_Post.Fx_Limpiar(_Modalidad)
 
                         If _Msj_Limpiar.EsCorrecto Then
+
+                            If CBool(_Zw_Stmp_Enc.Item("CantPalletAgregar")) Then
+                                Dim _ClPallet_Agrea As New Pallet.Cl_Pallet
+                                _ClPallet_Agrea.Codigo = _Zw_Stmp_Enc.Item("CodPalletAgregar")
+                                _ClPallet_Agrea.Cantidad = _Zw_Stmp_Enc.Item("CantPalletAgregar")
+                                _ClPallet_Agrea.Pallet = True
+                                Fm_Post.AgregaPallet = True
+                                Fm_Post.ClPallet_Agrea = _ClPallet_Agrea
+                            End If
 
                             Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
                             Fm_Post.Zw_Transporte_Dte = _Zw_Transporte_Dte
