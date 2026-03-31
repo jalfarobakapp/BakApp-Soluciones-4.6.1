@@ -629,6 +629,12 @@
     </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\14 Exportar documentos\Cl_ExpotarDoc.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\15 Pesos Variables\Cl_PesoVariable.vb" />
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_CiasSeguro.Designer.vb">
+      <DependentUpon>Frm_Crear_Entidad_Mt_CiasSeguro.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_CiasSeguro.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_Puntos.Designer.vb">
       <DependentUpon>Frm_Crear_Entidad_Mt_Puntos.vb</DependentUpon>
     </Compile>
@@ -848,6 +854,7 @@
     <Compile Include="01 Procesos  compartidos\Productos\22 Media y promedio de venta\Frm_MediaYPromedioXProd_Estudio.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_CiasSeguro.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\01 Actualizacion BakApp\Clas_Actualiza_BakApp_Sql.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.Designer.vb">
       <DependentUpon>Frm_Usuarios_Random.vb</DependentUpon>
@@ -4870,6 +4877,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Asociacion de documentos a OCC\Frm_RecargosXProd.resx">
       <DependentUpon>Frm_RecargosXProd.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_CiasSeguro.resx">
+      <DependentUpon>Frm_Crear_Entidad_Mt_CiasSeguro.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_ProdCanMinXProv.resx">
       <DependentUpon>Frm_Crear_Entidad_Mt_ProdCanMinXProv.vb</DependentUpon>

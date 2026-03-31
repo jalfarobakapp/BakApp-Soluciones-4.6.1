@@ -233,6 +233,8 @@ Public Class Frm_Crear_Entidad_Mt
 
     Private Sub Frm_Crear_Entidad_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
+        Btn_CiasCegurosAsociadas.Visible = True
+
         Chk_Libera_NVV.Visible = _Existe_Tbl_Entidades_Bakapp
         Btn_ProductosExcluidos.Visible = False
         Btn_ProdCanMinCompra.Visible = False
@@ -2752,6 +2754,7 @@ Public Class Frm_Crear_Entidad_Mt
             Txt_CodPagador.Tag = _FilaSeleccionada_Zw.CodigoTabla
             Txt_CodPagador.Text = _FilaSeleccionada_Zw.CodigoTabla.ToString.Trim & " - " & _FilaSeleccionada_Zw.NombreTabla.ToString.Trim
         End If
+
     End Sub
 
     Private Sub Btn_Mnu_HoldingVerEntidades_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_HoldingVerEntidades.Click
@@ -2876,6 +2879,14 @@ Public Class Frm_Crear_Entidad_Mt
             Txt_ImpNoCobraVtaStr.Text = String.Empty
             Txt_ImpNoCobraVtaStr.Tag = String.Empty
         End If
+    End Sub
+
+    Private Sub Btn_CiasCegurosAsociadas_Click(sender As Object, e As EventArgs) Handles Btn_CiasCegurosAsociadas.Click
+
+        Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(Txt_Koen.Text, Txt_Suen.Text, Txt_Crto.Tag)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Sb_Grilla_Maennmail_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
