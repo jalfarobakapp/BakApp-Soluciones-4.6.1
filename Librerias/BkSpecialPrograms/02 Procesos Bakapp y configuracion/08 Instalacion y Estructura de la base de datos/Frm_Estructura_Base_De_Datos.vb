@@ -393,6 +393,8 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Ingreso_Enc", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Paquetes", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_WMS_Picking_Log", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_WMS_RutaXDoc", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Ubicaciones_Bodega", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Ubicaciones_Sectores", _Modificar, Lbl_Eventos)

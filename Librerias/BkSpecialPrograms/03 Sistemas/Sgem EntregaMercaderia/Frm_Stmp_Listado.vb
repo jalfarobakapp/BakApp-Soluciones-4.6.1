@@ -1373,9 +1373,6 @@ Public Class Frm_Stmp_Listado
                                 "',CantPalletAgregar = '" & _Cl_Pallet.Cantidad &
                                 "',CodFuncionario_Factura = '" & FUNCIONARIO & "'" & vbCrLf &
                                 "Where Id = " & _Row.Item("Id")
-                If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-                    MessageBoxEx.Show(Me, _Msj_Pallet.Mensaje, _Msj_Pallet.Detalle, MessageBoxButtons.OK, _Msj_Pallet.Icono)
-                End If
 
             Else
 

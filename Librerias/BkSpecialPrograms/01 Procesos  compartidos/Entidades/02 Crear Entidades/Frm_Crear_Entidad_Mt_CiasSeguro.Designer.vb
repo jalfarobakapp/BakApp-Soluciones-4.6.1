@@ -23,20 +23,20 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Crear_Entidad_Mt_CiasSeguro))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_EditarCiaSeguro = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_QuitarCiaSeguro = New DevComponents.DotNetBar.ButtonItem()
-        Me.GrillaContactos = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Grilla_CisSeguros = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_AsociarCiaSeguro = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GrillaContactos, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Grilla_CisSeguros, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -45,7 +45,7 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.Menu_Contextual)
-        Me.GroupPanel1.Controls.Add(Me.GrillaContactos)
+        Me.GroupPanel1.Controls.Add(Me.Grilla_CisSeguros)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(10, 6)
         Me.GroupPanel1.Name = "GroupPanel1"
@@ -86,7 +86,7 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
         Me.Menu_Contextual.AntiAlias = True
         Me.Menu_Contextual.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_Contextual.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
-        Me.Menu_Contextual.Location = New System.Drawing.Point(153, 48)
+        Me.Menu_Contextual.Location = New System.Drawing.Point(92, 31)
         Me.Menu_Contextual.Name = "Menu_Contextual"
         Me.Menu_Contextual.Size = New System.Drawing.Size(153, 25)
         Me.Menu_Contextual.Stretch = True
@@ -107,7 +107,7 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
         Me.Btn_EditarCiaSeguro.Image = CType(resources.GetObject("Btn_EditarCiaSeguro.Image"), System.Drawing.Image)
         Me.Btn_EditarCiaSeguro.ImageAlt = CType(resources.GetObject("Btn_EditarCiaSeguro.ImageAlt"), System.Drawing.Image)
         Me.Btn_EditarCiaSeguro.Name = "Btn_EditarCiaSeguro"
-        Me.Btn_EditarCiaSeguro.Text = "Editar compañia de seguro"
+        Me.Btn_EditarCiaSeguro.Text = "Editar monto asignado"
         '
         'Btn_QuitarCiaSeguro
         '
@@ -116,45 +116,45 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
         Me.Btn_QuitarCiaSeguro.Name = "Btn_QuitarCiaSeguro"
         Me.Btn_QuitarCiaSeguro.Text = "Quitar compañia de seguro"
         '
-        'GrillaContactos
+        'Grilla_CisSeguros
         '
-        Me.GrillaContactos.AllowUserToAddRows = False
-        Me.GrillaContactos.AllowUserToDeleteRows = False
-        Me.GrillaContactos.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaContactos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
-        Me.GrillaContactos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GrillaContactos.DefaultCellStyle = DataGridViewCellStyle8
-        Me.GrillaContactos.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.GrillaContactos.EnableHeadersVisualStyles = False
-        Me.GrillaContactos.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
-        Me.GrillaContactos.Location = New System.Drawing.Point(0, 0)
-        Me.GrillaContactos.Name = "GrillaContactos"
-        Me.GrillaContactos.ReadOnly = True
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaContactos.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
-        Me.GrillaContactos.Size = New System.Drawing.Size(775, 185)
-        Me.GrillaContactos.StandardTab = True
-        Me.GrillaContactos.TabIndex = 54
+        Me.Grilla_CisSeguros.AllowUserToAddRows = False
+        Me.Grilla_CisSeguros.AllowUserToDeleteRows = False
+        Me.Grilla_CisSeguros.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_CisSeguros.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.Grilla_CisSeguros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_CisSeguros.DefaultCellStyle = DataGridViewCellStyle2
+        Me.Grilla_CisSeguros.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Grilla_CisSeguros.EnableHeadersVisualStyles = False
+        Me.Grilla_CisSeguros.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Grilla_CisSeguros.Location = New System.Drawing.Point(0, 0)
+        Me.Grilla_CisSeguros.Name = "Grilla_CisSeguros"
+        Me.Grilla_CisSeguros.ReadOnly = True
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_CisSeguros.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.Grilla_CisSeguros.Size = New System.Drawing.Size(775, 185)
+        Me.Grilla_CisSeguros.StandardTab = True
+        Me.Grilla_CisSeguros.TabIndex = 54
         '
         'Bar1
         '
@@ -198,7 +198,7 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
         Me.Text = "Compañias de seguro asociadas a la entidad"
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GrillaContactos, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Grilla_CisSeguros, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -208,7 +208,7 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
     Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_EditarCiaSeguro As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_QuitarCiaSeguro As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents GrillaContactos As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents Grilla_CisSeguros As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_AsociarCiaSeguro As DevComponents.DotNetBar.ButtonItem
 End Class

@@ -233,7 +233,7 @@ Public Class Frm_Crear_Entidad_Mt
 
     Private Sub Frm_Crear_Entidad_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
-        Btn_CiasCegurosAsociadas.Visible = True
+        'Btn_CiasCegurosAsociadas.Visible = True
 
         Chk_Libera_NVV.Visible = _Existe_Tbl_Entidades_Bakapp
         Btn_ProductosExcluidos.Visible = False

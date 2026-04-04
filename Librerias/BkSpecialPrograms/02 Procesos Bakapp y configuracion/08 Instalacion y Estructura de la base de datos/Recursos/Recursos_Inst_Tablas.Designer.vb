@@ -3552,8 +3552,8 @@ Namespace My.Resources
         '''
         '''
         '''CREATE TABLE [dbo].[Zw_Prod_Reemplazos](
-        '''	[Codigo] [varchar](13) NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Codigo_Madre] [varchar](13) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]        [varchar](13) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo_Madre]  [varchar](13) NOT NULL DEFAULT (&apos;&apos;),
         ''' CONSTRAINT [PK_Zw_Prod_Reemplazos] PRIMARY KEY CLUSTERED 
         '''(
         '''	[Codigo] ASC,
@@ -3576,15 +3576,14 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_Prod_SobreStock](
         '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
-        '''	[Empresa]				[char](2)           NOT NULL,
-        '''	[Codigo]				[varchar](13)       NOT NULL,
-        '''	[Descripcion]			[varchar](50)       NOT NULL,
-        '''	[Activo]				[bit]               NOT NULL,
-        '''	[CodFuncionarioCrea]	[varchar](3)        NOT NULL,
+        '''	[Empresa]				[char](2)           NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]				[varchar](13)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Descripcion]			[varchar](50)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Activo]				[bit]               NOT NULL DEFAULT (0),
+        '''	[CodFuncionarioCrea]	[varchar](3)        NOT NULL DEFAULT (&apos;&apos;),
         '''	[FechaVigencia]			[datetime]          NULL,
-        '''	[FormatoPqte]			[varchar](10)       NOT NULL,
-        '''	[PqteHabilitado]		[float]             NOT NULL,
-        '''	[PqteStock]             [float]    [resto de la cadena truncado]&quot;;.
+        '''	[FormatoPqte]			[varchar](10)       NOT NULL DEFAULT (&apos;&apos;),
+        '''	[PqteHa [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Prod_SobreStock() As String
             Get
@@ -5632,6 +5631,53 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_WMS_Paquetes() As String
             Get
                 Return ResourceManager.GetString("Zw_WMS_Paquetes", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_WMS_Picking_Log](
+        '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Enc]			[int]			NULL DEFAULT (0),
+        '''	[Idmaeedo]			[int]			NULL DEFAULT (0),
+        '''	[Idmaeddo]			[int]			NULL DEFAULT (0),
+        '''	[SKU]				[varchar](50)	NULL DEFAULT (&apos;&apos;),
+        '''	[Tag]				[varchar](50)	NULL DEFAULT (&apos;&apos;),
+        '''	[Accion]			[varchar](200)	NULL DEFAULT (&apos;&apos;),
+        '''	[Fecha_Accion]		[datetime]		NULL,
+        '''	[Observaciones]		[varchar](500)	NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_WMS_Picking_Log] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id]  [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_WMS_Picking_Log() As String
+            Get
+                Return ResourceManager.GetString("Zw_WMS_Picking_Log", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''
+        '''CREATE TABLE [dbo].[Zw_WMS_RutaXDoc](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa]		[char](2)			NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Id_Enc]		[int]				NOT NULL DEFAULT (0),
+        '''	[Idmaeedo]		[int]				NOT NULL DEFAULT (0),
+        '''	[Tido]			[char](3)			NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]			[varchar](10)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Ruta]			[varchar](10)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[OrdenRuta]		[int]				NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_WMS_RutaXDoc] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Id] ASC
+        ''')WITH (PAD_INDEX =  [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_WMS_RutaXDoc() As String
+            Get
+                Return ResourceManager.GetString("Zw_WMS_RutaXDoc", resourceCulture)
             End Get
         End Property
         

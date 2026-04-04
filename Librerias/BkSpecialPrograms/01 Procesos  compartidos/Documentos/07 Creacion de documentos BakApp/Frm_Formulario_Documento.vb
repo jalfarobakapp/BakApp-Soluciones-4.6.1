@@ -1707,6 +1707,10 @@ Public Class Frm_Formulario_Documento
             .Item("SobreStock") = SobreStock
             .Item("LeyendaMorosidad") = String.Empty
 
+            .Item("UsaCiaSeguro") = False
+            .Item("CodEntidad_Cia") = String.Empty
+            .Item("CodSucEntidad_Cia") = String.Empty
+
             _TblEncabezado.Rows.Add(NewFila)
 
         End With
@@ -7013,6 +7017,10 @@ Public Class Frm_Formulario_Documento
                     End If
                 End If
 
+                If _Fila.Cells("EsPallet").Value = True Then
+                    _CalCantidades = True
+                End If
+
                 _CantUd1 = _Fila.Cells("CantUd1").Value
                 _CantUd2 = _Fila.Cells("CantUd2").Value
 
@@ -8891,6 +8899,8 @@ Public Class Frm_Formulario_Documento
                         Dim _ClienteMoroso As Boolean = _Cl_Entidad.ClienteMoroso
 
                         _MensajeMsj = _Cl_Entidad.Mensaje
+
+                        '_RevAutomaticaMorosidadClientes = True
 
                         If _RevAutomaticaMorosidadClientes Then
 
@@ -12856,6 +12866,9 @@ Public Class Frm_Formulario_Documento
             .Item("TipoMoneda") = _TblEncabezado_StBy.Rows(0).Item("TipoMoneda")
             .Item("Valor_Dolar") = _TblEncabezado_StBy.Rows(0).Item("Valor_Dolar")
 
+            .Item("UsaCiaSeguro") = _TblEncabezado_StBy.Rows(0).Item("UsaCiaSeguro")
+            .Item("CodEntidad_Cia") = _TblEncabezado_StBy.Rows(0).Item("CodEntidad_Cia")
+            .Item("CodSucEntidad_Cia") = _TblEncabezado_StBy.Rows(0).Item("CodSucEntidad_Cia")
 
             LblMoneda.Tag = .Item("Moneda_Doc")
             LblMoneda.Text = .Item("Moneda_Doc")
@@ -17143,6 +17156,48 @@ Public Class Frm_Formulario_Documento
                     Catch ex As Exception
                         _Caja_Habilitada = False
                     End Try
+
+
+                    Dim _Revisar_CiaSeguro As Boolean = True
+
+                    If _Revisar_CiaSeguro Then
+
+                        Dim _Koen As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+                        Dim _Suen As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+                        Dim _TotalBrutoDoc As Double = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
+
+                        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidad_CiaSeguro", $"CodEntidad = '{_Koen}' And CodSucEntidad = '{_Suen}'")
+
+                        If CBool(_Reg) Then
+
+                            MessageBoxEx.Show(Me, "A continuación, deberá seleccionar una compañía de seguros para asociarla a la venta.",
+                                              "Compañia de seguros", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                            Dim _Row_CiaSeguro As DataRow
+
+                            Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(_Koen, _Suen, _TotalBrutoDoc)
+                            Fm.ModoSeleccion = True
+                            Fm.MontoAUtilizar = _TotalBrutoDoc
+                            Fm.ShowDialog(Me)
+                            If Fm.DialogResult = DialogResult.OK Then
+                                _Row_CiaSeguro = Fm.Row_CiaSeguro
+                            End If
+                            Fm.Dispose()
+
+                            If IsNothing(_Row_CiaSeguro) Then
+                                MessageBoxEx.Show(Me, "Debe seleccionar una compañía de seguros para realizar la venta.", "Validación",
+                                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Return
+                            Else
+                                _TblEncabezado.Rows(0).Item("UsaCiaSeguro") = True
+                                _TblEncabezado.Rows(0).Item("CodEntidad_Cia") = _Row_CiaSeguro.Item("CodEntidad_Cia")
+                                _TblEncabezado.Rows(0).Item("CodSucEntidad_Cia") = _Row_CiaSeguro.Item("CodSucEntidad_Cia")
+                            End If
+
+                        End If
+
+                    End If
+
 
                     Dim Fm_Obs As New Frm_Formulario_Observaciones(_Ds_Matriz_Documentos, _RowEntidad, _Tipo_Documento, _Documento_Autorizado)
                     Fm_Obs.Btn_Grabar_Observaciones.Visible = False
@@ -25317,6 +25372,8 @@ Public Class Frm_Formulario_Documento
                 End If
 
                 Dim _RevAutomaticaMorosidadClientes As Boolean = _Global_Row_Configuracion_General.Item("RevAutomaticaMorosidadClientes")
+
+                '_RevAutomaticaMorosidadClientes = True
 
                 If _RevAutomaticaMorosidadClientes Then
 

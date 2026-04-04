@@ -2093,19 +2093,26 @@ Public Class Clase_Crear_Documento
             Dim _Idpdaenca As Integer = NuloPorNro(_Row_Encabezado.Item("Idpdaenca"), 0)
             Dim _ConservaNudo As Boolean = NuloPorNro(_Row_Encabezado.Item("ConservaNudo"), 0)
             Dim _LeyendaMorosidad As String = NuloPorNro(_Row_Encabezado.Item("LeyendaMorosidad"), "")
+            Dim _UsaCiaSeguro As Boolean = NuloPorNro(_Row_Encabezado.Item("UsaCiaSeguro"), False)
+            Dim _CodEntidad_Cia As String = NuloPorNro(_Row_Encabezado.Item("CodEntidad_Cia"), "")
+            Dim _CodSucEntidad_Cia As String = NuloPorNro(_Row_Encabezado.Item("CodSucEntidad_Cia"), "")
+
             'Dim _B2B As Boolean = NuloPorNro(_Row_Encabezado.Item("B2B"), False)
 
             If (_Tido = "NVV" OrElse _Tido = "NVI") OrElse (_Tido = "COV" And SobreStock) Then
                 _Pickear = _Row_Encabezado.Item("Pickear")
             End If
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo,FechaHoraGrab," &
-                           "HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil,Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad,B2B) Values " &
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad," &
+                           "Tido,Nudo,FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil," &
+                           "Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad,B2B,UsaCiaSeguro,CodEntidad_Cia,CodSucEntidad_Cia) Values " &
                            "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad_Bk & "'" &
                            ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
                            "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(PreVenta) &
                            "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) &
-                           ",'" & _Empresa & "','" & _LeyendaMorosidad & "'," & Convert.ToInt32(B2B) & ")"
+                           ",'" & _Empresa & "','" & _LeyendaMorosidad & "'," &
+                           Convert.ToInt32(B2B) & "," & Convert.ToInt32(_UsaCiaSeguro) &
+                           ",'" & _CodEntidad_Cia & "','" & _CodSucEntidad_Cia & "')"
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
@@ -3204,6 +3211,10 @@ Public Class Clase_Crear_Documento
         Dim _Pickear As Integer
         Dim _Grupo As String
 
+        Dim _UsaCiaSeguro As Integer
+        Dim _CodEntidad_Cia As String
+        Dim _CodSucEntidad_Cia As String
+
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
 
@@ -3348,6 +3359,10 @@ Public Class Clase_Crear_Documento
                 SobreStock = .Item("SobreStock")
 
                 _LeyendaMorosidad = NuloPorNro(.Item("LeyendaMorosidad"), "")
+
+                _UsaCiaSeguro = Convert.ToInt32(.Item("UsaCiaSeguro"))
+                _CodEntidad_Cia = NuloPorNro(.Item("CodEntidad_Cia"), "")
+                _CodSucEntidad_Cia = NuloPorNro(.Item("CodSucEntidad_Cia"), "")
 
             End With
 
@@ -3905,6 +3920,9 @@ Public Class Clase_Crear_Documento
                            ",ConservaNudo = " & Convert.ToInt32(_ConservaNudo) & Environment.NewLine &
                            ",SobreStock = " & Convert.ToInt32(SobreStock) & Environment.NewLine &
                            ",LeyendaMorosidad = '" & _LeyendaMorosidad & "'" & Environment.NewLine &
+                           ",UsaCiaSeguro = " & Convert.ToInt32(_UsaCiaSeguro) & Environment.NewLine &
+                           ",CodEntidad_Cia = '" & _CodEntidad_Cia & "'" & Environment.NewLine &
+                           ",CodSucEntidad_Cia = '" & _CodSucEntidad_Cia & "'" & Environment.NewLine &
                            "Where Id_DocEnc = " & _Id_DocEnc
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
