@@ -1180,7 +1180,57 @@ Where Facturar = 1"
                                                                          True, False,,, False)
 
                             If CBool(_Msj_GrabarDoc.Id) Then
+
                                 Fm_Post.Sb_Activar_Orden_De_Despacho(_Msj_GrabarDoc.Id)
+
+                                If _SobreStock Then
+
+                                    Consulta_Sql = "Select KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
+
+                                    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+                                    For Each _Row_Kopct As DataRow In _Tbl.Rows
+
+                                        Dim _Codigo As String = _Row_Kopct.Item("KOPRCT")
+
+                                        If Not String.IsNullOrEmpty(_Codigo) Then
+
+                                            Consulta_Sql = $"
+;WITH CTE_SobreStock AS
+(
+    SELECT 
+        P.Id,
+        P.PqteHabilitado,
+        SUM(D.Qty_SobreStock) AS TotalFacturado
+    FROM {_Global_BaseBk}Zw_Prod_SobreStock AS P
+    INNER JOIN {_Global_BaseBk}Zw_Docu_Det AS D 
+            ON D.Id_SobreStock = P.Id
+           AND D.SobreStock = 1
+           AND D.Tido = 'NVV'
+    INNER JOIN MAEDDO AS M
+            ON M.IDRST = D.Idmaeddo
+           AND M.TIDO = 'FCV'
+    WHERE P.Codigo    = '{_Codigo}'
+      AND P.Empresa   = '{Mod_Empresa}'
+      --AND P.Eliminado = 0
+    GROUP BY 
+        P.Id,
+        P.PqteHabilitado
+)
+UPDATE P
+SET P.Activo = 0
+FROM {_Global_BaseBk}Zw_Prod_SobreStock AS P
+INNER JOIN CTE_SobreStock AS X
+        ON X.Id = P.Id
+WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
+  AND P.Activo = 1;   -- ← condición correcta aquí"
+                                            _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+                                        End If
+                                    Next
+
+                                End If
+
                             End If
                             Fm_Post.Dispose()
 

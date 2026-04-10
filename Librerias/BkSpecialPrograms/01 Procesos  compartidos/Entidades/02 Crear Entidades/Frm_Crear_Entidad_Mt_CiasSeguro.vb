@@ -24,15 +24,19 @@ Public Class Frm_Crear_Entidad_Mt_CiasSeguro
         Me._CodSucEntidad = _CodSucEntidad
         Me._MontoCreditoTotal = _MontoCreditoTotal
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_Crear_Entidad_Mt_CiasSeguro_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         Sb_Formato_Generico_Grilla(Grilla_CisSeguros, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, ModoSeleccion, False)
 
+        Btn_AsociarCiaSeguro.Enabled = Not ModoSeleccion
+        Btn_VenderSinUsarCiaSeguro.Visible = ModoSeleccion
+
         If ModoSeleccion Then
             Sb_Actualizar_Grilla_ModoSeleccion()
-            Btn_AsociarCiaSeguro.Enabled = False
         Else
             Sb_Actualizar_Grilla()
             AddHandler Grilla_CisSeguros.MouseDown, AddressOf Sb_Grilla_Cuentas_MouseDown
@@ -411,4 +415,8 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' And Co
 
     End Sub
 
+    Private Sub Btn_VenderSinUsarCiaSeguro_Click(sender As Object, e As EventArgs) Handles Btn_VenderSinUsarCiaSeguro.Click
+        Me.DialogResult = DialogResult.Cancel
+        Me.Close()
+    End Sub
 End Class

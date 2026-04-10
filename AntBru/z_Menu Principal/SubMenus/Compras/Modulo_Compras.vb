@@ -25,6 +25,8 @@ Public Class Modulo_Compras
 
         Sb_Color_Botones_Barra(Bar2)
 
+        Lbl_NombreEmpresaActiva.Text = BkSpecialPrograms.RazonEmpresa
+
     End Sub
 
     Private Sub ModuloCompras_Load(sender As Object, e As System.EventArgs) Handles Me.Load

@@ -23,17 +23,18 @@ Partial Class InformesCompra
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(InformesCompra))
-        Me.Bar2 = New DevComponents.DotNetBar.Bar
-        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem
-        Me.BtnInfPagoProveedores = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.ItemContainer3 = New DevComponents.DotNetBar.ItemContainer
-        Me.BtnRankingProductos = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.MetroTilePanel2 = New DevComponents.DotNetBar.Metro.MetroTilePanel
-        Me.MnuEspecialPrecios = New DevComponents.DotNetBar.ItemContainer
-        Me.Btn_Proximas_Recepciones = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.Btn_Informe_Vencimiento_Compras = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX
+        Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
+        Me.BtnInfPagoProveedores = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.ItemContainer3 = New DevComponents.DotNetBar.ItemContainer()
+        Me.BtnRankingProductos = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.MetroTilePanel2 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
+        Me.MnuEspecialPrecios = New DevComponents.DotNetBar.ItemContainer()
+        Me.Btn_Proximas_Recepciones = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Informe_Vencimiento_Compras = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -43,9 +44,9 @@ Partial Class InformesCompra
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.BtnCambiarDeUsuario})
-        Me.Bar2.Location = New System.Drawing.Point(0, 182)
+        Me.Bar2.Location = New System.Drawing.Point(0, 203)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(434, 41)
+        Me.Bar2.Size = New System.Drawing.Size(579, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 43
@@ -76,8 +77,8 @@ Partial Class InformesCompra
         Me.BtnInfPagoProveedores.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.BtnInfPagoProveedores.Name = "BtnInfPagoProveedores"
         Me.BtnInfPagoProveedores.SymbolColor = System.Drawing.Color.Empty
-        Me.BtnInfPagoProveedores.Text = "<font size=""+4"">Pago proveedores</font><br/><font size=""-1"">Teneduría de pagos a " & _
-            "proveedores<br/> - Informes<br/> - Procesos</font>"
+        Me.BtnInfPagoProveedores.Text = "<font size=""+4"">Pago proveedores</font><br/><font size=""-1"">Teneduría de pagos a " &
+    "proveedores<br/> - Informes<br/> - Procesos</font>"
         Me.BtnInfPagoProveedores.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Green
         '
         '
@@ -116,8 +117,8 @@ Partial Class InformesCompra
         Me.BtnRankingProductos.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.BtnRankingProductos.Name = "BtnRankingProductos"
         Me.BtnRankingProductos.SymbolColor = System.Drawing.Color.Empty
-        Me.BtnRankingProductos.Text = "<font size=""+4"">Ranking de productos</font><br/><font size=""-1"">Ranking de produc" & _
-            "tos: " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Presencia" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Cantidad" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Precio</font>"
+        Me.BtnRankingProductos.Text = "<font size=""+4"">Ranking de productos</font><br/><font size=""-1"">Ranking de produc" &
+    "tos: " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Presencia" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Cantidad" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "- Precio</font>"
         Me.BtnRankingProductos.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
         '
         '
@@ -146,7 +147,7 @@ Partial Class InformesCompra
         Me.MetroTilePanel2.ForeColor = System.Drawing.Color.Black
         Me.MetroTilePanel2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.MnuEspecialPrecios})
         Me.MetroTilePanel2.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroTilePanel2.Location = New System.Drawing.Point(3, 49)
+        Me.MetroTilePanel2.Location = New System.Drawing.Point(6, 70)
         Me.MetroTilePanel2.Name = "MetroTilePanel2"
         Me.MetroTilePanel2.Size = New System.Drawing.Size(609, 134)
         Me.MetroTilePanel2.TabIndex = 45
@@ -175,8 +176,8 @@ Partial Class InformesCompra
         Me.Btn_Proximas_Recepciones.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_Proximas_Recepciones.Name = "Btn_Proximas_Recepciones"
         Me.Btn_Proximas_Recepciones.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Proximas_Recepciones.Text = "<font size=""+4""><b>PROXIMAS RECEPCIONES</b></font><br/><font size=""-1"">Productos " & _
-            "pendientes...</font>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        Me.Btn_Proximas_Recepciones.Text = "<font size=""+4""><b>PROXIMAS RECEPCIONES</b></font><br/><font size=""-1"">Productos " &
+    "pendientes...</font>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         Me.Btn_Proximas_Recepciones.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
         Me.Btn_Proximas_Recepciones.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -202,8 +203,8 @@ Partial Class InformesCompra
         Me.Btn_Informe_Vencimiento_Compras.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_Informe_Vencimiento_Compras.Name = "Btn_Informe_Vencimiento_Compras"
         Me.Btn_Informe_Vencimiento_Compras.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Informe_Vencimiento_Compras.Text = "<font size=""+4""><b>VENCIMIENTOS</b></font><br/><font size=""-1"">Informe vencimient" & _
-            "os</font>"
+        Me.Btn_Informe_Vencimiento_Compras.Text = "<font size=""+4""><b>VENCIMIENTOS</b></font><br/><font size=""-1"">Informe vencimient" &
+    "os</font>"
         Me.Btn_Informe_Vencimiento_Compras.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
         Me.Btn_Informe_Vencimiento_Compras.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -236,15 +237,29 @@ Partial Class InformesCompra
         Me.LabelX1.TabIndex = 50
         Me.LabelX1.Text = "<font color=""#349FCE""><b>INFORMES DE COMPRA</b></font>"
         '
+        'Lbl_NombreEmpresaActiva
+        '
+        '
+        '
+        '
+        Me.Lbl_NombreEmpresaActiva.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_NombreEmpresaActiva.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_NombreEmpresaActiva.Location = New System.Drawing.Point(6, 41)
+        Me.Lbl_NombreEmpresaActiva.Name = "Lbl_NombreEmpresaActiva"
+        Me.Lbl_NombreEmpresaActiva.Size = New System.Drawing.Size(620, 23)
+        Me.Lbl_NombreEmpresaActiva.TabIndex = 59
+        Me.Lbl_NombreEmpresaActiva.Text = "NOMBRE DE LA EMPRESA... ESTE ES EL NOMBRE DE LA EM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
         'InformesCompra
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Lbl_NombreEmpresaActiva)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.MetroTilePanel2)
         Me.Controls.Add(Me.Bar2)
         Me.Name = "InformesCompra"
-        Me.Size = New System.Drawing.Size(434, 223)
+        Me.Size = New System.Drawing.Size(579, 244)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -260,5 +275,5 @@ Partial Class InformesCompra
     Private WithEvents Btn_Proximas_Recepciones As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents BtnCambiarDeUsuario As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
-
+    Friend WithEvents Lbl_NombreEmpresaActiva As DevComponents.DotNetBar.LabelX
 End Class

@@ -117,12 +117,21 @@ Public Class Cl_Entidad
                 Dim _Koen As String = _RowEntidad.Item("KOEN")
                 Dim _Suen As String = _RowEntidad.Item("SUEN")
 
+                Dim _ToleranciaDocMoroso As Integer
+
+                Try
+                    _ToleranciaDocMoroso = _Global_Row_Configuracion_General.Item("ToleranciaDocMoroso")
+                Catch ex As Exception
+                    _ToleranciaDocMoroso = 0
+                End Try
+
                 _Cl_Entidad.Dimoper = _RowEntidad.Item("DIMOPER")
 
                 Consulta_sql = My.Resources.Sql_Entidad.SqlQuery_deuda_doc_comerciales
                 Consulta_sql = Replace(Consulta_sql, "#CodEntidad#", _Koen)
                 Consulta_sql = Replace(Consulta_sql, "#Fecha#", _Fecha)
                 Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+                Consulta_sql = Replace(Consulta_sql, "#ToleranciaDocMoroso#", _ToleranciaDocMoroso)
 
                 Tbl_Deudas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -288,7 +297,7 @@ Public Class Cl_Entidad
                             _Cl_Entidad.VentaMayorPromedioUlt3Meses = False
                             '_Cl_Entidad.ListaProblemas.Add("La venta es menor al promedio de ventas realizadas los últimos 3 meses. " &
                             '                   $"Venta: { FormatNumber(_MontoVenta, 0)}, promedio venta: {FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}")
-                            _Cl_Entidad.ListaProblemas.Add("La venta actual ({ FormatNumber(_MontoVenta, 0)}) está por debajo del promedio de ventas de los" &
+                            _Cl_Entidad.ListaProblemas.Add($"La venta actual ({ FormatNumber(_MontoVenta, 0)}) está por debajo del promedio de ventas de los" &
                                                $"últimos 3 meses ({FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}).")
                         Else
                             _Cl_Entidad.VentaMayorPromedioUlt3Meses = True

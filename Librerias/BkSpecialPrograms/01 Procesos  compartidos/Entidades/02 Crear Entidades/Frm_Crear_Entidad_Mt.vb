@@ -1557,11 +1557,28 @@ Public Class Frm_Crear_Entidad_Mt
                 Txt_Suen.Text = _Suen
                 TipoSuc = .TIPOSUC
 
+                'Try
+                '    Txt_Rten.Text = .RTEN.ToString.Trim & "-" & RutDigito(.RTEN).ToString.Trim
+                'Catch ex As Exception
+                '    Txt_Rten.Text = .RTEN.ToString.Trim
+                'End Try
+
+                Dim _Rut As String = .RTEN.ToString.Trim
+                Dim _Rten = _Rut
+                Dim _Dv As String
+
+                If _Rut.Contains("-") Then
+                    Dim _Rt = Split(_Rut, "-")
+                    _Rut = _Rt(0)
+                End If
                 Try
-                    Txt_Rten.Text = .RTEN.ToString.Trim & "-" & RutDigito(.RTEN).ToString.Trim
+                    _Dv = RutDigito(_Rut)
+                    _Rut = _Rut & "-" & _Dv
                 Catch ex As Exception
-                    Txt_Rten.Text = .RTEN.ToString.Trim
+                    _Rut = _Rten
                 End Try
+
+                Txt_Rten.Text = _Rut
 
                 Cmb_Tiposuc.SelectedValue = .TIEN
                 Txt_Nokoen.Text = .NOKOEN.Trim
@@ -1892,8 +1909,8 @@ Public Class Frm_Crear_Entidad_Mt
                 Txt_Comuna.Text = _NComuna.Trim & ", " & _NCiudad.Trim & " - " & _NPais
 
                 Cmb_Actien.SelectedValue = _Row_Entidad.Item("ACTIEN")
-                Cmb_Lcen.SelectedValue = _Row_Entidad.Item("LCEN")
-                Cmb_Lven.SelectedValue = _Row_Entidad.Item("LVEN")
+                Cmb_Lcen.SelectedValue = Replace(_Row_Entidad.Item("LCEN"), "TABPP", "")
+                Cmb_Lven.SelectedValue = Replace(_Row_Entidad.Item("LVEN"), "TABPP", "")
                 Cmb_Ruen.SelectedValue = _Row_Entidad.Item("RUEN")
                 Cmb_Tamaen.SelectedValue = _Row_Entidad.Item("TAMAEN")
                 Cmb_Transpoen.SelectedValue = _Row_Entidad.Item("TRANSPOEN")

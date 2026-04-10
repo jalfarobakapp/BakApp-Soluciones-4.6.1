@@ -33,6 +33,7 @@ Partial Class Tesoreria_Clientes
         Me.Btn_Pago_Documentos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Liquidacion_TJV_Credito = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Anticipos = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -56,7 +57,7 @@ Partial Class Tesoreria_Clientes
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
-        Me.Bar2.Location = New System.Drawing.Point(0, 281)
+        Me.Bar2.Location = New System.Drawing.Point(0, 291)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(637, 41)
         Me.Bar2.Stretch = True
@@ -86,7 +87,7 @@ Partial Class Tesoreria_Clientes
         Me.MetroTilePanel1.ForeColor = System.Drawing.Color.Black
         Me.MetroTilePanel1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.MnuEspecialOtros})
         Me.MetroTilePanel1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 43)
+        Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 58)
         Me.MetroTilePanel1.Name = "MetroTilePanel1"
         Me.MetroTilePanel1.Size = New System.Drawing.Size(755, 353)
         Me.MetroTilePanel1.TabIndex = 41
@@ -243,15 +244,29 @@ Partial Class Tesoreria_Clientes
         Me.Btn_Anticipos.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Anticipos.TitleTextColor = System.Drawing.Color.White
         '
+        'Lbl_NombreEmpresaActiva
+        '
+        '
+        '
+        '
+        Me.Lbl_NombreEmpresaActiva.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_NombreEmpresaActiva.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_NombreEmpresaActiva.Location = New System.Drawing.Point(3, 29)
+        Me.Lbl_NombreEmpresaActiva.Name = "Lbl_NombreEmpresaActiva"
+        Me.Lbl_NombreEmpresaActiva.Size = New System.Drawing.Size(620, 23)
+        Me.Lbl_NombreEmpresaActiva.TabIndex = 58
+        Me.Lbl_NombreEmpresaActiva.Text = "NOMBRE DE LA EMPRESA... ESTE ES EL NOMBRE DE LA EM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
         'Tesoreria_Clientes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Lbl_NombreEmpresaActiva)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Tesoreria_Clientes"
-        Me.Size = New System.Drawing.Size(637, 322)
+        Me.Size = New System.Drawing.Size(637, 332)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -267,4 +282,5 @@ Partial Class Tesoreria_Clientes
     Private WithEvents Btn_Pago_Documentos As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Liquidacion_TJV_Credito As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Anticipos As DevComponents.DotNetBar.Metro.MetroTileItem
+    Friend WithEvents Lbl_NombreEmpresaActiva As DevComponents.DotNetBar.LabelX
 End Class

@@ -3997,7 +3997,7 @@ Public Module Crear_Documentos_Desde_Otro
                            "(Select COUNT(*) From MAEEDO Where TIDO = '" & _Tido & "' And NUDO Between RIGHT(REPLICATE('0', 10) + " &
                            "CAST(RNG_D AS VARCHAR(10)), 10) And RIGHT(REPLICATE('0', 10) + CAST(RNG_H AS VARCHAR(10)), 10)) As 'DocGen'," & vbCrLf &
                            "RNG_H-RNG_D+1 As 'NroDoc'," & vbCrLf &
-                           "(RNG_H-RNG_D+1) - (Select COUNT(*) From MAEEDO Where TIDO = '" & _Tido & "' And NUDO between RIGHT(REPLICATE('0', 10) + " &
+                           "(RNG_H-RNG_D+1) - (Select COUNT(*) From MAEEDO Where EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO between RIGHT(REPLICATE('0', 10) + " &
                            "CAST(RNG_D AS VARCHAR(10)), 10) And RIGHT(REPLICATE('0', 10) + CAST(RNG_H AS VARCHAR(10)), 10)) As 'SaldoFolios'," & vbCrLf &
                            "RIGHT(REPLICATE('0', 10) + CAST(RNG_D AS VARCHAR(10)), 10) AS NroDesde," & vbCrLf &
                            "RIGHT(REPLICATE('0', 10) + CAST(RNG_H AS VARCHAR(10)), 10) AS NroHasta," & vbCrLf &
@@ -6140,9 +6140,10 @@ Public Module Crear_Documentos_Desde_Otro
 
                 Dim _Id_SobreStock As Integer = _Fila.Item("Id_SobreStock")
                 Dim _PqteComprometidoSol As Double = _Fila.Item("PqteComprometidoSol")
+                Dim _Qty_SobreStock As Double = _Fila.Item("Qty_SobreStock")
 
                 _SqlQuery += "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
-                             "PqteComprometidoSol = PqteComprometidoSol-" & De_Num_a_Tx_01(_PqteComprometidoSol, False, 5) & vbCrLf &
+                             "PqteComprometidoSol = PqteComprometidoSol-" & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
                              "Where Id = " & _Id_SobreStock & vbCrLf
 
             End If

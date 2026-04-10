@@ -147,6 +147,8 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [NotfStockInsuficiente_Stmp]                            [bit]           NOT NULL DEFAULT (0),
 [RevAutomaticaMorosidadClientes]                        [bit]           NOT NULL DEFAULT (0),
 [ExigeNumPesada]                                        [bit]           NOT NULL DEFAULT (0),
+[SolictarCiaSeguro]                                     [bit]           NOT NULL DEFAULT (0),
+[ToleranciaDocMoroso]                                   [int]           NOT NULL DEFAULT (0),
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Empresa] ASC,

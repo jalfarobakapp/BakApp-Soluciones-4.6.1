@@ -854,7 +854,6 @@
     <Compile Include="01 Procesos  compartidos\Productos\22 Media y promedio de venta\Frm_MediaYPromedioXProd_Estudio.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="01 Procesos compartidos\Entidades\02 Crear Entidades\Frm_Crear_Entidad_Mt_CiasSeguro.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\01 Actualizacion BakApp\Clas_Actualiza_BakApp_Sql.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.Designer.vb">
       <DependentUpon>Frm_Usuarios_Random.vb</DependentUpon>
@@ -8340,6 +8339,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Configuracion_Formatos_X_Modalidad.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor_DocTom.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidad_CiaSeguro.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_PreVenta_StockProd.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Correos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CorreosEnvioRecepcion.sql" />

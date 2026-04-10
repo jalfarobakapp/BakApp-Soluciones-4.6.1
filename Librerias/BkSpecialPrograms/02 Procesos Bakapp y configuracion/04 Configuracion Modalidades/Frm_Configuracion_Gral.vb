@@ -267,7 +267,13 @@ Public Class Frm_Configuracion_Gral
             Chk_RevAutomaticaMorosidadClientes.Checked = .Item("RevAutomaticaMorosidadClientes")
             Chk_ExigeNumPesada.Checked = .Item("ExigeNumPesada")
 
+            Chk_SolictarCiaSeguro.Checked = .Item("SolictarCiaSeguro")
+            Input_ToleranciaDocMoroso.Value = .Item("ToleranciaDocMoroso")
+
         End With
+
+        Chk_SolictarCiaSeguro.Enabled = _Modalidad_General
+        Input_ToleranciaDocMoroso.Enabled = _Modalidad_General
 
         Chk_VendeUD2DesacUD1soloRTUD.Enabled = _Modalidad_General
         Chk_PermisoEspecialCambioVendedorLinea.Enabled = _Modalidad_General
@@ -613,6 +619,8 @@ Public Class Frm_Configuracion_Gral
                        ",NotfStockInsuficiente_Stmp = " & Convert.ToInt32(Chk_NotfStockInsuficiente_Stmp.Checked) & vbCrLf &
                        ",RevAutomaticaMorosidadClientes = " & Convert.ToInt32(Chk_RevAutomaticaMorosidadClientes.Checked) & vbCrLf &
                        ",ExigeNumPesada = " & Convert.ToInt32(Chk_ExigeNumPesada.Checked) & vbCrLf &
+                       ",SolictarCiaSeguro = " & Convert.ToInt32(Chk_SolictarCiaSeguro.Checked) & vbCrLf &
+                       ",ToleranciaDocMoroso = " & Input_ToleranciaDocMoroso.Value & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

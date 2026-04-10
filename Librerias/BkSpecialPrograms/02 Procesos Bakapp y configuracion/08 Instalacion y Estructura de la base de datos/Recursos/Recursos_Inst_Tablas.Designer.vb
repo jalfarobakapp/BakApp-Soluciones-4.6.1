@@ -1783,6 +1783,27 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Entidad_CiaSeguro](
+        '''	[Id] [int]              IDENTITY(1,1)   NOT NULL,
+        '''	[CodEntidad]			[varchar](13)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodSucEntidad]			[varchar](20)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodEntidad_Cia]		[varchar](13)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodSucEntidad_Cia]		[varchar](20)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[MontoAsignado]			[float]         NOT NULL DEFAULT (&apos;&apos;),
+        ''' CONSTRAINT [PK_Zw_Entidad_CiaSeguro] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[CodEntidad] ASC,
+        '''	[CodSucEntidad] ASC [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Entidad_CiaSeguro() As String
+            Get
+                Return ResourceManager.GetString("Zw_Entidad_CiaSeguro", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''CREATE TABLE [dbo].[Zw_Entidades](
         '''	[CodEntidad]		            [varchar](13)   NOT NULL DEFAULT(&apos;&apos;),
         '''	[CodSucEntidad]		            [varchar](20)   NOT NULL DEFAULT(&apos;&apos;),

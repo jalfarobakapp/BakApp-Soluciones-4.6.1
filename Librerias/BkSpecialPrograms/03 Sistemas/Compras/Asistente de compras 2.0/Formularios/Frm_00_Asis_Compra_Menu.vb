@@ -1134,11 +1134,22 @@ Public Class Frm_00_Asis_Compra_Menu
 
                 If Not Chk_Rotacion_Con_Ent_Excluidas.Checked Then
 
-                    _EntExcluidas = Space(1) & "And Ltrim(RTrim(ENDO))+LTrim(RTrim(SUENDO))" & vbCrLf &
-                                "NOT IN (SELECT LTrim(RTrim(Codigo))+LTrim(RTrim(Sucursal))" & vbCrLf &
-                                "From " & _Global_BaseBk & "Zw_TblInf_EntExcluidas" & vbCrLf &
-                                "Where Funcionario = '" & FUNCIONARIO & "' And Excluida in ('V','A','T'))" & Space(1)
+                    '_EntExcluidas = Space(1) & "And Ltrim(RTrim(ENDO))+LTrim(RTrim(SUENDO))" & vbCrLf &
+                    '            "NOT IN (SELECT LTrim(RTrim(Codigo))+LTrim(RTrim(Sucursal))" & vbCrLf &
+                    '            "From " & _Global_BaseBk & "Zw_TblInf_EntExcluidas" & vbCrLf &
+                    '            "Where Funcionario = '" & FUNCIONARIO & "' And Excluida in ('V','A','T'))" & Space(1)
 
+                    _EntExcluidas = $"
+          AND NOT EXISTS
+          (
+              SELECT 1
+              FROM {_Global_BaseBk}Zw_TblInf_EntExcluidas E
+              WHERE LTRIM(RTRIM(E.Codigo))   = LTRIM(RTRIM(ENDO))
+                AND LTRIM(RTRIM(E.Sucursal)) = LTRIM(RTRIM(SUENDO))
+                AND E.Funcionario = '{FUNCIONARIO}'
+                AND E.Excluida IN ('V','A','T')
+          )
+"
                 End If
 
                 Dim _Filtro_Bodega As String
@@ -1382,37 +1393,117 @@ Public Class Frm_00_Asis_Compra_Menu
                                     Inner Join " & _TblPasoInforme & " Z1 On Z1.Codigo = Z2.Codigo
 
                                     Select * From #Paso"
+
+                        Consulta_sql = $"
+DECLARE @Fecha_Inicio DATETIME = DATEADD(YEAR,-1,GETDATE()),
+        @Fecha_Fin    DATETIME = GETDATE();
+
+-- 1) Preagrupar ventas por producto y tipo de documento
+WITH Ventas AS
+(
+    SELECT 
+        KOPRCT AS Codigo,
+        TIDO,
+        COUNT(*) AS Cnt
+    FROM MAEDDO WITH (NOLOCK)
+    WHERE FEEMLI BETWEEN @Fecha_Inicio AND @Fecha_Fin
+      AND TIDO IN ('BLV','FCV','NCV')
+    GROUP BY KOPRCT, TIDO
+),
+
+-- 2) Última venta por producto
+UltVenta AS
+(
+    SELECT 
+        Z1.Codigo,
+        ISNULL(U.FEEMLI,'19000101') AS Fecha_Ult_Venta
+    FROM {_TblPasoInforme} Z1
+    OUTER APPLY
+    (
+        SELECT TOP 1 M.FEEMLI
+        FROM MAEDDO M WITH (NOLOCK)
+        WHERE M.KOPRCT = Z1.Codigo
+          AND M.TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ',
+                         'NCE','NCV','NCX','NCZ','NEV','RIN')
+          --AND M.EMPRESA = '02'
+          --AND M.SULIDO = 'SC1'
+          --AND M.BOSULIDO = 'BS0'
+         {_Filtro_Bodega}
+         {_EntExcluidas}
+          --AND NOT EXISTS
+          --(
+          --    SELECT 1
+          --    FROM BAKAPP_SUPERMERCADO_SPA.dbo.Zw_TblInf_EntExcluidas E
+          --    WHERE LTRIM(RTRIM(E.Codigo))   = LTRIM(RTRIM(M.ENDO))
+          --      AND LTRIM(RTRIM(E.Sucursal)) = LTRIM(RTRIM(M.SUENDO))
+          --      AND E.Funcionario = 'BAK'
+          --      AND E.Excluida IN ('V','A','T')
+          --)
+        ORDER BY M.FEEMLI DESC
+    ) U
+)
+
+-- 3) Resultado final
+SELECT 
+    Z1.Codigo,
+    BLV = ISNULL(V1.Cnt,0),
+    FCV = ISNULL(V2.Cnt,0),
+    NCV = ISNULL(V3.Cnt,0),
+    U.Fecha_Ult_Venta
+INTO #Paso
+FROM {_TblPasoInforme} Z1
+LEFT JOIN Ventas V1 ON V1.Codigo = Z1.Codigo AND V1.TIDO = 'BLV'
+LEFT JOIN Ventas V2 ON V2.Codigo = Z1.Codigo AND V2.TIDO = 'FCV'
+LEFT JOIN Ventas V3 ON V3.Codigo = Z1.Codigo AND V3.TIDO = 'NCV'
+LEFT JOIN UltVenta U ON U.Codigo = Z1.Codigo;
+
+-- 4) Actualización
+UPDATE Z1
+SET 
+    BLV_Ult_Year = Z2.BLV,
+    FCV_Ult_Year = Z2.FCV,
+    NCV_Ult_Year = Z2.NCV,
+    Fecha_Ult_Venta = Z2.Fecha_Ult_Venta
+FROM {_TblPasoInforme} Z1
+INNER JOIN #Paso Z2 ON Z1.Codigo = Z2.Codigo;
+
+SELECT * FROM #Paso
+Order By Codigo
+
+Drop Table #Paso
+"
+
                         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                        For Each _Row_Producto As DataRow In _Tbl_Informe.Rows
+                        'For Each _Row_Producto As DataRow In _Tbl_Informe.Rows
 
-                            System.Windows.Forms.Application.DoEvents()
+                        '    System.Windows.Forms.Application.DoEvents()
 
-                            Dim _Porc = _Contador / _Tbl_Informe.Rows.Count
+                        '    Dim _Porc = _Contador / _Tbl_Informe.Rows.Count
 
-                            Lbl_Status.Text = "Revisando ultimas compras del producto " &
-                                            FormatNumber(_Contador, 0) & " de " & FormatNumber(_Tbl_Informe.Rows.Count, 0) & " (" & FormatPercent(_Porc, 0) & ")"
+                        '    Lbl_Status.Text = "Revisando ultimas compras del producto " &
+                        '                    FormatNumber(_Contador, 0) & " de " & FormatNumber(_Tbl_Informe.Rows.Count, 0) & " (" & FormatPercent(_Porc, 0) & ")"
 
-                            If _Cancelar Then
-                                Lbl_Status.Text = "Status..."
-                                Barra_Progreso.Visible = Not _Cancelar
-                            End If
+                        '    If _Cancelar Then
+                        '        Lbl_Status.Text = "Status..."
+                        '        Barra_Progreso.Visible = Not _Cancelar
+                        '    End If
 
-                            Barra_Progreso.Value = ((_Contador * 100) / _Tbl_Informe.Rows.Count)
-                            _Contador += 1
+                        '    Barra_Progreso.Value = ((_Contador * 100) / _Tbl_Informe.Rows.Count)
+                        '    _Contador += 1
 
-                            If _Cancelar Then
-                                Sb_Habilitar_Desabilitar_Controles(True)
-                                Lbl_Status.Text = "Status..."
-                                Me.Enabled = True
-                                Fm_Espera.Close()
-                                Fm_Espera.Dispose()
-                                Fm_Espera = Nothing
-                                Me.Refresh()
-                                Return
-                            End If
+                        '    If _Cancelar Then
+                        '        Sb_Habilitar_Desabilitar_Controles(True)
+                        '        Lbl_Status.Text = "Status..."
+                        '        Me.Enabled = True
+                        '        Fm_Espera.Close()
+                        '        Fm_Espera.Dispose()
+                        '        Fm_Espera = Nothing
+                        '        Me.Refresh()
+                        '        Return
+                        '    End If
 
-                        Next
+                        'Next
 
                     End If
 

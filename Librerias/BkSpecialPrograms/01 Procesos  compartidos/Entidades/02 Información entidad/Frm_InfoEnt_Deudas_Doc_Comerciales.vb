@@ -1,5 +1,6 @@
 ﻿Imports BkSpecialPrograms.My.Resources
 Imports DevComponents.DotNetBar
+Imports OfficeOpenXml.FormulaParsing.LexicalAnalysis
 
 Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
@@ -692,9 +693,27 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
 
         Dim _Fecha As String = Format(FechaDelServidor, "yyyyMMdd")
 
+
+        Dim _ToleranciaDocMoroso As Integer
+
+        Try
+            _ToleranciaDocMoroso = _Global_Row_Configuracion_General.Item("ToleranciaDocMoroso")
+        Catch ex As Exception
+            _ToleranciaDocMoroso = 0
+        End Try
+
+        _Cl_Entidad.Dimoper = _RowEntidad.Item("DIMOPER")
+
         Consulta_Sql = My.Resources.Sql_Entidad.SqlQuery_deuda_doc_comerciales
         Consulta_Sql = Replace(Consulta_Sql, "#CodEntidad#", _CodEntidad)
         Consulta_Sql = Replace(Consulta_Sql, "#Fecha#", _Fecha)
+        Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
+        Consulta_Sql = Replace(Consulta_Sql, "#ToleranciaDocMoroso#", _ToleranciaDocMoroso)
+
+
+        'Consulta_Sql = My.Resources.Sql_Entidad.SqlQuery_deuda_doc_comerciales
+        'Consulta_Sql = Replace(Consulta_Sql, "#CodEntidad#", _CodEntidad)
+        'Consulta_Sql = Replace(Consulta_Sql, "#Fecha#", _Fecha)
 
         Dim _TblDeuda As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
@@ -731,10 +750,26 @@ Public Class Frm_InfoEnt_Deudas_Doc_Comerciales
         Dim _CodEntidad As String = _RowEntidad.Item("KOEN")
         Dim _Dimoper = _RowEntidad.Item("DIMOPER")
 
+        Dim _ToleranciaDocMoroso As Integer
+
+        Try
+            _ToleranciaDocMoroso = _Global_Row_Configuracion_General.Item("ToleranciaDocMoroso")
+        Catch ex As Exception
+            _ToleranciaDocMoroso = 0
+        End Try
+
         Consulta_Sql = My.Resources.Sql_Entidad.SqlQuery_deuda_doc_comerciales
         Consulta_Sql = Replace(Consulta_Sql, "#CodEntidad#", _CodEntidad)
         Consulta_Sql = Replace(Consulta_Sql, "#Fecha#", _Fecha)
         Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
+        Consulta_Sql = Replace(Consulta_Sql, "#ToleranciaDocMoroso#", _ToleranciaDocMoroso)
+
+        'Dim _TblDeuda As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+        'Consulta_Sql = My.Resources.Sql_Entidad.SqlQuery_deuda_doc_comerciales
+        'Consulta_Sql = Replace(Consulta_Sql, "#CodEntidad#", _CodEntidad)
+        'Consulta_Sql = Replace(Consulta_Sql, "#Fecha#", _Fecha)
+        'Consulta_Sql = Replace(Consulta_Sql, "#Empresa#", Mod_Empresa)
 
         _TblDeuda = _Sql.Fx_Get_DataTable(Consulta_Sql)
 

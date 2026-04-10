@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports BkSpecialPrograms.Frm_Ver_Documento
+Imports DevComponents.DotNetBar
 
 Public Class Frm_SobreStock_Productos
 
@@ -22,7 +23,6 @@ Public Class Frm_SobreStock_Productos
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
         Sb_Color_Botones_Barra(Bar1)
 
-
     End Sub
 
     Private Sub Frm_SobreStock_Productos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -31,11 +31,10 @@ Public Class Frm_SobreStock_Productos
 
         Btn_AgregarProducto.Visible = Not ModoSeleccion
 
-        'If ModoSoloLectrura Then
-        '    Btn_AgregarProducto.Visible = False
-        'End If
+        If Not ModoSeleccion Then
+            AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+        End If
 
-        AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         ActiveControl = Txt_Filtrar
@@ -48,12 +47,85 @@ Public Class Frm_SobreStock_Productos
 
         Dim _Cadena As String = CADENA_A_BUSCAR(RTrim$(Txt_Filtrar.Text.Trim), "Sbs.Codigo+Sbs.Descripcion Like '%")
 
+        '        Consulta_sql = $"
+        'Select Sbs.*,
+        'Sbs.PqteStock-Sbs.PqteComprometido-Sbs.PqteComprometidoSol As 'PqteDisponible'
+        'From {_Global_BaseBk}Zw_Prod_SobreStock Sbs
+        'Where Sbs.Empresa = '{_Empresa}' And Sbs.Activo = 1 -- Sbs.Eliminado = 0
+        'And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
+
         Consulta_sql = $"
-Select Sbs.*,
-Sbs.PqteStock-Sbs.PqteComprometido-Sbs.PqteComprometidoSol As 'PqteDisponible'
-From {_Global_BaseBk}Zw_Prod_SobreStock Sbs
-Where Sbs.Empresa = '{_Empresa}' And Sbs.Eliminado = 0
-And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
+SELECT 
+    Sbs.Id,
+    Sbs.Empresa,
+    Sbs.Codigo,
+    Sbs.Descripcion,
+    Sbs.Activo,
+    Sbs.CodFuncionarioCrea,
+    Sbs.FechaVigencia,
+    Sbs.FormatoPqte,
+    Sbs.PqteHabilitado,
+    Sbs.PqteStock,
+
+    -- 🔥 NVV abiertas (ESLIDO = '')
+    ISNULL(SUM(
+        CASE 
+            WHEN Ddo.TIDO = 'NVV' 
+             AND Ddo.ESLIDO = '' 
+            THEN Ddet.Qty_SobreStock 
+            ELSE 0 
+        END
+    ),0) AS PqteComprometidoNVV,
+
+    -- 🔥 NVV cerradas (ESLIDO = 'C')
+    ISNULL(SUM(
+        CASE 
+            WHEN Ddo.TIDO = 'NVV' 
+             AND Ddo.ESLIDO = 'C' 
+            THEN Ddet.Qty_SobreStock 
+            ELSE 0 
+        END
+    ),0) AS PqteComprometidoNVV_Cerradas,
+
+    Sbs.PqteComprometido,
+    Sbs.PqteComprometidoSol,
+	Sbs.PqteStock-Sbs.PqteComprometido-Sbs.PqteComprometidoSol As 'PqteDisponible',
+    Sbs.Ud1XPqte,
+    Sbs.CantMinFormato,
+    Sbs.Moneda,
+    Sbs.PrecioXUd1,
+    Sbs.Eliminado,
+    Sbs.StSobStockUd1,
+    Sbs.StSobStockUd2
+
+FROM {_Global_BaseBk}Zw_Prod_SobreStock Sbs
+LEFT JOIN {_Global_BaseBk}Zw_Docu_Det Ddet 
+       ON Ddet.Id_SobreStock = Sbs.Id
+LEFT JOIN MAEDDO Ddo 
+       ON Ddo.IDMAEDDO = Ddet.Idmaeddo
+WHERE Sbs.Empresa = '{_Empresa}'
+  AND Sbs.Activo = 1
+  AND Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'
+GROUP BY 
+    Sbs.Id,
+    Sbs.Empresa,
+    Sbs.Codigo,
+    Sbs.Descripcion,
+    Sbs.Activo,
+    Sbs.CodFuncionarioCrea,
+    Sbs.FechaVigencia,
+    Sbs.FormatoPqte,
+    Sbs.PqteHabilitado,
+    Sbs.PqteStock,
+    Sbs.PqteComprometido,
+    Sbs.PqteComprometidoSol,
+    Sbs.Ud1XPqte,
+    Sbs.CantMinFormato,
+    Sbs.Moneda,
+    Sbs.PrecioXUd1,
+    Sbs.Eliminado,
+    Sbs.StSobStockUd1,
+    Sbs.StSobStockUd2;"
 
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -77,7 +149,11 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
             .Columns("Codigo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Descripcion").Width = 310
+            If ModoSeleccion Then
+                .Columns("Descripcion").Width = 280 + (70 + 70 + 70 + 70)
+            Else
+                .Columns("Descripcion").Width = 280
+            End If
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").DisplayIndex = _DisplayIndex
@@ -96,18 +172,6 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
             .Columns("PrecioXUd1").Visible = True
             .Columns("PrecioXUd1").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
-
-            'If Not ModoSeleccion Then
-
-            '    .Columns("StSobStockUd1").Width = 70
-            '    .Columns("StSobStockUd1").HeaderText = "Disponible Ud1"
-            '    .Columns("StSobStockUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '    .Columns("StSobStockUd1").DefaultCellStyle.Format = "##,###0.##"
-            '    .Columns("StSobStockUd1").Visible = True
-            '    .Columns("StSobStockUd1").DisplayIndex = _DisplayIndex
-            '    _DisplayIndex += 1
-
-            'End If
 
             .Columns("FormatoPqte").Width = 70
             .Columns("FormatoPqte").HeaderText = "Form.Vnta"
@@ -140,8 +204,16 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
             .Columns("PqteStock").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("PqteComprometidoNVV").Width = 70
+            .Columns("PqteComprometidoNVV").HeaderText = "Cmtdo. NVV"
+            .Columns("PqteComprometidoNVV").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PqteComprometidoNVV").DefaultCellStyle.Format = "##,###0.##"
+            .Columns("PqteComprometidoNVV").Visible = Not ModoSeleccion
+            .Columns("PqteComprometidoNVV").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("PqteComprometido").Width = 70
-            .Columns("PqteComprometido").HeaderText = "Comprom. Venta"
+            .Columns("PqteComprometido").HeaderText = "Cmtdo. COV"
             .Columns("PqteComprometido").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PqteComprometido").DefaultCellStyle.Format = "##,###0.##"
             .Columns("PqteComprometido").Visible = Not ModoSeleccion
@@ -149,7 +221,7 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
             _DisplayIndex += 1
 
             .Columns("PqteComprometidoSol").Width = 70
-            .Columns("PqteComprometidoSol").HeaderText = "Comprom. SOL"
+            .Columns("PqteComprometidoSol").HeaderText = "Cmtdo. SOL"
             .Columns("PqteComprometidoSol").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PqteComprometidoSol").DefaultCellStyle.Format = "##,###0.##"
             .Columns("PqteComprometidoSol").Visible = Not ModoSeleccion
@@ -196,10 +268,10 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_SobreStock",
                                                         "Empresa = '" & Mod_Empresa & "' And " &
                                                         "Codigo = '" & _RowProducto.Item("KOPR") & "' And " &
-                                                        "Activo = 1 And Eliminado = 0")
+                                                        "Activo = 1 -- And Eliminado = 0")
 
         If _Reg > 0 Then
-            MessageBoxEx.Show(Me, "El producto ya se encuentra ingresado en la bodega seleccionada", "Validación",
+            MessageBoxEx.Show(Me, "El producto ya se encuentra ingresado y activo en la bodega seleccionada", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
@@ -442,5 +514,96 @@ And Sbs.Codigo+Sbs.Descripcion Like '%{_Cadena}%'"
         If String.IsNullOrWhiteSpace(Txt_Filtrar.Text) Then
             Sb_Actualizar_Grilla()
         End If
+    End Sub
+
+    Private Sub Btn_AgregarMasCantidad_Click(sender As Object, e As EventArgs) Handles Btn_AgregarMasCantidad.Click
+
+        Dim _Rows_Usuario_Autoriza As DataRow = Nothing
+        Dim _CodFuncionario_Autoriza As String = FUNCIONARIO
+
+        If Not Fx_Tiene_Permiso(Me, "Sobs0008",,,,,,,,, _Rows_Usuario_Autoriza) Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+        Dim _Descripcion As String = _Fila.Cells("Descripcion").Value
+        Dim _PqteHabilitado As Double = _Fila.Cells("PqteHabilitado").Value
+        Dim _PqteDisponible As Double = _Fila.Cells("PqteDisponible").Value
+        Dim _Activo As Boolean = _Fila.Cells("Activo").Value
+        Dim _CantidadAdicional As Double
+
+        If Not _Activo Then
+            MessageBoxEx.Show(Me, "El producto no está activo para sobre stock.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Aceptar As Boolean
+
+        _Aceptar = InputBox_Bk(Me, "Ingrese la cantidad adicional de pallet para el producto " & vbCrLf &
+                               _Codigo & " - " & _Descripcion & vbCrLf &
+                               "Pallet disponibles hasta ahora es de: " & _PqteDisponible,
+                               "Agregar cantidad", _CantidadAdicional, False,,, True,,, _Tipo_Caracter.Solo_Numeros_Enteros, False)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        If _CantidadAdicional <= 0 Then
+            MessageBoxEx.Show(Me, "La cantidad adicional debe ser mayor a cero.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Está seguro de agregar una cantidad adicional de " & _CantidadAdicional & " pallet al producto " & _Codigo & " para sobre stock?", "Agregar cantidad adicional",
+                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set " &
+                       "PqteHabilitado = PqteHabilitado + " & _CantidadAdicional & vbCrLf &
+                       ",PqteStock = PqteStock + " & _CantidadAdicional & vbCrLf &
+                       ",Activo = 1" & vbCrLf &
+                       "Where Id = " & _Fila.Cells("Id").Value
+
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+            If Not IsNothing(_Rows_Usuario_Autoriza) Then
+                _CodFuncionario_Autoriza = _Rows_Usuario_Autoriza.Item("KOFU").ToString.Trim
+            End If
+
+            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, " Zw_Prod_SobreStock", _Id, "",
+                               "Se agregó cantidad adicional de " & _CantidadAdicional & " al producto " & _Codigo & " para sobre stock", "", _Codigo, "", "", False, _CodFuncionario_Autoriza)
+            MessageBoxEx.Show(Me, "Cantidad adicional agregada correctamente.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        End If
+
+        Sb_Actualizar_Grilla()
+
+    End Sub
+
+    Private Sub Btn_Consolidar_Stock_X_Producto_Click(sender As Object, e As EventArgs) Handles Btn_Consolidar_Stock_X_Producto.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+        If Not String.IsNullOrEmpty(_Codigo) Then
+
+            Dim Fm As New Frm_Consolidacion_Stock_PP("('" & _Codigo & "')")
+            Fm.Pro_Ejecutar_Automaticamente = True
+            Fm.BtnCancelar.Visible = False
+            Fm.Chk_Reservar_Ventas_Pendientes_Bakapp.Enabled = False
+            Fm.BtnProcesar.Enabled = False
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        End If
+
+        Sb_Actualizar_Grilla()
+
     End Sub
 End Class

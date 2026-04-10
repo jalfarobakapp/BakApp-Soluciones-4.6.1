@@ -9,25 +9,28 @@ Public Class Modulo_Informes
         Get
             Return _Menu_Extra
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Menu_Extra = value
         End Set
     End Property
 
-    Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm)
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _Fm_Menu_Padre = Fm_Menu_Padre
+
+        Lbl_NombreEmpresaActiva.Text = BkSpecialPrograms.RazonEmpresa
+
     End Sub
 
-    Private Sub BtnSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSalir.Click
+    Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs) Handles BtnSalir.Click
         _Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 
-    Private Sub BtnInformesVenta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnInformesVenta.Click
+    Private Sub BtnInformesVenta_Click(sender As System.Object, e As System.EventArgs) Handles BtnInformesVenta.Click
 
         Dim NewPanel As InformesVenta = Nothing
         NewPanel = New InformesVenta(_Fm_Menu_Padre)
@@ -35,7 +38,7 @@ Public Class Modulo_Informes
 
     End Sub
 
-    Private Sub BtnInfMargenes_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnInfMargenes.Click
+    Private Sub BtnInfMargenes_Click(sender As System.Object, e As System.EventArgs) Handles BtnInfMargenes.Click
 
         Dim NewPanel As InformesCompra = Nothing
         NewPanel = New InformesCompra(_Fm_Menu_Padre)
@@ -43,7 +46,7 @@ Public Class Modulo_Informes
 
     End Sub
 
-    Private Sub Btn_Informes_Espciales_Clientes_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Informes_Espciales_Clientes.Click
+    Private Sub Btn_Informes_Espciales_Clientes_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informes_Espciales_Clientes.Click
 
         Dim NewPanel As Informes_Especial_Cliente = Nothing
         NewPanel = New Informes_Especial_Cliente(_Fm_Menu_Padre)
@@ -51,7 +54,7 @@ Public Class Modulo_Informes
 
     End Sub
 
-    Private Sub Btn_Inf_Stock_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Inf_Stock.Click
+    Private Sub Btn_Inf_Stock_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Inf_Stock.Click
         Dim NewPanel As InformesStock = Nothing
         NewPanel = New InformesStock(_Fm_Menu_Padre)
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)

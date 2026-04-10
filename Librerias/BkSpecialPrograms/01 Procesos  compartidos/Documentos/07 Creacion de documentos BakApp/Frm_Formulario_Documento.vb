@@ -183,6 +183,8 @@ Public Class Frm_Formulario_Documento
     Public Property Zw_Transporte_Dte As Zw_Transporte_Dte
     Public Property B2B As Boolean
 
+    Public Property PedirPermisoCiaSeguro As Boolean
+
     Dim _Cl_Entidad As New Cl_Entidad
 
 #Region "PROPIEDADES"
@@ -1239,6 +1241,7 @@ Public Class Frm_Formulario_Documento
 
         Btn_UtilizarDetalleOtroDoc.Tag = String.Empty
 
+        _PedirPermisoCiaSeguro = False
         _Cl_Despacho = Nothing
 
         If Not IsNothing(Fm_MPC) Then
@@ -1791,6 +1794,9 @@ Public Class Frm_Formulario_Documento
 
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00169", False, False, "", "", False, False, False) ' Cupo exedido y con morosidad de documentos
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00170", False, False, "", "", False, False, False) ' Venta sobre promedio de venta normar y con Morosidad
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00171", False, False, "", "", False, False, False) ' Vender sin asociar compañia de seguro cuando el cliente tiene compañia de seguro
+
+
         '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
         'Doc00161
 
@@ -2406,6 +2412,7 @@ Public Class Frm_Formulario_Documento
 
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00169", False, False, "", "", False, False, False) ' Permitir modificar el precio de venta a 0 (cero)
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00170", False, False, "", "", False, False, False) ' Venta sobre promedio de venta normar y con Morosidad
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00171", False, False, "", "", False, False, False) ' Vender sin asociar compañia de seguro cuando el cliente tiene compañia de seguro
 
             _TblPermisos = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
 
@@ -17157,41 +17164,63 @@ Public Class Frm_Formulario_Documento
                         _Caja_Habilitada = False
                     End Try
 
+                    Dim _SolictarCiaSeguro As Boolean
 
-                    Dim _Revisar_CiaSeguro As Boolean = True
+                    Try
+                        _SolictarCiaSeguro = _Global_Row_Configuracion_General.Item("SolictarCiaSeguro")
+                    Catch ex As Exception
+                        _SolictarCiaSeguro = False
+                    End Try
 
-                    If _Revisar_CiaSeguro Then
+                    If _Tido = "NVV" Or (_Tido = "COV" And SobreStock) Then
 
-                        Dim _Koen As String = _TblEncabezado.Rows(0).Item("CodEntidad")
-                        Dim _Suen As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
-                        Dim _TotalBrutoDoc As Double = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
+                        If _SolictarCiaSeguro Then
 
-                        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidad_CiaSeguro", $"CodEntidad = '{_Koen}' And CodSucEntidad = '{_Suen}'")
+                            Dim _Koen As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+                            Dim _Suen As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+                            Dim _TotalBrutoDoc As Double = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
 
-                        If CBool(_Reg) Then
+                            Dim _SolicitaCiaSeguro As Boolean
+                            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidad_CiaSeguro",
+                                                  $"CodEntidad = '{_Koen}' And CodSucEntidad = '{_Suen}'")
 
-                            MessageBoxEx.Show(Me, "A continuación, deberá seleccionar una compañía de seguros para asociarla a la venta.",
+                            If CBool(_Reg) Then
+
+                                MessageBoxEx.Show(Me, "A continuación, deberá seleccionar una compañía de seguros para asociarla a la venta.",
                                               "Compañia de seguros", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-                            Dim _Row_CiaSeguro As DataRow
+                                Dim _Row_CiaSeguro As DataRow
 
-                            Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(_Koen, _Suen, _TotalBrutoDoc)
-                            Fm.ModoSeleccion = True
-                            Fm.MontoAUtilizar = _TotalBrutoDoc
-                            Fm.ShowDialog(Me)
-                            If Fm.DialogResult = DialogResult.OK Then
-                                _Row_CiaSeguro = Fm.Row_CiaSeguro
-                            End If
-                            Fm.Dispose()
+                                Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(_Koen, _Suen, _TotalBrutoDoc)
+                                Fm.ModoSeleccion = True
+                                Fm.MontoAUtilizar = _TotalBrutoDoc
+                                Fm.ShowDialog(Me)
+                                If Fm.DialogResult = DialogResult.OK Then
+                                    _Row_CiaSeguro = Fm.Row_CiaSeguro
+                                    _SolicitaCiaSeguro = True
+                                ElseIf Fm.DialogResult = DialogResult.Cancel Then
+                                    PedirPermisoCiaSeguro = True
+                                End If
+                                Fm.Dispose()
 
-                            If IsNothing(_Row_CiaSeguro) Then
-                                MessageBoxEx.Show(Me, "Debe seleccionar una compañía de seguros para realizar la venta.", "Validación",
-                                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                Return
-                            Else
-                                _TblEncabezado.Rows(0).Item("UsaCiaSeguro") = True
-                                _TblEncabezado.Rows(0).Item("CodEntidad_Cia") = _Row_CiaSeguro.Item("CodEntidad_Cia")
-                                _TblEncabezado.Rows(0).Item("CodSucEntidad_Cia") = _Row_CiaSeguro.Item("CodSucEntidad_Cia")
+                                If _SolicitaCiaSeguro Then
+                                    If IsNothing(_Row_CiaSeguro) Then
+                                        MessageBoxEx.Show(Me, "Debe seleccionar una compañía de seguros para realizar la venta.", "Validación",
+                                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                        Return
+                                    Else
+                                        _TblEncabezado.Rows(0).Item("UsaCiaSeguro") = True
+                                        _TblEncabezado.Rows(0).Item("CodEntidad_Cia") = _Row_CiaSeguro.Item("CodEntidad_Cia")
+                                        _TblEncabezado.Rows(0).Item("CodSucEntidad_Cia") = _Row_CiaSeguro.Item("CodSucEntidad_Cia")
+                                    End If
+                                End If
+
+                                If PedirPermisoCiaSeguro Then
+                                    MessageBoxEx.Show(Me, "Se solicitara permiso para validar esta acción al grabar el documento",
+                                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                    Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
+                                End If
+
                             End If
 
                         End If
@@ -24458,7 +24487,6 @@ Public Class Frm_Formulario_Documento
 
         _Permiso = "Bkp00019"
 
-
         If _Cl_Entidad.Tiene_Deudas OrElse _Cl_Entidad.VentaMayorPromedioUlt3Meses OrElse _Cl_Entidad.SuperaCreditoDisponible Then
 
             If Not _Cl_Entidad.Tiene_Deudas_Vencidas Then
@@ -24506,21 +24534,44 @@ Public Class Frm_Formulario_Documento
 
                     Else
 
-                        If _Cl_Entidad.SuperaCreditoDisponible Then
-                            _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que se excede el crédito disponible.")
-                            _Permiso = "Doc00169"
-                            _RevisarPermiso = True
-                        ElseIf _MontoVenta > _Cl_Entidad.Promedio_Venta_UltXMeses Then
-                            _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que supera el promedio de ventas de los últimos 3 meses.")
-                            _Permiso = "Doc00170"
-                            _RevisarPermiso = True
+                        Dim _FechaEmision As Date = CDate(_TblEncabezado.Rows(0).Item("FechaEmision")).Date
+                        Dim _Fecha_1er_Vencimiento As Date = CDate(_TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento")).Date
+                        Dim _FechaUltVencimiento As Date = CDate(_TblEncabezado.Rows(0).Item("FechaUltVencimiento")).Date
+                        Dim _Dias_1er_Vencimiento As Integer = _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento")
+                        Dim _Dias_Vencimiento As Integer = _TblEncabezado.Rows(0).Item("Dias_Vencimiento")
+                        Dim _Crto As Double = _RowEntidad.Item("CRTO")
+
+                        If _FechaEmision = _FechaUltVencimiento AndAlso _Dias_1er_Vencimiento = 0 AndAlso _Dias_Vencimiento = 0 AndAlso _Crto = 0 Then
+
+                            _Cl_Entidad.ListaProblemas.Add("Sin días de vencimiento")
+                            _Cl_Entidad.ListaProblemas.Add("Cliente sin crédito asignado")
+                            _Cl_Entidad.ListaProblemas.Add("Documento contado no requiere evaluación")
+                            _Tiene_Morosidad = False
+
+                            _Cl_Entidad.Fx_LlenarMensaje(_Cl_Entidad)
+                            _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
+
+                            Return False
+
                         Else
-                            If _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper Then
+
+                            If _Cl_Entidad.SuperaCreditoDisponible Then
+                                _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que se excede el crédito disponible.")
+                                _Permiso = "Doc00169"
+                                _RevisarPermiso = True
+                            ElseIf _MontoVenta > _Cl_Entidad.Promedio_Venta_UltXMeses Then
+                                _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que supera el promedio de ventas de los últimos 3 meses.")
+                                _Permiso = "Doc00170"
                                 _RevisarPermiso = True
                             Else
-                                _Tiene_Morosidad = False
-                                Return False
+                                If _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper Then
+                                    _RevisarPermiso = True
+                                Else
+                                    _Tiene_Morosidad = False
+                                    Return False
+                                End If
                             End If
+
                         End If
 
                     End If
@@ -25489,6 +25540,12 @@ Public Class Frm_Formulario_Documento
                             Sb_Revisar_Permiso("Doc00102", False, True)
                         End If
 
+                    End If
+
+                    If PedirPermisoCiaSeguro Then
+                        If Not Fx_Tiene_Permiso(Me, "Doc00171", FUNCIONARIO, False) Then
+                            Sb_Revisar_Permiso("Doc00171", False, True)
+                        End If
                     End If
 
                 End If
@@ -31189,7 +31246,7 @@ Public Class Frm_Formulario_Documento
                 Dim _DIPRVE = _RowEntidad.Item("DIPRVE")
                 Dim _DIMOPER = _RowEntidad.Item("DIMOPER")
 
-                Dim _Dd As Double = _CRSD + _CRCH + _CRPA + _CRTO + _CRLT + _NUVECR + _DIASVENCI + _DIPRVE + _DIMOPER
+                Dim _Dd As Double = _CRSD + _CRCH + _CRPA + _CRTO + _CRLT + _NUVECR + _DIASVENCI + _DIPRVE '+ _DIMOPER
 
                 If IsNothing(_RowEntidad.Item("FEVECREN")) Or IsDBNull(_RowEntidad.Item("FEVECREN")) Then
                     Try
@@ -31200,9 +31257,7 @@ Public Class Frm_Formulario_Documento
                 End If
 
                 If CType(_RowEntidad.Item("FEVECREN"), Date).Date < _FechaEmision.Date And CBool(_Dd) Then
-
                     Return True
-
                 End If
 
             End If

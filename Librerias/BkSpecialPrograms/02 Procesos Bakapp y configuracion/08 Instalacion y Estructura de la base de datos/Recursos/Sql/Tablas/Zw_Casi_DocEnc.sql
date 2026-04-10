@@ -65,6 +65,9 @@ CREATE TABLE [dbo].[Zw_Casi_DocEnc](
     [ConservaNudo]          [bit]			NOT NULL DEFAULT (0),
     [SobreStock]            [bit]			NOT NULL DEFAULT (0),
     [LeyendaMorosidad]      [varchar](max)  NOT NULL DEFAULT (''),
+    [UsaCiaSeguro]          [bit]           NOT NULL DEFAULT (0),
+    [CodEntidad_Cia]        [varchar](13)   NOT NULL DEFAULT (''),
+    [CodSucEntidad_Cia]     [varchar](20)   NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Casi_DocEnc] PRIMARY KEY CLUSTERED 
 (
 	[Id_DocEnc] ASC

@@ -107,7 +107,7 @@ Update {_Global_BaseBk}Zw_Prod_SobreStock Set
 PqteStock = PqteHabilitado,
 PqteComprometido = 0, 
 PqteComprometidoSol = 0
-Where Codigo = '{_Codigo}' And Empresa = '{_Empresa}' And Eliminado = 0 And Activo = 1"
+Where Codigo = '{_Codigo}' And Empresa = '{_Empresa}' --And Eliminado = 0 And Activo = 1"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             If CBool(_TblBodegasPP.Rows.Count) Then
@@ -138,6 +138,48 @@ Where Codigo = '{_Codigo}' And Empresa = '{_Empresa}' And Eliminado = 0 And Acti
                 Next
 
             End If
+
+            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros($"{_Global_BaseBk}Zw_Prod_SobreStock",
+                                                       $"Codigo = '{_Codigo}' And Empresa = '{_Empresa}' -- And Activo = 1")
+
+            If CBool(_Reg) Then
+
+                ' Desactiva los sobre stocks que ya no tienen cantidad habilitada y que fueron completamente facturados
+
+                Consulta_sql = $"
+;WITH CTE_SobreStock AS
+(
+    SELECT 
+        P.Id,
+        P.PqteHabilitado,
+        SUM(D.Qty_SobreStock) AS TotalFacturado
+    FROM {_Global_BaseBk}Zw_Prod_SobreStock AS P
+    INNER JOIN {_Global_BaseBk}Zw_Docu_Det AS D 
+            ON D.Id_SobreStock = P.Id
+           AND D.SobreStock = 1
+           AND D.Tido = 'NVV'
+    INNER JOIN MAEDDO AS M
+            ON M.IDRST = D.Idmaeddo
+           AND M.TIDO = 'FCV'
+    WHERE P.Codigo    = '{_Codigo}'
+      AND P.Empresa   = '{Mod_Empresa}'
+      --AND P.Eliminado = 0
+    GROUP BY 
+        P.Id,
+        P.PqteHabilitado
+)
+UPDATE P
+SET P.Activo = 0
+FROM {_Global_BaseBk}Zw_Prod_SobreStock AS P
+INNER JOIN CTE_SobreStock AS X
+        ON X.Id = P.Id
+WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
+  AND P.Activo = 1;   -- ← condición correcta aquí"
+
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            End If
+
 
             System.Windows.Forms.Application.DoEvents()
 

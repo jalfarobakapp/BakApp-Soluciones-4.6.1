@@ -380,11 +380,11 @@ Public Class Frm_GRI_FabXProducto
 
         If Rdb_Maxi.Checked Then
 
-            If _Cantidad < 400 Or _Cantidad > 1500 Then
+            If _Cantidad > 1500 Then
 
                 Dim _Seguir = False
 
-                If MessageBoxEx.Show(Me, "La cantidad del MAXI-SACO debe estan entre un rango de 400 y 1500 kilos" & vbCrLf &
+                If MessageBoxEx.Show(Me, "La cantidad del MAXI-SACO debe ser menor o iguala 1500 kilos" & vbCrLf &
                                      "¿Confirma igualmente ingresar la cantidad de " & _Cantidad & " kilos?", "Validación",
                                   MessageBoxButtons.YesNo, MessageBoxIcon.Stop) = DialogResult.Yes Then
                     _Seguir = Fx_Tiene_Permiso(Me, "Pdc00013")

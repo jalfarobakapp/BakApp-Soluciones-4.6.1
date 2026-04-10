@@ -345,6 +345,8 @@ Public Class Frm_BusquedaDocumento_Filtro
             Wrn_MostrarSoloDocClientesDelVendedor.Visible = False
         End If
 
+        Lbl_Status.Text = "Empresa: " & RazonEmpresa
+
     End Sub
 
     Private Sub Btn_Documentos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Documentos.Click

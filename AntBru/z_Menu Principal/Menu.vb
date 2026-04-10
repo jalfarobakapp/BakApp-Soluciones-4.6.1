@@ -2,7 +2,6 @@
 Imports BkSpecialPrograms
 Imports BkSpecialPrograms.Frm_BkpPostBusquedaEspecial_Mt
 Imports DevComponents.DotNetBar
-Imports DevComponents.DotNetBar.Keyboard
 
 Public Class Menu
 
@@ -72,6 +71,7 @@ Public Class Menu
             Lbl_Estatus.Text = "Fun: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim &
                           ",Emp: " & Mod_Empresa & ", Mod: " & Mod_Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
                           "(Base BakApp: " & _Global_BaseBk & "). Estación: " & _Global_Row_EstacionBk.Item("NombreEquipo")
+            Lbl_NombreEmpresaActiva.Text = RazonEmpresa
         Catch ex As Exception
             Lbl_Estatus.Text = String.Empty
         End Try
@@ -850,6 +850,7 @@ Public Class Menu
             Lbl_Estatus.Text = "Fun: " & FUNCIONARIO & "-" & Nombre_funcionario_activo.Trim &
                           ", Mod: " & Mod_Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & "..." & Space(4) &
                           "(Base BakApp: " & _Global_BaseBk & "). Estación: " & _Global_Row_EstacionBk.Item("NombreEquipo")
+            Lbl_NombreEmpresaActiva.Text = RazonEmpresa
         Catch ex As Exception
             Lbl_Estatus.Text = String.Empty
         End Try
