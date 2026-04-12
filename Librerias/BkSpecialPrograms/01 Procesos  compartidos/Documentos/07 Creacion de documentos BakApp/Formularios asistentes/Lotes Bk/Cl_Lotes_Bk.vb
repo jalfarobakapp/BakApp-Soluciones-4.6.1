@@ -49,6 +49,11 @@
                 .SubLote = Lote_Madre.SubLote,
                 .FElaboracion = Lote_Madre.FElaboracion,
                 .FVencimiento = Lote_Madre.FVencimiento,
+                .Rtu = Lote_Madre.Rtu,
+                .Udtrans = Lote_Madre.Udtrans,
+                .UnTrans = Lote_Madre.UnTrans,
+                .Ud1 = Lote_Madre.Ud1,
+                .Ud2 = Lote_Madre.Ud2,
                 .CantUd1 = Lote_Madre.CantUd1,
                 .CantUd2 = Lote_Madre.CantUd2}
             Dim nuevaLista As New List(Of Zw_Docu_Det_Lote)

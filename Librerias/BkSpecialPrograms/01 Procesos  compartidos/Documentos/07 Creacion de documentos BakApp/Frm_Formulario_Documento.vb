@@ -9310,6 +9310,11 @@ Public Class Frm_Formulario_Documento
                                 .SubLote = String.Empty,
                                 .FElaboracion = Nothing,
                                 .FVencimiento = Nothing,
+                                .Rtu = _Fila.Cells("Rtu").Value,
+                                .Udtrans = _Fila.Cells("Udtrans").Value,
+                                .UnTrans = _Fila.Cells("UnTrans").Value,
+                                .Ud1 = _Fila.Cells("Ud01PR").Value,
+                                .Ud2 = _Fila.Cells("Ud02PR").Value,
                                 .CantUd1 = 0,
                                 .CantUd2 = 0}
 
@@ -9319,6 +9324,10 @@ Public Class Frm_Formulario_Documento
                             Dim Fm As New Frm_Lotes_Det
                             Fm.Ls_Lotes = _Lotes
                             Fm.ShowDialog(Me)
+
+                            ' Hay un error al modificar el lote, se debe actualizar la lista de lotes en memoria para que se refleje en la grilla
+                            ' cuando se borra una fila los lotes quedan en otra fila, queda todo enredado, se supone que cada lista debe quedar con su fila
+                            ' correspondiente, pero no es así, se debe revisar la lógica de los lotes para que quede mas claro y no se pierdan los datos
 
                             If Fm.DialogResult = DialogResult.OK Then
 
@@ -10938,6 +10947,28 @@ Public Class Frm_Formulario_Documento
                 _Ls_Cl_SobreStock.RemoveAt(_Index)
             End If
         End If
+
+        ' Eliminar registros de Lotes
+        For i As Integer = Ls_Lotes.Count - 1 To 0 Step -1
+            Dim lista As List(Of Zw_Docu_Det_Lote) = Ls_Lotes(i)
+            If lista Is Nothing Then
+                Continue For
+            End If
+
+            Dim eliminar As Boolean = False
+
+            For Each lote As Zw_Docu_Det_Lote In lista
+                If lote IsNot Nothing AndAlso lote.Id = _Index Then
+                    eliminar = True
+                    Exit For
+                End If
+            Next
+
+            If eliminar Then
+                Ls_Lotes.RemoveAt(i)
+            End If
+        Next
+
 
         Grilla_Detalle.Rows.RemoveAt(_Index)
 

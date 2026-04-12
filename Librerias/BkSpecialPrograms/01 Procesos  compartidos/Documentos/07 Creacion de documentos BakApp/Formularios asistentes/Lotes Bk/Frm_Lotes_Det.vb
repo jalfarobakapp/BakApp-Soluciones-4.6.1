@@ -1,6 +1,6 @@
-﻿
-Imports System.ComponentModel
+﻿Imports System.ComponentModel
 Imports DevComponents.DotNetBar
+Imports System.Globalization
 
 Public Class Frm_Lotes_Det
 
@@ -13,6 +13,8 @@ Public Class Frm_Lotes_Det
     Public Lista_Lotes As New BindingList(Of Zw_Docu_Det_Lote)
 
     Public Property ModoSoloLectura As Boolean = False
+    Public Property Sum_CantUd1 As Double = 0
+    Public Property Sum_CantUd2 As Double = 0
 
     Public Sub New()
 
@@ -27,6 +29,11 @@ Public Class Frm_Lotes_Det
     End Sub
 
     Private Sub Frm_Lotes_Det_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        AddHandler Grilla.EditingControlShowing, AddressOf Grilla_Detalle_EditingControlShowing
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler Grilla.CellEndEdit, AddressOf Grilla_CellEndEdit
+        AddHandler Grilla.CellValueChanged, AddressOf Grilla_CellValueChanged
 
         ' 1. Inicializar lista de entrada si es Nothing
         If IsNothing(Ls_Lotes) Then
@@ -52,6 +59,11 @@ Public Class Frm_Lotes_Det
                 .SubLote = String.Empty,
                 .FElaboracion = Nothing,
                 .FVencimiento = Nothing,
+                .Rtu = 0,
+                .Udtrans = String.Empty,
+                .UnTrans = 1,
+                .Ud1 = String.Empty,
+                .Ud2 = String.Empty,
                 .CantUd1 = 0,
                 .CantUd2 = 0
             }
@@ -60,6 +72,9 @@ Public Class Frm_Lotes_Det
         End If
 
         Sb_ActualizarGrilla()
+
+        ' Actualizar sumatorias iniciales
+        ActualizarSumatorias()
 
     End Sub
 
@@ -79,6 +94,11 @@ Public Class Frm_Lotes_Det
                     .SubLote = item.SubLote,
                     .FElaboracion = item.FElaboracion,
                     .FVencimiento = item.FVencimiento,
+                    .Rtu = item.Rtu,
+                    .Udtrans = item.Udtrans,
+                    .UnTrans = item.UnTrans,
+                    .Ud1 = item.Ud1,
+                    .Ud2 = item.Ud2,
                     .CantUd1 = item.CantUd1,
                     .CantUd2 = item.CantUd2
                 })
@@ -105,24 +125,44 @@ Public Class Frm_Lotes_Det
             .Columns("Codigo").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("CantUd1").Visible = True
-            .Columns("CantUd1").HeaderText = "Cantidad"
-            .Columns("CantUd1").Width = 100
-            .Columns("CantUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("CantUd1").DefaultCellStyle.Format = "###,##0.##"
-            .Columns("CantUd1").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
             .Columns("NroLote").Visible = True
             .Columns("NroLote").HeaderText = "Nro. Lote"
             .Columns("NroLote").Width = 100
             .Columns("NroLote").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("SubLote").Visible = True
-            .Columns("SubLote").HeaderText = "SubLote"
-            .Columns("SubLote").Width = 100
-            .Columns("SubLote").DisplayIndex = _DisplayIndex
+            '.Columns("SubLote").Visible = True
+            '.Columns("SubLote").HeaderText = "SubLote"
+            '.Columns("SubLote").Width = 100
+            '.Columns("SubLote").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("Ud1").Visible = True
+            .Columns("Ud1").HeaderText = "Ud1"
+            .Columns("Ud1").Width = 30
+            .Columns("Ud1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CantUd1").Visible = True
+            .Columns("CantUd1").HeaderText = "Cant.Ud1"
+            .Columns("CantUd1").Width = 100
+            .Columns("CantUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("CantUd1").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("CantUd1").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Ud2").Visible = True
+            .Columns("Ud2").HeaderText = "Ud2"
+            .Columns("Ud2").Width = 30
+            .Columns("Ud2").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CantUd2").Visible = True
+            .Columns("CantUd2").HeaderText = "Cant.Ud2"
+            .Columns("CantUd2").Width = 100
+            .Columns("CantUd2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("CantUd2").DefaultCellStyle.Format = "###,##0.##"
+            .Columns("CantUd2").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("FElaboracion").Visible = True
@@ -170,6 +210,11 @@ Public Class Frm_Lotes_Det
         _Detalle.SubLote = String.Empty
         _Detalle.FElaboracion = Nothing
         _Detalle.FVencimiento = Nothing
+        _Detalle.Rtu = _Item1.Rtu
+        _Detalle.Udtrans = _Item1.Udtrans
+        _Detalle.UnTrans = _Item1.UnTrans
+        _Detalle.Ud1 = _Item1.Ud1
+        _Detalle.Ud2 = _Item1.Ud2
         _Detalle.CantUd1 = 0
         _Detalle.CantUd2 = 0
 
@@ -177,7 +222,7 @@ Public Class Frm_Lotes_Det
         Grilla.Refresh()
 
         Try
-            Grilla.CurrentCell = Grilla.Rows(Grilla.RowCount - 1).Cells("CantUd1")
+            Grilla.CurrentCell = Grilla.Rows(Grilla.RowCount - 1).Cells("NroLote")
         Catch ex As Exception
 
         End Try
@@ -187,10 +232,6 @@ Public Class Frm_Lotes_Det
     Private Sub Grilla_KeyDown(sender As Object, e As KeyEventArgs) Handles Grilla.KeyDown
 
         If IsNothing(Grilla.CurrentCell) Then
-            Return
-        End If
-
-        If Not Btn_Grabar.Enabled Then
             Return
         End If
 
@@ -222,96 +263,77 @@ Public Class Frm_Lotes_Det
                    _Cabeza = "FElaboracion" Or
                    _Cabeza = "FVencimiento" Then
 
-                    If _Fila.IsNewRow Then
+                    'If _Fila.IsNewRow Then
 
-                        If _Cabeza = "NroLote" Or _Cabeza = "FElaboracion" Or _Cabeza = "FVencimiento" Then
+                    If _Cabeza <> "NroLote" Then
 
-                            If String.IsNullOrEmpty(_NroLote) Then
-                                MessageBoxEx.Show(Me, "Debe ingresar el número de Lote", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                Grilla.CurrentCell = _Fila.Cells("NroLote")
-                                Return
-                            End If
-
-                        End If
-
-                        SendKeys.Send("{F2}")
-                        e.Handled = True
-                        Grilla.Columns(_Cabeza).ReadOnly = False
-                        Grilla.BeginEdit(True)
-
-                    End If
-
-                    If Not _Fila.IsNewRow Then
-
-                        'If _Id_Padre = 0 And Not SoloUnProducto Then
-                        '    MessageBoxEx.Show(Me, "Esta línea no puede ser editada, pues es la línea de origen del producto", "Validación",
-                        '                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        '    Return
-                        'End If
-
-                        If _Cabeza = "CantUd1" Then
-
-                            'If String.IsNullOrEmpty(_Fila.Cells("Ubicacion").Value) Then
-                            '    MessageBoxEx.Show(Me, "Debe ingresar la ubicación", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                            '    Grilla.CurrentCell = _Fila.Cells("Ubicacion")
-                            '    e.Handled = True
-                            '    Return
-                            'End If
-
-                            'If String.IsNullOrEmpty(_Empresa) Or String.IsNullOrEmpty(_Sucursal) Or String.IsNullOrEmpty(_Bodega) Then
-                            '    MessageBoxEx.Show(Me, "Debe ingresar la bodega", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                            '    Grilla.CurrentCell = _Fila.Cells("NroLote")
-                            '    e.Handled = True
-                            '    Return
-                            'End If
-
-                            'If String.IsNullOrEmpty(_Fila.Cells("Um").Value) Then
-                            '    MessageBoxEx.Show(Me, "Debe ingresar la unidad de medida", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                            '    Grilla.CurrentCell = _Fila.Cells("Um")
-                            '    e.Handled = True
-                            '    Return
-                            'End If
-
-                            SendKeys.Send("{F2}")
-                            e.Handled = True
-                            Grilla.Columns(_Cabeza).ReadOnly = False
-                            Grilla.BeginEdit(True)
-
-                        End If
-
-                        If _Cabeza = "FElaboracion" Then
-
-                            Dim _Grabar As Boolean
-                            Dim _FechaSeleccionada As DateTime
-
-                            Dim Fm As New Frm_Seleccionar_Fecha
-
-                            Fm.SolicitarConfirmacionDeFecha = True
-                            Fm.ExigeFechaMaxima = True
-                            Fm.FechaMaxima = Now.Date.AddDays(1)
-
-                            If IsNothing(_Fila.Cells(_Cabeza).Value) Then
-                                Fm.FechaDisplay = Now.Date
-                            Else
-                                Fm.FechaDisplay = _Fila.Cells(_Cabeza).Value
-                            End If
-                            Fm.Dtp_Fecha.Value = Now.Date
-                            Fm.Dtp_Hora.Value = Now
-                            Fm.MostraFormularioAlCentro = True
-                            Fm.SeleccionarHora = True
-                            Fm.ShowDialog(Me)
-
-                            _Grabar = Fm.Grabar
-                            _FechaSeleccionada = Fm.FechaSeleccionada
-                            Fm.Dispose()
-
-                            If _Grabar Then
-                                _Fila.Cells(_Cabeza).Value = _FechaSeleccionada
-                            End If
-
+                        If String.IsNullOrEmpty(_NroLote) Then
+                            MessageBoxEx.Show(Me, "Debe ingresar el número de Lote", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, True)
+                            Grilla.CurrentCell = _Fila.Cells("NroLote")
+                            Return
                         End If
 
                     End If
+
+                    SendKeys.Send("{F2}")
+                    e.Handled = True
+                    'Grilla.Columns(_Cabeza).ReadOnly = False
+                    Grilla.CurrentCell.ReadOnly = False
+                    Grilla.BeginEdit(True)
+
+                    'End If
+
+                    'If Not _Fila.IsNewRow Then
+
+                    '    If _Cabeza = "CantUd1" Then
+
+                    '        If String.IsNullOrEmpty(_NroLote) Then
+                    '            MessageBoxEx.Show(Me, "Debe ingresar el número de Lote", "Validación",
+                    '                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    '            Grilla.CurrentCell = _Fila.Cells("NroLote")
+                    '            Return
+                    '        End If
+
+                    '    End If
+
+                    '    SendKeys.Send("{F2}")
+                    '    e.Handled = True
+                    '    Grilla.Columns(_Cabeza).ReadOnly = False
+                    '    Grilla.BeginEdit(True)
+
+                    '    'If _Cabeza = "FElaboracion" Then
+
+                    '    '    Dim _Grabar As Boolean
+                    '    '    Dim _FechaSeleccionada As DateTime
+
+                    '    '    Dim Fm As New Frm_Seleccionar_Fecha
+
+                    '    '    Fm.SolicitarConfirmacionDeFecha = True
+                    '    '    Fm.ExigeFechaMaxima = True
+                    '    '    Fm.FechaMaxima = Now.Date.AddDays(1)
+
+                    '    '    If IsNothing(_Fila.Cells(_Cabeza).Value) Then
+                    '    '        Fm.FechaDisplay = Now.Date
+                    '    '    Else
+                    '    '        Fm.FechaDisplay = _Fila.Cells(_Cabeza).Value
+                    '    '    End If
+                    '    '    Fm.Dtp_Fecha.Value = Now.Date
+                    '    '    Fm.Dtp_Hora.Value = Now
+                    '    '    Fm.MostraFormularioAlCentro = True
+                    '    '    Fm.SeleccionarHora = True
+                    '    '    Fm.ShowDialog(Me)
+
+                    '    '    _Grabar = Fm.Grabar
+                    '    '    _FechaSeleccionada = Fm.FechaSeleccionada
+                    '    '    Fm.Dispose()
+
+                    '    '    If _Grabar Then
+                    '    '        _Fila.Cells(_Cabeza).Value = _FechaSeleccionada
+                    '    '    End If
+
+                    '    'End If
+
+                    'End If
 
                 End If
 
@@ -335,8 +357,8 @@ Public Class Frm_Lotes_Det
                         End If
 
                         Grilla.Rows.RemoveAt(_Index)
+                        ActualizarSumatorias()
 
-                        'End If
                     End If
 
                     If Grilla.Rows.Count = 0 Then
@@ -373,6 +395,58 @@ Public Class Frm_Lotes_Det
         Grilla.Refresh()
 
     End Sub
+
+    Private Sub Sb_Validar_Keypress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
+        ' obtener indice de la columna
+
+        'With sender
+
+        Dim _Columna As Integer = Grilla.CurrentCellAddress.X 'Current.ColumnIndex
+        Dim _Fila As Integer = Grilla.CurrentCellAddress.Y 'Current.ColumnIndex
+
+        Dim _Cabeza = Grilla.Columns(_Columna).Name
+
+        ' comprobar si la celda en edición corresponde a la columna 1 o 2
+
+        If _Cabeza = "CantUd1" Then
+
+            ' Obtener caracter  
+            Dim _Caracter As Char = e.KeyChar
+
+            ' referencia a la celda  
+            Dim _Txt As TextBox = CType(sender, TextBox)
+
+            If e.KeyChar = "."c Then
+                ' si se pulsa la coma se convertirá en punto
+                'e.Handled = True
+                SendKeys.Send(",")
+                e.KeyChar = ","c
+                _Caracter = ","
+            End If
+
+            Dim _Caracter_Raro = ChrW(Keys.Back)
+            Dim _EsNumero As Boolean = Char.IsNumber(_Caracter)
+
+            ' comprobar si es un número con isNumber, si es el backspace, si el caracter  
+            ' es el separador decimal, y que no contiene ya el separador  
+            If (Char.IsNumber(_Caracter)) Or
+               (_Caracter = ChrW(Keys.Back)) Or
+               ((_Caracter = "-") And (_Txt.Text.Contains("-") = False)) Or
+               (_Caracter = ",") And (_Txt.Text.Contains(",") = False) Then
+                e.Handled = False
+            Else
+                e.Handled = True
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Grilla_Detalle_EditingControlShowing(sender As System.Object, e As System.Windows.Forms.DataGridViewEditingControlShowingEventArgs)
+        Dim validar As TextBox = CType(e.Control, TextBox)
+        AddHandler validar.KeyPress, AddressOf Sb_Validar_Keypress
+    End Sub
+
 
     Private Sub Btn_Aceptar_Click(sender As Object, e As EventArgs) Handles Btn_Aceptar.Click
 
@@ -474,6 +548,193 @@ Public Class Frm_Lotes_Det
         Return True
 
     End Function
+
+    ' Evento cuando cambia la lista (elemento agregado/eliminado/modificado)
+    Private Sub Lista_Lotes_ListChanged(sender As Object, e As ListChangedEventArgs)
+        ' Cada vez que hay un cambio en la lista recalcular sumatorias
+        ActualizarSumatorias()
+    End Sub
+
+    ' Procesa cambios en la grilla: calcula CantUd2 cuando cambie CantUd1 y actualiza sumas
+    Private Sub Grilla_CellEndEdit(sender As Object, e As DataGridViewCellEventArgs)
+        ProcesarCambioCelda(e.RowIndex, e.ColumnIndex)
+    End Sub
+
+    Private Sub Grilla_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs)
+        ProcesarCambioCelda(e.RowIndex, e.ColumnIndex)
+    End Sub
+
+    Private Sub ProcesarCambioCelda(rowIndex As Integer, columnIndex As Integer)
+        If rowIndex < 0 Then
+            Return
+        End If
+
+        If columnIndex < 0 Then
+            Return
+        End If
+
+        Dim colName = Grilla.Columns(columnIndex).Name
+
+        If colName = "CantUd1" Then
+            ' Asegurarse de que el índice existe en la lista binding
+            If rowIndex >= 0 AndAlso rowIndex < Lista_Lotes.Count Then
+                Dim item = Lista_Lotes(rowIndex)
+                ' Intentar obtener valor actual de la celda parseado a Double
+                Dim valorObj = Grilla.Rows(rowIndex).Cells("CantUd1").Value
+                Dim valor As Double = 0
+                If Not IsNothing(valorObj) Then
+                    Double.TryParse(Convert.ToString(valorObj), valor)
+                End If
+                item.CantUd1 = valor
+
+                ' Calcular CantUd2 = CantUd1 / Rtu, evitando división por cero
+                If item.Rtu > 0 Then
+                    item.CantUd2 = item.CantUd1 / item.Rtu
+                Else
+                    item.CantUd2 = 0
+                End If
+
+                ' Notificar cambio de item para refrescar la grilla
+                Try
+                    Lista_Lotes.ResetItem(rowIndex)
+                Catch ex As Exception
+                    ' Ignorar si ResetItem no está soportado
+                End Try
+
+                ' Actualizar sumas
+                ActualizarSumatorias()
+            End If
+        ElseIf colName = "NroLote" Then
+            ' Validar unicidad del NroLote en la lista
+            If rowIndex >= 0 AndAlso rowIndex < Lista_Lotes.Count Then
+                Dim item = Lista_Lotes(rowIndex)
+                Dim rawVal = Grilla.Rows(rowIndex).Cells("NroLote").Value
+                Dim nuevo As String = If(rawVal Is Nothing, String.Empty, Convert.ToString(rawVal).Trim())
+
+                If String.IsNullOrEmpty(nuevo) Then
+                    item.NroLote = String.Empty
+                    Try
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+                    Return
+                End If
+
+                ' Buscar duplicado en otras filas (ignorar mayúsc/minúsc)
+                Dim duplicado As Boolean = False
+                For i As Integer = 0 To Lista_Lotes.Count - 1
+                    If i <> rowIndex Then
+                        Dim existente = If(Lista_Lotes(i).NroLote, String.Empty)
+                        ' Uso de argumentos posicionales en lugar de nombres incorrectos
+                        If String.Equals(existente?.Trim(), nuevo, StringComparison.OrdinalIgnoreCase) Then
+                            duplicado = True
+                            Exit For
+                        End If
+                    End If
+                Next
+
+                If duplicado Then
+                    MessageBoxEx.Show(Me, "El número de lote ya existe en otra fila. Debe ser único.", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    ' Limpiar valor y devolver foco
+                    Grilla.Rows(rowIndex).Cells("NroLote").Value = String.Empty
+                    item.NroLote = String.Empty
+                    Try
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+                    Try
+                        Grilla.CurrentCell = Grilla.Rows(rowIndex).Cells("NroLote")
+                        Grilla.BeginEdit(True)
+                    Catch ex As Exception
+                    End Try
+                    Return
+                Else
+                    item.NroLote = nuevo
+                    Try
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+                End If
+            End If
+
+        ElseIf colName = "FElaboracion" OrElse colName = "FVencimiento" Then
+            ' Validar formato/valor de fecha
+            If rowIndex >= 0 AndAlso rowIndex < Lista_Lotes.Count Then
+                Dim item = Lista_Lotes(rowIndex)
+                Dim rawVal = Grilla.Rows(rowIndex).Cells(colName).Value
+
+                If rawVal Is Nothing OrElse String.IsNullOrWhiteSpace(Convert.ToString(rawVal)) Then
+                    ' Celda vacía -> asignar Nothing
+                    If colName = "FElaboracion" Then
+                        item.FElaboracion = Nothing
+                    Else
+                        item.FVencimiento = Nothing
+                    End If
+                    Try
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+                    Return
+                End If
+
+                Dim txt As String = Convert.ToString(rawVal).Trim()
+                Dim dt As Date
+                If Date.TryParse(txt, dt) Then
+                    If colName = "FElaboracion" Then
+                        item.FElaboracion = dt
+                    Else
+                        item.FVencimiento = dt
+                    End If
+                    Try
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+                Else
+                    MessageBoxEx.Show(Me, "Fecha inválida o formato incorrecto. Ingrese una fecha real (ej: 31/12/2023).", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    ' Limpiar valor y regresar edición
+                    Grilla.Rows(rowIndex).Cells(colName).Value = Nothing
+                    If colName = "FElaboracion" Then
+                        item.FElaboracion = Nothing
+                    Else
+                        item.FVencimiento = Nothing
+                    End If
+                    Try
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+                    Try
+                        Grilla.CurrentCell = Grilla.Rows(rowIndex).Cells(colName)
+                        Grilla.BeginEdit(True)
+                    Catch ex As Exception
+                    End Try
+                    Return
+                End If
+            End If
+        End If
+    End Sub
+
+    ' Recalcula las sumas de CantUd1 y CantUd2 sobre Lista_Lotes
+    Private Sub ActualizarSumatorias()
+        Dim s1 As Double = 0
+        Dim s2 As Double = 0
+
+        For Each it In Lista_Lotes
+            Try
+                s1 += it.CantUd1
+                s2 += it.CantUd2
+            Catch ex As Exception
+                ' Ignorar elementos con valores inválidos
+            End Try
+        Next
+
+        Sum_CantUd1 = s1
+        Sum_CantUd2 = s2
+
+        ' Refrescar UI si es necesario
+        Grilla.Refresh()
+    End Sub
 
     'Private Sub Dgv_Lotes_DataError(sender As Object, e As DataGridViewDataErrorEventArgs)
     '    ' Evitar excepciones no controladas al pegar/editar; marcar la celda con error

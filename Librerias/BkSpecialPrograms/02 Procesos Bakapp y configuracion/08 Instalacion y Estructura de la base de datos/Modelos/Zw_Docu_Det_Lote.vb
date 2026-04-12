@@ -12,6 +12,11 @@
     Public Property SubLote As String
     Public Property FElaboracion As DateTime?
     Public Property FVencimiento As DateTime?
+    Public Property Rtu As Double
+    Public Property Udtrans As String
+    Public Property UnTrans As Integer
+    Public Property Ud1 As String
+    Public Property Ud2 As String
     Public Property CantUd1 As Double
     Public Property CantUd2 As Double
 
@@ -29,6 +34,11 @@
         SubLote = String.Empty
         FElaboracion = Nothing
         FVencimiento = Nothing
+        Rtu = 0
+        Udtrans = String.Empty
+        UnTrans = 0
+        Ud1 = String.Empty
+        Ud2 = String.Empty
         CantUd1 = 0
         CantUd2 = 0
 
