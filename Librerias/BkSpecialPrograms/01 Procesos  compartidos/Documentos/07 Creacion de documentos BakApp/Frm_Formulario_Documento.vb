@@ -187,6 +187,8 @@ Public Class Frm_Formulario_Documento
 
     Dim _Cl_Entidad As New Cl_Entidad
 
+    Dim Ls_Lotes As New List(Of List(Of Zw_Docu_Det_Lote))
+
 #Region "PROPIEDADES"
 
     Public ReadOnly Property Pro_Idmaeedo() As Integer
@@ -1260,6 +1262,8 @@ Public Class Frm_Formulario_Documento
         If _Tido <> "COV" And _Tido <> "NVV" Then
             _Cl_DocListaSuperior.UsarVencListaPrecios = False
         End If
+
+        Ls_Lotes = New List(Of List(Of Zw_Docu_Det_Lote))
 
         'Dim _Cl_Contenedor As New Cl_Contenedor
         '_Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
@@ -2769,6 +2773,9 @@ Public Class Frm_Formulario_Documento
             .Item("Qty_SobreStock") = 0
             .Item("PqteComprometidoSol") = 0
 
+            .Item("TieneLotes") = False
+            .Item("NroLote") = String.Empty
+
             _TblDetalle.Rows.Add(NewFila)
 
         End With
@@ -3526,6 +3533,12 @@ Public Class Frm_Formulario_Documento
             .Columns("FechaRecepcion").Visible = True
             .Columns("FechaRecepcion").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("FechaRecepcion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NroLote").Width = 80 + _Mas
+            .Columns("NroLote").HeaderText = "Nro. Lote"
+            .Columns("NroLote").Visible = True
+            .Columns("NroLote").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Potencia").Width = 80 + _Mas
@@ -9282,6 +9295,59 @@ Public Class Frm_Formulario_Documento
 
                             _DatosDeGrillaProcesados = True
 
+                        Case "NroLote"
+
+                            Dim _Lote_Madre As New Zw_Docu_Det_Lote With {
+                                .Id = _Fila.Index,
+                                .Id_Det = _Fila.Cells("Id").Value,
+                                .Idmaeddo = 0,
+                                .Idmaeedo = 0,
+                                .Tido = _Tido,
+                                .Nudo = _TblEncabezado.Rows(0).Item("NroDocumento"),
+                                .Codigo = _Fila.Cells("Codigo").Value,
+                                .Descripcion = _Fila.Cells("Descripcion").Value,
+                                .NroLote = String.Empty,
+                                .SubLote = String.Empty,
+                                .FElaboracion = Nothing,
+                                .FVencimiento = Nothing,
+                                .CantUd1 = 0,
+                                .CantUd2 = 0}
+
+                            Dim _Cl_Lotes As New Cl_Lotes_Bk(Ls_Lotes, _Lote_Madre)
+                            Dim _Lotes As List(Of Zw_Docu_Det_Lote) = _Cl_Lotes.Fx_ObtenerLotesPorFila(_Fila)
+
+                            Dim Fm As New Frm_Lotes_Det
+                            Fm.Ls_Lotes = _Lotes
+                            Fm.ShowDialog(Me)
+
+                            If Fm.DialogResult = DialogResult.OK Then
+
+                                Dim _x = 0
+                                Dim _Salir = False
+
+                                For Each lista As List(Of Zw_Docu_Det_Lote) In Ls_Lotes
+                                    If lista Is Nothing Then
+                                        Continue For
+                                    End If
+
+                                    For Each lote As Zw_Docu_Det_Lote In lista
+                                        If lote IsNot Nothing AndAlso lote.Id = _Fila.Index Then
+                                            lista = Fm.Ls_Lotes
+                                            Ls_Lotes.Item(_x) = lista
+                                            _Salir = True
+                                            Exit For
+                                        End If
+                                    Next
+                                    _x += 1
+                                    If _Salir Then
+                                        Exit For
+                                    End If
+                                Next
+
+                            End If
+
+                            Fm.Dispose()
+
                         Case "Cantidad"
 
                             If String.IsNullOrEmpty(_Codigo) Then
@@ -9301,15 +9367,6 @@ Public Class Frm_Formulario_Documento
                                                   MessageBoxDefaultButton.Button1, Me.TopMost)
                                 Return
                             End If
-
-                            'If Not CBool(_Precio) Then
-
-                            '    Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
-                            '    Dim _Row_Producto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-                            '    Sb_Traer_Producto_Grilla(_Fila, _Row_Producto, False, _UnTrans, False)
-
-                            'End If
-
 
                             If _Stock_desde_WMS Then
 

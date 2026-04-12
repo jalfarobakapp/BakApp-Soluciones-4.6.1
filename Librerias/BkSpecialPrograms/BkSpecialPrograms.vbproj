@@ -502,6 +502,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Recuros_ListaSuperior.resx</DependentUpon>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lotes Bk\Cl_Lotes_Bk.vb" />
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lotes Bk\Frm_Lotes_Det.Designer.vb">
+      <DependentUpon>Frm_Lotes_Det.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lotes Bk\Frm_Lotes_Det.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Permisos Asociados\Cl_Permisos_Asociados.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Permisos Asociados\Cl_RemotasEnCadena.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\SobreStock_PV\Frm_Cantidades_PreVenta.Designer.vb">
@@ -854,6 +861,7 @@
     <Compile Include="01 Procesos  compartidos\Productos\22 Media y promedio de venta\Frm_MediaYPromedioXProd_Estudio.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lotes Bk\Frm_Lotes_Det.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\01 Actualizacion BakApp\Clas_Actualiza_BakApp_Sql.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\02 Usuarios\Random\Frm_Usuarios_Random.Designer.vb">
       <DependentUpon>Frm_Usuarios_Random.vb</DependentUpon>
@@ -908,6 +916,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Conceptos.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_DocTom.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Docu_Det_Lote.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pda2NVV.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_PreVenta_StockProd.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_Conf_Correo.vb" />
@@ -4812,6 +4821,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Recuros_ListaSuperior.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Lotes Bk\Frm_Lotes_Det.resx">
+      <DependentUpon>Frm_Lotes_Det.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\SobreStock_PV\Frm_Cantidades_PreVenta.resx">
       <DependentUpon>Frm_Cantidades_PreVenta.vb</DependentUpon>

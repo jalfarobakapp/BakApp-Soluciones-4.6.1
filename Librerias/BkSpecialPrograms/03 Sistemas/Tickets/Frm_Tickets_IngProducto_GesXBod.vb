@@ -30,7 +30,6 @@ Public Class Frm_Tickets_IngProducto_GesXBod
         AddHandler Grilla_Detalle.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         ' Asignar la lista de detalles a listaProductos
-        'listaProductos = New BindingList(Of Zw_Stk_Tickets_Producto)(Cl_Tickets.Ls_Zw_Stk_Tickets_Producto)
 
         listaProductosOriginal = New BindingList(Of Zw_Stk_Tickets_Producto)(Cl_Tickets.Ls_Zw_Stk_Tickets_Producto)
         listaProductos = New BindingList(Of Zw_Stk_Tickets_Producto)(ClonarLista(listaProductosOriginal))
@@ -329,18 +328,6 @@ Public Class Frm_Tickets_IngProducto_GesXBod
 
                             If Fm_b.Pro_Seleccionado Then
 
-                                '' Verificar si ya existe la misma empresa, sucursal y bodega en la lista
-                                'For Each producto As Zw_Stk_Tickets_Producto In listaProductos
-                                '    If producto.Empresa = Fm_b.Pro_RowBodega.Item("EMPRESA") AndAlso
-                                '        producto.Sucursal = Fm_b.Pro_RowBodega.Item("KOSU") AndAlso
-                                '        producto.Bodega = Fm_b.Pro_RowBodega.Item("KOBO") AndAlso producto.Id <> currentId AndAlso producto.Id_TicketAc = 0 Then
-                                '        MessageBoxEx.Show(Me, "Ya existe un registro con la misma empresa, sucursal y bodega", "Validación",
-                                '                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                '        Grilla_Detalle.CurrentCell = _Fila.Cells("Bodega")
-                                '        Return
-                                '    End If
-                                'Next
-
                                 _Fila.Cells("Empresa").Value = Fm_b.Pro_RowBodega.Item("EMPRESA")
                                 _Fila.Cells("Sucursal").Value = Fm_b.Pro_RowBodega.Item("KOSU")
                                 _Fila.Cells("Bodega").Value = Fm_b.Pro_RowBodega.Item("KOBO")
@@ -403,16 +390,6 @@ Public Class Frm_Tickets_IngProducto_GesXBod
                         End If
 
                         If _Cabeza = "Ubicacion" Then
-
-                            'SendKeys.Send("{F2}")
-                            'e.Handled = True
-                            'Grilla_Detalle.Columns(_Cabeza).ReadOnly = False
-                            'Grilla_Detalle.BeginEdit(True)
-
-                            'Dim _SqlFiltro_Fechas As String
-
-                            '_SqlFiltro_Fechas = "Where FEEMLI BETWEEN '" & Format(Dtp_Fecha_Desde.Value, "yyyyMMdd") & "' AND '" &
-                            '                     Format(Dtp_Fecha_Hasta.Value, "yyyyMMdd") & "'" & vbCrLf
 
                             If String.IsNullOrEmpty(_Sucursal) Or String.IsNullOrEmpty(_Sucursal) Then
                                 MessageBoxEx.Show(Me, "Falta la bodega", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
