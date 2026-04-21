@@ -90,6 +90,7 @@
     <Compile Include="Modelos\Bakapp\Zw_Demonio_NVVAutoDet.vb" />
     <Compile Include="Modelos\Conexion.vb" />
     <Compile Include="Modelos\Configuracion.vb" />
+    <Compile Include="Modelos\Config_Correos.vb" />
     <Compile Include="Modelos\Random\RespuestaDetalle.vb" />
     <Compile Include="Modelos\Random\RespuestaSQL.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

@@ -7,8 +7,10 @@ Public Class Frm_Lotes_Det
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    Public Property Ls_Lotes As List(Of Zw_Docu_Det_Lote)
+    ' Indica si ya se estableció el foco inicial para no repetir la operación en posteriores Activated
+    Private formActivatedOnce As Boolean = False
 
+    Public Property Ls_Lotes As List(Of Zw_Docu_Det_Lote)
     Public Lista_Lotes_Original As BindingList(Of Zw_Docu_Det_Lote)
     Public Lista_Lotes As New BindingList(Of Zw_Docu_Det_Lote)
 
@@ -76,6 +78,34 @@ Public Class Frm_Lotes_Det
         ' Actualizar sumatorias iniciales
         ActualizarSumatorias()
 
+    End Sub
+
+    ' Establece foco inicial en la grilla y en la columna "NroLote" cuando el formulario recibe foco por primera vez
+    Private Sub Frm_Lotes_Det_Activated(sender As Object, e As EventArgs) Handles Me.Activated
+        If formActivatedOnce Then
+            Return
+        End If
+
+        Try
+            If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > 0 AndAlso Grilla.Columns.Contains("NroLote") Then
+                ' Seleccionar la primera fila y la columna NroLote
+                Grilla.Focus()
+                Grilla.CurrentCell = Grilla.Rows(0).Cells("NroLote")
+
+                ' Iniciar edición sólo si no está en modo solo lectura
+                If Not ModoSoloLectura Then
+                    Try
+                        Grilla.BeginEdit(True)
+                    Catch ex As Exception
+                        ' Ignorar errores en BeginEdit
+                    End Try
+                End If
+            End If
+        Catch ex As Exception
+            ' Ignorar errores de foco/selección
+        Finally
+            formActivatedOnce = True
+        End Try
     End Sub
 
     Private Function ClonarLista(original As BindingList(Of Zw_Docu_Det_Lote)) As List(Of Zw_Docu_Det_Lote)
@@ -190,7 +220,7 @@ Public Class Frm_Lotes_Det
 
         ' Obtener el valor del campo Id del último registro en la lista y asignarlo a currentId + 1
         If Lista_Lotes.Count > 0 Then
-            currentId = Lista_Lotes(Lista_Lotes.Count - 1).Id + 1
+            currentId = Lista_Lotes(Lista_Lotes.Count - 1).Id_Det + 1
         Else
             currentId = 1
         End If
@@ -222,9 +252,18 @@ Public Class Frm_Lotes_Det
         Grilla.Refresh()
 
         Try
-            Grilla.CurrentCell = Grilla.Rows(Grilla.RowCount - 1).Cells("NroLote")
-        Catch ex As Exception
+            ' Obtener el índice real del nuevo elemento en la lista binding
+            Dim newIndex As Integer = Lista_Lotes.IndexOf(_Detalle)
 
+            ' Si no se encontró, intentar aproximar con el último elemento de datos (no el placeholder NewRow)
+            If newIndex < 0 Then
+                newIndex = Math.Max(0, Lista_Lotes.Count - 1)
+            End If
+
+            ' Llamar helper para posicionar foco en la fila correspondiente y columna "NroLote"
+            Sb_SetCellFocus(newIndex, "NroLote", True)
+        Catch ex As Exception
+            ' Ignorar errores de foco
         End Try
 
     End Sub
@@ -269,7 +308,8 @@ Public Class Frm_Lotes_Det
 
                         If String.IsNullOrEmpty(_NroLote) Then
                             MessageBoxEx.Show(Me, "Debe ingresar el número de Lote", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, True)
-                            Grilla.CurrentCell = _Fila.Cells("NroLote")
+                            'Grilla.CurrentCell = _Fila.Cells("NroLote")
+                            Sb_SetCellFocus(_Index, "NroLote", True)
                             Return
                         End If
 
@@ -281,60 +321,11 @@ Public Class Frm_Lotes_Det
                     Grilla.CurrentCell.ReadOnly = False
                     Grilla.BeginEdit(True)
 
-                    'End If
+                End If
 
-                    'If Not _Fila.IsNewRow Then
-
-                    '    If _Cabeza = "CantUd1" Then
-
-                    '        If String.IsNullOrEmpty(_NroLote) Then
-                    '            MessageBoxEx.Show(Me, "Debe ingresar el número de Lote", "Validación",
-                    '                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                    '            Grilla.CurrentCell = _Fila.Cells("NroLote")
-                    '            Return
-                    '        End If
-
-                    '    End If
-
-                    '    SendKeys.Send("{F2}")
-                    '    e.Handled = True
-                    '    Grilla.Columns(_Cabeza).ReadOnly = False
-                    '    Grilla.BeginEdit(True)
-
-                    '    'If _Cabeza = "FElaboracion" Then
-
-                    '    '    Dim _Grabar As Boolean
-                    '    '    Dim _FechaSeleccionada As DateTime
-
-                    '    '    Dim Fm As New Frm_Seleccionar_Fecha
-
-                    '    '    Fm.SolicitarConfirmacionDeFecha = True
-                    '    '    Fm.ExigeFechaMaxima = True
-                    '    '    Fm.FechaMaxima = Now.Date.AddDays(1)
-
-                    '    '    If IsNothing(_Fila.Cells(_Cabeza).Value) Then
-                    '    '        Fm.FechaDisplay = Now.Date
-                    '    '    Else
-                    '    '        Fm.FechaDisplay = _Fila.Cells(_Cabeza).Value
-                    '    '    End If
-                    '    '    Fm.Dtp_Fecha.Value = Now.Date
-                    '    '    Fm.Dtp_Hora.Value = Now
-                    '    '    Fm.MostraFormularioAlCentro = True
-                    '    '    Fm.SeleccionarHora = True
-                    '    '    Fm.ShowDialog(Me)
-
-                    '    '    _Grabar = Fm.Grabar
-                    '    '    _FechaSeleccionada = Fm.FechaSeleccionada
-                    '    '    Fm.Dispose()
-
-                    '    '    If _Grabar Then
-                    '    '        _Fila.Cells(_Cabeza).Value = _FechaSeleccionada
-                    '    '    End If
-
-                    '    'End If
-
-                    'End If
-
+                If Not IsNothing(e) Then
+                    e.SuppressKeyPress = False
+                    e.Handled = True
                 End If
 
             Case Keys.Delete
@@ -380,13 +371,25 @@ Public Class Frm_Lotes_Det
                         Return
                     End If
 
-                    'If SoloUnProducto Then
-                    '    Return
-                    'End If
+                    ' Nueva validación: la última fila debe tener número de lote para permitir agregar otra
+                    Dim nroUltimaFila As String = Convert.ToString(_Fila.Cells("NroLote").Value).Trim()
+                    If String.IsNullOrWhiteSpace(nroUltimaFila) Then
+                        MessageBoxEx.Show(Me, "Debe ingresar el número de lote en la última fila antes de agregar una nueva.",
+                                          "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        'Try
+                        '    Grilla.CurrentCell = _Fila.Cells("NroLote")
+                        '    Grilla.BeginEdit(True)
+                        'Catch ex As Exception
+                        'End Try
+                        Return
+                        Try
+                            Sb_SetCellFocus(_Index, "NroLote", True)
+                        Catch ex As Exception
+                        End Try
+                    End If
 
-                    'If Not String.IsNullOrEmpty(_Bodega) Then
                     Sb_Agregar_Nueva_Linea()
-                    'End If
 
                 End If
 
@@ -447,13 +450,12 @@ Public Class Frm_Lotes_Det
         AddHandler validar.KeyPress, AddressOf Sb_Validar_Keypress
     End Sub
 
-
     Private Sub Btn_Aceptar_Click(sender As Object, e As EventArgs) Handles Btn_Aceptar.Click
 
-        'Public Property Ls_Lotes As List(Of Zw_Docu_Det_Lote)
-
-        'Public Lista_Lotes_Original As BindingList(Of Zw_Docu_Det_Lote)
-        'Public Lista_Lotes As New BindingList(Of Zw_Docu_Det_Lote)
+        ' Validar filas obligatorias antes de procesar (fechas, número de lote y cantidades)
+        If Not ValidarFilasObligatorias() Then
+            Return
+        End If
 
         ' Lista que contendrá los registros nuevos o modificados (comparando con Lista_Lotes_Original)
         Dim ListaLotesDiferentes As New List(Of Zw_Docu_Det_Lote)
@@ -603,6 +605,203 @@ Public Class Frm_Lotes_Det
 
                 ' Actualizar sumas
                 ActualizarSumatorias()
+
+                ' Mover foco a FElaboracion si no está en solo lectura
+                If Not ModoSoloLectura And valor > 0 Then
+                    Try
+                        If Grilla.Columns.Contains("FElaboracion") AndAlso Grilla.Rows.Count > rowIndex Then
+                            Sb_SetCellFocus(rowIndex, "FElaboracion", True)
+                        End If
+                    Catch ex As Exception
+                        ' Ignorar errores al cambiar foco
+                    End Try
+                End If
+
+            End If
+        ElseIf colName = "NroLote" Then
+            ' Validar unicidad del NroLote en la lista
+            If rowIndex >= 0 AndAlso rowIndex < Lista_Lotes.Count Then
+                Dim item = Lista_Lotes(rowIndex)
+                Dim rawVal = Grilla.Rows(rowIndex).Cells("NroLote").Value
+                Dim nuevo As String = If(rawVal Is Nothing, String.Empty, Convert.ToString(rawVal).Trim())
+
+                If String.IsNullOrEmpty(nuevo) Then
+                    item.NroLote = String.Empty
+                    Try
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+                    Return
+                End If
+
+                ' Buscar duplicado en otras filas (ignorar mayúsc/minúsc)
+                Dim duplicado As Boolean = False
+                For i As Integer = 0 To Lista_Lotes.Count - 1
+                    If i <> rowIndex Then
+                        Dim existente = If(Lista_Lotes(i).NroLote, String.Empty)
+                        ' Uso de argumentos posicionales en lugar de nombres incorrectos
+                        If String.Equals(existente?.Trim(), nuevo, StringComparison.OrdinalIgnoreCase) Then
+                            duplicado = True
+                            Exit For
+                        End If
+                    End If
+                Next
+
+                If duplicado Then
+                    MessageBoxEx.Show(Me, "El número de lote ya existe en otra fila. Debe ser único.", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    ' Limpiar valor y devolver foco
+                    Grilla.Rows(rowIndex).Cells("NroLote").Value = String.Empty
+                    item.NroLote = String.Empty
+                    Try
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+                    Try
+                        Sb_SetCellFocus(rowIndex, "NroLote", True)
+                    Catch ex As Exception
+                    End Try
+                    Return
+                Else
+                    item.NroLote = nuevo
+                    Try
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+
+                    ' Mover foco a CantUd1 si no está en solo lectura
+                    If Not ModoSoloLectura Then
+                        Try
+                            If Grilla.Columns.Contains("CantUd1") AndAlso Grilla.Rows.Count > rowIndex Then
+                                Sb_SetCellFocus(rowIndex, "CantUd1", True)
+                            End If
+                        Catch ex As Exception
+                            ' Ignorar errores al cambiar foco
+                        End Try
+                    End If
+                End If
+            End If
+
+        ElseIf colName = "FElaboracion" OrElse colName = "FVencimiento" Then
+            ' Validar formato/valor de fecha
+            If rowIndex >= 0 AndAlso rowIndex < Lista_Lotes.Count Then
+                Dim item = Lista_Lotes(rowIndex)
+                Dim rawVal = Grilla.Rows(rowIndex).Cells(colName).Value
+
+                If rawVal Is Nothing OrElse String.IsNullOrWhiteSpace(Convert.ToString(rawVal)) Then
+                    ' Celda vacía -> asignar Nothing
+                    If colName = "FElaboracion" Then
+                        item.FElaboracion = Nothing
+                    Else
+                        item.FVencimiento = Nothing
+                    End If
+                    Try
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+                    Return
+                End If
+
+                Dim txt As String = Convert.ToString(rawVal).Trim()
+                Dim dt As Date
+                If Date.TryParse(txt, dt) Then
+                    If colName = "FElaboracion" Then
+                        item.FElaboracion = dt
+                    Else
+                        item.FVencimiento = dt
+                    End If
+                    Try
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+
+                    ' Si la columna editada fue FElaboracion, mover foco a FVencimiento
+                    If colName = "FElaboracion" AndAlso Not ModoSoloLectura Then
+                        Try
+                            If Grilla.Columns.Contains("FVencimiento") AndAlso Grilla.Rows.Count > rowIndex Then
+                                Sb_SetCellFocus(rowIndex, "FVencimiento", True)
+                            End If
+                        Catch ex As Exception
+                            ' Ignorar errores al cambiar foco
+                        End Try
+                    End If
+                Else
+                    MessageBoxEx.Show(Me, "Fecha inválida o formato incorrecto. Ingrese una fecha real (ej: 31/12/2023).", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    ' Limpiar valor y regresar edición
+                    Grilla.Rows(rowIndex).Cells(colName).Value = Nothing
+                    If colName = "FElaboracion" Then
+                        item.FElaboracion = Nothing
+                    Else
+                        item.FVencimiento = Nothing
+                    End If
+                    Try
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+                    Try
+                        Sb_SetCellFocus(rowIndex, colName, True)
+                    Catch ex As Exception
+                    End Try
+                    Return
+                End If
+            End If
+        End If
+    End Sub
+
+
+    Private Sub ProcesarCambioCelda_Old(rowIndex As Integer, columnIndex As Integer)
+        If rowIndex < 0 Then
+            Return
+        End If
+
+        If columnIndex < 0 Then
+            Return
+        End If
+
+        Dim colName = Grilla.Columns(columnIndex).Name
+
+        If colName = "CantUd1" Then
+            ' Asegurarse de que el índice existe en la lista binding
+            If rowIndex >= 0 AndAlso rowIndex < Lista_Lotes.Count Then
+                Dim item = Lista_Lotes(rowIndex)
+                ' Intentar obtener valor actual de la celda parseado a Double
+                Dim valorObj = Grilla.Rows(rowIndex).Cells("CantUd1").Value
+                Dim valor As Double = 0
+                If Not IsNothing(valorObj) Then
+                    Double.TryParse(Convert.ToString(valorObj), valor)
+                End If
+                item.CantUd1 = valor
+
+                ' Calcular CantUd2 = CantUd1 / Rtu, evitando división por cero
+                If item.Rtu > 0 Then
+                    item.CantUd2 = item.CantUd1 / item.Rtu
+                Else
+                    item.CantUd2 = 0
+                End If
+
+                ' Notificar cambio de item para refrescar la grilla
+                Try
+                    Lista_Lotes.ResetItem(rowIndex)
+                Catch ex As Exception
+                    ' Ignorar si ResetItem no está soportado
+                End Try
+
+                ' Actualizar sumas
+                ActualizarSumatorias()
+
+                ' Mover foco a FElaboracion si no está en solo lectura
+                If Not ModoSoloLectura And valor > 0 Then
+                    Try
+                        If Grilla.Columns.Contains("FElaboracion") AndAlso Grilla.Rows.Count > rowIndex Then
+                            Grilla.CurrentCell = Grilla.Rows(rowIndex).Cells("FElaboracion")
+                            Grilla.BeginEdit(True)
+                        End If
+                    Catch ex As Exception
+                        ' Ignorar errores al cambiar foco
+                    End Try
+                End If
+
             End If
         ElseIf colName = "NroLote" Then
             ' Validar unicidad del NroLote en la lista
@@ -655,6 +854,18 @@ Public Class Frm_Lotes_Det
                         Lista_Lotes.ResetItem(rowIndex)
                     Catch ex As Exception
                     End Try
+
+                    ' Mover foco a CantUd1 si no está en solo lectura
+                    If Not ModoSoloLectura Then
+                        Try
+                            If Grilla.Columns.Contains("CantUd1") AndAlso Grilla.Rows.Count > rowIndex Then
+                                Grilla.CurrentCell = Grilla.Rows(rowIndex).Cells("CantUd1")
+                                Grilla.BeginEdit(True)
+                            End If
+                        Catch ex As Exception
+                            ' Ignorar errores al cambiar foco
+                        End Try
+                    End If
                 End If
             End If
 
@@ -690,6 +901,18 @@ Public Class Frm_Lotes_Det
                         Lista_Lotes.ResetItem(rowIndex)
                     Catch ex As Exception
                     End Try
+
+                    ' Si la columna editada fue FElaboracion, mover foco a FVencimiento
+                    If colName = "FElaboracion" AndAlso Not ModoSoloLectura Then
+                        Try
+                            If Grilla.Columns.Contains("FVencimiento") AndAlso Grilla.Rows.Count > rowIndex Then
+                                Grilla.CurrentCell = Grilla.Rows(rowIndex).Cells("FVencimiento")
+                                Grilla.BeginEdit(True)
+                            End If
+                        Catch ex As Exception
+                            ' Ignorar errores al cambiar foco
+                        End Try
+                    End If
                 Else
                     MessageBoxEx.Show(Me, "Fecha inválida o formato incorrecto. Ingrese una fecha real (ej: 31/12/2023).", "Validación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -734,6 +957,257 @@ Public Class Frm_Lotes_Det
 
         ' Refrescar UI si es necesario
         Grilla.Refresh()
+    End Sub
+
+    ' Valida filas antes de aceptar:
+    ' - FElaboracion y FVencimiento no pueden ser Nothing
+    ' - NroLote no puede estar vacío
+    ' - CantUd1 y CantUd2 deben ser mayores que cero
+    ' Si se detecta error muestra mensaje y posiciona el foco en la celda correspondiente.
+    Private Function ValidarFilasObligatorias() As Boolean
+        If IsNothing(Lista_Lotes) Then
+            Return True
+        End If
+
+        For i As Integer = 0 To Lista_Lotes.Count - 1
+            Dim item = Lista_Lotes(i)
+            Dim filaNum As Integer = i + 1
+
+            ' Validar número de lote
+            Dim nro As String = If(item.NroLote, String.Empty).Trim()
+            If String.IsNullOrWhiteSpace(nro) Then
+                Try
+                    MessageBoxEx.Show(Me, String.Format("El número de lote no puede estar vacío en la fila {0}.", filaNum),
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Catch
+                End Try
+                Try
+                    If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("NroLote") Then
+                        Grilla.Focus()
+                        Grilla.CurrentCell = Grilla.Rows(i).Cells("NroLote")
+                        Grilla.BeginEdit(True)
+                    End If
+                Catch
+                End Try
+                Return False
+            End If
+
+            ' Validar cantidades mayores a cero
+            Try
+                If item.CantUd1 <= 0 Then
+                    MessageBoxEx.Show(Me, String.Format("La cantidad (CantUd1) debe ser mayor que cero en la fila {0}.", filaNum),
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Try
+                        If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("CantUd1") Then
+                            Grilla.Focus()
+                            Grilla.CurrentCell = Grilla.Rows(i).Cells("CantUd1")
+                            Grilla.BeginEdit(True)
+                        End If
+                    Catch
+                    End Try
+                    Return False
+                End If
+            Catch
+                ' si falla la lectura, tratar como inválido
+                MessageBoxEx.Show(Me, String.Format("Valor inválido en CantUd1 en la fila {0}.", filaNum),
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Try
+                    If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("CantUd1") Then
+                        Grilla.Focus()
+                        Grilla.CurrentCell = Grilla.Rows(i).Cells("CantUd1")
+                        Grilla.BeginEdit(True)
+                    End If
+                Catch
+                End Try
+                Return False
+            End Try
+
+            Try
+                If item.CantUd2 <= 0 Then
+                    MessageBoxEx.Show(Me, String.Format("La cantidad (CantUd2) debe ser mayor que cero en la fila {0}.", filaNum),
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Try
+                        If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("CantUd2") Then
+                            Grilla.Focus()
+                            Grilla.CurrentCell = Grilla.Rows(i).Cells("CantUd2")
+                            Grilla.BeginEdit(True)
+                        End If
+                    Catch
+                    End Try
+                    Return False
+                End If
+            Catch
+                MessageBoxEx.Show(Me, String.Format("Valor inválido en CantUd2 en la fila {0}.", filaNum),
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Try
+                    If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("CantUd2") Then
+                        Grilla.Focus()
+                        Grilla.CurrentCell = Grilla.Rows(i).Cells("CantUd2")
+                        Grilla.BeginEdit(True)
+                    End If
+                Catch
+                End Try
+                Return False
+            End Try
+
+            ' Validar fecha de elaboración
+            If item.FElaboracion Is Nothing Then
+                Try
+                    MessageBoxEx.Show(Me, String.Format("La fecha de elaboración no puede estar vacía en la fila {0}.", filaNum),
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Catch
+                End Try
+                Try
+                    If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("FElaboracion") Then
+                        Grilla.Focus()
+                        Grilla.CurrentCell = Grilla.Rows(i).Cells("FElaboracion")
+                        Grilla.BeginEdit(True)
+                    End If
+                Catch
+                End Try
+                Return False
+            End If
+
+            ' Validar fecha de vencimiento
+            If item.FVencimiento Is Nothing Then
+                Try
+                    MessageBoxEx.Show(Me, String.Format("La fecha de vencimiento no puede estar vacía en la fila {0}.", filaNum),
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Catch
+                End Try
+                Try
+                    If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("FVencimiento") Then
+                        Grilla.Focus()
+                        Grilla.CurrentCell = Grilla.Rows(i).Cells("FVencimiento")
+                        Grilla.BeginEdit(True)
+                    End If
+                Catch
+                End Try
+                Return False
+            End If
+
+        Next
+
+        Return True
+    End Function
+
+    ' Helper robusto para posicionar foco en una celda de la grilla y opcionalmente iniciar edición.
+    Private Sub Sb_SetCellFocus(rowIndex As Integer, colName As String, Optional startEdit As Boolean = True)
+        Try
+            If Grilla Is Nothing Then
+                Return
+            End If
+
+            If rowIndex < 0 Then
+                Return
+            End If
+
+            If Not Grilla.Columns.Contains(colName) Then
+                Return
+            End If
+
+            Dim bs = TryCast(Grilla.DataSource, BindingSource)
+            Dim targetBindingIndex As Integer = rowIndex
+            If bs IsNot Nothing Then
+                Try
+                    If bs.Count = 0 Then
+                        targetBindingIndex = 0
+                    Else
+                        targetBindingIndex = Math.Max(0, Math.Min(rowIndex, bs.Count - 1))
+                    End If
+                    bs.Position = targetBindingIndex
+                Catch
+                    ' Ignorar si no se puede asignar
+                End Try
+            End If
+
+            Me.BeginInvoke(New MethodInvoker(Sub()
+                                                 Try
+                                                     Grilla.Focus()
+
+                                                     Dim displayRowIndex As Integer = -1
+
+                                                     ' Intentar encontrar fila visible que no sea NewRow y que corresponda al Id_Det
+                                                     If Grilla.Columns.Contains("Id_Det") Then
+                                                         For i As Integer = 0 To Grilla.Rows.Count - 1
+                                                             Dim r = Grilla.Rows(i)
+                                                             If r.IsNewRow Then
+                                                                 Continue For
+                                                             End If
+                                                             Dim cellVal = r.Cells("Id_Det").Value
+                                                             If cellVal IsNot Nothing Then
+                                                                 Dim idDetValue As Integer
+                                                                 If Integer.TryParse(Convert.ToString(cellVal), idDetValue) Then
+                                                                     If targetBindingIndex >= 0 AndAlso targetBindingIndex < Lista_Lotes.Count Then
+                                                                         If idDetValue = Lista_Lotes(targetBindingIndex).Id_Det Then
+                                                                             displayRowIndex = i
+                                                                             Exit For
+                                                                         End If
+                                                                     End If
+                                                                 End If
+                                                             End If
+                                                         Next
+                                                     End If
+
+                                                     ' Si no se encontró por Id_Det, intentar usar la posición del BindingSource si existe y no apunta a NewRow
+                                                     If displayRowIndex = -1 AndAlso bs IsNot Nothing Then
+                                                         Dim pos = Math.Max(0, Math.Min(bs.Position, bs.Count - 1))
+                                                         For i As Integer = 0 To Grilla.Rows.Count - 1
+                                                             Dim r = Grilla.Rows(i)
+                                                             If r.IsNewRow Then
+                                                                 Continue For
+                                                             End If
+                                                             If i = pos Then
+                                                                 displayRowIndex = i
+                                                                 Exit For
+                                                             End If
+                                                         Next
+                                                     End If
+
+                                                     ' Fallback: usar el último índice real (no NewRow) o el rowIndex limitado
+                                                     If displayRowIndex = -1 Then
+                                                         Dim lastRealRow = -1
+                                                         For i As Integer = Grilla.Rows.Count - 1 To 0 Step -1
+                                                             If Not Grilla.Rows(i).IsNewRow Then
+                                                                 lastRealRow = i
+                                                                 Exit For
+                                                             End If
+                                                         Next
+                                                         If lastRealRow >= 0 Then
+                                                             displayRowIndex = Math.Min(Math.Max(0, rowIndex), lastRealRow)
+                                                         Else
+                                                             ' Si no hay filas reales, intentar con 0
+                                                             displayRowIndex = 0
+                                                         End If
+                                                     End If
+
+                                                     ' Asegurar que la fila está visible antes de asignar CurrentCell
+                                                     If displayRowIndex >= 0 AndAlso displayRowIndex < Grilla.Rows.Count Then
+                                                         Try
+                                                             Grilla.FirstDisplayedScrollingRowIndex = displayRowIndex
+                                                         Catch
+                                                             ' Algunos modos de la grilla pueden lanzar aquí; ignorar
+                                                         End Try
+
+                                                         If Grilla.Columns.Contains(colName) Then
+                                                             Grilla.CurrentCell = Grilla.Rows(displayRowIndex).Cells(colName)
+                                                             If startEdit AndAlso Not ModoSoloLectura Then
+                                                                 Try
+                                                                     Grilla.BeginEdit(True)
+                                                                 Catch
+                                                                     ' Ignorar errores en BeginEdit
+                                                                 End Try
+                                                             End If
+                                                         End If
+                                                     End If
+                                                 Catch
+                                                     ' Ignorar problemas al establecer foco
+                                                 End Try
+                                             End Sub))
+
+        Catch ex As Exception
+            ' Ignorar errores del helper
+        End Try
     End Sub
 
     'Private Sub Dgv_Lotes_DataError(sender As Object, e As DataGridViewDataErrorEventArgs)

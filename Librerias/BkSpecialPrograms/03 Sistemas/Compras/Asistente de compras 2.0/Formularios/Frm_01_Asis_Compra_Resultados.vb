@@ -7231,6 +7231,33 @@ SET
                _Condicion_Adicional & vbCrLf &
                " Order By FEEMLI Desc"
 
+            Consulta_sql = $"
+SELECT TOP {_Top} 
+       Ddo.IDMAEDDO,Ddo.IDMAEEDO,Ddo.TIDO,Ddo.NUDO,Ddo.ENDO,Ddo.SUENDO,E.NOKOEN,Ddo.FEEMLI,Ddo.BOSULIDO,Ddo.UDTRPR,Ddo.UD01PR AS UDTRANS,
+       Ddo.UD01PR,Ddo.UD02PR,Ddo.RLUDPR,Ddo.CAPRCO1,Ddo.CAPRCO2,Ddo.MOPPPR,ROUND(Ddo.PODTGLLI/100,4) AS PODTGLLI,
+       Ddo.PPPRNERE1 + Ddo.POTENCIA AS PPPRNEUd1,
+       CASE WHEN {_CostoUd1} = 0.0000 THEN 0 
+            ELSE ROUND(({_CostoUd1} - (Ddo.PPPRNERE1 + Ddo.POTENCIA)) / {_CostoUd1}, 2) 
+       END AS Porc_Dif_Precios_Neto,
+       CASE WHEN {_CostoUd1} = 0.0000 THEN 0 
+            ELSE ROUND(({_CostoUd1} - ((Ddo.VABRLI / NULLIF(Ddo.CAPRCO1,0)) + Ddo.POTENCIA)) / {_CostoUd1}, 2) 
+       END AS Porc_Dif_Precios_Bruto,
+       Ddo.PPPRNERE2 + (Ddo.POTENCIA * Ddo.RLUDPR) AS PPPRNEUd2,
+       (Ddo.VABRLI / NULLIF(Ddo.CAPRCO1,0)) + Ddo.POTENCIA AS VABRUTOUd1,
+       ROUND((Ddo.VABRLI / NULLIF(Ddo.CAPRCO2,0)) + (Ddo.POTENCIA * Ddo.RLUDPR), 0) AS VABRUTOUd2,
+       Ddo.PPPRNERE1,Ddo.PPPRNERE2,Ddo.VANELI,Ddo.VAIMLI,Ddo.VAIVLI,Ddo.VABRLI,E.LVEN AS Lista_Entidad
+FROM MAEDDO Ddo
+LEFT JOIN MAEEN E 
+       ON E.KOEN = Ddo.ENDO 
+      AND E.SUEN = Ddo.SUENDO
+WHERE Ddo.TIDO = '{_Tido}'
+  AND Ddo.KOPRCT = '{_Codigo}'
+  {_Filtro_Proveedor}
+  {_Condicion_Adicional}
+  -- AND Ddo.ESLIDO = ''
+  -- AND E.LVEN <> Ddo.UD01PR
+ORDER BY Ddo.FEEMLI DESC;"
+
         Else
 
             Consulta_sql = "Select Top " & _Top & " IDMAEDDO,IDMAEEDO,TIDO,NUDO,ENDO,SUENDO,NOKOEN,FEEMLI,BOSULIDO,UDTRPR,UD0" & Ud & "PR As UDTRANS,UD01PR,UD02PR,

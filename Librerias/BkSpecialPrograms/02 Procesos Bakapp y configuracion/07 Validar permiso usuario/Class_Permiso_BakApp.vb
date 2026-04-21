@@ -2963,11 +2963,11 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00169"
-                _DescripcionPermiso = "VENDER CON CUPO EXEDIDO CUANDO PUEDE HABER MOROSIDAD DE DOCUMENTOS"
+                _DescripcionPermiso = "VENDER CON CUPO EXEDIDO CUANDO SE EVALUA MOROSIDAD DE DOCUMENTOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00170"
-                _DescripcionPermiso = "VENDER CUANDO PUEDE HABER MOROSIDAD DE DOCUMENTOS Y ESTA VENDIENDO MAS DEL PROMEDIO DE VENTA NORMAL"
+                _DescripcionPermiso = "VENDER CUANDO SE ESTA VENDIENDO MAS DEL PROMEDIO DE VENTA NORMAL Y SE EVALUA MOROSIDAD DEL CLIENTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00171"

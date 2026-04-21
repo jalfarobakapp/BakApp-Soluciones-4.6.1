@@ -4142,7 +4142,7 @@ Public Module Crear_Documentos_Desde_Otro
                 Dim _Meses_Dif As Double = DateDiff(DateInterval.Month, _Fa, _Fecha_Servisor)
                 Dim _Dias_Dif As Integer = DateDiff(DateInterval.Day, _Fa, _Fecha_Servisor)
 
-                _Meses_Dif = Math.Round(_Dias_Dif / 31, 2)
+                _Meses_Dif = Math.Round(_Dias_Dif / 30.41, 3)
 
                 If _Meses_Dif > _Meses Then
 

@@ -237,11 +237,14 @@ Public Class Frm_Cantidades_PreVenta
 
             Dim _CantidadPallet As Double = De_Txt_a_Num_01(Txt_CantidadPreVenta.Text, 5)
 
-            'If _CantidadPallet < _Cl_PreVta.CantMinFormato Then
-            '    MessageBoxEx.Show(Me, "La cantidad no puede ser menor a " & _Cl_PreVta.CantMinFormato & " " & _Cl_PreVta.FormatoPqte,
-            '                                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            '    Return
-            'End If
+            ' Validar que no tenga decimales
+            If _CantidadPallet <> Math.Truncate(_CantidadPallet) Then
+                MessageBoxEx.Show(Me, "La cantidad no puede contener decimales", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Txt_CantidadPreVenta.SelectAll()
+                Txt_CantidadPreVenta.Focus()
+                Return
+            End If
 
             Cantidad = _CantidadPallet
             Cantidad_Ud1 = _CantidadPallet * Ud1XPqte
@@ -252,35 +255,6 @@ Public Class Frm_Cantidades_PreVenta
             Txt_CantUD2.Text = Math.Round(Cantidad_Ud2, 5)
 
             Btn_Aceptar.Focus()
-
-            'Dim _C1 As Double = Math.Round(De_Txt_a_Num_01(Txt_CantUD1.Text, 5), 5)
-
-            'If Chk_DesacRazTransf.Checked Then
-
-            '    _Cantidad_Ud1 = _C1
-
-            '    Try
-            '        Txt_RTU.Text = Math.Round(_Cantidad_Ud1 / _Cantidad_Ud2, 5)
-            '    Catch ex As Exception
-            '        Txt_RTU.Text = 0
-            '    End Try
-
-            '    Txt_CantUD2.Focus()
-
-            'Else
-
-            '    e.Handled = True
-
-            '    If _C1 <> _Cantidad_Ud1 Then
-            '        _Cantidad_Ud1 = _C1
-            '        _Cantidad_Ud2 = Math.Round(_Cantidad_Ud1 / _Rtu, 5)
-
-            '        Txt_CantUD2.Text = Math.Round(_Cantidad_Ud2, 3)
-            '    End If
-
-            '    Btn_Aceptar.Focus()
-
-            'End If
 
         ElseIf e.KeyChar = ","c Then
             ' si se pulsa la coma se convertirá en punto

@@ -1,6 +1,7 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
 Imports BkSpecialPrograms
+Imports BkSpecialPrograms.Bk_GenDoc2DTE
 Imports BkSpecialPrograms.LsValiciones
 Imports Newtonsoft.Json
 
@@ -23,7 +24,7 @@ Public Class Cl_ProcesaDatos
             _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
             '-----------------------------------------------------------------------------------------
             '1. BUSCAR NOTAS DE VENTA (NVV) DEL E-COMMERCE QUE NO TENGAN DESPACHO ASIGNADO
-            Consulta_sql = $"SELECT TOP 1
+            Consulta_sql = $"SELECT TOP 10
     e.IDMAEEDO, e.TIDO, e.NUDO, e.ENDO, e.SUENDO,
     m.NOKOEN, m.PAEN, m.CIEN, m.CMEN,
     e.EMPRESA, e.SUDO,
@@ -55,7 +56,9 @@ WHERE e.TIDO = 'NVV'
         SELECT 1
         FROM {Frm_Sincronizador._Global_BaseBk}Zw_Docu_Ent z
         WHERE z.Idmaeedo = e.IDMAEEDO
-  )"
+  )
+          AND e.IDMAEEDO In (976810,976811)
+        "
 
             Dim _Tbl_Pendientes As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql, False)
 
@@ -151,8 +154,16 @@ WHERE e.TIDO = 'NVV'
                             If _Mensaje_Stem.EsCorrecto Then
                                 If NVV.EMPRESA = "02" Then
                                     Sb_AddToLog("Demonio Despachos", $"se cambia momentaneamente la empresa para el documento {NVV.NUDO}!", Txt_Log)
+                                    Dim mensajeCambio As New LsValiciones.Mensajes
+                                    mensajeCambio = Fx_CambiarBodegaSeaGarden2MeatGarden(NVV.IDMAEEDO)
+                                    If mensajeCambio.EsCorrecto Then
+                                        Sb_Insertar_Log_Gestiones(NVV, $"La empresa del documento {NVV.NUDO} fue cambiada exitosamente a MeatGarden.")
+                                        Sb_AddToLog("Demonio Despachos", $"La empresa del documento {NVV.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
+                                    Else
+                                        Sb_Insertar_Log_Gestiones(NVV, $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.")
+                                        Sb_AddToLog("Demonio Despachos", $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
+                                    End If
 
-                                    Fx_CambiarBodegaSeaGarden2MeatGarden(NVV.IDMAEEDO)
                                 End If
                                 Sb_Insertar_Log_Gestiones(NVV, $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV.NUDO}")
 
@@ -230,7 +241,9 @@ WHERE e.TIDO = 'NVV'
         SELECT 1 
         FROM {Frm_Sincronizador._Global_BaseBk}Zw_Stmp_Enc s
         WHERE s.Idmaeedo = e.IDMAEEDO
-  )"
+  )
+        AND e.IDMAEEDO In (976810,976811)
+        "
 
             Dim _Tbl_Pendientes As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql, False)
 
@@ -308,29 +321,39 @@ WHERE e.TIDO = 'NVV'
                     ' Validamos el resultado
 
                     Dim _Cl_Stmp As New Cl_Stmp
-                        Dim _FechaParaFacturar As DateTime = DateTime.Now.AddDays(1)
-                        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+                    Dim _FechaParaFacturar As DateTime = DateTime.Now.AddDays(1)
+                    Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-                        ' Validamos si el pago fue suficiente (1)
-                        If NVV2.PagoSuficiente = 1 Then
-                            Sb_Insertar_Log_Gestiones(NVV2, $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).")
-                            Sb_AddToLog("Demonio Despachos", $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).", Txt_Log)
+                    ' Validamos si el pago fue suficiente (1)
+                    If NVV2.PagoSuficiente = 1 Then
+                        Sb_Insertar_Log_Gestiones(NVV2, $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).")
+                        Sb_AddToLog("Demonio Despachos", $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).", Txt_Log)
 
-                            _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(NVV2.IDMAEEDO, NVV2.TIDO, NVV2.NUDO, True, _FechaParaFacturar, "R", False, NVV2.EMPRESA, NVV2.SUENDO, NVV2.CodFuncionario, True, NVV2.IDMAEDPCE, NVV2.CodFuncionario)
+                        _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(NVV2.IDMAEEDO, NVV2.TIDO, NVV2.NUDO, True, _FechaParaFacturar, "R", False, NVV2.EMPRESA, NVV2.SUENDO, NVV2.CodFuncionario, True, NVV2.IDMAEDPCE, NVV2.CodFuncionario)
 
-                            If _Mensaje_Stem.EsCorrecto Then
+                        If _Mensaje_Stem.EsCorrecto Then
                             Sb_Insertar_Log_Gestiones(NVV2, $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV2.NUDO}")
 
                             '
                             Sb_AddToLog("Demonio Despachos", $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV2.NUDO}!", Txt_Log)
+                            Dim mensajeCambio As New LsValiciones.Mensajes
+                            mensajeCambio = Fx_CambiarBodegaSeaGarden2MeatGarden(NVV2.IDMAEEDO)
+                            If mensajeCambio.EsCorrecto Then
+                                Sb_Insertar_Log_Gestiones(NVV2, $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.")
+                                Sb_AddToLog("Demonio Despachos", $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
                             Else
-                                Sb_Insertar_Log_Gestiones(NVV2, $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}")
-                                Sb_AddToLog("Demonio Despachos", $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
+                                Sb_Insertar_Log_Gestiones(NVV2, $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.")
+                                Sb_AddToLog("Demonio Despachos", $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
                             End If
                         Else
-                            Sb_Insertar_Log_Gestiones(NVV2, $"Se omite la creación de ticket para el documento {NVV2.NUDO} porque el pago registrado no cubre el total o no existe.")
-                            Sb_AddToLog("Demonio Despachos", $"Se omite la creación de ticket para el documento {NVV2.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
+                            Sb_Insertar_Log_Gestiones(NVV2, $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}")
+                            Sb_AddToLog("Demonio Despachos", $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
                         End If
+                    Else
+                        Sb_Insertar_Log_Gestiones(NVV2, $"Se omite la creación de ticket para el documento {NVV2.NUDO} porque el pago registrado no cubre el total o no existe.")
+                        Sb_AddToLog("Demonio Despachos", $"Se omite la creación de ticket para el documento {NVV2.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
+                    End If
+
 
 
                 Catch exDoc As Exception
@@ -387,7 +410,7 @@ WHERE e.TIDO = 'NVV'
                  VALUES
                        ({NVV.IDMAEEDO}              -- Idmaeedo
                        ,'{_NombreEquipo}'           -- NombreEquipo
-                       ,''                          -- TipoEstacion
+                       ,'B2B'                          -- TipoEstacion
                        ,'{NVV.EMPRESA}'             -- Empresa
                        ,'WEB'                       -- Modalidad
                        ,'{NVV.TIDO}'                -- Tido
@@ -985,28 +1008,9 @@ ORDER BY Z.Id DESC"
             ' -----------------------------------------------------------------------------------------
             ' 2. CONFIGURACIÓN DEL CORREO 
             ' -----------------------------------------------------------------------------------------
-            Dim _Nombre_Correo As String = "Adjunto PDF por venta B2B"
-            Dim _Para_Maeenmail As Boolean = False
-            Dim _Kofudo As String = "B2B"
 
-            Dim _Asunto As String = ""
-            Dim _CuerpoMensaje As String = ""
 
-            Consulta_sql = $"SELECT Top 1 * FROM {Frm_Sincronizador._Global_BaseBk}Zw_Correos WHERE Nombre_Correo = '{_Nombre_Correo}'"
-            Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
-            If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
-                Sb_AddToLog("Demonio Despachos", $"Error al buscar la plantilla de correo: {_Sql.Pro_Error}", Txt_Log)
-                Return
-            End If
-
-            If Not IsNothing(_Row_Correo) Then
-                _Asunto = _Row_Correo.Item("Asunto").ToString()
-                _CuerpoMensaje = _Row_Correo.Item("CuerpoMensaje").ToString().Replace("'", "''")
-            Else
-                Sb_AddToLog("Demonio Despachos", $"ERROR: No se encontró la plantilla '{_Nombre_Correo}'. No se pueden procesar los correos.", Txt_Log)
-                Return
-            End If
 
             ' -----------------------------------------------------------------------------------------
             ' 3. PROCESAR CADA DOCUMENTO Y ENCOLARLO
@@ -1033,12 +1037,41 @@ ORDER BY Z.Id DESC"
                     _DocLog.TIDO = _Tido
                     _DocLog.EMPRESA = Empresa
 
-                    Dim _NombreFormato_Correo As String = "Formato_Estandar"
+                    Dim _NombreFormato_Correo As String = ""
+
+
+                    Dim _Nombre_Correo = ""
                     If Empresa = "01" Then
-                        _NombreFormato_Correo = "Electronica tam. carta Imprime PDF Adjuntos"
+                        _Nombre_Correo = Frm_Sincronizador.Correos.Empresa1_NombreCorreo
+                        _NombreFormato_Correo = Frm_Sincronizador.Correos.Empresa1_Formato
                     ElseIf Empresa = "02" Then
-                        _NombreFormato_Correo = "Electronica tam. carta Imprime PDF Adjuntos (MG)"
+                        _Nombre_Correo = Frm_Sincronizador.Correos.Empresa2_NombreCorreo
+                        _NombreFormato_Correo = Frm_Sincronizador.Correos.Empresa2_Formato
+
                     End If
+                    Dim _Para_Maeenmail As Boolean = False
+                    Dim _Kofudo As String = "B2B"
+
+                    Dim _Asunto As String = ""
+                    Dim _CuerpoMensaje As String = ""
+
+                    Consulta_sql = $"SELECT Top 1 * FROM {Frm_Sincronizador._Global_BaseBk}Zw_Correos WHERE Nombre_Correo = '{_Nombre_Correo}'"
+                    Dim _Row_Correo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+                    If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
+                        Sb_AddToLog("Demonio Despachos", $"Error al buscar la plantilla de correo: {_Sql.Pro_Error}", Txt_Log)
+                        Return
+                    End If
+
+                    If Not IsNothing(_Row_Correo) Then
+                        _Asunto = _Row_Correo.Item("Asunto").ToString()
+                        _CuerpoMensaje = _Row_Correo.Item("CuerpoMensaje").ToString().Replace("'", "''")
+                    Else
+                        Sb_AddToLog("Demonio Despachos", $"ERROR: No se encontró la plantilla '{_Nombre_Correo}'. No se pueden procesar los correos.", Txt_Log)
+                        Return
+                    End If
+
+
 
                     ' --- LOGS 1: Inicio del proceso ---
                     Sb_AddToLog("Demonio Despachos", $"Encolando documento: {_Nudo} (ID: {_Idmaeedo})", Txt_Log)

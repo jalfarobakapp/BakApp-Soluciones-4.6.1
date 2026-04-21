@@ -10,10 +10,10 @@
 
     ' Devuelve todas las entradas Zw_Docu_Det_Lote cuyo .Id coincide con el índice de la línea.
     ' Si no existen, crea una nueva lista con un lote inicial (Id = _Index), la agrega a Ls_Lotes y la retorna.
-    Function Fx_ObtenerLotesPorIndex(_Index As Integer) As List(Of Zw_Docu_Det_Lote)
+    Function Fx_ObtenerLotesPorIndex(_Id As Integer) As List(Of Zw_Docu_Det_Lote)
         Dim resultado As New List(Of Zw_Docu_Det_Lote)
 
-        If _Index < 0 Then
+        If _Id < 0 Then
             Return resultado
         End If
 
@@ -27,7 +27,7 @@
             End If
 
             For Each lote As Zw_Docu_Det_Lote In lista
-                If lote IsNot Nothing AndAlso lote.Id = _Index Then
+                If lote IsNot Nothing AndAlso lote.Id = _Id Then
                     resultado.Add(lote)
                 End If
             Next
@@ -74,7 +74,7 @@
             Return New List(Of Zw_Docu_Det_Lote)
         End If
 
-        Return Fx_ObtenerLotesPorIndex(_Fila.Index)
+        Return Fx_ObtenerLotesPorIndex(_Fila.Cells("Id").Value)
     End Function
 
     ' Ejemplo de uso:

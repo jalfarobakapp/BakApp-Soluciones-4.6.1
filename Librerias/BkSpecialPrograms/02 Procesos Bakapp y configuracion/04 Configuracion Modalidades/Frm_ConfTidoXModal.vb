@@ -58,6 +58,12 @@ Public Class Frm_ConfTidoXModal
         Txt_Numero.Text = _Nudo
         Lbl_Tipo.Text = _Tido & " - " & _RowFormato.Item("NOTIDO")
 
+        If _Modalidad = "  " Then
+            Me.Text = $"Documento {_RowFormato.Item("NOTIDO").ToString.Trim} Modalidad General"
+        Else
+            Me.Text = $"Documento {_RowFormato.Item("NOTIDO").ToString.Trim} Modalidad {_Modalidad}"
+        End If
+
         Txt_Nombreformato.Text = _RowFormato.Item("Nombreformato")
         Txt_NombreFormato_PDF.Text = _RowFormato.Item("NombreFormato_PDF")
 

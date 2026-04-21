@@ -25,7 +25,7 @@ Public Class Documentos_GDI_GRI
 
     End Sub
     Private Sub Documentos_GDI_GRI_Load(sender As Object, e As EventArgs) Handles Me.Load
-        If RutEmpresa = "85904700-9" Then
+        If RutEmpresa = "85904700-9" Or RutEmpresa = "78346122-6" Then
             'Me.Width = 634
             Btn_GDI_GRI.Visible = True
             'Documentos_GDI_GRI 634

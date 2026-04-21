@@ -15,6 +15,8 @@ Public Class Frm_Consolidacion_Stock_PP
     Dim _Filtro_In_Productos As String
     Dim _Consolidacion_terminada As Boolean
 
+    Public Property Idmaeedo_Documento As Integer
+
     Public ReadOnly Property Pro_Consolidacion_terminada() As Boolean
         Get
             Return _Consolidacion_terminada
@@ -89,10 +91,22 @@ Public Class Frm_Consolidacion_Stock_PP
 
             Dim _FECHA As Date = FechaDelServidor()
 
-            Consulta_sql = "Select EMPRESA,KOSU,KOBO From TABBOPR" & Space(1) &
-                           "Where KOPR = '" & _Codigo & "'" & vbCrLf &
-                           "And EMPRESA+KOSU+KOBO IN (Select Distinct EMPRESA+SULIDO+BOSULIDO" & Space(1) &
-                           "From MAEDDO Where KOPRCT = '" & _Codigo & "' And EMPRESA = '" & Empresa & "')"
+            If CBool(Idmaeedo_Documento) Then
+
+                Consulta_sql = $"
+Select Distinct EMPRESA,SULIDO As 'KOSU',BOSULIDO As 'KOBO'
+From MAEDDO
+Where IDMAEEDO = {Idmaeedo_Documento}
+"
+            Else
+                Consulta_sql = $"
+Select EMPRESA,KOSU,KOBO 
+From TABBOPR
+Where KOPR = '{_Codigo}'
+And EMPRESA+KOSU+KOBO IN (Select Distinct EMPRESA+SULIDO+BOSULIDO 
+    From MAEDDO Where KOPRCT = '{_Codigo}' And EMPRESA = '{Empresa}')"
+            End If
+
             Dim _TblBodegasPP As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             LblEstado.Text = "Producto: " & _Codigo & " - " & _Descripcion
@@ -107,7 +121,7 @@ Update {_Global_BaseBk}Zw_Prod_SobreStock Set
 PqteStock = PqteHabilitado,
 PqteComprometido = 0, 
 PqteComprometidoSol = 0
-Where Codigo = '{_Codigo}' And Empresa = '{_Empresa}' --And Eliminado = 0 And Activo = 1"
+Where Codigo = '{_Codigo}' And Empresa = '{_Empresa}' -- And Eliminado = 0 And Activo = 1"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             If CBool(_TblBodegasPP.Rows.Count) Then

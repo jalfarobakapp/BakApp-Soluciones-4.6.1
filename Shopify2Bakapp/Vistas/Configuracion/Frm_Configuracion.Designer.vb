@@ -24,6 +24,8 @@ Partial Class Frm_Configuracion
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Configuracion))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TxtBakApp = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
         Me.Btn_ProbarConexionRd = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_Rd_Basededatos = New System.Windows.Forms.TextBox()
         Me.Label5 = New System.Windows.Forms.Label()
@@ -38,6 +40,20 @@ Partial Class Frm_Configuracion
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.Formato_2 = New System.Windows.Forms.TextBox()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.NombreCorreo_2 = New System.Windows.Forms.TextBox()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Guardar2 = New DevComponents.DotNetBar.ButtonX()
+        Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Guardar1 = New DevComponents.DotNetBar.ButtonX()
+        Me.Formato_1 = New System.Windows.Forms.TextBox()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.NombreCorreo_1 = New System.Windows.Forms.TextBox()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
@@ -63,12 +79,13 @@ Partial Class Frm_Configuracion
         Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_RutaEtiquetas = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.TxtBakApp = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel3.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
+        Me.GroupBox2.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuspendLayout()
@@ -97,11 +114,31 @@ Partial Class Frm_Configuracion
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Datos de conexión SQL RANDOM + BAKAPP"
         '
+        'TxtBakApp
+        '
+        Me.TxtBakApp.BackColor = System.Drawing.Color.White
+        Me.TxtBakApp.ForeColor = System.Drawing.Color.Black
+        Me.TxtBakApp.Location = New System.Drawing.Point(124, 166)
+        Me.TxtBakApp.Name = "TxtBakApp"
+        Me.TxtBakApp.Size = New System.Drawing.Size(207, 26)
+        Me.TxtBakApp.TabIndex = 12
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.BackColor = System.Drawing.Color.White
+        Me.Label6.ForeColor = System.Drawing.Color.Black
+        Me.Label6.Location = New System.Drawing.Point(13, 169)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(78, 19)
+        Me.Label6.TabIndex = 13
+        Me.Label6.Text = "BakApp BD"
+        '
         'Btn_ProbarConexionRd
         '
         Me.Btn_ProbarConexionRd.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_ProbarConexionRd.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_ProbarConexionRd.Location = New System.Drawing.Point(213, 225)
+        Me.Btn_ProbarConexionRd.Location = New System.Drawing.Point(17, 225)
         Me.Btn_ProbarConexionRd.Name = "Btn_ProbarConexionRd"
         Me.Btn_ProbarConexionRd.Size = New System.Drawing.Size(102, 23)
         Me.Btn_ProbarConexionRd.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -112,7 +149,7 @@ Partial Class Frm_Configuracion
         '
         Me.Txt_Rd_Basededatos.BackColor = System.Drawing.Color.White
         Me.Txt_Rd_Basededatos.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Rd_Basededatos.Location = New System.Drawing.Point(320, 135)
+        Me.Txt_Rd_Basededatos.Location = New System.Drawing.Point(124, 135)
         Me.Txt_Rd_Basededatos.Name = "Txt_Rd_Basededatos"
         Me.Txt_Rd_Basededatos.Size = New System.Drawing.Size(207, 26)
         Me.Txt_Rd_Basededatos.TabIndex = 4
@@ -122,7 +159,7 @@ Partial Class Frm_Configuracion
         Me.Label5.AutoSize = True
         Me.Label5.BackColor = System.Drawing.Color.White
         Me.Label5.ForeColor = System.Drawing.Color.Black
-        Me.Label5.Location = New System.Drawing.Point(209, 138)
+        Me.Label5.Location = New System.Drawing.Point(13, 138)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(94, 19)
         Me.Label5.TabIndex = 10
@@ -132,7 +169,7 @@ Partial Class Frm_Configuracion
         '
         Me.Txt_Rd_Password.BackColor = System.Drawing.Color.White
         Me.Txt_Rd_Password.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Rd_Password.Location = New System.Drawing.Point(320, 107)
+        Me.Txt_Rd_Password.Location = New System.Drawing.Point(124, 107)
         Me.Txt_Rd_Password.Name = "Txt_Rd_Password"
         Me.Txt_Rd_Password.Size = New System.Drawing.Size(207, 26)
         Me.Txt_Rd_Password.TabIndex = 3
@@ -142,7 +179,7 @@ Partial Class Frm_Configuracion
         Me.Label4.AutoSize = True
         Me.Label4.BackColor = System.Drawing.Color.White
         Me.Label4.ForeColor = System.Drawing.Color.Black
-        Me.Label4.Location = New System.Drawing.Point(209, 110)
+        Me.Label4.Location = New System.Drawing.Point(13, 110)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(42, 19)
         Me.Label4.TabIndex = 8
@@ -152,7 +189,7 @@ Partial Class Frm_Configuracion
         '
         Me.Txt_Rd_Usuario.BackColor = System.Drawing.Color.White
         Me.Txt_Rd_Usuario.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Rd_Usuario.Location = New System.Drawing.Point(320, 80)
+        Me.Txt_Rd_Usuario.Location = New System.Drawing.Point(124, 80)
         Me.Txt_Rd_Usuario.Name = "Txt_Rd_Usuario"
         Me.Txt_Rd_Usuario.Size = New System.Drawing.Size(207, 26)
         Me.Txt_Rd_Usuario.TabIndex = 2
@@ -162,7 +199,7 @@ Partial Class Frm_Configuracion
         Me.Label3.AutoSize = True
         Me.Label3.BackColor = System.Drawing.Color.White
         Me.Label3.ForeColor = System.Drawing.Color.Black
-        Me.Label3.Location = New System.Drawing.Point(209, 83)
+        Me.Label3.Location = New System.Drawing.Point(13, 83)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(56, 19)
         Me.Label3.TabIndex = 6
@@ -172,7 +209,7 @@ Partial Class Frm_Configuracion
         '
         Me.Txt_Rd_Puerto.BackColor = System.Drawing.Color.White
         Me.Txt_Rd_Puerto.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Rd_Puerto.Location = New System.Drawing.Point(320, 52)
+        Me.Txt_Rd_Puerto.Location = New System.Drawing.Point(124, 52)
         Me.Txt_Rd_Puerto.Name = "Txt_Rd_Puerto"
         Me.Txt_Rd_Puerto.Size = New System.Drawing.Size(207, 26)
         Me.Txt_Rd_Puerto.TabIndex = 1
@@ -182,7 +219,7 @@ Partial Class Frm_Configuracion
         Me.Label2.AutoSize = True
         Me.Label2.BackColor = System.Drawing.Color.White
         Me.Label2.ForeColor = System.Drawing.Color.Black
-        Me.Label2.Location = New System.Drawing.Point(209, 55)
+        Me.Label2.Location = New System.Drawing.Point(13, 55)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(50, 19)
         Me.Label2.TabIndex = 4
@@ -192,7 +229,7 @@ Partial Class Frm_Configuracion
         '
         Me.Txt_Rd_Host.BackColor = System.Drawing.Color.White
         Me.Txt_Rd_Host.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Rd_Host.Location = New System.Drawing.Point(320, 23)
+        Me.Txt_Rd_Host.Location = New System.Drawing.Point(124, 23)
         Me.Txt_Rd_Host.Name = "Txt_Rd_Host"
         Me.Txt_Rd_Host.Size = New System.Drawing.Size(207, 26)
         Me.Txt_Rd_Host.TabIndex = 0
@@ -202,7 +239,7 @@ Partial Class Frm_Configuracion
         Me.Label1.AutoSize = True
         Me.Label1.BackColor = System.Drawing.Color.White
         Me.Label1.ForeColor = System.Drawing.Color.Black
-        Me.Label1.Location = New System.Drawing.Point(209, 26)
+        Me.Label1.Location = New System.Drawing.Point(13, 26)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(59, 19)
         Me.Label1.TabIndex = 2
@@ -248,6 +285,7 @@ Partial Class Frm_Configuracion
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
@@ -258,8 +296,160 @@ Partial Class Frm_Configuracion
         Me.SuperTabControl1.Size = New System.Drawing.Size(737, 292)
         Me.SuperTabControl1.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SuperTabControl1.TabIndex = 133
-        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem2})
+        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem2, Me.SuperTabItem3})
         Me.SuperTabControl1.Text = "SuperTabControl1"
+        '
+        'SuperTabControlPanel3
+        '
+        Me.SuperTabControlPanel3.Controls.Add(Me.GroupBox3)
+        Me.SuperTabControlPanel3.Controls.Add(Me.GroupBox2)
+        Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 31)
+        Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(737, 261)
+        Me.SuperTabControlPanel3.TabIndex = 0
+        Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
+        '
+        'GroupBox3
+        '
+        Me.GroupBox3.BackColor = System.Drawing.Color.White
+        Me.GroupBox3.Controls.Add(Me.Formato_2)
+        Me.GroupBox3.Controls.Add(Me.Label7)
+        Me.GroupBox3.Controls.Add(Me.NombreCorreo_2)
+        Me.GroupBox3.Controls.Add(Me.Label8)
+        Me.GroupBox3.Controls.Add(Me.Guardar2)
+        Me.GroupBox3.ForeColor = System.Drawing.Color.Black
+        Me.GroupBox3.Location = New System.Drawing.Point(358, 4)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(366, 254)
+        Me.GroupBox3.TabIndex = 107
+        Me.GroupBox3.TabStop = False
+        Me.GroupBox3.Text = "Configuración empresa 2"
+        '
+        'Formato_2
+        '
+        Me.Formato_2.BackColor = System.Drawing.Color.White
+        Me.Formato_2.ForeColor = System.Drawing.Color.Black
+        Me.Formato_2.Location = New System.Drawing.Point(154, 52)
+        Me.Formato_2.Name = "Formato_2"
+        Me.Formato_2.Size = New System.Drawing.Size(190, 26)
+        Me.Formato_2.TabIndex = 13
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.BackColor = System.Drawing.Color.White
+        Me.Label7.ForeColor = System.Drawing.Color.Black
+        Me.Label7.Location = New System.Drawing.Point(13, 54)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(135, 19)
+        Me.Label7.TabIndex = 15
+        Me.Label7.Text = "Formato documento"
+        '
+        'NombreCorreo_2
+        '
+        Me.NombreCorreo_2.BackColor = System.Drawing.Color.White
+        Me.NombreCorreo_2.ForeColor = System.Drawing.Color.Black
+        Me.NombreCorreo_2.Location = New System.Drawing.Point(154, 23)
+        Me.NombreCorreo_2.Name = "NombreCorreo_2"
+        Me.NombreCorreo_2.Size = New System.Drawing.Size(190, 26)
+        Me.NombreCorreo_2.TabIndex = 12
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.BackColor = System.Drawing.Color.White
+        Me.Label8.ForeColor = System.Drawing.Color.Black
+        Me.Label8.Location = New System.Drawing.Point(13, 26)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(102, 19)
+        Me.Label8.TabIndex = 14
+        Me.Label8.Text = "Nombre correo"
+        '
+        'Guardar2
+        '
+        Me.Guardar2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Guardar2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Guardar2.Location = New System.Drawing.Point(17, 225)
+        Me.Guardar2.Name = "Guardar2"
+        Me.Guardar2.Size = New System.Drawing.Size(102, 23)
+        Me.Guardar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Guardar2.TabIndex = 11
+        Me.Guardar2.Text = "Probar correo"
+        '
+        'GroupBox2
+        '
+        Me.GroupBox2.BackColor = System.Drawing.Color.White
+        Me.GroupBox2.Controls.Add(Me.Guardar1)
+        Me.GroupBox2.Controls.Add(Me.Formato_1)
+        Me.GroupBox2.Controls.Add(Me.Label11)
+        Me.GroupBox2.Controls.Add(Me.NombreCorreo_1)
+        Me.GroupBox2.Controls.Add(Me.Label12)
+        Me.GroupBox2.ForeColor = System.Drawing.Color.Black
+        Me.GroupBox2.Location = New System.Drawing.Point(3, 4)
+        Me.GroupBox2.Name = "GroupBox2"
+        Me.GroupBox2.Size = New System.Drawing.Size(349, 254)
+        Me.GroupBox2.TabIndex = 106
+        Me.GroupBox2.TabStop = False
+        Me.GroupBox2.Text = "Configuración empresa 1"
+        '
+        'Guardar1
+        '
+        Me.Guardar1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Guardar1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Guardar1.Location = New System.Drawing.Point(17, 225)
+        Me.Guardar1.Name = "Guardar1"
+        Me.Guardar1.Size = New System.Drawing.Size(102, 23)
+        Me.Guardar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Guardar1.TabIndex = 11
+        Me.Guardar1.Text = "Probar correo"
+        '
+        'Formato_1
+        '
+        Me.Formato_1.BackColor = System.Drawing.Color.White
+        Me.Formato_1.ForeColor = System.Drawing.Color.Black
+        Me.Formato_1.Location = New System.Drawing.Point(141, 52)
+        Me.Formato_1.Name = "Formato_1"
+        Me.Formato_1.Size = New System.Drawing.Size(190, 26)
+        Me.Formato_1.TabIndex = 1
+        '
+        'Label11
+        '
+        Me.Label11.AutoSize = True
+        Me.Label11.BackColor = System.Drawing.Color.White
+        Me.Label11.ForeColor = System.Drawing.Color.Black
+        Me.Label11.Location = New System.Drawing.Point(0, 54)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(135, 19)
+        Me.Label11.TabIndex = 4
+        Me.Label11.Text = "Formato documento"
+        '
+        'NombreCorreo_1
+        '
+        Me.NombreCorreo_1.BackColor = System.Drawing.Color.White
+        Me.NombreCorreo_1.ForeColor = System.Drawing.Color.Black
+        Me.NombreCorreo_1.Location = New System.Drawing.Point(141, 23)
+        Me.NombreCorreo_1.Name = "NombreCorreo_1"
+        Me.NombreCorreo_1.Size = New System.Drawing.Size(190, 26)
+        Me.NombreCorreo_1.TabIndex = 0
+        '
+        'Label12
+        '
+        Me.Label12.AutoSize = True
+        Me.Label12.BackColor = System.Drawing.Color.White
+        Me.Label12.ForeColor = System.Drawing.Color.Black
+        Me.Label12.Location = New System.Drawing.Point(0, 26)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Size = New System.Drawing.Size(102, 19)
+        Me.Label12.TabIndex = 2
+        Me.Label12.Text = "Nombre correo"
+        '
+        'SuperTabItem3
+        '
+        Me.SuperTabItem3.AttachedControl = Me.SuperTabControlPanel3
+        Me.SuperTabItem3.GlobalItem = False
+        Me.SuperTabItem3.Name = "SuperTabItem3"
+        Me.SuperTabItem3.Text = "Configuración correo"
         '
         'SuperTabControlPanel2
         '
@@ -672,26 +862,6 @@ Partial Class Frm_Configuracion
         Me.Txt_RutaEtiquetas.TabIndex = 122
         Me.Txt_RutaEtiquetas.WatermarkText = "Ruta de PDF"
         '
-        'TxtBakApp
-        '
-        Me.TxtBakApp.BackColor = System.Drawing.Color.White
-        Me.TxtBakApp.ForeColor = System.Drawing.Color.Black
-        Me.TxtBakApp.Location = New System.Drawing.Point(320, 166)
-        Me.TxtBakApp.Name = "TxtBakApp"
-        Me.TxtBakApp.Size = New System.Drawing.Size(207, 26)
-        Me.TxtBakApp.TabIndex = 12
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.BackColor = System.Drawing.Color.White
-        Me.Label6.ForeColor = System.Drawing.Color.Black
-        Me.Label6.Location = New System.Drawing.Point(209, 169)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(78, 19)
-        Me.Label6.TabIndex = 13
-        Me.Label6.Text = "BakApp BD"
-        '
         'Frm_Configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
@@ -714,6 +884,11 @@ Partial Class Frm_Configuracion
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel3.ResumeLayout(False)
+        Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox3.PerformLayout()
+        Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
@@ -761,4 +936,18 @@ Partial Class Frm_Configuracion
     Friend WithEvents Txt_RutaEtiquetas As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents TxtBakApp As TextBox
     Friend WithEvents Label6 As Label
+    Friend WithEvents SuperTabControlPanel3 As DevComponents.DotNetBar.SuperTabControlPanel
+    Friend WithEvents GroupBox2 As GroupBox
+    Friend WithEvents Guardar1 As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Formato_1 As TextBox
+    Friend WithEvents Label11 As Label
+    Friend WithEvents NombreCorreo_1 As TextBox
+    Friend WithEvents Label12 As Label
+    Friend WithEvents SuperTabItem3 As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents GroupBox3 As GroupBox
+    Friend WithEvents Guardar2 As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents Formato_2 As TextBox
+    Friend WithEvents Label7 As Label
+    Friend WithEvents NombreCorreo_2 As TextBox
+    Friend WithEvents Label8 As Label
 End Class

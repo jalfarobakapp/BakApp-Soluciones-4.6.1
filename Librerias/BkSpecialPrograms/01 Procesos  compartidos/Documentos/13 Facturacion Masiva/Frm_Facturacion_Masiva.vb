@@ -347,6 +347,60 @@ Public Class Frm_Facturacion_Masiva
 
                         If CBool(_Idmaeedo_Fcv) Then
 
+                            Dim _Idmaeedo_Origen As Integer = _Idmaeedo
+                            Dim _SobreStock As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "SobreStock", "Idmaeedo = " & _Idmaeedo_Origen)
+
+                            If _Tido = "FCV" And _SobreStock Then
+
+                                Consulta_sql = "Select EMPRESA,KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
+
+                                Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                                For Each _Row_Kopct As DataRow In _Tbl.Rows
+
+                                    Dim _Codigo As String = _Row_Kopct.Item("KOPRCT")
+                                    Dim _EmpresaDt As String = _Row_Kopct.Item("EMPRESA")
+
+                                    If Not String.IsNullOrEmpty(_Codigo) Then
+
+                                        Consulta_sql = $"
+;WITH CTE_SobreStock AS
+(
+    SELECT 
+        P.Id,
+        P.PqteHabilitado,
+        SUM(D.Qty_SobreStock) AS TotalFacturado
+    FROM {_Global_BaseBk}Zw_Prod_SobreStock AS P
+    INNER JOIN {_Global_BaseBk}Zw_Docu_Det AS D 
+            ON D.Id_SobreStock = P.Id
+           AND D.SobreStock = 1
+           AND D.Tido = 'NVV'
+    INNER JOIN MAEDDO AS M
+            ON M.IDRST = D.Idmaeddo
+           AND M.TIDO = 'FCV'
+    WHERE P.Codigo    = '{_Codigo}'
+      AND P.Empresa   = '{_EmpresaDt}'
+      --AND P.Eliminado = 0
+    GROUP BY 
+        P.Id,
+        P.PqteHabilitado
+)
+UPDATE P
+SET P.Activo = 0
+FROM {_Global_BaseBk}Zw_Prod_SobreStock AS P
+INNER JOIN CTE_SobreStock AS X
+        ON X.Id = P.Id
+WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
+  AND P.Activo = 1;   -- ← condición correcta aquí"
+                                        _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+                                    End If
+
+                                Next
+
+                            End If
+
+
                             Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Fcv
                             Dim _Row_Factura As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 

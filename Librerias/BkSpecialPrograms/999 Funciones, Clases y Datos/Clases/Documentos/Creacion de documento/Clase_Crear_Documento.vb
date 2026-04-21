@@ -1392,9 +1392,9 @@ Public Class Clase_Crear_Documento
                                 End While
                                 dfd1.Close()
 
-                                If Not _Activo Or _Eliminado Then
-                                    Throw New System.Exception("El producto " & _Koprct & " - " & _Nokopr & vbCrLf & "No se encuentra activo o fue eliminado de la lista Sobre Stock.")
-                                End If
+                                'If Not _Activo Or _Eliminado Then
+                                '    Throw New System.Exception("El producto " & _Koprct & " - " & _Nokopr & vbCrLf & "No se encuentra activo o fue eliminado de la lista Sobre Stock.")
+                                'End If
 
                                 If _PqtDisponible < _Qty_SobreStock Then
                                     Throw New System.Exception("Cantidad de " & _FormatoPqte & " no disponible." & vbCrLf &
@@ -3747,8 +3747,8 @@ Public Class Clase_Crear_Documento
 
                             Dim _FormatoPqte As String = String.Empty
                             Dim _PqtDisponible As Double
-                            Dim _Activo As Boolean
-                            Dim _Eliminado As Boolean
+                            'Dim _Activo As Boolean
+                            'Dim _Eliminado As Boolean
 
                             Consulta_sql = "Select FormatoPqte,Activo,Eliminado,PqteStock-PqteComprometido-PqteComprometidoSol As PqtDisponible" & vbCrLf &
                                            "From " & _Global_BaseBk & "Zw_Prod_SobreStock" & vbCrLf &
@@ -3760,14 +3760,14 @@ Public Class Clase_Crear_Documento
                             While dfd1.Read()
                                 _FormatoPqte = dfd1("FormatoPqte")
                                 _PqtDisponible = dfd1("PqtDisponible")
-                                _Activo = dfd1("Activo")
-                                _Eliminado = dfd1("Eliminado")
+                                '_Activo = dfd1("Activo")
+                                '_Eliminado = dfd1("Eliminado")
                             End While
                             dfd1.Close()
 
-                            If Not _Activo Or _Eliminado Then
-                                Throw New System.Exception("El producto " & _Codigo & " - " & _Descripcion & vbCrLf & "No se encuentra activo o fue eliminado de la lista Sobre Stock.")
-                            End If
+                            'If Not _Activo Or _Eliminado Then
+                            '    Throw New System.Exception("El producto " & _Codigo & " - " & _Descripcion & vbCrLf & "No se encuentra activo o fue eliminado de la lista Sobre Stock.")
+                            'End If
 
                             If _PqtDisponible < _Qty_SobreStock Then
                                 Throw New System.Exception("Cantidad de " & _FormatoPqte & " no disponible." & vbCrLf &

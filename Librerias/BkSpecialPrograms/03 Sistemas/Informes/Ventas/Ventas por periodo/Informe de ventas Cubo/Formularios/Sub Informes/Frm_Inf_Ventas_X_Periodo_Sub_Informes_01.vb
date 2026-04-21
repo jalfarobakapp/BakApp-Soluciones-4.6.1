@@ -273,8 +273,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                                "And TIDO+NUDO+ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%" & _Cadena & "%'" & vbCrLf &
                                "Group By IDMAEEDO,TIDO,NUDO,RTEN,RUT,ENDO,SUENDO,RAZON,FEEMDO,KOFULIDO,VENDEDOR,RUEN,RUBRO_EN,ZOEN,ZONA_EN,DIEN,CIEN,CIUDAD,CMEN,COMUNA,SUDO,SUCURSAL"
 
-        '_Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
-
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
         _Dv = New DataView
         _Dv.Table = _New_Ds.Tables("Table")
