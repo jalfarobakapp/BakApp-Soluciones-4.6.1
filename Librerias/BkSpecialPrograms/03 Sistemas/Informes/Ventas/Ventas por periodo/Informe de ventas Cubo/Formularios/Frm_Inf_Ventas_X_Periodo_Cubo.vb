@@ -3701,7 +3701,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                 _Kogru = "'" & _Kogru & "'"
             End If
 
-            _Filtro_Vendedores_Asignados_Todas = False
+            _Filtro_Vendedores_Todas = False
 
             _Sql_Filtro_Condicion_Extra += vbCrLf & "And KOFU In (Select d.KOFU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & "))"
 
@@ -3710,7 +3710,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         ElseIf Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
 
-            _Filtro_Vendedores_Asignados_Todas = False
+            _Filtro_Vendedores_Todas = False
             _Sql_Filtro_Condicion_Extra += "And KOFU = '" & FUNCIONARIO & "'"
             _SoloAlgunosVendedores = True
 
@@ -3726,10 +3726,10 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                                    Clas_Filtros_Random.Enum_Tabla_Fl._Funcionarios_Random, _Sql_Filtro_Condicion_Extra,
                                    _Filtro_Vendedores_Todas, False) Then
 
-            _Tbl_Filtro_Vendedores_Asignados = _Filtrar.Pro_Tbl_Filtro
+            _Tbl_Filtro_Vendedores = _Filtrar.Pro_Tbl_Filtro
 
             If Not _SoloAlgunosVendedores Then
-                _Filtro_Vendedores_Asignados_Todas = _Filtrar.Pro_Filtro_Todas
+                _Filtro_Vendedores_Todas = _Filtrar.Pro_Filtro_Todas
             End If
 
             If Cmb_Vista_Informe.SelectedValue = "KOFULIDO" Then
@@ -3937,7 +3937,9 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         End If
 
-        _Filtro += _Filtro_Nodos
+        '_Filtro += _Filtro_Nodos
+
+        _Filtro += _Filtro_Nodos & vbCrLf & "And EMPRESA = '" & Mod_Empresa & "'"
 
         Dim Fm As New Frm_Inf_Ventas_X_Periodo_Sub_Informes_01(_Nombre_Tabla_Paso,
                                                        _Filtro,
@@ -4061,7 +4063,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         End If
 
-        _Filtro += _Filtro_Nodos
+        '_Filtro += _Filtro_Nodos
+        _Filtro += _Filtro_Nodos & vbCrLf & "And EMPRESA = '" & Mod_Empresa & "'"
 
         Dim Fm As New Frm_Inf_Ventas_X_Periodo_Sub_Informes_01(_Nombre_Tabla_Paso,
                                                                _Filtro,

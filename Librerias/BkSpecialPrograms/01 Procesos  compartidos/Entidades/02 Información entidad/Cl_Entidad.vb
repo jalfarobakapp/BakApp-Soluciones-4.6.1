@@ -1,4 +1,4 @@
-﻿Imports BkSpecialPrograms.My.Resources
+﻿Imports Itenso
 
 Public Class Cl_Entidad
 
@@ -114,139 +114,157 @@ Public Class Cl_Entidad
                 Dim _Fecha_Tope As Date = FechaDelServidor()
                 Dim _Fecha As String = Format(FechaDelServidor, "yyyyMMdd")
 
-                Dim _CodEntidad As String = _RowEntidad.Item("KOEN")
+                Dim _Koen As String = _RowEntidad.Item("KOEN")
+                Dim _Suen As String = _RowEntidad.Item("SUEN")
+
+                Dim _ToleranciaDocMoroso As Integer
+
+                Try
+                    _ToleranciaDocMoroso = _Global_Row_Configuracion_General.Item("ToleranciaDocMoroso")
+                Catch ex As Exception
+                    _ToleranciaDocMoroso = 0
+                End Try
+
                 _Cl_Entidad.Dimoper = _RowEntidad.Item("DIMOPER")
 
                 Consulta_sql = My.Resources.Sql_Entidad.SqlQuery_deuda_doc_comerciales
-                Consulta_sql = Replace(Consulta_sql, "#CodEntidad#", _CodEntidad)
+                Consulta_sql = Replace(Consulta_sql, "#CodEntidad#", _Koen)
                 Consulta_sql = Replace(Consulta_sql, "#Fecha#", _Fecha)
                 Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+                Consulta_sql = Replace(Consulta_sql, "#ToleranciaDocMoroso#", _ToleranciaDocMoroso)
 
                 Tbl_Deudas = _Sql.Fx_Get_DataTable(Consulta_sql)
 
+                'If CBool(Tbl_Deudas.Rows.Count) Then
+
+                Dim _Deudas As Integer
+                Dim _MaxDiasDeAtraso As Integer = 0
+
                 If CBool(Tbl_Deudas.Rows.Count) Then
+                    '_Cl_Entidad.ListaProblemas.Add($"Tiene {Tbl_Deudas.Rows.Count} documentos con deuda")
+                    _Cl_Entidad.ListaProblemas.Add($"Existen {Tbl_Deudas.Rows.Count} documentos impagos actualmente registrados.")
+                Else
+                    _Cl_Entidad.ListaProblemas.Add($"Cliente sin deudas")
+                End If
 
-                    Dim _Deudas As Integer
-                    Dim _MaxDiasDeAtraso As Integer = 0
+                For Each _Fila As DataRow In Tbl_Deudas.Rows
 
-                    _Cl_Entidad.ListaProblemas.Add($"Tiene {Tbl_Deudas.Rows.Count} documentos con deuda")
+                    Dim _Nudonodefi As Boolean = _Fila.Item("NUDONODEFI")
+                    Dim _Dias_Atraso As Integer = _Fila.Item("DIAS_ATRASO")
 
-                    For Each _Fila As DataRow In Tbl_Deudas.Rows
+                    If Not _Nudonodefi Then
 
-                        Dim _Nudonodefi As Boolean = _Fila.Item("NUDONODEFI")
-                        Dim _Dias_Atraso As Integer = _Fila.Item("DIAS_ATRASO")
+                        Dim _DiasDeAtraso As Double = _Dias_Atraso
 
-                        If Not _Nudonodefi Then
+                        If _RestarDimoper Then
+                            _DiasDeAtraso = _Dias_Atraso - _Cl_Entidad.Dimoper
+                        End If
 
-                            Dim _DiasDeAtraso As Double = _Dias_Atraso
+                        If _DiasDeAtraso >= 0 Then
+                            _Deudas += 1
 
-                            If _RestarDimoper Then
-                                _DiasDeAtraso = _Dias_Atraso - _Cl_Entidad.Dimoper
-                            End If
+                            '' Actualizar el máximo de días de mora si corresponde
+                            'If _DiasDeAtraso > _MaxDiasDeAtraso Then
+                            '    _MaxDiasDeAtraso = _DiasDeAtraso
+                            'End If
 
-                            If _DiasDeAtraso >= 0 Then
-                                _Deudas += 1
-
-                                '' Actualizar el máximo de días de mora si corresponde
-                                'If _DiasDeAtraso > _MaxDiasDeAtraso Then
-                                '    _MaxDiasDeAtraso = _DiasDeAtraso
-                                'End If
-
-                                ' Actualizar el máximo de días de mora si corresponde
-                                If _Dias_Atraso > _MaxDiasDeAtraso Then
-                                    _MaxDiasDeAtraso = _Dias_Atraso
-                                End If
-
+                            ' Actualizar el máximo de días de mora si corresponde
+                            If _Dias_Atraso > _MaxDiasDeAtraso Then
+                                _MaxDiasDeAtraso = _Dias_Atraso
                             End If
 
                         End If
 
-                    Next
-
-                    _Cl_Entidad.ListaProblemas.Add($"El documentos con mas días de atraso tiene {_MaxDiasDeAtraso} días de atraso")
-
-                    If CBool(_Cl_Entidad.Dimoper) Then
-                        _Cl_Entidad.ListaProblemas.Add($"El cliente tiene {_Cl_Entidad.Dimoper} días de morosidad permitida")
-                    Else
-                        _Cl_Entidad.ListaProblemas.Add($"El cliente no tiene días de morosidad permitida")
                     End If
 
-                    ' Guardar el mayor dias de atraso en la instancia que se devuelve
+                Next
 
-                    _Cl_Entidad.MaxDiasMoraDocumentos = _MaxDiasDeAtraso
-                    _Cl_Entidad.Tiene_Deudas = CBool(_Deudas)
-                    _Cl_Entidad.Tbl_Deudas = Tbl_Deudas
-                    _Cl_Entidad.ClienteMoroso = _Cl_Entidad.Tiene_Deudas
+                Dim _Endo = _RowEntidad.Item("KOEN").ToString.Trim
+                Dim _Suendo = _RowEntidad.Item("SUEN").ToString.Trim
 
-                    Dim _Endo = _RowEntidad.Item("KOEN").ToString.Trim
-                    Dim _Suendo = _RowEntidad.Item("SUEN").ToString.Trim
+                Dim _Reg2 As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO", "TIDO In ('BLV','FCV','FDV') And ENDO = '" & _Endo & "' And SUENDO = '" & _Suen & "'")
 
-                    Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO", $"TIDO = 'FCV' And ENDO = '{_Endo}' And SUENDO = '{_Suendo}'")
+                If CBool(_Reg2) Then
+                    '_Cl_Entidad.ListaProblemas.Add($"El documentos con más días de atraso tiene {_MaxDiasDeAtraso} días de atraso")
+                    _Cl_Entidad.ListaProblemas.Add($"El documento con mayor atraso acumula {_MaxDiasDeAtraso} días desde su fecha de vencimiento.")
+                End If
 
-                    _Cl_Entidad.Tiene_Mas_Ventas = IIf(_Reg > 1, True, False)
-                    _Cl_Entidad.Promedio_Venta_UltXMeses = Fx_Promedio_Venta_UltXMeses(_RowEntidad, 3)
+                If CBool(_Cl_Entidad.Dimoper) Then
+                    _Cl_Entidad.ListaProblemas.Add($"El cliente tiene {_Cl_Entidad.Dimoper} días de morosidad permitida")
+                Else
+                    _Cl_Entidad.ListaProblemas.Add($"El cliente no tiene días de morosidad permitida")
+                End If
 
-                    If _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper Then
-                        _Cl_Entidad.Tiene_Deudas_Vencidas = True
-                        _Cl_Entidad.DiasDeMora = _Cl_Entidad.MaxDiasMoraDocumentos - _Cl_Entidad.Dimoper
-                        _Cl_Entidad.ListaProblemas.Add($"Hay un documento que tiene {_Cl_Entidad.DiasDeMora} días de morosidad restando los días permitidos de mora")
-                    End If
+                ' Guardar el mayor dias de atraso en la instancia que se devuelve
 
-                    Dim _DiasMaxMora As Double = _Cl_Entidad.Dimoper + 5
-                    Dim _MaxDiasMoraDocumentos As Double = _Cl_Entidad.MaxDiasMoraDocumentos
+                _Cl_Entidad.MaxDiasMoraDocumentos = _MaxDiasDeAtraso
+                _Cl_Entidad.Tiene_Deudas = CBool(_Deudas)
+                _Cl_Entidad.Tbl_Deudas = Tbl_Deudas
+                _Cl_Entidad.ClienteMoroso = _Cl_Entidad.Tiene_Deudas
 
-                    If _DiasMaxMora > 5 Then
-                        _Cl_Entidad.ListaProblemas.Add($"El sistema tiene permitido como máximo 5 de mora antes de que se bloquee")
-                    End If
+                Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros("MAEEDO", $"TIDO = 'FCV' And ENDO = '{_Endo}' And SUENDO = '{_Suendo}'")
 
+                _Cl_Entidad.Tiene_Mas_Ventas = IIf(_Reg > 1, True, False)
+                _Cl_Entidad.Promedio_Venta_UltXMeses = Fx_Promedio_Venta_UltXMeses(_RowEntidad, 3)
 
+                If _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper Then
+                    _Cl_Entidad.Tiene_Deudas_Vencidas = True
+                    _Cl_Entidad.DiasDeMora = _Cl_Entidad.MaxDiasMoraDocumentos - _Cl_Entidad.Dimoper
+                    '_Cl_Entidad.ListaProblemas.Add($"Hay un documento que tiene {_Cl_Entidad.DiasDeMora} días de morosidad restando los días permitidos de mora")
+                    _Cl_Entidad.ListaProblemas.Add($"Uno de los documentos presenta {_Cl_Entidad.DiasDeMora} días de morosidad efectiva, considerando los {_Cl_Entidad.Dimoper} días permitidos.")
+                End If
 
-                    'If _RevAutomaticaMorosidadClientes Then
+                '_Cl_Entidad.ClienteMoroso = _Cl_Entidad.Tiene_Deudas_Vencidas
 
-                    '    Dim _DiasMinMora As Double = _Cl_Entidad.Dimoper - _MaxDiasMoraDocumentos
+                Dim _DiasMaxMora As Double = _Cl_Entidad.Dimoper + 5
+                Dim _MaxDiasMoraDocumentos As Double = _Cl_Entidad.MaxDiasMoraDocumentos
+                Dim _DiasMr As Integer = _DiasMaxMora - _MaxDiasMoraDocumentos
 
-                    '    If _DiasMinMora > 0 Then
-                    '        _Cl_Entidad.ClienteMoroso = False
-                    '    End If
+                If _MaxDiasMoraDocumentos > _DiasMaxMora Then
+                    '_Cl_Entidad.ListaProblemas.Add($"El sistema tiene permitido como máximo 5 de mora posterior a los días de morosidad permitidos antes de que se bloquee")
+                    _Cl_Entidad.ListaProblemas.Add($"El sistema admite un máximo de 5 días de morosidad adicional (posterior a los días permitidos) antes de activar el bloqueo.")
+                    _Cl_Entidad.ListaProblemas.Add("¡El cliente supera el límite permitido, por lo que se encuentra bloqueado para nuevas ventas hasta regularizar su deuda!")
+                    _Cl_Entidad.Bloqueada = True
+                    _Mensaje.Tag = _Cl_Entidad
+                    Fx_LlenarMensaje(_Cl_Entidad)
+                    Throw New System.Exception("Cliente tiene documentos con deudas")
+                End If
 
-                    'End If
+                Consulta_sql = My.Resources.Recursos_Inf.SQLQuery_Informe_de_comportamiento_de_pagos
+                Consulta_sql = Replace(Consulta_sql, "#Filtro_Entidad#", "And ENDO = '" & _Endo & "'")
+                Consulta_sql = Replace(Consulta_sql, "#Filtro_2#", "And TIPO_DOC <> 'NCV'")
+                Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
-                    If _MaxDiasMoraDocumentos > _DiasMaxMora Then
-                        _Cl_Entidad.ListaProblemas.Add("¡No se le puede vender a este cliente hasta que no pague su deuda!")
-                        _Cl_Entidad.Bloqueada = True
-                        _Mensaje.Tag = _Cl_Entidad
-                        Fx_LlenarMensaje(_Cl_Entidad)
-                        Throw New System.Exception("Cliente tiene documentos con deudas")
-                    End If
+                Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
 
-                    Consulta_sql = My.Resources.Recursos_Inf.SQLQuery_Informe_de_comportamiento_de_pagos
-                    Consulta_sql = Replace(Consulta_sql, "#Filtro_Entidad#", "And ENDO = '" & _Endo & "'")
-                    Consulta_sql = Replace(Consulta_sql, "#Filtro_2#", "And TIPO_DOC <> 'NCV'")
-                    Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+                Dim _Row As DataRow = _Ds.Tables(2).Rows(0)
+                Dim _Row2 As DataRow = _Ds.Tables(3).Rows(0)
 
-                    Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
-
-                    Dim _Row As DataRow = _Ds.Tables(2).Rows(0)
-                    Dim _Row2 As DataRow = _Ds.Tables(3).Rows(0)
+                If CBool(_Reg2) Then
 
                     If Not IsNothing(_Row) Then
                         _Cl_Entidad.PromedioDiasPago = Math.Round(_Row.Item("PROMEDIO_DIAS_REAL_PAGO"), 2)
-                        _Cl_Entidad.ListaProblemas.Add($"El promedio de dias que demora el cliente en pagar es de {_Cl_Entidad.PromedioDiasPago} días")
+                        '_Cl_Entidad.ListaProblemas.Add($"El promedio de días que demora el cliente en pagar es de {_Cl_Entidad.PromedioDiasPago} días")
+                        _Cl_Entidad.ListaProblemas.Add($"El cliente presenta un promedio de {_Cl_Entidad.PromedioDiasPago} días de retraso en el pago de sus documentos.")
                     End If
 
                     If Not IsNothing(_Row2) Then
                         _Cl_Entidad.PromedioUltimas3FacturasPago = Math.Round(_Row2.Item("PROMEDIO_ULTIMAS_3_FACTURAS"), 2)
-                        _Cl_Entidad.ListaProblemas.Add($"El promedio de dias que demora el cliente en pagar las últimas 3 facturas es de {_Cl_Entidad.PromedioUltimas3FacturasPago} días")
+                        '_Cl_Entidad.ListaProblemas.Add($"El promedio de dias que demora el cliente en pagar las últimas 3 facturas es de {_Cl_Entidad.PromedioUltimas3FacturasPago} días")
+                        _Cl_Entidad.ListaProblemas.Add($"En sus últimas 3 facturas, el cliente ha registrado un plazo promedio de pago de {_Cl_Entidad.PromedioUltimas3FacturasPago} días.")
                     End If
 
-
                     If _Cl_Entidad.ClienteMoroso AndAlso
-                       _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper AndAlso
+                       _Cl_Entidad.MaxDiasMoraDocumentos > _DiasMaxMora AndAlso
                        _Cl_Entidad.PromedioUltimas3FacturasPago > _Cl_Entidad.Dimoper Then
 
-                        _Cl_Entidad.ListaProblemas.Add("No se le puede vender a este cliente hasta que no pague su deuda" & vbCrLf &
-                                                       "Las ultimas 3 facturas han sido pagadas en un promedio de " &
-                                                       _Cl_Entidad.PromedioUltimas3FacturasPago & " días, solo se permiten hasta " & _Cl_Entidad.Dimoper & " días.")
+                        '_Cl_Entidad.ListaProblemas.Add("No se le puede vender a este cliente hasta que no pague su deuda" & vbCrLf &
+                        '                       "Las ultimas 3 facturas han sido pagadas en un promedio de " &
+                        '                       _Cl_Entidad.PromedioUltimas3FacturasPago & " días, solo se permiten hasta " & _Cl_Entidad.Dimoper & " días.")
+
+                        _Cl_Entidad.ListaProblemas.Add($"El cliente no puede recibir nuevas ventas hasta regularizar su deuda pendiente.")
+                        _Cl_Entidad.ListaProblemas.Add($"Las últimas 3 facturas fueron pagadas con un promedio de {_Cl_Entidad.PromedioUltimas3FacturasPago} días de atraso, superando el límite permitido de {_Cl_Entidad.Dimoper} días.")
+
                         _Cl_Entidad.Bloqueada = True
                         _Mensaje.Tag = _Cl_Entidad
                         Fx_LlenarMensaje(_Cl_Entidad)
@@ -254,53 +272,75 @@ Public Class Cl_Entidad
 
                     End If
 
-                    If Not _Cl_Entidad.ClienteMoroso AndAlso _Cl_Entidad.PromedioUltimas3FacturasPago > _Cl_Entidad.Dimoper Then
-                        _Cl_Entidad.ClienteMoroso = True
-                        _Cl_Entidad.ListaProblemas.Add("Cliente moroso, el promedio de pago de las ultimas 3 facturas es mayor a los días de morosidad permitida")
-                    End If
+                    If _Cl_Entidad.Tiene_Deudas Then
 
-                    If _Cl_Entidad.Tiene_Deudas And Not _Cl_Entidad.Tiene_Deudas_Vencidas And _Cl_Entidad.PromedioUltimas3FacturasPago < _Cl_Entidad.Dimoper Then
-                        _Cl_Entidad.UltFacPagadasEnMenosTiempoQueDimoper = True
-                        _Cl_Entidad.ListaProblemas.Add("El promedio de pago de las ultimas 3 facturas es menor a los días de morosidad permitida")
-                    End If
+                        If Not _Cl_Entidad.ClienteMoroso AndAlso _Cl_Entidad.PromedioUltimas3FacturasPago > _Cl_Entidad.Dimoper Then
+                            _Cl_Entidad.ClienteMoroso = True
+                            '_Cl_Entidad.ListaProblemas.Add("Cliente moroso, el promedio de pago de las ultimas 3 facturas es mayor a los días de morosidad permitida")
+                            _Cl_Entidad.ListaProblemas.Add("El cliente presenta condición de moroso, ya que el promedio de pago" & vbCrLf &
+                                                           "de sus últimas 3 facturas supera los días de morosidad permitidos.")
+                        End If
 
-                    If CBool(_MontoVenta) AndAlso CBool(_Cl_Entidad.Promedio_Venta_UltXMeses) Then
-
-                        If _MontoVenta <= _Cl_Entidad.Promedio_Venta_UltXMeses Then
-                            _Cl_Entidad.VentaMayorPromedioUlt3Meses = False
-                            _Cl_Entidad.ListaProblemas.Add("La venta es menor al promedio de ventas realizadas los ultimos 3 meses. " &
-                                                       $"Venta:{ FormatNumber(_MontoVenta, 0)}, promedio venta: {FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}")
-                        Else
-                            _Cl_Entidad.VentaMayorPromedioUlt3Meses = True
-                            _Cl_Entidad.ListaProblemas.Add("La venta es mayor al promedio de ventas realizadas los ultimos 3 meses. " &
-                                                       $"Venta:{ FormatNumber(_MontoVenta, 0)}, promedio venta: {FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}")
+                        If Not _Cl_Entidad.Tiene_Deudas_Vencidas And _Cl_Entidad.PromedioUltimas3FacturasPago < _Cl_Entidad.Dimoper Then
+                            _Cl_Entidad.UltFacPagadasEnMenosTiempoQueDimoper = True
+                            '_Cl_Entidad.ListaProblemas.Add("El promedio de pago de las ultimas 3 facturas es menor a los días de morosidad permitida")
+                            _Cl_Entidad.ListaProblemas.Add("El promedio de pago de las últimas 3 facturas se encuentra por debajo del" & vbCrLf &
+                                                           "límite de morosidad permitido, lo que indica un comportamiento de pago dentro" & vbCrLf &
+                                                           "de los parámetros aceptados.")
                         End If
 
                     End If
 
-                    Dim _EnCurso_Total As Double = _MontoVenta
+                    If CBool(_MontoVenta) Then 'AndAlso CBool(_Cl_Entidad.Promedio_Venta_UltXMeses) Then
 
-                    Sb_Revisar_Situacion_Credito_Entidad(_RowEntidad, _EnCurso_Total, 0, 0, 0)
+                        If _MontoVenta <= _Cl_Entidad.Promedio_Venta_UltXMeses Then
+                            _Cl_Entidad.VentaMayorPromedioUlt3Meses = False
+                            '_Cl_Entidad.ListaProblemas.Add("La venta es menor al promedio de ventas realizadas los últimos 3 meses. " &
+                            '                   $"Venta: { FormatNumber(_MontoVenta, 0)}, promedio venta: {FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}")
+                            _Cl_Entidad.ListaProblemas.Add($"La venta actual ({ FormatNumber(_MontoVenta, 0)}) está por debajo del promedio de ventas de los" &
+                                               $"últimos 3 meses ({FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}).")
+                        Else
+                            _Cl_Entidad.VentaMayorPromedioUlt3Meses = True
+                            '_Cl_Entidad.ListaProblemas.Add("La venta es mayor al promedio de ventas realizadas los últimos 3 meses. " &
+                            '                   $"Venta: { FormatNumber(_MontoVenta, 0)}, promedio venta: {FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}")
 
-                    _Cl_Entidad.Crsd_Disponible = _Crsd_Disponible
+                            _Cl_Entidad.ListaProblemas.Add($"La venta actual ({ FormatNumber(_MontoVenta, 0)}) supera el promedio de ventas de los" &
+                                               $"últimos 3 meses ({FormatNumber(_Cl_Entidad.Promedio_Venta_UltXMeses, 0)}).")
 
-                    If _Cl_Entidad.Crsd_Disponible < 0 Then
-                        _Cl_Entidad.SuperaCreditoDisponible = True
-                        _Cl_Entidad.ListaProblemas.Add($"El cliente supera el credito que tiene disponible con esta venta. " &
-                                                       $"(monto diponible: { FormatNumber(_Cl_Entidad.Crsd_Disponible, 0)})")
-                    End If
+                        End If
 
-                    Fx_LlenarMensaje(_Cl_Entidad)
-
-                    _Mensaje.Tag = _Cl_Entidad
-
-                    If _Cl_Entidad.ClienteMoroso Then
-                        Throw New System.Exception("Cliente tiene documentos con deudas")
                     End If
 
                 End If
 
+                Dim _EnCurso_Total As Double = _MontoVenta
+
+                Sb_Revisar_Situacion_Credito_Entidad(_RowEntidad, _EnCurso_Total, 0, 0, 0)
+
+                _Cl_Entidad.Crsd_Disponible = _Crsd_Disponible
+                _Cl_Entidad.Crto_Disponible = _Crto_Disponible
+
+                If _Cl_Entidad.Crto_Disponible < 0 Then
+                    _Cl_Entidad.SuperaCreditoDisponible = True
+                    '_Cl_Entidad.ListaProblemas.Add($"El cliente supera el crédito que tiene disponible con esta venta. " &
+                    '                       $"(monto disponible: { FormatNumber(_Cl_Entidad.Crto_Disponible, 0)})")
+
+                    _Cl_Entidad.ListaProblemas.Add($"El cliente excede el crédito disponible con esta venta.")
+                    _Cl_Entidad.ListaProblemas.Add($"- Monto disponible actual: { FormatNumber(_Cl_Entidad.Crto_Disponible, 0)}, lo que indica que ya se encuentra sobrepasado.")
+
+                End If
+
+                Fx_LlenarMensaje(_Cl_Entidad)
+
+                _Mensaje.Tag = _Cl_Entidad
+
+                If _Cl_Entidad.ClienteMoroso Then
+                    Throw New System.Exception("Cliente tiene documentos con deudas")
+                End If
+
             End If
+
+            'End If
 
             _Mensaje.EsCorrecto = True
             _Mensaje.Mensaje = "Cliente sin deudas vencidas"
@@ -319,7 +359,6 @@ Public Class Cl_Entidad
         Return _Mensaje
 
     End Function
-
     Sub Fx_LlenarMensaje(ByRef _Cl_Entidad As Cl_Entidad)
 
         If CBool(_Cl_Entidad.ListaProblemas.Count) Then
@@ -371,7 +410,6 @@ FROM (
         Fx_Promedio_Venta_UltXMeses = _Row.Item("PROMEDIO_ULT_X_MESES")
 
     End Function
-
     Function Fx_Reparar_Maeven(_RowEntidad As DataRow) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -454,7 +492,6 @@ FROM (
         Return _Mensaje
 
     End Function
-
     Sub Sb_Revisar_Situacion_Credito_Entidad(_RowEntidad As DataRow,
                                              _EnCurso_Total As Double,
                                              _EnCurso_Cheque As Double,
@@ -526,7 +563,6 @@ FROM (
         _Crto_Disponible = _CRTO + _CrPgo_Disponible - (_Crto_Utilizado + _EnCurso_Total + _EnCurso_Cheque + _EnCurso_Letra + _EnCurso_Pagare)
 
     End Sub
-
     Sub Sb_Revisar_Saldo_Favor(ByRef _TblPagos As DataTable,
                                ByRef _CRSF As Double,
                                ByRef _CrPgo_Utilizado As Double,
@@ -573,5 +609,211 @@ AND DPCE.EMPRESA='" & Mod_Empresa & "'  AND DPCE.ESASDP='P'
 
     End Sub
 
+    Function Fx_Llenar_Entidad_CiaSeguros(_Koen As String, _Suen As String) As LsValiciones.Mensajes
+
+        Dim _Tbl As DataTable
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Consulta_sql = Fx_Consulta_Sql_Entidad_CiaSeguros(_Koen, _Suen)
+            _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Consulta realizada correctamente."
+            _Mensaje.Tag = _Tbl
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Error al consultar la información: " & ex.Message
+            _Mensaje.Tag = Nothing
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_Consulta_Sql_Entidad_CiaSeguros(_Koen As String, _Suen As String) As String
+
+        Consulta_sql = $"
+DECLARE @ENDO     VARCHAR(20) = '{_Koen}';
+DECLARE @SUENDO   VARCHAR(20) = '{_Suen}';
+
+/* =========================================================
+   1) DOCUMENTOS NVV y FCV DESDE MAEEDO
+========================================================= */
+WITH Docs AS
+(
+    SELECT 
+        IDMAEEDO,
+        ENDO,
+        SUENDO,
+        TIDO,
+        Saldo = VABRDO - VAABDO
+    FROM MAEEDO
+    WHERE TIDO IN ('NVV','FCV')
+      AND ENDO = @ENDO
+      AND SUENDO = @SUENDO
+      AND EMPRESA = '{Mod_Empresa}'
+      AND (
+            (TIDO = 'NVV' AND ESDO = '')
+         OR (TIDO = 'FCV' AND ESPGDO = 'P')
+      )
+),
+
+/* =========================================================
+   2) NVVSOL DESDE Zw_Casi_DocEnc (solo válidos)
+========================================================= */
+NVVSOL_Docs AS
+(
+    SELECT 
+        C.Id_DocEnc,
+        C.CodEntidad_Cia,
+        C.CodSucEntidad_Cia,
+        C.TotalBrutoDoc AS Monto
+    FROM {_Global_BaseBk}Zw_Casi_DocEnc AS C
+    INNER JOIN {_Global_BaseBk}Zw_Remotas AS R
+        ON C.Id_DocEnc = R.Id_Casi_DocEnc
+    INNER JOIN {_Global_BaseBk}Zw_Remotas_En_Cadena_01_Enc AS E
+        ON R.RCadena_Id_Enc = E.Id_Enc
+    WHERE C.Empresa = '{Mod_Empresa}'
+      AND C.CodEntidad = @ENDO
+      AND C.CodSucEntidad = @SUENDO
+      AND C.Stand_by = 0
+      AND C.TipoDoc = 'NVV'
+      AND C.UsaCiaSeguro = 1
+      AND E.Estado = ''
+),
+
+/* =========================================================
+   3) FCV / NVV CON COMPAÑÍA (Zw_Docu_Ent)
+========================================================= */
+Docs_Cia AS
+(
+    SELECT 
+        D.CodEntidad_Cia,
+        D.CodSucEntidad_Cia,
+        M.TIDO,
+        M.Saldo
+    FROM Docs AS M
+    INNER JOIN {_Global_BaseBk}Zw_Docu_Ent AS D
+        ON D.Idmaeedo = M.IDMAEEDO
+    WHERE D.CodEntidad_Cia <> ''
+),
+
+/* =========================================================
+   4) AGRUPAR MONTOS POR COMPAÑÍA
+========================================================= */
+Cias_Usadas AS
+(
+    SELECT 
+        CodEntidad_Cia,
+        CodSucEntidad_Cia,
+        FCV  = SUM(CASE WHEN TIDO = 'FCV' THEN Saldo ELSE 0 END),
+        NVV  = SUM(CASE WHEN TIDO = 'NVV' THEN Saldo ELSE 0 END),
+        NVVSOL = 0
+    FROM Docs_Cia
+    GROUP BY CodEntidad_Cia, CodSucEntidad_Cia
+
+    UNION ALL
+
+    SELECT 
+        CodEntidad_Cia,
+        CodSucEntidad_Cia,
+        FCV = 0,
+        NVV = 0,
+        NVVSOL = SUM(Monto)
+    FROM NVVSOL_Docs
+    GROUP BY CodEntidad_Cia, CodSucEntidad_Cia
+),
+
+/* =========================================================
+   5) SUMAR POR COMPAÑÍA
+========================================================= */
+Cias_Final AS
+(
+    SELECT 
+        CodEntidad_Cia,
+        CodSucEntidad_Cia,
+        FCV     = SUM(FCV),
+        NVV     = SUM(NVV),
+        NVVSOL  = SUM(NVVSOL)
+    FROM Cias_Usadas
+    GROUP BY CodEntidad_Cia, CodSucEntidad_Cia
+),
+
+/* =========================================================
+   6) MONTOS ASIGNADOS POR COMPAÑÍA + NOMBRE
+========================================================= */
+Asignaciones AS
+(
+    SELECT 
+        E.CodEntidad_Cia,
+        E.CodSucEntidad_Cia,
+        E.MontoAsignado,
+        M.NOKOEN AS Nombre_Entidad
+    FROM {_Global_BaseBk}Zw_Entidad_CiaSeguro AS E
+    LEFT JOIN MAEEN AS M
+        ON M.KOEN = E.CodEntidad_Cia
+       AND M.SUEN = E.CodSucEntidad_Cia
+    WHERE E.CodEntidad = @ENDO
+      AND E.CodSucEntidad = @SUENDO
+),
+
+/* =========================================================
+   7) DOCUMENTOS SIN COMPAÑÍA
+========================================================= */
+Sin_Cia AS
+(
+    SELECT 
+        'SIN_CIA' AS CodEntidad_Cia,
+        '' AS CodSucEntidad_Cia,
+        FCV = SUM(CASE WHEN TIDO = 'FCV' THEN Saldo ELSE 0 END),
+        NVV = SUM(CASE WHEN TIDO = 'NVV' THEN Saldo ELSE 0 END),
+        NVVSOL = 0
+    FROM Docs AS D
+    WHERE NOT EXISTS
+    (
+        SELECT 1
+        FROM {_Global_BaseBk}Zw_Docu_Ent AS Z
+        WHERE Z.Idmaeedo = D.IDMAEEDO
+    )
+)
+
+/* =========================================================
+   8) RESULTADO FINAL (TODO CON NULL→0)
+========================================================= */
+SELECT 
+	ISNULL(A.CodEntidad_Cia,'') AS CodEntidad_Cia,
+	ISNULL(A.CodSucEntidad_Cia,'') AS CodSucEntidad_Cia,
+    ISNULL(A.Nombre_Entidad, 'SIN COMPAÑÍA') AS NombreCia,
+    ISNULL(A.MontoAsignado, 0) AS MontoAsignado,
+    ISNULL(F.FCV, 0) AS FCV,
+    ISNULL(F.NVV, 0) AS NVV,
+    ISNULL(F.NVVSOL, 0) AS NVVSOL,
+    TotalUtilizado = ISNULL(F.FCV,0) + ISNULL(F.NVV,0) + ISNULL(F.NVVSOL,0),
+    SaldoDisponible = ISNULL(A.MontoAsignado,0) - (ISNULL(F.FCV,0) + ISNULL(F.NVV,0) + ISNULL(F.NVVSOL,0))
+FROM Asignaciones AS A
+LEFT JOIN Cias_Final AS F
+    ON A.CodEntidad_Cia = F.CodEntidad_Cia
+   AND A.CodSucEntidad_Cia = F.CodSucEntidad_Cia
+
+UNION ALL
+
+SELECT 
+	'','',
+    'SIN COMPAÑÍA',
+    0,
+    ISNULL(FCV,0),
+    ISNULL(NVV,0),
+    ISNULL(NVVSOL,0),
+    ISNULL(FCV,0) + ISNULL(NVV,0) + ISNULL(NVVSOL,0),
+    0
+FROM Sin_Cia;
+"
+
+        Return Consulta_sql
+
+    End Function
 
 End Class

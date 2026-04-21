@@ -2,8 +2,8 @@ USE [#Base#]
 
 
 CREATE TABLE [dbo].[Zw_Prod_Reemplazos](
-	[Codigo] [varchar](13) NOT NULL DEFAULT (''),
-	[Codigo_Madre] [varchar](13) NOT NULL DEFAULT (''),
+	[Codigo]        [varchar](13) NOT NULL DEFAULT (''),
+	[Codigo_Madre]  [varchar](13) NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Prod_Reemplazos] PRIMARY KEY CLUSTERED 
 (
 	[Codigo] ASC,

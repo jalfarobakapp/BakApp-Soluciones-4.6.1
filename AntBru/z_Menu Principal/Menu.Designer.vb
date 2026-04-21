@@ -87,6 +87,7 @@ Partial Class Menu
         Me.Btn_SobreStockNVV = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConvertirCOVNVV = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CrucePagoMasivos = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_EliminarDoc = New DevComponents.DotNetBar.ButtonItem()
         Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
@@ -109,7 +110,7 @@ Partial Class Menu
         Me.Metro_Bar_Color = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
-        Me.Btn_EliminarDoc = New DevComponents.DotNetBar.ButtonItem()
+        Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -200,7 +201,7 @@ Partial Class Menu
         Me.Panel_Menu.ForeColor = System.Drawing.Color.Black
         Me.Panel_Menu.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.MnuEspecialOtros})
         Me.Panel_Menu.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Panel_Menu.Location = New System.Drawing.Point(3, 58)
+        Me.Panel_Menu.Location = New System.Drawing.Point(3, 90)
         Me.Panel_Menu.Name = "Panel_Menu"
         Me.Panel_Menu.Size = New System.Drawing.Size(868, 454)
         Me.Panel_Menu.TabIndex = 2
@@ -656,7 +657,7 @@ Partial Class Menu
         Me.Barra.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Barra.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCambiarDeUsuario, Me.Btn_FichaFucnionario, Me.Btn_Actualizar_BakApp, Me.Btn_Prueba_Monto_Palabra, Me.Btn_CambioDeEmpresa, Me.BtnTeamviewer, Me.Btn_Cambio_Empresa, Me.Btn_Desconectar_Bases, Me.Btn_Permisos_Remotos, Me.BtnConfiguracion, Me.Btn_Cerrar_Sistema})
-        Me.Barra.Location = New System.Drawing.Point(0, 554)
+        Me.Barra.Location = New System.Drawing.Point(0, 594)
         Me.Barra.Name = "Barra"
         Me.Barra.Size = New System.Drawing.Size(845, 57)
         Me.Barra.Stretch = True
@@ -812,7 +813,7 @@ Partial Class Menu
         Me.Lbl_Info_Bakapp.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Info_Bakapp.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Lbl_Info_Bakapp.ForeColor = System.Drawing.Color.DimGray
-        Me.Lbl_Info_Bakapp.Location = New System.Drawing.Point(551, 526)
+        Me.Lbl_Info_Bakapp.Location = New System.Drawing.Point(551, 565)
         Me.Lbl_Info_Bakapp.Name = "Lbl_Info_Bakapp"
         Me.Lbl_Info_Bakapp.Size = New System.Drawing.Size(297, 24)
         Me.Lbl_Info_Bakapp.TabIndex = 13
@@ -980,6 +981,12 @@ Partial Class Menu
         Me.Btn_CrucePagoMasivos.GlobalItem = False
         Me.Btn_CrucePagoMasivos.Name = "Btn_CrucePagoMasivos"
         Me.Btn_CrucePagoMasivos.Text = "Cruce pagos masivos sin vincular"
+        '
+        'Btn_EliminarDoc
+        '
+        Me.Btn_EliminarDoc.GlobalItem = False
+        Me.Btn_EliminarDoc.Name = "Btn_EliminarDoc"
+        Me.Btn_EliminarDoc.Text = "Eliminar NVV Clon"
         '
         'Tiempo_Actualizar_BakApp
         '
@@ -1170,7 +1177,7 @@ Partial Class Menu
         Me.Btn_Themas.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Themas.Image = CType(resources.GetObject("Btn_Themas.Image"), System.Drawing.Image)
         Me.Btn_Themas.ImageAlt = CType(resources.GetObject("Btn_Themas.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Themas.Location = New System.Drawing.Point(3, 518)
+        Me.Btn_Themas.Location = New System.Drawing.Point(3, 557)
         Me.Btn_Themas.Name = "Btn_Themas"
         Me.Btn_Themas.Size = New System.Drawing.Size(141, 32)
         Me.Btn_Themas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1186,7 +1193,7 @@ Partial Class Menu
         '
         Me.ReflectionLabel1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ReflectionLabel1.ForeColor = System.Drawing.Color.Black
-        Me.ReflectionLabel1.Location = New System.Drawing.Point(700, 0)
+        Me.ReflectionLabel1.Location = New System.Drawing.Point(687, 16)
         Me.ReflectionLabel1.Name = "ReflectionLabel1"
         Me.ReflectionLabel1.Size = New System.Drawing.Size(142, 71)
         Me.ReflectionLabel1.TabIndex = 18
@@ -1204,7 +1211,7 @@ Partial Class Menu
         Me.Metro_Bar_Color.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 611)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 651)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
         Me.Metro_Bar_Color.Size = New System.Drawing.Size(845, 22)
         Me.Metro_Bar_Color.TabIndex = 55
@@ -1221,16 +1228,24 @@ Partial Class Menu
         Me.StyleManager1.ManagerStyle = DevComponents.DotNetBar.eStyle.Metro
         Me.StyleManager1.MetroColorParameters = New DevComponents.DotNetBar.Metro.ColorTables.MetroColorGeneratorParameters(System.Drawing.Color.White, System.Drawing.Color.FromArgb(CType(CType(43, Byte), Integer), CType(CType(87, Byte), Integer), CType(CType(154, Byte), Integer)))
         '
-        'Btn_EliminarDoc
+        'Lbl_NombreEmpresaActiva
         '
-        Me.Btn_EliminarDoc.GlobalItem = False
-        Me.Btn_EliminarDoc.Name = "Btn_EliminarDoc"
-        Me.Btn_EliminarDoc.Text = "Eliminar NVV Clon"
+        '
+        '
+        '
+        Me.Lbl_NombreEmpresaActiva.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_NombreEmpresaActiva.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_NombreEmpresaActiva.Location = New System.Drawing.Point(3, 49)
+        Me.Lbl_NombreEmpresaActiva.Name = "Lbl_NombreEmpresaActiva"
+        Me.Lbl_NombreEmpresaActiva.Size = New System.Drawing.Size(620, 23)
+        Me.Lbl_NombreEmpresaActiva.TabIndex = 56
+        Me.Lbl_NombreEmpresaActiva.Text = "NOMBRE DE LA EMPRESA... ESTE ES EL NOMBRE DE LA EM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Lbl_NombreEmpresaActiva)
         Me.Controls.Add(Me.Btn_Themas)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Menu_BakApp)
@@ -1242,7 +1257,7 @@ Partial Class Menu
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.MinimumSize = New System.Drawing.Size(845, 633)
         Me.Name = "Menu"
-        Me.Size = New System.Drawing.Size(845, 633)
+        Me.Size = New System.Drawing.Size(845, 673)
         CType(Me.Barra, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Menu_BakApp, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -1331,4 +1346,5 @@ Partial Class Menu
     Friend WithEvents Btn_CrucePagoMasivos As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_ConvertirCOVNVV As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_EliminarDoc As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Lbl_NombreEmpresaActiva As DevComponents.DotNetBar.LabelX
 End Class

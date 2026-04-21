@@ -24,6 +24,7 @@ Public Class SolAsisCompraModos
         _Fm_Menu_Padre = Fm_Menu_Padre
 
         ButtonItem2.Visible = (RutEmpresa = "79514800-0")
+        Lbl_NombreEmpresaActiva.Text = BkSpecialPrograms.RazonEmpresa
 
     End Sub
 

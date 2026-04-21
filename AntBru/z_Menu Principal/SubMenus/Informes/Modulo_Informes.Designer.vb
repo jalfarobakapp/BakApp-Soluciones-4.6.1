@@ -23,15 +23,16 @@ Partial Class Modulo_Informes
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Modulo_Informes))
-        Me.Bar2 = New DevComponents.DotNetBar.Bar
-        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem
-        Me.MetroTilePanel1 = New DevComponents.DotNetBar.Metro.MetroTilePanel
-        Me.ConsultaPreciosContenedor = New DevComponents.DotNetBar.ItemContainer
-        Me.BtnInformesVenta = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.BtnInfMargenes = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.Btn_Informes_Espciales_Clientes = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.Btn_Inf_Stock = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX
+        Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
+        Me.MetroTilePanel1 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
+        Me.ConsultaPreciosContenedor = New DevComponents.DotNetBar.ItemContainer()
+        Me.BtnInformesVenta = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.BtnInfMargenes = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Informes_Espciales_Clientes = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Inf_Stock = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -41,9 +42,9 @@ Partial Class Modulo_Informes
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
-        Me.Bar2.Location = New System.Drawing.Point(0, 278)
+        Me.Bar2.Location = New System.Drawing.Point(0, 318)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(436, 41)
+        Me.Bar2.Size = New System.Drawing.Size(585, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 37
@@ -71,7 +72,7 @@ Partial Class Modulo_Informes
         Me.MetroTilePanel1.ForeColor = System.Drawing.Color.Black
         Me.MetroTilePanel1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ConsultaPreciosContenedor})
         Me.MetroTilePanel1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 48)
+        Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 82)
         Me.MetroTilePanel1.Name = "MetroTilePanel1"
         Me.MetroTilePanel1.Size = New System.Drawing.Size(489, 407)
         Me.MetroTilePanel1.TabIndex = 36
@@ -175,8 +176,8 @@ Partial Class Modulo_Informes
         Me.Btn_Inf_Stock.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_Inf_Stock.Name = "Btn_Inf_Stock"
         Me.Btn_Inf_Stock.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Inf_Stock.Text = "<font size=""+4""><b>INFORMES DE STOCK</b></font><br/><font size=""-1"">Stock Valoriz" & _
-            "ado</font>"
+        Me.Btn_Inf_Stock.Text = "<font size=""+4""><b>INFORMES DE STOCK</b></font><br/><font size=""-1"">Stock Valoriz" &
+    "ado</font>"
         Me.Btn_Inf_Stock.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.RedOrange
         Me.Btn_Inf_Stock.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -204,15 +205,29 @@ Partial Class Modulo_Informes
         Me.LabelX1.TabIndex = 39
         Me.LabelX1.Text = "<font color=""#349FCE""><b>INFORMES</b></font>"
         '
+        'Lbl_NombreEmpresaActiva
+        '
+        '
+        '
+        '
+        Me.Lbl_NombreEmpresaActiva.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_NombreEmpresaActiva.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_NombreEmpresaActiva.Location = New System.Drawing.Point(6, 45)
+        Me.Lbl_NombreEmpresaActiva.Name = "Lbl_NombreEmpresaActiva"
+        Me.Lbl_NombreEmpresaActiva.Size = New System.Drawing.Size(620, 23)
+        Me.Lbl_NombreEmpresaActiva.TabIndex = 57
+        Me.Lbl_NombreEmpresaActiva.Text = "NOMBRE DE LA EMPRESA... ESTE ES EL NOMBRE DE LA EM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
         'Modulo_Informes
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Lbl_NombreEmpresaActiva)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Modulo_Informes"
-        Me.Size = New System.Drawing.Size(436, 319)
+        Me.Size = New System.Drawing.Size(585, 359)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -226,5 +241,5 @@ Partial Class Modulo_Informes
     Private WithEvents Btn_Informes_Espciales_Clientes As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Inf_Stock As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
-
+    Friend WithEvents Lbl_NombreEmpresaActiva As DevComponents.DotNetBar.LabelX
 End Class

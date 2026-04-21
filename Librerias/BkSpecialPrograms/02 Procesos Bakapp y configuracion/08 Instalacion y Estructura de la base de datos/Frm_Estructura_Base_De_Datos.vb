@@ -168,6 +168,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Empresas", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidad_Cia_Seguros", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Entidad_CiaSeguro", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades_ProdExcluidos", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades_ProdMinCompra", _Modificar, Lbl_Eventos)
 
@@ -393,6 +394,8 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Ingreso_Enc", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Paquetes", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_WMS_Picking_Log", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_WMS_RutaXDoc", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Ubicaciones_Bodega", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_WMS_Ubicaciones_Sectores", _Modificar, Lbl_Eventos)

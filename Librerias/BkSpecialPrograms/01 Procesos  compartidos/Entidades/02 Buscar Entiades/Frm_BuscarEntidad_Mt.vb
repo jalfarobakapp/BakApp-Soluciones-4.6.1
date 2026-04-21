@@ -70,7 +70,7 @@ Public Class Frm_BuscarEntidad_Mt
     Public Property PreguntaClientePuntos As Boolean
     Public Property VerSoloEntidadesDelVendedor As Boolean
     Public Property VerSoloEntidadesDelGrupo As Boolean
-
+    Public Property VerSoloCiaSeguro As Boolean
     Public Sub New(_Preguntar_Despues_de_seleccionar As Boolean)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -100,16 +100,21 @@ Public Class Frm_BuscarEntidad_Mt
         'End If
 
         If VerSoloEntidadesDelGrupo Then
-
             'VerSoloEntidadesDelVendedor = True
             Chk_Solo_Clientes_Del_Vendedor.Text = "Ver solo clientes del grupo de vendedores del usuario activo"
-
         End If
 
         If VerSoloEntidadesDelVendedor Or VerSoloEntidadesDelGrupo Then
             Chk_Solo_Clientes_Del_Vendedor.Checked = True
             Rdb_Ambos.Enabled = False
             Rdb_Proveedores.Enabled = False
+        End If
+
+        If VerSoloCiaSeguro Then
+            BtnCrearUser.Visible = False
+            BtnEditarUser.Visible = False
+            BtnEliminarUser.Visible = False
+            Pro_Crear_Entidad = False
         End If
 
         BtnEditarUser.Enabled = False
@@ -253,6 +258,7 @@ Public Class Frm_BuscarEntidad_Mt
                                           MessageBoxIcon.Question) = DialogResult.No Then
                             Return
                         End If
+
                     End If
 
                     _RowEntidad = Fx_Traer_Datos_Entidad(_CodEntidad, _SucEntidad)
@@ -433,6 +439,10 @@ Public Class Frm_BuscarEntidad_Mt
         If _Limpiar Then
             _Tbl_Entidades.Clear()
             _Filtro_Entidades = String.Empty
+        End If
+
+        If VerSoloCiaSeguro Then
+            _Filtro_Extra = "And KOEN+SUEN In (Select CodEntidad+CodSucEntidad From " & _Global_BaseBk & "Zw_Entidades Where EsCiaSeguro = 1)"
         End If
 
         Consulta_sql = "Select Top (50) IDMAEEN,KOEN,SUEN,NOKOEN,SIEN,DIEN," &

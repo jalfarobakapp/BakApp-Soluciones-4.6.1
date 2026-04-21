@@ -1137,21 +1137,39 @@ Where Facturar = 1"
                         End If
 
                         Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Docu_Ent Where Idmaeedo = {_Idmaeedo_Origen}"
+
                         Dim _Row_Zw_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
                         Dim _SobreStock As Boolean = _Row_Zw_Docu_Det.Item("SobreStock")
+
+                        Dim _B2B As Boolean
+
+                        _B2B = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "B2B",
+                                                     "Idmaeedo = " & _Idmaeedo_Origen & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'")
 
                         Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
                                                                     csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True,, _SobreStock)
 
-
+                        Fm_Post.B2B = _B2B
                         Fm_Post.ModEmpresa_Doc = _Empresa
                         Fm_Post.ModModalidad_Doc = _Modalidad
+
+                        Consulta_Sql = $"Select top 1 * From {_Global_BaseBk}Zw_Stmp_Enc Where Id = " & _Id_Enc
+                        Dim _Zw_Stmp_Enc As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
                         Dim _Msj_Limpiar As LsValiciones.Mensajes
 
                         _Msj_Limpiar = Fm_Post.Fx_Limpiar(_Modalidad)
 
                         If _Msj_Limpiar.EsCorrecto Then
+
+                            If CBool(_Zw_Stmp_Enc.Item("CantPalletAgregar")) Then
+                                Dim _ClPallet_Agrea As New Pallet.Cl_Pallet
+                                _ClPallet_Agrea.Codigo = _Zw_Stmp_Enc.Item("CodPalletAgregar")
+                                _ClPallet_Agrea.Cantidad = _Zw_Stmp_Enc.Item("CantPalletAgregar")
+                                _ClPallet_Agrea.Pallet = True
+                                Fm_Post.AgregaPallet = True
+                                Fm_Post.ClPallet_Agrea = _ClPallet_Agrea
+                            End If
 
                             Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
                             Fm_Post.Zw_Transporte_Dte = _Zw_Transporte_Dte
@@ -1162,7 +1180,57 @@ Where Facturar = 1"
                                                                          True, False,,, False)
 
                             If CBool(_Msj_GrabarDoc.Id) Then
+
                                 Fm_Post.Sb_Activar_Orden_De_Despacho(_Msj_GrabarDoc.Id)
+
+                                If _SobreStock Then
+
+                                    Consulta_Sql = "Select KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
+
+                                    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+                                    For Each _Row_Kopct As DataRow In _Tbl.Rows
+
+                                        Dim _Codigo As String = _Row_Kopct.Item("KOPRCT")
+
+                                        If Not String.IsNullOrEmpty(_Codigo) Then
+
+                                            Consulta_Sql = $"
+;WITH CTE_SobreStock AS
+(
+    SELECT 
+        P.Id,
+        P.PqteHabilitado,
+        SUM(D.Qty_SobreStock) AS TotalFacturado
+    FROM {_Global_BaseBk}Zw_Prod_SobreStock AS P
+    INNER JOIN {_Global_BaseBk}Zw_Docu_Det AS D 
+            ON D.Id_SobreStock = P.Id
+           AND D.SobreStock = 1
+           AND D.Tido = 'NVV'
+    INNER JOIN MAEDDO AS M
+            ON M.IDRST = D.Idmaeddo
+           AND M.TIDO = 'FCV'
+    WHERE P.Codigo    = '{_Codigo}'
+      AND P.Empresa   = '{Mod_Empresa}'
+      --AND P.Eliminado = 0
+    GROUP BY 
+        P.Id,
+        P.PqteHabilitado
+)
+UPDATE P
+SET P.Activo = 0
+FROM {_Global_BaseBk}Zw_Prod_SobreStock AS P
+INNER JOIN CTE_SobreStock AS X
+        ON X.Id = P.Id
+WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
+  AND P.Activo = 1;   -- ← condición correcta aquí"
+                                            _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+                                        End If
+                                    Next
+
+                                End If
+
                             End If
                             Fm_Post.Dispose()
 
@@ -1361,7 +1429,7 @@ Where Facturar = 1"
                             End If
 
                             Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo_Origen & "
-                                            Select *,CAse When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
+                                            Select *,Case When UDTRPR = 1 Then CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 End As 'Cantidad',
                                             CAPRCO1-CAPREX1 As 'CantUd1_Dori',CAPRCO2-CAPREX2 As 'CantUd2_Dori',
                                             Case WHEN UDTRPR = 1 Then " & _CampoPrecio & " Else " & _CampoPrecio & "*RLUDPR End AS 'Precio',
                                             0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
@@ -1393,11 +1461,10 @@ Where Facturar = 1"
                                 Throw New System.Exception(_Sql.Pro_Error)
                             End If
 
+                            Dim _Msj_Limpiar As LsValiciones.Mensajes
+
                             Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
                                                                         csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
-
-                            'If Fm_Post.MensajeRevFolio.EsCorrecto Then
-                            Dim _Msj_Limpiar As LsValiciones.Mensajes
 
                             _Msj_Limpiar = Fm_Post.Fx_Limpiar(_Modalidad)
 
@@ -1412,7 +1479,9 @@ Where Facturar = 1"
                                 If CBool(_Msj_GrabarDoc.Id) Then
                                     Fm_Post.Sb_Activar_Orden_De_Despacho(_Msj_GrabarDoc.Id)
                                 End If
+
                                 Fm_Post.Dispose()
+
                             Else
 
                                 Throw New System.Exception(_Msj_Limpiar.Mensaje)

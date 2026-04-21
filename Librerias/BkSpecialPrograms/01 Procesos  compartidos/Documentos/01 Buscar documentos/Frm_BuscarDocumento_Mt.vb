@@ -2530,7 +2530,7 @@ Select Top 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}"
                     If Not _Msj_GrabarDoc.EsCorrecto Then
 
                         _Mensaje.Mensaje = _Msj_GrabarDoc.Mensaje.Replace(vbCrLf, ". ")
-                        _Mensaje.Mensaje = "No fue posible realizar la grabación de la Factura. " & _Mensaje.Mensaje
+                        _Mensaje.Mensaje = "No fue posible realizar la grabación del documento. " & _Mensaje.Mensaje
                         _Mensaje.Detalle = "Error al grabar documento"
                         Throw New System.Exception(_Mensaje.Mensaje)
 
@@ -2550,8 +2550,8 @@ Select Top 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}"
                     If _PermiteSinStock Then
 
                         Fx_Add_Log_Gestion("XXX", Mod_Modalidad, "MAEEDO", _Msj_GrabarDoc.Id, "",
-                                                       "AUTORIZAR A VENDER CON STOCK MENOR O IGUAL A CERO",
-                                                       "Bkp00015", "", "", "", False, _FunAutoriza,,,, _Tido, _Nudo)
+                                           "AUTORIZAR A VENDER CON STOCK MENOR O IGUAL A CERO",
+                                           "Bkp00015", "", "", "", False, _FunAutoriza,,,, _Tido, _Nudo)
 
                     End If
 

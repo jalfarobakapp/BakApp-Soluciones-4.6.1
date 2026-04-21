@@ -182,6 +182,7 @@ Public Class Cl_Entidades
             .NoCobrarPallet = _Row.Item("NoCobrarPallet")
             .ImpNoCobraVta = _Row.Item("ImpNoCobraVta")
             .ImpNoCobraVtaStr = _Row.Item("ImpNoCobraVtaStr")
+            .EsCiaSeguro = _Row.Item("EsCiaSeguro")
 
         End With
 

@@ -4,6 +4,9 @@
 'Imports System.Windows.Forms
 'Imports System.Drawing
 
+Imports System.Reflection
+Imports System.Threading.Tasks
+
 Public Class AlertCustom
     Inherits DevComponents.DotNetBar.Balloon
 
@@ -388,390 +391,357 @@ Public Class AlertCustom
         AddHandler Rdb_Unidad_2.CheckedChanged, AddressOf Sb_Rdb_Unidad_CheckedChanged
         AddHandler Chk_Agrupar_Asociados.CheckedChanged, AddressOf Sb_Chk_Agrupar_Asociados_CheckedChanged
 
+        ' Registrar handler de formateo que pintará las celdas "ST_*"
+        AddHandler Grilla.CellFormatting, AddressOf Grilla_CellFormatting
+
         If DesdeContenedor Then
-            Sb_Actualizar_Grilla_Contenedor()
+            ' Llamada asíncrona, no bloqueante
+            Sb_Actualizar_Grilla_Contenedor_Async()
         Else
-            Sb_Actualizar_Grilla()
+            Sb_Actualizar_Grilla_Async()
         End If
 
     End Sub
 
-    Public Sub Sb_Actualizar_Grilla()
-
-        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
-        Dim _Filtro_Productos As String
-
-        If Chk_Agrupar_Asociados.Checked And Not IsNothing(_Row_Nodo_Clasificaciones) Then
-            Lbl_Producto.Text = "Stock Producto: " & _Row_Nodo_Clasificaciones.Item("Descripcion")
-            _Filtro_Productos = Generar_Filtro_IN(_TblProductos, "", "KOPR", False, False, "'")
-        Else
-            Lbl_Producto.Text = "Stock Producto: " & _RowProducto.Item("KOPR") & " - " & _RowProducto.Item("NOKOPR")
-            _Filtro_Productos = "('" & _Codigo & "')"
-        End If
-
-        Dim _Ud As Integer
-
-        If Rdb_Unidad_1.Checked Then
-            _Ud = 1
-        Else
-            _Ud = 2
-        End If
-
-        If _Tido = "NVI" Then
-
-            Consulta_sql = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* From TABBO" & vbCrLf &
-                           "Where EMPRESA+KOSU+KOBO" & vbCrLf &
-                           "In (" & vbCrLf &
-                           "Select SUBSTRING(CodPermiso, 5, 10)" & vbCrLf &
-                           "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
-                           "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
-                           "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega_NVI'))" & vbCrLf &
-                           "Or (EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')"
-
-        Else
-
-            Consulta_sql = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* From TABBO" & vbCrLf &
-                           "Where EMPRESA+KOSU+KOBO" & vbCrLf &
-                           "In (" & vbCrLf &
-                           "Select SUBSTRING(CodPermiso, 3, 10)" & vbCrLf &
-                           "From " & _Global_BaseBk & "ZW_PermisosVsUsuarios" & vbCrLf &
-                           "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
-                           "And CodPermiso In (Select CodPermiso From " & _Global_BaseBk & "ZW_Permisos Where CodFamilia = 'Bodega'))" & vbCrLf &
-                           "Or (EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')"
-
-        End If
-
-        Dim _Tbl_Bodegas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-        Dim _Filtro As String = Generar_Filtro_IN(_Tbl_Bodegas, "", "Cod", False, False, "'")
-
-        _Filtro = "And Empresa+Sucursal+Bodega In " & _Filtro
-
-        Dim _Orden_Bod = "ORDEN_BOD_" & Mod_Empresa.Trim & Mod_Sucursal.Trim
-
-        Consulta_sql = My.Resources.Recursos_Alerta_Stock.Stock_productos_por_emp_suc_bod
-        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
-        Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Codigo)
-        Consulta_sql = Replace(Consulta_sql, "#Codigos#", _Filtro_Productos)
-        Consulta_sql = Replace(Consulta_sql, "#Ud#", _Ud)
-        Consulta_sql = Replace(Consulta_sql, "#Filtro#", _Filtro)
-        Consulta_sql = Replace(Consulta_sql, "#Tabla#", _Orden_Bod)
-        Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
-
-        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-        With Grilla
-
-            .DataSource = _Tbl
-
-            OcultarEncabezadoGrilla(Grilla, True)
-
-            .Columns("SUC_BOD").Visible = True
-            .Columns("SUC_BOD").HeaderText = "Suc-Bod"
-            .Columns("SUC_BOD").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("SUC_BOD").Width = 60
-
-            .Columns("NOKOBO").Visible = True
-            .Columns("NOKOBO").HeaderText = "Bodega"
-            .Columns("NOKOBO").Width = 240
-
-            .Columns("ST_FISICO").Visible = Mostrar_Stock_Fisico
-            .Columns("ST_FISICO").HeaderText = "Físico"
-            .Columns("ST_FISICO").Width = 85
-            .Columns("ST_FISICO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ST_FISICO").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("ST_FISICO").ToolTipText = "Stock Ud" & _Unidad
-
-
-
-            .Columns("ST_COMPROMETIDO").Visible = Mostrar_Stock_Comprometido
-            .Columns("ST_COMPROMETIDO").HeaderText = "Comp.RD"
-            .Columns("ST_COMPROMETIDO").Width = 65
-            .Columns("ST_COMPROMETIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ST_COMPROMETIDO").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("ST_COMPROMETIDO").ToolTipText = "Stock comprometido Ud" & _Unidad & " (NVV)"
-
-            .Columns("ST_COMPROMETIDO_BK").Visible = Mostrar_Stock_Comprometido
-            .Columns("ST_COMPROMETIDO_BK").HeaderText = "Comp.BK"
-            .Columns("ST_COMPROMETIDO_BK").Width = 65
-            .Columns("ST_COMPROMETIDO_BK").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ST_COMPROMETIDO_BK").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("ST_COMPROMETIDO_BK").ToolTipText = "Stock comprometido Ud" & _Unidad & " (NVV - Pendientes de permisos remotos)"
-
-            .Columns("ST_DEVENGADO").Visible = Mostrar_Stock_Devengado
-            .Columns("ST_DEVENGADO").HeaderText = "Ven.N/Entr."
-            .Columns("ST_DEVENGADO").Width = 65
-            .Columns("ST_DEVENGADO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ST_DEVENGADO").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("ST_DEVENGADO").ToolTipText = "Ventas no despachadas (Devengados)"
-
-            Dim _NomCampo As String
-            Dim _ToolCampo As String
-
-            If String.IsNullOrEmpty(_Tido) Then
-                _NomCampo = "Teorico"
-                _ToolCampo = "Stock teórico = (Stock físico - Stock devengado- Stock comprometido)"
-            Else
-                _NomCampo = "Disponible"
-                _ToolCampo = "Stock disponible teóricamente Ud" & _Unidad & " (según configuración de calculo de stock)"
+    ' Helper: habilitar DoubleBuffered en DataGridView para reducir parpadeo
+    Private Sub SetDoubleBuffered(dgv As DataGridView, value As Boolean)
+        Try
+            Dim dgvType = GetType(DataGridView)
+            Dim prop = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance Or BindingFlags.NonPublic)
+            If Not IsNothing(prop) Then
+                prop.SetValue(dgv, value, Nothing)
             End If
+        Catch ex As Exception
+            ' ignorar
+        End Try
+    End Sub
 
-            .Columns("ST_DISPONIBLE").Visible = Mostrar_Stock_Disponible
-            .Columns("ST_DISPONIBLE").HeaderText = _NomCampo
-            .Columns("ST_DISPONIBLE").Width = 65
-            .Columns("ST_DISPONIBLE").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ST_DISPONIBLE").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("ST_DISPONIBLE").ToolTipText = _ToolCampo
+    ' Handler centralizado para pintar celdas de columnas ST_*
+    Private Sub Grilla_CellFormatting(sender As Object, e As DataGridViewCellFormattingEventArgs)
+        Try
+            Dim dgv = CType(sender, DataGridView)
+            If e.RowIndex < 0 Or e.ColumnIndex < 0 Then Return
 
-            .Columns("ST_PEDIDO").Visible = Mostrar_Stock_Pedido
-            .Columns("ST_PEDIDO").HeaderText = "Pedido"
-            .Columns("ST_PEDIDO").Width = 65
-            .Columns("ST_PEDIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ST_PEDIDO").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("ST_PEDIDO").ToolTipText = "Stock Pedido OCC"
+            Dim col = dgv.Columns(e.ColumnIndex)
+            Dim colName = col.Name
 
-        End With
+            If colName.Contains("ST_") Then
+                Dim rawValue = e.Value
+                Dim _Valor As Double = 0
+                If Not IsDBNull(rawValue) AndAlso Not rawValue Is Nothing Then
+                    Double.TryParse(rawValue.ToString, _Valor)
+                End If
 
-        For Each _Fila As DataGridViewRow In Grilla.Rows
+                Dim _Color_Cero As Color = Color.LightGray
+                Dim _Color_Positivo As Color = Azul
+                Dim _Color_Negativo As Color = Rojo
 
-            Dim _Suc_Bod = Trim(_Fila.Cells("SUC_BOD").Value)
-            Dim _St_Disponible = _Fila.Cells("ST_DISPONIBLE").Value
-
-            Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
-            Dim _Bodega As String = _Fila.Cells("Bodega").Value
-
-            If Not String.IsNullOrEmpty(_Tido) Then
-                _St_Disponible = Fx_Stock_Disponible(_Tido, Mod_Empresa, _Sucursal, _Bodega, _Codigo, _Ud, "STFI" & _Ud)
-                If _St_Disponible < 0 Then _St_Disponible = 0
-                _Fila.Cells("ST_DISPONIBLE").Value = _St_Disponible
-            End If
-
-            If String.IsNullOrEmpty(_Suc_Bod) Then
                 If Global_Thema = Enum_Themas.Oscuro Then
-                    _Fila.DefaultCellStyle.BackColor = Color.Black
-                    _Fila.DefaultCellStyle.ForeColor = Color.Gold
-                Else
-                    _Fila.DefaultCellStyle.BackColor = Color.Gold
+                    _Color_Cero = Color.FromArgb(60, 60, 60)
+                    _Color_Positivo = Verde
                 End If
-            Else
-                If Global_Thema = Enum_Themas.Oscuro Then
-                    _Fila.DefaultCellStyle.BackColor = Color.Black
-                Else
-                    _Fila.DefaultCellStyle.BackColor = Color.White
+
+                If _Valor = 0 Then
+                    e.CellStyle.ForeColor = _Color_Cero
+                ElseIf _Valor < 0 Then
+                    e.CellStyle.ForeColor = _Color_Negativo
+                ElseIf _Valor > 0 Then
+                    e.CellStyle.ForeColor = _Color_Positivo
                 End If
             End If
+        Catch ex As Exception
+            ' ignorar errores de formateo para no bloquear UI
+        End Try
+    End Sub
 
-            For Each Columna As DataGridViewColumn In Grilla.Columns
-                Dim _Columna As String = Columna.Name
-                If _Columna.Contains("ST_") Then
+    ' Versión asíncrona y no bloqueante de Sb_Actualizar_Grilla
+    Public Async Sub Sb_Actualizar_Grilla_Async()
 
-                    Dim _Valor As Double = _Fila.Cells(_Columna).Value
+        ' Ejecutar consultas y cálculos pesados en background
+        Dim tblResult As DataTable = Nothing
+        Dim filtrosProductos As String = Nothing
+        Dim udLocal As Integer = If(Rdb_Unidad_1.Checked, 1, 2)
+        Dim ordenBod = "ORDEN_BOD_" & Mod_Empresa.Trim & Mod_Sucursal.Trim
+        Dim codigoLocal = _Codigo
+        Dim tidoLocal = _Tido
+        Dim mostrarFisico = Mostrar_Stock_Fisico
+        Dim mostrarComp = Mostrar_Stock_Comprometido
+        Dim mostrarDev = Mostrar_Stock_Devengado
+        Dim mostrarPedido = Mostrar_Stock_Pedido
+        Dim mostrarDisp = Mostrar_Stock_Disponible
+        Dim globalBase = _Global_BaseBk
 
-                    Dim _Color_Cero As Color = Color.LightGray
-                    Dim _Color_Positivo As Color = Azul
-                    Dim _Color_Negativo As Color = Rojo
+        tblResult = Await Task.Run(Function()
+                                       Try
+                                           Dim sqlBkg As New Class_SQL(Cadena_ConexionSQL_Server)
+                                           ' Filtrar productos agrupados si corresponde
+                                           If Chk_Agrupar_Asociados.Checked AndAlso Not IsNothing(_Row_Nodo_Clasificaciones) Then
+                                               filtrosProductos = Generar_Filtro_IN(_TblProductos, "", "KOPR", False, False, "'")
+                                           Else
+                                               filtrosProductos = "('" & codigoLocal & "')"
+                                           End If
 
-                    If Global_Thema = Enum_Themas.Oscuro Then
-                        _Color_Cero = Color.FromArgb(60, 60, 60)
-                        _Color_Positivo = Verde
-                    End If
+                                           Dim Consulta As String
 
-                    If _Valor = 0 Then
-                        _Fila.Cells(_Columna).Style.ForeColor = _Color_Cero
-                    ElseIf _Valor < 0 Then
-                        _Fila.Cells(_Columna).Style.ForeColor = Rojo
-                    ElseIf _Valor > 0 Then
-                        _Fila.Cells(_Columna).Style.ForeColor = _Color_Positivo
-                    End If
+                                           If tidoLocal = "NVI" Then
+                                               Consulta = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* From TABBO" & vbCrLf &
+                                                          "Where EMPRESA+KOSU+KOBO" & vbCrLf &
+                                                          "In (" & vbCrLf &
+                                                          "Select SUBSTRING(CodPermiso, 5, 10)" & vbCrLf &
+                                                          "From " & globalBase & "ZW_PermisosVsUsuarios" & vbCrLf &
+                                                          "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
+                                                          "And CodPermiso In (Select CodPermiso From " & globalBase & "ZW_Permisos Where CodFamilia = 'Bodega_NVI'))" & vbCrLf &
+                                                          "Or (EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')"
+                                           Else
+                                               Consulta = "Select Distinct EMPRESA+KOSU+KOBO As Cod,* From TABBO" & vbCrLf &
+                                                          "Where EMPRESA+KOSU+KOBO" & vbCrLf &
+                                                          "In (" & vbCrLf &
+                                                          "Select SUBSTRING(CodPermiso, 3, 10)" & vbCrLf &
+                                                          "From " & globalBase & "ZW_PermisosVsUsuarios" & vbCrLf &
+                                                          "Where CodUsuario = '" & FUNCIONARIO & "'" & Space(1) &
+                                                          "And CodPermiso In (Select CodPermiso From " & globalBase & "ZW_Permisos Where CodFamilia = 'Bodega'))" & vbCrLf &
+                                                          "Or (EMPRESA = '" & Mod_Empresa & "' And KOSU = '" & Mod_Sucursal & "' And KOBO = '" & Mod_Bodega & "')"
+                                           End If
 
+                                           Dim tblBod As DataTable = sqlBkg.Fx_Get_DataTable(Consulta)
+                                           Dim filtroBod = Generar_Filtro_IN(tblBod, "", "Cod", False, False, "'")
+                                           filtroBod = "And Empresa+Sucursal+Bodega In " & filtroBod
+
+                                           Consulta = My.Resources.Recursos_Alerta_Stock.Stock_productos_por_emp_suc_bod
+                                           Consulta = Replace(Consulta, "#Empresa#", Mod_Empresa)
+                                           Consulta = Replace(Consulta, "#Codigo#", codigoLocal)
+                                           Consulta = Replace(Consulta, "#Codigos#", filtrosProductos)
+                                           Consulta = Replace(Consulta, "#Ud#", udLocal)
+                                           Consulta = Replace(Consulta, "#Filtro#", filtroBod)
+                                           Consulta = Replace(Consulta, "#Tabla#", ordenBod)
+                                           Consulta = Replace(Consulta, "#Global_BaseBk#", globalBase)
+
+                                           Dim tbl As DataTable = sqlBkg.Fx_Get_DataTable(Consulta)
+
+                                           ' Si es necesario calcular ST_DISPONIBLE con Fx_Stock_Disponible, hacerlo en background
+                                           If Not String.IsNullOrEmpty(tidoLocal) Then
+                                               For Each dr As DataRow In tbl.Rows
+                                                   Try
+                                                       Dim _Sucursal As String = dr.Item("Sucursal").ToString
+                                                       Dim _Bodega As String = dr.Item("Bodega").ToString
+                                                       Dim valor = Fx_Stock_Disponible(tidoLocal, Mod_Empresa, _Sucursal, _Bodega, codigoLocal, udLocal, "STFI" & udLocal)
+                                                       If valor < 0 Then valor = 0
+                                                       dr.Item("ST_DISPONIBLE") = valor
+                                                   Catch ex As Exception
+                                                       ' ignorar error por fila para no detener el background
+                                                   End Try
+                                               Next
+                                           End If
+
+                                           Return tbl
+                                       Catch ex As Exception
+                                           Return New DataTable()
+                                       End Try
+                                   End Function)
+
+        ' Volver al hilo UI y asignar DataSource en lote
+        Try
+            If IsNothing(tblResult) Then tblResult = New DataTable()
+
+            ' Mejorar performance de UI mientras se actualiza
+            Grilla.SuspendLayout()
+            SetDoubleBuffered(Grilla, True)
+
+            With Grilla
+                .DataSource = tblResult
+
+                OcultarEncabezadoGrilla(Grilla, True)
+
+                .Columns("SUC_BOD").Visible = True
+                .Columns("SUC_BOD").HeaderText = "Suc-Bod"
+                .Columns("SUC_BOD").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                .Columns("SUC_BOD").Width = 60
+
+                .Columns("NOKOBO").Visible = True
+                .Columns("NOKOBO").HeaderText = "Bodega"
+                .Columns("NOKOBO").Width = 240
+
+                .Columns("ST_FISICO").Visible = mostrarFisico
+                .Columns("ST_FISICO").HeaderText = "Físico"
+                .Columns("ST_FISICO").Width = 85
+                .Columns("ST_FISICO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("ST_FISICO").DefaultCellStyle.Format = "##,###0.##"
+                .Columns("ST_FISICO").ToolTipText = "Stock Ud" & _Unidad
+
+                .Columns("ST_COMPROMETIDO").Visible = mostrarComp
+                .Columns("ST_COMPROMETIDO").HeaderText = "Comp.RD"
+                .Columns("ST_COMPROMETIDO").Width = 65
+                .Columns("ST_COMPROMETIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("ST_COMPROMETIDO").DefaultCellStyle.Format = "##,###0.##"
+                .Columns("ST_COMPROMETIDO").ToolTipText = "Stock comprometido Ud" & _Unidad & " (NVV)"
+
+                .Columns("ST_COMPROMETIDO_BK").Visible = mostrarComp
+                .Columns("ST_COMPROMETIDO_BK").HeaderText = "Comp.BK"
+                .Columns("ST_COMPROMETIDO_BK").Width = 65
+                .Columns("ST_COMPROMETIDO_BK").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("ST_COMPROMETIDO_BK").DefaultCellStyle.Format = "##,###0.##"
+                .Columns("ST_COMPROMETIDO_BK").ToolTipText = "Stock comprometido Ud" & _Unidad & " (NVV - Pendientes de permisos remotos)"
+
+                .Columns("ST_DEVENGADO").Visible = mostrarDev
+                .Columns("ST_DEVENGADO").HeaderText = "Ven.N/Entr."
+                .Columns("ST_DEVENGADO").Width = 65
+                .Columns("ST_DEVENGADO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("ST_DEVENGADO").DefaultCellStyle.Format = "##,###0.##"
+                .Columns("ST_DEVENGADO").ToolTipText = "Ventas no despachadas (Devengados)"
+
+                Dim _NomCampo As String
+                Dim _ToolCampo As String
+
+                If String.IsNullOrEmpty(tidoLocal) Then
+                    _NomCampo = "Teorico"
+                    _ToolCampo = "Stock teórico = (Stock físico - Stock devengado- Stock comprometido)"
+                Else
+                    _NomCampo = "Disponible"
+                    _ToolCampo = "Stock disponible teóricamente Ud" & _Unidad & " (según configuración de calculo de stock)"
                 End If
-            Next
 
-        Next
+                .Columns("ST_DISPONIBLE").Visible = mostrarDisp
+                .Columns("ST_DISPONIBLE").HeaderText = _NomCampo
+                .Columns("ST_DISPONIBLE").Width = 65
+                .Columns("ST_DISPONIBLE").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("ST_DISPONIBLE").DefaultCellStyle.Format = "##,###0.##"
+                .Columns("ST_DISPONIBLE").ToolTipText = _ToolCampo
+
+                .Columns("ST_PEDIDO").Visible = mostrarPedido
+                .Columns("ST_PEDIDO").HeaderText = "Pedido"
+                .Columns("ST_PEDIDO").Width = 65
+                .Columns("ST_PEDIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("ST_PEDIDO").DefaultCellStyle.Format = "##,###0.##"
+                .Columns("ST_PEDIDO").ToolTipText = "Stock Pedido OCC"
+            End With
+
+        Finally
+            Grilla.ResumeLayout()
+        End Try
 
     End Sub
 
-    Public Sub Sb_Actualizar_Grilla_Contenedor()
+    ' Versión asíncrona y no bloqueante para contenedores
+    Public Async Sub Sb_Actualizar_Grilla_Contenedor_Async()
 
-        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
-        Dim _Filtro_Productos As String
+        Dim tblResult As DataTable = Await Task.Run(Function()
+                                                        Try
+                                                            Dim sqlBkg As New Class_SQL(Cadena_ConexionSQL_Server)
+                                                            Dim filtrosProductos As String
+                                                            If Chk_Agrupar_Asociados.Checked AndAlso Not IsNothing(_Row_Nodo_Clasificaciones) Then
+                                                                filtrosProductos = Generar_Filtro_IN(_TblProductos, "", "KOPR", False, False, "'")
+                                                            Else
+                                                                filtrosProductos = "('" & _Codigo & "')"
+                                                            End If
 
-        If Chk_Agrupar_Asociados.Checked And Not IsNothing(_Row_Nodo_Clasificaciones) Then
-            Lbl_Producto.Text = "Stock Producto: " & _Row_Nodo_Clasificaciones.Item("Descripcion")
-            _Filtro_Productos = Generar_Filtro_IN(_TblProductos, "", "KOPR", False, False, "'")
-        Else
-            Lbl_Producto.Text = "Stock Producto: " & _RowProducto.Item("KOPR") & " - " & _RowProducto.Item("NOKOPR")
-            _Filtro_Productos = "('" & _Codigo & "')"
-        End If
+                                                            Dim Consulta As String = "Select p.Empresa,p.IdCont,c.Contenedor,c.NombreContenedor,p.Codigo,NOKOPR," &
+                                                                                   "PqteHabilitado As ST_FISICO,PqteComprometido As ST_COMPROMETIDO," &
+                                                                                   "PqteHabilitado-PqteComprometido As ST_DISPONIBLE,e.FEER" & vbCrLf &
+                                                                                   "From " & _Global_BaseBk & "Zw_PreVenta_StockProd p" & vbCrLf &
+                                                                                   "Inner Join MAEPR m On m.KOPR = p.Codigo" & vbCrLf &
+                                                                                   "Inner Join " & _Global_BaseBk & "Zw_Contenedor c On c.IdCont = p.IdCont" & vbCrLf &
+                                                                                   "Inner Join MAEEDO e On c.Idmaeedo_Rela = e.IDMAEEDO" & vbCrLf &
+                                                                                   "Where p.Empresa = '" & Mod_Empresa & "' And p.Codigo = '" & _Codigo & "'"
 
-        Dim _Ud As Integer
+                                                            Dim tbl As DataTable = sqlBkg.Fx_Get_DataTable(Consulta)
 
-        If Rdb_Unidad_1.Checked Then
-            _Ud = 1
-        Else
-            _Ud = 2
-        End If
+                                                            ' Aquí no se calculan Fx_Stock_Disponible por contenedor en esta implementación,
+                                                            ' si fuera necesario, se puede calcular de forma similar en background.
 
-        Rdb_Unidad_1.Enabled = False
-        Rdb_Unidad_2.Enabled = False
+                                                            Return tbl
+                                                        Catch ex As Exception
+                                                            Return New DataTable()
+                                                        End Try
+                                                    End Function)
 
-        Consulta_sql = "Select p.Empresa,p.IdCont,c.Contenedor,c.NombreContenedor,p.Codigo,NOKOPR," &
-                       "PqteHabilitado As ST_FISICO,PqteComprometido As ST_COMPROMETIDO," &
-                       "PqteHabilitado-PqteComprometido As ST_DISPONIBLE,e.FEER" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_PreVenta_StockProd p" & vbCrLf &
-                       "Inner Join MAEPR m On m.KOPR = p.Codigo" & vbCrLf &
-                       "Inner Join " & _Global_BaseBk & "Zw_Contenedor c On c.IdCont = p.IdCont" & vbCrLf &
-                       "Inner Join MAEEDO e On c.Idmaeedo_Rela = e.IDMAEEDO" & vbCrLf &
-                       "Where p.Empresa = '" & Mod_Empresa & "' And p.Codigo = '" & _Codigo & "'"
+        Try
+            Grilla.SuspendLayout()
+            SetDoubleBuffered(Grilla, True)
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+            With Grilla
+                .DataSource = tblResult
 
-        With Grilla
+                OcultarEncabezadoGrilla(Grilla, True)
 
-            .DataSource = _Tbl
+                Dim _DisplayIndex = 0
 
-            OcultarEncabezadoGrilla(Grilla, True)
-
-            Dim _DisplayIndex = 0
-
-            .Columns("Contenedor").Visible = True
-            .Columns("Contenedor").HeaderText = "Contenedor"
-            .Columns("Contenedor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
-            .Columns("Contenedor").Width = 100
-            .Columns("Contenedor").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("NombreContenedor").Visible = True
-            .Columns("NombreContenedor").HeaderText = "Nombre contenedor"
-            .Columns("NombreContenedor").Width = 280
-            .Columns("NombreContenedor").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("FEER").Visible = Mostrar_Stock_Disponible
-            .Columns("FEER").HeaderText = "F.Llegada"
-            .Columns("FEER").Width = 65
-            .Columns("FEER").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("FEER").DefaultCellStyle.Format = "dd/MM/yyyy"
-            .Columns("FEER").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("ST_FISICO").Visible = Mostrar_Stock_Fisico
-            .Columns("ST_FISICO").HeaderText = "Físico"
-            .Columns("ST_FISICO").Width = 85
-            .Columns("ST_FISICO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ST_FISICO").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("ST_FISICO").ToolTipText = "Stock Ud" & _Unidad
-            .Columns("ST_FISICO").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("ST_COMPROMETIDO").Visible = Mostrar_Stock_Comprometido
-            .Columns("ST_COMPROMETIDO").HeaderText = "Comprometido COV"
-            .Columns("ST_COMPROMETIDO").Width = 85
-            .Columns("ST_COMPROMETIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ST_COMPROMETIDO").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("ST_COMPROMETIDO").ToolTipText = "Stock comprometido Ud" & _Unidad & " (Cotizaciones PRE-VENTA)"
-            .Columns("ST_COMPROMETIDO").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            '.Columns("ST_COMPROMETIDO_BK").Visible = Mostrar_Stock_Comprometido
-            '.Columns("ST_COMPROMETIDO_BK").HeaderText = "Comp.BK"
-            '.Columns("ST_COMPROMETIDO_BK").Width = 65
-            '.Columns("ST_COMPROMETIDO_BK").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("ST_COMPROMETIDO_BK").DefaultCellStyle.Format = "##,###0.##"
-            '.Columns("ST_COMPROMETIDO_BK").ToolTipText = "Stock comprometido Ud" & _Unidad & " (NVV - Pendientes de permisos remotos)"
-
-            '.Columns("ST_DEVENGADO").Visible = Mostrar_Stock_Devengado
-            '.Columns("ST_DEVENGADO").HeaderText = "Ven.N/Entr."
-            '.Columns("ST_DEVENGADO").Width = 65
-            '.Columns("ST_DEVENGADO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("ST_DEVENGADO").DefaultCellStyle.Format = "##,###0.##"
-            '.Columns("ST_DEVENGADO").ToolTipText = "Ventas no despachadas (Devengados)"
-
-            Dim _NomCampo As String
-            Dim _ToolCampo As String
-
-            'If String.IsNullOrEmpty(_Tido) Then
-            '    _NomCampo = "Teorico"
-            '    _ToolCampo = "Stock teórico = (Stock físico - Stock devengado- Stock comprometido)"
-            'Else
-            _NomCampo = "Disponible"
-            _ToolCampo = "Stock disponible teóricamente Ud" & _Unidad & " (según configuración de calculo de stock)"
-            'End If
-
-            .Columns("ST_DISPONIBLE").Visible = Mostrar_Stock_Disponible
-            .Columns("ST_DISPONIBLE").HeaderText = _NomCampo
-            .Columns("ST_DISPONIBLE").Width = 65
-            .Columns("ST_DISPONIBLE").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("ST_DISPONIBLE").DefaultCellStyle.Format = "##,###0.##"
-            .Columns("ST_DISPONIBLE").ToolTipText = _ToolCampo
-            .Columns("ST_DISPONIBLE").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            '.Columns("ST_PEDIDO").Visible = Mostrar_Stock_Pedido
-            '.Columns("ST_PEDIDO").HeaderText = "Pedido"
-            '.Columns("ST_PEDIDO").Width = 65
-            '.Columns("ST_PEDIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("ST_PEDIDO").DefaultCellStyle.Format = "##,###0.##"
-            '.Columns("ST_PEDIDO").ToolTipText = "Stock Pedido OCC"
-
-        End With
-
-        For Each _Fila As DataGridViewRow In Grilla.Rows
-
-            Dim _Contenedor = Trim(_Fila.Cells("Contenedor").Value)
-            Dim _St_Disponible = _Fila.Cells("ST_DISPONIBLE").Value
-
-            If String.IsNullOrEmpty(_Contenedor) Then
-                If Global_Thema = Enum_Themas.Oscuro Then
-                    _Fila.DefaultCellStyle.BackColor = Color.Black
-                    _Fila.DefaultCellStyle.ForeColor = Color.Gold
-                Else
-                    _Fila.DefaultCellStyle.BackColor = Color.Gold
+                If .Columns.Contains("Contenedor") Then
+                    .Columns("Contenedor").Visible = True
+                    .Columns("Contenedor").HeaderText = "Contenedor"
+                    .Columns("Contenedor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
+                    .Columns("Contenedor").Width = 100
+                    .Columns("Contenedor").DisplayIndex = _DisplayIndex
+                    _DisplayIndex += 1
                 End If
-            Else
-                If Global_Thema = Enum_Themas.Oscuro Then
-                    _Fila.DefaultCellStyle.BackColor = Color.Black
-                Else
-                    _Fila.DefaultCellStyle.BackColor = Color.White
+
+                If .Columns.Contains("NombreContenedor") Then
+                    .Columns("NombreContenedor").Visible = True
+                    .Columns("NombreContenedor").HeaderText = "Nombre contenedor"
+                    .Columns("NombreContenedor").Width = 280
+                    .Columns("NombreContenedor").DisplayIndex = _DisplayIndex
+                    _DisplayIndex += 1
                 End If
-            End If
 
-            For Each Columna As DataGridViewColumn In Grilla.Columns
-                Dim _Columna As String = Columna.Name
-                If _Columna.Contains("ST_") Then
-
-                    Dim _Valor As Double = _Fila.Cells(_Columna).Value
-
-                    Dim _Color_Cero As Color = Color.LightGray
-                    Dim _Color_Positivo As Color = Azul
-                    Dim _Color_Negativo As Color = Rojo
-
-                    If Global_Thema = Enum_Themas.Oscuro Then
-                        _Color_Cero = Color.FromArgb(60, 60, 60)
-                        _Color_Positivo = Verde
-                    End If
-
-                    If _Valor = 0 Then
-                        _Fila.Cells(_Columna).Style.ForeColor = _Color_Cero
-                    ElseIf _Valor < 0 Then
-                        _Fila.Cells(_Columna).Style.ForeColor = Rojo
-                    ElseIf _Valor > 0 Then
-                        _Fila.Cells(_Columna).Style.ForeColor = _Color_Positivo
-                    End If
-
+                If .Columns.Contains("FEER") Then
+                    .Columns("FEER").Visible = Mostrar_Stock_Disponible
+                    .Columns("FEER").HeaderText = "F.Llegada"
+                    .Columns("FEER").Width = 65
+                    .Columns("FEER").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                    .Columns("FEER").DefaultCellStyle.Format = "dd/MM/yyyy"
+                    .Columns("FEER").DisplayIndex = _DisplayIndex
+                    _DisplayIndex += 1
                 End If
-            Next
 
-        Next
+                If .Columns.Contains("ST_FISICO") Then
+                    .Columns("ST_FISICO").Visible = Mostrar_Stock_Fisico
+                    .Columns("ST_FISICO").HeaderText = "Físico"
+                    .Columns("ST_FISICO").Width = 85
+                    .Columns("ST_FISICO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                    .Columns("ST_FISICO").DefaultCellStyle.Format = "##,###0.##"
+                    .Columns("ST_FISICO").ToolTipText = "Stock Ud" & _Unidad
+                    .Columns("ST_FISICO").DisplayIndex = _DisplayIndex
+                    _DisplayIndex += 1
+                End If
+
+                If .Columns.Contains("ST_COMPROMETIDO") Then
+                    .Columns("ST_COMPROMETIDO").Visible = Mostrar_Stock_Comprometido
+                    .Columns("ST_COMPROMETIDO").HeaderText = "Comprometido COV"
+                    .Columns("ST_COMPROMETIDO").Width = 85
+                    .Columns("ST_COMPROMETIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                    .Columns("ST_COMPROMETIDO").DefaultCellStyle.Format = "##,###0.##"
+                    .Columns("ST_COMPROMETIDO").ToolTipText = "Stock comprometido Ud" & _Unidad & " (Cotizaciones PRE-VENTA)"
+                    .Columns("ST_COMPROMETIDO").DisplayIndex = _DisplayIndex
+                    _DisplayIndex += 1
+                End If
+
+                Dim _NomCampo As String = "Disponible"
+                Dim _ToolCampo As String = "Stock disponible teóricamente Ud" & _Unidad & " (según configuración de calculo de stock)"
+
+                If .Columns.Contains("ST_DISPONIBLE") Then
+                    .Columns("ST_DISPONIBLE").Visible = Mostrar_Stock_Disponible
+                    .Columns("ST_DISPONIBLE").HeaderText = _NomCampo
+                    .Columns("ST_DISPONIBLE").Width = 65
+                    .Columns("ST_DISPONIBLE").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                    .Columns("ST_DISPONIBLE").DefaultCellStyle.Format = "##,###0.##"
+                    .Columns("ST_DISPONIBLE").ToolTipText = _ToolCampo
+                    .Columns("ST_DISPONIBLE").DisplayIndex = _DisplayIndex
+                    _DisplayIndex += 1
+                End If
+
+            End With
+
+        Finally
+            Grilla.ResumeLayout()
+        End Try
 
     End Sub
 
     Private Sub Sb_Rdb_Unidad_CheckedChanged(sender As System.Object, e As System.EventArgs)
         If CType(sender, DevComponents.DotNetBar.Controls.CheckBoxX).Checked Then
             If DesdeContenedor Then
-                Sb_Actualizar_Grilla_Contenedor()
+                Sb_Actualizar_Grilla_Contenedor_Async()
             Else
-                Sb_Actualizar_Grilla()
+                Sb_Actualizar_Grilla_Async()
             End If
         End If
     End Sub
@@ -784,9 +754,9 @@ Public Class AlertCustom
 
     Private Sub Sb_Chk_Agrupar_Asociados_CheckedChanged(sender As System.Object, e As System.EventArgs)
         If DesdeContenedor Then
-            Sb_Actualizar_Grilla_Contenedor()
+            Sb_Actualizar_Grilla_Contenedor_Async()
         Else
-            Sb_Actualizar_Grilla()
+            Sb_Actualizar_Grilla_Async()
         End If
     End Sub
 

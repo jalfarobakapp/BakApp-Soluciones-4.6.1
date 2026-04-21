@@ -273,8 +273,6 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                                "And TIDO+NUDO+ENDO+SUENDO+RAZON+VENDEDOR+RUBRO_EN+ZONA_EN+CIUDAD+COMUNA Like '%" & _Cadena & "%'" & vbCrLf &
                                "Group By IDMAEEDO,TIDO,NUDO,RTEN,RUT,ENDO,SUENDO,RAZON,FEEMDO,KOFULIDO,VENDEDOR,RUEN,RUBRO_EN,ZOEN,ZONA_EN,DIEN,CIEN,CIUDAD,CMEN,COMUNA,SUDO,SUCURSAL"
 
-        '_Tbl_Informe = _Sql.Fx_Get_DataTable(Consulta_sql)
-
         Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
         _Dv = New DataView
         _Dv.Table = _New_Ds.Tables("Table")
@@ -872,6 +870,32 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
     Private Sub Txt_Filtro_Abanzado_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Filtro_Abanzado.ButtonCustom2Click
         Txt_Filtro_Abanzado.Text = String.Empty
         Sb_Filtrar()
+    End Sub
+
+    Private Sub Btn_CotizacionSobreStock_Click(sender As Object, e As EventArgs) Handles Btn_CotizacionSobreStock.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Sobs0006") Then
+            Return
+        End If
+
+        Dim _Kofu_Kogru As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Usuarios", "Kofu_Kogru",
+                                                      "CodFuncionario = '" & FUNCIONARIO & "'").ToString.Trim
+
+        If Not String.IsNullOrEmpty(_Kofu_Kogru) Then
+
+            _Kofu_Kogru = "Usuario(s): " & _Kofu_Kogru
+
+            Sb_Confirmar_Lectura("Aun tiene su grupo de vendedores asociado a otro usuario." & vbCrLf &
+                                 _Kofu_Kogru, "Debe quitarlo desde su ficha de usuario.", eTaskDialogIcon.Exclamation, Nothing)
+
+        End If
+
+        Dim Fm_Post As New Frm_Formulario_Documento("COV", csGlobales.Enum_Tipo_Documento.Venta, False,,,,,,,, True)
+        Fm_Post.MinimizeBox = False
+        Fm_Post.Pro_SubTido = "STK"
+        Fm_Post.ShowDialog(Me)
+        Fm_Post.Dispose()
+
     End Sub
 
     Sub Sb_Filtrar()

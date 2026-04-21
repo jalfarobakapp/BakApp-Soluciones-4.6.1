@@ -731,12 +731,35 @@ Module Mod_Imprimir
         ' Rut Entidad
         _Valor = NuloPorNro(_Row_Maeedo.Item("RTEN"), "")
 
-        Dim _R = De_Txt_a_Num_01(_Valor, 0)
-        Dim _Rut = FormatNumber(_R, 0) & "-" & RutDigito(_R)
+        'Dim _R '= De_Txt_a_Num_01(_Valor, 0)
+        'Dim _Rut '= FormatNumber(_R, 0) & "-" & RutDigito(_R)
+        'Dim _Rten As Double
 
-        _Valor = _Rut 'Fx_Rut(Trim(_Valor))
+        'Try
+        '    _Rten = NuloPorNro(_Row_Maeedo.Item("RTEN"), 0)
+        '    _R = De_Txt_a_Num_01(_Valor, 0)
+        '    _Rut = FormatNumber(_R, 0) & "-" & RutDigito(_Rten)
+        'Catch ex As Exception
+        '    _Rut = _Valor.ToString.Trim
+        'End Try
+
+        Dim _Rut As String = _Valor
+        Dim _Rten = _Rut
+        Dim _Dv As String
+
+        If _Rut.Contains("-") Then
+            Dim _Rt = Split(_Rut, "-")
+            _Rut = _Rt(0)
+        End If
+        Try
+            _Dv = RutDigito(_Rut)
+            _Rut = FormatNumber(_Rut, 0) & "-" & _Dv
+        Catch ex As Exception
+            _Rut = _Rten
+        End Try
+
+        _Valor = _Rut
         _Row_Maeedo.Item("Bk_Rut") = _Valor
-
 
         ' T_Escrito_1_Bruto As String
         _Valor = _Row_Maeedo.Item("VABRDO") '_Sql.Fx_Trae_Dato("MAEEDO", "VABRDO", "IDMAEEDO = " & _Idmaeedo)

@@ -23,14 +23,15 @@ Partial Class Informes_Especial_Cliente
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Informes_Especial_Cliente))
-        Me.MetroTilePanel2 = New DevComponents.DotNetBar.Metro.MetroTilePanel
-        Me.MnuEspecialPrecios = New DevComponents.DotNetBar.ItemContainer
-        Me.Btn_Creditos_Vigentes = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.Btn_Comportamiento_De_Pago = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.Btn_Informe_Cheques_En_Cartera = New DevComponents.DotNetBar.Metro.MetroTileItem
-        Me.Bar2 = New DevComponents.DotNetBar.Bar
-        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem
-        Me.LabelX1 = New DevComponents.DotNetBar.LabelX
+        Me.MetroTilePanel2 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
+        Me.MnuEspecialPrecios = New DevComponents.DotNetBar.ItemContainer()
+        Me.Btn_Creditos_Vigentes = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Comportamiento_De_Pago = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Informe_Cheques_En_Cartera = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -47,7 +48,7 @@ Partial Class Informes_Especial_Cliente
         Me.MetroTilePanel2.ForeColor = System.Drawing.Color.Black
         Me.MetroTilePanel2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.MnuEspecialPrecios})
         Me.MetroTilePanel2.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroTilePanel2.Location = New System.Drawing.Point(3, 48)
+        Me.MetroTilePanel2.Location = New System.Drawing.Point(6, 74)
         Me.MetroTilePanel2.Name = "MetroTilePanel2"
         Me.MetroTilePanel2.Size = New System.Drawing.Size(609, 232)
         Me.MetroTilePanel2.TabIndex = 48
@@ -102,8 +103,8 @@ Partial Class Informes_Especial_Cliente
         Me.Btn_Comportamiento_De_Pago.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
         Me.Btn_Comportamiento_De_Pago.Name = "Btn_Comportamiento_De_Pago"
         Me.Btn_Comportamiento_De_Pago.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Comportamiento_De_Pago.Text = "<font size=""+4""><b>COMPORTAMIENTOS DE PAGO</b></font><br/><font size=""-1"">..</fon" & _
-            "t>"
+        Me.Btn_Comportamiento_De_Pago.Text = "<font size=""+4""><b>COMPORTAMIENTOS DE PAGO</b></font><br/><font size=""-1"">..</fon" &
+    "t>"
         Me.Btn_Comportamiento_De_Pago.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Teal
         Me.Btn_Comportamiento_De_Pago.TileSize = New System.Drawing.Size(200, 100)
         '
@@ -149,9 +150,9 @@ Partial Class Informes_Especial_Cliente
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
-        Me.Bar2.Location = New System.Drawing.Point(0, 276)
+        Me.Bar2.Location = New System.Drawing.Point(0, 306)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(439, 41)
+        Me.Bar2.Size = New System.Drawing.Size(576, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 46
@@ -180,15 +181,29 @@ Partial Class Informes_Especial_Cliente
         Me.LabelX1.TabIndex = 51
         Me.LabelX1.Text = "<font color=""#349FCE""><b>ESPECIALES CLIENTES</b></font>"
         '
+        'Lbl_NombreEmpresaActiva
+        '
+        '
+        '
+        '
+        Me.Lbl_NombreEmpresaActiva.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_NombreEmpresaActiva.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_NombreEmpresaActiva.Location = New System.Drawing.Point(6, 45)
+        Me.Lbl_NombreEmpresaActiva.Name = "Lbl_NombreEmpresaActiva"
+        Me.Lbl_NombreEmpresaActiva.Size = New System.Drawing.Size(620, 23)
+        Me.Lbl_NombreEmpresaActiva.TabIndex = 60
+        Me.Lbl_NombreEmpresaActiva.Text = "NOMBRE DE LA EMPRESA... ESTE ES EL NOMBRE DE LA EM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
+        '
         'Informes_Especial_Cliente
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Lbl_NombreEmpresaActiva)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.MetroTilePanel2)
         Me.Controls.Add(Me.Bar2)
         Me.Name = "Informes_Especial_Cliente"
-        Me.Size = New System.Drawing.Size(439, 317)
+        Me.Size = New System.Drawing.Size(576, 347)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -201,5 +216,5 @@ Partial Class Informes_Especial_Cliente
     Friend WithEvents BtnSalir As DevComponents.DotNetBar.ButtonItem
     Private WithEvents Btn_Informe_Cheques_En_Cartera As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
-
+    Friend WithEvents Lbl_NombreEmpresaActiva As DevComponents.DotNetBar.LabelX
 End Class

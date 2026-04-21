@@ -26,6 +26,8 @@ Public Class Frm_SobreStock_IngDet
 
     Private Sub Frm_PreVenta_IngDet_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Me.Text = "INGRESO DE PALLET PARA VENTA SOBRE STOCK"
+
         With Zw_Prod_SobreStock
 
             Consulta_sql = "Select * From MAEPR Where KOPR = '" & .Codigo & "'"

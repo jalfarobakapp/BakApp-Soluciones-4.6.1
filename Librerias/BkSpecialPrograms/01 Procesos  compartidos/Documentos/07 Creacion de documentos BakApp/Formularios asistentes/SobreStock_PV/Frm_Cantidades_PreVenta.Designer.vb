@@ -96,7 +96,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_CantUD2.PreventEnterBeep = True
         Me.Txt_CantUD2.ReadOnly = True
         Me.Txt_CantUD2.Size = New System.Drawing.Size(100, 22)
-        Me.Txt_CantUD2.TabIndex = 130
+        Me.Txt_CantUD2.TabIndex = 3
         Me.Txt_CantUD2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.Txt_CantUD2.WatermarkText = "0"
         '
@@ -115,7 +115,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_CantUD1.PreventEnterBeep = True
         Me.Txt_CantUD1.ReadOnly = True
         Me.Txt_CantUD1.Size = New System.Drawing.Size(100, 22)
-        Me.Txt_CantUD1.TabIndex = 129
+        Me.Txt_CantUD1.TabIndex = 1
         Me.Txt_CantUD1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.Txt_CantUD1.WatermarkText = "0"
         '
@@ -139,7 +139,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Btn_Aceptar.Name = "Btn_Aceptar"
         Me.Btn_Aceptar.Size = New System.Drawing.Size(207, 23)
         Me.Btn_Aceptar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Aceptar.TabIndex = 127
+        Me.Btn_Aceptar.TabIndex = 4
         Me.Btn_Aceptar.Text = "ACEPTAR"
         '
         'Lbl_Ud2
@@ -173,7 +173,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_RTU.Name = "Txt_RTU"
         Me.Txt_RTU.ReadOnly = True
         Me.Txt_RTU.Size = New System.Drawing.Size(100, 22)
-        Me.Txt_RTU.TabIndex = 124
+        Me.Txt_RTU.TabIndex = 2
         Me.Txt_RTU.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         '
         'Txt_CantidadPreVenta
@@ -190,7 +190,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_CantidadPreVenta.Name = "Txt_CantidadPreVenta"
         Me.Txt_CantidadPreVenta.PreventEnterBeep = True
         Me.Txt_CantidadPreVenta.Size = New System.Drawing.Size(100, 22)
-        Me.Txt_CantidadPreVenta.TabIndex = 135
+        Me.Txt_CantidadPreVenta.TabIndex = 0
         Me.Txt_CantidadPreVenta.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.Txt_CantidadPreVenta.WatermarkText = "0"
         '
@@ -299,7 +299,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_CantMinFormato.PreventEnterBeep = True
         Me.Txt_CantMinFormato.ReadOnly = True
         Me.Txt_CantMinFormato.Size = New System.Drawing.Size(100, 22)
-        Me.Txt_CantMinFormato.TabIndex = 142
+        Me.Txt_CantMinFormato.TabIndex = 6
         Me.Txt_CantMinFormato.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.Txt_CantMinFormato.WatermarkText = "0"
         '
@@ -332,7 +332,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_CantidadDisponible.PreventEnterBeep = True
         Me.Txt_CantidadDisponible.ReadOnly = True
         Me.Txt_CantidadDisponible.Size = New System.Drawing.Size(100, 22)
-        Me.Txt_CantidadDisponible.TabIndex = 145
+        Me.Txt_CantidadDisponible.TabIndex = 7
         Me.Txt_CantidadDisponible.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.Txt_CantidadDisponible.WatermarkText = "0"
         '
@@ -365,7 +365,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.Txt_Ud1XPqte.PreventEnterBeep = True
         Me.Txt_Ud1XPqte.ReadOnly = True
         Me.Txt_Ud1XPqte.Size = New System.Drawing.Size(100, 22)
-        Me.Txt_Ud1XPqte.TabIndex = 146
+        Me.Txt_Ud1XPqte.TabIndex = 5
         Me.Txt_Ud1XPqte.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
         Me.Txt_Ud1XPqte.WatermarkText = "0"
         '
@@ -399,7 +399,7 @@ Partial Class Frm_Cantidades_PreVenta
         Me.DInput_PrecioXUd1.Name = "DInput_PrecioXUd1"
         Me.DInput_PrecioXUd1.ShowUpDown = True
         Me.DInput_PrecioXUd1.Size = New System.Drawing.Size(100, 22)
-        Me.DInput_PrecioXUd1.TabIndex = 172
+        Me.DInput_PrecioXUd1.TabIndex = 8
         '
         'Frm_Cantidades_PreVenta
         '

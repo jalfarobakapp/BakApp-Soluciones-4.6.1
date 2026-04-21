@@ -173,7 +173,8 @@ Public Class Frm_Stmp_IncNVVPicking
                         "Left Join " & _Global_BaseBk & "Zw_Despachos_Doc Ddd On Ddd.Idrst = Edo.IDMAEEDO And Ddd.Archidrst = 'MAEEDO'" & vbCrLf &
                         "Left Join " & _Global_BaseBk & "Zw_Despachos Den On Den.Id_Despacho = Ddd.Id_Despacho" & vbCrLf &
                         "Where 1 > 0" & vbCrLf &
-                        "And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado Not In ('NULO','NULA') And Empresa = '" & Mod_Empresa & "') -- And Sucursal = '" & Mod_Sucursal & "')" & vbCrLf &
+                        "--And Edo.IDMAEEDO Not In (Select Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Where Estado Not In ('NULO','NULA') And Empresa = '" & Mod_Empresa & "')" & vbCrLf &
+                        "And Not Exists (Select 1 From " & _Global_BaseBk & "Zw_Stmp_Enc Z Where Z.Idmaeedo = Edo.IDMAEEDO And Z.Empresa = '" & Mod_Empresa & "' And Z.Estado Not In ('NULO','NULA'))" & vbCrLf &
                         _FiltroFechaEmision &
                         _FiltroFechaDespacho &
                         _FiltroEntidad &

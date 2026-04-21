@@ -24,6 +24,7 @@ Public Class Frm_Formulario_Permisos_Asociados_New
     Dim _Tbl_Funcionarios_X_12_CambiarVendedorCliente As DataTable
     Dim _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad As DataTable
     Dim _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad As DataTable
+    Dim _Tbl_Funcionarios_X_15_SinCiaSeguro As DataTable
 
     Dim _Id_Enc As Integer
     Dim _Id_DocEnc As Integer
@@ -59,6 +60,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
             Return _Enviar_Solicitudes
         End Get
     End Property
+
+    Public Property LeyendaMorosidad As String
 
     Public Sub New(Ds_Matriz_Documentos As DataSet,
                    RowEntidad As DataRow,
@@ -290,6 +293,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl = _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad
                 Case "Doc00170"
                     _Tbl = _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad
+                Case "Doc00171"
+                    _Tbl = _Tbl_Funcionarios_X_15_SinCiaSeguro
 
             End Select
 
@@ -474,6 +479,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                         _Tbl = _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad
                     Case "Doc00170"
                         _Tbl = _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad
+                    Case "Doc00171"
+                        _Tbl = _Tbl_Funcionarios_X_15_SinCiaSeguro
 
                 End Select
 
@@ -643,6 +650,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                 _Tbl = _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad
             Case "Doc00170"
                 _Tbl = _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad
+            Case "Doc00171"
+                _Tbl = _Tbl_Funcionarios_X_15_SinCiaSeguro
 
         End Select
 
@@ -679,6 +688,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad = _Tbl
                 Case "Doc00170"
                     _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad = _Tbl
+                Case "Doc00171"
+                    _Tbl_Funcionarios_X_15_SinCiaSeguro = _Tbl
 
             End Select
 
@@ -822,6 +833,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad = Nothing
                 Case "Doc00170"
                     _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad = Nothing
+                Case "Doc00171"
+                    _Tbl_Funcionarios_X_15_SinCiaSeguro = Nothing
 
             End Select
 

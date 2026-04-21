@@ -207,7 +207,7 @@ Public Class Frm_Dte_Configuracion
 
         Consulta_sql += Fx_Llenar_Input_Configuracion("NombreFormato_PDF_BLV", Txt_NombreFormato_PDF_BLV.Text, "String", "ConfFormatoDoc", _AmbienteCertificacion)
         Consulta_sql += Fx_Llenar_Input_Configuracion("NombreFormato_PDF_FCV", Txt_NombreFormato_PDF_FCV.Text, "String", "ConfFormatoDoc", _AmbienteCertificacion)
-        Consulta_sql += Fx_Llenar_Input_Configuracion("Txt_NombreFormato_PDF_NCV", Txt_NombreFormato_PDF_NCV.Text, "String", "ConfFormatoDoc", _AmbienteCertificacion)
+        Consulta_sql += Fx_Llenar_Input_Configuracion("NombreFormato_PDF_NCV", Txt_NombreFormato_PDF_NCV.Text, "String", "ConfFormatoDoc", _AmbienteCertificacion)
 
         Consulta_sql += Fx_Llenar_Input_Configuracion("siimesesexpiranfolios", Input_siimesesexpiranfolios.Value, "Integer", "ConfGeneral", _AmbienteCertificacion)
         Consulta_sql += Fx_Llenar_Input_Configuracion("siimesesexpiranfolios_GUIAS", Input_siimesesexpiranfolios_GUIAS.Value, "Integer", "ConfGeneral", _AmbienteCertificacion)

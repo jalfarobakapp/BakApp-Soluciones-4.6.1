@@ -1,4 +1,4 @@
-'Imports Lib_Bakapp_VarClassFunc
+ï»¿'Imports Lib_Bakapp_VarClassFunc
 Imports DevComponents.DotNetBar
 
 Public Class Frm_InfoEnt_Informacion_General
@@ -9,10 +9,10 @@ Public Class Frm_InfoEnt_Informacion_General
 
     Public Sub New(ByVal RowEntidad As DataRow)
 
-        ' Llamada necesaria para el Diseñador de Windows Forms.
+        ' Llamada necesaria para el DiseÃ±ador de Windows Forms.
         InitializeComponent()
 
-        ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
+        ' Agregue cualquier inicializaciÃ³n despuÃ©s de la llamada a InitializeComponent().
 
         _RowEntidad = RowEntidad
         _CodEntidad = _RowEntidad.Item("KOEN")
@@ -28,7 +28,12 @@ Public Class Frm_InfoEnt_Informacion_General
         With _RowEntidad
 
             Dim _Rut As String = _RowEntidad.Item("RTEN")
-            _Rut = Replace(FormatNumber(_Rut, 0) & "-" & RutDigito(_Rut), ",", ".")
+
+            Try
+                _Rut = Replace(FormatNumber(_Rut, 0) & "-" & RutDigito(_Rut), ",", ".")
+            Catch ex As Exception
+                _Rut = _RowEntidad.Item("RTEN")
+            End Try
 
             RtxtInfEntidad.Text = Replace(RtxtInfEntidad.Text, "#CODIGO#", Trim(.Item("KOEN")))
             RtxtInfEntidad.Text = Replace(RtxtInfEntidad.Text, "#RUT#", _Rut)

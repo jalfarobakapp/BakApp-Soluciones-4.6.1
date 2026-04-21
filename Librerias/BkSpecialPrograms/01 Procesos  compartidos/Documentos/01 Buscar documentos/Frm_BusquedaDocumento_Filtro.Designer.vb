@@ -85,6 +85,8 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_FEntrega_EmitidosEntre = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Lbl_FEntrega_Hasta = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_FEntrega_Desde = New DevComponents.DotNetBar.LabelX()
+        Me.MetroStatusBar1 = New DevComponents.DotNetBar.Metro.MetroStatusBar()
+        Me.Lbl_Status = New DevComponents.DotNetBar.LabelItem()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.Grupo_documento.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
@@ -202,7 +204,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnAceptar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 559)
+        Me.Bar1.Location = New System.Drawing.Point(0, 560)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(793, 41)
         Me.Bar1.Stretch = True
@@ -542,7 +544,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.TableLayoutPanel3.ColumnCount = 3
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91.0!))
-        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 136.0!))
+        Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 137.0!))
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Algunas, 2, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.Rdb_Sucursal_Doc_Todas, 1, 0)
         Me.TableLayoutPanel3.Controls.Add(Me.LabelX2, 0, 0)
@@ -564,7 +566,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Sucursal_Doc_Algunas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Rdb_Sucursal_Doc_Algunas.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Sucursal_Doc_Algunas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(248, 4)
+        Me.Rdb_Sucursal_Doc_Algunas.Location = New System.Drawing.Point(247, 4)
         Me.Rdb_Sucursal_Doc_Algunas.Name = "Rdb_Sucursal_Doc_Algunas"
         Me.Rdb_Sucursal_Doc_Algunas.Size = New System.Drawing.Size(94, 17)
         Me.Rdb_Sucursal_Doc_Algunas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -584,7 +586,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Rdb_Sucursal_Doc_Todas.CheckState = System.Windows.Forms.CheckState.Checked
         Me.Rdb_Sucursal_Doc_Todas.CheckValue = "Y"
         Me.Rdb_Sucursal_Doc_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(156, 4)
+        Me.Rdb_Sucursal_Doc_Todas.Location = New System.Drawing.Point(155, 4)
         Me.Rdb_Sucursal_Doc_Todas.Name = "Rdb_Sucursal_Doc_Todas"
         Me.Rdb_Sucursal_Doc_Todas.Size = New System.Drawing.Size(85, 17)
         Me.Rdb_Sucursal_Doc_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1107,7 +1109,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         'Chk_Mostrar_Vales_Transitorios
         '
-        Me.Chk_Mostrar_Vales_Transitorios.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Chk_Mostrar_Vales_Transitorios.BackColor = System.Drawing.Color.White
         '
         '
@@ -1276,7 +1277,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
         '
         'Chk_MostrarSoloDocClientesDelVendedor
         '
-        Me.Chk_MostrarSoloDocClientesDelVendedor.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Chk_MostrarSoloDocClientesDelVendedor.BackColor = System.Drawing.Color.White
         '
         '
@@ -1524,11 +1524,37 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Lbl_FEntrega_Desde.TabIndex = 22
         Me.Lbl_FEntrega_Desde.Text = "Desde"
         '
+        'MetroStatusBar1
+        '
+        Me.MetroStatusBar1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.MetroStatusBar1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.MetroStatusBar1.ContainerControlProcessDialogKey = True
+        Me.MetroStatusBar1.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.MetroStatusBar1.DragDropSupport = True
+        Me.MetroStatusBar1.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.MetroStatusBar1.ForeColor = System.Drawing.Color.Black
+        Me.MetroStatusBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Status})
+        Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
+        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 601)
+        Me.MetroStatusBar1.Name = "MetroStatusBar1"
+        Me.MetroStatusBar1.Size = New System.Drawing.Size(793, 22)
+        Me.MetroStatusBar1.TabIndex = 49
+        Me.MetroStatusBar1.Text = "MetroStatusBar1"
+        '
+        'Lbl_Status
+        '
+        Me.Lbl_Status.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
+        Me.Lbl_Status.Name = "Lbl_Status"
+        Me.Lbl_Status.Text = "Status..."
+        '
         'Frm_BusquedaDocumento_Filtro
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(793, 600)
+        Me.ClientSize = New System.Drawing.Size(793, 623)
         Me.Controls.Add(Me.Grupo_FEntrega)
         Me.Controls.Add(Me.Wrn_MostrarSoloDocClientesDelVendedor)
         Me.Controls.Add(Me.Chk_MostrarSoloDocClientesDelVendedor)
@@ -1543,6 +1569,7 @@ Partial Class Frm_BusquedaDocumento_Filtro
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Btn_Documentos)
         Me.Controls.Add(Me.Rdb_Tipo_Documento_Algunos)
+        Me.Controls.Add(Me.MetroStatusBar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
@@ -1635,4 +1662,6 @@ Partial Class Frm_BusquedaDocumento_Filtro
     Friend WithEvents Lbl_FEntrega_Hasta As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_FEntrega_Desde As DevComponents.DotNetBar.LabelX
     Public WithEvents Txt_Funcionarios As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents MetroStatusBar1 As DevComponents.DotNetBar.Metro.MetroStatusBar
+    Friend WithEvents Lbl_Status As DevComponents.DotNetBar.LabelItem
 End Class

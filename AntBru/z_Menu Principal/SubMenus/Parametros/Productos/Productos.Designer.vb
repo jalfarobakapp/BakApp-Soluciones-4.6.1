@@ -45,11 +45,12 @@ Partial Class Productos
         Me.Btn_ImpAdicionalXProd = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Ofertas = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_Multiplos = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_RecalculoPPPNTrib = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Radio1 = New DevComponents.DotNetBar.Command(Me.components)
         Me.Radio2 = New DevComponents.DotNetBar.Command(Me.components)
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Radio3 = New DevComponents.DotNetBar.Command(Me.components)
-        Me.Btn_RecalculoPPPNTrib = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -59,7 +60,7 @@ Partial Class Productos
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir, Me.ButtonItem1})
-        Me.Bar2.Location = New System.Drawing.Point(0, 495)
+        Me.Bar2.Location = New System.Drawing.Point(0, 522)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1044, 57)
         Me.Bar2.Stretch = True
@@ -100,7 +101,7 @@ Partial Class Productos
         Me.MetroTilePanel1.ForeColor = System.Drawing.Color.Black
         Me.MetroTilePanel1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.MnuEspecialProductos})
         Me.MetroTilePanel1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 63)
+        Me.MetroTilePanel1.Location = New System.Drawing.Point(3, 82)
         Me.MetroTilePanel1.Name = "MetroTilePanel1"
         Me.MetroTilePanel1.Size = New System.Drawing.Size(1061, 659)
         Me.MetroTilePanel1.TabIndex = 29
@@ -532,6 +533,33 @@ Partial Class Productos
         Me.Btn_Multiplos.TileStyle.PaddingTop = 4
         Me.Btn_Multiplos.TileStyle.TextColor = System.Drawing.Color.White
         '
+        'Btn_RecalculoPPPNTrib
+        '
+        Me.Btn_RecalculoPPPNTrib.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_RecalculoPPPNTrib.Image = CType(resources.GetObject("Btn_RecalculoPPPNTrib.Image"), System.Drawing.Image)
+        Me.Btn_RecalculoPPPNTrib.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_RecalculoPPPNTrib.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_RecalculoPPPNTrib.Name = "Btn_RecalculoPPPNTrib"
+        Me.Btn_RecalculoPPPNTrib.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_RecalculoPPPNTrib.Text = "<font size=""+4""><b>RECALCULO PPP NORMA TRIB.</b></font><br/><font size=""-1"">Recal" &
+    "culo precio promedio ponderado norma tributaria</font>"
+        Me.Btn_RecalculoPPPNTrib.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_RecalculoPPPNTrib.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_RecalculoPPPNTrib.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_RecalculoPPPNTrib.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_RecalculoPPPNTrib.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_RecalculoPPPNTrib.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_RecalculoPPPNTrib.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
+        Me.Btn_RecalculoPPPNTrib.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_RecalculoPPPNTrib.TileStyle.PaddingBottom = 4
+        Me.Btn_RecalculoPPPNTrib.TileStyle.PaddingLeft = 4
+        Me.Btn_RecalculoPPPNTrib.TileStyle.PaddingRight = 4
+        Me.Btn_RecalculoPPPNTrib.TileStyle.PaddingTop = 4
+        Me.Btn_RecalculoPPPNTrib.TileStyle.TextColor = System.Drawing.Color.White
+        '
         'Radio1
         '
         Me.Radio1.Checked = True
@@ -562,42 +590,29 @@ Partial Class Productos
         Me.Radio3.Name = "Radio3"
         Me.Radio3.Text = "Con movimientos hoy"
         '
-        'Btn_RecalculoPPPNTrib
-        '
-        Me.Btn_RecalculoPPPNTrib.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_RecalculoPPPNTrib.Image = CType(resources.GetObject("Btn_RecalculoPPPNTrib.Image"), System.Drawing.Image)
-        Me.Btn_RecalculoPPPNTrib.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_RecalculoPPPNTrib.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_RecalculoPPPNTrib.Name = "Btn_RecalculoPPPNTrib"
-        Me.Btn_RecalculoPPPNTrib.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_RecalculoPPPNTrib.Text = "<font size=""+4""><b>RECALCULO PPP NORMA TRIB.</b></font><br/><font size=""-1"">Recal" &
-    "culo precio promedio ponderado norma tributaria</font>"
-        Me.Btn_RecalculoPPPNTrib.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
-        Me.Btn_RecalculoPPPNTrib.TileSize = New System.Drawing.Size(200, 100)
+        'Lbl_NombreEmpresaActiva
         '
         '
         '
-        Me.Btn_RecalculoPPPNTrib.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_RecalculoPPPNTrib.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_RecalculoPPPNTrib.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_RecalculoPPPNTrib.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_RecalculoPPPNTrib.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(61, Byte), Integer), CType(CType(131, Byte), Integer), CType(CType(140, Byte), Integer))
-        Me.Btn_RecalculoPPPNTrib.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_RecalculoPPPNTrib.TileStyle.PaddingBottom = 4
-        Me.Btn_RecalculoPPPNTrib.TileStyle.PaddingLeft = 4
-        Me.Btn_RecalculoPPPNTrib.TileStyle.PaddingRight = 4
-        Me.Btn_RecalculoPPPNTrib.TileStyle.PaddingTop = 4
-        Me.Btn_RecalculoPPPNTrib.TileStyle.TextColor = System.Drawing.Color.White
+        '
+        Me.Lbl_NombreEmpresaActiva.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_NombreEmpresaActiva.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_NombreEmpresaActiva.Location = New System.Drawing.Point(3, 53)
+        Me.Lbl_NombreEmpresaActiva.Name = "Lbl_NombreEmpresaActiva"
+        Me.Lbl_NombreEmpresaActiva.Size = New System.Drawing.Size(620, 23)
+        Me.Lbl_NombreEmpresaActiva.TabIndex = 66
+        Me.Lbl_NombreEmpresaActiva.Text = "NOMBRE DE LA EMPRESA... ESTE ES EL NOMBRE DE LA EM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'Productos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Lbl_NombreEmpresaActiva)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel1)
         Me.Name = "Productos"
-        Me.Size = New System.Drawing.Size(1044, 552)
+        Me.Size = New System.Drawing.Size(1044, 579)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -628,4 +643,5 @@ Partial Class Productos
     Private WithEvents Btn_Ofertas As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Multiplos As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_RecalculoPPPNTrib As DevComponents.DotNetBar.Metro.MetroTileItem
+    Friend WithEvents Lbl_NombreEmpresaActiva As DevComponents.DotNetBar.LabelX
 End Class

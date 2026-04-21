@@ -1657,7 +1657,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
         Dim _Endo = _Fila.Cells("ENDO").Value
-        Dim _SuEndo = "" '_Fila.Cells("SUENDO").Value
+        Dim _SuEndo = _Fila.Cells("SUENDO").Value
 
         Dim Fm As New Frm_Crear_Entidad_Mt
         Fm.Fx_Llenar_Entidad(_Endo, _SuEndo)

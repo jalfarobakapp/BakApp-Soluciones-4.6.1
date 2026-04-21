@@ -233,7 +233,7 @@ Public Class Frm_ImpMasiva
                     Dim _Row_Formato As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                     Dim _ImprimirDocAdjuntos As Boolean = _Row_Formato.Item("ImprimirDocAdjuntos")
-                    Dim _ImprimirCedible As Boolean = _Row_Formato.Item("ImprimirCedible")
+                    Dim _Doc_Electronico As Boolean = _Row_Formato.Item("Doc_Electronico")
 
                     If _ImprimirDocAdjuntos Then
                         Fx_ImprimirArchivoAdjunto(_ImprimirDocAdjuntos, _Idmaeedo, Txt_Impresora.Text)
@@ -243,7 +243,7 @@ Public Class Frm_ImpMasiva
 
                     _Mensaje = Fx_Imprimir_Documento2(_Idmaeedo, _Tido, _Nudo, _NombreFormato, False, False, False, Txt_Impresora.Text, _Subtido)
 
-                    If Chk_ImprimirCedible.Checked AndAlso _Mensaje.EsCorrecto AndAlso _ImprimirCedible Then
+                    If Chk_ImprimirCedible.Checked AndAlso _Mensaje.EsCorrecto AndAlso _Doc_Electronico Then
                         Fx_Imprimir_Documento2(_Idmaeedo, _Tido, _Nudo, _NombreFormato, True, False, False, Txt_Impresora.Text, _Subtido)
                     End If
 

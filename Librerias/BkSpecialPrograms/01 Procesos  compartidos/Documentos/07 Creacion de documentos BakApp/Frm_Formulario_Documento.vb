@@ -158,6 +158,9 @@ Public Class Frm_Formulario_Documento
     Dim _Cl_DocListaSuperior As New Cl_DocListaSuperior
     Dim _Cl_Pallet As New Pallet.Cl_Pallet
 
+    Public Property AgregaPallet As Boolean
+    Public Property ClPallet_Agrea As New Pallet.Cl_Pallet
+
     Public Property ForzarDecimalesEnUnidadesEnteras As Boolean
     Public Property PreVenta As Boolean
     Public Property SobreStock As Boolean
@@ -178,8 +181,13 @@ Public Class Frm_Formulario_Documento
     Dim _Ls_Cl_SobreStock As New List(Of Zw_Prod_SobreStock)
 
     Public Property Zw_Transporte_Dte As Zw_Transporte_Dte
+    Public Property B2B As Boolean
+
+    Public Property PedirPermisoCiaSeguro As Boolean
 
     Dim _Cl_Entidad As New Cl_Entidad
+
+    Dim Ls_Lotes As New List(Of List(Of Zw_Docu_Det_Lote))
 
 #Region "PROPIEDADES"
 
@@ -1025,7 +1033,7 @@ Public Class Frm_Formulario_Documento
                     Btn_Informe_Ventas_X_Vendedor.Visible = _Post_Venta
                     Btn_Desde_COV_OCC.Visible = _Post_Venta
 
-                    Btn_Cadena_Remota.Visible = (_Tido = "NVV")
+                    Btn_Cadena_Remota.Visible = ((_Tido = "NVV") OrElse (_Tido = "COV" And SobreStock))
 
                     Btn_Mini_Sol_Compra.Visible = True
                     Btn_Sol_Compra.Visible = True
@@ -1115,9 +1123,9 @@ Public Class Frm_Formulario_Documento
                 Chk_Pickear.Visible = _Pickear
                 Chk_Pickear.Enabled = True
 
-                If _Tido = "COV" And SobreStock Then
-                    Chk_Pickear.Enabled = False
-                End If
+                'If _Tido = "COV" And SobreStock Then
+                '    Chk_Pickear.Enabled = False
+                'End If
 
             End If
 
@@ -1235,6 +1243,7 @@ Public Class Frm_Formulario_Documento
 
         Btn_UtilizarDetalleOtroDoc.Tag = String.Empty
 
+        _PedirPermisoCiaSeguro = False
         _Cl_Despacho = Nothing
 
         If Not IsNothing(Fm_MPC) Then
@@ -1253,6 +1262,8 @@ Public Class Frm_Formulario_Documento
         If _Tido <> "COV" And _Tido <> "NVV" Then
             _Cl_DocListaSuperior.UsarVencListaPrecios = False
         End If
+
+        Ls_Lotes = New List(Of List(Of Zw_Docu_Det_Lote))
 
         'Dim _Cl_Contenedor As New Cl_Contenedor
         '_Cl_Contenedor.Fx_Soltar_Contenedor_Tomado(_Zw_Contenedor)
@@ -1703,6 +1714,10 @@ Public Class Frm_Formulario_Documento
             .Item("SobreStock") = SobreStock
             .Item("LeyendaMorosidad") = String.Empty
 
+            .Item("UsaCiaSeguro") = False
+            .Item("CodEntidad_Cia") = String.Empty
+            .Item("CodSucEntidad_Cia") = String.Empty
+
             _TblEncabezado.Rows.Add(NewFila)
 
         End With
@@ -1783,6 +1798,9 @@ Public Class Frm_Formulario_Documento
 
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00169", False, False, "", "", False, False, False) ' Cupo exedido y con morosidad de documentos
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00170", False, False, "", "", False, False, False) ' Venta sobre promedio de venta normar y con Morosidad
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00171", False, False, "", "", False, False, False) ' Vender sin asociar compañia de seguro cuando el cliente tiene compañia de seguro
+
+
         '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
         'Doc00161
 
@@ -2398,6 +2416,7 @@ Public Class Frm_Formulario_Documento
 
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00169", False, False, "", "", False, False, False) ' Permitir modificar el precio de venta a 0 (cero)
             _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00170", False, False, "", "", False, False, False) ' Venta sobre promedio de venta normar y con Morosidad
+            _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00171", False, False, "", "", False, False, False) ' Vender sin asociar compañia de seguro cuando el cliente tiene compañia de seguro
 
             _TblPermisos = _Ds_Matriz_Documentos.Tables("Permisos_Doc")
 
@@ -2754,6 +2773,9 @@ Public Class Frm_Formulario_Documento
             .Item("Qty_SobreStock") = 0
             .Item("PqteComprometidoSol") = 0
 
+            .Item("TieneLotes") = False
+            .Item("NroLote") = String.Empty
+
             _TblDetalle.Rows.Add(NewFila)
 
         End With
@@ -2917,33 +2939,39 @@ Public Class Frm_Formulario_Documento
 
         Next
 
-        'Dim _Suma_Flete As String = String.Empty
+        Lbl_Totaliza_Cantidades.Text = String.Empty
 
-        'If CBool(_Flete) Then
-        '    _Suma_Flete = ", Suma de flete: " & FormatNumber(_Flete, 0)
-        'End If
+        If Not SobreStock Then
 
-        'Dim _Dec1 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
-        'Dim _Dec2 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
-        'Dim _DecT = Math.Round(_Cantidad, 2) - Math.Round(_Cantidad, 0)
+            Dim _Suma_Flete As String = String.Empty
 
-        'Dim _DecimT, _Decim1, _Decim2 As Integer
+            If CBool(_Flete) Then
+                _Suma_Flete = ", Suma de flete: " & FormatNumber(_Flete, 0)
+            End If
 
-        'If _Dec1 <> 0 Then _Decim1 = 2
-        'If _Dec2 <> 0 Then _Decim2 = 2
-        'If _DecT <> 0 Then _DecimT = 2
+            Dim _Dec1 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
+            Dim _Dec2 = Math.Round(_CantUd1, 2) - Math.Round(_CantUd1, 0)
+            Dim _DecT = Math.Round(_Cantidad, 2) - Math.Round(_Cantidad, 0)
 
-        'Dim _Kilos_Str As String = String.Empty
+            Dim _DecimT, _Decim1, _Decim2 As Integer
 
-        'If CBool(_Kilos) Then
-        '    _Kilos_Str = "Kilos: " & FormatNumber(_Kilos, 2) & ", "
-        'End If
+            If _Dec1 <> 0 Then _Decim1 = 2
+            If _Dec2 <> 0 Then _Decim2 = 2
+            If _DecT <> 0 Then _DecimT = 2
 
-        'If _Ud1 = _Ud2 And _CantUd1 = _CantUd2 Then
-        '    Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, " & _Ud1 & ": " & FormatNumber(_CantUd1, _Decim1) & _Suma_Flete & _StrSobreStock
-        'Else
-        '    Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, " & _Ud1 & ": " & FormatNumber(_CantUd1, _Decim1) & ", " & _Ud2 & ": " & FormatNumber(_CantUd2, _Decim2) & _Suma_Flete & _StrSobreStock
-        'End If
+            Dim _Kilos_Str As String = String.Empty
+
+            If CBool(_Kilos) Then
+                _Kilos_Str = "Kilos: " & FormatNumber(_Kilos, 2) & ", "
+            End If
+
+            If _Ud1 = _Ud2 And _CantUd1 = _CantUd2 Then
+                Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, " & _Ud1 & ": " & FormatNumber(_CantUd1, _Decim1) & _Suma_Flete & _StrSobreStock
+            Else
+                Lbl_Totaliza_Cantidades.Text = _Kilos_Str & "Total Cantidades, " & _Ud1 & ": " & FormatNumber(_CantUd1, _Decim1) & ", " & _Ud2 & ": " & FormatNumber(_CantUd2, _Decim2) & _Suma_Flete & _StrSobreStock
+            End If
+
+        End If
 
         '"Trans: " & FormatNumber(_Cantidad, _DecimT) & _Suma_Flete
 
@@ -3507,6 +3535,12 @@ Public Class Frm_Formulario_Documento
             .Columns("FechaRecepcion").Visible = True
             .Columns("FechaRecepcion").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("FechaRecepcion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NroLote").Width = 80 + _Mas
+            .Columns("NroLote").HeaderText = "Nro. Lote"
+            .Columns("NroLote").Visible = True
+            .Columns("NroLote").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Potencia").Width = 80 + _Mas
@@ -7005,6 +7039,10 @@ Public Class Frm_Formulario_Documento
                     End If
                 End If
 
+                If _Fila.Cells("EsPallet").Value = True Then
+                    _CalCantidades = True
+                End If
+
                 _CantUd1 = _Fila.Cells("CantUd1").Value
                 _CantUd2 = _Fila.Cells("CantUd2").Value
 
@@ -8870,7 +8908,7 @@ Public Class Frm_Formulario_Documento
                     Dim _RevAutomaticaMorosidadClientes As Boolean = _Global_Row_Configuracion_General.Item("RevAutomaticaMorosidadClientes")
                     Dim _MontoVenta As Double = 0
 
-
+                    _Cl_Entidad = New Cl_Entidad
 
                     Dim _Msj_Deudas As LsValiciones.Mensajes = _Cl_Entidad.Fx_Entidad_Tiene_Deudas_CtaCte(_RowEntidad, False, False, _MontoVenta)
                     Dim _MensajeMsj As String = "La entidad presenta morosidad" & Environment.NewLine &
@@ -8884,13 +8922,30 @@ Public Class Frm_Formulario_Documento
 
                         _MensajeMsj = _Cl_Entidad.Mensaje
 
+                        '_RevAutomaticaMorosidadClientes = True
+
                         If _RevAutomaticaMorosidadClientes Then
 
                             _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
 
                             If _Cl_Entidad.Bloqueada Then
 
-                                MessageBoxEx.Show(Me, _Cl_Entidad.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                'MessageBoxEx.Show(Me, _Cl_Entidad.Mensaje, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                                Dim _Ic As eTaskDialogIcon = eTaskDialogIcon.Stop
+
+                                If _Msj_Deudas.Icono = MessageBoxIcon.Exclamation Then
+                                    _Ic = eTaskDialogIcon.Exclamation
+                                End If
+
+                                Dim _Msg1 = "CLIENTE MOROSO"
+                                Dim _Msg2 = _MensajeMsj
+
+                                Dim _Mensaje As LsValiciones.Mensajes = Fx_Confirmar_LecturaOK(_Msg1, _Msg2, _Ic, "Alerta", False)
+
+                                MessageBoxEx.Show(Me, "A continuación se mostrara la deuda del cliente", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                                Sb_Ver_Deuda_Pendiente(_Koen, _Suen)
 
                                 Return Nothing
 
@@ -8907,18 +8962,17 @@ Public Class Frm_Formulario_Documento
 
                             If _RevAutomaticaMorosidadClientes Then
 
-                                _MensajeMsj = _MensajeMsj & "Está situación será evaluada nuevamente al grabar el documento"
-
                                 Dim _Ic As eTaskDialogIcon = eTaskDialogIcon.Stop
 
                                 If _Msj_Deudas.Icono = MessageBoxIcon.Exclamation Then
                                     _Ic = eTaskDialogIcon.Exclamation
                                 End If
 
-                                Dim _Msg1 = "Mensaje 1"
+                                Dim _Msg1 = "REVISION DE MOROSIDAD DEL CLIENTE"
                                 Dim _Msg2 = _MensajeMsj
 
-                                Dim _Mensaje As LsValiciones.Mensajes = Fx_Confirmar_LecturaOK(_Msg1, _Msg2, _Ic, "Alerta", False)
+                                Dim _Mensaje As LsValiciones.Mensajes = Fx_Confirmar_LecturaOK(_Msg1, _Msg2, _Ic, "Alerta",
+                                                                                               False,, "Está situación será evaluada nuevamente al grabar el documento")
 
                             Else
 
@@ -8965,6 +9019,42 @@ Public Class Frm_Formulario_Documento
         Return _RowEntidad
 
     End Function
+
+    Sub Sb_Ver_Deuda_Pendiente(_Koen As String, _Suen As String)
+
+        'Dim _Koen As String = _Fila.Cells("KOEN").Value
+        'Dim _Suen As String = _Fila.Cells("SUEN").Value
+
+        Dim _Fx_Fecha_Inicio = "19000101"
+        Dim _Fx_Fecha_Fin = "22001231"
+
+        Dim _Filtro_Maeedo = "And EDO.ENDO = '" & _Koen & "' AND EDO.SUENDO = '" & _Suen & "'"
+        Dim _Filtro_Maedpce = "And DPCE.ENDP = '*" & _Koen & "'"
+
+        Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Ventas_Anuales & vbCrLf & vbCrLf
+
+        Dim Fm As New Frm_Inf_Vencimientos_Detalle_Documentos(_Koen, _Suen, Consulta_sql,
+                                                  _Fx_Fecha_Inicio, _Fx_Fecha_Fin,
+                                                  Frm_Inf_Vencimientos_Detalle_Documentos.Accion.Mostrar_todo,
+                                                  0, Frm_Inf_Vencimientos_Detalle_Documentos.Tipo_Informe.Ventas)
+
+        Fm.Pro_Mover_Fechas = False
+
+        'If _Cabeza = "TOT_DEUDA" Then
+        Fm.Pro_Chk_Deuda_Efectiva = True
+        'End If
+
+        Fm.Pro_Filtro_Maeedo = _Filtro_Maeedo
+        Fm.Pro_Filtro_Maedpce = _Filtro_Maedpce
+        Fm.Pro_Solo_Cheques = True
+        Fm.Btn_Marcar_Masivamente_Anotaciones_De_Documentos.Visible = False
+        Fm.Chk_Mostrar_Pagos_Pendientes.Visible = False
+        Fm.Sb_Generar_Informe("AND DIAS_ATRASO <= 0")
+
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 
     Private Sub Grilla_Detalle_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs)
 
@@ -9247,6 +9337,68 @@ Public Class Frm_Formulario_Documento
 
                             _DatosDeGrillaProcesados = True
 
+                        Case "NroLote"
+
+                            Dim _Lote_Madre As New Zw_Docu_Det_Lote With {
+                                .Id = _Fila.Cells("Id").Value,
+                                .Id_Det = 0,
+                                .Idmaeddo = 0,
+                                .Idmaeedo = 0,
+                                .Tido = _Tido,
+                                .Nudo = _TblEncabezado.Rows(0).Item("NroDocumento"),
+                                .Codigo = _Fila.Cells("Codigo").Value,
+                                .Descripcion = _Fila.Cells("Descripcion").Value,
+                                .NroLote = String.Empty,
+                                .SubLote = String.Empty,
+                                .FElaboracion = Nothing,
+                                .FVencimiento = Nothing,
+                                .Rtu = _Fila.Cells("Rtu").Value,
+                                .Udtrans = _Fila.Cells("Udtrans").Value,
+                                .UnTrans = _Fila.Cells("UnTrans").Value,
+                                .Ud1 = _Fila.Cells("Ud01PR").Value,
+                                .Ud2 = _Fila.Cells("Ud02PR").Value,
+                                .CantUd1 = 0,
+                                .CantUd2 = 0}
+
+                            Dim _Cl_Lotes As New Cl_Lotes_Bk(Ls_Lotes, _Lote_Madre)
+                            Dim _Lotes As List(Of Zw_Docu_Det_Lote) = _Cl_Lotes.Fx_ObtenerLotesPorFila(_Fila)
+
+                            Dim Fm As New Frm_Lotes_Det
+                            Fm.Ls_Lotes = _Lotes
+                            Fm.ShowDialog(Me)
+
+                            ' Hay un error al modificar el lote, se debe actualizar la lista de lotes en memoria para que se refleje en la grilla
+                            ' cuando se borra una fila los lotes quedan en otra fila, queda todo enredado, se supone que cada lista debe quedar con su fila
+                            ' correspondiente, pero no es así, se debe revisar la lógica de los lotes para que quede mas claro y no se pierdan los datos
+
+                            If Fm.DialogResult = DialogResult.OK Then
+
+                                Dim _x = 0
+                                Dim _Salir = False
+
+                                For Each lista As List(Of Zw_Docu_Det_Lote) In Ls_Lotes
+                                    If lista Is Nothing Then
+                                        Continue For
+                                    End If
+
+                                    For Each lote As Zw_Docu_Det_Lote In lista
+                                        If lote IsNot Nothing AndAlso lote.Id = _Fila.Cells("Id").Value Then
+                                            lista = Fm.Ls_Lotes
+                                            Ls_Lotes.Item(_x) = lista
+                                            _Salir = True
+                                            Exit For
+                                        End If
+                                    Next
+                                    _x += 1
+                                    If _Salir Then
+                                        Exit For
+                                    End If
+                                Next
+
+                            End If
+
+                            Fm.Dispose()
+
                         Case "Cantidad"
 
                             If String.IsNullOrEmpty(_Codigo) Then
@@ -9266,15 +9418,6 @@ Public Class Frm_Formulario_Documento
                                                   MessageBoxDefaultButton.Button1, Me.TopMost)
                                 Return
                             End If
-
-                            'If Not CBool(_Precio) Then
-
-                            '    Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
-                            '    Dim _Row_Producto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-                            '    Sb_Traer_Producto_Grilla(_Fila, _Row_Producto, False, _UnTrans, False)
-
-                            'End If
-
 
                             If _Stock_desde_WMS Then
 
@@ -9639,6 +9782,7 @@ Public Class Frm_Formulario_Documento
 
                             End If
 
+                            Call Grilla_Detalle_CellEnter(Nothing, Nothing)
 
                         Case "Precio"
 
@@ -10833,6 +10977,7 @@ Public Class Frm_Formulario_Documento
     Sub Sb_Eliminar_Fila(_Fila As DataGridViewRow, _Sumar_Totales As Boolean)
 
         Dim _Index As Integer = _Fila.Index
+        Dim _Id As Integer = _Fila.Cells("Id").Value
 
         If _Fila.Cells("ModFechVto").Value Then
             Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, True, False)
@@ -10845,6 +10990,27 @@ Public Class Frm_Formulario_Documento
                 _Ls_Cl_SobreStock.RemoveAt(_Index)
             End If
         End If
+
+        ' Eliminar registros de Lotes
+        For i As Integer = Ls_Lotes.Count - 1 To 0 Step -1
+            Dim lista As List(Of Zw_Docu_Det_Lote) = Ls_Lotes(i)
+            If lista Is Nothing Then
+                Continue For
+            End If
+
+            Dim eliminar As Boolean = False
+
+            For Each lote As Zw_Docu_Det_Lote In lista
+                If lote IsNot Nothing AndAlso lote.Id = _Id Then
+                    eliminar = True
+                    Exit For
+                End If
+            Next
+
+            If eliminar Then
+                Ls_Lotes.RemoveAt(i)
+            End If
+        Next
 
         Grilla_Detalle.Rows.RemoveAt(_Index)
 
@@ -11810,6 +11976,8 @@ Public Class Frm_Formulario_Documento
             Sb_Limpiar_Lista_CodBarras()
             Sb_Marcar_Fila_Grilla(_Fila)
 
+            Call Grilla_Detalle_CellEnter(Nothing, Nothing)
+
         Catch ex As Exception
 
         Finally
@@ -11871,7 +12039,7 @@ Public Class Frm_Formulario_Documento
 
         'If _Id <> _Id_Activo Or String.IsNullOrEmpty(_Id_Activo) Then
         _Id_Activo = _Id
-        Sb_Mostrar_Datos_Producto_Activo(True)
+        Sb_Mostrar_Datos_Producto_Activo(False)
         'End If
 
         If _Revision_Remota Then
@@ -11892,6 +12060,10 @@ Public Class Frm_Formulario_Documento
         Dim _StrSobreStock As String
 
         Dim _Prct As Boolean = _Fila.Cells("Prct").Value
+
+        If Not SobreStock Then
+            Return
+        End If
 
         Lbl_Totaliza_Cantidades.Text = String.Empty
 
@@ -12831,6 +13003,9 @@ Public Class Frm_Formulario_Documento
             .Item("TipoMoneda") = _TblEncabezado_StBy.Rows(0).Item("TipoMoneda")
             .Item("Valor_Dolar") = _TblEncabezado_StBy.Rows(0).Item("Valor_Dolar")
 
+            .Item("UsaCiaSeguro") = _TblEncabezado_StBy.Rows(0).Item("UsaCiaSeguro")
+            .Item("CodEntidad_Cia") = _TblEncabezado_StBy.Rows(0).Item("CodEntidad_Cia")
+            .Item("CodSucEntidad_Cia") = _TblEncabezado_StBy.Rows(0).Item("CodSucEntidad_Cia")
 
             LblMoneda.Tag = .Item("Moneda_Doc")
             LblMoneda.Text = .Item("Moneda_Doc")
@@ -15516,37 +15691,54 @@ Public Class Frm_Formulario_Documento
 
                                             End If
 
+                                            If _Tido = "GRI" Then
+                                                Try
+                                                    _Bodega_Destino = _Ds_Maeedo_Origen.Tables(0).Rows(0).Item("BODESTI")
+                                                Catch ex As Exception
+                                                    _Bodega_Destino = String.Empty
+                                                End Try
+                                            End If
+
                                             _TblEncabezado.Rows(0).Item("Bodega_Destino") = _Bodega_Destino
 
+                                            Dim _Empresa_Recepcion As String
+                                            Dim _Sucursal_Recepcion As String
                                             Dim _Bodega_Recepcion As String
+                                            Dim _Usar_SucBodRecepcion As Boolean
 
-                                            If _Tido = "GRD" Then
+                                            If _Tido = "GRD" Or _Tido = "GRI" Then
 
                                                 Dim Fm_Bd As New Frm_Seleccionar_Bodega_Grilla("")
                                                 Fm_Bd.Solo_Bodegas_Sucursal = True
                                                 Fm_Bd.Pro_Pedir_Permiso = False
                                                 Fm_Bd.Text = "INDIQUE LA BODEGA DE RECEPCION"
+                                                Fm_Bd.BodegaMarcar = _Bodega_Destino
                                                 Fm_Bd.ShowDialog(Me)
                                                 Dim _Row_Bodega_Destino As DataRow = Fm_Bd.Pro_Row_Bodega
                                                 Fm_Bd.Dispose()
 
                                                 If Not _Row_Bodega_Destino Is Nothing Then
 
-                                                    Dim _Empresa_Sel = _Row_Bodega_Destino.Item("EMPRESA")
-                                                    Dim _Sucursal_Sel = _Row_Bodega_Destino.Item("KOSU")
+                                                    _Empresa_Recepcion = _Row_Bodega_Destino.Item("EMPRESA")
+                                                    _Sucursal_Recepcion = _Row_Bodega_Destino.Item("KOSU")
                                                     _Bodega_Recepcion = _Row_Bodega_Destino.Item("KOBO")
 
-                                                    Dim _Permiso = "Bo" & _Empresa_Sel & _Sucursal_Sel & _Bodega_Recepcion
+                                                    Dim _Permiso = "Bo" & _Empresa_Recepcion & _Sucursal_Recepcion & _Bodega_Recepcion
 
                                                     If Not Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, _Permiso, Nothing) Then
                                                         Sb_Limpiar(ModModalidad_Doc)
+                                                        Return
                                                     End If
+
+                                                    _Usar_SucBodRecepcion = True
 
                                                 End If
 
                                             End If
 
-                                            Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, True, _FechaEmision, False, False,, _Bodega_Recepcion)
+                                            Sb_Crear_Documento_Desde_Otros_Documentos(Me, _Ds_Maeedo_Origen, False, True,
+                                                                                      _FechaEmision, False, False,,
+                                                                                      _Bodega_Recepcion, _Sucursal_Recepcion, _Usar_SucBodRecepcion)
 
                                             If _TblDetalle.Rows.Count = 1 Then
                                                 If _TblDetalle.Rows(0).Item("Nuevo_Producto") Then
@@ -17119,6 +17311,70 @@ Public Class Frm_Formulario_Documento
                         _Caja_Habilitada = False
                     End Try
 
+                    Dim _SolictarCiaSeguro As Boolean
+
+                    Try
+                        _SolictarCiaSeguro = _Global_Row_Configuracion_General.Item("SolictarCiaSeguro")
+                    Catch ex As Exception
+                        _SolictarCiaSeguro = False
+                    End Try
+
+                    If _Tido = "NVV" Or (_Tido = "COV" And SobreStock) Then
+
+                        If _SolictarCiaSeguro Then
+
+                            Dim _Koen As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+                            Dim _Suen As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+                            Dim _TotalBrutoDoc As Double = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
+
+                            Dim _SolicitaCiaSeguro As Boolean
+                            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidad_CiaSeguro",
+                                                  $"CodEntidad = '{_Koen}' And CodSucEntidad = '{_Suen}'")
+
+                            If CBool(_Reg) Then
+
+                                MessageBoxEx.Show(Me, "A continuación, deberá seleccionar una compañía de seguros para asociarla a la venta.",
+                                              "Compañia de seguros", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                                Dim _Row_CiaSeguro As DataRow
+
+                                Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(_Koen, _Suen, _TotalBrutoDoc)
+                                Fm.ModoSeleccion = True
+                                Fm.MontoAUtilizar = _TotalBrutoDoc
+                                Fm.ShowDialog(Me)
+                                If Fm.DialogResult = DialogResult.OK Then
+                                    _Row_CiaSeguro = Fm.Row_CiaSeguro
+                                    _SolicitaCiaSeguro = True
+                                ElseIf Fm.DialogResult = DialogResult.Cancel Then
+                                    PedirPermisoCiaSeguro = True
+                                End If
+                                Fm.Dispose()
+
+                                If _SolicitaCiaSeguro Then
+                                    If IsNothing(_Row_CiaSeguro) Then
+                                        MessageBoxEx.Show(Me, "Debe seleccionar una compañía de seguros para realizar la venta.", "Validación",
+                                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                        Return
+                                    Else
+                                        _TblEncabezado.Rows(0).Item("UsaCiaSeguro") = True
+                                        _TblEncabezado.Rows(0).Item("CodEntidad_Cia") = _Row_CiaSeguro.Item("CodEntidad_Cia")
+                                        _TblEncabezado.Rows(0).Item("CodSucEntidad_Cia") = _Row_CiaSeguro.Item("CodSucEntidad_Cia")
+                                    End If
+                                End If
+
+                                If PedirPermisoCiaSeguro Then
+                                    MessageBoxEx.Show(Me, "Se solicitara permiso para validar esta acción al grabar el documento",
+                                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                    Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
+                                End If
+
+                            End If
+
+                        End If
+
+                    End If
+
+
                     Dim Fm_Obs As New Frm_Formulario_Observaciones(_Ds_Matriz_Documentos, _RowEntidad, _Tipo_Documento, _Documento_Autorizado)
                     Fm_Obs.Btn_Grabar_Observaciones.Visible = False
                     Fm_Obs.Pro_Class_Referencias_DTE = _Class_Referencias_DTE
@@ -17192,7 +17448,7 @@ Public Class Frm_Formulario_Documento
 
                         Dim _AlertaRevNVVConVtasMismoDia As Boolean = _Global_Row_Configuracion_Estacion.Item("AlertaRevNVVConVtasMismoDia")
 
-                        If _AlertaRevNVVConVtasMismoDia And _Tido = "NVV" Then
+                        If _AlertaRevNVVConVtasMismoDia And (_Tido = "NVV" Or (_Tido = "COV" AndAlso SobreStock)) Then
 
                             Dim _CodProductoDoc As String = Generar_Filtro_IN(_TblDetalle, "", "Codigo", False, False, "'")
                             Dim _Feer As String = Format(_TblEncabezado.Rows(0).Item("FechaRecepcion"), "yyyyMMdd")
@@ -17223,6 +17479,7 @@ Public Class Frm_Formulario_Documento
 
 
                     Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
+
                     _Documento_Autorizado = Fx_Documento_Autorizado()
                     _Vizado = Grilla_Encabezado.Rows(0).Cells("Vizado").Value
 
@@ -17276,12 +17533,12 @@ Public Class Frm_Formulario_Documento
                                     If _Enviar_Solicitudes Then
 
                                         Dim _Msg = "El monto de la orden de compra excede su límite de aprobación" & vbCrLf &
-                                               "La orden de compra quedará a espera de ser aprobada por su jefatura."
+                                                   "La orden de compra quedará a espera de ser aprobada por su jefatura."
 
                                         If _Usar_Validador_Prod_X_Compras Then
                                             _Msg = "El monto de la orden de compra excede su límite de aprobación" & vbCrLf &
-                                               "o existen productos que deben ser aprobados por el funcionario a cargo del articulo" & vbCrLf & vbCrLf &
-                                               "La orden de compra quedará a espera de ser aprobada por su jefatura y/o funcionario a cargo de los productos a comprar."
+                                                   "o existen productos que deben ser aprobados por el funcionario a cargo del articulo" & vbCrLf & vbCrLf &
+                                                   "La orden de compra quedará a espera de ser aprobada por su jefatura y/o funcionario a cargo de los productos a comprar."
                                         End If
 
                                         MessageBoxEx.Show(Me, _Msg, "Validación",
@@ -17478,7 +17735,6 @@ Public Class Frm_Formulario_Documento
                     Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
                     Dim _Row_NeDocEnc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-
                     ' Graba archivos adjuntos
 
                     If _Sql.Fx_Existe_Tabla(_Global_BaseBk & "Zw_Casi_DocArc") Then
@@ -17517,6 +17773,63 @@ Public Class Frm_Formulario_Documento
                     'End If
 
                     'Crear Orden de Despacho
+
+                    If _Tido = "FCV" And SobreStock Then
+
+                        For Each _Fl As DataRow In _TblDetalle.Rows
+
+                            _Idmaeedo_Origen = _Fl.Item("Idmaeedo_Dori")
+
+                            Consulta_sql = "Select EMPRESA,KOPRCT From MAEDDO Where IDMAEEDO = " & _Idmaeedo_Origen
+
+                            Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                            For Each _Row_Kopct As DataRow In _Tbl.Rows
+
+                                Dim _Codigo As String = _Row_Kopct.Item("KOPRCT")
+                                Dim _EmpresaDt As String = _Row_Kopct.Item("EMPRESA")
+
+                                If Not String.IsNullOrEmpty(_Codigo) Then
+
+                                    Consulta_sql = $"
+;WITH CTE_SobreStock AS
+(
+    SELECT 
+        P.Id,
+        P.PqteHabilitado,
+        SUM(D.Qty_SobreStock) AS TotalFacturado
+    FROM {_Global_BaseBk}Zw_Prod_SobreStock AS P
+    INNER JOIN {_Global_BaseBk}Zw_Docu_Det AS D 
+            ON D.Id_SobreStock = P.Id
+           AND D.SobreStock = 1
+           AND D.Tido = 'NVV'
+    INNER JOIN MAEDDO AS M
+            ON M.IDRST = D.Idmaeddo
+           AND M.TIDO = 'FCV'
+    WHERE P.Codigo    = '{_Codigo}'
+      AND P.Empresa   = '{_EmpresaDt}'
+      --AND P.Eliminado = 0
+    GROUP BY 
+        P.Id,
+        P.PqteHabilitado
+)
+UPDATE P
+SET P.Activo = 0
+FROM {_Global_BaseBk}Zw_Prod_SobreStock AS P
+INNER JOIN CTE_SobreStock AS X
+        ON X.Id = P.Id
+WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
+  AND P.Activo = 1;   -- ← condición correcta aquí"
+                                    _Sql.Ej_consulta_IDU(Consulta_sql, False)
+
+                                End If
+
+                            Next
+
+                        Next
+
+                    End If
+
 
                     Try
 
@@ -17558,11 +17871,14 @@ Public Class Frm_Formulario_Documento
                     End Try
 
                     _Grabar = True
+
                     Sb_Reservar_Movimientos_WMS(_Idmaeedo)
+
                     If _Tipo_de_Grabacion = csGlobales.Enum_Tipo_de_Grabacion.Nuevo_documento Then
 
                         Dim _Ruta_Ultimo_Documento_Bkp As String = AppPath() & "\Data\" & RutEmpresa & "\BkPost\Ult_" & _Tido & "_Bkp.xml"
                         _Ds_Matriz_Documentos.WriteXml(_Ruta_Ultimo_Documento_Bkp)
+
                     End If
 
                     Dim _Error_PDF As String
@@ -17574,8 +17890,11 @@ Public Class Frm_Formulario_Documento
                     End If
 
                     If _Cerrar_Al_Grabar Then
+
                         Dim _Cl_Imprimir As New Cl_Enviar_Impresion_Diablito
+
                         _Cl_Imprimir.Fx_Enviar_Impresion_Al_Diablito(ModEmpresa_Doc, ModModalidad_Doc, _Idmaeedo)
+
                         If _Imprimir Then
 
                             If _Grabar_e_Imprimir Then
@@ -17593,6 +17912,7 @@ Public Class Frm_Formulario_Documento
                         If Me.Visible Then
                             Me.Close()
                         End If
+
                     Else
 
                         If _Post_Venta Or _Editar_documento Then
@@ -18058,6 +18378,7 @@ Public Class Frm_Formulario_Documento
             Fm.BtnCancelar.Visible = False
             Fm.Chk_Reservar_Ventas_Pendientes_Bakapp.Enabled = False
             Fm.BtnProcesar.Enabled = False
+            Fm.Idmaeedo_Documento = _New_Idmaeedo
             Fm.ShowDialog(Me)
             Fm.Dispose()
 
@@ -19053,6 +19374,8 @@ Public Class Frm_Formulario_Documento
         End If
 
         _New_Doc.Zw_Transporte_Dte = Zw_Transporte_Dte
+
+        _New_Doc.B2B = B2B
 
         For Each _Fl As DataRow In _TblDetalle.Rows
             _Fl.Item("Grupo") = _Sql.Fx_Trae_Dato("TABFUGD", "KOGRU", "KOFU = '" & _Fl.Item("CodVendedor") & "'",, False)
@@ -20365,9 +20688,7 @@ Public Class Frm_Formulario_Documento
                 End If
 
                 Sb_RevListaSuperiosEntidad(_MostrarMensaje)
-
                 Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, _Revisar_Permiso_Lista_Precio, _Aplicar_Vencimientos, False,, _ListaOrigen)
-
                 Sb_RevListaSuperiosEntidad_VtaCurso()
 
             Else
@@ -20384,7 +20705,8 @@ Public Class Frm_Formulario_Documento
                 _TblEncabezado.Rows(0).Item("Contacto_Ent") = String.Empty
             End Try
 
-            Txt_Contacto.Text = _Sql.Fx_Trae_Dato("MAEENCON", "NOKOCON", "KOEN = '" & _RowEntidad.Item("KOEN") & "' And RUTCONTACT = '" & _TblEncabezado.Rows(0).Item("Contacto_Ent") & "'")
+            Txt_Contacto.Text = _Sql.Fx_Trae_Dato("MAEENCON", "NOKOCON",
+                                                  "KOEN = '" & _RowEntidad.Item("KOEN") & "' And RUTCONTACT = '" & _TblEncabezado.Rows(0).Item("Contacto_Ent") & "'")
 
             Dim _CodEntidadFisica As String
             Dim _CodSucEntidadFisica = String.Empty
@@ -20776,6 +21098,14 @@ Public Class Frm_Formulario_Documento
 
             End Try
 
+            Dim _Bodesti As String
+
+            Try
+                _Bodesti = _RowMaeedo_Origen.Item("BODESTI")
+            Catch ex As Exception
+                _Bodesti = String.Empty
+            End Try
+
             For Each _Fila As DataRow In _TblMaeddo_Origen.Rows
 
                 Dim _Codigo As String = _Fila.Item("KOPRCT")
@@ -20939,6 +21269,10 @@ Public Class Frm_Formulario_Documento
                     _Bodega = _Bodega_Recepcion
 
                 End If
+
+                'If _Tido = "GRI" And (_Tidopa = "GDI" Or _Tidopa = "GTI") Then
+                '    _Bodega = _Bodesti
+                'End If
 
                 If _Conservar_Fecha_Origen Then
 
@@ -21457,6 +21791,26 @@ Public Class Frm_Formulario_Documento
 
             Next
 
+
+            If AgregaPallet Then
+
+                Consulta_sql = $"Select * From MAEPR Where KOPR = '{ClPallet_Agrea.Codigo}'"
+                Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                Sb_Nueva_Linea(_TblEncabezado.Rows(0).Item("ListaPrecios"))
+
+                Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1)
+                Dim _Indice As Integer = _New_Fila.Index
+
+                _New_Fila.Cells("EsPallet").Value = True
+
+                Sb_Traer_Producto_A_La_Nueva_Fila(_New_Fila, _RowProducto, _Indice)
+                _New_Fila.Cells("Cantidad").Value = ClPallet_Agrea.Cantidad
+                Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False, True)
+
+            End If
+
+
             Sb_Borrar_Lineas_En_Blanco()
 
             If _Contador = 0 Then _Contador = 1
@@ -21520,6 +21874,12 @@ Public Class Frm_Formulario_Documento
                         _TblEncabezado.Rows(0).Item("Vizado") = CBool(_Vizado)
 
                         Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
+
+                        If _Tido = "FCV" And CBool(_Idmaeedo_Dorigen) Then
+
+                            SobreStock = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "SobreStock", "Idmaeedo = " & _Idmaeedo_Dorigen, False, False,, True)
+
+                        End If
 
                     End If
 
@@ -24357,18 +24717,20 @@ Public Class Frm_Formulario_Documento
 
         _Permiso = "Bkp00019"
 
-        If _Cl_Entidad.Tiene_Deudas Then
+        If _Cl_Entidad.Tiene_Deudas OrElse _Cl_Entidad.VentaMayorPromedioUlt3Meses OrElse _Cl_Entidad.SuperaCreditoDisponible Then
 
             If Not _Cl_Entidad.Tiene_Deudas_Vencidas Then
 
-                If _Cl_Entidad.Tiene_Mas_Ventas Then
+                If (_Cl_Entidad.Tiene_Mas_Ventas OrElse
+                    _Cl_Entidad.VentaMayorPromedioUlt3Meses OrElse
+                    _Cl_Entidad.SuperaCreditoDisponible) Then
 
                     If _Cl_Entidad.UltFacPagadasEnMenosTiempoQueDimoper Then
 
                         _Cl_Entidad.ListaProblemas.Add("Las últimas ventas han sido pagadas en plazos menores que los días de morosidad permitidos.")
 
                         If _Cl_Entidad.SuperaCreditoDisponible Then
-                            _Cl_Entidad.ListaProblemas.Add("Se excede el crédito disponible.")
+                            _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que se excede el crédito disponible.")
                             _Permiso = "Doc00169"
                             _RevisarPermiso = True
                         Else
@@ -24378,17 +24740,20 @@ Public Class Frm_Formulario_Documento
                                 _Tiene_Morosidad = False
                                 _Validacion = True
                                 _Cl_Entidad.ListaProblemas.Add("Se otorga la autorización para la venta.")
+                                _Cl_Entidad.Fx_LlenarMensaje(_Cl_Entidad)
                                 _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
                                 Return _Validacion
 
                             Else
 
                                 If _MontoVenta > _Cl_Entidad.Promedio_Venta_UltXMeses Then   '_Cl_Entidad.PromedioUltimas3FacturasPago < _Cl_Entidad.MaxDiasMoraDocumentos Then
+                                    _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que supera el promedio de ventas de los últimos 3 meses.")
                                     _Permiso = "Doc00170"
                                     _RevisarPermiso = True
                                 Else
                                     _Tiene_Morosidad = False
                                     _Validacion = True
+                                    _Cl_Entidad.Fx_LlenarMensaje(_Cl_Entidad)
                                     _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
                                     Return _Validacion
                                 End If
@@ -24398,15 +24763,57 @@ Public Class Frm_Formulario_Documento
                         End If
 
                     Else
-                        _RevisarPermiso = True
+
+                        Dim _FechaEmision As Date = CDate(_TblEncabezado.Rows(0).Item("FechaEmision")).Date
+                        Dim _Fecha_1er_Vencimiento As Date = CDate(_TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento")).Date
+                        Dim _FechaUltVencimiento As Date = CDate(_TblEncabezado.Rows(0).Item("FechaUltVencimiento")).Date
+                        Dim _Dias_1er_Vencimiento As Integer = _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento")
+                        Dim _Dias_Vencimiento As Integer = _TblEncabezado.Rows(0).Item("Dias_Vencimiento")
+                        Dim _Crto As Double = _RowEntidad.Item("CRTO")
+
+                        If _FechaEmision = _FechaUltVencimiento AndAlso _Dias_1er_Vencimiento = 0 AndAlso _Dias_Vencimiento = 0 AndAlso _Crto = 0 Then
+
+                            _Cl_Entidad.ListaProblemas.Add("Sin días de vencimiento")
+                            _Cl_Entidad.ListaProblemas.Add("Cliente sin crédito asignado")
+                            _Cl_Entidad.ListaProblemas.Add("Documento contado no requiere evaluación")
+                            _Tiene_Morosidad = False
+
+                            _Cl_Entidad.Fx_LlenarMensaje(_Cl_Entidad)
+                            _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
+
+                            Return False
+
+                        Else
+
+                            If _Cl_Entidad.SuperaCreditoDisponible Then
+                                _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que se excede el crédito disponible.")
+                                _Permiso = "Doc00169"
+                                _RevisarPermiso = True
+                            ElseIf _MontoVenta > _Cl_Entidad.Promedio_Venta_UltXMeses Then
+                                _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta, ya que supera el promedio de ventas de los últimos 3 meses.")
+                                _Permiso = "Doc00170"
+                                _RevisarPermiso = True
+                            Else
+                                If _Cl_Entidad.MaxDiasMoraDocumentos > _Cl_Entidad.Dimoper Then
+                                    _RevisarPermiso = True
+                                Else
+                                    _Tiene_Morosidad = False
+                                    Return False
+                                End If
+                            End If
+
+                        End If
+
                     End If
 
                 End If
 
             Else
+                _Cl_Entidad.ListaProblemas.Add("Requiere autorización para realizar la venta ya que tiene documentos vencidos")
                 _RevisarPermiso = True
             End If
 
+            _Cl_Entidad.Fx_LlenarMensaje(_Cl_Entidad)
             _TblEncabezado.Rows(0).Item("LeyendaMorosidad") = _Cl_Entidad.Mensaje
 
             If _RevisarPermiso Then
@@ -25247,6 +25654,8 @@ Public Class Frm_Formulario_Documento
 
                 Dim _RevAutomaticaMorosidadClientes As Boolean = _Global_Row_Configuracion_General.Item("RevAutomaticaMorosidadClientes")
 
+                '_RevAutomaticaMorosidadClientes = True
+
                 If _RevAutomaticaMorosidadClientes Then
 
                     Dim _Permiso As String = "Bkp00019"
@@ -25361,6 +25770,12 @@ Public Class Frm_Formulario_Documento
                             Sb_Revisar_Permiso("Doc00102", False, True)
                         End If
 
+                    End If
+
+                    If PedirPermisoCiaSeguro Then
+                        If Not Fx_Tiene_Permiso(Me, "Doc00171", FUNCIONARIO, False) Then
+                            Sb_Revisar_Permiso("Doc00171", False, True)
+                        End If
                     End If
 
                 End If
@@ -31061,7 +31476,7 @@ Public Class Frm_Formulario_Documento
                 Dim _DIPRVE = _RowEntidad.Item("DIPRVE")
                 Dim _DIMOPER = _RowEntidad.Item("DIMOPER")
 
-                Dim _Dd As Double = _CRSD + _CRCH + _CRPA + _CRTO + _CRLT + _NUVECR + _DIASVENCI + _DIPRVE + _DIMOPER
+                Dim _Dd As Double = _CRSD + _CRCH + _CRPA + _CRTO + _CRLT + _NUVECR + _DIASVENCI + _DIPRVE '+ _DIMOPER
 
                 If IsNothing(_RowEntidad.Item("FEVECREN")) Or IsDBNull(_RowEntidad.Item("FEVECREN")) Then
                     Try
@@ -31072,9 +31487,7 @@ Public Class Frm_Formulario_Documento
                 End If
 
                 If CType(_RowEntidad.Item("FEVECREN"), Date).Date < _FechaEmision.Date And CBool(_Dd) Then
-
                     Return True
-
                 End If
 
             End If
@@ -31422,13 +31835,14 @@ Public Class Frm_Formulario_Documento
 
         Dim _Pickear As Boolean = False
 
-        If _Tido = "NVV" AndAlso (_Global_Row_Configuracion_General.Item("Pickear_NVVTodas") Or
-                                            _Global_Row_Configuracion_Estacion.Item("Pickear_NVVTodas")) Then
+        If (_Tido = "NVV" Or (_Tido = "COV" AndAlso SobreStock) AndAlso
+            (_Global_Row_Configuracion_General.Item("Pickear_NVVTodas") Or
+                _Global_Row_Configuracion_Estacion.Item("Pickear_NVVTodas"))) Then
             _Pickear = True
         End If
 
         If _Tido = "NVI" AndAlso (_Global_Row_Configuracion_General.Item("Pickear_NVITodas") Or
-                                            _Global_Row_Configuracion_Estacion.Item("Pickear_NVITodas")) Then
+                _Global_Row_Configuracion_Estacion.Item("Pickear_NVITodas")) Then
             _Pickear = True
         End If
 

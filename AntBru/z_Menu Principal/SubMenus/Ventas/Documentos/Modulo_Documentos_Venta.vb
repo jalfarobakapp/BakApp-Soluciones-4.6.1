@@ -24,6 +24,8 @@ Public Class Modulo_Documentos_Venta
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _Fm_Menu_Padre = Fm_Menu_Padre
 
+        Lbl_NombreEmpresaActiva.Text = BkSpecialPrograms.RazonEmpresa
+
     End Sub
 
     Private Sub Btn_Pago_Proveedores_Click(sender As System.Object, e As System.EventArgs)

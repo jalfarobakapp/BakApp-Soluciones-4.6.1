@@ -76,7 +76,7 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
 
     Private Sub Frm_Crear_Entidad_Mt_Lista_contactos_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
-        Sb_Llenar_Contactos_Entidad()
+        Sb_Actualizar_Grilla()
 
         If _Seleccionar_Contacto Then
             Me.Text = "Lista de contactos de la entidad: " & Trim(_Sql.Fx_Trae_Dato("MAEEN", "NOKOEN", "KOEN = '" & _CodEntidad & "'"))
@@ -100,7 +100,7 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
 
 #Region "Procedimientos"
 
-    Sub Sb_Llenar_Contactos_Entidad()
+    Sub Sb_Actualizar_Grilla()
 
         Consulta_Sql = "SELECT KOEN,RUTCONTACT,NOKOCON,FONOCON,FAXCON,EMAILCON,AREACON,CARGOCON," & vbCrLf &
                        "ISNULL((SELECT NOKOCARAC FROM TABCARAC WHERE KOTABLA = 'AREASACTIV' AND KOCARAC = AREACON),'') AS AREA," & vbCrLf &
@@ -144,7 +144,7 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
                 Fm.ShowDialog(Me)
 
                 If Fm._DatosActualizados Then
-                    Sb_Llenar_Contactos_Entidad()
+                    Sb_Actualizar_Grilla()
                 End If
                 Fm.Dispose()
             End If
@@ -158,7 +158,7 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
             Fm._CodEntidad = _CodEntidad
 
             If Fm.Fx_Eliminar_Contacto(_CodEntidad, _RutContacto) Then
-                Sb_Llenar_Contactos_Entidad()
+                Sb_Actualizar_Grilla()
             End If
             GrillaContactos.Focus()
             Fm.Dispose()
@@ -174,7 +174,7 @@ Public Class Frm_Crear_Entidad_Mt_Lista_contactos
             Fm._Crear = True
             Fm.ShowDialog(Me)
             If Fm._DatosActualizados Then
-                Sb_Llenar_Contactos_Entidad()
+                Sb_Actualizar_Grilla()
             End If
         End If
     End Sub

@@ -2650,6 +2650,12 @@ Partial Public Class Ds_Matriz_Documentos
         
         Private columnLeyendaMorosidad As Global.System.Data.DataColumn
         
+        Private columnUsaCiaSeguro As Global.System.Data.DataColumn
+        
+        Private columnCodEntidad_Cia As Global.System.Data.DataColumn
+        
+        Private columnCodSucEntidad_Cia As Global.System.Data.DataColumn
+        
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub New()
@@ -3358,6 +3364,30 @@ Partial Public Class Ds_Matriz_Documentos
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property UsaCiaSeguroColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnUsaCiaSeguro
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property CodEntidad_CiaColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCodEntidad_Cia
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property CodSucEntidad_CiaColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnCodSucEntidad_Cia
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -3478,9 +3508,12 @@ Partial Public Class Ds_Matriz_Documentos
                     ByVal Idpdaenca As Integer,  _
                     ByVal ConservaNudo As Boolean,  _
                     ByVal SobreStock As Boolean,  _
-                    ByVal LeyendaMorosidad As String) As Encabezado_DocRow
+                    ByVal LeyendaMorosidad As String,  _
+                    ByVal UsaCiaSeguro As Boolean,  _
+                    ByVal CodEntidad_Cia As String,  _
+                    ByVal CodSucEntidad_Cia As String) As Encabezado_DocRow
             Dim rowEncabezado_DocRow As Encabezado_DocRow = CType(Me.NewRow,Encabezado_DocRow)
-            Dim columnValuesArray() As Object = New Object() {Id_DocEnc, Post_Venta, Tipo_Documento, Modalidad, Empresa, Sucursal, TipoDoc, NroDocumento, CodEntidad, CodSucEntidad, Nombre_Entidad, FechaEmision, Fecha_1er_Vencimiento, FechaUltVencimiento, FechaRecepcion, FechaMaxRecepcion, Cuotas, Dias_1er_Vencimiento, Dias_Vencimiento, ListaPrecios, CodEntidadFisica, CodSucEntidadFisica, Nombre_Entidad_Fisica, Contacto_Ent, CodFuncionario, NomFuncionario, Centro_Costo, Moneda_Doc, Valor_Dolar, TotalNetoDoc, TotalIvaDoc, TotalIlaDoc, TotalBrutoDoc, Valor_Abonado, CantTotal, CantDesp, DocEn_Neto_Bruto, Es_ValeTransitorio, Es_Electronico, TipoMoneda, Vizado, TotalDsctoReal_Porc, CodUsuario_Permiso_Dscto, Idmaeedo_Origen, Fun_Auto_Deuda_Ven, Total_costo, Total_Porc_Margen, Total_Valor_Margen, Total_Porc_Dscto, Total_Sub_Total_Neto, Id_DocEnc_Padre, Bloquea_Doc, Fun_Auto_Stock_Ins, Fun_Auto_Cupo_Exe, SubTido, Fun_Auto_Fecha_Des, Stand_by, Fun_Auto_Sol_Compra, Tasadorig_Doc, Reserva_NroOCC, Reserva_Idmaeedo, Bodega_Destino, Libro, Fecha_Tributaria, TotalKilos, MinKgDesp, MinNetoDesp, RevFincred, IdFincred, MontoFincred, RevFincredEnt, TblTipoVenta, CodTipoVenta, Customizable, PreVenta, IdCont, Contenedor, Pickear, NomContacto_Ent, PdaRMovil, Idpdaenca, ConservaNudo, SobreStock, LeyendaMorosidad}
+            Dim columnValuesArray() As Object = New Object() {Id_DocEnc, Post_Venta, Tipo_Documento, Modalidad, Empresa, Sucursal, TipoDoc, NroDocumento, CodEntidad, CodSucEntidad, Nombre_Entidad, FechaEmision, Fecha_1er_Vencimiento, FechaUltVencimiento, FechaRecepcion, FechaMaxRecepcion, Cuotas, Dias_1er_Vencimiento, Dias_Vencimiento, ListaPrecios, CodEntidadFisica, CodSucEntidadFisica, Nombre_Entidad_Fisica, Contacto_Ent, CodFuncionario, NomFuncionario, Centro_Costo, Moneda_Doc, Valor_Dolar, TotalNetoDoc, TotalIvaDoc, TotalIlaDoc, TotalBrutoDoc, Valor_Abonado, CantTotal, CantDesp, DocEn_Neto_Bruto, Es_ValeTransitorio, Es_Electronico, TipoMoneda, Vizado, TotalDsctoReal_Porc, CodUsuario_Permiso_Dscto, Idmaeedo_Origen, Fun_Auto_Deuda_Ven, Total_costo, Total_Porc_Margen, Total_Valor_Margen, Total_Porc_Dscto, Total_Sub_Total_Neto, Id_DocEnc_Padre, Bloquea_Doc, Fun_Auto_Stock_Ins, Fun_Auto_Cupo_Exe, SubTido, Fun_Auto_Fecha_Des, Stand_by, Fun_Auto_Sol_Compra, Tasadorig_Doc, Reserva_NroOCC, Reserva_Idmaeedo, Bodega_Destino, Libro, Fecha_Tributaria, TotalKilos, MinKgDesp, MinNetoDesp, RevFincred, IdFincred, MontoFincred, RevFincredEnt, TblTipoVenta, CodTipoVenta, Customizable, PreVenta, IdCont, Contenedor, Pickear, NomContacto_Ent, PdaRMovil, Idpdaenca, ConservaNudo, SobreStock, LeyendaMorosidad, UsaCiaSeguro, CodEntidad_Cia, CodSucEntidad_Cia}
             rowEncabezado_DocRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowEncabezado_DocRow)
             Return rowEncabezado_DocRow
@@ -3587,6 +3620,9 @@ Partial Public Class Ds_Matriz_Documentos
             Me.columnConservaNudo = MyBase.Columns("ConservaNudo")
             Me.columnSobreStock = MyBase.Columns("SobreStock")
             Me.columnLeyendaMorosidad = MyBase.Columns("LeyendaMorosidad")
+            Me.columnUsaCiaSeguro = MyBase.Columns("UsaCiaSeguro")
+            Me.columnCodEntidad_Cia = MyBase.Columns("CodEntidad_Cia")
+            Me.columnCodSucEntidad_Cia = MyBase.Columns("CodSucEntidad_Cia")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -3760,6 +3796,12 @@ Partial Public Class Ds_Matriz_Documentos
             MyBase.Columns.Add(Me.columnSobreStock)
             Me.columnLeyendaMorosidad = New Global.System.Data.DataColumn("LeyendaMorosidad", GetType(String), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnLeyendaMorosidad)
+            Me.columnUsaCiaSeguro = New Global.System.Data.DataColumn("UsaCiaSeguro", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnUsaCiaSeguro)
+            Me.columnCodEntidad_Cia = New Global.System.Data.DataColumn("CodEntidad_Cia", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCodEntidad_Cia)
+            Me.columnCodSucEntidad_Cia = New Global.System.Data.DataColumn("CodSucEntidad_Cia", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnCodSucEntidad_Cia)
             Me.columnEmpresa.Caption = "DataColumn1"
             Me.columnListaPrecios.Caption = "DataColumn1"
             Me.columnTotalNetoDoc.DefaultValue = CType(0R,Double)
@@ -4188,6 +4230,10 @@ Partial Public Class Ds_Matriz_Documentos
         Private columnPrecio_DigSobreStock As Global.System.Data.DataColumn
         
         Private columnPqteComprometidoSol As Global.System.Data.DataColumn
+        
+        Private columnTieneLotes As Global.System.Data.DataColumn
+        
+        Private columnNroLote As Global.System.Data.DataColumn
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
@@ -5353,6 +5399,22 @@ Partial Public Class Ds_Matriz_Documentos
         End Property
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property TieneLotesColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnTieneLotes
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public ReadOnly Property NroLoteColumn() As Global.System.Data.DataColumn
+            Get
+                Return Me.columnNroLote
+            End Get
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0"),  _
          Global.System.ComponentModel.Browsable(false)>  _
         Public ReadOnly Property Count() As Integer
@@ -5529,9 +5591,11 @@ Partial Public Class Ds_Matriz_Documentos
                     ByVal Precio_SobreStock As Double,  _
                     ByVal Qty_SobreStock As Double,  _
                     ByVal Precio_DigSobreStock As Double,  _
-                    ByVal PqteComprometidoSol As Double) As Detalle_DocRow
+                    ByVal PqteComprometidoSol As Double,  _
+                    ByVal TieneLotes As Boolean,  _
+                    ByVal NroLote As String) As Detalle_DocRow
             Dim rowDetalle_DocRow As Detalle_DocRow = CType(Me.NewRow,Detalle_DocRow)
-            Dim columnValuesArray() As Object = New Object() {Nothing, Id_DocDet, Id_Det, Empresa, Sucursal, Bodega, CodFuncionario, UnTrans, Lincondest, Codigo, CodigoProv, UdTrans, Cantidad, TipoValor, Precio, DescuentoPorc, DescuentoValor, DescuentoValor_Anterior, RecargoValor, Descripcion, Descripcion_Ori, PrecioNetoUd, PrecioNetoUdLista, PrecioBrutoUd, PrecioBrutoUdLista, Rtu, Ud01PR, CantUd1, CodVendedor, Prct, Tipr, Tict, DsctoNeto, DsctoBruto, CDespUd1, Ud02PR, CantUd2, CDespUd2, ValVtaDescMax, ValVtaStockInf, CodLista, Melt, PrecioListaUd1, PrecioListaUd2, DescMaximo, NroDscto, NroImpuestos, PorIva, PorIla, ValIvaLinea, ValIlaLinea, ValSubNetoLinea, ValNetoLinea, ValBrutoLinea, PmLinea, PmSucLinea, PmIFRS, PrecioNetoRealUd1, PrecioNetoRealUd2, Idmaeedo_Dori, Idmaeddo_Dori, CantUd1_Dori, CantUd2_Dori, Estado, Emprepa, Tidopa, NudoPa, Endopa, Nulidopa, FechaEmision, FechaRecepcion, SubTotal, StockBodega, UbicacionBod, DsctoRealPorc, DsctoRealValor, DsctoGlobalSuperado, Tiene_Dscto, CantidadCalculo, Operacion, Potencia, PrecioCalculo, OCCGenerada, Bloqueapr, Observa, CodFunAutoriza, CodPermiso, Nuevo_Producto, Solicitado_bodega, Moneda, Tipo_Moneda, Tipo_Cambio, Ecuacion, Stock_desde_WMS, Total_Costo, Margen_Valor, Margen_Porc, Visado_Dscto, Visado_Stock, Crear_CPr, Id_CPr, Proyecto, Centro_Costo, Consolidar_Stock, No_Aplica_Redondeo, Id_Oferta, Es_Padre_Oferta, Oferta, Padre_Oferta, Aplica_Oferta, Hijo_Oferta, Cantidad_Oferta, Porcdesc_Oferta, Tasadorig, FunValida_Compra, Recargo_Campo, Recargo_Valor, Recargo_Distribuido, TieneOccPdte, PrecioListaUd1_Prov, PrecioListaUd2_Prov, Pesoubic, SumaKilos, CostoLista, Id_OtSvr, Semilla_Svr, Nmarca, RtuVariable, Espuntosvta, ModFechVto, Condicionado, EsPallet, DesacRazTransf, Grupo, SobreStock, Id_SobreStock, Moneda_SobreStock, Precio_SobreStock, Qty_SobreStock, Precio_DigSobreStock, PqteComprometidoSol}
+            Dim columnValuesArray() As Object = New Object() {Nothing, Id_DocDet, Id_Det, Empresa, Sucursal, Bodega, CodFuncionario, UnTrans, Lincondest, Codigo, CodigoProv, UdTrans, Cantidad, TipoValor, Precio, DescuentoPorc, DescuentoValor, DescuentoValor_Anterior, RecargoValor, Descripcion, Descripcion_Ori, PrecioNetoUd, PrecioNetoUdLista, PrecioBrutoUd, PrecioBrutoUdLista, Rtu, Ud01PR, CantUd1, CodVendedor, Prct, Tipr, Tict, DsctoNeto, DsctoBruto, CDespUd1, Ud02PR, CantUd2, CDespUd2, ValVtaDescMax, ValVtaStockInf, CodLista, Melt, PrecioListaUd1, PrecioListaUd2, DescMaximo, NroDscto, NroImpuestos, PorIva, PorIla, ValIvaLinea, ValIlaLinea, ValSubNetoLinea, ValNetoLinea, ValBrutoLinea, PmLinea, PmSucLinea, PmIFRS, PrecioNetoRealUd1, PrecioNetoRealUd2, Idmaeedo_Dori, Idmaeddo_Dori, CantUd1_Dori, CantUd2_Dori, Estado, Emprepa, Tidopa, NudoPa, Endopa, Nulidopa, FechaEmision, FechaRecepcion, SubTotal, StockBodega, UbicacionBod, DsctoRealPorc, DsctoRealValor, DsctoGlobalSuperado, Tiene_Dscto, CantidadCalculo, Operacion, Potencia, PrecioCalculo, OCCGenerada, Bloqueapr, Observa, CodFunAutoriza, CodPermiso, Nuevo_Producto, Solicitado_bodega, Moneda, Tipo_Moneda, Tipo_Cambio, Ecuacion, Stock_desde_WMS, Total_Costo, Margen_Valor, Margen_Porc, Visado_Dscto, Visado_Stock, Crear_CPr, Id_CPr, Proyecto, Centro_Costo, Consolidar_Stock, No_Aplica_Redondeo, Id_Oferta, Es_Padre_Oferta, Oferta, Padre_Oferta, Aplica_Oferta, Hijo_Oferta, Cantidad_Oferta, Porcdesc_Oferta, Tasadorig, FunValida_Compra, Recargo_Campo, Recargo_Valor, Recargo_Distribuido, TieneOccPdte, PrecioListaUd1_Prov, PrecioListaUd2_Prov, Pesoubic, SumaKilos, CostoLista, Id_OtSvr, Semilla_Svr, Nmarca, RtuVariable, Espuntosvta, ModFechVto, Condicionado, EsPallet, DesacRazTransf, Grupo, SobreStock, Id_SobreStock, Moneda_SobreStock, Precio_SobreStock, Qty_SobreStock, Precio_DigSobreStock, PqteComprometidoSol, TieneLotes, NroLote}
             rowDetalle_DocRow.ItemArray = columnValuesArray
             Me.Rows.Add(rowDetalle_DocRow)
             Return rowDetalle_DocRow
@@ -5695,6 +5759,8 @@ Partial Public Class Ds_Matriz_Documentos
             Me.columnQty_SobreStock = MyBase.Columns("Qty_SobreStock")
             Me.columnPrecio_DigSobreStock = MyBase.Columns("Precio_DigSobreStock")
             Me.columnPqteComprometidoSol = MyBase.Columns("PqteComprometidoSol")
+            Me.columnTieneLotes = MyBase.Columns("TieneLotes")
+            Me.columnNroLote = MyBase.Columns("NroLote")
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -5982,6 +6048,10 @@ Partial Public Class Ds_Matriz_Documentos
             MyBase.Columns.Add(Me.columnPrecio_DigSobreStock)
             Me.columnPqteComprometidoSol = New Global.System.Data.DataColumn("PqteComprometidoSol", GetType(Double), Nothing, Global.System.Data.MappingType.Element)
             MyBase.Columns.Add(Me.columnPqteComprometidoSol)
+            Me.columnTieneLotes = New Global.System.Data.DataColumn("TieneLotes", GetType(Boolean), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnTieneLotes)
+            Me.columnNroLote = New Global.System.Data.DataColumn("NroLote", GetType(String), Nothing, Global.System.Data.MappingType.Element)
+            MyBase.Columns.Add(Me.columnNroLote)
             Me.Constraints.Add(New Global.System.Data.UniqueConstraint("Constraint1", New Global.System.Data.DataColumn() {Me.columnId}, false))
             Me.columnId.AutoIncrement = true
             Me.columnId.AutoIncrementSeed = 1
@@ -10420,6 +10490,52 @@ Partial Public Class Ds_Matriz_Documentos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property UsaCiaSeguro() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableEncabezado_Doc.UsaCiaSeguroColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'UsaCiaSeguro' de la tabla 'Encabezado_Doc' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableEncabezado_Doc.UsaCiaSeguroColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property CodEntidad_Cia() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableEncabezado_Doc.CodEntidad_CiaColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'CodEntidad_Cia' de la tabla 'Encabezado_Doc' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableEncabezado_Doc.CodEntidad_CiaColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property CodSucEntidad_Cia() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableEncabezado_Doc.CodSucEntidad_CiaColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'CodSucEntidad_Cia' de la tabla 'Encabezado_Doc' es DBNull"& _ 
+                            ".", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableEncabezado_Doc.CodSucEntidad_CiaColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Function IsId_DocEncNull() As Boolean
             Return Me.IsNull(Me.tableEncabezado_Doc.Id_DocEncColumn)
         End Function
@@ -11424,6 +11540,42 @@ Partial Public Class Ds_Matriz_Documentos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetLeyendaMorosidadNull()
             Me(Me.tableEncabezado_Doc.LeyendaMorosidadColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsUsaCiaSeguroNull() As Boolean
+            Return Me.IsNull(Me.tableEncabezado_Doc.UsaCiaSeguroColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetUsaCiaSeguroNull()
+            Me(Me.tableEncabezado_Doc.UsaCiaSeguroColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsCodEntidad_CiaNull() As Boolean
+            Return Me.IsNull(Me.tableEncabezado_Doc.CodEntidad_CiaColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetCodEntidad_CiaNull()
+            Me(Me.tableEncabezado_Doc.CodEntidad_CiaColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsCodSucEntidad_CiaNull() As Boolean
+            Return Me.IsNull(Me.tableEncabezado_Doc.CodSucEntidad_CiaColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetCodSucEntidad_CiaNull()
+            Me(Me.tableEncabezado_Doc.CodSucEntidad_CiaColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     
@@ -13542,6 +13694,36 @@ Partial Public Class Ds_Matriz_Documentos
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property TieneLotes() As Boolean
+            Get
+                Try 
+                    Return CType(Me(Me.tableDetalle_Doc.TieneLotesColumn),Boolean)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'TieneLotes' de la tabla 'Detalle_Doc' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableDetalle_Doc.TieneLotesColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Property NroLote() As String
+            Get
+                Try 
+                    Return CType(Me(Me.tableDetalle_Doc.NroLoteColumn),String)
+                Catch e As Global.System.InvalidCastException
+                    Throw New Global.System.Data.StrongTypingException("El valor de la columna 'NroLote' de la tabla 'Detalle_Doc' es DBNull.", e)
+                End Try
+            End Get
+            Set
+                Me(Me.tableDetalle_Doc.NroLoteColumn) = value
+            End Set
+        End Property
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Function IsIdNull() As Boolean
             Return Me.IsNull(Me.tableDetalle_Doc.IdColumn)
         End Function
@@ -15158,6 +15340,30 @@ Partial Public Class Ds_Matriz_Documentos
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
         Public Sub SetPqteComprometidoSolNull()
             Me(Me.tableDetalle_Doc.PqteComprometidoSolColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsTieneLotesNull() As Boolean
+            Return Me.IsNull(Me.tableDetalle_Doc.TieneLotesColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetTieneLotesNull()
+            Me(Me.tableDetalle_Doc.TieneLotesColumn) = Global.System.Convert.DBNull
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Function IsNroLoteNull() As Boolean
+            Return Me.IsNull(Me.tableDetalle_Doc.NroLoteColumn)
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "17.0.0.0")>  _
+        Public Sub SetNroLoteNull()
+            Me(Me.tableDetalle_Doc.NroLoteColumn) = Global.System.Convert.DBNull
         End Sub
     End Class
     

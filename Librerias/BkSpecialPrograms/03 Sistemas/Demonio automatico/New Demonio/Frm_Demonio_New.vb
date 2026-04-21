@@ -1345,7 +1345,6 @@ Public Class Frm_Demonio_New
                             registro += vbCrLf & _Cl_FacturacionAuto.Log_Registro
                         End If
 
-
                         If RutEmpresa = "76095906-5" Then
                             Dim _Mod As New Clas_Modalidades
                             _Mod.Sb_Actualiza_Formatos_X_Modalidad(False)

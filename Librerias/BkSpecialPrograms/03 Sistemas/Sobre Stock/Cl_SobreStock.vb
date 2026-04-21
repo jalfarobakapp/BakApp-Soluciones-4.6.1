@@ -175,7 +175,7 @@ Public Class Cl_SobreStock
 
                 _Mensaje.Detalle = "Eliminar producto: " & .Codigo.Trim & ", " & .Descripcion.Trim
 
-                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set Eliminado = 1 Where Id = " & .Id
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_SobreStock Set Activo = 0, Eliminado = 1 Where Id = " & .Id
 
                 If Not _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
                     Throw New System.Exception("Error al soltar el contenedor tomado" & vbCrLf & _Sql.Pro_Error)

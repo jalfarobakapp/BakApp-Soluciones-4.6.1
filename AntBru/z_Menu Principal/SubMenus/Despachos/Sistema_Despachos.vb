@@ -25,6 +25,8 @@ Public Class Sistema_Despachos
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _Fm_Menu_Padre = Fm_Menu_Padre
 
+        Lbl_NombreEmpresaActiva.Text = BkSpecialPrograms.RazonEmpresa
+
     End Sub
 
     Private Sub Btn_Ordenes_De_Despacho_Click(sender As Object, e As EventArgs) Handles Btn_Ordenes_De_Despacho.Click

@@ -497,7 +497,7 @@ Public Class Frm_ImpresionDoc_Configuracion
                 Dim _Nudo = _RowDocumento_Pruebas.Item("NUDO")
 
                 Dim _Consulta = MessageBoxEx.Show(Me, "¿Desea utilizar el mismo documento para imprimir?" & vbCrLf &
-                                     "Documento: " & _Tido & "-" & _Nudo, "Imprimir", MessageBoxButtons.YesNoCancel)
+                                     "Documento: " & _Tido & "-" & _Nudo, "Imprimir", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question)
 
                 If _Consulta = Windows.Forms.DialogResult.Yes Then
                     _Imprimir = True

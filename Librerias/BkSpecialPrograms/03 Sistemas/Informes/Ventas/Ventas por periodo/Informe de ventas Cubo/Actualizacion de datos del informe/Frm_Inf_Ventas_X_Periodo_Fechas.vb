@@ -493,27 +493,90 @@ Public Class Frm_Inf_Ventas_X_Periodo_Fechas
 
             Dim _Mostrar_Error As Boolean = True
 
-            Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & "
-                            Where TIDO = 'BLV' And NUDO Not In " &
-                            "(Select NUDO From MAEEDO With (Nolock)" & Space(1) &
-                                "Where TIDO = 'BLV' And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "') 
-                            And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'
+            'Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & "
+            '                Where TIDO = 'BLV' And NUDO Not In " &
+            '                "(Select NUDO From MAEEDO With (Nolock)" & Space(1) &
+            '                    "Where TIDO = 'BLV' And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "') 
+            '                And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'
 
-                            Delete " & _Nombre_Tabla_Paso & "
-                            Where TIDO = 'FCV' And NUDO Not In " &
-                            "(Select NUDO From MAEEDO With (Nolock)" & Space(1) &
-                                "Where TIDO = 'FCV' And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "') 
-                            And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'"
+            '                Delete " & _Nombre_Tabla_Paso & "
+            '                Where TIDO = 'FCV' And NUDO Not In " &
+            '                "(Select NUDO From MAEEDO With (Nolock)" & Space(1) &
+            '                    "Where TIDO = 'FCV' And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "') 
+            '                And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'"
+
+            Consulta_Sql = $"
+DECLARE @Desde DATE = '{Format(_Fecha_Desde, "yyyyMMdd")}';
+DECLARE @Hasta DATE = '{Format(_Fecha_Hasta, "yyyyMMdd")}';
+
+-- BLV
+DELETE ZV
+FROM {_Nombre_Tabla_Paso} AS ZV
+WHERE ZV.TIDO = 'BLV'
+  AND ZV.FEEMLI BETWEEN @Desde AND @Hasta
+  AND NOT EXISTS (
+        SELECT 1
+        FROM MAEDDO AS M WITH (NOLOCK)
+        WHERE M.TIDO = 'BLV'
+          AND M.NUDO = ZV.NUDO
+          AND M.FEEMLI BETWEEN @Desde AND @Hasta
+  );
+
+-- FCV
+DELETE ZV
+FROM {_Nombre_Tabla_Paso} AS ZV
+WHERE ZV.TIDO = 'FCV'
+  AND ZV.FEEMLI BETWEEN @Desde AND @Hasta
+  AND NOT EXISTS (
+        SELECT 1
+        FROM MAEDDO AS M WITH (NOLOCK)
+        WHERE M.TIDO = 'FCV'
+          AND M.NUDO = ZV.NUDO
+          AND M.FEEMLI BETWEEN @Desde AND @Hasta
+  );"
             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
-            Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & vbCrLf &
-                           "Where IDMAEEDO Not In (Select IDMAEEDO From MAEEDO With (Nolock)) And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'"
+            'Consulta_Sql = "Delete " & _Nombre_Tabla_Paso & vbCrLf &
+            '               "Where IDMAEEDO Not In (Select IDMAEEDO From MAEEDO With (Nolock)) And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "'"
+
+            Consulta_Sql = $"
+DECLARE @Desde DATE = '{Format(_Fecha_Desde, "yyyyMMdd")}';
+DECLARE @Hasta DATE = '{Format(_Fecha_Hasta, "yyyyMMdd")}';
+
+DELETE ZV
+FROM {_Nombre_Tabla_Paso} AS ZV
+WHERE ZV.FEEMLI BETWEEN @Desde AND @Hasta
+  AND NOT EXISTS (
+        SELECT 1
+        FROM MAEEDO AS M WITH (NOLOCK)
+        WHERE M.IDMAEEDO = ZV.IDMAEEDO
+  );"
+
             _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
-            Consulta_Sql = "Select Distinct FEEMLI From MAEDDO With (Nolock) Where IDMAEDDO Not In (Select IDMAEDDO From " & _Nombre_Tabla_Paso & " With (Nolock))
-                            And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "' 
-                            And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')
-						    Order by FEEMLI"
+            '  Consulta_Sql = "Select Distinct FEEMLI From MAEDDO With (Nolock) Where IDMAEDDO Not In (Select IDMAEDDO From " & _Nombre_Tabla_Paso & " With (Nolock))
+            '                  And FEEMLI between '" & Format(_Fecha_Desde, "yyyyMMdd") & "' And '" & Format(_Fecha_Hasta, "yyyyMMdd") & "' 
+            '                  And TIDO IN ('BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ','FEE','FEV','FVL','FVT','FVX','FVZ','FXV','FYV','NCE','NCV','NCX','NCZ','NEV')
+            'Order by FEEMLI"
+
+            Consulta_Sql = $"
+DECLARE @Desde DATE = '{Format(_Fecha_Desde, "yyyyMMdd")}';
+DECLARE @Hasta DATE = '{Format(_Fecha_Hasta, "yyyyMMdd")}';
+
+SELECT DISTINCT M.FEEMLI
+FROM MAEDDO AS M WITH (NOLOCK)
+WHERE M.FEEMLI BETWEEN @Desde AND @Hasta
+  AND M.TIDO IN (
+        'BLV','BLX','BSV','ESC','FCV','FDB','FDV','FDX','FDZ',
+        'FEE','FEV','FVL','FVT','FVX','FVZ','FXV','FYV',
+        'NCE','NCV','NCX','NCZ','NEV'
+  )
+  AND NOT EXISTS (
+        SELECT 1
+        FROM {_Nombre_Tabla_Paso} AS ZV WITH (NOLOCK)
+        WHERE ZV.IDMAEDDO = M.IDMAEDDO
+  )
+ORDER BY M.FEEMLI;"
 
             Dim _TblFechas As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
 

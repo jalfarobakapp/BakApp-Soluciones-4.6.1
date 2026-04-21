@@ -638,7 +638,7 @@
         Dim _SqlQuery As String = String.Empty
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros($"{_Global_BaseBk}Zw_Prod_SobreStock",
-                                                       $"Codigo = '{_Codigo}' And Empresa = '{_Empresa}' And Activo = 1")
+                                                       $"Codigo = '{_Codigo}' And Empresa = '{_Empresa}' -- And Activo = 1")
 
         If Not CBool(_Reg) Then
             _Mensaje.EsCorrecto = True
@@ -676,7 +676,6 @@ SELECT
             Dim _PqteComprometido As Double = 0
             Dim _PqteComprometidoSol As Double = 0
             Dim _PqteDevuelto As Double = 0
-            'Dim _PqteStock As Double = 0
 
             Consulta_sql = $"
 SELECT 

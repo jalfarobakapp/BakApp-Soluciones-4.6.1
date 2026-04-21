@@ -26,11 +26,12 @@ Partial Class Entidades_menu
         Me.Btn_MantEntidades = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.MnuEspecialPrecios = New DevComponents.DotNetBar.ItemContainer()
         Me.Btn_EntExcuidas = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Tablas_Conf_Entidad = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.MetroTilePanel2 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_Tablas_Conf_Entidad = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -104,6 +105,33 @@ Partial Class Entidades_menu
         Me.Btn_EntExcuidas.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_EntExcuidas.TitleText = "Bakapp"
         '
+        'Btn_Tablas_Conf_Entidad
+        '
+        Me.Btn_Tablas_Conf_Entidad.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Tablas_Conf_Entidad.Image = CType(resources.GetObject("Btn_Tablas_Conf_Entidad.Image"), System.Drawing.Image)
+        Me.Btn_Tablas_Conf_Entidad.ImageIndent = New System.Drawing.Point(18, -10)
+        Me.Btn_Tablas_Conf_Entidad.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Tablas_Conf_Entidad.Name = "Btn_Tablas_Conf_Entidad"
+        Me.Btn_Tablas_Conf_Entidad.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Tablas_Conf_Entidad.Text = "<font size=""+4""><b>TABLAS DE ENTIDADES</b></font><br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<font size=""+1""></font>"
+        Me.Btn_Tablas_Conf_Entidad.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Azure
+        Me.Btn_Tablas_Conf_Entidad.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Tablas_Conf_Entidad.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_Tablas_Conf_Entidad.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_Tablas_Conf_Entidad.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Tablas_Conf_Entidad.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_Tablas_Conf_Entidad.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_Tablas_Conf_Entidad.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Tablas_Conf_Entidad.TileStyle.PaddingBottom = 4
+        Me.Btn_Tablas_Conf_Entidad.TileStyle.PaddingLeft = 4
+        Me.Btn_Tablas_Conf_Entidad.TileStyle.PaddingRight = 4
+        Me.Btn_Tablas_Conf_Entidad.TileStyle.PaddingTop = 4
+        Me.Btn_Tablas_Conf_Entidad.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Tablas_Conf_Entidad.TitleText = "BakApp"
+        '
         'BtnSalir
         '
         Me.BtnSalir.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
@@ -125,7 +153,7 @@ Partial Class Entidades_menu
         Me.MetroTilePanel2.ForeColor = System.Drawing.Color.Black
         Me.MetroTilePanel2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.MnuEspecialPrecios})
         Me.MetroTilePanel2.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroTilePanel2.Location = New System.Drawing.Point(3, 58)
+        Me.MetroTilePanel2.Location = New System.Drawing.Point(3, 74)
         Me.MetroTilePanel2.Name = "MetroTilePanel2"
         Me.MetroTilePanel2.Size = New System.Drawing.Size(766, 179)
         Me.MetroTilePanel2.TabIndex = 38
@@ -160,37 +188,24 @@ Partial Class Entidades_menu
         Me.LabelX1.TabIndex = 52
         Me.LabelX1.Text = "<font color=""#349FCE""><b>ESPECIALES CLIENTES</b></font>"
         '
-        'Btn_Tablas_Conf_Entidad
-        '
-        Me.Btn_Tablas_Conf_Entidad.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Tablas_Conf_Entidad.Image = CType(resources.GetObject("Btn_Tablas_Conf_Entidad.Image"), System.Drawing.Image)
-        Me.Btn_Tablas_Conf_Entidad.ImageIndent = New System.Drawing.Point(18, -10)
-        Me.Btn_Tablas_Conf_Entidad.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Tablas_Conf_Entidad.Name = "Btn_Tablas_Conf_Entidad"
-        Me.Btn_Tablas_Conf_Entidad.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Tablas_Conf_Entidad.Text = "<font size=""+4""><b>TABLAS DE ENTIDADES</b></font><br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "<font size=""+1""></font>"
-        Me.Btn_Tablas_Conf_Entidad.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Azure
-        Me.Btn_Tablas_Conf_Entidad.TileSize = New System.Drawing.Size(200, 100)
+        'Lbl_NombreEmpresaActiva
         '
         '
         '
-        Me.Btn_Tablas_Conf_Entidad.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.Btn_Tablas_Conf_Entidad.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.Btn_Tablas_Conf_Entidad.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Tablas_Conf_Entidad.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.Btn_Tablas_Conf_Entidad.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.Btn_Tablas_Conf_Entidad.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Tablas_Conf_Entidad.TileStyle.PaddingBottom = 4
-        Me.Btn_Tablas_Conf_Entidad.TileStyle.PaddingLeft = 4
-        Me.Btn_Tablas_Conf_Entidad.TileStyle.PaddingRight = 4
-        Me.Btn_Tablas_Conf_Entidad.TileStyle.PaddingTop = 4
-        Me.Btn_Tablas_Conf_Entidad.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Tablas_Conf_Entidad.TitleText = "BakApp"
+        '
+        Me.Lbl_NombreEmpresaActiva.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_NombreEmpresaActiva.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_NombreEmpresaActiva.Location = New System.Drawing.Point(3, 45)
+        Me.Lbl_NombreEmpresaActiva.Name = "Lbl_NombreEmpresaActiva"
+        Me.Lbl_NombreEmpresaActiva.Size = New System.Drawing.Size(620, 23)
+        Me.Lbl_NombreEmpresaActiva.TabIndex = 64
+        Me.Lbl_NombreEmpresaActiva.Text = "NOMBRE DE LA EMPRESA... ESTE ES EL NOMBRE DE LA EM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'Entidades_menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Lbl_NombreEmpresaActiva)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel2)
@@ -208,4 +223,5 @@ Partial Class Entidades_menu
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Private WithEvents Btn_Tablas_Conf_Entidad As DevComponents.DotNetBar.Metro.MetroTileItem
+    Friend WithEvents Lbl_NombreEmpresaActiva As DevComponents.DotNetBar.LabelX
 End Class

@@ -1355,11 +1355,38 @@ Public Class Frm_Stmp_Listado
 
             End If
 
-            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Facturar = 1,CodFuncionario_MarcaFacturar = '" & FUNCIONARIO & "'" & vbCrLf &
-                           "Where Id = " & _Row.Item("Id")
+
+            Dim _Msj_Pallet As LsValiciones.Mensajes = Fx_AgregarPallet()
+
+            If _Msj_Pallet.Cerrar Or _Msj_Pallet.Cancelado Then
+                Return
+            End If
+
+            If _Msj_Pallet.EsCorrecto Then
+
+                Dim _Cl_Pallet As Pallet.Cl_Pallet = New Pallet.Cl_Pallet
+                _Cl_Pallet = _Msj_Pallet.Tag
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
+                                "Facturar = 1,CodFuncionario_MarcaFacturar = '" & FUNCIONARIO & "'" & vbCrLf &
+                                ",CodPalletAgregar = '" & _Cl_Pallet.Codigo &
+                                "',CantPalletAgregar = '" & _Cl_Pallet.Cantidad &
+                                "',CodFuncionario_Factura = '" & FUNCIONARIO & "'" & vbCrLf &
+                                "Where Id = " & _Row.Item("Id")
+
+            Else
+
+                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set " & vbCrLf &
+                               "Facturar = 1,CodFuncionario_MarcaFacturar = '" & FUNCIONARIO & "'" & vbCrLf &
+                               "Where Id = " & _Row.Item("Id")
+
+            End If
+
+
             If _Sql.Ej_consulta_IDU(Consulta_sql) Then
 
                 Dim _Mensaje As LsValiciones.Mensajes
+
                 _Mensaje = Fx_EnviarImprimirTicket(_Row)
 
                 If Not _Mensaje.EsCorrecto Then
@@ -1369,6 +1396,7 @@ Public Class Frm_Stmp_Listado
                 MessageBoxEx.Show(Me, "Documento marcado", "Marcar documento", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             End If
+
             Sb_Actualizar_Grilla()
 
         Catch ex As Exception
@@ -1378,6 +1406,170 @@ Public Class Frm_Stmp_Listado
             End If
         End Try
     End Sub
+
+    Function Fx_AgregarPallet() As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            If Not _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Configuracion", "InsertarPalletAuto") Then
+                _Mensaje.EsCorrecto = True
+                Return _Mensaje
+            End If
+
+            If Not _Global_Row_Configuracion_Estacion.Item("InsertarPalletAuto") Then
+                _Mensaje.EsCorrecto = True
+                Return _Mensaje
+            End If
+
+            Dim _TidoPalletAuto As String = _Global_Row_Configuracion_Estacion.Item("TidoPalletAuto")
+
+            If Not _TidoPalletAuto.Contains("FCV") Then '_Tido <> "FCV" And _Tido <> "GDV" And _Tido <> "BLV" Then
+                _Mensaje.EsCorrecto = True
+                Return _Mensaje
+            End If
+
+            Dim _CodigoPallet As String = _Global_Row_Configuracion_Estacion.Item("CodigoPrPallet")
+            Dim _CantPregIngrePallet As Double = _Global_Row_Configuracion_Estacion.Item("CantPregIngrePallet")
+
+            'Sumar las cantidades de la unidad 1 y si es mas de lo que se requiere para preguntar por la cantidad de Pallet hacerlo
+            'si la cantidad es insuficiente salir y continuar
+
+            Dim _Cl_Pallet As Pallet.Cl_Pallet = New Pallet.Cl_Pallet
+
+            _Cl_Pallet.Codigo = String.Empty
+            _Cl_Pallet.Cantidad = 0
+            _Cl_Pallet.Pallet = True
+
+            Dim _Msg1 = "¿Cliente retira PALLETS?"
+            Dim _Msg2 = vbCrLf & "Elija su opción."
+
+            Dim _Msj As LsValiciones.Mensajes
+
+            _Msj = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.Flag)
+
+            If _Msj.Resultado <> "Yes" Then
+                _Msj.Tag = _Cl_Pallet
+                If _Msj.Cerrar Then
+                    Return _Msj
+                Else
+                    Return _Msj
+                End If
+            End If
+
+            '_Mensaje = Fx_AgregarPallet2(_CodigoPallet)
+
+            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _CodigoPallet & "'"
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowProducto) Then
+                _Mensaje.Detalle = "Validación"
+                Throw New ArgumentException("No existe el producto: " & _CodigoPallet & vbCrLf &
+                                            "Informe de esto al administrador del sistema")
+            End If
+
+            Dim _Cantidad As Integer
+            Dim _Cancelado As Boolean
+            Dim _CerradoPorX As Boolean
+            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese la cantidad de Pallet", "Ingresar Pallet",
+                                                  _Cantidad, False,, 2, True, _Tipo_Imagen.Product,,
+                                                  _Tipo_Caracter.Solo_Numeros_Enteros, False,,,,, _CerradoPorX, _Cancelado)
+
+            If Not _Aceptar Then
+                If _CerradoPorX Then _Cancelado = True
+                _Mensaje.Detalle = "Validación"
+                _Mensaje.Cancelado = _Cancelado
+                Throw New ArgumentException("Debe ingresar una cantidad de Pallet")
+            End If
+
+            _Cl_Pallet.Codigo = _CodigoPallet
+            _Cl_Pallet.Cantidad = _Cantidad
+            _Cl_Pallet.Pallet = True
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Agregar Pallet"
+            _Mensaje.Mensaje = "Pallet agregado con exito al final del detalle del documento"
+            _Mensaje.Tag = _Cl_Pallet
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+            'If _Mensaje.Cancelado Then
+            '    Return _Mensaje
+            'End If
+
+            ' MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Pallet no agregado"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
+    Function Fx_AgregarPallet2(_Codigo As String) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Consulta_sql = "Select * From MAEPR Where KOPR = '" & _Codigo & "'"
+            Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowProducto) Then
+                _Mensaje.Detalle = "Validación"
+                Throw New ArgumentException("No existe el producto: " & _Codigo & vbCrLf &
+                                            "Informe de esto al administrador del sistema")
+            End If
+
+            Dim _Cantidad As Integer
+            Dim _Cancelado As Boolean
+            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese la cantidad de Pallet", "Ingresar Pallet",
+                                                  _Cantidad, False,, 2, True, _Tipo_Imagen.Product,,
+                                                  _Tipo_Caracter.Solo_Numeros_Enteros, False,,,,, , _Cancelado)
+
+            If Not _Aceptar Then
+                _Mensaje.Detalle = "Validación"
+                _Mensaje.Cancelado = _Cancelado
+                Throw New ArgumentException("Debe ingresar una cantidad de Pallet")
+            End If
+
+            Dim _Cl_Pallet As Pallet.Cl_Pallet = New Pallet.Cl_Pallet
+
+            _Cl_Pallet.Codigo = _Codigo
+            _Cl_Pallet.Cantidad = _Cantidad
+            _Cl_Pallet.Pallet = True
+
+            'If _RowEntidadBakapp.Item("NoCobrarPallet") Then
+
+            'MessageBoxEx.Show(Me, "Los pallets se añadirán en la anotaciones tabuldas, pero no se cobrarán a este cliente.",
+            '                  "Cliente con exclusión para cobrar Pallet",
+            '                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            '_Mensaje.Detalle = "Cliente con exclusión para cobrar Pallet"
+            '_Mensaje.Mensaje = "Los pallets se añadirán en la anotaciones tabuldas, pero no se cobrarán a este cliente."
+
+            'Else
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Detalle = "Agregar Pallet"
+            _Mensaje.Mensaje = "Pallet agregado con exito al final del detalle del documento"
+            _Mensaje.Tag = _Cl_Pallet
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Pallet no agregado"
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Stop
+        End Try
+
+        Return _Mensaje
+
+    End Function
 
     Function Fx_EnviarImprimirTicket(_Row As DataRow) As LsValiciones.Mensajes
 
@@ -2366,4 +2558,5 @@ Namespace Stmp_Configuracion
     End Class
 
 End Namespace
+
 

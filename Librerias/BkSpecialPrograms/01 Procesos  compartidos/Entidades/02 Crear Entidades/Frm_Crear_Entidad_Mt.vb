@@ -233,6 +233,8 @@ Public Class Frm_Crear_Entidad_Mt
 
     Private Sub Frm_Crear_Entidad_Mt_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
+        'Btn_CiasCegurosAsociadas.Visible = True
+
         Chk_Libera_NVV.Visible = _Existe_Tbl_Entidades_Bakapp
         Btn_ProductosExcluidos.Visible = False
         Btn_ProdCanMinCompra.Visible = False
@@ -1138,6 +1140,7 @@ Public Class Frm_Crear_Entidad_Mt
                     .NoCobrarPallet = Chk_NoCobrarPallet.Checked
                     .ImpNoCobraVta = Chk_ImpNoCobraVta.Checked
                     .ImpNoCobraVtaStr = Txt_ImpNoCobraVtaStr.Tag
+                    .EsCiaSeguro = Chk_EsCiaSeguro.Checked
 
                     If _CreaNuevaEntidad Then
 
@@ -1168,6 +1171,7 @@ Public Class Frm_Crear_Entidad_Mt
                                    ",NoCobrarPallet = " & Convert.ToInt32(.NoCobrarPallet) & vbCrLf &
                                    ",ImpNoCobraVta = " & Convert.ToInt32(.ImpNoCobraVta) & vbCrLf &
                                    ",ImpNoCobraVtaStr = '" & .ImpNoCobraVtaStr & "'" & vbCrLf &
+                                   ",EsCiaSeguro = " & Convert.ToInt32(.EsCiaSeguro) & vbCrLf &
                                    "Where CodEntidad = '" & .CodEntidad & "' And CodSucEntidad = '" & .CodSucEntidad & "'"
 
                     Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
@@ -1553,11 +1557,28 @@ Public Class Frm_Crear_Entidad_Mt
                 Txt_Suen.Text = _Suen
                 TipoSuc = .TIPOSUC
 
+                'Try
+                '    Txt_Rten.Text = .RTEN.ToString.Trim & "-" & RutDigito(.RTEN).ToString.Trim
+                'Catch ex As Exception
+                '    Txt_Rten.Text = .RTEN.ToString.Trim
+                'End Try
+
+                Dim _Rut As String = .RTEN.ToString.Trim
+                Dim _Rten = _Rut
+                Dim _Dv As String
+
+                If _Rut.Contains("-") Then
+                    Dim _Rt = Split(_Rut, "-")
+                    _Rut = _Rt(0)
+                End If
                 Try
-                    Txt_Rten.Text = .RTEN.ToString.Trim & "-" & RutDigito(.RTEN).ToString.Trim
+                    _Dv = RutDigito(_Rut)
+                    _Rut = _Rut & "-" & _Dv
                 Catch ex As Exception
-                    Txt_Rten.Text = .RTEN.ToString.Trim
+                    _Rut = _Rten
                 End Try
+
+                Txt_Rten.Text = _Rut
 
                 Cmb_Tiposuc.SelectedValue = .TIEN
                 Txt_Nokoen.Text = .NOKOEN.Trim
@@ -1740,6 +1761,7 @@ Public Class Frm_Crear_Entidad_Mt
                     Chk_NoCobrarPallet.Checked = .NoCobrarPallet
                     Chk_ImpNoCobraVta.Checked = .ImpNoCobraVta
                     Txt_ImpNoCobraVtaStr.Tag = .ImpNoCobraVtaStr
+                    Chk_EsCiaSeguro.Checked = .EsCiaSeguro
 
                     If .ImpNoCobraVta Then
                         Txt_ImpNoCobraVtaStr.Text = .ImpNoCobraVtaStr & " - " & _Sql.Fx_Trae_Dato("TABIM", "NOKOIM", "KOIM = '" & Txt_ImpNoCobraVtaStr.Tag & "'")
@@ -1887,8 +1909,8 @@ Public Class Frm_Crear_Entidad_Mt
                 Txt_Comuna.Text = _NComuna.Trim & ", " & _NCiudad.Trim & " - " & _NPais
 
                 Cmb_Actien.SelectedValue = _Row_Entidad.Item("ACTIEN")
-                Cmb_Lcen.SelectedValue = _Row_Entidad.Item("LCEN")
-                Cmb_Lven.SelectedValue = _Row_Entidad.Item("LVEN")
+                Cmb_Lcen.SelectedValue = Replace(_Row_Entidad.Item("LCEN"), "TABPP", "")
+                Cmb_Lven.SelectedValue = Replace(_Row_Entidad.Item("LVEN"), "TABPP", "")
                 Cmb_Ruen.SelectedValue = _Row_Entidad.Item("RUEN")
                 Cmb_Tamaen.SelectedValue = _Row_Entidad.Item("TAMAEN")
                 Cmb_Transpoen.SelectedValue = _Row_Entidad.Item("TRANSPOEN")
@@ -2749,6 +2771,7 @@ Public Class Frm_Crear_Entidad_Mt
             Txt_CodPagador.Tag = _FilaSeleccionada_Zw.CodigoTabla
             Txt_CodPagador.Text = _FilaSeleccionada_Zw.CodigoTabla.ToString.Trim & " - " & _FilaSeleccionada_Zw.NombreTabla.ToString.Trim
         End If
+
     End Sub
 
     Private Sub Btn_Mnu_HoldingVerEntidades_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_HoldingVerEntidades.Click
@@ -2873,6 +2896,14 @@ Public Class Frm_Crear_Entidad_Mt
             Txt_ImpNoCobraVtaStr.Text = String.Empty
             Txt_ImpNoCobraVtaStr.Tag = String.Empty
         End If
+    End Sub
+
+    Private Sub Btn_CiasCegurosAsociadas_Click(sender As Object, e As EventArgs) Handles Btn_CiasCegurosAsociadas.Click
+
+        Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(Txt_Koen.Text, Txt_Suen.Text, Txt_Crto.Tag)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
     End Sub
 
     Private Sub Sb_Grilla_Maennmail_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)

@@ -936,7 +936,7 @@ Public Class Clas_Imprimir_Documento
 
 #Region "DETALLE"
 
-            Dim _Detalle_Y = _Fila_InicioDetalle
+            Dim _Detalle_Y As Integer = _Fila_InicioDetalle
 
             Dim _Salir_del_For As Boolean
             Dim _Paso_Fila_2 As Boolean
@@ -1014,6 +1014,9 @@ Public Class Clas_Imprimir_Documento
                         _Imprimir_Detalle = False
                     End If
 
+                    _SQL_Personalizada = _Fila.Item("SQL_Personalizada")
+                    _SqlQuery = _Fila.Item("SqlQuery")
+
                     If CBool(_IdDoc) Then
 
                         If _NombreObjeto = "Texto_libre" Then
@@ -1043,14 +1046,69 @@ Public Class Clas_Imprimir_Documento
 
                                 If _Imprimir_Detalle Then
 
+                                    'Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
+
+                                    '_Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo, _TipoDato, _Es_Descuento,
+                                    '                                       _Fila_D, _Formato_Fx, _Moneda_Str)
+                                    'e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+
+                                    Dim _Row_Fila_D As DataRow = _Fila_D
+
+                                    If _SQL_Personalizada Then
+
+                                        Dim _Error As String
+                                        _Idmaeddo = _Fila_D.Item("IDMAEDDO")
+
+                                        _Row_Fila_D = Fx_Funcion_SQL_Personalizada_Detalle(_SqlQuery, _Idmaeddo, _Error)
+
+                                        If String.IsNullOrEmpty(_Error) Then
+                                            _Campo = "CAMPO"
+                                        Else
+                                            _Campo = "_Error"
+                                        End If
+
+                                    End If
+
                                     Dim _Moneda_Str As String = _Fila_D.Item("MOPPPR").ToString.Trim
 
-                                    _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo, _TipoDato, _Es_Descuento,
-                                                                           _Fila_D, _Formato_Fx, _Moneda_Str)
-                                    e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+                                    _Texto = Fx_New_Trae_Valor_Detalle_Row(_Campo,
+                                                                           _TipoDato,
+                                                                           _Es_Descuento,
+                                                                           _Row_Fila_D,
+                                                                           _Texto,
+                                                                           _Moneda_Str)
+
+                                    'IMPRIME CODIGO DE BARRAS
+                                    If _Codigo_De_Barras Then
+
+                                        Dim bm As Bitmap = Nothing
+                                        Dim CodBarras As New PictureBox
+
+                                        Dim iType As BarCode.Code128SubTypes =
+                                            DirectCast([Enum].Parse(GetType(BarCode.Code128SubTypes), "CODE128"), BarCode.Code128SubTypes)
+                                        bm = BarCode.Code128(_Texto, iType, False)
+                                        If Not IsNothing(bm) Then
+                                            CodBarras.Image = bm
+                                        End If
+                                        Dim d = _Detalle_Y
+
+                                        If _Imprimir_Detalle Then
+
+                                            e.Graphics.DrawImage(CodBarras.Image, _Columna_X, _Detalle_Y - 3, _Ancho, _Alto - 2)
+
+                                        End If
+
+                                    Else
+
+                                        If _Imprimir_Detalle Then
+
+                                            e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Detalle_Y)
+
+                                        End If
+
+                                    End If
 
                                 End If
-
 
                             End If
 
@@ -1520,8 +1578,6 @@ Public Class Clas_Imprimir_Documento
                                 e.Graphics.DrawString(_Texto, _Fte_Usar, _DrawBrush, _Columna_X, _Fila_Y)
 
                             End If
-
-                            'e.Graphics.DrawString(_Texto, _Fte_Usar, Brushes.Black, _Columna_X, _Fila_Y)
 
                         End If
 

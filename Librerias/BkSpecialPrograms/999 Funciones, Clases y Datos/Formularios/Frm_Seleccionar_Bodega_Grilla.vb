@@ -11,6 +11,9 @@ Public Class Frm_Seleccionar_Bodega_Grilla
     Dim _Pedir_Permiso As Boolean = True
     Dim _Solo_Bodegas_Sucursal As Boolean
 
+    Public Property BodegaMarcar As String
+    Public Property ConfirmarSeleccion As Boolean
+
     Public ReadOnly Property Pro_Row_Bodega() As DataRow
         Get
             Return _Row_Bodega
@@ -106,6 +109,8 @@ Public Class Frm_Seleccionar_Bodega_Grilla
             .Columns("NOKOBO").Visible = True
 
         End With
+
+        BuscarDatoEnGrilla(BodegaMarcar, "KOBO", Grilla)
 
     End Sub
 

@@ -1,5 +1,4 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
-Imports BkSpecialPrograms
+﻿Imports BkSpecialPrograms
 Imports DevComponents.DotNetBar
 
 Public Class Modulo_Lista_Precios_Costos
@@ -22,6 +21,7 @@ Public Class Modulo_Lista_Precios_Costos
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _Fm_Menu_Padre = Fm_Menu_Padre
+        Lbl_NombreEmpresaActiva.Text = BkSpecialPrograms.RazonEmpresa
 
     End Sub
     Private Sub Modulo_Lista_Precios_Costos_Load(sender As Object, e As EventArgs) Handles Me.Load

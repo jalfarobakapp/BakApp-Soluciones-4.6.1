@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -23,9 +23,9 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Inf_Ventas_X_Periodo_Sub_Informes_01))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Informe_X_Documentos = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -70,6 +70,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         Me.Lbl_Total_Neto = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Filtro_Abanzado = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Btn_CotizacionSobreStock = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -181,7 +182,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         Me.Btn_Mnu_Estadisticas_Producto.Image = CType(resources.GetObject("Btn_Mnu_Estadisticas_Producto.Image"), System.Drawing.Image)
         Me.Btn_Mnu_Estadisticas_Producto.ImageAlt = CType(resources.GetObject("Btn_Mnu_Estadisticas_Producto.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_Estadisticas_Producto.Name = "Btn_Mnu_Estadisticas_Producto"
-        Me.Btn_Mnu_Estadisticas_Producto.Text = "Ver estadísticas del producto/información adicional"
+        Me.Btn_Mnu_Estadisticas_Producto.Text = "Ver estadÃ­sticas del producto/informaciÃ³n adicional"
         '
         'Btn_Mnu_Ver_Documento
         '
@@ -195,7 +196,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         Me.Btn_Mnu_Informeacion_Credito_Cliente.Image = CType(resources.GetObject("Btn_Mnu_Informeacion_Credito_Cliente.Image"), System.Drawing.Image)
         Me.Btn_Mnu_Informeacion_Credito_Cliente.ImageAlt = CType(resources.GetObject("Btn_Mnu_Informeacion_Credito_Cliente.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_Informeacion_Credito_Cliente.Name = "Btn_Mnu_Informeacion_Credito_Cliente"
-        Me.Btn_Mnu_Informeacion_Credito_Cliente.Text = "Ver información de créditos vigentes del cliente"
+        Me.Btn_Mnu_Informeacion_Credito_Cliente.Text = "Ver informaciÃ³n de crÃ©ditos vigentes del cliente"
         '
         'Btn_Copiar
         '
@@ -242,7 +243,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         '
         Me.Menu_Contextual_Ventas.AutoExpandOnClick = True
         Me.Menu_Contextual_Ventas.Name = "Menu_Contextual_Ventas"
-        Me.Menu_Contextual_Ventas.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem6, Me.Btn_Cotizacion, Me.Btn_Nota_de_venta})
+        Me.Menu_Contextual_Ventas.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem6, Me.Btn_Cotizacion, Me.Btn_Nota_de_venta, Me.Btn_CotizacionSobreStock})
         Me.Menu_Contextual_Ventas.Text = "Ventas..."
         '
         'LabelItem6
@@ -312,37 +313,37 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.RowHeadersVisible = False
         Me.Grilla.Size = New System.Drawing.Size(769, 266)
         Me.Grilla.TabIndex = 122
@@ -678,6 +679,13 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         Me.Txt_Filtro_Abanzado.Size = New System.Drawing.Size(677, 22)
         Me.Txt_Filtro_Abanzado.TabIndex = 120
         '
+        'Btn_CotizacionSobreStock
+        '
+        Me.Btn_CotizacionSobreStock.Image = CType(resources.GetObject("Btn_CotizacionSobreStock.Image"), System.Drawing.Image)
+        Me.Btn_CotizacionSobreStock.ImageAlt = CType(resources.GetObject("Btn_CotizacionSobreStock.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CotizacionSobreStock.Name = "Btn_CotizacionSobreStock"
+        Me.Btn_CotizacionSobreStock.Text = "COTIZACION (SOBRE STOCK)"
+        '
         'Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -755,4 +763,5 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
     Friend WithEvents LabelItem8 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_Exportar_Vista_Actual As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Exportar_Detalle As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_CotizacionSobreStock As DevComponents.DotNetBar.ButtonItem
 End Class

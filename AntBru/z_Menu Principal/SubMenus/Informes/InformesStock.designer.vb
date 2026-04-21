@@ -26,13 +26,14 @@ Partial Class InformesStock
         Me.MetroTilePanel2 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
         Me.MnuEspecialPrecios = New DevComponents.DotNetBar.ItemContainer()
         Me.Btn_Informe_Stock_Valorizado = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_Proyeccion_Stock = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.BtnRankingProductos = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.ItemContainer3 = New DevComponents.DotNetBar.ItemContainer()
         Me.BtnInfPagoProveedores = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_Proyeccion_Stock = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -49,7 +50,7 @@ Partial Class InformesStock
         Me.MetroTilePanel2.ForeColor = System.Drawing.Color.Black
         Me.MetroTilePanel2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.MnuEspecialPrecios})
         Me.MetroTilePanel2.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroTilePanel2.Location = New System.Drawing.Point(3, 47)
+        Me.MetroTilePanel2.Location = New System.Drawing.Point(6, 68)
         Me.MetroTilePanel2.Name = "MetroTilePanel2"
         Me.MetroTilePanel2.Size = New System.Drawing.Size(605, 301)
         Me.MetroTilePanel2.TabIndex = 48
@@ -97,6 +98,34 @@ Partial Class InformesStock
         Me.Btn_Informe_Stock_Valorizado.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_Informe_Stock_Valorizado.TitleText = "Bakapp"
         '
+        'Btn_Proyeccion_Stock
+        '
+        Me.Btn_Proyeccion_Stock.Cursor = System.Windows.Forms.Cursors.Hand
+        Me.Btn_Proyeccion_Stock.Image = CType(resources.GetObject("Btn_Proyeccion_Stock.Image"), System.Drawing.Image)
+        Me.Btn_Proyeccion_Stock.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Proyeccion_Stock.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Proyeccion_Stock.Name = "Btn_Proyeccion_Stock"
+        Me.Btn_Proyeccion_Stock.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Proyeccion_Stock.Text = "<font size=""+4""><b>PROYECCION STOCK</b></font><br/><font size=""-1"">Proyección seg" &
+    "ún ventas<br/>Cheques en cartera</font>"
+        Me.Btn_Proyeccion_Stock.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
+        Me.Btn_Proyeccion_Stock.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Proyeccion_Stock.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(171, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(171, Byte), Integer))
+        Me.Btn_Proyeccion_Stock.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(171, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(171, Byte), Integer))
+        Me.Btn_Proyeccion_Stock.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Proyeccion_Stock.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(171, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(171, Byte), Integer))
+        Me.Btn_Proyeccion_Stock.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(171, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(171, Byte), Integer))
+        Me.Btn_Proyeccion_Stock.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Proyeccion_Stock.TileStyle.PaddingBottom = 4
+        Me.Btn_Proyeccion_Stock.TileStyle.PaddingLeft = 4
+        Me.Btn_Proyeccion_Stock.TileStyle.PaddingRight = 4
+        Me.Btn_Proyeccion_Stock.TileStyle.PaddingTop = 4
+        Me.Btn_Proyeccion_Stock.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Proyeccion_Stock.TitleText = "Bakapp"
+        '
         'BtnRankingProductos
         '
         Me.BtnRankingProductos.Image = Global.BakApp.My.Resources.Resources.statistics_32
@@ -127,9 +156,9 @@ Partial Class InformesStock
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnSalir})
-        Me.Bar2.Location = New System.Drawing.Point(0, 185)
+        Me.Bar2.Location = New System.Drawing.Point(0, 193)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(440, 41)
+        Me.Bar2.Size = New System.Drawing.Size(579, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 46
@@ -198,43 +227,29 @@ Partial Class InformesStock
         Me.LabelX1.TabIndex = 49
         Me.LabelX1.Text = "<font color=""#349FCE""><b>INFORMES DE STOCK</b></font>"
         '
-        'Btn_Proyeccion_Stock
-        '
-        Me.Btn_Proyeccion_Stock.Cursor = System.Windows.Forms.Cursors.Hand
-        Me.Btn_Proyeccion_Stock.Image = CType(resources.GetObject("Btn_Proyeccion_Stock.Image"), System.Drawing.Image)
-        Me.Btn_Proyeccion_Stock.ImageIndent = New System.Drawing.Point(8, -10)
-        Me.Btn_Proyeccion_Stock.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
-        Me.Btn_Proyeccion_Stock.Name = "Btn_Proyeccion_Stock"
-        Me.Btn_Proyeccion_Stock.SymbolColor = System.Drawing.Color.Empty
-        Me.Btn_Proyeccion_Stock.Text = "<font size=""+4""><b>PROYECCION STOCK</b></font><br/><font size=""-1"">Proyección seg" &
-    "ún ventas<br/>Cheques en cartera</font>"
-        Me.Btn_Proyeccion_Stock.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.[Default]
-        Me.Btn_Proyeccion_Stock.TileSize = New System.Drawing.Size(200, 100)
+        'Lbl_NombreEmpresaActiva
         '
         '
         '
-        Me.Btn_Proyeccion_Stock.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(171, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(171, Byte), Integer))
-        Me.Btn_Proyeccion_Stock.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(171, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(171, Byte), Integer))
-        Me.Btn_Proyeccion_Stock.TileStyle.BackColorGradientAngle = 45
-        Me.Btn_Proyeccion_Stock.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(171, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(171, Byte), Integer))
-        Me.Btn_Proyeccion_Stock.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(171, Byte), Integer), CType(CType(99, Byte), Integer), CType(CType(171, Byte), Integer))
-        Me.Btn_Proyeccion_Stock.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
-        Me.Btn_Proyeccion_Stock.TileStyle.PaddingBottom = 4
-        Me.Btn_Proyeccion_Stock.TileStyle.PaddingLeft = 4
-        Me.Btn_Proyeccion_Stock.TileStyle.PaddingRight = 4
-        Me.Btn_Proyeccion_Stock.TileStyle.PaddingTop = 4
-        Me.Btn_Proyeccion_Stock.TileStyle.TextColor = System.Drawing.Color.White
-        Me.Btn_Proyeccion_Stock.TitleText = "Bakapp"
+        '
+        Me.Lbl_NombreEmpresaActiva.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_NombreEmpresaActiva.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Lbl_NombreEmpresaActiva.Location = New System.Drawing.Point(6, 39)
+        Me.Lbl_NombreEmpresaActiva.Name = "Lbl_NombreEmpresaActiva"
+        Me.Lbl_NombreEmpresaActiva.Size = New System.Drawing.Size(620, 23)
+        Me.Lbl_NombreEmpresaActiva.TabIndex = 61
+        Me.Lbl_NombreEmpresaActiva.Text = "NOMBRE DE LA EMPRESA... ESTE ES EL NOMBRE DE LA EM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
         'InformesStock
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.Controls.Add(Me.Lbl_NombreEmpresaActiva)
         Me.Controls.Add(Me.LabelX1)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.MetroTilePanel2)
         Me.Name = "InformesStock"
-        Me.Size = New System.Drawing.Size(440, 226)
+        Me.Size = New System.Drawing.Size(579, 234)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -249,4 +264,5 @@ Partial Class InformesStock
     Private WithEvents BtnInfPagoProveedores As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Private WithEvents Btn_Proyeccion_Stock As DevComponents.DotNetBar.Metro.MetroTileItem
+    Friend WithEvents Lbl_NombreEmpresaActiva As DevComponents.DotNetBar.LabelX
 End Class

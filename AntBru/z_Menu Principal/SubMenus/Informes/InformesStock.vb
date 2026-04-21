@@ -13,6 +13,9 @@ Public Class InformesStock
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         _Fm_Menu_Padre = Fm_Menu_Padre
+
+        Lbl_NombreEmpresaActiva.Text = BkSpecialPrograms.RazonEmpresa
+
     End Sub
 
     Private Sub Btn_Informe_Stock_Valorizado_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Informe_Stock_Valorizado.Click

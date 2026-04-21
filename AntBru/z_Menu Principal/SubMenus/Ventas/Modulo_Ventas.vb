@@ -15,12 +15,12 @@ Public Class Modulo_Ventas
         Get
             Return _Menu_Extra
         End Get
-        Set(ByVal value As Boolean)
+        Set(value As Boolean)
             _Menu_Extra = value
         End Set
     End Property
 
-    Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm)
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -32,13 +32,15 @@ Public Class Modulo_Ventas
             Sb_Color_Botones_Barra(Bar2)
         End If
 
+        Lbl_NombreEmpresaActiva.Text = BkSpecialPrograms.RazonEmpresa
+
     End Sub
 
-    Private Sub BtnSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSalir.Click
+    Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs) Handles BtnSalir.Click
         _Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 
-    Private Sub BtnPostVenta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnPostVenta.Click
+    Private Sub BtnPostVenta_Click(sender As System.Object, e As System.EventArgs) Handles BtnPostVenta.Click
 
         'If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Bkp00027",,, False,,,, False, False) Then
 
@@ -89,7 +91,7 @@ Public Class Modulo_Ventas
 
     End Sub
 
-    Private Sub Btn_ProductoSolicitadosBodega_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_ProductoSolicitadosBodega.Click
+    Private Sub Btn_ProductoSolicitadosBodega_Click(sender As System.Object, e As System.EventArgs) Handles Btn_ProductoSolicitadosBodega.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Bkp00031") Then
 
@@ -101,7 +103,7 @@ Public Class Modulo_Ventas
 
     End Sub
 
-    Private Sub Btn_Pago_Documentos_Click(sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Pago_Documentos.Click
+    Private Sub Btn_Pago_Documentos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Pago_Documentos.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Pcli0001") Then
 
@@ -170,7 +172,7 @@ Public Class Modulo_Ventas
 
     End Sub
 
-    Private Sub BtnBuscarDocumento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnBuscarDocumento.Click
+    Private Sub BtnBuscarDocumento_Click(sender As System.Object, e As System.EventArgs) Handles BtnBuscarDocumento.Click
 
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "Doc00015") Then
             Dim _Fm As New Frm_BusquedaDocumento_Filtro(True)
@@ -182,7 +184,7 @@ Public Class Modulo_Ventas
 
     End Sub
 
-    Private Sub BtnCambiarDeUsuario_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnCambiarDeUsuario.Click
+    Private Sub BtnCambiarDeUsuario_Click(sender As System.Object, e As System.EventArgs) Handles BtnCambiarDeUsuario.Click
 
         Dim NewPanel As Login = Nothing
         NewPanel = New Login(_Fm_Menu_Padre)
@@ -190,7 +192,7 @@ Public Class Modulo_Ventas
 
     End Sub
 
-    Private Sub Btn_Conf_CashDro_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Conf_CashDro.Click
+    Private Sub Btn_Conf_CashDro_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Conf_CashDro.Click
 
         If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Cdro0004") Then
             Return
@@ -213,7 +215,7 @@ Public Class Modulo_Ventas
 
     End Sub
 
-    Private Sub Btn_Documentos_Venta_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Documentos_Venta.Click
+    Private Sub Btn_Documentos_Venta_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Documentos_Venta.Click
 
         Dim _Msj_Tsc As LsValiciones.Mensajes = Fx_Revisar_Tasa_Cambio(_Fm_Menu_Padre)
 
@@ -256,4 +258,5 @@ Public Class Modulo_Ventas
         _Fm_Menu_Padre.ShowModalPanel(NewPanel, DevComponents.DotNetBar.Controls.eSlideSide.Left)
 
     End Sub
+
 End Class

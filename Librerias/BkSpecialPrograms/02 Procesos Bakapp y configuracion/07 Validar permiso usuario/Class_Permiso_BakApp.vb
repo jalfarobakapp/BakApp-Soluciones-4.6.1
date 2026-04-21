@@ -669,6 +669,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00168", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00169", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00170", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00171", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -1170,6 +1171,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Sobs0005", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Sobs0006", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Sobs0007", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Sobs0008", _Objeto, _Formulario)
 
         _SqlQuery += vbCrLf
 
@@ -2961,13 +2963,18 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00169"
-                _DescripcionPermiso = "VENDER CON CUPO EXEDIDO CUANDO PUEDE HABER MOROSIDAD DE DOCUMENTOS"
+                _DescripcionPermiso = "VENDER CON CUPO EXEDIDO CUANDO SE EVALUA MOROSIDAD DE DOCUMENTOS"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00170"
-                _DescripcionPermiso = "VENDER CUANDO PUEDE HABER MOROSIDAD DE DOCUMENTOS Y ESTA VENDIENDO MAS DEL PROMEDIO DE VENTA NORMAL"
+                _DescripcionPermiso = "VENDER CUANDO SE ESTA VENDIENDO MAS DEL PROMEDIO DE VENTA NORMAL Y SE EVALUA MOROSIDAD DEL CLIENTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00171"
+                _DescripcionPermiso = "VENDER SIN ASOCIAR CIA. DE SEGUROS CUANDO EL CLIENTE LO NECESITA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
         End Select
 
 #End Region
@@ -4811,7 +4818,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
             Case "Pdc00013"
-                _DescripcionPermiso = "INGRESAR MAXI-SACO CON UNA CANTIDAD FUERA DEL RANGO DE 400 A 1500 KILOS."
+                _DescripcionPermiso = "INGRESAR MAXI-SACO CON UNA CANTIDAD MAYOR A 1500 KILOS."
                 _CodFamilia = Fx_Rellena_ceros(_Fml.PRODUCCION, 6)
                 _NombreFamiliaPermiso = _Fml.PRODUCCION.ToString
             Case "Pdc00014"
@@ -5194,6 +5201,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Sobs0007"
                 _DescripcionPermiso = "CREAR (NVV) NOTAS DE VENTA DESDE (COV) COTIZACION SOBRE STOCK"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Sobs0008"
+                _DescripcionPermiso = "AGREGAR CANTIDAD ADICIONAL DISPONIBLE PARA LA VENTA DE PALLETS EN UN PRODUCTO YA EXISTENTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
