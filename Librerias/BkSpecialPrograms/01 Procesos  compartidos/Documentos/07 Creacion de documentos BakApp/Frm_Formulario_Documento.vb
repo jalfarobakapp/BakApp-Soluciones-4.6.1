@@ -1718,6 +1718,19 @@ Public Class Frm_Formulario_Documento
             .Item("CodEntidad_Cia") = String.Empty
             .Item("CodSucEntidad_Cia") = String.Empty
 
+            .Item("ActivaTipoCompra") = False
+
+            If _Tido = "OCC" Then
+                Try
+                    .Item("ActivaTipoCompra") = _Global_Row_Configuracion_General.Item("ActivaTipoCompra")
+                Catch ex As Exception
+                    .Item("ActivaTipoCompra") = False
+                End Try
+            End If
+
+            .Item("TipoCompra") = String.Empty
+            .Item("Cn_TipoCompra") = 0
+
             _TblEncabezado.Rows.Add(NewFila)
 
         End With
@@ -9344,6 +9357,9 @@ Public Class Frm_Formulario_Documento
                                 .Id_Det = 0,
                                 .Idmaeddo = 0,
                                 .Idmaeedo = 0,
+                                .Empresa = _Fila.Cells("Empresa").Value,
+                                .Sucursal = _Fila.Cells("Sucursal").Value,
+                                .Bodega = _Fila.Cells("Bodega").Value,
                                 .Tido = _Tido,
                                 .Nudo = _TblEncabezado.Rows(0).Item("NroDocumento"),
                                 .Codigo = _Fila.Cells("Codigo").Value,
@@ -9363,15 +9379,27 @@ Public Class Frm_Formulario_Documento
                             Dim _Cl_Lotes As New Cl_Lotes_Bk(Ls_Lotes, _Lote_Madre)
                             Dim _Lotes As List(Of Zw_Docu_Det_Lote) = _Cl_Lotes.Fx_ObtenerLotesPorFila(_Fila)
 
+                            Dim _Cantidad_Ud1 As Double
+                            Dim _Cantidad_Ud2 As Double
+
                             Dim Fm As New Frm_Lotes_Det
+                            Fm.Text = $"Producto: {_Codigo.ToString.Trim} - {_Descripcion.ToString.Trim}"
                             Fm.Ls_Lotes = _Lotes
+                            Fm.ModoSeleccion = (_Tido = "GDI")
                             Fm.ShowDialog(Me)
 
-                            ' Hay un error al modificar el lote, se debe actualizar la lista de lotes en memoria para que se refleje en la grilla
-                            ' cuando se borra una fila los lotes quedan en otra fila, queda todo enredado, se supone que cada lista debe quedar con su fila
-                            ' correspondiente, pero no es así, se debe revisar la lógica de los lotes para que quede mas claro y no se pierdan los datos
-
                             If Fm.DialogResult = DialogResult.OK Then
+
+                                _Cantidad_Ud1 = Fm.Sum_CantUd1
+                                _Cantidad_Ud2 = Fm.Sum_CantUd2
+
+                                If _Cantidad_Ud1 > 0 Then
+                                    _Fila.Cells("TieneLotes").Value = True
+                                    _Fila.Cells("NroLote").Value = "LOTES"
+                                Else
+                                    _Fila.Cells("TieneLotes").Value = False
+                                    _Fila.Cells("NroLote").Value = String.Empty
+                                End If
 
                                 Dim _x = 0
                                 Dim _Salir = False
@@ -9395,6 +9423,8 @@ Public Class Frm_Formulario_Documento
                                     End If
                                 Next
 
+                                Sb_Procesar_CantidadPostIngreLotesoCant2(_Fila, _Cantidad_Ud1, _Cantidad_Ud2)
+
                             End If
 
                             Fm.Dispose()
@@ -9408,6 +9438,18 @@ Public Class Frm_Formulario_Documento
 
                             If Convert.ToBoolean(_Prct) Then
                                 Beep()
+                                Return
+                            End If
+
+                            If _Fila.Cells("TieneLotes").Value Then
+                                MessageBoxEx.Show(Me, "El producto tiene números de lote asociados;" & vbCrLf &
+                                                  "las cantidades deben modificarse directamente desde los lotes.",
+                                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                'Grilla_Detalle.CurrentCell = Grilla_Detalle.Rows(_Fila.Index).Cells("NroLote")
+                                If Not IsNothing(e) Then
+                                    e.SuppressKeyPress = False
+                                    e.Handled = True
+                                End If
                                 Return
                             End If
 
@@ -10530,6 +10572,155 @@ Public Class Frm_Formulario_Documento
                 End If
             End If
         End Try
+
+    End Sub
+
+    Sub Sb_Procesar_CantidadPostIngreLotesoCant2(_Fila As DataGridViewRow,
+                                                 _Cantidad_Ud1 As Double,
+                                                 _Cantidad_Ud2 As Double)
+
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+        Dim _UnTrans As Integer = _Fila.Cells("UnTrans").Value
+        Dim _Aplica_Oferta As Boolean = _Fila.Cells("Aplica_Oferta").Value
+        Dim _Oferta As String = _Fila.Cells("Oferta").Value
+
+        Dim _Precio As Double
+
+        _Fila.Cells("CantUd1").Value = _Cantidad_Ud1
+        _Fila.Cells("CantUd2").Value = _Cantidad_Ud2
+
+        If _UnTrans = 1 Then
+            _Fila.Cells("Cantidad").Value = _Cantidad_Ud1
+        Else
+            _Fila.Cells("Cantidad").Value = _Cantidad_Ud2
+        End If
+
+        If Fr_Alerta_Stock.Visible Then
+            Fr_Alerta_Stock.Close()
+        End If
+
+        Dim _TblMaedtli As DataTable = Fx_Crea_Tabla_Con_Filtro(_Ds_Matriz_Documentos.Tables("Descuentos_Doc"), "Id = " & _Id, "Id")
+
+        _Fila.Cells("Recargo_Campo").Value = String.Empty
+        _Fila.Cells("Recargo_Valor").Value = 0
+
+        Sb_Procesar_Datos_De_Grilla(_Fila, "Cantidad", True, True)
+
+        '_DatosDeGrillaProcesados = True
+
+        Dim _Cantidad = NuloPorNro(_Fila.Cells("Cantidad").Value, 0)
+
+        If CBool(_Cantidad) Then
+
+            If Not CBool(_TblMaedtli.Rows.Count) Then
+                Sb_Traer_Descuentos_Seteados_Desde_Lista(_Fila)
+                _TblMaedtli = Fx_Crea_Tabla_Con_Filtro(_Ds_Matriz_Documentos.Tables("Descuentos_Doc"), "Id = " & _Id, "Id")
+            End If
+
+            ' VOLVEMOS A RECALCULAR LOS DESCUENTOS
+            If ChkValores.Checked Then
+                _Precio = _Fila.Cells("ValNetoLinea").Value() + _Fila.Cells("DsctoNeto").Value()
+            Else
+                _Precio = _Fila.Cells("ValBrutoLinea").Value + _Fila.Cells("DsctoBruto").Value()
+            End If
+
+            Dim _Total_Descuento As Double = 0
+            Dim _NroDsctos As Integer
+
+            Eliminar_Campos(_Ds_Matriz_Documentos.Tables("Descuentos_Doc"), _Id)
+
+            Dim _Decimal As Integer
+
+            If ChkValores.Checked Then
+                _Decimal = 1
+            Else
+                _Decimal = 0
+            End If
+
+            For Each _Fila_Dscto As DataRow In _TblMaedtli.Rows
+
+                Dim _Podt As Double = _Fila_Dscto.Item("Podt_Original")
+                Dim _Podt_Original As Double = Math.Round(_Fila_Dscto.Item("Podt_Original"), 5)
+                Dim _Vadt As Double = Math.Round((_Podt / 100) * _Precio, 1)
+
+                Dim _TblDsctos = _Ds_Matriz_Documentos.Tables("Descuentos_Doc").Select("Id = " & _Id)
+                Dim _Valor = _Precio - _Total_Descuento
+
+                If _Podt > 0 Then
+
+                    _Vadt = Math.Round((_Podt / 100) * _Valor, _Decimal)
+
+                    If Chk_Redondear_Cero.Checked Then _Vadt = Fx_Redondeo_Descuento(_Vadt, Chk_Redondear_Cero.Checked)
+
+                    _Podt = Math.Round((_Vadt / _Valor) * 100, 5)
+
+                    Dim NewFila As DataRow
+                    NewFila = _Ds_Matriz_Documentos.Tables("Descuentos_Doc").NewRow
+
+                    With NewFila
+                        .Item("Id") = _Id
+                        .Item("Podt") = _Podt
+                        .Item("Vadt") = _Vadt
+                        .Item("Podt_Original") = _Podt_Original
+                        _Ds_Matriz_Documentos.Tables("Descuentos_Doc").Rows.Add(NewFila)
+                    End With
+
+                End If
+
+                _Total_Descuento += _Vadt
+                _NroDsctos += 1
+
+            Next
+
+            _Total_Descuento = Math.Round(_Total_Descuento)
+
+            _Fila.Cells("DescuentoValor").Value = Math.Round(_Total_Descuento, 0)
+            _Fila.Cells("NroDscto").Value = _NroDsctos
+
+            Dim _Recargo_Valor As Double = _Fila.Cells("Recargo_Valor").Value
+
+            If CBool(_Recargo_Valor) Then
+                Sb_Procesar_Datos_De_Grilla(_Fila, "Cantidad", False, False)
+            End If
+
+            If CBool(_Total_Descuento) Then
+                Sb_Procesar_Datos_De_Grilla(_Fila, "DescuentoValor", False, False)
+            End If
+
+            '_DatosDeGrillaProcesados = True
+
+            '' Aca Incorporar funcion para OFERTAS
+
+            If _Aplica_Oferta Then
+
+                Sb_Editar_Oferta(_Fila)
+
+            Else
+
+                If Not String.IsNullOrEmpty(_Oferta) Then
+
+                    Consulta_sql = "Select * From MAEERES Where TIPORESE In ('OFE','OFD') And CODIGO = '" & _Codigo & "'"
+                    Dim _Row_Maeeres As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    Dim _Cantidad_Oferta As Double = _Row_Maeeres.Item("CANTIDAD")
+
+                    If _Cantidad_Oferta <= _Cantidad Then
+
+                        Sb_Insertar_Oferta(_Fila)
+
+                    Else
+
+                        _Fila.Cells("Aplica_Oferta").Value = False
+
+                    End If
+
+                End If
+
+            End If
+
+        End If
+
 
     End Sub
 
@@ -19099,6 +19290,19 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
             _Grabar = Fm_Obs.Pro_Grabar
             _Class_Referencias_DTE = Fm_Obs.Pro_Class_Referencias_DTE
             _Grabar_e_Imprimir = Not Fm_Obs.Solo_Grabar
+
+            Try
+                If _Global_Row_Configuracion_General.Item("ActivaTipoCompra") Then
+                    _TblEncabezado.Rows(0).Item("ActivaTipoCompra") = True
+                    _TblEncabezado.Rows(0).Item("Cn_TipoCompra") = Fm_Obs.Txt_TipoCompra.Tag
+                    _TblEncabezado.Rows(0).Item("TipoCompra") = Fm_Obs.Txt_TipoCompra.Text
+                End If
+            Catch ex As Exception
+                _TblEncabezado.Rows(0).Item("ActivaTipoCompra") = False
+                _TblEncabezado.Rows(0).Item("Cn_TipoCompra") = 0
+                _TblEncabezado.Rows(0).Item("TipoCompra") = String.Empty
+            End Try
+
             Fm_Obs.Dispose()
 
         Else
@@ -19374,6 +19578,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
         End If
 
         _New_Doc.Zw_Transporte_Dte = Zw_Transporte_Dte
+        _New_Doc.Ls_Lotes = Ls_Lotes
 
         _New_Doc.B2B = B2B
 

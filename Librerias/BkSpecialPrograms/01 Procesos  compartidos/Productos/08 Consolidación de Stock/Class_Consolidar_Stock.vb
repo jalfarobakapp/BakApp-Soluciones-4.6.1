@@ -773,6 +773,112 @@ Where Id = {_Id_SobreStock}" & vbCrLf & vbCrLf
 
     End Function
 
+
+    Function Fx_Consolidar_Lotes(_Empresa As String,
+                                _Sucursal As String,
+                                _Bodega As String,
+                                _RowProducto As DataRow) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim _Codigo = _RowProducto.Item("KOPR")
+        Dim _Descripcion = _RowProducto.Item("NOKOPR")
+        Dim _SqlQuery As String = String.Empty
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros($"{_Global_BaseBk} Zw_Docu_Det_Lote",
+                             $"Empresa = '{_Empresa}' And Sucursal = '{_Sucursal}' And Bodega = '{_Bodega}' And Codigo = '{_Codigo}'")
+
+        If Not CBool(_Reg) Then
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "No existen datos en Zw_Docu_Det_Lote"
+            Return _Mensaje
+        End If
+
+        _SqlQuery = $"
+
+DECLARE @Codigo VARCHAR(20) = '{_Codigo}';      -- <== AQUÍ EL PRODUCTO
+DECLARE @Empresa VARCHAR(2) = '{_Empresa}';     -- Ajusta si corresponde
+DECLARE @Sucursal VARCHAR(3) = '{_Sucursal}';   -- Ajusta si corresponde
+DECLARE @Bodega VARCHAR(3) = '{_Bodega}';       -- Ajusta si corresponde
+
+IF OBJECT_ID('tempdb..#StockCalculado') IS NOT NULL DROP TABLE #StockCalculado;
+
+/*===========================================================
+  1) CALCULAR STOCK REAL POR LOTE
+===========================================================*/
+SELECT 
+    L.Codigo,
+    L.NroLote,
+    L.SubLote,
+    SUM(CASE WHEN L.Tido IN ('GRC','GRI') THEN L.CantUd1 ELSE 0 END)
+      - SUM(CASE WHEN L.Tido = 'GDI' THEN L.CantUd1 ELSE 0 END) AS StockUd1,
+    SUM(CASE WHEN L.Tido IN ('GRC','GRI') THEN L.CantUd2 ELSE 0 END)
+      - SUM(CASE WHEN L.Tido = 'GDI' THEN L.CantUd2 ELSE 0 END) AS StockUd2
+INTO #StockCalculado
+FROM {_Global_BaseBk}Zw_Docu_Det_Lote L
+WHERE L.Codigo = @Codigo
+GROUP BY L.Codigo, L.NroLote, L.SubLote;
+
+/*===========================================================
+  2) INSERTAR LOTES QUE NO EXISTEN EN Zw_Prod_Stock_Lote
+===========================================================*/
+INSERT INTO {_Global_BaseBk}Zw_Prod_Stock_Lote (Empresa, Sucursal, Bodega, Codigo, NroLote, SubLote, Stfilt1, Stfilt2)
+SELECT 
+    @Empresa,
+    @Sucursal,
+    @Bodega,
+    C.Codigo,
+    C.NroLote,
+    C.SubLote,
+    C.StockUd1,
+    C.StockUd2
+FROM #StockCalculado C
+LEFT JOIN {_Global_BaseBk}Zw_Prod_Stock_Lote S
+    ON S.Codigo = C.Codigo
+    AND S.NroLote = C.NroLote
+    AND S.SubLote = C.SubLote
+WHERE S.Codigo IS NULL;
+
+/*===========================================================
+  3) ACTUALIZAR LOTES EXISTENTES
+===========================================================*/
+UPDATE S
+SET 
+    S.Stfilt1 = C.StockUd1,
+    S.Stfilt2 = C.StockUd2
+FROM {_Global_BaseBk}Zw_Prod_Stock_Lote S
+INNER JOIN #StockCalculado C
+    ON C.Codigo = S.Codigo
+    AND C.NroLote = S.NroLote
+    AND C.SubLote = S.SubLote
+WHERE S.Codigo = @Codigo;
+"
+
+        Try
+
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery) Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = "OK"
+                _Mensaje.Detalle = String.Empty
+                _Mensaje.Icono = MessageBoxIcon.Information
+            Else
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Mensaje = "Error al actualizar el stock de los lotes del producto " & _Codigo & " - " & _Descripcion
+                _Mensaje.Detalle = String.Empty
+                _Mensaje.Icono = MessageBoxIcon.Error
+            End If
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Error al actualizar el stock de los lotes del producto " & _Codigo & " - " & _Descripcion
+            _Mensaje.Detalle = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Private Function Stock_A_Una_Fecha_X_Producto(_Row_Producto As DataRow,
                                                   _Empresa As String,
                                                   _Sucursal As String,

@@ -4,6 +4,9 @@
     Public Property Id_Det As Integer
     Public Property Idmaeddo As Integer
     Public Property Idmaeedo As Integer
+    Public Property Empresa As String
+    Public Property Sucursal As String
+    Public Property Bodega As String
     Public Property Tido As String
     Public Property Nudo As String
     Public Property Codigo As String
@@ -19,6 +22,8 @@
     Public Property Ud2 As String
     Public Property CantUd1 As Double
     Public Property CantUd2 As Double
+    Public Property StockUd1 As Double
+    Public Property StockUd2 As Double
 
     Public Sub New()
 
@@ -41,6 +46,8 @@
         Ud2 = String.Empty
         CantUd1 = 0
         CantUd2 = 0
+        StockUd1 = 0
+        StockUd2 = 0
 
     End Sub
 

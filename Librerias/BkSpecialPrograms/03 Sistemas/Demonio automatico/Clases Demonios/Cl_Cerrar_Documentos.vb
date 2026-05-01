@@ -136,10 +136,26 @@ Public Class Cl_Cerrar_Documentos
 
         If CerrarDocEmpresas Then
             Consulta_Sql = Replace(Consulta_Sql, "#Filtro#",
-                                   "Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
+                                   "Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha & vbCrLf & "--NewFiltro")
         Else
             Consulta_Sql = Replace(Consulta_Sql, "#Filtro#",
-                                   "Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha)
+                                   "Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.TIDO = '" & _Tido & "' And Edo.ESDO = ''" & _TdFecha & vbCrLf & "--NewFiltro")
+        End If
+
+        Dim _ExluirB2B As Boolean = True
+
+        If _ExluirB2B Then
+
+            Dim _Condicion_B2B As String = $"
+			-- 🔥 EXCLUSIÓN DE DOCUMENTOS B2B
+    AND NOT EXISTS (
+        SELECT 1
+        FROM {_Global_BaseBk}Zw_Docu_Ent Z
+        WHERE Z.Idmaeedo = Edo.IDMAEEDO
+          AND Z.B2B = 1 AND Z.Tido = '{_Tido}'
+    )"
+            Consulta_Sql = Replace(Consulta_Sql, "--NewFiltro", _Condicion_B2B)
+
         End If
 
         Consulta_Sql = Replace(Consulta_Sql, "#Campo_SUENDOFI#", "")
@@ -209,7 +225,6 @@ Public Class Cl_Cerrar_Documentos
                 If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
                     Log_Registro += _Sql.Pro_Error & vbCrLf
                 End If
-
 
                 If _Tido = "COV" Then
 

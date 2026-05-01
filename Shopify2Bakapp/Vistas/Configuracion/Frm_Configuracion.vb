@@ -183,7 +183,7 @@ Public Class Frm_Configuracion
                     Formato_1.Text = miConfig.Empresa1_Formato
                     NombreCorreo_2.Text = miConfig.Empresa2_NombreCorreo
                     Formato_2.Text = miConfig.Empresa2_Formato
-
+                    ClienteActivo.Value = miConfig.ClienteActivo
                     _Mensaje.EsCorrecto = True
                     _Mensaje.Mensaje = "Configuración de correos cargada correctamente."
                     _Mensaje.Detalle = "Carga exitosa"
@@ -320,7 +320,8 @@ Public Class Frm_Configuracion
             .Empresa1_Formato = Formato_1.Text,
             .Empresa2_NombreCorreo = NombreCorreo_2.Text,
             .Empresa2_Formato = Formato_2.Text,
-            .FechaModificacion = DateTime.Now
+            .FechaModificacion = DateTime.Now,
+            .ClienteActivo = ClienteActivo.Value
         }
 
             Dim jsonString As String = JsonConvert.SerializeObject(miConfig, Formatting.Indented)
@@ -569,5 +570,13 @@ Public Class Frm_Configuracion
         ' _Cl_ConfiguracionLocal.Configuracion.NombreCorreo1 = NombreCorreo_1.Text ... etc
 
         MessageBoxEx.Show(Me, "Configuración correcta", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+    End Sub
+
+    Private Sub LabelX5_Click(sender As Object, e As EventArgs) Handles LabelX5.Click
+
+    End Sub
+
+    Private Sub ClienteActivo_ValueChanged(sender As Object, e As EventArgs) Handles ClienteActivo.ValueChanged
+
     End Sub
 End Class

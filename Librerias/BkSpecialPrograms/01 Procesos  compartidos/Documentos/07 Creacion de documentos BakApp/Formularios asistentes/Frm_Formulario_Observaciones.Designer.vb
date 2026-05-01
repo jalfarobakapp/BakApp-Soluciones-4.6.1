@@ -24,9 +24,9 @@ Partial Class Frm_Formulario_Observaciones
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Formulario_Observaciones))
-        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.TxtOrdendecompra = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.TxtFormadepago = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -43,6 +43,8 @@ Partial Class Frm_Formulario_Observaciones
         Me.Btn_Grabar_Pagar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grupo_OtrasObservaciones = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Txt_TipoCompra = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Lbl_TipoCompra = New DevComponents.DotNetBar.LabelX()
         Me.Txt_MotivoNCV = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Placa = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -52,6 +54,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.Lbl_Nombre_Retirador_Mercaderia = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Chk_Deshabilitar_ObsAdicionales = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Grilla_Obs_Adicionales = New DevComponents.DotNetBar.Controls.DataGridViewX()
@@ -60,7 +63,6 @@ Partial Class Frm_Formulario_Observaciones
         Me.Imagenes_32x32 = New System.Windows.Forms.ImageList(Me.components)
         Me.Btn_GDI_GTI = New DevComponents.DotNetBar.ButtonX()
         Me.Chk_GrabaNVVCustomizable = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Deshabilitar_ObsAdicionales = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.DtpFechaEntrega, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -240,7 +242,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_e_Imprimir, Me.Btn_Solo_Grabar, Me.Btn_Grabar_Observaciones, Me.Btn_Referencias_DTE, Me.Btn_Grabar_Pagar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 430)
+        Me.Bar2.Location = New System.Drawing.Point(0, 467)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(684, 41)
         Me.Bar2.Stretch = True
@@ -344,6 +346,8 @@ Partial Class Frm_Formulario_Observaciones
         '
         Me.Grupo_OtrasObservaciones.BackColor = System.Drawing.Color.White
         Me.Grupo_OtrasObservaciones.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_OtrasObservaciones.Controls.Add(Me.Txt_TipoCompra)
+        Me.Grupo_OtrasObservaciones.Controls.Add(Me.Lbl_TipoCompra)
         Me.Grupo_OtrasObservaciones.Controls.Add(Me.Txt_MotivoNCV)
         Me.Grupo_OtrasObservaciones.Controls.Add(Me.LabelX6)
         Me.Grupo_OtrasObservaciones.Controls.Add(Me.Txt_Placa)
@@ -358,7 +362,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.Grupo_OtrasObservaciones.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_OtrasObservaciones.Location = New System.Drawing.Point(6, 176)
         Me.Grupo_OtrasObservaciones.Name = "Grupo_OtrasObservaciones"
-        Me.Grupo_OtrasObservaciones.Size = New System.Drawing.Size(654, 98)
+        Me.Grupo_OtrasObservaciones.Size = New System.Drawing.Size(654, 146)
         '
         '
         '
@@ -388,6 +392,42 @@ Partial Class Frm_Formulario_Observaciones
         '
         Me.Grupo_OtrasObservaciones.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Grupo_OtrasObservaciones.TabIndex = 39
+        '
+        'Txt_TipoCompra
+        '
+        Me.Txt_TipoCompra.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_TipoCompra.Border.Class = "TextBoxBorder"
+        Me.Txt_TipoCompra.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_TipoCompra.ButtonCustom.Image = CType(resources.GetObject("Txt_TipoCompra.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_TipoCompra.ButtonCustom.Visible = True
+        Me.Txt_TipoCompra.ButtonCustom2.Image = CType(resources.GetObject("Txt_TipoCompra.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_TipoCompra.ButtonCustom2.Visible = True
+        Me.Txt_TipoCompra.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_TipoCompra.ForeColor = System.Drawing.Color.Black
+        Me.Txt_TipoCompra.Location = New System.Drawing.Point(3, 113)
+        Me.Txt_TipoCompra.MaxLength = 30
+        Me.Txt_TipoCompra.Name = "Txt_TipoCompra"
+        Me.Txt_TipoCompra.PreventEnterBeep = True
+        Me.Txt_TipoCompra.ReadOnly = True
+        Me.Txt_TipoCompra.Size = New System.Drawing.Size(362, 22)
+        Me.Txt_TipoCompra.TabIndex = 15
+        '
+        'Lbl_TipoCompra
+        '
+        Me.Lbl_TipoCompra.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_TipoCompra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_TipoCompra.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_TipoCompra.Location = New System.Drawing.Point(3, 93)
+        Me.Lbl_TipoCompra.Name = "Lbl_TipoCompra"
+        Me.Lbl_TipoCompra.Size = New System.Drawing.Size(187, 23)
+        Me.Lbl_TipoCompra.TabIndex = 14
+        Me.Lbl_TipoCompra.Text = "Tipo de compra"
         '
         'Txt_MotivoNCV
         '
@@ -534,7 +574,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.SuperTabControl1.ReorderTabsEnabled = True
         Me.SuperTabControl1.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.SuperTabControl1.SelectedTabIndex = 0
-        Me.SuperTabControl1.Size = New System.Drawing.Size(670, 315)
+        Me.SuperTabControl1.Size = New System.Drawing.Size(670, 359)
         Me.SuperTabControl1.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SuperTabControl1.TabIndex = 40
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2})
@@ -548,9 +588,29 @@ Partial Class Frm_Formulario_Observaciones
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 34)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(670, 281)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(670, 325)
         Me.SuperTabControlPanel1.TabIndex = 1
         Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
+        '
+        'Chk_Deshabilitar_ObsAdicionales
+        '
+        Me.Chk_Deshabilitar_ObsAdicionales.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_Deshabilitar_ObsAdicionales.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Deshabilitar_ObsAdicionales.CheckBoxImageChecked = CType(resources.GetObject("Chk_Deshabilitar_ObsAdicionales.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Deshabilitar_ObsAdicionales.Checked = True
+        Me.Chk_Deshabilitar_ObsAdicionales.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_Deshabilitar_ObsAdicionales.CheckValue = "Y"
+        Me.Chk_Deshabilitar_ObsAdicionales.FocusCuesEnabled = False
+        Me.Chk_Deshabilitar_ObsAdicionales.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Deshabilitar_ObsAdicionales.Location = New System.Drawing.Point(6, 153)
+        Me.Chk_Deshabilitar_ObsAdicionales.Name = "Chk_Deshabilitar_ObsAdicionales"
+        Me.Chk_Deshabilitar_ObsAdicionales.Size = New System.Drawing.Size(314, 17)
+        Me.Chk_Deshabilitar_ObsAdicionales.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Deshabilitar_ObsAdicionales.TabIndex = 146
+        Me.Chk_Deshabilitar_ObsAdicionales.Text = "Habilitar datos asicionales a observaciones"
         '
         'SuperTabItem1
         '
@@ -566,7 +626,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(670, 315)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(670, 359)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
         '
@@ -575,37 +635,37 @@ Partial Class Frm_Formulario_Observaciones
         Me.Grilla_Obs_Adicionales.AllowUserToAddRows = False
         Me.Grilla_Obs_Adicionales.AllowUserToDeleteRows = False
         Me.Grilla_Obs_Adicionales.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Obs_Adicionales.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Obs_Adicionales.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla_Obs_Adicionales.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Obs_Adicionales.DefaultCellStyle = DataGridViewCellStyle8
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Obs_Adicionales.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla_Obs_Adicionales.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Obs_Adicionales.EnableHeadersVisualStyles = False
         Me.Grilla_Obs_Adicionales.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Obs_Adicionales.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Obs_Adicionales.Name = "Grilla_Obs_Adicionales"
-        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Obs_Adicionales.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
-        Me.Grilla_Obs_Adicionales.Size = New System.Drawing.Size(670, 315)
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Obs_Adicionales.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        Me.Grilla_Obs_Adicionales.Size = New System.Drawing.Size(670, 359)
         Me.Grilla_Obs_Adicionales.StandardTab = True
         Me.Grilla_Obs_Adicionales.TabIndex = 28
         '
@@ -623,7 +683,7 @@ Partial Class Frm_Formulario_Observaciones
         Me.Warning_Visado.CloseButtonVisible = False
         Me.Warning_Visado.ForeColor = System.Drawing.Color.Black
         Me.Warning_Visado.Image = CType(resources.GetObject("Warning_Visado.Image"), System.Drawing.Image)
-        Me.Warning_Visado.Location = New System.Drawing.Point(10, 358)
+        Me.Warning_Visado.Location = New System.Drawing.Point(10, 400)
         Me.Warning_Visado.Name = "Warning_Visado"
         Me.Warning_Visado.OptionsText = "Ver permisos"
         Me.Warning_Visado.Size = New System.Drawing.Size(445, 34)
@@ -648,7 +708,7 @@ Partial Class Frm_Formulario_Observaciones
         '
         Me.Btn_GDI_GTI.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_GDI_GTI.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_GDI_GTI.Location = New System.Drawing.Point(461, 358)
+        Me.Btn_GDI_GTI.Location = New System.Drawing.Point(461, 400)
         Me.Btn_GDI_GTI.Name = "Btn_GDI_GTI"
         Me.Btn_GDI_GTI.Size = New System.Drawing.Size(219, 46)
         Me.Btn_GDI_GTI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -665,38 +725,18 @@ Partial Class Frm_Formulario_Observaciones
         Me.Chk_GrabaNVVCustomizable.CheckBoxImageChecked = CType(resources.GetObject("Chk_GrabaNVVCustomizable.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_GrabaNVVCustomizable.FocusCuesEnabled = False
         Me.Chk_GrabaNVVCustomizable.ForeColor = System.Drawing.Color.Black
-        Me.Chk_GrabaNVVCustomizable.Location = New System.Drawing.Point(10, 398)
+        Me.Chk_GrabaNVVCustomizable.Location = New System.Drawing.Point(10, 440)
         Me.Chk_GrabaNVVCustomizable.Name = "Chk_GrabaNVVCustomizable"
         Me.Chk_GrabaNVVCustomizable.Size = New System.Drawing.Size(314, 17)
         Me.Chk_GrabaNVVCustomizable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_GrabaNVVCustomizable.TabIndex = 145
         Me.Chk_GrabaNVVCustomizable.Text = "Grabar nota de venta como CUSTOMIZABLE"
         '
-        'Chk_Deshabilitar_ObsAdicionales
-        '
-        Me.Chk_Deshabilitar_ObsAdicionales.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_Deshabilitar_ObsAdicionales.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Deshabilitar_ObsAdicionales.CheckBoxImageChecked = CType(resources.GetObject("Chk_Deshabilitar_ObsAdicionales.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Deshabilitar_ObsAdicionales.Checked = True
-        Me.Chk_Deshabilitar_ObsAdicionales.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Chk_Deshabilitar_ObsAdicionales.CheckValue = "Y"
-        Me.Chk_Deshabilitar_ObsAdicionales.FocusCuesEnabled = False
-        Me.Chk_Deshabilitar_ObsAdicionales.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Deshabilitar_ObsAdicionales.Location = New System.Drawing.Point(6, 153)
-        Me.Chk_Deshabilitar_ObsAdicionales.Name = "Chk_Deshabilitar_ObsAdicionales"
-        Me.Chk_Deshabilitar_ObsAdicionales.Size = New System.Drawing.Size(314, 17)
-        Me.Chk_Deshabilitar_ObsAdicionales.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Deshabilitar_ObsAdicionales.TabIndex = 146
-        Me.Chk_Deshabilitar_ObsAdicionales.Text = "Habilitar datos asicionales a observaciones"
-        '
         'Frm_Formulario_Observaciones
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(684, 471)
+        Me.ClientSize = New System.Drawing.Size(684, 508)
         Me.Controls.Add(Me.Chk_GrabaNVVCustomizable)
         Me.Controls.Add(Me.Btn_GDI_GTI)
         Me.Controls.Add(Me.Warning_Visado)
@@ -761,4 +801,6 @@ Partial Class Frm_Formulario_Observaciones
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Chk_GrabaNVVCustomizable As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_Deshabilitar_ObsAdicionales As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Txt_TipoCompra As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Lbl_TipoCompra As DevComponents.DotNetBar.LabelX
 End Class

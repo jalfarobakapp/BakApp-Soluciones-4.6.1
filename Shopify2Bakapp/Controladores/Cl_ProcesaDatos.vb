@@ -24,7 +24,7 @@ Public Class Cl_ProcesaDatos
             _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
             '-----------------------------------------------------------------------------------------
             '1. BUSCAR NOTAS DE VENTA (NVV) DEL E-COMMERCE QUE NO TENGAN DESPACHO ASIGNADO
-            Consulta_sql = $"SELECT TOP 10
+            Consulta_sql = $"SELECT TOP 1
     e.IDMAEEDO, e.TIDO, e.NUDO, e.ENDO, e.SUENDO,
     m.NOKOEN, m.PAEN, m.CIEN, m.CMEN,
     e.EMPRESA, e.SUDO,
@@ -52,13 +52,12 @@ CROSS APPLY (
 LEFT JOIN MAEDPCE ce On ce.ARCHIRSD = 'MAEEDO' And ce.IDRSD = e.IDMAEEDO
 WHERE e.TIDO = 'NVV'
   AND e.NUDO LIKE 'B2B%'
+  AND e.ESDO = ''
   AND NOT EXISTS (
         SELECT 1
-        FROM {Frm_Sincronizador._Global_BaseBk}Zw_Docu_Ent z
+        FROM  {Frm_Sincronizador._Global_BaseBk}Zw_Docu_Ent z
         WHERE z.Idmaeedo = e.IDMAEEDO
-  )
-          AND e.IDMAEEDO In (976810,976811)
-        "
+  )"
 
             Dim _Tbl_Pendientes As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql, False)
 
@@ -148,7 +147,7 @@ WHERE e.TIDO = 'NVV'
                         If NVV.PagoSuficiente = 1 Then
                             Sb_Insertar_Log_Gestiones(NVV, $"Iniciando la creación del ticket para enviar el documento {NVV.NUDO} (Pago validado).")
                             Sb_AddToLog("Demonio Despachos", $"Iniciando la creación del ticket para enviar el documento {NVV.NUDO} (Pago validado).", Txt_Log)
-
+                            'DESCOMENTAR
                             _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(NVV.IDMAEEDO, NVV.TIDO, NVV.NUDO, True, _FechaParaFacturar, "R", False, NVV.EMPRESA, NVV.SUENDO, NVV.CodFuncionario, True, NVV.IDMAEDPCE, NVV.CodFuncionario)
 
                             If _Mensaje_Stem.EsCorrecto Then
@@ -229,6 +228,7 @@ CROSS APPLY (
 LEFT JOIN MAEDPCE ce On ce.ARCHIRSD = 'MAEEDO' And ce.IDRSD = e.IDMAEEDO
 WHERE e.TIDO = 'NVV'
   AND e.NUDO LIKE 'B2B%'
+  AND e.ESDO = ''
   -- 1. Validamos que exista en la cabecera de entregas y sea B2B
   AND EXISTS (
         SELECT 1
@@ -241,9 +241,7 @@ WHERE e.TIDO = 'NVV'
         SELECT 1 
         FROM {Frm_Sincronizador._Global_BaseBk}Zw_Stmp_Enc s
         WHERE s.Idmaeedo = e.IDMAEEDO
-  )
-        AND e.IDMAEEDO In (976810,976811)
-        "
+  )"
 
             Dim _Tbl_Pendientes As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql, False)
 
@@ -328,7 +326,7 @@ WHERE e.TIDO = 'NVV'
                     If NVV2.PagoSuficiente = 1 Then
                         Sb_Insertar_Log_Gestiones(NVV2, $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).")
                         Sb_AddToLog("Demonio Despachos", $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).", Txt_Log)
-
+                        'DESCOMENTAR
                         _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(NVV2.IDMAEEDO, NVV2.TIDO, NVV2.NUDO, True, _FechaParaFacturar, "R", False, NVV2.EMPRESA, NVV2.SUENDO, NVV2.CodFuncionario, True, NVV2.IDMAEDPCE, NVV2.CodFuncionario)
 
                         If _Mensaje_Stem.EsCorrecto Then
@@ -336,15 +334,20 @@ WHERE e.TIDO = 'NVV'
 
                             '
                             Sb_AddToLog("Demonio Despachos", $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV2.NUDO}!", Txt_Log)
-                            Dim mensajeCambio As New LsValiciones.Mensajes
-                            mensajeCambio = Fx_CambiarBodegaSeaGarden2MeatGarden(NVV2.IDMAEEDO)
-                            If mensajeCambio.EsCorrecto Then
-                                Sb_Insertar_Log_Gestiones(NVV2, $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.")
-                                Sb_AddToLog("Demonio Despachos", $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
-                            Else
-                                Sb_Insertar_Log_Gestiones(NVV2, $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.")
-                                Sb_AddToLog("Demonio Despachos", $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
+                            If NVV2.EMPRESA = "02" Then
+                                Sb_AddToLog("Demonio Despachos", $"se cambia momentaneamente la empresa para el documento {NVV2.NUDO}!", Txt_Log)
+
+                                Dim mensajeCambio As New LsValiciones.Mensajes
+                                mensajeCambio = Fx_CambiarBodegaSeaGarden2MeatGarden(NVV2.IDMAEEDO)
+                                If mensajeCambio.EsCorrecto Then
+                                    Sb_Insertar_Log_Gestiones(NVV2, $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.")
+                                    Sb_AddToLog("Demonio Despachos", $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
+                                Else
+                                    Sb_Insertar_Log_Gestiones(NVV2, $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.")
+                                    Sb_AddToLog("Demonio Despachos", $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
+                                End If
                             End If
+
                         Else
                             Sb_Insertar_Log_Gestiones(NVV2, $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}")
                             Sb_AddToLog("Demonio Despachos", $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
@@ -767,6 +770,7 @@ WHERE e.TIDO = 'NVV'
         Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Try
+            'DESCOMENTAR
             SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
             myTrans = Cn2.BeginTransaction()
 
@@ -945,6 +949,71 @@ WHERE e.TIDO = 'NVV'
         Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Try
+            'DESCOMENTAR
+            SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+            Dim Comando As New System.Data.SqlClient.SqlCommand(Consulta_Log, Cn2)
+            Comando.ExecuteNonQuery()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+        Catch ex As Exception
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+            ' Descomentado para asegurarte que si falla esto, también se avise por archivo físico.
+            ' Sb_AddToLog("Demonio Despachos", $"Error al insertar log en BD para {NVV.NUDO}: {ex.Message}", Txt_Log)
+        End Try
+    End Sub
+
+    Private Sub Sb_Insertar_Log_Fichas(Ficha As EntidadFactura)
+        Dim Texto_Accion As String = $"Campo: LVEN, Original: {Ficha.ListaEntidad}, Modificado: {Ficha.ListaKOLTPR}"
+        Dim _AccionLimpia As String = Texto_Accion.Replace("'", "''")
+        Dim _NombreEquipo As String = Environment.MachineName
+        Dim Consulta_Log As String = $"
+            INSERT INTO {Frm_Sincronizador._Global_BaseBk}Zw_Log_Gestiones
+                       ([Empresa]
+                       ,[NombreEquipo]
+                       ,[Funcionario]
+                       ,[Modalidad]
+                       ,[Archirst]
+                       ,[Idrst]
+                       ,[Fecha_Hora]
+                       ,[CodAccion]
+                       ,[Accion]
+                       ,[CodPermiso]
+                       ,[Kopr]
+                       ,[Koen]
+                       ,[Suen]
+                       ,[Solicitud_Permiso]
+                       ,[Funcionario_Autoriza]
+                       ,[PermisoRemoto]
+                       ,[Id_Rem]
+                       ,[NroRemota]
+                       ,[Tido]
+                       ,[Nudo])
+                 VALUES
+                       (''              -- Empresa
+                       ,'{_NombreEquipo}'             -- NombreEquipo
+                       ,'B2B'       -- Funcionario
+                       ,'WEB'                    -- Modalidad 
+                       ,''                     -- Archirst 
+                       ,0               -- Idrst
+                       ,GETDATE()                    -- Fecha_Hora
+                       ,'ModEntidad'                   -- CodAccion
+                       ,'B2B: {_AccionLimpia}'            -- Accion 
+                       ,''                           -- CodPermiso
+                       ,''                           -- Kopr
+                       ,'{Ficha.KOEN}'                 -- Koen
+                       ,'{Ficha.SUEN}'               -- Suen
+                       ,0                            -- Solicitud_Permiso
+                       ,''                           -- Funcionario_Autoriza
+                       ,0                            -- PermisoRemoto
+                       ,0                            -- Id_Rem
+                       ,''                           -- NroRemota
+                       ,''                 -- Tido
+                       ,'');"
+
+        Dim Cn2 As New System.Data.SqlClient.SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Try
+            'DESCOMENTAR
             SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
             Dim Comando As New System.Data.SqlClient.SqlCommand(Consulta_Log, Cn2)
             Comando.ExecuteNonQuery()
@@ -957,7 +1026,6 @@ WHERE e.TIDO = 'NVV'
     End Sub
 
 
-
     Public Sub GestionarCorreos(Txt_Log As Object)
 
         ' PreCarga: Buscar FCV (B2B) para encolar el envío de correos
@@ -966,7 +1034,7 @@ WHERE e.TIDO = 'NVV'
             Dim _Documentos_Enviados As Integer = 0
 
             ' -----------------------------------------------------------------------------------------
-            ' 1. BUSCAR FACTURAS (FCV) B2B DE LOS ÚLTIMOS 7 DÍAS QUE NO ESTÉN EN LA COLA DE CORREOS
+            ' 1. BUSCAR FACTURAS (FCV) B2B DE LOS ÚLTIMOS 7 DÍAS QUE NO ESTÉN EN LA COLA DE CORREOS /// despues borrar Z.nudo = 
             ' -----------------------------------------------------------------------------------------
             Consulta_sql = $"SELECT 
     Z.Id, Z.Idmaeedo, Z.NombreEquipo, Z.TipoEstacion, Z.Empresa, Z.Modalidad, Z.Tido, Z.Nudo, 
@@ -1084,7 +1152,7 @@ ORDER BY Z.Id DESC"
                                      Select '', '{_Nombre_Correo}', '{_Kofudo}', '{_Asunto}', '{_EmailDestino}', '', IDMAEEDO, TIDO, NUDO, 
                                      '{_NombreFormato_Correo}', 1, 0, 0, 1, '{_CuerpoMensaje}', Getdate(), {Convert.ToInt32(_Para_Maeenmail)} 
                                      From MAEEDO Where IDMAEEDO = {_Idmaeedo}"
-
+                    'DESCOMENTAR
                     If _Sql.Ej_consulta_IDU(Consulta_sql, False) Then
                         _Documentos_Enviados += 1
 
@@ -1107,7 +1175,7 @@ ORDER BY Z.Id DESC"
             Sb_AddToLog("Demonio Despachos", $"Proceso finalizado. Total de correos encolados: {_Documentos_Enviados}", Txt_Log)
 
         Catch exGeneral As Exception
-            ' Atrapamos caídas totales del método (como pérdida de conexión a SQL)
+            ' Atrapamos caídas totales del método (como pérdida de conexión a SQL)encolar correos
             Sb_AddToLog("Demonio Despachos", $"Fallo general en GestionarCorreos: {exGeneral.Message}", Txt_Log)
         End Try
 
@@ -1291,6 +1359,171 @@ DECLARE @New_Idmaeedo INT;              -- Nuevo ID clonado
         If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
             Throw New System.Exception("Error al ejecutar el proceso de clonación de NVV." & vbCrLf & _Sql.Pro_Error)
         End If
+
+    End Sub
+
+
+
+    Public Sub ActualizarFicha(Txt_Log As Object)
+        Try
+            _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+            Consulta_sql = $"/* -----------------------------------------------------------
+   1) Calcular la fecha desde hace 4 meses
+----------------------------------------------------------- */
+DECLARE @FechaDesde DATE = DATEADD(MONTH, -4, CAST(GETDATE() AS DATE));
+
+/* -----------------------------------------------------------
+   2) CTE: Obtener la última factura FCV por cliente/sucursal
+----------------------------------------------------------- */
+;WITH UltimaFactura AS
+(
+    SELECT 
+        M.IDMAEEDO,
+        M.ENDO,
+        M.SUENDO,
+        M.NUDO,
+        M.FEEMDO,
+        ROW_NUMBER() OVER (
+            PARTITION BY M.ENDO, M.SUENDO
+            ORDER BY M.FEEMDO DESC, M.IDMAEEDO DESC
+        ) AS rn
+    FROM MAEEDO AS M
+    WHERE M.TIDO = 'FCV'
+      AND M.FEEMDO >= @FechaDesde
+)
+
+/* -----------------------------------------------------------
+   3) CTE: Primera línea del detalle
+----------------------------------------------------------- */
+, PrimeraLinea AS
+(
+    SELECT 
+        D.IDMAEEDO,
+        D.KOLTPR,
+        ROW_NUMBER() OVER (
+            PARTITION BY D.IDMAEEDO
+            ORDER BY D.IDMAEDDO ASC
+        ) AS rn
+    FROM MAEDDO AS D
+)
+
+/* -----------------------------------------------------------
+   4) Unir y filtrar solo entidades con lista distinta
+----------------------------------------------------------- */
+SELECT 
+    E.KOEN,
+    E.SUEN,
+    E.NOKOEN,
+    E.KOFUEN,
+    E.LVEN AS Lista_Entidad,
+    U.NUDO AS Numero_Factura,
+    U.FEEMDO AS Fecha_Ultima_Factura,
+    P.KOLTPR AS Lista_KOLTPR,
+    CASE 
+        WHEN P.KOLTPR = 'TABPP01P' THEN 'Clientes con TABPP01P'
+        WHEN P.KOLTPR = 'TABPPMIN' THEN 'Clientes con TABPPMIN'
+        ELSE 'Otra Lista'
+    END AS Clasificacion
+FROM MAEEN AS E
+LEFT JOIN UltimaFactura AS U
+       ON U.ENDO = E.KOEN
+      AND U.SUENDO = E.SUEN
+      AND U.rn = 1
+LEFT JOIN PrimeraLinea AS P
+       ON P.IDMAEEDO = U.IDMAEEDO
+      AND P.rn = 1
+WHERE P.KOLTPR IN ('TABPP01P','TABPPMIN')
+  AND E.LVEN <> P.KOLTPR   
+ORDER BY Clasificacion, E.KOEN, E.SUEN;"
+            Dim _Tbl_Pendientes As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql, False)
+
+            If Not String.IsNullOrEmpty(_SqlRandom.Pro_Error) Then
+                Sb_AddToLog("Demonio Despachos", $"Error al consultar la base de datos: {_SqlRandom.Pro_Error}", Txt_Log)
+                Return
+            End If
+
+            ' --- AQUÍ ESTÁ LA CORRECCIÓN CLAVE ---
+            ' 1. Validamos si el objeto es nulo (Pasa cuando se pierde la conexión a la BD)
+
+            ' 2. Si no es nulo, validamos si viene vacío
+            If _Tbl_Pendientes.Rows.Count = 0 Then
+                Sb_AddToLog("Demonio Despachos", "No se encontraron Fichas pendientes de actualizacion", Txt_Log)
+
+                ' No hay nada nuevo que despachar
+                Return
+            End If
+            ' -------------------------------------
+
+            Sb_AddToLog("Demonio Despachos", "Se encontraron " & _Tbl_Pendientes.Rows.Count & " Fichas pendientes de actualizacion.", Txt_Log)
+            ' 1. Declarar la lista donde guardaremos los objetos
+            Dim ListaDiferencias As New List(Of EntidadFactura)
+
+            ' 2. Recorrer las filas del DataTable
+            For Each row As DataRow In _Tbl_Pendientes.Rows
+
+                ' Creamos una nueva instancia de nuestra clase por cada fila
+                Dim entidad As New EntidadFactura()
+
+                ' 3. Mapear los campos (usando DirectCast o Convert para mayor seguridad)
+                entidad.KOEN = row("KOEN").ToString().Trim()
+                entidad.SUEN = row("SUEN").ToString().Trim()
+                entidad.NOKOEN = row("NOKOEN").ToString().Trim()
+                entidad.KOFUEN = row("KOFUEN").ToString().Trim()
+                entidad.ListaEntidad = row("Lista_Entidad").ToString().Trim()
+                entidad.NumeroFactura = row("Numero_Factura").ToString().Trim()
+
+                ' Validación para la fecha (siempre es bueno prevenir nulos en fechas)
+                If Not IsDBNull(row("Fecha_Ultima_Factura")) Then
+                    entidad.FechaUltimaFactura = Convert.ToDateTime(row("Fecha_Ultima_Factura"))
+                Else
+                    entidad.FechaUltimaFactura = Nothing
+                End If
+
+                entidad.ListaKOLTPR = row("Lista_KOLTPR").ToString().Trim()
+                entidad.Clasificacion = row("Clasificacion").ToString().Trim()
+
+                ' 4. Agregar a la lista
+                ListaDiferencias.Add(entidad)
+            Next
+
+            ' Ahora puedes usar "ListaDiferencias" para lo que necesites
+            Sb_AddToLog("Demonio Despachos", $"Se han cargado {ListaDiferencias.Count} objetos en memoria.", Txt_Log)
+
+            Dim _Registros_Actualizados As Integer = 0
+
+            ' Recorremos la lista de diferencias que detectamos
+            For Each item As EntidadFactura In ListaDiferencias
+
+                ' 1. Armar el UPDATE
+                ' Actualizamos la lista de venta (LVEN) con el valor sugerido (Lista_KOLTPR)
+                Consulta_sql = $"UPDATE MAEEN SET LVEN = '{item.ListaKOLTPR}' 
+                    WHERE KOEN = '{item.KOEN}' AND SUEN = '{item.SUEN}'"
+
+                ' 2. Ejecutar la consulta (Usamos Ej_consulta_IDU para Insert/Delete/Update)
+                'DESCOMENTAR
+                If _SqlRandom.Ej_consulta_IDU(Consulta_sql, False) Then
+                    _Registros_Actualizados += 1
+
+                    ' --- LOGS: Éxito ---
+                    Sb_Insertar_Log_Fichas(item)
+                    Sb_AddToLog("Demonio Despachos",
+                                $"Entidad {item.KOEN}-{item.SUEN} actualizada: LVEN '{item.ListaEntidad}' -> '{item.ListaKOLTPR}'",
+                                Txt_Log)
+                Else
+                    ' --- LOGS: Error de ejecución ---
+                    Sb_AddToLog("Demonio Despachos",
+                                $"Error al actualizar entidad {item.KOEN}. Detalle: {_SqlRandom.Pro_Error}",
+                                Txt_Log)
+                End If
+            Next
+
+            ' Resumen final en el log
+            Sb_AddToLog("Demonio Despachos", $"Proceso finalizado. Se actualizaron {_Registros_Actualizados} fichas de clientes.", Txt_Log)
+
+        Catch exGeneral As Exception
+            ' Si falla la consulta a BD principal, o cualquier cosa fuera del bucle, atrapamos la caída total.
+            Sb_AddToLog("Demonio Despachos", $"Fallo general o de conexión en ActualizarFicha: {exGeneral.Message}", Txt_Log)
+        End Try
 
     End Sub
 End Class

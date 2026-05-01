@@ -29,6 +29,8 @@ CREATE TABLE [dbo].[Zw_Docu_Ent](
     [UsaCiaSeguro]      [bit]           NOT NULL DEFAULT (0),
     [CodEntidad_Cia]    [varchar](13)   NOT NULL DEFAULT (''),
     [CodSucEntidad_Cia] [varchar](20)   NOT NULL DEFAULT (''),
+    [Cn_TipoCompra]     [int]           NOT NULL DEFAULT (0),
+    [TipoCompra]        [varchar](100)  NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Docu_Ent] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

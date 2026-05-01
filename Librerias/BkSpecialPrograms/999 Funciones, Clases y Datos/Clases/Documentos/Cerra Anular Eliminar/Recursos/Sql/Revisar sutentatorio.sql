@@ -16,7 +16,7 @@ Begin
     WHERE IDDDODCR=@Idmaeedo
 End
 
-If @Tido Not In ('COV','NVV','OCC','OCI') 
+If @Tido Not In ('COV','NVV','OCC','OCI','NVI') 
 Begin
 
        SELECT TOP 1 IDMAEDPCD,TIDP,NUDP,ENDP,FEEMDP 

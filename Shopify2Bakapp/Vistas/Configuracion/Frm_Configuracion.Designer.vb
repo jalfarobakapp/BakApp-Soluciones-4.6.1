@@ -79,6 +79,8 @@ Partial Class Frm_Configuracion
         Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_RutaEtiquetas = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.ClienteActivo = New DevComponents.DotNetBar.Controls.SwitchButton()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -93,7 +95,9 @@ Partial Class Frm_Configuracion
         'GroupBox1
         '
         Me.GroupBox1.BackColor = System.Drawing.Color.White
+        Me.GroupBox1.Controls.Add(Me.ClienteActivo)
         Me.GroupBox1.Controls.Add(Me.TxtBakApp)
+        Me.GroupBox1.Controls.Add(Me.LabelX5)
         Me.GroupBox1.Controls.Add(Me.Label6)
         Me.GroupBox1.Controls.Add(Me.Btn_ProbarConexionRd)
         Me.GroupBox1.Controls.Add(Me.Txt_Rd_Basededatos)
@@ -285,8 +289,8 @@ Partial Class Frm_Configuracion
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -304,9 +308,9 @@ Partial Class Frm_Configuracion
         Me.SuperTabControlPanel3.Controls.Add(Me.GroupBox3)
         Me.SuperTabControlPanel3.Controls.Add(Me.GroupBox2)
         Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 31)
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 0)
         Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(737, 261)
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(737, 292)
         Me.SuperTabControlPanel3.TabIndex = 0
         Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
         '
@@ -862,6 +866,42 @@ Partial Class Frm_Configuracion
         Me.Txt_RutaEtiquetas.TabIndex = 122
         Me.Txt_RutaEtiquetas.WatermarkText = "Ruta de PDF"
         '
+        'ClienteActivo
+        '
+        Me.ClienteActivo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ClienteActivo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.ClienteActivo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ClienteActivo.ForeColor = System.Drawing.Color.Black
+        Me.ClienteActivo.Location = New System.Drawing.Point(619, 49)
+        Me.ClienteActivo.Name = "ClienteActivo"
+        Me.ClienteActivo.OffText = "Desactivada"
+        Me.ClienteActivo.OnText = "Activa"
+        Me.ClienteActivo.Size = New System.Drawing.Size(89, 35)
+        Me.ClienteActivo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ClienteActivo.TabIndex = 184
+        Me.ClienteActivo.Value = True
+        Me.ClienteActivo.ValueObject = "Y"
+        '
+        'LabelX5
+        '
+        Me.LabelX5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.LabelX5.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(363, 25)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(250, 77)
+        Me.LabelX5.TabIndex = 185
+        Me.LabelX5.Text = "Actualizar la lista de precios desde la ficha del cliente, con la ultima factura " &
+    "generada "
+        Me.LabelX5.WordWrap = True
+        '
         'Frm_Configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
@@ -871,6 +911,7 @@ Partial Class Frm_Configuracion
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -950,4 +991,6 @@ Partial Class Frm_Configuracion
     Friend WithEvents Label7 As Label
     Friend WithEvents NombreCorreo_2 As TextBox
     Friend WithEvents Label8 As Label
+    Friend WithEvents ClienteActivo As DevComponents.DotNetBar.Controls.SwitchButton
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
 End Class

@@ -95,7 +95,7 @@ Public Class Frm_Sincronizador
             Switch_Sincronizacion.Enabled = True
 
             CircularPgrs.IsRunning = True
-            Timer_Ejecutar.Interval = 5000 ' (1000 * 60) * 5 ' Configurado a 30 segundos (Ajustable)
+            Timer_Ejecutar.Interval = (1000 * 60) * 1 ' Configurado a 30 segundos (Ajustable)
             Timer_Ejecutar.Start()
             Timer_Limpiar.Start()
             Timer_AjustarFecha.Start()
@@ -164,10 +164,14 @@ Public Class Frm_Sincronizador
             ' Toma un Top de 50 registros por ciclo para no saturar la memoria
             '_Cl_GeneraDespachos.Sb_Procesar_Despachos_ECommerce(Txt_Log, 50)
             'Sb_AddToLog("Tick de Prueba:" & _CL_ProcesaDatos.Fx_Testear_Conexion(), 50)
+            If Correos.ClienteActivo = -1 Then
+                _CL_ProcesaDatos.ActualizarFicha(Txt_Log)
+            End If
             _CL_ProcesaDatos.PreCarga(Txt_Log)
 
             _CL_ProcesaDatos.Sb_Procesar_Despachos_ECommerce(Txt_Log)
             _CL_ProcesaDatos.GestionarCorreos(Txt_Log)
+
         Catch ex As Exception
             ' Evita que el programa crashee si se cae el servidor SQL momentáneamente
             Sb_AddToLog("Error Demonio", "Fallo en ejecución: " & ex.Message, Txt_Log)

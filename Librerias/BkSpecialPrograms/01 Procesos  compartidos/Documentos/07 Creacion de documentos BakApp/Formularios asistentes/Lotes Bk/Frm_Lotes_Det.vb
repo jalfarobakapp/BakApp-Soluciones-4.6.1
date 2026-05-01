@@ -1,6 +1,5 @@
 ﻿Imports System.ComponentModel
 Imports DevComponents.DotNetBar
-Imports System.Globalization
 
 Public Class Frm_Lotes_Det
 
@@ -15,6 +14,7 @@ Public Class Frm_Lotes_Det
     Public Lista_Lotes As New BindingList(Of Zw_Docu_Det_Lote)
 
     Public Property ModoSoloLectura As Boolean = False
+    Public Property ModoSeleccion As Boolean = False
     Public Property Sum_CantUd1 As Double = 0
     Public Property Sum_CantUd2 As Double = 0
 
@@ -53,6 +53,9 @@ Public Class Frm_Lotes_Det
                 .Id_Det = 1,
                 .Idmaeddo = 0,
                 .Idmaeedo = 0,
+                .Empresa = String.Empty,
+                .Sucursal = String.Empty,
+                .Bodega = String.Empty,
                 .Tido = String.Empty,
                 .Nudo = String.Empty,
                 .Codigo = String.Empty,
@@ -116,6 +119,9 @@ Public Class Frm_Lotes_Det
                     .Id_Det = item.Id_Det,
                     .Idmaeddo = item.Idmaeddo,
                     .Idmaeedo = item.Idmaeedo,
+                    .Empresa = item.Empresa,
+                    .Sucursal = item.Sucursal,
+                    .Bodega = item.Bodega,
                     .Tido = item.Tido,
                     .Nudo = item.Nudo,
                     .Codigo = item.Codigo,
@@ -130,7 +136,9 @@ Public Class Frm_Lotes_Det
                     .Ud1 = item.Ud1,
                     .Ud2 = item.Ud2,
                     .CantUd1 = item.CantUd1,
-                    .CantUd2 = item.CantUd2
+                    .CantUd2 = item.CantUd2,
+                    .StockUd1 = item.StockUd1,
+                    .StockUd2 = item.StockUd2
                 })
         Next
         Return nuevaLista
@@ -195,7 +203,7 @@ Public Class Frm_Lotes_Det
             .Columns("CantUd2").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FElaboracion").Visible = True
+            .Columns("FElaboracion").Visible = Not ModoSeleccion
             .Columns("FElaboracion").HeaderText = "F.Elaboración"
             .Columns("FElaboracion").HeaderText = "Fecha y hora de elaboración"
             .Columns("FElaboracion").DefaultCellStyle.Format = "dd/MM/yyyy"
@@ -203,7 +211,7 @@ Public Class Frm_Lotes_Det
             .Columns("FElaboracion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FVencimiento").Visible = True
+            .Columns("FVencimiento").Visible = Not ModoSeleccion
             .Columns("FVencimiento").HeaderText = "F.Vencimiento"
             .Columns("FVencimiento").HeaderText = "Fecha y hora de vencimiento"
             .Columns("FVencimiento").DefaultCellStyle.Format = "dd/MM/yyyy"
@@ -232,6 +240,9 @@ Public Class Frm_Lotes_Det
         _Detalle.Id_Det = currentId
         _Detalle.Idmaeddo = _Item1.Idmaeddo
         _Detalle.Idmaeedo = _Item1.Idmaeedo
+        _Detalle.Empresa = _Item1.Empresa
+        _Detalle.Sucursal = _Item1.Sucursal
+        _Detalle.Bodega = _Item1.Bodega
         _Detalle.Tido = _Item1.Tido
         _Detalle.Nudo = _Item1.Nudo
         _Detalle.Codigo = _Item1.Codigo
@@ -277,6 +288,10 @@ Public Class Frm_Lotes_Det
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim _Fila As DataGridViewRow = Grilla.CurrentRow
 
+        Dim _Empresa As String = _Fila.Cells("Empresa").Value
+        Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
+        Dim _Bodega As String = _Fila.Cells("Bodega").Value
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
         Dim _Id_Det As Integer = _Fila.Cells("Id_Det").Value
         Dim _NroLote As String = _Fila.Cells("NroLote").Value
         Dim _SubLote As String = _Fila.Cells("SubLote").Value
@@ -304,7 +319,66 @@ Public Class Frm_Lotes_Det
 
                     'If _Fila.IsNewRow Then
 
-                    If _Cabeza <> "NroLote" Then
+                    If _Cabeza = "NroLote" Then
+
+                        If ModoSeleccion Then
+
+                            Dim _Row_Lote As DataRow
+                            Dim Fm As New Frm_Lotes_Select(_Empresa, _Sucursal, _Bodega, _Codigo)
+                            Fm.ShowDialog(Me)
+                            If Fm.DialogResult = DialogResult.OK Then
+                                _Row_Lote = Fm.Row_Lote
+                            End If
+                            Fm.Dispose()
+
+                            If IsNothing(_Row_Lote) Then
+                                Return
+                            End If
+
+                            ' --- Nueva validación: impedir duplicados como en ProcesarCambioCelda ---
+                            Dim selectedNro As String = Convert.ToString(_Row_Lote.Item("NroLote")).Trim()
+                            If String.IsNullOrEmpty(selectedNro) Then
+                                ' Si no trae nro de lote, no asignar
+                                Return
+                            End If
+
+                            Dim duplicado As Boolean = False
+                            Try
+                                For i As Integer = 0 To Lista_Lotes.Count - 1
+                                    If i <> _Index Then
+                                        Dim existente As String = If(Lista_Lotes(i).NroLote, String.Empty).Trim()
+                                        If String.Equals(existente, selectedNro, StringComparison.OrdinalIgnoreCase) Then
+                                            duplicado = True
+                                            Exit For
+                                        End If
+                                    End If
+                                Next
+                            Catch ex As Exception
+                                ' En caso de error al comprobar, tratamos como no duplicado (o podría registrarse)
+                                duplicado = False
+                            End Try
+
+                            If duplicado Then
+                                MessageBoxEx.Show(Me, $"El número de lote {selectedNro.ToString.Trim} ya existe en otra fila. Debe ser único.", "Validación",
+                                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Try
+                                    Call Grilla_KeyDown(sender, e)
+                                    'Sb_SetCellFocus(_Index, "NroLote", True)
+                                Catch ex As Exception
+                                End Try
+                                Return
+                            End If
+                            ' --- Fin validación duplicado ---
+
+                            _Fila.Cells("NroLote").Value = _Row_Lote.Item("NroLote")
+                            _Fila.Cells("SubLote").Value = _Row_Lote.Item("SubLote")
+                            _Fila.Cells("StockUd1").Value = _Row_Lote.Item("Stfilt1")
+                            _Fila.Cells("StockUd2").Value = _Row_Lote.Item("Stfilt2")
+                            Sb_SetCellFocus(_Index, "CantUd1", True)
+
+                        End If
+
+                    Else
 
                         If String.IsNullOrEmpty(_NroLote) Then
                             MessageBoxEx.Show(Me, "Debe ingresar el número de Lote", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, True)
@@ -313,13 +387,13 @@ Public Class Frm_Lotes_Det
                             Return
                         End If
 
-                    End If
+                        SendKeys.Send("{F2}")
+                        e.Handled = True
+                        'Grilla.Columns(_Cabeza).ReadOnly = False
+                        Grilla.CurrentCell.ReadOnly = False
+                        Grilla.BeginEdit(True)
 
-                    SendKeys.Send("{F2}")
-                    e.Handled = True
-                    'Grilla.Columns(_Cabeza).ReadOnly = False
-                    Grilla.CurrentCell.ReadOnly = False
-                    Grilla.BeginEdit(True)
+                    End If
 
                 End If
 
@@ -333,21 +407,35 @@ Public Class Frm_Lotes_Det
                 Try
                     If Not _Fila.IsNewRow Then
 
-                        If _Id_Det = 0 Then
-                            MessageBoxEx.Show(Me, "Esta línea no puede ser eliminada, pues es la línea de origen del producto", "Validación",
-                                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                            Return
+                        If Not String.IsNullOrEmpty(_Fila.Cells("NroLote").Value) Then
+                            If MessageBoxEx.Show(Me, "¿Está seguro de eliminar la fila seleccionada?", "Eliminar Fila",
+                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                                Return
+                            End If
                         End If
 
                         ' Asegúrate de que el índice sea válido antes de intentar eliminar
                         'If _Index >= 0 AndAlso _Index < Grilla.Rows.Count AndAlso _Id_Padre = 1 Then
 
-                        If MessageBoxEx.Show(Me, "¿Está seguro de eliminar la fila seleccionada?", "Eliminar Fila",
-                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
-                            Return
+                        If _Id_Det = 0 Then
+
+                            'MessageBoxEx.Show(Me, "Esta línea no puede ser eliminada, pues es la línea de origen del producto", "Validación",
+                            '                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                            _Fila.Cells("CantUd1").Value = 0
+                            _Fila.Cells("CantUd2").Value = 0
+                            '_Fila.Cells("Ud1").Value = String.Empty
+                            _Fila.Cells("NroLote").Value = String.Empty
+                            _Fila.Cells("SubLote").Value = String.Empty
+                            _Fila.Cells("FElaboracion").Value = Nothing
+                            _Fila.Cells("FVencimiento").Value = Nothing
+                            _Fila.Cells("StockUd1").Value = 0
+                            _Fila.Cells("StockUd2").Value = 0
+
+                        Else
+                            Grilla.Rows.RemoveAt(_Index)
                         End If
 
-                        Grilla.Rows.RemoveAt(_Index)
                         ActualizarSumatorias()
 
                     End If
@@ -394,6 +482,7 @@ Public Class Frm_Lotes_Det
                 End If
 
         End Select
+
 
         Grilla.Refresh()
 
@@ -452,9 +541,11 @@ Public Class Frm_Lotes_Det
 
     Private Sub Btn_Aceptar_Click(sender As Object, e As EventArgs) Handles Btn_Aceptar.Click
 
-        ' Validar filas obligatorias antes de procesar (fechas, número de lote y cantidades)
-        If Not ValidarFilasObligatorias() Then
-            Return
+        If Sum_CantUd1 > 0 Then
+            ' Validar filas obligatorias antes de procesar (fechas, número de lote y cantidades)
+            If Not ValidarFilasObligatorias() Then
+                Return
+            End If
         End If
 
         ' Lista que contendrá los registros nuevos o modificados (comparando con Lista_Lotes_Original)
@@ -495,13 +586,15 @@ Public Class Frm_Lotes_Det
 
         ' Ejemplo mínimo de uso: si necesita procesar la lista de diferentes:
         ' Aquí sólo se cuenta y no se muestra UI adicional (puede quitar o adaptar según necesidades).
-        If ListaLotesDiferentes.Count > 0 Then
-            MessageBoxEx.Show(Me, String.Format("Se encontraron {0} registros nuevos o modificados.", ListaLotesDiferentes.Count),
-                              "Diferencias detectadas", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        Else
-            MessageBoxEx.Show(Me, "No se detectaron cambios entre la lista actual y la original.", "Sin cambios",
-                              MessageBoxButtons.OK, MessageBoxIcon.Information)
-        End If
+        'If ListaLotesDiferentes.Count > 0 Then
+        '    MessageBoxEx.Show(Me, String.Format("Se encontraron {0} registros nuevos o modificados.", ListaLotesDiferentes.Count),
+        '                      "Diferencias detectadas", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'Else
+        '    MessageBoxEx.Show(Me, "No se detectaron cambios entre la lista actual y la original.", "Sin cambios",
+        '                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+        'End If
+
+        MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Lotes", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         ' Si desea cerrar el formulario tras aceptar:
         Me.DialogResult = DialogResult.OK
@@ -563,7 +656,7 @@ Public Class Frm_Lotes_Det
     End Sub
 
     Private Sub Grilla_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs)
-        ProcesarCambioCelda(e.RowIndex, e.ColumnIndex)
+        'ProcesarCambioCelda(e.RowIndex, e.ColumnIndex)
     End Sub
 
     Private Sub ProcesarCambioCelda(rowIndex As Integer, columnIndex As Integer)
@@ -581,12 +674,92 @@ Public Class Frm_Lotes_Det
             ' Asegurarse de que el índice existe en la lista binding
             If rowIndex >= 0 AndAlso rowIndex < Lista_Lotes.Count Then
                 Dim item = Lista_Lotes(rowIndex)
-                ' Intentar obtener valor actual de la celda parseado a Double
+
+                ' Guardar valor previo
+                Dim prevValor As Double = 0
+                Try
+                    prevValor = item.CantUd1
+                Catch ex As Exception
+                End Try
+
+                ' Obtener nuevo valor desde la celda
                 Dim valorObj = Grilla.Rows(rowIndex).Cells("CantUd1").Value
                 Dim valor As Double = 0
                 If Not IsNothing(valorObj) Then
                     Double.TryParse(Convert.ToString(valorObj), valor)
                 End If
+
+                ' En modo selección validar disponibilidad usando la celda "StockUd1"
+                If ModoSeleccion Then
+
+                    Dim nroLote = If(item.NroLote, String.Empty).Trim()
+                    If String.IsNullOrEmpty(nroLote) Then
+                        MessageBoxEx.Show(Me, "Debe ingresar el número de lote antes de indicar la cantidad.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        item.CantUd1 = prevValor
+                        Try
+                            Lista_Lotes.ResetItem(rowIndex)
+                        Catch ex As Exception
+                        End Try
+                        Try
+                            Sb_SetCellFocus(rowIndex, "NroLote", True)
+                        Catch ex As Exception
+                        End Try
+                        Return
+                    End If
+
+                    ' Tomar stock disponible declarado en la celda "StockUd1" de la misma fila
+                    Dim stockVal As Double = 0
+                    Try
+                        If Grilla.Columns.Contains("StockUd1") Then
+                            Dim stockObj = Grilla.Rows(rowIndex).Cells("StockUd1").Value
+                            If Not IsNothing(stockObj) Then
+                                Double.TryParse(Convert.ToString(stockObj), stockVal)
+                            End If
+                        End If
+                    Catch ex As Exception
+                        stockVal = 0
+                    End Try
+
+                    ' Restar cantidades ya asignadas a otras filas del mismo lote
+                    Dim sumOtros As Double = 0
+                    For i As Integer = 0 To Lista_Lotes.Count - 1
+                        If i <> rowIndex Then
+                            Try
+                                Dim it = Lista_Lotes(i)
+                                If String.Equals(If(it.Codigo, String.Empty).Trim(), If(item.Codigo, String.Empty).Trim(), StringComparison.OrdinalIgnoreCase) AndAlso
+                               String.Equals(If(it.NroLote, String.Empty).Trim(), nroLote, StringComparison.OrdinalIgnoreCase) Then
+                                    sumOtros += it.CantUd1
+                                End If
+                            Catch ex As Exception
+                                ' Ignorar
+                            End Try
+                        End If
+                    Next
+
+                    Dim available As Double = stockVal - sumOtros
+                    If available < 0 Then available = 0
+
+                    If valor > available Then
+                        MessageBoxEx.Show(Me, String.Format("No hay stock suficiente del lote {0} como para sacarlo de la bodega. Stock disponible: {1}", nroLote, available),
+                                      "Stock insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        ' Revertir al valor previo
+                        item.CantUd1 = prevValor
+                        Try
+                            If Grilla.Columns.Contains("CantUd1") Then
+                                Grilla.Rows(rowIndex).Cells("CantUd1").Value = prevValor
+                            End If
+                            Lista_Lotes.ResetItem(rowIndex)
+                        Catch ex As Exception
+                        End Try
+                        Try
+                            Sb_SetCellFocus(rowIndex, "CantUd1", True)
+                        Catch ex As Exception
+                        End Try
+                        Return
+                    End If
+
+                End If
+
                 item.CantUd1 = valor
 
                 ' Calcular CantUd2 = CantUd1 / Rtu, evitando división por cero
@@ -748,7 +921,6 @@ Public Class Frm_Lotes_Det
             End If
         End If
     End Sub
-
 
     Private Sub ProcesarCambioCelda_Old(rowIndex As Integer, columnIndex As Integer)
         If rowIndex < 0 Then
@@ -1050,40 +1222,44 @@ Public Class Frm_Lotes_Det
                 Return False
             End Try
 
-            ' Validar fecha de elaboración
-            If item.FElaboracion Is Nothing Then
-                Try
-                    MessageBoxEx.Show(Me, String.Format("La fecha de elaboración no puede estar vacía en la fila {0}.", filaNum),
-                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Catch
-                End Try
-                Try
-                    If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("FElaboracion") Then
-                        Grilla.Focus()
-                        Grilla.CurrentCell = Grilla.Rows(i).Cells("FElaboracion")
-                        Grilla.BeginEdit(True)
-                    End If
-                Catch
-                End Try
-                Return False
-            End If
+            If Not ModoSeleccion And Not ModoSoloLectura Then
 
-            ' Validar fecha de vencimiento
-            If item.FVencimiento Is Nothing Then
-                Try
-                    MessageBoxEx.Show(Me, String.Format("La fecha de vencimiento no puede estar vacía en la fila {0}.", filaNum),
-                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                Catch
-                End Try
-                Try
-                    If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("FVencimiento") Then
-                        Grilla.Focus()
-                        Grilla.CurrentCell = Grilla.Rows(i).Cells("FVencimiento")
-                        Grilla.BeginEdit(True)
-                    End If
-                Catch
-                End Try
-                Return False
+                ' Validar fecha de elaboración
+                If item.FElaboracion Is Nothing Then
+                    Try
+                        MessageBoxEx.Show(Me, String.Format("La fecha de elaboración no puede estar vacía en la fila {0}.", filaNum),
+                                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Catch
+                    End Try
+                    Try
+                        If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("FElaboracion") Then
+                            Grilla.Focus()
+                            Grilla.CurrentCell = Grilla.Rows(i).Cells("FElaboracion")
+                            Grilla.BeginEdit(True)
+                        End If
+                    Catch
+                    End Try
+                    Return False
+                End If
+
+                ' Validar fecha de vencimiento
+                If item.FVencimiento Is Nothing Then
+                    Try
+                        MessageBoxEx.Show(Me, String.Format("La fecha de vencimiento no puede estar vacía en la fila {0}.", filaNum),
+                                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Catch
+                    End Try
+                    Try
+                        If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("FVencimiento") Then
+                            Grilla.Focus()
+                            Grilla.CurrentCell = Grilla.Rows(i).Cells("FVencimiento")
+                            Grilla.BeginEdit(True)
+                        End If
+                    Catch
+                    End Try
+                    Return False
+                End If
+
             End If
 
         Next

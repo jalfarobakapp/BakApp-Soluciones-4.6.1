@@ -20,9 +20,7 @@ Public Class Frm_Filtro_Especial_Informes
     Dim _Requiere_Seleccion As Boolean
 
     Dim _Orden_By As String = "Order by Codigo"
-
     Dim _Filtro_SQl As String
-
     Dim _Activar_Crear_Editar_Eliminar As Boolean
 
     Enum _Tabla_Fl
@@ -199,6 +197,8 @@ Public Class Frm_Filtro_Especial_Informes
     Public Property MostrarNumeracionDeRegistros As Boolean
     Public Property SonProductos As Boolean
     Public Property ReemplazarComillaspor As String
+    Public Property NO_MarcarMasiva_Excel As Boolean
+    Public Property NO_Exportar_Excel As Boolean
 
     Public Sub New(Tabla_filtro As _Tabla_Fl,
                    Optional Incorporar_Campo_Vacias As Boolean = False,
@@ -329,7 +329,8 @@ Public Class Frm_Filtro_Especial_Informes
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
-        Return
+        If NO_Exportar_Excel Then Btn_Exportar_Excel.Visible = False
+        If NO_MarcarMasiva_Excel Then Btn_MarcarMasiva_Excel.Visible = False
 
     End Sub
 
@@ -577,6 +578,7 @@ Public Class Frm_Filtro_Especial_Informes
         End If
 
         _Filtrar = True
+        Me.DialogResult = DialogResult.OK
         Me.Close()
 
     End Sub
@@ -937,6 +939,13 @@ Public Class Frm_Filtro_Especial_Informes
         Return _Descripcion_Busqueda
 
     End Function
+
+    Private Sub Btn_CancelarFiltro_Click(sender As Object, e As EventArgs) Handles Btn_CancelarFiltro.Click
+
+        Me.DialogResult = DialogResult.No
+        Me.Close()
+
+    End Sub
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 

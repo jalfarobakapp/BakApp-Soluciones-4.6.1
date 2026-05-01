@@ -143,6 +143,8 @@ Where Codigo = '{_Codigo}' And Empresa = '{_Empresa}' -- And Eliminado = 0 And A
 
                         _Consolidar_Stock.Fx_Consolidar_SobreStock(_Empresa, _Sucursal, _Bodega, _Fila)
 
+                        _Consolidar_Stock.Fx_Consolidar_Lotes(_Empresa, _Sucursal, _Bodega, _Fila)
+
                     Else
 
                         _consolidado = False

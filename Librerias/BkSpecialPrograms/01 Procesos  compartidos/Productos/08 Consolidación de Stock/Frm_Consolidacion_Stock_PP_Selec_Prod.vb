@@ -88,7 +88,7 @@ Public Class Frm_Consolidacion_Stock_PP_Selec_Prod
 
     Private Sub Btn_Seleccionar_Productos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Seleccionar_Productos.Click
 
-        Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN'"
+        Dim _Sql_Filtro_Condicion_Extra = "And TIPR In ('FPN','FIN')"
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)
 

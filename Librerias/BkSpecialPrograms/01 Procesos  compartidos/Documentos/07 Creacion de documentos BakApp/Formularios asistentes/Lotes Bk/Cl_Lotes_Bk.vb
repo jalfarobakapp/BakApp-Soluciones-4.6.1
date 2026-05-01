@@ -41,6 +41,9 @@
                 .Id_Det = Lote_Madre.Id_Det,
                 .Idmaeddo = Lote_Madre.Idmaeddo,
                 .Idmaeedo = Lote_Madre.Idmaeedo,
+                .Empresa = Lote_Madre.Empresa,
+                .Sucursal = Lote_Madre.Sucursal,
+                .Bodega = Lote_Madre.Bodega,
                 .Tido = Lote_Madre.Tido,
                 .Nudo = Lote_Madre.Nudo,
                 .Codigo = Lote_Madre.Codigo,
@@ -55,7 +58,10 @@
                 .Ud1 = Lote_Madre.Ud1,
                 .Ud2 = Lote_Madre.Ud2,
                 .CantUd1 = Lote_Madre.CantUd1,
-                .CantUd2 = Lote_Madre.CantUd2}
+                .CantUd2 = Lote_Madre.CantUd2,
+                .StockUd1 = Lote_Madre.StockUd1,
+                .StockUd2 = Lote_Madre.StockUd2
+            }
             Dim nuevaLista As New List(Of Zw_Docu_Det_Lote)
 
             nuevaLista.Add(nuevoLote)

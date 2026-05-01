@@ -198,6 +198,7 @@ Public Class Clase_Crear_Documento
     Public Property Ls_Cl_SobreStock As New List(Of Zw_Prod_SobreStock)
     Public Property Zw_Transporte_Dte As Zw_Transporte_Dte
     Public Property B2B As Boolean
+    Public Property Ls_Lotes As New List(Of List(Of Zw_Docu_Det_Lote))
 
 #Region "FUNCION CREAR DOCUMENTO RANDOM DEFINITIVO"
 
@@ -1307,9 +1308,9 @@ Public Class Clase_Crear_Documento
                         Comando = New SqlCommand("SELECT @@IDENTITY AS 'Identity'", cn2)
                         Comando.Transaction = myTrans
                         dfd1 = Comando.ExecuteReader()
-                        Dim _Id As Integer
+                        Dim _Id_Det As Integer
                         While dfd1.Read()
-                            _Id = dfd1("Identity")
+                            _Id_Det = dfd1("Identity")
                         End While
                         dfd1.Close()
 
@@ -1330,7 +1331,7 @@ Public Class Clase_Crear_Documento
 
                             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
                                            "IdCont = " & _Zw_PreVenta_StockProd.IdCont & ",Contenedor = '" & _Zw_PreVenta_StockProd.Contenedor & "'" & vbCrLf &
-                                           "Where Id = " & _Id
+                                           "Where Id = " & _Id_Det
                             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                             Comando.Transaction = myTrans
                             Comando.ExecuteNonQuery()
@@ -1355,7 +1356,7 @@ Public Class Clase_Crear_Documento
                                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det Set " &
                                                "SobreStock = 1" & vbCrLf &
                                                ",Qty_SobreStock = " & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
-                                               "Where Id = " & _Id
+                                               "Where Id = " & _Id_Det
                                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                 Comando.Transaction = myTrans
                                 Comando.ExecuteNonQuery()
@@ -1407,7 +1408,7 @@ Public Class Clase_Crear_Documento
                                                ",Moneda_SobreStock = '" & _Moneda_SobreStock & "'" & vbCrLf &
                                                ",Precio_SobreStock = " & De_Num_a_Tx_01(_Precio_SobreStock, False, 5) & vbCrLf &
                                                ",Qty_SobreStock = " & De_Num_a_Tx_01(_Qty_SobreStock, False, 5) & vbCrLf &
-                                               "Where Id = " & _Id
+                                               "Where Id = " & _Id_Det
                                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                 Comando.Transaction = myTrans
                                 Comando.ExecuteNonQuery()
@@ -1458,6 +1459,83 @@ Public Class Clase_Crear_Documento
                             Comando.ExecuteNonQuery()
 
                         End If
+
+
+                        Dim _Salir_For As Boolean = False
+
+                        For Each lista As List(Of Zw_Docu_Det_Lote) In Ls_Lotes
+                            If lista Is Nothing Then
+                                Continue For
+                            End If
+
+                            For Each lote As Zw_Docu_Det_Lote In lista
+                                If lote IsNot Nothing AndAlso lote.Id = Id_Linea Then
+
+                                    With lote
+
+                                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det_Lote (Id_Det,Idmaeddo,Idmaeedo," &
+                                                       "Empresa,Sucursal,Bodega,Tido,Nudo,Codigo," &
+                                                       "Descripcion,NroLote,SubLote,FElaboracion,FVencimiento,CantUd1,CantUd2) Values " &
+                                                       "(" & _Id_Det & "," & _Idmaeddo & "," & _Idmaeedo &
+                                                       ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & _Tido & "','" & _Nudo & "'" &
+                                                       ",'" & .Codigo & "','" & .Descripcion & "','" & .NroLote & "'" &
+                                                       ",'" & .SubLote & "','" & Format(.FElaboracion, "yyyyMMdd") & "','" & Format(.FVencimiento, "yyyyMMdd") & "'," &
+                                                       De_Num_a_Tx_01(.CantUd1, False, 5) & "," & De_Num_a_Tx_01(.CantUd2, False, 5) & ")"
+
+                                        Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                        Comando.Transaction = myTrans
+                                        Comando.ExecuteNonQuery()
+
+                                        Consulta_sql = "Select Count(*) As 'CountLotes' From " & _Global_BaseBk & "Zw_Prod_Stock_Lote" & vbCrLf &
+                                                       "Where Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "' And Bodega = '" & .Bodega & "' " &
+                                                       "And NroLote = '" & .NroLote & "' And SubLote = '" & .SubLote & "' And Codigo = '" & .Codigo & "'"
+                                        Comando = New SqlCommand(Consulta_sql, cn2)
+                                        Comando.Transaction = myTrans
+                                        dfd1 = Comando.ExecuteReader()
+                                        Dim _CountLotes As Integer
+                                        While dfd1.Read()
+                                            _CountLotes = dfd1("CountLotes")
+                                        End While
+                                        dfd1.Close()
+
+                                        If _CountLotes = 0 Then
+
+                                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Stock_Lote (Empresa,Sucursal,Bodega,NroLote,SubLote,Codigo) Values " &
+                                                           "('" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & .NroLote & "','" & .SubLote & "','" & .Codigo & "')"
+                                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                            Comando.Transaction = myTrans
+                                            Comando.ExecuteNonQuery()
+
+                                        End If
+
+                                        Dim _MasMenos As String
+
+                                        If _Tido = "GRC" Or _Tido = "GRI" Then
+                                            _MasMenos = "+"
+                                        ElseIf _Tido = "GDI" Or _Tido = "GTI" Then
+                                            _MasMenos = "-"
+                                        End If
+
+                                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Stock_Lote Set " &
+                                                       "Stfilt1 = Stfilt1" & _MasMenos & De_Num_a_Tx_01(.CantUd1, False, 5) &
+                                                       ",Stfilt2 = Stfilt2" & _MasMenos & De_Num_a_Tx_01(.CantUd1, False, 5) & vbCrLf &
+                                                       "Where Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "' And Bodega = '" & .Bodega & "' " &
+                                                       "And NroLote = '" & .NroLote & "' And SubLote = '" & .SubLote & "' And Codigo = '" & .Codigo & "'"
+                                        Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                        Comando.Transaction = myTrans
+                                        Comando.ExecuteNonQuery()
+
+                                    End With
+
+                                    '_Salir_For = True
+                                Else
+                                    Exit For
+                                End If
+                            Next
+                            'If _Salir_For Then
+                            '    Exit For
+                            'End If
+                        Next
 
 
                         ' **** Insertamos datos en tabla de disribucion de recargos
@@ -2117,19 +2195,71 @@ Public Class Clase_Crear_Documento
                 _Pickear = _Row_Encabezado.Item("Pickear")
             End If
 
+            Dim _Cn_TipoCompra As Integer = NuloPorNro(_Row_Encabezado.Item("Cn_TipoCompra"), 0)
+            Dim _TipoCompra As String = NuloPorNro(_Row_Encabezado.Item("TipoCompra"), "")
+
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad," &
                            "Tido,Nudo,FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil," &
-                           "Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad,B2B,UsaCiaSeguro,CodEntidad_Cia,CodSucEntidad_Cia) Values " &
+                           "Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad,B2B,UsaCiaSeguro,CodEntidad_Cia,CodSucEntidad_Cia,Cn_TipoCompra,TipoCompra) Values " &
                            "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad_Bk & "'" &
                            ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
                            "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(PreVenta) &
                            "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) &
                            ",'" & _Empresa & "','" & _LeyendaMorosidad & "'," &
                            Convert.ToInt32(B2B) & "," & Convert.ToInt32(_UsaCiaSeguro) &
-                           ",'" & _CodEntidad_Cia & "','" & _CodSucEntidad_Cia & "')"
+                           ",'" & _CodEntidad_Cia & "','" & _CodSucEntidad_Cia & "'," & _Cn_TipoCompra & ",'" & _TipoCompra & "')"
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
+
+            Dim _ActivaTipoCompra As Boolean
+
+            Try
+                _ActivaTipoCompra = _Row_Encabezado.Item("ActivaTipoCompra")
+            Catch ex As Exception
+                _ActivaTipoCompra = False
+            End Try
+
+            If _ActivaTipoCompra Then
+
+                For Each _Fl As DataRow In _Tbl_Detalle.Rows
+
+                    Dim _Codigo As String = _Fl.Item("Codigo")
+
+                    Consulta_sql = "Select Pas.Id,Asoc.Codigo_Nodo,Asoc.Descripcion From " & _Global_BaseBk & "Zw_Prod_Asociacion Pas" & vbCrLf &
+                                   "Left Join " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Asoc On Asoc.Codigo_Nodo = Pas.Codigo_Nodo" & vbCrLf &
+                                   "Where Codigo = '" & _Codigo & "'" & vbCrLf &
+                                   "And Pas.Codigo_Nodo In (Select Asd.Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Asd" & vbCrLf &
+                                   "Inner Join " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Ase On Ase.Identificador_Nodo = Asd.Identificacdor_NodoPadre" & vbCrLf &
+                                   "Where Ase.Codigo_Madre = 'TIPOCOMPRA')"
+
+                    Comando = New SqlCommand(Consulta_sql, cn2)
+                    Comando.Transaction = myTrans
+                    dfd1 = Comando.ExecuteReader()
+                    Dim _Id2 As Integer
+                    Dim _Codigo_Nodo As Integer
+                    Dim _DescripcionBusqueda As String
+                    While dfd1.Read()
+                        _Id2 = dfd1("Id")
+                        _Codigo_Nodo = dfd1("Codigo_Nodo")
+                        _DescripcionBusqueda = dfd1("Descripcion")
+                    End While
+                    dfd1.Close()
+
+                    If CBool(_Id2) Then
+
+                        Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Asociacion Set " &
+                                       "Codigo_Nodo = " & _Cn_TipoCompra & ",DescripcionBusqueda = '" & _DescripcionBusqueda & "' Where Id = " & _Id2
+
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                    End If
+
+                Next
+
+            End If
 
             If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "BLV" Or _Tido = "FCV" Or
                _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "NCV" Or _Tido = "GRI" Or _Tido = "GDI" Then

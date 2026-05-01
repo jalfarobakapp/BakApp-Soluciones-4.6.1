@@ -280,6 +280,17 @@ Public Class Frm_Formulario_Observaciones
 
         Chk_Deshabilitar_ObsAdicionales.Enabled = Not Chk_Deshabilitar_ObsAdicionales.Checked
 
+        Try
+            Lbl_TipoCompra.Enabled = _Global_Row_Configuracion_General.Item("ActivaTipoCompra")
+            Txt_TipoCompra.Enabled = _Global_Row_Configuracion_General.Item("ActivaTipoCompra")
+        Catch ex As Exception
+            Lbl_TipoCompra.Enabled = False
+            Txt_TipoCompra.Enabled = False
+        End Try
+
+        Txt_TipoCompra.Tag = _Row_Encabezado.Item("Cn_TipoCompra")
+        Txt_TipoCompra.Text = _Row_Encabezado.Item("TipoCompra")
+
     End Sub
 
 
@@ -1052,4 +1063,39 @@ Public Class Frm_Formulario_Observaciones
         End If
         Grupo_OtrasObservaciones.Enabled = Chk_Deshabilitar_ObsAdicionales.Checked
     End Sub
+
+    Private Sub Txt_TipoCompra_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_TipoCompra.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Tabla = _Global_BaseBk & "Zw_TblArbol_Asociaciones"
+        _Filtrar.Campo = "Codigo_Nodo"
+        _Filtrar.Descripcion = "Descripcion"
+
+        Dim _Identificacdor_NodoPadre As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TblArbol_Asociaciones", "Codigo_Nodo",
+                                                                     "Codigo_Madre = 'TIPOCOMPRA'", True)
+
+        If _Identificacdor_NodoPadre = 0 Then
+            MessageBoxEx.Show(Me, "Falta registrar el Tipo de compra en las clasificaciones únicas de Bakapp." & vbCrLf &
+                                  "Debe grabarse la categoría TIPOCOMPRA dentro de dichas clasificaciones.", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, $"And Identificacdor_NodoPadre = {_Identificacdor_NodoPadre}",
+                               Nothing, False, True, False) Then
+
+            Txt_TipoCompra.Tag = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Codigo")
+            Txt_TipoCompra.Text = _Filtrar.Pro_Tbl_Filtro.Rows(0).Item("Descripcion")
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_TipoCompra_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_TipoCompra.ButtonCustom2Click
+        Txt_TipoCompra.Tag = 0
+        Txt_TipoCompra.Text = String.Empty
+    End Sub
+
 End Class

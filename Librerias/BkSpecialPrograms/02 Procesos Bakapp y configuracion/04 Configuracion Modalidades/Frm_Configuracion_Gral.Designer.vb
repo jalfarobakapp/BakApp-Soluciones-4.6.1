@@ -80,6 +80,14 @@ Partial Class Frm_Configuracion_Gral
         Me.Cmb_CriterioFechaGDVconFechaDistintaDocOrigen = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.Txt_ValorMinimoNVV = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.SpTab_Ventas2 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel8 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Chk_BloqueaMarcas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_BloqueaClasificacionLibre = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_BloqueaRubros = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_BloqueaFamilias = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_BloqueaZonaProductos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel7 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Btn_ConfFTPProductos = New DevComponents.DotNetBar.ButtonX()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
@@ -102,6 +110,11 @@ Partial Class Frm_Configuracion_Gral
         Me.Cmb_Nodo_Raiz_Asociados = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.LabelX15 = New DevComponents.DotNetBar.LabelX()
         Me.SpTab_Productos = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel6 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Chk_InhabilitarObsEnCOV = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Input_Dias_Para_Hacer_NCV = New DevComponents.Editors.IntegerInput()
+        Me.Lbl_Dias_Para_Hacer_NCV = New DevComponents.DotNetBar.LabelX()
+        Me.SpTab_Ventas = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.Chk_ConservaListaDocOrigen = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -116,11 +129,6 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_LeerSoloUnaVezCodBarra = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_GrabarPreciosHistoricos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SpTab_General = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel6 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Chk_InhabilitarObsEnCOV = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Input_Dias_Para_Hacer_NCV = New DevComponents.Editors.IntegerInput()
-        Me.Lbl_Dias_Para_Hacer_NCV = New DevComponents.DotNetBar.LabelX()
-        Me.SpTab_Ventas = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel9 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
         Me.Chk_ExigeNumPesada = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -161,14 +169,6 @@ Partial Class Frm_Configuracion_Gral
         Me.Txt_CpRut = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.SpTab_DatosEmpresa = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel8 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Chk_BloqueaMarcas = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_BloqueaClasificacionLibre = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_BloqueaRubros = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_BloqueaFamilias = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_BloqueaZonaProductos = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Txt_Lista_Precios_Proveedores = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
@@ -199,6 +199,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfPuntosVta = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_ActivaTipoCompra = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -210,18 +211,18 @@ Partial Class Frm_Configuracion_Gral
         Me.Panel_MayoristaMinorista.SuspendLayout()
         CType(Me.Input_MesesVenListaPrecios, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
+        Me.SuperTabControlPanel8.SuspendLayout()
+        Me.TableLayoutPanel6.SuspendLayout()
         Me.SuperTabControlPanel7.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
-        Me.SuperTabControlPanel1.SuspendLayout()
-        Me.TableLayoutPanel5.SuspendLayout()
         Me.SuperTabControlPanel6.SuspendLayout()
         CType(Me.Input_Dias_Para_Hacer_NCV, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuperTabControlPanel1.SuspendLayout()
+        Me.TableLayoutPanel5.SuspendLayout()
         Me.SuperTabControlPanel9.SuspendLayout()
         Me.TableLayoutPanel7.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
-        Me.SuperTabControlPanel8.SuspendLayout()
-        Me.TableLayoutPanel6.SuspendLayout()
         Me.SuperTabControlPanel5.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
@@ -900,14 +901,14 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel8)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
@@ -1266,6 +1267,141 @@ Partial Class Frm_Configuracion_Gral
         Me.SpTab_Ventas2.Name = "SpTab_Ventas2"
         Me.SpTab_Ventas2.Text = "Ventas 2"
         '
+        'SuperTabControlPanel8
+        '
+        Me.SuperTabControlPanel8.Controls.Add(Me.TableLayoutPanel6)
+        Me.SuperTabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel8.Name = "SuperTabControlPanel8"
+        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel8.TabIndex = 0
+        Me.SuperTabControlPanel8.TabItem = Me.SuperTabItem1
+        '
+        'TableLayoutPanel6
+        '
+        Me.TableLayoutPanel6.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel6.ColumnCount = 1
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel6.Controls.Add(Me.Chk_BloqueaMarcas, 0, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.Chk_BloqueaClasificacionLibre, 0, 2)
+        Me.TableLayoutPanel6.Controls.Add(Me.Chk_BloqueaRubros, 0, 1)
+        Me.TableLayoutPanel6.Controls.Add(Me.Chk_BloqueaFamilias, 0, 4)
+        Me.TableLayoutPanel6.Controls.Add(Me.Chk_BloqueaZonaProductos, 0, 3)
+        Me.TableLayoutPanel6.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
+        Me.TableLayoutPanel6.RowCount = 10
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(666, 224)
+        Me.TableLayoutPanel6.TabIndex = 102
+        '
+        'Chk_BloqueaMarcas
+        '
+        Me.Chk_BloqueaMarcas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_BloqueaMarcas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_BloqueaMarcas.CheckBoxImageChecked = CType(resources.GetObject("Chk_BloqueaMarcas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_BloqueaMarcas.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_BloqueaMarcas.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_BloqueaMarcas.FocusCuesEnabled = False
+        Me.Chk_BloqueaMarcas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_BloqueaMarcas.Location = New System.Drawing.Point(3, 3)
+        Me.Chk_BloqueaMarcas.Name = "Chk_BloqueaMarcas"
+        Me.Chk_BloqueaMarcas.Size = New System.Drawing.Size(311, 16)
+        Me.Chk_BloqueaMarcas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_BloqueaMarcas.TabIndex = 86
+        Me.Chk_BloqueaMarcas.Text = "Bloquear creación/edición/eliminación de tabla de MARCAS"
+        '
+        'Chk_BloqueaClasificacionLibre
+        '
+        Me.Chk_BloqueaClasificacionLibre.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_BloqueaClasificacionLibre.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_BloqueaClasificacionLibre.CheckBoxImageChecked = CType(resources.GetObject("Chk_BloqueaClasificacionLibre.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_BloqueaClasificacionLibre.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_BloqueaClasificacionLibre.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_BloqueaClasificacionLibre.FocusCuesEnabled = False
+        Me.Chk_BloqueaClasificacionLibre.ForeColor = System.Drawing.Color.Black
+        Me.Chk_BloqueaClasificacionLibre.Location = New System.Drawing.Point(3, 47)
+        Me.Chk_BloqueaClasificacionLibre.Name = "Chk_BloqueaClasificacionLibre"
+        Me.Chk_BloqueaClasificacionLibre.Size = New System.Drawing.Size(396, 16)
+        Me.Chk_BloqueaClasificacionLibre.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_BloqueaClasificacionLibre.TabIndex = 94
+        Me.Chk_BloqueaClasificacionLibre.Text = "Bloquear creación/edición/eliminación de tabla de CLASIFICACION LIBRE"
+        '
+        'Chk_BloqueaRubros
+        '
+        Me.Chk_BloqueaRubros.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_BloqueaRubros.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_BloqueaRubros.CheckBoxImageChecked = CType(resources.GetObject("Chk_BloqueaRubros.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_BloqueaRubros.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_BloqueaRubros.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_BloqueaRubros.FocusCuesEnabled = False
+        Me.Chk_BloqueaRubros.ForeColor = System.Drawing.Color.Black
+        Me.Chk_BloqueaRubros.Location = New System.Drawing.Point(3, 25)
+        Me.Chk_BloqueaRubros.Name = "Chk_BloqueaRubros"
+        Me.Chk_BloqueaRubros.Size = New System.Drawing.Size(311, 16)
+        Me.Chk_BloqueaRubros.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_BloqueaRubros.TabIndex = 95
+        Me.Chk_BloqueaRubros.Text = "Bloquear creación/edición/eliminación de tabla de RUBROS"
+        '
+        'Chk_BloqueaFamilias
+        '
+        Me.Chk_BloqueaFamilias.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_BloqueaFamilias.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_BloqueaFamilias.CheckBoxImageChecked = CType(resources.GetObject("Chk_BloqueaFamilias.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_BloqueaFamilias.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_BloqueaFamilias.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_BloqueaFamilias.FocusCuesEnabled = False
+        Me.Chk_BloqueaFamilias.ForeColor = System.Drawing.Color.Black
+        Me.Chk_BloqueaFamilias.Location = New System.Drawing.Point(3, 91)
+        Me.Chk_BloqueaFamilias.Name = "Chk_BloqueaFamilias"
+        Me.Chk_BloqueaFamilias.Size = New System.Drawing.Size(551, 16)
+        Me.Chk_BloqueaFamilias.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_BloqueaFamilias.TabIndex = 97
+        Me.Chk_BloqueaFamilias.Text = "Bloquear creación/edición/eliminación de tabla de SUPER-FAMILIAS/FAMILIAS/SUB-FAM" &
+    "ILIAS"
+        '
+        'Chk_BloqueaZonaProductos
+        '
+        Me.Chk_BloqueaZonaProductos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_BloqueaZonaProductos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_BloqueaZonaProductos.CheckBoxImageChecked = CType(resources.GetObject("Chk_BloqueaZonaProductos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_BloqueaZonaProductos.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_BloqueaZonaProductos.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_BloqueaZonaProductos.FocusCuesEnabled = False
+        Me.Chk_BloqueaZonaProductos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_BloqueaZonaProductos.Location = New System.Drawing.Point(3, 69)
+        Me.Chk_BloqueaZonaProductos.Name = "Chk_BloqueaZonaProductos"
+        Me.Chk_BloqueaZonaProductos.Size = New System.Drawing.Size(381, 16)
+        Me.Chk_BloqueaZonaProductos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_BloqueaZonaProductos.TabIndex = 96
+        Me.Chk_BloqueaZonaProductos.Text = "Bloquear creación/edición/eliminación de tabla de ZONA DE PRODUCTOS"
+        '
+        'SuperTabItem1
+        '
+        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel8
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "Tablas"
+        '
         'SuperTabControlPanel7
         '
         Me.SuperTabControlPanel7.Controls.Add(Me.Btn_ConfFTPProductos)
@@ -1273,9 +1409,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel7.Controls.Add(Me.Cmb_Nodo_Raiz_Asociados)
         Me.SuperTabControlPanel7.Controls.Add(Me.LabelX15)
         Me.SuperTabControlPanel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(132, 0)
+        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(125, 0)
         Me.SuperTabControlPanel7.Name = "SuperTabControlPanel7"
-        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(660, 539)
+        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(667, 539)
         Me.SuperTabControlPanel7.TabIndex = 0
         Me.SuperTabControlPanel7.TabItem = Me.SpTab_Productos
         '
@@ -1648,6 +1784,74 @@ Partial Class Frm_Configuracion_Gral
         Me.SpTab_Productos.Name = "SpTab_Productos"
         Me.SpTab_Productos.Text = "Productos/Conceptos"
         '
+        'SuperTabControlPanel6
+        '
+        Me.SuperTabControlPanel6.Controls.Add(Me.Chk_InhabilitarObsEnCOV)
+        Me.SuperTabControlPanel6.Controls.Add(Me.Input_Dias_Para_Hacer_NCV)
+        Me.SuperTabControlPanel6.Controls.Add(Me.TableLayoutPanel3)
+        Me.SuperTabControlPanel6.Controls.Add(Me.Lbl_Dias_Para_Hacer_NCV)
+        Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel6.TabIndex = 0
+        Me.SuperTabControlPanel6.TabItem = Me.SpTab_Ventas
+        '
+        'Chk_InhabilitarObsEnCOV
+        '
+        Me.Chk_InhabilitarObsEnCOV.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_InhabilitarObsEnCOV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_InhabilitarObsEnCOV.CheckBoxImageChecked = CType(resources.GetObject("Chk_InhabilitarObsEnCOV.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_InhabilitarObsEnCOV.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_InhabilitarObsEnCOV.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_InhabilitarObsEnCOV.FocusCuesEnabled = False
+        Me.Chk_InhabilitarObsEnCOV.ForeColor = System.Drawing.Color.Black
+        Me.Chk_InhabilitarObsEnCOV.Location = New System.Drawing.Point(32, 453)
+        Me.Chk_InhabilitarObsEnCOV.Name = "Chk_InhabilitarObsEnCOV"
+        Me.Chk_InhabilitarObsEnCOV.Size = New System.Drawing.Size(525, 18)
+        Me.Chk_InhabilitarObsEnCOV.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_InhabilitarObsEnCOV.TabIndex = 130
+        Me.Chk_InhabilitarObsEnCOV.Text = "Inhabilitar obsercaiones adicionales en cotizaciones (COV)"
+        '
+        'Input_Dias_Para_Hacer_NCV
+        '
+        Me.Input_Dias_Para_Hacer_NCV.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_Dias_Para_Hacer_NCV.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_Dias_Para_Hacer_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_Dias_Para_Hacer_NCV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
+        Me.Input_Dias_Para_Hacer_NCV.ForeColor = System.Drawing.Color.Black
+        Me.Input_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(250, 477)
+        Me.Input_Dias_Para_Hacer_NCV.Name = "Input_Dias_Para_Hacer_NCV"
+        Me.Input_Dias_Para_Hacer_NCV.ShowUpDown = True
+        Me.Input_Dias_Para_Hacer_NCV.Size = New System.Drawing.Size(58, 22)
+        Me.Input_Dias_Para_Hacer_NCV.TabIndex = 91
+        '
+        'Lbl_Dias_Para_Hacer_NCV
+        '
+        Me.Lbl_Dias_Para_Hacer_NCV.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_Dias_Para_Hacer_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_Dias_Para_Hacer_NCV.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(6, 477)
+        Me.Lbl_Dias_Para_Hacer_NCV.Name = "Lbl_Dias_Para_Hacer_NCV"
+        Me.Lbl_Dias_Para_Hacer_NCV.Size = New System.Drawing.Size(248, 23)
+        Me.Lbl_Dias_Para_Hacer_NCV.TabIndex = 92
+        Me.Lbl_Dias_Para_Hacer_NCV.Text = "Máximo de días de una FCV para hacer una NCV"
+        '
+        'SpTab_Ventas
+        '
+        Me.SpTab_Ventas.AttachedControl = Me.SuperTabControlPanel6
+        Me.SpTab_Ventas.GlobalItem = False
+        Me.SpTab_Ventas.Name = "SpTab_Ventas"
+        Me.SpTab_Ventas.Text = "Ventas 1"
+        '
         'SuperTabControlPanel1
         '
         Me.SuperTabControlPanel1.Controls.Add(Me.TableLayoutPanel5)
@@ -1882,74 +2086,6 @@ Partial Class Frm_Configuracion_Gral
         Me.SpTab_General.GlobalItem = False
         Me.SpTab_General.Name = "SpTab_General"
         Me.SpTab_General.Text = "General"
-        '
-        'SuperTabControlPanel6
-        '
-        Me.SuperTabControlPanel6.Controls.Add(Me.Chk_InhabilitarObsEnCOV)
-        Me.SuperTabControlPanel6.Controls.Add(Me.Input_Dias_Para_Hacer_NCV)
-        Me.SuperTabControlPanel6.Controls.Add(Me.TableLayoutPanel3)
-        Me.SuperTabControlPanel6.Controls.Add(Me.Lbl_Dias_Para_Hacer_NCV)
-        Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(125, 0)
-        Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(667, 539)
-        Me.SuperTabControlPanel6.TabIndex = 0
-        Me.SuperTabControlPanel6.TabItem = Me.SpTab_Ventas
-        '
-        'Chk_InhabilitarObsEnCOV
-        '
-        Me.Chk_InhabilitarObsEnCOV.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Chk_InhabilitarObsEnCOV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_InhabilitarObsEnCOV.CheckBoxImageChecked = CType(resources.GetObject("Chk_InhabilitarObsEnCOV.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_InhabilitarObsEnCOV.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_InhabilitarObsEnCOV.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_InhabilitarObsEnCOV.FocusCuesEnabled = False
-        Me.Chk_InhabilitarObsEnCOV.ForeColor = System.Drawing.Color.Black
-        Me.Chk_InhabilitarObsEnCOV.Location = New System.Drawing.Point(32, 453)
-        Me.Chk_InhabilitarObsEnCOV.Name = "Chk_InhabilitarObsEnCOV"
-        Me.Chk_InhabilitarObsEnCOV.Size = New System.Drawing.Size(525, 18)
-        Me.Chk_InhabilitarObsEnCOV.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_InhabilitarObsEnCOV.TabIndex = 130
-        Me.Chk_InhabilitarObsEnCOV.Text = "Inhabilitar obsercaiones adicionales en cotizaciones (COV)"
-        '
-        'Input_Dias_Para_Hacer_NCV
-        '
-        Me.Input_Dias_Para_Hacer_NCV.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_Dias_Para_Hacer_NCV.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_Dias_Para_Hacer_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_Dias_Para_Hacer_NCV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
-        Me.Input_Dias_Para_Hacer_NCV.ForeColor = System.Drawing.Color.Black
-        Me.Input_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(250, 477)
-        Me.Input_Dias_Para_Hacer_NCV.Name = "Input_Dias_Para_Hacer_NCV"
-        Me.Input_Dias_Para_Hacer_NCV.ShowUpDown = True
-        Me.Input_Dias_Para_Hacer_NCV.Size = New System.Drawing.Size(58, 22)
-        Me.Input_Dias_Para_Hacer_NCV.TabIndex = 91
-        '
-        'Lbl_Dias_Para_Hacer_NCV
-        '
-        Me.Lbl_Dias_Para_Hacer_NCV.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Lbl_Dias_Para_Hacer_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Lbl_Dias_Para_Hacer_NCV.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(6, 477)
-        Me.Lbl_Dias_Para_Hacer_NCV.Name = "Lbl_Dias_Para_Hacer_NCV"
-        Me.Lbl_Dias_Para_Hacer_NCV.Size = New System.Drawing.Size(248, 23)
-        Me.Lbl_Dias_Para_Hacer_NCV.TabIndex = 92
-        Me.Lbl_Dias_Para_Hacer_NCV.Text = "Máximo de días de una FCV para hacer una NCV"
-        '
-        'SpTab_Ventas
-        '
-        Me.SpTab_Ventas.AttachedControl = Me.SuperTabControlPanel6
-        Me.SpTab_Ventas.GlobalItem = False
-        Me.SpTab_Ventas.Name = "SpTab_Ventas"
-        Me.SpTab_Ventas.Text = "Ventas 1"
         '
         'SuperTabControlPanel9
         '
@@ -2638,143 +2774,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SpTab_DatosEmpresa.Name = "SpTab_DatosEmpresa"
         Me.SpTab_DatosEmpresa.Text = "Datos Empresa"
         '
-        'SuperTabControlPanel8
-        '
-        Me.SuperTabControlPanel8.Controls.Add(Me.TableLayoutPanel6)
-        Me.SuperTabControlPanel8.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel8.Location = New System.Drawing.Point(125, 0)
-        Me.SuperTabControlPanel8.Name = "SuperTabControlPanel8"
-        Me.SuperTabControlPanel8.Size = New System.Drawing.Size(667, 539)
-        Me.SuperTabControlPanel8.TabIndex = 0
-        Me.SuperTabControlPanel8.TabItem = Me.SuperTabItem1
-        '
-        'TableLayoutPanel6
-        '
-        Me.TableLayoutPanel6.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel6.ColumnCount = 1
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel6.Controls.Add(Me.Chk_BloqueaMarcas, 0, 0)
-        Me.TableLayoutPanel6.Controls.Add(Me.Chk_BloqueaClasificacionLibre, 0, 2)
-        Me.TableLayoutPanel6.Controls.Add(Me.Chk_BloqueaRubros, 0, 1)
-        Me.TableLayoutPanel6.Controls.Add(Me.Chk_BloqueaFamilias, 0, 4)
-        Me.TableLayoutPanel6.Controls.Add(Me.Chk_BloqueaZonaProductos, 0, 3)
-        Me.TableLayoutPanel6.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel6.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
-        Me.TableLayoutPanel6.RowCount = 10
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(666, 224)
-        Me.TableLayoutPanel6.TabIndex = 102
-        '
-        'Chk_BloqueaMarcas
-        '
-        Me.Chk_BloqueaMarcas.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_BloqueaMarcas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_BloqueaMarcas.CheckBoxImageChecked = CType(resources.GetObject("Chk_BloqueaMarcas.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_BloqueaMarcas.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_BloqueaMarcas.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_BloqueaMarcas.FocusCuesEnabled = False
-        Me.Chk_BloqueaMarcas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_BloqueaMarcas.Location = New System.Drawing.Point(3, 3)
-        Me.Chk_BloqueaMarcas.Name = "Chk_BloqueaMarcas"
-        Me.Chk_BloqueaMarcas.Size = New System.Drawing.Size(311, 16)
-        Me.Chk_BloqueaMarcas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_BloqueaMarcas.TabIndex = 86
-        Me.Chk_BloqueaMarcas.Text = "Bloquear creación/edición/eliminación de tabla de MARCAS"
-        '
-        'Chk_BloqueaClasificacionLibre
-        '
-        Me.Chk_BloqueaClasificacionLibre.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_BloqueaClasificacionLibre.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_BloqueaClasificacionLibre.CheckBoxImageChecked = CType(resources.GetObject("Chk_BloqueaClasificacionLibre.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_BloqueaClasificacionLibre.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_BloqueaClasificacionLibre.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_BloqueaClasificacionLibre.FocusCuesEnabled = False
-        Me.Chk_BloqueaClasificacionLibre.ForeColor = System.Drawing.Color.Black
-        Me.Chk_BloqueaClasificacionLibre.Location = New System.Drawing.Point(3, 47)
-        Me.Chk_BloqueaClasificacionLibre.Name = "Chk_BloqueaClasificacionLibre"
-        Me.Chk_BloqueaClasificacionLibre.Size = New System.Drawing.Size(396, 16)
-        Me.Chk_BloqueaClasificacionLibre.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_BloqueaClasificacionLibre.TabIndex = 94
-        Me.Chk_BloqueaClasificacionLibre.Text = "Bloquear creación/edición/eliminación de tabla de CLASIFICACION LIBRE"
-        '
-        'Chk_BloqueaRubros
-        '
-        Me.Chk_BloqueaRubros.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_BloqueaRubros.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_BloqueaRubros.CheckBoxImageChecked = CType(resources.GetObject("Chk_BloqueaRubros.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_BloqueaRubros.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_BloqueaRubros.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_BloqueaRubros.FocusCuesEnabled = False
-        Me.Chk_BloqueaRubros.ForeColor = System.Drawing.Color.Black
-        Me.Chk_BloqueaRubros.Location = New System.Drawing.Point(3, 25)
-        Me.Chk_BloqueaRubros.Name = "Chk_BloqueaRubros"
-        Me.Chk_BloqueaRubros.Size = New System.Drawing.Size(311, 16)
-        Me.Chk_BloqueaRubros.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_BloqueaRubros.TabIndex = 95
-        Me.Chk_BloqueaRubros.Text = "Bloquear creación/edición/eliminación de tabla de RUBROS"
-        '
-        'Chk_BloqueaFamilias
-        '
-        Me.Chk_BloqueaFamilias.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_BloqueaFamilias.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_BloqueaFamilias.CheckBoxImageChecked = CType(resources.GetObject("Chk_BloqueaFamilias.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_BloqueaFamilias.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_BloqueaFamilias.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_BloqueaFamilias.FocusCuesEnabled = False
-        Me.Chk_BloqueaFamilias.ForeColor = System.Drawing.Color.Black
-        Me.Chk_BloqueaFamilias.Location = New System.Drawing.Point(3, 91)
-        Me.Chk_BloqueaFamilias.Name = "Chk_BloqueaFamilias"
-        Me.Chk_BloqueaFamilias.Size = New System.Drawing.Size(551, 16)
-        Me.Chk_BloqueaFamilias.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_BloqueaFamilias.TabIndex = 97
-        Me.Chk_BloqueaFamilias.Text = "Bloquear creación/edición/eliminación de tabla de SUPER-FAMILIAS/FAMILIAS/SUB-FAM" &
-    "ILIAS"
-        '
-        'Chk_BloqueaZonaProductos
-        '
-        Me.Chk_BloqueaZonaProductos.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_BloqueaZonaProductos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_BloqueaZonaProductos.CheckBoxImageChecked = CType(resources.GetObject("Chk_BloqueaZonaProductos.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_BloqueaZonaProductos.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_BloqueaZonaProductos.CheckBoxImageIndeterminate"), System.Drawing.Image)
-        Me.Chk_BloqueaZonaProductos.FocusCuesEnabled = False
-        Me.Chk_BloqueaZonaProductos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_BloqueaZonaProductos.Location = New System.Drawing.Point(3, 69)
-        Me.Chk_BloqueaZonaProductos.Name = "Chk_BloqueaZonaProductos"
-        Me.Chk_BloqueaZonaProductos.Size = New System.Drawing.Size(381, 16)
-        Me.Chk_BloqueaZonaProductos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_BloqueaZonaProductos.TabIndex = 96
-        Me.Chk_BloqueaZonaProductos.Text = "Bloquear creación/edición/eliminación de tabla de ZONA DE PRODUCTOS"
-        '
-        'SuperTabItem1
-        '
-        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel8
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "Tablas"
-        '
         'SuperTabControlPanel5
         '
+        Me.SuperTabControlPanel5.Controls.Add(Me.Chk_ActivaTipoCompra)
         Me.SuperTabControlPanel5.Controls.Add(Me.Txt_Lista_Precios_Proveedores)
         Me.SuperTabControlPanel5.Controls.Add(Me.LabelX20)
         Me.SuperTabControlPanel5.Controls.Add(Me.TableLayoutPanel1)
@@ -3205,6 +3207,24 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
+        'Chk_ActivaTipoCompra
+        '
+        Me.Chk_ActivaTipoCompra.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_ActivaTipoCompra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ActivaTipoCompra.CheckBoxImageChecked = CType(resources.GetObject("Chk_ActivaTipoCompra.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ActivaTipoCompra.FocusCuesEnabled = False
+        Me.Chk_ActivaTipoCompra.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ActivaTipoCompra.Location = New System.Drawing.Point(6, 245)
+        Me.Chk_ActivaTipoCompra.Name = "Chk_ActivaTipoCompra"
+        Me.Chk_ActivaTipoCompra.Size = New System.Drawing.Size(566, 15)
+        Me.Chk_ActivaTipoCompra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ActivaTipoCompra.TabIndex = 118
+        Me.Chk_ActivaTipoCompra.Text = "Editar la configuración Tipo de compra del producto según lo registrado en la ord" &
+    "en de compra."
+        '
         'Frm_Configuracion_Gral
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3232,18 +3252,18 @@ Partial Class Frm_Configuracion_Gral
         Me.Panel_MayoristaMinorista.ResumeLayout(False)
         CType(Me.Input_MesesVenListaPrecios, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
+        Me.SuperTabControlPanel8.ResumeLayout(False)
+        Me.TableLayoutPanel6.ResumeLayout(False)
         Me.SuperTabControlPanel7.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.SuperTabControlPanel1.ResumeLayout(False)
-        Me.TableLayoutPanel5.ResumeLayout(False)
         Me.SuperTabControlPanel6.ResumeLayout(False)
         CType(Me.Input_Dias_Para_Hacer_NCV, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SuperTabControlPanel1.ResumeLayout(False)
+        Me.TableLayoutPanel5.ResumeLayout(False)
         Me.SuperTabControlPanel9.ResumeLayout(False)
         Me.TableLayoutPanel7.ResumeLayout(False)
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
-        Me.SuperTabControlPanel8.ResumeLayout(False)
-        Me.TableLayoutPanel6.ResumeLayout(False)
         Me.SuperTabControlPanel5.ResumeLayout(False)
         Me.TableLayoutPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
@@ -3427,4 +3447,5 @@ Partial Class Frm_Configuracion_Gral
     Friend WithEvents Chk_SolictarCiaSeguro As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents LabelX19 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Input_ToleranciaDocMoroso As DevComponents.Editors.IntegerInput
+    Friend WithEvents Chk_ActivaTipoCompra As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class
