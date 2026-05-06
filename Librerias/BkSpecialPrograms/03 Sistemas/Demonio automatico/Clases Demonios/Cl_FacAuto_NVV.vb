@@ -1136,6 +1136,11 @@ Where Facturar = 1"
                             End With
                         End If
 
+                        Dim _UsaCiaSeguro As Boolean = _Row_Documento.Item("UsaCiaSeguro")
+                        Dim _CodEntidad_Cia As String = _Row_Documento.Item("CodEntidad_Cia")
+                        Dim _CodSucEntidad_Cia As String = _Row_Documento.Item("CodSucEntidad_Cia")
+
+
                         Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Docu_Ent Where Idmaeedo = {_Idmaeedo_Origen}"
 
                         Dim _Row_Zw_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
@@ -1171,7 +1176,11 @@ Where Facturar = 1"
                                 Fm_Post.ClPallet_Agrea = _ClPallet_Agrea
                             End If
 
-                            Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
+                            Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario,
+                                                                              _Ds_Maeedo_Origen,
+                                                                              False, False,
+                                                                              _Fecha_Emision,
+                                                                              False, True, ,,,,, _UsaCiaSeguro, _CodEntidad_Cia, _CodSucEntidad_Cia)
                             Fm_Post.Zw_Transporte_Dte = _Zw_Transporte_Dte
                             Fm_Post.NoConsolidarNuncaStock = True
 

@@ -17503,6 +17503,7 @@ Public Class Frm_Formulario_Documento
                     End Try
 
                     Dim _SolictarCiaSeguro As Boolean
+                    PedirPermisoCiaSeguro = False
 
                     Try
                         _SolictarCiaSeguro = _Global_Row_Configuracion_General.Item("SolictarCiaSeguro")
@@ -17528,6 +17529,7 @@ Public Class Frm_Formulario_Documento
                                               "Compañia de seguros", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                                 Dim _Row_CiaSeguro As DataRow
+                                Dim _Cancelar As Boolean = False
 
                                 Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(_Koen, _Suen, _TotalBrutoDoc)
                                 Fm.ModoSeleccion = True
@@ -17536,10 +17538,16 @@ Public Class Frm_Formulario_Documento
                                 If Fm.DialogResult = DialogResult.OK Then
                                     _Row_CiaSeguro = Fm.Row_CiaSeguro
                                     _SolicitaCiaSeguro = True
-                                ElseIf Fm.DialogResult = DialogResult.Cancel Then
+                                ElseIf Fm.DialogResult = DialogResult.No Then
                                     PedirPermisoCiaSeguro = True
+                                Else
+                                    _Cancelar = True
                                 End If
                                 Fm.Dispose()
+
+                                If _Cancelar Then
+                                    Return
+                                End If
 
                                 If _SolicitaCiaSeguro Then
                                     If IsNothing(_Row_CiaSeguro) Then
@@ -17648,6 +17656,19 @@ Public Class Frm_Formulario_Documento
                                    "Where Edo.ENDO = '" & _RowEntidad.Item("KOEN") & "' And Edo.SUENDO = '" & _RowEntidad.Item("SUEN") & "' " &
                                    "And Edo.FEER = '" & _Feer & "' And Ddo.KOPRCT In " & _CodProductoDoc &
                                    " And Ddo.TIPR In ('FPN','FPS','FNP','FIN') And Edo.TIDO In ('FCV','NVV','GDV','BLV')"
+
+                            Consulta_sql = $"Select Count(*) As Detalle 
+From MAEDDO Ddo WITH (NOLOCK) 
+Inner Join MAEEDO Edo WITH (NOLOCK) On Edo.IDMAEEDO = Ddo.IDMAEEDO
+Inner Join {_Global_BaseBk}Zw_Docu_Ent Ent On Ent.Idmaeedo = Edo.IDMAEEDO
+Where Edo.ENDO = '{_RowEntidad.Item("KOEN")}' 
+And Edo.SUENDO = '{_RowEntidad.Item("SUEN")}' 
+And Edo.FEER = '{_Feer}' 
+And Ddo.KOPRCT In {_CodProductoDoc} 
+And Ddo.TIPR In ('FPN','FPS','FNP','FIN') 
+And (Ent.Tido In ('FCV','NVV','GDV','BLV') Or (Ent.Tido = 'COV' And Ent.SobreStock = 1))
+"
+
                             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                             If Not IsNothing(_Row) Then
@@ -19743,7 +19764,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
             Dim _Vizado As Boolean = _TblEncabezado.Rows(0).Item("Vizado")
 
-            If _Vizado Then
+            If _Vizado Or (_Tido = "NVV" And SobreStock) Then
 
                 Try
 
@@ -20624,7 +20645,10 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                                          Optional _Bodega_Recepcion As String = "",
                                                          Optional _Sucursal_Recepcion As String = "",
                                                          Optional _Usar_SucBodRecepcion As Boolean = False,
-                                                         Optional _Usar_SucursalDocOrigen As Boolean = False)
+                                                         Optional _Usar_SucursalDocOrigen As Boolean = False,
+                                                         Optional _UsaCiaSeguro As Boolean = False,
+                                                         Optional _CodEntidad_Cia As String = "",
+                                                         Optional _CodSucEntidad_Cia As String = "")
 
         Try
 
@@ -20790,6 +20814,10 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                 Next
 
             End If
+
+            _TblEncabezado.Rows(0).Item("UsaCiaSeguro") = _UsaCiaSeguro
+            _TblEncabezado.Rows(0).Item("CodEntidad_Cia") = _CodEntidad_Cia
+            _TblEncabezado.Rows(0).Item("CodSucEntidad_Cia") = _CodSucEntidad_Cia
 
             Try
                 _TblEncabezado.Rows(0).Item("Pickear") = _RowMaeedo_Origen.Item("Pickear")
@@ -22036,7 +22064,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
                 Dim _Volver_A_Solicitar_Permiso_FCV_desde_NVV As Boolean = _Global_Row_Configuracion_General.Item("Volver_A_Solicitar_Permiso_FCV_desde_NVV")
 
-                If (_Tido <> "NCV" And _Tido <> "NVV") And (Not _Volver_A_Solicitar_Permiso_FCV_desde_NVV And _Tido_Dorigen = "NVV") Then
+                If ((_Tido <> "NCV" And _Tido <> "NVV") And (Not _Volver_A_Solicitar_Permiso_FCV_desde_NVV And _Tido_Dorigen = "NVV")) Then
+                    'Or (_Tido = "NVV" And SobreStock And _Tido_Dorigen = "COV") Then
 
                     Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Remotas Where Idmaeedo = " & _Idmaeedo_Dorigen & " And Eliminada = 0 "
                     Dim _Tbl_Remotas As DataTable

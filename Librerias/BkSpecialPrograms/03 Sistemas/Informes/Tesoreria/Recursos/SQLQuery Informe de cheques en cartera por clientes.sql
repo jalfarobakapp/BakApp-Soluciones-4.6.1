@@ -1,6 +1,7 @@
 
 
-SELECT Mdc.IDMAEDPCE,
+SELECT Distinct 
+       Mdc.IDMAEDPCE,
        Mdc.TIDP AS TIPO_DOC, 
        Mdc.EMDP AS COD_BANCO, 
        (Select Top 1 NOKOENDP From TABENDP Where KOENDP = Mdc.EMDP And TIDPEN = 'CH') As NOM_BANCO,
@@ -14,6 +15,7 @@ SELECT Mdc.IDMAEDPCE,
 FROM   dbo.MAEDPCE Mdc INNER JOIN
        dbo.MAEEN Mae ON Mdc.ENDP = Mae.KOEN
 WHERE Mdc.TIDP In ('CHV') AND (Mdc.FEVEDP > GETDATE() Or Mdc.ESPGDP In ('P','R') ) 
+And Mdc.EMPRESA = '#Empresa#'
 #Filtro_Entidad#
 
 Select * From #Paso_Cartera

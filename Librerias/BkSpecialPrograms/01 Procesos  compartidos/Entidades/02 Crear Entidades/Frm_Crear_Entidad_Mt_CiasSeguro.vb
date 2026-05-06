@@ -156,15 +156,23 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
             _DisplayIndex += 1
 
             .Columns("MontoAsignado").HeaderText = "M.Asignado"
-            .Columns("MontoAsignado").Width = 80
+            .Columns("MontoAsignado").Width = 75
             .Columns("MontoAsignado").Visible = True
             .Columns("MontoAsignado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("MontoAsignado").DefaultCellStyle.Format = "###,##0"
             .Columns("MontoAsignado").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("CHV").HeaderText = "CHV"
+            .Columns("CHV").Width = 75
+            .Columns("CHV").Visible = True
+            .Columns("CHV").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("CHV").DefaultCellStyle.Format = "###,##0"
+            .Columns("CHV").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("FCV").HeaderText = "FCV"
-            .Columns("FCV").Width = 80
+            .Columns("FCV").Width = 75
             .Columns("FCV").Visible = True
             .Columns("FCV").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("FCV").DefaultCellStyle.Format = "###,##0"
@@ -172,7 +180,7 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
             _DisplayIndex += 1
 
             .Columns("NVV").HeaderText = "NVV"
-            .Columns("NVV").Width = 80
+            .Columns("NVV").Width = 75
             .Columns("NVV").Visible = True
             .Columns("NVV").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("NVV").DefaultCellStyle.Format = "###,##0"
@@ -180,7 +188,7 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
             _DisplayIndex += 1
 
             .Columns("NVVSOL").HeaderText = "NVVSOL"
-            .Columns("NVVSOL").Width = 80
+            .Columns("NVVSOL").Width = 75
             .Columns("NVVSOL").Visible = True
             .Columns("NVVSOL").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("NVVSOL").DefaultCellStyle.Format = "###,##0"
@@ -188,7 +196,7 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
             _DisplayIndex += 1
 
             .Columns("TotalUtilizado").HeaderText = "T.Utilizado"
-            .Columns("TotalUtilizado").Width = 80
+            .Columns("TotalUtilizado").Width = 75
             .Columns("TotalUtilizado").Visible = True
             .Columns("TotalUtilizado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("TotalUtilizado").DefaultCellStyle.Format = "###,##0"
@@ -196,7 +204,7 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
             _DisplayIndex += 1
 
             .Columns("SaldoDisponible").HeaderText = "TDisponible"
-            .Columns("SaldoDisponible").Width = 80
+            .Columns("SaldoDisponible").Width = 75
             .Columns("SaldoDisponible").Visible = True
             .Columns("SaldoDisponible").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("SaldoDisponible").DefaultCellStyle.Format = "###,##0"
@@ -410,13 +418,26 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' And Co
             Return
         End If
 
+        If MessageBoxEx.Show(Me, "¿Confirma utilizar esta compañia de seguros?" & vbCrLf &
+                             "Compañia: " & Row_CiaSeguro.Item("NombreCia").ToString.Trim, "Seleccionar compañia de seguros",
+                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
         Me.DialogResult = DialogResult.OK
         Me.Close()
 
     End Sub
 
     Private Sub Btn_VenderSinUsarCiaSeguro_Click(sender As Object, e As EventArgs) Handles Btn_VenderSinUsarCiaSeguro.Click
-        Me.DialogResult = DialogResult.Cancel
+
+        If MessageBoxEx.Show(Me, "¿Confirma vender sin usar compañia de seguros?", "Vender sin usar CIA de seguros",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Me.DialogResult = DialogResult.No
         Me.Close()
+
     End Sub
 End Class
