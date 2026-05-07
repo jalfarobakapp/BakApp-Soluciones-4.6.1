@@ -677,7 +677,7 @@ Public Class Clas_Despacho
         Dim _Id_Despacho As Integer
         Dim _Confirmado As Boolean = Row_Despacho.Item("Confirmado")
 
-        Dim _Nro_Despacho As String = Fx_Nuevo_Nro_Despacho(_Confirmado)
+        Dim _Nro_Despacho As String
 
         Dim _Nro_Sub As String = Row_Despacho.Item("Nro_Sub")
 
@@ -729,9 +729,9 @@ Public Class Clas_Despacho
         Dim _Id_Despacho_Padre As Integer = Row_Despacho.Item("Id_Despacho_Padre")
 
         If CBool(_Id_Despacho_Padre) And _Confirmado Then
-
             _Nro_Despacho = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Despachos", "Nro_Despacho", "Id_Despacho = " & _Id_Despacho_Padre)
-
+        Else
+            _Nro_Despacho = Fx_Nuevo_Nro_Despacho(_Confirmado)
         End If
 
         Dim myTrans As SqlClient.SqlTransaction
@@ -1766,7 +1766,7 @@ Public Class Clas_Despacho
         If CBool(_TblPaso.Rows.Count) Then
 
             Dim _Ult_Nro_OT As String = NuloPorNro(_TblPaso.Rows(0).Item("Ult_Nro_Despacho"), "")
-
+            _NvoNro_Despacho = _Ult_Nro_OT
             _NvoNro_Despacho = Fx_Proximo_NroDocumento(_Ult_Nro_OT, 10)
 
         Else
@@ -1781,6 +1781,12 @@ Public Class Clas_Despacho
 
         If Not _Confirmado And _NvoNro_Despacho = "0000000001" Then
             _NvoNro_Despacho = "P000000001"
+        End If
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Despachos", $"Nro_Despacho = '{_NvoNro_Despacho}'", False)
+
+        If CBool(_Reg) Then
+            _NvoNro_Despacho = Fx_Nuevo_Nro_Despacho(_Confirmado)
         End If
 
         Return _NvoNro_Despacho

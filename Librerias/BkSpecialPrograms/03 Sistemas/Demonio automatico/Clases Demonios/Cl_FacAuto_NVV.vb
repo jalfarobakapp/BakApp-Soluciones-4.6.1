@@ -1136,10 +1136,6 @@ Where Facturar = 1"
                             End With
                         End If
 
-                        Dim _UsaCiaSeguro As Boolean = _Row_Documento.Item("UsaCiaSeguro")
-                        Dim _CodEntidad_Cia As String = _Row_Documento.Item("CodEntidad_Cia")
-                        Dim _CodSucEntidad_Cia As String = _Row_Documento.Item("CodSucEntidad_Cia")
-
 
                         Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Docu_Ent Where Idmaeedo = {_Idmaeedo_Origen}"
 
@@ -1150,6 +1146,10 @@ Where Facturar = 1"
 
                         _B2B = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "B2B",
                                                      "Idmaeedo = " & _Idmaeedo_Origen & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'")
+
+                        Dim _UsaCiaSeguro As Boolean = _Row_Zw_Docu_Det.Item("UsaCiaSeguro")
+                        Dim _CodEntidad_Cia As String = _Row_Zw_Docu_Det.Item("CodEntidad_Cia")
+                        Dim _CodSucEntidad_Cia As String = _Row_Zw_Docu_Det.Item("CodSucEntidad_Cia")
 
                         Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
                                                                     csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True,, _SobreStock)

@@ -87,7 +87,6 @@ Public Class Clas_Despacho_Fx
 
         If Not _Nudonodefi Then
 
-
             Dim _Nro_Despacho As String = Fx_Nuevo_Nro_Despacho(True)
 
             'Dim _Id_Despacho_Padre = _Id_Despacho
@@ -167,12 +166,12 @@ Public Class Clas_Despacho_Fx
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
         Dim _TblPaso = _Sql.Fx_Get_DataTable("Select Max(Nro_Despacho) As Ult_Nro_Despacho" & Space(1) &
-                                          "From " & _Global_BaseBk & "Zw_Despachos Where Confirmado = " & Convert.ToInt32(_Confirmado))
+                                        "From " & _Global_BaseBk & "Zw_Despachos Where Confirmado = " & Convert.ToInt32(_Confirmado))
 
         If CBool(_TblPaso.Rows.Count) Then
 
             Dim _Ult_Nro_OT As String = NuloPorNro(_TblPaso.Rows(0).Item("Ult_Nro_Despacho"), "")
-
+            _NvoNro_Despacho = _Ult_Nro_OT
             _NvoNro_Despacho = Fx_Proximo_NroDocumento(_Ult_Nro_OT, 10)
 
         Else
@@ -187,6 +186,12 @@ Public Class Clas_Despacho_Fx
 
         If Not _Confirmado And _NvoNro_Despacho = "0000000001" Then
             _NvoNro_Despacho = "P000000001"
+        End If
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Despachos", $"Nro_Despacho = '{_NvoNro_Despacho}'", False)
+
+        If CBool(_Reg) Then
+            _NvoNro_Despacho = Fx_Nuevo_Nro_Despacho(_Confirmado)
         End If
 
         Return _NvoNro_Despacho
