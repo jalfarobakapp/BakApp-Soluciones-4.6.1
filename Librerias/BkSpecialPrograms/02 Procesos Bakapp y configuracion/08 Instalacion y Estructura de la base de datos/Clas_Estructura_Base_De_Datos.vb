@@ -732,6 +732,8 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_Det
             Case "Zw_Docu_Det_Cust"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_Det_Cust
+            Case "Zw_Docu_Det_Lote"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_Det_Lote
 
 
             Case "Zw_DTE_Aec"

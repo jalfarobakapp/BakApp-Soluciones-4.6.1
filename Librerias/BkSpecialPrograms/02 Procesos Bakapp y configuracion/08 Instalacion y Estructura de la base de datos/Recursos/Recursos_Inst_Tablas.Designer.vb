@@ -1498,6 +1498,27 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Docu_Det_Lote](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id_Det]		[int]			NOT NULL DEFAULT (&apos;&apos;) ,
+        '''	[Idmaeddo]		[int]			NOT NULL DEFAULT (&apos;&apos;) ,
+        '''	[Idmaeedo]		[int]			NOT NULL DEFAULT (&apos;&apos;) ,
+        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;) ,
+        '''	[Sucursal]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
+        '''	[Bodega]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
+        '''	[Tido]			[varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
+        '''	[Nudo]			[varchar](10)	NOT NULL DEFAULT (&apos;&apos;) ,
+        '''	[Codigo]		[varchar](13)	NOT NULL DE [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Docu_Det_Lote() As String
+            Get
+                Return ResourceManager.GetString("Zw_Docu_Det_Lote", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''CREATE TABLE [dbo].[Zw_Docu_Ent](
         '''    [Id]                [int]           IDENTITY(1,1) NOT NULL,
         '''	[Idmaeedo]			[int]			NOT NULL DEFAULT (0),

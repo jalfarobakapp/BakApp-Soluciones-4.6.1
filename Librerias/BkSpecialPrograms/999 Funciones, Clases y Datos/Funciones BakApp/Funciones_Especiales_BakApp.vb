@@ -157,7 +157,6 @@ Public Module Funciones_Especiales_BakApp
             End If
         End If
 
-
         If String.IsNullOrEmpty(_Empresa) Then
             Return False
         End If

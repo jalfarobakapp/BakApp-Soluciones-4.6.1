@@ -2900,9 +2900,19 @@ Public Class Frm_Crear_Entidad_Mt
 
     Private Sub Btn_CiasCegurosAsociadas_Click(sender As Object, e As EventArgs) Handles Btn_CiasCegurosAsociadas.Click
 
+        Dim _MontoCreditoTotal As Double
+
         Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(Txt_Koen.Text, Txt_Suen.Text, Txt_Crto.Tag)
         Fm.ShowDialog(Me)
+        _MontoCreditoTotal = Fm.MontoCreditoTotal
         Fm.Dispose()
+
+        If Txt_Crto.Tag <> _MontoCreditoTotal Then
+            Txt_Crto.Tag = _MontoCreditoTotal
+            MessageBoxEx.Show(Me, "Se cambio el crédito total", "Crédito total", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Call BtnxGrabar_Click(Nothing, Nothing)
+            Me.Close()
+        End If
 
     End Sub
 

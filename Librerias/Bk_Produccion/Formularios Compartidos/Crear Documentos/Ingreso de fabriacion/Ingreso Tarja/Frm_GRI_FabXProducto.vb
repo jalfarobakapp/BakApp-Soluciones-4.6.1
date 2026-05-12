@@ -618,8 +618,16 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
-        If _LotePlantaTurno Then
-            _NroLote = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Planta & "" & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Turno & _NroLote & "-" & Mid(Now.Year, 3, 2)
+        If RutEmpresa = "78346122-6" Then
+
+            _NroLote = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Planta.ToString.Trim & _NroLote.ToString.Trim & Now.Day & numero_(Now.Month, 2) & Mid(Now.Year, 3, 2)
+
+        Else
+
+            If _LotePlantaTurno Then
+                _NroLote = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Planta & "" & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Turno & _NroLote & "-" & Mid(Now.Year, 3, 2)
+            End If
+
         End If
 
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Lotes_Enc Where NroLote = '" & _NroLote & "'"
@@ -940,11 +948,11 @@ Public Class Frm_GRI_FabXProducto
             MessageBoxEx.Show(Me, "Falta el producto", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
+        'RutEmpresaActiva
+        'Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
+        'Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Consulta_sql = "Select Top 1 * From CONFIGP Where EMPRESA = '" & Mod_Empresa & "'"
-        Dim _Row_Configp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim
+        Dim _Koen As String = RutEmpresaActiva '_Row_Configp.Item("RUT").ToString.Trim
         Dim _Observaciones As String
 
         Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"

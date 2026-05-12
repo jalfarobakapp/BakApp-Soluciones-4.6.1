@@ -517,7 +517,7 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
     Dim _Top = 100
     Dim _Top_Filas = 100
 
-
+    Public Property MostrarSoloProductosTipoServicio As Boolean
 
     Public Sub New()
 
@@ -1213,6 +1213,12 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                 Consulta_sql = Replace(Consulta_sql, "Inner Join MAEPREM Mpn WITH (NOLOCK) On Mpn.EMPRESA = @Empresa And Mpn.KOPR = Mp.KOPR ", "")
             End If
 
+            Dim _Filtro_Servicios = String.Empty
+
+            If MostrarSoloProductosTipoServicio Then
+                _Filtro_Servicios = "And Mp.KOPR IN (Select KOPR From MAEPR Where TIPR = 'SSN')"
+            End If
+
             Dim _Sql_Filtro3 As String = String.Empty
 
             _Sql_Filtro3 = _Filtro_ClasLibre & vbCrLf &
@@ -1220,7 +1226,8 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
                            _Filtro_Rubros & vbCrLf &
                            _Filtro_SuperFamilias & vbCrLf &
                            _Filtro_Zonas & vbCrLf &
-                           _Filtro_Bakapp
+                           _Filtro_Bakapp & vbCrLf &
+                           _Filtro_Servicios
 
             Consulta_sql = Replace(Consulta_sql, "#Sql_Filtro3#", _Sql_Filtro3)
 

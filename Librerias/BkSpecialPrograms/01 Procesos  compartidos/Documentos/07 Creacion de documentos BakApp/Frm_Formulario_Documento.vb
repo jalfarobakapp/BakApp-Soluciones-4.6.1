@@ -189,6 +189,8 @@ Public Class Frm_Formulario_Documento
 
     Dim Ls_Lotes As New List(Of List(Of Zw_Docu_Det_Lote))
 
+    Dim _VencimientosCliente As New VencimientosCliente.VencimientosCliente
+
 #Region "PROPIEDADES"
 
     Public ReadOnly Property Pro_Idmaeedo() As Integer
@@ -4473,6 +4475,17 @@ Public Class Frm_Formulario_Documento
 
         _Forma_pago = Trim(_RowEntidad.Item("CPEN"))
 
+        _VencimientosCliente = New VencimientosCliente.VencimientosCliente
+
+        With _VencimientosCliente
+            .FechaEmision = _FechaEmision
+            .Fecha_1er_Vencimiento = _Fecha_1er_Vencimiento
+            .FechaUltVencimiento = _FechaUltVencimiento
+            .Cuotas = _Cuotas
+            .Dias_1er_Vencimiento = _Dias_1er_Vencimiento
+            .Dias_Vencimiento = _Dias_Vencimiento
+        End With
+
         _TblEncabezado.Rows(0).Item("FechaEmision") = _FechaEmision
         _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _Fecha_1er_Vencimiento
         _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _FechaUltVencimiento
@@ -8544,7 +8557,8 @@ Public Class Frm_Formulario_Documento
                                 ByRef _Es_Concepto As Boolean,
                                 _Seleccion_Multiple As Boolean,
                                 ByRef _Tbl_Productos_Seleccionados_Multiple As DataTable,
-                                ByRef _EsKit As Boolean) As DataRow
+                                ByRef _EsKit As Boolean,
+                                Optional _MostrarSoloProductosTipoServicio As Boolean = False) As DataRow
 
         _Codigo = _Codigo.Trim
         Dim _RowProducto As DataRow
@@ -8708,6 +8722,8 @@ Public Class Frm_Formulario_Documento
                     End If
 
                 End If
+
+                Fm.MostrarSoloProductosTipoServicio = _MostrarSoloProductosTipoServicio
 
                 Fm.ShowDialog(Me)
 
@@ -11490,7 +11506,13 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-                        If SobreStock And _Tido = "COV" Then
+                        Dim _EsDespacho As Boolean = (_Codigo.ToString.ToUpper = "DESPACHO")
+
+                        If _EsDespacho Then
+                            _Codigo = String.Empty
+                        End If
+
+                        If SobreStock AndAlso _Tido = "COV" AndAlso Not _EsDespacho Then
 
                             Dim _Mensaje As New LsValiciones.Mensajes
                             _Mensaje = Fx_CargarProductoDesdeSobreStock()
@@ -11545,7 +11567,7 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-                        _RowProducto = Fx_Buscar_Producto(_Codigo, _Es_Concepto, True, _Tbl_Productos_Seleccionados_Multiple, _EsKit)
+                        _RowProducto = Fx_Buscar_Producto(_Codigo, _Es_Concepto, True, _Tbl_Productos_Seleccionados_Multiple, _EsKit, _EsDespacho)
 
                         If Not (_RowProducto Is Nothing) Then
 
@@ -12291,7 +12313,12 @@ Public Class Frm_Formulario_Documento
 
                 Dim _Zw_Prod_SobreStock As Zw_Prod_SobreStock = _Ls_Cl_SobreStock.FirstOrDefault(Function(x) x.IdIndex = _Id)
 
-                _StrSobreStock = ", " & _Zw_Prod_SobreStock.FormatoPqte & ": " & _Zw_Prod_SobreStock.Cantidad
+                Try
+                    _StrSobreStock = ", " & _Zw_Prod_SobreStock.FormatoPqte & ": " & _Zw_Prod_SobreStock.Cantidad
+                Catch ex As Exception
+                    _StrSobreStock = String.Empty
+                End Try
+
 
             End If
 
@@ -17412,6 +17439,112 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
+                        Dim _SolictarCiaSeguro As Boolean
+                        PedirPermisoCiaSeguro = False
+
+                        Try
+                            _SolictarCiaSeguro = _Global_Row_Configuracion_General.Item("SolictarCiaSeguro")
+                        Catch ex As Exception
+                            _SolictarCiaSeguro = False
+                        End Try
+
+                        If _Tido = "NVV" Or (_Tido = "COV" And SobreStock) Then
+
+                            If _SolictarCiaSeguro Then
+
+                                Dim _Koen As String = _TblEncabezado.Rows(0).Item("CodEntidad")
+                                Dim _Suen As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+                                Dim _TotalBrutoDoc As Double = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
+                                Dim _Moneda_Doc As String = _TblEncabezado.Rows(0).Item("Moneda_Doc").ToString.Trim
+                                Dim _Valor_Dolar As Double = _TblEncabezado.Rows(0).Item("Valor_Dolar")
+
+                                If _Moneda_Doc <> "$" Then
+                                    _TotalBrutoDoc = Math.Round(_TotalBrutoDoc * _Valor_Dolar, 0)
+                                End If
+
+                                Dim _SolicitaCiaSeguro As Boolean
+                                Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidad_CiaSeguro",
+                                                  $"CodEntidad = '{_Koen}' And CodSucEntidad = '{_Suen}'")
+
+                                If CBool(_Reg) Then
+
+                                    MessageBoxEx.Show(Me, "A continuación, deberá seleccionar una compañía de seguros para asociarla a la venta.",
+                                              "Compañia de seguros", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                                    Dim _Row_CiaSeguro As DataRow
+                                    Dim _Cancelar As Boolean = False
+
+                                    Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(_Koen, _Suen, _TotalBrutoDoc)
+                                    Fm.ModoSeleccion = True
+                                    Fm.MontoAUtilizar = _TotalBrutoDoc
+                                    Fm.ShowDialog(Me)
+                                    If Fm.DialogResult = DialogResult.OK Then
+                                        _Row_CiaSeguro = Fm.Row_CiaSeguro
+                                        _SolicitaCiaSeguro = True
+                                    ElseIf Fm.DialogResult = DialogResult.No Then
+                                        PedirPermisoCiaSeguro = True
+                                    Else
+                                        _Cancelar = True
+                                    End If
+                                    Fm.Dispose()
+
+                                    If _Cancelar Then
+                                        Return
+                                    End If
+
+                                    If _SolicitaCiaSeguro Then
+                                        If IsNothing(_Row_CiaSeguro) Then
+                                            MessageBoxEx.Show(Me, "Debe seleccionar una compañía de seguros para realizar la venta.", "Validación",
+                                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                            Return
+                                        Else
+                                            _TblEncabezado.Rows(0).Item("UsaCiaSeguro") = True
+                                            _TblEncabezado.Rows(0).Item("CodEntidad_Cia") = _Row_CiaSeguro.Item("CodEntidad_Cia")
+                                            _TblEncabezado.Rows(0).Item("CodSucEntidad_Cia") = _Row_CiaSeguro.Item("CodSucEntidad_Cia")
+                                        End If
+                                    End If
+
+                                    If PedirPermisoCiaSeguro Then
+
+                                        With _VencimientosCliente
+
+                                            _TblEncabezado.Rows(0).Item("FechaEmision") = .FechaEmision
+                                            _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
+                                            _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _TblEncabezado.Rows(0).Item("FechaEmision")
+                                            _TblEncabezado.Rows(0).Item("Cuotas") = 0
+                                            _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
+                                            _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
+
+                                        End With
+
+                                        MessageBoxEx.Show(Me, "Se solicitara permiso para validar esta acción al grabar el documento" & vbCrLf &
+                                                          "El documento al grabarse quedara al contado",
+                                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                        Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
+
+                                    Else
+
+                                        With _VencimientosCliente
+
+                                            _TblEncabezado.Rows(0).Item("FechaEmision") = .FechaEmision
+                                            _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = .Fecha_1er_Vencimiento
+                                            _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = .FechaUltVencimiento
+                                            _TblEncabezado.Rows(0).Item("Cuotas") = .Cuotas
+                                            _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = .Dias_1er_Vencimiento
+                                            _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = .Dias_Vencimiento
+
+                                        End With
+
+
+                                    End If
+
+                                End If
+
+                            End If
+
+                        End If
+
+
                         If _Obliga_Despacho Then
 
                             Dim _Filtros_Despachos = Generar_Filtro_IN(_TblDetalle, "", "Idmaeedo_Dori", True, False)
@@ -17502,76 +17635,6 @@ Public Class Frm_Formulario_Documento
                         _Caja_Habilitada = False
                     End Try
 
-                    Dim _SolictarCiaSeguro As Boolean
-                    PedirPermisoCiaSeguro = False
-
-                    Try
-                        _SolictarCiaSeguro = _Global_Row_Configuracion_General.Item("SolictarCiaSeguro")
-                    Catch ex As Exception
-                        _SolictarCiaSeguro = False
-                    End Try
-
-                    If _Tido = "NVV" Or (_Tido = "COV" And SobreStock) Then
-
-                        If _SolictarCiaSeguro Then
-
-                            Dim _Koen As String = _TblEncabezado.Rows(0).Item("CodEntidad")
-                            Dim _Suen As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
-                            Dim _TotalBrutoDoc As Double = _TblEncabezado.Rows(0).Item("TotalBrutoDoc")
-
-                            Dim _SolicitaCiaSeguro As Boolean
-                            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidad_CiaSeguro",
-                                                  $"CodEntidad = '{_Koen}' And CodSucEntidad = '{_Suen}'")
-
-                            If CBool(_Reg) Then
-
-                                MessageBoxEx.Show(Me, "A continuación, deberá seleccionar una compañía de seguros para asociarla a la venta.",
-                                              "Compañia de seguros", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-                                Dim _Row_CiaSeguro As DataRow
-                                Dim _Cancelar As Boolean = False
-
-                                Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(_Koen, _Suen, _TotalBrutoDoc)
-                                Fm.ModoSeleccion = True
-                                Fm.MontoAUtilizar = _TotalBrutoDoc
-                                Fm.ShowDialog(Me)
-                                If Fm.DialogResult = DialogResult.OK Then
-                                    _Row_CiaSeguro = Fm.Row_CiaSeguro
-                                    _SolicitaCiaSeguro = True
-                                ElseIf Fm.DialogResult = DialogResult.No Then
-                                    PedirPermisoCiaSeguro = True
-                                Else
-                                    _Cancelar = True
-                                End If
-                                Fm.Dispose()
-
-                                If _Cancelar Then
-                                    Return
-                                End If
-
-                                If _SolicitaCiaSeguro Then
-                                    If IsNothing(_Row_CiaSeguro) Then
-                                        MessageBoxEx.Show(Me, "Debe seleccionar una compañía de seguros para realizar la venta.", "Validación",
-                                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                        Return
-                                    Else
-                                        _TblEncabezado.Rows(0).Item("UsaCiaSeguro") = True
-                                        _TblEncabezado.Rows(0).Item("CodEntidad_Cia") = _Row_CiaSeguro.Item("CodEntidad_Cia")
-                                        _TblEncabezado.Rows(0).Item("CodSucEntidad_Cia") = _Row_CiaSeguro.Item("CodSucEntidad_Cia")
-                                    End If
-                                End If
-
-                                If PedirPermisoCiaSeguro Then
-                                    MessageBoxEx.Show(Me, "Se solicitara permiso para validar esta acción al grabar el documento",
-                                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                    Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
-                                End If
-
-                            End If
-
-                        End If
-
-                    End If
 
 
                     Dim Fm_Obs As New Frm_Formulario_Observaciones(_Ds_Matriz_Documentos, _RowEntidad, _Tipo_Documento, _Documento_Autorizado)
@@ -32400,4 +32463,18 @@ Namespace PreVenta
 
 End Namespace
 
+Namespace VencimientosCliente
+
+    Public Class VencimientosCliente
+
+        Property FechaEmision As DateTime?
+        Property Fecha_1er_Vencimiento As DateTime?
+        Property FechaUltVencimiento As DateTime?
+        Property Cuotas As Integer
+        Property Dias_1er_Vencimiento As Integer
+        Property Dias_Vencimiento As Integer
+
+    End Class
+
+End Namespace
 

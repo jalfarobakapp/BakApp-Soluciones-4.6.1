@@ -2456,6 +2456,8 @@ Select Top 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}"
                         Throw New System.Exception(_Sql.Pro_Error)
                     End If
 
+                    Dim _Row_EncabezadoDoc As DataRow = _Ds_Maeedo_Origen.Tables(0).Rows(0)
+
                     '-- MODO = '$',TIMODO = 'N, TAMODO = DolarHoy'
                     '-- MOPPPR = '$', TIMOPPPR = 'E', TAMOPPPR = DolarHoy
 
@@ -2466,15 +2468,24 @@ Select Top 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}"
                     Dim _Tasadorig_Doc As Double = _RowMoneda_Doc.Item("VAMO")
                     Dim _Tipo_Moneda As String = _RowMoneda_Doc.Item("TIMO")
 
-                    _Ds_Maeedo_Origen.Tables(0).Rows(0).Item("MODO") = "$"
-                    _Ds_Maeedo_Origen.Tables(0).Rows(0).Item("TIMODO") = "N"
-                    _Ds_Maeedo_Origen.Tables(0).Rows(0).Item("TAMODO") = _Tasadorig_Doc
+                    _Row_EncabezadoDoc.Item("MODO") = "$"
+                    _Row_EncabezadoDoc.Item("TIMODO") = "N"
+                    _Row_EncabezadoDoc.Item("TAMODO") = _Tasadorig_Doc
 
                     For Each _Fila_Dd As DataRow In _Ds_Maeedo_Origen.Tables(1).Rows
                         _Fila_Dd.Item("MOPPPR") = "$"
                         _Fila_Dd.Item("TIMOPPPR") = "N"
                         _Fila_Dd.Item("TAMOPPPR") = 1
                     Next
+
+                    'Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Docu_Ent Where Idmaeedo = {_Idmaeedo_Origen}"
+
+                    'Dim _Row_EncabezadoDoc As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+                    Dim _SobreStock As Boolean = _Row_EncabezadoDoc.Item("SobreStock")
+
+                    Dim _UsaCiaSeguro As Boolean = _Row_EncabezadoDoc.Item("UsaCiaSeguro")
+                    Dim _CodEntidad_Cia As String = _Row_EncabezadoDoc.Item("CodEntidad_Cia")
+                    Dim _CodSucEntidad_Cia As String = _Row_EncabezadoDoc.Item("CodSucEntidad_Cia")
 
                     Dim Fm_Post As New Frm_Formulario_Documento(_TidoDocEmitir,
                                                                 csGlobales.Enum_Tipo_Documento.Venta, False,,,,,, True)
@@ -2489,8 +2500,9 @@ Select Top 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}"
                     If _Msj_Limpiar.EsCorrecto Then
 
                         Fm_Post.DecimalesGl = 0
-                        Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
-
+                        Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Formulario, _Ds_Maeedo_Origen, False,
+                                                                          False, _Fecha_Emision, False, True,,,,,,
+                                                                          _UsaCiaSeguro, _CodEntidad_Cia, _CodSucEntidad_Cia)
                         Dim _MsjStock As LsValiciones.Mensajes
 
                         _MsjStock = Fm_Post.Fx_Validar_Stock2()

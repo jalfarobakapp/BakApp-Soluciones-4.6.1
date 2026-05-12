@@ -635,183 +635,6 @@ AND DPCE.EMPRESA='" & Mod_Empresa & "'  AND DPCE.ESASDP='P'
 
     Function Fx_Consulta_Sql_Entidad_CiaSeguros(_Koen As String, _Suen As String) As String
 
-        '        Consulta_sql = $"
-        'DECLARE @ENDO     VARCHAR(20) = '{_Koen}';
-        'DECLARE @SUENDO   VARCHAR(20) = '{_Suen}';
-
-        '/* =========================================================
-        '   1) DOCUMENTOS NVV y FCV DESDE MAEEDO
-        '========================================================= */
-        'WITH Docs AS
-        '(
-        '    SELECT 
-        '        IDMAEEDO,
-        '        ENDO,
-        '        SUENDO,
-        '        TIDO,
-        '        Saldo = VABRDO - VAABDO
-        '    FROM MAEEDO
-        '    WHERE TIDO IN ('NVV','FCV')
-        '      AND ENDO = @ENDO
-        '      AND SUENDO = @SUENDO
-        '      AND EMPRESA = '{Mod_Empresa}'
-        '      AND (
-        '            (TIDO = 'NVV' AND ESDO = '')
-        '         OR (TIDO = 'FCV' AND ESPGDO = 'P')
-        '      )
-        '),
-
-        '/* =========================================================
-        '   2) NVVSOL DESDE Zw_Casi_DocEnc (solo válidos)
-        '========================================================= */
-        'NVVSOL_Docs AS
-        '(
-        '    SELECT 
-        '        C.Id_DocEnc,
-        '        C.CodEntidad_Cia,
-        '        C.CodSucEntidad_Cia,
-        '        C.TotalBrutoDoc AS Monto
-        '    FROM {_Global_BaseBk}Zw_Casi_DocEnc AS C
-        '    INNER JOIN {_Global_BaseBk}Zw_Remotas AS R
-        '        ON C.Id_DocEnc = R.Id_Casi_DocEnc
-        '    INNER JOIN {_Global_BaseBk}Zw_Remotas_En_Cadena_01_Enc AS E
-        '        ON R.RCadena_Id_Enc = E.Id_Enc
-        '    WHERE C.Empresa = '{Mod_Empresa}'
-        '      AND C.CodEntidad = @ENDO
-        '      AND C.CodSucEntidad = @SUENDO
-        '      AND C.Stand_by = 0
-        '      AND C.TipoDoc = 'NVV'
-        '      AND C.UsaCiaSeguro = 1
-        '      AND E.Estado = ''
-        '),
-
-        '/* =========================================================
-        '   3) FCV / NVV CON COMPAÑÍA (Zw_Docu_Ent)
-        '========================================================= */
-        'Docs_Cia AS
-        '(
-        '    SELECT 
-        '        D.CodEntidad_Cia,
-        '        D.CodSucEntidad_Cia,
-        '        M.TIDO,
-        '        M.Saldo
-        '    FROM Docs AS M
-        '    INNER JOIN {_Global_BaseBk}Zw_Docu_Ent AS D
-        '        ON D.Idmaeedo = M.IDMAEEDO
-        '    WHERE D.CodEntidad_Cia <> ''
-        '),
-
-        '/* =========================================================
-        '   4) AGRUPAR MONTOS POR COMPAÑÍA
-        '========================================================= */
-        'Cias_Usadas AS
-        '(
-        '    SELECT 
-        '        CodEntidad_Cia,
-        '        CodSucEntidad_Cia,
-        '        FCV  = SUM(CASE WHEN TIDO = 'FCV' THEN Saldo ELSE 0 END),
-        '        NVV  = SUM(CASE WHEN TIDO = 'NVV' THEN Saldo ELSE 0 END),
-        '        NVVSOL = 0
-        '    FROM Docs_Cia
-        '    GROUP BY CodEntidad_Cia, CodSucEntidad_Cia
-
-        '    UNION ALL
-
-        '    SELECT 
-        '        CodEntidad_Cia,
-        '        CodSucEntidad_Cia,
-        '        FCV = 0,
-        '        NVV = 0,
-        '        NVVSOL = SUM(Monto)
-        '    FROM NVVSOL_Docs
-        '    GROUP BY CodEntidad_Cia, CodSucEntidad_Cia
-        '),
-
-        '/* =========================================================
-        '   5) SUMAR POR COMPAÑÍA
-        '========================================================= */
-        'Cias_Final AS
-        '(
-        '    SELECT 
-        '        CodEntidad_Cia,
-        '        CodSucEntidad_Cia,
-        '        FCV     = SUM(FCV),
-        '        NVV     = SUM(NVV),
-        '        NVVSOL  = SUM(NVVSOL)
-        '    FROM Cias_Usadas
-        '    GROUP BY CodEntidad_Cia, CodSucEntidad_Cia
-        '),
-
-        '/* =========================================================
-        '   6) MONTOS ASIGNADOS POR COMPAÑÍA + NOMBRE
-        '========================================================= */
-        'Asignaciones AS
-        '(
-        '    SELECT 
-        '        E.CodEntidad_Cia,
-        '        E.CodSucEntidad_Cia,
-        '        E.MontoAsignado,
-        '        M.NOKOEN AS Nombre_Entidad
-        '    FROM {_Global_BaseBk}Zw_Entidad_CiaSeguro AS E
-        '    LEFT JOIN MAEEN AS M
-        '        ON M.KOEN = E.CodEntidad_Cia
-        '       AND M.SUEN = E.CodSucEntidad_Cia
-        '    WHERE E.CodEntidad = @ENDO
-        '      AND E.CodSucEntidad = @SUENDO
-        '),
-
-        '/* =========================================================
-        '   7) DOCUMENTOS SIN COMPAÑÍA
-        '========================================================= */
-        'Sin_Cia AS
-        '(
-        '    SELECT 
-        '        'SIN_CIA' AS CodEntidad_Cia,
-        '        '' AS CodSucEntidad_Cia,
-        '        FCV = SUM(CASE WHEN TIDO = 'FCV' THEN Saldo ELSE 0 END),
-        '        NVV = SUM(CASE WHEN TIDO = 'NVV' THEN Saldo ELSE 0 END),
-        '        NVVSOL = 0
-        '    FROM Docs AS D
-        '    WHERE NOT EXISTS
-        '    (
-        '        SELECT 1
-        '        FROM {_Global_BaseBk}Zw_Docu_Ent AS Z
-        '        WHERE Z.Idmaeedo = D.IDMAEEDO
-        '    )
-        ')
-
-        '/* =========================================================
-        '   8) RESULTADO FINAL (TODO CON NULL→0)
-        '========================================================= */
-        'SELECT 
-        '	ISNULL(A.CodEntidad_Cia,'') AS CodEntidad_Cia,
-        '	ISNULL(A.CodSucEntidad_Cia,'') AS CodSucEntidad_Cia,
-        '    ISNULL(A.Nombre_Entidad, 'SIN COMPAÑÍA') AS NombreCia,
-        '    ISNULL(A.MontoAsignado, 0) AS MontoAsignado,
-        '    ISNULL(F.FCV, 0) AS FCV,
-        '    ISNULL(F.NVV, 0) AS NVV,
-        '    ISNULL(F.NVVSOL, 0) AS NVVSOL,
-        '    TotalUtilizado = ISNULL(F.FCV,0) + ISNULL(F.NVV,0) + ISNULL(F.NVVSOL,0),
-        '    SaldoDisponible = ISNULL(A.MontoAsignado,0) - (ISNULL(F.FCV,0) + ISNULL(F.NVV,0) + ISNULL(F.NVVSOL,0))
-        'FROM Asignaciones AS A
-        'LEFT JOIN Cias_Final AS F
-        '    ON A.CodEntidad_Cia = F.CodEntidad_Cia
-        '   AND A.CodSucEntidad_Cia = F.CodSucEntidad_Cia
-
-        'UNION ALL
-
-        'SELECT 
-        '	'','',
-        '    'SIN COMPAÑÍA',
-        '    0,
-        '    ISNULL(FCV,0),
-        '    ISNULL(NVV,0),
-        '    ISNULL(NVVSOL,0),
-        '    ISNULL(FCV,0) + ISNULL(NVV,0) + ISNULL(NVVSOL,0),
-        '    0
-        'FROM Sin_Cia;
-        '"
-
         Consulta_sql = $"
 DECLARE @ENDO     VARCHAR(20) = '{_Koen}';
 DECLARE @SUENDO   VARCHAR(20) = '{_Suen}';
@@ -909,6 +732,63 @@ Cheques_Cia AS
 ),
 
 /* =========================================================
+   X2) COTIZACIONES SOBRE STOCK (COVSS)
+========================================================= */
+COV_SobreStock AS
+(
+    SELECT 
+        BEn.CodEntidad_Cia,
+        BEn.CodSucEntidad_Cia,
+        Monto_Pesos = SUM(ROUND(Edo.VABRDO * M.VAMO,0))
+    FROM MAEEDO Edo
+    INNER JOIN {_Global_BaseBk}Zw_Docu_Ent BEn 
+        ON BEn.Idmaeedo = Edo.IDMAEEDO
+    OUTER APPLY (
+        SELECT TOP 1 VAMO
+        FROM MAEMO
+        WHERE KOMO = Edo.MODO
+        ORDER BY IDMAEMO DESC
+    ) M
+    WHERE BEn.Tido = 'COV'
+      AND BEn.SobreStock = 1
+      AND Edo.ESDO = ''
+      AND BEn.UsaCiaSeguro = 1
+      AND Edo.ENDO = @ENDO
+      AND Edo.SUENDO = @SUENDO
+      AND Edo.EMPRESA = @Empresa
+    GROUP BY 
+        BEn.CodEntidad_Cia,
+        BEn.CodSucEntidad_Cia
+),
+
+/* =========================================================
+   X3) COTIZACIONES SOBRE STOCK PENDIENTES DE PERMISO (COVSSPP)
+========================================================= */
+COVSSPP AS
+(
+    SELECT 
+        C.CodEntidad_Cia,
+        C.CodSucEntidad_Cia,
+        Monto_Pesos = SUM(ROUND(C.TotalBrutoDoc * M.VAMO,0))
+    FROM  {_Global_BaseBk}Zw_Casi_DocEnc AS C
+    OUTER APPLY (
+        SELECT TOP 1 VAMO
+        FROM MAEMO
+        WHERE KOMO = C.Moneda_Doc
+        ORDER BY IDMAEMO DESC
+    ) M
+    WHERE C.TipoDoc = 'COV'
+      AND C.UsaCiaSeguro = 1
+      AND C.Stand_by = 0
+      AND C.CodEntidad = @ENDO
+      AND C.CodSucEntidad = @SUENDO
+      AND C.Empresa = @Empresa
+    GROUP BY 
+        C.CodEntidad_Cia,
+        C.CodSucEntidad_Cia
+),
+
+/* =========================================================
    4) AGRUPAR MONTOS POR COMPAÑÍA
 ========================================================= */
 Cias_Usadas AS
@@ -919,7 +799,9 @@ Cias_Usadas AS
         FCV  = SUM(CASE WHEN TIDO = 'FCV' THEN Saldo ELSE 0 END),
         NVV  = SUM(CASE WHEN TIDO = 'NVV' THEN Saldo ELSE 0 END),
         NVVSOL = 0,
-        CHV = 0
+        CHV = 0,
+        COVSS = 0,
+        COVSSPP = 0
     FROM Docs_Cia
     GROUP BY CodEntidad_Cia, CodSucEntidad_Cia
 
@@ -931,7 +813,9 @@ Cias_Usadas AS
         FCV = 0,
         NVV = 0,
         NVVSOL = SUM(Monto),
-        CHV = 0
+        CHV = 0,
+        COVSS = 0,
+        COVSSPP = 0
     FROM NVVSOL_Docs
     GROUP BY CodEntidad_Cia, CodSucEntidad_Cia
 
@@ -943,8 +827,38 @@ Cias_Usadas AS
         FCV = 0,
         NVV = 0,
         NVVSOL = 0,
-        CHV = SUM(CHV)
+        CHV = SUM(CHV),
+        COVSS = 0,
+        COVSSPP = 0
     FROM Cheques_Cia
+    GROUP BY CodEntidad_Cia, CodSucEntidad_Cia
+
+    UNION ALL
+
+    SELECT 
+        CodEntidad_Cia,
+        CodSucEntidad_Cia,
+        FCV = 0,
+        NVV = 0,
+        NVVSOL = 0,
+        CHV = 0,
+        COVSS = SUM(Monto_Pesos),
+        COVSSPP = 0
+    FROM COV_SobreStock
+    GROUP BY CodEntidad_Cia, CodSucEntidad_Cia
+
+    UNION ALL
+
+    SELECT 
+        CodEntidad_Cia,
+        CodSucEntidad_Cia,
+        FCV = 0,
+        NVV = 0,
+        NVVSOL = 0,
+        CHV = 0,
+        COVSS = 0,
+        COVSSPP = SUM(Monto_Pesos)
+    FROM COVSSPP
     GROUP BY CodEntidad_Cia, CodSucEntidad_Cia
 ),
 
@@ -959,7 +873,9 @@ Cias_Final AS
         FCV     = SUM(FCV),
         NVV     = SUM(NVV),
         NVVSOL  = SUM(NVVSOL),
-        CHV     = SUM(CHV)
+        CHV     = SUM(CHV),
+        COVSS   = SUM(COVSS),
+        COVSSPP = SUM(COVSSPP)
     FROM Cias_Usadas
     GROUP BY CodEntidad_Cia, CodSucEntidad_Cia
 ),
@@ -973,13 +889,14 @@ Asignaciones AS
         E.CodEntidad_Cia,
         E.CodSucEntidad_Cia,
         E.MontoAsignado,
-        M.NOKOEN AS Nombre_Entidad
+        M.NOKOEN AS Nombre_Entidad,
+        E.Activa
     FROM {_Global_BaseBk}Zw_Entidad_CiaSeguro AS E
     LEFT JOIN MAEEN AS M
         ON M.KOEN = E.CodEntidad_Cia
        AND M.SUEN = E.CodSucEntidad_Cia
     WHERE E.CodEntidad = @ENDO
-      AND E.CodSucEntidad = @SUENDO
+      AND E.CodSucEntidad = @SUENDO     
 ),
 
 /* =========================================================
@@ -993,7 +910,9 @@ Sin_Cia AS
         FCV = SUM(CASE WHEN TIDO = 'FCV' THEN Saldo ELSE 0 END),
         NVV = SUM(CASE WHEN TIDO = 'NVV' THEN Saldo ELSE 0 END),
         NVVSOL = 0,
-        CHV = 0
+        CHV = 0,
+        COVSS = 0,
+        COVSSPP = 0
     FROM Docs AS D
     WHERE NOT EXISTS
     (
@@ -1004,19 +923,31 @@ Sin_Cia AS
 )
 
 /* =========================================================
-   8) RESULTADO FINAL (TODO CON NULL→0)
+   8) RESULTADO FINAL
 ========================================================= */
 SELECT 
     ISNULL(A.CodEntidad_Cia,'') AS CodEntidad_Cia,
     ISNULL(A.CodSucEntidad_Cia,'') AS CodSucEntidad_Cia,
     ISNULL(A.Nombre_Entidad, 'SIN COMPAÑÍA') AS NombreCia,
     ISNULL(A.MontoAsignado, 0) AS MontoAsignado,
+    CAST(ISNULL(A.Activa,0) AS BIT) AS Activa,
+    ISNULL(F.CHV, 0) AS CHV,
     ISNULL(F.FCV, 0) AS FCV,
     ISNULL(F.NVV, 0) AS NVV,
     ISNULL(F.NVVSOL, 0) AS NVVSOL,
-    ISNULL(F.CHV, 0) AS CHV,
-    TotalUtilizado = ISNULL(F.FCV,0) + ISNULL(F.NVV,0) + ISNULL(F.NVVSOL,0) + ISNULL(F.CHV,0),
-    SaldoDisponible = ISNULL(A.MontoAsignado,0) - (ISNULL(F.FCV,0) + ISNULL(F.NVV,0) + ISNULL(F.NVVSOL,0) + ISNULL(F.CHV,0))
+    ISNULL(F.COVSS, 0) AS COVSS,
+    ISNULL(F.COVSSPP, 0) AS COVSSPP,
+    TotalUtilizado = 
+        ISNULL(F.FCV,0) + 
+        ISNULL(F.NVV,0) + 
+        ISNULL(F.NVVSOL,0) + 
+        ISNULL(F.CHV,0) +
+        ISNULL(F.COVSS,0) +
+        ISNULL(F.COVSSPP,0),
+    SaldoDisponible = 
+        ISNULL(A.MontoAsignado,0) -
+        (ISNULL(F.FCV,0) + ISNULL(F.NVV,0) + ISNULL(F.NVVSOL,0) + 
+         ISNULL(F.CHV,0) + ISNULL(F.COVSS,0) + ISNULL(F.COVSSPP,0))
 FROM Asignaciones AS A
 LEFT JOIN Cias_Final AS F
     ON A.CodEntidad_Cia = F.CodEntidad_Cia
@@ -1028,15 +959,16 @@ SELECT
     '',
     '',
     'SIN COMPAÑÍA',
-    0,
-    ISNULL(FCV,0),
+    0,CAST(0 AS BIT),
+    ISNULL(CHV,0),
+	ISNULL(FCV,0),
     ISNULL(NVV,0),
     ISNULL(NVVSOL,0),
-    ISNULL(CHV,0),
-    ISNULL(FCV,0) + ISNULL(NVV,0) + ISNULL(NVVSOL,0) + ISNULL(CHV,0),
+    ISNULL(COVSS,0),
+    ISNULL(COVSSPP,0),
+    ISNULL(FCV,0) + ISNULL(NVV,0) + ISNULL(NVVSOL,0) + ISNULL(CHV,0) + ISNULL(COVSS,0) + ISNULL(COVSSPP,0),
     0
 FROM Sin_Cia;
-
 "
 
         Return Consulta_sql
