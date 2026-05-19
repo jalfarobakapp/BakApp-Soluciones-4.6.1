@@ -17,6 +17,7 @@ Public Class Frm_Lotes_Det
     Public Property ModoSeleccion As Boolean = False
     Public Property Sum_CantUd1 As Double = 0
     Public Property Sum_CantUd2 As Double = 0
+    Public Property ModoIngreso As Boolean = False
 
     Public Sub New()
 
@@ -137,6 +138,10 @@ Public Class Frm_Lotes_Det
                     .Ud2 = item.Ud2,
                     .CantUd1 = item.CantUd1,
                     .CantUd2 = item.CantUd2,
+                    .CantExUd1 = item.CantExUd1,
+                    .CantExUd2 = item.CantExUd2,
+                    .CantOriUd1 = item.CantOriUd1,
+                    .CantOriUd2 = item.CantOriUd2,
                     .StockUd1 = item.StockUd1,
                     .StockUd2 = item.StockUd2
                 })
@@ -404,6 +409,13 @@ Public Class Frm_Lotes_Det
 
             Case Keys.Delete
 
+                ' Nuevo: en modo ingreso no se permite eliminar filas
+                If ModoIngreso Then
+                    MessageBoxEx.Show(Me, "No se puede eliminar filas en modo de ingreso.", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+                End If
+
                 Try
                     If Not _Fila.IsNewRow Then
 
@@ -482,7 +494,6 @@ Public Class Frm_Lotes_Det
                 End If
 
         End Select
-
 
         Grilla.Refresh()
 
@@ -689,65 +700,21 @@ Public Class Frm_Lotes_Det
                     Double.TryParse(Convert.ToString(valorObj), valor)
                 End If
 
-                ' En modo selección validar disponibilidad usando la celda "StockUd1"
-                If ModoSeleccion Then
-
-                    Dim nroLote = If(item.NroLote, String.Empty).Trim()
-                    If String.IsNullOrEmpty(nroLote) Then
-                        MessageBoxEx.Show(Me, "Debe ingresar el número de lote antes de indicar la cantidad.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        item.CantUd1 = prevValor
-                        Try
-                            Lista_Lotes.ResetItem(rowIndex)
-                        Catch ex As Exception
-                        End Try
-                        Try
-                            Sb_SetCellFocus(rowIndex, "NroLote", True)
-                        Catch ex As Exception
-                        End Try
-                        Return
-                    End If
-
-                    ' Tomar stock disponible declarado en la celda "StockUd1" de la misma fila
-                    Dim stockVal As Double = 0
+                ' Comportamiento especial para ModoIngreso
+                If ModoIngreso Then
+                    ' Permitir 0, impedir negativo y valores mayores a CantOriUd1
+                    Dim maxAllowed As Double = 0
                     Try
-                        If Grilla.Columns.Contains("StockUd1") Then
-                            Dim stockObj = Grilla.Rows(rowIndex).Cells("StockUd1").Value
-                            If Not IsNothing(stockObj) Then
-                                Double.TryParse(Convert.ToString(stockObj), stockVal)
-                            End If
-                        End If
+                        maxAllowed = item.CantOriUd1
                     Catch ex As Exception
-                        stockVal = 0
+                        maxAllowed = 0
                     End Try
 
-                    ' Restar cantidades ya asignadas a otras filas del mismo lote
-                    Dim sumOtros As Double = 0
-                    For i As Integer = 0 To Lista_Lotes.Count - 1
-                        If i <> rowIndex Then
-                            Try
-                                Dim it = Lista_Lotes(i)
-                                If String.Equals(If(it.Codigo, String.Empty).Trim(), If(item.Codigo, String.Empty).Trim(), StringComparison.OrdinalIgnoreCase) AndAlso
-                               String.Equals(If(it.NroLote, String.Empty).Trim(), nroLote, StringComparison.OrdinalIgnoreCase) Then
-                                    sumOtros += it.CantUd1
-                                End If
-                            Catch ex As Exception
-                                ' Ignorar
-                            End Try
-                        End If
-                    Next
-
-                    Dim available As Double = stockVal - sumOtros
-                    If available < 0 Then available = 0
-
-                    If valor > available Then
-                        MessageBoxEx.Show(Me, String.Format("No hay stock suficiente del lote {0} como para sacarlo de la bodega. Stock disponible: {1}", nroLote, available),
-                                      "Stock insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        ' Revertir al valor previo
+                    If valor < 0 Then
+                        MessageBoxEx.Show(Me, "La cantidad no puede ser negativa.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                         item.CantUd1 = prevValor
                         Try
-                            If Grilla.Columns.Contains("CantUd1") Then
-                                Grilla.Rows(rowIndex).Cells("CantUd1").Value = prevValor
-                            End If
+                            Grilla.Rows(rowIndex).Cells("CantUd1").Value = prevValor
                             Lista_Lotes.ResetItem(rowIndex)
                         Catch ex As Exception
                         End Try
@@ -758,9 +725,120 @@ Public Class Frm_Lotes_Det
                         Return
                     End If
 
-                End If
+                    If maxAllowed <= 0 Then
+                        ' Si CantOriUd1 es 0, sólo permitir 0
+                        If valor > 0 Then
+                            MessageBoxEx.Show(Me, String.Format("La cantidad no puede ser mayor que la cantidad original ({0}) en la fila {1}.", maxAllowed, rowIndex + 1),
+                                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            item.CantUd1 = prevValor
+                            Try
+                                Grilla.Rows(rowIndex).Cells("CantUd1").Value = prevValor
+                                Lista_Lotes.ResetItem(rowIndex)
+                            Catch ex As Exception
+                            End Try
+                            Try
+                                Sb_SetCellFocus(rowIndex, "CantUd1", True)
+                            Catch ex As Exception
+                            End Try
+                            Return
+                        End If
+                    Else
+                        If valor > maxAllowed Then
+                            MessageBoxEx.Show(Me, String.Format("La cantidad no puede ser mayor que la cantidad original ({0}) en la fila {1}.", maxAllowed, rowIndex + 1),
+                                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            item.CantUd1 = prevValor
+                            Try
+                                Grilla.Rows(rowIndex).Cells("CantUd1").Value = prevValor
+                                Lista_Lotes.ResetItem(rowIndex)
+                            Catch ex As Exception
+                            End Try
+                            Try
+                                Sb_SetCellFocus(rowIndex, "CantUd1", True)
+                            Catch ex As Exception
+                            End Try
+                            Return
+                        End If
+                    End If
 
-                item.CantUd1 = valor
+                    ' Aceptar el valor dentro de límites
+                    item.CantUd1 = valor
+
+                Else
+                    ' Comportamiento previo (modo selección / normal)
+                    ' En modo selección validar disponibilidad usando la celda "StockUd1"
+                    If ModoSeleccion Then
+
+                        Dim nroLote = If(item.NroLote, String.Empty).Trim()
+                        If String.IsNullOrEmpty(nroLote) Then
+                            MessageBoxEx.Show(Me, "Debe ingresar el número de lote antes de indicar la cantidad.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            item.CantUd1 = prevValor
+                            Try
+                                Lista_Lotes.ResetItem(rowIndex)
+                            Catch ex As Exception
+                            End Try
+                            Try
+                                Sb_SetCellFocus(rowIndex, "NroLote", True)
+                            Catch ex As Exception
+                            End Try
+                            Return
+                        End If
+
+                        ' Tomar stock disponible declarado en la celda "StockUd1" de la misma fila
+                        Dim stockVal As Double = 0
+                        Try
+                            If Grilla.Columns.Contains("StockUd1") Then
+                                Dim stockObj = Grilla.Rows(rowIndex).Cells("StockUd1").Value
+                                If Not IsNothing(stockObj) Then
+                                    Double.TryParse(Convert.ToString(stockObj), stockVal)
+                                End If
+                            End If
+                        Catch ex As Exception
+                            stockVal = 0
+                        End Try
+
+                        ' Restar cantidades ya asignadas a otras filas del mismo lote
+                        Dim sumOtros As Double = 0
+                        For i As Integer = 0 To Lista_Lotes.Count - 1
+                            If i <> rowIndex Then
+                                Try
+                                    Dim it = Lista_Lotes(i)
+                                    If String.Equals(If(it.Codigo, String.Empty).Trim(), If(item.Codigo, String.Empty).Trim(), StringComparison.OrdinalIgnoreCase) AndAlso
+                                   String.Equals(If(it.NroLote, String.Empty).Trim(), nroLote, StringComparison.OrdinalIgnoreCase) Then
+                                        sumOtros += it.CantUd1
+                                    End If
+                                Catch ex As Exception
+                                    ' Ignorar
+                                End Try
+                            End If
+                        Next
+
+                        Dim available As Double = stockVal - sumOtros
+                        If available < 0 Then available = 0
+
+                        If valor > available Then
+                            MessageBoxEx.Show(Me, String.Format("No hay stock suficiente del lote {0} como para sacarlo de la bodega. Stock disponible: {1}", nroLote, available),
+                                          "Stock insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            ' Revertir al valor previo
+                            item.CantUd1 = prevValor
+                            Try
+                                If Grilla.Columns.Contains("CantUd1") Then
+                                    Grilla.Rows(rowIndex).Cells("CantUd1").Value = prevValor
+                                End If
+                                Lista_Lotes.ResetItem(rowIndex)
+                            Catch ex As Exception
+                            End Try
+                            Try
+                                Sb_SetCellFocus(rowIndex, "CantUd1", True)
+                            Catch ex As Exception
+                            End Try
+                            Return
+                        End If
+
+                    End If
+
+                    item.CantUd1 = valor
+
+                End If
 
                 ' Calcular CantUd2 = CantUd1 / Rtu, evitando división por cero
                 If item.Rtu > 0 Then
@@ -779,8 +857,8 @@ Public Class Frm_Lotes_Det
                 ' Actualizar sumas
                 ActualizarSumatorias()
 
-                ' Mover foco a FElaboracion si no está en solo lectura
-                If Not ModoSoloLectura And valor > 0 Then
+                ' Mover foco a FElaboracion si no está en solo lectura (en modo ingreso no forzar fechas)
+                If Not ModoSoloLectura AndAlso valor > 0 AndAlso Not ModoIngreso Then
                     Try
                         If Grilla.Columns.Contains("FElaboracion") AndAlso Grilla.Rows.Count > rowIndex Then
                             Sb_SetCellFocus(rowIndex, "FElaboracion", True)
@@ -1164,7 +1242,74 @@ Public Class Frm_Lotes_Det
                 Return False
             End If
 
-            ' Validar cantidades mayores a cero
+            ' Validaciones en modo ingreso: permitir cero, impedir negativos y valores mayores que CantOriUd1
+            If ModoIngreso Then
+                Try
+                    If item.CantUd1 < 0 Then
+                        MessageBoxEx.Show(Me, String.Format("La cantidad (CantUd1) no puede ser negativa en la fila {0}.", filaNum),
+                                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Try
+                            If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("CantUd1") Then
+                                Grilla.Focus()
+                                Grilla.CurrentCell = Grilla.Rows(i).Cells("CantUd1")
+                                Grilla.BeginEdit(True)
+                            End If
+                        Catch
+                        End Try
+                        Return False
+                    End If
+                Catch
+                    MessageBoxEx.Show(Me, String.Format("Valor inválido en CantUd1 en la fila {0}.", filaNum),
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End Try
+
+                ' Verificar no superar CantOriUd1
+                Dim maxOri As Double = 0
+                Try
+                    maxOri = item.CantOriUd1
+                Catch ex As Exception
+                    maxOri = 0
+                End Try
+
+                If item.CantUd1 > maxOri Then
+                    MessageBoxEx.Show(Me, String.Format("La cantidad (CantUd1) no puede ser mayor que la cantidad original ({0}) en la fila {1}.", maxOri, filaNum),
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Try
+                        If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("CantUd1") Then
+                            Grilla.Focus()
+                            Grilla.CurrentCell = Grilla.Rows(i).Cells("CantUd1")
+                            Grilla.BeginEdit(True)
+                        End If
+                    Catch
+                    End Try
+                    Return False
+                End If
+
+                ' CantUd2 debe ser >= 0 (no obligatorio >0)
+                Try
+                    If item.CantUd2 < 0 Then
+                        MessageBoxEx.Show(Me, String.Format("La cantidad (CantUd2) no puede ser negativa en la fila {0}.", filaNum),
+                                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Try
+                            If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > i AndAlso Grilla.Columns.Contains("CantUd2") Then
+                                Grilla.Focus()
+                                Grilla.CurrentCell = Grilla.Rows(i).Cells("CantUd2")
+                                Grilla.BeginEdit(True)
+                            End If
+                        Catch
+                        End Try
+                        Return False
+                    End If
+                Catch
+                    MessageBoxEx.Show(Me, String.Format("Valor inválido en CantUd2 en la fila {0}.", filaNum),
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                End Try
+
+                ' No requerir fechas en modo ingreso
+                Continue For
+            End If
+
+            ' Validar cantidades mayores a cero (modo normal)
             Try
                 If item.CantUd1 <= 0 Then
                     MessageBoxEx.Show(Me, String.Format("La cantidad (CantUd1) debe ser mayor que cero en la fila {0}.", filaNum),

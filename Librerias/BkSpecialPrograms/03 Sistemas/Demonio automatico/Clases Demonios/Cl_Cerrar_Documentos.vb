@@ -152,7 +152,9 @@ Public Class Cl_Cerrar_Documentos
         SELECT 1
         FROM {_Global_BaseBk}Zw_Docu_Ent Z
         WHERE Z.Idmaeedo = Edo.IDMAEEDO
-          AND Z.B2B = 1 AND Z.Tido = '{_Tido}'
+          AND Z.B2B = 1 
+          AND Z.Tido = '{_Tido}'
+          AND Edo.FEER >= DATEADD(DAY, -7, CAST(GETDATE() AS date))
     )"
             Consulta_Sql = Replace(Consulta_Sql, "--NewFiltro", _Condicion_B2B)
 

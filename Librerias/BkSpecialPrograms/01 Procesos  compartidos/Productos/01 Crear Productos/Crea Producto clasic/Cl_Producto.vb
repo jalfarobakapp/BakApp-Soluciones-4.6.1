@@ -722,9 +722,9 @@ Drop Table #Paso_Tabim"
                     _SqlQuery += "INSERT INTO MAEPREM ( EMPRESA,KOPR,LISCOSTO,PPUL01,PPUL02,PM) VALUES " &
                                          "( '" & _Empresa &
                                          "','" & _kopr &
-                                         "',''," & De_Num_a_Tx_01(_ppul01, False, 5) &
-                                         "," & De_Num_a_Tx_01(_ppul02, False, 5) &
-                                         "," & De_Num_a_Tx_01(_pm, False, 5) & ")" & vbCrLf & vbCrLf
+                                         "',''," & _ppul01 &
+                                         "," & _ppul02 &
+                                         "," & _pm & ")" & vbCrLf & vbCrLf
                 End If
 
             Next
@@ -892,9 +892,9 @@ Drop Table #Paso_Tabim"
                         _SqlQuery += "Insert Into MAEPREM ( EMPRESA,KOPR,LISCOSTO,PPUL01,PPUL02,PM) Values " &
                                      "( '" & _Cod &
                                      "','" & _kopr &
-                                     "',''," & De_Num_a_Tx_01(_ppul01, False, 5) &
-                                     "," & De_Num_a_Tx_01(_ppul02, False, 5) &
-                                     "," & De_Num_a_Tx_01(_pm, False, 5) & ")" & vbCrLf & vbCrLf
+                                     "',''," & _ppul01 &
+                                     "," & _ppul02 &
+                                     "," & _pm & ")" & vbCrLf & vbCrLf
                     End If
                 Else
                     _SqlQuery += "Delete MAEPREM Where KOPR = '" & _kopr & "' AND EMPRESA = '" & _Cod & "'" & vbCrLf & vbCrLf
@@ -966,7 +966,7 @@ Drop Table #Paso_Tabim"
 
                         _SqlQuery += "Insert Into TABPRE (KOPR,KOLT,KOPRRA,KOPRTE,RLUD,ECUACION,ECUACIONU2) Values ('" & _kopr &
                                         "','" & _Kolt & "','" & _koprra &
-                                        "','" & _koprte & "'," & De_Num_a_Tx_01(_rlud, False, 5) &
+                                        "','" & _koprte & "'," & _rlud &
                                         ",'" & _Ecuacion & "','" & _Ecuacionu2 & "')" & vbCrLf & vbCrLf
                     End If
 
@@ -976,7 +976,8 @@ Drop Table #Paso_Tabim"
 
             Next
 
-            _SqlQuery += "Update TABPRE Set KOPRRA = '" & _koprra & "',KOPRTE = '" & _koprte & "' Where KOPR = '" & _kopr & "'" & vbCrLf & vbCrLf
+            _SqlQuery += "Update TABPRE Set KOPRRA = '" & _koprra & "',KOPRTE = '" & _koprte & "', RLUD = " & _rlud &
+                         "Where KOPR = '" & _kopr & "'" & vbCrLf & vbCrLf
 
 
             'INGRESO DE PRODUCTOS A LA BODEGA

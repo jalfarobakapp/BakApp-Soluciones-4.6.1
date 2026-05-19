@@ -22,6 +22,10 @@
     Public Property Ud2 As String
     Public Property CantUd1 As Double
     Public Property CantUd2 As Double
+    Public Property CantExUd1 As Double
+    Public Property CantExUd2 As Double
+    Public Property CantOriUd1 As Double
+    Public Property CantOriUd2 As Double
     Public Property StockUd1 As Double
     Public Property StockUd2 As Double
 
@@ -46,6 +50,10 @@
         Ud2 = String.Empty
         CantUd1 = 0
         CantUd2 = 0
+        CantExUd1 = 0
+        CantExUd2 = 0
+        CantOriUd1 = 0
+        CantOriUd2 = 0
         StockUd1 = 0
         StockUd2 = 0
 

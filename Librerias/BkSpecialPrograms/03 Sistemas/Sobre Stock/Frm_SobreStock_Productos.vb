@@ -298,6 +298,8 @@ GROUP BY
             Return
         End If
 
+        Dim _KilosXPallet As Double = _Sql.Fx_Trae_Dato("TABCODAL", "MULTIPLO", $"KOPR = '{_RowProducto.Item("KOPR")}' And TXTMULTI = 'PALLET'", True) '_Fila.Cells("KilosXPallet").Value
+
         With _Zw_Prod_SobreStock
 
             .Id = 0
@@ -308,7 +310,7 @@ GROUP BY
             .FormatoPqte = "Pallet"
             .StDispUd1 = _Row_Stock.Item("StDispUd1")
             .PqteHabilitado = 0
-            .Ud1XPqte = 1
+            .Ud1XPqte = _KilosXPallet
             .CantMinFormato = 0
             .Moneda = String.Empty
             .PrecioXUd1 = 0

@@ -6369,7 +6369,7 @@ Public Class Frm_Formulario_Documento
 
 
         'Agregar Lista Superior
-        If _Tido = "NVV" AndAlso _Cl_DocListaSuperior.UsarVencListaPrecios And Not _Revisar_Notificacion_Automatica_Remota Then
+        If _Tido = "NVV" AndAlso _Cl_DocListaSuperior.UsarVencListaPrecios AndAlso Not _Revisar_Notificacion_Automatica_Remota AndAlso Not (SobreStock) Then
             _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpEntidad(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
             _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpSuperior(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
         End If
@@ -9402,6 +9402,7 @@ Public Class Frm_Formulario_Documento
                             Fm.Text = $"Producto: {_Codigo.ToString.Trim} - {_Descripcion.ToString.Trim}"
                             Fm.Ls_Lotes = _Lotes
                             Fm.ModoSeleccion = (_Tido = "GDI")
+                            Fm.ModoIngreso = (_Tido = "GRI")
                             Fm.ShowDialog(Me)
 
                             If Fm.DialogResult = DialogResult.OK Then
@@ -16370,6 +16371,10 @@ Public Class Frm_Formulario_Documento
 
         Next
 
+        If _RowMoneda_Det.Item("TIMO") = "E" Then
+            DecimalesGl = 5
+        End If
+
         Sb_Sumar_Totales()
 
         MessageBoxEx.Show(Me, "Cambio de moneda del documento a " & _Komo & " - " & _Nokomo, "Venta Sobre Stock", MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -17464,7 +17469,7 @@ Public Class Frm_Formulario_Documento
 
                                 Dim _SolicitaCiaSeguro As Boolean
                                 Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidad_CiaSeguro",
-                                                  $"CodEntidad = '{_Koen}' And CodSucEntidad = '{_Suen}'")
+                                                  $"CodEntidad = '{_Koen}' And CodSucEntidad = '{_Suen}' And Activa = 1")
 
                                 If CBool(_Reg) Then
 
@@ -22070,6 +22075,64 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                 _New_Fila.Cells("NroDscto").Value = _NroDscto
 
                                 If CBool(_DescuentoValor) Then Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoValor", False, False)
+
+                                If _Tido = "GRI" Then
+
+                                    Consulta_sql = "Select *,CantUd1-CantExUd1 As SaldoUd1,CantUd2-CantExUd2 As SaldoUd2" & vbCrLf &
+                                                   "From " & _Global_BaseBk & "Zw_Docu_Det_Lote" & vbCrLf &
+                                                   "Where Idmaeddo = " & _Idmaeddo_Dori & " And CantUd1-CantExUd1 > 0"
+                                    Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                                    Dim nuevaLista As New List(Of Zw_Docu_Det_Lote)
+
+                                    If CBool(_Tbl.Rows.Count) Then
+
+                                        For Each _Row As DataRow In _Tbl.Rows
+
+                                            If Not IsNothing(_Row) Then
+
+                                                Dim _Lote_Madre As New Zw_Docu_Det_Lote With {
+                                                                        .Id = _New_Fila.Cells("Id").Value,
+                                                                        .Id_Det = _Row.Item("Id"),
+                                                                        .Idmaeddo = _New_Fila.Cells("Idmaeddo_Dori").Value,
+                                                                        .Idmaeedo = _New_Fila.Cells("Idmaeedo_Dori").Value,
+                                                                        .Empresa = _New_Fila.Cells("Empresa").Value,
+                                                                        .Sucursal = _New_Fila.Cells("Sucursal").Value,
+                                                                        .Bodega = _New_Fila.Cells("Bodega").Value,
+                                                                        .Tido = _Tido,
+                                                                        .Nudo = _TblEncabezado.Rows(0).Item("NroDocumento"),
+                                                                        .Codigo = _New_Fila.Cells("Codigo").Value,
+                                                                        .Descripcion = _New_Fila.Cells("Descripcion").Value,
+                                                                        .NroLote = _Row.Item("NroLote"),
+                                                                        .SubLote = _Row.Item("SubLote"),
+                                                                        .FElaboracion = _Row.Item("FElaboracion"),
+                                                                        .FVencimiento = _Row.Item("FVencimiento"),
+                                                                        .Rtu = _New_Fila.Cells("Rtu").Value,
+                                                                        .Udtrans = _New_Fila.Cells("Udtrans").Value,
+                                                                        .UnTrans = _New_Fila.Cells("UnTrans").Value,
+                                                                        .Ud1 = _New_Fila.Cells("Ud01PR").Value,
+                                                                        .Ud2 = _New_Fila.Cells("Ud02PR").Value,
+                                                                        .CantUd1 = _Row.Item("SaldoUd1"),
+                                                                        .CantUd2 = _Row.Item("SaldoUd2"),
+                                                                        .CantOriUd1 = _Row.Item("SaldoUd1"),
+                                                                        .CantOriUd2 = _Row.Item("SaldoUd2")}
+
+                                                nuevaLista.Add(_Lote_Madre)
+
+                                                'Dim _Cl_Lotes As New Cl_Lotes_Bk(Ls_Lotes, _Lote_Madre)
+                                                'Dim _Lotes As List(Of Zw_Docu_Det_Lote) = _Cl_Lotes.Fx_ObtenerLotesPorFila(_New_Fila)
+
+                                            End If
+
+                                        Next
+
+                                        Ls_Lotes.Add(nuevaLista)
+                                        _New_Fila.Cells("TieneLotes").Value = True
+                                        _New_Fila.Cells("NroLote").Value = "LOTES"
+
+                                    End If
+
+                                End If
 
                             End If
 

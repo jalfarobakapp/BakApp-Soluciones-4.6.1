@@ -1,4 +1,5 @@
-﻿Imports DevComponents.DotNetBar
+﻿Imports System.Runtime.InteropServices
+Imports DevComponents.DotNetBar
 
 Public Class Frm_Crear_Entidad_Mt_CiasSeguro
 
@@ -29,6 +30,8 @@ Public Class Frm_Crear_Entidad_Mt_CiasSeguro
     End Sub
 
     Private Sub Frm_Crear_Entidad_Mt_CiasSeguro_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        Lbl_DatosCiaSeguros.Text = String.Empty
 
         Sb_Formato_Generico_Grilla(Grilla_CisSeguros, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, ModoSeleccion, False)
 
@@ -63,6 +66,8 @@ Public Class Frm_Crear_Entidad_Mt_CiasSeguro
     ' Implementación abajo.
 
     Sub Sb_Actualizar_Grilla()
+
+        Lbl_DatosCiaSeguros.Text = String.Empty
 
         Consulta_Sql = $"
 Select Cia.*, EN.NOKOEN From {_Global_BaseBk}Zw_Entidad_CiaSeguro Cia
@@ -221,151 +226,9 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
 
     End Sub
 
-    'Sub Sb_Actualizar_Grilla_ModoSeleccion()
-
-    '    Dim _Cl_Entidad As New Cl_Entidad
-
-    '    Dim _Msj_CiaSeguro As LsValiciones.Mensajes = _Cl_Entidad.Fx_Llenar_Entidad_CiaSeguros(_CodEntidad, _CodSucEntidad)
-    '    Dim _Tbl As DataTable = _Msj_CiaSeguro.Tag
-
-
-    '    ' Eliminar el último registro de la tabla si existe (por ejemplo, fila de totales)
-    '    If _Tbl IsNot Nothing AndAlso _Tbl.Rows.Count > 0 Then
-    '        Try
-    '            Dim _NombreCia As String = _Tbl.Rows(_Tbl.Rows.Count - 1).Item("NombreCia")
-    '            Dim _Activa As Boolean = _Tbl.Rows(_Tbl.Rows.Count - 1).Item("Activa")
-    '            If _NombreCia = "SIN COMPAÑÍA" Or Not _Activa Then
-    '                _Tbl.Rows.RemoveAt(_Tbl.Rows.Count - 1)
-    '            End If
-    '        Catch ex As Exception
-    '            ' Si falla la eliminación (tabla de solo lectura u otro error) continuar sin eliminar.
-    '        End Try
-    '    End If
-
-    '    ' Calcular la suma de MontoAsignado solo para compañias activas y asignarla a la variable de instancia
-    '    _SumMontoAsignado = 0
-    '    If _Tbl IsNot Nothing Then
-    '        For Each _rw As DataRow In _Tbl.Rows
-    '            Try
-    '                Dim _activo As Boolean = False
-    '                If Not IsDBNull(_rw.Item("Activa")) Then
-    '                    _activo = CBool(_rw.Item("Activa"))
-    '                End If
-
-    '                If _activo Then
-    '                    Dim _monto As Double = 0
-    '                    If Not IsDBNull(_rw.Item("MontoAsignado")) Then
-    '                        Double.TryParse(_rw.Item("MontoAsignado").ToString(), _monto)
-    '                    End If
-    '                    _SumMontoAsignado += _monto
-    '                End If
-    '            Catch ex As Exception
-    '                ' ignorar fila problemática
-    '            End Try
-    '        Next
-    '    End If
-
-    '    MontoCreditoTotal = _SumMontoAsignado
-
-    '    With Grilla_CisSeguros
-
-    '        .DataSource = _Tbl
-
-    '        OcultarEncabezadoGrilla(Grilla_CisSeguros, True)
-
-    '        Dim _DisplayIndex As Integer = 0
-
-    '        .Columns("NombreCia").HeaderText = "Nombre compañia de seguros"
-    '        .Columns("NombreCia").Width = 250
-    '        .Columns("NombreCia").Visible = True
-    '        .Columns("NombreCia").DisplayIndex = _DisplayIndex
-    '        _DisplayIndex += 1
-
-    '        .Columns("MontoAsignado").HeaderText = "M.Asignado"
-    '        .Columns("MontoAsignado").Width = 75
-    '        .Columns("MontoAsignado").Visible = True
-    '        .Columns("MontoAsignado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-    '        .Columns("MontoAsignado").DefaultCellStyle.Format = "###,##0"
-    '        .Columns("MontoAsignado").DisplayIndex = _DisplayIndex
-    '        _DisplayIndex += 1
-
-    '        .Columns("CHV").HeaderText = "CHV"
-    '        .Columns("CHV").ToolTipText = "Cheque pendiente de pago"
-    '        .Columns("CHV").Width = 75
-    '        .Columns("CHV").Visible = True
-    '        .Columns("CHV").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-    '        .Columns("CHV").DefaultCellStyle.Format = "###,##0"
-    '        .Columns("CHV").DisplayIndex = _DisplayIndex
-    '        _DisplayIndex += 1
-
-    '        .Columns("FCV").HeaderText = "FCV"
-    '        .Columns("FCV").ToolTipText = "Factura de venta"
-    '        .Columns("FCV").Width = 75
-    '        .Columns("FCV").Visible = True
-    '        .Columns("FCV").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-    '        .Columns("FCV").DefaultCellStyle.Format = "###,##0"
-    '        .Columns("FCV").DisplayIndex = _DisplayIndex
-    '        _DisplayIndex += 1
-
-    '        .Columns("NVV").HeaderText = "NVV"
-    '        .Columns("NVV").ToolTipText = "Nota de venta"
-    '        .Columns("NVV").Width = 75
-    '        .Columns("NVV").Visible = True
-    '        .Columns("NVV").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-    '        .Columns("NVV").DefaultCellStyle.Format = "###,##0"
-    '        .Columns("NVV").DisplayIndex = _DisplayIndex
-    '        _DisplayIndex += 1
-
-    '        .Columns("NVVSOL").HeaderText = "NVVSOL"
-    '        .Columns("NVVSOL").ToolTipText = "Nota de venta (pendiente de permiso remoto)"
-    '        .Columns("NVVSOL").Width = 75
-    '        .Columns("NVVSOL").Visible = True
-    '        .Columns("NVVSOL").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-    '        .Columns("NVVSOL").DefaultCellStyle.Format = "###,##0"
-    '        .Columns("NVVSOL").DisplayIndex = _DisplayIndex
-    '        _DisplayIndex += 1
-
-    '        .Columns("COVSS").HeaderText = "COVSS"
-    '        .Columns("COVSS").ToolTipText = "Cotización Sobre Stock"
-    '        .Columns("COVSS").Width = 75
-    '        .Columns("COVSS").Visible = True
-    '        .Columns("COVSS").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-    '        .Columns("COVSS").DefaultCellStyle.Format = "###,##0"
-    '        .Columns("COVSS").DisplayIndex = _DisplayIndex
-    '        _DisplayIndex += 1
-
-    '        .Columns("COVSSPP").HeaderText = "COVSS"
-    '        .Columns("COVSSPP").ToolTipText = "Cotización Sobre Stock (pendiente de permiso remoto)"
-    '        .Columns("COVSSPP").Width = 75
-    '        .Columns("COVSSPP").Visible = True
-    '        .Columns("COVSSPP").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-    '        .Columns("COVSSPP").DefaultCellStyle.Format = "###,##0"
-    '        .Columns("COVSSPP").DisplayIndex = _DisplayIndex
-    '        _DisplayIndex += 1
-
-    '        .Columns("TotalUtilizado").HeaderText = "T.Utilizado"
-    '        .Columns("TotalUtilizado").Width = 75
-    '        .Columns("TotalUtilizado").Visible = True
-    '        .Columns("TotalUtilizado").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-    '        .Columns("TotalUtilizado").DefaultCellStyle.Format = "###,##0"
-    '        .Columns("TotalUtilizado").DisplayIndex = _DisplayIndex
-    '        _DisplayIndex += 1
-
-    '        .Columns("SaldoDisponible").HeaderText = "TDisponible"
-    '        .Columns("SaldoDisponible").Width = 75
-    '        .Columns("SaldoDisponible").Visible = True
-    '        .Columns("SaldoDisponible").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-    '        .Columns("SaldoDisponible").DefaultCellStyle.Format = "###,##0"
-    '        .Columns("SaldoDisponible").DisplayIndex = _DisplayIndex
-    '        _DisplayIndex += 1
-
-    '    End With
-
-    '    Grilla_CisSeguros.Focus()
-
-    'End Sub
-
     Sub Sb_Actualizar_Grilla_ModoSeleccion()
+
+        Lbl_DatosCiaSeguros.Text = String.Empty
 
         Dim _Cl_Entidad As New Cl_Entidad
 
@@ -556,15 +419,19 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
 
     Private Sub Btn_AsociarCiaSeguro_Click(sender As Object, e As EventArgs) Handles Btn_AsociarCiaSeguro.Click
 
-        ' Crédito disponible: considerar solo las asignaciones de compañías activas para calcular lo que queda del límite total
-        Dim _CreditoDisponible As Double = _MontoCreditoTotal - _SumMontoAsignado
-
-        If _CreditoDisponible <= 0 Then
-            MessageBoxEx.Show(Me, "El cliente no cuenta con crédito disponible." & vbCrLf & _
-                              "Para asignar una nueva compañía de seguros, primero debe aumentar el crédito total asociado al cliente.",
-                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        If Not Fx_Tiene_Permiso(Me, "CfEnt039") Then
             Return
         End If
+
+        '' Crédito disponible: considerar solo las asignaciones de compañías activas para calcular lo que queda del límite total
+        Dim _CreditoDisponible As Double '= _MontoCreditoTotal - _SumMontoAsignado
+
+        'If _CreditoDisponible <= 0 Then
+        '    MessageBoxEx.Show(Me, "El cliente no cuenta con crédito disponible." & vbCrLf & _
+        '                      "Para asignar una nueva compañía de seguros, primero debe aumentar el crédito total asociado al cliente.",
+        '                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
 
         Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidades", "EsCiaSeguro = 1")
 
@@ -587,6 +454,7 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
 
         Dim _CodEntidad_Cia As String = _Row.Item("KOEN")
         Dim _CodSucEntidad_Cia As String = _Row.Item("SUEN")
+        Dim _NombreCia As String = _Row.Item("NOKOEN")
 
         _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidad_CiaSeguro",
                                         $"CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' " & _
@@ -602,7 +470,7 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
         Dim _MontoAsignado As Double
 
         ' Para nueva compañia el mínimo permitidio es 0 (no hay "TotalUtilizado")
-        _MontoAsignado = Fx_Asignar_Monto(_MontoAsignado, _CreditoDisponible, 0)
+        _MontoAsignado = Fx_Asignar_Monto(_MontoAsignado, _CreditoDisponible, _CodEntidad_Cia, _CodSucEntidad_Cia, _NombreCia, 0)
 
         If _MontoAsignado = 0 Then
             MessageBoxEx.Show(Me, "La compañia de seguros no fue agregada a la lista del cliente", "Validación",
@@ -611,24 +479,36 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
         End If
 
         Consulta_Sql = $"
-Insert Into {_Global_BaseBk}Zw_Entidad_CiaSeguro (CodEntidad,CodSucEntidad,CodEntidad_Cia,CodSucEntidad_Cia,MontoAsignado) 
-Values ('{_CodEntidad}','{_CodSucEntidad}','{_CodEntidad_Cia}','{_CodSucEntidad_Cia}',{De_Num_a_Tx_01(_MontoAsignado, False, 5)})"
+Insert Into {_Global_BaseBk}Zw_Entidad_CiaSeguro (CodEntidad,CodSucEntidad,CodEntidad_Cia,CodSucEntidad_Cia,MontoAsignado,Activa) 
+Values ('{_CodEntidad}','{_CodSucEntidad}','{_CodEntidad_Cia}','{_CodSucEntidad_Cia}',{De_Num_a_Tx_01(_MontoAsignado, False, 5)},1)"
+
         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+
+            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "", $"Incorporación de compañía de seguros: {_NombreCia} ({_CodEntidad_Cia} - {_CodSucEntidad_Cia}). Monto: { FormatNumber(_MontoAsignado)}",
+                               "", "", _CodEntidad, _CodSucEntidad, False, "")
+
             Sb_Actualizar_Grilla()
             MessageBoxEx.Show(Me, "Compañia de seguros asociada correctamente", "Agregar compañía de seguros",
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
+
         End If
 
     End Sub
 
-    Function Fx_Asignar_Monto(_MontoAsignado As Double, _CreditoDisponible As Double, Optional _MinimoPermitido As Double = 0) As Double
+    Function Fx_Asignar_Monto(_MontoAsignado As Double,
+                              _CreditoDisponible As Double,
+                              _CodEntidad_Cia As String,
+                              _CodSucEntidad_Cia As String,
+                              _NombreCia As String,
+                              Optional _MinimoPermitido As Double = 0) As Double
 
         Dim _CerradoPorX As Boolean
         Dim _Cancelado As Boolean
 
         Do
-            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Crédito total disponible del cliente: " & FormatNumber(_CreditoDisponible, 0) & vbCrLf &
-                                                  "Ingrese el monto a asignar" & IIf(_MinimoPermitido > 0, vbCrLf & "(Mínimo permitido por montos utilizados: " & FormatNumber(_MinimoPermitido, 0) & ")", ""),
+            Dim _Aceptar As Boolean = InputBox_Bk(Me, "Ingrese el monto a asignar para la compañía de seguros: " & vbCrLf &
+                                                  _NombreCia.ToString.Trim & " (" & _CodEntidad_Cia.ToString.Trim & "-" & _CodSucEntidad_Cia.ToString.Trim & ")" & vbCrLf &
+                                                  IIf(_MinimoPermitido > 0, "(Mínimo permitido por montos utilizados: " & FormatNumber(_MinimoPermitido, 0) & ")", ""),
                                                   "Monto asignado", _MontoAsignado, False, _Tipo_Mayus_Minus.Normal, 10,
                                                   True, _Tipo_Imagen.Money1,, _Tipo_Caracter.Moneda, False,,,,,
                                                   _CerradoPorX, _Cancelado)
@@ -639,7 +519,7 @@ Values ('{_CodEntidad}','{_CodSucEntidad}','{_CodEntidad_Cia}','{_CodSucEntidad_
 
             ' Validar que el monto sea al menos el mínimo permitido por montos utilizados
             If _MontoAsignado < _MinimoPermitido Then
-                MessageBoxEx.Show(Me, "El monto asignado no puede ser menor al total ya utilizado por la compañía." & vbCrLf & _
+                MessageBoxEx.Show(Me, "El monto asignado no puede ser menor al total ya utilizado por la compañía." & vbCrLf &
                                   "Mínimo permitido: " & FormatNumber(_MinimoPermitido, 0), "Validación",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 ' Volver a pedir el monto
@@ -669,31 +549,40 @@ Values ('{_CodEntidad}','{_CodSucEntidad}','{_CodEntidad_Cia}','{_CodSucEntidad_
                 If Hitest.Type = DataGridViewHitTestType.Cell Then
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
 
-                    Dim _Fila As DataGridViewRow = Grilla_CisSeguros.CurrentRow
-
-                    Btn_Activar.Visible = Not _Fila.Cells("Activa").Value
-                    Btn_Desactivar.Visible = _Fila.Cells("Activa").Value
-
-                    If _Fila.Cells("Activa").Value Then
-                        Lbl_DatosCiaSeguros.Text = "Compañia de seguros ACTIVA"
-                    Else
-                        Lbl_DatosCiaSeguros.Text = "Compañia de seguros INACTIVA"
-                    End If
-
-                    Btn_EditarCiaSeguro.Enabled = _Fila.Cells("Activa").Value
-
-                    ShowContextMenu(Menu_Contextual_01)
+                    Sb_MenuContextual(Grilla_CisSeguros.CurrentRow)
 
                 End If
             End With
         End If
     End Sub
 
+    Sub Sb_MenuContextual(_Fila As DataGridViewRow)
+
+        Btn_Activar.Visible = Not _Fila.Cells("Activa").Value
+        Btn_Desactivar.Visible = _Fila.Cells("Activa").Value
+
+        If _Fila.Cells("Activa").Value Then
+            Lbl_DatosCiaSeguros.Text = "Compañia de seguros ACTIVA"
+        Else
+            Lbl_DatosCiaSeguros.Text = "Compañia de seguros INACTIVA"
+        End If
+
+        Btn_EditarCiaSeguro.Enabled = _Fila.Cells("Activa").Value
+
+        ShowContextMenu(Menu_Contextual_01)
+
+    End Sub
+
     Private Sub Btn_EditarCiaSeguro_Click(sender As Object, e As EventArgs) Handles Btn_EditarCiaSeguro.Click
+
+        If Not Fx_Tiene_Permiso(Me, "CfEnt039") Then
+            Return
+        End If
 
         Dim _Fila As DataGridViewRow = Grilla_CisSeguros.CurrentRow
         Dim _CodEntidad_Cia As String = _Fila.Cells("CodEntidad_Cia").Value
         Dim _CodSucEntidad_Cia As String = _Fila.Cells("CodSucEntidad_Cia").Value
+        Dim _NombreCia As String = _Fila.Cells("NombreCia").Value.ToString.Trim
         Dim _MontoAsignado As Double = 0
         Double.TryParse(_Fila.Cells("MontoAsignado").Value.ToString(), _MontoAsignado)
 
@@ -706,7 +595,12 @@ Values ('{_CodEntidad}','{_CodSucEntidad}','{_CodEntidad_Cia}','{_CodSucEntidad_
         Dim _CreditoDisponible As Double = _MontoCreditoTotal - _SumMontoAsignado + _MontoAsignado
 
         ' El mínimo permitido al editar es el total ya utilizado por la compañía
-        Dim _NuevoMontoAsignado As Double = Fx_Asignar_Monto(_MontoAsignado, _CreditoDisponible, _TotalUtilizado)
+        Dim _NuevoMontoAsignado As Double = Fx_Asignar_Monto(_MontoAsignado,
+                                                             _CreditoDisponible,
+                                                             _CodEntidad_Cia,
+                                                             _CodSucEntidad_Cia,
+                                                             _NombreCia,
+                                                             _TotalUtilizado)
 
         If _NuevoMontoAsignado = 0 Then
             MessageBoxEx.Show(Me, "El monto asignado a la compañia de seguros no fue modificado", "Validación",
@@ -719,6 +613,10 @@ Update {_Global_BaseBk}Zw_Entidad_CiaSeguro Set MontoAsignado = {De_Num_a_Tx_01(
 Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' And CodEntidad_Cia = '{_CodEntidad_Cia}' And CodSucEntidad_Cia = '{_CodSucEntidad_Cia}'"
 
         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+
+            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "", $"Edita monto compañía de seguros: {_NombreCia} ({_CodEntidad_Cia} - {_CodSucEntidad_Cia}). Monto anterior: { FormatNumber(_MontoAsignado) }, Nuevo Monto: { FormatNumber(_NuevoMontoAsignado)} ",
+                               "", "", _CodEntidad, _CodSucEntidad, False, "")
+
             Sb_Actualizar_Grilla()
             MessageBoxEx.Show(Me, "Compañia de seguros actualizada correctamente", "Editar compañía de seguros",
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -728,9 +626,14 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' And Co
 
     Private Sub Btn_QuitarCiaSeguro_Click(sender As Object, e As EventArgs) Handles Btn_QuitarCiaSeguro.Click
 
+        If Not Fx_Tiene_Permiso(Me, "CfEnt039") Then
+            Return
+        End If
+
         Dim _Fila As DataGridViewRow = Grilla_CisSeguros.CurrentRow
         Dim _CodEntidad_Cia As String = _Fila.Cells("CodEntidad_Cia").Value
         Dim _CodSucEntidad_Cia As String = _Fila.Cells("CodSucEntidad_Cia").Value
+        Dim _NombreCia As String = _Fila.Cells("NombreCia").Value.ToString.Trim
 
         Dim _TotalUtilizado As Double = 0
         If Not IsDBNull(_Fila.Cells("TotalUtilizado").Value) Then
@@ -758,6 +661,10 @@ Delete From {_Global_BaseBk}Zw_Entidad_CiaSeguro
 Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' And CodEntidad_Cia = '{_CodEntidad_Cia}' And CodSucEntidad_Cia = '{_CodSucEntidad_Cia}'"
 
         If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+
+            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "", $"Eliminación de compañía de seguros: {_NombreCia} ({_CodEntidad_Cia} - {_CodSucEntidad_Cia})",
+                               "", "", _CodEntidad, _CodSucEntidad, False, "")
+
             Sb_Actualizar_Grilla()
             MessageBoxEx.Show(Me, "Compañia de seguros quitada correctamente", "Quitar compañía de seguros",
                                   MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -768,6 +675,7 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' And Co
     Private Sub Grilla_CisSeguros_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_CisSeguros.CellDoubleClick
 
         If Not ModoSeleccion Then
+            Sb_MenuContextual(Grilla_CisSeguros.CurrentRow)
             Return
         End If
 
@@ -883,12 +791,17 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' And Co
 
     Sub Sb_ActivarDesactivar(_Fila As DataGridViewRow, _Activar As Boolean)
 
+        If Not Fx_Tiene_Permiso(Me, "CfEnt039") Then
+            Return
+        End If
+
         Dim _CodEntidad_Cia As String = _Fila.Cells("CodEntidad_Cia").Value
         Dim _CodSucEntidad_Cia As String = _Fila.Cells("CodSucEntidad_Cia").Value
         Dim _MontoAsignado As Double = _Fila.Cells("MontoAsignado").Value
+        Dim _NombreCia As String = _Fila.Cells("NombreCia").Value.ToString.Trim
 
         If MessageBoxEx.Show(Me, "¿Confirma que desea " & IIf(_Activar, "activar", "desactivar") & " esta compañía de seguros?" & vbCrLf &
-                             "Compañia: " & _Fila.Cells("NombreCia").Value.ToString.Trim,
+                             "Compañia: " & _NombreCia,
                              IIf(_Activar, "Activar", "Desactivar") & " compañía de seguros",
                                          MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
@@ -909,6 +822,9 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' And Co
             _Fila.Cells("Activa").Value = _Activar
 
             Sb_Aplicar_Color_Filas(Grilla_CisSeguros)
+
+            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "", 0, "", $" {(IIf(_Activar, "Activa", "Desactiva"))} compañía de seguros: {_NombreCia} ({_CodEntidad_Cia} - {_CodSucEntidad_Cia})",
+                               "", "", _CodEntidad, _CodSucEntidad, False, "")
 
             MessageBoxEx.Show(Me, "Compañia de seguros " & IIf(_Activar, "activada", "desactivada") & " correctamente",
                               "Activar compañía de seguros",
@@ -949,8 +865,11 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' And Co
                         End Try
                     End If
 
+                    Dim _Color As Color = Color.Black
+
                     If esActiva Then
-                        row.DefaultCellStyle.ForeColor = Color.Black
+                        If Global_Thema = Enum_Themas.Oscuro Then _Color = Color.White
+                        'row.DefaultCellStyle.ForeColor = Color.Black
                     Else
                         row.DefaultCellStyle.ForeColor = Color.Gray
                     End If

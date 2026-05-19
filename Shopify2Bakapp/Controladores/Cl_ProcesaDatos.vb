@@ -923,27 +923,38 @@ WHERE e.TIDO = 'NVV'
                        ,[NroRemota]
                        ,[Tido]
                        ,[Nudo])
-                 VALUES
-                       (''              -- Empresa
-                       ,'{_NombreEquipo}'             -- NombreEquipo
-                       ,'B2B'       -- Funcionario
-                       ,'WEB'                    -- Modalidad 
-                       ,'MAEEDO'                     -- Archirst 
-                       ,{NVV.IDMAEEDO}               -- Idrst
-                       ,GETDATE()                    -- Fecha_Hora
-                       ,''                   -- CodAccion
-                       ,'B2B: {_AccionLimpia}'            -- Accion 
-                       ,''                           -- CodPermiso
-                       ,''                           -- Kopr
-                       ,'{NVV.ENDO}'                 -- Koen
-                       ,'{NVV.SUENDO}'               -- Suen
-                       ,0                            -- Solicitud_Permiso
-                       ,''                           -- Funcionario_Autoriza
-                       ,0                            -- PermisoRemoto
-                       ,0                            -- Id_Rem
-                       ,''                           -- NroRemota
-                       ,'{NVV.TIDO}'                 -- Tido
-                       ,'{NVV.NUDO}');"
+                 SELECT 
+               ''               -- Empresa
+               ,'{_NombreEquipo}'             -- NombreEquipo
+               ,'B2B'       -- Funcionario
+               ,'WEB'                     -- Modalidad 
+               ,'MAEEDO'                     -- Archirst 
+               ,{NVV.IDMAEEDO}               -- Idrst
+               ,GETDATE()                    -- Fecha_Hora
+               ,''                   -- CodAccion
+               ,'B2B: {_AccionLimpia}'             -- Accion 
+               ,''                           -- CodPermiso
+               ,''                           -- Kopr
+               ,'{NVV.ENDO}'                 -- Koen
+               ,'{NVV.SUENDO}'               -- Suen
+               ,0                            -- Solicitud_Permiso
+               ,''                           -- Funcionario_Autoriza
+               ,0                            -- PermisoRemoto
+               ,0                            -- Id_Rem
+               ,''                           -- NroRemota
+               ,'{NVV.TIDO}'                 -- Tido
+               ,'{NVV.NUDO}'
+         WHERE NOT EXISTS (
+    SELECT 1
+    FROM (
+        SELECT TOP 10 Accion
+        FROM Zw_Log_Gestiones
+        WHERE Idrst = {NVV.IDMAEEDO}
+          AND Archirst = 'MAEEDO'
+        ORDER BY Fecha_Hora DESC
+    ) AS UltimosLogs
+    WHERE UltimosLogs.Accion = 'B2B: {_AccionLimpia}'
+);"
 
         Dim Cn2 As New System.Data.SqlClient.SqlConnection
         Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -966,48 +977,59 @@ WHERE e.TIDO = 'NVV'
         Dim _AccionLimpia As String = Texto_Accion.Replace("'", "''")
         Dim _NombreEquipo As String = Environment.MachineName
         Dim Consulta_Log As String = $"
-            INSERT INTO {Frm_Sincronizador._Global_BaseBk}Zw_Log_Gestiones
-                       ([Empresa]
-                       ,[NombreEquipo]
-                       ,[Funcionario]
-                       ,[Modalidad]
-                       ,[Archirst]
-                       ,[Idrst]
-                       ,[Fecha_Hora]
-                       ,[CodAccion]
-                       ,[Accion]
-                       ,[CodPermiso]
-                       ,[Kopr]
-                       ,[Koen]
-                       ,[Suen]
-                       ,[Solicitud_Permiso]
-                       ,[Funcionario_Autoriza]
-                       ,[PermisoRemoto]
-                       ,[Id_Rem]
-                       ,[NroRemota]
-                       ,[Tido]
-                       ,[Nudo])
-                 VALUES
-                       (''              -- Empresa
-                       ,'{_NombreEquipo}'             -- NombreEquipo
-                       ,'B2B'       -- Funcionario
-                       ,'WEB'                    -- Modalidad 
-                       ,''                     -- Archirst 
-                       ,0               -- Idrst
-                       ,GETDATE()                    -- Fecha_Hora
-                       ,'ModEntidad'                   -- CodAccion
-                       ,'B2B: {_AccionLimpia}'            -- Accion 
-                       ,''                           -- CodPermiso
-                       ,''                           -- Kopr
-                       ,'{Ficha.KOEN}'                 -- Koen
-                       ,'{Ficha.SUEN}'               -- Suen
-                       ,0                            -- Solicitud_Permiso
-                       ,''                           -- Funcionario_Autoriza
-                       ,0                            -- PermisoRemoto
-                       ,0                            -- Id_Rem
-                       ,''                           -- NroRemota
-                       ,''                 -- Tido
-                       ,'');"
+    INSERT INTO {Frm_Sincronizador._Global_BaseBk}Zw_Log_Gestiones
+               ([Empresa]
+               ,[NombreEquipo]
+               ,[Funcionario]
+               ,[Modalidad]
+               ,[Archirst]
+               ,[Idrst]
+               ,[Fecha_Hora]
+               ,[CodAccion]
+               ,[Accion]
+               ,[CodPermiso]
+               ,[Kopr]
+               ,[Koen]
+               ,[Suen]
+               ,[Solicitud_Permiso]
+               ,[Funcionario_Autoriza]
+               ,[PermisoRemoto]
+               ,[Id_Rem]
+               ,[NroRemota]
+               ,[Tido]
+               ,[Nudo])
+         SELECT 
+               ''                            -- Empresa
+               ,'{_NombreEquipo}'            -- NombreEquipo
+               ,'B2B'                        -- Funcionario
+               ,'WEB'                        -- Modalidad 
+               ,''                           -- Archirst 
+               ,0                            -- Idrst
+               ,GETDATE()                    -- Fecha_Hora
+               ,'ModEntidad'                 -- CodAccion
+               ,'B2B: {_AccionLimpia}'       -- Accion 
+               ,''                           -- CodPermiso
+               ,''                           -- Kopr
+               ,'{Ficha.KOEN}'               -- Koen
+               ,'{Ficha.SUEN}'               -- Suen
+               ,0                            -- Solicitud_Permiso
+               ,''                           -- Funcionario_Autoriza
+               ,0                            -- PermisoRemoto
+               ,0                            -- Id_Rem
+               ,''                           -- NroRemota
+               ,''                           -- Tido
+               ,''                           -- Nudo
+         WHERE NOT EXISTS (
+             SELECT 1 
+             FROM (
+                 SELECT TOP 5 Accion
+                 FROM {Frm_Sincronizador._Global_BaseBk}Zw_Log_Gestiones
+                 WHERE Koen = '{Ficha.KOEN}' 
+                   AND Suen = '{Ficha.SUEN}'
+                 ORDER BY Fecha_Hora DESC
+             ) AS UltimosLogs
+             WHERE UltimosLogs.Accion = 'B2B: {_AccionLimpia}'
+         );"
 
         Dim Cn2 As New System.Data.SqlClient.SqlConnection
         Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)

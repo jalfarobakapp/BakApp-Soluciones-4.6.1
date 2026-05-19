@@ -26,6 +26,8 @@ Public Class Frm_Infor_Ent_Estado_Creditos_Vigentes
 
         Sb_Formato_Generico_Grilla(Grilla, 15, New Font("Tahoma", 7), Color.AliceBlue, ScrollBars.Both, False, False, False)
 
+        Sb_Color_Botones_Barra(Bar2)
+
     End Sub
 
 

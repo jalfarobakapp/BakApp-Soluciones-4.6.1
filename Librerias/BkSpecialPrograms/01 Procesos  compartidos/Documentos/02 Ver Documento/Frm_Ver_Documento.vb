@@ -766,7 +766,7 @@ Public Class Frm_Ver_Documento
                             Dim _RUTOt = String.Empty
                             Dim _IdAdicOtr = String.Empty
                             Dim _FchRef = _FlRef.Item("FEEMDO")
-                            Dim _CodRef = _Row_RefCarac.Item("CodigoTabla")
+                            Dim _CodRef = IIf(String.IsNullOrEmpty(_Row_RefCarac.Item("CodigoTabla")), 0, _Row_RefCarac.Item("CodigoTabla"))
                             Dim _RazonRef = _Nokocarac
 
                             _Class_Referencias_DTE.Fx_Row_Nueva_Referencia(0, _Idmaeedo, "", "",

@@ -33,7 +33,7 @@ Public Class Frm_SelecProdMezclaFab
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If IsNothing(_Row) Then
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones (Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Valor) Value " &
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones (Tabla,DescripcionTabla,CodigoTabla,NombreTabla,Valor) Values " &
                            "('TARJA_MAXMEZCLAS','Cant. Maxima a fabricar por mezcla','MAXMEZCLAS','MAXMEZCLAS',1200)" & vbCrLf &
                            "Select * From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones Where Tabla  = 'TARJA_MAXMEZCLAS' And CodigoTabla = 'MAXMEZCLAS'"
             _Row = _Sql.Fx_Get_DataRow(Consulta_sql)

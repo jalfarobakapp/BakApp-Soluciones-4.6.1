@@ -2592,8 +2592,24 @@ Public Module Modulo_Precios_Costos
                                 End If
                         End Select
 
+                        'Dim _Precio As Double
+                        'Dim _Valor
+
+                        'Try
+                        '    _Precio = _Sql.Fx_Trae_Dato("TABPRE", _Campo_Precio, "KOLT = '" & _Kolt & "' And KOPR = '" & _Codigo & "'", True, False, 0)
+                        'Catch ex As Exception
+                        '    _Precio = 0
+                        'End Try
+
+                        'If CBool(_Precio) Then
+                        '    _Valor = _Precio
+                        'Else
+                        '    _Valor = Fx_Precio_Formula_Random(_RowPrecio, _Campo_Precio, _Campo_Ecacion, Nothing, False, _Koen, _vCantUd1, _vCantUd2)
+                        'End If
+
                         Dim _Precio As Double
-                        Dim _Valor
+                        Dim _Valor As String
+                        Dim _ValorNum As Double
 
                         Try
                             _Precio = _Sql.Fx_Trae_Dato("TABPRE", _Campo_Precio, "KOLT = '" & _Kolt & "' And KOPR = '" & _Codigo & "'", True, False, 0)
@@ -2602,9 +2618,23 @@ Public Module Modulo_Precios_Costos
                         End Try
 
                         If CBool(_Precio) Then
-                            _Valor = _Precio
+                            _ValorNum = _Precio
                         Else
-                            _Valor = Fx_Precio_Formula_Random(_RowPrecio, _Campo_Precio, _Campo_Ecacion, Nothing, False, _Koen, _vCantUd1, _vCantUd2)
+                            _ValorNum = Fx_Precio_Formula_Random(_RowPrecio, _Campo_Precio, _Campo_Ecacion, Nothing, False, _Koen, _vCantUd1, _vCantUd2)
+                        End If
+
+                        ' Formatear _ValorNum a cadena según requerimiento:
+                        ' - si es entero -> 5 decimales "158.00000"
+                        ' - si tiene decimales -> representar con los decimales necesarios, sin ceros finales innecesarios "158.36"
+                        If _ValorNum = Math.Truncate(_ValorNum) Then
+                            _Valor = De_Num_a_Tx_01(_ValorNum, False, 5)
+                        Else
+                            _Valor = _ValorNum.ToString(System.Globalization.CultureInfo.InvariantCulture)
+                            If _Valor.Contains(".") Then
+                                _Valor = _Valor.TrimEnd("0"c)
+                                ' Si quedó con punto final (caso raro) dejar un cero
+                                If _Valor.EndsWith(".") Then _Valor &= "0"
+                            End If
                         End If
 
                         _Ecuacion = Replace(_Ecuacion, _Campo_Lista, LCase(_Valor))
