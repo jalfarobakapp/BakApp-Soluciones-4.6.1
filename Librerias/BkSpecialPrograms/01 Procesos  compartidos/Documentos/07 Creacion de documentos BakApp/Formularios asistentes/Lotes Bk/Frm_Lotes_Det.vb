@@ -17,7 +17,8 @@ Public Class Frm_Lotes_Det
     Public Property ModoSeleccion As Boolean = False
     Public Property Sum_CantUd1 As Double = 0
     Public Property Sum_CantUd2 As Double = 0
-    Public Property ModoIngreso As Boolean = False
+    Public Property ModoIngresoInterno As Boolean = False
+    Public Property ModoIngresoNuevo As Boolean = False
 
     Public Sub New()
 
@@ -117,9 +118,13 @@ Public Class Frm_Lotes_Det
         For Each item In original
             nuevaLista.Add(New Zw_Docu_Det_Lote With {
                     .Id = item.Id,
+                    .Id_LoteOri = item.Id_LoteOri,
                     .Id_Det = item.Id_Det,
                     .Idmaeddo = item.Idmaeddo,
                     .Idmaeedo = item.Idmaeedo,
+                    .Idmaeddo_Ori = item.Idmaeddo_Ori,
+                    .Tido_Ori = item.Tido_Ori,
+                    .Nudo_Ori = item.Nudo_Ori,
                     .Empresa = item.Empresa,
                     .Sucursal = item.Sucursal,
                     .Bodega = item.Bodega,
@@ -208,19 +213,21 @@ Public Class Frm_Lotes_Det
             .Columns("CantUd2").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FElaboracion").Visible = Not ModoSeleccion
+            .Columns("FElaboracion").Visible = True ' Not ModoSeleccion
             .Columns("FElaboracion").HeaderText = "F.Elaboración"
             .Columns("FElaboracion").HeaderText = "Fecha y hora de elaboración"
             .Columns("FElaboracion").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("FElaboracion").Width = 120
+            .Columns("FElaboracion").ReadOnly = Not ModoIngresoNuevo
             .Columns("FElaboracion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FVencimiento").Visible = Not ModoSeleccion
+            .Columns("FVencimiento").Visible = True '  Not ModoSeleccion
             .Columns("FVencimiento").HeaderText = "F.Vencimiento"
             .Columns("FVencimiento").HeaderText = "Fecha y hora de vencimiento"
             .Columns("FVencimiento").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("FVencimiento").Width = 120
+            .Columns("FVencimiento").ReadOnly = Not ModoIngresoNuevo
             .Columns("FVencimiento").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -242,9 +249,13 @@ Public Class Frm_Lotes_Det
         Dim _Detalle As New Zw_Docu_Det_Lote
 
         _Detalle.Id = _Item1.Id
+        _Detalle.Id_LoteOri = _Item1.Id_LoteOri
         _Detalle.Id_Det = currentId
         _Detalle.Idmaeddo = _Item1.Idmaeddo
         _Detalle.Idmaeedo = _Item1.Idmaeedo
+        _Detalle.Idmaeddo_Ori = _Item1.Idmaeddo_Ori
+        _Detalle.Tido_Ori = _Item1.Tido_Ori
+        _Detalle.Nudo_Ori = _Item1.Nudo_Ori
         _Detalle.Empresa = _Item1.Empresa
         _Detalle.Sucursal = _Item1.Sucursal
         _Detalle.Bodega = _Item1.Bodega
@@ -377,9 +388,19 @@ Public Class Frm_Lotes_Det
 
                             _Fila.Cells("NroLote").Value = _Row_Lote.Item("NroLote")
                             _Fila.Cells("SubLote").Value = _Row_Lote.Item("SubLote")
+                            _Fila.Cells("FElaboracion").Value = _Row_Lote.Item("FElaboracion")
+                            _Fila.Cells("FVencimiento").Value = _Row_Lote.Item("FVencimiento")
                             _Fila.Cells("StockUd1").Value = _Row_Lote.Item("Stfilt1")
                             _Fila.Cells("StockUd2").Value = _Row_Lote.Item("Stfilt2")
                             Sb_SetCellFocus(_Index, "CantUd1", True)
+
+                        ElseIf ModoIngresoNuevo Then
+
+                            SendKeys.Send("{F2}")
+                            e.Handled = True
+                            'Grilla.Columns(_Cabeza).ReadOnly = False
+                            Grilla.CurrentCell.ReadOnly = False
+                            Grilla.BeginEdit(True)
 
                         End If
 
@@ -389,6 +410,11 @@ Public Class Frm_Lotes_Det
                             MessageBoxEx.Show(Me, "Debe ingresar el número de Lote", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, True)
                             'Grilla.CurrentCell = _Fila.Cells("NroLote")
                             Sb_SetCellFocus(_Index, "NroLote", True)
+                            Return
+                        End If
+
+                        If Not ModoIngresoNuevo AndAlso (_Cabeza = "FElaboracion" OrElse _Cabeza = "FVencimiento") Then
+                            'Sb_SetCellFocus(_Index, "NroLote", True)
                             Return
                         End If
 
@@ -410,7 +436,7 @@ Public Class Frm_Lotes_Det
             Case Keys.Delete
 
                 ' Nuevo: en modo ingreso no se permite eliminar filas
-                If ModoIngreso Then
+                If ModoIngresoInterno Then
                     MessageBoxEx.Show(Me, "No se puede eliminar filas en modo de ingreso.", "Validación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Return
@@ -467,6 +493,12 @@ Public Class Frm_Lotes_Det
 
                     If ModoSoloLectura Then
                         MessageBoxEx.Show(Me, "El formulario se encuentra en modo de solo lectura", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        Return
+                    End If
+
+                    If ModoIngresoInterno Then
+                        MessageBoxEx.Show(Me, "No se permite agregar una línea adicional", "Validación",
                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
                         Return
                     End If
@@ -701,7 +733,7 @@ Public Class Frm_Lotes_Det
                 End If
 
                 ' Comportamiento especial para ModoIngreso
-                If ModoIngreso Then
+                If ModoIngresoInterno Then
                     ' Permitir 0, impedir negativo y valores mayores a CantOriUd1
                     Dim maxAllowed As Double = 0
                     Try
@@ -858,7 +890,7 @@ Public Class Frm_Lotes_Det
                 ActualizarSumatorias()
 
                 ' Mover foco a FElaboracion si no está en solo lectura (en modo ingreso no forzar fechas)
-                If Not ModoSoloLectura AndAlso valor > 0 AndAlso Not ModoIngreso Then
+                If Not ModoSoloLectura AndAlso valor > 0 AndAlso Not ModoIngresoInterno Then
                     Try
                         If Grilla.Columns.Contains("FElaboracion") AndAlso Grilla.Rows.Count > rowIndex Then
                             Sb_SetCellFocus(rowIndex, "FElaboracion", True)
@@ -1243,7 +1275,7 @@ Public Class Frm_Lotes_Det
             End If
 
             ' Validaciones en modo ingreso: permitir cero, impedir negativos y valores mayores que CantOriUd1
-            If ModoIngreso Then
+            If ModoIngresoInterno Then
                 Try
                     If item.CantUd1 < 0 Then
                         MessageBoxEx.Show(Me, String.Format("La cantidad (CantUd1) no puede ser negativa en la fila {0}.", filaNum),

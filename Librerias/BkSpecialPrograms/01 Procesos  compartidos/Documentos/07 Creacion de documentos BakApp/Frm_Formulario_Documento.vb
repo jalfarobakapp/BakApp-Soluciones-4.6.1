@@ -9370,9 +9370,13 @@ Public Class Frm_Formulario_Documento
 
                             Dim _Lote_Madre As New Zw_Docu_Det_Lote With {
                                 .Id = _Fila.Cells("Id").Value,
+                                .Id_LoteOri = 0,
                                 .Id_Det = 0,
                                 .Idmaeddo = 0,
                                 .Idmaeedo = 0,
+                                .Idmaeddo_Ori = 0,
+                                .Tido_Ori = "",
+                                .Nudo_Ori = "",
                                 .Empresa = _Fila.Cells("Empresa").Value,
                                 .Sucursal = _Fila.Cells("Sucursal").Value,
                                 .Bodega = _Fila.Cells("Bodega").Value,
@@ -9402,7 +9406,8 @@ Public Class Frm_Formulario_Documento
                             Fm.Text = $"Producto: {_Codigo.ToString.Trim} - {_Descripcion.ToString.Trim}"
                             Fm.Ls_Lotes = _Lotes
                             Fm.ModoSeleccion = (_Tido = "GDI")
-                            Fm.ModoIngreso = (_Tido = "GRI")
+                            Fm.ModoIngresoInterno = (_Tido = "GRI")
+                            Fm.ModoIngresoNuevo = (_Tido = "GRC")
                             Fm.ShowDialog(Me)
 
                             If Fm.DialogResult = DialogResult.OK Then
@@ -22093,9 +22098,13 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
                                                 Dim _Lote_Madre As New Zw_Docu_Det_Lote With {
                                                                         .Id = _New_Fila.Cells("Id").Value,
-                                                                        .Id_Det = _Row.Item("Id"),
-                                                                        .Idmaeddo = _New_Fila.Cells("Idmaeddo_Dori").Value,
-                                                                        .Idmaeedo = _New_Fila.Cells("Idmaeedo_Dori").Value,
+                                                                        .Id_LoteOri = _Row.Item("Id"),
+                                                                        .Id_Det = 0,
+                                                                        .Idmaeddo = 0, ' _New_Fila.Cells("Idmaeddo_Dori").Value,
+                                                                        .Idmaeedo = 0, ' _New_Fila.Cells("Idmaeedo_Dori").Value,
+                                                                        .Idmaeddo_Ori = _New_Fila.Cells("Idmaeddo_Dori").Value,
+                                                                        .Tido_Ori = _New_Fila.Cells("Tidopa").Value,
+                                                                        .Nudo_Ori = _New_Fila.Cells("Nudopa").Value,
                                                                         .Empresa = _New_Fila.Cells("Empresa").Value,
                                                                         .Sucursal = _New_Fila.Cells("Sucursal").Value,
                                                                         .Bodega = _New_Fila.Cells("Bodega").Value,

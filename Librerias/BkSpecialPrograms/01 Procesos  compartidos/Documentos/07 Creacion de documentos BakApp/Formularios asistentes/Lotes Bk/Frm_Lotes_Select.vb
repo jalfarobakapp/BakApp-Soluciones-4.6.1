@@ -38,7 +38,7 @@
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_sql = "Select Empresa, Sucursal, Bodega, NroLote, SubLote, Codigo, Stfilt1, Stfilt2" & vbCrLf &
+        Consulta_sql = "Select Empresa,Sucursal,Bodega,NroLote,SubLote,Codigo,FElaboracion,FVencimiento,Stfilt1,Stfilt2" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Prod_Stock_Lote" & vbCrLf &
                        "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo = '" & _Codigo & "'"
         _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
@@ -52,38 +52,54 @@
             OcultarEncabezadoGrilla(Grilla, True)
 
             .Columns("Empresa").ReadOnly = True
-            .Columns("Empresa").Width = 80
-            .Columns("Empresa").HeaderText = "Empresa"
+            .Columns("Empresa").Width = 30
+            .Columns("Empresa").HeaderText = "Emp."
             .Columns("Empresa").Visible = True
             .Columns("Empresa").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Sucursal").ReadOnly = True
-            .Columns("Sucursal").Width = 80
-            .Columns("Sucursal").HeaderText = "Sucursal"
+            .Columns("Sucursal").Width = 30
+            .Columns("Sucursal").HeaderText = "Suc."
             .Columns("Sucursal").Visible = True
             .Columns("Sucursal").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Bodega").ReadOnly = True
-            .Columns("Bodega").Width = 80
-            .Columns("Bodega").HeaderText = "Bodega"
+            .Columns("Bodega").Width = 30
+            .Columns("Bodega").HeaderText = "Bod."
             .Columns("Bodega").Visible = True
             .Columns("Bodega").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NroLote").ReadOnly = True
-            .Columns("NroLote").Width = 200
+            .Columns("NroLote").Width = 180
             .Columns("NroLote").HeaderText = "Lote"
             .Columns("NroLote").Visible = True
             .Columns("NroLote").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("SubLote").ReadOnly = True
-            .Columns("SubLote").Width = 100
+            .Columns("SubLote").Width = 80
             .Columns("SubLote").HeaderText = "Sub Lote"
             .Columns("SubLote").Visible = True
             .Columns("SubLote").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FElaboracion").Visible = True ' Not ModoSeleccion
+            .Columns("FElaboracion").HeaderText = "F.Elaboración"
+            .Columns("FElaboracion").HeaderText = "Fecha y hora de elaboración"
+            .Columns("FElaboracion").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FElaboracion").Width = 120
+            .Columns("FElaboracion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FVencimiento").Visible = True '  Not ModoSeleccion
+            .Columns("FVencimiento").HeaderText = "F.Vencimiento"
+            .Columns("FVencimiento").HeaderText = "Fecha y hora de vencimiento"
+            .Columns("FVencimiento").DefaultCellStyle.Format = "dd/MM/yyyy"
+            .Columns("FVencimiento").Width = 120
+            .Columns("FVencimiento").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Stfilt1").Width = 60

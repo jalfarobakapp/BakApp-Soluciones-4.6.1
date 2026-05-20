@@ -2,8 +2,12 @@
 
     Public Property Id As Integer
     Public Property Id_Det As Integer
+    Public Property Id_LoteOri As Integer
     Public Property Idmaeddo As Integer
     Public Property Idmaeedo As Integer
+    Public Property Idmaeddo_Ori As Integer
+    Public Property Tido_Ori As String
+    Public Property Nudo_Ori As String
     Public Property Empresa As String
     Public Property Sucursal As String
     Public Property Bodega As String
@@ -33,8 +37,12 @@
 
         Id = 0
         Id_Det = 0
+        Id_LoteOri = 0
         Idmaeddo = 0
         Idmaeedo = 0
+        Idmaeddo_Ori = 0
+        Tido_Ori = String.Empty
+        Nudo_Ori = String.Empty
         Tido = String.Empty
         Nudo = String.Empty
         Codigo = String.Empty

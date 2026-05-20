@@ -1473,117 +1473,124 @@ Public Class Clase_Crear_Documento
 
                                     With lote
 
-                                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det_Lote (Id_Det,Idmaeddo,Idmaeedo," &
-                                                       "Empresa,Sucursal,Bodega,Tido,Nudo,Codigo," &
-                                                       "Descripcion,NroLote,SubLote,FElaboracion,FVencimiento,CantUd1,CantUd2) Values " &
-                                                       "(" & _Id_Det & "," & _Idmaeddo & "," & _Idmaeedo &
-                                                       ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & _Tido & "','" & _Nudo & "'" &
-                                                       ",'" & .Codigo & "','" & .Descripcion & "','" & .NroLote & "'" &
-                                                       ",'" & .SubLote & "','" & Format(.FElaboracion, "yyyyMMdd") & "','" & Format(.FVencimiento, "yyyyMMdd") & "'," &
-                                                       De_Num_a_Tx_01(.CantUd1, False, 5) & "," & De_Num_a_Tx_01(.CantUd2, False, 5) & ")"
+                                        If CBool(.CantUd1 + .CantUd2) Then
 
-                                        Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                        Comando.Transaction = myTrans
-                                        Comando.ExecuteNonQuery()
+                                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det_Lote (Id_Det,Id_LoteOri,Idmaeddo,Idmaeedo," &
+                                                           "Idmaeddo_Ori,Tido_Ori,Nudo_Ori,Empresa,Sucursal,Bodega,Tido,Nudo,Codigo," &
+                                                           "Descripcion,NroLote,SubLote,FElaboracion,FVencimiento,CantUd1,CantUd2) Values " &
+                                                           "(" & _Id_Det & "," & .Id_LoteOri & "," & _Idmaeddo & "," & _Idmaeedo &
+                                                           "," & .Idmaeddo_Ori & ",'" & .Tido_Ori & "','" & .Nudo_Ori & "'" &
+                                                           ",'" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & _Tido & "','" & _Nudo & "'" &
+                                                           ",'" & .Codigo & "','" & .Descripcion & "','" & .NroLote & "'" &
+                                                           ",'" & .SubLote & "','" & Format(.FElaboracion, "yyyyMMdd") & "','" & Format(.FVencimiento, "yyyyMMdd") & "'," &
+                                                           De_Num_a_Tx_01(.CantUd1, False, 5) & "," & De_Num_a_Tx_01(.CantUd2, False, 5) & ")"
 
-                                        Consulta_sql = "Select Count(*) As 'CountLotes' From " & _Global_BaseBk & "Zw_Prod_Stock_Lote" & vbCrLf &
+                                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                            Comando.Transaction = myTrans
+                                            Comando.ExecuteNonQuery()
+
+
+
+                                            Consulta_sql = "Select Count(*) As 'CountLotes' From " & _Global_BaseBk & "Zw_Prod_Stock_Lote" & vbCrLf &
                                                        "Where Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "' And Bodega = '" & .Bodega & "' " &
                                                        "And NroLote = '" & .NroLote & "' And SubLote = '" & .SubLote & "' And Codigo = '" & .Codigo & "'"
-                                        Comando = New SqlCommand(Consulta_sql, cn2)
-                                        Comando.Transaction = myTrans
-                                        dfd1 = Comando.ExecuteReader()
-                                        Dim _CountLotes As Integer
-                                        While dfd1.Read()
-                                            _CountLotes = dfd1("CountLotes")
-                                        End While
-                                        dfd1.Close()
-
-                                        If _CountLotes = 0 Then
-
-                                            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Stock_Lote (Empresa,Sucursal,Bodega,NroLote,SubLote,Codigo) Values " &
-                                                           "('" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & .NroLote & "','" & .SubLote & "','" & .Codigo & "')"
-                                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                            Comando = New SqlCommand(Consulta_sql, cn2)
                                             Comando.Transaction = myTrans
-                                            Comando.ExecuteNonQuery()
+                                            dfd1 = Comando.ExecuteReader()
+                                            Dim _CountLotes As Integer
+                                            While dfd1.Read()
+                                                _CountLotes = dfd1("CountLotes")
+                                            End While
+                                            dfd1.Close()
 
-                                        End If
+                                            If _CountLotes = 0 Then
 
-                                        'Dim _MasMenos As String
-
-                                        If _Tido = "GRC" Or _Tido = "GRI" Then
-                                            '_MasMenos = "+"
-
-                                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Stock_Lote Set " &
-                                                           "Stfilt1 = Stfilt1+" & De_Num_a_Tx_01(.CantUd1, False, 5) &
-                                                           ",Stfilt2 = Stfilt2+" & De_Num_a_Tx_01(.CantUd1, False, 5) & vbCrLf &
-                                                           "Where Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "' And Bodega = '" & .Bodega & "' " &
-                                                           "And NroLote = '" & .NroLote & "' And SubLote = '" & .SubLote & "' And Codigo = '" & .Codigo & "'"
-                                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                            Comando.Transaction = myTrans
-                                            Comando.ExecuteNonQuery()
-
-                                            If _Tido = "GRI" Then
-
-                                                Dim _Empp = String.Empty
-                                                Dim _Succ = String.Empty
-                                                Dim _Bodd = String.Empty
-
-                                                If _Tido = "GRI" And CBool(.Idmaeddo) Then
-                                                    Comando = New SqlCommand("Select EMPRESA,SULIDO,BOSULIDO From MAEDDO Where IDMAEDDO = " & .Idmaeddo, cn2)
-                                                    Comando.Transaction = myTrans
-                                                    dfd1 = Comando.ExecuteReader()
-                                                    While dfd1.Read()
-                                                        _Empp = dfd1("EMPRESA")
-                                                        _Succ = dfd1("SULIDO")
-                                                        _Bodd = dfd1("BOSULIDO")
-                                                    End While
-                                                    dfd1.Close()
-                                                End If
-
-                                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Stock_Lote Set " &
-                                                               "Sttr1 = Sttr1-" & De_Num_a_Tx_01(.CantUd1, False, 5) &
-                                                               ",Sttr2 = Sttr2-" & De_Num_a_Tx_01(.CantUd2, False, 5) & vbCrLf &
-                                                               "Where Empresa = '" & _Empp & "' And Sucursal = '" & _Succ & "' And Bodega = '" & _Bodd & "' And Codigo = '" & .Codigo & "'"
-                                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                                Comando.Transaction = myTrans
-                                                Comando.ExecuteNonQuery()
-
-                                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det_Lote Set " &
-                                                               "CantExUd1 = CantExUd1+" & De_Num_a_Tx_01(.CantUd1, False, 5) &
-                                                               ",CantExUd2 = CantExUd2+" & De_Num_a_Tx_01(.CantUd2, False, 5) & vbCrLf &
-                                                               "Where Id = " & .Id_Det
+                                                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Prod_Stock_Lote (Empresa,Sucursal,Bodega,NroLote,SubLote,Codigo,FElaboracion,FVencimiento) Values " &
+                                                               "('" & .Empresa & "','" & .Sucursal & "','" & .Bodega & "','" & .NroLote &
+                                                               "','" & .SubLote & "','" & .Codigo &
+                                                               "','" & Format(.FElaboracion, "yyyyMMdd") & "','" & Format(.FVencimiento, "yyyyMMdd") & "')"
                                                 Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                                                 Comando.Transaction = myTrans
                                                 Comando.ExecuteNonQuery()
 
                                             End If
 
-                                        ElseIf _Tido = "GDI" Or _Tido = "GTI" Then
-                                            '_MasMenos = "-"
+                                            'Dim _MasMenos As String
 
-                                            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Stock_Lote Set " &
-                                                           "Stfilt1 = Stfilt1-" & De_Num_a_Tx_01(.CantUd1, False, 5) &
-                                                           ",Stfilt2 = Stfilt2-" & De_Num_a_Tx_01(.CantUd2, False, 5) & vbCrLf &
-                                                           ",Sttr1 = Sttr1+" & De_Num_a_Tx_01(.CantUd1, False, 5) &
-                                                           ",Sttr2 = Sttr2+" & De_Num_a_Tx_01(.CantUd2, False, 5) & vbCrLf &
-                                                           "Where Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "' And Bodega = '" & .Bodega & "' " &
-                                                           "And NroLote = '" & .NroLote & "' And SubLote = '" & .SubLote & "' And Codigo = '" & .Codigo & "'"
-                                            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
-                                            Comando.Transaction = myTrans
-                                            Comando.ExecuteNonQuery()
+                                            If _Tido = "GRC" Or _Tido = "GRI" Then
+                                                '_MasMenos = "+"
+
+                                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Stock_Lote Set " &
+                                                               "Stfilt1 = Stfilt1+" & De_Num_a_Tx_01(.CantUd1, False, 5) &
+                                                               ",Stfilt2 = Stfilt2+" & De_Num_a_Tx_01(.CantUd1, False, 5) & vbCrLf &
+                                                               "Where Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "' And Bodega = '" & .Bodega & "' " &
+                                                               "And NroLote = '" & .NroLote & "' And SubLote = '" & .SubLote & "' And Codigo = '" & .Codigo & "'"
+                                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                                Comando.Transaction = myTrans
+                                                Comando.ExecuteNonQuery()
+
+                                                If _Tido = "GRI" Then
+
+                                                    Dim _Empp = String.Empty
+                                                    Dim _Succ = String.Empty
+                                                    Dim _Bodd = String.Empty
+
+                                                    If _Tido = "GRI" And CBool(.Idmaeddo_Ori) Then
+                                                        Comando = New SqlCommand("Select EMPRESA,SULIDO,BOSULIDO From MAEDDO Where IDMAEDDO = " & .Idmaeddo_Ori, cn2)
+                                                        Comando.Transaction = myTrans
+                                                        dfd1 = Comando.ExecuteReader()
+                                                        While dfd1.Read()
+                                                            _Empp = dfd1("EMPRESA")
+                                                            _Succ = dfd1("SULIDO")
+                                                            _Bodd = dfd1("BOSULIDO")
+                                                        End While
+                                                        dfd1.Close()
+                                                    End If
+
+                                                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Stock_Lote Set " &
+                                                                   "Sttr1 = Sttr1-" & De_Num_a_Tx_01(.CantUd1, False, 5) &
+                                                                   ",Sttr2 = Sttr2-" & De_Num_a_Tx_01(.CantUd2, False, 5) & vbCrLf &
+                                                                   "Where Empresa = '" & _Empp & "' And Sucursal = '" & _Succ & "' And Bodega = '" & _Bodd &
+                                                                   "' And NroLote = '" & .NroLote & "' And SubLote = '" & .SubLote & "' And Codigo = '" & .Codigo & "'"
+                                                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                                    Comando.Transaction = myTrans
+                                                    Comando.ExecuteNonQuery()
+
+                                                    Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Det_Lote Set " &
+                                                                   "CantExUd1 = CantExUd1+" & De_Num_a_Tx_01(.CantUd1, False, 5) &
+                                                                   ",CantExUd2 = CantExUd2+" & De_Num_a_Tx_01(.CantUd2, False, 5) & vbCrLf &
+                                                                   "Where Id = " & .Id_LoteOri
+                                                    Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                                    Comando.Transaction = myTrans
+                                                    Comando.ExecuteNonQuery()
+
+                                                End If
+
+                                            ElseIf _Tido = "GDI" Or _Tido = "GTI" Then
+                                                '_MasMenos = "-"
+
+                                                Consulta_sql = "Update " & _Global_BaseBk & "Zw_Prod_Stock_Lote Set " &
+                                                               "Stfilt1 = Stfilt1-" & De_Num_a_Tx_01(.CantUd1, False, 5) &
+                                                               ",Stfilt2 = Stfilt2-" & De_Num_a_Tx_01(.CantUd2, False, 5) & vbCrLf &
+                                                               ",Sttr1 = Sttr1+" & De_Num_a_Tx_01(.CantUd1, False, 5) &
+                                                               ",Sttr2 = Sttr2+" & De_Num_a_Tx_01(.CantUd2, False, 5) & vbCrLf &
+                                                               "Where Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "' And Bodega = '" & .Bodega & "' " &
+                                                               "And NroLote = '" & .NroLote & "' And SubLote = '" & .SubLote & "' And Codigo = '" & .Codigo & "'"
+                                                Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+                                                Comando.Transaction = myTrans
+                                                Comando.ExecuteNonQuery()
+
+                                            End If
 
                                         End If
 
                                     End With
 
-                                    '_Salir_For = True
                                 Else
                                     Exit For
                                 End If
                             Next
-                            'If _Salir_For Then
-                            '    Exit For
-                            'End If
+
                         Next
 
 

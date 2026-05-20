@@ -1174,6 +1174,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Sobs0006", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Sobs0007", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Sobs0008", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Sobs0009", _Objeto, _Formulario)
 
         _SqlQuery += vbCrLf
 
@@ -5215,6 +5216,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Sobs0008"
                 _DescripcionPermiso = "AGREGAR CANTIDAD ADICIONAL DISPONIBLE PARA LA VENTA DE PALLETS EN UN PRODUCTO YA EXISTENTE"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Sobs0009"
+                _DescripcionPermiso = "EXPORTAR A EXCEL LISTADO DE PRODUCTOS SOBRE STOCK"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

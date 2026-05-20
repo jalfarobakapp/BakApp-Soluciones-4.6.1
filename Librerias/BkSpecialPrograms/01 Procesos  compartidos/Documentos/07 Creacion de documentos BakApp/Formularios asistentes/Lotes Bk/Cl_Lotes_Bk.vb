@@ -38,9 +38,13 @@
 
             Dim nuevoLote As New Zw_Docu_Det_Lote With {
                 .Id = Lote_Madre.Id,
+                .Id_LoteOri = Lote_Madre.Id_LoteOri,
                 .Id_Det = Lote_Madre.Id_Det,
                 .Idmaeddo = Lote_Madre.Idmaeddo,
                 .Idmaeedo = Lote_Madre.Idmaeedo,
+                .Idmaeddo_Ori = Lote_Madre.Idmaeddo_Ori,
+                .Tido_Ori = Lote_Madre.Tido_Ori,
+                .Nudo_Ori = Lote_Madre.Nudo_Ori,
                 .Empresa = Lote_Madre.Empresa,
                 .Sucursal = Lote_Madre.Sucursal,
                 .Bodega = Lote_Madre.Bodega,

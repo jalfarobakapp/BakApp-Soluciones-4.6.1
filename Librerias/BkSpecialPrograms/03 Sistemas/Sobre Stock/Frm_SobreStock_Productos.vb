@@ -7,6 +7,7 @@ Public Class Frm_SobreStock_Productos
     Dim Consulta_sql As String
 
     Private _Empresa As String = Mod_Empresa
+    Private _Tbl_Productos As DataTable
 
     Public Property Seleccionado As Boolean
     Public Property ModoSeleccion As Boolean
@@ -127,13 +128,13 @@ GROUP BY
     Sbs.StSobStockUd1,
     Sbs.StSobStockUd2;"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+        _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _DisplayIndex = 0
 
         With Grilla
 
-            .DataSource = _Tbl
+            .DataSource = _Tbl_Productos
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -608,4 +609,15 @@ GROUP BY
         Sb_Actualizar_Grilla()
 
     End Sub
+
+    Private Sub Btn_Exportar_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Excel.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Sobs0009") Then
+            Return
+        End If
+
+        ExportarTabla_JetExcel_Tabla(_Tbl_Productos, Me, "Productos_SobreStock")
+
+    End Sub
+
 End Class
