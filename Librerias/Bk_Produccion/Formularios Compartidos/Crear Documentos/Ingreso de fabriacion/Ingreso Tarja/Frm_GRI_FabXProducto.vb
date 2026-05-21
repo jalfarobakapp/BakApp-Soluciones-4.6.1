@@ -1148,10 +1148,53 @@ Public Class Frm_GRI_FabXProducto
         _ConsolidaStock = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
                                                       "Valor", "Tabla = 'TARJA_CONSSTOCK' And CodigoTabla = 'GRI'",, False,, True)
 
+
+        Dim _Row_Producto As DataRow = _Tbl_Productos.Rows(0)
+
+
+        Dim Ls_Lotes As New List(Of List(Of Zw_Docu_Det_Lote))
+        Dim nuevaLista As New List(Of Zw_Docu_Det_Lote)
+
+        Dim _Lote_Madre As New Zw_Docu_Det_Lote With {
+           .Id = 0,
+           .Id_LoteOri = 0,
+           .Id_Det = 0,
+           .Idmaeddo = 0,
+           .Idmaeedo = 0,
+           .Idmaeddo_Ori = 0,
+           .Tido_Ori = String.Empty,
+           .Nudo_Ori = String.Empty,
+           .Empresa = _Row_Producto.Item("Empresa"),
+           .Sucursal = _Row_Producto.Item("Sucursal"),
+           .Bodega = _Row_Producto.Item("Bodega"),
+           .Tido = "GRC",
+           .Nudo = String.Empty,
+           .Codigo = _Row_Producto.Item("CODIGO"),
+           .Descripcion = _Row_Producto.Item("GLOSA"),
+           .NroLote = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Lote,
+           .SubLote = String.Empty,
+           .FElaboracion = _Cl_Tarja.Zw_Pdp_CPT_Tarja.FechaElab,
+           .FVencimiento = DateAdd(DateInterval.Year, 1, CDate(_Cl_Tarja.Zw_Pdp_CPT_Tarja.FechaElab)),
+           .Rtu = _Row_Maepr.Item("RLUD"),
+           .Udtrans = _Row_Maepr.Item("UD01PR"),
+           .UnTrans = 1,
+           .Ud1 = _Row_Maepr.Item("UD01PR"),
+           .Ud2 = _Row_Maepr.Item("UD02PR"),
+           .CantUd1 = _Row_Producto.Item("Cantidad"),
+           .CantUd2 = _Row_Producto.Item("Cantidad") / _Row_Maepr.Item("RLUD"),
+           .CantOriUd1 = 0,
+           .CantOriUd2 = 0}
+
+        nuevaLista.Add(_Lote_Madre)
+
+        Ls_Lotes.Add(nuevaLista)
+
+
         Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
                                                False, False, False, False, False, False)
 
         Fm.Pro_RowEntidad = _Row_Entidad
+        Fm.Ls_Lotes = Ls_Lotes
         Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, _FechaEmision, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
         Fm.NoConsolidarNuncaStock = Not _ConsolidaStock
         _Mensaje = Fm.Fx_Grabar_Documento(False)

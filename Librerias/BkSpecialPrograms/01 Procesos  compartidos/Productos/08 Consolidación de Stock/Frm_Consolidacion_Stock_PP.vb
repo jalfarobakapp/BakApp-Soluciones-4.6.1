@@ -124,6 +124,12 @@ PqteComprometidoSol = 0
 Where Codigo = '{_Codigo}' And Empresa = '{_Empresa}' -- And Eliminado = 0 And Activo = 1"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
+            Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Prod_Stock_Lote Set
+Stfilt1 = 0,Stfilt2 = 0,Sttr1 = 0,Sttr2 = 0
+Where Codigo = '{_Codigo}' And Empresa = '{_Empresa}'"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
             If CBool(_TblBodegasPP.Rows.Count) Then
 
                 For Each _Fila_Bod As DataRow In _TblBodegasPP.Rows

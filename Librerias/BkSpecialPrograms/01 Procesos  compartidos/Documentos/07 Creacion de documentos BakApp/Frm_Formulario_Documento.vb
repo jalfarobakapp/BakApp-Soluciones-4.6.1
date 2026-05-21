@@ -187,7 +187,7 @@ Public Class Frm_Formulario_Documento
 
     Dim _Cl_Entidad As New Cl_Entidad
 
-    Dim Ls_Lotes As New List(Of List(Of Zw_Docu_Det_Lote))
+    Public Property Ls_Lotes As New List(Of List(Of Zw_Docu_Det_Lote))
 
     Dim _VencimientosCliente As New VencimientosCliente.VencimientosCliente
 

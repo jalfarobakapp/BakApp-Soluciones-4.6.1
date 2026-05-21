@@ -796,62 +796,124 @@ Where Id = {_Id_SobreStock}" & vbCrLf & vbCrLf
 
         _SqlQuery = $"
 
-DECLARE @Codigo VARCHAR(20) = '{_Codigo}';      -- <== AQUÍ EL PRODUCTO
-DECLARE @Empresa VARCHAR(2) = '{_Empresa}';     -- Ajusta si corresponde
-DECLARE @Sucursal VARCHAR(3) = '{_Sucursal}';   -- Ajusta si corresponde
-DECLARE @Bodega VARCHAR(3) = '{_Bodega}';       -- Ajusta si corresponde
+DECLARE 
+    @Empresa  varchar(10) = '{_Empresa}',
+    @Sucursal varchar(10) = '{_Sucursal}',
+    @Codigo   varchar(20) = '{_Codigo}';
+    -- Para traer todo, ponlos en NULL
 
-IF OBJECT_ID('tempdb..#StockCalculado') IS NOT NULL DROP TABLE #StockCalculado;
+WITH Movimientos AS
+(
+    SELECT 
+        Id,
+        Id_LoteOri,
+        Empresa,
+        Sucursal,
+        Bodega,
+        Codigo,
+        NroLote,
+        SubLote,
+        Tido,
+        CantUd1,
+        CantUd2
+    FROM {_Global_BaseBk}Zw_Docu_Det_Lote
+    WHERE (@Empresa  IS NULL OR Empresa  = @Empresa)
+      AND (@Sucursal IS NULL OR Sucursal = @Sucursal)
+      AND (@Codigo   IS NULL OR Codigo   = @Codigo)
+),
 
-/*===========================================================
-  1) CALCULAR STOCK REAL POR LOTE
-===========================================================*/
-SELECT 
-    L.Codigo,
-    L.NroLote,
-    L.SubLote,
-    SUM(CASE WHEN L.Tido IN ('GRC','GRI') THEN L.CantUd1 ELSE 0 END)
-      - SUM(CASE WHEN L.Tido = 'GDI' THEN L.CantUd1 ELSE 0 END) AS StockUd1,
-    SUM(CASE WHEN L.Tido IN ('GRC','GRI') THEN L.CantUd2 ELSE 0 END)
-      - SUM(CASE WHEN L.Tido = 'GDI' THEN L.CantUd2 ELSE 0 END) AS StockUd2
-INTO #StockCalculado
-FROM {_Global_BaseBk}Zw_Docu_Det_Lote L
-WHERE L.Codigo = @Codigo
-GROUP BY L.Codigo, L.NroLote, L.SubLote;
+-- INGRESOS FÍSICOS (GRC + GRI)
+Ingresos AS
+(
+    SELECT 
+        Empresa, Sucursal, Bodega, Codigo, NroLote, SubLote,
+        SUM(CASE WHEN Tido IN ('GRC','GRI') THEN CantUd1 ELSE 0 END) AS Ing_Ud1,
+        SUM(CASE WHEN Tido IN ('GRC','GRI') THEN CantUd2 ELSE 0 END) AS Ing_Ud2
+    FROM Movimientos
+    GROUP BY Empresa, Sucursal, Bodega, Codigo, NroLote, SubLote
+),
 
-/*===========================================================
-  2) INSERTAR LOTES QUE NO EXISTEN EN Zw_Prod_Stock_Lote
-===========================================================*/
-INSERT INTO {_Global_BaseBk}Zw_Prod_Stock_Lote (Empresa, Sucursal, Bodega, Codigo, NroLote, SubLote, Stfilt1, Stfilt2)
-SELECT 
-    @Empresa,
-    @Sucursal,
-    @Bodega,
-    C.Codigo,
-    C.NroLote,
-    C.SubLote,
-    C.StockUd1,
-    C.StockUd2
-FROM #StockCalculado C
-LEFT JOIN {_Global_BaseBk}Zw_Prod_Stock_Lote S
-    ON S.Codigo = C.Codigo
-    AND S.NroLote = C.NroLote
-    AND S.SubLote = C.SubLote
-WHERE S.Codigo IS NULL;
+-- SALIDAS FÍSICAS Y CREACIÓN DE TRÁNSITO (GDI)
+Salidas AS
+(
+    SELECT 
+        Empresa, Sucursal, Bodega, Codigo, NroLote, SubLote,
+        SUM(CASE WHEN Tido = 'GDI' THEN CantUd1 ELSE 0 END) AS Sal_Ud1,
+        SUM(CASE WHEN Tido = 'GDI' THEN CantUd2 ELSE 0 END) AS Sal_Ud2
+    FROM Movimientos
+    GROUP BY Empresa, Sucursal, Bodega, Codigo, NroLote, SubLote
+),
 
-/*===========================================================
-  3) ACTUALIZAR LOTES EXISTENTES
-===========================================================*/
-UPDATE S
-SET 
-    S.Stfilt1 = C.StockUd1,
-    S.Stfilt2 = C.StockUd2
-FROM {_Global_BaseBk}Zw_Prod_Stock_Lote S
-INNER JOIN #StockCalculado C
-    ON C.Codigo = S.Codigo
-    AND C.NroLote = S.NroLote
-    AND C.SubLote = S.SubLote
-WHERE S.Codigo = @Codigo;
+-- REBAJA DE TRÁNSITO (GRI rebaja tránsito en la bodega del GDI)
+RebajaTransito AS
+(
+    SELECT 
+        M1.Empresa,
+        M1.Sucursal,
+        M1.Bodega,       -- BODEGA DEL GDI (origen del tránsito)
+        M1.Codigo,
+        M1.NroLote,
+        M1.SubLote,
+        SUM(M2.CantUd1) AS Rebaja_Ud1,
+        SUM(M2.CantUd2) AS Rebaja_Ud2
+    FROM Movimientos M1   -- GDI
+    INNER JOIN Movimientos M2  -- GRI
+        ON M1.Id = M2.Id_LoteOri
+    WHERE M2.Tido = 'GRI'
+    GROUP BY M1.Empresa, M1.Sucursal, M1.Bodega, M1.Codigo, M1.NroLote, M1.SubLote
+),
+
+-- CONSOLIDACIÓN FINAL
+Consolidado AS
+(
+    SELECT 
+        COALESCE(I.Empresa, S.Empresa, R.Empresa) AS Empresa,
+        COALESCE(I.Sucursal, S.Sucursal, R.Sucursal) AS Sucursal,
+        COALESCE(I.Bodega, S.Bodega, R.Bodega) AS Bodega,
+        COALESCE(I.Codigo, S.Codigo, R.Codigo) AS Codigo,
+        COALESCE(I.NroLote, S.NroLote, R.NroLote) AS NroLote,
+        COALESCE(I.SubLote, S.SubLote, R.SubLote) AS SubLote,
+
+        -- STOCK FÍSICO = INGRESOS - SALIDAS
+        ISNULL(I.Ing_Ud1,0) - ISNULL(S.Sal_Ud1,0) AS Stfilt1,
+        ISNULL(I.Ing_Ud2,0) - ISNULL(S.Sal_Ud2,0) AS Stfilt2,
+
+        -- STOCK EN TRÁNSITO = SALIDAS - REBAJA POR GRI
+        ISNULL(S.Sal_Ud1,0) - ISNULL(R.Rebaja_Ud1,0) AS Sttr1,
+        ISNULL(S.Sal_Ud2,0) - ISNULL(R.Rebaja_Ud2,0) AS Sttr2
+    FROM Ingresos I
+    FULL JOIN Salidas S
+        ON I.Empresa = S.Empresa AND I.Sucursal = S.Sucursal AND I.Bodega = S.Bodega
+        AND I.Codigo = S.Codigo AND I.NroLote = S.NroLote AND I.SubLote = S.SubLote
+    FULL JOIN RebajaTransito R
+        ON R.Empresa = COALESCE(I.Empresa, S.Empresa)
+        AND R.Sucursal = COALESCE(I.Sucursal, S.Sucursal)
+        AND R.Bodega = COALESCE(I.Bodega, S.Bodega)
+        AND R.Codigo = COALESCE(I.Codigo, S.Codigo)
+        AND R.NroLote = COALESCE(I.NroLote, S.NroLote)
+        AND R.SubLote = COALESCE(I.SubLote, S.SubLote)
+)
+
+-- MERGE FINAL PARA ACTUALIZAR LA TABLA
+MERGE {_Global_BaseBk}Zw_Prod_Stock_Lote AS T
+USING Consolidado AS S
+ON T.Empresa = S.Empresa
+   AND T.Sucursal = S.Sucursal
+   AND T.Bodega = S.Bodega
+   AND T.Codigo = S.Codigo
+   AND T.NroLote = S.NroLote
+   AND ISNULL(T.SubLote,'') = ISNULL(S.SubLote,'')
+
+WHEN MATCHED THEN
+    UPDATE SET 
+        T.Stfilt1 = S.Stfilt1,
+        T.Stfilt2 = S.Stfilt2,
+        T.Sttr1   = S.Sttr1,
+        T.Sttr2   = S.Sttr2
+
+WHEN NOT MATCHED THEN
+    INSERT (Empresa, Sucursal, Bodega, Codigo, NroLote, SubLote, Stfilt1, Stfilt2, Sttr1, Sttr2)
+    VALUES (S.Empresa, S.Sucursal, S.Bodega, S.Codigo, S.NroLote, S.SubLote, S.Stfilt1, S.Stfilt2, S.Sttr1, S.Sttr2);
 "
 
         Try
