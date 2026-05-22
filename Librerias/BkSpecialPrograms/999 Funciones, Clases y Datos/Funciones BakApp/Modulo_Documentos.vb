@@ -106,6 +106,9 @@ Public Module Modulo_Documentos
                     If _Fm_Menu_Padre.Name <> "Frm_Menu_Extra" Then Fm_Post.MinimizeBox = True
                     Fm_Post.MinimizeBox = _Minimizar
                     Fm_Post.Pro_SubTido = _SubTido
+                    If _SobreStock Then
+                        Fm_Post.DecimalesGl = 3
+                    End If
                     Fm_Post.ShowDialog(_Fm_Menu_Padre)
                     Fm_Post.Dispose()
 

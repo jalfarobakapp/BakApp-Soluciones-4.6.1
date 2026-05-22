@@ -270,6 +270,8 @@ Public Class Frm_Configuracion_Gral
             Chk_SolictarCiaSeguro.Checked = .Item("SolictarCiaSeguro")
             Input_ToleranciaDocMoroso.Value = .Item("ToleranciaDocMoroso")
 
+            Chk_ActivaTipoCompra.Checked = .Item("ActivaTipoCompra")
+
         End With
 
         Chk_SolictarCiaSeguro.Enabled = _Modalidad_General
@@ -396,6 +398,8 @@ Public Class Frm_Configuracion_Gral
         Chk_RevAutomaticaMorosidadClientes.Enabled = _Modalidad_General
         Chk_ExigeNumPesada.Enabled = Not _Modalidad_General
 
+        Chk_ActivaTipoCompra.Enabled = _Modalidad_General
+
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
 
@@ -471,6 +475,22 @@ Public Class Frm_Configuracion_Gral
         'Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Configuracion_General" & vbCrLf &
         '               "Insert Into " & _Global_BaseBk & "Zw_Configuracion_General (Version,Revisa_Taza_Cambio,Vnta_Dias_Venci_Coti,SOC_CodTurno) Values " &
         '               "('3'," & CInt(Chk_Revisar_Tasa_de_Cambio.Checked) * -1 & "," & CInt(Txt_Dias_Venci_Coti.Text) & ",'" & Trim(Cmb_SOC_CodTurno.SelectedValue) & "')"
+
+        If Chk_ActivaTipoCompra.Checked Then
+
+            Dim _Identificacdor_NodoPadre As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TblArbol_Asociaciones", "Codigo_Nodo",
+                                                             "Codigo_Madre = 'TIPOCOMPRA'", True)
+
+            If _Identificacdor_NodoPadre = 0 Then
+                MessageBoxEx.Show(Me, "Falta registrar el Tipo de compra en las clasificaciones únicas de Bakapp." & vbCrLf &
+                                  "Debe grabarse la categoría TIPOCOMPRA dentro de dichas clasificaciones." & vbCrLf & vbCrLf &
+                                  "Mientras no exista este registro, no es posible seleccionar la opción:" & vbCrLf &
+                                  "[Editar la configuración Tipo de compra del producto según lo registrado en la orden de compra.]", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                SuperTabControl1.SelectedTabIndex = 1
+                Return
+            End If
+
+        End If
 
         If SpTab_DatosEmpresa.Visible Then
 
@@ -621,6 +641,7 @@ Public Class Frm_Configuracion_Gral
                        ",ExigeNumPesada = " & Convert.ToInt32(Chk_ExigeNumPesada.Checked) & vbCrLf &
                        ",SolictarCiaSeguro = " & Convert.ToInt32(Chk_SolictarCiaSeguro.Checked) & vbCrLf &
                        ",ToleranciaDocMoroso = " & Input_ToleranciaDocMoroso.Value & vbCrLf &
+                       ",ActivaTipoCompra = " & Convert.ToInt32(Chk_ActivaTipoCompra.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

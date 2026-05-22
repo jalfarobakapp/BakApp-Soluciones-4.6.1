@@ -73,26 +73,28 @@ Public Class Frm_MonedasFicha
 
         Consulta_sql = String.Empty
 
+        Dim _Vamo As String = De_Num_a_Tx_01(Txt_Vamo.Text, False, 5)
+
         If IsNothing(_Row_Moneda) Then
 
             Consulta_sql = "Insert Into TABMO (KOMO,NOKOMO,FEMO,TIMO,VAMO,VAMOCOM) Values " & vbCrLf &
                            "('" & Txt_Komo.Text & "','" & Txt_Nokomo.Text.Trim & "','" & Format(Dtp_Femo.Value, "yyyyMMdd") &
-                           "','" & Cmb_Timo.SelectedValue & "'," & De_Num_a_Tx_01(Txt_Vamo.Text) & ",1.0)" & vbCrLf
+                           "','" & Cmb_Timo.SelectedValue & "'," & _Vamo & ",1.0)" & vbCrLf
 
 
         End If
 
         Consulta_sql += "Insert Into MAEMO (KOMO,NOKOMO,FEMO,TIMO,VAMO,VAMOCOM) VALUES " &
                        "('" & Txt_Komo.Text & "','" & Txt_Nokomo.Text.Trim & "','" & Format(Dtp_Femo.Value, "yyyyMMdd") &
-                       "','" & Cmb_Timo.SelectedValue & "'," & De_Num_a_Tx_01(Txt_Vamo.Text) & ",1.0)" & vbCrLf &
+                       "','" & Cmb_Timo.SelectedValue & "'," & _Vamo & ",1.0)" & vbCrLf &
                        "Update TABMO Set " &
                        "NOKOMO='" & Txt_Nokomo.Text.Trim & "'" &
                        ",FEMO = '" & Format(Dtp_Femo.Value, "yyyyMMdd") & "'" &
                        ",TIMO = '" & Cmb_Timo.SelectedValue & "'" &
-                       ",VAMO = " & De_Num_a_Tx_01(Txt_Vamo.Text) &
+                       ",VAMO = " & _Vamo &
                        ",VAMOCOM = 1.0 " &
                        "WHERE KOMO = '" & Txt_Komo.Text & "'" & vbCrLf &
-                       "Update PNOMDIM Set VALOR = " & De_Num_a_Tx_01(Txt_Vamo.Text) & " Where CODIGO = 'VALOR_" & Txt_Komo.Text.Trim & "' "
+                       "Update PNOMDIM Set VALOR = " & _Vamo & " Where CODIGO = 'VALOR_" & Txt_Komo.Text.Trim & "'"
 
         If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Error al grabar", MessageBoxButtons.OK, MessageBoxIcon.Stop)

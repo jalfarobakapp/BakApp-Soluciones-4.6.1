@@ -1211,7 +1211,8 @@ Public Class Frm_Demonio_New
                             If _Cl_Correos.ActualizarListaMayoristaMinorista Then
 
                                 Dim _Cl_ListaMayoristaMinorista As New Cl_ListaMayoristaMinorista
-                                _Cl_ListaMayoristaMinorista.Sb_LlenarCorreosNuevosMayoristas(_Cl_Correos.CorreoMayoristaMinorista, DtpFecharevision.Value)
+                                _Cl_ListaMayoristaMinorista.Sb_LlenarCorreosNuevosMayoristas(_Cl_Correos.CorreoMayoristaMinorista,
+                                                                                             DtpFecharevision.Value)
 
                             End If
 

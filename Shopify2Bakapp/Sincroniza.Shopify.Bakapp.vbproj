@@ -48,7 +48,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>briefcase-update.ico</ApplicationIcon>
+    <ApplicationIcon>shopping-bag-green-update.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
@@ -91,6 +91,7 @@
     <Compile Include="Modelos\Conexion.vb" />
     <Compile Include="Modelos\Configuracion.vb" />
     <Compile Include="Modelos\Config_Correos.vb" />
+    <Compile Include="Modelos\Random\EntidadFactura.vb" />
     <Compile Include="Modelos\Random\RespuestaDetalle.vb" />
     <Compile Include="Modelos\Random\RespuestaSQL.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -152,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="briefcase-update.ico" />
+    <Content Include="shopping-bag-green-update.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Librerias\BkSpecialPrograms\BkSpecialPrograms.vbproj">

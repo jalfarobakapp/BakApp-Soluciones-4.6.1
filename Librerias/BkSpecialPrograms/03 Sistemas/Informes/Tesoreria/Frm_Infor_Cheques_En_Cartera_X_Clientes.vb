@@ -47,6 +47,7 @@ Public Class Frm_Infor_Cheques_En_Cartera_X_Clientes
 
         Consulta_sql = My.Resources.Recursos_Inf_Tesoreria.SQLQuery_Informe_de_cheques_en_cartera_por_clientes
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Entidad#", _Filtro_Entidad)
+        Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         ',,,CUENTA
         ',,,,,,,
         ',,,,

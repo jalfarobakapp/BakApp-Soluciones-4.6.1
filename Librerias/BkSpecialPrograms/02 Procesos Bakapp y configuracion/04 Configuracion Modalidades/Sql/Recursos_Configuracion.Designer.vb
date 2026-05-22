@@ -71,9 +71,9 @@ Namespace My.Resources
         '''           Csu.NOKOSU, Cbo.NOKOBO, Cja.NOKOCJ,
         '''           Z1.*
         '''From         dbo.TABBO AS Cbo RIGHT OUTER JOIN
-        '''                      dbo.CONFIEST AS CEst ON Cbo.EMPRESA = CEst.EMPRESA AND Cbo.KOSU = CEst.ESUCURSAL AND Cbo.KOBO = CEst.EBODEGA LEFT OUTER JOIN
+        '''                      dbo.CONFIEST AS CEst WITH (NOLOCK) ON Cbo.EMPRESA = CEst.EMPRESA AND Cbo.KOSU = CEst.ESUCURSAL AND Cbo.KOBO = CEst.EBODEGA LEFT OUTER JOIN
         '''                      dbo.TABCJ AS Cja ON CEst.EMPRESA = Cja.EMPRESA AND CEst.ESUCURSAL = Cja.KOSU AND CEst.ECAJA = Cja.KOCJ LEFT OUTER JOIN
-        '''                      dbo.TABSU AS Csu ON CEst.ESUCUR [resto de la cadena truncado]&quot;;.
+        '''                      dbo.TABSU AS Csu  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SqlQuery_Seleccionar_Modalidad() As String
             Get

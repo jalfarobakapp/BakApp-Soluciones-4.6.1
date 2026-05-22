@@ -148,6 +148,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Docu_Ent", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Docu_Det", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Docu_Det_Cust", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Docu_Det_Lote", _Modificar, Lbl_Eventos)
 
             ' SISTEMA DE DOCUMENTOS TRIBUTARIOS ELECTRONICOS DTE
             .Sb_Revisar_Tabla2(Me, "Zw_DTE_Aec", _Modificar, Lbl_Eventos)

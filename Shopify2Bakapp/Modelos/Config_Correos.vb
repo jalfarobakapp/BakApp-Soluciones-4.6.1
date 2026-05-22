@@ -4,4 +4,5 @@
     Public Property Empresa2_NombreCorreo As String
     Public Property Empresa2_Formato As String
     Public Property FechaModificacion As DateTime
+    Public Property ClienteActivo As Integer
 End Class

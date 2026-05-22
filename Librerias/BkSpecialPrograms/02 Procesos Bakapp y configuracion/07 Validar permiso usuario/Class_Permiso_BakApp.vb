@@ -395,6 +395,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("CfEnt035", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt036", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("CfEnt037", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt038", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("CfEnt039", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Crv0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Crv0002", _Objeto, _Formulario)
@@ -1172,6 +1174,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Sobs0006", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Sobs0007", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Sobs0008", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Sobs0009", _Objeto, _Formulario)
 
         _SqlQuery += vbCrLf
 
@@ -1842,6 +1845,14 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
             Case "CfEnt037"
                 _DescripcionPermiso = "INGRESAR AL MODULO DE ENTIDADES "
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
+            Case "CfEnt038"
+                _DescripcionPermiso = "INGRESAR AL MANTENEDOR DE COMPAÑIAS DE SEGUROS POR ENTIDAD"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
+                _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
+            Case "CfEnt039"
+                _DescripcionPermiso = "CREAR/EDITAR/ELIMINAR COMPAÑIAS DE SEGUROS POR ENTIDAD"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.CONFIGURACION_ENTIDAD, 6)
                 _NombreFamiliaPermiso = _Fml.CONFIGURACION_ENTIDAD.ToString
         End Select
@@ -5205,6 +5216,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Sobs0008"
                 _DescripcionPermiso = "AGREGAR CANTIDAD ADICIONAL DISPONIBLE PARA LA VENTA DE PALLETS EN UN PRODUCTO YA EXISTENTE"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Sobs0009"
+                _DescripcionPermiso = "EXPORTAR A EXCEL LISTADO DE PRODUCTOS SOBRE STOCK"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

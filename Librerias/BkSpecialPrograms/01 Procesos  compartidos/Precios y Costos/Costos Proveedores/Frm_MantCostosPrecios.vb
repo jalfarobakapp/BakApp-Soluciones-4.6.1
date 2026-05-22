@@ -1365,6 +1365,11 @@ Public Class Frm_MantCostosPrecios
 
 
             Dim Arreglo = ImpEx.Importar_Excel_Array(Ubic_Archivo, Extencion, Nro_Hoja)
+
+            If Not String.IsNullOrEmpty(ImpEx.Errores) Then
+                Throw New Exception(ImpEx.Errores)
+            End If
+
             Dim Filas = Arreglo.GetUpperBound(0)
             Dim RegInsert As Long = 0
 

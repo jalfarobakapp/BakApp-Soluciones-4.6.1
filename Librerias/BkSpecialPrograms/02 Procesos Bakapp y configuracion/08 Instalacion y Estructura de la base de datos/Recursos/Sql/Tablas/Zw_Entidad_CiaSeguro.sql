@@ -7,13 +7,14 @@ CREATE TABLE [dbo].[Zw_Entidad_CiaSeguro](
 	[CodEntidad_Cia]		[varchar](13)   NOT NULL DEFAULT (''),
 	[CodSucEntidad_Cia]		[varchar](20)   NOT NULL DEFAULT (''),
 	[MontoAsignado]			[float]         NOT NULL DEFAULT (''),
+	[Activa]                [bit]           NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Entidad_CiaSeguro] PRIMARY KEY CLUSTERED 
 (
 	[CodEntidad] ASC,
 	[CodSucEntidad] ASC,
 	[CodEntidad_Cia] ASC,
 	[CodSucEntidad_Cia] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 
 

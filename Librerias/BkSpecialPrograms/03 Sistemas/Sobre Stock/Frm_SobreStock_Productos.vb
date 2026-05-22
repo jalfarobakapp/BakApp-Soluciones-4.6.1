@@ -7,6 +7,7 @@ Public Class Frm_SobreStock_Productos
     Dim Consulta_sql As String
 
     Private _Empresa As String = Mod_Empresa
+    Private _Tbl_Productos As DataTable
 
     Public Property Seleccionado As Boolean
     Public Property ModoSeleccion As Boolean
@@ -127,13 +128,13 @@ GROUP BY
     Sbs.StSobStockUd1,
     Sbs.StSobStockUd2;"
 
-        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+        _Tbl_Productos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _DisplayIndex = 0
 
         With Grilla
 
-            .DataSource = _Tbl
+            .DataSource = _Tbl_Productos
 
             OcultarEncabezadoGrilla(Grilla, True)
 
@@ -298,6 +299,8 @@ GROUP BY
             Return
         End If
 
+        Dim _KilosXPallet As Double = _Sql.Fx_Trae_Dato("TABCODAL", "MULTIPLO", $"KOPR = '{_RowProducto.Item("KOPR")}' And TXTMULTI = 'PALLET'", True) '_Fila.Cells("KilosXPallet").Value
+
         With _Zw_Prod_SobreStock
 
             .Id = 0
@@ -308,7 +311,7 @@ GROUP BY
             .FormatoPqte = "Pallet"
             .StDispUd1 = _Row_Stock.Item("StDispUd1")
             .PqteHabilitado = 0
-            .Ud1XPqte = 1
+            .Ud1XPqte = _KilosXPallet
             .CantMinFormato = 0
             .Moneda = String.Empty
             .PrecioXUd1 = 0
@@ -606,4 +609,15 @@ GROUP BY
         Sb_Actualizar_Grilla()
 
     End Sub
+
+    Private Sub Btn_Exportar_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Excel.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Sobs0009") Then
+            Return
+        End If
+
+        ExportarTabla_JetExcel_Tabla(_Tbl_Productos, Me, "Productos_SobreStock")
+
+    End Sub
+
 End Class

@@ -331,6 +331,18 @@ Public Class Class_SQL
 
             _SqlDa.Fill(_DataSt)
 
+            ' Reemplaza: _SqlDa.Fill(_DataSt)
+            '' Optimización: usar SqlCommand + SqlDataReader y DataTable.Load (más rápido y con menor overhead que SqlDataAdapter.Fill)
+            'Dim cmdFill As New SqlCommand(Consulta_sql, _Cn)
+            'cmdFill.CommandTimeout = 8000
+            'Using rdr As SqlDataReader = cmdFill.ExecuteReader(CommandBehavior.SequentialAccess)
+            '    Do
+            '        Dim dtTemp As New DataTable()
+            '        dtTemp.Load(rdr)
+            '        _DataSt.Tables.Add(dtTemp)
+            '    Loop While rdr.NextResult()
+            'End Using
+
             For Each Tbl As DataTable In _DataSt.Tables
                 For Each col As DataColumn In Tbl.Columns
                     col.[ReadOnly] = False

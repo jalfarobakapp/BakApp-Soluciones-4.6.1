@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class Frm_Lotes_Det
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Frm_Lotes_Select
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
-    <System.Diagnostics.DebuggerNonUserCode()>
+    <System.Diagnostics.DebuggerNonUserCode()> _
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,14 +20,14 @@ Partial Class Frm_Lotes_Det
     'NOTE: The following procedure is required by the Windows Form Designer
     'It can be modified using the Windows Form Designer.  
     'Do not modify it using the code editor.
-    <System.Diagnostics.DebuggerStepThrough()>
+    <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Lotes_Det))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Lotes_Select))
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Aceptar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Seleccionar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -40,24 +40,24 @@ Partial Class Frm_Lotes_Det
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Aceptar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 319)
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Seleccionar})
+        Me.Bar1.Location = New System.Drawing.Point(0, 308)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(837, 41)
+        Me.Bar1.Size = New System.Drawing.Size(747, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Bar1.TabIndex = 139
+        Me.Bar1.TabIndex = 141
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
         '
-        'Btn_Aceptar
+        'Btn_Seleccionar
         '
-        Me.Btn_Aceptar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Aceptar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Aceptar.Image = CType(resources.GetObject("Btn_Aceptar.Image"), System.Drawing.Image)
-        Me.Btn_Aceptar.ImageAlt = CType(resources.GetObject("Btn_Aceptar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Aceptar.Name = "Btn_Aceptar"
-        Me.Btn_Aceptar.Text = "Aceptar"
+        Me.Btn_Seleccionar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Seleccionar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Seleccionar.Image = CType(resources.GetObject("Btn_Seleccionar.Image"), System.Drawing.Image)
+        Me.Btn_Seleccionar.ImageAlt = CType(resources.GetObject("Btn_Seleccionar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Seleccionar.Name = "Btn_Seleccionar"
+        Me.Btn_Seleccionar.Text = "Aceptar"
         '
         'GroupPanel1
         '
@@ -65,9 +65,9 @@ Partial Class Frm_Lotes_Det
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.Grilla)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 6)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(813, 290)
+        Me.GroupPanel1.Size = New System.Drawing.Size(722, 290)
         '
         '
         '
@@ -96,7 +96,7 @@ Partial Class Frm_Lotes_Det
         '
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.GroupPanel1.TabIndex = 138
+        Me.GroupPanel1.TabIndex = 140
         Me.GroupPanel1.Text = "Lotes del producto"
         '
         'Grilla
@@ -136,14 +136,14 @@ Partial Class Frm_Lotes_Det
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla.Size = New System.Drawing.Size(807, 267)
+        Me.Grilla.Size = New System.Drawing.Size(716, 267)
         Me.Grilla.TabIndex = 1
         '
-        'Frm_Lotes_Det
+        'Frm_Lotes_Select
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(837, 360)
+        Me.ClientSize = New System.Drawing.Size(747, 349)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.GroupPanel1)
         Me.DoubleBuffered = True
@@ -152,18 +152,19 @@ Partial Class Frm_Lotes_Det
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "Frm_Lotes_Det"
+        Me.Name = "Frm_Lotes_Select"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "MetroForm"
+        Me.Text = "SELECCION DE LOTES POR PRODUCTO"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
+
     Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
-    Public WithEvents Btn_Aceptar As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Seleccionar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
 End Class

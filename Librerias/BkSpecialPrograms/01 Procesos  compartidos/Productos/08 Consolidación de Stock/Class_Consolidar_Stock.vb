@@ -773,6 +773,174 @@ Where Id = {_Id_SobreStock}" & vbCrLf & vbCrLf
 
     End Function
 
+
+    Function Fx_Consolidar_Lotes(_Empresa As String,
+                                _Sucursal As String,
+                                _Bodega As String,
+                                _RowProducto As DataRow) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim _Codigo = _RowProducto.Item("KOPR")
+        Dim _Descripcion = _RowProducto.Item("NOKOPR")
+        Dim _SqlQuery As String = String.Empty
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros($"{_Global_BaseBk} Zw_Docu_Det_Lote",
+                             $"Empresa = '{_Empresa}' And Sucursal = '{_Sucursal}' And Bodega = '{_Bodega}' And Codigo = '{_Codigo}'")
+
+        If Not CBool(_Reg) Then
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "No existen datos en Zw_Docu_Det_Lote"
+            Return _Mensaje
+        End If
+
+        _SqlQuery = $"
+
+DECLARE 
+    @Empresa  varchar(10) = '{_Empresa}',
+    @Sucursal varchar(10) = '{_Sucursal}',
+    @Codigo   varchar(20) = '{_Codigo}';
+    -- Para traer todo, ponlos en NULL
+
+WITH Movimientos AS
+(
+    SELECT 
+        Id,
+        Id_LoteOri,
+        Empresa,
+        Sucursal,
+        Bodega,
+        Codigo,
+        NroLote,
+        SubLote,
+        Tido,
+        CantUd1,
+        CantUd2
+    FROM {_Global_BaseBk}Zw_Docu_Det_Lote
+    WHERE (@Empresa  IS NULL OR Empresa  = @Empresa)
+      AND (@Sucursal IS NULL OR Sucursal = @Sucursal)
+      AND (@Codigo   IS NULL OR Codigo   = @Codigo)
+),
+
+-- INGRESOS FÍSICOS (GRC + GRI)
+Ingresos AS
+(
+    SELECT 
+        Empresa, Sucursal, Bodega, Codigo, NroLote, SubLote,
+        SUM(CASE WHEN Tido IN ('GRC','GRI') THEN CantUd1 ELSE 0 END) AS Ing_Ud1,
+        SUM(CASE WHEN Tido IN ('GRC','GRI') THEN CantUd2 ELSE 0 END) AS Ing_Ud2
+    FROM Movimientos
+    GROUP BY Empresa, Sucursal, Bodega, Codigo, NroLote, SubLote
+),
+
+-- SALIDAS FÍSICAS Y CREACIÓN DE TRÁNSITO (GDI)
+Salidas AS
+(
+    SELECT 
+        Empresa, Sucursal, Bodega, Codigo, NroLote, SubLote,
+        SUM(CASE WHEN Tido = 'GDI' THEN CantUd1 ELSE 0 END) AS Sal_Ud1,
+        SUM(CASE WHEN Tido = 'GDI' THEN CantUd2 ELSE 0 END) AS Sal_Ud2
+    FROM Movimientos
+    GROUP BY Empresa, Sucursal, Bodega, Codigo, NroLote, SubLote
+),
+
+-- REBAJA DE TRÁNSITO (GRI rebaja tránsito en la bodega del GDI)
+RebajaTransito AS
+(
+    SELECT 
+        M1.Empresa,
+        M1.Sucursal,
+        M1.Bodega,       -- BODEGA DEL GDI (origen del tránsito)
+        M1.Codigo,
+        M1.NroLote,
+        M1.SubLote,
+        SUM(M2.CantUd1) AS Rebaja_Ud1,
+        SUM(M2.CantUd2) AS Rebaja_Ud2
+    FROM Movimientos M1   -- GDI
+    INNER JOIN Movimientos M2  -- GRI
+        ON M1.Id = M2.Id_LoteOri
+    WHERE M2.Tido = 'GRI'
+    GROUP BY M1.Empresa, M1.Sucursal, M1.Bodega, M1.Codigo, M1.NroLote, M1.SubLote
+),
+
+-- CONSOLIDACIÓN FINAL
+Consolidado AS
+(
+    SELECT 
+        COALESCE(I.Empresa, S.Empresa, R.Empresa) AS Empresa,
+        COALESCE(I.Sucursal, S.Sucursal, R.Sucursal) AS Sucursal,
+        COALESCE(I.Bodega, S.Bodega, R.Bodega) AS Bodega,
+        COALESCE(I.Codigo, S.Codigo, R.Codigo) AS Codigo,
+        COALESCE(I.NroLote, S.NroLote, R.NroLote) AS NroLote,
+        COALESCE(I.SubLote, S.SubLote, R.SubLote) AS SubLote,
+
+        -- STOCK FÍSICO = INGRESOS - SALIDAS
+        ISNULL(I.Ing_Ud1,0) - ISNULL(S.Sal_Ud1,0) AS Stfilt1,
+        ISNULL(I.Ing_Ud2,0) - ISNULL(S.Sal_Ud2,0) AS Stfilt2,
+
+        -- STOCK EN TRÁNSITO = SALIDAS - REBAJA POR GRI
+        ISNULL(S.Sal_Ud1,0) - ISNULL(R.Rebaja_Ud1,0) AS Sttr1,
+        ISNULL(S.Sal_Ud2,0) - ISNULL(R.Rebaja_Ud2,0) AS Sttr2
+    FROM Ingresos I
+    FULL JOIN Salidas S
+        ON I.Empresa = S.Empresa AND I.Sucursal = S.Sucursal AND I.Bodega = S.Bodega
+        AND I.Codigo = S.Codigo AND I.NroLote = S.NroLote AND I.SubLote = S.SubLote
+    FULL JOIN RebajaTransito R
+        ON R.Empresa = COALESCE(I.Empresa, S.Empresa)
+        AND R.Sucursal = COALESCE(I.Sucursal, S.Sucursal)
+        AND R.Bodega = COALESCE(I.Bodega, S.Bodega)
+        AND R.Codigo = COALESCE(I.Codigo, S.Codigo)
+        AND R.NroLote = COALESCE(I.NroLote, S.NroLote)
+        AND R.SubLote = COALESCE(I.SubLote, S.SubLote)
+)
+
+-- MERGE FINAL PARA ACTUALIZAR LA TABLA
+MERGE {_Global_BaseBk}Zw_Prod_Stock_Lote AS T
+USING Consolidado AS S
+ON T.Empresa = S.Empresa
+   AND T.Sucursal = S.Sucursal
+   AND T.Bodega = S.Bodega
+   AND T.Codigo = S.Codigo
+   AND T.NroLote = S.NroLote
+   AND ISNULL(T.SubLote,'') = ISNULL(S.SubLote,'')
+
+WHEN MATCHED THEN
+    UPDATE SET 
+        T.Stfilt1 = S.Stfilt1,
+        T.Stfilt2 = S.Stfilt2,
+        T.Sttr1   = S.Sttr1,
+        T.Sttr2   = S.Sttr2
+
+WHEN NOT MATCHED THEN
+    INSERT (Empresa, Sucursal, Bodega, Codigo, NroLote, SubLote, Stfilt1, Stfilt2, Sttr1, Sttr2)
+    VALUES (S.Empresa, S.Sucursal, S.Bodega, S.Codigo, S.NroLote, S.SubLote, S.Stfilt1, S.Stfilt2, S.Sttr1, S.Sttr2);
+"
+
+        Try
+
+            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery) Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = "OK"
+                _Mensaje.Detalle = String.Empty
+                _Mensaje.Icono = MessageBoxIcon.Information
+            Else
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Mensaje = "Error al actualizar el stock de los lotes del producto " & _Codigo & " - " & _Descripcion
+                _Mensaje.Detalle = String.Empty
+                _Mensaje.Icono = MessageBoxIcon.Error
+            End If
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Error al actualizar el stock de los lotes del producto " & _Codigo & " - " & _Descripcion
+            _Mensaje.Detalle = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+
+    End Function
+
     Private Function Stock_A_Una_Fecha_X_Producto(_Row_Producto As DataRow,
                                                   _Empresa As String,
                                                   _Sucursal As String,

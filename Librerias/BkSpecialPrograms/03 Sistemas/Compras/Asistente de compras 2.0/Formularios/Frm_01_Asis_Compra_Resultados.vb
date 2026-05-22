@@ -1,7 +1,5 @@
 ﻿Imports System.Data.SqlClient
-Imports System.Threading.Tasks
 Imports DevComponents.DotNetBar
-Imports OfficeOpenXml.FormulaParsing.LexicalAnalysis
 
 Public Class Frm_01_Asis_Compra_Resultados
 
@@ -42,6 +40,9 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     Dim _TblBodCompra As DataTable
     Dim _TblBodVenta As DataTable
+
+    Dim _Tbl_Mostrar_ProdConStockBod As DataTable
+    Dim _Tbl_Excluir_ProdConStockBod As DataTable
 
     Dim _Filtro_Marcas_Todas As Boolean
     Dim _Filtro_Super_Familias_Todas As Boolean
@@ -435,6 +436,8 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
         AddHandler Fm_Hijo.Txt_Descripcion.KeyDown, AddressOf Txt_Descripcion_KeyDown
         AddHandler Fm_Hijo.Chk_Ver_Doc_Solo_Proveedor.Click, AddressOf Sb_Actualizar_Grilla_Mensual
         AddHandler Fm_Hijo.Grilla.DataError, AddressOf Grilla_DataError
+
+        AddHandler Chk_FiltroEspecialBodStock.CheckedChanged, AddressOf Chk_FiltroEspecialBodStock_CheckedChanged
 
         _Con_Proveedor_Desde_Estudio = Not (_RowProveedor Is Nothing)
 
@@ -2066,6 +2069,20 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
         If Chk_SoloProdBodExterna.Checked Then
 
             _Condicion += vbCrLf & $"And TieneStockBosExt = 1"
+
+        End If
+
+        If Chk_FiltroEspecialBodStock.Checked Then
+
+            If Not IsNothing(_Tbl_Mostrar_ProdConStockBod) Then
+                Dim _Filtro_Mostrar_ProdConStockBod = Generar_Filtro_IN(_Tbl_Mostrar_ProdConStockBod, "Chk", "Codigo", False, True, "'")
+                _Condicion += vbCrLf & $"And Codigo In (Select KOPR From MAEST Where EMPRESA+KOSU+KOBO In {_Filtro_Mostrar_ProdConStockBod} And STFI1 > 0)"
+            End If
+
+            If Not IsNothing(_Tbl_Excluir_ProdConStockBod) Then
+                Dim _Filtro_Excluir_ProdConStockBod = Generar_Filtro_IN(_Tbl_Excluir_ProdConStockBod, "Chk", "Codigo", False, True, "'")
+                _Condicion += vbCrLf & $"And Codigo Not In (Select KOPR From MAEST Where EMPRESA+KOSU+KOBO In {_Filtro_Excluir_ProdConStockBod} And STFI1 > 0)"
+            End If
 
         End If
 
@@ -4670,49 +4687,6 @@ SET
 
     End Sub
 
-
-
-    Sub Sb_Grilla_Marcar_Async(Grilla As DataGridView, _Marcar_Todo As Boolean)
-        If Accion_Automatica Then Return
-
-        ' Mejora visual y rendimiento
-        Grilla.SuspendLayout()
-        Try
-            EnableDoubleBuffering(Grilla)
-            Dim diasProyeccion = Fx_Dias_Proyeccion()
-            Dim batchSize = 200 ' ajustar según pruebas
-
-            Dim progress = New Progress(Of List(Of Integer))(Sub(indices)
-                                                                 ' Se ejecuta en UI thread
-                                                                 For Each idx In indices
-                                                                     If idx >= 0 AndAlso idx < Grilla.Rows.Count Then
-                                                                         Grilla.Rows(idx).Cells("Marcar").Value = _Marcar_Todo Or ShouldMarkRow(Grilla.Rows(idx), diasProyeccion)
-                                                                     End If
-                                                                 Next
-                                                             End Sub)
-
-            Task.Run(Sub()
-                         Dim batch As New List(Of Integer)
-                         For i = 0 To Grilla.Rows.Count - 1
-                             ' Aquí calcula si debe marcar la fila sin tocar la UI
-                             If _Marcar_Todo OrElse ShouldMarkRow(Grilla.Rows(i), diasProyeccion) Then
-                                 batch.Add(i)
-                             End If
-
-                             If batch.Count >= batchSize Then
-                                 CType(progress, IProgress(Of List(Of Integer))).Report(New List(Of Integer)(batch))
-                                 batch.Clear()
-                             End If
-                         Next
-                         If batch.Count > 0 Then
-                             CType(progress, IProgress(Of List(Of Integer))).Report(batch)
-                         End If
-                     End Sub)
-        Finally
-            Grilla.ResumeLayout()
-        End Try
-    End Sub
-
     ' Función para decidir si marcar una fila (extrae la lógica de Sb_Marcar_Fila_Grilla)
     Private Function ShouldMarkRow(row As DataGridViewRow, diasProyeccion As Integer) As Boolean
         ' Implementar la misma lógica de Sb_Marcar_Fila_Grilla pero sin operaciones UI pesadas.
@@ -4724,10 +4698,6 @@ SET
         Dim prop = dgv.GetType().GetProperty("DoubleBuffered", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.NonPublic)
         If prop IsNot Nothing Then prop.SetValue(dgv, True, Nothing)
     End Sub
-
-
-
-
 
     Sub Sb_Actualizar_Ult3ComprasXprodVsProveedor()
 
@@ -4848,8 +4818,11 @@ SET
                     _Filtro_Bodegas_Todas = False
                 End If
             End If
+
             Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
+
         End If
+
         Fm.Dispose()
 
     End Sub
@@ -10270,6 +10243,73 @@ LEFT JOIN MAEEN AS E
         Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         ExportarTabla_JetExcel_Tabla(_Tbl, Me, "ProvEstrellaBasePrecioLista")
+
+    End Sub
+
+    Private Sub Btn_MostrarSoloProdStockBod_Click(sender As Object, e As EventArgs) Handles Btn_MostrarSoloProdStockBod.Click
+
+        Dim _Resultado As DialogResult
+
+        Dim Fm As New Frm_Filtro_Especial_Informes(Frm_Filtro_Especial_Informes._Tabla_Fl._Bodegas, False)
+        Fm.Pro_Tbl_Filtro = _Tbl_Mostrar_ProdConStockBod
+        Fm.Btn_CancelarFiltro.Visible = True
+        Fm.NO_Exportar_Excel = True
+        Fm.NO_MarcarMasiva_Excel = True
+        Fm.ShowDialog(Me)
+        _Resultado = Fm.DialogResult
+
+        If _Resultado = DialogResult.OK Then
+
+            _Tbl_Mostrar_ProdConStockBod = Fm.Pro_Tbl_Filtro
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
+
+        ElseIf _Resultado = DialogResult.No Then
+
+            If Not IsNothing(_Tbl_Mostrar_ProdConStockBod) Then
+                _Tbl_Mostrar_ProdConStockBod = Nothing
+                Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
+            End If
+
+        End If
+
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_ExcluirProdStockBod_Click(sender As Object, e As EventArgs) Handles Btn_ExcluirProdStockBod.Click
+
+        Dim _Resultado As DialogResult
+
+        Dim Fm As New Frm_Filtro_Especial_Informes(Frm_Filtro_Especial_Informes._Tabla_Fl._Bodegas, False)
+        Fm.Pro_Tbl_Filtro = _Tbl_Excluir_ProdConStockBod
+        Fm.Btn_CancelarFiltro.Visible = True
+        Fm.NO_Exportar_Excel = True
+        Fm.NO_MarcarMasiva_Excel = True
+        Fm.ShowDialog(Me)
+        _Resultado = Fm.DialogResult
+
+        If _Resultado = DialogResult.OK Then
+
+            _Tbl_Excluir_ProdConStockBod = Fm.Pro_Tbl_Filtro
+            Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
+
+        ElseIf _Resultado = DialogResult.No Then
+
+            If Not IsNothing(_Tbl_Excluir_ProdConStockBod) Then
+                _Tbl_Excluir_ProdConStockBod = Nothing
+                Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, False, True)
+            End If
+
+        End If
+
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Chk_FiltroEspecialBodStock_CheckedChanged(sender As Object, e As CheckBoxChangeEventArgs)
+
+        Btn_MostrarSoloProdStockBod.Enabled = Chk_FiltroEspecialBodStock.Checked
+        Btn_ExcluirProdStockBod.Enabled = Chk_FiltroEspecialBodStock.Checked
 
     End Sub
 

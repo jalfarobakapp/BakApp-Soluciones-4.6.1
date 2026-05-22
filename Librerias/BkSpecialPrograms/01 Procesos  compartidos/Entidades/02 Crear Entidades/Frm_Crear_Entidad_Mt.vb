@@ -1,4 +1,5 @@
 ﻿Imports System.Data.SqlClient
+Imports BkSpecialPrograms.My.Resources
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Crear_Entidad_Mt
@@ -1532,7 +1533,24 @@ Public Class Frm_Crear_Entidad_Mt
         Chk_Libera_NVV.Enabled = _Enable
         Dtp_Fevecren.Enabled = _Enable
 
-        If _Enable Then Txt_Crto.Focus()
+        If _Enable Then
+
+            Txt_Crto.Focus()
+
+            If Btn_CiasCegurosAsociadas.Visible Then
+
+                Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidad_CiaSeguro",
+                                                       $"CodEntidad = '{Txt_Koen.Text}' And CodSucEntidad = '{Txt_Suen.Text}' And Activa = 1")
+
+                If CBool(_Reg) Then
+                    Txt_Crto.ReadOnly = True
+                    Txt_Crto.ButtonCustom.Visible = True
+                    Txt_Crsd.Focus()
+                End If
+
+            End If
+
+        End If
 
     End Sub
 
@@ -2900,9 +2918,41 @@ Public Class Frm_Crear_Entidad_Mt
 
     Private Sub Btn_CiasCegurosAsociadas_Click(sender As Object, e As EventArgs) Handles Btn_CiasCegurosAsociadas.Click
 
+        If Not Fx_Tiene_Permiso(Me, "CfEnt038") Then
+            Return
+        End If
+
+        Dim _MontoCreditoTotal As Double
+
         Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(Txt_Koen.Text, Txt_Suen.Text, Txt_Crto.Tag)
         Fm.ShowDialog(Me)
+        _MontoCreditoTotal = Fm.MontoCreditoTotal
         Fm.Dispose()
+
+        If _MontoCreditoTotal = 0 Then
+            Txt_Crto.ButtonCustom.Visible = False
+            Txt_Crto.ReadOnly = False
+            TabControl1.SelectedTabIndex = 3
+            MessageBoxEx.Show(Me, "El crédito total se ha dejado en cero, ahora puede modificarlo manualmente",
+                              "Crédito total", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return
+        End If
+
+        If Txt_Crto.Tag <> _MontoCreditoTotal Then
+            Txt_Crto.Tag = _MontoCreditoTotal
+            MessageBoxEx.Show(Me, "Se cambio el crédito total", "Crédito total", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Call BtnxGrabar_Click(Nothing, Nothing)
+            Me.Close()
+        End If
+
+    End Sub
+
+    Private Sub Txt_Crto_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Crto.ButtonCustomClick
+
+        MessageBoxEx.Show(Me, "El crédito total se calcula en base a las compañías de seguros asociadas a la entidad" & vbCrLf &
+                          "Para modificar el crédito total debe agregar o eliminar compañías de seguros" & vbCrLf &
+                          "asociadas a la entidad desde el botón ""Compañias de seguro asociadas a la entidad""",
+                          "Crédito total", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
     End Sub
 

@@ -4,7 +4,7 @@ Imports DevComponents.DotNetBar
 Public Class Frm_MantListas_Redondeo
 
     Dim _Seleccionar As Boolean
-    Dim _Redondeo As Integer
+    Dim _Redondeo As String
     Dim _Lista_En_Neto As Boolean
 
     Dim _Tbl_Redondedor_10 As DataTable
