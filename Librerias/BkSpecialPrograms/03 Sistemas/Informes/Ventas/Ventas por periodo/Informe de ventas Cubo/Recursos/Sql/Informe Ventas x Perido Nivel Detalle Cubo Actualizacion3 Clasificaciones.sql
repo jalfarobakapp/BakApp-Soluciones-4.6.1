@@ -104,12 +104,28 @@ WHERE IDMAEEDO IN (#Idmaeedo#)
 Update #Tabla_Paso# Set NOKOGRU = '',NOKOGRUDT= '',KOGRU = '',KOGRUDT = '' 
 Where IDMAEEDO IN (#Idmaeedo#)
 
-Update #Tabla_Paso# Set KOGRU = Isnull((Select Top 1 KOGRU From TABFUGD Where KOFU = KOFULIDO Order By ORDEN),''),
-                        NOKOGRU = Isnull((Select Top 1 g.NOKOGRU 
-                                            From TABFUGE g Inner Join TABFUGD d On g.KOGRU = d.KOGRU 
-                                                Where d.KOFU = KOFULIDO),'')
-Where IDMAEEDO IN (#Idmaeedo#)
+--Update #Tabla_Paso# Set KOGRU = Isnull((Select Top 1 KOGRU From TABFUGD Where KOFU = KOFULIDO Order By ORDEN),''),
+--                        NOKOGRU = Isnull((Select Top 1 g.NOKOGRU 
+--                                            From TABFUGE g Inner Join TABFUGD d On g.KOGRU = d.KOGRU 
+--                                                Where d.KOFU = KOFULIDO),'')
+--Where IDMAEEDO IN (#Idmaeedo#)
 
+
+UPDATE Z
+SET 
+    Z.KOGRU = ISNULL(G.KOGRU,''),
+    Z.NOKOGRU = ISNULL(G.NOKOGRU,'')
+FROM #Tabla_Paso# Z
+OUTER APPLY (
+        SELECT TOP 1 
+            D.KOGRU,
+            G.NOKOGRU
+        FROM TABFUGD D
+        INNER JOIN TABFUGE G ON G.KOGRU = D.KOGRU
+        WHERE D.KOFU = Z.KOFULIDO
+        ORDER BY D.ORDEN
+) G
+Where IDMAEEDO IN (#Idmaeedo#)
 
 Update #Tabla_Paso# Set KOGRUDT = Isnull(Bk.Grupo,''),NOKOGRUDT = Isnull(G.NOKOGRU,'')
 From #Global_BaseBk#Zw_Docu_Det Bk

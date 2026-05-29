@@ -672,6 +672,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00169", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00170", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00171", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00172", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -2983,6 +2984,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00171"
                 _DescripcionPermiso = "VENDER SIN ASOCIAR CIA. DE SEGUROS CUANDO EL CLIENTE LO NECESITA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00172"
+                _DescripcionPermiso = "GRABAR ORDEN DE COMPRA SIN TIPO DE COMPRA CUANDO ES OBLIGATORIO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

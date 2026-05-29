@@ -264,6 +264,7 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_SolCompra", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_SolCompra_Resp", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_Stock", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Prod_Stock_Lote", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_Usuario_Validador", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_Doc_Ult_Ventas", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Prod_Dimensiones", _Modificar, Lbl_Eventos)

@@ -342,16 +342,59 @@ Error_Numero:
     '
 #End Region
 
+    'Public Function NuloPorNro(Of T)(value As T, defaultValue As T) As T
+
+    '    Dim obj1 As Object = value
+    '    Dim obj2 As Object = defaultValue
+
+    '    Try
+    '        If ((obj1 Is DBNull.Value) OrElse (obj1 Is Nothing)) Then
+    '            ' Es NULL; devolvemos el valor por defecto siempre
+    '            ' y cuando éste tampoco sea NULL.
+    '            '
+    '            If (Not obj2 Is DBNull.Value) Then
+    '                Return defaultValue
+    '            Else
+    '                Return Nothing
+    '            End If
+    '        Else
+    '            ' No es NULL ni Nothing; devolvemos el valor pasado.
+    '            '
+    '            Return value
+    '        End If
+    '    Catch ex As Exception
+    '        Return Nothing
+    '    End Try
+
+    'End Function
+
+    ' PSEUDOCÓDIGO (plan detallado):
+    ' 1. Evaluar si el valor entrante debe considerarse "nulo":
+    '    - obj1 es DBNull.Value
+    '    - obj1 es Nothing
+    '    - obj1 es String y está vacío o sólo espacios ("" o "   ")
+    ' 2. Si se considera nulo:
+    '    - Si el valor por defecto (obj2) no es DBNull.Value devolver defaultValue.
+    '    - Si obj2 es DBNull.Value devolver Nothing.
+    ' 3. Si no es nulo devolver el valor tal cual.
+    ' 4. Manejar excepciones devolviendo Nothing (comportamiento previo).
     Public Function NuloPorNro(Of T)(value As T, defaultValue As T) As T
 
         Dim obj1 As Object = value
         Dim obj2 As Object = defaultValue
 
         Try
-            If ((obj1 Is DBNull.Value) OrElse (obj1 Is Nothing)) Then
-                ' Es NULL; devolvemos el valor por defecto siempre
+            ' Considerar cadena vacía como "nulo" cuando procede
+            Dim esCadenaVacia As Boolean = False
+            If obj1 IsNot Nothing AndAlso TypeOf obj1 Is String Then
+                If String.IsNullOrWhiteSpace(CStr(obj1)) Then
+                    esCadenaVacia = True
+                End If
+            End If
+
+            If ((obj1 Is DBNull.Value) OrElse (obj1 Is Nothing) OrElse esCadenaVacia) Then
+                ' Es NULL o cadena vacía; devolvemos el valor por defecto siempre
                 ' y cuando éste tampoco sea NULL.
-                '
                 If (Not obj2 Is DBNull.Value) Then
                     Return defaultValue
                 Else
@@ -359,7 +402,6 @@ Error_Numero:
                 End If
             Else
                 ' No es NULL ni Nothing; devolvemos el valor pasado.
-                '
                 Return value
             End If
         Catch ex As Exception
