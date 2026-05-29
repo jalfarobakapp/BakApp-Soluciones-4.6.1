@@ -620,7 +620,9 @@ Public Class Frm_GRI_FabXProducto
 
         If RutEmpresa = "78346122-6" Then
 
-            _NroLote = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Planta.ToString.Trim & _NroLote.ToString.Trim & Now.Day & numero_(Now.Month, 2) & Mid(Now.Year, 3, 2)
+            Dim _FechaOt As Date = Dtp_Fecha_Ingreso.Value
+            Dim _FechaFormat As String = Format(_FechaOt, "ddMMyy")
+            _NroLote = _Cl_Tarja.Zw_Pdp_CPT_Tarja.Planta.ToString.Trim & _NroLote.ToString.Trim & _FechaFormat & "-" & numero_(_Row_Maepr.Item("RLUD"), 2)
 
         Else
 

@@ -266,62 +266,59 @@ Public Class Frm_ExporProd
 
     Private Sub Btn_ProdSoloBaseLocal_Click(sender As Object, e As EventArgs) Handles Btn_ProdSoloBaseLocal.Click
 
-        'Consulta_Sql = "SELECT KOPR,NOKOPR FROM MAEPR"
-        'Dim _TblLocal As DataTable
-        'Dim _TblExterna As DataTable = _Sql2.Fx_Get_Tablas(Consulta_Sql)
-
-        'Dim _FiltroProductos As String = Generar_Filtro_IN(_TblExterna, "", "KOPR", False, False, "'")
-
-        'Consulta_Sql = "Select KOPR As Codigo,NOKOPR As Descripcion From MAEPR Where KOPR Not In " & _FiltroProductos
-        '_TblLocal = _Sql2.Fx_Get_Tablas(Consulta_Sql)
-
-        'ExportarTabla_JetExcel_Tabla(_TblLocal, Me, "Productos en MAEPR solo en Base local")
-
         Consulta_Sql = "SELECT KOPR, NOKOPR FROM MAEPR"
 
         Dim _Tbl_MAEPRLocal As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Dim _Tbl_MAEPRExterno As DataTable = _Sql2.Fx_Get_DataTable(Consulta_Sql)
 
-        Dim idsNotInB = _Tbl_MAEPRLocal.AsEnumerable().Select(Function(r) r.Field(Of String)("KOPR")).Except(_Tbl_MAEPRExterno.AsEnumerable().[Select](Function(r) r.Field(Of String)("KOPR")))
-        Dim _TblLocal As DataTable
+        ' Normalizar y obtener listas de IDs
+        Dim localIds = _Tbl_MAEPRLocal.AsEnumerable() _
+            .Select(Function(r) If(r.Field(Of String)("KOPR"), String.Empty).Trim().ToUpperInvariant())
 
-        Try
-            _TblLocal = (From row In _Tbl_MAEPRLocal.AsEnumerable() Join id In idsNotInB On row.Field(Of String)("KOPR") Equals id Select row).CopyToDataTable()
+        Dim externalIds = _Tbl_MAEPRExterno.AsEnumerable() _
+            .Select(Function(r) If(r.Field(Of String)("KOPR"), String.Empty).Trim().ToUpperInvariant())
+
+        Dim idsNotInB = localIds.Except(externalIds).ToList()
+
+        ' Filtrar filas locales cuyos KOPR están en idsNotInB
+        Dim q = _Tbl_MAEPRLocal.AsEnumerable() _
+            .Where(Function(r) idsNotInB.Contains(If(r.Field(Of String)("KOPR"), String.Empty).Trim().ToUpperInvariant()))
+
+        If q.Any() Then
+            Dim _TblLocal As DataTable = q.CopyToDataTable()
             ExportarTabla_JetExcel_Tabla(_TblLocal, Me, "Productos en MAEPR solo en Base local")
-        Catch ex As Exception
-            MessageBoxEx.Show(Me, ex.Message, "No se encontraron registros", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        End Try
+        Else
+            MessageBoxEx.Show(Me, "No se encontraron registros de productos exclusivos en la base local.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
 
 
     End Sub
 
     Private Sub Btn_ProdSoloBaseExterna_Click(sender As Object, e As EventArgs) Handles Btn_ProdSoloBaseExterna.Click
 
-        'Consulta_Sql = "SELECT KOPR,NOKOPR FROM MAEPR"
-        'Dim _TblLocal As DataTable = _Sql.Fx_Get_Tablas(Consulta_Sql)
-        'Dim _TblExterna As DataTable
-
-        'Dim _FiltroProductos As String = Generar_Filtro_IN(_TblLocal, "", "KOPR", False, False, "'")
-
-        'Consulta_Sql = "Select KOPR As Codigo,NOKOPR As Descripcion From MAEPR Where KOPR Not In " & _FiltroProductos
-        '_TblExterna = _Sql2.Fx_Get_Tablas(Consulta_Sql)
-
-        'ExportarTabla_JetExcel_Tabla(_TblExterna, Me, "Productos en MAEPR solo en Base externa " & _Row_DbExt_Conexion.Item("Nombre_Conexion"))
-
         Consulta_Sql = "SELECT KOPR, NOKOPR FROM MAEPR"
 
         Dim _Tbl_MAEPRLocal As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
         Dim _Tbl_MAEPRExterno As DataTable = _Sql2.Fx_Get_DataTable(Consulta_Sql)
 
-        Dim idsNotInB = _Tbl_MAEPRExterno.AsEnumerable().Select(Function(r) r.Field(Of String)("KOPR")).Except(_Tbl_MAEPRLocal.AsEnumerable().[Select](Function(r) r.Field(Of String)("KOPR")))
+        ' Función auxiliar para extraer y normalizar la clave KOPR
+        Dim GetKey = Function(r As DataRow) Convert.ToString(r("KOPR")).Trim().ToUpperInvariant()
 
-        Dim _TblExterna As DataTable
+        Dim localIds = _Tbl_MAEPRLocal.AsEnumerable().Select(Function(r) GetKey(r))
+        Dim externalIds = _Tbl_MAEPRExterno.AsEnumerable().Select(Function(r) GetKey(r))
+
+        Dim idsNotInLocal = externalIds.Except(localIds).ToList()
 
         Try
-            _TblExterna = (From row In _Tbl_MAEPRExterno.AsEnumerable() Join id In idsNotInB On row.Field(Of String)("KOPR") Equals id Select row).CopyToDataTable()
-            ExportarTabla_JetExcel_Tabla(_TblExterna, Me, "Productos en MAEPR solo en Base externa " & _Row_DbExt_Conexion.Item("Nombre_Conexion"))
+            Dim q = _Tbl_MAEPRExterno.AsEnumerable().Where(Function(r) idsNotInLocal.Contains(GetKey(r)))
+            If q.Any() Then
+                Dim _TblExternoSolo As DataTable = q.CopyToDataTable()
+                ExportarTabla_JetExcel_Tabla(_TblExternoSolo, Me, "Productos en MAEPR solo en Base externa")
+            Else
+                MessageBoxEx.Show(Me, "No se encontraron registros de productos exclusivos en la base externa.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End If
         Catch ex As Exception
-            MessageBoxEx.Show(Me, ex.Message, "No se encontraron registros", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, ex.Message, "Error al procesar registros", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End Try
 
     End Sub

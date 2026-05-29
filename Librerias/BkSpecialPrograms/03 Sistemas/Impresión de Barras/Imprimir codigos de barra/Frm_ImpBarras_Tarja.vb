@@ -95,11 +95,15 @@ Public Class Frm_ImpBarras_Tarja
         _Veces = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
                                    "Valor", "Tabla = 'TARJA_MULTIMPETIQU' And CodigoTabla = '" & Lbl_Tipo.Text & "'", True, False)
 
-        If CBool(_Veces) Then
-            _Veces = _Veces * _CantidadTipo
-        Else
+        If Not CBool(_Veces) Then
             _Veces = 1
         End If
+
+        'If CBool(_Veces) Then
+        '    _Veces = _Veces * _CantidadTipo
+        'Else
+        '    _Veces = 1
+        'End If
 
         Dim _Udm As String = _Row_Tarja.Item("Udm")
         Dim _Formato As Integer = _Row_Tarja.Item("Formato")
@@ -283,6 +287,8 @@ Public Class Frm_ImpBarras_Tarja
             Dim _Veces2 As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
                                    "Valor", "Tabla = 'TARJA_MULTIMPETIQU' And CodigoTabla = '" & Lbl_Tipo.Text & "'", True, False)
 
+            Dim _Etiquetas As New List(Of String)
+
             If CBool(_Tbl_Tarja_Det.Rows.Count) Then
 
                 Dim _Nro = _Tbl_Tarja_Det.Rows(0).Item("Nro")
@@ -290,48 +296,90 @@ Public Class Frm_ImpBarras_Tarja
                 Dim _Ult_Nro = _Tbl_Tarja_Det.Rows(_Tbl_Tarja_Det.Rows.Count - 1).Item("Nro")
                 Dim _Contar = 1
                 Dim _Tipo = _Tbl_Tarja_Det.Rows(0).Item("Tipo").ToString.Trim
+                Dim _Nro_TipoET As String = _Tbl_Tarja_Det.Rows(0).Item("Nro_Tipo").ToString.Trim
 
-                If _Tipo = "PALLET" Then
+                If _Tbl_Tarja_Det.Rows.Count = 1 Then
+                    _Etiquetas.Add(_Nro_TipoET)
+                Else
 
-                    If _Veces = _CantPorLinea Then
+                    'If _Tipo = "PALLET" Then
 
-                        _Aceptar = InputBox_Bk(Me, "Ingrese el numero de PALLET a imprimir" & vbCrLf &
-                                               "El número de Pallet va del " & _Nro & " al " & _Ult_Nro,
-                                               "Imprimir Etiquetas", _Nro, False,, 2, True, _Tipo_Imagen.Barra,,
-                                               _Tipo_Caracter.Solo_Numeros_Enteros, False)
+                    Dim _Sql_Filtro_Condicion_Extra = "And Id_CPT = " & _Id_CPT
+                    Dim _Tbl_Filtro As DataTable
+                    Dim _Filtrar As Boolean
+                    Dim _DialogResult As DialogResult
 
-                        If Not _Aceptar Then
-                            Return
-                        End If
+                    Dim Fm As New Frm_Filtro_Especial_Informes(Frm_Filtro_Especial_Informes._Tabla_Fl._Otra, False)
+                    Fm.Text = "PALLET DE TARJA " & _Nro_CPT
+                    Fm.Pro_Tabla = _Global_BaseBk & "Zw_Pdp_CPT_Tarja_Det"
+                    Fm.Pro_Campo = "Nro_Tipo"
+                    Fm.Pro_Descripcion = "Nro_Tipo+' - Nro: '+Ltrim(Rtrim(str(Nro)))"
+                    Fm.Pro_Tbl_Filtro = Nothing
+                    Fm.Pro_Sql_Filtro_Condicion_Extra = _Sql_Filtro_Condicion_Extra
+                    Fm.Pro_Seleccionar_Todo = False
+                    Fm.Pro_Seleccionar_Solo_Uno = False
+                    Fm.Btn_CancelarFiltro.Visible = True
+                    Fm.Btn_Exportar_Excel.Visible = False
+                    Fm.Btn_MarcarMasiva_Excel.Visible = False
+                    Fm.ShowDialog(Me)
+                    _Filtrar = Fm.Pro_Filtrar
+                    _Tbl_Filtro = Fm.Pro_Tbl_Filtro
+                    _DialogResult = Fm.DialogResult
+                    Fm.Dispose()
 
-                        If _Nro < _Pri_Nro Or _Nro > _Ult_Nro Then
-                            MessageBoxEx.Show(Me, "No existe el Pallet número [" & _Nro & "] en esta Tarja",
-                                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                            Return
-                        End If
-
+                    If _DialogResult <> DialogResult.OK Then
+                        Return
                     End If
+
+                    For Each _Fl As DataRow In _Tbl_Filtro.Rows
+                        _Etiquetas.Add(_Fl.Item("Codigo"))
+                    Next
+
+                    'If _Veces = _CantPorLinea Then
+
+                    '    _Aceptar = InputBox_Bk(Me, "Ingrese el numero de PALLET a imprimir" & vbCrLf &
+                    '                           "El número de Pallet va del " & _Nro & " al " & _Ult_Nro,
+                    '                           "Imprimir Etiquetas", _Nro, False,, 2, True, _Tipo_Imagen.Barra,,
+                    '                           _Tipo_Caracter.Solo_Numeros_Enteros, False)
+
+                    '    If Not _Aceptar Then
+                    '        Return
+                    '    End If
+
+                    '    If _Nro < _Pri_Nro Or _Nro > _Ult_Nro Then
+                    '        MessageBoxEx.Show(Me, "No existe el Pallet número [" & _Nro & "] en esta Tarja",
+                    '                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    '        Return
+                    '    End If
+
+                    'End If
+
+                    ' End If
 
                 End If
 
-                For w = 1 To _Veces
+                For Each _Nro_Tipo As String In _Etiquetas
 
-                    Dim _Imp As New Class_Imprimir_Barras
+                    For w = 1 To _Veces
 
-                    _Imp.Sb_Imprimir_Tarja_Detalle_Pallet(Cmbetiquetas.SelectedValue, _Puerto, Mod_Empresa, _Row_Tarja.Item("Id"), _Nro)
+                        Dim _Imp As New Class_Imprimir_Barras
 
-                    If _Contar = _Veces2 Then
-                        _Nro += 1
-                        _Contar = 1
-                    Else
-                        _Contar += 1
-                    End If
+                        _Imp.Sb_Imprimir_Tarja_Detalle_Pallet(Cmbetiquetas.SelectedValue, _Puerto, Mod_Empresa, _Row_Tarja.Item("Id"), _Nro_Tipo)
 
-                    If Not String.IsNullOrEmpty(_Imp.Error) Then
-                        If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
-                            Return
+                        If _Contar = _Veces2 Then
+                            _Nro += 1
+                            _Contar = 1
+                        Else
+                            _Contar += 1
                         End If
-                    End If
+
+                        If Not String.IsNullOrEmpty(_Imp.Error) Then
+                            If MessageBoxEx.Show(Me, _Imp.Error, "Problema al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
+                                Return
+                            End If
+                        End If
+
+                    Next
 
                 Next
 

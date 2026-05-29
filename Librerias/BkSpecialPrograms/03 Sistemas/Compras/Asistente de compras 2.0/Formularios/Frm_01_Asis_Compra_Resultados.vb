@@ -2057,14 +2057,21 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         End If
 
+        Dim _Endo_Ult_GRCFCC As String = _RowProveedor.Item("KOEN").ToString.Trim
+        Dim _Suendo_Ult_GRCFCC As String = _RowProveedor.Item("SUEN").ToString.Trim
+
         If Chk_CompradoUltVezProveedor.Checked AndAlso Not IsNothing(_RowProveedor) Then
 
-            Dim _Proveedor As String = _RowProveedor.Item("KOEN")
-            Dim _Sucursal As String = _RowProveedor.Item("SUEN")
-
-            _Condicion += vbCrLf & $"And Endo_Ult_GRCFCC = '{_Proveedor}' And Suendo_Ult_GRCFCC = '{_Sucursal}'"
+            _Condicion += vbCrLf & $"And Endo_Ult_GRCFCC = '{_Endo_Ult_GRCFCC}' And Suendo_Ult_GRCFCC = '{_Suendo_Ult_GRCFCC}'"
 
         End If
+
+        If Chk_NOCompradoUltVezProveedor.Checked AndAlso Not IsNothing(_RowProveedor) Then
+
+            _Condicion += vbCrLf & $"And Endo_Ult_GRCFCC <> '{_Endo_Ult_GRCFCC}'"
+
+        End If
+
 
         If Chk_SoloProdBodExterna.Checked Then
 
@@ -5868,6 +5875,7 @@ SET
         Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Todas
         Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
         Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Todas
+        Fm.Pro_Filtro_Bakapp_Todas = Pro_Filtro_Bakapp_Todas
 
         Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
         Fm.Pro_Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
@@ -5880,28 +5888,34 @@ SET
         Fm.Ls_SelFamilias = _Ls_SelFamilias
         Fm.Ls_SelSubFamilias = _Ls_SelSubFamilias
 
+        Fm.Ls_SelArbol_Asociaciones = Ls_SelArbol_Asociaciones
+
         Fm.ShowDialog(Me)
 
-        'If Fm.Pro_Aceptar Then
+        If Fm.DialogResult = DialogResult.OK Then
 
-        '    _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
-        '    _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas
-        '    _Tbl_Filtro_Rubro = Fm.Pro_Tbl_Filtro_Rubro
-        '    _Tbl_Filtro_Super_Familias = Fm.Pro_Tbl_Filtro_Super_Familias
+            _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
+            _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas
+            _Tbl_Filtro_Rubro = Fm.Pro_Tbl_Filtro_Rubro
+            _Tbl_Filtro_Super_Familias = Fm.Pro_Tbl_Filtro_Super_Familias
 
-        '    Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
-        '    Ls_SelFamilias = Fm.Ls_SelFamilias
-        '    Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
+            Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
+            Ls_SelFamilias = Fm.Ls_SelFamilias
+            Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
 
-        '    _Tbl_Filtro_Zonas = Fm.Pro_Tbl_Filtro_Zonas
+            _Tbl_Filtro_Zonas = Fm.Pro_Tbl_Filtro_Zonas
+            Ls_SelArbol_Asociaciones = Fm.Ls_SelArbol_Asociaciones
 
-        '    _Filtro_Clalibpr_Todas = Fm.Pro_Filtro_Clalibpr_Todas
-        '    _Filtro_Marcas_Todas = Fm.Pro_Filtro_Marcas_Todas
-        '    _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
-        '    _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
-        '    _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+            _Filtro_Clalibpr_Todas = Fm.Pro_Filtro_Clalibpr_Todas
+            _Filtro_Marcas_Todas = Fm.Pro_Filtro_Marcas_Todas
+            _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
+            _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
+            _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+            Pro_Filtro_Bakapp_Todas = Fm.Pro_Filtro_Bakapp_Todas
 
-        'End If
+            Call Btn_Actualizar_Informe_Click(Nothing, Nothing)
+
+        End If
 
         Fm.Dispose()
 

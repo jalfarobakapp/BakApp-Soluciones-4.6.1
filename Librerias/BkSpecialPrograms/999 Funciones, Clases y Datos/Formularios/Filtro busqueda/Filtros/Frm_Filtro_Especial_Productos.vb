@@ -476,6 +476,7 @@ Public Class Frm_Filtro_Especial_Productos
             Pro_Tbl_Filtro_Productos = Nothing
         End If
 
+        Me.DialogResult = DialogResult.OK
         Aceptar = True
 
         Me.Close()

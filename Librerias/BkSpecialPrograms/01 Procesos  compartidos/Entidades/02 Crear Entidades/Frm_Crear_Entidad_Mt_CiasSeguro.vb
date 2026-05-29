@@ -192,7 +192,7 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
             .Columns("COVSS").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("COVSSPP").HeaderText = "COVSS"
+            .Columns("COVSSPP").HeaderText = "COVSOL"
             .Columns("COVSSPP").ToolTipText = "Cotización Sobre Stock (pendiente de permiso remoto)"
             .Columns("COVSSPP").Width = 75
             .Columns("COVSSPP").Visible = True
@@ -383,7 +383,7 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
             .Columns("COVSS").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("COVSSPP").HeaderText = "COVSS"
+            .Columns("COVSSPP").HeaderText = "COVSOL"
             .Columns("COVSSPP").ToolTipText = "Cotización Sobre Stock (pendiente de permiso remoto)"
             .Columns("COVSSPP").Width = 75
             .Columns("COVSSPP").Visible = True

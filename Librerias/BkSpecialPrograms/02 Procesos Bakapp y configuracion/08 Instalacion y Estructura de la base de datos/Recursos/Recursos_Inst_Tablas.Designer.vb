@@ -1500,15 +1500,15 @@ Namespace My.Resources
         '''
         '''CREATE TABLE [dbo].[Zw_Docu_Det_Lote](
         '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
-        '''	[Id_Det]		[int]			NOT NULL DEFAULT (&apos;&apos;) ,
-        '''	[Idmaeddo]		[int]			NOT NULL DEFAULT (&apos;&apos;) ,
-        '''	[Idmaeedo]		[int]			NOT NULL DEFAULT (&apos;&apos;) ,
+        '''	[Id_Det]		[int]			NOT NULL DEFAULT (0) ,
+        '''	[Idmaeddo]		[int]			NOT NULL DEFAULT (0) ,
+        '''	[Idmaeedo]		[int]			NOT NULL DEFAULT (0) ,
+        '''	[Idmaeddo_Ori]  [int]			NOT NULL DEFAULT (0) ,
+        '''    [Tido_Ori]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
+        '''    [Nudo_Ori]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
         '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;) ,
         '''	[Sucursal]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
-        '''	[Bodega]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
-        '''	[Tido]			[varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
-        '''	[Nudo]			[varchar](10)	NOT NULL DEFAULT (&apos;&apos;) ,
-        '''	[Codigo]		[varchar](13)	NOT NULL DE [resto de la cadena truncado]&quot;;.
+        '''	[Bodega]		[varchar](3)	NOT  [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Docu_Det_Lote() As String
             Get
@@ -1811,10 +1811,8 @@ Namespace My.Resources
         '''	[CodEntidad_Cia]		[varchar](13)   NOT NULL DEFAULT (&apos;&apos;),
         '''	[CodSucEntidad_Cia]		[varchar](20)   NOT NULL DEFAULT (&apos;&apos;),
         '''	[MontoAsignado]			[float]         NOT NULL DEFAULT (&apos;&apos;),
-        ''' CONSTRAINT [PK_Zw_Entidad_CiaSeguro] PRIMARY KEY CLUSTERED 
-        '''(
-        '''	[CodEntidad] ASC,
-        '''	[CodSucEntidad] ASC [resto de la cadena truncado]&quot;;.
+        '''	[Activa]                [bit]           NOT NULL DEFAULT (0),
+        ''' CONSTRAINT [PK_Zw_Entidad_CiaSeguro] PRI [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Entidad_CiaSeguro() As String
             Get
@@ -3735,6 +3733,28 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Prod_Stock_Enc_History() As String
             Get
                 Return ResourceManager.GetString("Zw_Prod_Stock_Enc_History", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Prod_Stock_Lote](
+        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[NroLote]		[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[SubLote]		[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo]		[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FElaboracion]	[datetime]		NULL,
+        '''	[FVencimiento]	[datetime]		NULL,
+        '''	[Stfilt1]		[float]			NOT NULL DEFAULT (0),
+        '''	[Stfilt2]		[float]			NOT NULL DEFAULT (0),
+        ''' [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Prod_Stock_Lote() As String
+            Get
+                Return ResourceManager.GetString("Zw_Prod_Stock_Lote", resourceCulture)
             End Get
         End Property
         

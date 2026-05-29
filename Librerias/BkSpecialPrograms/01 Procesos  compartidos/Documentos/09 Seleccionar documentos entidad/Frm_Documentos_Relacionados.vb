@@ -486,9 +486,9 @@ Drop Table #Paso"
 
         For i = 0 To _Lista_Descripciones.Length - 1
             If i = 0 Then
-                _Lista_productos_A_Buscar += "TIDO+NUDO Like '%" & _Lista_Descripciones(i) & "%'"
+                _Lista_productos_A_Buscar += "TIDO+NUDO+BODESTI Like '%" & _Lista_Descripciones(i) & "%'"
             Else
-                _Lista_productos_A_Buscar += "Or TIDO+NUDO Like '%" & _Lista_Descripciones(i) & "%'"
+                _Lista_productos_A_Buscar += "Or TIDO+NUDO+BODESTI Like '%" & _Lista_Descripciones(i) & "%'"
             End If
         Next
 
@@ -508,9 +508,88 @@ Drop Table #Paso"
 
     End Sub
 
+    Private Sub Sb_Buscar_En_Grilla_Dataview2()
+
+        Dim _Descripcion_a_buscar = Txt_Descripcion.Text
+
+        ' Normalizar tabs y eliminar comillas simples que rompen el RowFilter
+        _Descripcion_a_buscar = Replace(_Descripcion_a_buscar, vbTab, " ")
+        Dim _Descripcion As String = Replace(_Descripcion_a_buscar, "'", "")
+
+        If IsNothing(_Descripcion) Then _Descripcion = String.Empty
+
+        _Descripcion = _Descripcion.Trim()
+
+        ' Si no hay texto, limpiar filtro y restaurar colores según SUENDO
+        If String.IsNullOrEmpty(_Descripcion) Then
+
+            _Dv.RowFilter = String.Empty
+
+            For Each _Fila As DataGridViewRow In Grilla.Rows
+                Dim _Suendo As String = Convert.ToString(_Fila.Cells("SUENDO").Value)
+                If _Suen.Trim <> _Suendo.Trim Then
+                    _Fila.DefaultCellStyle.ForeColor = Color.Gray
+                Else
+                    _Fila.DefaultCellStyle.ForeColor = Color.Black
+                End If
+            Next
+
+            Return
+
+        End If
+
+        ' Separar por punto y coma o por cualquier espacio (uno o más)
+        Dim _Tokens() As String = System.Text.RegularExpressions.Regex.Split(_Descripcion, "[;\s]+")
+
+        Dim _Lista_productos_A_Buscar As New System.Text.StringBuilder()
+
+        For Each _Tok As String In _Tokens
+
+            Dim _Term As String = _Tok.Trim()
+
+            If String.IsNullOrEmpty(_Term) Then
+                Continue For
+            End If
+
+            ' Construir condición que busque el término en TIDO, NUDO o BODESTI
+            Dim _Cond As String = "(TIDO LIKE '%" & _Term & "%' OR NUDO LIKE '%" & _Term & "%' OR BODESTI LIKE '%" & _Term & "%')"
+
+            If _Lista_productos_A_Buscar.Length = 0 Then
+                _Lista_productos_A_Buscar.Append(_Cond)
+            Else
+                ' Usar AND para que todos los términos deban cumplirse (ej: "GDI Z05")
+                _Lista_productos_A_Buscar.Append(" AND " & _Cond)
+            End If
+
+        Next
+
+        Dim _FiltroFinal As String = _Lista_productos_A_Buscar.ToString()
+
+        If String.IsNullOrEmpty(_FiltroFinal) Then
+            _Dv.RowFilter = String.Empty
+        Else
+            _Dv.RowFilter = _FiltroFinal
+        End If
+
+        ' Ajustar color de filas en base a SUENDO como antes
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            Dim _Suendo As String = Convert.ToString(_Fila.Cells("SUENDO").Value)
+
+            If _Suen.Trim <> _Suendo.Trim Then
+                _Fila.DefaultCellStyle.ForeColor = Color.Gray
+            Else
+                _Fila.DefaultCellStyle.ForeColor = Color.Black
+            End If
+
+        Next
+
+    End Sub
+
     Private Sub Txt_Descripcion_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Descripcion.KeyDown
         If e.KeyValue = Keys.Enter Or e.KeyValue = Keys.Space Then
-            Sb_Buscar_En_Grilla_Dataview()
+            'Sb_Buscar_En_Grilla_Dataview()
+            Sb_Buscar_En_Grilla_Dataview2()
         End If
     End Sub
 
@@ -522,7 +601,8 @@ Drop Table #Paso"
 
     Private Sub Txt_Descripcion_TextChanged(sender As Object, e As EventArgs) Handles Txt_Descripcion.TextChanged
         If String.IsNullOrEmpty(Trim(Txt_Descripcion.Text)) Then
-            Sb_Buscar_En_Grilla_Dataview()
+            'Sb_Buscar_En_Grilla_Dataview()
+            Sb_Buscar_En_Grilla_Dataview2()
         End If
     End Sub
 

@@ -419,6 +419,10 @@ Public Class Frm_EstadisticaProducto
 
         _Row_Nodo_Clasificaciones = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+        If _Nodo_Raiz_Asociados = 0 Then
+            _Row_Nodo_Clasificaciones = Nothing
+        End If
+
         Dim _Codigo_Nodo As Integer
 
         If _Row_Nodo_Clasificaciones Is Nothing Then

@@ -83,8 +83,6 @@ Public Class Frm_Formulario_Observaciones
         End Set
     End Property
 
-
-
     Public Property TieneOrdenDeDespacho As Boolean
     Public Property CambiarFechaEnDetalle As Boolean
     Public Property SobreStock As Boolean
@@ -773,6 +771,20 @@ Public Class Frm_Formulario_Observaciones
             If Not Fx_Tiene_Permiso(Me, "Doc00099") Then
                 Return
             End If
+        End If
+
+        If _Global_Row_Configuracion_General.Item("ActivaTipoCompra") Then
+
+            If String.IsNullOrEmpty(Txt_TipoCompra.Text) Then
+                If MessageBoxEx.Show(Me, "¿Confirma grabar la orden de compra sin Tipo de compra?", "Tipo de compra",
+                                         MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) <> DialogResult.Yes Then
+                    Return
+                End If
+                If Not Fx_Tiene_Permiso(Me, "Doc00172") Then
+                    Return
+                End If
+            End If
+
         End If
 
         If Fx_Grabar_Observaciones() Then

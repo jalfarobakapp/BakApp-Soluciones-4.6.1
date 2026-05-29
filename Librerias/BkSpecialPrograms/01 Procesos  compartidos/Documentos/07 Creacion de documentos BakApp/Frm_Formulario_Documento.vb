@@ -18133,8 +18133,9 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                             End If
 
                             Consulta_sql = "Update " & _Global_BaseBk & "Zw_Chilexpress_Env Set IdDespacho = " & _Cl_Despacho.Id_Despacho_Padre & vbCrLf &
-                                       "Where IdDespacho = " & _Id_Despacho
+                                           "Where IdDespacho = " & _Id_Despacho
                             _Sql.Fx_Ejecutar_Consulta(Consulta_sql)
+
                         End If
 
                         If _Tido = "GDV" Then
