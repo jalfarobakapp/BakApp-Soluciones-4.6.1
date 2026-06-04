@@ -144,7 +144,7 @@ Partial Class Frm_Sincronizador
         Me.Dtp_FechaRevision.MonthCalendar.TodayButtonVisible = True
         Me.Dtp_FechaRevision.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
         Me.Dtp_FechaRevision.Name = "Dtp_FechaRevision"
-        Me.Dtp_FechaRevision.Size = New System.Drawing.Size(87, 22)
+        Me.Dtp_FechaRevision.Size = New System.Drawing.Size(87, 26)
         Me.Dtp_FechaRevision.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Dtp_FechaRevision.TabIndex = 179
         Me.Dtp_FechaRevision.Value = New Date(2024, 4, 26, 16, 52, 36, 0)
@@ -277,7 +277,7 @@ Partial Class Frm_Sincronizador
         '
         'Frm_Sincronizador
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(704, 476)
         Me.Controls.Add(Me.Switch_Sincronizacion)
@@ -291,7 +291,6 @@ Partial Class Frm_Sincronizador
         Me.Controls.Add(Me.LabelX2)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
