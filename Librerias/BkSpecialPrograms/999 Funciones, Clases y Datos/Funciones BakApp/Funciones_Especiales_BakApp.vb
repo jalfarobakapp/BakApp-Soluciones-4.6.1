@@ -1313,7 +1313,9 @@ Public Module Funciones_Especiales_BakApp
                                  _Bodega As String,
                                  _Codigo As String,
                                  _Ud As Integer,
-                                 _Campo As String) As Double
+                                 _Campo As String,
+                                 Optional _CalCular_Stock_En_Cero As Boolean = True,
+                                 Optional _RevQuivalencia As Boolean = True) As Double
 
 
         Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -1347,21 +1349,167 @@ Public Module Funciones_Especiales_BakApp
         _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "P", "[P]")
         _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "Q", "[Q]")
 
+        If _CalCular_Stock_En_Cero Then
+
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[A]", "Case When STFI" & _Ud & " < 0 Then 0 Else STFI" & _Ud & " End")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[B]", "Case When STDV" & _Ud & " < 0 Then 0 Else STDV" & _Ud & " End")
+
+            'Comprometido
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[C]",
+                                           "(Case When STOCNV" & _Ud & " < 0 Then 0 Else STOCNV" & _Ud & " End+Isnull(Case When StComp" & _Ud & " < 0 Then 0 Else StComp" & _Ud & " End,0))")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[D]", "Case When STDV" & _Ud & "C < 0 Then 0 Else STDV" & _Ud & "C End")
+
+            'Pedido
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[E]",
+                                           "(Case When STOCNV" & _Ud & "C < 0 Then 0 Else STOCNV" & _Ud & "C End+Isnull(Case When StPedi" & _Ud & " < 0 Then 0 Else StPedi" & _Ud & " End,0))")
+
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[F]", "Case When DESPNOFAC" & _Ud & " < 0 Then 0 Else DESPNOFAC" & _Ud & " End")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[G]", "Case When RECENOFAC" & _Ud & " < 0 Then 0 Else RECENOFAC" & _Ud & " End")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[H]", "Case When PRESALCLI" & _Ud & " < 0 Then 0 Else PRESALCLI" & _Ud & " End")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[I]", "Case When PRESDEPRO" & _Ud & " < 0 Then 0 Else PRESDEPRO" & _Ud & " End")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[J]", "Case When CONSALCLI" & _Ud & " < 0 Then 0 Else CONSALCLI" & _Ud & " End")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[K]", "Case When CONSDEPRO" & _Ud & " < 0 Then 0 Else CONSDEPRO" & _Ud & " End")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[L]", "Case When DEVENGNCV" & _Ud & " < 0 Then 0 Else DEVENGNCV" & _Ud & " End")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[M]", "Case When DEVENFNCC" & _Ud & " < 0 Then 0 Else DEVENFNCC" & _Ud & " End")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[N]", "Case When DEVSINNCV" & _Ud & " < 0 Then 0 Else DEVSINNCV" & _Ud & " End")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[O]", "Case When DEVSINNCC" & _Ud & " < 0 Then 0 Else DEVSINNCC" & _Ud & " End")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[P]", "Case When STENFAB" & _Ud & " < 0 Then 0 Else STENFAB" & _Ud & " End")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[Q]", "Case When STREQFAB" & _Ud & " < 0 Then 0 Else STREQFAB" & _Ud & " End")
+
+        Else
+
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[A]", $"ISNULL(STFI{_Ud},0)")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[B]", $"ISNULL(STDV{_Ud},0)")
+
+            'Comprometido
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[C]",
+                                           $"(ISNULL(STOCNV{_Ud},0)+ISNULL(StComp{_Ud},0))")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[D]", $"ISNULL(STDV{_Ud}C,0)")
+
+            'Pedido
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[E]",
+                                           $"(ISNULL(STOCNV{_Ud}C,0)+ISNULL(StPedi{_Ud},0))")
+
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[F]", $"ISNULL(DESPNOFAC{_Ud},0)")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[G]", $"ISNULL(RECENOFAC{_Ud},0)")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[H]", $"ISNULL(PRESALCLI{_Ud},0)")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[I]", $"ISNULL(PRESDEPRO{_Ud},0)")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[J]", $"ISNULL(CONSALCLI{_Ud},0)")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[K]", $"ISNULL(CONSDEPRO{_Ud},0)")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[L]", $"ISNULL(DEVENGNCV{_Ud},0)")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[M]", $"ISNULL(DEVENFNCC{_Ud},0)")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[N]", $"ISNULL(DEVSINNCV{_Ud},0)")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[O]", $"ISNULL(DEVSINNCC{_Ud},0)")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[P]", $"ISNULL(STENFAB{_Ud},0)")
+            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[Q]", $"ISNULL(STREQFAB{_Ud},0)")
+
+        End If
+
+        If String.IsNullOrEmpty(_Campo_Formula_Stock) Then
+            _Campo_Formula_Stock = _Campo
+        End If
+
+        Consulta_sql = $"
+Select {_Campo_Formula_Stock} As Stock_Disponible
+From MAEST
+Left Join {_Global_BaseBk}Zw_Prod_Stock On EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = Codigo
+Where
+EMPRESA = '{_Empresa}' And KOSU = '{_Sucursal}' And KOBO = '{_Bodega}' And KOPR = '{_Codigo}'"
+
+        Dim _RowStock As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not (_RowStock Is Nothing) Then
+            Fx_Stock_Disponible = _RowStock.Item("Stock_Disponible")
+        End If
+
+        If Not _RevQuivalencia Then
+            Return Fx_Stock_Disponible
+        End If
+
+        Dim _Tbl_Equivalencias As DataTable
+        Dim _AB As String = "A"
+        Dim _BA As String = "B"
+
+        If Mod_Empresa <> "01" Then
+            _AB = "B"
+            _BA = "A"
+        End If
+
+        Consulta_sql = $"
+Select Empresa_{_BA}, Sucursal_{_BA}, Bodega_{_BA} From {_Global_BaseBk}Zw_InterStock_Equivalencia 
+Where Empresa_{_AB} = '{_Empresa}' 
+And Sucursal_{_AB} = '{_Sucursal}'
+And Bodega_{_AB} = '{_Bodega}'"
+
+        _Tbl_Equivalencias = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Dim _StockDisponibleEquivalente As Double
+
+        For Each _Fila As DataRow In _Tbl_Equivalencias.Rows
+
+            Dim _Empresa_Equi As String = _Fila.Item("Empresa_" & _BA)
+            Dim _Sucursal_Equi As String = _Fila.Item("Sucursal_" & _BA)
+            Dim _Bodega_Equi As String = _Fila.Item("Bodega_" & _BA)
+
+            _StockDisponibleEquivalente += Fx_Stock_Disponible(_Tido, _Empresa_Equi, _Sucursal_Equi, _Bodega_Equi, _Codigo, _Ud, _Campo, False, False)
+
+        Next
+
+        Fx_Stock_Disponible = Math.Round(Fx_Stock_Disponible + _StockDisponibleEquivalente, 5)
+
+    End Function
+
+
+    Function Fx_Stock_Disponible_ConEquivalencia_Old(_Tido As String,
+                                             _Empresa As String,
+                                             _Sucursal As String,
+                                             _Bodega As String,
+                                             _Codigo As String,
+                                             _Ud As Integer,
+                                             _Campo As String) As Double
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Consulta_sql = "Select Top 1 * From TABTIDO Where TIDO = '" & _Tido & "'"
+        Dim _RowTido As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Campo_Formula_Stock As String
+
+        Try
+            _Campo_Formula_Stock = _RowTido.Item("STOCK")
+        Catch ex As Exception
+            _Campo_Formula_Stock = String.Empty
+        End Try
+
+        ' Reemplazos A..Q (igual que tu función original)
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "A", "[A]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "B", "[B]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "C", "[C]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "D", "[D]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "E", "[E]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "F", "[F]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "G", "[G]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "H", "[H]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "I", "[I]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "J", "[J]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "K", "[K]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "L", "[L]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "M", "[M]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "N", "[N]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "O", "[O]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "P", "[P]")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "Q", "[Q]")
 
         _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[A]", "Case When STFI" & _Ud & " < 0 Then 0 Else STFI" & _Ud & " End")
         _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[B]", "Case When STDV" & _Ud & " < 0 Then 0 Else STDV" & _Ud & " End")
 
-        'Comprometido
-        '_Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[C]", "(STOCNV" & _Ud & "+Isnull(StComp" & _Ud & ",0))")
         _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[C]",
-                                       "(Case When STOCNV" & _Ud & " < 0 Then 0 Else STOCNV" & _Ud & " End+Isnull(Case When StComp" & _Ud & " < 0 Then 0 Else StComp" & _Ud & " End,0))")
+                                   "(Case When STOCNV" & _Ud & " < 0 Then 0 Else STOCNV" & _Ud & " End+Isnull(Case When StComp" & _Ud & " < 0 Then 0 Else StComp" & _Ud & " End,0))")
 
         _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[D]", "Case When STDV" & _Ud & "C < 0 Then 0 Else STDV" & _Ud & "C End")
 
-        'Pedido
-        '_Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[E]", "(STOCNV" & _Ud & "C+Isnull(StPedi" & _Ud & ",0))")
         _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[E]",
-                                       "(Case When STOCNV" & _Ud & "C < 0 Then 0 Else STOCNV" & _Ud & "C End+Isnull(Case When StPedi" & _Ud & " < 0 Then 0 Else StPedi" & _Ud & " End,0))")
+                                   "(Case When STOCNV" & _Ud & "C < 0 Then 0 Else STOCNV" & _Ud & "C End+Isnull(Case When StPedi" & _Ud & " < 0 Then 0 Else StPedi" & _Ud & " End,0))")
 
         _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[F]", "Case When DESPNOFAC" & _Ud & " < 0 Then 0 Else DESPNOFAC" & _Ud & " End")
         _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[G]", "Case When RECENOFAC" & _Ud & " < 0 Then 0 Else RECENOFAC" & _Ud & " End")
@@ -1380,20 +1528,60 @@ Public Module Funciones_Especiales_BakApp
             _Campo_Formula_Stock = _Campo
         End If
 
-        Consulta_sql = "Select " & _Campo_Formula_Stock & " As Stock_Disponible" & vbCrLf &
-                       "From MAEST" & vbCrLf &
-                       "Left Join " & _Global_BaseBk & "Zw_Prod_Stock On EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = Codigo" & vbCrLf &
-                       "Where" & vbCrLf &
-                       "EMPRESA = '" & _Empresa & "' And KOSU = '" & _Sucursal & "'" & Space(1) &
-                       "And KOBO = '" & _Bodega & "' And KOPR = '" & _Codigo & "'"
+        ' OJO: usamos la fórmula dos veces: una para la bodega origen, otra para la equivalente
+        'Dim _BaseBk As String = _Global_BaseBk
+
+        Consulta_sql =
+"WITH Origen AS (" & vbCrLf &
+"    SELECT M.STFI" & _Ud & " AS STFI, M.STOCNV" & _Ud & " AS STOCNV, Z.StComp" & _Ud & " AS StComp" & vbCrLf &
+"    FROM MAEST M" & vbCrLf &
+"    LEFT JOIN " & _Global_BaseBk & "Zw_Prod_Stock Z" & vbCrLf &
+"        ON Z.Empresa = M.EMPRESA AND Z.Sucursal = M.KOSU AND Z.Bodega = M.KOBO AND Z.Codigo = M.KOPR" & vbCrLf &
+"    WHERE M.EMPRESA = '" & _Empresa & "'" & vbCrLf &
+"      AND M.KOSU = '" & _Sucursal & "'" & vbCrLf &
+"      AND M.KOBO = '" & _Bodega & "'" & vbCrLf &
+"      AND M.KOPR = '" & _Codigo & "'" & vbCrLf &
+"), Equivalente AS (" & vbCrLf &
+"    SELECT M2.STFI" & _Ud & " AS STFI, M2.STOCNV" & _Ud & " AS STOCNV, Z2.StComp" & _Ud & " AS StComp" & vbCrLf &
+"    FROM MAEST M2" & vbCrLf &
+"    LEFT JOIN " & _Global_BaseBk & "Zw_Prod_Stock Z2" & vbCrLf &
+"        ON Z2.Empresa = M2.EMPRESA AND Z2.Sucursal = M2.KOSU AND Z2.Bodega = M2.KOBO AND Z2.Codigo = M2.KOPR" & vbCrLf &
+"    INNER JOIN " & _Global_BaseBk & "Zw_InterStock_Equivalencia E" & vbCrLf &
+"        ON (" & vbCrLf &
+"                E.Empresa_A = '" & _Empresa & "' AND E.Sucursa_A = '" & _Sucursal & "' AND E.Bodega_A = '" & _Bodega & "'" & vbCrLf &
+"            AND M2.EMPRESA = E.Empresa_B AND M2.KOSU = E.Sucursa_B AND M2.KOBO = E.Bodega_B" & vbCrLf &
+"           )" & vbCrLf &
+"        OR (" & vbCrLf &
+"                E.Empresa_B = '" & _Empresa & "' AND E.Sucursa_B = '" & _Sucursal & "' AND E.Bodega_B = '" & _Bodega & "'" & vbCrLf &
+"            AND M2.EMPRESA = E.Empresa_A AND M2.KOSU = E.Sucursa_A AND M2.KOBO = E.Bodega_A" & vbCrLf &
+"           )" & vbCrLf &
+"    WHERE M2.KOPR = '" & _Codigo & "' AND E.Activo = 1" & vbCrLf &
+"), Suma AS (" & vbCrLf &
+"    SELECT" & vbCrLf &
+"        SUM(ISNULL(STFI,0)) AS STFI," & vbCrLf &
+"        SUM(ISNULL(STOCNV,0)) AS STOCNV," & vbCrLf &
+"        SUM(ISNULL(StComp,0)) AS StComp" & vbCrLf &
+"    FROM (" & vbCrLf &
+"        SELECT * FROM Origen" & vbCrLf &
+"        UNION ALL" & vbCrLf &
+"        SELECT * FROM Equivalente" & vbCrLf &
+"    ) X" & vbCrLf &
+")" & vbCrLf &
+"SELECT ISNULL(" &
+"   CASE WHEN STFI < 0 THEN 0 ELSE STFI END -" &
+"   (CASE WHEN STOCNV < 0 THEN 0 ELSE STOCNV END + CASE WHEN StComp < 0 THEN 0 ELSE StComp END)" &
+",0) AS Stock_Disponible" & vbCrLf &
+"FROM Suma"
+
 
         Dim _RowStock As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         If Not (_RowStock Is Nothing) Then
-            Fx_Stock_Disponible = _RowStock.Item("Stock_Disponible")
+            Fx_Stock_Disponible_ConEquivalencia_Old = _RowStock.Item("Stock_Disponible")
         End If
 
     End Function
+
 
     Public Function Fx_Suma_cantidades(CAMPO As String,
                                        TABLA As String,

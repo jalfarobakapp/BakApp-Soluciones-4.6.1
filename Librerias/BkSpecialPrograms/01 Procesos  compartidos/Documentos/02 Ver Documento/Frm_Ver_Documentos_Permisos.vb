@@ -41,7 +41,8 @@ Where Idmaeedo = " & _Idmaeedo & " And Eliminada = 0"
 From {_Global_BaseBk}Zw_Log_Gestiones l
 Left Join TABFU FuS On FuS.KOFU = l.Funcionario
 Left Join TABFU FuA On FuA.KOFU = l.Funcionario_Autoriza
-Where Archirst = 'MAEEDO' And Idrst = {_Idmaeedo}"
+Where Archirst = 'MAEEDO' And Idrst = {_Idmaeedo}
+Order By Id"
         Tbl_OtrosPermisos = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)

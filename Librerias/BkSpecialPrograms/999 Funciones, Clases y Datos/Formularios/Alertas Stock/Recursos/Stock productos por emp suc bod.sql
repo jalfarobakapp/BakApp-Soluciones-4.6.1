@@ -1,4 +1,4 @@
-DECLARE 
+﻿DECLARE 
 @Empresa char(2),
 @Codigo char(13)
 
@@ -28,34 +28,163 @@ CREATE TABLE [dbo].[#Paso] (
 	[ST_PEDIDO_BK]                [Float]       DEFAULT (0)  
 	)
 
+/* ============================================================
+   1) CARGAR BODEGAS DE LA EMPRESA CONSULTADA
+   ============================================================ */
 Insert Into #Paso (CodPermiso,Empresa,Sucursal,Bodega,EMP_SUC_BOD,SUC_BOD,NOKOBO,Codigo,ST_FISICO,ST_DEVENGADO,ST_DESP_SIN_FACTURAR,ST_COMPROMETIDO,ST_COMPROMETIDO_BK,ST_DISPONIBLE,
                    ST_COMPRAS_NO_RECEPCIONADAS,ST_RECEP_SIN_FACTURAR,ST_PEDIDO,ST_PEDIDO_BK)
-Select 'Bo'+EMPRESA+KOSU+KOBO,EMPRESA,KOSU,KOBO,Ltrim(Rtrim(EMPRESA))+Ltrim(Rtrim(KOSU))+Ltrim(Rtrim(KOBO)),KOSU+KOBO,NOKOBO,@Codigo,0,0,0,0,0,0,0,0,0,0
+Select 
+    'Bo'+EMPRESA+KOSU+KOBO,
+    EMPRESA,
+    KOSU,
+    KOBO,
+    Ltrim(Rtrim(EMPRESA))+Ltrim(Rtrim(KOSU))+Ltrim(Rtrim(KOBO)),
+    KOSU+KOBO,
+    NOKOBO,
+    @Codigo,
+    0,0,0,0,0,0,0,0,0,0
 From TABBO 
 Where 1 > 0
 And EMPRESA = @Empresa
 
-Update #Paso Set Orden = Isnull((Select Orden From #Global_BaseBk#Zw_TablaDeCaracterizaciones 
-						                        		 Where Tabla = '#Tabla#' And CodigoTabla = EMP_SUC_BOD),0)
+/* ============================================================
+   2) ORDEN DE BODEGAS
+   ============================================================ */
+--Update #Paso Set Orden = Isnull((Select Orden From #Global_BaseBk#Zw_TablaDeCaracterizaciones 
+--						                        		 Where Tabla = '#Tabla#' And CodigoTabla = EMP_SUC_BOD),0)
 
-Update #Paso Set 
-			ST_FISICO = Isnull((Select Sum(STFI#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
-			ST_DEVENGADO = Isnull((Select Sum(STDV#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
-			ST_DESP_SIN_FACTURAR = Isnull((Select Sum(DESPNOFAC#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
-			ST_COMPROMETIDO = Isnull((Select Sum(STOCNV#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
-			--ST_DISPONIBLE = Isnull((Select Sum(STFI#Ud#-STOCNV#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
-			ST_COMPRAS_NO_RECEPCIONADAS = Isnull((Select Sum(STDV#Ud#C) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
-			ST_RECEP_SIN_FACTURAR = Isnull((Select Sum(RECENOFAC#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
-			ST_PEDIDO = Isnull((Select Sum(STOCNV#Ud#C) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
+UPDATE #Paso 
+SET Orden = ISNULL((
+        SELECT Orden 
+        FROM #Global_BaseBk#Zw_TablaDeCaracterizaciones 
+        WHERE Tabla = '#Tabla#' 
+          AND CodigoTabla = EMP_SUC_BOD
+    ),0)
 
-            ST_COMPROMETIDO_BK = Isnull((Select Sum(StComp#Ud#) From #Global_BaseBk#Zw_Prod_Stock Stk Where Stk.Empresa = #Paso.Empresa And Stk.Sucursal = #Paso.Sucursal And Stk.Bodega = #Paso.Bodega And Stk.Codigo In #Codigos#),0), --
-			ST_PEDIDO_BK = Isnull((Select Sum(StPedi#Ud#) From #Global_BaseBk#Zw_Prod_Stock Stk Where Stk.Empresa = #Paso.Empresa And Stk.Sucursal = #Paso.Sucursal And Stk.Bodega = #Paso.Bodega And Stk.Codigo In #Codigos#),0) --
 
-Update #Paso Set ST_DISPONIBLE = Case When ST_FISICO < 0 Then 0 Else ST_FISICO End -
-								 Case When ST_COMPROMETIDO < 0 Then 0 Else ST_COMPROMETIDO End - 
-								 Case When ST_COMPROMETIDO_BK < 0 Then 0 Else ST_COMPROMETIDO_BK End
+/* ============================================================
+   3) STOCK REAL (TODO EN UNIDAD 2)
+   ============================================================ */
 
-Update #Paso Set ST_DISPONIBLE = 0 Where ST_DISPONIBLE < 0
+--Update #Paso Set 
+--			ST_FISICO = Isnull((Select Sum(STFI#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
+--			ST_DEVENGADO = Isnull((Select Sum(STDV#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
+--			ST_DESP_SIN_FACTURAR = Isnull((Select Sum(DESPNOFAC#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
+--			ST_COMPROMETIDO = Isnull((Select Sum(STOCNV#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
+--			--ST_DISPONIBLE = Isnull((Select Sum(STFI#Ud#-STOCNV#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
+--			ST_COMPRAS_NO_RECEPCIONADAS = Isnull((Select Sum(STDV#Ud#C) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
+--			ST_RECEP_SIN_FACTURAR = Isnull((Select Sum(RECENOFAC#Ud#) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
+--			ST_PEDIDO = Isnull((Select Sum(STOCNV#Ud#C) From MAEST Where EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR In #Codigos#),0),
+
+--            ST_COMPROMETIDO_BK = Isnull((Select Sum(StComp#Ud#) From #Global_BaseBk#Zw_Prod_Stock Stk Where Stk.Empresa = #Paso.Empresa And Stk.Sucursal = #Paso.Sucursal And Stk.Bodega = #Paso.Bodega And Stk.Codigo In #Codigos#),0), --
+--			ST_PEDIDO_BK = Isnull((Select Sum(StPedi#Ud#) From #Global_BaseBk#Zw_Prod_Stock Stk Where Stk.Empresa = #Paso.Empresa And Stk.Sucursal = #Paso.Sucursal And Stk.Bodega = #Paso.Bodega And Stk.Codigo In #Codigos#),0) --
+
+UPDATE P
+SET 
+    ST_FISICO = ISNULL((SELECT SUM(STFI#Ud#) FROM MAEST 
+                        WHERE EMPRESA=P.Empresa AND KOSU=P.Sucursal AND KOBO=P.Bodega AND KOPR In #Codigos#),0),
+
+    ST_DEVENGADO = ISNULL((SELECT SUM(STDV#Ud#) FROM MAEST 
+                           WHERE EMPRESA=P.Empresa AND KOSU=P.Sucursal AND KOBO=P.Bodega AND KOPR In #Codigos#),0),
+
+    ST_DESP_SIN_FACTURAR = ISNULL((SELECT SUM(DESPNOFAC#Ud#) FROM MAEST 
+                                   WHERE EMPRESA=P.Empresa AND KOSU=P.Sucursal AND KOBO=P.Bodega AND KOPR In #Codigos#),0),
+
+    ST_COMPROMETIDO = ISNULL((SELECT SUM(STOCNV#Ud#) FROM MAEST 
+                              WHERE EMPRESA=P.Empresa AND KOSU=P.Sucursal AND KOBO=P.Bodega AND KOPR In #Codigos#),0),
+
+    ST_COMPRAS_NO_RECEPCIONADAS = ISNULL((SELECT SUM(STDV#Ud#C) FROM MAEST 
+                                          WHERE EMPRESA=P.Empresa AND KOSU=P.Sucursal AND KOBO=P.Bodega AND KOPR In #Codigos#),0),
+
+    ST_RECEP_SIN_FACTURAR = ISNULL((SELECT SUM(RECENOFAC#Ud#) FROM MAEST 
+                                    WHERE EMPRESA=P.Empresa AND KOSU=P.Sucursal AND KOBO=P.Bodega AND KOPR In #Codigos#),0),
+
+    ST_PEDIDO = ISNULL((SELECT SUM(STOCNV#Ud#C) FROM MAEST 
+                        WHERE EMPRESA=P.Empresa AND KOSU=P.Sucursal AND KOBO=P.Bodega AND KOPR In #Codigos#),0),
+
+    ST_COMPROMETIDO_BK = ISNULL((SELECT SUM(StComp#Ud#) FROM #Global_BaseBk#Zw_Prod_Stock 
+                                 WHERE Empresa=P.Empresa AND Sucursal=P.Sucursal AND Bodega=P.Bodega AND Codigo In #Codigos#),0),
+
+    ST_PEDIDO_BK = ISNULL((SELECT SUM(StPedi#Ud#) FROM #Global_BaseBk#Zw_Prod_Stock 
+                           WHERE Empresa=P.Empresa AND Sucursal=P.Sucursal AND Bodega=P.Bodega AND Codigo In #Codigos#),0)
+FROM #Paso P
+
+
+
+/* ============================================================
+   4) CONSOLIDACIÓN BIDIRECCIONAL (01 ↔ 02) EN UNIDAD 2
+   ============================================================ */
+UPDATE P
+SET 
+    ST_FISICO = ST_FISICO +
+        ISNULL((
+            SELECT SUM(M.STFI#Ud#)
+            FROM MAEST M
+            INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
+                ON (
+                        (E.Empresa_A = P.Empresa AND E.Sucursal_A = P.Sucursal AND E.Bodega_A = P.Bodega
+                         AND M.EMPRESA = E.Empresa_B AND M.KOSU = E.Sucursal_B AND M.KOBO = E.Bodega_B)
+
+                     OR (E.Empresa_B = P.Empresa AND E.Sucursal_B = P.Sucursal AND E.Bodega_B = P.Bodega
+                         AND M.EMPRESA = E.Empresa_A AND M.KOSU = E.Sucursal_A AND M.KOBO = E.Bodega_A)
+                   )
+                AND E.Activo = 1
+            WHERE M.KOPR = @Codigo
+        ),0),
+
+    ST_COMPROMETIDO = ST_COMPROMETIDO +
+        ISNULL((
+            SELECT SUM(M.STOCNV#Ud#)
+            FROM MAEST M
+            INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
+                ON (
+                        (E.Empresa_A = P.Empresa AND E.Sucursal_A = P.Sucursal AND E.Bodega_A = P.Bodega
+                         AND M.EMPRESA = E.Empresa_B AND M.KOSU = E.Sucursal_B AND M.KOBO = E.Bodega_B)
+
+                     OR (E.Empresa_B = P.Empresa AND E.Sucursal_B = P.Sucursal AND E.Bodega_B = P.Bodega
+                         AND M.EMPRESA = E.Empresa_A AND M.KOSU = E.Sucursal_A AND M.KOBO = E.Bodega_A)
+                   )
+                AND E.Activo = 1
+            WHERE M.KOPR = @Codigo
+        ),0),
+
+    ST_COMPROMETIDO_BK = ST_COMPROMETIDO_BK +
+        ISNULL((
+            SELECT SUM(S.StComp#Ud#)
+            FROM #Global_BaseBk#Zw_Prod_Stock S
+            INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
+                ON (
+                        (E.Empresa_A = P.Empresa AND E.Sucursal_A = P.Sucursal AND E.Bodega_A = P.Bodega
+                         AND S.Empresa = E.Empresa_B AND S.Sucursal = E.Sucursal_B AND S.Bodega = E.Bodega_B)
+
+                     OR (E.Empresa_B = P.Empresa AND E.Sucursal_B = P.Sucursal AND E.Bodega_B = P.Bodega
+                         AND S.Empresa = E.Empresa_A AND S.Sucursal = E.Sucursal_A AND S.Bodega = E.Bodega_A)
+                   )
+                AND E.Activo = 1
+            WHERE S.Codigo = @Codigo
+        ),0)
+FROM #Paso P
+
+
+
+
+--Update #Paso Set ST_DISPONIBLE = Case When ST_FISICO < 0 Then 0 Else ST_FISICO End -
+--								 Case When ST_COMPROMETIDO < 0 Then 0 Else ST_COMPROMETIDO End - 
+--								 Case When ST_COMPROMETIDO_BK < 0 Then 0 Else ST_COMPROMETIDO_BK End
+
+--Update #Paso Set ST_DISPONIBLE = 0 Where ST_DISPONIBLE < 0
+
+/* ============================================================
+   5) CALCULAR DISPONIBLE CONSOLIDADO
+   ============================================================ */
+UPDATE #Paso 
+SET ST_DISPONIBLE = 
+      CASE WHEN ST_FISICO < 0 THEN 0 ELSE ST_FISICO END -
+      CASE WHEN ST_COMPROMETIDO < 0 THEN 0 ELSE ST_COMPROMETIDO END - 
+      CASE WHEN ST_COMPROMETIDO_BK < 0 THEN 0 ELSE ST_COMPROMETIDO_BK END
+
+UPDATE #Paso SET ST_DISPONIBLE = 0 WHERE ST_DISPONIBLE < 0
+
 
 --#Update_Conficion_Adicional#
 

@@ -1158,7 +1158,7 @@ Public Class Frm_GRI_FabXProducto
         Dim nuevaLista As New List(Of Zw_Docu_Det_Lote)
 
         Dim _Lote_Madre As New Zw_Docu_Det_Lote With {
-           .Id = 0,
+           .Id = 1,
            .Id_LoteOri = 0,
            .Id_Det = 0,
            .Idmaeddo = 0,

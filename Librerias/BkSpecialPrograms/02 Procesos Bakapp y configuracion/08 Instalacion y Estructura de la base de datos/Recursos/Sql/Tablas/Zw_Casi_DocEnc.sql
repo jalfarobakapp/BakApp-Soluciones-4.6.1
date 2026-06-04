@@ -68,6 +68,7 @@ CREATE TABLE [dbo].[Zw_Casi_DocEnc](
     [UsaCiaSeguro]          [bit]           NOT NULL DEFAULT (0),
     [CodEntidad_Cia]        [varchar](13)   NOT NULL DEFAULT (''),
     [CodSucEntidad_Cia]     [varchar](20)   NOT NULL DEFAULT (''),
+    [Id_Despacho]           [Int]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Casi_DocEnc] PRIMARY KEY CLUSTERED 
 (
 	[Id_DocEnc] ASC

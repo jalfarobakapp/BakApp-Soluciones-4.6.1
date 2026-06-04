@@ -187,7 +187,8 @@
               <xs:element name="CodSucEntidad_Cia" msprop:Generator_ColumnPropNameInTable="CodSucEntidad_CiaColumn" msprop:Generator_ColumnPropNameInRow="CodSucEntidad_Cia" msprop:Generator_UserColumnName="CodSucEntidad_Cia" msprop:Generator_ColumnVarNameInTable="columnCodSucEntidad_Cia" type="xs:string" minOccurs="0" />
               <xs:element name="ActivaTipoCompra" msprop:Generator_ColumnPropNameInTable="ActivaTipoCompraColumn" msprop:Generator_ColumnPropNameInRow="ActivaTipoCompra" msprop:Generator_UserColumnName="ActivaTipoCompra" msprop:Generator_ColumnVarNameInTable="columnActivaTipoCompra" type="xs:boolean" minOccurs="0" />
               <xs:element name="TipoCompra" msprop:Generator_ColumnPropNameInTable="TipoCompraColumn" msprop:Generator_ColumnPropNameInRow="TipoCompra" msprop:Generator_UserColumnName="TipoCompra" msprop:Generator_ColumnVarNameInTable="columnTipoCompra" type="xs:string" minOccurs="0" />
-              <xs:element name="Cn_TipoCompra" msprop:Generator_UserColumnName="Cn_TipoCompra" msprop:Generator_ColumnPropNameInTable="Cn_TipoCompraColumn" msprop:Generator_ColumnPropNameInRow="Cn_TipoCompra" msprop:Generator_ColumnVarNameInTable="columnCn_TipoCompra" type="xs:int" minOccurs="0" />
+              <xs:element name="Cn_TipoCompra" msprop:Generator_ColumnPropNameInTable="Cn_TipoCompraColumn" msprop:Generator_ColumnPropNameInRow="Cn_TipoCompra" msprop:Generator_UserColumnName="Cn_TipoCompra" msprop:Generator_ColumnVarNameInTable="columnCn_TipoCompra" type="xs:int" minOccurs="0" />
+              <xs:element name="Id_Despacho" msprop:Generator_ColumnPropNameInRow="Id_Despacho" msprop:Generator_ColumnPropNameInTable="Id_DespachoColumn" msprop:Generator_ColumnVarNameInTable="columnId_Despacho" msprop:Generator_UserColumnName="Id_Despacho" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

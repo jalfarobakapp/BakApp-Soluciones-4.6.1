@@ -104,7 +104,10 @@ Public Class Class_ActFxDinXProductos
 
                 Dim _Sigla = _Emp & _Suc & _Bod
 
-                Dim _St_Disponible = Fx_Stock_Disponible(_Tido_Stock, _Emp, _Suc, _Bod, _Codigo, 1, "STFI1")
+                Dim _St_Disponible As Double = Fx_Stock_Disponible(_Tido_Stock, _Emp, _Suc, _Bod, _Codigo, 1, "STFI1")
+
+                '_St_Disponible = Fx_Stock_Disponible_ConEquivalencia(_Tido_Stock, _Emp, _Suc, _Bod, _Codigo, 1, "STFI1")
+
                 If _St_Disponible < 0 Then _St_Disponible = 0
 
                 _Fila.Item("STOCK_Ud1_" & _Sigla) = _St_Disponible

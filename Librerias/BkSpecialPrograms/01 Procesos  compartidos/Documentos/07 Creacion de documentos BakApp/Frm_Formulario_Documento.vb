@@ -1732,6 +1732,7 @@ Public Class Frm_Formulario_Documento
 
             .Item("TipoCompra") = String.Empty
             .Item("Cn_TipoCompra") = 0
+            .Item("Id_Despacho") = 0
 
             _TblEncabezado.Rows.Add(NewFila)
 
@@ -13230,6 +13231,7 @@ Public Class Frm_Formulario_Documento
             .Item("UsaCiaSeguro") = _TblEncabezado_StBy.Rows(0).Item("UsaCiaSeguro")
             .Item("CodEntidad_Cia") = _TblEncabezado_StBy.Rows(0).Item("CodEntidad_Cia")
             .Item("CodSucEntidad_Cia") = _TblEncabezado_StBy.Rows(0).Item("CodSucEntidad_Cia")
+            .Item("Id_Despacho") = _TblEncabezado_StBy.Rows(0).Item("Id_Despacho")
 
             LblMoneda.Tag = .Item("Moneda_Doc")
             LblMoneda.Text = .Item("Moneda_Doc")
@@ -18907,7 +18909,12 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
         If _Revisar_Stock_Disponible Then
 
-            _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
+            '_Stock_Disponible = Fx_Stock_Disponible_ConEquivalencia(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
+            _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans, False)
+
+            If _Stock_Disponible < 0 Then
+                _Stock_Disponible = 0
+            End If
 
             If _Tidopa = "NVV" And _Tido <> "NVV" Then
 
@@ -28504,6 +28511,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                 If _Grabar Then
 
                     _Cl_Despacho.Sb_Cargar_Despacho(_Cl_Despacho.Id_Despacho)
+                    _TblEncabezado.Rows(0).Item("Id_Despacho") = _Cl_Despacho.Id_Despacho
                     _TblEncabezado.Rows(0).Item("FechaRecepcion") = _Cl_Despacho.Row_Despacho.Item("Fecha_Compromiso")
 
                     For Each _Fila As DataRow In _TblDetalle.Rows

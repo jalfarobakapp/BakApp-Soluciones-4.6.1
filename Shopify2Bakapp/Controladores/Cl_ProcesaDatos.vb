@@ -1,9 +1,11 @@
 ﻿Imports System.Data.SqlClient
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports BkSpecialPrograms
 Imports BkSpecialPrograms.Bk_GenDoc2DTE
 Imports BkSpecialPrograms.LsValiciones
 Imports Newtonsoft.Json
+
 
 Public Class Cl_ProcesaDatos
     Dim _SqlRandom As Class_SQL
@@ -24,7 +26,7 @@ Public Class Cl_ProcesaDatos
             _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
             '-----------------------------------------------------------------------------------------
             '1. BUSCAR NOTAS DE VENTA (NVV) DEL E-COMMERCE QUE NO TENGAN DESPACHO ASIGNADO
-            Consulta_sql = $"SELECT TOP 1
+            Consulta_sql = $"SELECT TOP 25
     e.IDMAEEDO, e.TIDO, e.NUDO, e.ENDO, e.SUENDO,
     m.NOKOEN, m.PAEN, m.CIEN, m.CMEN,
     e.EMPRESA, e.SUDO,
@@ -57,6 +59,15 @@ WHERE e.TIDO = 'NVV'
         SELECT 1
         FROM  {Frm_Sincronizador._Global_BaseBk}Zw_Docu_Ent z
         WHERE z.Idmaeedo = e.IDMAEEDO
+  ) AND NOT EXISTS (
+        SELECT 1
+        FROM {Frm_Sincronizador._Global_BaseBk}Zw_Log_Gestiones lg
+        WHERE lg.Idrst = e.IDMAEEDO 
+          AND lg.Archirst = 'MAEEDO'
+          And lg.Tido = 'NVV'
+          And lg.Nudo = e.NUDO
+          AND lg.Funcionario = 'B2B'
+          AND lg.Error_Log = 1
   )"
 
             Dim _Tbl_Pendientes As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql, False)
@@ -129,14 +140,14 @@ WHERE e.TIDO = 'NVV'
                     Dim correoCliente As String = NVV.TEXTO3
                     Dim idMaeedo As Integer = NVV.IDMAEEDO
 
-                    Sb_Insertar_Log_Gestiones(NVV, $"Procesando documento: {numeroDocumento} (ID: {idMaeedo})")
+                    Sb_Insertar_Log_Gestiones(NVV, $"Procesando documento: {numeroDocumento} (ID: {idMaeedo})", Txt_Log)
                     Sb_AddToLog("Demonio Despachos", $"Procesando documento: {numeroDocumento} (ID: {idMaeedo})", Txt_Log)
 
                     Dim Respuesta_Tr As LsValiciones.Mensajes = Fx_Transaccion(Txt_Log, NVV)
 
                     ' Validamos el resultado
                     If Respuesta_Tr.EsCorrecto Then
-                        Sb_Insertar_Log_Gestiones(NVV, $"El documento {numeroDocumento} fue procesado e insertado correctamente en el módulo de despachos.")
+                        Sb_Insertar_Log_Gestiones(NVV, $"El documento {numeroDocumento} fue procesado e insertado correctamente en el módulo de despachos.", Txt_Log)
                         Sb_AddToLog("Demonio Despachos", $"El documento {numeroDocumento} fue procesado e insertado correctamente en el módulo de despachos.", Txt_Log)
 
                         Dim _Cl_Stmp As New Cl_Stmp
@@ -145,7 +156,7 @@ WHERE e.TIDO = 'NVV'
 
                         ' Validamos si el pago fue suficiente (1)
                         If NVV.PagoSuficiente = 1 Then
-                            Sb_Insertar_Log_Gestiones(NVV, $"Iniciando la creación del ticket para enviar el documento {NVV.NUDO} (Pago validado).")
+                            Sb_Insertar_Log_Gestiones(NVV, $"Iniciando la creación del ticket para enviar el documento {NVV.NUDO} (Pago validado).", Txt_Log)
                             Sb_AddToLog("Demonio Despachos", $"Iniciando la creación del ticket para enviar el documento {NVV.NUDO} (Pago validado).", Txt_Log)
                             'DESCOMENTAR
                             _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(NVV.IDMAEEDO, NVV.TIDO, NVV.NUDO, True, _FechaParaFacturar, "R", False, NVV.EMPRESA, NVV.SUENDO, NVV.CodFuncionario, True, NVV.IDMAEDPCE, NVV.CodFuncionario)
@@ -156,28 +167,28 @@ WHERE e.TIDO = 'NVV'
                                     Dim mensajeCambio As New LsValiciones.Mensajes
                                     mensajeCambio = Fx_CambiarBodegaSeaGarden2MeatGarden(NVV.IDMAEEDO)
                                     If mensajeCambio.EsCorrecto Then
-                                        Sb_Insertar_Log_Gestiones(NVV, $"La empresa del documento {NVV.NUDO} fue cambiada exitosamente a MeatGarden.")
+                                        Sb_Insertar_Log_Gestiones(NVV, $"La empresa del documento {NVV.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
                                         Sb_AddToLog("Demonio Despachos", $"La empresa del documento {NVV.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
                                     Else
-                                        Sb_Insertar_Log_Gestiones(NVV, $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.")
+                                        Sb_Insertar_Log_Gestiones(NVV, $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
                                         Sb_AddToLog("Demonio Despachos", $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
                                     End If
 
                                 End If
-                                Sb_Insertar_Log_Gestiones(NVV, $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV.NUDO}")
+                                Sb_Insertar_Log_Gestiones(NVV, $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV.NUDO}", Txt_Log)
 
                                 Sb_AddToLog("Demonio Despachos", $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV.NUDO}!", Txt_Log)
                             Else
-                                Sb_Insertar_Log_Gestiones(NVV, $"Error al crear ticket para el documento {NVV.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}")
+                                Sb_Insertar_Log_Gestiones(NVV, $"Error al crear ticket para el documento {NVV.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
                                 Sb_AddToLog("Demonio Despachos", $"Error al crear ticket para el documento {NVV.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
                             End If
                         Else
-                            Sb_Insertar_Log_Gestiones(NVV, $"Se omite la creación de ticket para el documento {NVV.NUDO} porque el pago registrado no cubre el total o no existe.")
+                            Sb_Insertar_Log_Gestiones(NVV, $"Se omite la creación de ticket para el documento {NVV.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
                             Sb_AddToLog("Demonio Despachos", $"Se omite la creación de ticket para el documento {NVV.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
                         End If
                     Else
                         ' Si falló la transacción SQL interna
-                        Sb_Insertar_Log_Gestiones(NVV, $"Error al procesar documento {numeroDocumento}. Razón: {Respuesta_Tr.Detalle} - {Respuesta_Tr.Mensaje}")
+                        Sb_Insertar_Log_Gestiones(NVV, $"Error al procesar documento {numeroDocumento}. Razón: {Respuesta_Tr.Detalle} - {Respuesta_Tr.Mensaje}", Txt_Log, 1)
                         Sb_AddToLog("Demonio Despachos", $"Error al procesar documento {numeroDocumento}. Razón: {Respuesta_Tr.Detalle} - {Respuesta_Tr.Mensaje}", Txt_Log)
                     End If
 
@@ -185,7 +196,7 @@ WHERE e.TIDO = 'NVV'
                     ' ESTO ES CRÍTICO: Si falla UN documento por cualquier error de código, lo atrapamos aquí
                     ' Dejamos un registro y el FOR EACH continuará con el siguiente documento.
                     Sb_AddToLog("Demonio Despachos", $"EXCEPCIÓN CRÍTICA procesando NVV {NVV.NUDO}: {exDoc.Message}", Txt_Log)
-                    Sb_Insertar_Log_Gestiones(NVV, $"Excepción de código al intentar procesar: {exDoc.Message}")
+                    Sb_Insertar_Log_Gestiones(NVV, $"Excepción de código al intentar procesar: {exDoc.Message}", Txt_Log)
                 End Try
             Next
 
@@ -194,6 +205,21 @@ WHERE e.TIDO = 'NVV'
             Sb_AddToLog("Demonio Despachos", $"Fallo general o de conexión en Sb_Procesar_Despachos_ECommerce: {exGeneral.Message}", Txt_Log)
         End Try
     End Sub
+
+    Public Function TruncarSeguro(ByVal texto As String, ByVal longitudMaxima As Integer) As String
+            If String.IsNullOrEmpty(texto) Then Return ""
+
+            ' Evita el error de las comillas simples en SQL
+            texto = texto.Replace("'", "''")
+
+            ' Trunca solo si es necesario
+            If texto.Length <= longitudMaxima Then
+                Return texto
+            Else
+                Return texto.Substring(0, longitudMaxima)
+            End If
+        End Function
+
     Public Sub PreCarga(Txt_Log As Object)
         'PreCarga cargar las notas de venta  que quedaron excluidas de pickeo
         Try
@@ -314,7 +340,7 @@ WHERE e.TIDO = 'NVV'
                     Dim correoCliente As String = NVV2.TEXTO3
                     Dim idMaeedo As Integer = NVV2.IDMAEEDO
 
-                    Sb_Insertar_Log_Gestiones(NVV2, $"Procesando documento: {numeroDocumento} (ID: {idMaeedo})")
+                    Sb_Insertar_Log_Gestiones(NVV2, $"Procesando documento: {numeroDocumento} (ID: {idMaeedo})", Txt_Log)
                     Sb_AddToLog("Demonio Despachos", $"Procesando documento: {numeroDocumento} (ID: {idMaeedo})", Txt_Log)
                     ' Validamos el resultado
 
@@ -324,13 +350,13 @@ WHERE e.TIDO = 'NVV'
 
                     ' Validamos si el pago fue suficiente (1)
                     If NVV2.PagoSuficiente = 1 Then
-                        Sb_Insertar_Log_Gestiones(NVV2, $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).")
+                        Sb_Insertar_Log_Gestiones(NVV2, $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).", Txt_Log)
                         Sb_AddToLog("Demonio Despachos", $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).", Txt_Log)
                         'DESCOMENTAR
                         _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(NVV2.IDMAEEDO, NVV2.TIDO, NVV2.NUDO, True, _FechaParaFacturar, "R", False, NVV2.EMPRESA, NVV2.SUENDO, NVV2.CodFuncionario, True, NVV2.IDMAEDPCE, NVV2.CodFuncionario)
 
                         If _Mensaje_Stem.EsCorrecto Then
-                            Sb_Insertar_Log_Gestiones(NVV2, $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV2.NUDO}")
+                            Sb_Insertar_Log_Gestiones(NVV2, $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV2.NUDO}", Txt_Log)
 
                             '
                             Sb_AddToLog("Demonio Despachos", $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV2.NUDO}!", Txt_Log)
@@ -340,20 +366,20 @@ WHERE e.TIDO = 'NVV'
                                 Dim mensajeCambio As New LsValiciones.Mensajes
                                 mensajeCambio = Fx_CambiarBodegaSeaGarden2MeatGarden(NVV2.IDMAEEDO)
                                 If mensajeCambio.EsCorrecto Then
-                                    Sb_Insertar_Log_Gestiones(NVV2, $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.")
+                                    Sb_Insertar_Log_Gestiones(NVV2, $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
                                     Sb_AddToLog("Demonio Despachos", $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
                                 Else
-                                    Sb_Insertar_Log_Gestiones(NVV2, $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.")
+                                    Sb_Insertar_Log_Gestiones(NVV2, $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
                                     Sb_AddToLog("Demonio Despachos", $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
                                 End If
                             End If
 
                         Else
-                            Sb_Insertar_Log_Gestiones(NVV2, $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}")
+                            Sb_Insertar_Log_Gestiones(NVV2, $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
                             Sb_AddToLog("Demonio Despachos", $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
                         End If
                     Else
-                        Sb_Insertar_Log_Gestiones(NVV2, $"Se omite la creación de ticket para el documento {NVV2.NUDO} porque el pago registrado no cubre el total o no existe.")
+                        Sb_Insertar_Log_Gestiones(NVV2, $"Se omite la creación de ticket para el documento {NVV2.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
                         Sb_AddToLog("Demonio Despachos", $"Se omite la creación de ticket para el documento {NVV2.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
                     End If
 
@@ -363,7 +389,7 @@ WHERE e.TIDO = 'NVV'
                     ' ESTO ES CRÍTICO: Si falla UN documento por cualquier error de código, lo atrapamos aquí
                     ' Dejamos un registro y el FOR EACH continuará con el siguiente documento.
                     Sb_AddToLog("Demonio Despachos", $"EXCEPCIÓN CRÍTICA procesando NVV {NVV2.NUDO}: {exDoc.Message}", Txt_Log)
-                    Sb_Insertar_Log_Gestiones(NVV2, $"Excepción de código al intentar procesar: {exDoc.Message}")
+                    Sb_Insertar_Log_Gestiones(NVV2, $"Excepción de código al intentar procesar: {exDoc.Message}", Txt_Log, 1)
                 End Try
             Next
 
@@ -626,12 +652,12 @@ WHERE e.TIDO = 'NVV'
                            ,''               -- CodSucEntidad
                            ,'{_RUT}'                 -- Rut 
                            ,'{NVV.NOKOEN}'                                           -- Nombre_Entidad
-                           ,'{_Pais}'                    -- Pais
-                           ,'{_Ciudad}'                  -- Ciudad
-                           ,'{_Comuna}'                  -- Comuna
-                           ,'{_Direccion}'               -- Direccion
-                           ,'{NVV.TEXTO2 }'                      -- Telefono
-                           ,'{NVV.TEXTO3}'                       -- Email
+                           ,'{TruncarSeguro(_Pais, 30)}'                    -- Pais
+                           ,'{TruncarSeguro(_Ciudad, 50)}'                  -- Ciudad
+                           ,'{TruncarSeguro(_Comuna, 50)}'                  -- Comuna
+                           ,'{TruncarSeguro(_Direccion, 100)}'               -- Direccion
+                           ,'{TruncarSeguro(NVV.TEXTO2, 30) }'                      -- Telefono
+                           ,'{TruncarSeguro(NVV.TEXTO3, 100)}'                       -- Email
                            ,'{_Trans}'                           -- Transportista
                            ,0                            -- Transpor_Por_Pagar
                            ,0                            -- Entregar_Con_Doc_Pagados
@@ -648,6 +674,99 @@ WHERE e.TIDO = 'NVV'
                            ,'{NVV.CMEN}'                           -- CodComuna
                            ,''                           -- Nombre_Contacto
                            ,0);"
+            'DEscomentar
+            'Dim Consulta_Insert_Despachos As String = $"
+            '    INSERT INTO {Frm_Sincronizador._Global_BaseBk}Zw_Despachos
+            '               ([Id_Despacho_Padre]
+            '               ,[Nro_Despacho]
+            '               ,[Nro_Sub]
+            '               ,[Empresa]
+            '               ,[Sucursal]
+            '               ,[Bodega]
+            '               ,[Confirmado]
+            '               ,[CodFuncionario]
+            '               ,[Fecha_Emision]
+            '               ,[Fecha_Compromiso]
+            '               ,[Fecha_Despacho]
+            '               ,[Fecha_Cierre]
+            '               ,[Tipo_Despacho]
+            '               ,[Tipo_Envio]
+            '               ,[Tipo_Venta]
+            '               ,[Estado]
+            '               ,[Referencia]
+            '               ,[CodEntidad]
+            '               ,[CodSucEntidad]
+            '               ,[Rut]
+            '               ,[Nombre_Entidad]
+            '               ,[Pais]
+            '               ,[Ciudad]
+            '               ,[Comuna]
+            '               ,[Direccion]
+            '               ,[Telefono]
+            '               ,[Email]
+            '               ,[Transportista]
+            '               ,[Transpor_Por_Pagar]
+            '               ,[Entregar_Con_Doc_Pagados]
+            '               ,[Tipo_Entrega]
+            '               ,[Fecha_Entrega_Transpor]
+            '               ,[CodFuncionario_Transpor]
+            '               ,[Entregado_Por]
+            '               ,[Nombre_Transpor]
+            '               ,[Nro_Encomienda]
+            '               ,[Observaciones]
+            '               ,[Sucursal_Retiro]
+            '               ,[CodPais]
+            '               ,[CodCiudad]
+            '               ,[CodComuna]
+            '               ,[Nombre_Contacto]
+            '               ,[EntregaPaletizada])
+            '         VALUES
+            '               (0                            -- Id_Despacho_Padre
+            '               ,'{_Nro_Despacho}'            -- Nro_Despacho
+            '               ,'000'                        -- Nro_Sub
+            '               ,'{NVV.EMPRESA}'              -- Empresa
+            '               ,'{NVV.SUDO}'                -- Sucursal 
+            '               ,'{NVV.Bodega}'              -- Bodega 
+            '               ,0                            -- Confirmado
+            '               ,'{NVV.CodFuncionario}'                               -- CodFuncionario
+            '               ,GETDATE()                    -- Fecha_Emision
+            '               ,GETDATE() + 1 -- Fecha_Compromiso
+            '               ,NULL                         -- Fecha_Despacho
+            '               ,NULL                         -- Fecha_Cierre
+            '               ,'CLI'            -- Tipo_Despacho
+            '               ,'{_Tipo_Despacho}'                                           -- Tipo_Envio
+            '               ,'0001'                           -- Tipo_Venta
+            '               ,'ING'                           -- Estado
+            '               ,''                 -- Referencia 
+            '               ,'{NVV.ENDO}'                 -- CodEntidad
+            '               ,''               -- CodSucEntidad
+            '               ,'{_RUT}'                 -- Rut 
+            '               ,'{NVV.NOKOEN}'                                           -- Nombre_Entidad
+            '               ,'{ 30}'                    -- Pais
+            '               ,'{_Ciudad}'                  -- Ciudad
+            '               ,'{_Comuna}'                  -- Comuna
+            '               ,'{_Direccion}'               -- Direccion
+            '               ,'{NVV.TEXTO2}'                      -- Telefono
+            '               ,'{NVV.TEXTO3}'                       -- Email
+            '               ,'{_Trans}'                           -- Transportista
+            '               ,0                            -- Transpor_Por_Pagar
+            '               ,0                            -- Entregar_Con_Doc_Pagados
+            '               ,''                           -- Tipo_Entrega
+            '               ,NULL                         -- Fecha_Entrega_Transpor
+            '               ,''                           -- CodFuncionario_Transpor
+            '               ,''                           -- Entregado_Por
+            '               ,''                           -- Nombre_Transpor
+            '               ,''                           -- Nro_Encomienda
+            '               ,'B2B'                            -- Observaciones
+            '               ,''                           -- Sucursal_Retiro
+            '               ,'{NVV.PAEN}'                           -- CodPais
+            '               ,'{NVV.CIEN}'                           -- CodCiudad
+            '               ,'{NVV.CMEN}'                           -- CodComuna
+            '               ,''                           -- Nombre_Contacto
+            '               ,0);"
+
+
+
 
             Mis_Consultas.Add(Consulta_Insert_Despachos)
 
@@ -897,7 +1016,7 @@ WHERE e.TIDO = 'NVV'
         End Try
     End Function
 
-    Private Sub Sb_Insertar_Log_Gestiones(NVV As RespuestaSQL, Texto_Accion As String)
+    Private Sub Sb_Insertar_Log_Gestiones(NVV As RespuestaSQL, Texto_Accion As String, Txt_Log As Object, Optional EsError As Integer = 0)
         Dim _AccionLimpia As String = Texto_Accion.Replace("'", "''")
         Dim _NombreEquipo As String = Environment.MachineName
 
@@ -922,7 +1041,8 @@ WHERE e.TIDO = 'NVV'
                        ,[Id_Rem]
                        ,[NroRemota]
                        ,[Tido]
-                       ,[Nudo])
+                       ,[Nudo]
+            ,[Error_Log])
                  SELECT 
                ''               -- Empresa
                ,'{_NombreEquipo}'             -- NombreEquipo
@@ -943,12 +1063,13 @@ WHERE e.TIDO = 'NVV'
                ,0                            -- Id_Rem
                ,''                           -- NroRemota
                ,'{NVV.TIDO}'                 -- Tido
-               ,'{NVV.NUDO}'
+               ,'{NVV.NUDO}'                 -- Nudo
+               ,{EsError}                    -- Error_Log
          WHERE NOT EXISTS (
     SELECT 1
     FROM (
         SELECT TOP 10 Accion
-        FROM Zw_Log_Gestiones
+        FROM  {Frm_Sincronizador._Global_BaseBk}Zw_Log_Gestiones
         WHERE Idrst = {NVV.IDMAEEDO}
           AND Archirst = 'MAEEDO'
         ORDER BY Fecha_Hora DESC
@@ -968,7 +1089,7 @@ WHERE e.TIDO = 'NVV'
         Catch ex As Exception
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
             ' Descomentado para asegurarte que si falla esto, también se avise por archivo físico.
-            ' Sb_AddToLog("Demonio Despachos", $"Error al insertar log en BD para {NVV.NUDO}: {ex.Message}", Txt_Log)
+            Sb_AddToLog("Demonio Despachos", $"Error al insertar log en BD para {NVV.NUDO}: {ex.Message}", Txt_Log)
         End Try
     End Sub
 
@@ -1165,7 +1286,7 @@ ORDER BY Z.Id DESC"
 
                     ' --- LOGS 1: Inicio del proceso ---
                     Sb_AddToLog("Demonio Despachos", $"Encolando documento: {_Nudo} (ID: {_Idmaeedo})", Txt_Log)
-                    Sb_Insertar_Log_Gestiones(_DocLog, $"Iniciando encolado de correo para el documento {_Nudo}")
+                    Sb_Insertar_Log_Gestiones(_DocLog, $"Iniciando encolado de correo para el documento {_Nudo}", Txt_Log)
 
                     ' Armar el INSERT
                     Consulta_sql = $"Insert Into {Frm_Sincronizador._Global_BaseBk}Zw_Demonio_Doc_Emitidos_Aviso_Correo 
@@ -1180,17 +1301,17 @@ ORDER BY Z.Id DESC"
 
                         ' --- LOGS 2: Éxito ---
                         Sb_AddToLog("Demonio Despachos", $"Documento {_Nudo} encolado exitosamente.", Txt_Log)
-                        Sb_Insertar_Log_Gestiones(_DocLog, $"El documento {_Nudo} fue encolado exitosamente en Zw_Demonio_Doc_Emitidos_Aviso_Correo.")
+                        Sb_Insertar_Log_Gestiones(_DocLog, $"El documento {_Nudo} fue encolado exitosamente en Zw_Demonio_Doc_Emitidos_Aviso_Correo.", Txt_Log)
                     Else
                         ' --- LOGS 3: Error de ejecución de SQL ---
                         Sb_AddToLog("Demonio Despachos", $"Error al ejecutar el Insert para el documento {_Nudo}. Detalle: {_Sql.Pro_Error}", Txt_Log)
-                        Sb_Insertar_Log_Gestiones(_DocLog, $"Error de base de datos al encolar {_Nudo}. Detalle: {_Sql.Pro_Error}")
+                        Sb_Insertar_Log_Gestiones(_DocLog, $"Error de base de datos al encolar {_Nudo}. Detalle: {_Sql.Pro_Error}", Txt_Log, 1)
                     End If
 
                 Catch exDoc As Exception
                     ' --- LOGS 4: Despachos CRÍTICA (A prueba de errores) ---
                     Sb_AddToLog("Demonio Correos", $"EXCEPCIÓN CRÍTICA procesando FCV {_Nudo}: {exDoc.Message}", Txt_Log)
-                    Sb_Insertar_Log_Gestiones(_DocLog, $"Excepción de código al intentar procesar: {exDoc.Message}")
+                    Sb_Insertar_Log_Gestiones(_DocLog, $"Excepción de código al intentar procesar: {exDoc.Message}", Txt_Log, 1)
                 End Try
             Next
 

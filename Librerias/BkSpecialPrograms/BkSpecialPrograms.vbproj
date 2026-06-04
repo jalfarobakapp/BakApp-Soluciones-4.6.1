@@ -8361,6 +8361,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor_DocTom.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Det_Lote.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidad_CiaSeguro.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_InterStock_Equivalencia.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_PreVenta_StockProd.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Correos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CorreosEnvioRecepcion.sql" />
@@ -8826,6 +8827,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Inter Empresa Consolidacion Stock\" />
     <Folder Include="01 Procesos  compartidos\Productos\01 Buscar productos\New ProdFind\" />
     <Folder Include="03 Sistemas\Cia Seguros\" />
     <Folder Include="03 Sistemas\Comisiones\Recursos\" />

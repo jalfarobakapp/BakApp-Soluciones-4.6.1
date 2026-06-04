@@ -1,16 +1,17 @@
 USE [#Base#]
 
 CREATE TABLE [dbo].[Zw_Docu_Det_Lote](
-	[Id]			[int] IDENTITY(1,1) NOT NULL,
+	[Id]            [int] IDENTITY(1,1) NOT NULL,
 	[Id_Det]		[int]			NOT NULL DEFAULT (0) ,
+	[Id_LoteOri]    [int]			NOT NULL DEFAULT (0) ,
 	[Idmaeddo]		[int]			NOT NULL DEFAULT (0) ,
 	[Idmaeedo]		[int]			NOT NULL DEFAULT (0) ,
 	[Idmaeddo_Ori]  [int]			NOT NULL DEFAULT (0) ,
-    [Tido_Ori]		[varchar](3)	NOT NULL DEFAULT ('') ,
-    [Nudo_Ori]		[varchar](3)	NOT NULL DEFAULT ('') ,
-	[Empresa]		[char](2)		NOT NULL DEFAULT ('') ,
-	[Sucursal]		[varchar](3)	NOT NULL DEFAULT ('') ,
-	[Bodega]		[varchar](3)	NOT NULL DEFAULT ('') ,
+    [Tido_Ori]      [varchar](3)	NOT NULL DEFAULT ('') ,
+    [Nudo_Ori]      [varchar](3)	NOT NULL DEFAULT ('') ,
+	[Empresa]       [char](2)		NOT NULL DEFAULT ('') ,
+	[Sucursal]      [varchar](3)	NOT NULL DEFAULT ('') ,
+	[Bodega]        [varchar](3)	NOT NULL DEFAULT ('') ,
 	[Tido]			[varchar](3)	NOT NULL DEFAULT ('') ,
 	[Nudo]			[varchar](10)	NOT NULL DEFAULT ('') ,
 	[Codigo]		[varchar](13)	NOT NULL DEFAULT ('') ,

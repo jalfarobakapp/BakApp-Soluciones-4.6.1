@@ -197,6 +197,9 @@ Public Class Frm_Estructura_Base_De_Datos
             'FTP
             .Sb_Revisar_Tabla2(Me, "Zw_Ftp_Conexiones", _Modificar, Lbl_Eventos)
 
+            'INTER-EMPRESAS STOCK CONSOLIDADO
+            .Sb_Revisar_Tabla2(Me, "Zw_InterStock_Equivalencia", _Modificar, Lbl_Eventos)
+
             'INVENTARIO
             .Sb_Revisar_Tabla2(Me, "Zw_Inv_Contador", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Inv_FotoInventario", _Modificar, Lbl_Eventos)

@@ -2251,6 +2251,7 @@ Public Class Clase_Crear_Documento
             Dim _UsaCiaSeguro As Boolean = NuloPorNro(_Row_Encabezado.Item("UsaCiaSeguro"), False)
             Dim _CodEntidad_Cia As String = NuloPorNro(_Row_Encabezado.Item("CodEntidad_Cia"), "")
             Dim _CodSucEntidad_Cia As String = NuloPorNro(_Row_Encabezado.Item("CodSucEntidad_Cia"), "")
+            Dim _Id_Despacho As Integer = NuloPorNro(_Row_Encabezado.Item("Id_Despacho"), 0)
 
             'Dim _B2B As Boolean = NuloPorNro(_Row_Encabezado.Item("B2B"), False)
 
@@ -2263,14 +2264,15 @@ Public Class Clase_Crear_Documento
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad," &
                            "Tido,Nudo,FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil," &
-                           "Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad,B2B,UsaCiaSeguro,CodEntidad_Cia,CodSucEntidad_Cia,Cn_TipoCompra,TipoCompra) Values " &
+                           "Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad,B2B,UsaCiaSeguro,CodEntidad_Cia,CodSucEntidad_Cia," &
+                           "Cn_TipoCompra,TipoCompra,Id_Despacho) Values " &
                            "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad_Bk & "'" &
                            ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
                            "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(PreVenta) &
                            "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) &
                            ",'" & _Empresa & "','" & _LeyendaMorosidad & "'," &
                            Convert.ToInt32(B2B) & "," & Convert.ToInt32(_UsaCiaSeguro) &
-                           ",'" & _CodEntidad_Cia & "','" & _CodSucEntidad_Cia & "'," & _Cn_TipoCompra & ",'" & _TipoCompra & "')"
+                           ",'" & _CodEntidad_Cia & "','" & _CodSucEntidad_Cia & "'," & _Cn_TipoCompra & ",'" & _TipoCompra & "'," & _Id_Despacho & ")"
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
@@ -3422,6 +3424,8 @@ Public Class Clase_Crear_Documento
         Dim _CodEntidad_Cia As String
         Dim _CodSucEntidad_Cia As String
 
+        Dim _Id_Despacho As Integer
+
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
 
@@ -3570,6 +3574,7 @@ Public Class Clase_Crear_Documento
                 _UsaCiaSeguro = Convert.ToInt32(.Item("UsaCiaSeguro"))
                 _CodEntidad_Cia = NuloPorNro(.Item("CodEntidad_Cia"), "")
                 _CodSucEntidad_Cia = NuloPorNro(.Item("CodSucEntidad_Cia"), "")
+                _Id_Despacho = NuloPorNro(.Item("Id_Despacho"), 0)
 
             End With
 
@@ -4130,6 +4135,7 @@ Public Class Clase_Crear_Documento
                            ",UsaCiaSeguro = " & Convert.ToInt32(_UsaCiaSeguro) & Environment.NewLine &
                            ",CodEntidad_Cia = '" & _CodEntidad_Cia & "'" & Environment.NewLine &
                            ",CodSucEntidad_Cia = '" & _CodSucEntidad_Cia & "'" & Environment.NewLine &
+                           ",Id_Despacho = " & _Id_Despacho & Environment.NewLine &
                            "Where Id_DocEnc = " & _Id_DocEnc
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)

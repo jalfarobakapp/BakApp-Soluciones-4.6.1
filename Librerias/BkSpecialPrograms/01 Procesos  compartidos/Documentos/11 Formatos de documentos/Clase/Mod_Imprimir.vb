@@ -207,7 +207,7 @@ Module Mod_Imprimir
             Dim _Tido = _RowMaeedo.Item("TIDO")
             Dim _Nudo = _RowMaeedo.Item("NUDO")
 
-            If _Tido = "GDI" Then
+            If _Tido = "GDI" Or _Tido = "COV" Then
                 _Subtido = String.Empty
             End If
 
