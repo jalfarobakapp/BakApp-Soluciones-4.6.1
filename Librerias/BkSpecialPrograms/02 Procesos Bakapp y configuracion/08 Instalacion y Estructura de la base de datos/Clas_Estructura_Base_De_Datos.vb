@@ -810,6 +810,10 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_Ftp_Conexiones"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Ftp_Conexiones
 
+            Case "Zw_InterStock_Equivalencia"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_InterStock_Equivalencia
+
+
             Case "Zw_Inv_Contador"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Inv_Contador
             Case "Zw_Inv_FotoInventario"

@@ -2202,6 +2202,31 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''
+        '''CREATE TABLE [dbo].[Zw_InterStock_Equivalencia](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Empresa_A]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursa_A]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega_A]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Empresa_B]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursa_B]		[varchar](3)	NULL DEFAULT (&apos;&apos;),
+        '''	[Bodega_B]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Activo]		[bit]			NOT NULL,
+        '''	[FechaCreacion] [datetime] NULL
+        ''') ON [PRIMARY]
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_InterStock_Equivalencia() As String
+            Get
+                Return ResourceManager.GetString("Zw_InterStock_Equivalencia", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''CREATE TABLE [dbo].[Zw_Inv_Contador](
         '''	[Id]		[int] IDENTITY(1,1) NOT NULL,
         '''	[Rut]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
