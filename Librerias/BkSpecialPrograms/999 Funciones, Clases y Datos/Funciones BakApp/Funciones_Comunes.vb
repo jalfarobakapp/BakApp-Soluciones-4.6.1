@@ -3273,6 +3273,75 @@ Error_Numero:
         Return sanitizedFileName.ToString()
     End Function
 
+    ' Pseudocódigo / Plan detallado:
+    ' 1) Crear una función reutilizable `ObtenerTextoCabeceraFila` que reciba:
+    '    - `row As DataGridViewRow` (fila de la grilla, puede ser Nothing)
+    '    - `dgv As DataGridView` (opcional, para fallback si la fila no tiene header)
+    ' 2) Dentro de la función:
+    '    - Si `row` es Nothing retornar String.Empty.
+    '    - Intentar obtener `row.HeaderCell.Value` de forma segura:
+    '        - Comprobar que HeaderCell no es Nothing y que su Value no es Nothing ni DBNull.
+    '        - Si existe, devolver el texto trimmed.
+    '    - Si no existe header en la fila, intentar obtener el header de la columna actual:
+    '        - Preferir `row.DataGridView.CurrentCell.OwningColumn.HeaderText` si `row.DataGridView` es accesible.
+    '        - Si se pasó `dgv` y hay `dgv.CurrentCell`, usar `dgv.CurrentCell.OwningColumn.HeaderText`.
+    '    - Si todo falla, devolver String.Empty.
+    ' 3) Manejar excepciones internamente y devolver String.Empty en caso de error para no bloquear la UI.
+    ' 4) Cambiar el uso directo del bloque repetido por una llamada a `ObtenerTextoCabeceraFila`.
+    '
+    ' Inserte esta función dentro de la clase `Frm_Crear_Entidad_Mt_CiasSeguro`.
+    '
+    Public Function Fx_ObtenerTextoCabeceraFila(_Row As DataGridViewRow,
+                                                 Optional _Grilla As DataGridView = Nothing) As String
+        Try
+            If _Row Is Nothing Then
+                Return String.Empty
+            End If
+
+            ' Intentar obtener el valor del HeaderCell de la fila
+            Try
+                If _Row.HeaderCell IsNot Nothing AndAlso _Row.HeaderCell.Value IsNot Nothing AndAlso
+                   Not IsDBNull(_Row.HeaderCell.Value) Then
+                    Dim texto As String = _Row.HeaderCell.Value.ToString().Trim()
+                    If Not String.IsNullOrWhiteSpace(texto) Then
+                        Return texto
+                    End If
+                End If
+            Catch
+                ' Ignorar y seguir con fallback
+            End Try
+
+            ' Fallback 1: usar la columna de la celda actual de la propia DataGridView de la fila
+            Try
+                If _Row.DataGridView IsNot Nothing AndAlso _Row.DataGridView.CurrentCell IsNot Nothing AndAlso
+                   _Row.DataGridView.CurrentCell.OwningColumn IsNot Nothing Then
+                    Dim textoCol As String = _Row.DataGridView.CurrentCell.OwningColumn.HeaderText
+                    If Not String.IsNullOrWhiteSpace(textoCol) Then
+                        Return textoCol.Trim()
+                    End If
+                End If
+            Catch
+                ' Ignorar y seguir con siguiente fallback
+            End Try
+
+            ' Fallback 2: usar la DataGridView pasada como parámetro (si existe)
+            Try
+                If _Grilla IsNot Nothing AndAlso _Grilla.CurrentCell IsNot Nothing AndAlso _Grilla.CurrentCell.OwningColumn IsNot Nothing Then
+                    Dim textoCol As String = _Grilla.CurrentCell.OwningColumn.HeaderText
+                    If Not String.IsNullOrWhiteSpace(textoCol) Then
+                        Return textoCol.Trim()
+                    End If
+                End If
+            Catch
+                ' Ignorar
+            End Try
+
+            Return String.Empty
+        Catch
+            Return String.Empty
+        End Try
+    End Function
+
 End Module
 
 Public Class Sel_Impresora

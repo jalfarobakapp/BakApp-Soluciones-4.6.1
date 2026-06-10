@@ -2057,21 +2057,24 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         End If
 
-        Dim _Endo_Ult_GRCFCC As String = _RowProveedor.Item("KOEN").ToString.Trim
-        Dim _Suendo_Ult_GRCFCC As String = _RowProveedor.Item("SUEN").ToString.Trim
+        If Not IsNothing(_RowProveedor) Then
 
-        If Chk_CompradoUltVezProveedor.Checked AndAlso Not IsNothing(_RowProveedor) Then
+            Dim _Endo_Ult_GRCFCC As String = _RowProveedor.Item("KOEN").ToString.Trim
+            Dim _Suendo_Ult_GRCFCC As String = _RowProveedor.Item("SUEN").ToString.Trim
 
-            _Condicion += vbCrLf & $"And Endo_Ult_GRCFCC = '{_Endo_Ult_GRCFCC}' And Suendo_Ult_GRCFCC = '{_Suendo_Ult_GRCFCC}'"
+            If Chk_CompradoUltVezProveedor.Checked Then
+
+                _Condicion += vbCrLf & $"And Endo_Ult_GRCFCC = '{_Endo_Ult_GRCFCC}' And Suendo_Ult_GRCFCC = '{_Suendo_Ult_GRCFCC}'"
+
+            End If
+
+            If Chk_NOCompradoUltVezProveedor.Checked Then
+
+                _Condicion += vbCrLf & $"And Endo_Ult_GRCFCC <> '{_Endo_Ult_GRCFCC}'"
+
+            End If
 
         End If
-
-        If Chk_NOCompradoUltVezProveedor.Checked AndAlso Not IsNothing(_RowProveedor) Then
-
-            _Condicion += vbCrLf & $"And Endo_Ult_GRCFCC <> '{_Endo_Ult_GRCFCC}'"
-
-        End If
-
 
         If Chk_SoloProdBodExterna.Checked Then
 

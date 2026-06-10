@@ -17052,9 +17052,22 @@ Public Class Frm_Formulario_Documento
                 Return
             End If
 
+
+            Dim _SolictarCiaSeguro As Boolean
+            PedirPermisoCiaSeguro = False
+
+            Try
+                _SolictarCiaSeguro = _Global_Row_Configuracion_General.Item("SolictarCiaSeguro")
+            Catch ex As Exception
+                _SolictarCiaSeguro = False
+            End Try
+
+
             'VALIDACION FINCRED
-            If Not Fx_Revisar_Fincred() Then
-                Return
+            If Not _SolictarCiaSeguro Then
+                If Not Fx_Revisar_Fincred() Then
+                    Return
+                End If
             End If
 
             If Not Fx_Revisar_MinimoCompra() Then
@@ -17451,14 +17464,7 @@ Public Class Frm_Formulario_Documento
 
                         End If
 
-                        Dim _SolictarCiaSeguro As Boolean
-                        PedirPermisoCiaSeguro = False
 
-                        Try
-                            _SolictarCiaSeguro = _Global_Row_Configuracion_General.Item("SolictarCiaSeguro")
-                        Catch ex As Exception
-                            _SolictarCiaSeguro = False
-                        End Try
 
                         If _Tido = "NVV" Or (_Tido = "COV" And SobreStock) Then
 
@@ -17486,9 +17492,13 @@ Public Class Frm_Formulario_Documento
                                     Dim _Row_CiaSeguro As DataRow
                                     Dim _Cancelar As Boolean = False
 
+                                    Dim _RevFincredEnt As Boolean = _TblEncabezado.Rows(0).Item("RevFincredEnt")
+                                    Dim _RevFincred As Boolean = _TblEncabezado.Rows(0).Item("RevFincred")
+
                                     Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(_Koen, _Suen, _TotalBrutoDoc)
                                     Fm.ModoSeleccion = True
                                     Fm.MontoAUtilizar = _TotalBrutoDoc
+                                    Fm.UsarCreditoFINCRED = _RevFincredEnt
                                     Fm.ShowDialog(Me)
                                     If Fm.DialogResult = DialogResult.OK Then
                                         _Row_CiaSeguro = Fm.Row_CiaSeguro
@@ -17498,13 +17508,14 @@ Public Class Frm_Formulario_Documento
                                     Else
                                         _Cancelar = True
                                     End If
+                                    _RevFincred = Fm.UsarCreditoFINCRED
                                     Fm.Dispose()
 
                                     If _Cancelar Then
                                         Return
                                     End If
 
-                                    If _SolicitaCiaSeguro Then
+                                    If _SolicitaCiaSeguro And Not _RevFincred Then
                                         If IsNothing(_Row_CiaSeguro) Then
                                             MessageBoxEx.Show(Me, "Debe seleccionar una compañía de seguros para realizar la venta.", "Validación",
                                                       MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -17545,9 +17556,16 @@ Public Class Frm_Formulario_Documento
                                             _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = .Dias_1er_Vencimiento
                                             _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = .Dias_Vencimiento
 
+                                            _TblEncabezado.Rows(0).Item("RevFincred") = _RevFincred
+
                                         End With
 
+                                    End If
 
+                                    If _RevFincred Then
+                                        If Not Fx_Revisar_Fincred() Then
+                                            Return
+                                        End If
                                     End If
 
                                 End If
@@ -18910,11 +18928,11 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
         If _Revisar_Stock_Disponible Then
 
             '_Stock_Disponible = Fx_Stock_Disponible_ConEquivalencia(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
-            _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans, False)
+            _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
 
-            If _Stock_Disponible < 0 Then
-                _Stock_Disponible = 0
-            End If
+            'If _Stock_Disponible < 0 Then
+            '    _Stock_Disponible = 0
+            'End If
 
             If _Tidopa = "NVV" And _Tido <> "NVV" Then
 
@@ -32399,6 +32417,18 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
     Private Sub Txt_Lbl_Nombre_Entidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Nombre_Entidad.ButtonCustomClick
         If Not (_RowEntidad Is Nothing) Then
+
+            Dim _SolictarCiaSeguro As Boolean
+            PedirPermisoCiaSeguro = False
+
+            Try
+                _SolictarCiaSeguro = _Global_Row_Configuracion_General.Item("SolictarCiaSeguro")
+            Catch ex As Exception
+                _SolictarCiaSeguro = False
+            End Try
+
+            Btn_CiasSeguro.Visible = _SolictarCiaSeguro
+
             ShowContextMenu(Menu_Contextual_Info_Entidad)
         Else
             MessageBoxEx.Show(Me, "Falta el entidad", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, Me.TopMost)
@@ -32497,6 +32527,18 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
         Return False
 
     End Function
+
+    Private Sub Btn_CiasSeguro_Click(sender As Object, e As EventArgs) Handles Btn_CiasSeguro.Click
+
+        Dim _Koen = _TblEncabezado.Rows(0).Item("CodEntidad")
+        Dim _Suen = _TblEncabezado.Rows(0).Item("CodSucEntidad")
+
+        Dim Fm As New Frm_Crear_Entidad_Mt_CiasSeguro(_Koen, _Suen, 0)
+        Fm.ModoSoloLectura = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 
     Private Sub Grilla_Encabezado_CellBeginEdit(sender As Object, e As DataGridViewCellCancelEventArgs) Handles Grilla_Encabezado.CellBeginEdit
         Barra.Enabled = False

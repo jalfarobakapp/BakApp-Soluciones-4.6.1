@@ -118,7 +118,13 @@ UPDATE P
 SET 
     ST_FISICO = ST_FISICO +
         ISNULL((
-            SELECT SUM(M.STFI#Ud#)
+            --SELECT SUM(M.STFI#Ud#)
+            SELECT SUM(
+                    CASE 
+                        WHEN ISNULL(M.STFI#Ud#,0) < 0 THEN 0 
+                        ELSE ISNULL(M.STFI#Ud#,0) 
+                    END
+                  )
             FROM MAEST M
             INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
                 ON (
@@ -134,7 +140,13 @@ SET
 
     ST_COMPROMETIDO = ST_COMPROMETIDO +
         ISNULL((
-            SELECT SUM(M.STOCNV#Ud#)
+            --SELECT SUM(M.STOCNV#Ud#)
+            SELECT SUM(
+                    CASE 
+                        WHEN ISNULL(M.STOCNV#Ud#,0) < 0 THEN 0 
+                        ELSE ISNULL(M.STOCNV#Ud#,0) 
+                    END
+                  )
             FROM MAEST M
             INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
                 ON (
@@ -150,7 +162,13 @@ SET
 
     ST_COMPROMETIDO_BK = ST_COMPROMETIDO_BK +
         ISNULL((
-            SELECT SUM(S.StComp#Ud#)
+            --SELECT SUM(S.StComp#Ud#)
+            SELECT SUM(
+                    CASE 
+                        WHEN ISNULL(S.StComp#Ud#,0) < 0 THEN 0 
+                        ELSE ISNULL(S.StComp#Ud#,0) 
+                    END
+                  )
             FROM #Global_BaseBk#Zw_Prod_Stock S
             INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
                 ON (

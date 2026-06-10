@@ -536,7 +536,7 @@ Public Class AlertCustom
                                                        Try
                                                            Dim _Sucursal As String = dr.Item("Sucursal").ToString
                                                            Dim _Bodega As String = dr.Item("Bodega").ToString
-                                                           Dim valor As Double = Fx_Stock_Disponible(tidoLocal, Mod_Empresa, _Sucursal, _Bodega, codigoLocal, udLocal, "STFI" & udLocal, False, True)
+                                                           Dim valor As Double = Fx_Stock_Disponible(tidoLocal, Mod_Empresa, _Sucursal, _Bodega, codigoLocal, udLocal, "STFI" & udLocal)
 
                                                            'valor = Fx_Stock_Disponible_ConEquivalencia(tidoLocal, Mod_Empresa, _Sucursal, _Bodega, codigoLocal, udLocal, "STFI" & udLocal)
 

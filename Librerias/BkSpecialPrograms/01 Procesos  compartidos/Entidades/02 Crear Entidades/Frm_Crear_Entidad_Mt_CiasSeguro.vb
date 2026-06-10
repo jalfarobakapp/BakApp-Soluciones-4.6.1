@@ -1,5 +1,4 @@
-﻿Imports System.Runtime.InteropServices
-Imports DevComponents.DotNetBar
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Crear_Entidad_Mt_CiasSeguro
 
@@ -12,8 +11,10 @@ Public Class Frm_Crear_Entidad_Mt_CiasSeguro
 
     Public Property MontoCreditoTotal As Double
     Public Property ModoSeleccion As Boolean
+    Public Property ModoSoloLectura As Boolean
     Public Property MontoAUtilizar As Double
     Public Property Row_CiaSeguro As DataRow
+    Public Property UsarCreditoFINCRED As Boolean
 
     Public Sub New(_CodEntidad As String, _CodSucEntidad As String, _MontoCreditoTotal As Double)
 
@@ -37,12 +38,22 @@ Public Class Frm_Crear_Entidad_Mt_CiasSeguro
 
         Btn_AsociarCiaSeguro.Enabled = Not ModoSeleccion
         Btn_VenderSinUsarCiaSeguro.Visible = ModoSeleccion
+        Btn_VerFCV.Visible = Not ModoSeleccion
+        Btn_InfFincred.Visible = UsarCreditoFINCRED
 
-        If ModoSeleccion Then
-            Sb_Actualizar_Grilla_ModoSeleccion()
-        Else
+        If ModoSoloLectura Then
+            Btn_AsociarCiaSeguro.Visible = False
+            Btn_VenderSinUsarCiaSeguro.Visible = False
+            Btn_VerFCV.Visible = True
+            Btn_InfFincred.Visible = False
             Sb_Actualizar_Grilla()
-            AddHandler Grilla_CisSeguros.MouseDown, AddressOf Sb_Grilla_Cuentas_MouseDown
+        Else
+            If ModoSeleccion Then
+                Sb_Actualizar_Grilla_ModoSeleccion()
+            Else
+                Sb_Actualizar_Grilla()
+                AddHandler Grilla_CisSeguros.MouseDown, AddressOf Sb_Grilla_Cuentas_MouseDown
+            End If
         End If
 
         AddHandler Grilla_CisSeguros.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
@@ -457,7 +468,7 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}'"
         Dim _NombreCia As String = _Row.Item("NOKOEN")
 
         _Reg = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Entidad_CiaSeguro",
-                                        $"CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' " & _
+                                        $"CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' " &
                                         $"And CodEntidad_Cia = '{_CodEntidad_Cia}' And CodSucEntidad_Cia = '{_CodSucEntidad_Cia}'")
 
         If CBool(_Reg) Then
@@ -548,6 +559,11 @@ Values ('{_CodEntidad}','{_CodSucEntidad}','{_CodEntidad_Cia}','{_CodSucEntidad_
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
                 If Hitest.Type = DataGridViewHitTestType.Cell Then
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+
+                    Dim _Cabeza As String = Fx_ObtenerTextoCabeceraFila(Grilla_CisSeguros.CurrentRow, Grilla_CisSeguros)
+
+                    LabelItem1.Visible = (_Cabeza = "FCV" Or _Cabeza = "NVV")
+                    Btn_MostrarDetalle.Visible = (_Cabeza = "FCV" Or _Cabeza = "NVV")
 
                     Sb_MenuContextual(Grilla_CisSeguros.CurrentRow)
 
@@ -674,20 +690,33 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' And Co
 
     Private Sub Grilla_CisSeguros_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_CisSeguros.CellDoubleClick
 
-        If Not ModoSeleccion Then
-            Sb_MenuContextual(Grilla_CisSeguros.CurrentRow)
+        If ModoSoloLectura Then
             Return
         End If
 
         Dim _Fila As DataGridViewRow = Grilla_CisSeguros.CurrentRow
+
+        If Not ModoSeleccion Then
+
+            Dim _Cabeza As String = Fx_ObtenerTextoCabeceraFila(_Fila, Grilla_CisSeguros)
+
+            LabelItem1.Visible = (_Cabeza = "FCV" Or _Cabeza = "NVV")
+            Btn_MostrarDetalle.Visible = (_Cabeza = "FCV" Or _Cabeza = "NVV")
+
+            Sb_MenuContextual(Grilla_CisSeguros.CurrentRow)
+            Return
+
+        End If
+
+
         Dim _SaldoDisponible As Double = 0
         If Not IsDBNull(_Fila.Cells("SaldoDisponible").Value) Then
             Double.TryParse(_Fila.Cells("SaldoDisponible").Value.ToString(), _SaldoDisponible)
         End If
 
         If MontoAUtilizar > _SaldoDisponible Then
-            MessageBoxEx.Show(Me, "El monto a utilizar es mayor al saldo disponible de la compañía de seguros seleccionada." & vbCrLf & _
-                              "Monto a utilizar: " & FormatNumber(MontoAUtilizar, 0) & vbCrLf & _
+            MessageBoxEx.Show(Me, "El monto a utilizar es mayor al saldo disponible de la compañía de seguros seleccionada." & vbCrLf &
+                              "Monto a utilizar: " & FormatNumber(MontoAUtilizar, 0) & vbCrLf &
                               "Saldo disponible: " & FormatNumber(_SaldoDisponible, 0), "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
@@ -716,24 +745,44 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' And Co
             Return
         End If
 
-        If MessageBoxEx.Show(Me, "¿Confirma utilizar esta compañia de seguros?" & vbCrLf & _
-                             "Compañia: " & Row_CiaSeguro.Item("NombreCia").ToString.Trim, "Seleccionar compañia de seguros",
-                                         MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+        Dim _CodEntidad_Cia As String = Row_CiaSeguro.Item("CodEntidad_Cia")
+        Dim _CodSucEntidad_Cia As String = Row_CiaSeguro.Item("CodSucEntidad_Cia")
+        Dim _NombreCia As String = Row_CiaSeguro.Item("NombreCia").ToString.Trim
+
+        'If MessageBoxEx.Show(Me, "¿Confirma utilizar esta compañia de seguros?" & vbCrLf &
+        '                     "Compañia: " & Row_CiaSeguro.Item("NombreCia").ToString.Trim, "Seleccionar compañia de seguros",
+        '                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+        '    Return
+        'End If
+
+        Dim _Msg1 = "CONFIRMAR COMPAÑIA DE SEGUROS"
+        Dim _Msg2 = vbCrLf & _NombreCia & vbCrLf
+
+        If Not Fx_Confirmar_Lectura(_Msg1, _Msg2, eTaskDialogIcon.ShieldHelp) Then
             Return
         End If
 
         Me.DialogResult = DialogResult.OK
+        Me.UsarCreditoFINCRED = False
         Me.Close()
 
     End Sub
 
     Private Sub Btn_VenderSinUsarCiaSeguro_Click(sender As Object, e As EventArgs) Handles Btn_VenderSinUsarCiaSeguro.Click
 
-        If MessageBoxEx.Show(Me, "¿Confirma vender sin usar compañia de seguros?", "Vender sin usar CIA de seguros",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+        Dim _Msg1 = "Vender sin usar CIA de seguros"
+        Dim _Msg2 = vbCrLf & "¿Confirma vender sin usar compañia de seguros?" & vbCrLf
+
+        If Not Fx_Confirmar_Lectura(_Msg1.ToUpper, _Msg2.ToUpper, eTaskDialogIcon.ShieldHelp) Then
             Return
         End If
 
+        'If MessageBoxEx.Show(Me, "¿Confirma vender sin usar compañia de seguros?", "Vender sin usar CIA de seguros",
+        '                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+        '    Return
+        'End If
+
+        Me.UsarCreditoFINCRED = False
         Me.DialogResult = DialogResult.No
         Me.Close()
 
@@ -880,5 +929,301 @@ Where CodEntidad = '{_CodEntidad}' And CodSucEntidad = '{_CodSucEntidad}' And Co
         Catch
             ' Ignorar cualquier error y no bloquear la UI
         End Try
+    End Sub
+
+    Private Sub Btn_MostrarDetalle_Click(sender As Object, e As EventArgs) Handles Btn_MostrarDetalle.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_CisSeguros.CurrentRow
+
+        Dim _CodEntidad_Cia As String = _Fila.Cells("CodEntidad_Cia").Value
+        Dim _CodSucEntidad_Cia As String = _Fila.Cells("CodSucEntidad_Cia").Value
+        Dim _NombreCia As String = _Fila.Cells("NombreCia").Value
+
+        Dim _Cabeza As String = Fx_ObtenerTextoCabeceraFila(_Fila, Grilla_CisSeguros)
+
+        If _Cabeza <> "FCV" And _Cabeza <> "NVV" Then
+            MessageBoxEx.Show(Me, "Solo se muestran documentos de tipo Factura y Nota de venta", "Información",
+                              MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            Return
+        End If
+
+        Dim _Tbl As DataTable = Fx_Trae_Tbl(_Cabeza, _CodEntidad_Cia, _CodSucEntidad_Cia)
+
+        If Not CBool(_Tbl.Rows.Count) Then
+            Beep()
+            ToastNotification.Show(Me, "NO EXISTE INFORMACION",
+                                  My.Resources.cross,
+                                   1 * 1000, eToastGlowColor.Red,
+                                   eToastPosition.MiddleCenter)
+            Return
+        End If
+
+        Dim Fm As New Frm_InfoEnt_Situacion_Documentos
+        Fm.Text = "Compañia de seguros: " & _NombreCia
+        Fm.TipoDocumentos = Frm_InfoEnt_Situacion_Documentos._TipoDoc.Doc_Venta
+        Fm.Tabla = _Tbl
+        Fm.Btn_Exportar_Excel.Visible = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Function Fx_Trae_Tbl(_Cabeza As String, _CodEntidad_Cia As String, _CodSucEntidad_Cia As String) As DataTable
+
+
+        Select Case _Cabeza
+            Case "FCV"
+
+                Consulta_Sql = $"
+SELECT 
+    EDO.IDMAEEDO, EDO.EMPRESA, EDO.TIDO, EDO.NUDO, EDO.ENDO, EDO.SUENDO,
+    EDO.MODO, EDO.TIMODO, EDO.TAMODO, EDO.ESPGDO, EDO.FEULVEDO,
+    ROUND(EDO.VABRDO,2) AS VABRDO, ROUND(EDO.VAABDO,2) AS VAABDO,
+    ROUND(EDO.VABRDO - EDO.VAABDO,2) AS SALDO,
+    ROUND(EDO.VAIVARET,2) AS VAIVARET, ROUND(EDO.VAIVDO,2) AS VAIVDO,
+    ROUND(EDO.VANEDO,2) AS VANEDO, EDO.BLOQUEAPAG, EDO.NUDONODEFI,
+    CASE EDO.NUDONODEFI WHEN 1 THEN 'Documento en Transito' ELSE 'Definitivo' END AS DEFOTRANS,
+    D.CodEntidad_Cia,
+    D.CodSucEntidad_Cia
+FROM MAEEDO AS EDO
+INNER JOIN {_Global_BaseBk}Zw_Docu_Ent AS D
+        ON D.Idmaeedo = EDO.IDMAEEDO
+WHERE EDO.TIDO = 'FCV'
+  AND EDO.ENDO = '{_CodEntidad}'
+  AND EDO.SUENDO = '{_CodSucEntidad}'
+  AND EDO.EMPRESA = {Mod_Empresa}
+  AND EDO.ESPGDO = 'P'
+  AND D.CodEntidad_Cia = '{_CodEntidad_Cia}'
+  AND D.CodSucEntidad_Cia = '{_CodSucEntidad_Cia}';
+"
+            Case "NVV"
+
+                Consulta_Sql = $"
+SELECT 
+    EDO.IDMAEEDO, EDO.EMPRESA, EDO.TIDO, EDO.NUDO, EDO.ENDO, EDO.SUENDO,
+    EDO.MODO, EDO.TIMODO, EDO.TAMODO, EDO.ESPGDO, EDO.FEULVEDO,
+    ROUND(EDO.VABRDO,2) AS VABRDO, ROUND(EDO.VAABDO,2) AS VAABDO,
+    ROUND(EDO.VABRDO - EDO.VAABDO,2) AS SALDO,
+    ROUND(EDO.VAIVARET,2) AS VAIVARET, ROUND(EDO.VAIVDO,2) AS VAIVDO,
+    ROUND(EDO.VANEDO,2) AS VANEDO, EDO.BLOQUEAPAG, EDO.NUDONODEFI,
+    CASE EDO.NUDONODEFI WHEN 1 THEN 'Documento en Transito' ELSE 'Definitivo' END AS DEFOTRANS,
+    D.CodEntidad_Cia,
+    D.CodSucEntidad_Cia
+FROM MAEEDO AS EDO
+INNER JOIN {_Global_BaseBk}Zw_Docu_Ent AS D
+        ON D.Idmaeedo = EDO.IDMAEEDO
+WHERE EDO.TIDO = 'NVV'
+  AND EDO.ENDO = '{_CodEntidad}'
+  AND EDO.SUENDO = '{_CodSucEntidad}'
+  AND EDO.EMPRESA = {Mod_Empresa}
+  AND EDO.ESDO = ''
+  AND D.CodEntidad_Cia = '{_CodEntidad_Cia}'
+  AND D.CodSucEntidad_Cia = '{_CodSucEntidad_Cia}';
+"
+
+            Case Else
+
+                'NVVSOL — Detalle (sin MAEEDO, no aplica campos extra)
+                Consulta_Sql = $"
+SELECT 
+    C.Id_DocEnc,
+    C.TipoDoc,
+    C.TotalBrutoDoc AS Monto,
+    C.CodEntidad_Cia,
+    C.CodSucEntidad_Cia
+FROM {_Global_BaseBk}Zw_Casi_DocEnc AS C
+INNER JOIN {_Global_BaseBk}Zw_Remotas AS R
+        ON C.Id_DocEnc = R.Id_Casi_DocEnc
+INNER JOIN {_Global_BaseBk}Zw_Remotas_En_Cadena_01_Enc AS E
+        ON R.RCadena_Id_Enc = E.Id_Enc
+WHERE C.Empresa = @Empresa
+  AND C.CodEntidad = @ENDO
+  AND C.CodSucEntidad = @SUENDO
+  AND C.Stand_by = 0
+  AND C.TipoDoc = 'NVV'
+  AND C.UsaCiaSeguro = 1
+  AND E.Estado = ''
+  AND C.CodEntidad_Cia = @CodEntidad_Cia
+  AND C.CodSucEntidad_Cia = @CodSucEntidad_Cia;
+"
+
+                'CHV — Detalle (no proviene de MAEEDO, no aplica campos extra)
+                Consulta_Sql = $"
+SELECT 
+    Pce.IDMAEDPCE,
+    Pce.FEEMDP,
+    Pcd.VAASDP AS Monto,
+    De.CodEntidad_Cia,
+    De.CodSucEntidad_Cia
+FROM MAEDPCE AS Pce
+INNER JOIN MAEDPCD AS Pcd 
+        ON Pcd.IDMAEDPCE = Pce.IDMAEDPCE
+INNER JOIN {_Global_BaseBk}Zw_Docu_Ent AS De 
+        ON De.Idmaeedo = Pcd.IDRST
+INNER JOIN MAEEDO AS EDO 
+        ON EDO.IDMAEEDO = De.Idmaeedo
+WHERE Pce.ENDP = @ENDO
+  AND Pce.TIDP = 'CHV'
+  AND Pce.EMPRESA = @Empresa
+  AND (Pce.ESPGDP = 'P' OR Pce.ESPGDP = 'R')
+  AND De.Tido = 'FCV'
+  AND De.UsaCiaSeguro = 1
+  AND EDO.ENDO = @ENDO
+  AND EDO.SUENDO = @SUENDO
+  AND De.CodEntidad_Cia = @CodEntidad_Cia
+  AND De.CodSucEntidad_Cia = @CodSucEntidad_Cia;
+"
+
+                'COVSS — Detalle (MAEEDO + campos completos)
+                Consulta_Sql = $"
+SELECT 
+    EDO.IDMAEEDO, EDO.EMPRESA, EDO.TIDO, EDO.NUDO, EDO.ENDO, EDO.SUENDO,
+    EDO.MODO, EDO.TIMODO, EDO.TAMODO, EDO.ESPGDO, EDO.FEULVEDO,
+    ROUND(EDO.VABRDO,2) AS VABRDO, ROUND(EDO.VAABDO,2) AS VAABDO,
+    ROUND(EDO.VABRDO - EDO.VAABDO,2) AS SALDO,
+    ROUND(EDO.VAIVARET,2) AS VAIVARET, ROUND(EDO.VAIVDO,2) AS VAIVDO,
+    ROUND(EDO.VANEDO,2) AS VANEDO, EDO.BLOQUEAPAG, EDO.NUDONODEFI,
+    CASE EDO.NUDONODEFI WHEN 1 THEN 'Documento en Transito' ELSE 'Definitivo' END AS DEFOTRANS,
+    BEn.CodEntidad_Cia,
+    BEn.CodSucEntidad_Cia,
+    Monto_Pesos = ROUND(EDO.VABRDO * M.VAMO,0)
+FROM MAEEDO EDO
+INNER JOIN {_Global_BaseBk}Zw_Docu_Ent BEn 
+        ON BEn.Idmaeedo = EDO.IDMAEEDO
+OUTER APPLY (
+    SELECT TOP 1 VAMO
+    FROM MAEMO
+    WHERE KOMO = EDO.MODO
+    ORDER BY IDMAEMO DESC
+) M
+WHERE BEn.Tido = 'COV'
+  AND BEn.SobreStock = 1
+  AND EDO.ESDO = ''
+  AND BEn.UsaCiaSeguro = 1
+  AND EDO.ENDO = @ENDO
+  AND EDO.SUENDO = @SUENDO
+  AND EDO.EMPRESA = @Empresa
+  AND BEn.CodEntidad_Cia = @CodEntidad_Cia
+  AND BEn.CodSucEntidad_Cia = @CodSucEntidad_Cia;
+
+"
+
+                'COVSSPP — Detalle (con filtro de compañía)
+                Consulta_Sql = $"
+SELECT 
+    C.Id_DocEnc,
+    C.TipoDoc,
+    C.TotalBrutoDoc,
+    C.CodEntidad_Cia,
+    C.CodSucEntidad_Cia,
+    Monto_Pesos = ROUND(C.TotalBrutoDoc * M.VAMO,0)
+FROM {_Global_BaseBk}Zw_Casi_DocEnc AS C
+OUTER APPLY (
+    SELECT TOP 1 VAMO
+    FROM MAEMO
+    WHERE KOMO = C.Moneda_Doc
+    ORDER BY IDMAEMO DESC
+) M
+WHERE C.TipoDoc = 'COV'
+  AND C.UsaCiaSeguro = 1
+  AND C.Stand_by = 0
+  AND C.CodEntidad = @ENDO
+  AND C.CodSucEntidad = @SUENDO
+  AND C.Empresa = @Empresa
+  AND C.CodEntidad_Cia = @CodEntidad_Cia
+  AND C.CodSucEntidad_Cia = @CodSucEntidad_Cia;
+"
+
+
+                Return Nothing
+        End Select
+
+        Dim _Tbl As DataTable
+
+        _Tbl = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+        Return _Tbl
+
+    End Function
+
+    Private Sub Btn_VerFCV_Click(sender As Object, e As EventArgs) Handles Btn_VerFCV.Click
+
+        'If Not CBool(Grilla_CisSeguros.RowCount) Then
+        '    MessageBoxEx.Show(Me, "No hay datos que mostrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        '    Return
+        'End If
+
+        Dim _Fila As DataGridViewRow = Grilla_CisSeguros.CurrentRow
+
+        'Dim _CodEntidad_Cia As String = _Fila.Cells("CodEntidad_Cia").Value
+        'Dim _CodSucEntidad_Cia As String = _Fila.Cells("CodSucEntidad_Cia").Value
+        'Dim _NombreCia As String = _Fila.Cells("NombreCia").Value
+
+        Dim _Cabeza As String = Fx_ObtenerTextoCabeceraFila(_Fila, Grilla_CisSeguros)
+
+        Consulta_Sql = $"
+DECLARE @ENDO     VARCHAR(20) = '{_CodEntidad}'
+DECLARE @SUENDO   VARCHAR(20) = '{_CodSucEntidad}'
+DECLARE @Empresa  CHAR(2)     = '{Mod_Empresa}'
+
+SELECT 
+    EDO.TIDO,
+    EDO.NUDO,
+    EDO.ENDO,
+    EDO.SUENDO,
+    EDO.FEULVEDO,
+    ROUND(EDO.VABRDO,2) AS VABRDO,
+    ROUND(EDO.VABRDO - EDO.VAABDO,2) AS SALDO,
+
+    D.CodEntidad_Cia,
+    D.CodSucEntidad_Cia,
+
+    CASE 
+        WHEN ISNULL(D.CodEntidad_Cia,'') = '' THEN 'Sin Asignar'
+        ELSE 'Asignado'
+    END AS Estado_Cia_Seguro,
+
+    -- Nombre de la compañía desde MAEEN
+    ISNULL(ME.NOKOEN, 'SIN NOMBRE') AS Nombre_Cia_Seguro
+
+FROM MAEEDO AS EDO
+INNER JOIN {_Global_BaseBk}Zw_Docu_Ent AS D
+        ON D.Idmaeedo = EDO.IDMAEEDO
+
+LEFT JOIN MAEEN AS ME
+       ON ME.KOEN = D.CodEntidad_Cia
+      AND ME.SUEN = D.CodSucEntidad_Cia
+
+WHERE EDO.TIDO = 'FCV'
+  AND EDO.ENDO = @ENDO
+  AND EDO.SUENDO = @SUENDO
+  AND EDO.EMPRESA = @Empresa
+  AND EDO.ESPGDO = 'P';
+"
+
+        Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+        ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Detalle_FCV_")
+
+    End Sub
+
+    Private Sub Btn_InfFincred_Click(sender As Object, e As EventArgs) Handles Btn_InfFincred.Click
+
+        Dim _Msg1 = "Vender con crédito FINCRED"
+        Dim _Msg2 = vbCrLf & "¿Confirma usar el crédito FINCRED?" & vbCrLf
+
+        If Not Fx_Confirmar_Lectura(_Msg1.ToUpper, _Msg2.ToUpper, eTaskDialogIcon.ShieldHelp) Then
+            Return
+        End If
+
+        'If MessageBoxEx.Show(Me, "¿Confirma usar el crédito FINCRED?", "Vender con crédito FINCRED",
+        '                     MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+        '    Return
+        'End If
+
+        Me.UsarCreditoFINCRED = True
+        Me.DialogResult = DialogResult.OK
+        Me.Close()
+
     End Sub
 End Class

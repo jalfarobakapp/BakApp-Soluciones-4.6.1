@@ -1,7 +1,7 @@
-﻿Imports DevComponents.DotNetBar
-Imports BkSpecialPrograms
-Imports System.IO
+﻿Imports System.IO
 Imports Bk_Produccion
+Imports BkSpecialPrograms
+Imports DevComponents.DotNetBar
 
 Public Module Mod_Variables
 
@@ -636,53 +636,70 @@ Public Module Mod_Variables
                        "Where NombreEquipo = '" & _NombreEquipo & "'"
         _Row_CashDro = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        If Not (_Row_CashDro Is Nothing) Then
+        If IsNothing(_Row_CashDro) Then
 
-            If Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo) Then
-
-                FUNCIONARIO = _Row_CashDro.Item("Funcionario")
-                Mod_Modalidad = _Row_CashDro.Item("Modalidad")
-
-                Consulta_sql = "Select * From TABFU Where KOFU = '" & FUNCIONARIO & "'"
-                Dim _RowUsuario As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-                FUNCIONARIO = _RowUsuario.Item("KOFU")
-                Nombre_funcionario_activo = Trim(_RowUsuario.Item("NOKOFU"))
-
-                Dim _Mod As New Clas_Modalidades
-                _Mod.Sb_Actualiza_Formatos_X_Modalidad()
-                _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
-                _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
-                _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
-
-                Dim _RowFormato_BLV As DataRow = Fx_Formato_Modalidad(Frm_Menu, Mod_Empresa, Mod_Modalidad, "BLV", True)
-                Dim _RowFormato_FCV As DataRow = Fx_Formato_Modalidad(Frm_Menu, Mod_Empresa, Mod_Modalidad, "FCV", True)
-
-                If (_RowFormato_BLV Is Nothing) Or
-                   (_RowFormato_BLV Is Nothing) Then
-
-                    MessageBoxEx.Show(Frm_Menu, "Debe configurar el formato de salida en la configuración por modalidad de trabajo",
-                                      "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
-
-
-                Else
-
-                    Frm_Menu.Text = "Sistema BakApp. Empresa :" & RazonEmpresa &
-                                    ", Funcionario Activo: " & Trim(Nombre_funcionario_activo) &
-                                    ", Modalidad: " & Mod_Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & ","
-
-                    Dim Fm_Cd As New Frm_Cashdro_Presentacion
-                    Fm_Cd.ShowDialog(_Formulario)
-                    Fm_Cd.Dispose()
-
-                End If
-
-            End If
-        Else
             MessageBoxEx.Show(_Formulario, "Esta estación no esta registrada como equipo para CASHDRO",
-                                "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
         End If
+
+        Dim _Firma_Bakapp As Boolean
+        Dim _Firma_RunMonitor As Boolean
+
+        Try
+            If _Global_Row_Configuracion_General.Item("FacElec_Bakapp_Hefesto") Then
+                _Firma_Bakapp = True
+            Else
+                _Firma_RunMonitor = True
+            End If
+        Catch ex As Exception
+            _Firma_RunMonitor = True
+        End Try
+
+        If _Firma_RunMonitor Then
+            If Not Fx_Datos_Directorio_GenDTE(_Directorio_GenDTE, _NombreEquipo) Then
+                Return
+            End If
+        End If
+
+        FUNCIONARIO = _Row_CashDro.Item("Funcionario")
+        Mod_Modalidad = _Row_CashDro.Item("Modalidad")
+
+        Consulta_sql = "Select * From TABFU Where KOFU = '" & FUNCIONARIO & "'"
+        Dim _RowUsuario As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        FUNCIONARIO = _RowUsuario.Item("KOFU")
+        Nombre_funcionario_activo = Trim(_RowUsuario.Item("NOKOFU"))
+
+        Dim _Mod As New Clas_Modalidades
+        _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+        _Global_Row_Configuracion_General = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.General, "")
+        _Global_Row_Configuracion_Estacion = _Mod.Fx_Sql_Trae_Modalidad(Clas_Modalidades.Enum_Modalidad.Estacion, Mod_Modalidad)
+        _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
+
+        Dim _RowFormato_BLV As DataRow = Fx_Formato_Modalidad(Frm_Menu, Mod_Empresa, Mod_Modalidad, "BLV", True)
+        Dim _RowFormato_FCV As DataRow = Fx_Formato_Modalidad(Frm_Menu, Mod_Empresa, Mod_Modalidad, "FCV", True)
+
+        If (_RowFormato_BLV Is Nothing) Or
+           (_RowFormato_BLV Is Nothing) Then
+
+            MessageBoxEx.Show(Frm_Menu, "Debe configurar el formato de salida en la configuración por modalidad de trabajo",
+                              "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+
+        Else
+
+            Frm_Menu.Text = "Sistema BakApp. Empresa :" & RazonEmpresa &
+                            ", Funcionario Activo: " & Trim(Nombre_funcionario_activo) &
+                            ", Modalidad: " & Mod_Modalidad & ", BakApp Versión: " & _Global_Version_BakApp & ","
+
+            Dim Fm_Cd As New Frm_Cashdro_Presentacion
+            Fm_Cd.ShowDialog(_Formulario)
+            Fm_Cd.Dispose()
+
+        End If
+
+
 
     End Sub
 

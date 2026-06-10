@@ -1314,7 +1314,6 @@ Public Module Funciones_Especiales_BakApp
                                  _Codigo As String,
                                  _Ud As Integer,
                                  _Campo As String,
-                                 Optional _CalCular_Stock_En_Cero As Boolean = True,
                                  Optional _RevQuivalencia As Boolean = True) As Double
 
 
@@ -1349,61 +1348,60 @@ Public Module Funciones_Especiales_BakApp
         _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "P", "[P]")
         _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "Q", "[Q]")
 
-        If _CalCular_Stock_En_Cero Then
 
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[A]", "Case When STFI" & _Ud & " < 0 Then 0 Else STFI" & _Ud & " End")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[B]", "Case When STDV" & _Ud & " < 0 Then 0 Else STDV" & _Ud & " End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[A]", "Case When Isnull(STFI" & _Ud & ",0) < 0 Then 0 Else Isnull(STFI" & _Ud & ",0) End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[B]", "Case When Isnull(STDV" & _Ud & ",0) < 0 Then 0 Else Isnull(STDV" & _Ud & ",0) End")
 
-            'Comprometido
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[C]",
-                                           "(Case When STOCNV" & _Ud & " < 0 Then 0 Else STOCNV" & _Ud & " End+Isnull(Case When StComp" & _Ud & " < 0 Then 0 Else StComp" & _Ud & " End,0))")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[D]", "Case When STDV" & _Ud & "C < 0 Then 0 Else STDV" & _Ud & "C End")
+        'Comprometido
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[C]",
+                                       "(Case When Isnull(STOCNV" & _Ud & ",0) < 0 Then 0 Else Isnull(STOCNV" & _Ud & ",0) End+Isnull(Case When Isnull(StComp" & _Ud & ",0) < 0 Then 0 Else Isnull(StComp" & _Ud & ",0) End,0))")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[D]", "Case When Isnull(STDV" & _Ud & "C,0) < 0 Then 0 Else Isnull(STDV" & _Ud & "C,0) End")
 
-            'Pedido
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[E]",
-                                           "(Case When STOCNV" & _Ud & "C < 0 Then 0 Else STOCNV" & _Ud & "C End+Isnull(Case When StPedi" & _Ud & " < 0 Then 0 Else StPedi" & _Ud & " End,0))")
+        'Pedido
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[E]",
+                                       "(Case When Isnull(STOCNV" & _Ud & "C,0) < 0 Then 0 Else Isnull(STOCNV" & _Ud & "C,0) End+Isnull(Case When Isnull(StPedi" & _Ud & ",0) < 0 Then 0 Else Isnull(StPedi" & _Ud & ",0) End,0))")
 
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[F]", "Case When DESPNOFAC" & _Ud & " < 0 Then 0 Else DESPNOFAC" & _Ud & " End")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[G]", "Case When RECENOFAC" & _Ud & " < 0 Then 0 Else RECENOFAC" & _Ud & " End")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[H]", "Case When PRESALCLI" & _Ud & " < 0 Then 0 Else PRESALCLI" & _Ud & " End")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[I]", "Case When PRESDEPRO" & _Ud & " < 0 Then 0 Else PRESDEPRO" & _Ud & " End")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[J]", "Case When CONSALCLI" & _Ud & " < 0 Then 0 Else CONSALCLI" & _Ud & " End")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[K]", "Case When CONSDEPRO" & _Ud & " < 0 Then 0 Else CONSDEPRO" & _Ud & " End")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[L]", "Case When DEVENGNCV" & _Ud & " < 0 Then 0 Else DEVENGNCV" & _Ud & " End")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[M]", "Case When DEVENFNCC" & _Ud & " < 0 Then 0 Else DEVENFNCC" & _Ud & " End")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[N]", "Case When DEVSINNCV" & _Ud & " < 0 Then 0 Else DEVSINNCV" & _Ud & " End")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[O]", "Case When DEVSINNCC" & _Ud & " < 0 Then 0 Else DEVSINNCC" & _Ud & " End")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[P]", "Case When STENFAB" & _Ud & " < 0 Then 0 Else STENFAB" & _Ud & " End")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[Q]", "Case When STREQFAB" & _Ud & " < 0 Then 0 Else STREQFAB" & _Ud & " End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[F]", "Case When Isnull(DESPNOFAC" & _Ud & ",0) < 0 Then 0 Else Isnull(DESPNOFAC" & _Ud & ",0) End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[G]", "Case When Isnull(RECENOFAC" & _Ud & ",0) < 0 Then 0 Else Isnull(RECENOFAC" & _Ud & ",0) End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[H]", "Case When Isnull(PRESALCLI" & _Ud & ",0) < 0 Then 0 Else Isnull(PRESALCLI" & _Ud & ",0) End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[I]", "Case When Isnull(PRESDEPRO" & _Ud & ",0) < 0 Then 0 Else Isnull(PRESDEPRO" & _Ud & ",0) End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[J]", "Case When Isnull(CONSALCLI" & _Ud & ",0) < 0 Then 0 Else Isnull(CONSALCLI" & _Ud & ",0) End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[K]", "Case When Isnull(CONSDEPRO" & _Ud & ",0) < 0 Then 0 Else Isnull(CONSDEPRO" & _Ud & ",0) End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[L]", "Case When Isnull(DEVENGNCV" & _Ud & ",0) < 0 Then 0 Else Isnull(DEVENGNCV" & _Ud & ",0) End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[M]", "Case When Isnull(DEVENFNCC" & _Ud & ",0) < 0 Then 0 Else Isnull(DEVENFNCC" & _Ud & ",0) End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[N]", "Case When Isnull(DEVSINNCV" & _Ud & ",0) < 0 Then 0 Else Isnull(DEVSINNCV" & _Ud & ",0) End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[O]", "Case When Isnull(DEVSINNCC" & _Ud & ",0) < 0 Then 0 Else Isnull(DEVSINNCC" & _Ud & ",0) End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[P]", "Case When Isnull(STENFAB" & _Ud & ",0) < 0 Then 0 Else Isnull(STENFAB" & _Ud & ",0) End")
+        _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[Q]", "Case When Isnull(STREQFAB" & _Ud & ",0) < 0 Then 0 Else Isnull(STREQFAB" & _Ud & ",0) End")
 
-        Else
+        'Else
 
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[A]", $"ISNULL(STFI{_Ud},0)")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[B]", $"ISNULL(STDV{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[A]", $"ISNULL(STFI{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[B]", $"ISNULL(STDV{_Ud},0)")
 
-            'Comprometido
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[C]",
-                                           $"(ISNULL(STOCNV{_Ud},0)+ISNULL(StComp{_Ud},0))")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[D]", $"ISNULL(STDV{_Ud}C,0)")
+        '    'Comprometido
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[C]",
+        '                                   $"(ISNULL(STOCNV{_Ud},0)+ISNULL(StComp{_Ud},0))")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[D]", $"ISNULL(STDV{_Ud}C,0)")
 
-            'Pedido
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[E]",
-                                           $"(ISNULL(STOCNV{_Ud}C,0)+ISNULL(StPedi{_Ud},0))")
+        '    'Pedido
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[E]",
+        '                                   $"(ISNULL(STOCNV{_Ud}C,0)+ISNULL(StPedi{_Ud},0))")
 
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[F]", $"ISNULL(DESPNOFAC{_Ud},0)")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[G]", $"ISNULL(RECENOFAC{_Ud},0)")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[H]", $"ISNULL(PRESALCLI{_Ud},0)")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[I]", $"ISNULL(PRESDEPRO{_Ud},0)")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[J]", $"ISNULL(CONSALCLI{_Ud},0)")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[K]", $"ISNULL(CONSDEPRO{_Ud},0)")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[L]", $"ISNULL(DEVENGNCV{_Ud},0)")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[M]", $"ISNULL(DEVENFNCC{_Ud},0)")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[N]", $"ISNULL(DEVSINNCV{_Ud},0)")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[O]", $"ISNULL(DEVSINNCC{_Ud},0)")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[P]", $"ISNULL(STENFAB{_Ud},0)")
-            _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[Q]", $"ISNULL(STREQFAB{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[F]", $"ISNULL(DESPNOFAC{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[G]", $"ISNULL(RECENOFAC{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[H]", $"ISNULL(PRESALCLI{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[I]", $"ISNULL(PRESDEPRO{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[J]", $"ISNULL(CONSALCLI{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[K]", $"ISNULL(CONSDEPRO{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[L]", $"ISNULL(DEVENGNCV{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[M]", $"ISNULL(DEVENFNCC{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[N]", $"ISNULL(DEVSINNCV{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[O]", $"ISNULL(DEVSINNCC{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[P]", $"ISNULL(STENFAB{_Ud},0)")
+        '    _Campo_Formula_Stock = Replace(_Campo_Formula_Stock, "[Q]", $"ISNULL(STREQFAB{_Ud},0)")
 
-        End If
+        'End If
 
         If String.IsNullOrEmpty(_Campo_Formula_Stock) Then
             _Campo_Formula_Stock = _Campo
@@ -1439,7 +1437,8 @@ EMPRESA = '{_Empresa}' And KOSU = '{_Sucursal}' And KOBO = '{_Bodega}' And KOPR 
 Select Empresa_{_BA}, Sucursal_{_BA}, Bodega_{_BA} From {_Global_BaseBk}Zw_InterStock_Equivalencia 
 Where Empresa_{_AB} = '{_Empresa}' 
 And Sucursal_{_AB} = '{_Sucursal}'
-And Bodega_{_AB} = '{_Bodega}'"
+And Bodega_{_AB} = '{_Bodega}' 
+And Activo = 1"
 
         _Tbl_Equivalencias = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -1451,7 +1450,7 @@ And Bodega_{_AB} = '{_Bodega}'"
             Dim _Sucursal_Equi As String = _Fila.Item("Sucursal_" & _BA)
             Dim _Bodega_Equi As String = _Fila.Item("Bodega_" & _BA)
 
-            _StockDisponibleEquivalente += Fx_Stock_Disponible(_Tido, _Empresa_Equi, _Sucursal_Equi, _Bodega_Equi, _Codigo, _Ud, _Campo, False, False)
+            _StockDisponibleEquivalente += Fx_Stock_Disponible(_Tido, _Empresa_Equi, _Sucursal_Equi, _Bodega_Equi, _Codigo, _Ud, _Campo, False)
 
         Next
 
