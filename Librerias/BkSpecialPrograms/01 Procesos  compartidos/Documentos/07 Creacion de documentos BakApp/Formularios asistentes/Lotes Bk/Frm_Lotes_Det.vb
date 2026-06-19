@@ -83,6 +83,9 @@ Public Class Frm_Lotes_Det
         ' Actualizar sumatorias iniciales
         ActualizarSumatorias()
 
+        Btn_Aceptar.Visible = Not ModoSoloLectura
+        Btn_Salir.Visible = ModoSoloLectura
+
     End Sub
 
     ' Establece foco inicial en la grilla y en la columna "NroLote" cuando el formulario recibe foco por primera vez
@@ -322,8 +325,8 @@ Public Class Frm_Lotes_Det
             Case Keys.Enter
 
                 If ModoSoloLectura Then
-                    MessageBoxEx.Show(Me, "El formulario se encuentra en modo de solo lectura", "Validación",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    'MessageBoxEx.Show(Me, "El formulario se encuentra en modo de solo lectura", "Validación",
+                    '                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
                     Return
                 End If
 
@@ -492,8 +495,8 @@ Public Class Frm_Lotes_Det
                 If Grilla.CurrentRow.Index = Grilla.Rows.Count - 1 Then
 
                     If ModoSoloLectura Then
-                        MessageBoxEx.Show(Me, "El formulario se encuentra en modo de solo lectura", "Validación",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        'MessageBoxEx.Show(Me, "El formulario se encuentra en modo de solo lectura", "Validación",
+                        '              MessageBoxButtons.OK, MessageBoxIcon.Stop)
                         Return
                     End If
 
@@ -583,6 +586,11 @@ Public Class Frm_Lotes_Det
     End Sub
 
     Private Sub Btn_Aceptar_Click(sender As Object, e As EventArgs) Handles Btn_Aceptar.Click
+
+        If ModoSoloLectura Then
+            Me.Close()
+            Return
+        End If
 
         If Sum_CantUd1 > 0 Then
             ' Validar filas obligatorias antes de procesar (fechas, número de lote y cantidades)
@@ -1561,6 +1569,16 @@ Public Class Frm_Lotes_Det
         Catch ex As Exception
             ' Ignorar errores del helper
         End Try
+    End Sub
+
+    Private Sub Frm_Lotes_Det_KeyDown(sender As Object, e As KeyEventArgs) Handles MyBase.KeyDown
+        If e.KeyValue = Keys.Escape Then
+            Me.Close()
+        End If
+    End Sub
+
+    Private Sub Btn_Salir_Click(sender As Object, e As EventArgs) Handles Btn_Salir.Click
+        Me.Close()
     End Sub
 
     'Private Sub Dgv_Lotes_DataError(sender As Object, e As DataGridViewDataErrorEventArgs)

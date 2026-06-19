@@ -560,7 +560,7 @@ WHERE e.TIDO = 'NVV'
                 SELECT MAX(CAST(Nro_Despacho AS INT)) AS UltimoNro 
                 FROM {Frm_Sincronizador._Global_BaseBk}Zw_Despachos 
                 WHERE Nro_Despacho NOT LIKE 'P%' 
-                  AND ISNUMERIC(Nro_Despacho) = 1"
+                  AND ISNUMERIC(Nro_Despacho) = 1 and Confirmado = 1"
 
             Dim Tbl_UltimoNro As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_Ultimo_Despacho, False)
             If Not String.IsNullOrEmpty(_SqlRandom.Pro_Error) Then
@@ -637,7 +637,7 @@ WHERE e.TIDO = 'NVV'
                            ,'{NVV.EMPRESA}'              -- Empresa
                            ,'{NVV.SUDO}'                -- Sucursal 
                            ,'{NVV.Bodega}'              -- Bodega 
-                           ,0                            -- Confirmado
+                           ,1                            -- Confirmado
                            ,'{NVV.CodFuncionario}'                               -- CodFuncionario
                            ,GETDATE()                    -- Fecha_Emision
                            ,GETDATE() + 1 -- Fecha_Compromiso

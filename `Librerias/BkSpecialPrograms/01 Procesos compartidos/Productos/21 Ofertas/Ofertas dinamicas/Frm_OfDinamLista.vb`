@@ -1,0 +1,88 @@
+' PSEUDOCÓDIGO:
+' 1. Agregar una bandera privada para identificar cuando la fila se está actualizando
+'    desde la ficha abierta con doble clic.
+' 2. En la edición por doble clic:
+'    - activar la bandera antes de asignar valores a las celdas.
+'    - actualizar las celdas de la fila.
+'    - desactivar la bandera en un Finally para asegurar restauración.
+' 3. En `Grilla_Recetas_CellValueChanged`:
+'    - salir inmediatamente si la bandera está activa.
+'    - así se evita preguntar por cambio masivo cuando el cambio fue programático
+'      y no una edición manual en la grilla.
+
+' INSERTAR EN LAS DECLARACIONES DEL FORMULARIO, JUNTO A LAS OTRAS BANDERAS:
+Dim _Actualizando_Oferta_Desde_Ficha As Boolean
+
+' REEMPLAZAR ESTE BLOQUE DENTRO DE `Grilla_Recetas_CellDoubleClick`:
+If _Resultado = DialogResult.OK Then
+
+    _Actualizando_Oferta_Desde_Ficha = True
+
+    Try
+
+        Consulta_sql = Fx_Consulta_Ofertas_Dinamicas(" And Mr.CODIGO = '" & _Codigo & "'")
+
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        _Fila.Cells("DESCRIPTOR").Value = _Row.Item("DESCRIPTOR")
+        _Fila.Cells("TipoOferta").Value = _Row.Item("TipoOferta")
+        _Fila.Cells("FIOFERTA").Value = _Row.Item("FIOFERTA")
+        _Fila.Cells("FTOFERTA").Value = _Row.Item("FTOFERTA")
+        _Fila.Cells("Dias").Value = _Row.Item("Dias")
+        _Fila.Cells("Activa").Value = _Row.Item("Activa")
+        _Fila.Cells("ProdAsociados").Value = _Row.Item("ProdAsociados")
+
+    Finally
+        _Actualizando_Oferta_Desde_Ficha = False
+    End Try
+
+    Sb_Cargar_Filtro_TipoOferta()
+    Sb_Aplicar_Filtro_Ofertas()
+
+End If
+
+' REEMPLAZAR COMPLETO EL EVENTO `Grilla_Recetas_CellValueChanged`:
+Private Sub Grilla_Recetas_CellValueChanged(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Recetas.CellValueChanged
+
+    If _Actualizando_Oferta_Desde_Ficha Then
+        Return
+    End If
+
+    If e.RowIndex < 0 OrElse e.ColumnIndex < 0 Then
+        Return
+    End If
+
+    Dim _NombreColumna As String = Grilla_Recetas.Columns(e.ColumnIndex).Name
+
+    If _NombreColumna = "FTOFERTA" Then
+
+        Dim _Fila As DataGridViewRow = Grilla_Recetas.Rows(e.RowIndex)
+
+        Sb_Actualizar_Estado_Fila_Oferta(_Fila)
+
+        If _Aplicando_Cambio_Masivo_Ftoferta Then
+            Return
+        End If
+
+        Dim _CantidadFilasMarcadas As Integer = Fx_Cantidad_Filas_Marcadas(_Fila)
+
+        If Not CBool(_CantidadFilasMarcadas) Then
+            Return
+        End If
+
+        Dim _FechaTope As Date = CDate(_Fila.Cells("FTOFERTA").Value).Date
+
+        If MessageBoxEx.Show(Me,
+                             "Hay " & _CantidadFilasMarcadas & " oferta(s) marcada(s)." & vbCrLf & vbCrLf &
+                             "¿Desea cambiar también la fecha de tope en todas las filas marcadas?",
+                             "Cambio masivo de fecha de tope",
+                             MessageBoxButtons.YesNo,
+                             MessageBoxIcon.Question) = DialogResult.Yes Then
+
+            Sb_Aplicar_Fecha_Tope_A_Filas_Marcadas(_FechaTope)
+
+        End If
+
+    End If
+
+End Sub

@@ -7674,7 +7674,11 @@ Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
             Case "GDD"
                 _Permiso = "Doc00132" ' GUIA DESPACHO POR DEVOLUCION"
             Case "GDI"
-                _Permiso = "Doc00133" ' GUIA SALIDA DE BODEGA"
+                If _Subtido = "AJU" Then
+                    _Permiso = "Doc00174" ' GUIA DE RECEPCION INTERNA (AJUSTE)"
+                Else
+                    _Permiso = "Doc00133" ' GUIA SALIDA DE BODEGA"
+                End If
             Case "GDP"
                 _Permiso = "Doc00134" ' GUIA DESPACHO PRESTAMO"
             Case "GDV"
@@ -7684,7 +7688,11 @@ Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
             Case "GRD"
                 _Permiso = "Doc00137" ' GUIA RECEPCION DE DEVOLUCION"
             Case "GRI"
-                _Permiso = "Doc00138" ' GUIA DE RECEPCION INTERNA"
+                If _Subtido = "AJU" Then
+                    _Permiso = "Doc00173" ' GUIA DE RECEPCION INTERNA (AJUSTE)"
+                Else
+                    _Permiso = "Doc00138" ' GUIA DE RECEPCION INTERNA" 
+                End If
             Case "GRP"
                 _Permiso = "Doc00139" ' GUIA DE RECEPCION PRESTAMOS"
             Case "GTI"

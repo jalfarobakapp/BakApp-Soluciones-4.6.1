@@ -2662,6 +2662,7 @@ Public Class Frm_Formulario_Documento
             .Item("Idmaeddo_Dori") = 0
             .Item("Tidopa") = String.Empty
             .Item("Nudopa") = String.Empty
+            .Item("Feemlipa") = DBNull.Value
 
             .Item("Prct") = 0
             .Item("Tict") = String.Empty
@@ -4617,6 +4618,66 @@ Public Class Frm_Formulario_Documento
 
     End Sub
 
+    Sub Sb_RecalculaFechasVencimiento(_FechaEmision As Date)
+
+        Dim _Cuotas As Integer = 1
+        Dim _Dias_1er_Vencimiento As Integer = 0
+        Dim _Dias_Vencimiento As Integer = 0
+        Dim _Fecha_1er_Vencimiento As Date
+        Dim _FechaUltVencimiento As Date
+
+        _Cuotas = _RowEntidad.Item("NUVECR")
+        _Dias_1er_Vencimiento = _RowEntidad.Item("DIPRVE")
+        _Dias_Vencimiento = NuloPorNro(_RowEntidad.Item("DIASVENCI"), 0)
+
+        If _Cuotas = 0 Then _Cuotas = 1
+
+        Dim _Cuotas_(_Cuotas - 1) As Date
+
+        If CBool(_Dias_1er_Vencimiento) Or CBool(_Dias_Vencimiento) Then
+
+            _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = _Dias_1er_Vencimiento
+            _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = _Dias_Vencimiento
+
+            Dim _FechasVenci As Date = _FechaEmision
+            Dim _dias As Integer
+
+            If _Dias_1er_Vencimiento > 0 Or _Dias_Vencimiento > 0 Then
+
+                _dias = _Dias_1er_Vencimiento
+
+                For i = 1 To _Cuotas
+
+                    _FechasVenci = DateAdd(DateInterval.Day, _dias, _FechasVenci)
+                    _Cuotas_(i - 1) = _FechasVenci
+                    _dias = _Dias_Vencimiento
+
+                Next
+
+                _FechaUltVencimiento = _FechasVenci
+
+            Else
+
+                _Cuotas = 1
+
+            End If
+
+            _Fecha_1er_Vencimiento = _Cuotas_(0)
+
+        End If
+
+        _VencimientosCliente = New VencimientosCliente.VencimientosCliente
+
+        With _VencimientosCliente
+            .FechaEmision = _FechaEmision
+            .Fecha_1er_Vencimiento = _Fecha_1er_Vencimiento
+            .FechaUltVencimiento = _FechaUltVencimiento
+            .Cuotas = _Cuotas
+            .Dias_1er_Vencimiento = _Dias_1er_Vencimiento
+            .Dias_Vencimiento = _Dias_Vencimiento
+        End With
+
+    End Sub
     Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs)
 
         Me.Close()
@@ -4705,9 +4766,10 @@ Public Class Frm_Formulario_Documento
                     If CBool(_Idmaeddo_Dori) Then
 
                         Dim Td, Nr As String
+                        Dim _Feemlipa As Date? = .Cells("Feemlipa").Value
                         Td = .Cells("Tidopa").Value
                         Nr = .Cells("Nudopa").Value
-                        _Desde = " Desde: " & Td & " - " & Nr
+                        _Desde = $" Desde: {Td} - {Nr} ({_Feemlipa?.ToString("dd/MM/yyyy")})"
 
                     End If
 
@@ -13220,9 +13282,19 @@ Public Class Frm_Formulario_Documento
             .Item("FechaUltVencimiento") = _TblEncabezado_StBy.Rows(0).Item("FechaUltVencimiento")
             .Item("FechaRecepcion") = _TblEncabezado_StBy.Rows(0).Item("FechaRecepcion")
             .Item("Cuotas") = _TblEncabezado_StBy.Rows(0).Item("Cuotas")
-
             .Item("Dias_1er_Vencimiento") = _TblEncabezado_StBy.Rows(0).Item("Dias_1er_Vencimiento")
             .Item("Dias_Vencimiento") = _TblEncabezado_StBy.Rows(0).Item("Dias_Vencimiento")
+
+
+            'With _VencimientosCliente
+            '    .FechaEmision = _TblEncabezado_StBy.Rows(0).Item("FechaEmision")
+            '    .Fecha_1er_Vencimiento = _TblEncabezado_StBy.Rows(0).Item("Fecha_1er_Vencimiento")
+            '    .FechaUltVencimiento = _TblEncabezado_StBy.Rows(0).Item("FechaUltVencimiento")
+            '    .Cuotas = _TblEncabezado_StBy.Rows(0).Item("Cuotas")
+            '    .Dias_1er_Vencimiento = _TblEncabezado_StBy.Rows(0).Item("Dias_1er_Vencimiento")
+            '    .Dias_Vencimiento = _TblEncabezado_StBy.Rows(0).Item("Dias_Vencimiento")
+            'End With
+
 
             .Item("Moneda_Doc") = _TblEncabezado_StBy.Rows(0).Item("Moneda_Doc")
             .Item("TipoMoneda") = _TblEncabezado_StBy.Rows(0).Item("TipoMoneda")
@@ -17540,12 +17612,27 @@ Public Class Frm_Formulario_Documento
 
                                         End With
 
-                                        MessageBoxEx.Show(Me, "Se solicitara permiso para validar esta acción al grabar el documento" & vbCrLf &
-                                                          "El documento al grabarse quedara al contado",
-                                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                                        Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
+                                        Dim _PermiteVtaContadoCiaSeguro As Boolean = _Global_Row_Configuracion_General.Item("PermiteVtaContadoCiaSeguro")
+
+                                        If _PermiteVtaContadoCiaSeguro Then
+
+                                            MessageBoxEx.Show(Me, "El documento al grabarse quedara al contado",
+                                                            "Validación", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                                            PedirPermisoCiaSeguro = False
+
+                                        Else
+
+                                            MessageBoxEx.Show(Me, "Se solicitara permiso para validar esta acción al grabar el documento" & vbCrLf &
+                                                            "El documento al grabarse quedara al contado",
+                                                            "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                            Sb_Actualizar_Permisos_Necesarios_Del_Documento_New()
+
+                                        End If
 
                                     Else
+
+                                        Sb_RecalculaFechasVencimiento(_TblEncabezado.Rows(0).Item("FechaEmision"))
+                                        _TblEncabezado.Rows(0).Item("RevFincred") = _RevFincred
 
                                         With _VencimientosCliente
 
@@ -17555,8 +17642,6 @@ Public Class Frm_Formulario_Documento
                                             _TblEncabezado.Rows(0).Item("Cuotas") = .Cuotas
                                             _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = .Dias_1er_Vencimiento
                                             _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = .Dias_Vencimiento
-
-                                            _TblEncabezado.Rows(0).Item("RevFincred") = _RevFincred
 
                                         End With
 
@@ -21491,6 +21576,13 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                 Dim _Nudopa As String = _Fila.Item("NUDO")
                 Dim _Endopa As String = _Fila.Item("ENDO")
                 Dim _Nulidopa As String = _Fila.Item("NULIDO")
+                Dim _Feemlipa As DateTime? = Nothing
+
+                Try
+                    _Feemlipa = _Fila.Item("FEEMLI")
+                Catch ex As Exception
+                    _Feemlipa = Nothing
+                End Try
 
                 If _Tidopa = _Tido Then
                     _Idmaeddo_Dori = 0
@@ -21522,6 +21614,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                     _Nudopa = String.Empty
                     _Endopa = String.Empty
                     _Nulidopa = String.Empty
+                    _Feemlipa = Nothing
 
                 End If
 
@@ -21790,6 +21883,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                     _New_Fila.Cells("Nudopa").Value = _Nudopa
                     _New_Fila.Cells("Endopa").Value = _Endopa
                     _New_Fila.Cells("Nulidopa").Value = _Nulidopa
+                    _New_Fila.Cells("Feemlipa").Value = _Feemlipa
 
                     _New_Fila.Cells("Observa").Value = Trim(_Observa)
 
@@ -22680,7 +22774,6 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                 Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", False, True)
             End If
         End If
-
 
     End Sub
 

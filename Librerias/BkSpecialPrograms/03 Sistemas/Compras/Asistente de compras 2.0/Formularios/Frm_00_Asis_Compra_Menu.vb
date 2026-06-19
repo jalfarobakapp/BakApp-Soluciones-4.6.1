@@ -1526,10 +1526,10 @@ Drop Table #Paso
                 Dim _Filtro_Documentos As String
 
                 If Chk_Incluir_Salidas_GDI_OT.Checked Then
-                    _Filtro_Documentos = "And (TIDO IN ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV','GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV') Or " &
+                    _Filtro_Documentos = "And (TIDO IN ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV','BLX','GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV') Or " &
                                           "TIDO In ('GDI','GRI') And ARCHIRST = 'POTD')"
                 Else
-                    _Filtro_Documentos = "And TIDO IN ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV','GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV')"
+                    _Filtro_Documentos = "And TIDO IN ('FCV', 'FDB', 'FDV', 'FDX', 'FDZ', 'FEV', 'FVL', 'FVT', 'FVX', 'FVZ','FEE', 'BLV','BLX','GDV','GDP','NCE', 'NCV', 'NCX', 'NCZ', 'NEV')"
                 End If
 
 #Region "ROTACION POR PRODUCTO"

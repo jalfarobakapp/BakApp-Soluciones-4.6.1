@@ -221,7 +221,7 @@ Public Class Menu
         Dim Cls_CB As New Clase_Cambiar_Empresa(_Fm_Menu_Padre)
 
         If Cls_CB.Fx_Cambiar_Empresa_Solo_Para_Formulario_Actual(Clase_Cambiar_Empresa.Tipo_de_cambio.Cambiar_totalmente,
-                                                                 "Espr0010", Btn_Cambio_Empresa.Image) Then
+         "Espr0010", Btn_Cambio_Empresa.Image) Then
 
             '_Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
             'sesion = False
@@ -263,7 +263,7 @@ Public Class Menu
     Private Sub Btn_Desconectar_Bases_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Desconectar_Bases.Click
 
         If MessageBoxEx.Show(_Fm_Menu_Padre, "Esto lo desconectara de las otras bases a las cuales se ha conectado durante el transcurso de su sesión" & vbCrLf &
-                              "¿Está seguro de cerrar estas conexiones?", "Cerrar conexiones", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+  "¿Está seguro de cerrar estas conexiones?", "Cerrar conexiones", MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
 
             Dim Ip = getIp()
             Dim _NombreEquipo = UCase(System.Net.Dns.GetHostName)
@@ -295,7 +295,7 @@ Public Class Menu
                         'data source = SQL7.VITGLOBAL.NET,1777; initial catalog = AGRORAMA; user id = AGRORAMA; password = AGRORAMA
 
                         Cadena_ConexionSQL_Server = "data source = " & _Servidor & "; initial catalog = " & _BaseDeDatos &
-                                        "; user id = " & _Usuario & "; password = " & _Clave
+            "; user id = " & _Usuario & "; password = " & _Clave
 
                         If Cadena_ConexionSQL_Server <> _Cadena_ConexionSQL_Server_Original Then
 
@@ -307,8 +307,8 @@ Public Class Menu
 
                                 _Global_BaseBk = _Class_BaseBk.Pro_Row_Tabcarac("Global_BaseBk")
                                 Consulta_sql = "Update " & _Global_BaseBk & "Zw_EstacionesBkp Set Conectado = 0," & vbCrLf &
-                                       "Fecha_Hora_Conec = Null" & vbCrLf &
-                                       "Where NombreEquipo = '" & _NombreEquipo & "'"
+           "Fecha_Hora_Conec = Null" & vbCrLf &
+           "Where NombreEquipo = '" & _NombreEquipo & "'"
                                 _Sql.Ej_consulta_IDU(Consulta_sql, False)
 
                             End If
@@ -318,7 +318,7 @@ Public Class Menu
                     Next
 
                     MessageBoxEx.Show(_Fm_Menu_Padre, "Bases liberadas correctamente", "Desconectar bases",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+          MessageBoxButtons.OK, MessageBoxIcon.Information)
 
 
                 End If
@@ -336,7 +336,7 @@ Public Class Menu
                 Else
 
                     MessageBoxEx.Show(_Fm_Menu_Padre, "No esta configurada la base de datos de BakApp",
-                                      "Falta identificación de base BakApp", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+          "Falta identificación de base BakApp", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
                     If _Class_BaseBk.Fx_Grabar_Base_Bakapp_En_Tabcarac() Then
                         _Global_BaseBk = Trim(_Class_BaseBk.Pro_Row_Tabcarac.Item("Global_BaseBk"))
@@ -413,7 +413,7 @@ Public Class Menu
             Dim _Numero As Double
 
             If InputBox_Bk(_Fm_Menu_Padre, "Revisar monto escrito", "BakApp", _Numero, False,
-                                                _Tipo_Mayus_Minus.Normal, , True, _Tipo_Imagen.Cheque_Numero, True, _Tipo_Caracter.Moneda, False) Then
+                    _Tipo_Mayus_Minus.Normal, , True, _Tipo_Imagen.Cheque_Numero, True, _Tipo_Caracter.Moneda, False) Then
 
                 Dim _Palabra = Letras(_Numero)
                 MessageBoxEx.Show(_Fm_Menu_Padre, _Palabra, FormatNumber(_Numero, 0), MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -816,16 +816,16 @@ Public Class Menu
 
             If UCase(prog.ProcessName) = UCase(_Global_Nombre_BakApp_Demonio) Then
                 MessageBoxEx.Show(Frm_Menu, "El diablito de monitoreo de acciones automáticas se encuentra en ejecución." & vbCrLf &
-                                            "No se puede hacer cambio de empresa cuando el diablito esta corriendo.", "Validación",
-                                            MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                "No se puede hacer cambio de empresa cuando el diablito esta corriendo.", "Validación",
+                MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 'prog.Kill()
                 Return
             End If
 
             If UCase(prog.ProcessName) = UCase(_Global_Nombre_BakApp_DTEMonitor) Then
                 MessageBoxEx.Show(Frm_Menu, "El diablito de monitoreo de documentos DTE SII se encuentra en ejecución." & vbCrLf &
-                                             "No se puede hacer cambio de empresa cuando el diablito esta corriendo.", "Validación",
-                                            MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                 "No se puede hacer cambio de empresa cuando el diablito esta corriendo.", "Validación",
+                MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 'prog.Kill()
                 Return
             End If
@@ -957,12 +957,12 @@ Public Class Menu
         Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim Fm As New Frm_Formulario_Documento(_Tido,
-                                               csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,
-                                               False, False, False, False, False)
+                   csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,
+                   False, False, False, False, False)
 
         Fm.Pro_RowEntidad = _Row_Entidad
         Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Fm_Menu_Padre, _Tbl_Productos, _Fecha_Emision,
-                                                "Codigo", "Cantidad", "Precio", "Observacion", False, True)
+                    "Codigo", "Cantidad", "Precio", "Observacion", False, True)
         Dim _Mensaje As LsValiciones.Mensajes = Fm.Fx_Grabar_Documento(False)
         Fm.Dispose()
 
@@ -976,7 +976,7 @@ Public Class Menu
                            ",Idmaeedo_NVV = " & _Row.Item("IDMAEEDO") &
                            ",Nudo_NVV = '" & _Row.Item("NUDO") & "'" &
                            ",Feemdo_NVV = '" & Format(_Row.Item("FEEMDO"), "yyyyMMdd") & "'" & vbCrLf &
-                            "Where Id_Enc = " & _Id_Enc
+"Where Id_Enc = " & _Id_Enc
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
         End If
@@ -1111,11 +1111,11 @@ Public Class Menu
             'End If
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_Doc_Emitidos_Aviso_Correo (Id_Correo,Nombre_Correo,CodFuncionario,Asunto," &
-                            "Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos,Adjuntar_DTE,Id_Dte,Id_Trackid)" &
-                            vbCrLf &
-                            "Values (" & _Id_Correo & ",'" & _Nombre_Correo & "','','" & _Asunto & "','" & _Para & "','" & _Cc &
-                            "',0,'','','',1,'" & _CuerpoMensaje & "'," & _Fecha &
-                            "," & Convert.ToInt32(_Adjuntar_Documento) & ",'',1,0,0)"
+"Para,Cc,Idmaeedo,Tido,Nudo,NombreFormato,Enviar,Mensaje,Fecha,Adjuntar_Documento,Doc_Adjuntos,Adjuntar_DTE,Id_Dte,Id_Trackid)" &
+vbCrLf &
+"Values (" & _Id_Correo & ",'" & _Nombre_Correo & "','','" & _Asunto & "','" & _Para & "','" & _Cc &
+"',0,'','','',1,'" & _CuerpoMensaje & "'," & _Fecha &
+"," & Convert.ToInt32(_Adjuntar_Documento) & ",'',1,0,0)"
 
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
 
@@ -1136,7 +1136,7 @@ Public Class Menu
         If (_RowFormato Is Nothing) Then
 
             MessageBoxEx.Show(_Fm_Menu_Padre, "Debe configurar el formato de salida en la configuración por modalidad de trabajo",
-                              "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+  "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
             Exit Sub
 
@@ -1253,12 +1253,12 @@ Public Class Menu
         'Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         'Dim Fm As New Frm_Formulario_Documento(_Tido,
-        '                               csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna,
-        '                               False, False, False, False, False)
+        '   csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna,
+        '   False, False, False, False, False)
         'Fm.Sb_Limpiar(_Modalidad)
         'Fm.Pro_RowEntidad = _Row_Entidad
         'Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Fm_Menu_Padre, _Tbl_Productos, _Fecha_Emision,
-        '                                        "Codigo", "Cantidad", "Precio", "Observacion", False, True,, True)
+        '            "Codigo", "Cantidad", "Precio", "Observacion", False, True,, True)
         'Fm.Pro_SubTido = "GTI"
         '_Mensaje = Fm.Fx_Grabar_Documento(False)
         'Fm.Dispose()
@@ -1278,11 +1278,11 @@ Public Class Menu
     End Sub
 
     Function Fx_Crear_GDI2GRI(_Modalidad As String,
-                              _Sucursal As String,
-                              _Bodega_GDI As String,
-                              _Fecha_Emision As Date,
-                              _Codigo As String,
-                              _Cantidad As Double) As LsValiciones.Mensajes
+  _Sucursal As String,
+  _Bodega_GDI As String,
+  _Fecha_Emision As Date,
+  _Codigo As String,
+  _Cantidad As Double) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -1304,12 +1304,12 @@ Public Class Menu
             Dim _Tbl_Productos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Dim Fm As New Frm_Formulario_Documento("GDI",
-                                           csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna,
-                                           False, False, False, False, False)
+               csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Despacho_Interna,
+               False, False, False, False, False)
             Fm.Sb_Limpiar(_Modalidad)
             Fm.Pro_RowEntidad = _Row_Entidad
             Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Fm_Menu_Padre, _Tbl_Productos, _Fecha_Emision,
-                                                    "Codigo", "Cantidad", "Precio", "Observacion", False, True,, True)
+                        "Codigo", "Cantidad", "Precio", "Observacion", False, True,, True)
             Fm.Pro_SubTido = "GTI"
             _Mensaje = Fm.Fx_Grabar_Documento(False)
             Fm.Dispose()
@@ -1330,9 +1330,9 @@ Public Class Menu
     End Function
 
     Function Fx_Crear_GRIDesdeGDI(_Formulario As Form,
-                                  _Idmaeedo_Ori As Integer,
-                                  _Sucursal_Recepcion As String,
-                                  _Bodega_Recepcion As String) As LsValiciones.Mensajes
+      _Idmaeedo_Ori As Integer,
+      _Sucursal_Recepcion As String,
+      _Bodega_Recepcion As String) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -1403,9 +1403,9 @@ Public Class Menu
     Private Sub Btn_CovPreVenta_Click(sender As Object, e As EventArgs) Handles Btn_CovPreVenta.Click
 
         Modulo_Documentos.Sb_Generar_Documento(_Fm_Menu_Padre,
-                                               "COV",
-                                               True,
-                                               csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta, "PRE")
+                   "COV",
+                   True,
+                   csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta, "PRE")
 
     End Sub
 
@@ -1414,7 +1414,7 @@ Public Class Menu
         Dim _EjecutarProcesoTodosLosProductos As Boolean = False
 
         If MessageBoxEx.Show(Me, "¿Desea recalcular todo automáticamente el PPP?", "Recalcular PPP por producto",
-                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
+ MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
             _EjecutarProcesoTodosLosProductos = True
         End If
 
@@ -1563,7 +1563,7 @@ Public Class Menu
 
         If _Grabar Then
             MessageBoxEx.Show(Me, "Los datos se han grabado correctamente", "Ficha funcionario",
-                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+  MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
 
     End Sub
@@ -1585,9 +1585,9 @@ Public Class Menu
     Private Sub Btn_SobreStockNVV_Click(sender As Object, e As EventArgs) Handles Btn_SobreStockNVV.Click
 
         Modulo_Documentos.Sb_Generar_Documento(_Fm_Menu_Padre,
-                                               "COV",
-                                               True,
-                                               csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta, "STK")
+                   "COV",
+                   True,
+                   csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta, "STK")
 
     End Sub
 
@@ -1628,10 +1628,167 @@ Public Class Menu
         Dim _Cl_Elimina_Anula As New Clas_Cerrar_Anular_Eliminar_Documento_Origen
         If _Cl_Elimina_Anula.Fx_EliminarAnular_Doc(_Fm_Menu_Padre, _Idmaeedo, FUNCIONARIO, Clas_Cerrar_Anular_Eliminar_Documento_Origen.Enum_Accion.Eliminar, True, True) Then
             MessageBoxEx.Show(Me, "El documento se ha eliminado correctamente", "Eliminar documento",
-                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+  MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
 
 
     End Sub
+
+    Private Sub Btn_CrearFCV01a02_Click(sender As Object, e As EventArgs) Handles Btn_CrearFCV01a02.Click
+
+        Dim _CodLista As String = Mod_ListaPrecioCosto
+        Dim _Observaciones As String = String.Empty
+
+        Dim _Koen As String = "76095906"
+        Dim _Suen As String = String.Empty
+
+        Dim _Idmaeedo_FCV As Integer = 894256
+
+        Consulta_sql = $"
+Select Top 1 *,KOEN AS ENDO, SUEN AS SUENDO From MAEEN
+Where KOEN = '{_Koen}' And SUEN = '{_Suen}'"
+        Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Consulta_sql = $"
+Select Codigo,Comprarud1 As Cantidad,Comprarud1 As 'CantDoriUd1',Comprarud2 As 'CantDoriUd2',Costo,Id_Det As 'Observa'
+From {_Global_BaseBk}Zw_InterStock_Det
+Where Idmaeedo = {_Idmaeedo_FCV}"
+
+        Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        If Not CBool(_TblDetalle.Rows.Count) Then
+            MessageBoxEx.Show(Me, "No existen productos seleccionados para comprar desde el tratamiento",
+                              "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+        Me.Enabled = False
+
+        Mod_Empresa = "02"
+        Mod_Modalidad = "ADMIG"
+
+        Consulta_sql = "Select top 1 Cest.*,Cfgp.RAZON" & vbCrLf &
+                "From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA" & vbCrLf &
+                "Where MODALIDAD = '" & Mod_Modalidad & "'  And Cest.EMPRESA = '" & Mod_Empresa & "'"
+        _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Mod_Empresa = _Global_Row_Modalidad.Item("EMPRESA")
+        Mod_Sucursal = _Global_Row_Modalidad.Item("ESUCURSAL")
+        Mod_Bodega = _Global_Row_Modalidad.Item("EBODEGA")
+        Mod_Caja = _Global_Row_Modalidad.Item("ECAJA")
+        Mod_ListaPrecioVenta = Mid(_Global_Row_Modalidad.Item("ELISTAVEN"), 6, 3)
+        Mod_ListaPrecioCosto = Mid(_Global_Row_Modalidad.Item("ELISTACOM"), 6, 3)
+
+        Dim _Mod As New Clas_Modalidades
+
+        _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+        _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Dim Fm As Frm_Formulario_Documento
+
+        Fm = New Frm_Formulario_Documento("OCC", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra,
+                                               False, True, False, False, False)
+        Fm.Pro_RowEntidad = _Row_Entidad
+        Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Fm_Menu_Padre, _TblDetalle, FechaDelServidor,
+                                                     "Codigo", "Cantidad", "Costo", _Observaciones, False, False)
+        _Mensaje = Fm.Fx_Grabar_Documento(False,, False)
+        Fm.Dispose()
+
+
+        Mod_Empresa = "01"
+        Mod_Modalidad = "VENTA"
+
+        Consulta_sql = "Select top 1 Cest.*,Cfgp.RAZON" & vbCrLf &
+                "From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA" & vbCrLf &
+                "Where MODALIDAD = '" & Mod_Modalidad & "'  And Cest.EMPRESA = '" & Mod_Empresa & "'"
+        _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Mod_Empresa = _Global_Row_Modalidad.Item("EMPRESA")
+        Mod_Sucursal = _Global_Row_Modalidad.Item("ESUCURSAL")
+        Mod_Bodega = _Global_Row_Modalidad.Item("EBODEGA")
+        Mod_Caja = _Global_Row_Modalidad.Item("ECAJA")
+        Mod_ListaPrecioVenta = Mid(_Global_Row_Modalidad.Item("ELISTAVEN"), 6, 3)
+        Mod_ListaPrecioCosto = Mid(_Global_Row_Modalidad.Item("ELISTACOM"), 6, 3)
+
+
+
+
+        Consulta_sql = $"
+Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO
+Select 'BKP' As KOFULIDO,Codigo As KOPRCT,RLUD As 'RLUDPR',
+NOKOPR,'{_Row_Entidad.Item("LVEN").ToString.Replace("TABPP", "")}' As KOLTPR,Mp.PPUL01 As UD1,Mp.PPUL02 As UD2,
+Itd.Costo As CostoUd1,0 As CostoUd2,
+Itd.Costo As Precio,RLUD As Rtu,Itd.Comprarud1 As Cantidad,
+0 As Desc1,0 As Desc2,0 AsDesc3,0 As Desc4,0 As Desc5,0 As PRCT,'' As TICT,TIPR,2 As UDTRPR,0 As POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
+0 As IDMAEEDO,0 As IDMAEDDO,Itd.Empresa_NVV As EMPRESA,Itd.Sucursal_NVV As SULIDO,Itd.Bodega_NVV As BOSULIDO,
+'' As ENDO,'' As SUENDO,
+GetDate() As FEEMLI,'' As TIDO,'' As NUDO,'' As NULIDO,Itd.Comprarud1 As CantUd1_Dori,Itd.Comprarud2 As CantUd2_Dori,Itd.Id As OBSERVA,
+0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,
+0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
+From {_Global_BaseBk}Zw_InterStock_Det Itd
+Inner Join MAEPR Mp On Mp.KOPR = Codigo
+--Where (Ud1_negativo = 1 Or Ud2_negativo = 1) And Idmaeddo_FCV = 0
+Where Idmaeedo = {_Idmaeedo_FCV}
+
+Select * From MAEIMLI Where 1<0  
+Select * From MAEDTLI Where 1<0  
+Select '{_Observaciones}' As OBDO"
+
+        Fm = New Frm_Formulario_Documento("NVV", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,
+                                               False, True, False, False, False)
+        Fm.Pro_RowEntidad = _Row_Entidad
+        Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Fm_Menu_Padre, _TblDetalle, FechaDelServidor,
+                                                     "Codigo", "Cantidad", "Costo", _Observaciones, False, False)
+        _Mensaje = Fm.Fx_Grabar_Documento(False,, False)
+        Fm.Dispose()
+
+        Me.Enabled = True
+
+    End Sub
+
+    'Function Fx_GrabarDocumento(_Tido As String,
+    '                            _Empresa As String,
+    '                            _Modalidad As String,
+    '                            _Row_Entidad As DataRow,
+    '                            _Tbl_Productos As DataTable) As LsValiciones.Mensajes
+
+    '    Dim _Mensaje As New LsValiciones.Mensajes
+
+    '    Dim _Observaciones As String
+    '    Dim _Tipo_Documento As csGlobales.Enum_Tipo_Documento
+
+    '    If _Tido = "OCC" Then
+    '        _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra
+    '    ElseIf _Tido = "NVV" Then
+    '        _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta
+    '    End If
+
+    '    Dim Fm As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False, True, False, False, False)
+    '    Fm.Pro_RowEntidad = _Row_Entidad
+    '    Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Fm_Menu_Padre, _Tbl_Productos, FechaDelServidor,
+    '                                                 "Codigo", "Cantidad", "Costo", _Observaciones, False, False)
+    '    _Mensaje = Fm.Fx_Grabar_Documento(False,, False)
+    '    Fm.Dispose()
+
+    '    'Dim Fm As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False, True, False)
+    '    'Fm.ModEmpresa_Doc = _Empresa
+    '    'Fm.ModModalidad_Doc = _Modalidad
+    '    'Fm.Pro_Agrupar_Reemplazos = False
+    '    'Fm.Pro_RowEntidad = _Row_Entidad
+    '    'Fm.Pro_RowEntidad_Despacho = Nothing
+    '    'Fm.Pro_Lista_de_precios_de_proveedores = False
+    '    'Fm.Sb_Crear_Documento_Desde_Otros_Documentos(_Fm_Menu_Padre, _Ds_New_Documento, True, False, Nothing, False, False)
+
+    '    'Fm.MinimizeBox = False
+
+    '    '_Mensaje = Fm.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento)
+
+    '    '_New_Idmaeedo = Fm.Pro_Idmaeedo
+    '    'Fm.Dispose()
+
+    '    Return _Mensaje
+
+    'End Function
 
 End Class

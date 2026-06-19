@@ -257,6 +257,7 @@ Public Class Frm_Formulario_Cantidad_Stock_X_Bodega
             Dim _Sucursal = _Fila.Cells("Sucursal").Value
             Dim _Bodega = _Fila.Cells("Bodega").Value
 
+
             If Not String.IsNullOrEmpty(_Tido) Then
                 _St_Disponible = Fx_Stock_Disponible(_Tido, Mod_Empresa, _Sucursal, _Bodega, _Codigo, _Ud, "STFI" & _Ud)
                 If _St_Disponible < 0 Then _St_Disponible = 0

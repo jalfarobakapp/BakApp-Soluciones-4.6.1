@@ -8,8 +8,7 @@ Public Class Frm_OfDinamFicha
     Dim _Codigo As String
     Dim _Tbl_Listas As DataTable
 
-    Public Property Grabar As Boolean
-    Public Property Eliminado As Boolean
+    'Public Property Eliminado As Boolean
     Public Property Row_Maeeres As DataRow
 
     Dim _Tbl_TipoOferta As DataTable
@@ -56,6 +55,7 @@ Public Class Frm_OfDinamFicha
         Cmb_Kogen.SelectedValue = ""
 
         Txt_Valdesc.Enabled = True
+        Txt_Codigo.CharacterCasing = CharacterCasing.Normal
 
         Lbl_Kogen.Visible = CBool(_Tbl_TipoOferta.Rows.Count)
         Cmb_Kogen.Visible = CBool(_Tbl_TipoOferta.Rows.Count)
@@ -293,7 +293,7 @@ Public Class Frm_OfDinamFicha
 
             MessageBoxEx.Show(Me, "Datos actualizados correctamente", "Grabar", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
-            Grabar = True
+            Me.DialogResult = DialogResult.OK
             Me.Close()
 
         Else
@@ -376,8 +376,9 @@ Where CODIGO = '" & _Codigo & "'" & vbCrLf
             Return
         End If
 
-        Grabar = True
-        Eliminado = True
+        'Grabar = True
+        'Eliminado = True
+        Me.DialogResult = DialogResult.No
         MessageBoxEx.Show(Me, "Oferta eliminada correctamente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Me.Close()
 

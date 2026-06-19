@@ -1,4 +1,5 @@
 ﻿Imports BkSpecialPrograms
+Imports BkSpecialPrograms.Frm_SolCredito_Autorizar
 Imports DevComponents.DotNetBar
 
 Public Class Documentos_GDI_GRI
@@ -56,6 +57,10 @@ Public Class Documentos_GDI_GRI
     End Sub
 
     Private Sub Btn_GDI_GRI_Click(sender As Object, e As EventArgs) Handles Btn_GDI_GRI.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Doc00175") Then
+            Return
+        End If
 
         Dim Fm As New Frm_GDI2GRI
         Fm.ShowDialog(Me)

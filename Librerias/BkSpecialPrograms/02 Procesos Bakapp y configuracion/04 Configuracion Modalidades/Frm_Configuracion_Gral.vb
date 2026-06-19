@@ -268,6 +268,8 @@ Public Class Frm_Configuracion_Gral
             Chk_ExigeNumPesada.Checked = .Item("ExigeNumPesada")
 
             Chk_SolictarCiaSeguro.Checked = .Item("SolictarCiaSeguro")
+            Chk_PermiteVtaContadoCiaSeguro.Checked = .Item("PermiteVtaContadoCiaSeguro")
+
             Input_ToleranciaDocMoroso.Value = .Item("ToleranciaDocMoroso")
 
             Chk_ActivaTipoCompra.Checked = .Item("ActivaTipoCompra")
@@ -275,6 +277,8 @@ Public Class Frm_Configuracion_Gral
         End With
 
         Chk_SolictarCiaSeguro.Enabled = _Modalidad_General
+        Chk_PermiteVtaContadoCiaSeguro.Enabled = _Modalidad_General
+
         Input_ToleranciaDocMoroso.Enabled = _Modalidad_General
 
         Chk_VendeUD2DesacUD1soloRTUD.Enabled = _Modalidad_General
@@ -340,7 +344,7 @@ Public Class Frm_Configuracion_Gral
         Chk_PermitirMigrarProductosBaseExterna.Enabled = _Modalidad_General
         Chk_ListaDesdeSustentatorio.Enabled = _Modalidad_General
 
-        Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Enabled = _Modalidad_General
+        Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Enabled = Not _Modalidad_General
         LabelX20.Enabled = _Modalidad_General
         Txt_Lista_Precios_Proveedores.Enabled = _Modalidad_General
 
@@ -640,6 +644,7 @@ Public Class Frm_Configuracion_Gral
                        ",RevAutomaticaMorosidadClientes = " & Convert.ToInt32(Chk_RevAutomaticaMorosidadClientes.Checked) & vbCrLf &
                        ",ExigeNumPesada = " & Convert.ToInt32(Chk_ExigeNumPesada.Checked) & vbCrLf &
                        ",SolictarCiaSeguro = " & Convert.ToInt32(Chk_SolictarCiaSeguro.Checked) & vbCrLf &
+                       ",PermiteVtaContadoCiaSeguro = " & Convert.ToInt32(Chk_PermiteVtaContadoCiaSeguro.Checked) & vbCrLf &
                        ",ToleranciaDocMoroso = " & Input_ToleranciaDocMoroso.Value & vbCrLf &
                        ",ActivaTipoCompra = " & Convert.ToInt32(Chk_ActivaTipoCompra.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
@@ -857,6 +862,16 @@ Public Class Frm_Configuracion_Gral
 
         If Chk_NVIQuedaSUDOSucRecibe.Checked Then
             Chk_NVIQuedaSUDOSucEnvia.Checked = False
+        End If
+
+    End Sub
+
+    Private Sub Chk_SolictarCiaSeguro_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_SolictarCiaSeguro.CheckedChanged
+
+        Chk_PermiteVtaContadoCiaSeguro.Enabled = Chk_SolictarCiaSeguro.Checked
+
+        If Not Chk_SolictarCiaSeguro.Checked Then
+            Chk_PermiteVtaContadoCiaSeguro.Checked = False
         End If
 
     End Sub

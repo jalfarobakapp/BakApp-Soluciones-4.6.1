@@ -70,7 +70,7 @@ SELECT
               EDD.EMPRESA,    -- Empresa de la linea
               EDD.SULIDO,     -- Sucursal de la linea
               EDD.BOSULIDO,   -- Bodega de la linea
-              Cast(CASE WHEN TIDO LIKE 'G%' THEN 1 ELSE EDD.LINCONDESP END As Bit) As 'LINCONDESP',  -- Despacho stock
+              Cast(CASE WHEN EDD.TIDO LIKE 'G%' THEN 1 ELSE EDD.LINCONDESP END As Bit) As 'LINCONDESP',  -- Despacho stock
 			  EDD.KOFULIDO,   -- Vendedor
 			  EDD.NULIDO,     -- Nro. linea
               EDD.KOPRCT,     -- Código producto
@@ -79,15 +79,15 @@ SELECT
               EDD.UDTRPR,     -- Unidad de transaccion (Número)
               CASE
                    WHEN EDD.UDTRPR = 1 
-                   THEN UD01PR
-                   ELSE UD02PR
+                   THEN EDD.UD01PR
+                   ELSE EDD.UD02PR
               END     
               AS UD, -- Unidad de transaccion (Caracter)
               CASE WHEN EDD.TICT = '' THEN
                    CASE
                         WHEN EDD.UDTRPR = 1 
-                        THEN CAPRCO1
-                        ELSE CAPRCO2
+                        THEN EDD.CAPRCO1
+                        ELSE EDD.CAPRCO2
                    END     
                    ELSE 0
               END
@@ -95,8 +95,8 @@ SELECT
               CASE WHEN EDD.TICT = '' THEN
                    CASE
                         WHEN EDD.UDTRPR = 1 
-                        THEN CAPRAD1
-                        ELSE CAPRAD1
+                        THEN EDD.CAPRAD1
+                        ELSE EDD.CAPRAD2
                    END     
                    ELSE 0
               END
@@ -104,8 +104,8 @@ SELECT
               CASE WHEN EDD.TICT = '' THEN
                    CASE
                         WHEN EDD.UDTRPR = 1 
-                        THEN CAPREX1
-                        ELSE CAPREX1
+                        THEN EDD.CAPREX1
+                        ELSE EDD.CAPREX2
                    END     
                    ELSE 0
               END  
@@ -140,29 +140,30 @@ SELECT
                     THEN EDD.PODTGLLI/100 
                     ELSE 0
               END 
-              AS PC_DESC,     -- Porcentaje de descuento de la linea 
-              EDD.VADTNELI,   -- Valor Neto descuento de la linea 
-			  EDD.POIVLI,     -- Porcentaje IVA
-			  EDD.POIMGLLI,   -- Porcentaje Otros Impuestos
-			  EDD.VAIVLI,	  -- Valor IVA linea	
-			  EDD.VAIMLI,     -- Valor Otros Impuestos linea
-              EDD.VANELI,     -- Valor Neto de la linea (total neto)
-              EDD.VADTBRLI,   -- Valor Bruto descuento de la linea 
-              EDD.VABRLI,     -- Valor Bruto de la linea (total neto)
-              EDD.TIDOPA,     -- Tipo de documento sustentatorio
-			  EDD.NUDOPA,     -- Nro. de documento sustentatorio
-			  EDD.ENDOPA,     -- Entidad del documento sustentatorio
-			  EDD.NULIDOPA,   -- Nro. de la linea del documento sustentatorio
-			  EDD.ARCHIRST,   -- Tabla de origen del documento sustentatorio
-			  EDD.IDRST,      -- Indice del documento sustentatorio
-			  EDD.ESLIDO,     -- Estado de la línea
-			  EDD.TIPR,		  -- Tipo de producto	
-			  EDD.PRCT,	      -- Es producto (0) o concepto (1)
-			  EDD.TICT,		  -- Tipo de Concepto (R) Recargo, (D) Descuento
+              AS PC_DESC,                       -- Porcentaje de descuento de la linea 
+              EDD.VADTNELI,                     -- Valor Neto descuento de la linea 
+			  EDD.POIVLI,                       -- Porcentaje IVA
+			  EDD.POIMGLLI,                     -- Porcentaje Otros Impuestos
+			  EDD.VAIVLI,	                    -- Valor IVA linea	
+			  EDD.VAIMLI,                       -- Valor Otros Impuestos linea
+              EDD.VANELI,                       -- Valor Neto de la linea (total neto)
+              EDD.VADTBRLI,                     -- Valor Bruto descuento de la linea 
+              EDD.VABRLI,                       -- Valor Bruto de la linea (total neto)
+              EDD.TIDOPA,                       -- Tipo de documento sustentatorio
+			  EDD.NUDOPA,                       -- Nro. de documento sustentatorio
+			  EDD.ENDOPA,                       -- Entidad del documento sustentatorio
+			  EDD.NULIDOPA,                     -- Nro. de la linea del documento sustentatorio
+              Dopa.FEEMLI As 'FEEMLIPA',        -- Fecha de documento sustentatorio
+			  EDD.ARCHIRST,                     -- Tabla de origen del documento sustentatorio
+			  EDD.IDRST,                        -- Indice del documento sustentatorio
+			  EDD.ESLIDO,                       -- Estado de la línea
+			  EDD.TIPR,		                    -- Tipo de producto	
+			  EDD.PRCT,	                        -- Es producto (0) o concepto (1)
+			  EDD.TICT,		                    -- Tipo de Concepto (R) Recargo, (D) Descuento
 			  CASE 
-				WHEN ESLIDO = '' THEN 'Vigente'
-				WHEN ESLIDO = 'C' THEN 'Cerrado'
-				WHEN ESLIDO = 'N' THEN 'Nulo'
+				WHEN EDD.ESLIDO = '' THEN 'Vigente'
+				WHEN EDD.ESLIDO = 'C' THEN 'Cerrado'
+				WHEN EDD.ESLIDO = 'N' THEN 'Nulo'
                 ELSE 'Otro' 
               End As 'ESTADO',
 			  EDD.LILG,    
@@ -174,6 +175,7 @@ SELECT
               EDD.POTENCIA
 			  
    FROM MAEDDO EDD WITH (NOLOCK)
+    LEFT JOIN MAEDDO Dopa On Dopa.IDMAEDDO = EDD.IDRST
    WHERE  
         EDD.IDMAEEDO=@Idmaeedo  
         ORDER BY EDD.NULIDO  --EDD.IDMAEDDO ,EDD.NULIDO  

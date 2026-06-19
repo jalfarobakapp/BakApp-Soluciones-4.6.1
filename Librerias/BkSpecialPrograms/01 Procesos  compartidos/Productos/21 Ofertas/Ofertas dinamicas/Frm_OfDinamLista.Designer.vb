@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Ôªø<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_OfDinamLista
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -30,6 +30,12 @@ Partial Class Frm_OfDinamLista
         Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Cmb_TipoOferta = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
+        Me.Dtp_FechaTope = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.Dtp_FechaInicio = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_BuscaXProducto = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Buscador = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -37,6 +43,8 @@ Partial Class Frm_OfDinamLista
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_Productos = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Crear_Receta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ExportarExcel = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -46,12 +54,16 @@ Partial Class Frm_OfDinamLista
         Me.Btn_Mnu_AsociarProductos = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_QuitarProducto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_InfoKardex = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Recetas = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_NroMaxProdXOfertaDinamica = New DevComponents.DotNetBar.LabelX()
         Me.Btn_EditarNroMaxProductos = New DevComponents.DotNetBar.ButtonX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Chk_Marcar_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel3.SuspendLayout()
+        CType(Me.Dtp_FechaTope, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_FechaInicio, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.Grilla_Productos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -65,6 +77,12 @@ Partial Class Frm_OfDinamLista
         '
         Me.GroupPanel3.BackColor = System.Drawing.Color.White
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel3.Controls.Add(Me.Cmb_TipoOferta)
+        Me.GroupPanel3.Controls.Add(Me.LabelX9)
+        Me.GroupPanel3.Controls.Add(Me.Dtp_FechaTope)
+        Me.GroupPanel3.Controls.Add(Me.LabelX4)
+        Me.GroupPanel3.Controls.Add(Me.Dtp_FechaInicio)
+        Me.GroupPanel3.Controls.Add(Me.LabelX3)
         Me.GroupPanel3.Controls.Add(Me.Txt_BuscaXProducto)
         Me.GroupPanel3.Controls.Add(Me.LabelX2)
         Me.GroupPanel3.Controls.Add(Me.Txt_Buscador)
@@ -72,7 +90,7 @@ Partial Class Frm_OfDinamLista
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(9, 0)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(864, 70)
+        Me.GroupPanel3.Size = New System.Drawing.Size(1038, 100)
         '
         '
         '
@@ -104,6 +122,168 @@ Partial Class Frm_OfDinamLista
         Me.GroupPanel3.TabIndex = 104
         Me.GroupPanel3.Text = "Buscador"
         '
+        'Cmb_TipoOferta
+        '
+        Me.Cmb_TipoOferta.DisplayMember = "Text"
+        Me.Cmb_TipoOferta.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_TipoOferta.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_TipoOferta.FormattingEnabled = True
+        Me.Cmb_TipoOferta.ItemHeight = 16
+        Me.Cmb_TipoOferta.Location = New System.Drawing.Point(508, 48)
+        Me.Cmb_TipoOferta.Name = "Cmb_TipoOferta"
+        Me.Cmb_TipoOferta.Size = New System.Drawing.Size(278, 22)
+        Me.Cmb_TipoOferta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_TipoOferta.TabIndex = 108
+        Me.Cmb_TipoOferta.Text = "Todas..."
+        '
+        'LabelX9
+        '
+        Me.LabelX9.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX9.ForeColor = System.Drawing.Color.Black
+        Me.LabelX9.Location = New System.Drawing.Point(424, 47)
+        Me.LabelX9.Name = "LabelX9"
+        Me.LabelX9.Size = New System.Drawing.Size(78, 23)
+        Me.LabelX9.TabIndex = 109
+        Me.LabelX9.Text = "Tipo de oferta"
+        '
+        'Dtp_FechaTope
+        '
+        Me.Dtp_FechaTope.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_FechaTope.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FechaTope.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaTope.ButtonClear.Visible = True
+        Me.Dtp_FechaTope.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FechaTope.ButtonDropDown.Visible = True
+        Me.Dtp_FechaTope.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FechaTope.IsPopupCalendarOpen = False
+        Me.Dtp_FechaTope.Location = New System.Drawing.Point(294, 48)
+        '
+        '
+        '
+        Me.Dtp_FechaTope.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaTope.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaTope.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FechaTope.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_FechaTope.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FechaTope.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaTope.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FechaTope.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FechaTope.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FechaTope.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FechaTope.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaTope.MonthCalendar.DisplayMonth = New Date(2023, 3, 1, 0, 0, 0, 0)
+        Me.Dtp_FechaTope.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FechaTope.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FechaTope.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaTope.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FechaTope.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaTope.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FechaTope.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaTope.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FechaTope.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FechaTope.Name = "Dtp_FechaTope"
+        Me.Dtp_FechaTope.Size = New System.Drawing.Size(101, 22)
+        Me.Dtp_FechaTope.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FechaTope.TabIndex = 105
+        Me.Dtp_FechaTope.Value = New Date(2023, 3, 6, 13, 17, 7, 0)
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(210, 47)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(93, 23)
+        Me.LabelX4.TabIndex = 104
+        Me.LabelX4.Text = "Fecha de Tope"
+        '
+        'Dtp_FechaInicio
+        '
+        Me.Dtp_FechaInicio.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_FechaInicio.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FechaInicio.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaInicio.ButtonClear.Visible = True
+        Me.Dtp_FechaInicio.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FechaInicio.ButtonDropDown.Visible = True
+        Me.Dtp_FechaInicio.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FechaInicio.IsPopupCalendarOpen = False
+        Me.Dtp_FechaInicio.Location = New System.Drawing.Point(92, 48)
+        '
+        '
+        '
+        Me.Dtp_FechaInicio.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaInicio.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaInicio.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FechaInicio.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_FechaInicio.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FechaInicio.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaInicio.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FechaInicio.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FechaInicio.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FechaInicio.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FechaInicio.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaInicio.MonthCalendar.DisplayMonth = New Date(2023, 3, 1, 0, 0, 0, 0)
+        Me.Dtp_FechaInicio.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FechaInicio.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FechaInicio.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaInicio.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FechaInicio.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaInicio.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FechaInicio.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaInicio.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FechaInicio.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FechaInicio.Name = "Dtp_FechaInicio"
+        Me.Dtp_FechaInicio.Size = New System.Drawing.Size(101, 22)
+        Me.Dtp_FechaInicio.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FechaInicio.TabIndex = 103
+        Me.Dtp_FechaInicio.Value = New Date(2023, 3, 6, 13, 17, 7, 0)
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(3, 47)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(93, 23)
+        Me.LabelX3.TabIndex = 102
+        Me.LabelX3.Text = "Fecha de Inicio"
+        '
         'Txt_BuscaXProducto
         '
         Me.Txt_BuscaXProducto.BackColor = System.Drawing.Color.White
@@ -118,11 +298,11 @@ Partial Class Frm_OfDinamLista
         Me.Txt_BuscaXProducto.ButtonCustom2.Visible = True
         Me.Txt_BuscaXProducto.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_BuscaXProducto.ForeColor = System.Drawing.Color.Black
-        Me.Txt_BuscaXProducto.Location = New System.Drawing.Point(663, 20)
+        Me.Txt_BuscaXProducto.Location = New System.Drawing.Point(792, 20)
         Me.Txt_BuscaXProducto.Name = "Txt_BuscaXProducto"
         Me.Txt_BuscaXProducto.PreventEnterBeep = True
         Me.Txt_BuscaXProducto.ReadOnly = True
-        Me.Txt_BuscaXProducto.Size = New System.Drawing.Size(189, 22)
+        Me.Txt_BuscaXProducto.Size = New System.Drawing.Size(237, 22)
         Me.Txt_BuscaXProducto.TabIndex = 1
         '
         'LabelX2
@@ -133,7 +313,7 @@ Partial Class Frm_OfDinamLista
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(663, 0)
+        Me.LabelX2.Location = New System.Drawing.Point(792, 0)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(121, 23)
         Me.LabelX2.TabIndex = 101
@@ -155,7 +335,7 @@ Partial Class Frm_OfDinamLista
         Me.Txt_Buscador.Location = New System.Drawing.Point(3, 20)
         Me.Txt_Buscador.Name = "Txt_Buscador"
         Me.Txt_Buscador.PreventEnterBeep = True
-        Me.Txt_Buscador.Size = New System.Drawing.Size(654, 22)
+        Me.Txt_Buscador.Size = New System.Drawing.Size(783, 22)
         Me.Txt_Buscador.TabIndex = 0
         '
         'LabelX7
@@ -170,7 +350,7 @@ Partial Class Frm_OfDinamLista
         Me.LabelX7.Name = "LabelX7"
         Me.LabelX7.Size = New System.Drawing.Size(404, 23)
         Me.LabelX7.TabIndex = 99
-        Me.LabelX7.Text = "Ingrese alg˙n cÛdigo o algo de la descripciÛn del descuento especial"
+        Me.LabelX7.Text = "Ingrese alg√∫n c√≥digo o algo de la descripci√≥n del descuento especial"
         '
         'GroupPanel2
         '
@@ -178,9 +358,9 @@ Partial Class Frm_OfDinamLista
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel2.Controls.Add(Me.Grilla_Productos)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(9, 376)
+        Me.GroupPanel2.Location = New System.Drawing.Point(9, 436)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(864, 153)
+        Me.GroupPanel2.Size = New System.Drawing.Size(1038, 153)
         '
         '
         '
@@ -250,7 +430,7 @@ Partial Class Frm_OfDinamLista
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Productos.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla_Productos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla_Productos.Size = New System.Drawing.Size(858, 130)
+        Me.Grilla_Productos.Size = New System.Drawing.Size(1032, 130)
         Me.Grilla_Productos.TabIndex = 1
         '
         'Bar2
@@ -258,15 +438,34 @@ Partial Class Frm_OfDinamLista
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Crear_Receta, Me.Btn_ExportarExcel})
-        Me.Bar2.Location = New System.Drawing.Point(0, 571)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Eliminar, Me.Btn_Crear_Receta, Me.Btn_ExportarExcel})
+        Me.Bar2.Location = New System.Drawing.Point(0, 631)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(885, 41)
+        Me.Bar2.Size = New System.Drawing.Size(1056, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 102
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
+        '
+        'Btn_Grabar
+        '
+        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Grabar.Name = "Btn_Grabar"
+        Me.Btn_Grabar.Tooltip = "Grabar [F4]"
+        '
+        'Btn_Eliminar
+        '
+        Me.Btn_Eliminar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Eliminar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Eliminar.Image = CType(resources.GetObject("Btn_Eliminar.Image"), System.Drawing.Image)
+        Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Eliminar.Name = "Btn_Eliminar"
+        Me.Btn_Eliminar.Tooltip = "Eliminar"
         '
         'Btn_Crear_Receta
         '
@@ -294,9 +493,9 @@ Partial Class Frm_OfDinamLista
         Me.GroupPanel1.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel1.Controls.Add(Me.Grilla_Recetas)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(9, 76)
+        Me.GroupPanel1.Location = New System.Drawing.Point(9, 106)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(864, 294)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1038, 298)
         '
         '
         '
@@ -326,7 +525,7 @@ Partial Class Frm_OfDinamLista
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 101
-        Me.GroupPanel1.Text = "NÛmina de tipos de descuentos especiales"
+        Me.GroupPanel1.Text = "N√≥mina de tipos de descuentos especiales"
         '
         'ContextMenuBar1
         '
@@ -367,7 +566,7 @@ Partial Class Frm_OfDinamLista
         '
         Me.Menu_Contextual_02.AutoExpandOnClick = True
         Me.Menu_Contextual_02.Name = "Menu_Contextual_02"
-        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_QuitarProducto})
+        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_QuitarProducto, Me.Btn_InfoKardex})
         Me.Menu_Contextual_02.Text = "Opciones"
         '
         'Btn_Mnu_QuitarProducto
@@ -376,6 +575,13 @@ Partial Class Frm_OfDinamLista
         Me.Btn_Mnu_QuitarProducto.ImageAlt = CType(resources.GetObject("Btn_Mnu_QuitarProducto.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mnu_QuitarProducto.Name = "Btn_Mnu_QuitarProducto"
         Me.Btn_Mnu_QuitarProducto.Text = "Quitar producto de la oferta"
+        '
+        'Btn_InfoKardex
+        '
+        Me.Btn_InfoKardex.Image = CType(resources.GetObject("Btn_InfoKardex.Image"), System.Drawing.Image)
+        Me.Btn_InfoKardex.ImageAlt = CType(resources.GetObject("Btn_InfoKardex.ImageAlt"), System.Drawing.Image)
+        Me.Btn_InfoKardex.Name = "Btn_InfoKardex"
+        Me.Btn_InfoKardex.Text = "Ver informaci√≥n del stock del producto"
         '
         'Grilla_Recetas
         '
@@ -415,7 +621,7 @@ Partial Class Frm_OfDinamLista
         DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla_Recetas.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla_Recetas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
-        Me.Grilla_Recetas.Size = New System.Drawing.Size(858, 271)
+        Me.Grilla_Recetas.Size = New System.Drawing.Size(1032, 275)
         Me.Grilla_Recetas.TabIndex = 1
         '
         'LabelX1
@@ -430,7 +636,7 @@ Partial Class Frm_OfDinamLista
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(518, 20)
         Me.LabelX1.TabIndex = 105
-        Me.LabelX1.Text = "Numero m·ximo de productos que se podr·n seleccionar para ser asociados a una ofe" &
+        Me.LabelX1.Text = "Numero m√°ximo de productos que se podr√°n seleccionar para ser asociados a una ofe" &
     "rta de una sola vez"
         '
         'Lbl_NroMaxProdXOfertaDinamica
@@ -452,7 +658,7 @@ Partial Class Frm_OfDinamLista
         '
         Me.Btn_EditarNroMaxProductos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_EditarNroMaxProductos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_EditarNroMaxProductos.Location = New System.Drawing.Point(601, 535)
+        Me.Btn_EditarNroMaxProductos.Location = New System.Drawing.Point(601, 565)
         Me.Btn_EditarNroMaxProductos.Name = "Btn_EditarNroMaxProductos"
         Me.Btn_EditarNroMaxProductos.Size = New System.Drawing.Size(62, 27)
         Me.Btn_EditarNroMaxProductos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -469,18 +675,36 @@ Partial Class Frm_OfDinamLista
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX1, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Lbl_NroMaxProdXOfertaDinamica, 1, 0)
         Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(9, 535)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(9, 595)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(586, 28)
         Me.TableLayoutPanel1.TabIndex = 108
         '
+        'Chk_Marcar_Todas
+        '
+        Me.Chk_Marcar_Todas.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Marcar_Todas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Marcar_Todas.CheckBoxImageChecked = CType(resources.GetObject("Chk_Marcar_Todas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Marcar_Todas.FocusCuesEnabled = False
+        Me.Chk_Marcar_Todas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Marcar_Todas.Location = New System.Drawing.Point(9, 410)
+        Me.Chk_Marcar_Todas.Name = "Chk_Marcar_Todas"
+        Me.Chk_Marcar_Todas.Size = New System.Drawing.Size(145, 20)
+        Me.Chk_Marcar_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Marcar_Todas.TabIndex = 109
+        Me.Chk_Marcar_Todas.Text = "Marcar todas"
+        '
         'Frm_OfDinamLista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(885, 612)
+        Me.ClientSize = New System.Drawing.Size(1056, 672)
+        Me.Controls.Add(Me.Chk_Marcar_Todas)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.Btn_EditarNroMaxProductos)
         Me.Controls.Add(Me.GroupPanel3)
@@ -498,6 +722,8 @@ Partial Class Frm_OfDinamLista
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "OFERTAS DINAMICAS"
         Me.GroupPanel3.ResumeLayout(False)
+        CType(Me.Dtp_FechaTope, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_FechaInicio, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
         CType(Me.Grilla_Productos, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
@@ -531,4 +757,14 @@ Partial Class Frm_OfDinamLista
     Friend WithEvents Lbl_NroMaxProdXOfertaDinamica As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_EditarNroMaxProductos As DevComponents.DotNetBar.ButtonX
     Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents Cmb_TipoOferta As DevComponents.DotNetBar.Controls.ComboBoxEx
+    Friend WithEvents LabelX9 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Dtp_FechaTope As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Dtp_FechaInicio As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Btn_InfoKardex As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Chk_Marcar_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
 End Class

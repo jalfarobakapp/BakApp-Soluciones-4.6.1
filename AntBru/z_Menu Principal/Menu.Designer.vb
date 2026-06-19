@@ -111,6 +111,7 @@ Partial Class Menu
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
         Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_CrearFCV01a02 = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -829,7 +830,7 @@ Partial Class Menu
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP, Me.Btn_PDARMovil, Me.Btn_SobreStock, Me.Btn_CrucePagoMasivos, Me.Btn_EliminarDoc})
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP, Me.Btn_PDARMovil, Me.Btn_SobreStock, Me.Btn_CrucePagoMasivos, Me.Btn_EliminarDoc, Me.Btn_CrearFCV01a02})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
         Me.ButtonX1.Visible = False
@@ -1241,6 +1242,12 @@ Partial Class Menu
         Me.Lbl_NombreEmpresaActiva.TabIndex = 56
         Me.Lbl_NombreEmpresaActiva.Text = "NOMBRE DE LA EMPRESA... ESTE ES EL NOMBRE DE LA EM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
+        'Btn_CrearFCV01a02
+        '
+        Me.Btn_CrearFCV01a02.GlobalItem = False
+        Me.Btn_CrearFCV01a02.Name = "Btn_CrearFCV01a02"
+        Me.Btn_CrearFCV01a02.Text = "Crear FCV desde empresa A a empresa B"
+        '
         'Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1347,4 +1354,5 @@ Partial Class Menu
     Friend WithEvents Btn_ConvertirCOVNVV As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_EliminarDoc As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Lbl_NombreEmpresaActiva As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Btn_CrearFCV01a02 As DevComponents.DotNetBar.ButtonItem
 End Class
