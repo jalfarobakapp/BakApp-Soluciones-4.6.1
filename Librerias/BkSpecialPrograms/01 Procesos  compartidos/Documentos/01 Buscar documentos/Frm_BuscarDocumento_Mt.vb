@@ -1886,10 +1886,14 @@ Where Idmaeedo = {_Idmaeedo}"
     Function Fx_RevisarFincred(_Idmaeedo As Integer, _MostrarMensaje As Boolean) As Boolean
 
         Dim _RowMaeedo As DataRow
+        Dim _Zw_Docu_Ent As DataRow
         Dim _RowEntidad As DataRow
 
         Consulta_Sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
         _RowMaeedo = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Docu_Ent Where Idmaeedo = " & _Idmaeedo
+        _Zw_Docu_Ent = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
         _RowEntidad = Fx_Traer_Datos_Entidad(_RowMaeedo.Item("ENDO"), _RowMaeedo.Item("SUENDO"))
 
@@ -1908,6 +1912,10 @@ Where Idmaeedo = {_Idmaeedo}"
         'End If
 
         If Not _RevFincredEnt Then
+            Return True
+        End If
+
+        If _Zw_Docu_Ent.Item("UsaCiaSeguro") Then
             Return True
         End If
 

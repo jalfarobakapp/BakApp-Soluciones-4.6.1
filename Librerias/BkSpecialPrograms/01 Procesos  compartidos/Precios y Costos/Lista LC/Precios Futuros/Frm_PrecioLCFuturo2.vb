@@ -5,6 +5,7 @@ Public Class Frm_PrecioLCFuturo2
     Dim Consulta_sql As String
 
     Dim _Tbl_PreciosFuturo As DataTable
+    Dim _Dv_PreciosFuturo As DataView
 
     Public Sub New()
 
@@ -15,11 +16,16 @@ Public Class Frm_PrecioLCFuturo2
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
 
+        Sb_Color_Botones_Barra(Bar1)
+
     End Sub
 
     Private Sub Frm_PrecioLCFuturo2_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
+        Dtp_FechaInicio.Text = String.Empty
+        Dtp_FechaTope.Text = String.Empty
 
         Sb_Llenar_Combos()
         Sb_ActualizarGrilla()
@@ -33,22 +39,80 @@ Public Class Frm_PrecioLCFuturo2
 
         Dim _FechaServidor As String = Format(FechaDelServidor, "yyyyMMdd")
 
-        Consulta_sql = "Select Cast(0 As Bit) As Chk,LcDet.Id,Id_Enc,Lista,NombreLista,LcDet.Codigo,NOKOPR,PrecioUd1,PrecioUd2,LcEnt.FechaCreacion,LcEnt.FechaProgramada," &
-                       "LcEnt.FechaAplica,LcEnt.Funcionario,EcuacionUd1,EcuacionUd2,Rtu,MargenPorc,VarMcosto,VarPm,VarUc,VarFlete,VarIva,VarIla,VarNetoDigit," &
-                       "VarValorDigit,LcDet.Eliminada,LcDet.FuncionarioElimina,LcDet.FechaEliminacion,Cast(1 As Int) As Cantidad" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_ListaLC_Programadas_Detalles LcDet" & vbCrLf &
-                       "Inner Join " & _Global_BaseBk & "Zw_ListaLC_Programadas LcEnt On LcEnt.Id = LcDet.Id_Enc" & vbCrLf &
-                       "Left Join MAEPR On KOPR = LcDet.Codigo" & vbCrLf &
-                       "Where LcEnt.Activo = 1 And LcDet.Eliminada = 0 And Lista = '" & CmbLista.SelectedValue & "'" & vbCrLf &
-                       "And LcEnt.FechaProgramada > '" & _FechaServidor & "'" & vbCrLf &
-                       "Order By LcEnt.FechaProgramada,Id_Enc,LcDet.Codigo"
+        Dim _TextoBuscador As String = Txt_Buscador.Text
+        Dim _SuperFamilia As String = Fx_Traer_Valor_Combo(Cmb_SuperFamilia)
+        Dim _Marca As String = Fx_Traer_Valor_Combo(Cmb_Marca)
+        Dim _Zona As String = Fx_Traer_Valor_Combo(Cmb_Zona)
+
+        Dim _UsarFechaInicio As Boolean = Not String.IsNullOrWhiteSpace(Dtp_FechaInicio.Text)
+        Dim _UsarFechaTope As Boolean = Not String.IsNullOrWhiteSpace(Dtp_FechaTope.Text)
+
+        Dim _FechaInicio As Date = Dtp_FechaInicio.Value
+        Dim _FechaTope As Date = Dtp_FechaTope.Value
+
+        Dim _IdFilaActual As Integer = 0
+
+        If Not IsNothing(Grilla.CurrentRow) Then
+            If Not IsDBNull(Grilla.CurrentRow.Cells("Id").Value) Then
+                _IdFilaActual = Grilla.CurrentRow.Cells("Id").Value
+            End If
+        End If
+
+        Consulta_sql = $"
+Select Cast(0 As Bit) As Chk,LcDet.Id,Id_Enc,Lista,NombreLista,LcDet.Codigo,Mp.NOKOPR,PrecioUd1,PrecioUd2,LcEnt.FechaCreacion,LcEnt.FechaProgramada,
+LcEnt.FechaAplica,LcEnt.Funcionario,EcuacionUd1,EcuacionUd2,Rtu,MargenPorc,VarMcosto,VarPm,VarUc,VarFlete,VarIva,VarIla,VarNetoDigit,VarValorDigit,
+LcDet.Eliminada,LcDet.FuncionarioElimina,LcDet.FechaEliminacion,Cast(1 As Int) As Cantidad,
+Isnull(Tcz.KOCARAC,'') As 'CosZona',Isnull(Tcz.NOKOCARAC,'') As 'Zona',
+Isnull(Spf.KOFM,'') As 'CodSuperFm',Isnull(Spf.NOKOFM,'') As 'SuperFamilia',Isnull(Fm.KOPF,'') As 'CodFm',Isnull(Fm.NOKOPF,'') As 'Familia',Isnull(Hf.KOHF,'') As 'CodSubFm',Isnull(Hf.NOKOHF,'') As 'SubFamilia',
+Isnull(Mrc.KOMR,'') As 'CodMarca',Isnull(Mrc.NOKOMR,'') As 'Marca'
+From {_Global_BaseBk}Zw_ListaLC_Programadas_Detalles LcDet
+Inner Join {_Global_BaseBk}Zw_ListaLC_Programadas LcEnt On LcEnt.Id = LcDet.Id_Enc
+Left Join MAEPR Mp On KOPR = LcDet.Codigo
+Left Join TABCARAC Tcz On KOTABLA = 'ZONAPRODUC' And Tcz.KOCARAC = Mp.ZONAPR
+Left Join TABFM Spf On Spf.KOFM = Mp.FMPR
+Left Join TABPF Fm On Fm.KOFM = Mp.FMPR And Fm.KOPF = Mp.PFPR
+Left Join TABHF Hf On Hf.KOFM = Mp.FMPR And Hf.KOPF = Mp.PFPR And Hf.KOHF = Mp.HFPR
+Left Join TABMR Mrc On Mrc.KOMR = Mp.MRPR 
+Where LcEnt.Activo = 1 And LcDet.Eliminada = 0 And Lista = '{CmbLista.SelectedValue}'
+And LcEnt.FechaProgramada > '{_FechaServidor}'
+Order By LcEnt.FechaProgramada,Id_Enc,LcDet.Codigo"
+
         _Tbl_PreciosFuturo = _Sql.Fx_Get_DataTable(Consulta_sql)
+        _Dv_PreciosFuturo = New DataView(_Tbl_PreciosFuturo)
+
+        _Cargando_Filtros = True
+
+        Try
+
+            Sb_Llenar_Combos_Filtros()
+
+            Txt_Buscador.Text = _TextoBuscador
+
+            If _UsarFechaInicio Then
+                Dtp_FechaInicio.Value = _FechaInicio
+            Else
+                Dtp_FechaInicio.Text = String.Empty
+            End If
+
+            If _UsarFechaTope Then
+                Dtp_FechaTope.Value = _FechaTope
+            Else
+                Dtp_FechaTope.Text = String.Empty
+            End If
+
+            Fx_Seleccionar_Valor_Combo(Cmb_SuperFamilia, _SuperFamilia)
+            Fx_Seleccionar_Valor_Combo(Cmb_Marca, _Marca)
+            Fx_Seleccionar_Valor_Combo(Cmb_Zona, _Zona)
+
+        Finally
+            _Cargando_Filtros = False
+        End Try
 
         With Grilla
 
-            .DataSource = _Tbl_PreciosFuturo
+            .DataSource = _Dv_PreciosFuturo
 
-            OcultarEncabezadoGrilla(Grilla, True)
+            OcultarEncabezadoGrilla(Grilla, False)
 
             Dim _DisplayIndex = 0
 
@@ -71,49 +135,49 @@ Public Class Frm_PrecioLCFuturo2
             .Columns("NOKOPR").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("Lista").Width = 30
-            '.Columns("Lista").HeaderText = "LP"
-            '.Columns("Lista").Visible = True
-            '.Columns("Lista").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
-            '.Columns("NombreLista").Width = 150
-            '.Columns("NombreLista").HeaderText = "Nombre Lista"
-            '.Columns("NombreLista").Visible = True
-            '.Columns("NombreLista").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
-
             .Columns("Funcionario").Width = 30
             .Columns("Funcionario").HeaderText = "Fun"
             .Columns("Funcionario").Visible = True
             .Columns("Funcionario").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FechaCreacion").Width = 80
+            .Columns("Zona").Width = 100
+            .Columns("Zona").HeaderText = "Zona"
+            .Columns("Zona").Visible = True
+            .Columns("Zona").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("SuperFamilia").Width = 100
+            .Columns("SuperFamilia").HeaderText = "Super Familia"
+            .Columns("SuperFamilia").Visible = True
+            .Columns("SuperFamilia").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Marca").Width = 100
+            .Columns("Marca").HeaderText = "Marca"
+            .Columns("Marca").Visible = True
+            .Columns("Marca").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FechaCreacion").Width = 70
             .Columns("FechaCreacion").HeaderText = "F.creación"
             .Columns("FechaCreacion").Visible = True
             .Columns("FechaCreacion").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("FechaCreacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FechaProgramada").Width = 80
+            .Columns("FechaProgramada").Width = 70
             .Columns("FechaProgramada").HeaderText = "F.activación"
             .Columns("FechaProgramada").Visible = True
             .Columns("FechaProgramada").DefaultCellStyle.Format = "dd/MM/yyyy"
             .Columns("FechaProgramada").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("PrecioUd1").Width = 80
+            .Columns("PrecioUd1").Width = 70
             .Columns("PrecioUd1").HeaderText = "Precio Ud1"
             .Columns("PrecioUd1").DefaultCellStyle.Format = "$ ###,##"
             .Columns("PrecioUd1").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("PrecioUd1").Visible = True
-
-            '.Columns("PrecioUd2").Width = 80
-            '.Columns("PrecioUd2").HeaderText = "Precio Ud2"
-            '.Columns("PrecioUd2").DefaultCellStyle.Format = "$ ###,##"
-            '.Columns("PrecioUd2").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("PrecioUd2").Visible = True
 
             .Columns("Cantidad").Width = 60
             .Columns("Cantidad").HeaderText = "Cant.Imp"
@@ -127,6 +191,9 @@ Public Class Frm_PrecioLCFuturo2
 
         End With
 
+        Sb_Filtrar_Grilla()
+        Fx_Restaurar_Fila_Seleccionada(_IdFilaActual)
+
     End Sub
 
     Private Sub Grilla_CellMouseUp(sender As Object, e As DataGridViewCellMouseEventArgs) Handles Grilla.CellMouseUp
@@ -135,7 +202,8 @@ Public Class Frm_PrecioLCFuturo2
 
     Private Sub Btnimprimir_Click(sender As Object, e As EventArgs) Handles Btnimprimir.Click
 
-        Sb_Imprimir_Etiquetas()
+        'Sb_Imprimir_Etiquetas()
+        Sb_Imprimir_Etiquetas_Orden_Grilla()
 
     End Sub
 
@@ -345,6 +413,186 @@ Public Class Frm_PrecioLCFuturo2
 
     End Sub
 
+    Private Function Fx_Calcular_Veces_Impresion(_Cantidad As Integer,
+                                                 _CantPorLinea As Integer) As Integer
+
+        If _CantPorLinea <= 0 Then
+            _CantPorLinea = 1
+        End If
+
+        If _Cantidad <= 0 Then
+            Return 0
+        End If
+
+        Return CInt(Math.Ceiling(_Cantidad / CDbl(_CantPorLinea)))
+
+    End Function
+
+    Sub Sb_Imprimir_Etiquetas_Orden_Grilla()
+
+        Try
+
+            Grilla.EndEdit()
+
+            If IsNothing(CmbEtiqueta.SelectedValue) Then
+                Throw New System.Exception("Debe seleccionar un formato de impresión")
+            End If
+
+            Dim _NombreEtiqueta As String = CmbEtiqueta.SelectedValue.ToString.Trim
+
+            If String.IsNullOrEmpty(_NombreEtiqueta) Then
+                Throw New System.Exception("Debe seleccionar un formato de impresión")
+            End If
+
+            Dim _Puerto As String = String.Empty
+
+            If Not IsNothing(CmbPuerto.SelectedValue) Then
+                _Puerto = CmbPuerto.SelectedValue.ToString.Trim
+            End If
+
+            Dim _ListaSeleccionada As String = String.Empty
+
+            If Not IsNothing(CmbLista.SelectedValue) Then
+                _ListaSeleccionada = CmbLista.SelectedValue.ToString.Trim
+            End If
+
+            Dim _CantPorLinea As Integer =
+                _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tbl_DisenoBarras",
+                                  "CantPorLinea",
+                                  "NombreEtiqueta = '" & _NombreEtiqueta & "'")
+
+            If _CantPorLinea <= 0 Then
+                _CantPorLinea = 1
+            End If
+
+            Dim _FilasSeleccionadas As New List(Of DataGridViewRow)
+
+            For Each _FilaGrilla As DataGridViewRow In Grilla.Rows
+
+                If _FilaGrilla.IsNewRow Then
+                    Continue For
+                End If
+
+                Dim _Marcada As Boolean = False
+
+                If Not IsDBNull(_FilaGrilla.Cells("Chk").Value) Then
+                    _Marcada = CBool(_FilaGrilla.Cells("Chk").Value)
+                End If
+
+                If Not _Marcada Then
+                    Continue For
+                End If
+
+                Dim _ListaFila As String = String.Empty
+
+                If Not IsDBNull(_FilaGrilla.Cells("Lista").Value) Then
+                    _ListaFila = _FilaGrilla.Cells("Lista").Value.ToString.Trim
+                End If
+
+                If _ListaFila <> _ListaSeleccionada Then
+                    _FilaGrilla.Cells("Chk").Value = False
+                    Continue For
+                End If
+
+                _FilasSeleccionadas.Add(_FilaGrilla)
+
+            Next
+
+            If _FilasSeleccionadas.Count = 0 Then
+                MessageBoxEx.Show(Me, "No hay registros seleccionados", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            For Each _FilaGrilla As DataGridViewRow In _FilasSeleccionadas
+
+                Dim _Cantidad As Integer = 0
+
+                If Not IsDBNull(_FilaGrilla.Cells("Cantidad").Value) Then
+                    Integer.TryParse(_FilaGrilla.Cells("Cantidad").Value.ToString(), _Cantidad)
+                End If
+
+                Dim _Id As Integer = 0
+                Dim _Codigo As String = String.Empty
+                Dim _Descripcion As String = String.Empty
+                Dim _Lista As String = String.Empty
+
+                If Not IsDBNull(_FilaGrilla.Cells("Id").Value) Then
+                    _Id = CInt(_FilaGrilla.Cells("Id").Value)
+                End If
+
+                If Not IsDBNull(_FilaGrilla.Cells("Codigo").Value) Then
+                    _Codigo = _FilaGrilla.Cells("Codigo").Value.ToString.Trim
+                End If
+
+                If Not IsDBNull(_FilaGrilla.Cells("NOKOPR").Value) Then
+                    _Descripcion = _FilaGrilla.Cells("NOKOPR").Value.ToString.Trim
+                End If
+
+                If Not IsDBNull(_FilaGrilla.Cells("Lista").Value) Then
+                    _Lista = _FilaGrilla.Cells("Lista").Value.ToString.Trim
+                End If
+
+                If _Cantidad <= 0 Then
+                    MessageBoxEx.Show(Me, "Debe poner la cantidad a imprimir" & vbCrLf & vbCrLf &
+                                      "Producto: " & _Codigo & "-" & _Descripcion,
+                                      "Validación",
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Stop)
+                    Continue For
+                End If
+
+                Dim _Veces As Integer = Fx_Calcular_Veces_Impresion(_Cantidad, _CantPorLinea)
+
+                If _Veces < 1 Then
+                    _Veces = 1
+                End If
+
+                For _Indice = 1 To _Veces
+
+                    Dim _SigueMarcada As Boolean = False
+
+                    If Not IsDBNull(_FilaGrilla.Cells("Chk").Value) Then
+                        _SigueMarcada = CBool(_FilaGrilla.Cells("Chk").Value)
+                    End If
+
+                    If Not _SigueMarcada Then
+                        Exit For
+                    End If
+
+                    Dim _Imp As New Class_Imprimir_Barras
+
+                    _Imp.Sb_Imprimir_Producto(_NombreEtiqueta,
+                                              _Puerto,
+                                              _Codigo,
+                                              _Lista,
+                                              Mod_Empresa,
+                                              Mod_Sucursal,
+                                              Mod_Bodega,
+                                              "",
+                                              False,
+                                              True,
+                                              _Id,
+                                              "",
+                                              False,
+                                              False,
+                                              False)
+
+                    If Not String.IsNullOrEmpty(_Imp.Error) Then
+                        If MessageBoxEx.Show(Me, _Imp.Error, "Error al imprimir", MessageBoxButtons.OKCancel, MessageBoxIcon.Stop) <> DialogResult.OK Then
+                            Return
+                        End If
+                    End If
+
+                Next
+
+            Next
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, ex.Message, "Problema al imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End Try
+
+    End Sub
+
     Private Sub validar_Keypress(sender As Object, e As System.Windows.Forms.KeyPressEventArgs)
         ' evento Keypress  
 
@@ -377,11 +625,23 @@ Public Class Frm_PrecioLCFuturo2
         AddHandler validar.KeyPress, AddressOf validar_Keypress
     End Sub
 
-    Private Sub Chk_Marcar_todo_Click(sender As Object, e As EventArgs) Handles Chk_Marcar_todo.Click
+    Private Sub Chk_Marcar_todo_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Marcar_todo.CheckedChanged
+
+        Dim _Marcar As Boolean = Chk_Marcar_todo.Checked
+
+        Grilla.EndEdit()
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
-            _Fila.Cells("Chk").Value = Chk_Marcar_todo.Checked
+
+            If _Fila.IsNewRow Then
+                Continue For
+            End If
+
+            _Fila.Cells("Chk").Value = _Marcar
+
         Next
+
+        Grilla.EndEdit()
 
     End Sub
 
@@ -615,4 +875,218 @@ Public Class Frm_PrecioLCFuturo2
 
     End Sub
 
+    Dim _Cargando_Filtros As Boolean
+
+    Sub Sb_Llenar_Combos_Filtros()
+
+        Sb_Llenar_Combo_Filtro(Cmb_SuperFamilia, "SuperFamilia")
+        Sb_Llenar_Combo_Filtro(Cmb_Marca, "Marca")
+        Sb_Llenar_Combo_Filtro(Cmb_Zona, "Zona")
+
+    End Sub
+
+    Sub Sb_Llenar_Combo_Filtro(_Combo As DevComponents.DotNetBar.Controls.ComboBoxEx,
+                           _Campo As String)
+
+        Dim _Tbl_Combo As New DataTable
+        _Tbl_Combo.Columns.Add("Padre", GetType(String))
+        _Tbl_Combo.Columns.Add("Hijo", GetType(String))
+
+        Dim _Fila As DataRow = _Tbl_Combo.NewRow()
+        _Fila("Padre") = String.Empty
+        _Fila("Hijo") = "Todas..."
+        _Tbl_Combo.Rows.Add(_Fila)
+
+        If Not IsNothing(_Tbl_PreciosFuturo) AndAlso _Tbl_PreciosFuturo.Rows.Count > 0 Then
+
+            Dim _Vista As New DataView(_Tbl_PreciosFuturo)
+            _Vista.Sort = _Campo
+
+            Dim _Tbl_Distintos As DataTable = _Vista.ToTable(True, _Campo)
+
+            For Each _FilaDato As DataRow In _Tbl_Distintos.Rows
+
+                Dim _Valor As String = String.Empty
+
+                If Not IsDBNull(_FilaDato.Item(_Campo)) Then
+                    _Valor = _FilaDato.Item(_Campo).ToString.Trim
+                End If
+
+                If Not String.IsNullOrEmpty(_Valor) Then
+                    _Fila = _Tbl_Combo.NewRow()
+                    _Fila("Padre") = _Valor
+                    _Fila("Hijo") = _Valor
+                    _Tbl_Combo.Rows.Add(_Fila)
+                End If
+
+            Next
+
+        End If
+
+        With _Combo
+            .DataSource = Nothing
+            .ValueMember = "Padre"
+            .DisplayMember = "Hijo"
+            .DataSource = _Tbl_Combo
+            .SelectedValue = String.Empty
+        End With
+
+    End Sub
+
+    Private Sub Txt_Buscador_TextChanged(sender As Object, e As EventArgs) Handles Txt_Buscador.TextChanged
+        If _Cargando_Filtros Then Return
+        Sb_Filtrar_Grilla()
+    End Sub
+
+    Private Sub Cmb_SuperFamilia_SelectedValueChanged(sender As Object, e As EventArgs) Handles Cmb_SuperFamilia.SelectedValueChanged
+        If _Cargando_Filtros Then Return
+        Sb_Filtrar_Grilla()
+    End Sub
+
+    Private Sub Cmb_Marca_SelectedValueChanged(sender As Object, e As EventArgs) Handles Cmb_Marca.SelectedValueChanged
+        If _Cargando_Filtros Then Return
+        Sb_Filtrar_Grilla()
+    End Sub
+
+    Private Sub Cmb_Zona_SelectedValueChanged(sender As Object, e As EventArgs) Handles Cmb_Zona.SelectedValueChanged
+        If _Cargando_Filtros Then Return
+        Sb_Filtrar_Grilla()
+    End Sub
+
+    Private Sub Dtp_FechaInicio_ValueChanged(sender As Object, e As EventArgs) Handles Dtp_FechaInicio.ValueChanged
+        If _Cargando_Filtros Then Return
+        Sb_Filtrar_Grilla()
+    End Sub
+
+    Private Sub Dtp_FechaTope_ValueChanged(sender As Object, e As EventArgs) Handles Dtp_FechaTope.ValueChanged
+        If _Cargando_Filtros Then Return
+        Sb_Filtrar_Grilla()
+    End Sub
+
+    Sub Sb_Filtrar_Grilla()
+
+        If IsNothing(_Dv_PreciosFuturo) Then
+            Return
+        End If
+
+        Dim _Filtro = String.Empty
+
+        If Not String.IsNullOrWhiteSpace(Txt_Buscador.Text) Then
+
+            Dim _Texto = Replace(Txt_Buscador.Text.Trim, "'", "''")
+
+            _Filtro &= "(Codigo Like '%" & _Texto & "%' " &
+                       "Or NOKOPR Like '%" & _Texto & "%')"
+
+        End If
+
+        If Not IsNothing(Cmb_SuperFamilia.SelectedValue) Then
+
+            Dim _SuperFamilia = Cmb_SuperFamilia.SelectedValue.ToString.Trim
+
+            If Not String.IsNullOrEmpty(_SuperFamilia) Then
+                If Not String.IsNullOrEmpty(_Filtro) Then _Filtro &= " And "
+                _Filtro &= "SuperFamilia = '" & Replace(_SuperFamilia, "'", "''") & "'"
+            End If
+
+        End If
+
+        If Not IsNothing(Cmb_Marca.SelectedValue) Then
+
+            Dim _Marca = Cmb_Marca.SelectedValue.ToString.Trim
+
+            If Not String.IsNullOrEmpty(_Marca) Then
+                If Not String.IsNullOrEmpty(_Filtro) Then _Filtro &= " And "
+                _Filtro &= "Marca = '" & Replace(_Marca, "'", "''") & "'"
+            End If
+
+        End If
+
+        If Not IsNothing(Cmb_Zona.SelectedValue) Then
+
+            Dim _Zona = Cmb_Zona.SelectedValue.ToString.Trim
+
+            If Not String.IsNullOrEmpty(_Zona) Then
+                If Not String.IsNullOrEmpty(_Filtro) Then _Filtro &= " And "
+                _Filtro &= "Zona = '" & Replace(_Zona, "'", "''") & "'"
+            End If
+
+        End If
+
+        If Not String.IsNullOrWhiteSpace(Dtp_FechaInicio.Text) Then
+            If Not String.IsNullOrEmpty(_Filtro) Then _Filtro &= " And "
+            _Filtro &= "(CONVERT(FechaCreacion, 'System.DateTime') >= #" & Dtp_FechaInicio.Value.Date.ToString("MM/dd/yyyy") & "# " &
+                       "And CONVERT(FechaCreacion, 'System.DateTime') < #" & Dtp_FechaInicio.Value.Date.AddDays(1).ToString("MM/dd/yyyy") & "#)"
+        End If
+
+        If Not String.IsNullOrWhiteSpace(Dtp_FechaTope.Text) Then
+            If Not String.IsNullOrEmpty(_Filtro) Then _Filtro &= " And "
+            _Filtro &= "(CONVERT(FechaProgramada, 'System.DateTime') >= #" & Dtp_FechaTope.Value.Date.ToString("MM/dd/yyyy") & "# " &
+                       "And CONVERT(FechaProgramada, 'System.DateTime') < #" & Dtp_FechaTope.Value.Date.AddDays(1).ToString("MM/dd/yyyy") & "#)"
+        End If
+
+        _Dv_PreciosFuturo.RowFilter = _Filtro
+
+    End Sub
+
+    Function Fx_Traer_Valor_Combo(_Combo As DevComponents.DotNetBar.Controls.ComboBoxEx) As String
+
+        If IsNothing(_Combo.SelectedValue) Then
+            Return String.Empty
+        End If
+
+        If TypeOf _Combo.SelectedValue Is DataRowView Then
+            Return String.Empty
+        End If
+
+        Return _Combo.SelectedValue.ToString.Trim
+
+    End Function
+
+    Sub Fx_Seleccionar_Valor_Combo(_Combo As DevComponents.DotNetBar.Controls.ComboBoxEx,
+                               _Valor As String)
+
+        If IsNothing(_Combo.DataSource) Then
+            Return
+        End If
+
+        If String.IsNullOrEmpty(_Valor) Then
+            _Combo.SelectedValue = String.Empty
+            Return
+        End If
+
+        For Each _Item As DataRowView In _Combo.Items
+            If _Item("Padre").ToString.Trim = _Valor Then
+                _Combo.SelectedValue = _Valor
+                Return
+            End If
+        Next
+
+        _Combo.SelectedValue = String.Empty
+
+    End Sub
+
+    Sub Fx_Restaurar_Fila_Seleccionada(_Id As Integer)
+
+        If Not CBool(_Id) Then
+            Return
+        End If
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            If _Fila.IsNewRow Then
+                Continue For
+            End If
+
+            If Not IsDBNull(_Fila.Cells("Id").Value) Then
+                If _Fila.Cells("Id").Value = _Id Then
+                    Grilla.CurrentCell = _Fila.Cells("Codigo")
+                    _Fila.Selected = True
+                    Exit For
+                End If
+            End If
+
+        Next
+
+    End Sub
 End Class

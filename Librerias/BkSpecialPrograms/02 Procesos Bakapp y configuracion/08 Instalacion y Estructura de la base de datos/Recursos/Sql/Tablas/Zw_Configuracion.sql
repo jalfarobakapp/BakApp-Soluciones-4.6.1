@@ -150,6 +150,7 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [SolictarCiaSeguro]                                     [bit]           NOT NULL DEFAULT (0),
 [ToleranciaDocMoroso]                                   [int]           NOT NULL DEFAULT (0),
 [ActivaTipoCompra]                                      [bit]           NOT NULL DEFAULT (0),
+[PermiteVtaContadoCiaSeguro]                            [bit]           NOT NULL DEFAULT (0),
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Empresa] ASC,

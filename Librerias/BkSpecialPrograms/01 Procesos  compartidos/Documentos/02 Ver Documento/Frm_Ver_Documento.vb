@@ -348,7 +348,8 @@ Public Class Frm_Ver_Documento
                 AddHandler GrillaDetalleDoc.MouseDown, AddressOf Sb_Grilla_Detalle_MouseDown
                 AddHandler GrillaEncabezado.MouseDown, AddressOf Sb_Grilla_Encabezado_MouseDown
                 AddHandler GrillaDetalleDoc.CellEnter, AddressOf GrillaDetalleDoc_CellEnter
-                AddHandler GrillaDetalleDoc.CellDoubleClick, AddressOf Sb_Ver_Documento_Origen
+                AddHandler GrillaDetalleDoc.CellDoubleClick, AddressOf GrillaDetalleDoc_CellDoubleClick
+                AddHandler GrillaDetalleDoc.KeyDown, AddressOf GrillaDetalleDoc_KeyDown
 
                 'Dim Fm As New Frm_Ver_Documentos_Permisos(_Idmaeedo)
                 'Btn_Permisos_Asociados.Enabled = (Convert.ToBoolean(Fm.Tbl_Remotas.Rows.Count) Or Convert.ToBoolean(Fm.Tbl_OtrosPermisos.Rows.Count))
@@ -1311,32 +1312,120 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Sub Sb_Ver_Documento_Origen()
+    Sub GrillaDetalleDoc_CellDoubleClick()
 
-        Dim _Fila As DataGridViewRow = GrillaDetalleDoc.Rows(GrillaDetalleDoc.CurrentRow.Index)
+        Try
 
-        Dim _Idmaeedo_pa As Integer = _Fila.Cells("IDMAEEDO_PA").Value
-        Dim _Idmaeddo As Integer = _Fila.Cells("IDRST").Value
+            Dim _Fila As DataGridViewRow = GrillaDetalleDoc.Rows(GrillaDetalleDoc.CurrentRow.Index)
 
-        If _Idmaeedo_pa <> 0 Then
+            Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEDDO").Value
+            Dim _Idmaeddo As Integer = _Fila.Cells("IDMAEDDO").Value
+            Dim _Codigo As String = _Fila.Cells("KOPRCT").Value
+            Dim _Descripcion As String = _Fila.Cells("NOKOPR").Value
+
+            Dim _Idrst As Integer = _Fila.Cells("IDRST").Value
+            Dim _Idmaeedo_pa As Integer = _Fila.Cells("IDMAEEDO_PA").Value
+
+            Dim _Cabeza As String = Fx_ObtenerTextoCabeceraFila(_Fila)
+
+            If _Cabeza = "Cant." Then
+
+                Dim Ls_Lotes As List(Of List(Of Zw_Docu_Det_Lote))
+
+                Dim _Cl_Lotes As New Cl_Lotes_Bk(Ls_Lotes, Nothing)
+                Dim _Lotes As List(Of Zw_Docu_Det_Lote) = _Cl_Lotes.Fx_Lotes_XProductoBD(_Idmaeddo)
+
+                If CBool(_Lotes.Count) Then
+
+                    Dim Fm_Lotes As New Frm_Lotes_Det
+                    Fm_Lotes.Text = $"Producto: {_Codigo.ToString.Trim} - {_Descripcion.ToString.Trim}"
+                    Fm_Lotes.Ls_Lotes = _Lotes
+                    Fm_Lotes.ModoSoloLectura = True
+                    Fm_Lotes.ShowDialog(Me)
+                    Fm_Lotes.Dispose()
+                    Return
+
+                End If
+
+            End If
+
+            If _Idmaeedo_pa = 0 Then
+
+                Beep()
+                ToastNotification.Show(Me, "NO HAY RELACIONES PARA LA LINEA ACTIVA", My.Resources.cross,
+                                      1 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+
+            End If
 
             Dim Fm As New Frm_Ver_Documento(_Idmaeedo_pa, Enum_Tipo_Apertura.Desde_Random_SQL)
             Fm.Btn_Ver_Orden_de_despacho.Visible = Btn_Ver_Orden_de_despacho.Visible
-            Fm.Idrst = _Idmaeddo
+            Fm.Idrst = _Idrst
             Fm.Correr_a_la_derecha = True
             Fm.ShowDialog(Me)
             Fm.Dispose()
 
-        Else
+        Catch ex As Exception
+            ' Registrar el error en la variable de la clase para uso posterior
+            _Error = ex.Message
 
-            Beep()
-            ToastNotification.Show(Me, "NO HAY RELACIONES PARA LA LINEA ACTIVA", My.Resources.cross,
-                                  1 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+            ' Mostrar mensaje al usuario (consistente con el resto de la aplicación)
+            MessageBoxEx.Show(Me, ex.Message, "Error al abrir línea", MessageBoxButtons.OK, MessageBoxIcon.Error)
 
-        End If
+            ' Notificar de forma breve en la UI
+            Try
+                ToastNotification.Show(Me, "Ocurrió un error al procesar la línea activa", My.Resources.cross,
+                                       2 * 1000, eToastGlowColor.Red, eToastPosition.MiddleCenter)
+            Catch
+                ' Silenciar cualquier error secundario en la notificación
+            End Try
+
+            ' No rethrow para mantener la estabilidad de la UI
+
+        End Try
 
     End Sub
 
+    Private Sub GrillaDetalleDoc_KeyDown(sender As Object, e As System.Windows.Forms.KeyEventArgs)
+
+        Try
+
+            ' Detectar Enter
+            If e.KeyCode = Keys.Enter Then
+
+                ' Asegurar que exista una celda activa
+                If GrillaDetalleDoc.CurrentCell Is Nothing Then
+                    Return
+                End If
+
+                Dim col As DataGridViewColumn = GrillaDetalleDoc.CurrentCell.OwningColumn
+                Dim colName As String = String.Empty
+                Dim headerText As String = String.Empty
+
+                If Not IsNothing(col) Then
+                    colName = col.Name
+                    headerText = col.HeaderText
+                End If
+
+                ' Comparar nombre de columna o texto del encabezado
+                If String.Equals(colName, "CANTIDAD", StringComparison.OrdinalIgnoreCase) OrElse
+               String.Equals(headerText, "Cant.", StringComparison.OrdinalIgnoreCase) Then
+
+                    ' Evitar que el Enter mueva el foco o haga otra acción por defecto
+                    e.Handled = True
+                    e.SuppressKeyPress = True
+
+                    ' Llamar al método que se ejecuta al hacer doble click en la línea
+                    GrillaDetalleDoc_CellDoubleClick()
+
+                End If
+
+            End If
+
+        Catch ex As Exception
+            ' Silenciar excepción para no interrumpir la UX; opcionalmente logear si existe infraestructura
+        End Try
+
+    End Sub
     Sub Sb_Formato_Grilla_EncPie_RD()
 
         Dim _Tido = _TblEncabezado.Rows(0).Item("TIDO").ToString.Trim
@@ -2455,11 +2544,12 @@ Public Class Frm_Ver_Documento
 
         Dim _Fila As DataGridViewRow = GrillaDetalleDoc.Rows(GrillaDetalleDoc.CurrentRow.Index)
 
-        Dim _Tido = Trim(_TblEncabezado.Rows(0).Item("TIDO"))
-        Dim _Descripcion As String = Trim(NuloPorNro(_Fila.Cells("NOKOPR").Value, ""))
+        Dim _Tido = _TblEncabezado.Rows(0).Item("TIDO").ToString.Trim
+        Dim _Descripcion As String = NuloPorNro(_Fila.Cells("NOKOPR").Value, "").ToString.Trim
         Dim _Lista = _Fila.Cells("LISTA").Value
-        Dim _Tidopa As String = ", Desde " & Trim(_Fila.Cells("TIDOPA").Value) & "-"
-        Dim _Nudopa As String = Trim(_Fila.Cells("NUDOPA").Value)
+        Dim _Tidopa As String = ", Desde " & _Fila.Cells("TIDOPA").Value.ToString.Trim & "-"
+        Dim _Nudopa As String = _Fila.Cells("NUDOPA").Value.ToString.Trim
+        Dim _Feemlipa As Date = NuloPorNro(_Fila.Cells("FEEMLIPA").Value, Nothing)
         Dim _Obs = String.Empty
 
         Dim _Vaivli As Double = _Fila.Cells("VAIVLI").Value
@@ -2479,7 +2569,12 @@ Public Class Frm_Ver_Documento
 
         End If
 
-        If String.IsNullOrEmpty(_Nudopa) Then _Tidopa = String.Empty : _Nudopa = String.Empty
+        If String.IsNullOrEmpty(_Nudopa) Then
+            _Tidopa = String.Empty
+            _Nudopa = String.Empty
+        Else
+            _Nudopa += $" ({_Feemlipa.ToString("dd/MM/yyyy")})"
+        End If
 
         LblDescripcion.Text = _Descripcion & ", Lista [" & _Lista & "]" & _Tidopa & _Nudopa & ", I.V.A. " & FormatNumber(_Vaivli, 2) & _Obs
 
@@ -2548,7 +2643,7 @@ Public Class Frm_Ver_Documento
     End Sub
 
     Private Sub Btn_Ver_documento_origen_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Ver_documento_origen.Click
-        Sb_Ver_Documento_Origen()
+        GrillaDetalleDoc_CellDoubleClick()
     End Sub
 
 #Region "REVISAR STOCK"

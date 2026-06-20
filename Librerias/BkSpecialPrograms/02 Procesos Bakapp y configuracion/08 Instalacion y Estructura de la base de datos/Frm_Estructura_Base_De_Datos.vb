@@ -459,7 +459,7 @@ Public Class Frm_Estructura_Base_De_Datos
                     Consulta_Sql = _Accion
                     Consulta_Sql = Replace(Consulta_Sql, "varbinary (-1)", "varbinary")
                     Consulta_Sql = Replace(Consulta_Sql, "varchar (-1)", "varchar(Max)")
-
+                    Me.Cursor = Cursors.WaitCursor
                     If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
                         _Fila.Cells("Reparado").Value = True
                         Grilla.Rows.RemoveAt(Grilla.CurrentRow.Index)
@@ -472,6 +472,7 @@ Public Class Frm_Estructura_Base_De_Datos
         Catch ex As Exception
         Finally
             Grilla.Enabled = True
+            Me.Cursor = Cursors.Default
         End Try
 
     End Sub

@@ -30,6 +30,7 @@ Partial Class Frm_InfoEnt_Situacion_Documentos
         Me.Grilla_Documentos = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Salir = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Grilla_Documentos, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -120,7 +121,7 @@ Partial Class Frm_InfoEnt_Situacion_Documentos
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Salir})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Exportar_Excel, Me.Btn_Salir})
         Me.Bar2.Location = New System.Drawing.Point(0, 395)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(655, 41)
@@ -137,6 +138,17 @@ Partial Class Frm_InfoEnt_Situacion_Documentos
         Me.Btn_Salir.ImageAlt = CType(resources.GetObject("Btn_Salir.ImageAlt"), System.Drawing.Image)
         Me.Btn_Salir.Name = "Btn_Salir"
         Me.Btn_Salir.Text = "ButtonItem1"
+        '
+        'Btn_Exportar_Excel
+        '
+        Me.Btn_Exportar_Excel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Exportar_Excel.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Exportar_Excel.Image = CType(resources.GetObject("Btn_Exportar_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Exportar_Excel.ImageAlt = CType(resources.GetObject("Btn_Exportar_Excel.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Exportar_Excel.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
+        Me.Btn_Exportar_Excel.Name = "Btn_Exportar_Excel"
+        Me.Btn_Exportar_Excel.Tooltip = "Crear  nueva entidad"
+        Me.Btn_Exportar_Excel.Visible = False
         '
         'Frm_InfoEnt_Situacion_Documentos
         '
@@ -166,4 +178,5 @@ Partial Class Frm_InfoEnt_Situacion_Documentos
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Friend WithEvents Grilla_Documentos As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Btn_Salir As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Exportar_Excel As DevComponents.DotNetBar.ButtonItem
 End Class

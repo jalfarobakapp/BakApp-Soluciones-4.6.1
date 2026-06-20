@@ -263,6 +263,12 @@ Public Class Frm_Dte_Configuracion
         Txt_NroResol.Text = _Global_Row_Configp.Item("NRORESOL").ToString.Trim
         Txt_FchResol.Text = Format(_Global_Row_Configp.Item("FECHRESOL"), "yyyy-MM-dd").ToString.Trim
 
+        If _AmbienteCertificacion Then
+            Txt_FchResol.Text = String.Empty
+        End If
+
+        Txt_Cn.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'Cn' And AmbienteCertificacion = 0")
+
         MessageBoxEx.Show(Me, "Datos importados correctamente", "Importar datos", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
     End Sub

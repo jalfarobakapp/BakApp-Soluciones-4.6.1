@@ -62,6 +62,7 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Mnu_Ficha_Entidad = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Ver_Situacion_Cliente = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Info_Plana_Entidad = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CiasSeguro = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem4 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Ver_Comportamiento_De_Pago = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem5 = New DevComponents.DotNetBar.LabelItem()
@@ -460,7 +461,7 @@ Partial Class Frm_Formulario_Documento
         '
         Me.Menu_Contextual_Info_Entidad.AutoExpandOnClick = True
         Me.Menu_Contextual_Info_Entidad.Name = "Menu_Contextual_Info_Entidad"
-        Me.Menu_Contextual_Info_Entidad.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem3, Me.Btn_Mnu_Ficha_Entidad, Me.Btn_Ver_Situacion_Cliente, Me.Btn_Info_Plana_Entidad, Me.LabelItem4, Me.Btn_Ver_Comportamiento_De_Pago, Me.LabelItem5, Me.Btn_Ver_Documentos_Pendientes, Me.Btn_Ver_Cheques_En_Cartera, Me.Btn_Ver_Deuda_Total})
+        Me.Menu_Contextual_Info_Entidad.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem3, Me.Btn_Mnu_Ficha_Entidad, Me.Btn_Ver_Situacion_Cliente, Me.Btn_Info_Plana_Entidad, Me.Btn_CiasSeguro, Me.LabelItem4, Me.Btn_Ver_Comportamiento_De_Pago, Me.LabelItem5, Me.Btn_Ver_Documentos_Pendientes, Me.Btn_Ver_Cheques_En_Cartera, Me.Btn_Ver_Deuda_Total})
         Me.Menu_Contextual_Info_Entidad.Text = "Menu Entidad"
         '
         'LabelItem3
@@ -493,6 +494,13 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Info_Plana_Entidad.Image = CType(resources.GetObject("Btn_Info_Plana_Entidad.Image"), System.Drawing.Image)
         Me.Btn_Info_Plana_Entidad.Name = "Btn_Info_Plana_Entidad"
         Me.Btn_Info_Plana_Entidad.Text = "Información plana entidad"
+        '
+        'Btn_CiasSeguro
+        '
+        Me.Btn_CiasSeguro.Image = CType(resources.GetObject("Btn_CiasSeguro.Image"), System.Drawing.Image)
+        Me.Btn_CiasSeguro.ImageAlt = CType(resources.GetObject("Btn_CiasSeguro.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CiasSeguro.Name = "Btn_CiasSeguro"
+        Me.Btn_CiasSeguro.Text = "Ver compañias de seguro asociadas"
         '
         'LabelItem4
         '
@@ -3065,4 +3073,5 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Btn_Contacto_VerInfo As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Contacto_Agregar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Contacto_Quitar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_CiasSeguro As DevComponents.DotNetBar.ButtonItem
 End Class

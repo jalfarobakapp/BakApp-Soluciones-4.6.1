@@ -23,9 +23,9 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Crear_Entidad_Mt_CiasSeguro))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
@@ -35,11 +35,15 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_EditarCiaSeguro = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_QuitarCiaSeguro = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_MostrarDetalle = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_CisSeguros = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_AsociarCiaSeguro = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_VenderSinUsarCiaSeguro = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_VerFCV = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_DatosCiaSeguros = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_InfFincred = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_CisSeguros, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -105,7 +109,7 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estado, Me.Btn_Activar, Me.Btn_Desactivar, Me.LabelItem2, Me.Btn_EditarCiaSeguro, Me.Btn_QuitarCiaSeguro})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estado, Me.Btn_Activar, Me.Btn_Desactivar, Me.LabelItem2, Me.Btn_EditarCiaSeguro, Me.Btn_QuitarCiaSeguro, Me.LabelItem1, Me.Btn_MostrarDetalle})
         Me.Menu_Contextual_01.Text = "Opciones"
         '
         'Lbl_Estado
@@ -160,42 +164,62 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
         Me.Btn_QuitarCiaSeguro.Name = "Btn_QuitarCiaSeguro"
         Me.Btn_QuitarCiaSeguro.Text = "Quitar compañia de seguro"
         '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Información"
+        '
+        'Btn_MostrarDetalle
+        '
+        Me.Btn_MostrarDetalle.Image = CType(resources.GetObject("Btn_MostrarDetalle.Image"), System.Drawing.Image)
+        Me.Btn_MostrarDetalle.ImageAlt = CType(resources.GetObject("Btn_MostrarDetalle.ImageAlt"), System.Drawing.Image)
+        Me.Btn_MostrarDetalle.Name = "Btn_MostrarDetalle"
+        Me.Btn_MostrarDetalle.Text = "Mostrar detalle de documentos"
+        '
         'Grilla_CisSeguros
         '
         Me.Grilla_CisSeguros.AllowUserToAddRows = False
         Me.Grilla_CisSeguros.AllowUserToDeleteRows = False
         Me.Grilla_CisSeguros.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_CisSeguros.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_CisSeguros.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla_CisSeguros.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_CisSeguros.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_CisSeguros.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla_CisSeguros.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_CisSeguros.EnableHeadersVisualStyles = False
         Me.Grilla_CisSeguros.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_CisSeguros.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_CisSeguros.Name = "Grilla_CisSeguros"
         Me.Grilla_CisSeguros.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_CisSeguros.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_CisSeguros.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla_CisSeguros.Size = New System.Drawing.Size(1014, 185)
         Me.Grilla_CisSeguros.StandardTab = True
         Me.Grilla_CisSeguros.TabIndex = 54
@@ -205,7 +229,7 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
         Me.Bar1.AntiAlias = True
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_AsociarCiaSeguro, Me.Btn_VenderSinUsarCiaSeguro})
+        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_AsociarCiaSeguro, Me.Btn_VenderSinUsarCiaSeguro, Me.Btn_InfFincred, Me.Btn_VerFCV})
         Me.Bar1.Location = New System.Drawing.Point(0, 253)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(1042, 41)
@@ -232,6 +256,15 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
         Me.Btn_VenderSinUsarCiaSeguro.Name = "Btn_VenderSinUsarCiaSeguro"
         Me.Btn_VenderSinUsarCiaSeguro.Text = "No usar compañia de seguros para la venta"
         '
+        'Btn_VerFCV
+        '
+        Me.Btn_VerFCV.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_VerFCV.ForeColor = System.Drawing.Color.Black
+        Me.Btn_VerFCV.Image = CType(resources.GetObject("Btn_VerFCV.Image"), System.Drawing.Image)
+        Me.Btn_VerFCV.ImageAlt = CType(resources.GetObject("Btn_VerFCV.ImageAlt"), System.Drawing.Image)
+        Me.Btn_VerFCV.Name = "Btn_VerFCV"
+        Me.Btn_VerFCV.Tooltip = "Mostrar todas las facturas asociadas y sus Cias de seguro asociadas"
+        '
         'Lbl_DatosCiaSeguros
         '
         Me.Lbl_DatosCiaSeguros.BackColor = System.Drawing.Color.White
@@ -246,6 +279,14 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
         Me.Lbl_DatosCiaSeguros.TabIndex = 56
         Me.Lbl_DatosCiaSeguros.Text = "LabelX1"
         '
+        'Btn_InfFincred
+        '
+        Me.Btn_InfFincred.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_InfFincred.ForeColor = System.Drawing.Color.Black
+        Me.Btn_InfFincred.Image = CType(resources.GetObject("Btn_InfFincred.Image"), System.Drawing.Image)
+        Me.Btn_InfFincred.Name = "Btn_InfFincred"
+        Me.Btn_InfFincred.Text = "Usar crédito FINCRED"
+        '
         'Frm_Crear_Entidad_Mt_CiasSeguro
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -256,7 +297,6 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
@@ -286,4 +326,8 @@ Partial Class Frm_Crear_Entidad_Mt_CiasSeguro
     Friend WithEvents Btn_Desactivar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Lbl_DatosCiaSeguros As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_MostrarDetalle As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_VerFCV As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_InfFincred As DevComponents.DotNetBar.ButtonItem
 End Class

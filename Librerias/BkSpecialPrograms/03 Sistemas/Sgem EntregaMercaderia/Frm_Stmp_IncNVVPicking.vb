@@ -424,15 +424,19 @@ Public Class Frm_Stmp_IncNVVPicking
                 Return
             End If
 
-            Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Despachos_Doc",
-                                        "Idrst = " & _Idmaeedo & " And Activo = 1"))
+            If Tido = "NVV" Then
 
-            If Not _Reg Then
-                MessageBoxEx.Show(Me, "Este documento no tiene despacho asociado." & vbCrLf &
-                                      "Debe ingresar un despacho para poder habilitar la nota de venta", "Validación",
-                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                _Fila.Cells(_Cabeza).Value = False
-                Return
+                Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Despachos_Doc",
+                                "Idrst = " & _Idmaeedo & " And Activo = 1"))
+
+                If Not _Reg Then
+                    MessageBoxEx.Show(Me, "Este documento no tiene despacho asociado." & vbCrLf &
+                                          "Debe ingresar un despacho para poder habilitar la nota de venta", "Validación",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    _Fila.Cells(_Cabeza).Value = False
+                    Return
+                End If
+
             End If
 
             If Chk_NotfStockInsuficiente_Stmp.Checked Then
@@ -527,12 +531,18 @@ Public Class Frm_Stmp_IncNVVPicking
                     _Marcar = True
 
                     Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
-                    Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Despachos_Doc",
-                                        "Idrst = " & _Idmaeedo & " And Activo = 1"))
 
-                    If Not _Reg Then
-                        _Marcar = False
-                        _SinHabilitar += 1
+                    If Tido = "NVV" Then
+
+                        Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Despachos_Doc", "Idrst = " & _Idmaeedo & " And Activo = 1"))
+
+                        If Not _Reg Then
+
+                            _Marcar = False
+                            _SinHabilitar += 1
+
+                        End If
+
                     End If
 
                     If Tido = "NVV" AndAlso _LasNVVDebenSerHabilitadasParaFacturar Then

@@ -687,6 +687,56 @@ Public Class Frm_Tabla_Caracterizaciones_01_Listado
 
         Consulta_sql = String.Empty
 
+        ' VALIDACIÓN: ninguna descripción "NombreTabla" puede estar null o en blanco.
+        For Each _FilaVal As DataRow In _TblTablaCaracterizaciones.Rows
+            Try
+                If _FilaVal.RowState <> DataRowState.Deleted Then
+                    If _FilaVal.IsNull("NombreTabla") OrElse String.IsNullOrWhiteSpace(Convert.ToString(_FilaVal.Item("NombreTabla"))) Then
+
+                        Dim _CodigoFila As String = String.Empty
+
+                        If Not _FilaVal.IsNull("CodigoTabla") Then
+                            _CodigoFila = Convert.ToString(_FilaVal.Item("CodigoTabla"))
+                        End If
+
+                        MessageBoxEx.Show(Me,
+                                      "No se puede grabar. Se ha detectado al menos una fila con la descripción ('NombreTabla') vacía." & vbCrLf & vbCrLf &
+                                      "Código: " & _CodigoFila & vbCrLf &
+                                      "Por favor complete la descripción antes de continuar.",
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+                        ' Intentar posicionar el foco en la fila inválida dentro de la grilla si corresponde
+                        Try
+                            If Not Grilla.DataSource Is Nothing Then
+                                ' Buscar la primera fila de la grilla que coincida con el CodigoTabla (si existe)
+                                For Each _Row As DataGridViewRow In Grilla.Rows
+                                    If Not _Row.IsNewRow Then
+                                        Dim _CodGrilla = NuloPorNro(_Row.Cells("CodigoTabla").Value, "")
+                                        If _CodGrilla.ToString = _CodigoFila OrElse String.IsNullOrEmpty(_CodigoFila) Then
+                                            Grilla.CurrentCell = _Row.Cells("NombreTabla")
+                                            Grilla.Focus()
+                                            Grilla.BeginEdit(True)
+                                            Exit For
+                                        End If
+                                    End If
+                                Next
+                            End If
+                        Catch ex As Exception
+                            ' No interrumpir la validación si falla el enfoque en la grilla
+                        End Try
+
+                        Return
+                    End If
+                End If
+            Catch ex As Exception
+                ' Si ocurre algún error al validar una fila, detener el guardado y notificar
+                MessageBoxEx.Show(Me, "Error al validar filas antes de grabar: " & ex.Message, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End Try
+        Next
+
+
+
         For Each _Fila As DataRow In _TblTablaCaracterizaciones.Rows
 
             Select Case _Fila.RowState

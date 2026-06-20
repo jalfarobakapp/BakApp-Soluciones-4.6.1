@@ -189,4 +189,11 @@ Public Class Frm_InfoEnt_Situacion_Documentos
     Private Sub Btn_Salir_Click(sender As Object, e As EventArgs) Handles Btn_Salir.Click
         Me.Close()
     End Sub
+
+    Private Sub Btn_Exportar_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Excel.Click
+
+        ExportarTabla_JetExcel_Tabla(_Tabla, Me, "Informe")
+
+    End Sub
+
 End Class
