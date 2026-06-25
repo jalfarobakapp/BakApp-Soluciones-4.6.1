@@ -5748,7 +5748,7 @@ Public Module Crear_Documentos_Desde_Otro
 
     End Function
 
-    Function Fx_Caracter_Raro_Quitar(ByRef _Texto As String)
+    Function Fx_Caracter_Raro_Quitar_Old(ByRef _Texto As String)
 
         _Texto = Replace(_Texto, "&", "&amp;")
         _Texto = Replace(_Texto, "<", "&lt;")
@@ -5795,6 +5795,50 @@ Public Module Crear_Documentos_Desde_Otro
         End If
 
         _Texto = _Texto.Trim
+
+    End Function
+
+    Function Fx_LimpiarTextoXML(_Texto As String) As String
+
+        If String.IsNullOrEmpty(_Texto) Then Return ""
+
+        Dim sb As New System.Text.StringBuilder()
+
+        For Each ch As Char In _Texto
+            Dim code As Integer = AscW(ch)
+
+            ' 1. Eliminar caracteres de control no permitidos
+            If (code >= 0 AndAlso code <= 31) AndAlso (code <> 9 AndAlso code <> 10 AndAlso code <> 13) Then
+                Continue For
+            End If
+
+            ' 2. Eliminar caracteres invisibles o problemáticos
+            Select Case code
+                Case &H200B, &H200D, &HA0, &HAD ' ZERO WIDTH SPACE, ZERO WIDTH JOINER, NBSP, SOFT HYPHEN
+                    Continue For
+            End Select
+
+            ' 3. Validar rango permitido por XML 1.0
+            If Not ((code = &H9) OrElse (code = &HA) OrElse (code = &HD) OrElse
+                (code >= &H20 AndAlso code <= &HD7FF) OrElse
+                (code >= &HE000 AndAlso code <= &HFFFD) OrElse
+                (code >= &H10000 AndAlso code <= &H10FFFF)) Then
+                Continue For
+            End If
+
+            ' 4. Escapar caracteres XML obligatorios
+            Select Case ch
+                Case "&"c : sb.Append("&amp;")
+                Case "<"c : sb.Append("&lt;")
+                Case ">"c : sb.Append("&gt;")
+                Case """"c : sb.Append("&quot;")
+                Case "'"c : sb.Append("&apos;")
+                Case Else
+                    sb.Append(ch)
+            End Select
+        Next
+
+        Return sb.ToString().Trim()
 
     End Function
 

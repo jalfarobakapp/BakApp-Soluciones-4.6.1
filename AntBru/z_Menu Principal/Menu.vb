@@ -1639,30 +1639,39 @@ vbCrLf &
         Dim _CodLista As String = Mod_ListaPrecioCosto
         Dim _Observaciones As String = String.Empty
 
-        Dim _Koen As String = "76095906"
-        Dim _Suen As String = String.Empty
+        Dim _Koen_OCC As String = "76095906-5"
+        Dim _Suen_OCC As String = String.Empty
+
+        Dim _Koen_NVV As String = "77988832-0"
+        Dim _Suen_NVV As String = String.Empty
 
         Dim _Idmaeedo_FCV As Integer = 894256
 
         Consulta_sql = $"
 Select Top 1 *,KOEN AS ENDO, SUEN AS SUENDO From MAEEN
-Where KOEN = '{_Koen}' And SUEN = '{_Suen}'"
-        Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+Where KOEN = '{_Koen_OCC}' And SUEN = '{_Suen_OCC}'"
+        Dim _Row_Entidad_OCC As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Consulta_sql = $"
+Select Top 1 *,KOEN AS ENDO, SUEN AS SUENDO From MAEEN
+Where KOEN = '{_Koen_NVV}' And SUEN = '{_Suen_NVV}'"
+        Dim _Row_Entidad_NVV As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
         Consulta_sql = $"
 Select Codigo,Comprarud1 As Cantidad,Comprarud1 As 'CantDoriUd1',Comprarud2 As 'CantDoriUd2',Costo,Id_Det As 'Observa'
 From {_Global_BaseBk}Zw_InterStock_Det
 Where Idmaeedo = {_Idmaeedo_FCV}"
-
         Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         If Not CBool(_TblDetalle.Rows.Count) Then
             MessageBoxEx.Show(Me, "No existen productos seleccionados para comprar desde el tratamiento",
                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
         End If
 
         Me.Enabled = False
 
+        ' SE ACTIVA LA MODALIDAD DE TRABAJO PARA QUE LOS DOCUMENTOS SEAN CREADOS CON LOS DATOS DE LA MODALIDAD DE LA EMPRESA QUE DEBE COMPRAR
         Mod_Empresa = "02"
         Mod_Modalidad = "ADMIG"
 
@@ -1687,15 +1696,15 @@ Where Idmaeedo = {_Idmaeedo_FCV}"
 
         Dim Fm As Frm_Formulario_Documento
 
-        Fm = New Frm_Formulario_Documento("OCC", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra,
-                                               False, True, False, False, False)
-        Fm.Pro_RowEntidad = _Row_Entidad
+        Fm = New Frm_Formulario_Documento("OCC", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra, False, True, False, False, False)
+        Fm.Pro_RowEntidad = _Row_Entidad_OCC
         Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Fm_Menu_Padre, _TblDetalle, FechaDelServidor,
-                                                     "Codigo", "Cantidad", "Costo", _Observaciones, False, False)
+                                                "Codigo", "Cantidad", "Costo", _Observaciones, False, False)
         _Mensaje = Fm.Fx_Grabar_Documento(False,, False)
         Fm.Dispose()
 
 
+        ' SE ACTIVA LA MODALIDAD DE TRABAJO PARA QUE LOS DOCUMENTOS SEAN CREADOS CON LOS DATOS DE LA MODALIDAD DE LA EMPRESA QUE DEBE VENDER
         Mod_Empresa = "01"
         Mod_Modalidad = "VENTA"
 
@@ -1711,33 +1720,15 @@ Where Idmaeedo = {_Idmaeedo_FCV}"
         Mod_ListaPrecioVenta = Mid(_Global_Row_Modalidad.Item("ELISTAVEN"), 6, 3)
         Mod_ListaPrecioCosto = Mid(_Global_Row_Modalidad.Item("ELISTACOM"), 6, 3)
 
-
-
-
-        Consulta_sql = $"
-Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO
-Select 'BKP' As KOFULIDO,Codigo As KOPRCT,RLUD As 'RLUDPR',
-NOKOPR,'{_Row_Entidad.Item("LVEN").ToString.Replace("TABPP", "")}' As KOLTPR,Mp.PPUL01 As UD1,Mp.PPUL02 As UD2,
-Itd.Costo As CostoUd1,0 As CostoUd2,
-Itd.Costo As Precio,RLUD As Rtu,Itd.Comprarud1 As Cantidad,
-0 As Desc1,0 As Desc2,0 AsDesc3,0 As Desc4,0 As Desc5,0 As PRCT,'' As TICT,TIPR,2 As UDTRPR,0 As POTENCIA,'' As KOFUAULIDO,'' As KOOPLIDO,
-0 As IDMAEEDO,0 As IDMAEDDO,Itd.Empresa_NVV As EMPRESA,Itd.Sucursal_NVV As SULIDO,Itd.Bodega_NVV As BOSULIDO,
-'' As ENDO,'' As SUENDO,
-GetDate() As FEEMLI,'' As TIDO,'' As NUDO,'' As NULIDO,Itd.Comprarud1 As CantUd1_Dori,Itd.Comprarud2 As CantUd2_Dori,Itd.Id As OBSERVA,
-0 As Id_Oferta,'' As Oferta,0 As Es_Padre_Oferta,0 As Padre_Oferta,
-0 As Hijo_Oferta,0 As Cantidad_Oferta,0 As Porcdesc_Oferta
-From {_Global_BaseBk}Zw_InterStock_Det Itd
-Inner Join MAEPR Mp On Mp.KOPR = Codigo
---Where (Ud1_negativo = 1 Or Ud2_negativo = 1) And Idmaeddo_FCV = 0
-Where Idmaeedo = {_Idmaeedo_FCV}
-
-Select * From MAEIMLI Where 1<0  
-Select * From MAEDTLI Where 1<0  
-Select '{_Observaciones}' As OBDO"
+        '        Consulta_sql = $"
+        'Select Codigo,Comprarud1 As Cantidad,Comprarud1 As 'CantDoriUd1',Comprarud2 As 'CantDoriUd2',Costo,Id_Det As 'Observa'
+        'From {_Global_BaseBk}Zw_InterStock_Det
+        'Where Idmaeedo = {_Idmaeedo_FCV}"
+        '_TblDetalle = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Fm = New Frm_Formulario_Documento("NVV", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta,
                                                False, True, False, False, False)
-        Fm.Pro_RowEntidad = _Row_Entidad
+        Fm.Pro_RowEntidad = _Row_Entidad_OCC
         Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Fm_Menu_Padre, _TblDetalle, FechaDelServidor,
                                                      "Codigo", "Cantidad", "Costo", _Observaciones, False, False)
         _Mensaje = Fm.Fx_Grabar_Documento(False,, False)
@@ -1746,49 +1737,5 @@ Select '{_Observaciones}' As OBDO"
         Me.Enabled = True
 
     End Sub
-
-    'Function Fx_GrabarDocumento(_Tido As String,
-    '                            _Empresa As String,
-    '                            _Modalidad As String,
-    '                            _Row_Entidad As DataRow,
-    '                            _Tbl_Productos As DataTable) As LsValiciones.Mensajes
-
-    '    Dim _Mensaje As New LsValiciones.Mensajes
-
-    '    Dim _Observaciones As String
-    '    Dim _Tipo_Documento As csGlobales.Enum_Tipo_Documento
-
-    '    If _Tido = "OCC" Then
-    '        _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra
-    '    ElseIf _Tido = "NVV" Then
-    '        _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Venta
-    '    End If
-
-    '    Dim Fm As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False, True, False, False, False)
-    '    Fm.Pro_RowEntidad = _Row_Entidad
-    '    Fm.Sb_Crear_Documento_Interno_Con_Tabla(_Fm_Menu_Padre, _Tbl_Productos, FechaDelServidor,
-    '                                                 "Codigo", "Cantidad", "Costo", _Observaciones, False, False)
-    '    _Mensaje = Fm.Fx_Grabar_Documento(False,, False)
-    '    Fm.Dispose()
-
-    '    'Dim Fm As New Frm_Formulario_Documento(_Tido, _Tipo_Documento, False, True, False)
-    '    'Fm.ModEmpresa_Doc = _Empresa
-    '    'Fm.ModModalidad_Doc = _Modalidad
-    '    'Fm.Pro_Agrupar_Reemplazos = False
-    '    'Fm.Pro_RowEntidad = _Row_Entidad
-    '    'Fm.Pro_RowEntidad_Despacho = Nothing
-    '    'Fm.Pro_Lista_de_precios_de_proveedores = False
-    '    'Fm.Sb_Crear_Documento_Desde_Otros_Documentos(_Fm_Menu_Padre, _Ds_New_Documento, True, False, Nothing, False, False)
-
-    '    'Fm.MinimizeBox = False
-
-    '    '_Mensaje = Fm.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento)
-
-    '    '_New_Idmaeedo = Fm.Pro_Idmaeedo
-    '    'Fm.Dispose()
-
-    '    Return _Mensaje
-
-    'End Function
 
 End Class

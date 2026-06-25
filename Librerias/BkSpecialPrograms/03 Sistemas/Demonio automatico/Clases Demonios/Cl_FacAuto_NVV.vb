@@ -366,7 +366,11 @@
             _Orden = "Order By CantItem"
         End If
 
-        'Consulta_Sql = "Select Top " & CantDocFacturanXProceso & " * From " & _Global_BaseBk & "Zw_Demonio_FacAuto Where Facturar = 1" & vbCrLf & _Orden
+        '        Consulta_Sql = $"Select Top {CantDocFacturanXProceso} Fa.*,Case De.Empresa_Ori When '' Then De.Empresa Else De.Empresa_Ori End As 'Empresa_Ori',Edo.EMPRESA As 'Empresa'   
+        'From {_Global_BaseBk}Zw_Demonio_FacAuto Fa
+        'Inner Join MAEEDO Edo On Edo.IDMAEEDO = Fa.Idmaeedo_NVV
+        'Inner Join {_Global_BaseBk}Zw_Docu_Ent De On Fa.Idmaeedo_NVV = De.Idmaeedo
+        'Where Fa.Id = 68664"
 
         Consulta_Sql = $"Select Top {CantDocFacturanXProceso} Fa.*,Case De.Empresa_Ori When '' Then De.Empresa Else De.Empresa_Ori End As 'Empresa_Ori',Edo.EMPRESA As 'Empresa'   
 From {_Global_BaseBk}Zw_Demonio_FacAuto Fa

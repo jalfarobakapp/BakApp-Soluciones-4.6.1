@@ -243,7 +243,7 @@ Public Class Frm_OfDinamLista
 
             .Columns("DESCRIPTOR").Visible = True
             .Columns("DESCRIPTOR").HeaderText = "Nombre del tipo de descuento oferta"
-            .Columns("DESCRIPTOR").Width = 350
+            .Columns("DESCRIPTOR").Width = 320
             .Columns("DESCRIPTOR").DisplayIndex = _DisplayIndex
             .Columns("DESCRIPTOR").ReadOnly = True
             _DisplayIndex += 1
@@ -260,7 +260,7 @@ Public Class Frm_OfDinamLista
             .Columns("FIOFERTA").ToolTipText = "Fecha de inicio de la oferta"
             .Columns("FIOFERTA").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("FIOFERTA").DefaultCellStyle.Format = "dd/MM/yyyy"
-            .Columns("FIOFERTA").Width = 75
+            .Columns("FIOFERTA").Width = 70
             .Columns("FIOFERTA").DisplayIndex = _DisplayIndex
             .Columns("FIOFERTA").ReadOnly = True
             _DisplayIndex += 1
@@ -270,7 +270,7 @@ Public Class Frm_OfDinamLista
             .Columns("FTOFERTA").ToolTipText = "Fecha de tope de la oferta"
             .Columns("FTOFERTA").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("FTOFERTA").DefaultCellStyle.Format = "dd/MM/yyyy"
-            .Columns("FTOFERTA").Width = 75
+            .Columns("FTOFERTA").Width = 70
             .Columns("FTOFERTA").DisplayIndex = _DisplayIndex
             .Columns("FTOFERTA").ReadOnly = False
             _DisplayIndex += 1
@@ -280,15 +280,15 @@ Public Class Frm_OfDinamLista
             .Columns("FTOFERTA_Anterior").ToolTipText = "Fecha de tope original"
             .Columns("FTOFERTA_Anterior").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter
             .Columns("FTOFERTA_Anterior").DefaultCellStyle.Format = "dd/MM/yyyy"
-            .Columns("FTOFERTA_Anterior").Width = 85
+            .Columns("FTOFERTA_Anterior").Width = 70
             .Columns("FTOFERTA_Anterior").DisplayIndex = _DisplayIndex
             .Columns("FTOFERTA_Anterior").ReadOnly = True
             _DisplayIndex += 1
 
             .Columns("Dias").Visible = True
-            .Columns("Dias").HeaderText = "Dias Expira"
+            .Columns("Dias").HeaderText = "Expira"
             .Columns("Dias").ToolTipText = "Días que faltan para que termine la oferta"
-            .Columns("Dias").Width = 70
+            .Columns("Dias").Width = 50
             .Columns("Dias").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Dias").DefaultCellStyle.Format = "###,##0.##"
             .Columns("Dias").DisplayIndex = _DisplayIndex
@@ -305,7 +305,7 @@ Public Class Frm_OfDinamLista
             .Columns("ProdAsociados").Visible = True
             .Columns("ProdAsociados").HeaderText = "Productos"
             .Columns("ProdAsociados").ToolTipText = "Productos asociados a la oferta"
-            .Columns("ProdAsociados").Width = 70
+            .Columns("ProdAsociados").Width = 50
             .Columns("ProdAsociados").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("ProdAsociados").DefaultCellStyle.Format = "###,##0.##"
             .Columns("ProdAsociados").DisplayIndex = _DisplayIndex
@@ -901,7 +901,7 @@ Where CODIGO = '{_Codigo}'"
         Dias = CASE WHEN DATEDIFF(D, GETDATE(), Mr.FTOFERTA) < 0
                     THEN 0
                     ELSE DATEDIFF(D, GETDATE(), Mr.FTOFERTA) END,
-        Activa = CASE WHEN GETDATE() BETWEEN Mr.FIOFERTA AND Mr.FTOFERTA THEN 1 ELSE 0 END,
+        Activa = CASE WHEN GETDATE() BETWEEN Mr.FIOFERTA AND Mr.FTOFERTA THEN 'Si' ELSE 'No' END,
         ProdAsociados = (
             SELECT COUNT(*)
             FROM MAEDRES D
@@ -1125,17 +1125,17 @@ FROM Paso2;"
         End If
 
         If Not _Row.Table.Columns.Contains("FIOFERTA") OrElse
-           Not _Row.Table.Columns.Contains("FTOFERTA") OrElse
-           Not _Row.Table.Columns.Contains("FTOFERTA_Anterior") OrElse
-           Not _Row.Table.Columns.Contains("Dias") OrElse
-           Not _Row.Table.Columns.Contains("Activa") OrElse
-           Not _Row.Table.Columns.Contains("FTOFERTA_Modificada") Then
+       Not _Row.Table.Columns.Contains("FTOFERTA") OrElse
+       Not _Row.Table.Columns.Contains("FTOFERTA_Anterior") OrElse
+       Not _Row.Table.Columns.Contains("Dias") OrElse
+       Not _Row.Table.Columns.Contains("Activa") OrElse
+       Not _Row.Table.Columns.Contains("FTOFERTA_Modificada") Then
             Return
         End If
 
         If IsDBNull(_Row.Item("FIOFERTA")) OrElse
-           IsDBNull(_Row.Item("FTOFERTA")) OrElse
-           IsDBNull(_Row.Item("FTOFERTA_Anterior")) Then
+       IsDBNull(_Row.Item("FTOFERTA")) OrElse
+       IsDBNull(_Row.Item("FTOFERTA_Anterior")) Then
             Return
         End If
 
@@ -1143,6 +1143,7 @@ FROM Paso2;"
         Dim _FechaInicio As Date = CDate(_Row.Item("FIOFERTA")).Date
         Dim _FechaTope As Date = CDate(_Row.Item("FTOFERTA")).Date
         Dim _FechaTopeAnterior As Date = CDate(_Row.Item("FTOFERTA_Anterior")).Date
+        Dim _OfertaActiva As Boolean = (_FechaServidor >= _FechaInicio AndAlso _FechaServidor <= _FechaTope)
 
         Dim _Dias As Integer = DateDiff(DateInterval.Day, _FechaServidor, _FechaTope)
         If _Dias < 0 Then
@@ -1150,7 +1151,7 @@ FROM Paso2;"
         End If
 
         _Row.Item("Dias") = _Dias
-        _Row.Item("Activa") = (_FechaServidor >= _FechaInicio AndAlso _FechaServidor <= _FechaTope)
+        _Row.Item("Activa") = If(_OfertaActiva, "Si", "No")
         _Row.Item("FTOFERTA_Modificada") = (_FechaTope <> _FechaTopeAnterior)
 
     End Sub
@@ -1193,6 +1194,7 @@ FROM Paso2;"
         Dim _FechaInicio As Date = CDate(_Fila.Cells("FIOFERTA").Value).Date
         Dim _FechaTope As Date = CDate(_Fila.Cells("FTOFERTA").Value).Date
         Dim _FechaTopeAnterior As Date = CDate(_Fila.Cells("FTOFERTA_Anterior").Value).Date
+        Dim _OfertaActiva As Boolean = (_FechaServidor >= _FechaInicio AndAlso _FechaServidor <= _FechaTope)
 
         Dim _Dias As Integer = DateDiff(DateInterval.Day, _FechaServidor, _FechaTope)
         If _Dias < 0 Then
@@ -1200,7 +1202,7 @@ FROM Paso2;"
         End If
 
         _Fila.Cells("Dias").Value = _Dias
-        _Fila.Cells("Activa").Value = (_FechaServidor >= _FechaInicio AndAlso _FechaServidor <= _FechaTope)
+        _Fila.Cells("Activa").Value = If(_OfertaActiva, "Si", "No")
         _Fila.Cells("FTOFERTA_Modificada").Value = (_FechaTope <> _FechaTopeAnterior)
 
     End Sub
@@ -1473,19 +1475,20 @@ FROM Paso2;"
         Dim _NuevaFecha As Date
         Dim _FechaServidor As Date = FechaDelServidor().Date
         Dim _Fila As DataGridViewRow = Grilla_Recetas.Rows(e.RowIndex)
+        Dim _FechaInicio As Date = CDate(_Fila.Cells("FIOFERTA").Value).Date
         Dim _FechaOriginal As Date = CDate(_Fila.Cells("FTOFERTA_Anterior").Value).Date
         Dim _Cultura As System.Globalization.CultureInfo = System.Globalization.CultureInfo.GetCultureInfo("es-ES")
         Dim _Formatos() As String = {
-    "d/M/yyyy", "dd/MM/yyyy", "d/M/yy", "dd/MM/yy",
-    "d-M-yyyy", "dd-MM-yyyy", "d-M-yy", "dd-MM-yy"
-}
+        "d/M/yyyy", "dd/MM/yyyy", "d/M/yy", "dd/MM/yy",
+        "d-M-yyyy", "dd-MM-yyyy", "d-M-yy", "dd-MM-yy"
+    }
 
         If String.IsNullOrWhiteSpace(_Texto) Then
             MessageBoxEx.Show(Me,
-                              "Debe ingresar una fecha de tope válida.",
-                              "Validación",
-                              MessageBoxButtons.OK,
-                              MessageBoxIcon.Stop)
+                          "Debe ingresar una fecha de tope válida.",
+                          "Validación",
+                          MessageBoxButtons.OK,
+                          MessageBoxIcon.Stop)
             e.Cancel = True
             Return
         End If
@@ -1493,16 +1496,16 @@ FROM Paso2;"
         _Texto = _Texto.Replace(".", "/").Replace("-", "/").Trim
 
         If Not Date.TryParseExact(_Texto,
-                                  _Formatos,
-                                  _Cultura,
-                                  Globalization.DateTimeStyles.None,
-                                  _NuevaFecha) Then
+                              _Formatos,
+                              _Cultura,
+                              Globalization.DateTimeStyles.None,
+                              _NuevaFecha) Then
             MessageBoxEx.Show(Me,
-                              "La fecha ingresada no es válida." & vbCrLf & vbCrLf &
-                              "Ejemplo correcto: 31/12/2026",
-                              "Validación",
-                              MessageBoxButtons.OK,
-                              MessageBoxIcon.Stop)
+                          "La fecha ingresada no es válida." & vbCrLf & vbCrLf &
+                          "Ejemplo correcto: 31/12/2026",
+                          "Validación",
+                          MessageBoxButtons.OK,
+                          MessageBoxIcon.Stop)
             e.Cancel = True
             Return
         End If
@@ -1513,14 +1516,24 @@ FROM Paso2;"
             Return
         End If
 
-        If _NuevaFecha <= _FechaServidor Then
+        If _NuevaFecha < _FechaInicio Then
             MessageBoxEx.Show(Me,
-                              "La fecha de tope debe ser posterior a la fecha actual.",
-                              "Validación",
-                              MessageBoxButtons.OK,
-                              MessageBoxIcon.Stop)
+                          "La fecha de tope no puede ser menor a la fecha de inicio de la oferta.",
+                          "Validación",
+                          MessageBoxButtons.OK,
+                          MessageBoxIcon.Stop)
             e.Cancel = True
+            Return
         End If
+
+        'If _NuevaFecha <= _FechaServidor Then
+        '    MessageBoxEx.Show(Me,
+        '                  "La fecha de tope debe ser posterior a la fecha actual.",
+        '                  "Validación",
+        '                  MessageBoxButtons.OK,
+        '                  MessageBoxIcon.Stop)
+        '    e.Cancel = True
+        'End If
 
     End Sub
 

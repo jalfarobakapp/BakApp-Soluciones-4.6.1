@@ -2128,10 +2128,10 @@ Public Class Clase_Crear_Documento
 
             With Tbl_Observaciones
 
-                _Obdo = .Rows(0).Item("Observaciones")
-                _Cpdo = .Rows(0).Item("Forma_pago")
-                _Ocdo = .Rows(0).Item("Orden_compra")
-                _Motivo = .Rows(0).Item("Motivo")
+                _Obdo = .Rows(0).Item("Observaciones").ToString.Replace("'", "")
+                _Cpdo = .Rows(0).Item("Forma_pago").ToString.Replace("'", "")
+                _Ocdo = .Rows(0).Item("Orden_compra").ToString.Replace("'", "")
+                _Motivo = .Rows(0).Item("Motivo").ToString.Replace("'", "")
 
                 Dim _Placapat As String = .Rows(0).Item("Placa").ToString.Trim
                 Dim _Diendesp As String = .Rows(0).Item("CodRetirador").ToString

@@ -1126,11 +1126,11 @@ Public Class Class_Genera_DTE_RdBk
 
         'End If
 
-        Fx_Caracter_Raro_Quitar(_RznSoc)
-        Fx_Caracter_Raro_Quitar(_GiroEmis)
-        Fx_Caracter_Raro_Quitar(_DirOrigen)
-        Fx_Caracter_Raro_Quitar(_CmnaOrigen)
-        Fx_Caracter_Raro_Quitar(_CiudadOrigen)
+        _RznSoc = Fx_LimpiarTextoXML(_RznSoc)
+        _GiroEmis = Fx_LimpiarTextoXML(_GiroEmis)
+        _DirOrigen = Fx_LimpiarTextoXML(_DirOrigen)
+        _CmnaOrigen = Fx_LimpiarTextoXML(_CmnaOrigen)
+        _CiudadOrigen = Fx_LimpiarTextoXML(_CiudadOrigen)
 
         _XML = Replace(_XML, "#RUTEmisor#", _RUTEmisor)
         _XML = Replace(_XML, "#RznSoc#", _RznSoc)
@@ -1153,11 +1153,11 @@ Public Class Class_Genera_DTE_RdBk
         Dim _CmnaRecep = Mid(Trim(_Row_Maeen_Receptor.Item("COMUNA")), 1, 20)
         Dim _CiudadRecep = Mid(Trim(_Row_Maeen_Receptor.Item("CIUDAD")), 1, 15)
 
-        Fx_Caracter_Raro_Quitar(_RznSocRecep)
-        Fx_Caracter_Raro_Quitar(_GiroRecep)
-        Fx_Caracter_Raro_Quitar(_DirRecep)
-        Fx_Caracter_Raro_Quitar(_CmnaRecep)
-        Fx_Caracter_Raro_Quitar(_CiudadRecep)
+        _RznSocRecep = Fx_LimpiarTextoXML(_RznSocRecep)
+        _GiroRecep = Fx_LimpiarTextoXML(_GiroRecep)
+        _DirRecep = Fx_LimpiarTextoXML(_DirRecep)
+        _CmnaRecep = Fx_LimpiarTextoXML(_CmnaRecep)
+        _CiudadRecep = Fx_LimpiarTextoXML(_CiudadRecep)
 
         _XML = Replace(_XML, "#RUTRecep#", _RUTRecep)
         _XML = Replace(_XML, "#RznSocRecep#", _RznSocRecep)
@@ -1485,7 +1485,7 @@ Public Class Class_Genera_DTE_RdBk
                 _TpoCodigo = "INTERNO"
                 _VlrCodigo = _Fila.Item("KOPRCT").ToString.Trim
 
-                Fx_Caracter_Raro_Quitar(_NmbItem)
+                _NmbItem = Fx_LimpiarTextoXML(_NmbItem)
 
                 Dim _QtyItem_Str As String = _QtyItem
                 Dim _Decimales = Split(_QtyItem, ",")
@@ -1565,7 +1565,7 @@ Public Class Class_Genera_DTE_RdBk
                     End If
                 End If
 
-                Fx_Caracter_Raro_Quitar(_GlosaDR)
+                Fx_LimpiarTextoXML(_GlosaDR)
 
                 _Detalle += vbCrLf &
                             "<DscRcgGlobal>" & vbCrLf &
@@ -1678,11 +1678,11 @@ Public Class Class_Genera_DTE_RdBk
             Dim _CmnaDest As String = _Rows.Item("CmnaDest").ToString.Trim
             Dim _CiudadDest As String = _Rows.Item("CiudadDest").ToString.Trim
 
-            Fx_Caracter_Raro_Quitar(_Patente)
-            Fx_Caracter_Raro_Quitar(_Chofer)
-            Fx_Caracter_Raro_Quitar(_DirDest)
-            Fx_Caracter_Raro_Quitar(_CmnaDest)
-            Fx_Caracter_Raro_Quitar(_CiudadDest)
+            _Patente = Fx_LimpiarTextoXML(_Patente)
+            _Chofer = Fx_LimpiarTextoXML(_Chofer)
+            _DirDest = Fx_LimpiarTextoXML(_DirDest)
+            _CmnaDest = Fx_LimpiarTextoXML(_CmnaDest)
+            _CiudadDest = Fx_LimpiarTextoXML(_CiudadDest)
 
             If _RUTTrans = _RUTChofer Then
                 _RUTTrans = String.Empty
@@ -1757,7 +1757,7 @@ Public Class Class_Genera_DTE_RdBk
         Dim _RUTRecep = Trim(_Row_Maeen_Receptor.Item("RTEN")) & "-" & Trim(RutDigito(_Row_Maeen_Receptor.Item("RTEN")))
         Dim _RznSocRecep = Mid(Trim(_Row_Maeen_Receptor.Item("NOKOEN")), 1, 40) ' Trim(_Row_Maeen_Receptor.Item("NOKOEN"))
 
-        Fx_Caracter_Raro_Quitar(_RznSocRecep)
+        _RznSocRecep = Fx_LimpiarTextoXML(_RznSocRecep)
 
         _RznSocRecep = _RznSocRecep.ToString.Trim
 
@@ -1794,7 +1794,7 @@ Public Class Class_Genera_DTE_RdBk
             _Re = _Row_Ffolios.Item("RE").ToString.Trim
             _Rs = _Row_Ffolios.Item("RS").ToString.Trim
 
-            Fx_Caracter_Raro_Quitar(_Rs)
+            _Rs = Fx_LimpiarTextoXML(_Rs)
 
             _Rng_d = _Row_Ffolios.Item("RNG_D").ToString.Trim
             _Rng_h = _Row_Ffolios.Item("RNG_H").ToString.Trim
@@ -1821,7 +1821,7 @@ Public Class Class_Genera_DTE_RdBk
         Dim _It1 = Mid(Trim(_Maeddo.Rows(0).Item("NOKOPR")), 1, 40)
         _It1 = _It1.ToString.Trim
 
-        Fx_Caracter_Raro_Quitar(_It1)
+        _It1 = Fx_LimpiarTextoXML(_It1)
 
         If _Mnt Is Nothing Then
             Dim _Vabrdo As Double = _Maeedo.Rows(0).Item("VABRDO")
@@ -1918,11 +1918,11 @@ Public Class Class_Genera_DTE_RdBk
 
         End If
 
-        Fx_Caracter_Raro_Quitar(_RznSoc)
-        Fx_Caracter_Raro_Quitar(_GiroEmis)
-        Fx_Caracter_Raro_Quitar(_DirOrigen)
-        Fx_Caracter_Raro_Quitar(_CmnaOrigen)
-        Fx_Caracter_Raro_Quitar(_CiudadOrigen)
+        _RznSoc = Fx_LimpiarTextoXML(_RznSoc)
+        _GiroEmis = Fx_LimpiarTextoXML(_GiroEmis)
+        _DirOrigen = Fx_LimpiarTextoXML(_DirOrigen)
+        _CmnaOrigen = Fx_LimpiarTextoXML(_CmnaOrigen)
+        _CiudadOrigen = Fx_LimpiarTextoXML(_CiudadOrigen)
 
         _XML = Replace(_XML, "#RUTEmisor#", _RUTEmisor)
         _XML = Replace(_XML, "#RznSoc#", _RznSoc)
@@ -1945,11 +1945,11 @@ Public Class Class_Genera_DTE_RdBk
         Dim _CmnaRecep = Mid(Trim(_Row_Maeen_Receptor.Item("COMUNA")), 1, 20)
         Dim _CiudadRecep = Mid(Trim(_Row_Maeen_Receptor.Item("CIUDAD")), 1, 15)
 
-        Fx_Caracter_Raro_Quitar(_RznSocRecep)
-        Fx_Caracter_Raro_Quitar(_GiroRecep)
-        Fx_Caracter_Raro_Quitar(_DirRecep)
-        Fx_Caracter_Raro_Quitar(_CmnaRecep)
-        Fx_Caracter_Raro_Quitar(_CiudadRecep)
+        _RznSocRecep = Fx_LimpiarTextoXML(_RznSocRecep)
+        _GiroRecep = Fx_LimpiarTextoXML(_GiroRecep)
+        _DirRecep = Fx_LimpiarTextoXML(_DirRecep)
+        _CmnaRecep = Fx_LimpiarTextoXML(_CmnaRecep)
+        _CiudadRecep = Fx_LimpiarTextoXML(_CiudadRecep)
 
         _XML = Replace(_XML, "#RUTRecep#", _RUTRecep)
         _XML = Replace(_XML, "#RznSocRecep#", _RznSocRecep)
@@ -2216,7 +2216,7 @@ Public Class Class_Genera_DTE_RdBk
                 _TpoCodigo = "INTERNO"
                 _VlrCodigo = _Fila.Item("KOPRCT").ToString.Trim
 
-                Fx_Caracter_Raro_Quitar(_NmbItem)
+                Fx_LimpiarTextoXML(_NmbItem)
 
                 Dim _QtyItem_Str As String = _QtyItem
                 Dim _Decimales = Split(_QtyItem, ",")
@@ -2295,7 +2295,7 @@ Public Class Class_Genera_DTE_RdBk
                     End If
                 End If
 
-                Fx_Caracter_Raro_Quitar(_GlosaDR)
+                _GlosaDR = Fx_LimpiarTextoXML(_GlosaDR)
 
                 _Detalle += vbCrLf &
                         "<DscRcgGlobal>" & vbCrLf &
@@ -3118,7 +3118,7 @@ Public Class Class_Genera_DTE_RdBk
             val.errores = Respuesta.Mensaje
             _Errores.Add(val.errores)
 
-            Dim _Respuesta As String
+            Dim _Respuesta As String = String.Empty
 
             For Each _Er As String In _Errores
                 _Respuesta += _Er.Trim & "; "
@@ -3163,13 +3163,14 @@ Public Class Class_Genera_DTE_RdBk
             _Firma = _Dte.XPathSelectElement("/DTE/Documento/TED", _nsManager)
         End If
 
-        Dim _DteXml As String = _Dte.Document.ToString
-        Dim _CaratulaCml As String = _DteResultado
+        Dim _DteXml As String = Replace(_Dte.Document.ToString(), "'", "''")
+        Dim _FirmaXml As String = Replace(_Firma.ToString(), "'", "''")
+        Dim _CaratulaCml As String = Replace(_DteResultado, "'", "''")
 
         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_DTE_Documentos(Idmaeedo,Tido,Nudo,FechaSolicitud,Xml,Firma," &
-                       "CaratulaXml,AmbienteCertificacion,Procesar,Empresa) Values " &
-                     "(" & _Idmaeedo & ", '" & _Tido & "', '" & _Nudo & "',Getdate(),'" & _DteXml & "','" & _Firma.ToString &
-                     "','" & _CaratulaCml & "'," & _AmbienteCertificacion & ",1,'" & _Empresa & "')"
+               "CaratulaXml,AmbienteCertificacion,Procesar,Empresa) Values " &
+               "(" & _Idmaeedo & ", '" & _Tido & "', '" & _Nudo & "',Getdate(),'" & _DteXml & "','" & _FirmaXml &
+               "','" & _CaratulaCml & "'," & _AmbienteCertificacion & ",1,'" & _Empresa & "')"
         _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Dte)
 
         If CBool(_Id_Dte) Then
@@ -3404,7 +3405,7 @@ Public Class Class_Genera_DTE_RdBk
         End If
 
         Dim _DteXml As String = _Dte.Document.ToString
-        Dim _CaratulaCml As String = _DteResultado
+        Dim _CaratulaCml As String = Replace(_DteResultado, "'", "''")
 
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_DTE_Documentos Set CaratulaXmlEmail = '" & _CaratulaCml & "' Where Id_Dte = " & _Id_Dte
         _Sql.Ej_consulta_IDU(Consulta_sql, False)

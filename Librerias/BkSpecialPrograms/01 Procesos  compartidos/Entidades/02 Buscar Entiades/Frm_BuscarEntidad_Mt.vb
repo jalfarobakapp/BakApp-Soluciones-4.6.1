@@ -289,7 +289,7 @@ Public Class Frm_BuscarEntidad_Mt
 
             Dim _DisplayIndex = 0
 
-            .Columns("KOEN").Width = 73
+            .Columns("KOEN").Width = 75
             .Columns("KOEN").HeaderText = "Código"
             .Columns("KOEN").Visible = True
             .Columns("KOEN").Frozen = True

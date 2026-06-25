@@ -360,6 +360,10 @@ Error_Numero:
             Else
                 ' No es NULL ni Nothing; devolvemos el valor pasado.
                 '
+                If String.IsNullOrWhiteSpace(value.ToString) And IsNumeric(defaultValue) Then
+                    Return defaultValue
+                End If
+
                 Return value
             End If
         Catch ex As Exception

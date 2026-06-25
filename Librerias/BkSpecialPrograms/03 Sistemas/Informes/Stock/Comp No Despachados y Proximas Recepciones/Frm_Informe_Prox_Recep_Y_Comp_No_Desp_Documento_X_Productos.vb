@@ -76,6 +76,8 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
         End If
 
+        Btn_Facturar.Visible = False
+
     End Sub
 
     Sub Sb_Actualizar_Grillas()
@@ -268,11 +270,11 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
         If _Nombre_Grilla = "Grilla_Documentos" Then
             Btn_Estadisticas_Producto.Visible = False
             Btn_Ver_Documento.Visible = True
-            Btn_Facturar.Visible = (_Tido = "NVV")
+            'Btn_Facturar.Visible = (_Tido = "NVV")
         ElseIf _Nombre_Grilla = "Grilla_Detalle" Then
             Btn_Estadisticas_Producto.Visible = True
             Btn_Ver_Documento.Visible = True
-            Btn_Facturar.Visible = False
+            'Btn_Facturar.Visible = False
         End If
 
         ShowContextMenu(Menu_Contextual)
@@ -382,6 +384,35 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
         End If
 
+        Dim _MensajeRevFolio As LsValiciones.Mensajes
+        Dim _NroDocumento As String = String.Empty
+
+        If Tido = "NVV" Then
+
+            '_NroDocumento = Traer_Numero_Documento("BLV", , , , False)
+            '_MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, "BLV", _NroDocumento, True, Mod_Empresa, Mod_Modalidad)
+
+            'If Not _MensajeRevFolio.EsCorrecto Then
+            '    Return
+            'End If
+
+            _NroDocumento = Traer_Numero_Documento("FCV", , , , False)
+            _MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, "FCV", _NroDocumento, True, Mod_Empresa, Mod_Modalidad)
+
+            If Not _MensajeRevFolio.EsCorrecto Then
+                Return
+            End If
+
+            '_NroDocumento = Traer_Numero_Documento("GDV", , , , False)
+            '_MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, "GDV", _NroDocumento, True, Mod_Empresa, Mod_Modalidad)
+
+            'If Not _MensajeRevFolio.EsCorrecto Then
+            '    Return
+            'End If
+
+        End If
+
+
         Dim _Filtro_Doc As String '= Generar_Filtro_IN(_Tbl_Productos, "", "IDMAEEDO", False, False, "")
 
         _Filtro_Doc = Generar_Filtro_IN_Arreglo(_Lista_Idmaeedo, True)
@@ -441,6 +472,44 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
         _Filtro_Doc = Generar_Filtro_IN_Arreglo(_Lista_Idmaeedo, True)
         _Filtro_Doc = "And Edo.EMPRESA = '" & Mod_Empresa & "' And Edo.IDMAEEDO In " & _Filtro_Doc
 
+        Dim _MensajeRevFolio As LsValiciones.Mensajes
+        Dim _NroDocumento As String = String.Empty
+
+        If Tido = "NVV" Then
+
+            '_NroDocumento = Traer_Numero_Documento("BLV", , , , False)
+            '_MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, "BLV", _NroDocumento, True, Mod_Empresa, Mod_Modalidad)
+
+            'If Not _MensajeRevFolio.EsCorrecto Then
+            '    Return
+            'End If
+
+            _NroDocumento = Traer_Numero_Documento("FCV", , , , False)
+            _MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, "FCV", _NroDocumento, True, Mod_Empresa, Mod_Modalidad)
+
+            If Not _MensajeRevFolio.EsCorrecto Then
+                Return
+            End If
+
+            '_NroDocumento = Traer_Numero_Documento("GDV", , , , False)
+            '_MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, "GDV", _NroDocumento, True, Mod_Empresa, Mod_Modalidad)
+
+            'If Not _MensajeRevFolio.EsCorrecto Then
+            '    Return
+            'End If
+
+        End If
+
+        If Tido = "NVI" Then
+
+            _NroDocumento = Traer_Numero_Documento("GTI", , , , False)
+            _MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, "GTI", _NroDocumento, True, Mod_Empresa, Mod_Modalidad)
+
+            If Not _MensajeRevFolio.EsCorrecto Then
+                Return
+            End If
+
+        End If
 
         Dim Fm As New Frm_Stmp_IncNVVPicking
         Fm.Tido = Tido

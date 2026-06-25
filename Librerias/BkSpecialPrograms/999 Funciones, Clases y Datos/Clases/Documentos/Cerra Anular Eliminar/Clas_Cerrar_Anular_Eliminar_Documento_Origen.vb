@@ -181,7 +181,9 @@ Public Class Clas_Cerrar_Anular_Eliminar_Documento_Origen
                                "Delete From MAEEDOOB Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
                                "Delete From TABPERMISO Where IDRST=" & _Idmaeedo & " And ARCHIRST='MAEEDO'" & vbCrLf &
                                "Select TOP 1 * From MAEDCR WITH (NOLOCK) Where IDMAEEDO=" & _Idmaeedo & vbCrLf &
-                               "Delete From MAEDCR Where IDMAEEDO=" & _Idmaeedo & vbCrLf & vbCrLf
+                               "Delete From MAEDCR Where IDMAEEDO=" & _Idmaeedo & vbCrLf & vbCrLf &
+                               "Delete " & _Global_BaseBk & "Zw_Docu_Ent Where Idmaeedo = " & _Idmaeedo & vbCrLf &
+                               "Delete " & _Global_BaseBk & "Zw_Docu_Det Where Idmaeedo = " & _Idmaeedo
 
                 Consulta_sql = Replace(Consulta_sql, "#Idmaeedo#", _Idmaeedo)
 
