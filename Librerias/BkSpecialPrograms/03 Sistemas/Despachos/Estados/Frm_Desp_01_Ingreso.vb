@@ -983,7 +983,9 @@ Public Class Frm_Desp_01_Ingreso
             Fm.Cl_Despacho = _Cl_Despacho
             Fm.Tbl_Documentos_Seleccionados = _Tbl_Documentos
             Fm.Text = "SELECCIONE DOCUMENTOS PARA EL DESPACHO"
-            Fm.NoPermitirSeleccionarMasDocumentos = True
+
+            'Fm.NoPermitirSeleccionarMasDocumentos = True
+
             Fm.DeshabilitarMenuContextual = True
             If CBool(Fm.Tbl_Informe.Rows.Count) Then
                 Fm.ShowDialog(Me)

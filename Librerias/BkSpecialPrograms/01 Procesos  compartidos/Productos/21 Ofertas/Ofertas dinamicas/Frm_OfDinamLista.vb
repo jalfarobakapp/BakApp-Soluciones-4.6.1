@@ -398,6 +398,10 @@ Where CODIGO = '{_Codigo}'"
                 _Fila.Cells("Activa").Value = _Row.Item("Activa")
                 _Fila.Cells("ProdAsociados").Value = _Row.Item("ProdAsociados")
 
+                If Not IsNothing(_Fila.DataBoundItem) AndAlso TypeOf _Fila.DataBoundItem Is DataRowView Then
+                    CType(_Fila.DataBoundItem, DataRowView).Row.Item("EditadoGrabadoSesion") = True
+                End If
+
             Finally
                 _Actualizando_Oferta_Desde_Ficha = False
             End Try
@@ -890,6 +894,7 @@ Where CODIGO = '{_Codigo}'"
 (
     SELECT 
         Cast(0 As Bit) As 'Chk',
+        Cast(0 As Bit) As EditadoGrabadoSesion,
         Mr.*,
         Cast(Mr.FTOFERTA As DateTime) As FTOFERTA_Anterior,
         Cast(0 As Bit) As FTOFERTA_Modificada,
@@ -1286,12 +1291,20 @@ FROM Paso2;"
             Return
         End If
 
+        Dim _FilasEditadasEnSesion As DataRow() = _Tbl_Maeeres.Select("FTOFERTA_Modificada = True")
+
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
+
+            For Each _Row As DataRow In _FilasEditadasEnSesion
+                _Row.Item("EditadoGrabadoSesion") = True
+            Next
 
             For Each _Row As DataRow In _FilasModificadas
                 _Row.Item("FTOFERTA_Anterior") = _Row.Item("FTOFERTA")
                 _Row.Item("FTOFERTA_Modificada") = False
             Next
+
+            Sb_Desmarcar_Todas_Las_Filas()
 
             _Tbl_Maeeres.AcceptChanges()
             Sb_Aplicar_Filtro_Ofertas()
@@ -1480,7 +1493,7 @@ FROM Paso2;"
         Dim _Cultura As System.Globalization.CultureInfo = System.Globalization.CultureInfo.GetCultureInfo("es-ES")
         Dim _Formatos() As String = {
         "d/M/yyyy", "dd/MM/yyyy", "d/M/yy", "dd/MM/yy",
-        "d-M-yyyy", "dd-MM-yyyy", "d-M-yy", "dd-MM-yy"
+        "d-M-yyyy", "dd-MM-yyyy", "d-M-yy", "dd-M-yy"
     }
 
         If String.IsNullOrWhiteSpace(_Texto) Then
@@ -1570,6 +1583,22 @@ FROM Paso2;"
             Return
         End If
 
+        If _FilasMarcadas.Length > 1 Then
+
+            Dim _FilasBloqueadas As DataRow() = _Tbl_Maeeres.Select("Chk = True And EditadoGrabadoSesion = True")
+
+            If CBool(_FilasBloqueadas.Length) Then
+                MessageBoxEx.Show(Me,
+                              "No se permite eliminar registros que fueron editados y grabados en esta sesión." & vbCrLf & vbCrLf &
+                              "Al cerrar y volver a abrir el formulario, esta restricción se libera.",
+                              "Validación",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Stop)
+                Return
+            End If
+
+        End If
+
         Dim _Mensaje As String
 
         If _FilasMarcadas.Length = 1 Then
@@ -1603,12 +1632,13 @@ FROM Paso2;"
         If _Sql.Fx_Existe_Tabla("MAEERES_Hist") Then
 
             _SqlQuery.AppendLine("Insert Into MAEERES_Hist (CODIGO,CANTIDAD,UDAD,DESCRIPTOR,ESTARESE,TIPORESE,CONCEPTO,LISTAS,FIOFERTA,FTOFERTA,APLICAUT,PORDESC,ECUPORDESC,DESC_LUN,DESC_MAR,DESC_MIE,")
-            _SqlQuery.AppendLine("DESC_JUE,DESC_VIE,DESC_SAB,DESC_DOM,DESCVALOR,VALDESC,ECUVALDESC,KOGEN,CANTMIN,TIPOTRAT,RANGOS,INCLUYENVV,TGRANEL,FGRABACION,KOFUGRABA,OFERTAELIMINADA)")
+            _SqlQuery.AppendLine("DESC_JUE,DESC_VIE,DESC_SAB,DESC_DOM,DESCVALOR,VALDESC,ECUVALDESC,KOGEN,CANTMIN,TIPOTRAT,RANGOS,INCLUYENVV,TGRANEL,FGRABACION,KOFUGRABA,OFERTAELIMINADA,ELIMINAMASIVA)")
             _SqlQuery.AppendLine("Select CODIGO,CANTIDAD,UDAD,DESCRIPTOR,ESTARESE,TIPORESE,CONCEPTO,LISTAS,FIOFERTA,FTOFERTA,APLICAUT,PORDESC,ECUPORDESC,DESC_LUN,DESC_MAR,DESC_MIE,")
-            _SqlQuery.AppendLine("DESC_JUE,DESC_VIE,DESC_SAB,DESC_DOM,DESCVALOR,VALDESC,ECUVALDESC,KOGEN,CANTMIN,TIPOTRAT,RANGOS,INCLUYENVV,TGRANEL,GETDATE(),'" & FUNCIONARIO & "',1")
+            _SqlQuery.AppendLine("DESC_JUE,DESC_VIE,DESC_SAB,DESC_DOM,DESCVALOR,VALDESC,ECUVALDESC,KOGEN,CANTMIN,TIPOTRAT,RANGOS,INCLUYENVV,TGRANEL,GETDATE(),'" & FUNCIONARIO & "',1,1")
             _SqlQuery.AppendLine("From MAEERES")
             _SqlQuery.AppendLine("Where CODIGO In (" & _FiltroCodigos & ")")
             _SqlQuery.AppendLine()
+
         End If
 
         _SqlQuery.AppendLine("Delete From MAEDRES Where CODIGO In (" & _FiltroCodigos & ")")
@@ -1632,6 +1662,28 @@ FROM Paso2;"
                           "Eliminar ofertas",
                           MessageBoxButtons.OK,
                           MessageBoxIcon.Information)
+
+    End Sub
+
+    Private Sub Sb_Desmarcar_Todas_Las_Filas()
+
+        If IsNothing(_Tbl_Maeeres) Then
+            Chk_Marcar_Todas.Checked = False
+            Return
+        End If
+
+        For Each _Row As DataRow In _Tbl_Maeeres.Rows
+            _Row.Item("Chk") = False
+        Next
+
+        Chk_Marcar_Todas.Checked = False
+
+        If Not IsNothing(_Dv) Then
+            Dim _CurrencyManager As CurrencyManager = CType(BindingContext(_Dv), CurrencyManager)
+            _CurrencyManager.EndCurrentEdit()
+        End If
+
+        Grilla_Recetas.Refresh()
 
     End Sub
 

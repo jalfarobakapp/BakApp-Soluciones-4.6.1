@@ -535,7 +535,7 @@ WHERE e.TIDO = 'NVV'
         End If
         Dim _Trans As String
 
-        If ObdoLimpio.Replace(" ", "").Contains("Direccióndeenvío:,,,") Then
+        If ObdoLimpio.Replace(" ", "").Contains("Direccióndeenvío:,,,") OrElse ObdoLimpio = ", , ," Then
             _Tipo_Despacho = "RT"
             _Trans = ""
         Else

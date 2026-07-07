@@ -1738,4 +1738,117 @@ Where Idmaeedo = {_Idmaeedo_FCV}"
 
     End Sub
 
+    Private Sub Btn_CrearFCCdesdeOCC_Click(sender As Object, e As EventArgs) Handles Btn_CrearFCCdesdeOCC.Click
+
+        Dim _Tido = "FCC"
+        Dim _Idmaeedo_OCC As Integer = 894355
+        Dim _CampoPrecio As String
+
+        Consulta_sql = $"Select * From MAEEDO Where IDMAEEDO = {_Idmaeedo_OCC}"
+        Dim _Row_Maeedo_OCC As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Koen As String = _Row_Maeedo_OCC.Item("ENDO")
+        Dim _Suen As String = _Row_Maeedo_OCC.Item("SUENDO")
+        Dim _Nudo As String = "0000000360"
+
+        Dim _Fecha_Emision As DateTime? = New DateTime(2026, 6, 17)
+
+        'Dim _Razon_Social As String = _Row_Maeedo_OCC.Item("Razon_Social")
+
+        If True Then
+            ' Neto
+            _CampoPrecio = "PPPRNE"
+        Else
+            ' Bruto
+            _CampoPrecio = "PPPRBR"
+        End If
+
+        Consulta_sql = $"Select * From MAEEDO Where IDMAEEDO = {_Idmaeedo_OCC}"
+        Dim _Row_OCC As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row_OCC) Then
+
+            Me.Enabled = False
+
+            Dim Fm_Espera As New Frm_Form_Esperar
+            Fm_Espera.Pro_Texto = "CREANDO DOCUMENTO, POR FAVOR ESPERE..."
+            Fm_Espera.BarraCircular.IsRunning = True
+            Fm_Espera.Show()
+
+            Try
+
+                '_Idmaeedo_OCC = _Row_OCC.Item("IDMAEEDO")
+                '_Nudo = _Row_OCC.Item("NUDO")
+
+                Consulta_sql = $"
+SELECT * FROM MAEEDO Where IDMAEEDO = {_Idmaeedo_OCC}
+SELECT *,CASE WHEN UDTRPR = 1 THEN CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 END AS 'Cantidad',
+CAPRCO1-CAPREX1 AS 'CantUd1_Dori',CAPRCO2-CAPREX2 AS 'CantUd2_Dori',
+CASE WHEN UDTRPR = 1 THEN {_CampoPrecio} ELSE {_CampoPrecio}*RLUDPR END AS 'Precio',
+0 As Id_Oferta,
+'' As Oferta,
+0 As Es_Padre_Oferta,
+0 As Padre_Oferta,
+0 As Hijo_Oferta,
+0 As Cantidad_Oferta,
+0 As Porcdesc_Oferta
+FROM MAEDDO  WITH ( NOLOCK ) 
+Where IDMAEEDO = {_Idmaeedo_OCC} AND ( ESLIDO<>'C' OR ESFALI='I' ) AND TICT = ''
+ORDER BY IDMAEEDO,IDMAEDDO 
+SELECT * FROM MAEIMLI
+Where IDMAEEDO = {_Idmaeedo_OCC} 
+SELECT * FROM MAEDTLI
+Where IDMAEEDO = {_Idmaeedo_OCC} 
+SELECT TOP 1 * FROM MAEEDOOB Where IDMAEEDO = {_Idmaeedo_OCC}"
+
+                'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
+                'Falta campo FECHATRIB = Fecha de ingreso
+
+                ' SUBTIDO
+                '-- 001 Sin derecho a credito fiscal y Sin documento contiene activo fijo
+                '-- 000 Documento contiene activo fijo y Sin derecho a credito fiscal
+                '-- 101 Conderecho a credito fiscal y documento contiene activo fijo
+                '-- 100 Con derecho a credito fiscal y sin documento contiene activo fijo
+                '-- '' -- No incluye este documento en el libro de compras 
+
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
+
+                Dim Fm_Post As New Frm_Formulario_Documento(_Tido, csGlobales.Enum_Tipo_Documento.Compra, False)
+                Fm_Post.Pro_SubTido = "100"
+                Fm_Post.Sb_Limpiar(Mod_Modalidad)
+                Fm_Post.Pro_Nudo = _Nudo
+                Fm_Post.HoraAlPrincipioDelDia = True
+                Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(_Fm_Menu_Padre, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
+                _Mensaje = Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, False)
+                Fm_Post.Dispose()
+
+                If _Mensaje.EsCorrecto Then
+                    MessageBoxEx.Show(Me, "Se ha creado la factura correctamente", "Creación de documento",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Else
+                    MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
+                End If
+
+
+            Catch ex As Exception
+
+                MessageBoxEx.Show(Me, ex.Message, "Problema al crear el documento", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+            Finally
+
+                If Not Fm_Espera Is Nothing Then Fm_Espera.Dispose()
+                Me.Enabled = True
+
+            End Try
+
+        Else
+
+            MessageBoxEx.Show(Me, "No se encontro coincidencia", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+
+        End If
+
+    End Sub
+
 End Class

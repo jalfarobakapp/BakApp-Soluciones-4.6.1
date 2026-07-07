@@ -213,7 +213,8 @@ Public Class Clase_Crear_Documento
                                 Optional _Cambiar_NroDocumento As Boolean = True,
                                 Optional ByRef _Origen_Modificado_Intertanto As Boolean = False,
                                 Optional _Es_TLV As Boolean = False,
-                                Optional _HoraAlFinalDelDia As Boolean = False) As LsValiciones.Mensajes
+                                Optional _HoraAlFinalDelDia As Boolean = False,
+                                Optional _HoraAlPrincipioDelDia As Boolean = False) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -1843,6 +1844,7 @@ Public Class Clase_Crear_Documento
 
                     If _Feemdo2 > _Feemli2 Then
                         _HoraAlFinalDelDia = True
+                        _HoraAlPrincipioDelDia = False
                     Else
                         _HoraAlFinalDelDia = False
                     End If
@@ -1851,7 +1853,7 @@ Public Class Clase_Crear_Documento
 
             End If
 
-            _HoraGrab = Hora_Grab_fx(_HoraAlFinalDelDia) 'Math.Round((_HH * 3600) + (_MM * 60) + _SS, 0)
+            _HoraGrab = Hora_Grab_fx(_HoraAlFinalDelDia, _HoraAlPrincipioDelDia) 'Math.Round((_HH * 3600) + (_MM * 60) + _SS, 0)
 
             'Consulta_sql = "Declare @HoraGrab Int" & vbCrLf & _
             '               "set @HoraGrab = convert(money,substring(convert(varchar(20),getdate(),114),1,2)) * 3600 +" & vbCrLf & _
@@ -4488,7 +4490,7 @@ Public Class Clase_Crear_Documento
 
                 If Not _Lincondesp And _Tidopa <> "GRC" Then
                     _Campos.Add("STDV1C")
-                    _Campos.Add("STDV1C")
+                    _Campos.Add("STDV2C")
                 End If
 
             Case "GTI"

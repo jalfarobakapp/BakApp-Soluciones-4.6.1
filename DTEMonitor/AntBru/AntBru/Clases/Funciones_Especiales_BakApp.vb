@@ -5800,7 +5800,10 @@ Public Module Crear_Documentos_Desde_Otro
 
     Function Fx_LimpiarTextoXML(_Texto As String) As String
 
+        Fx_Caracter_Raro_Quitar_Old(_Texto)
         If String.IsNullOrEmpty(_Texto) Then Return ""
+
+        Return _Texto
 
         Dim sb As New System.Text.StringBuilder()
 
@@ -5826,6 +5829,8 @@ Public Module Crear_Documentos_Desde_Otro
                 Continue For
             End If
 
+            Fx_Caracter_Raro_Quitar_Old(ch)
+
             ' 4. Escapar caracteres XML obligatorios
             Select Case ch
                 Case "&"c : sb.Append("&amp;")
@@ -5836,6 +5841,7 @@ Public Module Crear_Documentos_Desde_Otro
                 Case Else
                     sb.Append(ch)
             End Select
+
         Next
 
         Return sb.ToString().Trim()

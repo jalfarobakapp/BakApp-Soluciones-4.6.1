@@ -191,6 +191,8 @@ Public Class Frm_Formulario_Documento
 
     Dim _VencimientosCliente As New VencimientosCliente.VencimientosCliente
 
+    Public Property HoraAlPrincipioDelDia As Boolean
+
 #Region "PROPIEDADES"
 
     Public ReadOnly Property Pro_Idmaeedo() As Integer
@@ -9471,6 +9473,7 @@ Public Class Frm_Formulario_Documento
                             Fm.ModoSeleccion = (_Tido = "GDI")
                             Fm.ModoIngresoInterno = (_Tido = "GRI")
                             Fm.ModoIngresoNuevo = (_Tido = "GRC")
+                            Fm.ModoDespachoInterno = (_Tido = "GDI")
                             Fm.ShowDialog(Me)
 
                             If Fm.DialogResult = DialogResult.OK Then
@@ -19802,7 +19805,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                                    _Cambiar_NroDocumento,
                                                    _Origen_Modificado_Intertanto,
                                                    _Es_TLV,
-                                                   _HoraAlFinalDelDia)
+                                                   _HoraAlFinalDelDia,
+                                                   _HoraAlPrincipioDelDia)
 
             If Not _Mensaje.EsCorrecto Then
 

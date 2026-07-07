@@ -1091,7 +1091,7 @@ Public Module Funciones_Especiales_BakApp
 
     End Function
 
-    Public Function Hora_Grab_fx(_HoraAlFinalDelDia As Boolean) As String
+    Public Function Hora_Grab_fx(_HoraAlFinalDelDia As Boolean, Optional _HoraAlPrincipioDelDia As Boolean = False) As String
 
         Dim _HH_sistem As Date
 
@@ -1105,6 +1105,10 @@ Public Module Funciones_Especiales_BakApp
 
         If _HoraAlFinalDelDia Then
             _HH = 23 : _MM = 59 : _SS = 59
+        End If
+
+        If _HoraAlPrincipioDelDia Then
+            _HH = 0 : _MM = 0 : _SS = 1
         End If
 
         Dim _HoraGrab As String = Math.Round((_HH * 3600) + (_MM * 60) + _SS, 0)
