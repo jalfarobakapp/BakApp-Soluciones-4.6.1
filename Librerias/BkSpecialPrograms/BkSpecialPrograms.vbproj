@@ -549,6 +549,12 @@
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Archivo Electronico Cesion AEC\Frm_Aec_CesionDTE.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Archivo Electronico Cesion AEC\Frm_Aec_CesionExt.Designer.vb">
+      <DependentUpon>Frm_Aec_CesionExt.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Archivo Electronico Cesion AEC\Frm_Aec_CesionExt.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Class_MantFacturasElect.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Dte_Configuracion.Designer.vb">
       <DependentUpon>Frm_Dte_Configuracion.vb</DependentUpon>
@@ -4849,6 +4855,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Archivo Electronico Cesion AEC\Frm_Aec_CesionDTE.resx">
       <DependentUpon>Frm_Aec_CesionDTE.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Archivo Electronico Cesion AEC\Frm_Aec_CesionExt.resx">
+      <DependentUpon>Frm_Aec_CesionExt.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Documentos\10 DTE\Factura Electronica Efesto\Frm_Dte_Configuracion.resx">
       <DependentUpon>Frm_Dte_Configuracion.vb</DependentUpon>

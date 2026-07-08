@@ -247,11 +247,11 @@ Public Class Frm_Anotaciones_Ver_Anotaciones
                         If Convert.ToBoolean(_Idrve) Then
 
                             Consulta_sql += "INSERT INTO MEVENTO (ARCHIRVE,IDRVE,ARCHIRSE,IDRSE,KOFU,FEVENTO,KOTABLA,KOCARAC,NOKOCARAC," &
-                                        "FECHAREF,HORAGRAB) VALUES " & vbCrLf &
-                                        "('" & _Archive & "'," & _Idrve & ",'" & _Archirse & "'," & _Idrse & ",'" & FUNCIONARIO &
-                                        "','" & Format(_Fevento, "yyyyMMdd") &
-                                        "','" & _Kotabla & "','" & _Kocarac & "','" & _Nokocarac &
-                                        "',GetDate()," & _HoraGrab & ")" & vbCrLf
+                                            "FECHAREF,HORAGRAB) VALUES " & vbCrLf &
+                                            "('" & _Archive & "'," & _Idrve & ",'" & _Archirse & "'," & _Idrse & ",'" & FUNCIONARIO &
+                                            "','" & Format(_Fevento, "yyyyMMdd") &
+                                            "','" & _Kotabla & "','" & _Kocarac & "','" & _Nokocarac &
+                                            "',GetDate()," & _HoraGrab & ")" & vbCrLf
 
                         Else
 

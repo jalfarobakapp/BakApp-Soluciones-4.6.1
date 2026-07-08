@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Frm_MantFacturasElectronicas
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -24,9 +24,9 @@ Partial Class Frm_MantFacturasElectronicas
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_MantFacturasElectronicas))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ButtonItem()
@@ -36,6 +36,7 @@ Partial Class Frm_MantFacturasElectronicas
         Me.Btn_Reenviar_SII = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ReConsultar_Trackid = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Reenviar_Correo = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Exportar_XML_Hefesto = New DevComponents.DotNetBar.ButtonItem()
         Me.Lbl_AEC = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_CesionarDTE = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
@@ -61,7 +62,8 @@ Partial Class Frm_MantFacturasElectronicas
         Me.Chk_AceptadoSII = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_EnviadoSII = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_DocFirmado = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_Mnu_Exportar_XML_Hefesto = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CesionarDTEExt = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CesionarDTEExtQuitar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -128,7 +130,7 @@ Partial Class Frm_MantFacturasElectronicas
         '
         Me.Menu_Contextual.AutoExpandOnClick = True
         Me.Menu_Contextual.Name = "Menu_Contextual"
-        Me.Menu_Contextual.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_LeyendaDoc, Me.Btn_Ver_Documento, Me.Btn_Firmar_Documento, Me.Btn_Reenviar_SII, Me.Btn_ReConsultar_Trackid, Me.Btn_Reenviar_Correo, Me.Btn_Mnu_Exportar_XML_Hefesto, Me.Lbl_AEC, Me.Btn_CesionarDTE})
+        Me.Menu_Contextual.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_LeyendaDoc, Me.Btn_Ver_Documento, Me.Btn_Firmar_Documento, Me.Btn_Reenviar_SII, Me.Btn_ReConsultar_Trackid, Me.Btn_Reenviar_Correo, Me.Btn_Mnu_Exportar_XML_Hefesto, Me.Lbl_AEC, Me.Btn_CesionarDTE, Me.Btn_CesionarDTEExt, Me.Btn_CesionarDTEExtQuitar})
         Me.Menu_Contextual.Text = "Opciones"
         '
         'Lbl_LeyendaDoc
@@ -173,7 +175,14 @@ Partial Class Frm_MantFacturasElectronicas
         '
         Me.Btn_Reenviar_Correo.Image = CType(resources.GetObject("Btn_Reenviar_Correo.Image"), System.Drawing.Image)
         Me.Btn_Reenviar_Correo.Name = "Btn_Reenviar_Correo"
-        Me.Btn_Reenviar_Correo.Text = "Reenviar correo de notificación al cliente"
+        Me.Btn_Reenviar_Correo.Text = "Reenviar correo de notificaciÃ³n al cliente"
+        '
+        'Btn_Mnu_Exportar_XML_Hefesto
+        '
+        Me.Btn_Mnu_Exportar_XML_Hefesto.Image = CType(resources.GetObject("Btn_Mnu_Exportar_XML_Hefesto.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Exportar_XML_Hefesto.ImageAlt = CType(resources.GetObject("Btn_Mnu_Exportar_XML_Hefesto.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Exportar_XML_Hefesto.Name = "Btn_Mnu_Exportar_XML_Hefesto"
+        Me.Btn_Mnu_Exportar_XML_Hefesto.Text = "Exportar XML"
         '
         'Lbl_AEC
         '
@@ -186,7 +195,7 @@ Partial Class Frm_MantFacturasElectronicas
         Me.Lbl_AEC.PaddingLeft = 10
         Me.Lbl_AEC.PaddingTop = 1
         Me.Lbl_AEC.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.Lbl_AEC.Text = "Archivo Electrónico de Cesión (AEC)"
+        Me.Lbl_AEC.Text = "Archivo ElectrÃ³nico de CesiÃ³n (AEC)"
         '
         'Btn_CesionarDTE
         '
@@ -199,36 +208,36 @@ Partial Class Frm_MantFacturasElectronicas
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.Size = New System.Drawing.Size(978, 370)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
@@ -303,7 +312,7 @@ Partial Class Frm_MantFacturasElectronicas
         'Lbl_Etiqueta
         '
         Me.Lbl_Etiqueta.Name = "Lbl_Etiqueta"
-        Me.Lbl_Etiqueta.Text = "Ambiente de producción"
+        Me.Lbl_Etiqueta.Text = "Ambiente de producciÃ³n"
         '
         'Img_Imagenes
         '
@@ -575,12 +584,19 @@ Partial Class Frm_MantFacturasElectronicas
         Me.Chk_DocFirmado.TabIndex = 48
         Me.Chk_DocFirmado.Text = "Firmado"
         '
-        'Btn_Mnu_Exportar_XML_Hefesto
+        'Btn_CesionarDTEExt
         '
-        Me.Btn_Mnu_Exportar_XML_Hefesto.Image = CType(resources.GetObject("Btn_Mnu_Exportar_XML_Hefesto.Image"), System.Drawing.Image)
-        Me.Btn_Mnu_Exportar_XML_Hefesto.ImageAlt = CType(resources.GetObject("Btn_Mnu_Exportar_XML_Hefesto.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Mnu_Exportar_XML_Hefesto.Name = "Btn_Mnu_Exportar_XML_Hefesto"
-        Me.Btn_Mnu_Exportar_XML_Hefesto.Text = "Exportar XML"
+        Me.Btn_CesionarDTEExt.Image = CType(resources.GetObject("Btn_CesionarDTEExt.Image"), System.Drawing.Image)
+        Me.Btn_CesionarDTEExt.ImageAlt = CType(resources.GetObject("Btn_CesionarDTEExt.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CesionarDTEExt.Name = "Btn_CesionarDTEExt"
+        Me.Btn_CesionarDTEExt.Text = "Cesionar documento (Desde Factoring)"
+        '
+        'Btn_CesionarDTEExtQuitar
+        '
+        Me.Btn_CesionarDTEExtQuitar.Image = CType(resources.GetObject("Btn_CesionarDTEExtQuitar.Image"), System.Drawing.Image)
+        Me.Btn_CesionarDTEExtQuitar.ImageAlt = CType(resources.GetObject("Btn_CesionarDTEExtQuitar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_CesionarDTEExtQuitar.Name = "Btn_CesionarDTEExtQuitar"
+        Me.Btn_CesionarDTEExtQuitar.Text = "Quitar Cesion documento (Desde Factoring)"
         '
         'Frm_MantFacturasElectronicas
         '
@@ -652,4 +668,6 @@ Partial Class Frm_MantFacturasElectronicas
     Friend WithEvents Lbl_AEC As DevComponents.DotNetBar.LabelItem
     Public WithEvents Btn_CesionarDTE As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_Exportar_XML_Hefesto As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_CesionarDTEExt As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_CesionarDTEExtQuitar As DevComponents.DotNetBar.ButtonItem
 End Class

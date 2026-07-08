@@ -726,6 +726,8 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Dte00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Dte00002", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Dte00003", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Dte00004", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Dte00005", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Fmto0001", _Objeto, _Formulario)
 
@@ -3192,14 +3194,20 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "REENVIAR DOCUMENTOS DTE AL SII"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.FACTURA_ELECTRONICA, 6)
                 _NombreFamiliaPermiso = _Fml.FACTURA_ELECTRONICA.ToString
-
             Case "Dte00002"
                 _DescripcionPermiso = "INGRESAR AL SIS. DE ADMINISTRACION DE FACTURA ELECTRONICA BAKAPP"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.FACTURA_ELECTRONICA, 6)
                 _NombreFamiliaPermiso = _Fml.FACTURA_ELECTRONICA.ToString
-
             Case "Dte00003"
                 _DescripcionPermiso = "CONFIGURAR SIS. FACTURACION ELECTRONICA BAKAPP"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.FACTURA_ELECTRONICA, 6)
+                _NombreFamiliaPermiso = _Fml.FACTURA_ELECTRONICA.ToString
+            Case "Dte00004"
+                _DescripcionPermiso = "MARCAR FACTURAS COMO CEDIDAS DE FORMA MANUAL"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.FACTURA_ELECTRONICA, 6)
+                _NombreFamiliaPermiso = _Fml.FACTURA_ELECTRONICA.ToString
+            Case "Dte00005"
+                _DescripcionPermiso = "DESMARCAR FACTURAS CEDIDAS DE FORMA MANUAL"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.FACTURA_ELECTRONICA, 6)
                 _NombreFamiliaPermiso = _Fml.FACTURA_ELECTRONICA.ToString
 
