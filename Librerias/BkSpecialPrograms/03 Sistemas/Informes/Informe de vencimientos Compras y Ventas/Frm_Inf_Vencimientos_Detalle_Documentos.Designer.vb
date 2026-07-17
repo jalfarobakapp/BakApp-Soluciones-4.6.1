@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Ôªø<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -71,6 +71,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Lbl_Total_Saldos = New DevComponents.DotNetBar.LabelX()
         Me.Chk_Marcar_todo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Mostrar_Pagos_Pendientes = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SumarSoloSinCesion = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -88,7 +89,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(999, 423)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1082, 423)
         '
         '
         '
@@ -190,13 +191,13 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         '
         Me.Btn_Anotacion_Telefono.Image = CType(resources.GetObject("Btn_Anotacion_Telefono.Image"), System.Drawing.Image)
         Me.Btn_Anotacion_Telefono.Name = "Btn_Anotacion_Telefono"
-        Me.Btn_Anotacion_Telefono.Text = "Llamado telefÛnico"
+        Me.Btn_Anotacion_Telefono.Text = "Llamado telef√≥nico"
         '
         'Btn_Anotacion_Mail
         '
         Me.Btn_Anotacion_Mail.Image = CType(resources.GetObject("Btn_Anotacion_Mail.Image"), System.Drawing.Image)
         Me.Btn_Anotacion_Mail.Name = "Btn_Anotacion_Mail"
-        Me.Btn_Anotacion_Mail.Text = "EnvÌo de correo"
+        Me.Btn_Anotacion_Mail.Text = "Env√≠o de correo"
         '
         'Btn_Anotacion_Visita_Cliente
         '
@@ -286,7 +287,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Lbl_Mnu_1.PaddingLeft = 10
         Me.Lbl_Mnu_1.PaddingTop = 1
         Me.Lbl_Mnu_1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.Lbl_Mnu_1.Text = "InformaciÛn del cliente"
+        Me.Lbl_Mnu_1.Text = "Informaci√≥n del cliente"
         '
         'Btn_Mnu_Ficha_Entidad
         '
@@ -367,7 +368,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.RowHeadersVisible = False
-        Me.Grilla.Size = New System.Drawing.Size(993, 400)
+        Me.Grilla.Size = New System.Drawing.Size(1076, 400)
         Me.Grilla.TabIndex = 3
         '
         'Bar1
@@ -378,7 +379,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar_Informacion, Me.Btn_Buscar_Documento, Me.Btn_Exportar_Excel, Me.Btn_Mover, Me.Btn_Enviar_correo, Me.Btn_Anotaciones_al_documento, Me.Btn_Marcar_Masivamente_Anotaciones_De_Documentos, Me.Btn_Imprimir, Me.Btn_Autorizar_Pago_Proveedor, Me.Btn_Autorizar_Pago_De_Documentos_Proveedores})
         Me.Bar1.Location = New System.Drawing.Point(0, 530)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(1020, 41)
+        Me.Bar1.Size = New System.Drawing.Size(1106, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 38
@@ -390,6 +391,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Btn_Actualizar_Informacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Actualizar_Informacion.ForeColor = System.Drawing.Color.Black
         Me.Btn_Actualizar_Informacion.Image = CType(resources.GetObject("Btn_Actualizar_Informacion.Image"), System.Drawing.Image)
+        Me.Btn_Actualizar_Informacion.ImageAlt = CType(resources.GetObject("Btn_Actualizar_Informacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Actualizar_Informacion.Name = "Btn_Actualizar_Informacion"
         Me.Btn_Actualizar_Informacion.Tooltip = "Actualizar vista"
         '
@@ -398,6 +400,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Btn_Buscar_Documento.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Buscar_Documento.ForeColor = System.Drawing.Color.Black
         Me.Btn_Buscar_Documento.Image = CType(resources.GetObject("Btn_Buscar_Documento.Image"), System.Drawing.Image)
+        Me.Btn_Buscar_Documento.ImageAlt = CType(resources.GetObject("Btn_Buscar_Documento.ImageAlt"), System.Drawing.Image)
         Me.Btn_Buscar_Documento.Name = "Btn_Buscar_Documento"
         Me.Btn_Buscar_Documento.Tooltip = "Buscar documento en el listado actual (F3)"
         '
@@ -406,6 +409,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Btn_Exportar_Excel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Exportar_Excel.ForeColor = System.Drawing.Color.Black
         Me.Btn_Exportar_Excel.Image = CType(resources.GetObject("Btn_Exportar_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Exportar_Excel.ImageAlt = CType(resources.GetObject("Btn_Exportar_Excel.ImageAlt"), System.Drawing.Image)
         Me.Btn_Exportar_Excel.Name = "Btn_Exportar_Excel"
         Me.Btn_Exportar_Excel.Tooltip = "Exportar a Excel"
         '
@@ -414,6 +418,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Btn_Mover.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Mover.ForeColor = System.Drawing.Color.Black
         Me.Btn_Mover.Image = CType(resources.GetObject("Btn_Mover.Image"), System.Drawing.Image)
+        Me.Btn_Mover.ImageAlt = CType(resources.GetObject("Btn_Mover.ImageAlt"), System.Drawing.Image)
         Me.Btn_Mover.Name = "Btn_Mover"
         Me.Btn_Mover.Tooltip = "Cambiar fecha del vencimiento"
         '
@@ -422,6 +427,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Btn_Enviar_correo.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Enviar_correo.ForeColor = System.Drawing.Color.Black
         Me.Btn_Enviar_correo.Image = CType(resources.GetObject("Btn_Enviar_correo.Image"), System.Drawing.Image)
+        Me.Btn_Enviar_correo.ImageAlt = CType(resources.GetObject("Btn_Enviar_correo.ImageAlt"), System.Drawing.Image)
         Me.Btn_Enviar_correo.Name = "Btn_Enviar_correo"
         Me.Btn_Enviar_correo.Tooltip = "Enviar correo"
         '
@@ -430,8 +436,9 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Btn_Anotaciones_al_documento.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Anotaciones_al_documento.ForeColor = System.Drawing.Color.Black
         Me.Btn_Anotaciones_al_documento.Image = CType(resources.GetObject("Btn_Anotaciones_al_documento.Image"), System.Drawing.Image)
+        Me.Btn_Anotaciones_al_documento.ImageAlt = CType(resources.GetObject("Btn_Anotaciones_al_documento.ImageAlt"), System.Drawing.Image)
         Me.Btn_Anotaciones_al_documento.Name = "Btn_Anotaciones_al_documento"
-        Me.Btn_Anotaciones_al_documento.Tooltip = "Agregar anotaciÛn a documentos"
+        Me.Btn_Anotaciones_al_documento.Tooltip = "Agregar anotaci√≥n a documentos"
         Me.Btn_Anotaciones_al_documento.Visible = False
         '
         'Btn_Marcar_Masivamente_Anotaciones_De_Documentos
@@ -439,14 +446,16 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Btn_Marcar_Masivamente_Anotaciones_De_Documentos.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Marcar_Masivamente_Anotaciones_De_Documentos.ForeColor = System.Drawing.Color.Black
         Me.Btn_Marcar_Masivamente_Anotaciones_De_Documentos.Image = CType(resources.GetObject("Btn_Marcar_Masivamente_Anotaciones_De_Documentos.Image"), System.Drawing.Image)
+        Me.Btn_Marcar_Masivamente_Anotaciones_De_Documentos.ImageAlt = CType(resources.GetObject("Btn_Marcar_Masivamente_Anotaciones_De_Documentos.ImageAlt"), System.Drawing.Image)
         Me.Btn_Marcar_Masivamente_Anotaciones_De_Documentos.Name = "Btn_Marcar_Masivamente_Anotaciones_De_Documentos"
-        Me.Btn_Marcar_Masivamente_Anotaciones_De_Documentos.Tooltip = "Marcar masivamente los documentos (AnotaciÛn tabulada)"
+        Me.Btn_Marcar_Masivamente_Anotaciones_De_Documentos.Tooltip = "Marcar masivamente los documentos (Anotaci√≥n tabulada)"
         '
         'Btn_Imprimir
         '
         Me.Btn_Imprimir.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Imprimir.ForeColor = System.Drawing.Color.Black
         Me.Btn_Imprimir.Image = CType(resources.GetObject("Btn_Imprimir.Image"), System.Drawing.Image)
+        Me.Btn_Imprimir.ImageAlt = CType(resources.GetObject("Btn_Imprimir.ImageAlt"), System.Drawing.Image)
         Me.Btn_Imprimir.Name = "Btn_Imprimir"
         Me.Btn_Imprimir.Tooltip = "Imprimir documento"
         Me.Btn_Imprimir.Visible = False
@@ -457,7 +466,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Btn_Autorizar_Pago_Proveedor.ForeColor = System.Drawing.Color.Black
         Me.Btn_Autorizar_Pago_Proveedor.Image = CType(resources.GetObject("Btn_Autorizar_Pago_Proveedor.Image"), System.Drawing.Image)
         Me.Btn_Autorizar_Pago_Proveedor.Name = "Btn_Autorizar_Pago_Proveedor"
-        Me.Btn_Autorizar_Pago_Proveedor.Tooltip = "Autorizar documentos a pagar (crear cÛdigo de autorizaciÛn)"
+        Me.Btn_Autorizar_Pago_Proveedor.Tooltip = "Autorizar documentos a pagar (crear c√≥digo de autorizaci√≥n)"
         Me.Btn_Autorizar_Pago_Proveedor.Visible = False
         '
         'Btn_Autorizar_Pago_De_Documentos_Proveedores
@@ -476,7 +485,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(12, 441)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(830, 54)
+        Me.GroupPanel2.Size = New System.Drawing.Size(912, 54)
         '
         '
         '
@@ -519,7 +528,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Lbl_Nombre_Entidad.ForeColor = System.Drawing.Color.Black
         Me.Lbl_Nombre_Entidad.Location = New System.Drawing.Point(3, 4)
         Me.Lbl_Nombre_Entidad.Name = "Lbl_Nombre_Entidad"
-        Me.Lbl_Nombre_Entidad.Size = New System.Drawing.Size(818, 22)
+        Me.Lbl_Nombre_Entidad.Size = New System.Drawing.Size(893, 22)
         Me.Lbl_Nombre_Entidad.TabIndex = 91
         '
         'GroupPanel3
@@ -528,7 +537,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel3.Controls.Add(Me.Lbl_Total_Saldos)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel3.Location = New System.Drawing.Point(848, 441)
+        Me.GroupPanel3.Location = New System.Drawing.Point(930, 441)
         Me.GroupPanel3.Name = "GroupPanel3"
         Me.GroupPanel3.Size = New System.Drawing.Size(164, 54)
         '
@@ -586,6 +595,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         '
         '
         Me.Chk_Marcar_todo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Marcar_todo.FocusCuesEnabled = False
         Me.Chk_Marcar_todo.ForeColor = System.Drawing.Color.Black
         Me.Chk_Marcar_todo.Location = New System.Drawing.Point(12, 501)
         Me.Chk_Marcar_todo.Name = "Chk_Marcar_todo"
@@ -601,6 +611,7 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         '
         '
         Me.Chk_Mostrar_Pagos_Pendientes.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Mostrar_Pagos_Pendientes.FocusCuesEnabled = False
         Me.Chk_Mostrar_Pagos_Pendientes.ForeColor = System.Drawing.Color.Black
         Me.Chk_Mostrar_Pagos_Pendientes.Location = New System.Drawing.Point(103, 501)
         Me.Chk_Mostrar_Pagos_Pendientes.Name = "Chk_Mostrar_Pagos_Pendientes"
@@ -609,11 +620,31 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Chk_Mostrar_Pagos_Pendientes.TabIndex = 42
         Me.Chk_Mostrar_Pagos_Pendientes.Text = "Mostrar deuda efectiva (Doc. Pago)"
         '
+        'Chk_SumarSoloSinCesion
+        '
+        Me.Chk_SumarSoloSinCesion.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_SumarSoloSinCesion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SumarSoloSinCesion.Checked = True
+        Me.Chk_SumarSoloSinCesion.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_SumarSoloSinCesion.CheckValue = "Y"
+        Me.Chk_SumarSoloSinCesion.FocusCuesEnabled = False
+        Me.Chk_SumarSoloSinCesion.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SumarSoloSinCesion.Location = New System.Drawing.Point(305, 501)
+        Me.Chk_SumarSoloSinCesion.Name = "Chk_SumarSoloSinCesion"
+        Me.Chk_SumarSoloSinCesion.Size = New System.Drawing.Size(196, 23)
+        Me.Chk_SumarSoloSinCesion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SumarSoloSinCesion.TabIndex = 43
+        Me.Chk_SumarSoloSinCesion.Text = "Sumar solo documentos sin cesi√≥n"
+        '
         'Frm_Inf_Vencimientos_Detalle_Documentos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1020, 571)
+        Me.ClientSize = New System.Drawing.Size(1106, 571)
+        Me.Controls.Add(Me.Chk_SumarSoloSinCesion)
         Me.Controls.Add(Me.Chk_Mostrar_Pagos_Pendientes)
         Me.Controls.Add(Me.Chk_Marcar_todo)
         Me.Controls.Add(Me.GroupPanel3)
@@ -685,4 +716,5 @@ Partial Class Frm_Inf_Vencimientos_Detalle_Documentos
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Lbl_Nombre_Entidad As DevComponents.DotNetBar.LabelX
     Friend WithEvents Lbl_Total_Saldos As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_SumarSoloSinCesion As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

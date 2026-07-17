@@ -543,6 +543,15 @@ Public Class Frm_Cms
                                                             _FechaDesde,
                                                             _FechaHasta,
                                                             False)
+
+                If Fm.FaltaGrupoAsociadoUsuario Then
+                    MessageBoxEx.Show(Me, "Falta asignar un grupo a la ficha del usuario." & vbCrLf &
+                  "Por favor, asigne un grupo para habilitar la generación de informes.", "Validación",
+                  MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, True)
+                    Fm.Dispose()
+                    Return
+                End If
+
                 Fm.Tbl_Filtro_Entidad = _Tbl_Filtro_Entidad
                 Fm.Tbl_Filtro_EntidadExcluidas = _Tbl_Filtro_EntidadExcluidas
                 Fm.Tbl_Filtro_SucursalDoc = _Tbl_Filtro_SucursalDoc
@@ -1395,6 +1404,15 @@ Public Class Frm_Cms
                                                     _FechaDesde,
                                                     _FechaHasta,
                                                     False)
+
+        If Fm.FaltaGrupoAsociadoUsuario Then
+            MessageBoxEx.Show(Me, "Falta asignar un grupo a la ficha del usuario." & vbCrLf &
+                  "Por favor, asigne un grupo para habilitar la generación de informes.", "Validación",
+                  MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, True)
+            Fm.Dispose()
+            Return
+        End If
+
         Fm.Tbl_Filtro_Entidad = _Tbl_Filtro_Entidad
         Fm.Tbl_Filtro_EntidadExcluidas = _Tbl_Filtro_EntidadExcluidas
         Fm.Tbl_Filtro_SucursalDoc = _Tbl_Filtro_SucursalDoc

@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Inf_Vencimientos_Procesar_Informe
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -38,6 +38,11 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Lbl_Nombre_Empresa = New DevComponents.DotNetBar.LabelX()
         Me.Chk_Deuda_Efectiva = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
+        Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Rdb_ClientesTodos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_ClientesSinCredito = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_ClientesConCredito = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_SoloClientesFincred = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Excluir_Documentos_Autorizados_Pago = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
@@ -56,22 +61,17 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Entidades_Algunas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Entidades_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.TableLayoutPanel6 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Rdb_ClientesSinCredito = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_ClientesConCredito = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_ClientesTodos = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.Dtp_Fecha_Hasta, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_Fecha_Desde, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
+        Me.TableLayoutPanel6.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         Me.TableLayoutPanel3.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
-        Me.TableLayoutPanel6.SuspendLayout()
         Me.SuspendLayout()
         '
         'Bar1
@@ -114,7 +114,7 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Btn_Configuracion_Local.Image = CType(resources.GetObject("Btn_Configuracion_Local.Image"), System.Drawing.Image)
         Me.Btn_Configuracion_Local.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Far
         Me.Btn_Configuracion_Local.Name = "Btn_Configuracion_Local"
-        Me.Btn_Configuracion_Local.Tooltip = "Configuración local"
+        Me.Btn_Configuracion_Local.Tooltip = "ConfiguraciÃ³n local"
         '
         'GroupPanel1
         '
@@ -419,6 +419,92 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel4.TabIndex = 36
         Me.GroupPanel4.Text = "Filtros"
+        '
+        'LabelX7
+        '
+        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX7.ForeColor = System.Drawing.Color.Black
+        Me.LabelX7.Location = New System.Drawing.Point(11, 48)
+        Me.LabelX7.Name = "LabelX7"
+        Me.LabelX7.Size = New System.Drawing.Size(58, 19)
+        Me.LabelX7.TabIndex = 9
+        Me.LabelX7.Text = "Ver clientes"
+        '
+        'TableLayoutPanel6
+        '
+        Me.TableLayoutPanel6.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel6.ColumnCount = 3
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91.0!))
+        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111.0!))
+        Me.TableLayoutPanel6.Controls.Add(Me.Rdb_ClientesTodos, 0, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.Rdb_ClientesSinCredito, 2, 0)
+        Me.TableLayoutPanel6.Controls.Add(Me.Rdb_ClientesConCredito, 1, 0)
+        Me.TableLayoutPanel6.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel6.Location = New System.Drawing.Point(72, 45)
+        Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
+        Me.TableLayoutPanel6.RowCount = 1
+        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.TableLayoutPanel6.Size = New System.Drawing.Size(275, 25)
+        Me.TableLayoutPanel6.TabIndex = 8
+        '
+        'Rdb_ClientesTodos
+        '
+        Me.Rdb_ClientesTodos.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_ClientesTodos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_ClientesTodos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_ClientesTodos.Checked = True
+        Me.Rdb_ClientesTodos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_ClientesTodos.CheckValue = "Y"
+        Me.Rdb_ClientesTodos.FocusCuesEnabled = False
+        Me.Rdb_ClientesTodos.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_ClientesTodos.Location = New System.Drawing.Point(3, 3)
+        Me.Rdb_ClientesTodos.Name = "Rdb_ClientesTodos"
+        Me.Rdb_ClientesTodos.Size = New System.Drawing.Size(67, 19)
+        Me.Rdb_ClientesTodos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_ClientesTodos.TabIndex = 9
+        Me.Rdb_ClientesTodos.Text = "Todas "
+        '
+        'Rdb_ClientesSinCredito
+        '
+        Me.Rdb_ClientesSinCredito.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_ClientesSinCredito.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_ClientesSinCredito.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_ClientesSinCredito.FocusCuesEnabled = False
+        Me.Rdb_ClientesSinCredito.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_ClientesSinCredito.Location = New System.Drawing.Point(167, 3)
+        Me.Rdb_ClientesSinCredito.Name = "Rdb_ClientesSinCredito"
+        Me.Rdb_ClientesSinCredito.Size = New System.Drawing.Size(94, 19)
+        Me.Rdb_ClientesSinCredito.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_ClientesSinCredito.TabIndex = 3
+        Me.Rdb_ClientesSinCredito.Text = "Sin crÃ©dito"
+        '
+        'Rdb_ClientesConCredito
+        '
+        Me.Rdb_ClientesConCredito.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_ClientesConCredito.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_ClientesConCredito.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_ClientesConCredito.FocusCuesEnabled = False
+        Me.Rdb_ClientesConCredito.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_ClientesConCredito.Location = New System.Drawing.Point(76, 3)
+        Me.Rdb_ClientesConCredito.Name = "Rdb_ClientesConCredito"
+        Me.Rdb_ClientesConCredito.Size = New System.Drawing.Size(85, 19)
+        Me.Rdb_ClientesConCredito.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_ClientesConCredito.TabIndex = 1
+        Me.Rdb_ClientesConCredito.Text = "Con crÃ©dito"
         '
         'Chk_SoloClientesFincred
         '
@@ -726,92 +812,6 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         Me.Rdb_Entidades_Todas.TabIndex = 1
         Me.Rdb_Entidades_Todas.Text = "Todas "
         '
-        'TableLayoutPanel6
-        '
-        Me.TableLayoutPanel6.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel6.ColumnCount = 3
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91.0!))
-        Me.TableLayoutPanel6.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 111.0!))
-        Me.TableLayoutPanel6.Controls.Add(Me.Rdb_ClientesTodos, 0, 0)
-        Me.TableLayoutPanel6.Controls.Add(Me.Rdb_ClientesSinCredito, 2, 0)
-        Me.TableLayoutPanel6.Controls.Add(Me.Rdb_ClientesConCredito, 1, 0)
-        Me.TableLayoutPanel6.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel6.Location = New System.Drawing.Point(72, 45)
-        Me.TableLayoutPanel6.Name = "TableLayoutPanel6"
-        Me.TableLayoutPanel6.RowCount = 1
-        Me.TableLayoutPanel6.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel6.Size = New System.Drawing.Size(275, 25)
-        Me.TableLayoutPanel6.TabIndex = 8
-        '
-        'Rdb_ClientesSinCredito
-        '
-        Me.Rdb_ClientesSinCredito.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_ClientesSinCredito.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_ClientesSinCredito.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_ClientesSinCredito.FocusCuesEnabled = False
-        Me.Rdb_ClientesSinCredito.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_ClientesSinCredito.Location = New System.Drawing.Point(167, 3)
-        Me.Rdb_ClientesSinCredito.Name = "Rdb_ClientesSinCredito"
-        Me.Rdb_ClientesSinCredito.Size = New System.Drawing.Size(94, 19)
-        Me.Rdb_ClientesSinCredito.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_ClientesSinCredito.TabIndex = 3
-        Me.Rdb_ClientesSinCredito.Text = "Sin crédito"
-        '
-        'Rdb_ClientesConCredito
-        '
-        Me.Rdb_ClientesConCredito.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_ClientesConCredito.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_ClientesConCredito.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_ClientesConCredito.FocusCuesEnabled = False
-        Me.Rdb_ClientesConCredito.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_ClientesConCredito.Location = New System.Drawing.Point(76, 3)
-        Me.Rdb_ClientesConCredito.Name = "Rdb_ClientesConCredito"
-        Me.Rdb_ClientesConCredito.Size = New System.Drawing.Size(85, 19)
-        Me.Rdb_ClientesConCredito.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_ClientesConCredito.TabIndex = 1
-        Me.Rdb_ClientesConCredito.Text = "Con crédito"
-        '
-        'Rdb_ClientesTodos
-        '
-        Me.Rdb_ClientesTodos.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_ClientesTodos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_ClientesTodos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_ClientesTodos.Checked = True
-        Me.Rdb_ClientesTodos.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_ClientesTodos.CheckValue = "Y"
-        Me.Rdb_ClientesTodos.FocusCuesEnabled = False
-        Me.Rdb_ClientesTodos.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_ClientesTodos.Location = New System.Drawing.Point(3, 3)
-        Me.Rdb_ClientesTodos.Name = "Rdb_ClientesTodos"
-        Me.Rdb_ClientesTodos.Size = New System.Drawing.Size(67, 19)
-        Me.Rdb_ClientesTodos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_ClientesTodos.TabIndex = 9
-        Me.Rdb_ClientesTodos.Text = "Todas "
-        '
-        'LabelX7
-        '
-        Me.LabelX7.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX7.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX7.ForeColor = System.Drawing.Color.Black
-        Me.LabelX7.Location = New System.Drawing.Point(11, 48)
-        Me.LabelX7.Name = "LabelX7"
-        Me.LabelX7.Size = New System.Drawing.Size(58, 19)
-        Me.LabelX7.TabIndex = 9
-        Me.LabelX7.Text = "Ver clientes"
-        '
         'Frm_Inf_Vencimientos_Procesar_Informe
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -840,11 +840,11 @@ Partial Class Frm_Inf_Vencimientos_Procesar_Informe
         CType(Me.Dtp_Fecha_Hasta, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_Fecha_Desde, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel4.ResumeLayout(False)
+        Me.TableLayoutPanel6.ResumeLayout(False)
         Me.TableLayoutPanel5.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
         Me.TableLayoutPanel3.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.TableLayoutPanel6.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub

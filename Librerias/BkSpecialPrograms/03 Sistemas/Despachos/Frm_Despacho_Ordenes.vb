@@ -69,6 +69,8 @@ Public Class Frm_Despacho_Ordenes
 
         Sb_Actualizar_Grilla()
 
+        AddHandler Grilla_Ordenes_Despacho.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+
     End Sub
 
     Sub Sb_Actualizar_Grilla()

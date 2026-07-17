@@ -76,11 +76,7 @@ Public Class Frm_MantFacturasElectronicas
 
         Grilla.Columns.Clear()
 
-        'Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
-        'Dim _Tbl_Informe As DataTable = _New_Ds.Tables(0)
-        '_Dv.Table = _New_Ds.Tables("Table")
-
-        _Dv.Table = _Ds.Tables("Table") 'Fx_Generar_Informe().Tables("Table")
+        _Dv.Table = _Ds.Tables("Table")
 
         Dim _DisplayIndex = 0
 
@@ -95,6 +91,13 @@ Public Class Frm_MantFacturasElectronicas
             .Columns("Tido_Nudo").Width = 100
             .Columns("Tido_Nudo").Frozen = True
             .Columns("Tido_Nudo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("GlosaCesion").Visible = True
+            .Columns("GlosaCesion").HeaderText = "Aec"
+            .Columns("GlosaCesion").Width = 50
+            .Columns("GlosaCesion").Frozen = True
+            .Columns("GlosaCesion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NOKOEN").Visible = True
@@ -407,21 +410,15 @@ Public Class Frm_MantFacturasElectronicas
                     Dim _Row_TidDoc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                     If IsNothing(_Row_TidDoc) Then
-                        MessageBoxEx.Show(Me, "No se encontro el archivo XML en la tabla [Zw_DTE_Documentos]" & vbCrLf &
-                              "Puede ser también que ese documento se haya enviado desde Random", "Validación",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        Return
+                        Btn_CesionarDTE.Visible = False
+                        Btn_CesionarDTEExt.Visible = False
+                        Btn_CesionarDTEExtQuitar.Visible = False
+                    Else
+                        Btn_CesionarDTE.Visible = Not CBool(_Row_TidDoc.Item("Id_Aec"))
+                        Btn_CesionarDTEExt.Visible = Not CBool(_Row_TidDoc.Item("Id_Aec"))
+                        Btn_CesionarDTEExtQuitar.Visible = (CBool(_Row_TidDoc.Item("Id_Aec")) And _Row_TidDoc.Item("CesionExterna"))
+                        Btn_CesionarDTEExtInfo.Visible = (CBool(_Row_TidDoc.Item("Id_Aec")))
                     End If
-
-                    If CBool(_Row_TidDoc.Item("Id_Aec")) And Not _Row_TidDoc.Item("CesionExterna") Then
-                        MessageBoxEx.Show(Me, "Ya existe una solicitud AEC para este documento", "Validación",
-                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
-                        Return
-                    End If
-
-                    Btn_CesionarDTE.Visible = Not CBool(_Row_TidDoc.Item("Id_Aec"))
-                    Btn_CesionarDTEExt.Visible = Not CBool(_Row_TidDoc.Item("Id_Aec"))
-                    Btn_CesionarDTEExtQuitar.Visible = (CBool(_Row_TidDoc.Item("Id_Aec")) And _Row_TidDoc.Item("CesionExterna"))
 
                     Call Grilla_CellDoubleClick(Nothing, Nothing)
                     'ShowContextMenu(Menu_Contextual)
@@ -1265,12 +1262,14 @@ Public Class Frm_MantFacturasElectronicas
         Dim _FechaUltVenci As Date = _Row_Documento.Item("FEULVEDO")
 
         Dim _DialogResult As DialogResult
+        Dim _Accion As String
 
         Dim Fm As New Frm_Aec_CesionExt(_Idmaeedo)
         Fm.AmbienteCertificacion = _AmbienteCertificacion
         Fm.ShowDialog(Me)
         _Id_Aec = Fm.Id_Aec
         _DialogResult = Fm.DialogResult
+        _Accion = Fm.Accion
         Fm.Dispose()
 
         If _DialogResult <> DialogResult.OK Then
@@ -1278,7 +1277,11 @@ Public Class Frm_MantFacturasElectronicas
         End If
 
         If CBool(_Id_Aec) Then
-            MessageBoxEx.Show(Me, "Documento marcado como cedido correctamente", "Registro grabado",
+
+            _Fila.Cells("Id_Aec").Value = _Id_Aec
+            _Fila.Cells("GlosaCesion").Value = "Cedida"
+
+            MessageBoxEx.Show(Me, _Accion, "Registro grabado",
                           MessageBoxButtons.OK, MessageBoxIcon.Information)
         End If
 
@@ -1334,6 +1337,9 @@ Public Class Frm_MantFacturasElectronicas
 
             Dim _Accion As String = $"Quitar cesion de documento externamente"
 
+            _Fila.Cells("Id_Aec").Value = 0
+            _Fila.Cells("GlosaCesion").Value = String.Empty
+
             Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEEDO", _Idmaeedo, "CesionExt",
                            _Accion, "", "", "", "", False, FUNCIONARIO, False, 0, "", _Tido, _Nudo)
 
@@ -1342,4 +1348,25 @@ Public Class Frm_MantFacturasElectronicas
 
     End Sub
 
+    Private Sub Btn_CesionarDTEExtInfo_Click(sender As Object, e As EventArgs) Handles Btn_CesionarDTEExtInfo.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id_Dte As Integer = _Fila.Cells("Id_Dte").Value
+        Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
+        Dim _Id_Aec As Integer = _Fila.Cells("Id_Aec").Value
+
+        Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+        Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _FechaServidor As Date = FechaDelServidor()
+        Dim _FechaUltVenci As Date = _Row_Documento.Item("FEULVEDO")
+
+        Dim Fm As New Frm_Aec_CesionExt(_Idmaeedo)
+        Fm.AmbienteCertificacion = _AmbienteCertificacion
+        Fm.Modolectura = True
+        Fm.Id_Aec = _Id_Aec
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

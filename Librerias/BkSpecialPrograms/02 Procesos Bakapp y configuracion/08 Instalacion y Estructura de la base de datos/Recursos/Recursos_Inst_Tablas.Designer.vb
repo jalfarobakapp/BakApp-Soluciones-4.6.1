@@ -1499,16 +1499,16 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''CREATE TABLE [dbo].[Zw_Docu_Det_Lote](
-        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[Id]            [int] IDENTITY(1,1) NOT NULL,
         '''	[Id_Det]		[int]			NOT NULL DEFAULT (0) ,
+        '''	[Id_LoteOri]    [int]			NOT NULL DEFAULT (0) ,
         '''	[Idmaeddo]		[int]			NOT NULL DEFAULT (0) ,
         '''	[Idmaeedo]		[int]			NOT NULL DEFAULT (0) ,
         '''	[Idmaeddo_Ori]  [int]			NOT NULL DEFAULT (0) ,
-        '''    [Tido_Ori]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
-        '''    [Nudo_Ori]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
-        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;) ,
-        '''	[Sucursal]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
-        '''	[Bodega]		[varchar](3)	NOT  [resto de la cadena truncado]&quot;;.
+        '''    [Tido_Ori]      [varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
+        '''    [Nudo_Ori]      [varchar](3)	NOT NULL DEFAULT (&apos;&apos;) ,
+        '''	[Empresa]       [char](2)		NOT NULL DEFAULT (&apos;&apos;) ,
+        '''	[Sucurs [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Docu_Det_Lote() As String
             Get
@@ -2203,20 +2203,61 @@ Namespace My.Resources
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
         '''
+        '''CREATE TABLE [dbo].[Zw_InterStock_Det](
+        '''	[Id_Enc]			[int]			NOT NULL DEFAULT (0),
+        '''	[Id_Det]			[int]			IDENTITY(1,1) NOT NULL,
+        '''	[Idmaeedo]			[int]			NOT NULL DEFAULT (0),
+        '''	[Idmaeddo]			[int]			NOT NULL DEFAULT (0),
+        '''	[Tido]				[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]				[char](10)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Endo]				[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Suendo]			[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Empresa]			[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Sucursal]			[char](3)		NOT NULL D [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_InterStock_Det() As String
+            Get
+                Return ResourceManager.GetString("Zw_InterStock_Det", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''
+        '''CREATE TABLE [dbo].[Zw_InterStock_Enc](
+        '''	[Id_Enc]		[int]			IDENTITY(1,1) NOT NULL,
+        '''	[Idmaeedo]		[int]			NOT NULL DEFAULT (0),
+        '''	[Empresa]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Tido]			[char](3)		NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nudo]			[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Endo]			[varchar](13)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Suendo]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Nokoen]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Estado]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Procesar]		[bit]			NOT NULL  [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_InterStock_Enc() As String
+            Get
+                Return ResourceManager.GetString("Zw_InterStock_Enc", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''
         '''CREATE TABLE [dbo].[Zw_InterStock_Equivalencia](
         '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
-        '''	[Empresa_A]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursa_A]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Bodega_A]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Empresa_B]		[char](2)		NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Sucursa_B]		[varchar](3)	NULL DEFAULT (&apos;&apos;),
-        '''	[Bodega_B]		[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Activo]		[bit]			NOT NULL,
-        '''	[FechaCreacion] [datetime] NULL
-        ''') ON [PRIMARY]
-        '''
-        '''
-        '''.
+        '''	[Empresa_A]		[char](2)		NOT NULL    DEFAULT (&apos;&apos;),
+        '''	[Sucursal_A]	[varchar](3)	NOT NULL    DEFAULT (&apos;&apos;),
+        '''	[Bodega_A]		[varchar](3)	NOT NULL    DEFAULT (&apos;&apos;),
+        '''	[Empresa_B]		[char](2)		NOT NULL    DEFAULT (&apos;&apos;),
+        '''	[Sucursal_B]	[varchar](3)	NULL        DEFAULT (&apos;&apos;),
+        '''	[Bodega_B]		[varchar](3)	NOT NULL    DEFAULT (&apos;&apos;),
+        '''	[Activo]		[bit]			NOT NULL    DEFAULT (0),
+        '''	[FechaCreacion] [datetime]      NULL
+        ''') O [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_InterStock_Equivalencia() As String
             Get

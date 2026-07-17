@@ -30,7 +30,26 @@ Select Cast(0 As Int) As Existe,
         Isnull(Doc.Eliminado,0) As 'Eliminado',
         Cast('' As Varchar(300)) As 'LeyendaEmail',
         Isnull(Correo.Destinatarios,'') As 'Destinatarios',
-        Edo.ESDO As 'Esdo'
+        Edo.ESDO As 'Esdo',
+
+        		        ---------------------------------------------------------
+        -- CAMPOS DE CESIÓN
+        ---------------------------------------------------------
+        Isnull(Aec.Id_Aec,0) AS 'Id_Aec',
+		Isnull(Aec.RutCesionario,'') As 'RutCesionario',
+		Isnull(Aec.RazonSocialCesionario,'') As 'RazonSocialCesionario',
+        CASE WHEN Aec.Id_Aec IS NULL THEN 0 ELSE 1 END AS 'TieneCesion',
+        Isnull(Aec.MontoCesion,0) AS 'MontoCesion',
+        Isnull(Aec.FechaSolicitud,'') AS 'FechaCesion',
+        Isnull(Aec.Procesado,0) AS 'CesionProcesada',
+        Isnull(Aec.ErrorEnvioAEC,0) AS 'CesionError',
+        (SELECT COUNT(*) 
+		 FROM #Global_BaseBk#Zw_DTE_Aec A 
+		 WHERE A.Id_Dte = Tid.Id_Dte 
+			OR (A.Idmaeedo = Edo.IDMAEEDO And A.CesionExterna = 1)
+		) AS 'CantidadCesiones',
+        CASE WHEN Aec.Id_Aec IS NULL THEN '' ELSE 'Cedida' END AS 'GlosaCesion'
+
 Into #PasoDTE
 From MAEEDO Edo
 	Left Join MAEEN En On En.KOEN = Edo.ENDO And En.SUEN = Edo.SUENDO
@@ -39,6 +58,14 @@ From MAEEDO Edo
 				Left Join #Global_BaseBk#Zw_DTE_Documentos Doc On Edo.IDMAEEDO = Doc.Idmaeedo And Doc.AmbienteCertificacion = #AmbienteCertificacion#
 					Left Join #Global_BaseBk#Zw_DTE_Trackid Tid On Tid.Id_Dte = Doc.Id_Dte And Tid.AmbienteCertificacion = #AmbienteCertificacion#
 						Left Join #Global_BaseBk#Zw_DTE_NotifxCorreo Correo On Correo.Id_Dte = Doc.Id_Dte And Correo.AmbienteCertificacion = #AmbienteCertificacion#
+
+    ---------------------------------------------------------
+    -- JOIN DE CESIÓN
+    ---------------------------------------------------------
+LEFT JOIN #Global_BaseBk#Zw_DTE_Aec Aec 
+       ON (Aec.Id_Aec = Tid.Id_Aec)
+       OR (Aec.Idmaeedo = Edo.IDMAEEDO) -- And Aec.CesionExterna = 1)
+
 Where 1 > 0 
 #Filtros#
 And TIDOELEC = 1
@@ -61,6 +88,15 @@ Update #PasoDTE Set LeyendaEmail = 'Error, el correo no pudo ser enviado al diab
 Update #PasoDTE Set LeyendaEmail = 'Correo enviado correctamente. '+Destinatarios Where MailEnviado = 1
 Update #PasoDTE Set LeyendaEmail = 'Error, correo no enviado al cliente. avise al administrador del sistema' Where ErrorEnviarMail = 1 And Destinatarios <> ''
 Update #PasoDTE Set LeyendaEmail = 'Error, correo no enviado al cliente. Falta correo de destinatario, revise la ficha del cliente' Where ErrorEnviarMail = 1 And Destinatarios = ''
+
+---------------------------------------------------------
+-- GLOSA CESIÓN (tu regla)
+---------------------------------------------------------
+
+UPDATE #PasoDTE SET GlosaCesion = 'Cedida' WHERE TieneCesion = 1
+UPDATE #PasoDTE SET GlosaCesion = '' WHERE TieneCesion = 0
+
+---------------------------------------------------------
 
 Update #PasoDTE Set AceptadoSII = 1 Where Estado = 'RPR'
 

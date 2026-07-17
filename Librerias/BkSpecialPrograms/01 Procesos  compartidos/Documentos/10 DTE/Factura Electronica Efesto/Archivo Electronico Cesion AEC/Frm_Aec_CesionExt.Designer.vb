@@ -26,7 +26,7 @@ Partial Class Frm_Aec_CesionExt
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar_Cesion = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
-        Me.Dtp_FEmision_Desde = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.Dtp_FechaCesion = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Lbl_FEmision_Desde = New DevComponents.DotNetBar.LabelX()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Cesionario_Entidad = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -39,10 +39,13 @@ Partial Class Frm_Aec_CesionExt
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Dtp_FUltimoVencimiento = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel3.SuspendLayout()
-        CType(Me.Dtp_FEmision_Desde, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_FechaCesion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
+        CType(Me.Dtp_FUltimoVencimiento, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar1
@@ -73,7 +76,9 @@ Partial Class Frm_Aec_CesionExt
         '
         Me.GroupPanel3.BackColor = System.Drawing.Color.White
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
-        Me.GroupPanel3.Controls.Add(Me.Dtp_FEmision_Desde)
+        Me.GroupPanel3.Controls.Add(Me.Dtp_FUltimoVencimiento)
+        Me.GroupPanel3.Controls.Add(Me.LabelX3)
+        Me.GroupPanel3.Controls.Add(Me.Dtp_FechaCesion)
         Me.GroupPanel3.Controls.Add(Me.Lbl_FEmision_Desde)
         Me.GroupPanel3.Controls.Add(Me.LabelX7)
         Me.GroupPanel3.Controls.Add(Me.Txt_Cesionario_Entidad)
@@ -112,57 +117,57 @@ Partial Class Frm_Aec_CesionExt
         Me.GroupPanel3.TabIndex = 111
         Me.GroupPanel3.Text = "Datos del Cesionario"
         '
-        'Dtp_FEmision_Desde
+        'Dtp_FechaCesion
         '
-        Me.Dtp_FEmision_Desde.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Dtp_FEmision_Desde.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_FEmision_Desde.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FEmision_Desde.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_FEmision_Desde.ButtonDropDown.Visible = True
-        Me.Dtp_FEmision_Desde.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_FEmision_Desde.IsPopupCalendarOpen = False
-        Me.Dtp_FEmision_Desde.Location = New System.Drawing.Point(88, 31)
+        Me.Dtp_FechaCesion.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Dtp_FEmision_Desde.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        Me.Dtp_FechaCesion.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FechaCesion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaCesion.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FechaCesion.ButtonDropDown.Visible = True
+        Me.Dtp_FechaCesion.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FechaCesion.IsPopupCalendarOpen = False
+        Me.Dtp_FechaCesion.Location = New System.Drawing.Point(88, 31)
         '
         '
         '
-        Me.Dtp_FEmision_Desde.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FEmision_Desde.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_FEmision_Desde.MonthCalendar.ClearButtonVisible = True
+        Me.Dtp_FechaCesion.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
         '
         '
         '
-        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_FEmision_Desde.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FEmision_Desde.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
-        Me.Dtp_FEmision_Desde.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_FEmision_Desde.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_FEmision_Desde.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        Me.Dtp_FechaCesion.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaCesion.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FechaCesion.MonthCalendar.ClearButtonVisible = True
         '
         '
         '
-        Me.Dtp_FEmision_Desde.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_FEmision_Desde.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_FEmision_Desde.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_FEmision_Desde.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_FEmision_Desde.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_FEmision_Desde.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_FEmision_Desde.Name = "Dtp_FEmision_Desde"
-        Me.Dtp_FEmision_Desde.Size = New System.Drawing.Size(83, 22)
-        Me.Dtp_FEmision_Desde.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_FEmision_Desde.TabIndex = 37
-        Me.Dtp_FEmision_Desde.Value = New Date(2016, 7, 8, 16, 33, 0, 0)
+        Me.Dtp_FechaCesion.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FechaCesion.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaCesion.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FechaCesion.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FechaCesion.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FechaCesion.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FechaCesion.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaCesion.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
+        Me.Dtp_FechaCesion.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FechaCesion.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FechaCesion.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FechaCesion.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FechaCesion.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FechaCesion.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FechaCesion.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FechaCesion.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FechaCesion.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FechaCesion.Name = "Dtp_FechaCesion"
+        Me.Dtp_FechaCesion.Size = New System.Drawing.Size(83, 22)
+        Me.Dtp_FechaCesion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FechaCesion.TabIndex = 37
+        Me.Dtp_FechaCesion.Value = New Date(2016, 7, 8, 16, 33, 0, 0)
         '
         'Lbl_FEmision_Desde
         '
@@ -174,9 +179,9 @@ Partial Class Frm_Aec_CesionExt
         Me.Lbl_FEmision_Desde.ForeColor = System.Drawing.Color.Black
         Me.Lbl_FEmision_Desde.Location = New System.Drawing.Point(3, 30)
         Me.Lbl_FEmision_Desde.Name = "Lbl_FEmision_Desde"
-        Me.Lbl_FEmision_Desde.Size = New System.Drawing.Size(46, 23)
+        Me.Lbl_FEmision_Desde.Size = New System.Drawing.Size(75, 23)
         Me.Lbl_FEmision_Desde.TabIndex = 36
-        Me.Lbl_FEmision_Desde.Text = "Desde"
+        Me.Lbl_FEmision_Desde.Text = "Fecha cesión"
         '
         'LabelX7
         '
@@ -373,6 +378,72 @@ Partial Class Frm_Aec_CesionExt
         Me.LabelX1.TabIndex = 0
         Me.LabelX1.Text = "Rut"
         '
+        'Dtp_FUltimoVencimiento
+        '
+        Me.Dtp_FUltimoVencimiento.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_FUltimoVencimiento.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_FUltimoVencimiento.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FUltimoVencimiento.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_FUltimoVencimiento.ButtonDropDown.Visible = True
+        Me.Dtp_FUltimoVencimiento.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_FUltimoVencimiento.IsPopupCalendarOpen = False
+        Me.Dtp_FUltimoVencimiento.Location = New System.Drawing.Point(289, 30)
+        '
+        '
+        '
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_FUltimoVencimiento.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_FUltimoVencimiento.Name = "Dtp_FUltimoVencimiento"
+        Me.Dtp_FUltimoVencimiento.Size = New System.Drawing.Size(83, 22)
+        Me.Dtp_FUltimoVencimiento.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_FUltimoVencimiento.TabIndex = 39
+        Me.Dtp_FUltimoVencimiento.Value = New Date(2016, 7, 8, 16, 33, 0, 0)
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(190, 30)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(93, 23)
+        Me.LabelX3.TabIndex = 38
+        Me.LabelX3.Text = "Fecha vencimiento"
+        '
         'Frm_Aec_CesionExt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -394,8 +465,9 @@ Partial Class Frm_Aec_CesionExt
         Me.Text = "REGISTRO DE DOCUMENTO CESIONADO DESDE FACTORING"
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel3.ResumeLayout(False)
-        CType(Me.Dtp_FEmision_Desde, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_FechaCesion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel2.ResumeLayout(False)
+        CType(Me.Dtp_FUltimoVencimiento, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -413,6 +485,8 @@ Partial Class Frm_Aec_CesionExt
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Dtp_FEmision_Desde As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents Dtp_FechaCesion As DevComponents.Editors.DateTimeAdv.DateTimeInput
     Friend WithEvents Lbl_FEmision_Desde As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Dtp_FUltimoVencimiento As DevComponents.Editors.DateTimeAdv.DateTimeInput
+    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
 End Class

@@ -2263,18 +2263,20 @@ Public Class Clase_Crear_Documento
 
             Dim _Cn_TipoCompra As Integer = NuloPorNro(_Row_Encabezado.Item("Cn_TipoCompra"), 0)
             Dim _TipoCompra As String = NuloPorNro(_Row_Encabezado.Item("TipoCompra"), "")
+            Dim _Id_Enc_InterStock As Integer = NuloPorNro(_Row_Encabezado.Item("Id_Enc_InterStock"), 0)
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad," &
                            "Tido,Nudo,FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil," &
                            "Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad,B2B,UsaCiaSeguro,CodEntidad_Cia,CodSucEntidad_Cia," &
-                           "Cn_TipoCompra,TipoCompra,Id_Despacho) Values " &
+                           "Cn_TipoCompra,TipoCompra,Id_Despacho,Id_Enc_InterStock) Values " &
                            "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad_Bk & "'" &
                            ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
                            "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(PreVenta) &
                            "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) &
                            ",'" & _Empresa & "','" & _LeyendaMorosidad & "'," &
                            Convert.ToInt32(B2B) & "," & Convert.ToInt32(_UsaCiaSeguro) &
-                           ",'" & _CodEntidad_Cia & "','" & _CodSucEntidad_Cia & "'," & _Cn_TipoCompra & ",'" & _TipoCompra & "'," & _Id_Despacho & ")"
+                           ",'" & _CodEntidad_Cia & "','" & _CodSucEntidad_Cia & "'," & _Cn_TipoCompra & ",'" & _TipoCompra & "'," &
+                           _Id_Despacho & "," & _Id_Enc_InterStock & ")"
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()

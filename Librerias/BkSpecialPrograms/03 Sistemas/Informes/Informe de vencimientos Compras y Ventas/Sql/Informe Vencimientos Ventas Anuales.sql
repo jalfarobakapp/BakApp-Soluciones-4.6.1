@@ -28,50 +28,57 @@ SELECT CAST( 0 AS Bit) AS Chk,
        Isnull((Select Top 1 NOTIDO From TABTIDO Where TIDO = EDO.TIDO),'') As Tipo,
        EDO.NUDO,
        EDO.FEEMDO,VEN.FEVE,DATEDIFF(DD,FEEMDO,FEVE) AS DIAS,DATEDIFF(DD,GETDATE(),FEVE) AS DIAS_ATRASO,
-	(CASE  
-		WHEN EDO.TIMODO='E' THEN VEN.VAVE*EDO.TAMODO*( 
-			CASE 
-				WHEN EDO.TIDO IN ('NCV','NCX','NEV') OR EDO.TIDO='NCC' THEN -1 
-				ELSE 1 
-			END) 
-		ELSE VEN.VAVE*( 
-			CASE 
-				WHEN EDO.TIDO IN ('NCV','NCX','NEV') OR EDO.TIDO='NCC' THEN -1 
-				ELSE 1 
-			END) 
-	END) AS VAVE ,
+	    (CASE  
+		    WHEN EDO.TIMODO='E' THEN VEN.VAVE*EDO.TAMODO*( 
+			    CASE 
+				    WHEN EDO.TIDO IN ('NCV','NCX','NEV') OR EDO.TIDO='NCC' THEN -1 
+				    ELSE 1 
+			    END) 
+		    ELSE VEN.VAVE*( 
+			    CASE 
+				    WHEN EDO.TIDO IN ('NCV','NCX','NEV') OR EDO.TIDO='NCC' THEN -1 
+				    ELSE 1 
+			    END) 
+	    END) AS VAVE ,
 
-	(CASE  
-		WHEN EDO.TIMODO='E' THEN VEN.VAABVE*EDO.TAMODO*( 
-			CASE 
-				WHEN EDO.TIDO IN ('NCV','NCX','NEV') OR EDO.TIDO='NCC' THEN -1 
-				ELSE 1 
-			END ) 
-		ELSE VEN.VAABVE*( 
-			CASE 
-				WHEN EDO.TIDO IN ('NCV','NCX','NEV') OR EDO.TIDO='NCC' THEN -1 
-				ELSE 1 
-			END ) 
-	END) AS VAABVE,
-    VAABDO,
-	CAST( 0 AS Float) AS SALDO,
-    VABRDO-VAABDO AS SALDO_Total,
-	Cast(0 As Float) As Valor_Abonado_Maeven,
-    VEN.ESPGVE,
-    CAST( 0 AS Bit) AS SOSPECHA_STOCK,
-    CAST( 0 AS Bit) AS SOSPECHA_DEVOLUCION,
-    CAST( 0 AS Bit) AS REVISADO_PAGAR,
-    CAST( 0 AS Bit) AS AUTORIZADO_PAGAR,
-    EDO.FEULVEDO,
-    'Documentos' as Deuda,
-    CAST('MAEEDO' As Varchar(10)) As ARCHIRVE,
-    EDO.IDMAEEDO AS IDRVE,
-    CAST(
-         Isnull((Select Top 1 CONVERT(VARCHAR, FEVENTO, 103)+' -> '+KOTABLA+' -> '+KOCARAC+' -> '+NOKOCARAC  
-		 From MEVENTO 
-		 Where KOTABLA = 'COBRANZA' And ARCHIRVE = 'MAEEDO' And IDRVE = EDO.IDMAEEDO Order by IDEVENTO Desc),'') 
-         As Varchar(1000)) As 'ULT_EVENTO',   
-    Cast(0 As Bit) As 'Revisar_Documento'
+	    (CASE  
+		    WHEN EDO.TIMODO='E' THEN VEN.VAABVE*EDO.TAMODO*( 
+			    CASE 
+				    WHEN EDO.TIDO IN ('NCV','NCX','NEV') OR EDO.TIDO='NCC' THEN -1 
+				    ELSE 1 
+			    END ) 
+		    ELSE VEN.VAABVE*( 
+			    CASE 
+				    WHEN EDO.TIDO IN ('NCV','NCX','NEV') OR EDO.TIDO='NCC' THEN -1 
+				    ELSE 1 
+			    END ) 
+	    END) AS VAABVE,
+       VAABDO,
+	   CAST( 0 AS Float) AS SALDO,
+       VABRDO-VAABDO AS SALDO_Total,
+	   Cast(0 As Float) As Valor_Abonado_Maeven,
+       VEN.ESPGVE,
+       CAST( 0 AS Bit) AS SOSPECHA_STOCK,
+       CAST( 0 AS Bit) AS SOSPECHA_DEVOLUCION,
+       CAST( 0 AS Bit) AS REVISADO_PAGAR,
+       CAST( 0 AS Bit) AS AUTORIZADO_PAGAR,
+       EDO.FEULVEDO,
+       'Documentos' as Deuda,
+       CAST('MAEEDO' As Varchar(10)) As ARCHIRVE,
+       EDO.IDMAEEDO AS IDRVE,
+       CAST(
+            Isnull((Select Top 1 CONVERT(VARCHAR, FEVENTO, 103)+' -> '+KOTABLA+' -> '+KOCARAC+' -> '+NOKOCARAC  
+		    From MEVENTO 
+		    Where KOTABLA = 'COBRANZA' And ARCHIRVE = 'MAEEDO' And IDRVE = EDO.IDMAEEDO Order by IDEVENTO Desc),'') 
+            As Varchar(1000)) As 'ULT_EVENTO',   
+       CAST(0 As Bit) As 'Revisar_Documento',
+
+       CAST('' AS VARCHAR(5))  AS 'Cesionado',
+	   CAST(0 AS BIT)		   AS 'CesionExterna',
+	   CAST('' AS VARCHAR(13)) AS 'CodEntidad_Cedente',
+	   CAST('' AS VARCHAR(10)) AS 'CodSucEntidad_Cedente',
+	   CAST('' AS VARCHAR(15)) AS 'RutCesionario',
+	   CAST('' AS VARCHAR(50)) AS 'RazonSocialCesionario'
     			 
  INTO #INFVEN 		 
  
@@ -177,3 +184,14 @@ UPDATE #INFVEN SET SALDO = COALESCE(VAVE-VAABVE ,0.0)
 Update #INFVEN Set Revisar_Documento = 1 Where VAABDO <> Valor_Abonado_Maeven
  
 
+---- Agregar datos de cesión (factoring)
+UPDATE I
+SET 
+    I.CesionExterna         = ISNULL(A.CesionExterna, 0),
+    I.CodEntidad_Cedente    = ISNULL(A.CodEntidad_Cedente, ''),
+    I.CodSucEntidad_Cedente = ISNULL(A.CodSucEntidad_Cedente, ''),
+    I.RutCesionario         = ISNULL(A.RutCesionario, ''),
+    I.RazonSocialCesionario = ISNULL(A.RazonSocialCesionario, ''),
+    I.Cesionado             = CASE WHEN A.Idmaeedo IS NULL THEN 'NO' ELSE 'SI' END
+FROM #INFVEN I
+LEFT JOIN #BAKAPP_SG#Zw_DTE_Aec A ON A.Idmaeedo = I.IDMAEEDO

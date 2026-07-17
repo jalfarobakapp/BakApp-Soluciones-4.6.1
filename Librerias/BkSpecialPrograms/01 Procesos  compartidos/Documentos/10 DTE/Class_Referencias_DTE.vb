@@ -172,7 +172,8 @@ Public Class Class_Referencias_DTE
     Function Fx_Insertar_Referencias_NCV_FDV(_Formulario As Form,
                                              _TblDetalle As DataTable,
                                              ByRef _Tbl_Mevento_Edo As DataTable,
-                                             _RowEntidad As DataRow) As Boolean
+                                             _RowEntidad As DataRow,
+                                             _Tido As String) As Boolean
 
         Dim _Idmaeddo_Dori As Integer
 
@@ -207,10 +208,16 @@ Public Class Class_Referencias_DTE
 
                         With _Fmr
 
+                            Dim _Documentos As String = "Where TIDO In ('FCV','BLV')"
+
+                            If _Tido = "FDV" Then
+                                _Documentos = "Where TIDO In ('FCV','BLV','NCV')"
+                            End If
+
                             .Pro_Sql_Filtro_Otro_Filtro = "And Edo.NUDONODEFI = 0"
                             .Pro_TipoDoc_Seleccionado = Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado
                             .Rdb_Tipo_Documento_Uno.Checked = True
-                            .Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "FCV", "Where TIDO In ('FCV','BLV')")
+                            .Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "FCV", _Documentos)
                             .Rdb_Estado_Vigente.Checked = True
 
                             .Rdb_Estado_Todas.Checked = True

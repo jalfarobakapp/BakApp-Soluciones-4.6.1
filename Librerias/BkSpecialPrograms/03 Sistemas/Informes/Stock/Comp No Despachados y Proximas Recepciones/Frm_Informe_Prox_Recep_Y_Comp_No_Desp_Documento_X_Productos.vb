@@ -389,31 +389,18 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
 
         If Tido = "NVV" Then
 
-            '_NroDocumento = Traer_Numero_Documento("BLV", , , , False)
-            '_MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, "BLV", _NroDocumento, True, Mod_Empresa, Mod_Modalidad)
-
-            'If Not _MensajeRevFolio.EsCorrecto Then
-            '    Return
-            'End If
-
             _NroDocumento = Traer_Numero_Documento("FCV", , , , False)
             _MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, "FCV", _NroDocumento, True, Mod_Empresa, Mod_Modalidad)
 
             If Not _MensajeRevFolio.EsCorrecto Then
+                MessageBoxEx.Show(Me, _MensajeRevFolio.Mensaje, _MensajeRevFolio.Detalle, MessageBoxButtons.OK, _MensajeRevFolio.Icono)
                 Return
             End If
-
-            '_NroDocumento = Traer_Numero_Documento("GDV", , , , False)
-            '_MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, "GDV", _NroDocumento, True, Mod_Empresa, Mod_Modalidad)
-
-            'If Not _MensajeRevFolio.EsCorrecto Then
-            '    Return
-            'End If
 
         End If
 
 
-        Dim _Filtro_Doc As String '= Generar_Filtro_IN(_Tbl_Productos, "", "IDMAEEDO", False, False, "")
+        Dim _Filtro_Doc As String
 
         _Filtro_Doc = Generar_Filtro_IN_Arreglo(_Lista_Idmaeedo, True)
         _Filtro_Doc = "Where IDMAEEDO In " & _Filtro_Doc
@@ -488,6 +475,7 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
             _MensajeRevFolio = Fx_Revisar_Expiracion_Folio_SII(Me, "FCV", _NroDocumento, True, Mod_Empresa, Mod_Modalidad)
 
             If Not _MensajeRevFolio.EsCorrecto Then
+                MessageBoxEx.Show(Me, _MensajeRevFolio.Mensaje, _MensajeRevFolio.Detalle, MessageBoxButtons.OK, _MensajeRevFolio.Icono)
                 Return
             End If
 

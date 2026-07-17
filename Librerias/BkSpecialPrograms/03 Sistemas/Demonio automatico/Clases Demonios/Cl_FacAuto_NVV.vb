@@ -372,12 +372,66 @@
         'Inner Join {_Global_BaseBk}Zw_Docu_Ent De On Fa.Idmaeedo_NVV = De.Idmaeedo
         'Where Fa.Id = 68664"
 
-        Consulta_Sql = $"Select Top {CantDocFacturanXProceso} Fa.*,Case De.Empresa_Ori When '' Then De.Empresa Else De.Empresa_Ori End As 'Empresa_Ori',Edo.EMPRESA As 'Empresa'   
-From {_Global_BaseBk}Zw_Demonio_FacAuto Fa
-Inner Join MAEEDO Edo On Edo.IDMAEEDO = Fa.Idmaeedo_NVV
-Inner Join {_Global_BaseBk}Zw_Docu_Ent De On Fa.Idmaeedo_NVV = De.Idmaeedo
-Where Facturar = 1"
+        'Consulta_Sql = $"
+        '                Insert Into {_Global_BaseBk}Zw_Demonio_FacAuto (NombreEquipo,Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac, 
+        '                Fecha_Facturar,Facturar,Facturando,Facturado,Idmaeedo_FCV,Nudo_Fcv,Fecha_Facturado,Informacion, 
+        '                DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,Pagada)
+        '                Select '' As NombreEquipo,Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,1, 
+        '                Facturando,Facturado,Idmaeedo_FCV,Nudo_Fcv,Fecha_Facturado,'' As Informacion,DesdePickeo, 
+        '                Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,Pagada
+        '                From {_Global_BaseBk}Zw_Demonio_FacAuto
+        '                Where ((Informacion Like '%interbloqueo%') Or (Informacion LIKE '% tiempo de espera%')) And ErrorGrabar = 1 And Idmaeedo_FCV = 0 -- And Fecha_Facturar = '{Format(_FechaEmision, "yyyyMMdd")}'"
 
+        Consulta_Sql = $"
+INSERT INTO {_Global_BaseBk}Zw_Demonio_FacAuto 
+    (NombreEquipo,Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,
+     Facturando,Facturado,Idmaeedo_FCV,Nudo_Fcv,Fecha_Facturado,Informacion,
+     DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,Pagada)
+SELECT 
+    '' AS NombreEquipo,
+    Src.Idmaeedo_NVV,
+    Src.Nudo_NVV,
+    Src.Modalidad_Fac,
+    Src.Fecha_Facturar,
+    1,
+    Src.Facturando,
+    Src.Facturado,
+    Src.Idmaeedo_FCV,
+    Src.Nudo_Fcv,
+    Src.Fecha_Facturado,
+    '' AS Informacion,
+    Src.DesdePickeo,
+    Src.Id_Pickeo,
+    Src.DocEmitir,
+    Src.CerrarDespFact,
+    Src.CodFuncionario_Factura,
+    Src.Pagada
+FROM {_Global_BaseBk}Zw_Demonio_FacAuto AS Src
+WHERE 
+    ((Src.Informacion LIKE '%interbloqueo%') 
+     OR (Src.Informacion LIKE '%tiempo de espera%'))
+    AND Src.ErrorGrabar = 1
+    AND Src.Idmaeedo_FCV = 0
+    AND NOT EXISTS (
+        SELECT 1
+        FROM {_Global_BaseBk}Zw_Demonio_FacAuto AS Dst
+        WHERE 
+            Dst.Idmaeedo_NVV = Src.Idmaeedo_NVV
+            AND Dst.Nudo_NVV = Src.Nudo_NVV
+            AND Dst.Modalidad_Fac = Src.Modalidad_Fac
+            AND Dst.Fecha_Facturar = Src.Fecha_Facturar
+            AND Dst.Idmaeedo_FCV = 0
+            AND Dst.Facturar = 1   -- asegura que ya fue insertado por esta rutina
+    );"
+        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+
+        Consulta_Sql = $"
+                        Select Top {CantDocFacturanXProceso} Fa.*,
+                        Case De.Empresa_Ori When '' Then De.Empresa Else De.Empresa_Ori End As 'Empresa_Ori',Edo.EMPRESA As 'Empresa'   
+                        From {_Global_BaseBk}Zw_Demonio_FacAuto Fa
+                        Inner Join MAEEDO Edo On Edo.IDMAEEDO = Fa.Idmaeedo_NVV
+                        Inner Join {_Global_BaseBk}Zw_Docu_Ent De On Fa.Idmaeedo_NVV = De.Idmaeedo
+                        Where Facturar = 1"
         Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
@@ -401,7 +455,7 @@ Where Facturar = 1"
 
                 Dim _Id As Integer = _Fila.Item("Id")
                 Dim _Idmaeedo As Integer = _Fila.Item("Idmaeedo_NVV")
-                Dim _Fecha_Emision As Date = _Fila.Item("Fecha_Facturar") '_FechaEmision
+                Dim _Fecha_Emision As Date = _Fila.Item("Fecha_Facturar")
                 Dim _Idmaeedo_Fcv As Integer
                 Dim _DesdePickeo As Boolean = _Fila.Item("DesdePickeo")
                 Dim _DocEmitir As String = _Fila.Item("DocEmitir")
