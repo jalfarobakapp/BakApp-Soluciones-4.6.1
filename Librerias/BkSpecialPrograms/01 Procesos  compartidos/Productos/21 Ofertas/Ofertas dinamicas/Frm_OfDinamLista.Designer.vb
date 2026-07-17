@@ -658,7 +658,7 @@ Partial Class Frm_OfDinamLista
         '
         Me.Btn_EditarNroMaxProductos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_EditarNroMaxProductos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_EditarNroMaxProductos.Location = New System.Drawing.Point(601, 565)
+        Me.Btn_EditarNroMaxProductos.Location = New System.Drawing.Point(601, 595)
         Me.Btn_EditarNroMaxProductos.Name = "Btn_EditarNroMaxProductos"
         Me.Btn_EditarNroMaxProductos.Size = New System.Drawing.Size(62, 27)
         Me.Btn_EditarNroMaxProductos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled

@@ -26,6 +26,10 @@ CREATE TABLE [dbo].[Zw_DTE_Aec](
 	[ErrorEnvioAEC]				[bit]			NOT NULL DEFAULT (0),
 	[AmbienteCertificacion]		[bit]			NOT NULL DEFAULT (0),
 	[DeclaracionJurada]			[varchar](max)	NOT NULL DEFAULT (''),
+    [CesionExterna]             [bit]           NOT NULL DEFAULT (0),
+	[CodEntidad_Cedente]        [varchar](13)   NOT NULL DEFAULT (''),
+	[CodSucEntidad_Cedente]     [varchar](10)   NOT NULL DEFAULT (''),
+	[CodFuncionario_CE]         [char](3)       NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_DTE_Aec] PRIMARY KEY CLUSTERED 
 (
 	[Id_Aec] ASC

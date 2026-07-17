@@ -574,6 +574,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
     Public Property TotalNetoComisiones As Double
     Public Property ImportarComisiones As Boolean
     Public Property UltFiltroSeleccionado As String
+    Public Property FaltaGrupoAsociadoUsuario As Boolean
 
     Public Sub New(Informe As Enum_Informe,
                    Nombre_Tabla_Paso As String,
@@ -605,6 +606,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
                 Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
                                "From TABFU Where KOFU In (Select d.KOFU From TABFUGD d Left Join TABFUGE e On e.KOGRU = d.KOGRU Where d.KOGRU In (" & _Kogru & "))"
                 _Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                If Not CBool(_Tbl_Filtro_Vendedores_Asignados.Rows.Count) Then
+                    FaltaGrupoAsociadoUsuario = True
+                    Return
+                End If
 
             End If
 

@@ -19,6 +19,7 @@ Public Class Frm_Lotes_Det
     Public Property Sum_CantUd2 As Double = 0
     Public Property ModoIngresoInterno As Boolean = False
     Public Property ModoIngresoNuevo As Boolean = False
+    Public Property ModoDespachoInterno As Boolean = False
 
     Public Sub New()
 
@@ -98,7 +99,8 @@ Public Class Frm_Lotes_Det
             If Grilla IsNot Nothing AndAlso Grilla.Rows.Count > 0 AndAlso Grilla.Columns.Contains("NroLote") Then
                 ' Seleccionar la primera fila y la columna NroLote
                 Grilla.Focus()
-                Grilla.CurrentCell = Grilla.Rows(0).Cells("NroLote")
+                'Grilla.CurrentCell = Grilla.Rows(0).Cells("NroLote")
+                Grilla.CurrentCell = Grilla.Rows(0).Cells("Codigo")
 
                 ' Iniciar edición sólo si no está en modo solo lectura
                 If Not ModoSoloLectura Then
@@ -340,7 +342,15 @@ Public Class Frm_Lotes_Det
 
                     If _Cabeza = "NroLote" Then
 
-                        If ModoSeleccion Then
+                        If ModoSeleccion And String.IsNullOrEmpty(_NroLote) Then
+
+                            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Prod_Stock_Lote",
+                                                                           $"Empresa = '{_Empresa}' And Sucursal = '{_Sucursal}' And Bodega = '{_Bodega}' And Codigo = '{_Codigo}' And Stfilt1 > 0")
+
+                            If _Reg = 0 Then
+                                MessageBoxEx.Show(Me, "No existen lotes que mostrar", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Return
+                            End If
 
                             Dim _Row_Lote As DataRow
                             Dim Fm As New Frm_Lotes_Select(_Empresa, _Sucursal, _Bodega, _Codigo)
@@ -393,8 +403,15 @@ Public Class Frm_Lotes_Det
                             _Fila.Cells("SubLote").Value = _Row_Lote.Item("SubLote")
                             _Fila.Cells("FElaboracion").Value = _Row_Lote.Item("FElaboracion")
                             _Fila.Cells("FVencimiento").Value = _Row_Lote.Item("FVencimiento")
+                            _Fila.Cells("CantOriUd1").Value = _Row_Lote.Item("Stfilt1")
+                            _Fila.Cells("CantOriUd2").Value = _Row_Lote.Item("Stfilt2")
+                            _Fila.Cells("CantUd1").Value = _Row_Lote.Item("Stfilt1")
+                            _Fila.Cells("CantUd2").Value = _Row_Lote.Item("Stfilt2")
                             _Fila.Cells("StockUd1").Value = _Row_Lote.Item("Stfilt1")
                             _Fila.Cells("StockUd2").Value = _Row_Lote.Item("Stfilt2")
+
+                            ActualizarSumatorias()
+
                             Sb_SetCellFocus(_Index, "CantUd1", True)
 
                         ElseIf ModoIngresoNuevo Then
@@ -592,7 +609,7 @@ Public Class Frm_Lotes_Det
             Return
         End If
 
-        If Sum_CantUd1 > 0 Then
+        If Sum_CantUd1 > 0 Or ModoDespachoInterno Then
             ' Validar filas obligatorias antes de procesar (fechas, número de lote y cantidades)
             If Not ValidarFilasObligatorias() Then
                 Return
@@ -740,6 +757,28 @@ Public Class Frm_Lotes_Det
                     Double.TryParse(Convert.ToString(valorObj), valor)
                 End If
 
+                If ModoDespachoInterno AndAlso valor <= 0 Then
+                    ' Permitir 0, impedir negativo y valores mayores a CantOriUd1
+                    Dim maxAllowed As Double = 0
+                    Try
+                        maxAllowed = item.CantOriUd1
+                    Catch ex As Exception
+                        maxAllowed = 0
+                    End Try
+                    MessageBoxEx.Show(Me, "La cantidad debe ser mayor que cero." & vbCrLf & String.Format("cantidad original ({0})", maxAllowed), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    item.CantUd1 = prevValor
+                    Try
+                        Grilla.Rows(rowIndex).Cells("CantUd1").Value = prevValor
+                        Lista_Lotes.ResetItem(rowIndex)
+                    Catch ex As Exception
+                    End Try
+                    Try
+                        Sb_SetCellFocus(rowIndex, "CantUd1", True)
+                    Catch ex As Exception
+                    End Try
+                    Return
+                End If
+
                 ' Comportamiento especial para ModoIngreso
                 If ModoIngresoInterno Then
                     ' Permitir 0, impedir negativo y valores mayores a CantOriUd1
@@ -751,7 +790,7 @@ Public Class Frm_Lotes_Det
                     End Try
 
                     If valor < 0 Then
-                        MessageBoxEx.Show(Me, "La cantidad no puede ser negativa.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                        MessageBoxEx.Show(Me, "La cantidad no puede ser negativa." & vbCrLf & String.Format("cantidad original ({0})", maxAllowed), "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                         item.CantUd1 = prevValor
                         Try
                             Grilla.Rows(rowIndex).Cells("CantUd1").Value = prevValor
@@ -766,7 +805,6 @@ Public Class Frm_Lotes_Det
                     End If
 
                     If maxAllowed <= 0 Then
-                        ' Si CantOriUd1 es 0, sólo permitir 0
                         If valor > 0 Then
                             MessageBoxEx.Show(Me, String.Format("La cantidad no puede ser mayor que la cantidad original ({0}) en la fila {1}.", maxAllowed, rowIndex + 1),
                                               "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -1283,7 +1321,7 @@ Public Class Frm_Lotes_Det
             End If
 
             ' Validaciones en modo ingreso: permitir cero, impedir negativos y valores mayores que CantOriUd1
-            If ModoIngresoInterno Then
+            If ModoIngresoInterno Or ModoDespachoInterno Then
                 Try
                     If item.CantUd1 < 0 Then
                         MessageBoxEx.Show(Me, String.Format("La cantidad (CantUd1) no puede ser negativa en la fila {0}.", filaNum),
@@ -1303,7 +1341,6 @@ Public Class Frm_Lotes_Det
                                       "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 End Try
 
-                ' Verificar no superar CantOriUd1
                 Dim maxOri As Double = 0
                 Try
                     maxOri = item.CantOriUd1
@@ -1325,7 +1362,6 @@ Public Class Frm_Lotes_Det
                     Return False
                 End If
 
-                ' CantUd2 debe ser >= 0 (no obligatorio >0)
                 Try
                     If item.CantUd2 < 0 Then
                         MessageBoxEx.Show(Me, String.Format("La cantidad (CantUd2) no puede ser negativa en la fila {0}.", filaNum),
@@ -1345,7 +1381,6 @@ Public Class Frm_Lotes_Det
                                       "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 End Try
 
-                ' No requerir fechas en modo ingreso
                 Continue For
             End If
 

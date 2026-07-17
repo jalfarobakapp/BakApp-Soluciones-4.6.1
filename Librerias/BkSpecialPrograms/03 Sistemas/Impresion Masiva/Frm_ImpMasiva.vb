@@ -16,6 +16,9 @@ Public Class Frm_ImpMasiva
     ' Estado que indica si los controles están bloqueados (True = bloqueados)
     Private _ControlesBloqueados As Boolean = True
 
+    Private _ColumnaOrdenActual As String
+    Private _OrdenAscendente As Boolean = True
+
     Public Sub New(_Tido As String, _Ls_Idmaeedo As List(Of String))
 
         ' Esta llamada es exigida por el diseñador.
@@ -48,6 +51,10 @@ Public Class Frm_ImpMasiva
         Sb_HabilitarDeshabilitarControles(False, True)
         _ControlesBloqueados = True
 
+        AddHandler Grilla.ColumnHeaderMouseClick, AddressOf Grilla_ColumnHeaderMouseClick
+
+        Sb_OrdenarListaDocumentos("Tido")
+
     End Sub
 
     Sub Sb_ActualizarGrilla()
@@ -70,6 +77,12 @@ Public Class Frm_ImpMasiva
             .Columns("Chk").Width = 30
             .Columns("Chk").ReadOnly = False
             .Columns("Chk").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Empresa").Visible = True
+            .Columns("Empresa").HeaderText = "Emp."
+            .Columns("Empresa").Width = 30
+            .Columns("Empresa").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("Tido").Visible = True
@@ -110,19 +123,19 @@ Public Class Frm_ImpMasiva
 
             .Columns("Modalidad").Visible = True
             .Columns("Modalidad").HeaderText = "Modalidad"
-            .Columns("Modalidad").Width = 150
+            .Columns("Modalidad").Width = 60
             .Columns("Modalidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NombreFormato_Modalidad").Visible = True
             .Columns("NombreFormato_Modalidad").HeaderText = "Nombre Formato Modalidad"
-            .Columns("NombreFormato_Modalidad").Width = 150
+            .Columns("NombreFormato_Modalidad").Width = 250
             .Columns("NombreFormato_Modalidad").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NombreFormato_ModalidadDoc").Visible = True
             .Columns("NombreFormato_ModalidadDoc").HeaderText = "Nombre Formato Modalidad Documento"
-            .Columns("NombreFormato_ModalidadDoc").Width = 150
+            .Columns("NombreFormato_ModalidadDoc").Width = 250
             .Columns("NombreFormato_ModalidadDoc").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
@@ -135,6 +148,8 @@ Public Class Frm_ImpMasiva
             '_DisplayIndex += 1
 
         End With
+
+        Sb_ActualizarIndicadorOrden()
 
     End Sub
 
@@ -459,4 +474,117 @@ Public Class Frm_ImpMasiva
             ' Ignorar si no se puede cambiar el texto
         End Try
     End Sub
+
+    Private Sub Grilla_ColumnHeaderMouseClick(sender As Object, e As DataGridViewCellMouseEventArgs)
+
+        ' Pseudocódigo:
+        ' 1. Detectar la columna cliqueada.
+        ' 2. Si es Empresa, Tido o Nudo, alternar asc/desc.
+        ' 3. Reordenar la lista enlazada.
+        ' 4. Volver a cargar la grilla.
+        ' 5. Mostrar el glifo de orden.
+
+        If e.ColumnIndex < 0 Then
+            Return
+        End If
+
+        Dim _NombreColumna As String = Grilla.Columns(e.ColumnIndex).Name
+
+        Select Case _NombreColumna
+            Case "Empresa", "Tido", "Nudo"
+                Sb_OrdenarListaDocumentos(_NombreColumna)
+        End Select
+
+    End Sub
+
+    Private Sub Sb_OrdenarListaDocumentos(_NombreColumna As String)
+
+        Grilla.EndEdit()
+
+        If _ColumnaOrdenActual = _NombreColumna Then
+            _OrdenAscendente = Not _OrdenAscendente
+        Else
+            _ColumnaOrdenActual = _NombreColumna
+            _OrdenAscendente = True
+        End If
+
+        Dim _ListaOrdenada As List(Of ImpMasiva.ImpDocumentos)
+
+        Select Case _NombreColumna
+
+            Case "Empresa"
+                If _OrdenAscendente Then
+                    _ListaOrdenada = ListaDocumentos.
+                        OrderBy(Function(x) x.Empresa).
+                        ThenBy(Function(x) x.Tido).
+                        ThenBy(Function(x) x.Nudo).
+                        ToList()
+                Else
+                    _ListaOrdenada = ListaDocumentos.
+                        OrderByDescending(Function(x) x.Empresa).
+                        ThenBy(Function(x) x.Tido).
+                        ThenBy(Function(x) x.Nudo).
+                        ToList()
+                End If
+
+            Case "Tido"
+                If _OrdenAscendente Then
+                    _ListaOrdenada = ListaDocumentos.
+                        OrderBy(Function(x) x.Tido).
+                        ThenBy(Function(x) x.Empresa).
+                        ThenBy(Function(x) x.Nudo).
+                        ToList()
+                Else
+                    _ListaOrdenada = ListaDocumentos.
+                        OrderByDescending(Function(x) x.Tido).
+                        ThenBy(Function(x) x.Empresa).
+                        ThenBy(Function(x) x.Nudo).
+                        ToList()
+                End If
+
+            Case "Nudo"
+                If _OrdenAscendente Then
+                    _ListaOrdenada = ListaDocumentos.
+                        OrderBy(Function(x) x.Nudo).
+                        ThenBy(Function(x) x.Empresa).
+                        ThenBy(Function(x) x.Tido).
+                        ToList()
+                Else
+                    _ListaOrdenada = ListaDocumentos.
+                        OrderByDescending(Function(x) x.Nudo).
+                        ThenBy(Function(x) x.Empresa).
+                        ThenBy(Function(x) x.Tido).
+                        ToList()
+                End If
+
+            Case Else
+                Return
+
+        End Select
+
+        ListaDocumentos = New BindingList(Of ImpMasiva.ImpDocumentos)(_ListaOrdenada)
+        Sb_ActualizarGrilla()
+
+    End Sub
+
+    Private Sub Sb_ActualizarIndicadorOrden()
+
+        For Each _Columna As DataGridViewColumn In Grilla.Columns
+            _Columna.HeaderCell.SortGlyphDirection = SortOrder.None
+        Next
+
+        If String.IsNullOrEmpty(_ColumnaOrdenActual) Then
+            Return
+        End If
+
+        For Each _Columna As DataGridViewColumn In Grilla.Columns
+            If _Columna.Name = _ColumnaOrdenActual Then
+                _Columna.HeaderCell.SortGlyphDirection =
+                    If(_OrdenAscendente, SortOrder.Ascending, SortOrder.Descending)
+                Exit For
+            End If
+        Next
+
+    End Sub
+
 End Class

@@ -719,12 +719,10 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_Demonio_NVVAutoDet"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Demonio_NVVAutoDet
 
-
             Case "Zw_Docu_Archivos"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_Archivos
             Case "Zw_Docu_ObligPg"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_ObligPg
-
 
             Case "Zw_Docu_Ent"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_Ent
@@ -734,7 +732,6 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_Det_Cust
             Case "Zw_Docu_Det_Lote"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Docu_Det_Lote
-
 
             Case "Zw_DTE_Aec"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_DTE_Aec
@@ -831,6 +828,10 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_Inv_Sector"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Inv_Sector
 
+            Case "Zw_InterStock_Enc"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_InterStock_Enc
+            Case "Zw_InterStock_Det"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_InterStock_Det
 
             Case "Zw_Licencia"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Licencia

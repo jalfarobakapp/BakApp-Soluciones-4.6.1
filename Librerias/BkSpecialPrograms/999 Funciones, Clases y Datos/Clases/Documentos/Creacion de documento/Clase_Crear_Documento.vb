@@ -213,7 +213,8 @@ Public Class Clase_Crear_Documento
                                 Optional _Cambiar_NroDocumento As Boolean = True,
                                 Optional ByRef _Origen_Modificado_Intertanto As Boolean = False,
                                 Optional _Es_TLV As Boolean = False,
-                                Optional _HoraAlFinalDelDia As Boolean = False) As LsValiciones.Mensajes
+                                Optional _HoraAlFinalDelDia As Boolean = False,
+                                Optional _HoraAlPrincipioDelDia As Boolean = False) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -1843,6 +1844,7 @@ Public Class Clase_Crear_Documento
 
                     If _Feemdo2 > _Feemli2 Then
                         _HoraAlFinalDelDia = True
+                        _HoraAlPrincipioDelDia = False
                     Else
                         _HoraAlFinalDelDia = False
                     End If
@@ -1851,7 +1853,7 @@ Public Class Clase_Crear_Documento
 
             End If
 
-            _HoraGrab = Hora_Grab_fx(_HoraAlFinalDelDia) 'Math.Round((_HH * 3600) + (_MM * 60) + _SS, 0)
+            _HoraGrab = Hora_Grab_fx(_HoraAlFinalDelDia, _HoraAlPrincipioDelDia) 'Math.Round((_HH * 3600) + (_MM * 60) + _SS, 0)
 
             'Consulta_sql = "Declare @HoraGrab Int" & vbCrLf & _
             '               "set @HoraGrab = convert(money,substring(convert(varchar(20),getdate(),114),1,2)) * 3600 +" & vbCrLf & _
@@ -2128,10 +2130,10 @@ Public Class Clase_Crear_Documento
 
             With Tbl_Observaciones
 
-                _Obdo = .Rows(0).Item("Observaciones")
-                _Cpdo = .Rows(0).Item("Forma_pago")
-                _Ocdo = .Rows(0).Item("Orden_compra")
-                _Motivo = .Rows(0).Item("Motivo")
+                _Obdo = .Rows(0).Item("Observaciones").ToString.Replace("'", "")
+                _Cpdo = .Rows(0).Item("Forma_pago").ToString.Replace("'", "")
+                _Ocdo = .Rows(0).Item("Orden_compra").ToString.Replace("'", "")
+                _Motivo = .Rows(0).Item("Motivo").ToString.Replace("'", "")
 
                 Dim _Placapat As String = .Rows(0).Item("Placa").ToString.Trim
                 Dim _Diendesp As String = .Rows(0).Item("CodRetirador").ToString
@@ -2261,18 +2263,20 @@ Public Class Clase_Crear_Documento
 
             Dim _Cn_TipoCompra As Integer = NuloPorNro(_Row_Encabezado.Item("Cn_TipoCompra"), 0)
             Dim _TipoCompra As String = NuloPorNro(_Row_Encabezado.Item("TipoCompra"), "")
+            Dim _Id_Enc_InterStock As Integer = NuloPorNro(_Row_Encabezado.Item("Id_Enc_InterStock"), 0)
 
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad," &
                            "Tido,Nudo,FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil," &
                            "Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad,B2B,UsaCiaSeguro,CodEntidad_Cia,CodSucEntidad_Cia," &
-                           "Cn_TipoCompra,TipoCompra,Id_Despacho) Values " &
+                           "Cn_TipoCompra,TipoCompra,Id_Despacho,Id_Enc_InterStock) Values " &
                            "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad_Bk & "'" &
                            ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
                            "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(PreVenta) &
                            "," & Convert.ToInt32(_PdaRMovil) & "," & _Idpdaenca & "," & Convert.ToInt32(SobreStock) &
                            ",'" & _Empresa & "','" & _LeyendaMorosidad & "'," &
                            Convert.ToInt32(B2B) & "," & Convert.ToInt32(_UsaCiaSeguro) &
-                           ",'" & _CodEntidad_Cia & "','" & _CodSucEntidad_Cia & "'," & _Cn_TipoCompra & ",'" & _TipoCompra & "'," & _Id_Despacho & ")"
+                           ",'" & _CodEntidad_Cia & "','" & _CodSucEntidad_Cia & "'," & _Cn_TipoCompra & ",'" & _TipoCompra & "'," &
+                           _Id_Despacho & "," & _Id_Enc_InterStock & ")"
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
@@ -4488,7 +4492,7 @@ Public Class Clase_Crear_Documento
 
                 If Not _Lincondesp And _Tidopa <> "GRC" Then
                     _Campos.Add("STDV1C")
-                    _Campos.Add("STDV1C")
+                    _Campos.Add("STDV2C")
                 End If
 
             Case "GTI"

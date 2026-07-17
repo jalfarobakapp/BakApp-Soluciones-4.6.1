@@ -44,12 +44,12 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         End Get
     End Property
 
-    Public Sub New(ByVal New_SqlConsulta As String,
-                   ByVal New_Fecha_Inicio As Date,
-                   ByVal New_Fecha_Fin As Date,
-                   ByVal New_Valor_Maximo As Double,
-                   ByVal New_Id_Correo As Integer,
-                   ByVal New_Informe As Informe_VC)
+    Public Sub New(New_SqlConsulta As String,
+                    New_Fecha_Inicio As Date,
+                    New_Fecha_Fin As Date,
+                    New_Valor_Maximo As Double,
+                    New_Id_Correo As Integer,
+                    New_Informe As Informe_VC)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -69,7 +69,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
     End Sub
 
-    Private Sub Frm_Inf_Vencimientos_Mes_Detalle_Diario_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_Inf_Vencimientos_Mes_Detalle_Diario_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         If _Tipo_Informe = Tipo_Informe.Diario Then
             Sb_Generar_Informe_Diario(_Fecha_Inicio, _Fecha_Fin)
@@ -85,8 +85,8 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
     End Sub
 
 
-    Sub Sb_Generar_Informe_Diario(ByVal _Fecha_Inicio As Date,
-                                  ByVal _Fecha_Fin As Date)
+    Sub Sb_Generar_Informe_Diario(_Fecha_Inicio As Date,
+                                  _Fecha_Fin As Date)
 
 
         Consulta_sql = _SqlConsulta_informe 'My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Compras_Anuales & vbCrLf & vbCrLf
@@ -306,8 +306,8 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
     End Sub
 
-    Sub Sb_Generar_Informe_Mensual(ByVal _Fecha_Inicio As Date,
-                                   ByVal _Fecha_Fin As Date)
+    Sub Sb_Generar_Informe_Mensual(_Fecha_Inicio As Date,
+                                    _Fecha_Fin As Date)
 
         Me.Cursor = Cursors.WaitCursor
 
@@ -544,13 +544,13 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
     End Sub
 
-    Private Sub Frm_Inf_Vencimientos_Mes_Detalle_Diario_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+    Private Sub Frm_Inf_Vencimientos_Mes_Detalle_Diario_KeyDown(sender As System.Object, e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
         If e.KeyValue = Keys.Escape Then
             Me.Close()
         End If
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Sb_Revisar_Columna()
         'Sb_Mostrar_Detalle(False, Accion.Mostrar_todo)
@@ -602,11 +602,11 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Mostrar_todo
     End Enum
 
-    Sub Sb_Mostrar_Detalle(ByVal _Mover As Boolean,
-                           ByVal _Accion As Accion,
-                           ByVal _Id_Correo_ As Integer,
-                           Optional ByVal _Nueva_Fecha As String = "",
-                           Optional ByVal _Mostrar_todo As Boolean = False)
+    Sub Sb_Mostrar_Detalle(_Mover As Boolean,
+                            _Accion As Accion,
+                            _Id_Correo_ As Integer,
+                           Optional _Nueva_Fecha As String = "",
+                           Optional _Mostrar_todo As Boolean = False)
 
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
@@ -652,7 +652,6 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
             End If
 
         End If
-
 
         If _Mostrar_todo Then
             _Fx_Fecha_Inicio = "19000101"
@@ -715,7 +714,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
     End Sub
 
-    Function Fx_Mes_a_Numero(ByVal _MesPalabra As String)
+    Function Fx_Mes_a_Numero(_MesPalabra As String)
 
         _MesPalabra = UCase(_MesPalabra)
         Dim _Mes As Integer
@@ -750,9 +749,9 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Return _Mes
     End Function
 
-    Function Fx_Revisar_Si_Es_Posible_Cambiar_Fechas_De_Documentos(ByVal _TblDocumento As DataTable,
-                                                                   ByVal _Solo_Checkeados As Boolean,
-                                                                   ByVal _Nueva_Fecha As String) As Integer
+    Function Fx_Revisar_Si_Es_Posible_Cambiar_Fechas_De_Documentos(_TblDocumento As DataTable,
+                                                                    _Solo_Checkeados As Boolean,
+                                                                    _Nueva_Fecha As String) As Integer
 
         Dim _Documentos As Integer
 
@@ -788,9 +787,9 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
     End Function
 
-    Function Fx_Cambiar_Fechas_De_Documentos(ByVal _TblDocumento As DataTable,
-                                             ByVal _Solo_Checkeados As Boolean,
-                                             ByVal _Nueva_Fecha As String) As Boolean
+    Function Fx_Cambiar_Fechas_De_Documentos(_TblDocumento As DataTable,
+                                              _Solo_Checkeados As Boolean,
+                                              _Nueva_Fecha As String) As Boolean
 
         Consulta_sql = String.Empty
 
@@ -842,7 +841,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
     End Function
 
 
-    Private Sub BtnActualizarInformacion_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Actualizar_Informacion.Click
+    Private Sub BtnActualizarInformacion_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_Informacion.Click
         If _Tipo_Informe = Tipo_Informe.Diario Then
             Sb_Generar_Informe_Diario(_Fecha_Inicio, _Fecha_Fin)
         ElseIf _Tipo_Informe = Tipo_Informe.Mensual Then
@@ -886,15 +885,15 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Next
     End Sub
 
-    Private Sub Btn_Quitar_Celdas_En_Cero_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Quitar_Celdas_En_Cero.Click
+    Private Sub Btn_Quitar_Celdas_En_Cero_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Quitar_Celdas_En_Cero.Click
         Sb_Quitar_Columnas_en_cero()
     End Sub
 
-    Private Sub Btn_Exportar_Excel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Exportar_Excel.Click
+    Private Sub Btn_Exportar_Excel_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Exportar_Excel.Click
         ExportarTabla_JetExcel_Tabla(Grilla.DataSource, Me, Me.Text)
     End Sub
 
-    Sub Sb_Eventos_Arrastrar(ByVal _Asignar As Boolean)
+    Sub Sb_Eventos_Arrastrar(_Asignar As Boolean)
 
 
         If _Asignar Then
@@ -944,11 +943,11 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
     End Sub
 
-    Private Sub Sb_Grilla_DragEnter(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs)
+    Private Sub Sb_Grilla_DragEnter(sender As System.Object, e As System.Windows.Forms.DragEventArgs)
         e.Effect = DragDropEffects.Move
     End Sub
 
-    Private Sub Sb_Grilla_DragDrop(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs)
+    Private Sub Sb_Grilla_DragDrop(sender As System.Object, e As System.Windows.Forms.DragEventArgs)
 
         Dim Point = Grilla.PointToClient(New Point(e.X, e.Y))
         Dim Hitest As DataGridView.HitTestInfo = Grilla.HitTest(Point.X, Point.Y)
@@ -1021,7 +1020,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
     End Sub
 
-    Private Sub Sb_Grilla_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         'Get the Index of Row which is being Dragged
         'We would use this Index on Drop to identify which Row was dragged and get the values from that row
         If e.Button = Windows.Forms.MouseButtons.Left Then
@@ -1058,7 +1057,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         End If
     End Sub
 
-    Private Sub Sb_Grilla_DragOver(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DragEventArgs)
+    Private Sub Sb_Grilla_DragOver(sender As System.Object, e As System.Windows.Forms.DragEventArgs)
         'Just to Show a mouse icon to denote drop is allowed here
 
         Dim Point = Grilla.PointToClient(New Point(e.X, e.Y))
@@ -1105,7 +1104,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
     End Sub
 
-    Private Sub Sb_Grilla_MouseMove(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseMove(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         'If _Arrastrando Then
         Dim Hitest As DataGridView.HitTestInfo = Grilla.HitTest(e.X, e.Y)
         If Hitest.Type = DataGridViewHitTestType.Cell Then
@@ -1150,7 +1149,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
     End Function
 
 
-    Private Sub Btn_Cambiar_Fechas_Vencimiento_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Cambiar_Fechas_Vencimiento.Click
+    Private Sub Btn_Cambiar_Fechas_Vencimiento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Cambiar_Fechas_Vencimiento.Click
 
         Dim _Cambiar As Boolean
 
@@ -1168,7 +1167,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
 
 
-    Private Sub Sb_Grilla_MouseDown_Boton_Derecho(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
+    Private Sub Sb_Grilla_MouseDown_Boton_Derecho(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
         If e.Button = Windows.Forms.MouseButtons.Right Then
             With sender
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
@@ -1187,7 +1186,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         End If
     End Sub
 
-    Private Sub Grilla_ColumnHeaderMouseClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles Grilla.ColumnHeaderMouseClick
+    Private Sub Grilla_ColumnHeaderMouseClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellMouseEventArgs) Handles Grilla.ColumnHeaderMouseClick
         If _Tipo_Informe = Tipo_Informe.Diario Then
             Sb_Formato_Informe_Diario()
         ElseIf _Tipo_Informe = Tipo_Informe.Mensual Then
@@ -1196,20 +1195,20 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
     End Sub
 
 
-    Private Sub Btn_Mostrar_deuda_actual_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Mostrar_deuda_actual.Click
+    Private Sub Btn_Mostrar_deuda_actual_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Mostrar_deuda_actual.Click
         Sb_Mostrar_Detalle(False, Accion.Mostrar_todo, _Id_Correo)
     End Sub
 
 
-    Private Sub Btn_Mostrar_deuda_completa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Mostrar_deuda_completa.Click
+    Private Sub Btn_Mostrar_deuda_completa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Mostrar_deuda_completa.Click
         Sb_Mostrar_Detalle(False, Accion.Mostrar_todo, 0, "", True)
     End Sub
 
-    Private Sub Btn_Enviar_Correo_Cobranza_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Enviar_Correo_Cobranza.Click
+    Private Sub Btn_Enviar_Correo_Cobranza_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Enviar_Correo_Cobranza.Click
         Sb_Mostrar_Detalle(False, Accion.Cobranza, _Id_Correo)
     End Sub
 
-    Private Sub Btn_Buscar_Entidad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Buscar_Entidad.Click
+    Private Sub Btn_Buscar_Entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Buscar_Entidad.Click
 
         Dim Fm As New Frm_BuscarEntidad_Mt(False)
         Fm.ShowDialog(Me)
@@ -1236,7 +1235,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
     End Sub
 
-    Private Sub Btn_Ficha_Entidad_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Ficha_Entidad.Click
+    Private Sub Btn_Ficha_Entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Ficha_Entidad.Click
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
@@ -1252,7 +1251,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
 
     End Sub
 
-    Private Sub Btn_Mnu_Enviar_Correo_Cobranza_Deuda_Completa_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_Mnu_Enviar_Correo_Cobranza_Deuda_Completa.Click
+    Private Sub Btn_Mnu_Enviar_Correo_Cobranza_Deuda_Completa_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Mnu_Enviar_Correo_Cobranza_Deuda_Completa.Click
         Sb_Mostrar_Detalle(False, Accion.Cobranza, _Id_Correo, , True)
     End Sub
 
@@ -1261,7 +1260,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Get
             Return _Chk_Deuda_Efectiva
         End Get
-        Set(ByVal value)
+        Set(value)
             _Chk_Deuda_Efectiva = value
             If value Then
                 Btn_Cambiar_Fechas_Vencimiento.Visible = False
@@ -1274,7 +1273,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Get
             Return _Filtro_Maeedo
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Filtro_Maeedo = value
         End Set
     End Property
@@ -1283,7 +1282,7 @@ Public Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Get
             Return _Filtro_Maedpce
         End Get
-        Set(ByVal value As String)
+        Set(value As String)
             _Filtro_Maedpce = value
         End Set
     End Property

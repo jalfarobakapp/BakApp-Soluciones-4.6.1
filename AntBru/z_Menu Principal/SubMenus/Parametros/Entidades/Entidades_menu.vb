@@ -5,7 +5,7 @@ Public Class Entidades_menu
 
     Dim _Fm_Menu_Padre As Metro.MetroAppForm
 
-    Public Sub New(ByVal Fm_Menu_Padre As Metro.MetroAppForm)
+    Public Sub New(Fm_Menu_Padre As Metro.MetroAppForm)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -16,11 +16,11 @@ Public Class Entidades_menu
 
     End Sub
 
-    Private Sub BtnSalir_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnSalir.Click
+    Private Sub BtnSalir_Click(sender As System.Object, e As System.EventArgs) Handles BtnSalir.Click
         _Fm_Menu_Padre.CloseModalPanel(Me, DevComponents.DotNetBar.Controls.eSlideSide.Left)
     End Sub
 
-    Private Sub Btn_MantEntidades_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_MantEntidades.Click
+    Private Sub Btn_MantEntidades_Click(sender As System.Object, e As System.EventArgs) Handles Btn_MantEntidades.Click
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "CfEnt001") Then
             Dim Fm As New Frm_BuscarEntidad_Mt(False)
             Fm.Pro_Crear_Entidad = True
@@ -29,7 +29,7 @@ Public Class Entidades_menu
         End If
     End Sub
 
-    Private Sub Btn_EntExcuidas_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Btn_EntExcuidas.Click
+    Private Sub Btn_EntExcuidas_Click(sender As System.Object, e As System.EventArgs) Handles Btn_EntExcuidas.Click
         If Fx_Tiene_Permiso(_Fm_Menu_Padre, "CfEnt016") Then
             Dim Fm As New Frm_EntExcluidas
             Fm.ShowDialog(Me)

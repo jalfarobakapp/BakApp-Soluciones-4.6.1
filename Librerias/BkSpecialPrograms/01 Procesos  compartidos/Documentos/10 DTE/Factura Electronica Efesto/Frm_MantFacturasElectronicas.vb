@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
 
 Public Class Frm_MantFacturasElectronicas
 
@@ -75,11 +76,7 @@ Public Class Frm_MantFacturasElectronicas
 
         Grilla.Columns.Clear()
 
-        'Dim _New_Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
-        'Dim _Tbl_Informe As DataTable = _New_Ds.Tables(0)
-        '_Dv.Table = _New_Ds.Tables("Table")
-
-        _Dv.Table = _Ds.Tables("Table") 'Fx_Generar_Informe().Tables("Table")
+        _Dv.Table = _Ds.Tables("Table")
 
         Dim _DisplayIndex = 0
 
@@ -94,6 +91,13 @@ Public Class Frm_MantFacturasElectronicas
             .Columns("Tido_Nudo").Width = 100
             .Columns("Tido_Nudo").Frozen = True
             .Columns("Tido_Nudo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("GlosaCesion").Visible = True
+            .Columns("GlosaCesion").HeaderText = "Aec"
+            .Columns("GlosaCesion").Width = 50
+            .Columns("GlosaCesion").Frozen = True
+            .Columns("GlosaCesion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("NOKOEN").Visible = True
@@ -394,6 +398,28 @@ Public Class Frm_MantFacturasElectronicas
                 Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
                 If Hitest.Type = DataGridViewHitTestType.Cell Then
                     .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+
+                    Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+                    Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
+
+                    Consulta_sql = "Select Top 1 Tid.Id As Id_Trackid,Tid.Id_Dte,Isnull(Aec.Id_Aec,0) As Id_Aec,Isnull(Aec.CesionExterna,0) As CesionExterna" & vbCrLf &
+                                   "From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
+                                   "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
+                                   "Left Join " & _Global_BaseBk & "Zw_DTE_Aec Aec On Aec.Idmaeedo = Tid.Idmaeedo" & vbCrLf &
+                                   "Where Doc.Idmaeedo = " & _Idmaeedo & " And Tid.Id_Dte <> 0 And Estado In ('EPR','RPR','RLV') "
+                    Dim _Row_TidDoc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    If IsNothing(_Row_TidDoc) Then
+                        Btn_CesionarDTE.Visible = False
+                        Btn_CesionarDTEExt.Visible = False
+                        Btn_CesionarDTEExtQuitar.Visible = False
+                    Else
+                        Btn_CesionarDTE.Visible = Not CBool(_Row_TidDoc.Item("Id_Aec"))
+                        Btn_CesionarDTEExt.Visible = Not CBool(_Row_TidDoc.Item("Id_Aec"))
+                        Btn_CesionarDTEExtQuitar.Visible = (CBool(_Row_TidDoc.Item("Id_Aec")) And _Row_TidDoc.Item("CesionExterna"))
+                        Btn_CesionarDTEExtInfo.Visible = (CBool(_Row_TidDoc.Item("Id_Aec")))
+                    End If
+
                     Call Grilla_CellDoubleClick(Nothing, Nothing)
                     'ShowContextMenu(Menu_Contextual)
                 End If
@@ -403,7 +429,7 @@ Public Class Frm_MantFacturasElectronicas
 
     Private Sub Btn_Ver_Documento_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Documento.Click
 
-        Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow ' .Rows(Grilla.CurrentRow.Index)
         Dim _Idmaeedo As Integer = _Fila.Cells("IDMAEEDO").Value
 
         Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
@@ -1215,6 +1241,132 @@ Public Class Frm_MantFacturasElectronicas
         End If
 
         'End If
+
+    End Sub
+
+    Private Sub Btn_CesionarDTEExt_Click(sender As Object, e As EventArgs) Handles Btn_CesionarDTEExt.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Dte00004") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id_Dte As Integer = _Fila.Cells("Id_Dte").Value
+        Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
+        Dim _Id_Aec As Integer
+
+        Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+        Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _FechaServidor As Date = FechaDelServidor()
+        Dim _FechaUltVenci As Date = _Row_Documento.Item("FEULVEDO")
+
+        Dim _DialogResult As DialogResult
+        Dim _Accion As String
+
+        Dim Fm As New Frm_Aec_CesionExt(_Idmaeedo)
+        Fm.AmbienteCertificacion = _AmbienteCertificacion
+        Fm.ShowDialog(Me)
+        _Id_Aec = Fm.Id_Aec
+        _DialogResult = Fm.DialogResult
+        _Accion = Fm.Accion
+        Fm.Dispose()
+
+        If _DialogResult <> DialogResult.OK Then
+            Return
+        End If
+
+        If CBool(_Id_Aec) Then
+
+            _Fila.Cells("Id_Aec").Value = _Id_Aec
+            _Fila.Cells("GlosaCesion").Value = "Cedida"
+
+            MessageBoxEx.Show(Me, _Accion, "Registro grabado",
+                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+
+    End Sub
+
+    Private Sub Btn_CesionarDTEExtQuitar_Click(sender As Object, e As EventArgs) Handles Btn_CesionarDTEExtQuitar.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Dte00005") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id_Dte As Integer = _Fila.Cells("Id_Dte").Value
+        Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
+        Dim _Tido As String = _Fila.Cells("TIDO").Value
+        Dim _Nudo As String = _Fila.Cells("NUDO").Value
+
+        Dim _Id_Aec As Integer
+
+        Consulta_sql = "Select Top 1 Tid.Id As Id_Trackid,Tid.Id_Dte,Isnull(Aec.Id_Aec,0) As Id_Aec" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_DTE_Trackid Tid" & vbCrLf &
+                       "Inner Join " & _Global_BaseBk & "Zw_DTE_Documentos Doc On Tid.Id_Dte = Doc.Id_Dte" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_DTE_Aec Aec On Aec.Idmaeedo = Tid.Idmaeedo" & vbCrLf &
+                       "Where Doc.Idmaeedo = " & _Idmaeedo & " And Tid.Id_Dte <> 0 And Estado In ('EPR','RPR','RLV') "
+        Dim _Row_TidDoc As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_TidDoc) Then
+            MessageBoxEx.Show(Me, "No se encontro el archivo XML en la tabla [Zw_DTE_Documentos]" & vbCrLf &
+                              "Puede ser también que ese documento se haya enviado desde Random", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '_Errores.Add("No se encontro el archivo XML en la tabla [Zw_DTE_Documentos]")
+            Return
+        End If
+
+        If Not CBool(_Row_TidDoc.Item("Id_Aec")) Then
+            MessageBoxEx.Show(Me, "No existe el registro", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Está seguro de quitar la cesión de este documento?", "Quitar cesión de DTE",
+                          MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        _Id_Aec = _Row_TidDoc.Item("Id_Aec")
+
+        Consulta_sql = $"
+                Delete From {_Global_BaseBk}Zw_DTE_Aec Where Id_Aec = {_Id_Aec}
+                Delete MEVENTO Where KOTABLA = 'CESION' And ARCHIRVE = 'MAEEDO' And IDRVE = {_Idmaeedo}"
+
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+
+            Dim _Accion As String = $"Quitar cesion de documento externamente"
+
+            _Fila.Cells("Id_Aec").Value = 0
+            _Fila.Cells("GlosaCesion").Value = String.Empty
+
+            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEEDO", _Idmaeedo, "CesionExt",
+                           _Accion, "", "", "", "", False, FUNCIONARIO, False, 0, "", _Tido, _Nudo)
+
+            MessageBoxEx.Show(Me, "Cesion eliminada correctamente", "Eliminar cesion", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End If
+
+    End Sub
+
+    Private Sub Btn_CesionarDTEExtInfo_Click(sender As Object, e As EventArgs) Handles Btn_CesionarDTEExtInfo.Click
+
+        Dim _Fila As DataGridViewRow = Grilla.CurrentRow
+        Dim _Id_Dte As Integer = _Fila.Cells("Id_Dte").Value
+        Dim _Idmaeedo As Integer = _Fila.Cells("Idmaeedo").Value
+        Dim _Id_Aec As Integer = _Fila.Cells("Id_Aec").Value
+
+        Consulta_sql = "Select * From MAEEDO Where IDMAEEDO = " & _Idmaeedo
+        Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _FechaServidor As Date = FechaDelServidor()
+        Dim _FechaUltVenci As Date = _Row_Documento.Item("FEULVEDO")
+
+        Dim Fm As New Frm_Aec_CesionExt(_Idmaeedo)
+        Fm.AmbienteCertificacion = _AmbienteCertificacion
+        Fm.Modolectura = True
+        Fm.Id_Aec = _Id_Aec
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 End Class

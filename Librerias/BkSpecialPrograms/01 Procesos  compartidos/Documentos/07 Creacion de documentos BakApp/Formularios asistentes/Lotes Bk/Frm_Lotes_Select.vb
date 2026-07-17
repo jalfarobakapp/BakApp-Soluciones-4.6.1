@@ -38,9 +38,10 @@
 
     Sub Sb_Actualizar_Grilla()
 
-        Consulta_sql = "Select Empresa,Sucursal,Bodega,NroLote,SubLote,Codigo,FElaboracion,FVencimiento,Stfilt1,Stfilt2" & vbCrLf &
-                       "From " & _Global_BaseBk & "Zw_Prod_Stock_Lote" & vbCrLf &
-                       "Where Empresa = '" & _Empresa & "' And Sucursal = '" & _Sucursal & "' And Bodega = '" & _Bodega & "' And Codigo = '" & _Codigo & "'"
+        Consulta_sql = $"
+Select Empresa,Sucursal,Bodega,NroLote,SubLote,Codigo,FElaboracion,FVencimiento,Stfilt1,Stfilt2
+From {_Global_BaseBk}Zw_Prod_Stock_Lote
+Where Empresa = '{_Empresa}' And Sucursal = '{_Sucursal}' And Bodega = '{_Bodega}' And Codigo = '{_Codigo}' And Stfilt1 > 0"
         _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
         Dim _DisplayIndex = 0

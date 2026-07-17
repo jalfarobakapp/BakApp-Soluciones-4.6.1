@@ -118,14 +118,17 @@ Public Class Clas_Modalidades
                 DireccionEmpresa = Trim(_Global_Row_Empresa.Item("Direccion"))
             End If
 
-            If RutEmpresa.Trim <> _New_RutEmpresa.Trim Then
+            If IsNothing(RutEmpresa) OrElse RutEmpresa.Trim <> _New_RutEmpresa.Trim Then
 
                 Dim _Dir_Local As String = Application.StartupPath & "\Data\"
 
                 If Not Directory.Exists(_Dir_Local & _New_RutEmpresa) Then
 
                     System.IO.Directory.CreateDirectory(Application.StartupPath & "\Data\" & _New_RutEmpresa)
-                    My.Computer.FileSystem.CopyDirectory(_Dir_Local & RutEmpresa, _Dir_Local & _New_RutEmpresa, True)
+
+                    If Not IsNothing(RutEmpresa) AndAlso RutEmpresa.Trim <> String.Empty Then
+                        My.Computer.FileSystem.CopyDirectory(_Dir_Local & RutEmpresa, _Dir_Local & _New_RutEmpresa, True)
+                    End If
 
                 End If
 

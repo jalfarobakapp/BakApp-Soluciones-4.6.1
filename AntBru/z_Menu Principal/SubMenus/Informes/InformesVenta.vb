@@ -138,6 +138,15 @@ Public Class InformesVenta
                                                     _Fecha_Desde,
                                                     _Fecha_Hasta,
                                                     False)
+
+        If Fm.FaltaGrupoAsociadoUsuario Then
+            MessageBoxEx.Show(_Fm_Menu_Padre, "Falta asignar un grupo a la ficha del usuario." & vbCrLf &
+                  "Por favor, asigne un grupo para habilitar la generación de informes.", "Validación",
+                  MessageBoxButtons.OK, MessageBoxIcon.Stop, MessageBoxDefaultButton.Button1, True)
+            Fm.Dispose()
+            Return
+        End If
+
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

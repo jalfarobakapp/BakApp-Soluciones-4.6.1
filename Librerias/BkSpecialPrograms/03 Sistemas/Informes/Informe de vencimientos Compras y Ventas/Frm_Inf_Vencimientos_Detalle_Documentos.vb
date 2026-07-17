@@ -124,6 +124,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Color_Botones_Barra(Bar1)
 
     End Sub
 
@@ -135,7 +136,9 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
         End If
 
         Sb_Load()
+
         AddHandler Chk_Mostrar_Pagos_Pendientes.CheckedChanging, AddressOf Sb_Chk_Mostrar_Pagos_Pendientes_CheckedChanging
+        AddHandler Chk_SumarSoloSinCesion.CheckedChanged, AddressOf Chk_SumarSoloSinCesion_CheckedChanged
 
         AddHandler Btn_Exportar_Informe_01_Vista_Actual.Click, AddressOf Btn_Exportar_Informe_01_Vista_Actual_Click
         AddHandler Btn_Exportar_Informe_02_Mostrar_todas_las_Anotaciones.Click, AddressOf Btn_Exportar_Informe_02_Mostrar_todas_las_Anotaciones_Click
@@ -349,10 +352,17 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
 
         End If
 
+        'If _Accion = Accion.Mostrar_todo Then
+        '    _Total_Saldos = NuloPorNro(_TblInforme.Compute("SUM(SALDO)", "SALDO <> 0"), 0)
+        'Else
+        '    _Total_Saldos = 0
+        'End If
+
         If _Accion = Accion.Mostrar_todo Then
-            _Total_Saldos = NuloPorNro(_TblInforme.Compute("SUM(SALDO)", "SALDO <> 0"), 0)
+            Sb_Recalcular_Total_Saldos_Desde_Tabla(True)
         Else
             _Total_Saldos = 0
+            Lbl_Total_Saldos.Text = FormatCurrency(_Total_Saldos, 0)
         End If
 
         Lbl_Total_Saldos.Text = FormatCurrency(_Total_Saldos, 0)
@@ -447,115 +457,353 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
         Me.Close()
     End Sub
 
+    'Sub Sb_Formato_Grilla()
+
+    '    With Grilla
+
+    '        '.DataSource = _TblInforme
+    '        OcultarEncabezadoGrilla(Grilla)
+
+    '        Dim _Mostrar_Chk As Boolean
+    '        Dim _Menos = 0
+
+    '        If _Accion <> Accion.Mostrar_todo Then
+    '            _Mostrar_Chk = True
+    '            _Menos = 10
+    '        End If
+
+    '        Dim _DisplayIndex = 0
+
+    '        .Columns("Chk").Width = 30
+    '        .Columns("Chk").HeaderText = "Sel."
+    '        .Columns("Chk").Visible = _Mostrar_Chk
+    '        '.Columns("Chk").Frozen = True
+    '        .Columns("Chk").DisplayIndex = _DisplayIndex
+    '        .Columns("Chk").ReadOnly = False
+    '        _DisplayIndex += 1
+
+    '        .Columns("ENDO").Width = 80
+    '        .Columns("ENDO").HeaderText = "Entidad"
+    '        .Columns("ENDO").Visible = True
+    '        '.Columns("ENDO").Frozen = True
+    '        .Columns("ENDO").DisplayIndex = _DisplayIndex
+    '        _DisplayIndex += 1
+    '        '.Columns("ENDO").ReadOnly = True
+
+    '        .Columns("TIDO").Width = 30
+    '        .Columns("TIDO").HeaderText = "Tipo"
+    '        .Columns("TIDO").Visible = True
+    '        '.Columns("TIDO").Frozen = True
+    '        .Columns("TIDO").DisplayIndex = _DisplayIndex
+    '        _DisplayIndex += 1
+    '        '.Columns("TIDO").ReadOnly = True
+
+    '        .Columns("Tipo").Width = 150
+    '        .Columns("Tipo").HeaderText = "Tipo Doc."
+    '        .Columns("Tipo").Visible = True
+    '        '.Columns("Tipo").Frozen = True
+    '        .Columns("Tipo").DisplayIndex = _DisplayIndex
+    '        _DisplayIndex += 1
+    '        '.Columns("Tipo").ReadOnly = True
+
+    '        .Columns("NUDO").Width = 70
+    '        .Columns("NUDO").HeaderText = "Número"
+    '        .Columns("NUDO").Visible = True
+    '        '.Columns("NUDO").Frozen = True
+    '        .Columns("NUDO").DisplayIndex = _DisplayIndex
+    '        _DisplayIndex += 1
+    '        '.Columns("NUDO").ReadOnly = True
+
+    '        If .Columns.Contains("Cesionado") Then
+    '            .Columns("Cesionado").Width = 50
+    '            .Columns("Cesionado").HeaderText = "AEC"
+    '            .Columns("Cesionado").ToolTipText = "Documento cedido"
+    '            .Columns("Cesionado").Visible = True
+    '            .Columns("Cesionado").DisplayIndex = _DisplayIndex
+    '            _DisplayIndex += 1
+    '        End If
+
+    '        .Columns("FEEMDO").Width = 70
+    '        .Columns("FEEMDO").HeaderText = "F. Emisión"
+    '        .Columns("FEEMDO").Visible = True
+    '        '.Columns("FEEMDO").Frozen = True
+    '        .Columns("FEEMDO").DisplayIndex = _DisplayIndex
+    '        _DisplayIndex += 1
+    '        '.Columns("FEEMDO").ReadOnly = True
+
+    '        .Columns("FEVE").Width = 80
+    '        .Columns("FEVE").HeaderText = "Vencimiento"
+    '        .Columns("FEVE").Visible = True
+    '        .Columns("FEVE").DisplayIndex = _DisplayIndex
+    '        _DisplayIndex += 1
+    '        '.Columns("FEVE").ReadOnly = True
+
+    '        .Columns("DIAS").Width = 35
+    '        .Columns("DIAS").HeaderText = "Días"
+    '        .Columns("DIAS").Visible = True
+    '        .Columns("DIAS").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+    '        .Columns("DIAS").DisplayIndex = _DisplayIndex
+    '        _DisplayIndex += 1
+    '        '.Columns("DIAS").ReadOnly = True
+
+    '        .Columns("DIAS_ATRASO").Width = 70
+    '        .Columns("DIAS_ATRASO").HeaderText = "Días Morosidad"
+    '        .Columns("DIAS_ATRASO").Visible = True
+    '        .Columns("DIAS_ATRASO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+    '        .Columns("DIAS_ATRASO").DisplayIndex = _DisplayIndex
+    '        _DisplayIndex += 1
+    '        '.Columns("DIAS_ATRASO").ReadOnly = True
+
+    '        .Columns("VAVE").HeaderText = "Valor Vencimiento"
+    '        .Columns("VAVE").Width = 90 - _Menos
+    '        .Columns("VAVE").DefaultCellStyle.Format = "$ ###,##0"
+    '        .Columns("VAVE").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+    '        .Columns("VAVE").Visible = True
+    '        .Columns("VAVE").DisplayIndex = _DisplayIndex
+    '        _DisplayIndex += 1
+    '        '.Columns("VAVE").ReadOnly = True
+
+    '        .Columns("VAABVE").HeaderText = "Valor Abonado"
+    '        .Columns("VAABVE").Width = 90 - _Menos
+    '        .Columns("VAABVE").DefaultCellStyle.Format = "$ ###,##0"
+    '        .Columns("VAABVE").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+    '        .Columns("VAABVE").Visible = True
+    '        .Columns("VAABVE").DisplayIndex = _DisplayIndex
+    '        _DisplayIndex += 1
+    '        '.Columns("VAABVE").ReadOnly = True
+
+    '        .Columns("SALDO").HeaderText = "Saldo"
+    '        .Columns("SALDO").Width = 90 - _Menos
+    '        .Columns("SALDO").DefaultCellStyle.Format = "$ ###,##0"
+    '        .Columns("SALDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+    '        .Columns("SALDO").Visible = True
+    '        .Columns("SALDO").DisplayIndex = _DisplayIndex
+    '        _DisplayIndex += 1
+    '        '.Columns("SALDO").ReadOnly = True
+
+    '        .Columns("FEULVEDO").Width = 70
+    '        .Columns("FEULVEDO").HeaderText = "Ult. Venci."
+    '        .Columns("FEULVEDO").Visible = True
+    '        .Columns("FEULVEDO").DisplayIndex = _DisplayIndex
+    '        _DisplayIndex += 1
+    '        '.Columns("FEULVEDO").ReadOnly = True
+
+    '    End With
+
+    '    Dim _Cuenta_Error_Vencimiento = 0
+
+    '    For Each _Fila As DataGridViewRow In Grilla.Rows
+
+    '        Dim _Tido = _Fila.Cells("TIDO").Value
+    '        Dim _Dias_Atraso As Integer = _Fila.Cells("DIAS_ATRASO").Value
+
+    '        Dim _Idmaeven = _Fila.Cells("IDMAEVEN").Value
+
+    '        If _Idmaeven = 0 Then
+    '            _Fila.DefaultCellStyle.BackColor = Color.Pink
+    '        End If
+
+    '        If _Tido = "NCV" Or _Tido = "NCC" Then
+    '            _Fila.DefaultCellStyle.BackColor = Color.Yellow
+    '        End If
+
+    '        Dim _Color As Color
+
+    '        If Global_Thema = Enum_Themas.Oscuro Then
+
+    '            If _Dias_Atraso < 0 Then
+    '                _Color = Color.FromArgb(220, 78, 66)
+    '            ElseIf _Dias_Atraso = 0 Then
+    '                _Color = Color.FromArgb(37, 136, 213)
+    '            ElseIf _Dias_Atraso > 0 Then
+    '                _Color = Color.FromArgb(30, 215, 96)
+    '            End If
+
+    '        Else
+
+    '            If _Dias_Atraso < 0 Then
+    '                _Color = Color.Red
+    '            ElseIf _Dias_Atraso = 0 Then
+    '                _Color = Color.Blue
+    '            ElseIf _Dias_Atraso > 0 Then
+    '                _Color = Color.Green
+    '            End If
+
+    '        End If
+
+    '        _Fila.Cells("DIAS_ATRASO").Style.ForeColor = _Color
+
+    '        If _Accion = Accion.Pago_Proveedores Then
+
+    '            Dim _Sospecha_Stock As Boolean = _Fila.Cells("SOSPECHA_STOCK").Value
+    '            Dim _Sospecha_Devolucion As Boolean = _Fila.Cells("SOSPECHA_DEVOLUCION").Value
+    '            Dim _Revisado_Pagar As Boolean = _Fila.Cells("REVISADO_PAGAR").Value
+
+    '            If _Revisado_Pagar Then
+
+    '                If _Sospecha_Stock Then
+    '                    _Fila.DefaultCellStyle.BackColor = Color.Yellow
+    '                End If
+
+    '                If _Sospecha_Devolucion Then
+    '                    _Fila.DefaultCellStyle.ForeColor = Color.White
+    '                    _Fila.DefaultCellStyle.BackColor = Color.Red
+    '                End If
+
+    '            Else
+    '                _Fila.DefaultCellStyle.BackColor = Color.LightSalmon
+    '            End If
+
+    '        End If
+
+    '        If Global_Thema = Enum_Themas.Oscuro Then
+    '            Dim _Cl As Color = _Fila.DefaultCellStyle.BackColor
+    '            If _Cl.Name <> "0" Then
+    '                _Fila.DefaultCellStyle.ForeColor = Color.Black
+    '            End If
+
+    '        End If
+
+    '        Dim _ForeColor As Color = _Fila.DefaultCellStyle.ForeColor
+    '        Dim _BackColor As Color = _Fila.DefaultCellStyle.BackColor
+
+    '        Try
+    '            If _Fila.Cells("Revisar_Documento").Value Then
+    '                _Fila.DefaultCellStyle.ForeColor = Color.White
+    '                _Fila.DefaultCellStyle.BackColor = Color.Red
+    '                _Fila.Cells("DIAS_ATRASO").Style.ForeColor = _ForeColor
+    '                _Fila.Cells("DIAS_ATRASO").Style.BackColor = _BackColor
+    '                _Cuenta_Error_Vencimiento += 1
+    '            End If
+    '        Catch ex As Exception
+    '            _Fila.DefaultCellStyle.ForeColor = _ForeColor
+    '            _Fila.DefaultCellStyle.BackColor = _BackColor
+    '            _Fila.Cells("DIAS_ATRASO").Style.ForeColor = _ForeColor
+    '            _Fila.Cells("DIAS_ATRASO").Style.BackColor = _BackColor
+    '        End Try
+
+    '    Next
+
+    '    If CBool(_Cuenta_Error_Vencimiento) Then
+    '        MessageBoxEx.Show(Me, "Existen algún documento que tiene vencimiento, sin embargo, no existe pago asociado" & vbCrLf &
+    '                         "La fila estara marcada en rojo completamente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+    '    End If
+
+    '    Sb_Aplicar_Color_Filas_Cesionadas
+
+    'End Sub
+
     Sub Sb_Formato_Grilla()
 
         With Grilla
 
-            '.DataSource = _TblInforme
             OcultarEncabezadoGrilla(Grilla)
 
             Dim _Mostrar_Chk As Boolean
             Dim _Menos = 0
+
             If _Accion <> Accion.Mostrar_todo Then
                 _Mostrar_Chk = True
                 _Menos = 10
             End If
 
+            Dim _DisplayIndex = 0
+
             .Columns("Chk").Width = 30
             .Columns("Chk").HeaderText = "Sel."
             .Columns("Chk").Visible = _Mostrar_Chk
-            .Columns("Chk").Frozen = True
-            .Columns("Chk").DisplayIndex = 0
+            .Columns("Chk").DisplayIndex = _DisplayIndex
             .Columns("Chk").ReadOnly = False
+            _DisplayIndex += 1
 
             .Columns("ENDO").Width = 80
             .Columns("ENDO").HeaderText = "Entidad"
             .Columns("ENDO").Visible = True
-            .Columns("ENDO").Frozen = True
-            .Columns("ENDO").DisplayIndex = 1
-            .Columns("ENDO").ReadOnly = True
+            .Columns("ENDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("TIDO").Width = 30
             .Columns("TIDO").HeaderText = "Tipo"
             .Columns("TIDO").Visible = True
-            .Columns("TIDO").Frozen = True
-            .Columns("TIDO").DisplayIndex = 2
-            .Columns("TIDO").ReadOnly = True
+            .Columns("TIDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("Tipo").Width = 150
             .Columns("Tipo").HeaderText = "Tipo Doc."
             .Columns("Tipo").Visible = True
-            .Columns("Tipo").Frozen = True
-            .Columns("Tipo").DisplayIndex = 3
-            .Columns("Tipo").ReadOnly = True
+            .Columns("Tipo").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("NUDO").Width = 70
             .Columns("NUDO").HeaderText = "Número"
             .Columns("NUDO").Visible = True
-            .Columns("NUDO").Frozen = True
-            .Columns("NUDO").DisplayIndex = 4
-            .Columns("NUDO").ReadOnly = True
+            .Columns("NUDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            If .Columns.Contains("Cesionado") Then
+                .Columns("Cesionado").Width = 50
+                .Columns("Cesionado").HeaderText = "AEC"
+                .Columns("Cesionado").ToolTipText = "Documento cedido"
+                .Columns("Cesionado").Visible = True
+                .Columns("Cesionado").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+            End If
 
             .Columns("FEEMDO").Width = 70
             .Columns("FEEMDO").HeaderText = "F. Emisión"
             .Columns("FEEMDO").Visible = True
-            '.Columns("FEEMDO").Frozen = True
-            .Columns("FEEMDO").DisplayIndex = 5
-            .Columns("FEEMDO").ReadOnly = True
+            .Columns("FEEMDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("FEVE").Width = 80
             .Columns("FEVE").HeaderText = "Vencimiento"
             .Columns("FEVE").Visible = True
-            '.Columns("FEVE").Frozen = True
-            .Columns("FEVE").DisplayIndex = 6
-            .Columns("FEVE").ReadOnly = True
+            .Columns("FEVE").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("DIAS").Width = 35
             .Columns("DIAS").HeaderText = "Días"
             .Columns("DIAS").Visible = True
             .Columns("DIAS").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("DIAS").Frozen = True
-            .Columns("DIAS").DisplayIndex = 7
-            .Columns("DIAS").ReadOnly = True
+            .Columns("DIAS").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("DIAS_ATRASO").Width = 70
             .Columns("DIAS_ATRASO").HeaderText = "Días Morosidad"
             .Columns("DIAS_ATRASO").Visible = True
             .Columns("DIAS_ATRASO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            '.Columns("DIAS_ATRASO").Frozen = True
-            .Columns("DIAS_ATRASO").DisplayIndex = 8
-            .Columns("DIAS_ATRASO").ReadOnly = True
+            .Columns("DIAS_ATRASO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            .Columns("VAVE").HeaderText = "Valor Vencimiento" '_Dia_Palabra & ", " & _Dia & "-" & _Mes & "-" & _Ano
+            .Columns("VAVE").HeaderText = "Valor Vencimiento"
             .Columns("VAVE").Width = 90 - _Menos
             .Columns("VAVE").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("VAVE").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("VAVE").Visible = True
-            .Columns("VAVE").DisplayIndex = 9
-            .Columns("VAVE").ReadOnly = True
+            .Columns("VAVE").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            .Columns("VAABVE").HeaderText = "Valor Abonado" '_Dia_Palabra & ", " & _Dia & "-" & _Mes & "-" & _Ano
+            .Columns("VAABVE").HeaderText = "Valor Abonado"
             .Columns("VAABVE").Width = 90 - _Menos
             .Columns("VAABVE").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("VAABVE").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("VAABVE").Visible = True
-            .Columns("VAABVE").DisplayIndex = 10
-            .Columns("VAABVE").ReadOnly = True
+            .Columns("VAABVE").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            .Columns("SALDO").HeaderText = "Saldo" '_Dia_Palabra & ", " & _Dia & "-" & _Mes & "-" & _Ano
+            .Columns("SALDO").HeaderText = "Saldo"
             .Columns("SALDO").Width = 90 - _Menos
             .Columns("SALDO").DefaultCellStyle.Format = "$ ###,##0"
             .Columns("SALDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("SALDO").Visible = True
-            .Columns("SALDO").DisplayIndex = 11
-            .Columns("SALDO").ReadOnly = True
+            .Columns("SALDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             .Columns("FEULVEDO").Width = 70
             .Columns("FEULVEDO").HeaderText = "Ult. Venci."
             .Columns("FEULVEDO").Visible = True
-            '.Columns("FEULVEDO").Frozen = True
-            .Columns("FEULVEDO").DisplayIndex = 12
-            .Columns("FEULVEDO").ReadOnly = True
+            .Columns("FEULVEDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 
@@ -563,9 +811,10 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
+            Sb_Limpiar_Estilo_Fila(_Fila)
+
             Dim _Tido = _Fila.Cells("TIDO").Value
             Dim _Dias_Atraso As Integer = _Fila.Cells("DIAS_ATRASO").Value
-
             Dim _Idmaeven = _Fila.Cells("IDMAEVEN").Value
 
             If _Idmaeven = 0 Then
@@ -630,7 +879,6 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
                 If _Cl.Name <> "0" Then
                     _Fila.DefaultCellStyle.ForeColor = Color.Black
                 End If
-
             End If
 
             Dim _ForeColor As Color = _Fila.DefaultCellStyle.ForeColor
@@ -655,8 +903,66 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
 
         If CBool(_Cuenta_Error_Vencimiento) Then
             MessageBoxEx.Show(Me, "Existen algún documento que tiene vencimiento, sin embargo, no existe pago asociado" & vbCrLf &
-                             "La fila estara marcada en rojo completamente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                         "La fila estara marcada en rojo completamente", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End If
+
+        Sb_Aplicar_Color_Filas_Cesionadas()
+
+    End Sub
+
+    Private Sub Sb_Limpiar_Estilo_Fila(_Fila As DataGridViewRow)
+
+        _Fila.DefaultCellStyle.ForeColor = Color.Empty
+        _Fila.DefaultCellStyle.BackColor = Color.Empty
+        _Fila.DefaultCellStyle.SelectionForeColor = Color.Empty
+        _Fila.DefaultCellStyle.SelectionBackColor = Color.Empty
+
+        If Grilla.Columns.Contains("DIAS_ATRASO") Then
+            _Fila.Cells("DIAS_ATRASO").Style.ForeColor = Color.Empty
+            _Fila.Cells("DIAS_ATRASO").Style.BackColor = Color.Empty
+            _Fila.Cells("DIAS_ATRASO").Style.SelectionForeColor = Color.Empty
+            _Fila.Cells("DIAS_ATRASO").Style.SelectionBackColor = Color.Empty
+        End If
+
+    End Sub
+
+    'Private Sub Sb_Aplicar_Color_Filas_Cesionadas()
+
+    '    If Not Grilla.Columns.Contains("Cesionado") Then
+    '        Return
+    '    End If
+
+    '    For Each _Fila As DataGridViewRow In Grilla.Rows
+
+    '        If Chk_SumarSoloSinCesion.Checked AndAlso Fx_Fila_Cesionada(_Fila) Then
+
+    '            _Fila.DefaultCellStyle.ForeColor = Color.Gray
+    '            _Fila.DefaultCellStyle.SelectionForeColor = Color.Gray
+
+    '            If Grilla.Columns.Contains("DIAS_ATRASO") Then
+    '                _Fila.Cells("DIAS_ATRASO").Style.ForeColor = Color.Gray
+    '                _Fila.Cells("DIAS_ATRASO").Style.SelectionForeColor = Color.Gray
+    '            End If
+
+    '        End If
+
+    '    Next
+
+    'End Sub
+
+    Private Sub Chk_SumarSoloSinCesion_CheckedChanged(sender As Object, e As EventArgs)
+
+        Sb_Formato_Grilla()
+
+        If _Accion = Accion.Mostrar_todo Then
+            Sb_Recalcular_Total_Saldos_Desde_Tabla(True)
+        Else
+            Sb_Recalcular_Total_Saldos_Desde_Grilla()
+        End If
+
+        Grilla.Refresh()
+        Grilla.Invalidate()
+        Me.Refresh()
 
     End Sub
 
@@ -713,6 +1019,30 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
     Private Sub Sb_Grilla_CellBeginEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellCancelEventArgs)
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+        Dim _Cabeza = Grilla.Columns(e.ColumnIndex).Name
+
+        If _Cabeza = "Chk" AndAlso Grilla.Columns.Contains("Cesionado") Then
+
+            Dim _Chk As Boolean = CBool(_Fila.Cells("Chk").Value)
+            Dim _Cesionado As String = String.Empty
+            Dim _RutCesionario As String = _Fila.Cells("RutCesionario").Value
+            Dim _RazonSocialCesionario As String = _Fila.Cells("RazonSocialCesionario").Value
+
+            If Not (_Fila.Cells("Cesionado").Value Is Nothing) AndAlso
+               Not IsDBNull(_Fila.Cells("Cesionado").Value) Then
+                _Cesionado = UCase(Trim(CStr(_Fila.Cells("Cesionado").Value)))
+            End If
+
+            If Not _Chk AndAlso _Cesionado.ToUpper = "SI" Then
+                MessageBoxEx.Show(Me,
+                                  "Este documento está cesionado y no puede ser seleccionado." & vbCrLf &
+                                  $"Cedido a: {_RutCesionario} - {_RazonSocialCesionario}",
+                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                e.Cancel = True
+                Exit Sub
+            End If
+
+        End If
 
         If _Accion = Accion.Mover_Fechas Then
 
@@ -793,13 +1123,15 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
 
     Private Sub Sb_Grilla_CellEndEdit(sender As Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
-        _Total_Saldos = 0
-        For Each _Row As DataGridViewRow In Grilla.Rows
-            If _Row.Cells("Chk").Value Then
-                _Total_Saldos += _Row.Cells("SALDO").Value
-            End If
-        Next
-        Lbl_Total_Saldos.Text = FormatCurrency(_Total_Saldos, 0)
+        '_Total_Saldos = 0
+        'For Each _Row As DataGridViewRow In Grilla.Rows
+        '    If _Row.Cells("Chk").Value Then
+        '        _Total_Saldos += _Row.Cells("SALDO").Value
+        '    End If
+        'Next
+        'Lbl_Total_Saldos.Text = FormatCurrency(_Total_Saldos, 0)
+
+        Sb_Recalcular_Total_Saldos_Desde_Grilla()
 
     End Sub
 
@@ -822,19 +1154,98 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
 
     End Sub
 
+    'Private Function ChequearTodo(Grilla As DataGridView,
+    '                              Chk As Boolean)
+
+    '    _Total_Saldos = 0
+
+    '    Dim _TieneColumnaCesionado As Boolean = Grilla.Columns.Contains("Cesionado")
+    '    Dim _RegistrosCesionados As Integer = 0
+
+    '    For Each _Fila As DataGridViewRow In Grilla.Rows
+
+    '        Dim _PermitirMarcar As Boolean = True
+
+    '        If Chk AndAlso _TieneColumnaCesionado Then
+
+    '            Dim _Cesionado As String = String.Empty
+
+    '            If Not (_Fila.Cells("Cesionado").Value Is Nothing) AndAlso
+    '               Not IsDBNull(_Fila.Cells("Cesionado").Value) Then
+    '                _Cesionado = UCase(Trim(CStr(_Fila.Cells("Cesionado").Value)))
+    '            End If
+
+    '            If _Cesionado = "SI" Then
+    '                _PermitirMarcar = False
+    '                _RegistrosCesionados += 1
+    '            End If
+
+    '        End If
+
+    '        _Fila.Cells("Chk").Value = Chk AndAlso _PermitirMarcar
+
+    '        If CBool(_Fila.Cells("Chk").Value) Then
+    '            _Total_Saldos += _Fila.Cells("SALDO").Value
+    '        End If
+
+    '    Next
+
+    '    Lbl_Total_Saldos.Text = FormatCurrency(_Total_Saldos, 0)
+
+    '    If Chk AndAlso CBool(_RegistrosCesionados) Then
+    '        MessageBoxEx.Show(Me,
+    '                          "No se marcaron " & FormatNumber(_RegistrosCesionados, 0) &
+    '                          " documento(s) porque están cesionados.",
+    '                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+    '    End If
+
+
+    'End Function
+
     Private Function ChequearTodo(Grilla As DataGridView,
-                                  Chk As Boolean)
+                              Chk As Boolean)
 
         _Total_Saldos = 0
+
+        Dim _TieneColumnaCesionado As Boolean = Grilla.Columns.Contains("Cesionado")
+        Dim _RegistrosCesionados As Integer = 0
+
         For Each _Fila As DataGridViewRow In Grilla.Rows
-            _Fila.Cells("Chk").Value = Chk
-            If Chk Then
+
+            Dim _PermitirMarcar As Boolean = True
+
+            If Chk AndAlso _TieneColumnaCesionado Then
+
+                Dim _Cesionado As String = String.Empty
+
+                If Not (_Fila.Cells("Cesionado").Value Is Nothing) AndAlso
+               Not IsDBNull(_Fila.Cells("Cesionado").Value) Then
+                    _Cesionado = UCase(Trim(CStr(_Fila.Cells("Cesionado").Value)))
+                End If
+
+                If _Cesionado = "SI" Then
+                    _PermitirMarcar = False
+                    _RegistrosCesionados += 1
+                End If
+
+            End If
+
+            _Fila.Cells("Chk").Value = Chk AndAlso _PermitirMarcar
+
+            If CBool(_Fila.Cells("Chk").Value) AndAlso Fx_Sumar_Fila_SinCesion(_Fila) Then
                 _Total_Saldos += _Fila.Cells("SALDO").Value
             End If
+
         Next
 
         Lbl_Total_Saldos.Text = FormatCurrency(_Total_Saldos, 0)
 
+        If Chk AndAlso CBool(_RegistrosCesionados) Then
+            MessageBoxEx.Show(Me,
+                          "No se marcaron " & FormatNumber(_RegistrosCesionados, 0) &
+                          " documento(s) porque están cesionados.",
+                          "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        End If
 
     End Function
 
@@ -1214,8 +1625,6 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
     Private Sub Btn_Buscar_Documento_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Buscar_Documento.Click
         Sb_Buscar_Documento_Lista_Actual()
     End Sub
-
-
 
     Private Sub Btn_Marcar_Masivamente_Anotaciones_De_Documentos_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Marcar_Masivamente_Anotaciones_De_Documentos.Click
 
@@ -1712,6 +2121,19 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
         e.Cancel = True
     End Sub
 
+    'Private Sub Chk_SumarSoloSinCesion_CheckedChanged(sender As Object, e As EventArgs)
+
+    '    Sb_Formato_Grilla()
+
+    '    If _Accion = Accion.Mostrar_todo Then
+    '        Sb_Recalcular_Total_Saldos_Desde_Tabla(True)
+    '    Else
+    '        Sb_Recalcular_Total_Saldos_Desde_Grilla()
+    '    End If
+
+    '    Grilla.Refresh()
+
+    'End Sub
 
     Private Sub Btn_Autorizar_Pago_De_Documentos_Proveedores_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Autorizar_Pago_De_Documentos_Proveedores.Click
 
@@ -1871,6 +2293,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
 
         End If
 
+        Sb_Recalcular_Total_Saldos_Desde_Tabla()
 
     End Sub
 
@@ -1912,6 +2335,126 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
         Fm.Dispose()
 
     End Sub
+
+    Private Function Fx_Fila_Cesionada(_Fila As DataGridViewRow) As Boolean
+
+        If Not Grilla.Columns.Contains("Cesionado") Then
+            Return False
+        End If
+
+        Dim _Cesionado As String = String.Empty
+
+        If Not (_Fila.Cells("Cesionado").Value Is Nothing) AndAlso
+           Not IsDBNull(_Fila.Cells("Cesionado").Value) Then
+            _Cesionado = UCase(Trim(CStr(_Fila.Cells("Cesionado").Value)))
+        End If
+
+        Return _Cesionado = "SI"
+
+    End Function
+
+    Private Sub Sb_Aplicar_Color_Filas_Cesionadas()
+
+        If Not Grilla.Columns.Contains("Cesionado") Then
+            Return
+        End If
+
+        For Each _Fila As DataGridViewRow In Grilla.Rows
+
+            If Chk_SumarSoloSinCesion.Checked AndAlso Fx_Fila_Cesionada(_Fila) Then
+
+                _Fila.DefaultCellStyle.ForeColor = Color.Gray
+                _Fila.DefaultCellStyle.SelectionForeColor = Color.Gray
+
+                If Grilla.Columns.Contains("DIAS_ATRASO") Then
+                    _Fila.Cells("DIAS_ATRASO").Style.ForeColor = Color.Gray
+                    _Fila.Cells("DIAS_ATRASO").Style.SelectionForeColor = Color.Gray
+                End If
+
+            End If
+
+        Next
+
+    End Sub
+
+    Private Function Fx_Sumar_Fila_SinCesion(_Fila As DataGridViewRow) As Boolean
+
+        If Not Chk_SumarSoloSinCesion.Checked Then
+            Return True
+        End If
+
+        If Not Grilla.Columns.Contains("Cesionado") Then
+            Return True
+        End If
+
+        Dim _Cesionado As String = String.Empty
+
+        If Not (_Fila.Cells("Cesionado").Value Is Nothing) AndAlso
+       Not IsDBNull(_Fila.Cells("Cesionado").Value) Then
+            _Cesionado = UCase(Trim(CStr(_Fila.Cells("Cesionado").Value)))
+        End If
+
+        Return _Cesionado = "NO"
+
+    End Function
+
+    Private Function Fx_Sumar_Fila_SinCesion(_Fila As DataRow) As Boolean
+
+        If Not Chk_SumarSoloSinCesion.Checked Then
+            Return True
+        End If
+
+        If Not _Fila.Table.Columns.Contains("Cesionado") Then
+            Return True
+        End If
+
+        Dim _Cesionado As String = String.Empty
+
+        If Not (_Fila.Item("Cesionado") Is Nothing) AndAlso
+       Not IsDBNull(_Fila.Item("Cesionado")) Then
+            _Cesionado = UCase(Trim(CStr(_Fila.Item("Cesionado"))))
+        End If
+
+        Return _Cesionado = "NO"
+
+    End Function
+
+    Private Sub Sb_Recalcular_Total_Saldos_Desde_Grilla()
+
+        _Total_Saldos = 0
+
+        For Each _Row As DataGridViewRow In Grilla.Rows
+            If CBool(_Row.Cells("Chk").Value) AndAlso Fx_Sumar_Fila_SinCesion(_Row) Then
+                _Total_Saldos += _Row.Cells("SALDO").Value
+            End If
+        Next
+
+        Lbl_Total_Saldos.Text = FormatCurrency(_Total_Saldos, 0)
+
+    End Sub
+
+    Private Sub Sb_Recalcular_Total_Saldos_Desde_Tabla(Optional _Sumar_Todos As Boolean = False)
+
+        _Total_Saldos = 0
+
+        For Each _Fila As DataRow In _TblInforme.Rows
+
+            If _Sumar_Todos Then
+                If Fx_Sumar_Fila_SinCesion(_Fila) AndAlso _Fila.Item("SALDO") <> 0 Then
+                    _Total_Saldos += _Fila.Item("SALDO")
+                End If
+            Else
+                If _Fila.Item("Chk") AndAlso Fx_Sumar_Fila_SinCesion(_Fila) Then
+                    _Total_Saldos += _Fila.Item("SALDO")
+                End If
+            End If
+
+        Next
+
+        Lbl_Total_Saldos.Text = FormatCurrency(_Total_Saldos, 0)
+
+    End Sub
+
 
 End Class
 

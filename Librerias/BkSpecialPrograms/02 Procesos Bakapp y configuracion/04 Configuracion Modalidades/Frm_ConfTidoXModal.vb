@@ -85,6 +85,8 @@ Public Class Frm_ConfTidoXModal
 
         Txt_ListaPrecioDoc.Text = _RowFormato.Item("ListaPrecioDoc")
 
+        Input_AvisoSaldoFolios.MaxValue = 365
+
         If Modalidad_General Then
             Input_AvisoSaldoFolios.Value = NuloPorNro(_RowFormato.Item("AvisoSaldoFolios"), 10)
             Input_DiasAvisoExpiraFolio.Value = NuloPorNro(_RowFormato.Item("DiasAvisoExpiraFolio"), 14)
@@ -236,6 +238,7 @@ Public Class Frm_ConfTidoXModal
             Consulta_sql += "Update CONFIEST Set GTI = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
             Consulta_sql += "Update CONFIEST Set GDP = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf
             Consulta_sql += "Update CONFIEST Set GDD = '" & _Numero & "' Where EMPRESA = '" & Mod_Empresa & "' And MODALIDAD = '" & _Modalidad & "'" & vbCrLf & vbCrLf
+            _Filtro_Tido = "('GDV','GTI','GDP','GDD')"
         Else
 
             If Txt_Numero.Visible Then

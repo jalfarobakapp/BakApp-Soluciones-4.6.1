@@ -188,7 +188,8 @@
               <xs:element name="ActivaTipoCompra" msprop:Generator_ColumnPropNameInTable="ActivaTipoCompraColumn" msprop:Generator_ColumnPropNameInRow="ActivaTipoCompra" msprop:Generator_UserColumnName="ActivaTipoCompra" msprop:Generator_ColumnVarNameInTable="columnActivaTipoCompra" type="xs:boolean" minOccurs="0" />
               <xs:element name="TipoCompra" msprop:Generator_ColumnPropNameInTable="TipoCompraColumn" msprop:Generator_ColumnPropNameInRow="TipoCompra" msprop:Generator_UserColumnName="TipoCompra" msprop:Generator_ColumnVarNameInTable="columnTipoCompra" type="xs:string" minOccurs="0" />
               <xs:element name="Cn_TipoCompra" msprop:Generator_ColumnPropNameInTable="Cn_TipoCompraColumn" msprop:Generator_ColumnPropNameInRow="Cn_TipoCompra" msprop:Generator_UserColumnName="Cn_TipoCompra" msprop:Generator_ColumnVarNameInTable="columnCn_TipoCompra" type="xs:int" minOccurs="0" />
-              <xs:element name="Id_Despacho" msprop:Generator_UserColumnName="Id_Despacho" msprop:Generator_ColumnPropNameInTable="Id_DespachoColumn" msprop:Generator_ColumnPropNameInRow="Id_Despacho" msprop:Generator_ColumnVarNameInTable="columnId_Despacho" type="xs:int" minOccurs="0" />
+              <xs:element name="Id_Despacho" msprop:Generator_ColumnPropNameInTable="Id_DespachoColumn" msprop:Generator_ColumnPropNameInRow="Id_Despacho" msprop:Generator_UserColumnName="Id_Despacho" msprop:Generator_ColumnVarNameInTable="columnId_Despacho" type="xs:int" minOccurs="0" />
+              <xs:element name="Id_Enc_InterStock" msprop:Generator_ColumnPropNameInRow="Id_Enc_InterStock" msprop:Generator_ColumnPropNameInTable="Id_Enc_InterStockColumn" msprop:Generator_ColumnVarNameInTable="columnId_Enc_InterStock" msprop:Generator_UserColumnName="Id_Enc_InterStock" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
@@ -338,7 +339,7 @@
               <xs:element name="PqteComprometidoSol" msprop:Generator_ColumnPropNameInTable="PqteComprometidoSolColumn" msprop:Generator_ColumnPropNameInRow="PqteComprometidoSol" msprop:Generator_UserColumnName="PqteComprometidoSol" msprop:Generator_ColumnVarNameInTable="columnPqteComprometidoSol" type="xs:double" minOccurs="0" />
               <xs:element name="TieneLotes" msprop:Generator_ColumnPropNameInTable="TieneLotesColumn" msprop:Generator_ColumnPropNameInRow="TieneLotes" msprop:Generator_UserColumnName="TieneLotes" msprop:Generator_ColumnVarNameInTable="columnTieneLotes" type="xs:boolean" minOccurs="0" />
               <xs:element name="NroLote" msprop:Generator_ColumnPropNameInTable="NroLoteColumn" msprop:Generator_ColumnPropNameInRow="NroLote" msprop:Generator_UserColumnName="NroLote" msprop:Generator_ColumnVarNameInTable="columnNroLote" type="xs:string" minOccurs="0" />
-              <xs:element name="Feemlipa" msprop:Generator_ColumnPropNameInRow="Feemlipa" msprop:Generator_ColumnPropNameInTable="FeemlipaColumn" msprop:Generator_ColumnVarNameInTable="columnFeemlipa" msprop:Generator_UserColumnName="Feemlipa" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Feemlipa" msprop:Generator_UserColumnName="Feemlipa" msprop:Generator_ColumnPropNameInTable="FeemlipaColumn" msprop:Generator_ColumnPropNameInRow="Feemlipa" msprop:Generator_ColumnVarNameInTable="columnFeemlipa" type="xs:dateTime" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

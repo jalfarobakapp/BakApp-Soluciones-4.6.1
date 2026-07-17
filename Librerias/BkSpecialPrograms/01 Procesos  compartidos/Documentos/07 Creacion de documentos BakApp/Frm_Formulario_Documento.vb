@@ -191,6 +191,8 @@ Public Class Frm_Formulario_Documento
 
     Dim _VencimientosCliente As New VencimientosCliente.VencimientosCliente
 
+    Public Property HoraAlPrincipioDelDia As Boolean
+
 #Region "PROPIEDADES"
 
     Public ReadOnly Property Pro_Idmaeedo() As Integer
@@ -1733,6 +1735,7 @@ Public Class Frm_Formulario_Documento
             .Item("TipoCompra") = String.Empty
             .Item("Cn_TipoCompra") = 0
             .Item("Id_Despacho") = 0
+            .Item("Id_Enc_InterStock") = 0
 
             _TblEncabezado.Rows.Add(NewFila)
 
@@ -9471,6 +9474,7 @@ Public Class Frm_Formulario_Documento
                             Fm.ModoSeleccion = (_Tido = "GDI")
                             Fm.ModoIngresoInterno = (_Tido = "GRI")
                             Fm.ModoIngresoNuevo = (_Tido = "GRC")
+                            Fm.ModoDespachoInterno = (_Tido = "GDI")
                             Fm.ShowDialog(Me)
 
                             If Fm.DialogResult = DialogResult.OK Then
@@ -19476,7 +19480,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                 If Not _Class_Referencias_DTE.Fx_Insertar_Referencias_NCV_FDV(Me,
                                                                               _TblDetalle,
                                                                               _Tbl_Mevento_Edo,
-                                                                              _RowEntidad) Then
+                                                                              _RowEntidad,
+                                                                              _Tido) Then
                     Return _Mensaje
 
                 End If
@@ -19802,7 +19807,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                                    _Cambiar_NroDocumento,
                                                    _Origen_Modificado_Intertanto,
                                                    _Es_TLV,
-                                                   _HoraAlFinalDelDia)
+                                                   _HoraAlFinalDelDia,
+                                                   _HoraAlPrincipioDelDia)
 
             If Not _Mensaje.EsCorrecto Then
 
@@ -23786,6 +23792,308 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
     End Sub
 
+    Public Sub Sb_Crear_Documento_Interno_Con_Tabla_SincroStock(_Tbl_Detalle_Externo As DataTable,
+                                                 _FechaEmision As Date,
+                                                 _Campo_Codigo As String,
+                                                 _Campo_Cantidad As String,
+                                                 _Campo_Precio As String,
+                                                 _Observaciones As String,
+                                                 _Orden_compra As String,
+                                                 _Aplica_Descuentos As Boolean,
+                                                 _Aplicar_Precio_De_Listas As Boolean,
+                                                 _Id_Enc_InterStock As Integer)
+
+        _Revisar_Notificacion_Automatica_Remota = True
+
+        _TblEncabezado.Rows(0).Item("Id_Enc_InterStock") = _Id_Enc_InterStock
+        _TblObservaciones.Rows(0).Item("Observaciones") = _Observaciones
+        _TblObservaciones.Rows(0).Item("Orden_compra") = _Orden_compra
+
+        Dim _Kolt As String = String.Empty
+        Dim _Conservar_Lista_Entidad = True
+        Dim _Cambiar_Vendedor = False
+
+        If _Conservar_Lista_Entidad Then
+            _Kolt = _RowEntidad.Item("LVEN").ToString.Replace("TABPP", "")
+        End If
+
+        Sb_Actualizar_Datos_De_La_Entidad(Me, _RowEntidad, False, False, _Cambiar_Vendedor)
+
+        If _Conservar_Lista_Entidad Then
+
+            _TblEncabezado.Rows(0).Item("ListaPrecios") = _Kolt
+            _TblDetalle.Rows(0).Item("CodLista") = _Kolt
+
+            Consulta_sql = "Select * From TABPP Inner Join TABMO On MOLT = KOMO Where KOLT = '" & _Kolt & "'"
+            Dim _RowMoneda_Det = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            _TblDetalle.Rows(0).Item("CodLista") = _RowMoneda_Det.Item("KOLT")
+            _TblDetalle.Rows(0).Item("Moneda") = _RowMoneda_Det.Item("KOMO")
+            _TblDetalle.Rows(0).Item("Tipo_Cambio") = _RowMoneda_Det.Item("VAMO")
+            _TblDetalle.Rows(0).Item("Tipo_Moneda") = _RowMoneda_Det.Item("TIMO")
+            _TblDetalle.Rows(0).Item("Tasadorig") = _TblEncabezado.Rows(0).Item("Tasadorig_Doc")
+
+        End If
+
+        Dim _TipoValor = _Sql.Fx_Trae_Dato("TABTIDO", "MEARDO", "TIDO = '" & _Tido & "'")
+
+        If _TipoValor = "N" Then
+            ChkValores.Checked = True
+        ElseIf _TipoValor = "B" Then
+            ChkValores.Checked = False
+        End If
+
+        'If Not String.IsNullOrEmpty(_NroDocumento) Then
+        '    _TblEncabezado.Rows(0).Item("NroDocumento") = _NroDocumento
+        'End If
+
+        'If IsNothing(_FechaRecepcion) Then
+        '    _FechaRecepcion = _FechaEmision
+        'End If
+
+        'If Not _FechaRecepcion.HasValue OrElse _FechaRecepcion.Value = Date.MinValue Then
+        '    _FechaRecepcion = _FechaEmision
+        'End If
+
+        Dim _FechaRecepcion = _FechaEmision
+
+        _TblEncabezado.Rows(0).Item("FechaEmision") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("Fecha_1er_Vencimiento") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("FechaUltVencimiento") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("FechaRecepcion") = _FechaRecepcion
+        _TblEncabezado.Rows(0).Item("FechaMaxRecepcion") = _FechaEmision
+        _TblEncabezado.Rows(0).Item("Cuotas") = 0
+        _TblEncabezado.Rows(0).Item("Dias_1er_Vencimiento") = 0
+        _TblEncabezado.Rows(0).Item("Dias_Vencimiento") = 0
+        _TblObservaciones.Rows(0).Item("Forma_pago") = String.Empty
+
+        Dim _CodLista = _TblEncabezado.Rows(0).Item("ListaPrecios")
+
+        Dim _Contador = 0
+        Dim _Cont_Filas = 0
+
+        Dim tiempoPorProducto As Double
+
+        For Each Fila As DataRow In _Tbl_Detalle_Externo.Rows
+
+            Dim _Codigo As String = Fila.Item(_Campo_Codigo).ToString
+            Dim _Descripcion As String
+            Dim _Prct As Boolean
+
+            Try
+                _Prct = Fila.Item("Prct")
+            Catch ex As Exception
+                _Prct = False
+            End Try
+
+            Dim _RowProducto As DataRow
+            Dim _RowConcepto As DataRow
+
+            If _Prct Then
+
+                Consulta_sql = "Select Top 1 * From TABCT Where KOCT = '" & _Codigo & "'"
+                _RowConcepto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                _Descripcion = _RowConcepto.Item("NOKOCT").ToString.Trim
+
+            Else
+
+                Consulta_sql = "Select Top 1 * From MAEPR Where KOPR = '" & _Codigo & "'"
+                _RowProducto = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                _Descripcion = _RowProducto.Item("NOKOPR").ToString.Trim
+
+            End If
+
+            Dim _Cantidad As Double = Fila.Item(_Campo_Cantidad)
+
+            If CBool(_Cantidad) Then
+
+                ' Iniciar el cronómetro
+                Dim stopwatch As Stopwatch = System.Diagnostics.Stopwatch.StartNew()
+
+                Dim _UnTrans As Integer = 1
+                Dim _Precio As Double = Fila.Item(_Campo_Precio)
+
+                Dim _Observa As String = Fila.Item("Observa")
+                Dim _DescuentoPorc As Double
+
+                If _Aplica_Descuentos Then
+
+                    Dim _Desc1 As Double = Fila.Item("Desc1")
+                    Dim _Desc2 As Double = Fila.Item("Desc2")
+                    Dim _Desc3 As Double = Fila.Item("Desc3")
+                    Dim _Desc4 As Double = Fila.Item("Desc4")
+                    Dim _Desc5 As Double = Fila.Item("Desc5")
+
+                    _DescuentoPorc = 100 * (1 - ((1 - (_Desc1 / 100.0)) *
+                                                   (1 - (_Desc2 / 100.0)) *
+                                                   (1 - (_Desc3 / 100.0)) *
+                                                   (1 - (_Desc4 / 100.0)) *
+                                                   (1 - (_Desc5 / 100.0))))
+
+                    _DescuentoPorc = Math.Round(_DescuentoPorc, 2)
+
+                Else
+                    _DescuentoPorc = 0
+                End If
+
+                Dim _New_Fila As DataGridViewRow = Grilla_Detalle.Rows(_Cont_Filas)
+
+                _New_Fila.Cells("FechaEmision").Value = _FechaEmision
+
+                If _Prct Then
+                    Sb_Agregar_Concepto(_New_Fila, _RowConcepto)
+                Else
+                    Sb_Traer_Producto_Grilla(_New_Fila, _RowProducto, True)
+                End If
+
+                Dim _Sucursal As String
+                Dim _Bodega As String
+
+                Try
+                    _Sucursal = Fila.Item("Sucursal")
+                    _New_Fila.Cells("Sucursal").Value = _Sucursal
+                Catch ex As Exception
+
+                End Try
+
+                Try
+                    _Bodega = Fila.Item("Bodega")
+                    _New_Fila.Cells("Bodega").Value = _Bodega
+                Catch ex As Exception
+
+                End Try
+
+                _New_Fila.Cells("Codigo").Value = _Codigo
+                _New_Fila.Cells("Cantidad").Value = _Cantidad
+
+                _New_Fila.Cells("CantUd1").Value = Fila.Item("CantDoriUd1")
+                _New_Fila.Cells("CantUd2").Value = Fila.Item("CantDoriUd2")
+                _New_Fila.Cells("DesacRazTransf").Value = True
+
+                Dim _Precio_Old As Double = _New_Fila.Cells("Precio").Value
+
+                If Not _Aplicar_Precio_De_Listas Then
+                    _New_Fila.Cells("Precio").Value = _Precio
+                End If
+
+                If _New_Fila.Cells("Precio").Value = 0 Then
+                    _New_Fila.Cells("Precio").Value = 1
+                End If
+
+                _New_Fila.Cells("Observa").Value = _Observa
+
+                _New_Fila.Cells("Potencia").Value = 0
+                _New_Fila.Cells("Operacion").Value = String.Empty
+
+                Try
+                    _New_Fila.Cells("CodFuncionario").Value = Fila.Item("Kofulido")
+                Catch ex As Exception
+
+                End Try
+
+                If _New_Fila.Cells("Precio").Value > 0 Then
+
+                    If _Prct Then
+
+                        Dim _Campo
+                        Dim _Campo_Bk
+
+                        If ChkValores.Checked Then
+                            _Campo = "VADTNELI"
+                            _Campo_Bk = "ValNetoLinea"
+                        Else
+                            _Campo = "VADTBRLI"
+                            _Campo_Bk = "ValBrutoLinea"
+                        End If
+
+                        _New_Fila.Cells("Cantidad").Value = 0
+                        _New_Fila.Cells("Precio").Value = 0
+                        _New_Fila.Cells(_Campo_Bk).Value = _Precio
+
+                        Sb_Procesar_Datos_De_Grilla(_New_Fila, _Campo_Bk, False, False, True)
+
+                    Else
+
+                        Dim _Revisar_Descuentos = False
+
+                        Sb_Procesar_Datos_De_Grilla(_New_Fila, "Cantidad", False, False, , _Revisar_Descuentos)
+
+                        If _DescuentoPorc > 0 Then
+                            _New_Fila.Cells("DescuentoPorc").Value = Math.Round(_DescuentoPorc, 2)
+                            Sb_Procesar_Datos_De_Grilla(_New_Fila, "DescuentoPorc", False, False, , _Revisar_Descuentos)
+                        Else
+
+                            'If _AgregarDscotSeteados Then
+                            '    Sb_Agregar_DsctoSeteadoPorLinea(_New_Fila)
+                            'End If
+
+                        End If
+
+                    End If
+
+                End If
+
+                Sb_Nueva_Linea(_CodLista)
+
+                _Cont_Filas += 1
+
+                stopwatch.Stop()
+                Dim aa = stopwatch.ElapsedMilliseconds
+
+                tiempoPorProducto = aa / 1000.0
+
+            End If
+
+            '' Define el tiempo estimado por producto en segundos
+            'tiempoPorProducto = 0.333
+
+            '' Calcula el número de productos restantes
+            'Dim productosRestantes As Integer = _CantLineas - _Contador
+
+            '' Calcula el tiempo restante en segundos
+            'Dim tiempoRestante As Integer = productosRestantes * tiempoPorProducto
+
+            ''' Muestra el tiempo restante en una etiqueta (Label)
+            ''If Not IsNothing(_LblTiempoRestante) Then
+            ''    _LblTiempoRestante.Text = "Tiempo restante: " & tiempoRestante.ToString() & " segundos"
+            ''End If
+            '' Crear un TimeSpan a partir del tiempo en segundos
+            'Dim tiempo As TimeSpan = TimeSpan.FromSeconds(tiempoRestante)
+
+            '' Obtener horas, minutos y segundos
+            'Dim horas As Integer = tiempo.Hours
+            'Dim minutos As Integer = tiempo.Minutes
+            'Dim segundos As Integer = tiempo.Seconds
+
+
+            'If Not IsNothing(_LblEstatus) Then
+            '    System.Windows.Forms.Application.DoEvents()
+            '    _LblEstatus.Text = "Tiempo restante: " & tiempo.ToString() & ", Producto: " & _Codigo.ToString.Trim & ", " & _Descripcion
+            'End If
+
+            'If Not IsNothing(_Progreso_Porc) AndAlso Not IsNothing(_Progreso_Cont) AndAlso CBool(_CantLineas) Then
+
+            '    System.Windows.Forms.Application.DoEvents()
+            '    _Progreso_Porc.Value = ((_Contador * 100) / _CantLineas)
+            '    _Progreso_Cont.Value += 1
+
+            'End If
+
+            _Contador += 1
+
+            If Cancelar Then
+                Return
+            End If
+
+        Next
+
+        'If _MarcarGrilla Then
+        '    Sb_Marcar_Grilla()
+        'End If
+
+    End Sub
     Private Sub Btn_Minimizar_Click(sender As System.Object, e As System.EventArgs)
 
         Dim _Borrar As Boolean = _Post_Venta

@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -43,9 +43,9 @@ Partial Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Me.Btn_Mnu_Mostrar_deuda_completa = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_Enviar_Correo_Cobranza = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_Enviar_Correo_Cobranza_Deuda_Completa = New DevComponents.DotNetBar.ButtonItem()
+        Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.Radio1 = New DevComponents.DotNetBar.Command(Me.components)
         Me.Radio2 = New DevComponents.DotNetBar.Command(Me.components)
-        Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -60,7 +60,7 @@ Partial Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar_Informacion, Me.Btn_Quitar_Celdas_En_Cero, Me.Btn_Cambiar_Fechas_Vencimiento, Me.Btn_Buscar_Entidad, Me.Btn_Exportar_Excel})
         Me.Bar1.Location = New System.Drawing.Point(0, 520)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(954, 41)
+        Me.Bar1.Size = New System.Drawing.Size(1056, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 21
@@ -72,6 +72,7 @@ Partial Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Me.Btn_Actualizar_Informacion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Actualizar_Informacion.ForeColor = System.Drawing.Color.Black
         Me.Btn_Actualizar_Informacion.Image = CType(resources.GetObject("Btn_Actualizar_Informacion.Image"), System.Drawing.Image)
+        Me.Btn_Actualizar_Informacion.ImageAlt = CType(resources.GetObject("Btn_Actualizar_Informacion.ImageAlt"), System.Drawing.Image)
         Me.Btn_Actualizar_Informacion.Name = "Btn_Actualizar_Informacion"
         '
         'Btn_Quitar_Celdas_En_Cero
@@ -79,6 +80,7 @@ Partial Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Me.Btn_Quitar_Celdas_En_Cero.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Quitar_Celdas_En_Cero.ForeColor = System.Drawing.Color.Black
         Me.Btn_Quitar_Celdas_En_Cero.Image = CType(resources.GetObject("Btn_Quitar_Celdas_En_Cero.Image"), System.Drawing.Image)
+        Me.Btn_Quitar_Celdas_En_Cero.ImageAlt = CType(resources.GetObject("Btn_Quitar_Celdas_En_Cero.ImageAlt"), System.Drawing.Image)
         Me.Btn_Quitar_Celdas_En_Cero.Name = "Btn_Quitar_Celdas_En_Cero"
         Me.Btn_Quitar_Celdas_En_Cero.Tooltip = "Quitar columnas con totales en cero"
         '
@@ -87,6 +89,7 @@ Partial Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Me.Btn_Cambiar_Fechas_Vencimiento.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Cambiar_Fechas_Vencimiento.ForeColor = System.Drawing.Color.Black
         Me.Btn_Cambiar_Fechas_Vencimiento.Image = CType(resources.GetObject("Btn_Cambiar_Fechas_Vencimiento.Image"), System.Drawing.Image)
+        Me.Btn_Cambiar_Fechas_Vencimiento.ImageAlt = CType(resources.GetObject("Btn_Cambiar_Fechas_Vencimiento.ImageAlt"), System.Drawing.Image)
         Me.Btn_Cambiar_Fechas_Vencimiento.Name = "Btn_Cambiar_Fechas_Vencimiento"
         Me.Btn_Cambiar_Fechas_Vencimiento.Tooltip = "Cambiar fechas de vencimiento"
         '
@@ -95,6 +98,7 @@ Partial Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Me.Btn_Buscar_Entidad.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Buscar_Entidad.ForeColor = System.Drawing.Color.Black
         Me.Btn_Buscar_Entidad.Image = CType(resources.GetObject("Btn_Buscar_Entidad.Image"), System.Drawing.Image)
+        Me.Btn_Buscar_Entidad.ImageAlt = CType(resources.GetObject("Btn_Buscar_Entidad.ImageAlt"), System.Drawing.Image)
         Me.Btn_Buscar_Entidad.Name = "Btn_Buscar_Entidad"
         Me.Btn_Buscar_Entidad.Tooltip = "Buscar entidad"
         '
@@ -103,6 +107,7 @@ Partial Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Me.Btn_Exportar_Excel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
         Me.Btn_Exportar_Excel.ForeColor = System.Drawing.Color.Black
         Me.Btn_Exportar_Excel.Image = CType(resources.GetObject("Btn_Exportar_Excel.Image"), System.Drawing.Image)
+        Me.Btn_Exportar_Excel.ImageAlt = CType(resources.GetObject("Btn_Exportar_Excel.ImageAlt"), System.Drawing.Image)
         Me.Btn_Exportar_Excel.Name = "Btn_Exportar_Excel"
         Me.Btn_Exportar_Excel.Tooltip = "Exportar a Excel"
         '
@@ -115,7 +120,7 @@ Partial Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(930, 502)
+        Me.GroupPanel1.Size = New System.Drawing.Size(1032, 502)
         '
         '
         '
@@ -179,7 +184,7 @@ Partial Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Me.Lbl_Mnu_1.PaddingLeft = 10
         Me.Lbl_Mnu_1.PaddingTop = 1
         Me.Lbl_Mnu_1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.Lbl_Mnu_1.Text = "Informaci�n del cliente"
+        Me.Lbl_Mnu_1.Text = "Información del cliente"
         '
         'Btn_Mnu_Ficha_Entidad
         '
@@ -224,17 +229,6 @@ Partial Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         Me.Btn_Mnu_Enviar_Correo_Cobranza_Deuda_Completa.Name = "Btn_Mnu_Enviar_Correo_Cobranza_Deuda_Completa"
         Me.Btn_Mnu_Enviar_Correo_Cobranza_Deuda_Completa.Text = "Enviar correo de cobranza (deuda completa)"
         '
-        'Radio1
-        '
-        Me.Radio1.Checked = True
-        Me.Radio1.Name = "Radio1"
-        Me.Radio1.Text = "Mover todos"
-        '
-        'Radio2
-        '
-        Me.Radio2.Name = "Radio2"
-        Me.Radio2.Text = "Seleccionar"
-        '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
@@ -272,14 +266,25 @@ Partial Class Frm_Inf_Vencimientos_Mes_Detalle_Diario
         DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
         Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla.RowHeadersVisible = False
-        Me.Grilla.Size = New System.Drawing.Size(924, 479)
+        Me.Grilla.Size = New System.Drawing.Size(1026, 479)
         Me.Grilla.TabIndex = 48
+        '
+        'Radio1
+        '
+        Me.Radio1.Checked = True
+        Me.Radio1.Name = "Radio1"
+        Me.Radio1.Text = "Mover todos"
+        '
+        'Radio2
+        '
+        Me.Radio2.Name = "Radio2"
+        Me.Radio2.Text = "Seleccionar"
         '
         'Frm_Inf_Vencimientos_Mes_Detalle_Diario
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(954, 561)
+        Me.ClientSize = New System.Drawing.Size(1056, 561)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar1)
         Me.DoubleBuffered = True

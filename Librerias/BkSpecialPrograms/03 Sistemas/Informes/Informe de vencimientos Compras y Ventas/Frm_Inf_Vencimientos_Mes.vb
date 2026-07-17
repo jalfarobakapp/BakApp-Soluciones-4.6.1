@@ -213,6 +213,8 @@ Public Class Frm_Inf_Vencimientos_Mes
 
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
 
+        Consulta_sql = Replace(Consulta_sql, "#BAKAPP_SG#", _Global_BaseBk)
+
         '--#Filtro_Adicional_Maeedo#
         '--#Filtro_Adicional_Maedpce#
 
@@ -482,12 +484,16 @@ Public Class Frm_Inf_Vencimientos_Mes
     Private Sub Btn_Informe_Por_Entidad_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Informe_Por_Entidad.Click
 
         Try
+
             Me.Enabled = False
+
             If _Informe = Tipo_Informe.Compras Then
                 Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Compras_Anuales & vbCrLf & vbCrLf
             ElseIf _Informe = Tipo_Informe.Ventas Then
                 Consulta_sql = My.Resources.Recursos_Inf_Compras_Vencimiento.Informe_Vencimientos_Ventas_Anuales & vbCrLf & vbCrLf
             End If
+
+            Consulta_sql = Replace(Consulta_sql, "#BAKAPP_SG#", _Global_BaseBk)
 
             Dim Fm As New Frm_Inf_Vencimientos_Mes_Detalle_Diario(Consulta_sql,
                                                                   _Fecha_Inicio,
