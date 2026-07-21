@@ -1,4 +1,6 @@
-﻿Public Class Cl_FacAuto_NVV
+﻿Imports Gma.QrCodeNet.Encoding.DataEncodation
+
+Public Class Cl_FacAuto_NVV
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_Sql As String
@@ -356,6 +358,12 @@
             Log_Registro += _Sql.Pro_Error & vbCrLf
         End If
 
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1, Facturando = 0, ErrorGrabar = 0,Intentos = Intentos+1" & vbCrLf &
+                       "Where NombreEquipo = '" & Nombre_Equipo & "' And ErrorGrabar = 1 And Intentos <= 5 And IpEquipo = '" & _IpEquipo & "' And Facturado = 0"
+        If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+            Log_Registro += _Sql.Pro_Error & vbCrLf
+        End If
+
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto  Set CantItem = (Select COUNT(*) From MAEDDO Where IDMAEEDO = Idmaeedo_NVV)" & vbCrLf &
                        "Where CantItem = 0 And Facturar = 1"
         _Sql.Ej_consulta_IDU(Consulta_Sql, False)
@@ -382,48 +390,48 @@
         '                From {_Global_BaseBk}Zw_Demonio_FacAuto
         '                Where ((Informacion Like '%interbloqueo%') Or (Informacion LIKE '% tiempo de espera%')) And ErrorGrabar = 1 And Idmaeedo_FCV = 0 -- And Fecha_Facturar = '{Format(_FechaEmision, "yyyyMMdd")}'"
 
-        Consulta_Sql = $"
-INSERT INTO {_Global_BaseBk}Zw_Demonio_FacAuto 
-    (NombreEquipo,Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,
-     Facturando,Facturado,Idmaeedo_FCV,Nudo_Fcv,Fecha_Facturado,Informacion,
-     DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,Pagada)
-SELECT 
-    '' AS NombreEquipo,
-    Src.Idmaeedo_NVV,
-    Src.Nudo_NVV,
-    Src.Modalidad_Fac,
-    Src.Fecha_Facturar,
-    1,
-    Src.Facturando,
-    Src.Facturado,
-    Src.Idmaeedo_FCV,
-    Src.Nudo_Fcv,
-    Src.Fecha_Facturado,
-    '' AS Informacion,
-    Src.DesdePickeo,
-    Src.Id_Pickeo,
-    Src.DocEmitir,
-    Src.CerrarDespFact,
-    Src.CodFuncionario_Factura,
-    Src.Pagada
-FROM {_Global_BaseBk}Zw_Demonio_FacAuto AS Src
-WHERE 
-    ((Src.Informacion LIKE '%interbloqueo%') 
-     OR (Src.Informacion LIKE '%tiempo de espera%'))
-    AND Src.ErrorGrabar = 1
-    AND Src.Idmaeedo_FCV = 0
-    AND NOT EXISTS (
-        SELECT 1
-        FROM {_Global_BaseBk}Zw_Demonio_FacAuto AS Dst
-        WHERE 
-            Dst.Idmaeedo_NVV = Src.Idmaeedo_NVV
-            AND Dst.Nudo_NVV = Src.Nudo_NVV
-            AND Dst.Modalidad_Fac = Src.Modalidad_Fac
-            AND Dst.Fecha_Facturar = Src.Fecha_Facturar
-            AND Dst.Idmaeedo_FCV = 0
-            AND Dst.Facturar = 1   -- asegura que ya fue insertado por esta rutina
-    );"
-        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
+        '        Consulta_Sql = $"
+        'INSERT INTO {_Global_BaseBk}Zw_Demonio_FacAuto 
+        '    (NombreEquipo,Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,
+        '     Facturando,Facturado,Idmaeedo_FCV,Nudo_Fcv,Fecha_Facturado,Informacion,
+        '     DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,Pagada)
+        'SELECT 
+        '    '' AS NombreEquipo,
+        '    Src.Idmaeedo_NVV,
+        '    Src.Nudo_NVV,
+        '    Src.Modalidad_Fac,
+        '    Src.Fecha_Facturar,
+        '    1,
+        '    Src.Facturando,
+        '    Src.Facturado,
+        '    Src.Idmaeedo_FCV,
+        '    Src.Nudo_Fcv,
+        '    Src.Fecha_Facturado,
+        '    '' AS Informacion,
+        '    Src.DesdePickeo,
+        '    Src.Id_Pickeo,
+        '    Src.DocEmitir,
+        '    Src.CerrarDespFact,
+        '    Src.CodFuncionario_Factura,
+        '    Src.Pagada
+        'FROM {_Global_BaseBk}Zw_Demonio_FacAuto AS Src
+        'WHERE 
+        '    ((Src.Informacion LIKE '%interbloqueo%') 
+        '     OR (Src.Informacion LIKE '%tiempo de espera%'))
+        '    AND Src.ErrorGrabar = 1
+        '    AND Src.Idmaeedo_FCV = 0
+        '    AND NOT EXISTS (
+        '        SELECT 1
+        '        FROM {_Global_BaseBk}Zw_Demonio_FacAuto AS Dst
+        '        WHERE 
+        '            Dst.Idmaeedo_NVV = Src.Idmaeedo_NVV
+        '            AND Dst.Nudo_NVV = Src.Nudo_NVV
+        '            AND Dst.Modalidad_Fac = Src.Modalidad_Fac
+        '            AND Dst.Fecha_Facturar = Src.Fecha_Facturar
+        '            AND Dst.Idmaeedo_FCV = 0
+        '            AND Dst.Facturar = 1   -- asegura que ya fue insertado por esta rutina
+        '    );"
+        '        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
         Consulta_Sql = $"
                         Select Top {CantDocFacturanXProceso} Fa.*,
@@ -481,6 +489,7 @@ WHERE
                                    ",Facturando = 0" &
                                    ",Facturado = 0" &
                                    ",ErrorGrabar = 1" &
+                                   ",Intentos = 6" &
                                    ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
@@ -577,7 +586,19 @@ WHERE
 
                 Else
 
+                    Dim _Intentos As Integer = _Fila.Item("Intentos")
+
                     _Mensaje.Mensaje = Replace(_Mensaje.Mensaje, "'", "''")
+
+                    If _Mensaje.Mensaje.ToLower.Contains("se encuentra cerrado completamente") Then
+                        _Intentos = 6
+                    End If
+
+                    'If _Mensaje.Mensaje.Contains("No existe tasa de cambio para la fecha:") Then
+                    '    _Intentos = 1
+                    'End If
+
+                    'No existe tasa de cambio para la fecha:  25/03/2026, para las monedas: EU_-EURO PRUEBA  UF_-UF PRUEBA  US_-DOLAR PRUEBA  
 
                     Log_Registro += _Mensaje.Mensaje & vbCrLf
 
@@ -586,6 +607,7 @@ WHERE
                                    ",Facturando = 0" &
                                    ",Facturado = 0" &
                                    ",ErrorGrabar = 1" &
+                                   ",Intentos = " & _Intentos &
                                    ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then

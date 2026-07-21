@@ -49,6 +49,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Btn_Procesar = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Estado = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grupo_Excepciones = New System.Windows.Forms.TableLayoutPanel()
+        Me.Rdb_ErrorEnvioCorreo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_EstadoSinFirmar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_EstadoRechazados = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_EstadoAceptadosReparos = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -60,7 +61,6 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Buscar_Todos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Buscar_Uno = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_ErrorEnvioCorreo = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Grupo_Fechas.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
         CType(Me.Dtp_Fecha_Emision_Desde, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -84,7 +84,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Grupo_Fechas.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Fechas.Location = New System.Drawing.Point(12, 43)
         Me.Grupo_Fechas.Name = "Grupo_Fechas"
-        Me.Grupo_Fechas.Size = New System.Drawing.Size(217, 59)
+        Me.Grupo_Fechas.Size = New System.Drawing.Size(208, 59)
         '
         '
         '
@@ -590,7 +590,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Procesar})
         Me.Bar1.Location = New System.Drawing.Point(0, 292)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(479, 41)
+        Me.Bar1.Size = New System.Drawing.Size(519, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 124
@@ -616,7 +616,7 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Grupo_Estado.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Estado.Location = New System.Drawing.Point(329, 108)
         Me.Grupo_Estado.Name = "Grupo_Estado"
-        Me.Grupo_Estado.Size = New System.Drawing.Size(139, 181)
+        Me.Grupo_Estado.Size = New System.Drawing.Size(178, 181)
         '
         '
         '
@@ -671,6 +671,25 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Grupo_Excepciones.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20.0!))
         Me.Grupo_Excepciones.Size = New System.Drawing.Size(127, 99)
         Me.Grupo_Excepciones.TabIndex = 138
+        '
+        'Rdb_ErrorEnvioCorreo
+        '
+        Me.Rdb_ErrorEnvioCorreo.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Rdb_ErrorEnvioCorreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_ErrorEnvioCorreo.CheckBoxImageChecked = CType(resources.GetObject("Rdb_ErrorEnvioCorreo.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_ErrorEnvioCorreo.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_ErrorEnvioCorreo.CheckBoxImageUnChecked"), System.Drawing.Image)
+        Me.Rdb_ErrorEnvioCorreo.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_ErrorEnvioCorreo.FocusCuesEnabled = False
+        Me.Rdb_ErrorEnvioCorreo.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_ErrorEnvioCorreo.Location = New System.Drawing.Point(4, 80)
+        Me.Rdb_ErrorEnvioCorreo.Name = "Rdb_ErrorEnvioCorreo"
+        Me.Rdb_ErrorEnvioCorreo.Size = New System.Drawing.Size(119, 15)
+        Me.Rdb_ErrorEnvioCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_ErrorEnvioCorreo.TabIndex = 140
+        Me.Rdb_ErrorEnvioCorreo.Text = "Sin envió de correo"
         '
         'Rdb_EstadoSinFirmar
         '
@@ -799,9 +818,9 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Grupo_Uno.Controls.Add(Me.Txt_Documento)
         Me.Grupo_Uno.Controls.Add(Me.LabelX3)
         Me.Grupo_Uno.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Uno.Location = New System.Drawing.Point(235, 43)
+        Me.Grupo_Uno.Location = New System.Drawing.Point(223, 43)
         Me.Grupo_Uno.Name = "Grupo_Uno"
-        Me.Grupo_Uno.Size = New System.Drawing.Size(233, 59)
+        Me.Grupo_Uno.Size = New System.Drawing.Size(284, 59)
         '
         '
         '
@@ -843,15 +862,19 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Txt_Documento.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_Documento.ButtonCustom.Image = CType(resources.GetObject("Txt_Documento.ButtonCustom.Image"), System.Drawing.Image)
         Me.Txt_Documento.ButtonCustom.Visible = True
+        Me.Txt_Documento.ButtonCustom2.Image = CType(resources.GetObject("Txt_Documento.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Documento.ButtonCustom2.Visible = True
+        Me.Txt_Documento.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Documento.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Documento.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Documento.Location = New System.Drawing.Point(107, 6)
+        Me.Txt_Documento.Location = New System.Drawing.Point(139, 5)
         Me.Txt_Documento.Name = "Txt_Documento"
         Me.Txt_Documento.PreventEnterBeep = True
         Me.Txt_Documento.ReadOnly = True
-        Me.Txt_Documento.Size = New System.Drawing.Size(117, 22)
+        Me.Txt_Documento.Size = New System.Drawing.Size(137, 22)
         Me.Txt_Documento.TabIndex = 1
         Me.Txt_Documento.TextAlign = System.Windows.Forms.HorizontalAlignment.Center
+        Me.Txt_Documento.WatermarkText = "Ej: FCV-12345"
         '
         'LabelX3
         '
@@ -861,9 +884,11 @@ Partial Class Frm_MantFacturasElecFiltrar
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Image = CType(resources.GetObject("LabelX3.Image"), System.Drawing.Image)
+        Me.LabelX3.ImagePosition = DevComponents.DotNetBar.eImagePosition.Right
         Me.LabelX3.Location = New System.Drawing.Point(3, 6)
         Me.LabelX3.Name = "LabelX3"
-        Me.LabelX3.Size = New System.Drawing.Size(104, 23)
+        Me.LabelX3.Size = New System.Drawing.Size(130, 23)
         Me.LabelX3.TabIndex = 0
         Me.LabelX3.Text = "Documento a buscar"
         '
@@ -908,30 +933,11 @@ Partial Class Frm_MantFacturasElecFiltrar
         Me.Rdb_Buscar_Uno.TabIndex = 137
         Me.Rdb_Buscar_Uno.Text = "Uno en particular"
         '
-        'Rdb_ErrorEnvioCorreo
-        '
-        Me.Rdb_ErrorEnvioCorreo.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Rdb_ErrorEnvioCorreo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_ErrorEnvioCorreo.CheckBoxImageChecked = CType(resources.GetObject("Rdb_ErrorEnvioCorreo.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_ErrorEnvioCorreo.CheckBoxImageUnChecked = CType(resources.GetObject("Rdb_ErrorEnvioCorreo.CheckBoxImageUnChecked"), System.Drawing.Image)
-        Me.Rdb_ErrorEnvioCorreo.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_ErrorEnvioCorreo.FocusCuesEnabled = False
-        Me.Rdb_ErrorEnvioCorreo.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_ErrorEnvioCorreo.Location = New System.Drawing.Point(4, 80)
-        Me.Rdb_ErrorEnvioCorreo.Name = "Rdb_ErrorEnvioCorreo"
-        Me.Rdb_ErrorEnvioCorreo.Size = New System.Drawing.Size(119, 15)
-        Me.Rdb_ErrorEnvioCorreo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_ErrorEnvioCorreo.TabIndex = 140
-        Me.Rdb_ErrorEnvioCorreo.Text = "Sin envió de correo"
-        '
         'Frm_MantFacturasElecFiltrar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(479, 333)
+        Me.ClientSize = New System.Drawing.Size(519, 333)
         Me.Controls.Add(Me.Rdb_Buscar_Uno)
         Me.Controls.Add(Me.Rdb_Buscar_Todos)
         Me.Controls.Add(Me.Grupo_Uno)

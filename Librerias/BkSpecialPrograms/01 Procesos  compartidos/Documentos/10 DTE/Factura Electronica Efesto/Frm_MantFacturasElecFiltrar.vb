@@ -171,6 +171,8 @@ Public Class Frm_MantFacturasElecFiltrar
         '    Lbl_Etiqueta.Text = "Ambiente de Certificación y Prueba"
         'End If
 
+        Txt_Documento.ReadOnly = False
+
     End Sub
 
 
@@ -327,6 +329,10 @@ Public Class Frm_MantFacturasElecFiltrar
         Grupo_Filtros.Enabled = _Habilitar_Todo
         Grupo_Uno.Enabled = Not _Habilitar_Todo
 
+        If Grupo_Uno.Enabled Then
+            Txt_Documento.Focus()
+        End If
+
     End Sub
 
     Private Sub Rdb_Buscar_Todos_CheckedChanged(sender As Object, e As EventArgs)
@@ -337,12 +343,76 @@ Public Class Frm_MantFacturasElecFiltrar
         Grupo_Excepciones.Enabled = Rdb_EstadoExcepciones.Checked
     End Sub
 
+    Private Function Fx_Buscar_Documento_Por_Texto() As Boolean
+
+        Txt_Documento.Tag = 0
+
+        Dim _Documento As String = Trim(Txt_Documento.Text).ToUpper()
+
+        If String.IsNullOrWhiteSpace(_Documento) Then
+            Txt_Documento.Text = String.Empty
+            Return False
+        End If
+
+        Dim _Partes() As String = _Documento.Split("-"c)
+
+        If _Partes.Length <> 2 Then
+            Return False
+        End If
+
+        Dim _Tido As String = Trim(_Partes(0))
+        Dim _Nudo As String = Trim(_Partes(1))
+
+        If String.IsNullOrWhiteSpace(_Tido) OrElse String.IsNullOrWhiteSpace(_Nudo) Then
+            Return False
+        End If
+
+        If _Tido.Length <> 3 Then
+            Return False
+        End If
+
+        _Nudo = Fx_Rellena_ceros(_Nudo, 10)
+
+        Consulta_sql = $"Select IDMAEEDO,TIDO,NUDO From MAEEDO Where EMPRESA = '{Mod_Empresa}' And TIDO = '{_Tido}' And NUDO = '{_Nudo}'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row) Then
+            Txt_Documento.Text = _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            Txt_Documento.Tag = _Row.Item("IDMAEEDO")
+            Return True
+        End If
+
+        Return False
+
+    End Function
+
+    Private Sub Txt_Documento_KeyDown(sender As Object, e As KeyEventArgs) Handles Txt_Documento.KeyDown
+
+        If e.KeyCode <> Keys.Enter Then
+            Return
+        End If
+
+        e.SuppressKeyPress = True
+
+        If Fx_Buscar_Documento_Por_Texto() Then
+            Call Btn_Procesar_Click(Nothing, Nothing)
+        Else
+            MessageBoxEx.Show(Me, "No se encontró el documento ingresado" & Txt_Documento.Text.Trim & vbCrLf &
+                              "Para buscar un documento debe poner la nomenclatura TIDO-NUDO, ejemplo: FCV-12345", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Documento.SelectAll()
+        End If
+
+    End Sub
+
     Private Sub Txt_Documento_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Documento.ButtonCustomClick
+
+        If Fx_Buscar_Documento_Por_Texto() Then
+            Return
+        End If
 
         Dim _Fm As New Frm_BusquedaDocumento_Filtro(False)
         _Fm.Sb_LlenarCombo_FlDoc(Frm_BusquedaDocumento_Filtro._TipoDoc_Sel.Personalizado, "",
                                  "Where TIDO In ('BLV','FCL','FCT','FCV','FDE','FDV','FDX','FEV','FVX','FXV','FYV','GDD','GDP','GDV','GTI','NCV','NCX','NEV')")
-        '_Fm.Rdb_Estado_Todos.Enabled = False
         _Fm.Rdb_Estado_Todas.Checked = True
         _Fm.ShowDialog(Me)
         Dim _Row_Documento As DataRow = _Fm.Pro_Row_Documento_Seleccionado
@@ -355,4 +425,14 @@ Public Class Frm_MantFacturasElecFiltrar
 
     End Sub
 
+    Private Sub Txt_Documento_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Documento.ButtonCustom2Click
+        Txt_Documento.Text = String.Empty
+        Txt_Documento.Tag = 0
+    End Sub
+
+    Private Sub LabelX3_Click(sender As Object, e As EventArgs) Handles LabelX3.Click
+        MessageBoxEx.Show(Me, "Para buscar un documento debe poner la nomenclatura TIDO-NUDO, ejemplo: FCV-12345", "Validación",
+                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
 End Class

@@ -70,7 +70,7 @@ Public Class Frm_Aec_CesionExt
     Private Sub Txt_Cesionario_Entidad_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Cesionario_Entidad.ButtonCustomClick
 
         Dim Fm As New Frm_BuscarEntidad_Mt(False)
-        Fm.Rdb_Clientes.Checked = True
+        ' Fm.Rdb_Clientes.Checked = True
         Fm.ShowDialog(Me)
         Dim _RowEntidad = Fm.Pro_RowEntidad
         Fm.Dispose()
@@ -125,7 +125,7 @@ Public Class Frm_Aec_CesionExt
         If _FechaSolicitud > _FechaServidor Then
             MessageBoxEx.Show(Me,
                           "La fecha ingresada no puede ser mayor a la fecha del servidor: " &
-                          Format(_FechaServidor, "dd/MM/yyyy"),
+                          _FechaServidor.ToShortDateString,
                           "Validación",
                           MessageBoxButtons.OK,
                           MessageBoxIcon.Stop)
@@ -134,14 +134,16 @@ Public Class Frm_Aec_CesionExt
         End If
 
         If _FUltimoVencimiento < _FechaServidor Then
-            MessageBoxEx.Show(Me,
-                              "La fecha de vencimiento no puede ser menor a la fecha del servidor: " &
-                              Format(_FechaServidor, "dd/MM/yyyy"),
+            If MessageBoxEx.Show(Me,
+                              "La fecha de vencimiento es menor a la fecha del servidor: " &
+                              _FechaServidor.ToShortDateString & vbCrLf &
+                              $"¿Confirma la fecha de vencimiento {_FUltimoVencimiento.ToShortDateString}?",
                               "Validación",
-                              MessageBoxButtons.OK,
-                              MessageBoxIcon.Stop)
-            Dtp_FUltimoVencimiento.Focus()
-            Return
+                              MessageBoxButtons.YesNo,
+                              MessageBoxIcon.Warning) <> DialogResult.Yes Then
+                Dtp_FUltimoVencimiento.Focus()
+                Return
+            End If
         End If
 
         Dim _Idmaeedo As Integer = _Row_Maeedo.Item("IDMAEEDO")
