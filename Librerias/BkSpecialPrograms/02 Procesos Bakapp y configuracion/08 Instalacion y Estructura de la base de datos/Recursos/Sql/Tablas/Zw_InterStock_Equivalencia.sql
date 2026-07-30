@@ -10,7 +10,8 @@ CREATE TABLE [dbo].[Zw_InterStock_Equivalencia](
 	[Sucursal_B]	[varchar](3)	NULL        DEFAULT (''),
 	[Bodega_B]		[varchar](3)	NOT NULL    DEFAULT (''),
 	[Activo]		[bit]			NOT NULL    DEFAULT (0),
-	[FechaCreacion] [datetime]      NULL
+	[FechaCreacion] [datetime]      NULL,
+    [Activo2]		[bit]			NOT NULL    DEFAULT (0),
 ) ON [PRIMARY]
 
 

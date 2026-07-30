@@ -198,6 +198,8 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Ftp_Conexiones", _Modificar, Lbl_Eventos)
 
             'INTER-EMPRESAS STOCK CONSOLIDADO
+            .Sb_Revisar_Tabla2(Me, "Zw_InterStock_Enc", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_InterStock_Det", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_InterStock_Equivalencia", _Modificar, Lbl_Eventos)
 
             'INVENTARIO
@@ -210,8 +212,6 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Inv_Inventario", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Inv_Sector", _Modificar, Lbl_Eventos)
 
-            .Sb_Revisar_Tabla2(Me, "Zw_InterStock_Enc", _Modificar, Lbl_Eventos)
-            .Sb_Revisar_Tabla2(Me, "Zw_InterStock_Det", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_Licencia", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Licencia_Mod", _Modificar, Lbl_Eventos)

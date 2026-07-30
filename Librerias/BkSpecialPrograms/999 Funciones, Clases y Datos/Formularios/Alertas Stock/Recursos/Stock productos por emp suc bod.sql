@@ -127,7 +127,7 @@ SET
                     END
                   )
             FROM MAEST M
-            INNER JOIN BAKAPP_SG.dbo.Zw_InterStock_Equivalencia E
+            INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
                 ON (
                         (E.Empresa_A = P.Empresa AND E.Sucursal_A = P.Sucursal AND E.Bodega_A = P.Bodega
                          AND M.EMPRESA = E.Empresa_B AND M.KOSU = E.Sucursal_B AND M.KOBO = E.Bodega_B)
@@ -148,7 +148,7 @@ SET
                     END
                   )
             FROM MAEST M
-            INNER JOIN BAKAPP_SG.dbo.Zw_InterStock_Equivalencia E
+            INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
                 ON (
                         (E.Empresa_A = P.Empresa AND E.Sucursal_A = P.Sucursal AND E.Bodega_A = P.Bodega
                          AND M.EMPRESA = E.Empresa_B AND M.KOSU = E.Sucursal_B AND M.KOBO = E.Bodega_B)
@@ -168,8 +168,8 @@ SET
                         ELSE ISNULL(S.StComp2,0) 
                     END
                   )
-            FROM BAKAPP_SG.dbo.Zw_Prod_Stock S
-            INNER JOIN BAKAPP_SG.dbo.Zw_InterStock_Equivalencia E
+            FROM #Global_BaseBk#Zw_Prod_Stock S
+            INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
                 ON (
                         (E.Empresa_A = P.Empresa AND E.Sucursal_A = P.Sucursal AND E.Bodega_A = P.Bodega
                          AND S.Empresa = E.Empresa_B AND S.Sucursal = E.Sucursal_B AND S.Bodega = E.Bodega_B)
