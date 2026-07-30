@@ -1,4 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
 
 Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
 
@@ -901,13 +902,49 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             Return
         End If
 
+        Dim _ExisteEnGrilla As Boolean
+
         If _Tbl.Rows.Count = 1 Then
 
             Dim _Idmaeedo As Integer = _Tbl.Rows(0).Item("IDMAEEDO")
             Dim _Endo As String = _Tbl.Rows(0).Item("ENDO").ToString.Trim
             Dim _Nokoen As String = _Tbl.Rows(0).Item("NOKOEN").ToString.Trim
+            Dim _Tido As String = _Tbl.Rows(0).Item("TIDO")
+            Dim _Nudo As String = _Tbl.Rows(0).Item("NUDO")
 
-            If MessageBoxEx.Show(Me, "Se encontro el documento " & _Tbl.Rows(0).Item("TIDO") & "-" & _Tbl.Rows(0).Item("NUDO") & vbCrLf &
+            For Each _Fila_Rev As DataGridViewRow In Grilla_Maedpce.Rows
+
+                If _Fila_Rev.Index <> _Fila.Index Then
+
+                    Dim _Idrsd_Rev As Integer = 0
+
+                    If Not IsNothing(_Fila_Rev.Cells("IDRSD").Value) AndAlso
+                                       Integer.TryParse(_Fila_Rev.Cells("IDRSD").Value.ToString(), _Idrsd_Rev) Then
+
+                        If _Idrsd_Rev = _Idmaeedo Then
+                            _ExisteEnGrilla = True
+                            Exit For
+                        End If
+
+                    End If
+
+                End If
+
+            Next
+
+            If _ExisteEnGrilla Then
+
+                MessageBoxEx.Show(Me, "El documento " & _Tido & "-" & _Nudo & vbCrLf &
+                                  "ya se encuentra asociado en otro registro de la grilla y no puede vincularse nuevamente.",
+                                  "Validación",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Stop)
+
+                Return
+
+            End If
+
+            If MessageBoxEx.Show(Me, "Se encontro el documento " & _Tido & "-" & _Nudo & vbCrLf &
                                 "Entidad: " & _Endo & " - " & _Nokoen & vbCrLf &
                                  "¿Confirma el cruce del pago para este documento?",
                                  "Cruzar pago", MessageBoxButtons.YesNo, MessageBoxIcon.Information) <> DialogResult.Yes Then
@@ -944,8 +981,44 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
             Return
         End If
 
+        Dim _Row_Documento As DataRow = CType(_Mensaje.Tag, DataRow)
+        Dim _Idmaeedo_Sel As Integer = _Row_Documento.Item("IDMAEEDO")
+
+        For Each _Fila_Rev As DataGridViewRow In Grilla_Maedpce.Rows
+
+            If _Fila_Rev.Index <> _Fila.Index Then
+
+                Dim _Idrsd_Rev As Integer = 0
+
+                If Not IsNothing(_Fila_Rev.Cells("IDRSD").Value) AndAlso
+                   Integer.TryParse(_Fila_Rev.Cells("IDRSD").Value.ToString(), _Idrsd_Rev) Then
+
+                    If _Idrsd_Rev = _Idmaeedo_Sel Then
+                        _ExisteEnGrilla = True
+                        Exit For
+                    End If
+
+                End If
+
+            End If
+
+        Next
+
+        If _ExisteEnGrilla Then
+
+            MessageBoxEx.Show(Me,
+                              "El documento " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO") & vbCrLf &
+                              "ya se encuentra asociado en otro registro de la grilla y no puede vincularse nuevamente.",
+                              "Validación",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Stop)
+            Return
+
+        End If
+
+
         _Fila.Cells("ARCHIRSD").Value = "MAEEDO"
-        _Fila.Cells("IDRSD").Value = CType(_Mensaje.Tag, DataRow).Item("IDMAEEDO")
+        _Fila.Cells("IDRSD").Value = _Idmaeedo_Sel
         _Fila.Cells("Doc_Anticipo").Value = CType(_Mensaje.Tag, DataRow).Item("TIDO") & "-" & CType(_Mensaje.Tag, DataRow).Item("NUDO")
         _Fila.Cells("REFANTI").Value = "*** Cruce automático ***"
         _Fila.Cells("CruzarPagoAuto").Value = True
@@ -1992,6 +2065,34 @@ Public Class Frm_Pagos_CtasEntidad_Expor_Bancos
                         Dim _Referencia As String = "*** Cruce automático ***"
 
                         If _Tbl.Rows.Count = 1 Then
+
+                            Dim _ExisteEnGrilla As Boolean
+
+                            For Each _Fila_Rev As DataGridViewRow In Grilla_Maedpce.Rows
+
+                                If _Fila_Rev.Index <> _Fila.Index Then
+
+                                    Dim _Idrsd_Rev As Integer = 0
+
+                                    If Not IsNothing(_Fila_Rev.Cells("IDRSD").Value) AndAlso
+                                       Integer.TryParse(_Fila_Rev.Cells("IDRSD").Value.ToString(), _Idrsd_Rev) Then
+
+                                        If _Idrsd_Rev = _Idmaeedo Then
+                                            _ExisteEnGrilla = True
+                                            Exit For
+                                        End If
+
+                                    End If
+
+                                End If
+
+                            Next
+
+                            If _ExisteEnGrilla Then
+
+                                Continue For
+
+                            End If
 
                             _Fila.Cells("ENDP").Value = _Endo
                             _Fila.Cells("RAZON").Value = _Nokoen

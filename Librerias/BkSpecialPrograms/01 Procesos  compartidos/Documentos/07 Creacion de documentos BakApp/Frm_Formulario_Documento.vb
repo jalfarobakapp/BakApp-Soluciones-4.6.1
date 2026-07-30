@@ -19016,8 +19016,16 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
         If _Revisar_Stock_Disponible Then
 
-            '_Stock_Disponible = Fx_Stock_Disponible_ConEquivalencia(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
-            _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
+
+            Dim _TieneBodEquivalente As Boolean = _Sql.Fx_Cuenta_Registros($"{_Global_BaseBk}Zw_InterStock_Equivalencia",
+                                                  $"Bodega_A = '{_Bodega}' Or Bodega_B = '{_Bodega}' And Activo2 = 1")
+
+            If _TieneBodEquivalente Then
+                _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans, False)
+            Else
+                _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
+            End If
+
 
             'If _Stock_Disponible < 0 Then
             '    _Stock_Disponible = 0
@@ -20838,11 +20846,16 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                                          Optional _Usar_SucursalDocOrigen As Boolean = False,
                                                          Optional _UsaCiaSeguro As Boolean = False,
                                                          Optional _CodEntidad_Cia As String = "",
-                                                         Optional _CodSucEntidad_Cia As String = "")
+                                                         Optional _CodSucEntidad_Cia As String = "",
+                                                         Optional Id_Enc_InterStock As Integer = 0)
 
         Try
 
             Me.Enabled = False
+
+            If Id_Enc_InterStock > 0 Then
+                _TblEncabezado.Rows(0).Item("Id_Enc_InterStock") = Id_Enc_InterStock
+            End If
 
             Dim _Mostrar_Error As Boolean = Not _Facturacion_Automatica
 
@@ -24794,7 +24807,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                     Fx_Autorizar_X_Descuentos(False)
                 End If
 
-            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102", "Doc00161", "Doc00169", "Doc00170"
+            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102", "Doc00161", "Doc00169", "Doc00170", "Doc00171"
 
                 If _Crear_Doc_Def_Al_Grabar Then
 

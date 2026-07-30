@@ -1934,6 +1934,34 @@ Public Class Frm_Crear_Entidad_Mt
                 Cmb_Transpoen.SelectedValue = _Row_Entidad.Item("TRANSPOEN")
                 Cmb_Tien.SelectedValue = _Row_Entidad.Item("TIPOEN")
 
+                If Not _Global_Row_Configuracion_General.Item("NoCopiarCreditosSucEnt") Then
+
+                    Txt_Crto.Tag = _Row_Entidad.Item("CRTO")
+                    Txt_Crto.Text = _Row_Entidad.Item("CRTO")
+
+                    Txt_Crsd.Tag = _Row_Entidad.Item("CRSD")
+                    Txt_Crsd.Text = _Row_Entidad.Item("CRSD")
+
+                    Txt_Crch.Tag = _Row_Entidad.Item("CRCH")
+                    Txt_Crch.Text = _Row_Entidad.Item("CRCH")
+
+                    Txt_Crlt.Tag = _Row_Entidad.Item("CRLT")
+                    Txt_Crlt.Text = _Row_Entidad.Item("CRLT")
+
+                    Txt_Crpa.Tag = _Row_Entidad.Item("CRPA")
+                    Txt_Crpa.Text = _Row_Entidad.Item("CRPA")
+
+                    Txt_Nuvecre.Tag = _Row_Entidad.Item("NUVECR")
+                    Txt_Nuvecre.Text = _Row_Entidad.Item("NUVECR")
+                    Txt_Dipreve.Tag = _Row_Entidad.Item("DIPRVE")
+                    Txt_Dipreve.Text = _Row_Entidad.Item("DIPRVE")
+                    Txt_Diasvenci.Tag = _Row_Entidad.Item("DIASVENCI")
+                    Txt_Diasvenci.Text = _Row_Entidad.Item("DIASVENCI")
+                    Txt_Dimoper.Tag = _Row_Entidad.Item("DIMOPER")
+                    Txt_Dimoper.Text = _Row_Entidad.Item("DIMOPER")
+
+                End If
+
             End If
 
 

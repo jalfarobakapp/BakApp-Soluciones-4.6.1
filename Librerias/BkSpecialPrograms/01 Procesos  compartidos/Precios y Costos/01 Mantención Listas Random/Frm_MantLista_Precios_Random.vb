@@ -22,6 +22,7 @@ Public Class Frm_MantLista_Precios_Random
     Dim _Filtro_Clalibpr_Todas As Boolean
     Dim _Filtro_Zonas_Todas As Boolean
     Dim _Filtro_Bodegas_Todas As Boolean
+    Dim _Filtro_Bakapp_Todas As Boolean
 
     Dim _Tbl_Filtro_Productos As DataTable
     Dim _Tbl_Filtro_Super_Familias As DataTable
@@ -29,6 +30,7 @@ Public Class Frm_MantLista_Precios_Random
     Dim _Tbl_Filtro_Rubro As DataTable
     Dim _Tbl_Filtro_Clalibpr As DataTable
     Dim _Tbl_Filtro_Zonas As DataTable
+    Dim _Ls_SelArbol_Asociaciones As New List(Of Zw_TblArbol_Asociaciones)
 
     Dim _RowProducto As DataRow
 
@@ -661,6 +663,7 @@ Public Class Frm_MantLista_Precios_Random
         Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Todas
         Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
         Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Todas
+        Fm.Pro_Filtro_Bakapp_Todas = _Filtro_Bakapp_Todas
 
         Fm.Pro_Tbl_Filtro_Productos = _Tbl_Filtro_Productos
         Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
@@ -668,15 +671,9 @@ Public Class Frm_MantLista_Precios_Random
         Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro
         Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
+        Fm.Ls_SelArbol_Asociaciones = _Ls_SelArbol_Asociaciones
 
         Fm.ShowDialog(Me)
-
-        _Tbl_Filtro_Productos = Fm.Pro_Tbl_Filtro_Productos
-        _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
-        _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas
-        _Tbl_Filtro_Rubro = Fm.Pro_Tbl_Filtro_Rubro
-        _Tbl_Filtro_Super_Familias = Fm.Pro_Tbl_Filtro_Super_Familias
-        _Tbl_Filtro_Zonas = Fm.Pro_Tbl_Filtro_Zonas
 
         _Filtro_Productos_Todos = Fm.Pro_Filtro_Productos_Todos
         _Filtro_Clalibpr_Todas = Fm.Pro_Filtro_Clalibpr_Todas
@@ -684,6 +681,15 @@ Public Class Frm_MantLista_Precios_Random
         _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
         _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
         _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+        _Filtro_Bakapp_Todas = Fm.Pro_Filtro_Bakapp_Todas
+
+        _Tbl_Filtro_Productos = Fm.Pro_Tbl_Filtro_Productos
+        _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
+        _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas
+        _Tbl_Filtro_Rubro = Fm.Pro_Tbl_Filtro_Rubro
+        _Tbl_Filtro_Super_Familias = Fm.Pro_Tbl_Filtro_Super_Familias
+        _Tbl_Filtro_Zonas = Fm.Pro_Tbl_Filtro_Zonas
+        _Ls_SelArbol_Asociaciones = Fm.Ls_SelArbol_Asociaciones
 
         Fm.Dispose()
 
@@ -696,6 +702,7 @@ Public Class Frm_MantLista_Precios_Random
         Dim _Filtro_SuperFamilias = String.Empty
         Dim _Filtro_ClasLibre = String.Empty
         Dim _Filtro_Bodega = String.Empty
+        Dim _Filtro_Bakapp = String.Empty
 
 
         If _Filtro_Productos_Todos Then
@@ -725,6 +732,22 @@ Public Class Frm_MantLista_Precios_Random
                 _Filtro_Zonas = "And KOPR IN (Select KOPR From MAEPR Where ZONAPR In " & _Filtro_Zonas & ")"
             End If
 
+            If _Filtro_Bakapp_Todas Then
+                _Filtro_Bakapp = String.Empty
+            Else
+
+                For Each _Asoc As Zw_TblArbol_Asociaciones In _Ls_SelArbol_Asociaciones
+                    _Filtro_Bakapp += _Asoc.Codigo_Nodo & ","
+                Next
+
+                _Filtro_Bakapp = _Filtro_Bakapp.TrimEnd(",")
+
+                If Not String.IsNullOrWhiteSpace(_Filtro_Bakapp) Then
+                    _Filtro_Bakapp = "And KOPR IN (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo In (" & _Filtro_Bakapp & "))"
+                End If
+
+            End If
+
         Else
 
             If IsNothing(_Tbl_Filtro_Productos) Then
@@ -745,7 +768,8 @@ Public Class Frm_MantLista_Precios_Random
                         _Filtro_Marcas & vbCrLf &
                         _Filtro_Rubros & vbCrLf &
                         _Filtro_SuperFamilias & vbCrLf &
-                        _Filtro_Zonas
+                        _Filtro_Zonas & vbCrLf &
+                        _Filtro_Bakapp
 
         If Rdb_Traer_No_Bloqueados.Checked Then
             Consulta_sql += Rdb_Traer_No_Bloqueados.Tag.ToString
@@ -1303,6 +1327,7 @@ Public Class Frm_MantLista_Precios_Random
         _Filtro_Rubro_Todas = True
         _Filtro_Super_Familias_Todas = True
         _Filtro_Zonas_Todas = True
+        _Filtro_Bakapp_Todas = True
 
         _Tbl_Filtro_Productos = Nothing
         _Tbl_Filtro_Clalibpr = Nothing
@@ -1310,6 +1335,7 @@ Public Class Frm_MantLista_Precios_Random
         _Tbl_Filtro_Rubro = Nothing
         _Tbl_Filtro_Super_Familias = Nothing
         _Tbl_Filtro_Zonas = Nothing
+        _Ls_SelArbol_Asociaciones.Clear()
 
         Sb_Crear_Tabla_De_Paso()
 

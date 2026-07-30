@@ -3346,6 +3346,17 @@ Error_Numero:
         End Try
     End Function
 
+    Public Sub Sb_DataGridView_KeyDown_Global(sender As Object, e As KeyEventArgs)
+        Dim dgv As DataGridView = DirectCast(sender, DataGridView)
+
+        If e.Control AndAlso e.KeyCode = Keys.C Then
+            If dgv.CurrentCell IsNot Nothing AndAlso dgv.CurrentCell.Value IsNot Nothing Then
+                Clipboard.SetText(dgv.CurrentCell.Value.ToString())
+                e.Handled = True
+            End If
+        End If
+    End Sub
+
 End Module
 
 Public Class Sel_Impresora

@@ -482,6 +482,10 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             Timer_InformeDeComprasAgrupadoporAsociacion.Start()
         End If
 
+        If RutEmpresa = "77458040-9" OrElse RutEmpresa = "07251245-6" OrElse RutEmpresa = "77634877-5" OrElse RutEmpresa = "77634879-1" Then
+            Btn_ListaLC.Visible = True
+        End If
+
     End Sub
 
     Private Sub Frm_01_AsisCompra_Resultados_FormClosed(sender As Object, e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
@@ -1067,6 +1071,36 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             .Columns("Porc_CumpUlt3Pedidos").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
             .Columns("Porc_CumpUlt3Pedidos").Visible = True
             .Columns("Porc_CumpUlt3Pedidos").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            'Dim _Br_Nt = "Neto" Precio_Ud1_Neto,Precio_Ud1_Bruto
+            If Rdb_Valores_Brutos.Checked Then _Br_Nt = "Bruto"
+
+            .Columns("Precio_Ud1_" & _Br_Nt).Width = 50
+            .Columns("Precio_Ud1_" & _Br_Nt).HeaderText = "$ Precio " & _Br_Nt
+            .Columns("Precio_Ud1_" & _Br_Nt).ToolTipText = "Precio " & _Br_Nt & " Unidad 1"
+            .Columns("Precio_Ud1_" & _Br_Nt).DefaultCellStyle.Format = "##,###0"
+            .Columns("Precio_Ud1_" & _Br_Nt).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Precio_Ud1_" & _Br_Nt).Visible = True
+            .Columns("Precio_Ud1_" & _Br_Nt).DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Margen_Porc").Width = 50
+            .Columns("Margen_Porc").HeaderText = "% Margen"
+            .Columns("Margen_Porc").ToolTipText = "Porcentaje de Margen"
+            .Columns("Margen_Porc").DefaultCellStyle.Format = "% ##,##0.##"
+            .Columns("Margen_Porc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Margen_Porc").Visible = True
+            .Columns("Margen_Porc").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Margen_Valor").Width = 50
+            .Columns("Margen_Valor").HeaderText = "$ Margen"
+            .Columns("Margen_Valor").ToolTipText = "Margen, valor"
+            .Columns("Margen_Valor").DefaultCellStyle.Format = "##,###0"
+            .Columns("Margen_Valor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Margen_Valor").Visible = True
+            .Columns("Margen_Valor").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Refresh()
@@ -4424,21 +4458,149 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
     Sub Sb_Actualizar_Costos()
 
-        Dim _Lista As String = Cmb_Lista_Costos.SelectedItem.Value
+        Dim _Lista_Costos As String = Cmb_Lista_Costos.SelectedItem.Value
 
-        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set Iva = (Select POIVPR From MAEPR Where KOPR = Codigo)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Ila = Isnull((Select Sum(POIM) From TABIM Where KOIM In (Select KOIM From TABIMPR Where KOPR = Codigo)),0)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_PPP = (Select PM From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_UltComUd1 = (Select PPUL01 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_UltComUd2 = (Select PPUL02 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)                        
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = (Select PP01UD From TABPRE Where KOLT = '" & _Lista & "' And KOPR = Codigo)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Neto = (Select PP02UD From TABPRE Where KOLT = '" & _Lista & "' And KOPR = Codigo)
+        'Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set Iva = (Select POIVPR From MAEPR Where KOPR = Codigo)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Ila = Isnull((Select Sum(POIM) From TABIM Where KOIM In (Select KOIM From TABIMPR Where KOPR = Codigo)),0)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_PPP = (Select PM From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_UltComUd1 = (Select PPUL01 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_UltComUd2 = (Select PPUL02 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)                        
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = (Select PP01UD From TABPRE Where KOLT = '" & _Lista_Costos & "' And KOPR = Codigo)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Neto = (Select PP02UD From TABPRE Where KOLT = '" & _Lista_Costos & "' And KOPR = Codigo)
 
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Bruto = Round(Costo_Ud1Lista_Neto * (1+((Iva+Ila)/100)),0)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Neto * (1+((Iva+Ila)/100)),0)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Flete = 0"
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Bruto = Round(Costo_Ud1Lista_Neto * (1+((Iva+Ila)/100)),0)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Neto * (1+((Iva+Ila)/100)),0)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Flete = 0"
+
+        Consulta_sql = $"
+Update {_Nombre_Tbl_Paso_Informe} Set Iva = (Select POIVPR From MAEPR Where KOPR = Codigo)
+Update {_Nombre_Tbl_Paso_Informe} Set Ila = Isnull((Select Sum(POIM) From TABIM Where KOIM In (Select KOIM From TABIMPR Where KOPR = Codigo)),0)
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_PPP = (Select PM From MAEPREM Where EMPRESA = '{Mod_Empresa}' And KOPR = Codigo)
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_UltComUd1 = (Select PPUL01 From MAEPREM Where EMPRESA = '{Mod_Empresa}' And KOPR = Codigo)
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_UltComUd2 = (Select PPUL02 From MAEPREM Where EMPRESA = '{Mod_Empresa}' And KOPR = Codigo)                        
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_Ud1Lista_Neto = (Select PP01UD From TABPRE Where KOLT = '{_Lista_Costos}' And KOPR = Codigo)
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_Ud2Lista_Neto = (Select PP02UD From TABPRE Where KOLT = '{_Lista_Costos}' And KOPR = Codigo)
+
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_Ud1Lista_Bruto = Round(Costo_Ud1Lista_Neto * (1+((Iva+Ila)/100)),0)
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Neto * (1+((Iva+Ila)/100)),0)
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_Flete = 0"
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        ' Actualiza Lista de Precios
+
+        Dim _Lista_Precios As String = "PB7"
+        Dim _Row_Lista_Precios As DataRow
+
+        Consulta_sql = $"Select * From TABPP Where KOLT = '{_Lista_Precios}'"
+        _Row_Lista_Precios = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Melt As String = _Row_Lista_Precios.Item("MELT")
+
+        '        Consulta_sql = $"
+
+        'Update {_Nombre_Tbl_Paso_Informe} Set Lista_Precio = '{_Lista_Precios}'
+        'Update {_Nombre_Tbl_Paso_Informe} Set Precio_Ud1_Neto = (Select PP01UD From TABPRE Where KOLT = '{_Lista_Precios}' And KOPR = Codigo)
+        'Update {_Nombre_Tbl_Paso_Informe} Set Precio_Ud2_Neto = (Select PP02UD From TABPRE Where KOLT = '{_Lista_Precios}' And KOPR = Codigo)
+
+        'Update {_Nombre_Tbl_Paso_Informe} Set Precio_Ud1_Bruto = Round(Precio_Ud1_Neto * (1+((Iva+Ila)/100)),0)
+        'Update {_Nombre_Tbl_Paso_Informe} Set Precio_Ud2_Bruto = Round(Precio_Ud2_Neto * (1+((Iva+Ila)/100)),0)"
+
+        ' Precios Netos desde lista de precios y calculamos el Bruto
+        If _Melt = "N" Then
+
+            Consulta_sql = $"
+                ------------------------------------------------------------
+                --  A) TABPRE entrega precios NETOS
+                --     PP01UD y PP02UD están en NETO
+                --     Se convierten a BRUTO aplicando impuestos
+                ------------------------------------------------------------
+
+                -- 1. Asignar lista de precios
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET Lista_Precio = '{_Lista_Precios}';
+
+                -- 2. Cargar precios NETOS desde TABPRE
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET Precio_Ud1_Neto = ROUND((
+                        SELECT PP01UD
+                        FROM TABPRE
+                        WHERE KOLT = '{_Lista_Precios}'
+                          AND KOPR = Codigo
+                    ), 5),
+                    Precio_Ud2_Neto = ROUND((
+                        SELECT PP02UD
+                        FROM TABPRE
+                        WHERE KOLT = '{_Lista_Precios}'
+                          AND KOPR = Codigo
+                    ), 5);
+
+                -- 3. Convertir NETO → BRUTO
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET Precio_Ud1_Bruto = ROUND(Precio_Ud1_Neto * (1 + ((Iva + Ila) / 100.0)), 0),
+                    Precio_Ud2_Bruto = ROUND(Precio_Ud2_Neto * (1 + ((Iva + Ila) / 100.0)), 0);
+"
+            ' Precios Brutos desde lista de precios y calculamos el Neto
+        ElseIf _Melt = "B" Then
+
+            Consulta_sql = $"
+                ------------------------------------------------------------
+                --  B) TABPRE entrega precios BRUTOS
+                --     PP01UD y PP02UD están en BRUTO
+                --     Se convierten a NETO eliminando impuestos
+                ------------------------------------------------------------
+
+                -- 1. Asignar lista de precios
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET Lista_Precio = '{_Lista_Precios}';
+
+                -- 2. Cargar precios NETOS calculados desde BRUTOS
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET Precio_Ud1_Neto = ROUND((
+                        SELECT PP01UD / (1 + ((Iva + Ila) / 100.0))
+                        FROM TABPRE
+                        WHERE KOLT = '{_Lista_Precios}'
+                          AND KOPR = Codigo
+                    ), 5),
+                    Precio_Ud2_Neto = ROUND((
+                        SELECT PP02UD / (1 + ((Iva + Ila) / 100.0))
+                        FROM TABPRE
+                        WHERE KOLT = '{_Lista_Precios}'
+                          AND KOPR = Codigo
+                    ), 5);
+
+                -- 3. (Opcional) Recalcular BRUTO desde NETO para mantener coherencia
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET Precio_Ud1_Bruto = ROUND(Precio_Ud1_Neto * (1 + ((Iva + Ila) / 100.0)), 0),
+                    Precio_Ud2_Bruto = ROUND(Precio_Ud2_Neto * (1 + ((Iva + Ila) / 100.0)), 0);
+"
+
+        End If
+
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        Consulta_sql = $"
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET 
+                    Margen_Valor = 
+                        CASE 
+                            WHEN Costo_PPP = 0 THEN 0
+                            ELSE Precio_Ud1_Neto - Costo_PPP
+                        END,
+
+                    Margen_Porc = 
+                        CASE 
+                            WHEN Costo_PPP = 0 THEN 0
+                            ELSE ROUND(
+                                    (Precio_Ud1_Neto / Costo_PPP) - 1
+                                , 5)
+                        END;"
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        ' ------------------------------------------------------------------------------------------------------
+
+
+
 
         If Not IsNothing(_RowProveedor) Then
 
@@ -4478,7 +4640,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
                 _Campos_Descuentos += "(1 - (" & _Campo & " / 100.0))"
             End If
 
-            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " & _Campo & " = (Select " & _Campo & " From TABPRE Where KOLT = '" & _Lista & "' And KOPR = Codigo)"
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " & _Campo & " = (Select " & _Campo & " From TABPRE Where KOLT = '" & _Lista_Costos & "' And KOPR = Codigo)"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Next
@@ -4511,28 +4673,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
             End If
 
-            'Consulta_sql = "--Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = Costo_Ud1Lista_Neto + Costo_FleteNeto
-            '                --Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Neto = Costo_Ud2Lista_Neto + (Costo_FleteNeto*Rtu)
-
-            '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Bruto = Round(Costo_Ud1Lista_Bruto + Costo_Flete,0)
-            '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Bruto + (Costo_Flete*Rtu),0)"
-            '_Sql.Ej_consulta_IDU(Consulta_sql)
-
-            'Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = Costo_Ud1Lista_Neto + (Costo_Flete/1.19)
-            '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Neto = Costo_Ud2Lista_Neto + ((Costo_Flete/1.19)*Rtu)
-
-            '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Bruto = Round(Costo_Ud1Lista_Bruto + Costo_Flete,0)
-            '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Bruto + (Costo_Flete*Rtu),0)"
-            '_Sql.Ej_consulta_IDU(Consulta_sql)
-
         End If
-
-        ' Incorpora campo que indica la diferencia con el costo de la ultima compra VS el costo del proveedor
-
-        'Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " &
-        '       "PorcDifCostoBruUd1 = Round((Costo_Ud1Lista_Bruto-(Costo_UltComUd1*(1+((Iva+Ila)/100))))/(Costo_UltComUd1*(1+((Iva+Ila)/100))),2)" & vbCrLf &
-        '       "Where Costo_Ud1Lista_Neto > 0 And Costo_UltComUd1 > 0"
-        '_Sql.Ej_consulta_IDU(Consulta_sql)
 
         If Chk_MostrarFlete.Checked Then
             Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " &
@@ -4546,16 +4687,6 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
                    "Where Costo_Ud1Lista_Neto > 0 And Costo_UltComUd1 > 0"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
-
-
-        '_DescuentoPorc = 100 * (1 - (
-        '                             (1 - (_Desc1 / 100.0)) *
-        '                             (1 - (_Desc2 / 100.0)) *
-        '                             (1 - (_Desc3 / 100.0)) *
-        '                             (1 - (_Desc4 / 100.0)) *
-        '                             (1 - (_Desc5 / 100.0))
-        '                             )
-        '                             )
 
     End Sub
 
@@ -10326,6 +10457,25 @@ LEFT JOIN MAEEN AS E
 
         Btn_MostrarSoloProdStockBod.Enabled = Chk_FiltroEspecialBodStock.Checked
         Btn_ExcluirProdStockBod.Enabled = Chk_FiltroEspecialBodStock.Checked
+
+    End Sub
+
+    Private Sub Btn_ListaLC_Click(sender As Object, e As EventArgs) Handles Btn_ListaLC.Click
+
+        If Fx_Tiene_Permiso(Me, "Pre0002") Then
+
+            Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
+
+            Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+            Dim Fm As New Frm_PreciosLC_Mt01
+            Fm.Sb_Cargar_Producto(_Codigo)
+            Fm.Txtcodigo.Text = _Codigo
+            Fm.Cerrar_Al_Grabar = True
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        End If
 
     End Sub
 

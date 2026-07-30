@@ -179,9 +179,9 @@ CREATE TABLE [dbo].[#TablaPaso#](
 	[Suendo_Utl_Compra]         [Char](10)     DEFAULT '',
 
     [Idmaeedo_Ult_GRCFCC]       [Int]          DEFAULT (0),
-	[Tido_Ult_GRCFCC]       [Char](3)      DEFAULT '',
-	[Nudo_Ult_GRCFCC]       [Char](10)     DEFAULT '',
-	[Endo_Ult_GRCFCC]       [Char](13)     DEFAULT '',
+	[Tido_Ult_GRCFCC]           [Char](3)      DEFAULT '',
+	[Nudo_Ult_GRCFCC]           [Char](10)     DEFAULT '',
+	[Endo_Ult_GRCFCC]           [Char](13)     DEFAULT '',
 	[Suendo_Ult_GRCFCC]         [Char](10)     DEFAULT '',
 	
     [TienePrecioListasProv]     [Bit]          DEFAULT (0),
@@ -205,8 +205,17 @@ CREATE TABLE [dbo].[#TablaPaso#](
     [PorcDifCostoNetUd1]        [Float]        DEFAULT (0),
     [PorcDifCostoBruUd1]        [Float]        DEFAULT (0),
     --#Campos_Descuentos#
-    [Porc_Descuento]            [Float]        DEFAULT (0),
-	[Orden]                     [Int]          DEFAULT (0),
+    [Porc_Descuento]            [Float]        DEFAULT (0),	
+
+    [Lista_Precio]              [Char](13)     DEFAULT '',
+    [Precio_Ud1_Neto]           [Float]        DEFAULT (0),
+    [Precio_Ud2_Neto]           [Float]        DEFAULT (0),
+    [Precio_Ud1_Bruto]          [Float]        DEFAULT (0),
+    [Precio_Ud2_Bruto]          [Float]        DEFAULT (0),
+    [Margen_Porc]               [Float]        DEFAULT (0),
+    [Margen_Valor]              [Float]        DEFAULT (0),
+        
+    [Orden]                     [Int]          DEFAULT (0),
 	[Dias_Venta_Efectivos]      [Float]        DEFAULT (0),
 	[Fecha_Ult_Venta]           [Date],
 	[Dias_Existencia_Habiles]   [Float]        DEFAULT (0),

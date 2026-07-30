@@ -1,5 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
-Imports Google.Protobuf.Reflection
+
 Public Class Frm_OfDinamLista
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -45,6 +45,9 @@ Public Class Frm_OfDinamLista
         AddHandler Grilla_Recetas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Productos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
+        AddHandler Grilla_Recetas.KeyDown, AddressOf Sb_DataGridView_KeyDown_Global
+        AddHandler Grilla_Productos.KeyDown, AddressOf Sb_DataGridView_KeyDown_Global
+
         _Sql.Sb_Parametro_Informe_Sql(Lbl_NroMaxProdXOfertaDinamica, "Ofertas_Dinamincas",
                                       Lbl_NroMaxProdXOfertaDinamica.Name, Class_SQLite.Enum_Type._Tag, Lbl_NroMaxProdXOfertaDinamica.Tag, False,, False, False)
 
@@ -52,15 +55,6 @@ Public Class Frm_OfDinamLista
 
         AddHandler Dtp_FechaInicio.ValueChanged, AddressOf Dtp_FechaInicio_ValueChanged
         AddHandler Dtp_FechaTope.ValueChanged, AddressOf Dtp_FechaTope_ValueChanged
-
-        '        caract_combo(Cmb_TipoOferta)
-        '        Consulta_sql = $"
-        'SELECT KOCARAC AS Padre,LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'TIPOOFERTA' ORDER BY Hijo
-        'Union
-        'Select '' As Padre, 'Todas...' As Hijo"
-        '        Dim _Tbl_TipoOferta As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-        '        Cmb_TipoOferta.DataSource = _Tbl_TipoOferta
-        '        Cmb_TipoOferta.SelectedValue = ""
 
         Sb_Aplicar_Filtro_Ofertas()
 
@@ -1687,4 +1681,35 @@ FROM Paso2;"
 
     End Sub
 
+    Private Sub Mnu_Btn_CopiarOf_Click(sender As Object, e As EventArgs) Handles Mnu_Btn_CopiarOf.Click
+        With Grilla_Recetas
+
+            Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
+            Dim _Texto_Cabeza = .Columns(.CurrentCell.ColumnIndex).HeaderText
+
+            Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
+            Clipboard.SetText(Copiar)
+
+            ToastNotification.Show(Me, _Texto_Cabeza & " esta en el portapapeles", Mnu_Btn_CopiarOf.Image,
+                                   2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+
+        End With
+    End Sub
+
+    Private Sub Mnu_Btn_CopiarPr_Click(sender As Object, e As EventArgs) Handles Mnu_Btn_CopiarPr.Click
+        With Grilla_Productos
+
+            Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
+            Dim _Texto_Cabeza = .Columns(.CurrentCell.ColumnIndex).HeaderText
+
+            Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
+            Clipboard.SetText(Copiar)
+
+            ToastNotification.Show(Me, _Texto_Cabeza & " esta en el portapapeles", Mnu_Btn_CopiarPr.Image,
+                                   2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+
+        End With
+    End Sub
 End Class

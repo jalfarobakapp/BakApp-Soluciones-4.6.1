@@ -1936,6 +1936,53 @@
         RU5ErkJggg==
 </value>
   </data>
+  <data name="Btn_ListaLC.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAARRSURBVEhLjZN9TBtlHMcf2BaYJvKHOhNm4tj+cRPaXsGh0IdBhqPt3XgZA0ZizAw6Jm4sBscd
+        kTIX3zAx6IJs8S/j2IzBEWtvS5BoFt8Syx2CUSYgOMaGEIiDsrbXu+tdzXPtjacHRX7Jkz693H2+v+fz
+        PA8AG6iU5CRwzvo48NqzwIDDfJonibuDlDXCk4SKfvE5TxIyTxJuzkk8+D6xw4haXQj+sXk7GCjJBAN2
+        U+sgtRq61pwnifqOnJ1GXHwheCeCH8gEnD3LFftwrbHMk0Q3TxJT2LO2dQNS9c4RvCSrDXWOdxmnxWmh
+        OKcF8E5LOk8Swf8NSEkC4HxWOuCeewrBXbqWRAEcaYEogHNa0niSuLduAIJ3xeD8gXW14AOpaeVJ4mfs
+        2eoA5LzLtD0GzzyDa/nt+WL5zmedwkx3lzDySqU4dDg/PFj2tGJcDbbJ8QEI/mHOTuC1m6LOV46dOlyz
+        Tw7N3hHVaCmqLCuhuRlx/lqPsKEABP/ImgF+sZuB12FpMyqY6nxbQOSZy58IIyeqg+GAX0L/Z7/8VN/Q
+        tUarFhC9RBnAazeDAYclTovezfSFdiESiUQm2+l7/vERUfYtyove74OKLIVvnDwixm04Zf3uh9K8J/sq
+        9qe8WZgPQKf1CeAtMaEbqh3FlZez78//qK8QVSWsKJIUlnyL8o3GWnGoyhaWFv+VFvp6A/p7HGW91lNV
+        llrf8MEequly7v7TvQAMOEyAc5jP4MsbdzUIC/3ugP5/uLZIRjCk5a+zpwT9+e8vlYq/lu1VovDs/v6K
+        oodePd6eVsCw85Bh/ZBhiwFHmrVzjmuZ670oqIqijNF1IQQPTPwpyv5lSVUVZc59adXGclT2Nz3V5Vvr
+        TpwzF9LuXMiwNZBhRciwtwFPEnPGUzBUXSCH/pkWxflZKTA5KkpLdyWkJXhrIiTcvhkXEIM/8EJjlyXW
+        +SJk2Fwb7am00Z48FGDjScKHB6D5KF0XjB1Ldab7vH+s5VgoHPDLgb/Hgvp7GNyM4AUtVyNoQIadttGe
+        rXnNboCuNwrJ50liCd+Hmx1tAuo8MDka0oNUWQ5PvPVaCOs8Ndb5AmRYNTaWbbSnwEZ7wDZTMQAv7noM
+        D/FhutThI4XSYGmOMu5qCN268F5wpKFKO5Icld2Ha4l1rcEhze5D8N2Vb4CkTZujF80YYtRlcB6Fn9S0
+        LGBaNDikWbCn0rUC1+tofEicrvuDsl6/UlWKtBBraIGocw2ebIDrha0kz6ArwlPWwetlMK3x+LuPFDDs
+        HKbFBxlWc767snV158Yy6NJWggJ+LH22gn7Z9XBR81dmyLCnIMMqmhYEZxJoSVRHd23DV7LEU9bJSzWH
+        Nzte/6IFRtVYIMM2bEhLosJWYv3p4DPFTcfOboG0ZwoyV1UbzX6bT3u2aFoObUBLoqrd8SjoyMkA7xws
+        B46mzx2QYXtttKfQRnuS8pq/Bul7y0FS8ibjZ3H1H5rVxk3i9YKPAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="Btn_ListaLC.ImageAlt" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAP5SURBVEhLlZRdaBxVFMfv7ubTQgMqrUhR+lAwaWhqUgzW7NyzaaFk7tYa+xA3O/cuarWy7SYG
+        laKkqULRVkF9kkjI3Ehf0mhSQSrWT8T4EvVBQUWxUOMH0ZCde3cmgkoTubOzyd3ZJK0HDjs7zPz///M7
+        dxeh66j6WBRN3L0LLfRg5PTCU5JBvpBJLEsGS+pTv5YM/pUM3hYUb3oDN4WlKqsuFkVvJnaihV4D5VMw
+        WMhUiq51LRkcHU80h+XKa0XcMlDeMk4GL67VBcngnGRwRbs3tKGBwuKLp33xIZVcT6mnFhQnBcVIUHyr
+        ZPDXNQ3qohE0aTSifG/cT15Y5bueQTwwaJAM3A0NlPhb8UaUT3UgJx3fCIveCs2gZPC5dq/SoD4WJE/F
+        lfgpHYtk8Idk8KJk8IJk8H2Q9J/wNNqSyw3UQqf2NaG85Sf3mWsPO4LiHQGGqKC4RlC8XVA4fl0GSnwy
+        sQs5FkYONYYqEFAYUeKSwnOSwrcijRscy0CCwTMVz672oG+gTsuUEk9j5FhQhkVL81rRAE+JtHGXsPAW
+        QfF9guJayeCbsoVnOj/67eGDd/xwNFU73H0IoQvQXBIvw1JgcFUz+FFQHBOWUSso3iIZfK12ICi+RVKc
+        LT0nMp0XZ3LZusGXPm6yhn9uv39kHiF/VAufCo33gWTwiPZ9QYkJy0CSwbva/ctq0YH4+z892rP52bOX
+        Ggh3/yTc8wj39iPBjJNhLILiEyqxZDCtxCWDNkHxjWrBksGT4cWKTOelmdyx+hMvT7fcOyraCfd6CPf+
+        Jtz7RSWaW+MUyODU3C4ptEoKWxUWQXGzoHinblAUz94w8OoXu5PF5A7hXjux3cPmqLtXGXQowZCBmmha
+        WDiiEEoKZySDTwXFmwXFbSuTrojPtCjx5NjismrCvVnTduu7RiRS51qZ3CMZiNAezgmKtwqKW4Pzr7pG
+        UHhnNfmxuiD5POHeUtAFk7uGabtoWwdF6Inm23QTqeFSJk7w/66WPiwZfBckf0/HEqT2xYntYiXe1jeO
+        IlU1xR9a2CSMK8Q8EPexzGtYfHFiu2hP7jyKlsRLNVBuEsZV7Eziky9zjyksd1Zgsd24Sq7EI7HqcvFS
+        aZPsDeFalpnEV7NHuhtOn7l480HuzmlYJOGez7wtN16ZPFwhXP4kyuD3h5Ldr5w+f9OhUaeFcK+fjC1e
+        9bFwzyDcQ3v6J64tXioNl5pEyEzi8mePD1SlXv/1acI9hWY34V7WtL0ilv6J9bGsV9okrXMPdu0/+/yF
+        6iR3r5CxxSXC3Q9N263usl3U2jexelr+b2UbtyH1l2sfOY4eGJ7tItybNLkLpu1GTFui7Qf6UCRWFX6t
+        rP4DAOzWez9i7sEAAAAASUVORK5CYII=
+</value>
+  </data>
   <data name="Btn_Copiar.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAArNJREFUSEul

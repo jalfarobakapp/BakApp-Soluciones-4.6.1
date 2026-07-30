@@ -155,6 +155,8 @@ Public Class Frm_BuscarEntidad_Mt
 
         Btn_ConsultaExistenciaEntidad.Visible = Chk_Solo_Clientes_Del_Vendedor.Checked
 
+        AddHandler Grilla_Entidades.KeyDown, AddressOf Sb_DataGridView_KeyDown_Global
+
     End Sub
 
     Private Sub BtnCrearUser_Click(sender As System.Object, e As System.EventArgs) Handles BtnCrearUser.Click

@@ -329,6 +329,7 @@ Public Class Frm_Inf_Vencimientos_Detalle_Documentos
 
         End If
 
+        Consulta_sql = Replace(Consulta_sql, "#BAKAPP_SG#", _Global_BaseBk)
 
         _TblInforme = _Sql.Fx_Get_DataTable(Consulta_sql)
 

@@ -31,6 +31,8 @@ CREATE TABLE [dbo].[Zw_Demonio_FacAuto](
     [Error_Paga]                [bit]		        NOT NULL DEFAULT (0),
     [Informacion_Paga]          [varchar](max)		NOT NULL DEFAULT (''),
     [TidoGene]                  [varchar](3)        NOT NULL DEFAULT (''),
+    [Intentos]                  [int]		        NOT NULL DEFAULT (0),
+    [EdoEmpresa]                [char](2)		    NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Demonio_FacAuto] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

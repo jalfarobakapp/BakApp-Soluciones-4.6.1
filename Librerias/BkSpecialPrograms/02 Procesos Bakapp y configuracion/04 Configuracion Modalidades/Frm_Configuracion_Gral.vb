@@ -273,6 +273,7 @@ Public Class Frm_Configuracion_Gral
             Input_ToleranciaDocMoroso.Value = .Item("ToleranciaDocMoroso")
 
             Chk_ActivaTipoCompra.Checked = .Item("ActivaTipoCompra")
+            Chk_NoCopiarCreditosSucEnt.Checked = .Item("NoCopiarCreditosSucEnt")
 
         End With
 
@@ -403,6 +404,7 @@ Public Class Frm_Configuracion_Gral
         Chk_ExigeNumPesada.Enabled = Not _Modalidad_General
 
         Chk_ActivaTipoCompra.Enabled = _Modalidad_General
+        Chk_NoCopiarCreditosSucEnt.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -647,6 +649,7 @@ Public Class Frm_Configuracion_Gral
                        ",PermiteVtaContadoCiaSeguro = " & Convert.ToInt32(Chk_PermiteVtaContadoCiaSeguro.Checked) & vbCrLf &
                        ",ToleranciaDocMoroso = " & Input_ToleranciaDocMoroso.Value & vbCrLf &
                        ",ActivaTipoCompra = " & Convert.ToInt32(Chk_ActivaTipoCompra.Checked) & vbCrLf &
+                       ",NoCopiarCreditosSucEnt = " & Convert.ToInt32(Chk_NoCopiarCreditosSucEnt.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then

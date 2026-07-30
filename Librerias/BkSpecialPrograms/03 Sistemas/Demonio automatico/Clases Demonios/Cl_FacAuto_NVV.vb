@@ -51,8 +51,8 @@ Public Class Cl_FacAuto_NVV
 
         End If
 
-        Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar)" & vbCrLf &
-                       "Select TOP 20 Edo.IDMAEEDO,Edo.NUDO,'" & _Modalidad_Fac & "','" & Format(_Fecha_Revision, "yyyyMMdd") & "',1" & vbCrLf &
+        Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,EdoEmpresa)" & vbCrLf &
+                       "Select TOP 20 Edo.IDMAEEDO,Edo.NUDO,'" & _Modalidad_Fac & "','" & Format(_Fecha_Revision, "yyyyMMdd") & "',1, Edo.EMPRESA" & vbCrLf &
                        "From MAEEDO Edo" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Entidades Ent " &
                        "On Edo.ENDO = Ent.CodEntidad And Edo.SUENDO = Ent.CodSucEntidad " &
@@ -106,9 +106,11 @@ Public Class Cl_FacAuto_NVV
                        "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set EnvFacAutoBk = 1" & vbCrLf &
                        "Where Idmaeedo In (Select Idmaeedo From #Paso)" & vbCrLf &
                        vbCrLf &
-                       "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga)" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar," &
+                       "DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga,EdoEmpresa)" & vbCrLf &
                        "Select Edo.IDMAEEDO As 'Idmaeedo_NVV',Edo.NUDO As 'Nudo_NVV','" & Modalidad_Fac & "' As 'Modalidad_Fac',Fecha_Facturar As Fecha_Facturar,1 As 'Facturar'," & vbCrLf &
-                       "1 As 'DesdePickeo',#Paso.Id As 'Id_Pickeo',#Paso.DocEmitir As 'DocEmitir',1 As 'CerrarDespFact',CodFuncionario_Factura,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga" & vbCrLf &
+                       "1 As 'DesdePickeo',#Paso.Id As 'Id_Pickeo',#Paso.DocEmitir As 'DocEmitir',1 As 'CerrarDespFact',CodFuncionario_Factura," &
+                       "PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga,Edo.EMPRESA" & vbCrLf &
                        "From MAEEDO Edo" & vbCrLf &
                        "Inner Join #Paso On #Paso.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
                        vbCrLf &
@@ -175,9 +177,11 @@ Public Class Cl_FacAuto_NVV
                        "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set EnvFacAutoBk = 1" & vbCrLf &
                        "Where Idmaeedo_NVV In (Select Idmaeedo From #Paso)" & vbCrLf &
                        vbCrLf &
-                       "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,DesdeNVVAuto,DocEmitir,CerrarDespFact,CodFuncionario_Factura)" & vbCrLf &
-                       "Select Edo.IDMAEEDO As 'Idmaeedo_NVV',Edo.NUDO As 'Nudo_NVV',Case When #Paso.Modalidad_Fac <> '' Then #Paso.Modalidad_Fac Else '" & Modalidad_Fac & "' End As 'Modalidad_Fac',Fecha_Facturar,1 As 'Facturar'," & vbCrLf &
-                       "1 As 'DesdeNVVAuto',#Paso.DocEmitir As 'DocEmitir',1 As 'CerrarDespFact',CodFuncionario_Factura" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,DesdeNVVAuto,DocEmitir," &
+                       "CerrarDespFact,CodFuncionario_Factura,EdoEmpresa)" & vbCrLf &
+                       "Select Edo.IDMAEEDO As 'Idmaeedo_NVV',Edo.NUDO As 'Nudo_NVV'," &
+                       "Case When #Paso.Modalidad_Fac <> '' Then #Paso.Modalidad_Fac Else '" & Modalidad_Fac & "' End As 'Modalidad_Fac',Fecha_Facturar,1 As 'Facturar'," & vbCrLf &
+                       "1 As 'DesdeNVVAuto',#Paso.DocEmitir As 'DocEmitir',1 As 'CerrarDespFact',CodFuncionario_Factura,Edo.EMPRESA" & vbCrLf &
                        "From MAEEDO Edo" & vbCrLf &
                        "Inner Join #Paso On #Paso.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
                        vbCrLf &
@@ -359,7 +363,7 @@ Public Class Cl_FacAuto_NVV
         End If
 
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1, Facturando = 0, ErrorGrabar = 0,Intentos = Intentos+1" & vbCrLf &
-                       "Where NombreEquipo = '" & Nombre_Equipo & "' And ErrorGrabar = 1 And Intentos <= 5 And IpEquipo = '" & _IpEquipo & "' And Facturado = 0"
+                       "Where NombreEquipo = '" & Nombre_Equipo & "' And ErrorGrabar = 1 And Intentos <= 5 And Facturado = 0 -- And IpEquipo = '" & _IpEquipo & "'"
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf
         End If
@@ -389,49 +393,6 @@ Public Class Cl_FacAuto_NVV
         '                Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,Pagada
         '                From {_Global_BaseBk}Zw_Demonio_FacAuto
         '                Where ((Informacion Like '%interbloqueo%') Or (Informacion LIKE '% tiempo de espera%')) And ErrorGrabar = 1 And Idmaeedo_FCV = 0 -- And Fecha_Facturar = '{Format(_FechaEmision, "yyyyMMdd")}'"
-
-        '        Consulta_Sql = $"
-        'INSERT INTO {_Global_BaseBk}Zw_Demonio_FacAuto 
-        '    (NombreEquipo,Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,
-        '     Facturando,Facturado,Idmaeedo_FCV,Nudo_Fcv,Fecha_Facturado,Informacion,
-        '     DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,Pagada)
-        'SELECT 
-        '    '' AS NombreEquipo,
-        '    Src.Idmaeedo_NVV,
-        '    Src.Nudo_NVV,
-        '    Src.Modalidad_Fac,
-        '    Src.Fecha_Facturar,
-        '    1,
-        '    Src.Facturando,
-        '    Src.Facturado,
-        '    Src.Idmaeedo_FCV,
-        '    Src.Nudo_Fcv,
-        '    Src.Fecha_Facturado,
-        '    '' AS Informacion,
-        '    Src.DesdePickeo,
-        '    Src.Id_Pickeo,
-        '    Src.DocEmitir,
-        '    Src.CerrarDespFact,
-        '    Src.CodFuncionario_Factura,
-        '    Src.Pagada
-        'FROM {_Global_BaseBk}Zw_Demonio_FacAuto AS Src
-        'WHERE 
-        '    ((Src.Informacion LIKE '%interbloqueo%') 
-        '     OR (Src.Informacion LIKE '%tiempo de espera%'))
-        '    AND Src.ErrorGrabar = 1
-        '    AND Src.Idmaeedo_FCV = 0
-        '    AND NOT EXISTS (
-        '        SELECT 1
-        '        FROM {_Global_BaseBk}Zw_Demonio_FacAuto AS Dst
-        '        WHERE 
-        '            Dst.Idmaeedo_NVV = Src.Idmaeedo_NVV
-        '            AND Dst.Nudo_NVV = Src.Nudo_NVV
-        '            AND Dst.Modalidad_Fac = Src.Modalidad_Fac
-        '            AND Dst.Fecha_Facturar = Src.Fecha_Facturar
-        '            AND Dst.Idmaeedo_FCV = 0
-        '            AND Dst.Facturar = 1   -- asegura que ya fue insertado por esta rutina
-        '    );"
-        '        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
         Consulta_Sql = $"
                         Select Top {CantDocFacturanXProceso} Fa.*,
@@ -598,6 +559,11 @@ Public Class Cl_FacAuto_NVV
                     '    _Intentos = 1
                     'End If
 
+                    'If _Mensaje.Mensaje.Contains("El folio del documento electrónico no está autorizado por el SII:") Then
+                    '    _Intentos = 1
+                    'End If
+
+                    'El folio del documento electrónico no está autorizado por el SII:
                     'No existe tasa de cambio para la fecha:  25/03/2026, para las monedas: EU_-EURO PRUEBA  UF_-UF PRUEBA  US_-DOLAR PRUEBA  
 
                     Log_Registro += _Mensaje.Mensaje & vbCrLf

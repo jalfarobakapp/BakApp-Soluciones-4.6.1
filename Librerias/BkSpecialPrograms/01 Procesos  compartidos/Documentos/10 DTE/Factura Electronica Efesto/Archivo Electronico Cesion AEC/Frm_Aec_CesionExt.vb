@@ -107,7 +107,7 @@ Public Class Frm_Aec_CesionExt
         End If
 
         Dim _FechaSolicitud As Date = Dtp_FechaCesion.Value.Date
-        Dim _FUltimoVencimiento As Date = Dtp_FUltimoVencimiento.Value.Date
+        'Dim _FUltimoVencimiento As Date = Dtp_FUltimoVencimiento.Value.Date
 
         Dim _FechaServidor As Date = FechaDelServidor().Date
 
@@ -133,18 +133,18 @@ Public Class Frm_Aec_CesionExt
             Return
         End If
 
-        If _FUltimoVencimiento < _FechaServidor Then
-            If MessageBoxEx.Show(Me,
-                              "La fecha de vencimiento es menor a la fecha del servidor: " &
-                              _FechaServidor.ToShortDateString & vbCrLf &
-                              $"¿Confirma la fecha de vencimiento {_FUltimoVencimiento.ToShortDateString}?",
-                              "Validación",
-                              MessageBoxButtons.YesNo,
-                              MessageBoxIcon.Warning) <> DialogResult.Yes Then
-                Dtp_FUltimoVencimiento.Focus()
-                Return
-            End If
-        End If
+        'If _FUltimoVencimiento < _FechaServidor Then
+        '    If MessageBoxEx.Show(Me,
+        '                      "La fecha de vencimiento es menor a la fecha del servidor: " &
+        '                      _FechaServidor.ToShortDateString & vbCrLf &
+        '                      $"¿Confirma la fecha de vencimiento {_FUltimoVencimiento.ToShortDateString}?",
+        '                      "Validación",
+        '                      MessageBoxButtons.YesNo,
+        '                      MessageBoxIcon.Warning) <> DialogResult.Yes Then
+        '        Dtp_FUltimoVencimiento.Focus()
+        '        Return
+        '    End If
+        'End If
 
         Dim _Idmaeedo As Integer = _Row_Maeedo.Item("IDMAEEDO")
         Dim _Tido As String = _Row_Maeedo.Item("TIDO")
@@ -160,11 +160,11 @@ Public Class Frm_Aec_CesionExt
 
         Dim _HoraGrab = Hora_Grab_fx(False)
 
-        Dim _FechaUlVenciDistintaOri As Boolean
+        'Dim _FechaUlVenciDistintaOri As Boolean
 
-        If _FUltimoVencimiento.Date <> _Feulvedo.Date Then
-            _FechaUlVenciDistintaOri = True
-        End If
+        'If _FUltimoVencimiento.Date <> _Feulvedo.Date Then
+        '    _FechaUlVenciDistintaOri = True
+        'End If
 
         Consulta_sql = $"Select Top 1 * From MAEVEN Where IDMAEEDO = {_Idmaeedo} Order By FEVE Desc"
         Dim _Row_Maeven As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
@@ -179,7 +179,7 @@ Public Class Frm_Aec_CesionExt
         ({_Idmaeedo},0,'{_Tido}','{_Nudo}','{Format(_FechaSolicitud, "yyyyMMdd")}','{_RutCedente}','{_RutCesionario}','{_RazonSocialCesionario}',
         '{_DireccionCesionario}','{_eMailCesionario}',
         {De_Num_a_Tx_01(_MontoCesion, False, 5)},
-        '{Format(_FUltimoVencimiento, "yyyyMMdd")}','','','','','','','',0,0,
+        '{Format(_Feulvedo, "yyyyMMdd")}','','','','','','','',0,0,
         {Convert.ToInt32(_AmbienteCertificacion)},1,'{_CodEntidad_Cedente}','{_CodSucEntidad_Cedente}','{FUNCIONARIO}')"
 
         If Not _Sql.Ej_Insertar_Trae_Identity(Consulta_sql, _Id_Aec, False) Then
@@ -196,29 +196,29 @@ Public Class Frm_Aec_CesionExt
                 ('MAEEDO',{_Idmaeedo},'',0,'{FUNCIONARIO}','{Format(_FechaServidor, "yyyyMMdd")}','CESION','RUTCECIONA','{_RutCesionario}',GetDate(),{_HoraGrab})"
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
-        If _FechaUlVenciDistintaOri Then
-            Consulta_sql = $"
-                Update MAEEDO Set FEULVEDO = '{Format(_FUltimoVencimiento, "yyyyMMdd")}' Where IDMAEEDO = {_Idmaeedo}   
-                Update MAEVEN Set FEVE = '{Format(_FUltimoVencimiento, "yyyyMMdd")}' Where IDMAEVEN = {_Idmaeven}"
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-        End If
+        'If _FechaUlVenciDistintaOri Then
+        '    Consulta_sql = $"
+        '        Update MAEEDO Set FEULVEDO = '{Format(_FUltimoVencimiento, "yyyyMMdd")}' Where IDMAEEDO = {_Idmaeedo}   
+        '        Update MAEVEN Set FEVE = '{Format(_FUltimoVencimiento, "yyyyMMdd")}' Where IDMAEVEN = {_Idmaeven}"
+        '    _Sql.Ej_consulta_IDU(Consulta_sql)
+        'End If
 
         Accion = $"Cesion de documento externamente, Cecionario: {_RutCesionario} - {_RazonSocialCesionario}, Fecha: {_FechaSolicitud}"
 
         Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEEDO", _Idmaeedo, "CesionExt",
                            Accion, "", "", "", "", False, FUNCIONARIO, False, 0, "", _Tido, _Nudo)
 
-        If _FechaUlVenciDistintaOri Then
+        'If _FechaUlVenciDistintaOri Then
 
-            Accion = $"Cesion de documento externamente." & vbCrLf &
-            $"Cecionario: {_RutCesionario} - {_RazonSocialCesionario}" & vbCrLf &
-            $"Fecha: {_FechaSolicitud} Se cambia la fecha último vencimiento: {_FUltimoVencimiento}"
+        '    Accion = $"Cesion de documento externamente." & vbCrLf &
+        '    $"Cecionario: {_RutCesionario} - {_RazonSocialCesionario}" & vbCrLf &
+        '    $"Fecha: {_FechaSolicitud} Se cambia la fecha último vencimiento: {_FUltimoVencimiento}"
 
-            Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEEDO", _Idmaeedo, "CesionExt",
-                   $"Se cambia la fecha de vencimiento del documento, Fecha anterior: {_Feulvedo.Date.ToShortDateString}, nueva fecha: {_FUltimoVencimiento.Date.ToShortDateString}",
-                   "", "", "", "", False, FUNCIONARIO, False, 0, "", _Tido, _Nudo)
+        '    Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEEDO", _Idmaeedo, "CesionExt",
+        '           $"Se cambia la fecha de vencimiento del documento, Fecha anterior: {_Feulvedo.Date.ToShortDateString}, nueva fecha: {_FUltimoVencimiento.Date.ToShortDateString}",
+        '           "", "", "", "", False, FUNCIONARIO, False, 0, "", _Tido, _Nudo)
 
-        End If
+        'End If
 
         Me.DialogResult = DialogResult.OK
         Me.Close()

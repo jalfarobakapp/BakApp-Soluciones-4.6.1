@@ -116,17 +116,18 @@ FROM #Paso P
    ============================================================ */
 UPDATE P
 SET 
-    ST_FISICO = ST_FISICO +
+    -- Si la bodega principal tiene negativo, lo tratamos como 0 para el cálculo con equivalencia, 
+    -- o sumamos únicamente los positivos equivalentes.
+    ST_FISICO = CASE WHEN ST_FISICO < 0 THEN 0 ELSE ST_FISICO END +
         ISNULL((
-            --SELECT SUM(M.STFI#Ud#)
             SELECT SUM(
                     CASE 
-                        WHEN ISNULL(M.STFI#Ud#,0) < 0 THEN 0 
-                        ELSE ISNULL(M.STFI#Ud#,0) 
+                        WHEN ISNULL(M.STFI2,0) < 0 THEN 0 
+                        ELSE ISNULL(M.STFI2,0) 
                     END
                   )
             FROM MAEST M
-            INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
+            INNER JOIN BAKAPP_SG.dbo.Zw_InterStock_Equivalencia E
                 ON (
                         (E.Empresa_A = P.Empresa AND E.Sucursal_A = P.Sucursal AND E.Bodega_A = P.Bodega
                          AND M.EMPRESA = E.Empresa_B AND M.KOSU = E.Sucursal_B AND M.KOBO = E.Bodega_B)
@@ -134,21 +135,20 @@ SET
                      OR (E.Empresa_B = P.Empresa AND E.Sucursal_B = P.Sucursal AND E.Bodega_B = P.Bodega
                          AND M.EMPRESA = E.Empresa_A AND M.KOSU = E.Sucursal_A AND M.KOBO = E.Bodega_A)
                    )
-                AND E.Activo = 1
+                AND E.Activo2 = 1
             WHERE M.KOPR = @Codigo
         ),0),
 
-    ST_COMPROMETIDO = ST_COMPROMETIDO +
+    ST_COMPROMETIDO = CASE WHEN ST_COMPROMETIDO < 0 THEN 0 ELSE ST_COMPROMETIDO END +
         ISNULL((
-            --SELECT SUM(M.STOCNV#Ud#)
             SELECT SUM(
                     CASE 
-                        WHEN ISNULL(M.STOCNV#Ud#,0) < 0 THEN 0 
-                        ELSE ISNULL(M.STOCNV#Ud#,0) 
+                        WHEN ISNULL(M.STOCNV2,0) < 0 THEN 0 
+                        ELSE ISNULL(M.STOCNV2,0) 
                     END
                   )
             FROM MAEST M
-            INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
+            INNER JOIN BAKAPP_SG.dbo.Zw_InterStock_Equivalencia E
                 ON (
                         (E.Empresa_A = P.Empresa AND E.Sucursal_A = P.Sucursal AND E.Bodega_A = P.Bodega
                          AND M.EMPRESA = E.Empresa_B AND M.KOSU = E.Sucursal_B AND M.KOBO = E.Bodega_B)
@@ -156,21 +156,20 @@ SET
                      OR (E.Empresa_B = P.Empresa AND E.Sucursal_B = P.Sucursal AND E.Bodega_B = P.Bodega
                          AND M.EMPRESA = E.Empresa_A AND M.KOSU = E.Sucursal_A AND M.KOBO = E.Bodega_A)
                    )
-                AND E.Activo = 1
+                AND E.Activo2 = 1
             WHERE M.KOPR = @Codigo
         ),0),
 
-    ST_COMPROMETIDO_BK = ST_COMPROMETIDO_BK +
+    ST_COMPROMETIDO_BK = CASE WHEN ST_COMPROMETIDO_BK < 0 THEN 0 ELSE ST_COMPROMETIDO_BK END +
         ISNULL((
-            --SELECT SUM(S.StComp#Ud#)
             SELECT SUM(
                     CASE 
-                        WHEN ISNULL(S.StComp#Ud#,0) < 0 THEN 0 
-                        ELSE ISNULL(S.StComp#Ud#,0) 
+                        WHEN ISNULL(S.StComp2,0) < 0 THEN 0 
+                        ELSE ISNULL(S.StComp2,0) 
                     END
                   )
-            FROM #Global_BaseBk#Zw_Prod_Stock S
-            INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
+            FROM BAKAPP_SG.dbo.Zw_Prod_Stock S
+            INNER JOIN BAKAPP_SG.dbo.Zw_InterStock_Equivalencia E
                 ON (
                         (E.Empresa_A = P.Empresa AND E.Sucursal_A = P.Sucursal AND E.Bodega_A = P.Bodega
                          AND S.Empresa = E.Empresa_B AND S.Sucursal = E.Sucursal_B AND S.Bodega = E.Bodega_B)
@@ -178,19 +177,12 @@ SET
                      OR (E.Empresa_B = P.Empresa AND E.Sucursal_B = P.Sucursal AND E.Bodega_B = P.Bodega
                          AND S.Empresa = E.Empresa_A AND S.Sucursal = E.Sucursal_A AND S.Bodega = E.Bodega_A)
                    )
-                AND E.Activo = 1
+                AND E.Activo2 = 1
             WHERE S.Codigo = @Codigo
         ),0)
 FROM #Paso P
 
 
-
-
---Update #Paso Set ST_DISPONIBLE = Case When ST_FISICO < 0 Then 0 Else ST_FISICO End -
---								 Case When ST_COMPROMETIDO < 0 Then 0 Else ST_COMPROMETIDO End - 
---								 Case When ST_COMPROMETIDO_BK < 0 Then 0 Else ST_COMPROMETIDO_BK End
-
---Update #Paso Set ST_DISPONIBLE = 0 Where ST_DISPONIBLE < 0
 
 /* ============================================================
    5) CALCULAR DISPONIBLE CONSOLIDADO
