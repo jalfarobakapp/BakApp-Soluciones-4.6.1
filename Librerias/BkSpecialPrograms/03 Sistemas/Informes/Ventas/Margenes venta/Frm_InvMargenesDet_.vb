@@ -144,16 +144,15 @@ Public Class Frm_InvMargenesDet_
 
         Me.Enabled = False
 
-        Dim _Tido, _Nudo, _Koprct As String
-        Dim _Idmaeedo As Integer
-
         Dim _Fila As DataGridViewRow = GrillaDetalle.Rows(GrillaDetalle.CurrentRow.Index)
 
-        _Koprct = _Fila.Cells("Koprct").Value
-        _Tido = _Fila.Cells("Tido").Value
-        _Nudo = _Fila.Cells("Nudo").Value
+        Dim _Tido As String = _Fila.Cells("Tido").Value
+        Dim _Nudo As String = _Fila.Cells("Nudo").Value
+        Dim _Koprct As String = _Fila.Cells("Koprct").Value
+        Dim _Empresa As String = _Fila.Cells("Empresa").Value
+        Dim _Idmaeedo As Integer
 
-        _Idmaeedo = _Sql.Fx_Trae_Dato("MAEDDO", "IDMAEEDO", "TIDO = '" & _Tido & "' AND NUDO = '" & _Nudo & "'")
+        _Idmaeedo = _Sql.Fx_Trae_Dato("MAEDDO", "IDMAEEDO", $"EMPRESA = '{_Empresa}' And TIDO = '{_Tido}' And NUDO = '{_Nudo}'")
 
         Dim Fm As New Frm_Ver_Documento(_Idmaeedo, Frm_Ver_Documento.Enum_Tipo_Apertura.Desde_Random_SQL)
         Fm.Codigo_Marcar = _Koprct

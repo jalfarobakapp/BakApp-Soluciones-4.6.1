@@ -3020,8 +3020,6 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         End If
 
-
-
         Dim _Cantidad = NuloPorNro(_Fila.Cells("CantComprar").Value, 0)
         Dim _RotacionDiaria = NuloPorNro(_Fila.Cells("RotDiariaUd" & Ud).Value, 0)
         Dim _RotacionMensual = NuloPorNro(_Fila.Cells("RotMensualUd" & Ud).Value, 0)
@@ -3165,6 +3163,9 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             _Fila.Cells(_ColDif).Style.ForeColor = Verde
         End If
 
+        If Chk_MarcarOfertas.Checked AndAlso _Fila.Cells("OfertaActiva").Value Then
+            _Fila.DefaultCellStyle.BackColor = Color.LightGreen
+        End If
 
     End Sub
 
@@ -3672,6 +3673,17 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         Dim _Color_Fila As Color = _Fila.DefaultCellStyle.BackColor ' = Color.Khaki
 
+        If Chk_MarcarOfertas.Checked AndAlso _Fila.Cells("OfertaActiva").Value Then
+
+            Dim _CodigoOfecta As String = _Fila.Cells("CodigoOferta").Value
+            Dim _NombreOferta As String = _Fila.Cells("NombreOferta").Value
+            Dim _FechaInicioOferta As DateTime = _Fila.Cells("FechaInicioOferta").Value
+            Dim _FechaFinOferta As DateTime = _Fila.Cells("FechaFinOferta").Value
+
+            _Informacion_Fila += Space(1) & $" ***** [TIENE OFERTA ACTIVA] : {_CodigoOfecta.Trim} - {_NombreOferta.Trim}, Fecha Inicio: {_FechaInicioOferta.ToShortDateString}, Fecha Fin: {_FechaFinOferta.ToShortDateString}"
+
+        End If
+
         _Fila.Cells("Informacion_Fila").Value = _Informacion_Fila
         Fm_Hijo.LblProveedorProducto.BackColor = _Color_Fila
         Me.Refresh()
@@ -3972,6 +3984,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         Sb_Actualizar_Ranking()
         Sb_Actualizar_Costos()
+        Sb_Actualizar_Ofertas()
 
         ' Actualizacion de precios para comparativo de compras entre Mayorista/Supermercado y proveedor
 
@@ -4001,19 +4014,10 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
         End If
 
         Sb_Actualizar_Rotacion("", _Actualizar_Rotacion)
-
-        'If Chk_CompMinXProveedores.Checked Then
-        '    Sb_PonerMultiploDeCompraPorProveedor(False)
-        'End If
-
-        'Sb_Actualizar_Ult3ComprasXprodVsProveedor()
-
         Sb_Grilla_Actualizar_Informe(Grilla)
-
 
         If _MarcarGrilla Then
 
-            'Sb_Grilla_Marcar_Async(Grilla, False)
             Sb_Grilla_Marcar(Grilla, False)
 
         End If
@@ -4031,7 +4035,6 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
         If Not String.IsNullOrEmpty(Fm_Hijo.Txt_Descripcion.Text) Then
             _Dv.RowFilter = String.Format("Codigo+Descripcion Like '%{0}%'", Trim(Fm_Hijo.Txt_Descripcion.Text))
             Sb_Grilla_Marcar(Grilla, False)
-            'Sb_Grilla_Marcar_Async(Grilla, False)
         End If
 
         Fm_Hijo.Chk_Ver_Doc_Solo_Proveedor.Enabled = Not IsNothing(_RowProveedor)
@@ -4940,6 +4943,51 @@ SET
         Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", _Nombre_Tbl_Paso_Informe)
         Consulta_sql = Replace(Consulta_sql, "#CodFuncionario#", FUNCIONARIO)
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Bodega#", _Filtro_Bodega)
+
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+    End Sub
+
+    Sub Sb_Actualizar_Ofertas()
+
+        Consulta_sql = $"
+;WITH Paso2 AS
+(
+    SELECT 
+        Cast(0 As Bit) As Chk,
+        Cast(0 As Bit) As EditadoGrabadoSesion,
+        Mr.*,
+        Cast(Mr.FTOFERTA As DateTime) As FTOFERTA_Anterior,
+        Cast(0 As Bit) As FTOFERTA_Modificada,
+        TipoOferta = (
+            SELECT TOP 1 LTRIM(RTRIM(ISNULL(NOKOCARAC,'')))
+            FROM TABCARAC
+            WHERE KOCARAC = Mr.KOGEN
+        ),
+        Dias = CASE WHEN DATEDIFF(D, GETDATE(), Mr.FTOFERTA) < 0
+                    THEN 0
+                    ELSE DATEDIFF(D, GETDATE(), Mr.FTOFERTA) END,
+        Activa = CASE WHEN GETDATE() BETWEEN Mr.FIOFERTA AND Mr.FTOFERTA THEN 'Si' ELSE 'No' END,
+        ProdAsociados = (
+            SELECT COUNT(*)
+            FROM MAEDRES D
+            WHERE D.CODIGO = Mr.CODIGO
+        )
+    FROM MAEERES Mr
+    WHERE Mr.TIPORESE = 'din'
+)
+UPDATE T
+SET 
+    T.CodigoOferta        = P.CODIGO,
+    T.NombreOferta        = P.DESCRIPTOR,
+    T.FechaInicioOferta   = P.FIOFERTA,
+    T.FechaFinOferta      = P.FTOFERTA,
+    T.OfertaActiva        = CASE WHEN P.Activa = 'Si' THEN 1 ELSE 0 END
+FROM {_Nombre_Tbl_Paso_Informe} T
+INNER JOIN MAEDRES D ON D.ELEMENTO = T.Codigo
+INNER JOIN Paso2 P   ON P.CODIGO = D.CODIGO
+WHERE P.Activa = 'Si';
+"
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 

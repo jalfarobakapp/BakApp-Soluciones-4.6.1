@@ -217,7 +217,7 @@ Public Class Cl_PPPPr
                     _UltSaldoNegativo = True
                 End If
 
-                If _Nudo = "0000015146" Then
+                If _Nudo = "0000008489" Then
                     Dim _Aqui = 0
                 End If
 
@@ -258,6 +258,7 @@ Public Class Cl_PPPPr
                    ((_Tido = "GRC") Or
                    (_Tido = "GRI" And String.IsNullOrWhiteSpace(_Tidopa)) Or
                    (_Tido = "FCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                   (_Tido = "FCC" And _Tidopa = "OCC") Or
                     _Tido = "BLC" Or
                     _Tido = "GRD" Or
                    (_Tido = "NCV" And String.IsNullOrWhiteSpace(_Tidopa)) Or

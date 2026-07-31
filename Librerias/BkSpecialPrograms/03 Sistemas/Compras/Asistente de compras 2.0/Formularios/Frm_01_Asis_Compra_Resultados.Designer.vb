@@ -247,6 +247,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.CheckBoxItem22 = New DevComponents.DotNetBar.CheckBoxItem()
         Me.CheckBoxItem23 = New DevComponents.DotNetBar.CheckBoxItem()
         Me.CheckBoxItem24 = New DevComponents.DotNetBar.CheckBoxItem()
+        Me.Chk_MarcarOfertas = New DevComponents.DotNetBar.CheckBoxItem()
         Me.RibbonControl1.SuspendLayout()
         Me.RibbonPanel8.SuspendLayout()
         Me.RibbonPanel5.SuspendLayout()
@@ -277,9 +278,9 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonControl1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.RibbonControl1.CaptionVisible = True
         Me.RibbonControl1.Controls.Add(Me.RibbonPanel8)
-        Me.RibbonControl1.Controls.Add(Me.RibbonPanel5)
-        Me.RibbonControl1.Controls.Add(Me.RibbonPanel1)
         Me.RibbonControl1.Controls.Add(Me.RibbonPanel2)
+        Me.RibbonControl1.Controls.Add(Me.RibbonPanel1)
+        Me.RibbonControl1.Controls.Add(Me.RibbonPanel5)
         Me.RibbonControl1.Controls.Add(Me.RibbonPanel7)
         Me.RibbonControl1.Dock = System.Windows.Forms.DockStyle.Top
         Me.RibbonControl1.ForeColor = System.Drawing.Color.Black
@@ -350,7 +351,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.Rib_MargenVenta.DragDropSupport = True
         Me.Rib_MargenVenta.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ItCont_Margen})
         Me.Rib_MargenVenta.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Rib_MargenVenta.Location = New System.Drawing.Point(795, 0)
+        Me.Rib_MargenVenta.Location = New System.Drawing.Point(809, 0)
         Me.Rib_MargenVenta.Name = "Rib_MargenVenta"
         Me.Rib_MargenVenta.Size = New System.Drawing.Size(199, 105)
         Me.Rib_MargenVenta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -413,7 +414,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonBar12.DragDropSupport = True
         Me.RibbonBar12.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_PonerMultXProveedores, Me.ButtonItem1})
         Me.RibbonBar12.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.RibbonBar12.Location = New System.Drawing.Point(664, 0)
+        Me.RibbonBar12.Location = New System.Drawing.Point(678, 0)
         Me.RibbonBar12.Name = "RibbonBar12"
         Me.RibbonBar12.Size = New System.Drawing.Size(131, 105)
         Me.RibbonBar12.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -464,7 +465,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.RibbonBar11.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.RibbonBar11.Location = New System.Drawing.Point(3, 0)
         Me.RibbonBar11.Name = "RibbonBar11"
-        Me.RibbonBar11.Size = New System.Drawing.Size(661, 105)
+        Me.RibbonBar11.Size = New System.Drawing.Size(675, 105)
         Me.RibbonBar11.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.RibbonBar11.TabIndex = 2
         Me.RibbonBar11.Text = "Excluir - Incluir"
@@ -486,7 +487,7 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.ItemContainer15.LayoutOrientation = DevComponents.DotNetBar.eOrientation.Vertical
         Me.ItemContainer15.MultiLine = True
         Me.ItemContainer15.Name = "ItemContainer15"
-        Me.ItemContainer15.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Chk_Quitar_Comprados, Me.Chk_Traer_Productos_De_Reemplazo, Me.Chk_Sumar_Rotacion_Hermanos, Me.Chk_Rotacion_Con_Ent_Excluidas, Me.Chk_Quitar_Ventas_Calzadas, Me.Chk_Quitare_Sospechosos_Stock, Me.Chk_Trabajando_Con_Proyeccion, Me.Chk_CompMinXProveedores, Me.Chk_SumerStockExternoAlFisico, Me.Chk_QuitarProdExcluidos, Me.Chk_Sacar_Productos_Sin_Rotacion, Me.Chk_Incluir_Salidas_GDI_OT, Me.Chk_MarcarFilas})
+        Me.ItemContainer15.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Chk_Quitar_Comprados, Me.Chk_Traer_Productos_De_Reemplazo, Me.Chk_Sumar_Rotacion_Hermanos, Me.Chk_Rotacion_Con_Ent_Excluidas, Me.Chk_Quitar_Ventas_Calzadas, Me.Chk_Quitare_Sospechosos_Stock, Me.Chk_Trabajando_Con_Proyeccion, Me.Chk_CompMinXProveedores, Me.Chk_SumerStockExternoAlFisico, Me.Chk_QuitarProdExcluidos, Me.Chk_Sacar_Productos_Sin_Rotacion, Me.Chk_Incluir_Salidas_GDI_OT, Me.Chk_MarcarFilas, Me.Chk_MarcarOfertas})
         '
         '
         '
@@ -2820,9 +2821,14 @@ Partial Class Frm_01_Asis_Compra_Resultados
         Me.CheckBoxItem24.Name = "CheckBoxItem24"
         Me.CheckBoxItem24.Text = "Marcar filas"
         '
+        'Chk_MarcarOfertas
+        '
+        Me.Chk_MarcarOfertas.Name = "Chk_MarcarOfertas"
+        Me.Chk_MarcarOfertas.Text = "Marcar ofertas"
+        '
         'Frm_01_Asis_Compra_Resultados
         '
-        Me.ClientSize = New System.Drawing.Size(1473, 323)
+        Me.ClientSize = New System.Drawing.Size(1473, 321)
         Me.Controls.Add(Me.ContextMenuBar1)
         Me.Controls.Add(Me.RibbonControl1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -3080,4 +3086,5 @@ Partial Class Frm_01_Asis_Compra_Resultados
     Friend WithEvents Rdb_LPMC_ListaCostos As DevComponents.DotNetBar.CheckBoxItem
     Friend WithEvents Rdb_LPMC_PPPPM As DevComponents.DotNetBar.CheckBoxItem
     Friend WithEvents Txt_ListaPreciosCM As DevComponents.DotNetBar.TextBoxItem
+    Friend WithEvents Chk_MarcarOfertas As DevComponents.DotNetBar.CheckBoxItem
 End Class
