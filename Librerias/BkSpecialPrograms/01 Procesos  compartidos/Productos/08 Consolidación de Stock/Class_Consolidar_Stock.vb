@@ -1013,6 +1013,38 @@ WHEN NOT MATCHED THEN
                             And Det.Empresa = '" & _Empresa & "' And Det.Sucursal = '" & _Sucursal & "' And Det.Bodega = '" & _Bodega & "' And Det.Codigo = '" & _Codigo & "' And Enc.TipoDoc = '" & _TipoDoc & "'
                             Group By Det.Codigo,Det.Descripcion,Det.Empresa,Det.Sucursal,Det.Bodega"
 
+            '            Consulta_sql = $"
+            'SELECT 
+            '    Det.Codigo,
+            '    Det.Descripcion,
+            '    Det.Empresa,
+            '    Det.Sucursal,
+            '    Det.Bodega,
+            '    SUM(Det.CantUd1) AS CantidadUd1,
+            '    SUM(Det.CantUd2) AS CantidadUd2
+            'FROM {_Global_BaseBk}Zw_Casi_DocDet AS Det WITH (NOLOCK)
+            'INNER JOIN {_Global_BaseBk}Zw_Casi_DocEnc AS Enc WITH (NOLOCK)
+            '        ON Enc.Id_DocEnc = Det.Id_DocEnc
+            'INNER JOIN {_Global_BaseBk}Zw_Remotas AS R WITH (NOLOCK)
+            '        ON R.Id_Casi_DocEnc = Enc.Id_DocEnc
+            'INNER JOIN {_Global_BaseBk}Zw_Remotas_En_Cadena_02_Det AS RC WITH (NOLOCK)
+            '        ON RC.NroRemota = R.NroRemota
+            'WHERE 
+            '    RC.NroRemota <> '' 
+            '    AND R.CodFuncionario_Autoriza = ''
+            '    AND Det.Empresa = '{_Empresa}'
+            '    AND Det.Sucursal = '{_Sucursal}'
+            '    AND Det.Bodega = '{_Bodega}'
+            '    AND Det.Codigo = '{_Codigo}'
+            '    AND Enc.TipoDoc = '{_TipoDoc}'
+            'GROUP BY 
+            '    Det.Codigo,
+            '    Det.Descripcion,
+            '    Det.Empresa,
+            '    Det.Sucursal,
+            '    Det.Bodega;
+            '"
+
             Dim Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             If Tbl.Rows.Count > 0 Then

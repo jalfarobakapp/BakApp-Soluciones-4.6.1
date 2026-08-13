@@ -330,6 +330,7 @@ Public Class Frm_Desp_01_Ingreso
         Dim _Tipo_Envio As String = Cmb_Tipo_Envio.SelectedValue
 
         If _Tipo_Envio = "RR" Then _Tipo_Envio = "AG"
+        If _Tipo_Envio = "DD" Then _Limpiar_Despacho = False
 
         Dim _Sql_Filtro_Condicion_Extra = "And KORETI In (Select CodTransportista From " & _Global_BaseBk & "Zw_Despachos_Transportistas Where Mostrar = 1 And Tipo_Envio In ('" & _Tipo_Envio & "',''))"
         _Tipo_Envio = Cmb_Tipo_Envio.SelectedValue

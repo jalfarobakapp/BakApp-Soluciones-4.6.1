@@ -5882,24 +5882,34 @@ Public Class Frm_Formulario_Documento
                     _Noaplica_Imp = " And NOAPLICEN Not like '%BSV,BLV%'"
                 End If
 
-                If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVta") AndAlso
-                    _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVtaStr") Then
+                'If _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVta") AndAlso
+                '    _Sql.Fx_Exite_Campo(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVtaStr") Then
 
-                    Dim _ImpNoCobraVta As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVta", "CodEntidad = '" & _CodEntidad & "'", True)
-                    Dim _ImpNoCobraVtaStr As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVtaStr", "CodEntidad = '" & _CodEntidad & "'", True)
+                Dim _ImpNoCobraVta As Boolean = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVta", "CodEntidad = '" & _CodEntidad & "'", True)
+                Dim _ImpNoCobraVtaStr As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades", "ImpNoCobraVtaStr", "CodEntidad = '" & _CodEntidad & "'", True)
 
-                    If _ImpNoCobraVta Then
-                        _Noaplica_Imp += " And KOIM <> '" & _ImpNoCobraVtaStr & "'"
-                    End If
-
+                If _ImpNoCobraVta Then
+                    _Noaplica_Imp += " And KOIM <> '" & _ImpNoCobraVtaStr & "'"
                 End If
 
+                'End If
+
+                ' EN ESTA PARTE EL SISTEMA NO CARGA IMPUESTO ESPECIFICO APLICA EN SEAGARDEN Y MEATGARDEN RESPECTIVAMENTE
                 If RutEmpresa = "77988832-0" Or (RutEmpresa = "76095906-5" And ModEmpresa_Doc = "02") Then
                     _QuitaImpCarne = True
                 End If
 
             ElseIf _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
+
                 _Noaplica_Imp = " And NOAPLICEN Not like '%compras%'"
+
+                Dim _ImpNoCobraVta As Boolean = _Global_Row_Configuracion_General.Item("ImpNoCobraVta")
+                Dim _ImpNoCobraVtaStr As String = _Global_Row_Configuracion_General.Item("ImpNoCobraVtaStr")
+
+                If _ImpNoCobraVta Then
+                    _Noaplica_Imp += " And KOIM <> '" & _ImpNoCobraVtaStr & "'"
+                End If
+
             End If
 
         End If
@@ -7141,11 +7151,19 @@ Public Class Frm_Formulario_Documento
                 If _CalCantidades Then
 
                     If _Rtu = 1 Then
+
                         _CantUd1 = _Cantidad
                         _CantUd2 = _Cantidad * _Rtu
+
                     Else
+
                         _CantUd1 = _Cantidad
                         _CantUd2 = _Cantidad / _Rtu
+
+                        If Double.IsInfinity(_CantUd2) OrElse Double.IsNaN(_CantUd2) Then
+                            _CantUd2 = 0
+                        End If
+
                     End If
 
                 End If
@@ -7160,11 +7178,19 @@ Public Class Frm_Formulario_Documento
                 End If
 
                 If _Rtu > 1 Then
+
                     _CantUd2 = _Cantidad
                     _CantUd1 = _Cantidad * _Rtu
+
                 Else
+
                     _CantUd2 = _Cantidad
                     _CantUd1 = _Cantidad / _Rtu
+
+                    If Double.IsInfinity(_CantUd2) OrElse Double.IsNaN(_CantUd2) Then
+                        _CantUd2 = 0
+                    End If
+
                 End If
 
             End If
@@ -7833,6 +7859,14 @@ Public Class Frm_Formulario_Documento
 
                     _PrecioNetoRealUd1 = Math.Round(_TotalNeto / _CantUd1, 5)
                     _PrecioNetoRealUd2 = Math.Round(_TotalNeto / _CantUd2, 5)
+
+                    If Double.IsInfinity(_PrecioNetoRealUd1) OrElse Double.IsNaN(_PrecioNetoRealUd1) Then
+                        _PrecioNetoRealUd1 = 0
+                    End If
+
+                    If Double.IsInfinity(_PrecioNetoRealUd2) OrElse Double.IsNaN(_PrecioNetoRealUd2) Then
+                        _PrecioNetoRealUd2 = 0
+                    End If
 
                     If Not ChkValores.Checked Then
                         _PrecioNeto = _PrecioNetoRealUd1
@@ -9724,6 +9758,10 @@ Public Class Frm_Formulario_Documento
 
                                     If (_RtuVariable Or _DesacRazTransf) AndAlso CBool(Fm.Cantidad_Ud1 + Fm.Cantidad_Ud2) Then
                                         _Fila.Cells("Rtu").Value = Math.Round(Fm.Cantidad_Ud1 / Fm.Cantidad_Ud2, 5)
+                                    End If
+
+                                    If Double.IsInfinity(_Fila.Cells("Rtu").Value) OrElse Double.IsNaN(_Fila.Cells("Rtu").Value) Then
+                                        _Fila.Cells("Rtu").Value = 0
                                     End If
 
                                     Dim _No_Permite_Superar_Cantidad_Original As Boolean
@@ -22068,7 +22106,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
                         End If
 
-                        If _Tido = "NCV" And _Tidopa <> "BLV" Then
+                        If _Tido = "NCV" And (_Tidopa <> "BLV" And _Tidopa <> "GRD") Then
                             _Total_Campo = (_Caprex1 + _Caprad1) - _Caprnc1
                         End If
 
@@ -23984,6 +24022,12 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                 _New_Fila.Cells("CantUd1").Value = Fila.Item("CantDoriUd1")
                 _New_Fila.Cells("CantUd2").Value = Fila.Item("CantDoriUd2")
                 _New_Fila.Cells("DesacRazTransf").Value = True
+
+                _New_Fila.Cells("Rtu").Value = Math.Round(_New_Fila.Cells("CantUd1").Value / _New_Fila.Cells("CantUd2").Value, 5)
+
+                If Double.IsInfinity(_New_Fila.Cells("Rtu").Value) OrElse Double.IsNaN(_New_Fila.Cells("Rtu").Value) Then
+                    _New_Fila.Cells("Rtu").Value = 0
+                End If
 
                 Dim _Precio_Old As Double = _New_Fila.Cells("Precio").Value
 

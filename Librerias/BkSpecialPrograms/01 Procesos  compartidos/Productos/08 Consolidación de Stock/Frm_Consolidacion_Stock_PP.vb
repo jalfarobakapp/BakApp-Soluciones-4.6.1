@@ -32,6 +32,7 @@ Public Class Frm_Consolidacion_Stock_PP
     End Property
 
     Public Property Empresa As String
+    Public Property ConsolidarTodasLasEmpresas As Boolean
 
     Public Sub New(Filtro_In_Productos As String)
 
@@ -55,7 +56,7 @@ Public Class Frm_Consolidacion_Stock_PP
         Tiempo_Accion_Automatico.Enabled = _Ejecutar_Automaticamente
     End Sub
 
-    Sub Sb_Consolidar_Stock(Tabla_Producto As DataTable)
+    Sub Sb_Consolidar_Stock(Tabla_Producto As DataTable, _Empresa_Cons As String)
 
         Dim _SqlQuery As String
 
@@ -68,6 +69,8 @@ Public Class Frm_Consolidacion_Stock_PP
         Progreso_Porc.Maximum = 100
         Progreso_Cont.Maximum = Tabla_Producto.Rows.Count
         Barra_Progreso.Maximum = Tabla_Producto.Rows.Count
+
+        Empresa = _Empresa_Cons
 
         Dim _Contador As Integer = 0
         Dim _Contador_Consolidados As Integer = 0
@@ -184,7 +187,7 @@ Where Codigo = '{_Codigo}' And Empresa = '{_Empresa}'"
             ON M.IDRST = D.Idmaeddo
            AND M.TIDO = 'FCV'
     WHERE P.Codigo    = '{_Codigo}'
-      AND P.Empresa   = '{Mod_Empresa}'
+      AND P.Empresa   = '{_Empresa_Cons}'
       --AND P.Eliminado = 0
     GROUP BY 
         P.Id,
@@ -342,7 +345,21 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
     End Function
 
     Private Sub BtnGenerar_Click(sender As System.Object, e As System.EventArgs) Handles BtnProcesar.Click
-        Sb_Consolidar_Stock(_TblProductos)
+
+        If ConsolidarTodasLasEmpresas Then
+
+            Consulta_sql = "Select EMPRESA From CONFIGP"
+            Dim _TblEmpresas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            For Each _Fila As DataRow In _TblEmpresas.Rows
+                Dim _Empresa As String = _Fila.Item("EMPRESA")
+                Sb_Consolidar_Stock(_TblProductos, _Empresa)
+            Next
+
+        Else
+            Sb_Consolidar_Stock(_TblProductos, Empresa)
+        End If
+
     End Sub
 
     Private Sub BtnCancelar_Click(sender As System.Object, e As System.EventArgs) Handles BtnCancelar.Click
@@ -370,9 +387,25 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
     Private Sub Tiempo_Accion_Automatico_Tick(sender As System.Object, e As System.EventArgs) Handles Tiempo_Accion_Automatico.Tick
         Tiempo_Accion_Automatico.Enabled = False
+
         If Not (_TblProductos Is Nothing) Then
-            Sb_Consolidar_Stock(_TblProductos)
+
+            If ConsolidarTodasLasEmpresas Then
+
+                Consulta_sql = "Select EMPRESA From CONFIGP"
+                Dim _TblEmpresas As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+                For Each _Fila As DataRow In _TblEmpresas.Rows
+                    Dim _Empresa As String = _Fila.Item("EMPRESA")
+                    Sb_Consolidar_Stock(_TblProductos, _Empresa)
+                Next
+
+            Else
+                Sb_Consolidar_Stock(_TblProductos, Empresa)
+            End If
+
         End If
+
     End Sub
 
     Sub Sb_Reservar_Stock_Pedido_Desde_NVV_Bakapp_Con_Permisos_Pendientes()

@@ -275,6 +275,10 @@ Public Class Frm_Configuracion_Gral
             Chk_ActivaTipoCompra.Checked = .Item("ActivaTipoCompra")
             Chk_NoCopiarCreditosSucEnt.Checked = .Item("NoCopiarCreditosSucEnt")
 
+            Chk_ImpNoCobraVta.Checked = .Item("ImpNoCobraVta")
+            Txt_ImpNoCobraVtaStr.Text = .Item("ImpNoCobraVtaStr") & " - " & _Sql.Fx_Trae_Dato("TABIM", "NOKOIM", $"KOIM = '{ .Item("ImpNoCobraVtaStr")}'").ToString.Trim
+            Txt_ImpNoCobraVtaStr.Tag = .Item("ImpNoCobraVtaStr")
+
         End With
 
         Chk_SolictarCiaSeguro.Enabled = _Modalidad_General
@@ -405,6 +409,9 @@ Public Class Frm_Configuracion_Gral
 
         Chk_ActivaTipoCompra.Enabled = _Modalidad_General
         Chk_NoCopiarCreditosSucEnt.Enabled = _Modalidad_General
+
+        Chk_ImpNoCobraVta.Enabled = _Modalidad_General
+        Txt_ImpNoCobraVtaStr.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -650,6 +657,8 @@ Public Class Frm_Configuracion_Gral
                        ",ToleranciaDocMoroso = " & Input_ToleranciaDocMoroso.Value & vbCrLf &
                        ",ActivaTipoCompra = " & Convert.ToInt32(Chk_ActivaTipoCompra.Checked) & vbCrLf &
                        ",NoCopiarCreditosSucEnt = " & Convert.ToInt32(Chk_NoCopiarCreditosSucEnt.Checked) & vbCrLf &
+                       ",ImpNoCobraVta = " & Convert.ToInt32(Chk_ImpNoCobraVta.Checked) & vbCrLf &
+                       ",ImpNoCobraVtaStr = '" & Txt_ImpNoCobraVtaStr.Tag & "'" & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
@@ -876,6 +885,39 @@ Public Class Frm_Configuracion_Gral
         If Not Chk_SolictarCiaSeguro.Checked Then
             Chk_PermiteVtaContadoCiaSeguro.Checked = False
         End If
+
+    End Sub
+
+    Private Sub Txt_ImpNoCobraVtaStr_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_ImpNoCobraVtaStr.ButtonCustomClick
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+
+        _Filtrar.Pro_Nombre_Encabezado_Informe = "IMPUESTOS ESPECIFICOS"
+
+        _Filtrar.Tabla = "TABIM"
+        _Filtrar.Campo = "KOIM"
+        _Filtrar.Descripcion = "NOKOIM"
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Otra, "",
+                               Nothing, False, True) Then
+
+            Dim _Row As DataRow = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+            Dim _Codigo As String = _Row.Item("Codigo").ToString.Trim
+            Dim _Descripcion As String = _Row.Item("Descripcion").ToString.Trim
+
+            Txt_ImpNoCobraVtaStr.Tag = _Codigo
+            Txt_ImpNoCobraVtaStr.Text = _Codigo & " - " & _Descripcion
+
+        End If
+
+    End Sub
+
+    Private Sub Txt_ImpNoCobraVtaStr_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_ImpNoCobraVtaStr.ButtonCustom2Click
+
+        Txt_ImpNoCobraVtaStr.Text = String.Empty
+        Txt_ImpNoCobraVtaStr.Tag = String.Empty
 
     End Sub
 
