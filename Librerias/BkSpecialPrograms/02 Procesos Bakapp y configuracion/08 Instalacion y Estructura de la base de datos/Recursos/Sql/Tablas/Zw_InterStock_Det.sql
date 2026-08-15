@@ -56,6 +56,17 @@ CREATE TABLE [dbo].[Zw_InterStock_Det](
 	[Idmaeddo_FCC]		[int]			NOT NULL DEFAULT (0),
 	[Tido_FCC]			[char](3)		NOT NULL DEFAULT (''),
 	[Nudo_FCC]			[varchar](10)	NOT NULL DEFAULT (''),
+    [Observaciones]     [varchar](max)  NOT NULL DEFAULT (''),
+	[Empresa_NCV]       [char](2)       NOT NULL DEFAULT (''),
+	[Idmaeedo_NCV]      [int]           NOT NULL DEFAULT (0),
+	[Idmaeddo_NCV]      [int]           NOT NULL DEFAULT (0),
+	[Tido_NCV]          [char](3)       NOT NULL DEFAULT (''),
+	[Nudo_NCV]          [varchar](50)   NOT NULL DEFAULT (''),
+	[Empresa_NCC]       [char](2)       NOT NULL DEFAULT (''),
+	[Idmaeedo_NCC]      [int]           NOT NULL DEFAULT (0),
+	[Idmaeddo_NCC]      [int]           NOT NULL DEFAULT (0),
+	[Tido_NCC]          [char](3)       NOT NULL DEFAULT (''),
+	[Nudo_NCC]          [varchar](10)   NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_InterStock_Det] PRIMARY KEY CLUSTERED 
 (
 	[Id_Det] ASC

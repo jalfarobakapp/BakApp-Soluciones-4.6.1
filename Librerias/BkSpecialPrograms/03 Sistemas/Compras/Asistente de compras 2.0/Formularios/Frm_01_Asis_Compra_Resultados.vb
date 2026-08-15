@@ -1167,6 +1167,27 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
             End If
 
+            If Chk_MarcarOfertas.Checked Then
+
+                .Columns("MontoOferta").Width = 70
+                .Columns("MontoOferta").HeaderText = $"$ Costo Oferta"
+                .Columns("MontoOferta").ToolTipText = "Costo Menor Oferta"
+                .Columns("MontoOferta").DefaultCellStyle.Format = "##,###0.##"
+                .Columns("MontoOferta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("MontoOferta").Visible = True
+                .Columns("MontoOferta").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+                .Columns("FechaFinOferta").HeaderText = "F.T.Oferta"
+                .Columns("FechaFinOferta").ToolTipText = "Fecha de termino de la Oferta"
+                .Columns("FechaFinOferta").Width = 70
+                .Columns("FechaFinOferta").DefaultCellStyle.Format = "dd/MM/yyyy"
+                .Columns("FechaFinOferta").Visible = True
+                .Columns("FechaFinOferta").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+            End If
+
             .Refresh()
 
         End With
@@ -4967,14 +4988,19 @@ SET
         Dias = CASE WHEN DATEDIFF(D, GETDATE(), Mr.FTOFERTA) < 0
                     THEN 0
                     ELSE DATEDIFF(D, GETDATE(), Mr.FTOFERTA) END,
-        Activa = CASE WHEN GETDATE() BETWEEN Mr.FIOFERTA AND Mr.FTOFERTA THEN 'Si' ELSE 'No' END,
-        ProdAsociados = (
-            SELECT COUNT(*)
-            FROM MAEDRES D
-            WHERE D.CODIGO = Mr.CODIGO
-        )
+        Activa = CASE WHEN GETDATE() BETWEEN Mr.FIOFERTA AND Mr.FTOFERTA THEN 'Si' ELSE 'No' END
     FROM MAEERES Mr
     WHERE Mr.TIPORESE = 'din'
+),
+MinOferta AS
+(
+    SELECT 
+        D.ELEMENTO AS Producto,
+        MIN(P.VALDESC) AS MinValDesc
+    FROM MAEDRES D
+    INNER JOIN Paso2 P ON P.CODIGO = D.CODIGO
+    WHERE P.Activa = 'Si'
+    GROUP BY D.ELEMENTO
 )
 UPDATE T
 SET 
@@ -4982,10 +5008,13 @@ SET
     T.NombreOferta        = P.DESCRIPTOR,
     T.FechaInicioOferta   = P.FIOFERTA,
     T.FechaFinOferta      = P.FTOFERTA,
-    T.OfertaActiva        = CASE WHEN P.Activa = 'Si' THEN 1 ELSE 0 END
+    T.OfertaActiva        = CASE WHEN P.Activa = 'Si' THEN 1 ELSE 0 END,
+    T.MontoOferta         = P.VALDESC
 FROM {_Nombre_Tbl_Paso_Informe} T
 INNER JOIN MAEDRES D ON D.ELEMENTO = T.Codigo
 INNER JOIN Paso2 P   ON P.CODIGO = D.CODIGO
+INNER JOIN MinOferta M ON M.Producto = D.ELEMENTO
+                      AND M.MinValDesc = P.VALDESC
 WHERE P.Activa = 'Si';
 "
 

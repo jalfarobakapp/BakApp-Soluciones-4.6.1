@@ -19567,7 +19567,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
             If _Tipo_Documento = csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Compra Then
 
-                If _Tido = "FCC" And Not String.IsNullOrEmpty(_SubTido) Then
+                If (_Tido = "FCC" And Not String.IsNullOrEmpty(_SubTido)) Or _Tido = "NCC" Then
 
                     ' SUBTIDO
                     '-- 001 Sin derecho a credito fiscal y Sin documento contiene activo fijo
@@ -19584,7 +19584,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                     Dim _Periodo = _FechaEmision.Year & numero_(_FechaEmision.Month, 2) & Mod_Sucursal 'Now.Year & numero_(Now.Month, 2) & Mod_Sucursal '
 
                     Dim _Maxlibro As String = _Sql.Fx_Trae_Dato("MAEEDO", "MAX(LIBRO)",
-                                                                "EMPRESA = '" & ModEmpresa_Doc & "' AND SUBSTRING(LIBRO,1,9)='" & _Periodo & "'  AND TIDO<>'BLC'")
+                                                                "EMPRESA = '" & ModEmpresa_Doc & "' AND SUBSTRING(LIBRO,1,9)='" & _Periodo & "' AND TIDO<>'BLC'")
 
                     If String.IsNullOrEmpty(_Maxlibro) Then _Maxlibro = _Periodo & "00000"
 

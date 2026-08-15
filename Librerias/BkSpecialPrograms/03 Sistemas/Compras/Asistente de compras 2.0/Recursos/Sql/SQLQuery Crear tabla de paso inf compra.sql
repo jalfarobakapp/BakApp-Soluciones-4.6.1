@@ -257,6 +257,7 @@ CREATE TABLE [dbo].[#TablaPaso#](
     [FechaInicioOferta]         [Datetime],
     [FechaFinOferta]            [Datetime],
     [OfertaActiva]              [Bit]          DEFAULT (0),
+    [MontoOferta]               [Float]        DEFAULT (0),
 
 	CONSTRAInt [PK_Zw_#TablaPaso#_Codigo] PRIMARY KEY CLUSTERED 
 (
