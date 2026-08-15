@@ -94,7 +94,7 @@ Public Class Frm_Kardex_Informe_X_Producto
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-        Sb_Formato_Generico_Grilla(GrillaKardex, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, False, False, False)
+        Sb_Formato_Generico_Grilla(GrillaKardex, 15, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         GrillaKardex.SelectionMode = DataGridViewSelectionMode.FullRowSelect
 
         _Codigo = Codigo
@@ -121,6 +121,7 @@ Public Class Frm_Kardex_Informe_X_Producto
 
     Private Sub Frm_DocumentoKardex_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
+        AddHandler GrillaKardex.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler GrillaKardex.CellEnter, AddressOf Sb_CellEnter
 
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
@@ -866,7 +867,7 @@ Public Class Frm_Kardex_Informe_X_Producto
 
     Private Sub Btn_DecimalAgregar_Click(sender As Object, e As EventArgs) Handles Btn_DecimalAgregar.Click
 
-        If _DecimalesGl < 3 Then _DecimalesGl += 1
+        If _DecimalesGl < 5 Then _DecimalesGl += 1
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
         Dim _Palabra = Letras(_DecimalesGl)
         Lbl_NroDecimales.Tooltip = _Palabra & " decimal(es)"
@@ -876,7 +877,7 @@ Public Class Frm_Kardex_Informe_X_Producto
 
     Private Sub Btn_DecimalRestar_Click(sender As Object, e As EventArgs) Handles Btn_DecimalRestar.Click
 
-        If _DecimalesGl > 0 And _DecimalesGl <= 3 Then _DecimalesGl -= 1
+        If _DecimalesGl > 0 And _DecimalesGl <= 5 Then _DecimalesGl -= 1
         Lbl_NroDecimales.Text = FormatNumber(0, _DecimalesGl)
         Dim _Palabra = Letras(_DecimalesGl)
         Lbl_NroDecimales.Tooltip = _Palabra & " decimal(es)"

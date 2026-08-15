@@ -107,27 +107,28 @@ CREATE TABLE [dbo].[#TablaPaso#](
     [PromMensualUd1_Ul3Mes]     [Float]        DEFAULT (0), -- Promedio mensual Ud1 ult 3 meses
 	[PromMensualUd2_Ul3Mes]     [Float]        DEFAULT (0), -- Promedio mensual Ud2 ult 3 meses
 
-    [RotDiariaUd1_Ult_3Mes_Prod]     [Float]        DEFAULT (0), -- Rotacion diaria Ud1 ult 3 meses por producto
-	[RotDiariaUd2_Ult_3Mes_Prod]     [Float]        DEFAULT (0), -- Rotacion diaria Ud2 ult 3 meses por producto	
-    [RotMensualUd1_Ult_3Mes_Prod]    [Float]        DEFAULT (0), -- Rotacion mensual Ud1 ult 3 meses por producto
-	[RotMensualUd2_Ult_3Mes_Prod]    [Float]        DEFAULT (0), -- Rotacion mensual Ud2 ult 3 meses por producto
+    [RotDiariaUd1_Ult_3Mes_Prod]     [Float]   DEFAULT (0), -- Rotacion diaria Ud1 ult 3 meses por producto
+	[RotDiariaUd2_Ult_3Mes_Prod]     [Float]   DEFAULT (0), -- Rotacion diaria Ud2 ult 3 meses por producto	
+    [RotMensualUd1_Ult_3Mes_Prod]    [Float]   DEFAULT (0), -- Rotacion mensual Ud1 ult 3 meses por producto
+	[RotMensualUd2_Ult_3Mes_Prod]    [Float]   DEFAULT (0), -- Rotacion mensual Ud2 ult 3 meses por producto
 
-    [PromDiariaUd1_Ul3Mes_Prod]  [Float]        DEFAULT (0), -- Promedio diario Ud1 ult 3 meses por producto
-	[PromDiariaUd2_Ul3Mes_Prod]  [Float]        DEFAULT (0), -- Promedio diario Ud2 ult 3 meses por producto	
-    [PromMensualUd1_Ul3Mes_Prod] [Float]        DEFAULT (0), -- Promedio mensual Ud1 ult 3 meses por producto
-	[PromMensualUd2_Ul3Mes_Prod] [Float]        DEFAULT (0), -- Promedio mensual Ud2 ult 3 meses por producto
+    [PromDiariaUd1_Ul3Mes_Prod]  [Float]       DEFAULT (0), -- Promedio diario Ud1 ult 3 meses por producto
+	[PromDiariaUd2_Ul3Mes_Prod]  [Float]       DEFAULT (0), -- Promedio diario Ud2 ult 3 meses por producto	
+    [PromMensualUd1_Ul3Mes_Prod] [Float]       DEFAULT (0), -- Promedio mensual Ud1 ult 3 meses por producto
+	[PromMensualUd2_Ul3Mes_Prod] [Float]       DEFAULT (0), -- Promedio mensual Ud2 ult 3 meses por producto
     
- --   [Prom_Ud1_Ult_3Mes]         [Float]        DEFAULT (0),
-	--[Prom_Ud2_Ult_3Mes]         [Float]        DEFAULT (0),
- --   [Prom_Ud1_Mensual_Ult_3Mes] [Float]        DEFAULT (0),
-	--[Prom_Ud2_Mensual_Ult_3Mes] [Float]        DEFAULT (0),
+ -- [Prom_Ud1_Ult_3Mes]         [Float]        DEFAULT (0),
+ -- [Prom_Ud2_Ult_3Mes]         [Float]        DEFAULT (0),
+ -- [Prom_Ud1_Mensual_Ult_3Mes] [Float]        DEFAULT (0),
+ -- [Prom_Ud2_Mensual_Ult_3Mes] [Float]        DEFAULT (0),
 
- --   [Prom_Ult_Ud1_Ult_3Mes]     [Float]        DEFAULT (0),
-	--[Prom_Ult_Ud2_Ult_3Mes]     [Float]        DEFAULT (0),
+ -- [Prom_Ult_Ud1_Ult_3Mes]     [Float]        DEFAULT (0),
+ -- [Prom_Ult_Ud2_Ult_3Mes]     [Float]        DEFAULT (0),
 
     [PromUlt3CioPromUlt3Meses_Ud1_Prod] [Float]        DEFAULT (0),
     [PromUlt3CioPromUlt3Meses_Ud2_Prod] [Float]        DEFAULT (0),
-    --[Promedio_Mensual_Ud1_UltMesMasPromUlt3Mes_Prod]    [Float]        DEFAULT (0),
+
+ -- [Promedio_Mensual_Ud1_UltMesMasPromUlt3Mes_Prod]    [Float]        DEFAULT (0),
 
 	[SumTotalQtyUd1]            [Float]        DEFAULT (0),
 	[SumTotalQtyUd2]            [Float]        DEFAULT (0),
@@ -138,10 +139,11 @@ CREATE TABLE [dbo].[#TablaPaso#](
     [SumTotalQtyUd1_Ult_3Cio]   [Float]        DEFAULT (0),
 	[SumTotalQtyUd2_Ult_3Cio]   [Float]        DEFAULT (0),
     
-    [TipoRotCalculo]            [Varchar](20)   DEFAULT '',
+    [TipoRotCalculo]            [Varchar](20)  DEFAULT '',
     [RotCalculo]                [Float]        DEFAULT (0),
 
     [RotCalculo_Prod]           [Float]        DEFAULT (0),
+
     [Duracion_Proyeccion_Prod]               [Float]        DEFAULT (0),
     [Duracion_Proyeccion_Recepcion_Prod]     [Float]        DEFAULT (0), 
 
@@ -179,9 +181,9 @@ CREATE TABLE [dbo].[#TablaPaso#](
 	[Suendo_Utl_Compra]         [Char](10)     DEFAULT '',
 
     [Idmaeedo_Ult_GRCFCC]       [Int]          DEFAULT (0),
-	[Tido_Ult_GRCFCC]       [Char](3)      DEFAULT '',
-	[Nudo_Ult_GRCFCC]       [Char](10)     DEFAULT '',
-	[Endo_Ult_GRCFCC]       [Char](13)     DEFAULT '',
+	[Tido_Ult_GRCFCC]           [Char](3)      DEFAULT '',
+	[Nudo_Ult_GRCFCC]           [Char](10)     DEFAULT '',
+	[Endo_Ult_GRCFCC]           [Char](13)     DEFAULT '',
 	[Suendo_Ult_GRCFCC]         [Char](10)     DEFAULT '',
 	
     [TienePrecioListasProv]     [Bit]          DEFAULT (0),
@@ -205,8 +207,17 @@ CREATE TABLE [dbo].[#TablaPaso#](
     [PorcDifCostoNetUd1]        [Float]        DEFAULT (0),
     [PorcDifCostoBruUd1]        [Float]        DEFAULT (0),
     --#Campos_Descuentos#
-    [Porc_Descuento]            [Float]        DEFAULT (0),
-	[Orden]                     [Int]          DEFAULT (0),
+    [Porc_Descuento]            [Float]        DEFAULT (0),	
+
+    [Lista_Precio]              [Char](13)     DEFAULT '',
+    [Precio_Ud1_Neto]           [Float]        DEFAULT (0),
+    [Precio_Ud2_Neto]           [Float]        DEFAULT (0),
+    [Precio_Ud1_Bruto]          [Float]        DEFAULT (0),
+    [Precio_Ud2_Bruto]          [Float]        DEFAULT (0),
+    [Margen_Porc]               [Float]        DEFAULT (0),
+    [Margen_Valor]              [Float]        DEFAULT (0),
+        
+    [Orden]                     [Int]          DEFAULT (0),
 	[Dias_Venta_Efectivos]      [Float]        DEFAULT (0),
 	[Fecha_Ult_Venta]           [Date],
 	[Dias_Existencia_Habiles]   [Float]        DEFAULT (0),
@@ -240,6 +251,14 @@ CREATE TABLE [dbo].[#TablaPaso#](
 	[Nom_SuperFamilia]          [VarChar](50)  DEFAULT '',
 	[Nom_Familia]               [VarChar](50)  DEFAULT '',
 	[Nom_SubFamilia]            [VarChar](50)  DEFAULT '',
+
+    [CodigoOferta]              [VarChar](13)  DEFAULT '',
+    [NombreOferta]              [VarChar](50)  DEFAULT '',
+    [FechaInicioOferta]         [Datetime],
+    [FechaFinOferta]            [Datetime],
+    [OfertaActiva]              [Bit]          DEFAULT (0),
+    [MontoOferta]               [Float]        DEFAULT (0),
+
 	CONSTRAInt [PK_Zw_#TablaPaso#_Codigo] PRIMARY KEY CLUSTERED 
 (
 	[Codigo] ASC,

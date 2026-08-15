@@ -264,6 +264,8 @@ Public Class Frm_01_Asis_Compra_Resultados
 
     Public Property InformeDeComprasAgrupadoporAsociacion As Boolean
 
+    Public Property Ver_Margenes As Boolean
+
     Dim _Pstar As Boolean
     Dim _CodProveedor_Pstar As String
     Dim _CodSucProveedor_Pstar As String
@@ -374,6 +376,8 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
     Private Sub Frm_01_AsisCompra_Resultados_Load(sender As Object, e As System.EventArgs) Handles Me.Load
 
+        Rib_MargenVenta.Enabled = Ver_Margenes
+
         _Rdb_Productos_Proveedor = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Tmp_Prm_Informes", "Valor",
                                                                     "Funcionario = '" & FUNCIONARIO & "'" & Space(1) &
                                                                     "And Campo = 'Rdb_Productos_Proveedor'" & Space(1) &
@@ -480,6 +484,10 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         If InformeDeComprasAgrupadoporAsociacion Then
             Timer_InformeDeComprasAgrupadoporAsociacion.Start()
+        End If
+
+        If RutEmpresa = "77458040-9" OrElse RutEmpresa = "07251245-6" OrElse RutEmpresa = "77634877-5" OrElse RutEmpresa = "77634879-1" Then
+            Btn_ListaLC.Visible = True
         End If
 
     End Sub
@@ -783,12 +791,54 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             .Columns("ProductoExcluido").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '' Creamos un nuevo estilo de celda
-            ''
-            'Dim cellStyle As New DataGridViewCellStyle
 
-            'cellStyle.Font = New Font(Grilla.Font.Name, Grilla.Font.Size, FontStyle.Bold)
-            'Grilla.Columns("CantSugeridaTot").DefaultCellStyle = cellStyle
+            If Ver_Margenes Then
+
+                Dim _Col_Costo As String = String.Empty
+
+                If Rdb_LPMC_ListaCostos.Checked Then
+                    _Col_Costo = "Costo_Ud1Lista_Neto"
+                ElseIf Rdb_LPMC_PPPPM.Checked Then
+                    _Col_Costo = "Costo_PPP"
+                End If
+
+                .Columns("Precio_Ud1_Neto").Width = 70
+                .Columns("Precio_Ud1_Neto").HeaderText = "$ Precio Neto"
+                .Columns("Precio_Ud1_Neto").ToolTipText = "Precio Neto Unidad 1"
+                .Columns("Precio_Ud1_Neto").DefaultCellStyle.Format = "##,###0"
+                .Columns("Precio_Ud1_Neto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Precio_Ud1_Neto").Visible = True
+                .Columns("Precio_Ud1_Neto").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+                .Columns(_Col_Costo).Width = 70
+                .Columns(_Col_Costo).HeaderText = $"$ Costo Neto {IIf(Rdb_LPMC_ListaCostos.Checked, "Lista P.", "PPP (PM)")}"
+                .Columns(_Col_Costo).ToolTipText = "Costo Neto Unidad 1"
+                .Columns(_Col_Costo).DefaultCellStyle.Format = "##,###0.##"
+                .Columns(_Col_Costo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(_Col_Costo).Visible = True
+                .Columns(_Col_Costo).DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+                .Columns("Margen_Valor").Width = 60
+                .Columns("Margen_Valor").HeaderText = "$ Margen"
+                .Columns("Margen_Valor").ToolTipText = "Margen, valor"
+                .Columns("Margen_Valor").DefaultCellStyle.Format = "##,###0"
+                .Columns("Margen_Valor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Margen_Valor").Visible = True
+                .Columns("Margen_Valor").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+                .Columns("Margen_Porc").Width = 60
+                .Columns("Margen_Porc").HeaderText = "% Margen"
+                .Columns("Margen_Porc").ToolTipText = "Porcentaje de Margen"
+                .Columns("Margen_Porc").DefaultCellStyle.Format = "% ##,##0.##"
+                .Columns("Margen_Porc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Margen_Porc").Visible = True
+                .Columns("Margen_Porc").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+            End If
 
             .Refresh()
 
@@ -1068,6 +1118,75 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             .Columns("Porc_CumpUlt3Pedidos").Visible = True
             .Columns("Porc_CumpUlt3Pedidos").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            If Ver_Margenes Then
+
+                Dim _Col_Costo As String = String.Empty
+
+                If Rdb_LPMC_ListaCostos.Checked Then
+                    _Col_Costo = "Costo_Ud1Lista_Neto"
+                ElseIf Rdb_LPMC_PPPPM.Checked Then
+                    _Col_Costo = "Costo_PPP"
+                End If
+
+                .Columns("Precio_Ud1_Neto").Width = 70
+                .Columns("Precio_Ud1_Neto").HeaderText = "$ Precio Neto"
+                .Columns("Precio_Ud1_Neto").ToolTipText = "Precio Neto Unidad 1"
+                .Columns("Precio_Ud1_Neto").DefaultCellStyle.Format = "##,###0.##"
+                .Columns("Precio_Ud1_Neto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Precio_Ud1_Neto").Visible = True
+                .Columns("Precio_Ud1_Neto").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+                .Columns(_Col_Costo).Width = 70
+                .Columns(_Col_Costo).HeaderText = $"$ Costo Neto {IIf(Rdb_LPMC_ListaCostos.Checked, "Lista P.", "PPP (PM)")}"
+                .Columns(_Col_Costo).ToolTipText = "Costo Neto Unidad 1"
+                .Columns(_Col_Costo).DefaultCellStyle.Format = "##,###0.##"
+                .Columns(_Col_Costo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(_Col_Costo).Visible = True
+                .Columns(_Col_Costo).DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+                .Columns("Margen_Valor").Width = 60
+                .Columns("Margen_Valor").HeaderText = "$ Margen"
+                .Columns("Margen_Valor").ToolTipText = "Margen, valor"
+                .Columns("Margen_Valor").DefaultCellStyle.Format = "##,###0"
+                .Columns("Margen_Valor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Margen_Valor").Visible = True
+                .Columns("Margen_Valor").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+                .Columns("Margen_Porc").Width = 60
+                .Columns("Margen_Porc").HeaderText = "% Margen"
+                .Columns("Margen_Porc").ToolTipText = "Porcentaje de Margen"
+                .Columns("Margen_Porc").DefaultCellStyle.Format = "% ##,##0.##"
+                .Columns("Margen_Porc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Margen_Porc").Visible = True
+                .Columns("Margen_Porc").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+            End If
+
+            If Chk_MarcarOfertas.Checked Then
+
+                .Columns("MontoOferta").Width = 70
+                .Columns("MontoOferta").HeaderText = $"$ Costo Oferta"
+                .Columns("MontoOferta").ToolTipText = "Costo Menor Oferta"
+                .Columns("MontoOferta").DefaultCellStyle.Format = "##,###0.##"
+                .Columns("MontoOferta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("MontoOferta").Visible = True
+                .Columns("MontoOferta").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+                .Columns("FechaFinOferta").HeaderText = "F.T.Oferta"
+                .Columns("FechaFinOferta").ToolTipText = "Fecha de termino de la Oferta"
+                .Columns("FechaFinOferta").Width = 70
+                .Columns("FechaFinOferta").DefaultCellStyle.Format = "dd/MM/yyyy"
+                .Columns("FechaFinOferta").Visible = True
+                .Columns("FechaFinOferta").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+            End If
 
             .Refresh()
 
@@ -1355,12 +1474,53 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             .Columns("ProductoExcluido").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '' Creamos un nuevo estilo de celda
-            ''
-            'Dim cellStyle As New DataGridViewCellStyle
+            If Ver_Margenes Then
 
-            'cellStyle.Font = New Font(Grilla.Font.Name, Grilla.Font.Size, FontStyle.Bold)
-            'Grilla.Columns("CantSugeridaTot").DefaultCellStyle = cellStyle
+                Dim _Col_Costo As String = String.Empty
+
+                If Rdb_LPMC_ListaCostos.Checked Then
+                    _Col_Costo = "Costo_Ud1Lista_Neto"
+                ElseIf Rdb_LPMC_PPPPM.Checked Then
+                    _Col_Costo = "Costo_PPP"
+                End If
+
+                .Columns("Precio_Ud1_Neto").Width = 70
+                .Columns("Precio_Ud1_Neto").HeaderText = "$ Precio Neto"
+                .Columns("Precio_Ud1_Neto").ToolTipText = "Precio Neto Unidad 1"
+                .Columns("Precio_Ud1_Neto").DefaultCellStyle.Format = "##,###0"
+                .Columns("Precio_Ud1_Neto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Precio_Ud1_Neto").Visible = True
+                .Columns("Precio_Ud1_Neto").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+                .Columns(_Col_Costo).Width = 70
+                .Columns(_Col_Costo).HeaderText = $"$ Costo Neto {IIf(Rdb_LPMC_ListaCostos.Checked, "Lista P.", "PPP (PM)")}"
+                .Columns(_Col_Costo).ToolTipText = "Costo Neto Unidad 1"
+                .Columns(_Col_Costo).DefaultCellStyle.Format = "##,###0.##"
+                .Columns(_Col_Costo).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(_Col_Costo).Visible = True
+                .Columns(_Col_Costo).DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+                .Columns("Margen_Valor").Width = 60
+                .Columns("Margen_Valor").HeaderText = "$ Margen"
+                .Columns("Margen_Valor").ToolTipText = "Margen, valor"
+                .Columns("Margen_Valor").DefaultCellStyle.Format = "##,###0"
+                .Columns("Margen_Valor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Margen_Valor").Visible = True
+                .Columns("Margen_Valor").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+                .Columns("Margen_Porc").Width = 60
+                .Columns("Margen_Porc").HeaderText = "% Margen"
+                .Columns("Margen_Porc").ToolTipText = "Porcentaje de Margen"
+                .Columns("Margen_Porc").DefaultCellStyle.Format = "% ##,##0.##"
+                .Columns("Margen_Porc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns("Margen_Porc").Visible = True
+                .Columns("Margen_Porc").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+
+            End If
 
             .Refresh()
 
@@ -2881,8 +3041,6 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         End If
 
-
-
         Dim _Cantidad = NuloPorNro(_Fila.Cells("CantComprar").Value, 0)
         Dim _RotacionDiaria = NuloPorNro(_Fila.Cells("RotDiariaUd" & Ud).Value, 0)
         Dim _RotacionMensual = NuloPorNro(_Fila.Cells("RotMensualUd" & Ud).Value, 0)
@@ -3026,6 +3184,9 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             _Fila.Cells(_ColDif).Style.ForeColor = Verde
         End If
 
+        If Chk_MarcarOfertas.Checked AndAlso _Fila.Cells("OfertaActiva").Value Then
+            _Fila.DefaultCellStyle.BackColor = Color.LightGreen
+        End If
 
     End Sub
 
@@ -3533,6 +3694,17 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         Dim _Color_Fila As Color = _Fila.DefaultCellStyle.BackColor ' = Color.Khaki
 
+        If Chk_MarcarOfertas.Checked AndAlso _Fila.Cells("OfertaActiva").Value Then
+
+            Dim _CodigoOfecta As String = _Fila.Cells("CodigoOferta").Value
+            Dim _NombreOferta As String = _Fila.Cells("NombreOferta").Value
+            Dim _FechaInicioOferta As DateTime = _Fila.Cells("FechaInicioOferta").Value
+            Dim _FechaFinOferta As DateTime = _Fila.Cells("FechaFinOferta").Value
+
+            _Informacion_Fila += Space(1) & $" ***** [TIENE OFERTA ACTIVA] : {_CodigoOfecta.Trim} - {_NombreOferta.Trim}, Fecha Inicio: {_FechaInicioOferta.ToShortDateString}, Fecha Fin: {_FechaFinOferta.ToShortDateString}"
+
+        End If
+
         _Fila.Cells("Informacion_Fila").Value = _Informacion_Fila
         Fm_Hijo.LblProveedorProducto.BackColor = _Color_Fila
         Me.Refresh()
@@ -3833,6 +4005,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         Sb_Actualizar_Ranking()
         Sb_Actualizar_Costos()
+        Sb_Actualizar_Ofertas()
 
         ' Actualizacion de precios para comparativo de compras entre Mayorista/Supermercado y proveedor
 
@@ -3862,19 +4035,10 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
         End If
 
         Sb_Actualizar_Rotacion("", _Actualizar_Rotacion)
-
-        'If Chk_CompMinXProveedores.Checked Then
-        '    Sb_PonerMultiploDeCompraPorProveedor(False)
-        'End If
-
-        'Sb_Actualizar_Ult3ComprasXprodVsProveedor()
-
         Sb_Grilla_Actualizar_Informe(Grilla)
-
 
         If _MarcarGrilla Then
 
-            'Sb_Grilla_Marcar_Async(Grilla, False)
             Sb_Grilla_Marcar(Grilla, False)
 
         End If
@@ -3892,7 +4056,6 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
         If Not String.IsNullOrEmpty(Fm_Hijo.Txt_Descripcion.Text) Then
             _Dv.RowFilter = String.Format("Codigo+Descripcion Like '%{0}%'", Trim(Fm_Hijo.Txt_Descripcion.Text))
             Sb_Grilla_Marcar(Grilla, False)
-            'Sb_Grilla_Marcar_Async(Grilla, False)
         End If
 
         Fm_Hijo.Chk_Ver_Doc_Solo_Proveedor.Enabled = Not IsNothing(_RowProveedor)
@@ -4424,21 +4587,35 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
     Sub Sb_Actualizar_Costos()
 
-        Dim _Lista As String = Cmb_Lista_Costos.SelectedItem.Value
+        Dim _Lista_Costos As String = Cmb_Lista_Costos.SelectedItem.Value
 
-        Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set Iva = (Select POIVPR From MAEPR Where KOPR = Codigo)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Ila = Isnull((Select Sum(POIM) From TABIM Where KOIM In (Select KOIM From TABIMPR Where KOPR = Codigo)),0)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_PPP = (Select PM From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_UltComUd1 = (Select PPUL01 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_UltComUd2 = (Select PPUL02 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)                        
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = (Select PP01UD From TABPRE Where KOLT = '" & _Lista & "' And KOPR = Codigo)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Neto = (Select PP02UD From TABPRE Where KOLT = '" & _Lista & "' And KOPR = Codigo)
+        'Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set Iva = (Select POIVPR From MAEPR Where KOPR = Codigo)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Ila = Isnull((Select Sum(POIM) From TABIM Where KOIM In (Select KOIM From TABIMPR Where KOPR = Codigo)),0)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_PPP = (Select PM From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_UltComUd1 = (Select PPUL01 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_UltComUd2 = (Select PPUL02 From MAEPREM Where EMPRESA = '" & Mod_Empresa & "' And KOPR = Codigo)                        
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = (Select PP01UD From TABPRE Where KOLT = '" & _Lista_Costos & "' And KOPR = Codigo)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Neto = (Select PP02UD From TABPRE Where KOLT = '" & _Lista_Costos & "' And KOPR = Codigo)
 
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Bruto = Round(Costo_Ud1Lista_Neto * (1+((Iva+Ila)/100)),0)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Neto * (1+((Iva+Ila)/100)),0)
-                        Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Flete = 0"
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Bruto = Round(Costo_Ud1Lista_Neto * (1+((Iva+Ila)/100)),0)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Neto * (1+((Iva+Ila)/100)),0)
+        '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Flete = 0"
+
+        Consulta_sql = $"
+Update {_Nombre_Tbl_Paso_Informe} Set Iva = (Select POIVPR From MAEPR Where KOPR = Codigo)
+Update {_Nombre_Tbl_Paso_Informe} Set Ila = Isnull((Select Sum(POIM) From TABIM Where KOIM In (Select KOIM From TABIMPR Where KOPR = Codigo)),0)
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_PPP = (Select PM From MAEPREM Where EMPRESA = '{Mod_Empresa}' And KOPR = Codigo)
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_UltComUd1 = (Select PPUL01 From MAEPREM Where EMPRESA = '{Mod_Empresa}' And KOPR = Codigo)
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_UltComUd2 = (Select PPUL02 From MAEPREM Where EMPRESA = '{Mod_Empresa}' And KOPR = Codigo)                        
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_Ud1Lista_Neto = (Select PP01UD From TABPRE Where KOLT = '{_Lista_Costos}' And KOPR = Codigo)
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_Ud2Lista_Neto = (Select PP02UD From TABPRE Where KOLT = '{_Lista_Costos}' And KOPR = Codigo)
+
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_Ud1Lista_Bruto = Round(Costo_Ud1Lista_Neto * (1+((Iva+Ila)/100)),0)
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Neto * (1+((Iva+Ila)/100)),0)
+Update {_Nombre_Tbl_Paso_Informe} Set Costo_Flete = 0"
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
+
 
         If Not IsNothing(_RowProveedor) Then
 
@@ -4478,7 +4655,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
                 _Campos_Descuentos += "(1 - (" & _Campo & " / 100.0))"
             End If
 
-            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " & _Campo & " = (Select " & _Campo & " From TABPRE Where KOLT = '" & _Lista & "' And KOPR = Codigo)"
+            Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " & _Campo & " = (Select " & _Campo & " From TABPRE Where KOLT = '" & _Lista_Costos & "' And KOPR = Codigo)"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
         Next
@@ -4511,28 +4688,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
                 _Sql.Ej_consulta_IDU(Consulta_sql)
             End If
 
-            'Consulta_sql = "--Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = Costo_Ud1Lista_Neto + Costo_FleteNeto
-            '                --Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Neto = Costo_Ud2Lista_Neto + (Costo_FleteNeto*Rtu)
-
-            '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Bruto = Round(Costo_Ud1Lista_Bruto + Costo_Flete,0)
-            '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Bruto + (Costo_Flete*Rtu),0)"
-            '_Sql.Ej_consulta_IDU(Consulta_sql)
-
-            'Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Neto = Costo_Ud1Lista_Neto + (Costo_Flete/1.19)
-            '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Neto = Costo_Ud2Lista_Neto + ((Costo_Flete/1.19)*Rtu)
-
-            '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud1Lista_Bruto = Round(Costo_Ud1Lista_Bruto + Costo_Flete,0)
-            '                Update " & _Nombre_Tbl_Paso_Informe & " Set Costo_Ud2Lista_Bruto = Round(Costo_Ud2Lista_Bruto + (Costo_Flete*Rtu),0)"
-            '_Sql.Ej_consulta_IDU(Consulta_sql)
-
         End If
-
-        ' Incorpora campo que indica la diferencia con el costo de la ultima compra VS el costo del proveedor
-
-        'Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " &
-        '       "PorcDifCostoBruUd1 = Round((Costo_Ud1Lista_Bruto-(Costo_UltComUd1*(1+((Iva+Ila)/100))))/(Costo_UltComUd1*(1+((Iva+Ila)/100))),2)" & vbCrLf &
-        '       "Where Costo_Ud1Lista_Neto > 0 And Costo_UltComUd1 > 0"
-        '_Sql.Ej_consulta_IDU(Consulta_sql)
 
         If Chk_MostrarFlete.Checked Then
             Consulta_sql = "Update " & _Nombre_Tbl_Paso_Informe & " Set " &
@@ -4547,15 +4703,131 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
         End If
 
+        ' Actualiza Lista de Precios
 
-        '_DescuentoPorc = 100 * (1 - (
-        '                             (1 - (_Desc1 / 100.0)) *
-        '                             (1 - (_Desc2 / 100.0)) *
-        '                             (1 - (_Desc3 / 100.0)) *
-        '                             (1 - (_Desc4 / 100.0)) *
-        '                             (1 - (_Desc5 / 100.0))
-        '                             )
-        '                             )
+        If Ver_Margenes Then
+
+            Dim _Lista_Precios As String = Txt_ListaPreciosCM.Tag ' "PB7"
+            Dim _Row_Lista_Precios As DataRow
+
+            Consulta_sql = $"Select * From TABPP Where KOLT = '{_Lista_Precios}'"
+            _Row_Lista_Precios = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            Dim _Melt As String = _Row_Lista_Precios.Item("MELT")
+
+            '        Consulta_sql = $"
+
+            'Update {_Nombre_Tbl_Paso_Informe} Set Lista_Precio = '{_Lista_Precios}'
+            'Update {_Nombre_Tbl_Paso_Informe} Set Precio_Ud1_Neto = (Select PP01UD From TABPRE Where KOLT = '{_Lista_Precios}' And KOPR = Codigo)
+            'Update {_Nombre_Tbl_Paso_Informe} Set Precio_Ud2_Neto = (Select PP02UD From TABPRE Where KOLT = '{_Lista_Precios}' And KOPR = Codigo)
+
+            'Update {_Nombre_Tbl_Paso_Informe} Set Precio_Ud1_Bruto = Round(Precio_Ud1_Neto * (1+((Iva+Ila)/100)),0)
+            'Update {_Nombre_Tbl_Paso_Informe} Set Precio_Ud2_Bruto = Round(Precio_Ud2_Neto * (1+((Iva+Ila)/100)),0)"
+
+            ' Precios Netos desde lista de precios y calculamos el Bruto
+            If _Melt = "N" Then
+
+                Consulta_sql = $"
+                ------------------------------------------------------------
+                --  A) TABPRE entrega precios NETOS
+                --     PP01UD y PP02UD están en NETO
+                --     Se convierten a BRUTO aplicando impuestos
+                ------------------------------------------------------------
+
+                -- 1. Asignar lista de precios
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET Lista_Precio = '{_Lista_Precios}';
+
+                -- 2. Cargar precios NETOS desde TABPRE
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET Precio_Ud1_Neto = ROUND((
+                        SELECT PP01UD
+                        FROM TABPRE
+                        WHERE KOLT = '{_Lista_Precios}'
+                          AND KOPR = Codigo
+                    ), 5),
+                    Precio_Ud2_Neto = ROUND((
+                        SELECT PP02UD
+                        FROM TABPRE
+                        WHERE KOLT = '{_Lista_Precios}'
+                          AND KOPR = Codigo
+                    ), 5);
+
+                -- 3. Convertir NETO → BRUTO
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET Precio_Ud1_Bruto = ROUND(Precio_Ud1_Neto * (1 + ((Iva + Ila) / 100.0)), 0),
+                    Precio_Ud2_Bruto = ROUND(Precio_Ud2_Neto * (1 + ((Iva + Ila) / 100.0)), 0);
+"
+                ' Precios Brutos desde lista de precios y calculamos el Neto
+            ElseIf _Melt = "B" Then
+
+                Consulta_sql = $"
+                ------------------------------------------------------------
+                --  B) TABPRE entrega precios BRUTOS
+                --     PP01UD y PP02UD están en BRUTO
+                --     Se convierten a NETO eliminando impuestos
+                ------------------------------------------------------------
+
+                -- 1. Asignar lista de precios
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET Lista_Precio = '{_Lista_Precios}';
+
+                -- 2. Cargar precios NETOS calculados desde BRUTOS
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET Precio_Ud1_Neto = ROUND((
+                        SELECT PP01UD / (1 + ((Iva + Ila) / 100.0))
+                        FROM TABPRE
+                        WHERE KOLT = '{_Lista_Precios}'
+                          AND KOPR = Codigo
+                    ), 5),
+                    Precio_Ud2_Neto = ROUND((
+                        SELECT PP02UD / (1 + ((Iva + Ila) / 100.0))
+                        FROM TABPRE
+                        WHERE KOLT = '{_Lista_Precios}'
+                          AND KOPR = Codigo
+                    ), 5);
+
+                -- 3. (Opcional) Recalcular BRUTO desde NETO para mantener coherencia
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET Precio_Ud1_Bruto = ROUND(Precio_Ud1_Neto * (1 + ((Iva + Ila) / 100.0)), 0),
+                    Precio_Ud2_Bruto = ROUND(Precio_Ud2_Neto * (1 + ((Iva + Ila) / 100.0)), 0);
+"
+
+            End If
+
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            Dim _Lc_Costo As String
+
+            If Rdb_LPMC_ListaCostos.Checked Then
+                _Lc_Costo = "Costo_Ud1Lista_Neto"
+            ElseIf Rdb_LPMC_PPPPM.Checked Then
+                _Lc_Costo = "Costo_PPP"
+            End If
+
+            Consulta_sql = $"
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET 
+                    Margen_Valor = 
+                        CASE 
+                            WHEN {_Lc_Costo} = 0 THEN 0
+                            ELSE Precio_Ud1_Neto - {_Lc_Costo}
+                        END,
+
+                    Margen_Porc = 
+                        CASE 
+                            WHEN {_Lc_Costo} = 0 THEN 0
+                            ELSE ROUND(
+                                    (Precio_Ud1_Neto / {_Lc_Costo}) - 1
+                                , 5)
+                        END;"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            ' ------------------------------------------------------------------------------------------------------
+
+
+        End If
+
 
     End Sub
 
@@ -4692,6 +4964,59 @@ SET
         Consulta_sql = Replace(Consulta_sql, "#TablaPaso#", _Nombre_Tbl_Paso_Informe)
         Consulta_sql = Replace(Consulta_sql, "#CodFuncionario#", FUNCIONARIO)
         Consulta_sql = Replace(Consulta_sql, "#Filtro_Bodega#", _Filtro_Bodega)
+
+        _Sql.Ej_consulta_IDU(Consulta_sql)
+
+    End Sub
+
+    Sub Sb_Actualizar_Ofertas()
+
+        Consulta_sql = $"
+;WITH Paso2 AS
+(
+    SELECT 
+        Cast(0 As Bit) As Chk,
+        Cast(0 As Bit) As EditadoGrabadoSesion,
+        Mr.*,
+        Cast(Mr.FTOFERTA As DateTime) As FTOFERTA_Anterior,
+        Cast(0 As Bit) As FTOFERTA_Modificada,
+        TipoOferta = (
+            SELECT TOP 1 LTRIM(RTRIM(ISNULL(NOKOCARAC,'')))
+            FROM TABCARAC
+            WHERE KOCARAC = Mr.KOGEN
+        ),
+        Dias = CASE WHEN DATEDIFF(D, GETDATE(), Mr.FTOFERTA) < 0
+                    THEN 0
+                    ELSE DATEDIFF(D, GETDATE(), Mr.FTOFERTA) END,
+        Activa = CASE WHEN GETDATE() BETWEEN Mr.FIOFERTA AND Mr.FTOFERTA THEN 'Si' ELSE 'No' END
+    FROM MAEERES Mr
+    WHERE Mr.TIPORESE = 'din'
+),
+MinOferta AS
+(
+    SELECT 
+        D.ELEMENTO AS Producto,
+        MIN(P.VALDESC) AS MinValDesc
+    FROM MAEDRES D
+    INNER JOIN Paso2 P ON P.CODIGO = D.CODIGO
+    WHERE P.Activa = 'Si'
+    GROUP BY D.ELEMENTO
+)
+UPDATE T
+SET 
+    T.CodigoOferta        = P.CODIGO,
+    T.NombreOferta        = P.DESCRIPTOR,
+    T.FechaInicioOferta   = P.FIOFERTA,
+    T.FechaFinOferta      = P.FTOFERTA,
+    T.OfertaActiva        = CASE WHEN P.Activa = 'Si' THEN 1 ELSE 0 END,
+    T.MontoOferta         = P.VALDESC
+FROM {_Nombre_Tbl_Paso_Informe} T
+INNER JOIN MAEDRES D ON D.ELEMENTO = T.Codigo
+INNER JOIN Paso2 P   ON P.CODIGO = D.CODIGO
+INNER JOIN MinOferta M ON M.Producto = D.ELEMENTO
+                      AND M.MinValDesc = P.VALDESC
+WHERE P.Activa = 'Si';
+"
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
@@ -8946,7 +9271,7 @@ ORDER BY Ddo.FEEMLI DESC;"
 
     End Sub
 
-    Private Sub Rd_Costo_Lista_Proveedor_CheckedChanged(sender As Object, e As EventArgs) Handles Rd_Costo_Lista_Proveedor.CheckedChanged
+    Private Sub Rd_Costo_Lista_Proveedor_CheckedChanged(sender As Object, e As EventArgs)
         Cmb_Lista_Costos.Enabled = Rd_Costo_Lista_Proveedor.Checked
     End Sub
 
@@ -10326,6 +10651,25 @@ LEFT JOIN MAEEN AS E
 
         Btn_MostrarSoloProdStockBod.Enabled = Chk_FiltroEspecialBodStock.Checked
         Btn_ExcluirProdStockBod.Enabled = Chk_FiltroEspecialBodStock.Checked
+
+    End Sub
+
+    Private Sub Btn_ListaLC_Click(sender As Object, e As EventArgs) Handles Btn_ListaLC.Click
+
+        If Fx_Tiene_Permiso(Me, "Pre0002") Then
+
+            Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
+
+            Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+            Dim Fm As New Frm_PreciosLC_Mt01
+            Fm.Sb_Cargar_Producto(_Codigo)
+            Fm.Txtcodigo.Text = _Codigo
+            Fm.Cerrar_Al_Grabar = True
+            Fm.ShowDialog(Me)
+            Fm.Dispose()
+
+        End If
 
     End Sub
 

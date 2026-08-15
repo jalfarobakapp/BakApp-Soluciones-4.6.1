@@ -52,15 +52,21 @@ Partial Class Frm_OfDinamLista
         Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_EditarOferta = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_AsociarProductos = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Mnu_Btn_CopiarOf = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_QuitarProducto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_InfoKardex = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
+        Me.Mnu_Btn_CopiarPr = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla_Recetas = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_NroMaxProdXOfertaDinamica = New DevComponents.DotNetBar.LabelX()
         Me.Btn_EditarNroMaxProductos = New DevComponents.DotNetBar.ButtonX()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
         Me.Chk_Marcar_Todas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Listas = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.GroupPanel3.SuspendLayout()
         CType(Me.Dtp_FechaTope, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_FechaInicio, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -358,7 +364,7 @@ Partial Class Frm_OfDinamLista
         Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel2.Controls.Add(Me.Grilla_Productos)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(9, 436)
+        Me.GroupPanel2.Location = New System.Drawing.Point(9, 468)
         Me.GroupPanel2.Name = "GroupPanel2"
         Me.GroupPanel2.Size = New System.Drawing.Size(1038, 153)
         '
@@ -439,7 +445,7 @@ Partial Class Frm_OfDinamLista
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar, Me.Btn_Eliminar, Me.Btn_Crear_Receta, Me.Btn_ExportarExcel})
-        Me.Bar2.Location = New System.Drawing.Point(0, 631)
+        Me.Bar2.Location = New System.Drawing.Point(0, 672)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1056, 41)
         Me.Bar2.Stretch = True
@@ -545,7 +551,7 @@ Partial Class Frm_OfDinamLista
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_EditarOferta, Me.Btn_Mnu_AsociarProductos})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_EditarOferta, Me.Btn_Mnu_AsociarProductos, Me.LabelItem1, Me.Mnu_Btn_CopiarOf})
         Me.Menu_Contextual_01.Text = "Opciones"
         '
         'Btn_Mnu_EditarOferta
@@ -562,11 +568,31 @@ Partial Class Frm_OfDinamLista
         Me.Btn_Mnu_AsociarProductos.Name = "Btn_Mnu_AsociarProductos"
         Me.Btn_Mnu_AsociarProductos.Text = "Asociar productos a la oferta"
         '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Acciones"
+        '
+        'Mnu_Btn_CopiarOf
+        '
+        Me.Mnu_Btn_CopiarOf.Image = CType(resources.GetObject("Mnu_Btn_CopiarOf.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_CopiarOf.ImageAlt = CType(resources.GetObject("Mnu_Btn_CopiarOf.ImageAlt"), System.Drawing.Image)
+        Me.Mnu_Btn_CopiarOf.Name = "Mnu_Btn_CopiarOf"
+        Me.Mnu_Btn_CopiarOf.Text = "Copiar (portapapeles)"
+        '
         'Menu_Contextual_02
         '
         Me.Menu_Contextual_02.AutoExpandOnClick = True
         Me.Menu_Contextual_02.Name = "Menu_Contextual_02"
-        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_QuitarProducto, Me.Btn_InfoKardex})
+        Me.Menu_Contextual_02.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_QuitarProducto, Me.Btn_InfoKardex, Me.LabelItem2, Me.Mnu_Btn_CopiarPr})
         Me.Menu_Contextual_02.Text = "Opciones"
         '
         'Btn_Mnu_QuitarProducto
@@ -582,6 +608,26 @@ Partial Class Frm_OfDinamLista
         Me.Btn_InfoKardex.ImageAlt = CType(resources.GetObject("Btn_InfoKardex.ImageAlt"), System.Drawing.Image)
         Me.Btn_InfoKardex.Name = "Btn_InfoKardex"
         Me.Btn_InfoKardex.Text = "Ver información del stock del producto"
+        '
+        'LabelItem2
+        '
+        Me.LabelItem2.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem2.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem2.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem2.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem2.Name = "LabelItem2"
+        Me.LabelItem2.PaddingBottom = 1
+        Me.LabelItem2.PaddingLeft = 10
+        Me.LabelItem2.PaddingTop = 1
+        Me.LabelItem2.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem2.Text = "Acciones"
+        '
+        'Mnu_Btn_CopiarPr
+        '
+        Me.Mnu_Btn_CopiarPr.Image = CType(resources.GetObject("Mnu_Btn_CopiarPr.Image"), System.Drawing.Image)
+        Me.Mnu_Btn_CopiarPr.ImageAlt = CType(resources.GetObject("Mnu_Btn_CopiarPr.ImageAlt"), System.Drawing.Image)
+        Me.Mnu_Btn_CopiarPr.Name = "Mnu_Btn_CopiarPr"
+        Me.Mnu_Btn_CopiarPr.Text = "Copiar (portapapeles)"
         '
         'Grilla_Recetas
         '
@@ -658,7 +704,7 @@ Partial Class Frm_OfDinamLista
         '
         Me.Btn_EditarNroMaxProductos.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_EditarNroMaxProductos.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_EditarNroMaxProductos.Location = New System.Drawing.Point(601, 595)
+        Me.Btn_EditarNroMaxProductos.Location = New System.Drawing.Point(601, 627)
         Me.Btn_EditarNroMaxProductos.Name = "Btn_EditarNroMaxProductos"
         Me.Btn_EditarNroMaxProductos.Size = New System.Drawing.Size(62, 27)
         Me.Btn_EditarNroMaxProductos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -675,7 +721,7 @@ Partial Class Frm_OfDinamLista
         Me.TableLayoutPanel1.Controls.Add(Me.LabelX1, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Lbl_NroMaxProdXOfertaDinamica, 1, 0)
         Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(9, 595)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(9, 627)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -692,18 +738,53 @@ Partial Class Frm_OfDinamLista
         Me.Chk_Marcar_Todas.CheckBoxImageChecked = CType(resources.GetObject("Chk_Marcar_Todas.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_Marcar_Todas.FocusCuesEnabled = False
         Me.Chk_Marcar_Todas.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Marcar_Todas.Location = New System.Drawing.Point(9, 410)
+        Me.Chk_Marcar_Todas.Location = New System.Drawing.Point(9, 442)
         Me.Chk_Marcar_Todas.Name = "Chk_Marcar_Todas"
         Me.Chk_Marcar_Todas.Size = New System.Drawing.Size(145, 20)
         Me.Chk_Marcar_Todas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Marcar_Todas.TabIndex = 109
         Me.Chk_Marcar_Todas.Text = "Marcar todas"
         '
+        'LabelX5
+        '
+        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(9, 407)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(196, 23)
+        Me.LabelX5.TabIndex = 110
+        Me.LabelX5.Text = "Listas de precio asociadas a la Oferta:"
+        '
+        'Txt_Listas
+        '
+        Me.Txt_Listas.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Listas.Border.Class = "TextBoxBorder"
+        Me.Txt_Listas.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Listas.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Listas.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Listas.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Listas.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Listas.Location = New System.Drawing.Point(200, 408)
+        Me.Txt_Listas.Name = "Txt_Listas"
+        Me.Txt_Listas.PreventEnterBeep = True
+        Me.Txt_Listas.ReadOnly = True
+        Me.Txt_Listas.Size = New System.Drawing.Size(847, 22)
+        Me.Txt_Listas.TabIndex = 111
+        '
         'Frm_OfDinamLista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1056, 672)
+        Me.ClientSize = New System.Drawing.Size(1056, 713)
+        Me.Controls.Add(Me.Txt_Listas)
+        Me.Controls.Add(Me.LabelX5)
         Me.Controls.Add(Me.Chk_Marcar_Todas)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.Btn_EditarNroMaxProductos)
@@ -767,4 +848,10 @@ Partial Class Frm_OfDinamLista
     Friend WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_Marcar_Todas As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem1 As DevComponents.DotNetBar.LabelItem
+    Public WithEvents Mnu_Btn_CopiarOf As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem2 As DevComponents.DotNetBar.LabelItem
+    Public WithEvents Mnu_Btn_CopiarPr As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Listas As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

@@ -536,12 +536,17 @@ Public Class AlertCustom
                                                        Try
                                                            Dim _Sucursal As String = dr.Item("Sucursal").ToString
                                                            Dim _Bodega As String = dr.Item("Bodega").ToString
-                                                           Dim valor As Double = Fx_Stock_Disponible(tidoLocal, Mod_Empresa, _Sucursal, _Bodega, codigoLocal, udLocal, "STFI" & udLocal)
+                                                           Dim valor As Double
 
-                                                           'valor = Fx_Stock_Disponible_ConEquivalencia(tidoLocal, Mod_Empresa, _Sucursal, _Bodega, codigoLocal, udLocal, "STFI" & udLocal)
+                                                           Dim _TieneBodEquivalente As Boolean = _Sql.Fx_Cuenta_Registros($"{_Global_BaseBk}Zw_InterStock_Equivalencia",
+                                                                                                                          $"Bodega_A = '{_Bodega}' Or Bodega_B = '{_Bodega}' And Activo2 = 1")
 
-                                                           If valor < 0 Then valor = 0
-                                                           dr.Item("ST_DISPONIBLE") = valor
+                                                           If _TieneBodEquivalente Then
+                                                               valor = Fx_Stock_Disponible(tidoLocal, Mod_Empresa, _Sucursal, _Bodega, codigoLocal, udLocal, "STFI" & udLocal, False, False)
+                                                               If valor < 0 Then valor = 0
+                                                               dr.Item("ST_DISPONIBLE") = valor
+                                                           End If
+
                                                        Catch ex As Exception
                                                            ' ignorar error por fila para no detener el background
                                                        End Try

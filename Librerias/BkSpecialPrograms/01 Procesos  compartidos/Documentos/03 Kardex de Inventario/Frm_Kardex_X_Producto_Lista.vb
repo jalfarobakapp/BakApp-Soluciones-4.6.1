@@ -305,7 +305,7 @@ Public Class Frm_Kardex_X_Producto_Lista
             .Columns("STFI" & _Unidad).HeaderText = "Stock Físico"
             .Columns("STFI" & _Unidad).Width = 80
             .Columns("STFI" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("STFI" & _Unidad).DefaultCellStyle.Format = "##,#0.###"
+            .Columns("STFI" & _Unidad).DefaultCellStyle.Format = "##,#0.#####"
             .Columns("STFI" & _Unidad).ToolTipText = "Stock Físico"
             .Columns("STFI" & _Unidad).Visible = True
 

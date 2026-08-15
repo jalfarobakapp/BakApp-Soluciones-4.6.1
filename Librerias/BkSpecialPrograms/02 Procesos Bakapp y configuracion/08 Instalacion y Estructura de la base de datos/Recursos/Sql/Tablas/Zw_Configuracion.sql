@@ -151,6 +151,9 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [ToleranciaDocMoroso]                                   [int]           NOT NULL DEFAULT (0),
 [ActivaTipoCompra]                                      [bit]           NOT NULL DEFAULT (0),
 [PermiteVtaContadoCiaSeguro]                            [bit]           NOT NULL DEFAULT (0),
+[NoCopiarCreditosSucEnt]                                [bit]           NOT NULL DEFAULT (0),
+[ImpNoCobraVta]                                         [bit]           NOT NULL DEFAULT (0),
+[ImpNoCobraVtaStr]                                      [varchar](13)   NOT NULL DEFAULT (''),
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Empresa] ASC,

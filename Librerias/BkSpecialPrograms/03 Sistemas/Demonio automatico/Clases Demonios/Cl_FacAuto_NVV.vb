@@ -1,4 +1,6 @@
-﻿Public Class Cl_FacAuto_NVV
+﻿Imports Gma.QrCodeNet.Encoding.DataEncodation
+
+Public Class Cl_FacAuto_NVV
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_Sql As String
@@ -49,8 +51,8 @@
 
         End If
 
-        Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar)" & vbCrLf &
-                       "Select TOP 20 Edo.IDMAEEDO,Edo.NUDO,'" & _Modalidad_Fac & "','" & Format(_Fecha_Revision, "yyyyMMdd") & "',1" & vbCrLf &
+        Consulta_Sql = "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,EdoEmpresa)" & vbCrLf &
+                       "Select TOP 20 Edo.IDMAEEDO,Edo.NUDO,'" & _Modalidad_Fac & "','" & Format(_Fecha_Revision, "yyyyMMdd") & "',1, Edo.EMPRESA" & vbCrLf &
                        "From MAEEDO Edo" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Entidades Ent " &
                        "On Edo.ENDO = Ent.CodEntidad And Edo.SUENDO = Ent.CodSucEntidad " &
@@ -104,9 +106,11 @@
                        "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set EnvFacAutoBk = 1" & vbCrLf &
                        "Where Idmaeedo In (Select Idmaeedo From #Paso)" & vbCrLf &
                        vbCrLf &
-                       "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga)" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar," &
+                       "DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga,EdoEmpresa)" & vbCrLf &
                        "Select Edo.IDMAEEDO As 'Idmaeedo_NVV',Edo.NUDO As 'Nudo_NVV','" & Modalidad_Fac & "' As 'Modalidad_Fac',Fecha_Facturar As Fecha_Facturar,1 As 'Facturar'," & vbCrLf &
-                       "1 As 'DesdePickeo',#Paso.Id As 'Id_Pickeo',#Paso.DocEmitir As 'DocEmitir',1 As 'CerrarDespFact',CodFuncionario_Factura,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga" & vbCrLf &
+                       "1 As 'DesdePickeo',#Paso.Id As 'Id_Pickeo',#Paso.DocEmitir As 'DocEmitir',1 As 'CerrarDespFact',CodFuncionario_Factura," &
+                       "PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga,Edo.EMPRESA" & vbCrLf &
                        "From MAEEDO Edo" & vbCrLf &
                        "Inner Join #Paso On #Paso.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
                        vbCrLf &
@@ -173,9 +177,11 @@
                        "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set EnvFacAutoBk = 1" & vbCrLf &
                        "Where Idmaeedo_NVV In (Select Idmaeedo From #Paso)" & vbCrLf &
                        vbCrLf &
-                       "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,DesdeNVVAuto,DocEmitir,CerrarDespFact,CodFuncionario_Factura)" & vbCrLf &
-                       "Select Edo.IDMAEEDO As 'Idmaeedo_NVV',Edo.NUDO As 'Nudo_NVV',Case When #Paso.Modalidad_Fac <> '' Then #Paso.Modalidad_Fac Else '" & Modalidad_Fac & "' End As 'Modalidad_Fac',Fecha_Facturar,1 As 'Facturar'," & vbCrLf &
-                       "1 As 'DesdeNVVAuto',#Paso.DocEmitir As 'DocEmitir',1 As 'CerrarDespFact',CodFuncionario_Factura" & vbCrLf &
+                       "Insert Into " & _Global_BaseBk & "Zw_Demonio_FacAuto (Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,DesdeNVVAuto,DocEmitir," &
+                       "CerrarDespFact,CodFuncionario_Factura,EdoEmpresa)" & vbCrLf &
+                       "Select Edo.IDMAEEDO As 'Idmaeedo_NVV',Edo.NUDO As 'Nudo_NVV'," &
+                       "Case When #Paso.Modalidad_Fac <> '' Then #Paso.Modalidad_Fac Else '" & Modalidad_Fac & "' End As 'Modalidad_Fac',Fecha_Facturar,1 As 'Facturar'," & vbCrLf &
+                       "1 As 'DesdeNVVAuto',#Paso.DocEmitir As 'DocEmitir',1 As 'CerrarDespFact',CodFuncionario_Factura,Edo.EMPRESA" & vbCrLf &
                        "From MAEEDO Edo" & vbCrLf &
                        "Inner Join #Paso On #Paso.Idmaeedo = Edo.IDMAEEDO" & vbCrLf &
                        vbCrLf &
@@ -210,10 +216,19 @@
     ''' </summary>
     Sub Sb_Cambiar_EmpSucBod()
         'Throw New InvalidOperationException("The operation is not valid for the current state.")
-        Consulta_Sql = "Select Distinct Idmaeedo,Tido,Nudo,Empresa,Sucursal,Bodega From " & _Global_BaseBk & "Zw_Docu_Det" & vbCrLf &
-                       "Where Idmaeedo In (Select Zenc.Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Zenc" & vbCrLf &
-                       "Inner Join " & _Global_BaseBk & "Zw_Docu_Det Zd On Zenc.Idmaeedo = Zd.Idmaeedo" & vbCrLf &
-                       "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And Zd.Empresa = '02' And Zenc.Empresa = '01')"
+        'Consulta_Sql = "Select Distinct Idmaeedo,Tido,Nudo,Empresa,Sucursal,Bodega From " & _Global_BaseBk & "Zw_Docu_Det" & vbCrLf &
+        '               "Where Idmaeedo In (Select Zenc.Idmaeedo From " & _Global_BaseBk & "Zw_Stmp_Enc Zenc" & vbCrLf &
+        '               "Inner Join " & _Global_BaseBk & "Zw_Docu_Det Zd On Zenc.Idmaeedo = Zd.Idmaeedo" & vbCrLf &
+        '               "Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And Zd.Empresa = '02' And Zenc.Empresa = '01')"
+
+        Consulta_Sql = $"
+Select Distinct Det.Idmaeedo,Det.Tido,Det.Nudo,Det.Empresa,Det.Sucursal,Det.Bodega,Ddo.EMPRESA,Ddo.SULIDO,Ddo.BOSULIDO 
+From {_Global_BaseBk}Zw_Docu_Det Det
+Left Join MAEDDO Ddo On Det.Idmaeedo = Ddo.IDMAEEDO 
+Where Idmaeedo In (Select Zenc.Idmaeedo From {_Global_BaseBk}Zw_Stmp_Enc Zenc
+Inner Join {_Global_BaseBk}Zw_Docu_Det Zd On Zenc.Idmaeedo = Zd.Idmaeedo
+Where Facturar = 1 And Estado = 'COMPL' And EnvFacAutoBk = 0 And Zd.Empresa = '02' And Zenc.Empresa = '01')"
+
         Dim _Tbl_Det As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         For Each _Fila As DataRow In _Tbl_Det.Rows
@@ -221,22 +236,108 @@
             Dim _Idmaeedo As Integer = _Fila.Item("Idmaeedo")
             Dim _Tido As String = _Fila.Item("Tido").ToString.Trim
             Dim _Nudo As String = _Fila.Item("Nudo").ToString.Trim
-            Dim _Empresa As String = _Fila.Item("Empresa").ToString.Trim
-            Dim _Sucursal As String = _Fila.Item("Sucursal").ToString.Trim
-            Dim _Bodega As String = _Fila.Item("Bodega").ToString.Trim
+            Dim _Empresa_Ori As String = _Fila.Item("Empresa").ToString.Trim
+            Dim _Sucursal_Ori As String = _Fila.Item("Sucursal").ToString.Trim
+            Dim _Bodega_Ori As String = _Fila.Item("Bodega").ToString.Trim
+            Dim _Empresa_Dest As String = _Fila.Item("EMPRESA").ToString.Trim
+            Dim _Sucursal_Dest As String = _Fila.Item("SULIDO").ToString.Trim
+            Dim _Bodega_Dest As String = _Fila.Item("BOSULIDO").ToString.Trim
 
-            Consulta_Sql = "Declare @Idmaeedo Int = " & _Idmaeedo & vbCrLf &
-                           "Update MAEEDO Set EMPRESA = '" & _Empresa & "',SUDO = '" & _Sucursal & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
-                           "Update MAEDDO Set EMPRESA = '" & _Empresa & "',SULIDO = '" & _Sucursal & "',BOSULIDO = '" & _Bodega & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
-                           "Update " & _Global_BaseBk & "Zw_Despachos Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "',Bodega = '" & _Bodega &
-                                "' Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))" & vbCrLf &
-                           "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Empresa = '" & _Empresa & "',Sucursal = '" & _Sucursal & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
-                           "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa = '" & _Empresa & "' Where Idmaeedo = @Idmaeedo"
+            Consulta_Sql = $"
+Declare @Idmaeedo Int = {_Idmaeedo}
 
-            'Clipboard.SetText(Consulta_Sql)
+-- REVERSA STOCK
+UPDATE M
+SET 
+    M.STOCNV1 = M.STOCNV1 
+                - ISNULL(SUMAS.SumaCAPRCO1, 0)   -- antes sumaba, ahora resta
+                + ISNULL(RESTAS.RestaCAPRCO1, 0), -- antes restaba, ahora suma
+    M.STOCNV2 = M.STOCNV2 
+                - ISNULL(SUMAS.SumaCAPRCO2, 0)
+                + ISNULL(RESTAS.RestaCAPRCO2, 0)
+FROM MAEST M WITH (NOLOCK)
 
-            'MessageBox.Show(_Formulario, Consulta_Sql, "Actualizar empresa, sucursal y bodega de documentos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+-- SUMAS (que ahora serán RESTAS) desde MAEDDO
+OUTER APPLY (
+    SELECT 
+        SUM(Ddo.CAPRCO1) AS SumaCAPRCO1,
+        SUM(Ddo.CAPRCO2) AS SumaCAPRCO2
+    FROM MAEDDO Ddo WITH (NOLOCK)
+    WHERE 
+        Ddo.EMPRESA = M.EMPRESA
+        AND Ddo.SULIDO = M.KOSU
+        AND Ddo.BOSULIDO = M.KOBO
+        AND Ddo.KOPRCT = M.KOPR
+        AND Ddo.IDMAEEDO = @Idmaeedo
+) SUMAS
+
+-- RESTAS (que ahora serán SUMAS) desde MAEDDO vía Zw_Docu_Det
+OUTER APPLY (
+    SELECT 
+        SUM(Ddo2.CAPRCO1) AS RestaCAPRCO1,
+        SUM(Ddo2.CAPRCO2) AS RestaCAPRCO2
+    FROM {_Global_BaseBk}Zw_Docu_Det Det WITH (NOLOCK)
+    INNER JOIN MAEDDO Ddo2 WITH (NOLOCK)
+        ON Ddo2.IDMAEDDO = Det.Idmaeddo
+    WHERE 
+        Det.Idmaeedo = @Idmaeedo
+        AND Det.Empresa = M.EMPRESA
+        AND Det.Sucursal = M.KOSU
+        AND Det.Bodega = M.KOBO
+        AND Ddo2.KOPRCT = M.KOPR
+) RESTAS
+
+WHERE 
+    M.KOPR IN (
+        SELECT DISTINCT KOPRCT 
+        FROM MAEDDO 
+        WHERE IDMAEEDO = @Idmaeedo
+    )
+    AND M.KOBO IN ('{_Bodega_Ori}','{_Bodega_Dest}');
+
+
+Update MAEEDO Set EMPRESA = '{_Empresa_Ori}',SUDO = '{_Sucursal_Ori}' 
+Where IDMAEEDO = @Idmaeedo
+
+Update MAEDDO Set EMPRESA = '{_Empresa_Ori}',SULIDO = '{_Sucursal_Ori}',BOSULIDO = '{_Bodega_Ori}' 
+Where IDMAEEDO = @Idmaeedo
+
+Update {_Global_BaseBk}Zw_Despachos Set Empresa = '{_Empresa_Ori}',Sucursal = '{_Sucursal_Ori}',Bodega = '{_Bodega_Ori}' 
+Where Id_Despacho In (Select Id_Despacho From {_Global_BaseBk}Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))
+
+Update {_Global_BaseBk}Zw_Stmp_Enc Set Empresa = '{_Empresa_Ori}',Sucursal = '{_Sucursal_Ori}' Where Idmaeedo = @Idmaeedo
+Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo = @Idmaeedo
+
+"
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql, False)
+
+            '            Consulta_Sql = "Declare @Idmaeedo Int = " & _Idmaeedo & vbCrLf &
+            '                           "Update MAEEDO Set EMPRESA = '" & _Empresa_Ori & "',SUDO = '" & _Sucursal_Ori & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
+            '                           "Update MAEDDO Set EMPRESA = '" & _Empresa_Ori & "',SULIDO = '" & _Sucursal_Ori & "',BOSULIDO = '" & _Bodega_Ori & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
+            '                           "Update " & _Global_BaseBk & "Zw_Despachos Set Empresa = '" & _Empresa_Ori & "',Sucursal = '" & _Sucursal_Ori & "',Bodega = '" & _Bodega_Ori &
+            '                                "' Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))" & vbCrLf &
+            '                           "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Empresa = '" & _Empresa_Ori & "',Sucursal = '" & _Sucursal_Ori & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
+            '                           "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa = '" & _Empresa_Ori & "' Where Idmaeedo = @Idmaeedo"
+
+            '            Consulta_Sql = $"
+            'Declare @Idmaeedo Int = {_Idmaeedo}
+
+            'Update MAEEDO Set EMPRESA = '{_Empresa_Ori}',SUDO = '{_Sucursal_Ori}' 
+            'Where IDMAEEDO = @Idmaeedo
+
+            'Update MAEDDO Set EMPRESA = '{_Empresa_Ori}',SULIDO = '{_Sucursal_Ori}',BOSULIDO = '{_Bodega_Ori}' 
+            'Where IDMAEEDO = @Idmaeedo
+
+            'Update {_Global_BaseBk}Zw_Despachos Set Empresa = '{_Empresa_Ori}',Sucursal = '{_Sucursal_Ori}',Bodega = '{_Bodega_Ori}' 
+            'Where Id_Despacho In (Select Id_Despacho From {_Global_BaseBk}Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))
+
+            'Update {_Global_BaseBk}Zw_Stmp_Enc Set Empresa = '{_Empresa_Ori}',Sucursal = '{_Sucursal_Ori}' Where Idmaeedo = @Idmaeedo
+            'Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo = @Idmaeedo"
+
+            '            'Clipboard.SetText(Consulta_Sql)
+
+            '            'MessageBox.Show(_Formulario, Consulta_Sql, "Actualizar empresa, sucursal y bodega de documentos", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            '            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Log_Registro += _Sql.Pro_Error & vbCrLf
@@ -356,6 +457,12 @@
             Log_Registro += _Sql.Pro_Error & vbCrLf
         End If
 
+        Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1, Facturando = 0, ErrorGrabar = 0,Intentos = Intentos+1" & vbCrLf &
+                       "Where NombreEquipo = '" & Nombre_Equipo & "' And ErrorGrabar = 1 And Intentos <= 5 And Facturado = 0 -- And IpEquipo = '" & _IpEquipo & "'"
+        If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
+            Log_Registro += _Sql.Pro_Error & vbCrLf
+        End If
+
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto  Set CantItem = (Select COUNT(*) From MAEDDO Where IDMAEEDO = Idmaeedo_NVV)" & vbCrLf &
                        "Where CantItem = 0 And Facturar = 1"
         _Sql.Ej_consulta_IDU(Consulta_Sql, False)
@@ -381,49 +488,6 @@
         '                Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,Pagada
         '                From {_Global_BaseBk}Zw_Demonio_FacAuto
         '                Where ((Informacion Like '%interbloqueo%') Or (Informacion LIKE '% tiempo de espera%')) And ErrorGrabar = 1 And Idmaeedo_FCV = 0 -- And Fecha_Facturar = '{Format(_FechaEmision, "yyyyMMdd")}'"
-
-        Consulta_Sql = $"
-INSERT INTO {_Global_BaseBk}Zw_Demonio_FacAuto 
-    (NombreEquipo,Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,Facturar,
-     Facturando,Facturado,Idmaeedo_FCV,Nudo_Fcv,Fecha_Facturado,Informacion,
-     DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,Pagada)
-SELECT 
-    '' AS NombreEquipo,
-    Src.Idmaeedo_NVV,
-    Src.Nudo_NVV,
-    Src.Modalidad_Fac,
-    Src.Fecha_Facturar,
-    1,
-    Src.Facturando,
-    Src.Facturado,
-    Src.Idmaeedo_FCV,
-    Src.Nudo_Fcv,
-    Src.Fecha_Facturado,
-    '' AS Informacion,
-    Src.DesdePickeo,
-    Src.Id_Pickeo,
-    Src.DocEmitir,
-    Src.CerrarDespFact,
-    Src.CodFuncionario_Factura,
-    Src.Pagada
-FROM {_Global_BaseBk}Zw_Demonio_FacAuto AS Src
-WHERE 
-    ((Src.Informacion LIKE '%interbloqueo%') 
-     OR (Src.Informacion LIKE '%tiempo de espera%'))
-    AND Src.ErrorGrabar = 1
-    AND Src.Idmaeedo_FCV = 0
-    AND NOT EXISTS (
-        SELECT 1
-        FROM {_Global_BaseBk}Zw_Demonio_FacAuto AS Dst
-        WHERE 
-            Dst.Idmaeedo_NVV = Src.Idmaeedo_NVV
-            AND Dst.Nudo_NVV = Src.Nudo_NVV
-            AND Dst.Modalidad_Fac = Src.Modalidad_Fac
-            AND Dst.Fecha_Facturar = Src.Fecha_Facturar
-            AND Dst.Idmaeedo_FCV = 0
-            AND Dst.Facturar = 1   -- asegura que ya fue insertado por esta rutina
-    );"
-        _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
         Consulta_Sql = $"
                         Select Top {CantDocFacturanXProceso} Fa.*,
@@ -481,6 +545,7 @@ WHERE
                                    ",Facturando = 0" &
                                    ",Facturado = 0" &
                                    ",ErrorGrabar = 1" &
+                                   ",Intentos = 6" &
                                    ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
@@ -577,7 +642,24 @@ WHERE
 
                 Else
 
+                    Dim _Intentos As Integer = _Fila.Item("Intentos")
+
                     _Mensaje.Mensaje = Replace(_Mensaje.Mensaje, "'", "''")
+
+                    If _Mensaje.Mensaje.ToLower.Contains("se encuentra cerrado completamente") Then
+                        _Intentos = 6
+                    End If
+
+                    'If _Mensaje.Mensaje.Contains("No existe tasa de cambio para la fecha:") Then
+                    '    _Intentos = 1
+                    'End If
+
+                    'If _Mensaje.Mensaje.Contains("El folio del documento electrónico no está autorizado por el SII:") Then
+                    '    _Intentos = 1
+                    'End If
+
+                    'El folio del documento electrónico no está autorizado por el SII:
+                    'No existe tasa de cambio para la fecha:  25/03/2026, para las monedas: EU_-EURO PRUEBA  UF_-UF PRUEBA  US_-DOLAR PRUEBA  
 
                     Log_Registro += _Mensaje.Mensaje & vbCrLf
 
@@ -586,6 +668,7 @@ WHERE
                                    ",Facturando = 0" &
                                    ",Facturado = 0" &
                                    ",ErrorGrabar = 1" &
+                                   ",Intentos = " & _Intentos &
                                    ",Informacion = '" & _Mensaje.Mensaje & "'" & vbCrLf &
                                    "Where Id = " & _Id
                     If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then

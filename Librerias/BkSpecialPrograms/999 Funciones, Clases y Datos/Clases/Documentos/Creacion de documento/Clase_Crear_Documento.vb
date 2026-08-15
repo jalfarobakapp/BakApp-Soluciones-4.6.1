@@ -794,6 +794,9 @@ Public Class Clase_Crear_Documento
                                 dfd1.Close()
 
                                 If Not _Tranafeppp Then _Sttr1 = 0
+                                If _Stfi1 < 0 Then _Stfi1 = 0
+                                If _Sttr1 < 0 Then _Sttr1 = 0
+                                If _Stfi1_Suc < 0 Then _Stfi1_Suc = 0
 
                                 _Total_Stfi_x_Pm = _Pm * (_Stfi1 + _Sttr1)
                                 _Total_Stfi_x_Pmifrs = _Pmifrs * (_Stfi1 + _Sttr1)
@@ -815,7 +818,7 @@ Public Class Clase_Crear_Documento
                                 _Ppprpmifrs = De_Num_a_Tx_01(_Pmifrs, False, 5)
                                 _Ppprmsuc = De_Num_a_Tx_01(_Pmsuc, False, 5)
 
-                                If _Ppprmsuc.Contains("∞") Or _Ppprmsuc.Contains("NaN") Then
+                                If _Ppprmsuc.Contains("∞") Or _Ppprmsuc.Contains("NaN") Or _Pmsuc < 0 Then
                                     _Ppprmsuc = 0
                                 End If
 

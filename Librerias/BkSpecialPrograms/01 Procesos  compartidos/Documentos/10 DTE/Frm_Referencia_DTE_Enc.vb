@@ -191,7 +191,7 @@ Public Class Frm_Referencia_DTE_Enc
                     Dim _RazonRef = _Row_Referencia.Item("RazonRef")
 
                     Consulta_sql = "Update " & _Global_BaseBk & "Zw_Referencias_Dte Set 
-                                TpoDocRef = " & _TpoDocRef & ", 
+                                TpoDocRef = '" & _TpoDocRef & "', 
                                 FolioRef = '" & _FolioRef & "', 
                                 FchRef = '" & _FchRef & "', 
                                 CodRef = '" & _CodRef & "', 

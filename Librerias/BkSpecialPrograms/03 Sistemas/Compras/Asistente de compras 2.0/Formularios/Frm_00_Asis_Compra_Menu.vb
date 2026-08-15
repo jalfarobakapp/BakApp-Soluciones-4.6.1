@@ -221,6 +221,11 @@ Public Class Frm_00_Asis_Compra_Menu
         Cmb_Lista_de_costos.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
         Cmb_Lista_de_costos.SelectedValue = ""
 
+        caract_combo(Cmb_ListaPreciosCM)
+        Consulta_sql = "Select '' As Padre,'' As Hijo Union Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'P'"
+        Cmb_ListaPreciosCM.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
+        Cmb_ListaPreciosCM.SelectedValue = ""
+
     End Sub
 
 #Region "FUNCIONES"
@@ -888,6 +893,23 @@ Public Class Frm_00_Asis_Compra_Menu
         _Sql.Sb_Parametro_Informe_Sql(Txt_ListaDePreciosCompara, "Compras_Asistente",
                                       Txt_ListaDePreciosCompara.Name, Class_SQLite.Enum_Type._Text, Txt_ListaDePreciosCompara.Text, _Actualizar)
 
+        ' Lista de precios para Margen
+        _Sql.Sb_Parametro_Informe_Sql(Cmb_ListaPreciosCM, "Compras_Asistente",
+                                      Cmb_ListaPreciosCM.Name, Class_SQLite.Enum_Type._ComboBox, "", _Actualizar)
+
+        ' Lista de precios para Margen desde lista de costos
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_LPMC_ListaCostos, "Compras_Asistente",
+                                             Rdb_LPMC_ListaCostos.Name, Class_SQLite.Enum_Type._Boolean, Rdb_LPMC_ListaCostos.Checked, _Actualizar)
+
+        ' Lista de precios para Margen desde precio promedio ponderado de productos
+        _Sql.Sb_Parametro_Informe_Sql(Rdb_LPMC_PPPPM, "Compras_Asistente",
+                                             Rdb_LPMC_PPPPM.Name, Class_SQLite.Enum_Type._Boolean, Rdb_LPMC_PPPPM.Checked, _Actualizar)
+
+        ' Mostrar márgenes de venta en Grilla de resultados de estudio de compras
+        _Sql.Sb_Parametro_Informe_Sql(Chk_MostrarMargenesVenta, "Compras_Asistente",
+                                      Chk_MostrarMargenesVenta.Name, Class_SQLite.Enum_Type._Boolean, Chk_MostrarMargenesVenta.Checked, _Actualizar)
+
+
     End Sub
 
 #End Region
@@ -896,6 +918,13 @@ Public Class Frm_00_Asis_Compra_Menu
 
         Dim _Koen As String
         Dim _Suen As String
+
+        If Chk_MostrarMargenesVenta.Checked AndAlso String.IsNullOrEmpty(Cmb_ListaPreciosCM.Text) Then
+            MessageBoxEx.Show(Me, "Se marco la casilla ver Margen" & vbCrLf &
+                              "Falta la lista de precios para calcular el margen", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            STabConfiguracion.SelectedTabIndex = 1
+            Return
+        End If
 
         If Rdb_Productos_Proveedor.Checked Then
 
@@ -2065,6 +2094,15 @@ Drop Table #Paso
         Fm.InformeDeComprasAgrupadoporAsociacion = Chk_InformeDeComprasAgrupadoporAsociacion.Checked
 
         Fm.Chk_CompMinXProveedores.Checked = Chk_CompMinXProveedores.Checked
+
+        'Fm.Rib_ListaPreciosMG.Visible = Chk_MostrarMargenesVenta.Checked
+        'Fm.Cmb_ListaPreciosCM.SelectedItem = Cmb_ListaPreciosCM.SelectedItem
+
+        Fm.Ver_Margenes = Chk_MostrarMargenesVenta.Checked
+        Fm.Rdb_LPMC_ListaCostos.Checked = Rdb_LPMC_ListaCostos.Checked
+        Fm.Txt_ListaPreciosCM.Text = Cmb_ListaPreciosCM.Text
+        Fm.Txt_ListaPreciosCM.Tag = Cmb_ListaPreciosCM.SelectedValue
+        Fm.Rdb_LPMC_PPPPM.Checked = Rdb_LPMC_PPPPM.Checked
 
         Fm.ShowDialog(Me)
         Fm.Dispose()

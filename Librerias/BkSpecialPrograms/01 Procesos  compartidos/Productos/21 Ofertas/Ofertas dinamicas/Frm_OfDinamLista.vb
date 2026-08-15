@@ -1,5 +1,5 @@
 ﻿Imports DevComponents.DotNetBar
-Imports Google.Protobuf.Reflection
+
 Public Class Frm_OfDinamLista
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
@@ -45,6 +45,9 @@ Public Class Frm_OfDinamLista
         AddHandler Grilla_Recetas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla_Productos.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
+        AddHandler Grilla_Recetas.KeyDown, AddressOf Sb_DataGridView_KeyDown_Global
+        AddHandler Grilla_Productos.KeyDown, AddressOf Sb_DataGridView_KeyDown_Global
+
         _Sql.Sb_Parametro_Informe_Sql(Lbl_NroMaxProdXOfertaDinamica, "Ofertas_Dinamincas",
                                       Lbl_NroMaxProdXOfertaDinamica.Name, Class_SQLite.Enum_Type._Tag, Lbl_NroMaxProdXOfertaDinamica.Tag, False,, False, False)
 
@@ -52,15 +55,6 @@ Public Class Frm_OfDinamLista
 
         AddHandler Dtp_FechaInicio.ValueChanged, AddressOf Dtp_FechaInicio_ValueChanged
         AddHandler Dtp_FechaTope.ValueChanged, AddressOf Dtp_FechaTope_ValueChanged
-
-        '        caract_combo(Cmb_TipoOferta)
-        '        Consulta_sql = $"
-        'SELECT KOCARAC AS Padre,LTRIM(RTRIM(NOKOCARAC)) AS Hijo FROM TABCARAC WHERE KOTABLA = 'TIPOOFERTA' ORDER BY Hijo
-        'Union
-        'Select '' As Padre, 'Todas...' As Hijo"
-        '        Dim _Tbl_TipoOferta As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-        '        Cmb_TipoOferta.DataSource = _Tbl_TipoOferta
-        '        Cmb_TipoOferta.SelectedValue = ""
 
         Sb_Aplicar_Filtro_Ofertas()
 
@@ -394,6 +388,7 @@ Where CODIGO = '{_Codigo}'"
                 _Fila.Cells("TipoOferta").Value = _Row.Item("TipoOferta")
                 _Fila.Cells("FIOFERTA").Value = _Row.Item("FIOFERTA")
                 _Fila.Cells("FTOFERTA").Value = _Row.Item("FTOFERTA")
+                _Fila.Cells("LISTAS").Value = _Row.Item("LISTAS")
                 _Fila.Cells("Dias").Value = _Row.Item("Dias")
                 _Fila.Cells("Activa").Value = _Row.Item("Activa")
                 _Fila.Cells("ProdAsociados").Value = _Row.Item("ProdAsociados")
@@ -408,6 +403,7 @@ Where CODIGO = '{_Codigo}'"
 
             Sb_Cargar_Filtro_TipoOferta()
             Sb_Aplicar_Filtro_Ofertas()
+            Sb_Actualizar_Txt_Listas(_Fila)
 
         End If
 
@@ -444,6 +440,7 @@ Where CODIGO = '{_Codigo}'"
     Private Sub Grilla_Recetas_CellEnter(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla_Recetas.CellEnter
 
         If IsNothing(Grilla_Recetas.CurrentRow) Then
+            Txt_Listas.Text = String.Empty
             Sb_Actualizar_Grilla_Productos(String.Empty)
             Return
         End If
@@ -451,6 +448,7 @@ Where CODIGO = '{_Codigo}'"
         Dim _Fila As DataGridViewRow = Grilla_Recetas.CurrentRow
         Dim _Codigo As String = _Fila.Cells("CODIGO").Value
 
+        Sb_Actualizar_Txt_Listas(_Fila)
         Sb_Actualizar_Grilla_Productos(_Codigo)
 
     End Sub
@@ -493,6 +491,7 @@ Where CODIGO = '{_Codigo}'"
         Dim _Fila As DataGridViewRow = Grilla_Recetas.CurrentRow
 
         Dim _Codigo As String = _Fila.Cells("CODIGO").Value
+        Dim _Listas As String = _Fila.Cells("LISTAS").Value
 
         Consulta_sql = "Select Cast(1 As Bit) As Chk,ELEMENTO As Codigo,NOKOPR As Descripcion,NREG" & vbCrLf &
                        "From MAEDRES" & vbCrLf &
@@ -508,6 +507,9 @@ Where CODIGO = '{_Codigo}'"
         Dim _Sql_Filtro_Condicion_Extra = "And TIPR <> 'SSN' And KOPR Not In " &
                                           "(Select ELEMENTO From MAEDRES Where CODIGO In " &
                                           "(Select CODIGO From MAEERES Res Where TIPORESE = 'din' And FTOFERTA >= '" & Format(_FechaServidor, "yyyyMMdd") & "'))"
+
+        _Sql_Filtro_Condicion_Extra = Fx_SqlProductosNoAsociadosAListas(_Listas)
+
         Dim _Nreg = 0
 
         If CBool(_TblProductos.Rows.Count) Then
@@ -581,6 +583,54 @@ Where CODIGO = '{_Codigo}'"
         End If
 
     End Sub
+
+    Private Function Fx_SqlProductosNoAsociadosAListas(Listas As String) As String
+
+        ' Separar las listas por "_"
+        Dim partes As String() = Listas.Split("_"c)
+        Dim filtros As New List(Of String)
+
+        ' Construir los filtros LIKE dinámicos
+        For Each lista In partes
+            Dim l As String = lista.Trim()
+            If l <> "" Then
+                filtros.Add("E.LISTAS LIKE '%" & l & "%'")
+            End If
+        Next
+
+        ' Unir los filtros con OR
+        Dim filtroListas As String = String.Join(" OR ", filtros)
+
+        ' Construir el SQL final
+        Dim sql As String =
+        "SELECT CAST(0 AS bit) AS Chk, P.KOPR AS Codigo, P.NOKOPR AS Descripcion" & vbCrLf &
+        "FROM MAEPR P WITH (NOLOCK)" & vbCrLf &
+        "WHERE P.TIPR <> 'SSN'" & vbCrLf &
+        "  AND NOT EXISTS (" & vbCrLf &
+        "        SELECT 1" & vbCrLf &
+        "        FROM MAEDRES D WITH (NOLOCK)" & vbCrLf &
+        "        JOIN MAEERES E WITH (NOLOCK) ON E.CODIGO = D.CODIGO" & vbCrLf &
+        "        WHERE D.ELEMENTO = P.KOPR" & vbCrLf &
+        "          AND E.TIPORESE = 'din'" & vbCrLf &
+        "          AND (" & filtroListas & ")" & vbCrLf &
+        "  )" & vbCrLf &
+        "ORDER BY P.KOPR"
+
+        sql = $"
+AND TIPR <> 'SSN'
+AND NOT EXISTS (
+SELECT 1
+FROM MAEDRES D WITH (NOLOCK)
+JOIN MAEERES E WITH (NOLOCK) ON E.CODIGO = D.CODIGO
+WHERE D.ELEMENTO = KOPR
+AND E.TIPORESE = 'din'
+AND ({filtroListas}))
+"
+
+        Return sql
+
+    End Function
+
 
     Private Sub Btn_Mnu_QuitarProducto_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_QuitarProducto.Click
 
@@ -869,9 +919,11 @@ Where CODIGO = '{_Codigo}'"
         Grilla_Recetas.DataSource = _Dv
 
         Dim _Codigo As String = String.Empty
+        Txt_Listas.Text = String.Empty
 
         If CBool(_Dv.Count) Then
-            _Codigo = _Dv.Item(0).Item("CODIGO").ToString
+            _Codigo = _Dv.Item(0).Item("CODIGO").ToString()
+            Txt_Listas.Text = _Dv.Item(0).Item("LISTAS").ToString()
         End If
 
         Sb_Actualizar_Grilla_Productos(_Codigo)
@@ -1684,6 +1736,54 @@ FROM Paso2;"
         End If
 
         Grilla_Recetas.Refresh()
+
+    End Sub
+
+    Private Sub Mnu_Btn_CopiarOf_Click(sender As Object, e As EventArgs) Handles Mnu_Btn_CopiarOf.Click
+        With Grilla_Recetas
+
+            Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
+            Dim _Texto_Cabeza = .Columns(.CurrentCell.ColumnIndex).HeaderText
+
+            Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
+            Clipboard.SetText(Copiar)
+
+            ToastNotification.Show(Me, _Texto_Cabeza & " esta en el portapapeles", Mnu_Btn_CopiarOf.Image,
+                                   2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+
+        End With
+    End Sub
+
+    Private Sub Mnu_Btn_CopiarPr_Click(sender As Object, e As EventArgs) Handles Mnu_Btn_CopiarPr.Click
+        With Grilla_Productos
+
+            Dim _Cabeza = .Columns(.CurrentCell.ColumnIndex).Name
+            Dim _Texto_Cabeza = .Columns(.CurrentCell.ColumnIndex).HeaderText
+
+            Dim Copiar = .Rows(.CurrentRow.Index).Cells(_Cabeza).Value
+            Clipboard.SetText(Copiar)
+
+            ToastNotification.Show(Me, _Texto_Cabeza & " esta en el portapapeles", Mnu_Btn_CopiarPr.Image,
+                                   2 * 1000, eToastGlowColor.Green, eToastPosition.MiddleCenter)
+
+
+        End With
+    End Sub
+
+    Private Sub Sb_Actualizar_Txt_Listas(_Fila As DataGridViewRow)
+
+        Txt_Listas.Text = String.Empty
+
+        If IsNothing(_Fila) Then
+            Return
+        End If
+
+        If IsNothing(_Fila.Cells("LISTAS").Value) OrElse IsDBNull(_Fila.Cells("LISTAS").Value) Then
+            Return
+        End If
+
+        Txt_Listas.Text = _Fila.Cells("LISTAS").Value.ToString()
 
     End Sub
 
