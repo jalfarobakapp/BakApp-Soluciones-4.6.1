@@ -10,13 +10,15 @@ Public Class Frm_Filtro_Especial_Productos
     Dim _Tbl_Filtro_Rubro As DataTable
     Dim _Tbl_Filtro_Clalibpr As DataTable
     Dim _Tbl_Filtro_Zonas As DataTable
+    Dim _Tbl_Filtro_Jefes As DataTable
 
     Dim _Filtro_Extra_Productos,
         _Filtro_Extra_Super_Familias,
         _Filtro_Extra_Marcas,
         _Filtro_Extra_Rubro,
         _Filtro_Extra_Clalibpr,
-        _Filtro_Extra_Zonas As String
+        _Filtro_Extra_Zonas,
+        _Filtro_Extra_Jefes As String
 
     Public Property Aceptar() As Boolean
 
@@ -76,6 +78,15 @@ Public Class Frm_Filtro_Especial_Productos
             _Tbl_Filtro_Zonas = value
         End Set
     End Property
+    Public Property Pro_Tbl_Filtro_Jefes() As DataTable
+        Get
+            Return _Tbl_Filtro_Jefes
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_Jefes = value
+        End Set
+    End Property
+
 
     Public Property Pro_Filtro_Marcas_Todas() As Boolean
         Get
@@ -162,6 +173,19 @@ Public Class Frm_Filtro_Especial_Productos
         End Set
     End Property
 
+    Public Property Pro_Filtro_Jefes_Todos As Boolean
+        Get
+            Return Rdb_Jefes_Todos.Checked
+        End Get
+        Set(value As Boolean)
+            If value Then
+                Rdb_Jefes_Todos.Checked = True
+            Else
+                Rdb_Jefes_Algunos.Checked = True
+            End If
+        End Set
+    End Property
+
     Public Property Pro_Filtro_Extra_Productos()
         Get
             Return _Filtro_Extra_Productos
@@ -211,6 +235,15 @@ Public Class Frm_Filtro_Especial_Productos
         End Set
     End Property
 
+    Public Property Pro_Filtro_Extra_JefesProducto()
+        Get
+            Return _Filtro_Extra_Jefes
+        End Get
+        Set(value)
+            _Filtro_Extra_Jefes = value
+        End Set
+    End Property
+
     Public Sub New()
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -250,6 +283,10 @@ Public Class Frm_Filtro_Especial_Productos
         Call Rdb_CheckedChanged(Rdb_Bakapp_Algunas, Nothing)
     End Sub
 
+    Private Sub Btn_Jefes_Algunos_Click(sender As Object, e As EventArgs) Handles Btn_Jefes_Algunos.Click
+        Call Rdb_CheckedChanged(Rdb_Jefes_Algunos, Nothing)
+    End Sub
+
     Private Sub Frm_Filtro_Especial_Productos_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         AddHandler Rdb_Productos_Algunos.CheckedChanged, AddressOf Rdb_CheckedChanged
@@ -258,6 +295,7 @@ Public Class Frm_Filtro_Especial_Productos
         AddHandler Rdb_Rubros_Algunos.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_Super_Familias_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_Zonas_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
+        AddHandler Rdb_Jefes_Algunos.CheckedChanged, AddressOf Rdb_CheckedChanged
         AddHandler Rdb_Bakapp_Algunas.CheckedChanged, AddressOf Rdb_CheckedChanged
 
         Panel_Otros_Filtros.Enabled = Rdb_Productos_Todos.Checked
@@ -268,6 +306,7 @@ Public Class Frm_Filtro_Especial_Productos
         Btn_Super_Familias_Algunas.Visible = Rdb_Super_Familias_Algunas.Checked
         Btn_Rubros_Algunos.Visible = Rdb_Rubros_Algunos.Checked
         Btn_Zonas_Algunas.Visible = Rdb_Zonas_Algunas.Checked
+        Btn_Jefes_Algunos.Visible = Rdb_Jefes_Algunos.Checked
         Btn_Bakapp_Algunas.Visible = Rdb_Bakapp_Algunas.Checked
 
     End Sub
@@ -341,6 +380,14 @@ Public Class Frm_Filtro_Especial_Productos
 
                 Btn_Bakapp_Algunas.Visible = _Control.Checked
                 _Control_Todas = Rdb_Bakapp_Todas
+
+            Case "Rdb_Jefes_Algunos"
+
+                _Tbl_Filtro = _Tbl_Filtro_Jefes
+                _Tabla_Fl = Enum_Tabla_Fl._Funcionarios_Random
+                _Control_Todas = Rdb_Jefes_Todos
+                _Sql_Filtro_Condicion_Extra = _Filtro_Extra_Jefes
+                Btn_Jefes_Algunos.Visible = _Control.Checked
 
         End Select
 
@@ -424,6 +471,8 @@ Public Class Frm_Filtro_Especial_Productos
                                 _Tbl_Filtro_Rubro = _Tbl_Filtro
                             Case "Rdb_Zonas_Algunas"
                                 _Tbl_Filtro_Zonas = _Tbl_Filtro
+                            Case "Rdb_Jefes_Algunos"
+                                _Tbl_Filtro_Jefes = _Tbl_Filtro
                         End Select
                     End If
                 End If

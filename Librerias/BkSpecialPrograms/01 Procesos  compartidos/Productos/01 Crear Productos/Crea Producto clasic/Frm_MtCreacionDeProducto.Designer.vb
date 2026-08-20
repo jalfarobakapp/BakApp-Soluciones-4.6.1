@@ -22,6 +22,7 @@ Partial Class Frm_MtCreacionDeProducto
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_MtCreacionDeProducto))
         Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -34,7 +35,6 @@ Partial Class Frm_MtCreacionDeProducto
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_MtCreacionDeProducto))
         Me.Txt_Rlud = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Nokoprra = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Nokopr = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -164,11 +164,14 @@ Partial Class Frm_MtCreacionDeProducto
         Me.Lbl_Ancho = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Alto = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Chk_ExluyeTipoVenta = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.SuperTabItem5 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupPanel9 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.SuperTabItem4 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel6 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Lbl_Dim_Descripcion = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_Dim_Codigo = New DevComponents.DotNetBar.LabelX()
@@ -207,9 +210,6 @@ Partial Class Frm_MtCreacionDeProducto
         Me.Rdb_1raDimension = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Rdb_Raiz = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.STab_Dimensiones = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Chk_ExluyeTipoVenta = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.SuperTabItem5 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
@@ -235,12 +235,12 @@ Partial Class Frm_MtCreacionDeProducto
         Me.GroupPanel1.SuspendLayout()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel5.SuspendLayout()
+        Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuperTabControlPanel4.SuspendLayout()
         Me.GroupPanel9.SuspendLayout()
-        Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuperTabControlPanel6.SuspendLayout()
         Me.GroupPanel10.SuspendLayout()
-        Me.SuperTabControlPanel5.SuspendLayout()
         Me.SuperTabControlPanel2.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
         Me.SuspendLayout()
@@ -2724,12 +2724,12 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(9, 12)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -2741,6 +2741,63 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabControl1.TabIndex = 8
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2, Me.SuperTabItem3, Me.SuperTabItem4, Me.STab_Dimensiones, Me.SuperTabItem5})
         Me.SuperTabControl1.Text = "SuperTabControl1"
+        '
+        'SuperTabControlPanel5
+        '
+        Me.SuperTabControlPanel5.Controls.Add(Me.Chk_ExluyeTipoVenta)
+        Me.SuperTabControlPanel5.Controls.Add(Me.GroupPanel1)
+        Me.SuperTabControlPanel5.Controls.Add(Me.GroupPanel8)
+        Me.SuperTabControlPanel5.Controls.Add(Me.GroupPanel7)
+        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
+        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(977, 494)
+        Me.SuperTabControlPanel5.TabIndex = 0
+        Me.SuperTabControlPanel5.TabItem = Me.SuperTabItem5
+        '
+        'Chk_ExluyeTipoVenta
+        '
+        Me.Chk_ExluyeTipoVenta.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_ExluyeTipoVenta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ExluyeTipoVenta.CheckBoxImageChecked = CType(resources.GetObject("Chk_ExluyeTipoVenta.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ExluyeTipoVenta.FocusCuesEnabled = False
+        Me.Chk_ExluyeTipoVenta.Font = New System.Drawing.Font("Segoe UI", 9.75!)
+        Me.Chk_ExluyeTipoVenta.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ExluyeTipoVenta.Location = New System.Drawing.Point(10, 398)
+        Me.Chk_ExluyeTipoVenta.Name = "Chk_ExluyeTipoVenta"
+        Me.Chk_ExluyeTipoVenta.Size = New System.Drawing.Size(381, 21)
+        Me.Chk_ExluyeTipoVenta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ExluyeTipoVenta.TabIndex = 75
+        Me.Chk_ExluyeTipoVenta.Text = "No excluir este producto en ventas exclusivas (vender siempre)"
+        '
+        'SuperTabItem5
+        '
+        Me.SuperTabItem5.AttachedControl = Me.SuperTabControlPanel5
+        Me.SuperTabItem5.GlobalItem = False
+        Me.SuperTabItem5.Name = "SuperTabItem5"
+        Me.SuperTabItem5.Text = "ADICIONALES"
+        '
+        'SuperTabControlPanel1
+        '
+        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel5)
+        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel15)
+        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel14)
+        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
+        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(977, 467)
+        Me.SuperTabControlPanel1.TabIndex = 1
+        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
+        '
+        'SuperTabItem1
+        '
+        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
+        Me.SuperTabItem1.GlobalItem = False
+        Me.SuperTabItem1.Name = "SuperTabItem1"
+        Me.SuperTabItem1.Text = "PRODUCTO"
         '
         'SuperTabControlPanel4
         '
@@ -2800,25 +2857,6 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabItem4.GlobalItem = False
         Me.SuperTabItem4.Name = "SuperTabItem4"
         Me.SuperTabItem4.Text = "IMPUESTOS"
-        '
-        'SuperTabControlPanel1
-        '
-        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel5)
-        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel15)
-        Me.SuperTabControlPanel1.Controls.Add(Me.GroupPanel14)
-        Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(977, 467)
-        Me.SuperTabControlPanel1.TabIndex = 1
-        Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
-        '
-        'SuperTabItem1
-        '
-        Me.SuperTabItem1.AttachedControl = Me.SuperTabControlPanel1
-        Me.SuperTabItem1.GlobalItem = False
-        Me.SuperTabItem1.Name = "SuperTabItem1"
-        Me.SuperTabItem1.Text = "PRODUCTO"
         '
         'SuperTabControlPanel6
         '
@@ -3341,44 +3379,6 @@ Partial Class Frm_MtCreacionDeProducto
         Me.STab_Dimensiones.Name = "STab_Dimensiones"
         Me.STab_Dimensiones.Text = "DIMENSIONES"
         '
-        'SuperTabControlPanel5
-        '
-        Me.SuperTabControlPanel5.Controls.Add(Me.Chk_ExluyeTipoVenta)
-        Me.SuperTabControlPanel5.Controls.Add(Me.GroupPanel1)
-        Me.SuperTabControlPanel5.Controls.Add(Me.GroupPanel8)
-        Me.SuperTabControlPanel5.Controls.Add(Me.GroupPanel7)
-        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
-        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(977, 467)
-        Me.SuperTabControlPanel5.TabIndex = 0
-        Me.SuperTabControlPanel5.TabItem = Me.SuperTabItem5
-        '
-        'Chk_ExluyeTipoVenta
-        '
-        Me.Chk_ExluyeTipoVenta.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_ExluyeTipoVenta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_ExluyeTipoVenta.CheckBoxImageChecked = CType(resources.GetObject("Chk_ExluyeTipoVenta.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_ExluyeTipoVenta.FocusCuesEnabled = False
-        Me.Chk_ExluyeTipoVenta.Font = New System.Drawing.Font("Segoe UI", 9.75!)
-        Me.Chk_ExluyeTipoVenta.ForeColor = System.Drawing.Color.Black
-        Me.Chk_ExluyeTipoVenta.Location = New System.Drawing.Point(10, 398)
-        Me.Chk_ExluyeTipoVenta.Name = "Chk_ExluyeTipoVenta"
-        Me.Chk_ExluyeTipoVenta.Size = New System.Drawing.Size(381, 21)
-        Me.Chk_ExluyeTipoVenta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_ExluyeTipoVenta.TabIndex = 75
-        Me.Chk_ExluyeTipoVenta.Text = "No excluir este producto en ventas exclusivas (vender siempre)"
-        '
-        'SuperTabItem5
-        '
-        Me.SuperTabItem5.AttachedControl = Me.SuperTabControlPanel5
-        Me.SuperTabItem5.GlobalItem = False
-        Me.SuperTabItem5.Name = "SuperTabItem5"
-        Me.SuperTabItem5.Text = "ADICIONALES"
-        '
         'SuperTabControlPanel2
         '
         Me.SuperTabControlPanel2.Controls.Add(Me.ChkSelTodo)
@@ -3417,9 +3417,9 @@ Partial Class Frm_MtCreacionDeProducto
         Me.SuperTabControlPanel3.Controls.Add(Me.Label11)
         Me.SuperTabControlPanel3.Controls.Add(Me.Btn_Marcas)
         Me.SuperTabControlPanel3.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel3.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel3.Name = "SuperTabControlPanel3"
-        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(977, 494)
+        Me.SuperTabControlPanel3.Size = New System.Drawing.Size(977, 467)
         Me.SuperTabControlPanel3.TabIndex = 0
         Me.SuperTabControlPanel3.TabItem = Me.SuperTabItem3
         '
@@ -3472,12 +3472,12 @@ Partial Class Frm_MtCreacionDeProducto
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel5.ResumeLayout(False)
+        Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel4.ResumeLayout(False)
         Me.GroupPanel9.ResumeLayout(False)
-        Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel6.ResumeLayout(False)
         Me.GroupPanel10.ResumeLayout(False)
-        Me.SuperTabControlPanel5.ResumeLayout(False)
         Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.SuperTabControlPanel3.PerformLayout()

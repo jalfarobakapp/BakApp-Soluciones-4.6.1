@@ -19504,7 +19504,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                  Optional _Grabar_Y_Pagar_Vale As Boolean = False,
                                  Optional _Mostrar_Mensaje As Boolean = True,
                                  Optional _ConvertirAPesos As Boolean = False,
-                                 Optional _ListaPrecios As String = "") As LsValiciones.Mensajes
+                                 Optional _ListaPrecios As String = "",
+                                 Optional _ReferenciaAutomatica As Boolean = False) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -19523,12 +19524,27 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
             If _Es_Electronico Then
 
-                If Not _Class_Referencias_DTE.Fx_Insertar_Referencias_NCV_FDV(Me,
+                If _ReferenciaAutomatica Then
+
+                    Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,FEEMDO From MAEDDO Where IDMAEDDO = " & _TblDetalle.Rows(0).Item("Idmaeddo_Ori")
+                    Dim _Row_DocOrigen As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                    Dim _Tido_Ref = _Row_DocOrigen.Item("TIDO")
+                    Dim _Nudo_Ref = _Row_DocOrigen.Item("NUDO")
+                    Dim _Feemdo_Ref = _Row_DocOrigen.Item("FEEMDO")
+
+                    Fx_Insertar_Referencia_DTE(_Tido, "", _Tido_Ref, _Nudo_Ref, _Feemdo_Ref)
+
+                Else
+
+                    If Not _Class_Referencias_DTE.Fx_Insertar_Referencias_NCV_FDV(Me,
                                                                               _TblDetalle,
                                                                               _Tbl_Mevento_Edo,
                                                                               _RowEntidad,
                                                                               _Tido) Then
-                    Return _Mensaje
+                        Return _Mensaje
+
+                    End If
 
                 End If
 
@@ -20331,6 +20347,34 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
         _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc)
 
         Return _Mensaje
+
+    End Function
+
+    Function Fx_Insertar_Referencia_DTE(_Tido As String,
+                                        _Nudo As String,
+                                        _Tido_Ref As String,
+                                        _Nudo_Ref As String,
+                                        _Feemdo_Ref As Date) As Boolean
+
+        Dim _Nudopa = String.Empty
+        Dim _NroLinRef = 1
+        Dim _TpoDocRef = Fx_Tipo_DTE_VS_TIDO(_Tido_Ref)
+        Dim _FolioRef = Convert.ToInt32(_Nudo_Ref)
+        Dim _RUTOt = String.Empty
+        Dim _IdAdicOtr = String.Empty
+        Dim _FchRef = _Feemdo_Ref
+        Dim _CodRef = 3
+        Dim _RazonRef = "Devolucion de Mercaderias"
+
+        _Class_Referencias_DTE.Fx_Row_Nueva_Referencia(0, 0, "", _Nudopa,
+                                                         _NroLinRef,
+                                                         _TpoDocRef,
+                                                         _FolioRef,
+                                                         _RUTOt,
+                                                         _IdAdicOtr,
+                                                         _FchRef,
+                                                         _CodRef,
+                                                         _RazonRef)
 
     End Function
 
@@ -21863,6 +21907,14 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                             _New_Fila.Cells("CantUd1").Value = _CantUd1_Dori
                             _New_Fila.Cells("CantUd2").Value = _CantUd2_Dori
 
+                        End If
+
+                        Dim _Nuimli As Integer = _Fila.Item("NUIMLI")
+                        Dim _Poimglli As Double = _Fila.Item("POIMGLLI")
+                        Dim _Vaimli As Double = _Fila.Item("VAIMLI")
+
+                        If _Poimglli <> 0 Then
+                            _New_Fila.Cells("PorIla").Value = _Poimglli
                         End If
 
                     End If

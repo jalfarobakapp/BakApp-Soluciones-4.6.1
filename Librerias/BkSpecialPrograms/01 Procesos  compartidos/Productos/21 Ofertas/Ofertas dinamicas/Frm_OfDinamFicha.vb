@@ -10,6 +10,7 @@ Public Class Frm_OfDinamFicha
 
     'Public Property Eliminado As Boolean
     Public Property Row_Maeeres As DataRow
+    Public Property Editar As Boolean
 
     Dim _Tbl_TipoOferta As DataTable
 
@@ -219,20 +220,25 @@ Public Class Frm_OfDinamFicha
             Dim _Fi As String = Format(Dtp_Fioferta.Value, "yyyyMMdd")
             Dim _Ft As String = Format(Dtp_Ftoferta.Value, "yyyyMMdd")
 
+            Dim _Sql_Listas As String = Fx_SqlProductosNoAsociadosAListas(Txt_Listas.Text)
+
             Consulta_sql = "Select ELEMENTO Into #Ps1 From MAEDRES Where CODIGO = '" & Txt_Codigo.Text.Trim & "'" & vbCrLf &
                            "Select * From MAEERES Where CODIGO In" & vbCrLf &
                            "(Select CODIGO From MAEDRES Where ELEMENTO In (Select ELEMENTO From #Ps1))" & vbCrLf &
                            "And CODIGO <> '" & Txt_Codigo.Text.Trim & "' And ('" & _Fi & "' Between FIOFERTA And FTOFERTA Or '" & _Ft & "' Between FIOFERTA And FTOFERTA)" & vbCrLf &
+                           _Sql_Listas & vbCrLf &
                            "Drop Table #Ps1"
 
             Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
+
             If CBool(_Tbl.Rows.Count) Then
                 MessageBoxEx.Show(Me, "PRODUCTOS YA ACTIVOS EN OTRA OFERTA." & vbCrLf & "NO SE PUEDE ACTIVAR ESTE DESCUENTO." & vbCrLf & vbCrLf &
-                                  "Puedes suceder 2 cosas:" & vbCrLf &
-                                  "- Hay una oferta con productos que ya esta activa." & vbCrLf &
-                                  "- Hay una oferta que se activara en una fecha futura y coincidirá con esta oferta.",
-                                  "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                      "Puedes lo siguiente:" & vbCrLf &
+                                      "- Hay oferta con productos que ya esta activa." & vbCrLf &
+                                      "- Hay una oferta que se activara en una fecha futura y coincidirá con esta oferta." & vbCrLf &
+                                      "- Todo esto con ofertas que contengan una lista de precios seleccionada.",
+                                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
             End If
 
@@ -414,5 +420,32 @@ Where CODIGO = '" & _Codigo & "'" & vbCrLf
                               Txt_Udad.Name, Class_SQLite.Enum_Type._Text, Txt_Udad.Text, _Actualizar,, False)
 
     End Sub
+
+    Private Function Fx_SqlProductosNoAsociadosAListas(Listas As String) As String
+
+        ' Separar las listas por "_"
+        Dim partes As String() = Listas.Split("_"c)
+        Dim filtros As New List(Of String)
+
+        ' Construir los filtros LIKE dinámicos
+        For Each lista In partes
+            Dim l As String = lista.Trim()
+            If l <> "" Then
+                filtros.Add("LISTAS LIKE '%" & l & "%'")
+            End If
+        Next
+
+        If filtros.Count = 0 Then
+            Return String.Empty
+        End If
+
+        ' Unir los filtros con OR
+        Dim filtroListas As String = String.Join(" OR ", filtros)
+
+        ' Construir el SQL final
+        Dim sql As String = $"AND ({filtroListas})"
+        Return sql
+
+    End Function
 
 End Class

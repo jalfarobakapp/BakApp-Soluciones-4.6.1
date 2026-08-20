@@ -386,10 +386,10 @@ Namespace My.Resources
         '''Declare @Marca_Proyeccion Int = #Marca_Proyeccion#
         '''Declare @RotCalculo varchar(2) = &apos;#RotCalculo#&apos;
         '''Declare @Fecha_Actual Date = GetDate()
-        '''Declare @MesesPreImportacion Int = #MesesPreImportacion#
+        '''Declare @MesesSobreStock Int = #MesesSobreStock#
         '''
         '''Set @Porc_Creciminto = @Porc_Creciminto /100.0 + 1        
-        '''Set @Dias_Abastecer = #Dias_Abast [resto de la cadena truncado]&quot;;.
+        '''Set @Dias_Abastecer = #Dias_Abastecer#--@ [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Proyeccion_Compras_30_60_120_ActualizaTablas() As String
             Get
@@ -407,10 +407,10 @@ Namespace My.Resources
         '''Declare @Marca_Proyeccion Int = #Marca_Proyeccion#
         '''Declare @RotCalculo varchar(2) = &apos;#RotCalculo#&apos;
         '''Declare @Fecha_Actual Date = GetDate()
-        '''Declare @MesesPreImportacion Int = #MesesPreImportacion#
+        '''Declare @MesesSobreStock Int = #MesesSobreStock#
         '''
         '''Set @Porc_Creciminto = @Porc_Creciminto /100.0 + 1        
-        '''Set @Dias_Abastecer = #Dias_Abast [resto de la cadena truncado]&quot;;.
+        '''Set @Dias_Abastecer = #Dias_Abastecer#--@ [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property SQLQuery_Proyeccion_Compras_30_60_120_CreaTablas() As String
             Get
@@ -612,6 +612,30 @@ Namespace My.Resources
         Friend Shared ReadOnly Property SQLQuery_UltimasOccGrc_Pendientes() As String
             Get
                 Return ResourceManager.GetString("SQLQuery_UltimasOccGrc_Pendientes", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a DECLARE 
+        '''@Empresa char(2),
+        '''@Codigo char(13)
+        '''
+        '''select @Empresa = &apos;#Empresa#&apos;,
+        '''       @Codigo = &apos;#Codigo#&apos;
+        '''
+        '''
+        '''CREATE TABLE [dbo].[#Paso] (
+        '''    [Orden]                       [Int]			DEFAULT (0),
+        '''    [CodPermiso]                  [Char](10)    DEFAULT &apos;&apos;,
+        '''    [Empresa]                     [Char](2)     DEFAULT &apos;&apos;,
+        '''    [Sucursal]                    [Char](3)     DEFAULT &apos;&apos;,
+        '''	[Bodega]                      [Char](3)     DEFAULT &apos;&apos;,
+        '''    [EMP_SUC_BOD]                 [Varchar](8)  DEFAULT &apos;&apos;,
+        '''    [SUC_B [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Stock_productos_por_emp_suc_bod() As String
+            Get
+                Return ResourceManager.GetString("Stock_productos_por_emp_suc_bod", resourceCulture)
             End Get
         End Property
     End Class

@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Threading
+Imports BkSpecialPrograms.Frm_Demonio_01
 Imports Newtonsoft.Json
 
 Public Class Frm_Demonio_New
@@ -36,7 +37,7 @@ Public Class Frm_Demonio_New
     Private _Timer_Prestashop_Orders As Timer
     Private _Timer_Prestashop_Prod As Timer
     Private _Timer_Archivador As Timer
-    Private _Timer_ListasProgramadas As Timer
+    'Private _Timer_ListasProgramadas As Timer
 
     Private logFilePath As String = "Log_Demonio.txt"
 
@@ -222,7 +223,7 @@ Public Class Frm_Demonio_New
         End If
 
         If _DProgramaciones.Sp_ListasProgramadas.Activo Then
-            Sb_Timer_IntervaloCada(_Timer_ListasProgramadas, _DProgramaciones.Sp_ListasProgramadas, AddressOf Sb_ListasProgramadas)
+            Sb_Activar_ObjetosTimer(Timer_ListasProgramadas, _DProgramaciones.Sp_ListasProgramadas)
         End If
 
         If _DProgramaciones.Sp_FacturacionAuto.Activo Then
@@ -782,45 +783,45 @@ Public Class Frm_Demonio_New
 
     End Sub
 
-    Sub Sb_ListasProgramadas(state As Object)
+    'Sub Sb_ListasProgramadas(state As Object)
 
-        If IsNothing(_Timer_ListasProgramadas) Then Return
+    '    If IsNothing(_Timer_ListasProgramadas) Then Return
 
-        If _Cl_Listas_Programadas.Procesando Then
+    '    If _Cl_Listas_Programadas.Procesando Then
 
-            Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(2) 'DateTime.Now.AddMinutes(1)
-            Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
-            _Timer_ListasProgramadas.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
+    '        Dim horaProgramada As DateTime = DateTime.Now.AddSeconds(2) 'DateTime.Now.AddMinutes(1)
+    '        Dim tiempoRestante As TimeSpan = horaProgramada - DateTime.Now
+    '        Timer_ListasProgramadas.Change(tiempoRestante, Timeout.InfiniteTimeSpan)
 
-            ' Este método se ejecuta cada vez que se activa el temporizador (cada 1 minuto adicional)
-            Dim registro As String = DateTime.Now.ToString() & " - Listas programadas a futuro (Proceso en curso se volverá a revisar en 2 segundos mas...)"
+    '        ' Este método se ejecuta cada vez que se activa el temporizador (cada 1 minuto adicional)
+    '        Dim registro As String = DateTime.Now.ToString() & " - Listas programadas a futuro (Proceso en curso se volverá a revisar en 2 segundos mas...)"
 
-            ' Registrar la información en un archivo de registro
-            RegistrarLog(registro)
-            MostrarRegistro(registro)
+    '        ' Registrar la información en un archivo de registro
+    '        RegistrarLog(registro)
+    '        MostrarRegistro(registro)
 
-        Else
+    '    Else
 
-            _Cl_Listas_Programadas.FechaProgramacion = DtpFecharevision.Value
-            '_Cl_Listas_Programadas.Nombre_Equipo = _NombreEquipo
-            _Cl_Listas_Programadas.Log_Registro = String.Empty
-            _Cl_Listas_Programadas.Sb_Grabar_Listas_Programadas()
+    '        _Cl_Listas_Programadas.FechaProgramacion = DtpFecharevision.Value
+    '        '_Cl_Listas_Programadas.Nombre_Equipo = _NombreEquipo
+    '        _Cl_Listas_Programadas.Log_Registro = String.Empty
+    '        _Cl_Listas_Programadas.Sb_Grabar_Listas_Programadas()
 
-            Sb_Timer_IntervaloCada(_Timer_ListasProgramadas, _DProgramaciones.Sp_ListasProgramadas, AddressOf Sb_ListasProgramadas)
+    '        Sb_Timer_IntervaloCada(_Timer_ListasProgramadas, _DProgramaciones.Sp_ListasProgramadas, AddressOf Sb_ListasProgramadas)
 
-            Dim registro As String = "Tarea ejecutada (Listas programadas a futuro) a las: " & DateTime.Now.ToString()
+    '        Dim registro As String = "Tarea ejecutada (Listas programadas a futuro) a las: " & DateTime.Now.ToString()
 
-            If Not String.IsNullOrWhiteSpace(_Cl_Listas_Programadas.Log_Registro) Then
-                registro += vbCrLf & _Cl_Listas_Programadas.Log_Registro
+    '        If Not String.IsNullOrWhiteSpace(_Cl_Listas_Programadas.Log_Registro) Then
+    '            registro += vbCrLf & _Cl_Listas_Programadas.Log_Registro
 
-                ' Registrar la información en un archivo de registro
-                RegistrarLog(registro)
-                MostrarRegistro(registro)
-            End If
+    '            ' Registrar la información en un archivo de registro
+    '            RegistrarLog(registro)
+    '            MostrarRegistro(registro)
+    '        End If
 
-        End If
+    '    End If
 
-    End Sub
+    'End Sub
 
     Function Fx_CumpleDiaSemana(_Programacion As Cl_NewProgramacion) As Boolean
 
@@ -969,9 +970,9 @@ Public Class Frm_Demonio_New
                 Sb_Timer_IntervaloCada(_Timer_ImprimirPicking, _DProgramaciones.Sp_ColaImpPick, AddressOf Sb_Imprimir_Picking)
             End If
 
-            If _DProgramaciones.Sp_ListasProgramadas.Activo Then
-                Sb_Timer_IntervaloCada(_Timer_ListasProgramadas, _DProgramaciones.Sp_ListasProgramadas, AddressOf Sb_ListasProgramadas)
-            End If
+            'If _DProgramaciones.Sp_ListasProgramadas.Activo Then
+            '    Sb_Timer_IntervaloCada(_Timer_ListasProgramadas, _DProgramaciones.Sp_ListasProgramadas, AddressOf Sb_ListasProgramadas)
+            'End If
 
             If _DProgramaciones.Sp_Prestashop_Order.Activo Then
                 Sb_Timer_IntervaloCada(_Timer_Prestashop_Orders, _DProgramaciones.Sp_Prestashop_Order, AddressOf Sb_Prestashop_Orders)
@@ -1874,6 +1875,30 @@ Public Class Frm_Demonio_New
 
 #End Region
 
+#Region "LISTAS DE PRECIO PROGRAMADAS"
+
+            If _Cl_Listas_Programadas.Ejecutar Then
+
+                If Not _Cl_Listas_Programadas.Procesando Then '_Hora.Contains(":00") Then
+
+                    'Sb_Pausar(_Pausa.Pausa)
+
+                    _Cl_Listas_Programadas.FechaProgramacion = DtpFecharevision.Value
+                    _Cl_Listas_Programadas.Sb_Grabar_Listas_Programadas()
+
+                    _Cl_Listas_Programadas.Procesando = False
+                    _Cl_Listas_Programadas.Ejecutar = False
+
+                    Sb_Activar_ObjetosTimer(Timer_ListasProgramadas, _DProgramaciones.Sp_ListasProgramadas)
+
+                End If
+
+                'Lbl_Segundos_Listas_Programadas.Text = _Segundos_Listas_Programacion
+
+            End If
+
+#End Region
+
         Catch ex As Exception
             Dim mensaje As String = "Error en Timer_Ejecuciones_Tick: " & ex.Message
             '_Cl_Imprimir_Documentos.Procesando = False
@@ -1949,6 +1974,12 @@ Public Class Frm_Demonio_New
     Private Sub Timer_RecalculoPPP_Tick(sender As Object, e As EventArgs) Handles Timer_RecalculoPPP.Tick
         If Fx_CumpleDiaSemana(_DProgramaciones.Sp_RecalculoPPP) Then
             _Cl_RecalculoPPP.Ejecutar = True
+        End If
+    End Sub
+
+    Private Sub Timer_ListasProgramadas_Tick(sender As Object, e As EventArgs) Handles Timer_ListasProgramadas.Tick
+        If Fx_CumpleDiaSemana(_DProgramaciones.Sp_ListasProgramadas) Then
+            _Cl_Listas_Programadas.Ejecutar = True
         End If
     End Sub
 End Class

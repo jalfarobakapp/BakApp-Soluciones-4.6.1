@@ -55,6 +55,7 @@ Partial Class Frm_Demonio_New
         Me.Timer_NVVAutoExterna = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_ImprimirDocumentos = New System.Windows.Forms.Timer(Me.components)
         Me.Timer_RecalculoPPP = New System.Windows.Forms.Timer(Me.components)
+        Me.Timer_ListasProgramadas = New System.Windows.Forms.Timer(Me.components)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         Me.SuspendLayout()
@@ -384,6 +385,10 @@ Partial Class Frm_Demonio_New
         '
         Me.Timer_RecalculoPPP.Interval = 1000
         '
+        'Timer_ListasProgramadas
+        '
+        Me.Timer_ListasProgramadas.Interval = 1000
+        '
         'Frm_Demonio_New
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -401,7 +406,6 @@ Partial Class Frm_Demonio_New
         Me.Controls.Add(Me.Metro_Bar_Color)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ForeColor = System.Drawing.Color.Black
         Me.MaximizeBox = False
         Me.Name = "Frm_Demonio_New"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
@@ -442,4 +446,5 @@ Partial Class Frm_Demonio_New
     Friend WithEvents Timer_NVVAutoExterna As Timer
     Friend WithEvents Timer_ImprimirDocumentos As Timer
     Friend WithEvents Timer_RecalculoPPP As Timer
+    Friend WithEvents Timer_ListasProgramadas As Timer
 End Class

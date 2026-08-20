@@ -35,8 +35,8 @@ Public Class Frm_01_Asis_Compra_Resultados
     Dim _Tbl_Filtro_Marcas As DataTable
     Dim _Tbl_Filtro_Rubro As DataTable
     Dim _Tbl_Filtro_Clalibpr As DataTable
-
     Dim _Tbl_Filtro_Zonas As DataTable
+    Dim _Tbl_Filtro_Jefes As DataTable
 
     Dim _TblBodCompra As DataTable
     Dim _TblBodVenta As DataTable
@@ -49,6 +49,7 @@ Public Class Frm_01_Asis_Compra_Resultados
     Dim _Filtro_Rubro_Todas As Boolean
     Dim _Filtro_Clalibpr_Todas As Boolean
     Dim _Filtro_Zonas_Todas As Boolean
+    Dim _Filtro_Jefes_Todos As Boolean
 
     Dim _Filtro_Bodegas_Todas As Boolean
 
@@ -154,6 +155,14 @@ Public Class Frm_01_Asis_Compra_Resultados
             _Tbl_Filtro_Zonas = value
         End Set
     End Property
+    Public Property Pro_Tbl_Filtro_Jefes() As DataTable
+        Get
+            Return _Tbl_Filtro_Jefes
+        End Get
+        Set(value As DataTable)
+            _Tbl_Filtro_Jefes = value
+        End Set
+    End Property
     Public Property Pro_TblBodCompra() As DataTable
         Get
             Return _TblBodCompra
@@ -203,6 +212,15 @@ Public Class Frm_01_Asis_Compra_Resultados
         End Set
     End Property
 
+    Public Property Pro_Filtro_Jefes_Todos() As Boolean
+        Get
+            Return _Filtro_Jefes_Todos
+        End Get
+        Set(value As Boolean)
+            _Filtro_Jefes_Todos = value
+        End Set
+    End Property
+
     Public Property Pro_Filtro_Bakapp_Todas As Boolean
 
     Public Property Pro_RowParametros() As DataRow
@@ -230,7 +248,6 @@ Public Class Frm_01_Asis_Compra_Resultados
             _Nombre_Tbl_Paso_Costos = value
         End Set
     End Property
-
 
     Public Property Input_DiasMarcarProvQueNoTiene As Integer
 
@@ -488,6 +505,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         If RutEmpresa = "77458040-9" OrElse RutEmpresa = "07251245-6" OrElse RutEmpresa = "77634877-5" OrElse RutEmpresa = "77634879-1" Then
             Btn_ListaLC.Visible = True
+            Btn_OfertasDinamicas.Visible = True
         End If
 
     End Sub
@@ -2018,6 +2036,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             _Filtro_Marcas,
             _Filtro_Zonas,
             _Filtro_SuperFamilias,
+            _Filtro_Jefes,
             _Filtro_Bakapp,
             _Filtro_ClasLibre,
             _Filtro_Bodega,
@@ -2137,6 +2156,13 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             _Filtro_Zonas = "And Codigo IN (Select KOPR From MAEPR Where ZONAPR In " & _Filtro_Zonas & ")"
         End If
 
+        If _Filtro_Jefes_Todos Then
+            _Filtro_Jefes = String.Empty
+        Else
+            _Filtro_Jefes = Generar_Filtro_IN(_Tbl_Filtro_Jefes, "Chk", "Codigo", False, True, "'")
+            _Filtro_Jefes = "And Codigo IN (Select KOPR From MAEPR Where KOFUPR In " & _Filtro_Jefes & ")"
+        End If
+
         '---------------------------
 
         If Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked Then
@@ -2162,6 +2188,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
                       _Filtro_Marcas & vbCrLf &
                       _Filtro_Rubros & vbCrLf &
                       _Filtro_SuperFamilias & vbCrLf &
+                      _Filtro_Jefes & vbCrLf &
                       _Filtro_Bakapp & vbCrLf &
                       _Filtro_Zonas & vbCrLf &
                       _Filtro_Stock_Pedido & vbCrLf &
@@ -4583,6 +4610,14 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         _Clas_Asistente_Compras.Sb_Actualizar_Stock(_Accion_Automatica)
 
+        If Chk_SumarStfisicoStTransito.Checked Then
+            Consulta_sql = $"
+                            Update {_Nombre_Tbl_Paso_Informe} Set 
+                            Stock_Fisico_Ud1 = Stock_Fisico_Ud1+StockEnTransitoUd1,
+                            Stock_Fisico_Ud2 = Stock_Fisico_Ud2+StockEnTransitoUd2"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End If
+
     End Sub
 
     Sub Sb_Actualizar_Costos()
@@ -6203,6 +6238,7 @@ WHERE P.Activa = 'Si';
         Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Todas
         Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
         Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Todas
+        Fm.Pro_Filtro_Jefes_Todos = _Filtro_Jefes_Todos
         Fm.Pro_Filtro_Bakapp_Todas = Pro_Filtro_Bakapp_Todas
 
         Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
@@ -6210,6 +6246,7 @@ WHERE P.Activa = 'Si';
         Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro
         Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
+        Fm.Pro_Tbl_Filtro_Jefes = _Tbl_Filtro_Jefes
 
         Fm.BuscarSpfmfmsubfm = True
         Fm.Ls_SelSuperFamilias = _Ls_SelSuperFamilias
@@ -6226,6 +6263,7 @@ WHERE P.Activa = 'Si';
             _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas
             _Tbl_Filtro_Rubro = Fm.Pro_Tbl_Filtro_Rubro
             _Tbl_Filtro_Super_Familias = Fm.Pro_Tbl_Filtro_Super_Familias
+            _Tbl_Filtro_Jefes = Fm.Pro_Tbl_Filtro_Jefes
 
             Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
             Ls_SelFamilias = Fm.Ls_SelFamilias
@@ -6239,6 +6277,8 @@ WHERE P.Activa = 'Si';
             _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
             _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
             _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+            _Filtro_Jefes_Todos = Fm.Pro_Filtro_Jefes_Todos
+
             Pro_Filtro_Bakapp_Todas = Fm.Pro_Filtro_Bakapp_Todas
 
             Call Btn_Actualizar_Informe_Click(Nothing, Nothing)
@@ -6996,9 +7036,17 @@ WHERE P.Activa = 'Si';
     End Sub
 
     Private Sub Btn_Actualizar_Informe_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Actualizar_Informe.Click
-        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, Not _Proceso_Automatico_Ejecutado, False)
+
+        Dim _Actualizar_Stock As Boolean = False
+
+        If Chk_SumarStfisicoStTransito.Checked Then
+            _Actualizar_Stock = True
+        End If
+
+        Sb_Refrescar_Grilla_Principal(Fm_Hijo.Grilla, Not _Proceso_Automatico_Ejecutado, _Actualizar_Stock)
         If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Codigo.Text)) Then Sb_Buscar_X_Codigo()
         If Not String.IsNullOrEmpty(Trim(Fm_Hijo.Txt_Descripcion.Text)) Then Sb_Buscar_X_Descripcion()
+
     End Sub
 
     Sub Sb_Buscar_X_Codigo()
@@ -7669,7 +7717,9 @@ ORDER BY Ddo.FEEMLI DESC;"
         Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Prod_Stock Where Codigo = '" & _Codigo & "' And StfiBodExt" & Ud & " <> 0"
         Dim _TblStExt As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
-        Consulta_sql = My.Resources.Recursos_Alerta_Stock.Stock_productos_por_emp_suc_bod
+        'Consulta_sql = My.Resources.Recursos_Alerta_Stock.Stock_productos_por_emp_suc_bod
+
+        Consulta_sql = My.Resources.Recursos_Asis_Compras.Stock_productos_por_emp_suc_bod
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
         Consulta_sql = Replace(Consulta_sql, "#Codigo#", _Codigo)
         Consulta_sql = Replace(Consulta_sql, "#Codigos#", _Filtro_Productos)
@@ -7735,7 +7785,22 @@ ORDER BY Ddo.FEEMLI DESC;"
             .Columns("ST_PEDIDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("ST_COMPROMETIDO").Visible = True
+            .Columns("ST_TRANSITO").Visible = True
+            .Columns("ST_TRANSITO").HeaderText = "Transito"
+            .Columns("ST_TRANSITO").Width = 60
+            .Columns("ST_TRANSITO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("ST_TRANSITO").DefaultCellStyle.Format = "##,##0.##"
+            .Columns("ST_TRANSITO").ToolTipText = "Stock en transito"
+            .Columns("ST_TRANSITO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            Dim _Visualizar_Comprometido As Boolean = True
+
+            If RutEmpresa = "77458040-9" OrElse RutEmpresa = "07251245-6" OrElse RutEmpresa = "77634877-5" OrElse RutEmpresa = "77634879-1" Then
+                _Visualizar_Comprometido = False
+            End If
+
+            .Columns("ST_COMPROMETIDO").Visible = _Visualizar_Comprometido
             .Columns("ST_COMPROMETIDO").HeaderText = "Comp.RD"
             .Columns("ST_COMPROMETIDO").Width = 60
             .Columns("ST_COMPROMETIDO").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -7744,7 +7809,7 @@ ORDER BY Ddo.FEEMLI DESC;"
             .Columns("ST_COMPROMETIDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("ST_COMPROMETIDO_BK").Visible = True
+            .Columns("ST_COMPROMETIDO_BK").Visible = _Visualizar_Comprometido
             .Columns("ST_COMPROMETIDO_BK").HeaderText = "Comp.BK"
             .Columns("ST_COMPROMETIDO_BK").Width = 60
             .Columns("ST_COMPROMETIDO_BK").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -7765,13 +7830,8 @@ ORDER BY Ddo.FEEMLI DESC;"
             Dim _NomCampo As String
             Dim _ToolCampo As String
 
-            'If String.IsNullOrEmpty(_Tido) Then
-            '_NomCampo = "Teorico"
-            '_ToolCampo = "Stock teórico = (Stock físico - Stock devengado- Stock comprometido)"
-            'Else
             _NomCampo = "Disponible"
             _ToolCampo = "Stock disponible teóricamente Ud" & Ud & " (según configuración de calculo de stock)"
-            'End If
 
             .Columns("ST_DISPONIBLE").Visible = True
             .Columns("ST_DISPONIBLE").HeaderText = _NomCampo
@@ -7788,6 +7848,7 @@ ORDER BY Ddo.FEEMLI DESC;"
 
             Dim _Suc_Bod = Trim(_Fila.Cells("SUC_BOD").Value)
             Dim _St_Fisico = _Fila.Cells("ST_FISICO").Value
+            Dim _St_Transito = _Fila.Cells("ST_TRANSITO").Value
             Dim _St_Devengado = _Fila.Cells("ST_DEVENGADO").Value
             Dim _St_Pedido = _Fila.Cells("ST_PEDIDO").Value
             Dim _St_Comprometido = _Fila.Cells("ST_COMPROMETIDO").Value
@@ -7797,7 +7858,7 @@ ORDER BY Ddo.FEEMLI DESC;"
             Dim _St_Disponible = _Fila.Cells("ST_DISPONIBLE").Value
 
             If _Ocultar_BodSinStock Then
-                _Fila.Visible = CBool(_St_Fisico + _St_Devengado + _St_Pedido + _St_Comprometido + _St_Comprometido_Bk)
+                _Fila.Visible = CBool(_St_Fisico + _St_Transito + _St_Devengado + _St_Pedido + _St_Comprometido + _St_Comprometido_Bk)
             End If
 
             Dim _Sucursal As String = _Fila.Cells("Sucursal").Value
@@ -10670,6 +10731,24 @@ LEFT JOIN MAEEN AS E
             Fm.Dispose()
 
         End If
+
+    End Sub
+
+    Private Sub Btn_OfertasDinamicas_Click(sender As Object, e As EventArgs) Handles Btn_OfertasDinamicas.Click
+
+        If Not Fx_Tiene_Permiso(Me, "Ofer0001") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
+
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+        Dim _CodigoOferta As String = _Fila.Cells("CodigoOferta").Value
+
+        Dim Fm As New Frm_OfDinamLista
+        Fm.Txt_Buscador.Text = _CodigoOferta
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 
