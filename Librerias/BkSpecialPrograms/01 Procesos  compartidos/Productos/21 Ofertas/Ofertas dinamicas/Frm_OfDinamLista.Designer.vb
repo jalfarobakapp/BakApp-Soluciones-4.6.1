@@ -767,8 +767,8 @@ Partial Class Frm_OfDinamLista
         '
         Me.Txt_Listas.Border.Class = "TextBoxBorder"
         Me.Txt_Listas.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Listas.ButtonCustom.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_Listas.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX1.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Listas.ButtonCustom.Image = CType(resources.GetObject("Txt_Listas.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Listas.ButtonCustom2.Image = CType(resources.GetObject("Txt_Listas.ButtonCustom2.Image"), System.Drawing.Image)
         Me.Txt_Listas.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Listas.ForeColor = System.Drawing.Color.Black
         Me.Txt_Listas.Location = New System.Drawing.Point(200, 408)
@@ -819,7 +819,6 @@ Partial Class Frm_OfDinamLista
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Txt_BuscaXProducto As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Txt_Buscador As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grilla_Productos As DevComponents.DotNetBar.Controls.DataGridViewX
@@ -854,4 +853,5 @@ Partial Class Frm_OfDinamLista
     Public WithEvents Mnu_Btn_CopiarPr As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Txt_Listas As DevComponents.DotNetBar.Controls.TextBoxX
+    Public WithEvents Txt_Buscador As DevComponents.DotNetBar.Controls.TextBoxX
 End Class

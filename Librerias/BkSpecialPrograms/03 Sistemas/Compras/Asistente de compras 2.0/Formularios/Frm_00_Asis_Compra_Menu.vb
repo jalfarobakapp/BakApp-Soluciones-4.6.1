@@ -31,6 +31,7 @@ Public Class Frm_00_Asis_Compra_Menu
     Dim _Tbl_Filtro_Rubro As DataTable
     Dim _Tbl_Filtro_Clalibpr As DataTable
     Dim _Tbl_Filtro_Zonas As DataTable
+    Dim _Tbl_Filtro_Jefes As DataTable
 
     Dim _TblBodCompra As DataTable
     Dim _TblBodVenta As DataTable
@@ -44,6 +45,7 @@ Public Class Frm_00_Asis_Compra_Menu
     Dim _Filtro_Zonas_Todas As Boolean
     Dim _Filtro_Bodegas_Todas As Boolean
     Dim _Filtro_Bodegas_Est_Vta_Todas As Boolean
+    Dim _Filtro_Jefes_Todos As Boolean
     Dim _Filtro_Bakapp_Todas As Boolean
 
     Dim _RowProveedor As DataRow
@@ -114,6 +116,7 @@ Public Class Frm_00_Asis_Compra_Menu
         _Filtro_Zonas_Todas = True
         _Filtro_Bodegas_Todas = True
         _Filtro_Bakapp_Todas = True
+        _Filtro_Jefes_Todos = True
 
         STabConfiguracion.SelectedTabIndex = 0
         SbTab_ConfAutomatizacion.SelectedTabIndex = 0
@@ -2027,12 +2030,14 @@ Drop Table #Paso
         Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
         Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Todas
         Fm.Pro_Filtro_Bakapp_Todas = _Filtro_Bakapp_Todas
+        Fm.Pro_Filtro_Jefes_Todos = _Filtro_Jefes_Todos
 
         Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
         Fm.Pro_Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
         Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro
-
         Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
+        Fm.Pro_Tbl_Filtro_Jefes = _Tbl_Filtro_Jefes
+
         Fm.Ls_SelSuperFamilias = Ls_SelSuperFamilias
         Fm.Ls_SelFamilias = Ls_SelFamilias
         Fm.Ls_SelSubFamilias = Ls_SelSubFamilias
@@ -2448,12 +2453,6 @@ Drop Table #Paso
 
                 If Not IsNothing(_TblFiltroProductos_Proveedor) Then
 
-                    '_Filtro_Clalibpr_Todas = Fm.Pro_Filtro_Clalibpr_Todas
-                    '_Filtro_Marcas_Todas = Fm.Pro_Filtro_Marcas_Todas
-                    '_Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
-                    '_Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
-                    '_Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
-
                     If Not _Filtro_Productos_Todos Then
                         _Algunos_Productos = Generar_Filtro_IN(_TblFiltroProductos_Proveedor, "Chk", "Codigo", False, True, "'")
                     End If
@@ -2516,6 +2515,7 @@ Drop Table #Paso
             Dim _Filtro_Bakapp = String.Empty
             Dim _Filtro_ClasLibre = String.Empty
             Dim _Filtro_Bodega = String.Empty
+            Dim _Filtro_Jefes = String.Empty
 
             If _Filtro_Rubro_Todas Then
                 _Filtro_Rubros = String.Empty
@@ -2622,6 +2622,13 @@ Drop Table #Paso
                 _Filtro_Zonas = "And ZONAPR In " & _Filtro_Zonas
             End If
 
+            If _Filtro_Jefes_Todos Then
+                _Filtro_Jefes = String.Empty
+            Else
+                _Filtro_Jefes = Generar_Filtro_IN(_Tbl_Filtro_Jefes, "Chk", "Codigo", False, True, "'")
+                _Filtro_Jefes = "And KOPR IN (Select KOPR From MAEPR Where KOFUPR In " & _Filtro_Jefes & ")"
+            End If
+
             '---------------------------
 
             Dim Fl As String = _Filtro_Productos
@@ -2634,7 +2641,8 @@ Drop Table #Paso
                             _Filtro_Bakapp & vbCrLf &
                             _Filtro_Zonas & vbCrLf &
                             _FiltroBodCompra & vbCrLf &
-                            _FiltroBodVenta
+                            _FiltroBodVenta & vbCrLf &
+                            _Filtro_Jefes
 
             Consulta_sql += vbCrLf & "And TIPR In ('FPN','FIN')"
 
@@ -2767,6 +2775,7 @@ Drop Table #Paso
         Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Todas
         Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
         Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Todas
+        Fm.Pro_Filtro_Jefes_Todos = _Filtro_Jefes_Todos
         Fm.Pro_Filtro_Bakapp_Todas = _Filtro_Bakapp_Todas
 
         Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
@@ -2789,12 +2798,14 @@ Drop Table #Paso
         _Tbl_Filtro_Rubro = Fm.Pro_Tbl_Filtro_Rubro
         _Tbl_Filtro_Super_Familias = Fm.Pro_Tbl_Filtro_Super_Familias
         _Tbl_Filtro_Zonas = Fm.Pro_Tbl_Filtro_Zonas
+        _Tbl_Filtro_Jefes = Fm.Pro_Tbl_Filtro_Jefes
 
         _Filtro_Clalibpr_Todas = Fm.Pro_Filtro_Clalibpr_Todas
         _Filtro_Marcas_Todas = Fm.Pro_Filtro_Marcas_Todas
         _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
         _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
         _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+        _Filtro_Jefes_Todos = Fm.Pro_Filtro_Jefes_Todos
         _Filtro_Bakapp_Todas = Fm.Pro_Filtro_Bakapp_Todas
 
         Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
@@ -3042,11 +3053,12 @@ Drop Table #Paso
         Dim Fm As New Frm_Filtro_Especial_Productos
 
         Fm.Pro_Filtro_Extra_Productos = _Sql_Filtro_Condicion_Extra
-        Fm.Pro_Filtro_Extra_Marcas = "And KOMR In (Select MRPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
-        Fm.Pro_Filtro_Extra_Super_Familias = "And KOFM In (Select FMPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
-        Fm.Pro_Filtro_Extra_Rubro_Productos = "And KORU In (Select RUPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
-        Fm.Pro_Filtro_Extra_Clalibpr = "And KOCARAC In (Select CLALIBPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
-        Fm.Pro_Filtro_Extra_Zonas = "And KOZO In (Select ZONAPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 " & _Sql_Filtro_Condicion_Extra & "))"
+        Fm.Pro_Filtro_Extra_Marcas = $"And KOMR In (Select MRPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 {_Sql_Filtro_Condicion_Extra}))"
+        Fm.Pro_Filtro_Extra_Super_Familias = $"And KOFM In (Select FMPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 {_Sql_Filtro_Condicion_Extra}))"
+        Fm.Pro_Filtro_Extra_Rubro_Productos = $"And KORU In (Select RUPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 {_Sql_Filtro_Condicion_Extra}))"
+        Fm.Pro_Filtro_Extra_Clalibpr = $"And KOCARAC In (Select CLALIBPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 {_Sql_Filtro_Condicion_Extra}))"
+        Fm.Pro_Filtro_Extra_Zonas = $"And KOZO In (Select ZONAPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 {_Sql_Filtro_Condicion_Extra}))"
+        Fm.Pro_Filtro_Extra_JefesProducto = $"And INACTIVO = 0 And KOFU In (Select KOFU From TABFUEM Where EMPRESA = '{Mod_Empresa}')"
 
         Fm.Pro_Filtro_Productos_Todos = _Filtro_Productos_Todos
         Fm.Pro_Filtro_Clalibpr_Todas = _Filtro_Clalibpr_Todas
@@ -3054,6 +3066,7 @@ Drop Table #Paso
         Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Todas
         Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
         Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Todas
+        Fm.Pro_Filtro_Jefes_Todos = _Filtro_Jefes_Todos
         Fm.Pro_Filtro_Bakapp_Todas = _Filtro_Bakapp_Todas
 
         Fm.Pro_Tbl_Filtro_Productos = _Tbl_Filtro_Productos
@@ -3061,6 +3074,7 @@ Drop Table #Paso
         Fm.Pro_Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
         Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro
         Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
+        Fm.Pro_Tbl_Filtro_Jefes = _Tbl_Filtro_Jefes
         Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
 
         Fm.BuscarSpfmfmsubfm = True
@@ -3077,6 +3091,7 @@ Drop Table #Paso
         _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas
         _Tbl_Filtro_Rubro = Fm.Pro_Tbl_Filtro_Rubro
         _Tbl_Filtro_Super_Familias = Fm.Pro_Tbl_Filtro_Super_Familias
+        _Tbl_Filtro_Jefes = Fm.Pro_Tbl_Filtro_Jefes
         _Tbl_Filtro_Zonas = Fm.Pro_Tbl_Filtro_Zonas
 
         _Filtro_Productos_Todos = Fm.Pro_Filtro_Productos_Todos
@@ -3085,6 +3100,7 @@ Drop Table #Paso
         _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
         _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
         _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+        _Filtro_Jefes_Todos = Fm.Pro_Filtro_Jefes_Todos
         _Filtro_Bakapp_Todas = Fm.Pro_Filtro_Bakapp_Todas
 
         Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
@@ -3104,6 +3120,7 @@ Drop Table #Paso
         Dim _Filtro_SuperFamilias = String.Empty
         Dim _Filtro_ClasLibre = String.Empty
         Dim _Filtro_Bodega = String.Empty
+        Dim _Filtro_Jefes = String.Empty
         Dim _Filtro_Bakapp = String.Empty
 
 
@@ -3201,6 +3218,11 @@ Drop Table #Paso
                 _Filtro_Zonas = "And KOPR IN (Select KOPR From MAEPR Where ZONAPR In " & _Filtro_Zonas & ")"
             End If
 
+            If Not _Filtro_Jefes_Todos Then
+                _Filtro_Jefes = Generar_Filtro_IN(_Tbl_Filtro_Jefes, "Chk", "Codigo", False, True, "'")
+                _Filtro_Jefes = "And KOPR IN (Select KOPR From MAEPR Where KOFUPR In " & _Filtro_Jefes & ")"
+            End If
+
         Else
 
             If IsNothing(_Tbl_Filtro_Productos) Then
@@ -3221,7 +3243,8 @@ Drop Table #Paso
                         _Filtro_Marcas & vbCrLf &
                         _Filtro_Rubros & vbCrLf &
                         _Filtro_SuperFamilias & vbCrLf &
-                        _Filtro_Zonas
+                        _Filtro_Zonas & vbCrLf &
+                        _Filtro_Jefes
 
         _TblFiltroProductos_Proveedor = _Sql.Fx_Get_DataTable(Consulta_sql)
 

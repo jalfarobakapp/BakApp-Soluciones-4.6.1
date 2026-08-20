@@ -366,6 +366,7 @@ Where CODIGO = '{_Codigo}'"
         Dim _Resultado As DialogResult
 
         Dim Fm As New Frm_OfDinamFicha(_Codigo)
+        Fm.Editar = True
         Fm.ShowDialog(Me)
         _Resultado = Fm.DialogResult
         '_Grabar = Fm.Grabar
@@ -412,28 +413,7 @@ Where CODIGO = '{_Codigo}'"
             Sb_Actualizar_Grilla_Ofertas()
         End If
 
-        'If _Grabar Then
-
-        '    If _Eliminado Then
-        '        Sb_Actualizar_Grilla_Ofertas()
-        '    Else
-
-        '        Consulta_sql = Fx_Consulta_Ofertas_Dinamicas(" And Mr.CODIGO = '" & _Codigo & "'")
-
-        '        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
-
-        '        _Fila.Cells("DESCRIPTOR").Value = _Row.Item("DESCRIPTOR")
-        '        _Fila.Cells("TipoOferta").Value = _Row.Item("TipoOferta")
-        '        _Fila.Cells("FIOFERTA").Value = _Row.Item("FIOFERTA")
-        '        _Fila.Cells("FTOFERTA").Value = _Row.Item("FTOFERTA")
-        '        _Fila.Cells("Dias").Value = _Row.Item("Dias")
-        '        _Fila.Cells("Activa").Value = _Row.Item("Activa")
-        '        _Fila.Cells("ProdAsociados").Value = _Row.Item("ProdAsociados")
-
-        '        Sb_Aplicar_Filtro_Ofertas()
-
-        '    End If
-        'End If
+        Sb_Actualizar_Grilla_Productos(_Codigo)
 
     End Sub
 
@@ -602,21 +582,7 @@ Where CODIGO = '{_Codigo}'"
         Dim filtroListas As String = String.Join(" OR ", filtros)
 
         ' Construir el SQL final
-        Dim sql As String =
-        "SELECT CAST(0 AS bit) AS Chk, P.KOPR AS Codigo, P.NOKOPR AS Descripcion" & vbCrLf &
-        "FROM MAEPR P WITH (NOLOCK)" & vbCrLf &
-        "WHERE P.TIPR <> 'SSN'" & vbCrLf &
-        "  AND NOT EXISTS (" & vbCrLf &
-        "        SELECT 1" & vbCrLf &
-        "        FROM MAEDRES D WITH (NOLOCK)" & vbCrLf &
-        "        JOIN MAEERES E WITH (NOLOCK) ON E.CODIGO = D.CODIGO" & vbCrLf &
-        "        WHERE D.ELEMENTO = P.KOPR" & vbCrLf &
-        "          AND E.TIPORESE = 'din'" & vbCrLf &
-        "          AND (" & filtroListas & ")" & vbCrLf &
-        "  )" & vbCrLf &
-        "ORDER BY P.KOPR"
-
-        sql = $"
+        Dim sql As String = $"
 AND TIPR <> 'SSN'
 AND NOT EXISTS (
 SELECT 1
@@ -626,11 +592,9 @@ WHERE D.ELEMENTO = KOPR
 AND E.TIPORESE = 'din'
 AND ({filtroListas}))
 "
-
         Return sql
 
     End Function
-
 
     Private Sub Btn_Mnu_QuitarProducto_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_QuitarProducto.Click
 

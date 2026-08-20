@@ -1243,8 +1243,6 @@ Public Class Clas_Asistente_Compras
         End If
 
 
-        'If _IncluirNVIEnStockPedido Then
-
         Dim _SqlQueryNVI, _SqlQueryGTI, _InsertarStockPedidoEnNVI As String
 
         _Filtro_Bodega = Generar_Filtro_IN(_Tbl_Filtro_Bodegas, "Chk", "Codigo", False, True, "'")
@@ -1280,8 +1278,6 @@ Public Class Clas_Asistente_Compras
         _InsertarStockPedidoEnNVI = _SqlQueryNVI & vbCrLf & vbCrLf & _SqlQueryGTI
 
         Consulta_sql = Replace(Consulta_sql, "--InsertarStockPedidoEnNVI", _InsertarStockPedidoEnNVI)
-
-        'End If
 
         _Sql.Ej_consulta_IDU(Consulta_sql)
 
