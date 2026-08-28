@@ -1,4 +1,6 @@
-﻿Public Class Frm_PreciosLC_InfUltCompras_Mt
+﻿Imports DocumentFormat.OpenXml.VariantTypes
+
+Public Class Frm_PreciosLC_InfUltCompras_Mt
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -15,6 +17,8 @@
 
     Dim _Fecha_Hoy As Date = FormatDateTime(FechaDelServidor(), DateFormat.ShortDate)
 
+    Dim FormatDecimal As String
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -24,10 +28,11 @@
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
         Sb_Formato_Generico_Grilla(GrillaProdActualizados, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_GRC_Ant, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, False, False)
 
     End Sub
 
-    Private Sub Frm_PreciosLC_InfUltCompras_Mt_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Frm_PreciosLC_InfUltCompras_Mt_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
         DFechaInicio.Value = Date.Now 'Primerdiadelmes(Date.Now)
         DFechaTermino.Value = Date.Now 'ultimodiadelmes(Date.Now)
@@ -46,7 +51,7 @@
 
 #Region "FUNCIONES"
 
-    Function ActualizarInforme(ByVal Redondeo As String)
+    Function ActualizarInforme(Redondeo As String)
 
         Dim Unidad, UD, UdPEdido As String
 
@@ -177,10 +182,10 @@
 
     End Sub
 
-    Function EjecutarInformeEvaluacionCompras(ByVal FechaDesde As String,
-                                              ByVal FechaHasta As String,
-                                              ByVal ConsideraFechas As String,
-                                              ByVal TablaPaso As String)
+    Function EjecutarInformeEvaluacionCompras(FechaDesde As String,
+                                               FechaHasta As String,
+                                               ConsideraFechas As String,
+                                               TablaPaso As String)
 
         Consulta_sql = "IF EXISTS (SELECT * FROM sysobjects WHERE name='Trae_UltGRCxProducto') BEGIN" & vbCrLf &
                        "DROP PROCEDURE Trae_UltGRCxProducto End"
@@ -204,11 +209,10 @@
 
     End Function
 
-    Function FormatoGrilla(ByVal Grilla As DataGridView,
-                           ByVal VarDecimal As String)
+    Function FormatoGrilla(Grilla As DataGridView,
+                            VarDecimal As String)
         Try
 
-            Dim FormatDecimal As String
             If VarDecimal = 0 Then FormatDecimal = "##,###0"
             If VarDecimal = 1 Then FormatDecimal = "##,#0.0"
             If VarDecimal = 2 Then FormatDecimal = "##,##0.00"
@@ -300,8 +304,6 @@
 
         Dim VarDecimal = 3
 
-        Dim FormatDecimal As String
-
         If VarDecimal = 0 Then FormatDecimal = "##,###0"
         If VarDecimal = 1 Then FormatDecimal = "##,#0.0"
         If VarDecimal = 2 Then FormatDecimal = "##,##0.00"
@@ -312,7 +314,7 @@
         Dim _Fecha_Desde As String = Format(DFechaInicio.Value, "yyyyMMdd")
         Dim _Fecha_Hasta As String = Format(DFechaTermino.Value, "yyyyMMdd")
 
-        Consulta_sql = My.Resources.Recursos_Lista_LC.Ult_Compras_GRC
+        Consulta_sql = My.Resources.Recursos_Lista_LC.Ult_Compras_GRC__New
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Desde#", _Fecha_Desde)
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Hasta#", _Fecha_Hasta)
         Consulta_sql = Replace(Consulta_sql, "#Condicion#", _Condicion)
@@ -341,6 +343,13 @@
             .Columns("NUDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("TieneFCC").Width = 30
+            .Columns("TieneFCC").HeaderText = "Fcc?"
+            .Columns("TieneFCC").ToolTipText = "¿Tiene FCC?"
+            .Columns("TieneFCC").Visible = True
+            .Columns("TieneFCC").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("FECHA").Width = 100
             .Columns("FECHA").HeaderText = "Fecha Doc."
             .Columns("FECHA").Visible = True
@@ -365,22 +374,6 @@
             .Columns("UD02PR").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("PPPRNE").Width = 60
-            .Columns("PPPRNE").HeaderText = "Precio en Doc."
-            .Columns("PPPRNE").DefaultCellStyle.Format = "$ ###,##"
-            .Columns("PPPRNE").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("PPPRNE").Visible = True
-            .Columns("PPPRNE").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Ult_Compra").Width = 100
-            .Columns("Ult_Compra").HeaderText = "$ Ult. Compra (Valor futuro en prox. FCC)"
-            .Columns("Ult_Compra").DefaultCellStyle.Format = "$ ###,##"
-            .Columns("Ult_Compra").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Ult_Compra").Visible = True
-            .Columns("Ult_Compra").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
             .Columns("PM").Width = 60
             .Columns("PM").HeaderText = "$ P.M."
             .Columns("PM").DefaultCellStyle.Format = "$ ###,##"
@@ -389,12 +382,36 @@
             .Columns("PM").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Mcosto").Width = 60
-            .Columns("Mcosto").HeaderText = "Mejor Costo (Anterior)"
-            .Columns("Mcosto").DefaultCellStyle.Format = "$ ###,##"
-            .Columns("Mcosto").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Mcosto").Visible = True
-            .Columns("Mcosto").DisplayIndex = _DisplayIndex
+            .Columns("Costo_UN").Width = 100
+            .Columns("Costo_UN").HeaderText = "$ Valor GRC"
+            .Columns("Costo_UN").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("Costo_UN").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Costo_UN").Visible = True
+            .Columns("Costo_UN").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Costo_UN_Ant").Width = 60
+            .Columns("Costo_UN_Ant").HeaderText = "$ Valor GRC (Anterior)"
+            .Columns("Costo_UN_Ant").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("Costo_UN_Ant").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Costo_UN_Ant").Visible = True
+            .Columns("Costo_UN_Ant").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Dif_UCCValor").Width = 60
+            .Columns("Dif_UCCValor").HeaderText = "$ Dif.UCC Valor"
+            .Columns("Dif_UCCValor").DefaultCellStyle.Format = "$ ###,##.##"
+            .Columns("Dif_UCCValor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Dif_UCCValor").Visible = True
+            .Columns("Dif_UCCValor").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Dif_UCCPorc").Width = 60
+            .Columns("Dif_UCCPorc").HeaderText = "% Dif.UCC Porc."
+            .Columns("Dif_UCCPorc").DefaultCellStyle.Format = "% ###,##.##"
+            .Columns("Dif_UCCPorc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Dif_UCCPorc").Visible = True
+            .Columns("Dif_UCCPorc").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("CAPRCO2").Width = 60
@@ -416,37 +433,223 @@
 
         For Each _Fila As DataGridViewRow In Grilla.Rows
 
-            Dim CostoPM As Double
-            Dim CostoUC As Double
-            Dim Mcosto, McostoNew As Double
-            'Dim _FechaModif As Date = FormatDateTime(_Fila.Cells("FechaModif").Value, DateFormat.ShortDate)
+            Dim _CostoPM As Double
+            Dim _CostoUC As Double
+            Dim _Mcosto As Double
+            Dim _McostoNew As Double
+            Dim _Dif_UCCPorc As Double
 
-            CostoPM = NuloPorNro(_Fila.Cells("PM").Value, 0)
-            CostoUC = NuloPorNro(_Fila.Cells("PPUL01").Value, 0)
-            Mcosto = NuloPorNro(_Fila.Cells("MCosto").Value, 0)
+            _CostoPM = NuloPorNro(_Fila.Cells("PM").Value, 0)
+            _CostoUC = NuloPorNro(_Fila.Cells("PPUL01").Value, 0)
+            _Mcosto = NuloPorNro(_Fila.Cells("MCosto").Value, 0)
+            _Dif_UCCPorc = NuloPorNro(_Fila.Cells("Dif_UCCPorc").Value, 2) * 100
 
-            If CostoPM > CostoUC Then
-                McostoNew = CostoPM
-            ElseIf CostoPM < CostoUC Then
-                McostoNew = CostoUC
-            ElseIf CostoPM = CostoUC Then
-                McostoNew = CostoUC
+            If _CostoPM > _CostoUC Then
+                _McostoNew = _CostoPM
+            ElseIf _CostoPM < _CostoUC Then
+                _McostoNew = _CostoUC
+            ElseIf _CostoPM = _CostoUC Then
+                _McostoNew = _CostoUC
             End If
 
-            If Math.Round(McostoNew, 0) > Math.Round(Mcosto, 0) Then
-                _Fila.DefaultCellStyle.BackColor = Color.Red ' Rojo
-                _Fila.DefaultCellStyle.ForeColor = Color.White ' Rojo
-            Else
-                _Fila.DefaultCellStyle.BackColor = Color.White 'Blanco
-                _Fila.DefaultCellStyle.ForeColor = Color.Black 'Negro
+            If _Dif_UCCPorc >= 5 Then
+                '_Fila.DefaultCellStyle.BackColor = Rojo ' Rojo
+                _Fila.DefaultCellStyle.ForeColor = Rojo
+            ElseIf _Dif_UCCPorc <= -5 Then
+                '_Fila.DefaultCellStyle.BackColor = Color.White 'Blanco
+                _Fila.DefaultCellStyle.ForeColor = Verde
+                'Else
+                '    _Fila.DefaultCellStyle.BackColor = Color.White 'Blanco
+                '    _Fila.DefaultCellStyle.ForeColor = Color.Black 'Negro
             End If
 
-            'If _FechaModif = _Fecha_Hoy Then
-            '    '_Fila.DefaultCellStyle.BackColor = Color.LightGreen
-            '    '_Fila.DefaultCellStyle.ForeColor = Color.Black
+            'If Math.Round(_McostoNew, 0) > Math.Round(_Mcosto, 0) Then
+            '    _Fila.DefaultCellStyle.BackColor = Color.Red ' Rojo
+            '    _Fila.DefaultCellStyle.ForeColor = Color.White ' Rojo
+            'Else
+            '    _Fila.DefaultCellStyle.BackColor = Color.White 'Blanco
+            '    _Fila.DefaultCellStyle.ForeColor = Color.Black 'Negro
             'End If
 
         Next
+
+    End Sub
+
+    Private Sub Sb_Actualizar_Grilla_GRC_Ant()
+
+        Grilla_GRC_Ant.DataSource = Nothing
+
+        If TabControl1.SelectedIndex <> 0 Then
+            Return
+        End If
+
+        If IsNothing(Grilla.DataSource) Then
+            Return
+        End If
+
+        If IsNothing(Grilla.CurrentRow) Then
+            Return
+        End If
+
+        Dim _DtOrigen As DataTable = TryCast(Grilla.DataSource, DataTable)
+
+        If IsNothing(_DtOrigen) Then
+            Return
+        End If
+
+        Dim _TblAnt As New DataTable
+        Dim _FilaOrigen As DataGridViewRow = Grilla.CurrentRow
+
+        For Each _Columna As DataGridViewColumn In Grilla.Columns
+
+            If _Columna.Name.EndsWith("_Ant") Then
+                Continue For
+            End If
+
+            Dim _NombreColumnaAnt As String = _Columna.Name & "_Ant"
+
+            If Not _DtOrigen.Columns.Contains(_NombreColumnaAnt) Then
+                Continue For
+            End If
+
+            _TblAnt.Columns.Add(_NombreColumnaAnt, _DtOrigen.Columns(_NombreColumnaAnt).DataType)
+
+        Next
+
+        If _TblAnt.Columns.Count = 0 Then
+            Return
+        End If
+
+        Dim _NuevaFila As DataRow = _TblAnt.NewRow()
+
+        For Each _Columna As DataGridViewColumn In Grilla.Columns
+
+            If _Columna.Name.EndsWith("_Ant") Then
+                Continue For
+            End If
+
+            Dim _NombreColumnaAnt As String = _Columna.Name & "_Ant"
+
+            If Not _TblAnt.Columns.Contains(_NombreColumnaAnt) Then
+                Continue For
+            End If
+
+            _NuevaFila(_NombreColumnaAnt) = _FilaOrigen.Cells(_NombreColumnaAnt).Value
+
+        Next
+
+        _TblAnt.Rows.Add(_NuevaFila)
+        Grilla_GRC_Ant.DataSource = _TblAnt
+
+        OcultarEncabezadoGrilla(Grilla_GRC_Ant, True)
+
+        Dim VarDecimal = 3
+
+        If VarDecimal = 0 Then FormatDecimal = "##,###0"
+        If VarDecimal = 1 Then FormatDecimal = "##,#0.0"
+        If VarDecimal = 2 Then FormatDecimal = "##,##0.00"
+        If VarDecimal = 3 Then FormatDecimal = "##0.000"
+        If VarDecimal = 4 Then FormatDecimal = "##,###0.0000"
+        If VarDecimal = 5 Then FormatDecimal = "##,###0.00000"
+
+        Dim _DisplayIndex = 0
+
+        With Grilla_GRC_Ant
+
+            .Columns("TIDO_Ant").Width = 60
+            .Columns("TIDO_Ant").HeaderText = "Tipo Doc."
+            .Columns("TIDO_Ant").Visible = True
+            .Columns("TIDO_Ant").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NUDO_Ant").Width = 100
+            .Columns("NUDO_Ant").HeaderText = "Nro Doc."
+            .Columns("NUDO_Ant").Visible = True
+            .Columns("NUDO_Ant").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("TieneFCC_Ant").Width = 30
+            .Columns("TieneFCC_Ant").HeaderText = "Fcc?"
+            .Columns("TieneFCC_Ant").ToolTipText = "¿Tiene FCC?"
+            .Columns("TieneFCC_Ant").Visible = True
+            .Columns("TieneFCC_Ant").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            '.Columns("FEEMLI_Ant").Width = 100
+            '.Columns("FEEMLI_Ant").HeaderText = "Fecha Doc."
+            '.Columns("FEEMLI_Ant").Visible = True
+            '.Columns("FEEMLI_Ant").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            '.Columns("KOPRCT_Ant").Width = 100
+            '.Columns("KOPRCT_Ant").HeaderText = "Código producto"
+            '.Columns("KOPRCT_Ant").Visible = True
+            '.Columns("KOPRCT_Ant").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            '.Columns("NOKOPR_Ant").Width = 300
+            '.Columns("NOKOPR_Ant").HeaderText = "Descripción producto"
+            '.Columns("NOKOPR_Ant").Visible = True
+            '.Columns("NOKOPR_Ant").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            '.Columns("UD02PR").Width = 60
+            '.Columns("UD02PR").HeaderText = "Ud"
+            '.Columns("UD02PR").Visible = True
+            '.Columns("UD02PR").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            '.Columns("PM").Width = 60
+            '.Columns("PM").HeaderText = "$ P.M."
+            '.Columns("PM").DefaultCellStyle.Format = "$ ###,##"
+            '.Columns("PM").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            '.Columns("PM").Visible = True
+            '.Columns("PM").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("Costo_UN_Ant").Width = 100
+            .Columns("Costo_UN_Ant").HeaderText = "$ Valor GRC"
+            .Columns("Costo_UN_Ant").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("Costo_UN_Ant").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Costo_UN_Ant").Visible = True
+            .Columns("Costo_UN_Ant").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("CAPRCO2_Ant").Width = 60
+            .Columns("CAPRCO2_Ant").HeaderText = "Cantidad"
+            .Columns("CAPRCO2_Ant").DefaultCellStyle.Format = FormatDecimal
+            .Columns("CAPRCO2_Ant").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("CAPRCO2_Ant").Visible = True
+            .Columns("CAPRCO2_Ant").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+        End With
+
+        'For Each _Columna As DataGridViewColumn In Grilla.Columns
+
+        '    If _Columna.Name.EndsWith("_Ant") Then
+        '        Continue For
+        '    End If
+
+        '    Dim _NombreColumnaAnt As String = _Columna.Name & "_Ant"
+
+        '    If Not Grilla_GRC_Ant.Columns.Contains(_NombreColumnaAnt) Then
+        '        Continue For
+        '    End If
+
+        '    Dim _DisplayIndex = 0
+
+        '    With Grilla_GRC_Ant.Columns(_NombreColumnaAnt)
+        '        .HeaderText = If(String.IsNullOrWhiteSpace(_Columna.HeaderText), _Columna.Name, _Columna.HeaderText)
+        '        .Width = _Columna.Width
+        '        .DefaultCellStyle.Format = _Columna.DefaultCellStyle.Format
+        '        .DefaultCellStyle.Alignment = _Columna.DefaultCellStyle.Alignment
+        '        .Visible = True
+        '        .DisplayIndex = _DisplayIndex
+        '        _DisplayIndex += 1
+        '    End With
+
+        'Next
 
     End Sub
 
@@ -461,7 +664,7 @@
 
 #End Region
 
-    Private Sub Grilla_CellFormatting(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellFormattingEventArgs)
+    Private Sub Grilla_CellFormatting(sender As System.Object, e As System.Windows.Forms.DataGridViewCellFormattingEventArgs)
 
         With sender
 
@@ -495,7 +698,7 @@
 
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
@@ -547,7 +750,7 @@
 
     End Sub
 
-    Private Sub GrillaProdActualizados_CellDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaProdActualizados.CellDoubleClick
+    Private Sub GrillaProdActualizados_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaProdActualizados.CellDoubleClick
 
         Dim _Cabeza = Grilla.Columns(GrillaProdActualizados.CurrentCell.ColumnIndex).Name
         Dim _Fila As DataGridViewRow = GrillaProdActualizados.Rows(GrillaProdActualizados.CurrentRow.Index)
@@ -592,7 +795,7 @@
 
     End Sub
 
-    Private Sub BtnActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtnActualizar.Click
+    Private Sub BtnActualizar_Click(sender As System.Object, e As System.EventArgs) Handles BtnActualizar.Click
         'Ejecutar()
         TabControl1.SelectedIndex = 0
         Call TabControl1_SelectedIndexChanged(Nothing, Nothing)
@@ -600,7 +803,7 @@
     End Sub
 
 
-    Private Sub Grilla_RowPostPaint(ByVal sender As Object, ByVal e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
+    Private Sub Grilla_RowPostPaint(sender As Object, e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
         Try
             'Captura el numero de filas del datagridview
             Dim RowsNumber As String = (e.RowIndex + 1).ToString
@@ -622,11 +825,21 @@
     Private Sub TabControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.SelectedIndexChanged
 
         If TabControl1.SelectedIndex = 0 Then
-            Sb_Actualizar_Grilla(Grilla, _Tbl_Lista_LC, "Where FechaModif <> '" & Format(_Fecha_Hoy, "yyyyMMdd") & "' Or FechaModif Is Null")
+            Sb_Actualizar_Grilla(Grilla,
+                                 _Tbl_Lista_LC,
+                                 "Where FechaModif <> '" & Format(_Fecha_Hoy, "yyyyMMdd") & "' Or FechaModif Is Null")
         Else
-            Sb_Actualizar_Grilla(GrillaProdActualizados, _Tbl_Lista_LC_Actualizados, "Where FechaModif = '" & Format(_Fecha_Hoy, "yyyyMMdd") & "'")
+            Sb_Actualizar_Grilla(GrillaProdActualizados,
+                                 _Tbl_Lista_LC_Actualizados,
+                                 "Where FechaModif = '" & Format(_Fecha_Hoy, "yyyyMMdd") & "'")
         End If
 
+    End Sub
+
+    Private Sub Grilla_SelectionChanged(sender As Object, e As EventArgs) Handles Grilla.SelectionChanged
+        If Object.ReferenceEquals(Grilla, Me.Grilla) Then
+            Sb_Actualizar_Grilla_GRC_Ant()
+        End If
     End Sub
 
 End Class

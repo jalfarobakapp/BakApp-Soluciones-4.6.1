@@ -970,7 +970,7 @@ Public Class Clase_Crear_Documento
 
                             If _CantUd1_Dori < _CantUd1 Or _Tidopa = "OTL" Then
 
-                                If _Tido = "NCV" And Not _Tidopa.Contains("G") Then
+                                If (_Tido = "NCV" Or _Tido = "NCC") And Not _Tidopa.Contains("G") Then
                                     _Caprnc1 = De_Num_a_Tx_01(_CantUd1_Dori, False, 5)
                                     _Caprnc2 = De_Num_a_Tx_01(_CantUd2_Dori, False, 5)
                                 Else
@@ -980,8 +980,11 @@ Public Class Clase_Crear_Documento
 
                             Else
 
-                                If (_Tido = "NCV" And Not _Tidopa.Contains("G")) Or (_Tido = "GDD" And _Subtido = String.Empty) Or
-                                   (_Tido = "GRD" And _Tidopa = "FCV") Or (_Tido = "GRD" And _Tidopa = "BLV") Then
+                                If (_Tido = "NCV" And Not _Tidopa.Contains("G")) Or
+                                    (_Tido = "NCC" And Not _Tidopa.Contains("G")) Or
+                                    (_Tido = "GDD" And _Subtido = String.Empty) Or
+                                    (_Tido = "GRD" And _Tidopa = "FCV") Or
+                                    (_Tido = "GRD" And _Tidopa = "BLV") Then
 
                                     _Caprnc1 = De_Num_a_Tx_01(_CantUd1, False, 5)
                                     _Caprnc2 = De_Num_a_Tx_01(_CantUd2, False, 5)
@@ -1987,7 +1990,7 @@ Public Class Clase_Crear_Documento
 
                                 If Not IsNothing(_Row_Dori) Then
 
-                                    If _Tido = "NCV" Or _Tido = "GRD" Or (_Tido = "GDD" And _Subtido = String.Empty) Then
+                                    If _Tido = "NCV" Or _Tido = "GRD" Or (_Tido = "GDD" And _Subtido = String.Empty) Or _Tido = "NCC" Then
 
                                         If _CantUd1 <> _CantUd1_Dori_Ncv Or _CantUd2 <> _CantUd2_Dori_Ncv Then
 

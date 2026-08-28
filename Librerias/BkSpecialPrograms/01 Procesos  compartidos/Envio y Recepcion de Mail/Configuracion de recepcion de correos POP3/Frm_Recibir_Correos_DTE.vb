@@ -548,9 +548,11 @@ Public Class Frm_Recibir_Correos_DTE
             Return
         End If
 
-        Dim _Host As String = _Row_Cuenta.Item("Host") 'Txt_Host.Text
-        Dim _User As String = _Row_Cuenta.Item("Nombre_Usuario") 'Txt_Usuario.Text
-        Dim _Pass As String = _Row_Cuenta.Item("Contrasena") 'Txt_Clave.Text
+        Dim _Host As String = _Row_Cuenta.Item("Host")
+        Dim _User As String = _Row_Cuenta.Item("Nombre_Usuario")
+        Dim _Pass As String = _Row_Cuenta.Item("Contrasena")
+
+        _Host = _Row_Cuenta.Item("Host_Entrada")
 
         Lbl_Total_Correos.Text = 0
         Lbl_Xml_InsertBD.Text = 0

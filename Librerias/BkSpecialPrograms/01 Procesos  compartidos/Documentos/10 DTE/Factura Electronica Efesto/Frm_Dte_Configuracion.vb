@@ -22,6 +22,8 @@ Public Class Frm_Dte_Configuracion
 
         _AmbienteCertificacion = Convert.ToInt32(_Global_Row_Configuracion_Estacion.Item("FacElect_Usar_AmbienteCertificacion"))
 
+        Input_siimesesexpiranfolios_GUIAS.MaxValue = 9999
+
         Txt_Empresa.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'Empresa' And AmbienteCertificacion = " & _AmbienteCertificacion)
         Txt_RutEmisor.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'RutEmisor' And AmbienteCertificacion = " & _AmbienteCertificacion)
         Txt_RutEnvia.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'RutEnvia' And AmbienteCertificacion = " & _AmbienteCertificacion)
@@ -52,6 +54,9 @@ Public Class Frm_Dte_Configuracion
         Input_siimesesexpiranfolios_BOLETAS.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'Input_siimesesexpiranfolios_BOLETAS' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
         Input_siimesesexpiranfolios_NOTASDEBITO.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'Input_siimesesexpiranfolios_NOTASDEBITO' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
         Input_siimesesexpiranfolios_NOTASCREDITO.Value = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_DTE_Configuracion", "Valor", "Empresa = '" & Mod_Empresa & "' And Campo = 'Input_siimesesexpiranfolios_NOTASCREDITO' And AmbienteCertificacion = " & _AmbienteCertificacion, True)
+
+        Input_siimesesexpiranfolios_GUIAS.Value = 9999
+        Input_siimesesexpiranfolios_GUIAS.Enabled = False
 
         'If String.IsNullOrEmpty(Txt_Empresa.Text) Then Txt_Empresa.Text = _Global_Row_Configp.Item("EMPRESA")
         'If String.IsNullOrEmpty(Txt_RutEnvia.Text) Then Txt_RutEnvia.Text = _Global_Row_Configp.Item("FIRMAELEC")

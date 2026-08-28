@@ -121,7 +121,7 @@ Public Class Frm_MantLista_Precios_Random
         End If
 
         Btn_Ejecutar_Formula.Enabled = False
-        Btn_Imprimir_Maestra.Visible = (RutEmpresa = "85904700-9")
+        Btn_Imprimir_Maestra.Visible = (RutEmpresa = "85904700-9" Or RutEmpresa = "78346122-6")
 
         If Rdb_Traer_Bloqueados_Compras.Checked Then Btn_ProdBloqueados.Text = Rdb_Traer_Bloqueados_Compras.Text
         If Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion.Checked Then Btn_ProdBloqueados.Text = Rdb_Traer_Bloqueados_Compra_Venta_y_Produccion.Text

@@ -611,26 +611,63 @@ AND ({filtroListas}))
             Return
         End If
 
+        'Consulta_sql = "Delete From MAEDRES Where ELEMENTO = '" & _Elemento & "' AND CODIGO = '" & _Codigo & "'"
+        'If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+        '    Grilla_Productos.Rows.Remove(_Fila)
+        'End If
+
+        'Consulta_sql = "Select *,DATEDIFF(D,GETDATE(),FTOFERTA) As Dias,CAST(0 As Bit) As Activa,CAST(0 As Int) As 'ProdAsociados'" & vbCrLf &
+        '"Into #Paso" & vbCrLf &
+        '"From MAEERES" & vbCrLf &
+        '"Where TIPORESE = 'din' And CODIGO = '" & _Codigo & "'" & vbCrLf &
+        '"Update #Paso Set Activa = 1 Where GETDATE() Between FIOFERTA And FTOFERTA" & vbCrLf &
+        '"Update #Paso Set ProdAsociados = (Select COUNT(*) From MAEDRES Where MAEDRES.CODIGO = #Paso.CODIGO)" & vbCrLf &
+        '"Update #Paso Set Dias = 0 Where Dias < 0" & vbCrLf &
+        '"Select * From #Paso" & vbCrLf &
+        '"Drop Table #Paso"
+
+        'Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        'Dim _FilaR As DataGridViewRow = Grilla_Recetas.CurrentRow
+
+        '_FilaR.Cells("ProdAsociados").Value = _Row.Item("ProdAsociados")
+
         Consulta_sql = "Delete From MAEDRES Where ELEMENTO = '" & _Elemento & "' AND CODIGO = '" & _Codigo & "'"
-        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
-            Grilla_Productos.Rows.Remove(_Fila)
+
+        If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            Return
         End If
 
+        Grilla_Productos.Rows.Remove(_Fila)
+
         Consulta_sql = "Select *,DATEDIFF(D,GETDATE(),FTOFERTA) As Dias,CAST(0 As Bit) As Activa,CAST(0 As Int) As 'ProdAsociados'" & vbCrLf &
-        "Into #Paso" & vbCrLf &
-        "From MAEERES" & vbCrLf &
-        "Where TIPORESE = 'din' And CODIGO = '" & _Codigo & "'" & vbCrLf &
-        "Update #Paso Set Activa = 1 Where GETDATE() Between FIOFERTA And FTOFERTA" & vbCrLf &
-        "Update #Paso Set ProdAsociados = (Select COUNT(*) From MAEDRES Where MAEDRES.CODIGO = #Paso.CODIGO)" & vbCrLf &
-        "Update #Paso Set Dias = 0 Where Dias < 0" & vbCrLf &
-        "Select * From #Paso" & vbCrLf &
-        "Drop Table #Paso"
+                   "Into #Paso" & vbCrLf &
+                   "From MAEERES" & vbCrLf &
+                   "Where TIPORESE = 'din' And CODIGO = '" & _Codigo & "'" & vbCrLf &
+                   "Update #Paso Set Activa = 1 Where GETDATE() Between FIOFERTA And FTOFERTA" & vbCrLf &
+                   "Update #Paso Set ProdAsociados = (Select COUNT(*) From MAEDRES Where MAEDRES.CODIGO = #Paso.CODIGO)" & vbCrLf &
+                   "Update #Paso Set Dias = 0 Where Dias < 0" & vbCrLf &
+                   "Select * From #Paso" & vbCrLf &
+                   "Drop Table #Paso"
 
         Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        Dim _FilaR As DataGridViewRow = Grilla_Recetas.CurrentRow
+        If IsNothing(_Row) Then
+            MessageBoxEx.Show(Me, "No fue posible actualizar la oferta.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
 
-        _FilaR.Cells("ProdAsociados").Value = _Row.Item("ProdAsociados")
+        Dim _FilaR As DataGridViewRow = Fx_Buscar_Fila_Oferta(_Codigo)
+
+        If IsNothing(_FilaR) Then
+            Sb_Actualizar_Grilla_Ofertas()
+            _FilaR = Fx_Buscar_Fila_Oferta(_Codigo)
+        End If
+
+        If Not IsNothing(_FilaR) Then
+            _FilaR.Cells("ProdAsociados").Value = _Row.Item("ProdAsociados")
+        End If
+
 
     End Sub
 
@@ -882,12 +919,28 @@ AND ({filtroListas}))
         _Dv.RowFilter = _Filtro
         Grilla_Recetas.DataSource = _Dv
 
+        'Dim _Codigo As String = String.Empty
+        'Txt_Listas.Text = String.Empty
+
+        'If CBool(_Dv.Count) Then
+        '    _Codigo = _Dv.Item(0).Item("CODIGO").ToString()
+        '    Txt_Listas.Text = _Dv.Item(0).Item("LISTAS").ToString()
+        'End If
+
+        'Sb_Actualizar_Grilla_Productos(_Codigo)
+
         Dim _Codigo As String = String.Empty
         Txt_Listas.Text = String.Empty
 
         If CBool(_Dv.Count) Then
             _Codigo = _Dv.Item(0).Item("CODIGO").ToString()
             Txt_Listas.Text = _Dv.Item(0).Item("LISTAS").ToString()
+
+            If Grilla_Recetas.Rows.Count > 0 AndAlso Grilla_Recetas.Columns.Contains("CODIGO") Then
+                Grilla_Recetas.ClearSelection()
+                Grilla_Recetas.CurrentCell = Grilla_Recetas.Rows(0).Cells("CODIGO")
+                Grilla_Recetas.Rows(0).Selected = True
+            End If
         End If
 
         Sb_Actualizar_Grilla_Productos(_Codigo)
@@ -1750,5 +1803,38 @@ FROM Paso2;"
         Txt_Listas.Text = _Fila.Cells("LISTAS").Value.ToString()
 
     End Sub
+
+    Private Function Fx_Buscar_Fila_Oferta(_Codigo As String) As DataGridViewRow
+
+        _Codigo = _Codigo.Trim()
+
+        If Not IsNothing(Grilla_Recetas.CurrentRow) Then
+            Dim _CodigoActual As String = Grilla_Recetas.CurrentRow.Cells("CODIGO").Value.ToString().Trim()
+            If _CodigoActual = _Codigo Then
+                Return Grilla_Recetas.CurrentRow
+            End If
+        End If
+
+        For Each _Fila As DataGridViewRow In Grilla_Recetas.SelectedRows
+            If Not _Fila.IsNewRow Then
+                Dim _CodigoFila As String = _Fila.Cells("CODIGO").Value.ToString().Trim()
+                If _CodigoFila = _Codigo Then
+                    Return _Fila
+                End If
+            End If
+        Next
+
+        For Each _Fila As DataGridViewRow In Grilla_Recetas.Rows
+            If Not _Fila.IsNewRow Then
+                Dim _CodigoFila As String = _Fila.Cells("CODIGO").Value.ToString().Trim()
+                If _CodigoFila = _Codigo Then
+                    Return _Fila
+                End If
+            End If
+        Next
+
+        Return Nothing
+
+    End Function
 
 End Class

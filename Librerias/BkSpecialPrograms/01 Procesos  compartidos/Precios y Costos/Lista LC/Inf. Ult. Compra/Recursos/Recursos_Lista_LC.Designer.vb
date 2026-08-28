@@ -88,5 +88,30 @@ Namespace My.Resources
                 Return ResourceManager.GetString("Ult_Compras_GRC", resourceCulture)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a Declare @Fecha_Desde As Datetime,
+        '''		@Fecha_Hasta As Datetime,
+        '''        @Empresa As Char(2)
+        '''
+        '''Select @Fecha_Desde = &apos;#Fecha_Desde#&apos;,@Fecha_Hasta = &apos;#Fecha_Hasta#&apos;,@Empresa = &apos;#Empresa#&apos;
+        '''
+        '''SELECT DISTINCT    Ddo.IDMAEEDO,
+        '''				   Ddo.IDMAEDDO,	
+        '''                   Ddo.TIDO, 
+        '''                   Ddo.NUDO, 
+        '''				   Ddo.SULIDO,
+        '''				   Ddo.BOSULIDO,
+        '''                   Ddo.FEEMLI As FECHA, 
+        '''                   Ddo.ENDO, 
+        '''                   Ddo.SUENDO, 
+        '''                   dbo.MAEEN.NOKOEN, 
+        '''                 [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Ult_Compras_GRC__New() As String
+            Get
+                Return ResourceManager.GetString("Ult_Compras_GRC__New", resourceCulture)
+            End Get
+        End Property
     End Class
 End Namespace

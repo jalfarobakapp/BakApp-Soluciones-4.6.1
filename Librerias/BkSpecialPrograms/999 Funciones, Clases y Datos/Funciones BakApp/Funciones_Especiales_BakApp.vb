@@ -1414,7 +1414,12 @@ Public Module Funciones_Especiales_BakApp
         End If
 
         Consulta_sql = $"
-Select {_Campo_Formula_Stock} As Stock_Disponible
+Select 
+    Case 
+        When ISNULL(STFI2,0) > 0 
+            Then {_Campo_Formula_Stock}
+        Else 0
+    End As Stock_Disponible
 From MAEST
 Left Join {_Global_BaseBk}Zw_Prod_Stock On EMPRESA = Empresa And KOSU = Sucursal And KOBO = Bodega And KOPR = Codigo
 Where
@@ -1461,7 +1466,15 @@ And Activo2 = 1"
             Dim _Sucursal_Equi As String = _Fila.Item("Sucursal_" & _BA)
             Dim _Bodega_Equi As String = _Fila.Item("Bodega_" & _BA)
 
-            _StockDisponibleEquivalente += Fx_Stock_Disponible(_Tido, _Empresa_Equi, _Sucursal_Equi, _Bodega_Equi, _Codigo, _Ud, _Campo, False, True)
+            _StockDisponibleEquivalente += Fx_Stock_Disponible(_Tido,
+                                                               _Empresa_Equi,
+                                                               _Sucursal_Equi,
+                                                               _Bodega_Equi,
+                                                               _Codigo,
+                                                               _Ud,
+                                                               _Campo,
+                                                               _RevQuivalencia,
+                                                               True)
             _HayEquivalencia = True
 
         Next

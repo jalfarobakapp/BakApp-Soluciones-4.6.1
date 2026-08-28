@@ -542,7 +542,7 @@ Public Class AlertCustom
                                                                                                                           $"Bodega_A = '{_Bodega}' Or Bodega_B = '{_Bodega}' And Activo2 = 1")
 
                                                            If _TieneBodEquivalente Then
-                                                               valor = Fx_Stock_Disponible(tidoLocal, Mod_Empresa, _Sucursal, _Bodega, codigoLocal, udLocal, "STFI" & udLocal, False, False)
+                                                               valor = Fx_Stock_Disponible(tidoLocal, Mod_Empresa, _Sucursal, _Bodega, codigoLocal, udLocal, "STFI" & udLocal)
                                                                If valor < 0 Then valor = 0
                                                                dr.Item("ST_DISPONIBLE") = valor
                                                            End If
