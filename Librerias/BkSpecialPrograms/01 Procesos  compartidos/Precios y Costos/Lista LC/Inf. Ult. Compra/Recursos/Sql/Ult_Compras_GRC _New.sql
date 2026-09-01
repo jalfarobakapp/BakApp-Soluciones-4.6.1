@@ -7,58 +7,83 @@ SELECT @Fecha_Desde = '#Fecha_Desde#',
        @Empresa     = '#Empresa#';
 
 SELECT DISTINCT
-       Ddo.IDMAEEDO,
-       Ddo.IDMAEDDO,
-       Ddo.TIDO,
-       Ddo.NUDO,
-       Ddo.SULIDO,
-       Ddo.BOSULIDO,
-       Ddo.FEEMLI AS FECHA,
-       Ddo.ENDO,
-       Ddo.SUENDO,
-       MAEEN.NOKOEN,
-       Ddo.TIPR,
-       Ddo.PRCT,
-       Ddo.KOPRCT,
-       Ddo.UDTRPR,
-       Ddo.RLUDPR,
-       Ddo.CAPRCO1,
-       Ddo.CAPRCO2,
-       Ddo.UD01PR,
-       Ddo.UD02PR,
-       Ddo.NOKOPR,
-       Ddo.PPPRNE,
-	   ROUND(Ddo.PPPRNE/Ddo.RLUDPR,2) As 'Costo_UN',
-       Ddo.PPPRNERE1,
-       Ddo.PPPRNERE2,
-       Mpen.PPUL01,
-       Mpen.PPUL02,
-       Mpen.PM,
-       Fcc.TIDO AS TIDO_FCC,
-       Fcc.NUDO AS NUDO_FCC,
-       Ddo.POTENCIA AS Flete_Bruto,
-       CAST(0 AS FLOAT) AS Flete_Neto,
-       CAST(0 AS FLOAT) AS Costo_FleteBrutoAct,
-       CAST(0 AS FLOAT) AS Costo_FleteNetoAct,
-       CAST('' AS VARCHAR(13)) AS CodigoOferta,
-       CAST('' AS VARCHAR(50)) AS NombreOferta,
-       CAST(NULL AS DATETIME) AS FechaInicioOferta,
-       CAST(NULL AS DATETIME) AS FechaFinOferta,
-       CAST(0 AS BIT) AS OfertaActiva,
-       CAST(0 AS FLOAT) AS MontoOferta,
-       CAST(0 AS FLOAT) AS Precio_Venta
+        Ddo.IDMAEEDO
+       ,Ddo.IDMAEDDO
+       ,Ddo.TIDO
+       ,Ddo.NUDO
+       ,Ddo.SULIDO
+       ,Ddo.BOSULIDO
+       ,Ddo.FEEMLI As 'FECHA'
+       ,Ddo.ENDO
+       ,Ddo.SUENDO
+       ,MAEEN.NOKOEN
+       ,Ddo.TIPR
+       ,Ddo.PRCT
+       ,Ddo.KOPRCT
+       ,Ddo.UDTRPR
+       ,Ddo.RLUDPR
+       ,Ddo.CAPRCO1
+       ,Ddo.CAPRCO2
+       ,Ddo.UD01PR
+       ,Ddo.UD02PR
+       ,Ddo.NOKOPR
+       ,Ddo.PPPRNE
+	   ,ROUND(Ddo.PPPRNE/Ddo.RLUDPR,2) As 'Costo_UN'
+       ,Ddo.PPPRNERE1
+       ,Ddo.PPPRNERE2
+       ,Mpen.PPUL01
+       ,Mpen.PPUL02
+       ,Mpen.PM
+       ,Fcc.TIDO                As 'TIDO_FCC'
+       ,Fcc.NUDO                As 'NUDO_FCC'
+       ,Ddo.POTENCIA            AS 'Flete_Bruto'
+       ,CAST(0 AS FLOAT)        As 'Flete_Neto'
+       ,CAST(0 AS FLOAT)        As 'Costo_FleteBrutoAct'
+       ,CAST(0 AS FLOAT)        As 'Costo_FleteNetoAct'
+       ,CAST('' AS VARCHAR(13)) As 'CodigoOferta'
+       ,CAST('' AS VARCHAR(50)) As 'NombreOferta'
+       ,CAST(NULL AS DATETIME)  As 'FechaInicioOferta'
+       ,CAST(NULL AS DATETIME)  As 'FechaFinOferta'
+       ,CAST(0 AS BIT)          As 'OfertaActiva'
+       ,CAST(0 AS FLOAT)        As 'MontoOferta'
+       ,CAST(0 AS FLOAT)        As 'Precio_Venta'
+       ,Isnull(Mp.FMPR,'')		As 'FMPR' 
+	   ,Isnull(Spf.NOKOFM,'')	As 'NOKOFM'
+	   ,Isnull(Mp.PFPR,'')		As 'PFPR'
+	   ,Isnull(Fm.NOKOPF,'')	As 'NOKOPF'
+	   ,Isnull(Mp.HFPR,'')		As 'HFPR'
+	   ,Isnull(Sbf.NOKOHF,'')	As 'NOKOHF'
+	   ,Isnull(Mp.MRPR,'')		As 'MRPR'
+	   ,Isnull(Mr.NOKOMR,'')	As 'NOKOMR'
+	   ,Isnull(Mp.KOFUPR,'')	As 'KOFUPR'
+	   ,Isnull(Jf.NOKOFU,'')	As 'NOKOFU'
+       ,ISNULL(Mp.ZONAPR,'')	As 'ZONAPR'
+	   ,ISNULL(Tz.NOKOCARAC,'')	As 'NOKOZOPR'
+	   ,ISNULL(Mp.CLALIBPR,'')	As 'CLALIBPR'
+	   ,ISNULL(Tc.NOKOCARAC,'')	As 'NOKOCARAC'
 INTO #Tbl_Paso2
 FROM MAEDDO Ddo
-LEFT JOIN MAEEN ON Ddo.ENDO = MAEEN.KOEN AND Ddo.SUENDO = MAEEN.SUEN
-LEFT JOIN MAEPREM Mpen ON Mpen.KOPR = Ddo.KOPRCT AND Mpen.EMPRESA = @Empresa
-LEFT JOIN MAEDDO Fcc ON Ddo.IDMAEDDO = Fcc.IDRST AND Fcc.TIDO = 'FCC'
+    Left Join MAEEN ON Ddo.ENDO = MAEEN.KOEN AND Ddo.SUENDO = MAEEN.SUEN
+        Left Join MAEPREM Mpen ON Mpen.KOPR = Ddo.KOPRCT AND Mpen.EMPRESA = @Empresa
+            Left Join MAEDDO Fcc ON Ddo.IDMAEDDO = Fcc.IDRST AND Fcc.TIDO = 'FCC'
+                Left Join MAEPR Mp On Mp.KOPR = Ddo.KOPRCT
+                    Left Join TABFM Spf On Spf.KOFM = Mp.FMPR
+                        Left Join TABPF Fm On Fm.KOFM = Mp.FMPR And Fm.KOPF = Mp.PFPR
+                            Left Join TABHF Sbf On Sbf.KOFM = Mp.FMPR And Sbf.KOPF = Mp.PFPR And Sbf.KOHF = Mp.HFPR
+                                Left Join TABMR Mr On Mr.KOMR = Mp.MRPR
+                                    Left Join TABFU Jf On Jf.KOFU = Mp.KOFUPR
+                                        Left Join TABCARAC Tz On Tz.KOCARAC = Mp.ZONAPR And Tz.KOTABLA = 'ZONAPRODUC'
+											Left Join TABCARAC Tc On Tc.KOCARAC = Mp.CLALIBPR And Tc.KOTABLA = 'CLALIBPR'
 WHERE Ddo.TIDO = 'GRC'
-  AND Ddo.FEEMLI BETWEEN @Fecha_Desde AND @Fecha_Hasta
+  And Ddo.FEEMLI Between @Fecha_Desde And @Fecha_Hasta
+  --#Condicion_Productos#
 GROUP BY Ddo.IDMAEEDO, Ddo.IDMAEDDO, Ddo.NUDO, Ddo.ENDO, Ddo.SUENDO, MAEEN.NOKOEN,
          Ddo.TIPR, Ddo.PRCT, Ddo.KOPRCT, Ddo.UDTRPR, Ddo.RLUDPR, Ddo.CAPRCO1,
          Ddo.CAPRCO2, Ddo.UD01PR, Ddo.UD02PR, Ddo.PPPRNE, Ddo.NOKOPR, Ddo.FEEMLI,
          Ddo.TIDO, Ddo.SULIDO, Ddo.BOSULIDO, Ddo.PPPRNERE1, Ddo.PPPRNERE2,
-         Mpen.PPUL01, Mpen.PPUL02, Mpen.PM, Fcc.TIDO, Fcc.NUDO, Ddo.POTENCIA;
+         Mpen.PPUL01, Mpen.PPUL02, Mpen.PM, Fcc.TIDO, Fcc.NUDO, Ddo.POTENCIA,
+         Mp.FMPR,Spf.NOKOFM,Mp.PFPR,Fm.NOKOPF,Mp.HFPR,Sbf.NOKOHF,
+		 Mp.MRPR,Mr.NOKOMR,Mp.KOFUPR,Jf.NOKOFU,Mp.ZONAPR,Tz.NOKOCARAC,Mp.CLALIBPR,Tc.NOKOCARAC;
 
 UPDATE #Tbl_Paso2
 SET Flete_Neto = ROUND(ISNULL(Flete_Bruto,0)/1.19,5);
@@ -134,12 +159,12 @@ SELECT
     END AS TieneFCC_Ant,
 
     -- Margen GRC vs última venta
-    ROUND((ISNULL(Venta_Ant.PPPRNE_Vta,0) - T2.Costo_UN),2) AS 'Margen_Valor',
-    CASE WHEN ISNULL(Venta_Ant.PPPRNE_Vta,0)=0 THEN 0
-         ELSE ROUND(((Venta_Ant.PPPRNE_Vta-T2.Costo_UN)/Venta_Ant.PPPRNE_Vta)*100,2)/100
+    ROUND((ISNULL(Venta_Ant.PPPRNERE1_Vta,0) - (T2.Costo_UN+T2.Flete_Neto)),2) AS 'Margen_Valor',
+    CASE WHEN ISNULL(Venta_Ant.PPPRNERE1_Vta,0)=0 THEN 0
+         ELSE ROUND(((Venta_Ant.PPPRNERE1_Vta - (T2.Costo_UN+T2.Flete_Neto))/Venta_Ant.PPPRNERE1_Vta)*100,2)/100
     END AS 'Margen_Porc',
-    CASE WHEN ISNULL(T2.Costo_UN,0)=0 THEN 0
-         ELSE ROUND(((Venta_Ant.PPPRNE_Vta - T2.Costo_UN)/T2.Costo_UN)*100,2)/100
+    CASE WHEN ISNULL(T2.Costo_UN,0)+ISNULL(T2.Flete_Neto,0)=0 THEN 0
+         ELSE ROUND(((Venta_Ant.PPPRNERE1_Vta - (T2.Costo_UN+T2.Flete_Neto))/(T2.Costo_UN+T2.Flete_Neto))*100,2)/100
     END AS 'Markup_Porc',
 
     -- GRC anterior
@@ -152,7 +177,7 @@ FROM #Tbl_Paso2 T2
 LEFT JOIN #Global_BaseBk#Zw_ListaLC_ValPro Lc
        ON T2.KOPRCT = Lc.Codigo
       --AND (Lc.FechaModif <> '#Fecha_Hasta#' OR Lc.FechaModif IS NULL)
-      --#Condicion#
+      
 
 CROSS APPLY (
     SELECT TOP 1
@@ -160,7 +185,7 @@ CROSS APPLY (
         Ddo.IDMAEDDO		AS 'IDMAEDDO_Ant',
         Ddo.TIDO			AS 'TIDO_Ant',
         Ddo.NUDO			AS 'NUDO_Ant',
-        Ddo.FEEMLI			AS 'FEEMLI_Ant',
+        Ddo.FEEMLI			AS 'FECHA_Ant',
         Ddo.ENDO			AS 'ENDO_Ant',
         Ddo.SUENDO			AS 'SUENDO_Ant',
         Ddo.CAPRCO1			AS 'CAPRCO1_Ant',
@@ -191,6 +216,7 @@ CROSS APPLY (
         Ddo.IDMAEDDO		AS 'IDMAEDDO_Vta',
         Ddo.TIDO			AS 'TIDO_Vta',
         Ddo.NUDO			AS 'NUDO_Vta',
+        Ddo.TIDO+'-'+Ddo.NUDO AS 'ULT_Vta',
         Ddo.FEEMLI			AS 'FEEMLI_Vta',
         Ddo.ENDO			AS 'ENDO_Vta',
         Ddo.SUENDO			AS 'SUENDO_Vta',
@@ -211,6 +237,7 @@ CROSS APPLY (
       AND Ddo.FEEMLI < T2.FECHA
     ORDER BY Ddo.FEEMLI DESC
 ) AS Venta_Ant
+--#Condicion#
 
 ORDER BY T2.KOPRCT;
 

@@ -282,6 +282,7 @@ Public Class Cl_Stmp
             _Mensaje_Stem.EsCorrecto = True
             _Mensaje_Stem.Detalle = "Documento grabado correctamente"
             _Mensaje_Stem.Mensaje = "Se crea Ticket Nro " & _Zw_Stmp_Enc.Numero & " - (" & _Zw_Stmp_Enc.Tido & "-" & _Zw_Stmp_Enc.Nudo & ")"
+            _Mensaje_Stem.Id = _Zw_Stmp_Enc.Id
 
         Catch ex As Exception
 

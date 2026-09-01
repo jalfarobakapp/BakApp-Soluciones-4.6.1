@@ -1,4 +1,5 @@
-﻿Imports DocumentFormat.OpenXml.VariantTypes
+﻿Imports DevComponents.DotNetBar
+Imports DocumentFormat.OpenXml.VariantTypes
 
 Public Class Frm_PreciosLC_InfUltCompras_Mt
 
@@ -19,16 +20,57 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
     Dim FormatDecimal As String
 
+    Private _Filtro_Productos_Todos As Boolean
+    Private _Filtro_Clalibpr_Todas As Boolean
+    Private _Filtro_Marcas_Todas As Boolean
+    Private _Filtro_Rubro_Todas As Boolean
+    Private _Filtro_Super_Familias_Todas As Boolean
+    Private _Filtro_Zonas_Todas As Boolean
+    Private _Filtro_Jefes_Todos As Boolean
+    Private _Filtro_Bakapp_Todas As Boolean
+    Private _Tbl_Filtro_Productos As DataTable
+    Private _Tbl_Filtro_Clalibpr As DataTable
+    Private _Tbl_Filtro_Marcas As DataTable
+    Private _Tbl_Filtro_Rubro As DataTable
+    Private _Tbl_Filtro_Super_Familias As DataTable
+    Private _Tbl_Filtro_Jefes As DataTable
+    Private _Tbl_Filtro_Zonas As DataTable
+    Private _Ls_SelSuperFamilias As New List(Of SelSuperFamilias)
+    Private _Ls_SelFamilias As New List(Of SelFamilias)
+    Private _Ls_SelSubFamilias As New List(Of SelSubFamilias)
+    Private _Ls_SelArbol_Asociaciones As New List(Of Zw_TblArbol_Asociaciones)
+
+    Private _Sql_FiltroProductos As String
+
+    Private _Imagen_Btn_Filtro_Productos As System.Drawing.Image
+    Private _ImagenAlt_Btn_Filtro_Productos As System.Drawing.Image
+    Private _Texto_Btn_Filtro_Productos As String
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
 
+        _Imagen_Btn_Filtro_Productos = Btn_Filtro_Productos.Image
+        _ImagenAlt_Btn_Filtro_Productos = Btn_Filtro_Productos.ImageAlt
+        _Texto_Btn_Filtro_Productos = Btn_Filtro_Productos.Text
+
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
-        Sb_Formato_Generico_Grilla(GrillaProdActualizados, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+        Sb_Formato_Generico_Grilla(GrillaProdActualizados, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
         Sb_Formato_Generico_Grilla(Grilla_GRC_Ant, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, False, False)
+
+        _Sql_FiltroProductos = String.Empty
+
+        _Filtro_Productos_Todos = True
+        _Filtro_Clalibpr_Todas = True
+        _Filtro_Marcas_Todas = True
+        _Filtro_Rubro_Todas = True
+        _Filtro_Super_Familias_Todas = True
+        _Filtro_Zonas_Todas = True
+        _Filtro_Jefes_Todos = True
+        _Filtro_Bakapp_Todas = True
 
     End Sub
 
@@ -40,12 +82,30 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
         'Ejecutar()
         'Sb_Actualizar_Grilla()
 
+        Dim _Arr_GRCvsUltGR(,) As String = {{"", ""},
+                                           {"5", ">= 5% Diferencia"},
+                                           {"-5", "<= 5% Diferencia"}}
+        Sb_Llenar_Combos(_Arr_GRCvsUltGR, Cmb_GRCvsUltGRC)
+        Cmb_GRCvsUltGRC.SelectedValue = ""
+
+        Dim _Arr_Margen(,) As String = {{"", ""},
+                                       {"5", ">= 5% Diferencia"},
+                                       {"-5", "<= 5% Diferencia"}}
+        Sb_Llenar_Combos(_Arr_Margen, Cmb_Margen)
+        Cmb_Margen.SelectedValue = ""
+
+        caract_combo(Cmb_ListaPrecio)
+        Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
+                       "SELECT KOLT AS Padre,'TABPP'+KOLT+' '+NOKOLT AS Hijo FROM TABPP WHERE TILT = 'P' ORDER BY Hijo "
+        Cmb_ListaPrecio.DataSource = _Sql.Fx_Get_DataTable(Consulta_sql)
+        Cmb_ListaPrecio.SelectedValue = "PB7"
+
         Call TabControl1_SelectedIndexChanged(Nothing, Nothing)
 
         'AddHandler GrillaProdActualizados.CellFormatting, AddressOf Grilla_CellFormatting
 
-        AddHandler Grilla.RowPostPaint, AddressOf Grilla_RowPostPaint
-        AddHandler GrillaProdActualizados.RowPostPaint, AddressOf Grilla_RowPostPaint
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
+        AddHandler GrillaProdActualizados.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
     End Sub
 
@@ -317,9 +377,11 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
         Consulta_sql = My.Resources.Recursos_Lista_LC.Ult_Compras_GRC__New
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Desde#", _Fecha_Desde)
         Consulta_sql = Replace(Consulta_sql, "#Fecha_Hasta#", _Fecha_Hasta)
-        Consulta_sql = Replace(Consulta_sql, "#Condicion#", _Condicion)
+        Consulta_sql = Replace(Consulta_sql, "--#Condicion#", _Condicion)
         Consulta_sql = Replace(Consulta_sql, "#Global_BaseBk#", _Global_BaseBk)
         Consulta_sql = Replace(Consulta_sql, "#Empresa#", Mod_Empresa)
+        Consulta_sql = Replace(Consulta_sql, "#Condicion_Productos#", _Sql_FiltroProductos)
+
 
         _Tbl = _Sql.Fx_Get_DataTable(Consulta_sql)
 
@@ -327,20 +389,26 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
             .DataSource = _Tbl
 
-            OcultarEncabezadoGrilla(Grilla, True)
+            OcultarEncabezadoGrilla(Grilla)
 
             Dim _DisplayIndex = 0
 
-            .Columns("TIDO").Width = 60
+            .Columns("TIDO").Width = 30
             .Columns("TIDO").HeaderText = "Tipo Doc."
             .Columns("TIDO").Visible = True
             .Columns("TIDO").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NUDO").Width = 100
+            .Columns("NUDO").Width = 80
             .Columns("NUDO").HeaderText = "Nro Doc."
             .Columns("NUDO").Visible = True
             .Columns("NUDO").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FECHA").Width = 80
+            .Columns("FECHA").HeaderText = "Fecha Doc."
+            .Columns("FECHA").Visible = True
+            .Columns("FECHA").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("TieneFCC").Width = 30
@@ -350,10 +418,16 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             .Columns("TieneFCC").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("FECHA").Width = 100
-            .Columns("FECHA").HeaderText = "Fecha Doc."
-            .Columns("FECHA").Visible = True
-            .Columns("FECHA").DisplayIndex = _DisplayIndex
+            '.Columns("TIDO_FCC").Width = 30
+            '.Columns("TIDO_FCC").HeaderText = "TD"
+            '.Columns("TIDO_FCC").Visible = True
+            '.Columns("TIDO_FCC").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("NUDO_FCC").Width = 80
+            .Columns("NUDO_FCC").HeaderText = "Nro FCC"
+            .Columns("NUDO_FCC").Visible = True
+            .Columns("NUDO_FCC").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("KOPRCT").Width = 100
@@ -368,50 +442,17 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             .Columns("NOKOPR").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("UD02PR").Width = 60
+            .Columns("RLUDPR").Width = 30
+            .Columns("RLUDPR").HeaderText = "Rtu"
+            .Columns("RLUDPR").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("RLUDPR").Visible = True
+            .Columns("RLUDPR").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("UD02PR").Width = 30
             .Columns("UD02PR").HeaderText = "Ud"
             .Columns("UD02PR").Visible = True
             .Columns("UD02PR").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("PM").Width = 60
-            .Columns("PM").HeaderText = "$ P.M."
-            .Columns("PM").DefaultCellStyle.Format = "$ ###,##"
-            .Columns("PM").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("PM").Visible = True
-            .Columns("PM").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Costo_UN").Width = 100
-            .Columns("Costo_UN").HeaderText = "$ Valor GRC"
-            .Columns("Costo_UN").DefaultCellStyle.Format = "$ ###,##"
-            .Columns("Costo_UN").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Costo_UN").Visible = True
-            .Columns("Costo_UN").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Costo_UN_Ant").Width = 60
-            .Columns("Costo_UN_Ant").HeaderText = "$ Valor GRC (Anterior)"
-            .Columns("Costo_UN_Ant").DefaultCellStyle.Format = "$ ###,##"
-            .Columns("Costo_UN_Ant").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Costo_UN_Ant").Visible = True
-            .Columns("Costo_UN_Ant").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Dif_UCCValor").Width = 60
-            .Columns("Dif_UCCValor").HeaderText = "$ Dif.UCC Valor"
-            .Columns("Dif_UCCValor").DefaultCellStyle.Format = "$ ###,##.##"
-            .Columns("Dif_UCCValor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Dif_UCCValor").Visible = True
-            .Columns("Dif_UCCValor").DisplayIndex = _DisplayIndex
-            _DisplayIndex += 1
-
-            .Columns("Dif_UCCPorc").Width = 60
-            .Columns("Dif_UCCPorc").HeaderText = "% Dif.UCC Porc."
-            .Columns("Dif_UCCPorc").DefaultCellStyle.Format = "% ###,##.##"
-            .Columns("Dif_UCCPorc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("Dif_UCCPorc").Visible = True
-            .Columns("Dif_UCCPorc").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("CAPRCO2").Width = 60
@@ -422,85 +463,147 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             .Columns("CAPRCO2").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("RLUDPR").Width = 30
-            .Columns("RLUDPR").HeaderText = "Rtu"
-            .Columns("RLUDPR").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("RLUDPR").Visible = True
-            .Columns("RLUDPR").DisplayIndex = _DisplayIndex
+            .Columns("Costo_UN").Width = 70
+            .Columns("Costo_UN").HeaderText = "Preci GRC (Actual)"
+            .Columns("Costo_UN").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("Costo_UN").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Costo_UN").Visible = True
+            .Columns("Costo_UN").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Costo_UN_Ant").Width = 70
+            .Columns("Costo_UN_Ant").HeaderText = "Precio GRC (Anterior)"
+            .Columns("Costo_UN_Ant").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("Costo_UN_Ant").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Costo_UN_Ant").Visible = True
+            .Columns("Costo_UN_Ant").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Dif_UCCValor").Width = 60
+            .Columns("Dif_UCCValor").HeaderText = "Dif.UCC Valor"
+            .Columns("Dif_UCCValor").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("Dif_UCCValor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Dif_UCCValor").Visible = True
+            .Columns("Dif_UCCValor").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Dif_UCCPorc").Width = 60
+            .Columns("Dif_UCCPorc").HeaderText = "Dif.UCC Porc."
+            .Columns("Dif_UCCPorc").DefaultCellStyle.Format = "% ###,##.##"
+            .Columns("Dif_UCCPorc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Dif_UCCPorc").Visible = True
+            .Columns("Dif_UCCPorc").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("PM").Width = 60
+            .Columns("PM").HeaderText = "$ P.M."
+            .Columns("PM").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("PM").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PM").Visible = True
+            .Columns("PM").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("ULT_Vta").Width = 100
+            .Columns("ULT_Vta").HeaderText = "Ult.Venta"
+            .Columns("ULT_Vta").Visible = True
+            .Columns("ULT_Vta").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FEEMLI_Vta").Width = 80
+            .Columns("FEEMLI_Vta").HeaderText = "Fecha Doc."
+            .Columns("FEEMLI_Vta").Visible = True
+            .Columns("FEEMLI_Vta").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("PPPRNERE1_Vta").Width = 70
+            .Columns("PPPRNERE1_Vta").HeaderText = "Precio Vta."
+            .Columns("PPPRNERE1_Vta").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("PPPRNERE1_Vta").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("PPPRNERE1_Vta").Visible = True
+            .Columns("PPPRNERE1_Vta").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Margen_Valor").Width = 60
+            .Columns("Margen_Valor").HeaderText = "Margen Valor"
+            .Columns("Margen_Valor").DefaultCellStyle.Format = "$ ###,##"
+            .Columns("Margen_Valor").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Margen_Valor").Visible = True
+            .Columns("Margen_Valor").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Margen_Porc").Width = 60
+            .Columns("Margen_Porc").HeaderText = "Margen Porc."
+            .Columns("Margen_Porc").DefaultCellStyle.Format = "% ###,##.##"
+            .Columns("Margen_Porc").DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+            .Columns("Margen_Porc").Visible = True
+            .Columns("Margen_Porc").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
         End With
 
-        For Each _Fila As DataGridViewRow In Grilla.Rows
+        Sb_Aplicar_Colores_Filas(Grilla)
 
-            Dim _CostoPM As Double
-            Dim _CostoUC As Double
-            Dim _Mcosto As Double
-            Dim _McostoNew As Double
-            Dim _Dif_UCCPorc As Double
+        'For Each _Fila As DataGridViewRow In Grilla.Rows
 
-            _CostoPM = NuloPorNro(_Fila.Cells("PM").Value, 0)
-            _CostoUC = NuloPorNro(_Fila.Cells("PPUL01").Value, 0)
-            _Mcosto = NuloPorNro(_Fila.Cells("MCosto").Value, 0)
-            _Dif_UCCPorc = NuloPorNro(_Fila.Cells("Dif_UCCPorc").Value, 2) * 100
+        '    Dim _CostoPM As Double
+        '    Dim _CostoUC As Double
+        '    Dim _Mcosto As Double
+        '    Dim _McostoNew As Double
+        '    Dim _Dif_UCCPorc As Double
 
-            If _CostoPM > _CostoUC Then
-                _McostoNew = _CostoPM
-            ElseIf _CostoPM < _CostoUC Then
-                _McostoNew = _CostoUC
-            ElseIf _CostoPM = _CostoUC Then
-                _McostoNew = _CostoUC
-            End If
+        '    _CostoPM = NuloPorNro(_Fila.Cells("PM").Value, 0)
+        '    _CostoUC = NuloPorNro(_Fila.Cells("PPUL01").Value, 0)
+        '    _Mcosto = NuloPorNro(_Fila.Cells("MCosto").Value, 0)
+        '    _Dif_UCCPorc = NuloPorNro(_Fila.Cells("Dif_UCCPorc").Value, 2) * 100
 
-            If _Dif_UCCPorc >= 5 Then
-                '_Fila.DefaultCellStyle.BackColor = Rojo ' Rojo
-                _Fila.DefaultCellStyle.ForeColor = Rojo
-            ElseIf _Dif_UCCPorc <= -5 Then
-                '_Fila.DefaultCellStyle.BackColor = Color.White 'Blanco
-                _Fila.DefaultCellStyle.ForeColor = Verde
-                'Else
-                '    _Fila.DefaultCellStyle.BackColor = Color.White 'Blanco
-                '    _Fila.DefaultCellStyle.ForeColor = Color.Black 'Negro
-            End If
+        '    If _CostoPM > _CostoUC Then
+        '        _McostoNew = _CostoPM
+        '    ElseIf _CostoPM < _CostoUC Then
+        '        _McostoNew = _CostoUC
+        '    ElseIf _CostoPM = _CostoUC Then
+        '        _McostoNew = _CostoUC
+        '    End If
 
-            'If Math.Round(_McostoNew, 0) > Math.Round(_Mcosto, 0) Then
-            '    _Fila.DefaultCellStyle.BackColor = Color.Red ' Rojo
-            '    _Fila.DefaultCellStyle.ForeColor = Color.White ' Rojo
-            'Else
-            '    _Fila.DefaultCellStyle.BackColor = Color.White 'Blanco
-            '    _Fila.DefaultCellStyle.ForeColor = Color.Black 'Negro
-            'End If
+        '    If _Dif_UCCPorc >= 5 Then
+        '        _Fila.DefaultCellStyle.ForeColor = Rojo
+        '    ElseIf _Dif_UCCPorc <= -5 Then
+        '        _Fila.DefaultCellStyle.ForeColor = Verde
+        '    End If
 
-        Next
+        'Next
 
     End Sub
 
-    Private Sub Sb_Actualizar_Grilla_GRC_Ant()
+    Private Sub Sb_Actualizar_Grilla_GRC_Ant(_Grilla As DataGridView)
 
         Grilla_GRC_Ant.DataSource = Nothing
 
-        If TabControl1.SelectedIndex <> 0 Then
+        If IsNothing(_Grilla.DataSource) Then
             Return
         End If
 
-        If IsNothing(Grilla.DataSource) Then
+        If IsNothing(_Grilla.CurrentRow) Then
             Return
         End If
 
-        If IsNothing(Grilla.CurrentRow) Then
-            Return
-        End If
-
-        Dim _DtOrigen As DataTable = TryCast(Grilla.DataSource, DataTable)
+        Dim _DtOrigen As DataTable = TryCast(_Grilla.DataSource, DataTable)
 
         If IsNothing(_DtOrigen) Then
             Return
         End If
 
         Dim _TblAnt As New DataTable
-        Dim _FilaOrigen As DataGridViewRow = Grilla.CurrentRow
+        Dim _FilaOrigen As DataGridViewRow = _Grilla.CurrentRow
 
-        For Each _Columna As DataGridViewColumn In Grilla.Columns
+        If _DtOrigen.Columns.Contains("KOPRCT") Then
+            _TblAnt.Columns.Add("KOPRCT", _DtOrigen.Columns("KOPRCT").DataType)
+        End If
+
+        If _DtOrigen.Columns.Contains("NOKOPR") Then
+            _TblAnt.Columns.Add("NOKOPR", _DtOrigen.Columns("NOKOPR").DataType)
+        End If
+
+        For Each _Columna As DataGridViewColumn In _Grilla.Columns
 
             If _Columna.Name.EndsWith("_Ant") Then
                 Continue For
@@ -522,7 +625,11 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
         Dim _NuevaFila As DataRow = _TblAnt.NewRow()
 
-        For Each _Columna As DataGridViewColumn In Grilla.Columns
+        For Each _Columna As DataGridViewColumn In _Grilla.Columns
+
+            If _TblAnt.Columns.Contains(_Columna.Name) Then
+                _NuevaFila(_Columna.Name) = _FilaOrigen.Cells(_Columna.Name).Value
+            End If
 
             If _Columna.Name.EndsWith("_Ant") Then
                 Continue For
@@ -556,16 +663,22 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
         With Grilla_GRC_Ant
 
-            .Columns("TIDO_Ant").Width = 60
-            .Columns("TIDO_Ant").HeaderText = "Tipo Doc."
+            .Columns("TIDO_Ant").Width = 30
+            .Columns("TIDO_Ant").HeaderText = "TD"
             .Columns("TIDO_Ant").Visible = True
             .Columns("TIDO_Ant").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("NUDO_Ant").Width = 100
+            .Columns("NUDO_Ant").Width = 80
             .Columns("NUDO_Ant").HeaderText = "Nro Doc."
             .Columns("NUDO_Ant").Visible = True
             .Columns("NUDO_Ant").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FECHA_Ant").Width = 100
+            .Columns("FECHA_Ant").HeaderText = "Fecha Doc."
+            .Columns("FECHA_Ant").Visible = True
+            .Columns("FECHA_Ant").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("TieneFCC_Ant").Width = 30
@@ -575,23 +688,29 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             .Columns("TieneFCC_Ant").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            '.Columns("FEEMLI_Ant").Width = 100
-            '.Columns("FEEMLI_Ant").HeaderText = "Fecha Doc."
-            '.Columns("FEEMLI_Ant").Visible = True
-            '.Columns("FEEMLI_Ant").DisplayIndex = _DisplayIndex
+            '.Columns("TIDO_FCC_Ant").Width = 60
+            '.Columns("TIDO_FCC_Ant").HeaderText = "TD"
+            '.Columns("TIDO_FCC_Ant").Visible = True
+            '.Columns("TIDO_FCC_Ant").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
 
-            '.Columns("KOPRCT_Ant").Width = 100
-            '.Columns("KOPRCT_Ant").HeaderText = "Código producto"
-            '.Columns("KOPRCT_Ant").Visible = True
-            '.Columns("KOPRCT_Ant").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("NUDO_FCC_Ant").Width = 80
+            .Columns("NUDO_FCC_Ant").HeaderText = "Nro FCC"
+            .Columns("NUDO_FCC_Ant").Visible = True
+            .Columns("NUDO_FCC_Ant").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
-            '.Columns("NOKOPR_Ant").Width = 300
-            '.Columns("NOKOPR_Ant").HeaderText = "Descripción producto"
-            '.Columns("NOKOPR_Ant").Visible = True
-            '.Columns("NOKOPR_Ant").DisplayIndex = _DisplayIndex
-            '_DisplayIndex += 1
+            .Columns("KOPRCT").Width = 100
+            .Columns("KOPRCT").HeaderText = "Código producto"
+            .Columns("KOPRCT").Visible = True
+            .Columns("KOPRCT").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("NOKOPR").Width = 300
+            .Columns("NOKOPR").HeaderText = "Descripción producto"
+            .Columns("NOKOPR").Visible = True
+            .Columns("NOKOPR").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             '.Columns("UD02PR").Width = 60
             '.Columns("UD02PR").HeaderText = "Ud"
@@ -698,7 +817,7 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
     End Sub
 
-    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
+    Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Cabeza = Grilla.Columns(Grilla.CurrentCell.ColumnIndex).Name
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
@@ -750,7 +869,7 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
     End Sub
 
-    Private Sub GrillaProdActualizados_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles GrillaProdActualizados.CellDoubleClick
+    Private Sub GrillaProdActualizados_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs)
 
         Dim _Cabeza = Grilla.Columns(GrillaProdActualizados.CurrentCell.ColumnIndex).Name
         Dim _Fila As DataGridViewRow = GrillaProdActualizados.Rows(GrillaProdActualizados.CurrentRow.Index)
@@ -795,51 +914,549 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
     End Sub
 
-    Private Sub BtnActualizar_Click(sender As System.Object, e As System.EventArgs) Handles BtnActualizar.Click
-        'Ejecutar()
-        TabControl1.SelectedIndex = 0
-        Call TabControl1_SelectedIndexChanged(Nothing, Nothing)
-        'Sb_Actualizar_Grilla()
-    End Sub
 
+    'Private Sub Grilla_RowPostPaint(sender As Object, e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
+    '    Try
+    '        'Captura el numero de filas del datagridview
+    '        Dim RowsNumber As String = (e.RowIndex + 1).ToString
+    '        While RowsNumber.Length < sender.RowCount.ToString.Length
+    '            RowsNumber = "0" & RowsNumber
+    '        End While
+    '        Dim size As SizeF = e.Graphics.MeasureString(RowsNumber, Me.Font)
+    '        If sender.RowHeadersWidth < CInt(size.Width + 20) Then
+    '            sender.RowHeadersWidth = CInt(size.Width + 20)
+    '        End If
+    '        Dim ob As Brush = SystemBrushes.ControlText
+    '        e.Graphics.DrawString(RowsNumber, Me.Font, ob, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2))
+    '    Catch ex As Exception
+    '        MessageBox.Show(ex.Message, "vb.net",
+    '     MessageBoxButtons.OK, MessageBoxIcon.Error)
+    '    End Try
+    'End Sub
 
-    Private Sub Grilla_RowPostPaint(sender As Object, e As System.Windows.Forms.DataGridViewRowPostPaintEventArgs)
+    Private Sub TabControl1_SelectedIndexChanged(sender As Object, e As EventArgs)
+
+        Dim _Condicion As String = String.Empty
+        Dim Fm_Espera As New Frm_Form_Esperar
+
         Try
-            'Captura el numero de filas del datagridview
-            Dim RowsNumber As String = (e.RowIndex + 1).ToString
-            While RowsNumber.Length < sender.RowCount.ToString.Length
-                RowsNumber = "0" & RowsNumber
-            End While
-            Dim size As SizeF = e.Graphics.MeasureString(RowsNumber, Me.Font)
-            If sender.RowHeadersWidth < CInt(size.Width + 20) Then
-                sender.RowHeadersWidth = CInt(size.Width + 20)
+
+            Me.Enabled = False
+            Fm_Espera.BarraCircular.IsRunning = True
+            Fm_Espera.Show()
+            Me.Cursor = Cursors.WaitCursor
+
+            If TabControl1.SelectedTabIndex = 0 Then
+
+                _Condicion = $"Where (Lc.FechaModif <> '{Format(_Fecha_Hoy, "yyyyMMdd")}' OR Lc.FechaModif IS NULL)"
+
+                Sb_Actualizar_Grilla(Grilla,
+                                     _Tbl_Lista_LC,
+                                     _Condicion)
+            Else
+
+                _Condicion = $"Where Lc.FechaModif = '{Format(_Fecha_Hoy, "yyyyMMdd")}'"
+
+                Sb_Actualizar_Grilla(GrillaProdActualizados,
+                                     _Tbl_Lista_LC_Actualizados,
+                                     _Condicion)
             End If
-            Dim ob As Brush = SystemBrushes.ControlText
-            e.Graphics.DrawString(RowsNumber, Me.Font, ob, e.RowBounds.Location.X + 15, e.RowBounds.Location.Y + ((e.RowBounds.Height - size.Height) / 2))
+
+            Sb_Aplicar_Filtros()
+
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "vb.net",
-         MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            Me.Enabled = True
+            Fm_Espera.Dispose()
+            Me.Cursor = Cursors.Default
         End Try
-    End Sub
 
-    Private Sub TabControl1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl1.SelectedIndexChanged
-
-        If TabControl1.SelectedIndex = 0 Then
-            Sb_Actualizar_Grilla(Grilla,
-                                 _Tbl_Lista_LC,
-                                 "Where FechaModif <> '" & Format(_Fecha_Hoy, "yyyyMMdd") & "' Or FechaModif Is Null")
-        Else
-            Sb_Actualizar_Grilla(GrillaProdActualizados,
-                                 _Tbl_Lista_LC_Actualizados,
-                                 "Where FechaModif = '" & Format(_Fecha_Hoy, "yyyyMMdd") & "'")
-        End If
+        Me.Refresh()
 
     End Sub
 
     Private Sub Grilla_SelectionChanged(sender As Object, e As EventArgs) Handles Grilla.SelectionChanged
         If Object.ReferenceEquals(Grilla, Me.Grilla) Then
-            Sb_Actualizar_Grilla_GRC_Ant()
+            Sb_Actualizar_Grilla_GRC_Ant(Me.Grilla)
         End If
+    End Sub
+
+    Private Sub GrillaProdActualizados_SelectionChanged(sender As Object, e As EventArgs) Handles GrillaProdActualizados.SelectionChanged
+        If Object.ReferenceEquals(Grilla, Me.Grilla) Then
+            Sb_Actualizar_Grilla_GRC_Ant(Me.GrillaProdActualizados)
+        End If
+    End Sub
+
+    Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
+        TabControl1.SelectedTabIndex = 0
+        Call TabControl1_SelectedIndexChanged(Nothing, Nothing)
+    End Sub
+
+    Private Function Fx_Grilla_Activa() As DataGridView
+
+        If TabControl1.SelectedTabIndex = 0 Then
+            Return Grilla
+        End If
+
+        Return GrillaProdActualizados
+
+    End Function
+
+    Private Function Fx_Obtener_Valor_Combo(_Combo As DevComponents.DotNetBar.Controls.ComboBoxEx) As String
+
+        If IsNothing(_Combo.SelectedValue) Then
+            Return String.Empty
+        End If
+
+        If TypeOf _Combo.SelectedValue Is DataRowView Then
+            Return String.Empty
+        End If
+
+        Return _Combo.SelectedValue.ToString.Trim
+
+    End Function
+
+    Private Function Fx_Construir_Filtro_Porcentaje(_Campo As String,
+                                                _ValorCombo As String) As String
+
+        Select Case _ValorCombo
+
+            Case "5"
+                Return "IsNull(" & _Campo & ", 0) >= 0.05"
+
+            Case "-5"
+                Return "IsNull(" & _Campo & ", 0) <= -0.05"
+
+        End Select
+
+        Return String.Empty
+
+    End Function
+
+    Private Sub Sb_Agregar_Filtro(ByRef _Filtro As String,
+                              _Condicion As String)
+
+        If String.IsNullOrWhiteSpace(_Condicion) Then
+            Return
+        End If
+
+        If Not String.IsNullOrWhiteSpace(_Filtro) Then
+            _Filtro &= " And "
+        End If
+
+        _Filtro &= _Condicion
+
+    End Sub
+
+    Private Sub Sb_Aplicar_Filtros()
+
+        Dim _Grilla As DataGridView = Fx_Grilla_Activa()
+        Dim _Tbl As DataTable = TryCast(_Grilla.DataSource, DataTable)
+
+        If IsNothing(_Tbl) Then
+            Return
+        End If
+
+        Dim _Filtro As String = String.Empty
+
+        Sb_Agregar_Filtro(_Filtro,
+                      Fx_Construir_Filtro_Porcentaje("Dif_UCCPorc",
+                                                     Fx_Obtener_Valor_Combo(Cmb_GRCvsUltGRC)))
+
+        Sb_Agregar_Filtro(_Filtro,
+                      Fx_Construir_Filtro_Porcentaje("Margen_Porc",
+                                                     Fx_Obtener_Valor_Combo(Cmb_Margen)))
+
+        If Not String.IsNullOrWhiteSpace(Txt_BuscaXProducto.Text) Then
+            Dim _CodigoProducto As String = Txt_BuscaXProducto.Text.Trim.Replace("'", "''")
+            Sb_Agregar_Filtro(_Filtro, "KOPRCT = '" & _CodigoProducto & "'")
+        End If
+
+        _Tbl.DefaultView.RowFilter = _Filtro
+        Sb_Aplicar_Colores_Filas(_Grilla)
+
+        If _Grilla.Rows.Count Then
+
+            _Grilla.ClearSelection()
+            _Grilla.Rows(0).Selected = True
+
+            If _Grilla.Columns.Contains("KOPRCT") Then
+                _Grilla.CurrentCell = _Grilla.Rows(0).Cells("KOPRCT")
+            Else
+                _Grilla.CurrentCell = _Grilla.Rows(0).Cells(0)
+            End If
+
+            Sb_Actualizar_Grilla_GRC_Ant(_Grilla)
+
+        Else
+            Grilla_GRC_Ant.DataSource = Nothing
+        End If
+
+    End Sub
+
+    Private Sub Cmb_GRCvsUltGRC_SelectedValueChanged(sender As Object, e As EventArgs) Handles Cmb_GRCvsUltGRC.SelectedValueChanged
+        Sb_Aplicar_Filtros()
+    End Sub
+
+    Private Sub Cmb_Margen_SelectedValueChanged(sender As Object, e As EventArgs) Handles Cmb_Margen.SelectedValueChanged
+        Sb_Aplicar_Filtros()
+    End Sub
+
+    Private Sub Sb_Aplicar_Colores_Filas(_Grilla As DataGridView)
+
+        If IsNothing(_Grilla) Then
+            Return
+        End If
+
+        If IsNothing(_Grilla.DataSource) Then
+            Return
+        End If
+
+        If Not _Grilla.Columns.Contains("Dif_UCCPorc") Then
+            Return
+        End If
+
+        For Each _Fila As DataGridViewRow In _Grilla.Rows
+
+            Dim _Dif_UCCPorc As Double = NuloPorNro(_Fila.Cells("Dif_UCCPorc").Value, 0) * 100
+
+            _Fila.DefaultCellStyle.BackColor = Color.White
+            _Fila.DefaultCellStyle.ForeColor = Color.Black
+
+            If _Dif_UCCPorc >= 5 Then
+                _Fila.DefaultCellStyle.ForeColor = Rojo
+            ElseIf _Dif_UCCPorc <= -5 Then
+                _Fila.DefaultCellStyle.ForeColor = Verde
+            End If
+
+        Next
+
+    End Sub
+
+
+    Private Sub Btn_Filtro_Productos_Click(sender As Object, e As EventArgs) Handles Btn_Filtro_Productos.Click
+
+        Dim Fm As New Frm_Filtro_Especial_Productos
+
+        Dim _Sql_Filtro_Condicion_Extra As String
+
+        Fm.Pro_Filtro_Extra_Productos = _Sql_Filtro_Condicion_Extra
+        Fm.Pro_Filtro_Extra_Marcas = $"And KOMR In (Select MRPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 {_Sql_Filtro_Condicion_Extra}))"
+        Fm.Pro_Filtro_Extra_Super_Familias = $"And KOFM In (Select FMPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 {_Sql_Filtro_Condicion_Extra}))"
+        Fm.Pro_Filtro_Extra_Rubro_Productos = $"And KORU In (Select RUPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 {_Sql_Filtro_Condicion_Extra}))"
+        Fm.Pro_Filtro_Extra_Clalibpr = $"And KOCARAC In (Select CLALIBPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 {_Sql_Filtro_Condicion_Extra}))"
+        Fm.Pro_Filtro_Extra_Zonas = $"And KOZO In (Select ZONAPR From MAEPR Where KOPR In (Select KOPR From MAEPR Where 1>0 {_Sql_Filtro_Condicion_Extra}))"
+        Fm.Pro_Filtro_Extra_JefesProducto = $"And INACTIVO = 0 And KOFU In (Select KOFU From TABFUEM Where EMPRESA = '{Mod_Empresa}')"
+
+        Fm.Pro_Filtro_Productos_Todos = _Filtro_Productos_Todos
+        Fm.Pro_Filtro_Clalibpr_Todas = _Filtro_Clalibpr_Todas
+        Fm.Pro_Filtro_Marcas_Todas = _Filtro_Marcas_Todas
+        Fm.Pro_Filtro_Rubro_Todas = _Filtro_Rubro_Todas
+        Fm.Pro_Filtro_Super_Familias_Todas = _Filtro_Super_Familias_Todas
+        Fm.Pro_Filtro_Zonas_Todas = _Filtro_Zonas_Todas
+        Fm.Pro_Filtro_Jefes_Todos = _Filtro_Jefes_Todos
+        Fm.Pro_Filtro_Bakapp_Todas = _Filtro_Bakapp_Todas
+
+        Fm.Pro_Tbl_Filtro_Productos = _Tbl_Filtro_Productos
+        Fm.Pro_Tbl_Filtro_Clalibpr = _Tbl_Filtro_Clalibpr
+        Fm.Pro_Tbl_Filtro_Marcas = _Tbl_Filtro_Marcas
+        Fm.Pro_Tbl_Filtro_Rubro = _Tbl_Filtro_Rubro
+        Fm.Pro_Tbl_Filtro_Super_Familias = _Tbl_Filtro_Super_Familias
+        Fm.Pro_Tbl_Filtro_Jefes = _Tbl_Filtro_Jefes
+        Fm.Pro_Tbl_Filtro_Zonas = _Tbl_Filtro_Zonas
+
+        Fm.BuscarSpfmfmsubfm = True
+        Fm.Ls_SelSuperFamilias = _Ls_SelSuperFamilias
+        Fm.Ls_SelFamilias = _Ls_SelFamilias
+        Fm.Ls_SelSubFamilias = _Ls_SelSubFamilias
+
+        Fm.Ls_SelArbol_Asociaciones = _Ls_SelArbol_Asociaciones
+
+        Fm.ShowDialog(Me)
+
+        If Fm.DialogResult <> DialogResult.OK Then
+            Fm.Dispose()
+            Return
+        End If
+
+        _Tbl_Filtro_Productos = Fm.Pro_Tbl_Filtro_Productos
+        _Tbl_Filtro_Clalibpr = Fm.Pro_Tbl_Filtro_Clalibpr
+        _Tbl_Filtro_Marcas = Fm.Pro_Tbl_Filtro_Marcas
+        _Tbl_Filtro_Rubro = Fm.Pro_Tbl_Filtro_Rubro
+        _Tbl_Filtro_Super_Familias = Fm.Pro_Tbl_Filtro_Super_Familias
+        _Tbl_Filtro_Jefes = Fm.Pro_Tbl_Filtro_Jefes
+        _Tbl_Filtro_Zonas = Fm.Pro_Tbl_Filtro_Zonas
+
+        _Filtro_Productos_Todos = Fm.Pro_Filtro_Productos_Todos
+        _Filtro_Clalibpr_Todas = Fm.Pro_Filtro_Clalibpr_Todas
+        _Filtro_Marcas_Todas = Fm.Pro_Filtro_Marcas_Todas
+        _Filtro_Rubro_Todas = Fm.Pro_Filtro_Rubro_Todas
+        _Filtro_Super_Familias_Todas = Fm.Pro_Filtro_Super_Familias_Todas
+        _Filtro_Zonas_Todas = Fm.Pro_Filtro_Zonas_Todas
+        _Filtro_Jefes_Todos = Fm.Pro_Filtro_Jefes_Todos
+        _Filtro_Bakapp_Todas = Fm.Pro_Filtro_Bakapp_Todas
+
+        _Ls_SelSuperFamilias = Fm.Ls_SelSuperFamilias
+        _Ls_SelFamilias = Fm.Ls_SelFamilias
+        _Ls_SelSubFamilias = Fm.Ls_SelSubFamilias
+
+        _Ls_SelArbol_Asociaciones = Fm.Ls_SelArbol_Asociaciones
+
+        Fm.Dispose()
+
+        '---- FILTROS -------------------------------
+
+        Dim _Filtro_Productos = String.Empty
+        Dim _Filtro_Rubros = String.Empty
+        Dim _Filtro_Marcas = String.Empty
+        Dim _Filtro_Zonas = String.Empty
+        Dim _Filtro_SuperFamilias = String.Empty
+        Dim _Filtro_ClasLibre = String.Empty
+        Dim _Filtro_Bodega = String.Empty
+        Dim _Filtro_Jefes = String.Empty
+        Dim _Filtro_Bakapp = String.Empty
+
+
+        If _Filtro_Productos_Todos Then
+
+            If Not _Filtro_Rubro_Todas Then
+                _Filtro_Rubros = Generar_Filtro_IN(_Tbl_Filtro_Rubro, "Chk", "Codigo", False, True, "'")
+                _Filtro_Rubros = "And Ddo.KOPRCT IN (Select KOPR From MAEPR Where RUPR In " & _Filtro_Rubros & ")"
+            End If
+
+            If Not _Filtro_Marcas_Todas Then
+                _Filtro_Marcas = Generar_Filtro_IN(_Tbl_Filtro_Marcas, "Chk", "Codigo", False, True, "'")
+                _Filtro_Marcas = "And Ddo.KOPRCT IN (Select KOPR From MAEPR Where MRPR In " & _Filtro_Marcas & ")"
+            End If
+
+            If Not _Filtro_Super_Familias_Todas Then
+
+                Dim _Fl_SuperFamilias As String = String.Empty
+                Dim _Fl_Familias As String = String.Empty
+                Dim _Fl_SubFamilias As String = String.Empty
+
+                For Each _Sfm As SelSubFamilias In _Ls_SelSubFamilias
+                    _Fl_SubFamilias += "(FMPR = '" & _Sfm.Kofm & "' And PFPR = '" & _Sfm.Kopf & "' And HFPR = '" & _Sfm.Kohf & "');"
+                Next
+                _Fl_SubFamilias = _Fl_SubFamilias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                For Each _Fm As SelFamilias In _Ls_SelFamilias
+                    If _Fl_SubFamilias.Contains("FMPR = '" & _Fm.Kofm & "'") And _Fl_SubFamilias.Contains("PFPR = '" & _Fm.Kopf & "'") Then
+                        Continue For
+                    End If
+                    _Fl_Familias += "(FMPR = '" & _Fm.Kofm & "' And PFPR = '" & _Fm.Kopf & "');"
+                Next
+                _Fl_Familias = _Fl_Familias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                For Each _Spfm As SelSuperFamilias In _Ls_SelSuperFamilias
+                    If _Fl_SubFamilias.Contains("FMPR = '" & _Spfm.Kofm & "'") Or _Fl_Familias.Contains("FMPR = '" & _Spfm.Kofm & "'") Then
+                        Continue For
+                    End If
+                    _Fl_SuperFamilias += "(FMPR = '" & _Spfm.Kofm & "');"
+                Next
+                _Fl_SuperFamilias = _Fl_SuperFamilias.TrimEnd(";").ToString.Replace(";", " Or ")
+
+                If Not String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                    _Filtro_SuperFamilias = "And Ddo.KOPRCT IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & ")"
+                End If
+
+                If Not String.IsNullOrWhiteSpace(_Fl_Familias) Then
+                    If String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                        _Filtro_SuperFamilias = "And Ddo.KOPRCT IN (Select KOPR From MAEPR Where " & _Fl_Familias & ")"
+                    Else
+                        _Filtro_SuperFamilias = "And Ddo.KOPRCT IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & " Or " & _Fl_Familias & ")"
+                    End If
+                End If
+
+                If Not String.IsNullOrWhiteSpace(_Fl_SubFamilias) Then
+                    If String.IsNullOrWhiteSpace(_Fl_Familias) Then
+                        _Filtro_SuperFamilias = "And Ddo.KOPRCT IN (Select KOPR From MAEPR Where " & _Fl_SubFamilias & ")"
+                    Else
+
+                        If String.IsNullOrWhiteSpace(_Fl_SuperFamilias) Then
+                            _Filtro_SuperFamilias = "And Ddo.KOPRCT IN (Select KOPR From MAEPR Where " & _Fl_Familias & " Or " & _Fl_SubFamilias & ")"
+                        Else
+                            _Filtro_SuperFamilias = "And Ddo.KOPRCT IN (Select KOPR From MAEPR Where " & _Fl_SuperFamilias & " Or " & _Fl_Familias & " Or " & _Fl_SubFamilias & ")"
+                        End If
+
+                    End If
+                End If
+
+                '_Filtro_SuperFamilias = Generar_Filtro_IN(_Tbl_Filtro_Super_Familias, "Chk", "Codigo", False, True, "'")
+                '_Filtro_SuperFamilias = "And KOPR IN (Select KOPR From MAEPR Where FMPR In " & _Filtro_SuperFamilias & ")"
+
+            End If
+
+            If _Filtro_Bakapp_Todas Then
+                _Filtro_Bakapp = String.Empty
+            Else
+
+                For Each _Asoc In _Ls_SelArbol_Asociaciones
+                    If String.IsNullOrWhiteSpace(_Filtro_Bakapp) Then
+                        _Filtro_Bakapp = _Asoc.Codigo_Nodo
+                    Else
+                        _Filtro_Bakapp &= "," & _Asoc.Codigo_Nodo
+                    End If
+                Next
+
+                If Not String.IsNullOrWhiteSpace(_Filtro_Bakapp) Then
+                    _Filtro_Bakapp = "And Ddo.KOPRCT IN (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo In (" & _Filtro_Bakapp & "))"
+                End If
+
+            End If
+
+            If Not _Filtro_Clalibpr_Todas Then
+                _Filtro_ClasLibre = Generar_Filtro_IN(_Tbl_Filtro_Clalibpr, "Chk", "Codigo", False, True, "'")
+                _Filtro_ClasLibre = "And Ddo.KOPRCT IN (Select KOPR From MAEPR Where CLALIBPR In " & _Filtro_ClasLibre & ")"
+            End If
+
+            If Not _Filtro_Zonas_Todas Then
+                _Filtro_Zonas = Generar_Filtro_IN(_Tbl_Filtro_Zonas, "Chk", "Codigo", False, True, "'")
+                _Filtro_Zonas = "And Ddo.KOPRCT IN (Select KOPR From MAEPR Where ZONAPR In " & _Filtro_Zonas & ")"
+            End If
+
+            If Not _Filtro_Jefes_Todos Then
+                _Filtro_Jefes = Generar_Filtro_IN(_Tbl_Filtro_Jefes, "Chk", "Codigo", False, True, "'")
+                _Filtro_Jefes = "And Ddo.KOPRCT IN (Select KOPR From MAEPR Where KOFUPR In " & _Filtro_Jefes & ")"
+            End If
+
+        Else
+
+            If IsNothing(_Tbl_Filtro_Productos) Then
+                Return
+            End If
+
+            _Filtro_Productos = Generar_Filtro_IN(_Tbl_Filtro_Productos, "Chk", "Codigo", False, True, "'")
+            _Filtro_Productos = "And Ddo.KOPRCT IN " & _Filtro_Productos
+
+        End If
+
+        '---------------------------
+
+        _Sql_FiltroProductos = _Filtro_Productos & vbCrLf &
+                        _Filtro_Bodega & vbCrLf &
+                        _Filtro_ClasLibre & vbCrLf &
+                        _Filtro_Marcas & vbCrLf &
+                        _Filtro_Rubros & vbCrLf &
+                        _Filtro_SuperFamilias & vbCrLf &
+                        _Filtro_Zonas & vbCrLf &
+                        _Filtro_Jefes & vbCrLf &
+                        _Filtro_Bakapp
+
+        '_Tbl_Productos_Filtrados = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        Sb_Actualizar_Imagen_Btn_Filtro_Productos()
+
+        Call TabControl1_SelectedIndexChanged(Nothing, Nothing)
+
+    End Sub
+
+    Private Sub Txt_BuscaXProducto_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_BuscaXProducto.ButtonCustomClick
+
+        Txt_BuscaXProducto.Enabled = False
+
+        Dim _RowProducto As DataRow = Fx_Buscar_Producto("")
+
+        If Not IsNothing(_RowProducto) Then
+
+            Txt_BuscaXProducto.ButtonCustom.Visible = False
+            Txt_BuscaXProducto.ButtonCustom2.Visible = True
+
+            Txt_BuscaXProducto.Text = _RowProducto.Item("KOPR").ToString.Trim
+            Sb_Aplicar_Filtros()
+
+            If Not CBool(Fx_Grilla_Activa().RowCount) Then
+                MessageBoxEx.Show(Me, "No se encontraron registros", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            End If
+
+        End If
+
+        Txt_BuscaXProducto.Enabled = True
+
+    End Sub
+
+    Private Sub Txt_BuscaXProducto_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_BuscaXProducto.ButtonCustom2Click
+
+        If String.IsNullOrWhiteSpace(Txt_BuscaXProducto.Text) Then
+            Return
+        End If
+
+        Txt_BuscaXProducto.Text = String.Empty
+        Txt_BuscaXProducto.ButtonCustom2.Visible = False
+        Txt_BuscaXProducto.ButtonCustom.Visible = True
+
+        Sb_Aplicar_Filtros()
+
+    End Sub
+
+    Function Fx_Buscar_Producto(_Codigo As String) As DataRow
+
+        Dim Fm As New Frm_BkpPostBusquedaEspecial_Mt
+        Fm.Pro_CodEntidad = String.Empty
+        Fm.Pro_CodSucEntidad = String.Empty
+        Fm.Pro_Tipo_Lista = "P"
+
+        Fm.Pro_Sucursal_Busqueda = Mod_Sucursal
+        Fm.Pro_Bodega_Busqueda = Mod_Bodega
+        Fm.Txtdescripcion.Text = _Codigo
+        Fm.Pro_Mostrar_Info = True
+        Fm.Pro_Actualizar_Precios = True
+
+        Codigo_abuscar = String.Empty
+        Fm.Pro_Mostrar_Clasificaciones = True
+        Fm.Pro_Mostrar_Imagenes = True
+
+        Fm.Pro_Filtro_Sql_Extra = "And TIPR <> 'SSN'"
+
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Seleccionado Then
+            Return Fm.Pro_RowProducto
+        Else
+            Return Nothing
+        End If
+
+    End Function
+
+    Private Sub Grilla_Sorted(sender As Object, e As EventArgs) Handles Grilla.Sorted
+
+        Dim _Grilla As DataGridView = DirectCast(sender, DataGridView)
+
+        Sb_Aplicar_Colores_Filas(_Grilla)
+
+        If _Grilla.Rows.Count Then
+            Sb_Actualizar_Grilla_GRC_Ant(_Grilla)
+        Else
+            Grilla_GRC_Ant.DataSource = Nothing
+        End If
+
+    End Sub
+
+    Private Function Fx_Hay_Filtro_Productos() As Boolean
+
+        Return Not (_Filtro_Productos_Todos And
+                    _Filtro_Clalibpr_Todas And
+                    _Filtro_Marcas_Todas And
+                    _Filtro_Rubro_Todas And
+                    _Filtro_Super_Familias_Todas And
+                    _Filtro_Zonas_Todas And
+                    _Filtro_Jefes_Todos And
+                    _Filtro_Bakapp_Todas)
+
+    End Function
+
+    Private Sub Sb_Actualizar_Imagen_Btn_Filtro_Productos()
+
+        If Fx_Hay_Filtro_Productos() Then
+            Btn_Filtro_Productos.Image = _Imagen_Btn_Filtro_Productos
+            Btn_Filtro_Productos.ImageAlt = _ImagenAlt_Btn_Filtro_Productos
+            Btn_Filtro_Productos.Text = _Texto_Btn_Filtro_Productos & " (*)"
+        Else
+            Btn_Filtro_Productos.Image = Nothing
+            Btn_Filtro_Productos.ImageAlt = Nothing
+            Btn_Filtro_Productos.Text = _Texto_Btn_Filtro_Productos
+        End If
+
     End Sub
 
 End Class

@@ -836,10 +836,34 @@ Public Class Frm_Stmp_IncNVVPicking
                                                          _CodFuncionario_Paga)
 
                 If _Mensaje_Stem.EsCorrecto Then
+
                     If RutEmpresa = "77988832-0" Then
-                        Fx_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo)
+
+                        Dim _Mensaje_CBod As New LsValiciones.Mensajes
+
+                        _Mensaje_CBod = Fx_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo)
+
+                        If Not _Mensaje_CBod.EsCorrecto Then
+
+                            Dim _Id_Enc As Integer = _Mensaje_Stem.Id
+                            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stmp_Enc Where Id = " & _Id_Enc & vbCrLf &
+                                           "Delete " & _Global_BaseBk & "Zw_Stmp_Det Where Id_Enc = " & _Id_Enc
+                            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                            _Lista.Add(_Mensaje_CBod)
+                            Continue For
+
+                        End If
+
                     End If
+
                 End If
+
+                'If _Mensaje_Stem.EsCorrecto Then
+                '    If RutEmpresa = "77988832-0" Then
+                '        Fx_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo)
+                '    End If
+                'End If
 
                 _Lista.Add(_Mensaje_Stem)
 
@@ -854,6 +878,8 @@ Public Class Frm_Stmp_IncNVVPicking
     Function Fx_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo As Integer) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
+
+        _Mensaje.Mensaje = "Error al cambiar de empresa, intentelo nuevamente"
 
         Try
 
@@ -871,17 +897,11 @@ Public Class Frm_Stmp_IncNVVPicking
                 _Bodega = _Row_Maeddo.Item("Bodega")
 
                 If String.IsNullOrEmpty(_Empresa) Or String.IsNullOrEmpty(_Sucursal) Or String.IsNullOrEmpty(_Bodega) Then
-                    _Mensaje.EsCorrecto = False
-                    _Mensaje.Mensaje = "No se pudo obtener la empresa, sucursal o bodega de la nota de venta"
-                    Return _Mensaje
+                    Throw New ApplicationException("No se pudo obtener la empresa, sucursal o bodega de la nota de venta")
                 End If
 
             Else
-
-                _Mensaje.EsCorrecto = False
-                _Mensaje.Mensaje = "No se encontró información de la nota de venta"
-                Return _Mensaje
-
+                Throw New ApplicationException("No se encontró información de la nota de venta")
             End If
 
             Dim _Empresa_Ori As String = _Empresa
@@ -890,16 +910,13 @@ Public Class Frm_Stmp_IncNVVPicking
 
             Dim EmpSucBod As String = _Empresa & ";" & _Sucursal & ";" & _Bodega
 
-
             Consulta_sql = "Select Tabla, DescripcionTabla, CodigoTabla, NombreTabla" & vbCrLf &
                            "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
                            "Where Tabla = 'SEA2MEATGARDEN' And NombreTabla = '" & EmpSucBod & "'"
             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If IsNothing(_Row) Then
-                _Mensaje.EsCorrecto = False
-                _Mensaje.Mensaje = "No se encontró la caracterización para la empresa, sucursal y bodega: " & EmpSucBod
-                Return _Mensaje
+                Throw New ApplicationException("No se encontró la caracterización para la empresa, sucursal y bodega: " & EmpSucBod)
             End If
 
             'Sb_ClonarNVV(_Idmaeedo)
@@ -909,22 +926,6 @@ Public Class Frm_Stmp_IncNVVPicking
             Dim _Empresa_Dest = _ESB(0).Trim
             Dim _Sucursal_Dest = _ESB(1).Trim
             Dim _Bodega_Dest = _ESB(2).Trim
-
-            '            Consulta_sql = "Declare @Idmaeedo Int = " & _Idmaeedo & vbCrLf &
-            '                           "Update MAEEDO Set EMPRESA = '" & _Empresa_Dest & "',SUDO = '" & _Sucursal_Dest & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
-            '                           "Update MAEDDO Set EMPRESA = '" & _Empresa_Dest & "',SULIDO = '" & _Sucursal_Dest & "',BOSULIDO = '" & _Bodega_Dest & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
-            '                           "Update " & _Global_BaseBk & "Zw_Despachos Set Empresa = '" & _Empresa_Dest & "',Sucursal = '" & _Sucursal_Dest & "',Bodega = '" & _Bodega_Dest &
-            '                                "' Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))" & vbCrLf &
-            '                           "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Empresa = '" & _Empresa_Dest & "',Sucursal = '" & _Sucursal_Dest & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
-            '                           "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa_Ori = Empresa Where Idmaeedo = @Idmaeedo" & vbCrLf &
-            '                           "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa = '" & _Empresa_Dest & "' Where Idmaeedo = @Idmaeedo"
-
-            '            Consulta_sql = $"
-            '"
-
-
-            '            If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False) Then
-
 
             Consulta_sql = $"
 
@@ -997,33 +998,21 @@ WHERE
     AND M.KOBO IN ('{_Bodega_Ori}','{_Bodega_Dest}');
 
 "
-            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False)
+            If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False) Then
+                _Mensaje.Mensaje = "Error al cambiar de empresa"
+                Throw New ApplicationException(_Sql.Pro_Error)
+            End If
 
-            '_Sql.Ej_consulta_IDU(Consulta_sql)
-
-            'Consulta_sql = "Select KOPRCT As Codigo From MAEDDO Where IDMAEEDO = " & _Idmaeedo
-            'Dim _TblDetalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
-
-            'Dim _Filtro_Productos As String = Generar_Filtro_IN(_TblDetalle, "Consolidar_Stock", "Codigo", False, False, "'")
-
-            'If _Filtro_Productos <> "()" Then
-
-            '    Dim Fm As New Frm_Consolidacion_Stock_PP(_Filtro_Productos)
-            '    Fm.ConsolidarTodasLasEmpresas = True
-            '    Fm.Pro_Ejecutar_Automaticamente = True
-            '    Fm.BtnCancelar.Visible = False
-            '    Fm.Chk_Reservar_Ventas_Pendientes_Bakapp.Enabled = False
-            '    Fm.BtnProcesar.Enabled = False
-            '    Fm.ShowDialog(Me)
-            '    Fm.Dispose()
-
-            'End If
-
-            'End If
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Cambio de empresa en documento."
+            _Mensaje.Detalle = "Documento cambiado a empresa 01 correctamente"
 
         Catch ex As Exception
-
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = ex.Message
         End Try
+
+        Return _Mensaje
 
     End Function
 
