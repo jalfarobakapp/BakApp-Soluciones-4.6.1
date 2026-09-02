@@ -20928,7 +20928,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                                          Optional _UsaCiaSeguro As Boolean = False,
                                                          Optional _CodEntidad_Cia As String = "",
                                                          Optional _CodSucEntidad_Cia As String = "",
-                                                         Optional Id_Enc_InterStock As Integer = 0)
+                                                         Optional Id_Enc_InterStock As Integer = 0,
+                                                         Optional EsAutomatico As Boolean = False)
 
         Try
 
@@ -21896,6 +21897,11 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                         _New_Fila.Cells("CantUd1").Value = _CantUd1_Dori
                         _New_Fila.Cells("CantUd2").Value = _CantUd2_Dori
 
+                        If EsAutomatico Then
+                            _New_Fila.Cells("CantUd1").Value = _Fila.Item("Cantidad")
+                            _New_Fila.Cells("CantUd2").Value = _Fila.Item("Cantidad2")
+                        End If
+
                         Dim _Nmarca As String = _RowProducto.Item("NMARCA")
 
                         If _Nmarca = "¡" Or _New_Fila.Cells("Rtu").Value <> _Fila.Item("RLUDPR") Then
@@ -21905,6 +21911,11 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
                             _New_Fila.Cells("CantUd1").Value = _CantUd1_Dori
                             _New_Fila.Cells("CantUd2").Value = _CantUd2_Dori
+
+                            If EsAutomatico Then
+                                _New_Fila.Cells("CantUd1").Value = _Fila.Item("Cantidad")
+                                _New_Fila.Cells("CantUd2").Value = _Fila.Item("Cantidad2")
+                            End If
 
                         End If
 

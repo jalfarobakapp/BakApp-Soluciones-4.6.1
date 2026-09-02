@@ -28,7 +28,8 @@ SELECT DISTINCT
        ,Ddo.UD02PR
        ,Ddo.NOKOPR
        ,Ddo.PPPRNE
-	   ,ROUND(Ddo.PPPRNE/Ddo.RLUDPR,2) As 'Costo_UN'
+	   --,ROUND(Ddo.PPPRNE/Ddo.RLUDPR,2) As 'Costo_UN'
+       ,Ddo.PPPRNERE1 As 'Costo_UN'
        ,Ddo.PPPRNERE1
        ,Ddo.PPPRNERE2
        ,Mpen.PPUL01
@@ -60,7 +61,7 @@ SELECT DISTINCT
        ,ISNULL(Mp.ZONAPR,'')	As 'ZONAPR'
 	   ,ISNULL(Tz.NOKOCARAC,'')	As 'NOKOZOPR'
 	   ,ISNULL(Mp.CLALIBPR,'')	As 'CLALIBPR'
-	   ,ISNULL(Tc.NOKOCARAC,'')	As 'NOKOCARAC'
+	   ,ISNULL(Tc.NOKOCARAC,'')	As 'NOCLALIBPR'
 INTO #Tbl_Paso2
 FROM MAEDDO Ddo
     Left Join MAEEN ON Ddo.ENDO = MAEEN.KOEN AND Ddo.SUENDO = MAEEN.SUEN
@@ -191,7 +192,8 @@ CROSS APPLY (
         Ddo.CAPRCO1			AS 'CAPRCO1_Ant',
         Ddo.CAPRCO2			AS 'CAPRCO2_Ant',
         Ddo.PPPRNE			AS 'PPPRNE_Ant',
-		ROUND(Ddo.PPPRNE/Ddo.RLUDPR,2) As 'Costo_UN_Ant',
+		--ROUND(Ddo.PPPRNE/Ddo.RLUDPR,2) As 'Costo_UN_Ant',
+		Ddo.PPPRNERE1       As 'Costo_UN_Ant',
         Ddo.PPPRNERE1		AS 'PPPRNERE1_Ant',
         Ddo.PPPRNERE2		AS 'PPPRNERE2_Ant',
         Mpen.PPUL01			AS 'PPUL01_Ant',

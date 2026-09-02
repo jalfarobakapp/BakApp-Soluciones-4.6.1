@@ -11059,20 +11059,20 @@ LEFT JOIN MAEEN AS E
 
     Private Sub Btn_ListaLC_Click(sender As Object, e As EventArgs) Handles Btn_ListaLC.Click
 
-        If Fx_Tiene_Permiso(Me, "Pre0002") Then
-
-            Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
-
-            Dim _Codigo As String = _Fila.Cells("Codigo").Value
-
-            Dim Fm As New Frm_PreciosLC_Mt01
-            Fm.Sb_Cargar_Producto(_Codigo)
-            Fm.Txtcodigo.Text = _Codigo
-            Fm.Cerrar_Al_Grabar = True
-            Fm.ShowDialog(Me)
-            Fm.Dispose()
-
+        If Not Fx_Tiene_Permiso(Me, "Pre0002") Then
+            Return
         End If
+
+        Dim _Fila As DataGridViewRow = Fm_Hijo.Grilla.Rows(Fm_Hijo.Grilla.CurrentRow.Index)
+
+        Dim _Codigo As String = _Fila.Cells("Codigo").Value
+
+        Dim Fm As New Frm_PreciosLC_Mt01
+        Fm.Sb_Cargar_Producto(_Codigo)
+        Fm.Txtcodigo.Text = _Codigo
+        Fm.Cerrar_Al_Grabar = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 

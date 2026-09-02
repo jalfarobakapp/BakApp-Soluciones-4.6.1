@@ -22,16 +22,16 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle21 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_PreciosLC_InfUltCompras_Mt))
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle22 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle23 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle24 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle25 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle26 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle27 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Grilla_GRC_Ant = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
@@ -52,11 +52,16 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.TabControl1 = New DevComponents.DotNetBar.SuperTabControl()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ListaLC = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_OfertasDinamicas = New DevComponents.DotNetBar.ButtonItem()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GrillaProdActualizados = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.Btn_Ver_Documento = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Grilla_GRC_Ant, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -66,6 +71,7 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
         CType(Me.TabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TabControl1.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel2.SuspendLayout()
         CType(Me.GrillaProdActualizados, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -76,37 +82,37 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
         Me.Grilla_GRC_Ant.AllowUserToAddRows = False
         Me.Grilla_GRC_Ant.AllowUserToDeleteRows = False
         Me.Grilla_GRC_Ant.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_GRC_Ant.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
+        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle19.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle19.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle19.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_GRC_Ant.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle19
         Me.Grilla_GRC_Ant.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_GRC_Ant.DefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle20.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle20.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle20.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle20.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_GRC_Ant.DefaultCellStyle = DataGridViewCellStyle20
         Me.Grilla_GRC_Ant.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_GRC_Ant.EnableHeadersVisualStyles = False
         Me.Grilla_GRC_Ant.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_GRC_Ant.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_GRC_Ant.Name = "Grilla_GRC_Ant"
         Me.Grilla_GRC_Ant.ReadOnly = True
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_GRC_Ant.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle21.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle21.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle21.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle21.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle21.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_GRC_Ant.RowHeadersDefaultCellStyle = DataGridViewCellStyle21
         Me.Grilla_GRC_Ant.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.Grilla_GRC_Ant.Size = New System.Drawing.Size(1034, 77)
         Me.Grilla_GRC_Ant.StandardTab = True
@@ -527,6 +533,7 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
         '
         'SuperTabControlPanel1
         '
+        Me.SuperTabControlPanel1.Controls.Add(Me.ContextMenuBar1)
         Me.SuperTabControlPanel1.Controls.Add(Me.Grilla)
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
@@ -535,42 +542,80 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
         Me.SuperTabControlPanel1.TabIndex = 1
         Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
         '
+        'ContextMenuBar1
+        '
+        Me.ContextMenuBar1.AntiAlias = True
+        Me.ContextMenuBar1.DockSide = DevComponents.DotNetBar.eDockSide.Document
+        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(92, 52)
+        Me.ContextMenuBar1.Name = "ContextMenuBar1"
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(319, 25)
+        Me.ContextMenuBar1.Stretch = True
+        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ContextMenuBar1.TabIndex = 31
+        Me.ContextMenuBar1.TabStop = False
+        Me.ContextMenuBar1.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual
+        '
+        Me.Menu_Contextual.AutoExpandOnClick = True
+        Me.Menu_Contextual.Name = "Menu_Contextual"
+        Me.Menu_Contextual.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Ver_Documento, Me.Btn_ListaLC, Me.Btn_OfertasDinamicas})
+        Me.Menu_Contextual.Text = "Opciones"
+        '
+        'Btn_ListaLC
+        '
+        Me.Btn_ListaLC.Image = CType(resources.GetObject("Btn_ListaLC.Image"), System.Drawing.Image)
+        Me.Btn_ListaLC.ImageAlt = CType(resources.GetObject("Btn_ListaLC.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ListaLC.Name = "Btn_ListaLC"
+        Me.Btn_ListaLC.Text = "Lista LC (Mantención de precios LC)"
+        Me.Btn_ListaLC.Visible = False
+        '
+        'Btn_OfertasDinamicas
+        '
+        Me.Btn_OfertasDinamicas.Image = CType(resources.GetObject("Btn_OfertasDinamicas.Image"), System.Drawing.Image)
+        Me.Btn_OfertasDinamicas.ImageAlt = CType(resources.GetObject("Btn_OfertasDinamicas.ImageAlt"), System.Drawing.Image)
+        Me.Btn_OfertasDinamicas.Name = "Btn_OfertasDinamicas"
+        Me.Btn_OfertasDinamicas.Text = "Control de ofertas dinámicas"
+        Me.Btn_OfertasDinamicas.Visible = False
+        '
         'Grilla
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.AllowUserToDeleteRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle13.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle13.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
+        DataGridViewCellStyle22.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle22.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle22.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle22.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle22.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle22.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle22.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle22
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle14.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle14
+        DataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle23.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle23.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle23.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle23.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle23
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
         Me.Grilla.ReadOnly = True
-        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle15.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle15
+        DataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle24.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle24.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle24.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle24
         Me.Grilla.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.Grilla.Size = New System.Drawing.Size(1038, 354)
         Me.Grilla.StandardTab = True
@@ -598,37 +643,37 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
         Me.GrillaProdActualizados.AllowUserToAddRows = False
         Me.GrillaProdActualizados.AllowUserToDeleteRows = False
         Me.GrillaProdActualizados.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle16.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaProdActualizados.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle25.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle25.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle25.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle25.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle25.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle25.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle25.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaProdActualizados.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle25
         Me.GrillaProdActualizados.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle17.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle17.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GrillaProdActualizados.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle26.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle26.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle26.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle26.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GrillaProdActualizados.DefaultCellStyle = DataGridViewCellStyle26
         Me.GrillaProdActualizados.Dock = System.Windows.Forms.DockStyle.Fill
         Me.GrillaProdActualizados.EnableHeadersVisualStyles = False
         Me.GrillaProdActualizados.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.GrillaProdActualizados.Location = New System.Drawing.Point(0, 0)
         Me.GrillaProdActualizados.Name = "GrillaProdActualizados"
         Me.GrillaProdActualizados.ReadOnly = True
-        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle18.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle18.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaProdActualizados.RowHeadersDefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle27.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle27.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle27.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaProdActualizados.RowHeadersDefaultCellStyle = DataGridViewCellStyle27
         Me.GrillaProdActualizados.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.GrillaProdActualizados.Size = New System.Drawing.Size(1038, 381)
         Me.GrillaProdActualizados.StandardTab = True
@@ -640,6 +685,13 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
         Me.SuperTabItem2.GlobalItem = False
         Me.SuperTabItem2.Name = "SuperTabItem2"
         Me.SuperTabItem2.Text = "Productos actualizados hoy"
+        '
+        'Btn_Ver_Documento
+        '
+        Me.Btn_Ver_Documento.Image = CType(resources.GetObject("Btn_Ver_Documento.Image"), System.Drawing.Image)
+        Me.Btn_Ver_Documento.ImageAlt = CType(resources.GetObject("Btn_Ver_Documento.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ver_Documento.Name = "Btn_Ver_Documento"
+        Me.Btn_Ver_Documento.Text = "Ver documento"
         '
         'Frm_PreciosLC_InfUltCompras_Mt
         '
@@ -667,6 +719,7 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
         CType(Me.TabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TabControl1.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel2.ResumeLayout(False)
         CType(Me.GrillaProdActualizados, System.ComponentModel.ISupportInitialize).EndInit()
@@ -698,4 +751,9 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
     Friend WithEvents Btn_Filtro_Productos As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Txt_BuscaXProducto As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ListaLC As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_OfertasDinamicas As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Ver_Documento As DevComponents.DotNetBar.ButtonItem
 End Class
