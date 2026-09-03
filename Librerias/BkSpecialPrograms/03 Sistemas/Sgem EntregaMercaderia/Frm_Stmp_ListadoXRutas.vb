@@ -513,6 +513,7 @@ Public Class Frm_Stmp_ListadoXRutas
         End Try
 
         Dim Fm As New Frm_ImpMasiva(_TipoSeleccionado, _Ls_Idmaeedo)
+        Fm.OrdenarColumnas = False
         Fm.ShowDialog(Me)
         Fm.Dispose()
 

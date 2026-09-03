@@ -821,43 +821,61 @@ Public Class Frm_Stmp_IncNVVPicking
 
             If _Pickear Then
 
-                _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Idmaeedo,
-                                                         _Tido,
-                                                         _Nudo,
-                                                         _Facturar,
-                                                         _FechaParaFacturar,
-                                                         "R",
-                                                         False,
-                                                         _Empresa,
-                                                         _Sucursal,
-                                                         FUNCIONARIO,
-                                                         _PagarAuto,
-                                                         _Idmaedpce_Paga,
-                                                         _CodFuncionario_Paga)
+                If RutEmpresa = "77988832-0" Then
 
-                If _Mensaje_Stem.EsCorrecto Then
+                    _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo,
+                                         _Tido,
+                                         _Nudo,
+                                         _Facturar,
+                                         _FechaParaFacturar,
+                                         "R",
+                                         False,
+                                         _Empresa,
+                                         _Sucursal,
+                                         FUNCIONARIO,
+                                         _PagarAuto,
+                                         _Idmaedpce_Paga,
+                                         _CodFuncionario_Paga)
 
-                    If RutEmpresa = "77988832-0" Then
+                Else
 
-                        Dim _Mensaje_CBod As New LsValiciones.Mensajes
-
-                        _Mensaje_CBod = Fx_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo)
-
-                        If Not _Mensaje_CBod.EsCorrecto Then
-
-                            Dim _Id_Enc As Integer = _Mensaje_Stem.Id
-                            Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stmp_Enc Where Id = " & _Id_Enc & vbCrLf &
-                                           "Delete " & _Global_BaseBk & "Zw_Stmp_Det Where Id_Enc = " & _Id_Enc
-                            _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                            _Lista.Add(_Mensaje_CBod)
-                            Continue For
-
-                        End If
-
-                    End If
+                    _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Idmaeedo,
+                                         _Tido,
+                                         _Nudo,
+                                         _Facturar,
+                                         _FechaParaFacturar,
+                                         "R",
+                                         False,
+                                         _Empresa,
+                                         _Sucursal,
+                                         FUNCIONARIO,
+                                         _PagarAuto,
+                                         _Idmaedpce_Paga,
+                                         _CodFuncionario_Paga)
 
                 End If
+
+                'If _Mensaje_Stem.EsCorrecto Then
+
+                '    If RutEmpresa = "77988832-0" Then
+
+                '        'Dim _Mensaje_CBod As New LsValiciones.Mensajes
+
+                '        '_Mensaje_CBod = Fx_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo)
+
+                '        'If Not _Mensaje_CBod.EsCorrecto Then
+
+                '        '    Dim _Id_Enc As Integer = _Mensaje_Stem.Id
+                '        '    Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stmp_Enc Where Id = " & _Id_Enc & vbCrLf &
+                '        '                   "Delete " & _Global_BaseBk & "Zw_Stmp_Det Where Id_Enc = " & _Id_Enc
+                '        '    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                '        '    _Lista.Add(_Mensaje_CBod)
+                '        '    Continue For
+
+                '        'End If
+
+                '    End If
 
                 'If _Mensaje_Stem.EsCorrecto Then
                 '    If RutEmpresa = "77988832-0" Then

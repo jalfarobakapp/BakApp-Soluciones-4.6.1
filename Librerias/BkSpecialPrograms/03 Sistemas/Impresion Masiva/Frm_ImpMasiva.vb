@@ -19,6 +19,8 @@ Public Class Frm_ImpMasiva
     Private _ColumnaOrdenActual As String
     Private _OrdenAscendente As Boolean = True
 
+    Public Property OrdenarColumnas As Boolean
+
     Public Sub New(_Tido As String, _Ls_Idmaeedo As List(Of String))
 
         ' Esta llamada es exigida por el diseñador.
@@ -53,7 +55,9 @@ Public Class Frm_ImpMasiva
 
         AddHandler Grilla.ColumnHeaderMouseClick, AddressOf Grilla_ColumnHeaderMouseClick
 
-        Sb_OrdenarListaDocumentos("Tido")
+        If OrdenarColumnas Then
+            Sb_OrdenarListaDocumentos("Tido")
+        End If
 
     End Sub
 
