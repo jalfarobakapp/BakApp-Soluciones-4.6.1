@@ -147,7 +147,7 @@ Partial Class Frm_Sincronizador
         Me.Dtp_FechaRevision.MonthCalendar.TodayButtonVisible = True
         Me.Dtp_FechaRevision.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
         Me.Dtp_FechaRevision.Name = "Dtp_FechaRevision"
-        Me.Dtp_FechaRevision.Size = New System.Drawing.Size(87, 22)
+        Me.Dtp_FechaRevision.Size = New System.Drawing.Size(87, 26)
         Me.Dtp_FechaRevision.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Dtp_FechaRevision.TabIndex = 179
         Me.Dtp_FechaRevision.Value = New Date(2024, 4, 26, 16, 52, 36, 0)
@@ -177,6 +177,7 @@ Partial Class Frm_Sincronizador
         Me.Button2.TabIndex = 1
         Me.Button2.Text = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
+        Me.Button2.Visible = False
         '
         'Button1
         '
@@ -186,6 +187,7 @@ Partial Class Frm_Sincronizador
         Me.Button1.TabIndex = 0
         Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
+        Me.Button1.Visible = False
         '
         'Btn_Limpiar
         '
@@ -300,7 +302,7 @@ Partial Class Frm_Sincronizador
         '
         'Frm_Sincronizador
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(704, 476)
         Me.Controls.Add(Me.Switch_Sincronizacion)

@@ -144,5 +144,7 @@ Public Class Frm_Entidad
         Me.Close()
     End Sub
 
+    Private Sub Txt_EntidadCompra_TextChanged(sender As Object, e As EventArgs) Handles Txt_EntidadCompra.TextChanged
 
+    End Sub
 End Class

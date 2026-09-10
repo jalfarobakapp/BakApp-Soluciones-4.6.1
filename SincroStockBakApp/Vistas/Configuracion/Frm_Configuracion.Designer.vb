@@ -22,10 +22,13 @@ Partial Class Frm_Configuracion
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Configuracion))
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.TxtBakApp = New System.Windows.Forms.TextBox()
         Me.Label6 = New System.Windows.Forms.Label()
@@ -41,8 +44,14 @@ Partial Class Frm_Configuracion
         Me.Txt_Rd_Host = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Eliminar_AUX = New DevComponents.DotNetBar.ButtonItem()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
         Me.SuperTabControlPanel6 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Txt_Funcionario = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
         Me.Txt_Empresa01 = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -52,44 +61,19 @@ Partial Class Frm_Configuracion
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
         Me.Empresas = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
-        Me.Lbl_EMP2VEN = New System.Windows.Forms.Label()
-        Me.Lbl_EMP2COM = New System.Windows.Forms.Label()
-        Me.Lbl_EMP1VEN = New System.Windows.Forms.Label()
-        Me.Lbl_EMP1COM = New System.Windows.Forms.Label()
-        Me.Btn_Empresa2VentaMod = New System.Windows.Forms.Button()
-        Me.Label15 = New System.Windows.Forms.Label()
-        Me.Btn_Empresa1CompraMod = New System.Windows.Forms.Button()
-        Me.Btn_Empresa1VentaMod = New System.Windows.Forms.Button()
-        Me.Btn_Empresa2CompraMod = New System.Windows.Forms.Button()
-        Me.Label16 = New System.Windows.Forms.Label()
-        Me.Label17 = New System.Windows.Forms.Label()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.ConfgModalidad = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
-        Me.Lbl_EmpresaVenta2 = New System.Windows.Forms.Label()
-        Me.Lbl_Empresa2Compra = New System.Windows.Forms.Label()
-        Me.Lbl_Empresa1Venta = New System.Windows.Forms.Label()
-        Me.Lbl_Empresa1Compra = New System.Windows.Forms.Label()
-        Me.ButtonVenta2 = New System.Windows.Forms.Button()
-        Me.Label7 = New System.Windows.Forms.Label()
-        Me.ButtonCompra1 = New System.Windows.Forms.Button()
-        Me.ButtonVenta1 = New System.Windows.Forms.Button()
-        Me.ButtonCompra2 = New System.Windows.Forms.Button()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.Label10 = New System.Windows.Forms.Label()
-        Me.Label12 = New System.Windows.Forms.Label()
-        Me.ConfEntidades = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Btn_Programacion = New DevComponents.DotNetBar.ButtonX()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_Tareas = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Btn_Equivalencia = New DevComponents.DotNetBar.ButtonX()
+        Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Data_Equivalencia = New DevComponents.DotNetBar.Controls.DataGridViewX()
+        Me.Equivalencia = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
@@ -107,30 +91,31 @@ Partial Class Frm_Configuracion
         Me.Txt_Empresa = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX17 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_Facturar = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Vendedor = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Responsable = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_RutaEtiquetas = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.AUX_btn = New DevComponents.DotNetBar.ButtonX()
-        Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Eliminar_AUX = New DevComponents.DotNetBar.ButtonItem()
-        Me.Chk_Facturar = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
+        Me.Lbl_NombreF = New DevComponents.DotNetBar.LabelX()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
         Me.SuperTabControlPanel6.SuspendLayout()
+        Me.GroupPanel4.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupPanel3.SuspendLayout()
         Me.TableLayoutPanel2.SuspendLayout()
-        Me.SuperTabControlPanel5.SuspendLayout()
-        Me.GroupBox4.SuspendLayout()
-        Me.SuperTabControlPanel4.SuspendLayout()
-        Me.GroupBox3.SuspendLayout()
-        Me.SuperTabControlPanel2.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Grilla_Tareas, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuperTabControlPanel2.SuspendLayout()
+        Me.SuperTabControlPanel4.SuspendLayout()
+        Me.GroupPanel2.SuspendLayout()
+        CType(Me.Data_Equivalencia, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -304,6 +289,25 @@ Partial Class Frm_Configuracion
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
         '
+        'Btn_Grabar
+        '
+        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
+        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Grabar.Name = "Btn_Grabar"
+        Me.Btn_Grabar.Tooltip = "Grabar conexiones"
+        '
+        'Btn_Eliminar_AUX
+        '
+        Me.Btn_Eliminar_AUX.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Eliminar_AUX.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Eliminar_AUX.Image = CType(resources.GetObject("Btn_Eliminar_AUX.Image"), System.Drawing.Image)
+        Me.Btn_Eliminar_AUX.ImageAlt = CType(resources.GetObject("Btn_Eliminar_AUX.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Eliminar_AUX.Name = "Btn_Eliminar_AUX"
+        Me.Btn_Eliminar_AUX.Tooltip = "Eliminar Servidor de correo de salida SMTP"
+        Me.Btn_Eliminar_AUX.Visible = False
+        '
         'SuperTabControl1
         '
         Me.SuperTabControl1.BackColor = System.Drawing.Color.White
@@ -321,10 +325,9 @@ Partial Class Frm_Configuracion
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -334,11 +337,12 @@ Partial Class Frm_Configuracion
         Me.SuperTabControl1.Size = New System.Drawing.Size(737, 292)
         Me.SuperTabControl1.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SuperTabControl1.TabIndex = 133
-        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem2, Me.SuperTabItem3, Me.ConfEntidades, Me.ConfgModalidad, Me.Empresas})
+        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem2, Me.SuperTabItem3, Me.Empresas, Me.Equivalencia})
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
         'SuperTabControlPanel6
         '
+        Me.SuperTabControlPanel6.Controls.Add(Me.GroupPanel4)
         Me.SuperTabControlPanel6.Controls.Add(Me.GroupPanel3)
         Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 31)
@@ -346,6 +350,98 @@ Partial Class Frm_Configuracion
         Me.SuperTabControlPanel6.Size = New System.Drawing.Size(737, 261)
         Me.SuperTabControlPanel6.TabIndex = 0
         Me.SuperTabControlPanel6.TabItem = Me.Empresas
+        '
+        'GroupPanel4
+        '
+        Me.GroupPanel4.BackColor = System.Drawing.Color.White
+        Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.TableLayoutPanel1)
+        Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel4.Location = New System.Drawing.Point(9, 158)
+        Me.GroupPanel4.Name = "GroupPanel4"
+        Me.GroupPanel4.Size = New System.Drawing.Size(719, 90)
+        '
+        '
+        '
+        Me.GroupPanel4.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel4.Style.BackColorGradientAngle = 90
+        Me.GroupPanel4.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel4.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderBottomWidth = 1
+        Me.GroupPanel4.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel4.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderLeftWidth = 1
+        Me.GroupPanel4.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderRightWidth = 1
+        Me.GroupPanel4.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel4.Style.BorderTopWidth = 1
+        Me.GroupPanel4.Style.CornerDiameter = 4
+        Me.GroupPanel4.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel4.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel4.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel4.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel4.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel4.TabIndex = 106
+        Me.GroupPanel4.Text = "Funcionario"
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel1.ColumnCount = 2
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.12023!))
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.87977!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Lbl_NombreF, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.LabelX9, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.LabelX11, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Txt_Funcionario, 1, 1)
+        Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 2
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(707, 63)
+        Me.TableLayoutPanel1.TabIndex = 5
+        '
+        'Txt_Funcionario
+        '
+        Me.Txt_Funcionario.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Funcionario.Border.Class = "TextBoxBorder"
+        Me.Txt_Funcionario.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Funcionario.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_info
+        Me.Txt_Funcionario.ButtonCustom.Visible = True
+        Me.Txt_Funcionario.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Funcionario.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Funcionario.Location = New System.Drawing.Point(322, 32)
+        Me.Txt_Funcionario.Name = "Txt_Funcionario"
+        Me.Txt_Funcionario.PreventEnterBeep = True
+        Me.Txt_Funcionario.Size = New System.Drawing.Size(382, 26)
+        Me.Txt_Funcionario.TabIndex = 14
+        Me.Txt_Funcionario.Text = "No Asignada"
+        '
+        'LabelX11
+        '
+        Me.LabelX11.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX11.ForeColor = System.Drawing.Color.Black
+        Me.LabelX11.Location = New System.Drawing.Point(322, 3)
+        Me.LabelX11.Name = "LabelX11"
+        Me.LabelX11.Size = New System.Drawing.Size(382, 23)
+        Me.LabelX11.TabIndex = 2
+        Me.LabelX11.Text = "Codigo"
         '
         'GroupPanel3
         '
@@ -509,361 +605,7 @@ Partial Class Frm_Configuracion
         Me.Empresas.GlobalItem = False
         Me.Empresas.Name = "Empresas"
         Me.Empresas.Text = "Empresas"
-        '
-        'SuperTabControlPanel5
-        '
-        Me.SuperTabControlPanel5.Controls.Add(Me.GroupBox4)
-        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(0, 31)
-        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
-        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(737, 261)
-        Me.SuperTabControlPanel5.TabIndex = 0
-        Me.SuperTabControlPanel5.TabItem = Me.ConfgModalidad
-        '
-        'GroupBox4
-        '
-        Me.GroupBox4.BackColor = System.Drawing.Color.White
-        Me.GroupBox4.Controls.Add(Me.Lbl_EMP2VEN)
-        Me.GroupBox4.Controls.Add(Me.Lbl_EMP2COM)
-        Me.GroupBox4.Controls.Add(Me.Lbl_EMP1VEN)
-        Me.GroupBox4.Controls.Add(Me.Lbl_EMP1COM)
-        Me.GroupBox4.Controls.Add(Me.Btn_Empresa2VentaMod)
-        Me.GroupBox4.Controls.Add(Me.Label15)
-        Me.GroupBox4.Controls.Add(Me.Btn_Empresa1CompraMod)
-        Me.GroupBox4.Controls.Add(Me.Btn_Empresa1VentaMod)
-        Me.GroupBox4.Controls.Add(Me.Btn_Empresa2CompraMod)
-        Me.GroupBox4.Controls.Add(Me.Label16)
-        Me.GroupBox4.Controls.Add(Me.Label17)
-        Me.GroupBox4.Controls.Add(Me.Label18)
-        Me.GroupBox4.ForeColor = System.Drawing.Color.Black
-        Me.GroupBox4.Location = New System.Drawing.Point(14, 3)
-        Me.GroupBox4.Name = "GroupBox4"
-        Me.GroupBox4.Size = New System.Drawing.Size(708, 254)
-        Me.GroupBox4.TabIndex = 139
-        Me.GroupBox4.TabStop = False
-        Me.GroupBox4.Text = "Configuracion de Modalidad"
-        '
-        'Lbl_EMP2VEN
-        '
-        Me.Lbl_EMP2VEN.AutoSize = True
-        Me.Lbl_EMP2VEN.BackColor = System.Drawing.Color.White
-        Me.Lbl_EMP2VEN.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_EMP2VEN.Location = New System.Drawing.Point(379, 191)
-        Me.Lbl_EMP2VEN.Name = "Lbl_EMP2VEN"
-        Me.Lbl_EMP2VEN.Size = New System.Drawing.Size(0, 19)
-        Me.Lbl_EMP2VEN.TabIndex = 145
-        '
-        'Lbl_EMP2COM
-        '
-        Me.Lbl_EMP2COM.AutoSize = True
-        Me.Lbl_EMP2COM.BackColor = System.Drawing.Color.White
-        Me.Lbl_EMP2COM.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_EMP2COM.Location = New System.Drawing.Point(379, 147)
-        Me.Lbl_EMP2COM.Name = "Lbl_EMP2COM"
-        Me.Lbl_EMP2COM.Size = New System.Drawing.Size(0, 19)
-        Me.Lbl_EMP2COM.TabIndex = 144
-        '
-        'Lbl_EMP1VEN
-        '
-        Me.Lbl_EMP1VEN.AutoSize = True
-        Me.Lbl_EMP1VEN.BackColor = System.Drawing.Color.White
-        Me.Lbl_EMP1VEN.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_EMP1VEN.Location = New System.Drawing.Point(379, 88)
-        Me.Lbl_EMP1VEN.Name = "Lbl_EMP1VEN"
-        Me.Lbl_EMP1VEN.Size = New System.Drawing.Size(0, 19)
-        Me.Lbl_EMP1VEN.TabIndex = 143
-        '
-        'Lbl_EMP1COM
-        '
-        Me.Lbl_EMP1COM.AutoSize = True
-        Me.Lbl_EMP1COM.BackColor = System.Drawing.Color.White
-        Me.Lbl_EMP1COM.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_EMP1COM.Location = New System.Drawing.Point(379, 35)
-        Me.Lbl_EMP1COM.Name = "Lbl_EMP1COM"
-        Me.Lbl_EMP1COM.Size = New System.Drawing.Size(0, 19)
-        Me.Lbl_EMP1COM.TabIndex = 142
-        '
-        'Btn_Empresa2VentaMod
-        '
-        Me.Btn_Empresa2VentaMod.BackColor = System.Drawing.Color.White
-        Me.Btn_Empresa2VentaMod.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Empresa2VentaMod.Location = New System.Drawing.Point(177, 195)
-        Me.Btn_Empresa2VentaMod.Name = "Btn_Empresa2VentaMod"
-        Me.Btn_Empresa2VentaMod.Size = New System.Drawing.Size(117, 28)
-        Me.Btn_Empresa2VentaMod.TabIndex = 141
-        Me.Btn_Empresa2VentaMod.Text = "Asignar"
-        Me.Btn_Empresa2VentaMod.UseVisualStyleBackColor = False
-        '
-        'Label15
-        '
-        Me.Label15.AutoSize = True
-        Me.Label15.BackColor = System.Drawing.Color.White
-        Me.Label15.ForeColor = System.Drawing.Color.Black
-        Me.Label15.Location = New System.Drawing.Point(13, 191)
-        Me.Label15.Name = "Label15"
-        Me.Label15.Size = New System.Drawing.Size(112, 19)
-        Me.Label15.TabIndex = 140
-        Me.Label15.Text = "Empresa 2 Venta"
-        '
-        'Btn_Empresa1CompraMod
-        '
-        Me.Btn_Empresa1CompraMod.BackColor = System.Drawing.Color.White
-        Me.Btn_Empresa1CompraMod.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Empresa1CompraMod.Location = New System.Drawing.Point(177, 26)
-        Me.Btn_Empresa1CompraMod.Name = "Btn_Empresa1CompraMod"
-        Me.Btn_Empresa1CompraMod.Size = New System.Drawing.Size(117, 28)
-        Me.Btn_Empresa1CompraMod.TabIndex = 139
-        Me.Btn_Empresa1CompraMod.Text = "Asignar"
-        Me.Btn_Empresa1CompraMod.UseVisualStyleBackColor = False
-        '
-        'Btn_Empresa1VentaMod
-        '
-        Me.Btn_Empresa1VentaMod.BackColor = System.Drawing.Color.White
-        Me.Btn_Empresa1VentaMod.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Empresa1VentaMod.Location = New System.Drawing.Point(177, 83)
-        Me.Btn_Empresa1VentaMod.Name = "Btn_Empresa1VentaMod"
-        Me.Btn_Empresa1VentaMod.Size = New System.Drawing.Size(117, 28)
-        Me.Btn_Empresa1VentaMod.TabIndex = 138
-        Me.Btn_Empresa1VentaMod.Text = "Asignar"
-        Me.Btn_Empresa1VentaMod.UseVisualStyleBackColor = False
-        '
-        'Btn_Empresa2CompraMod
-        '
-        Me.Btn_Empresa2CompraMod.BackColor = System.Drawing.Color.White
-        Me.Btn_Empresa2CompraMod.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Empresa2CompraMod.Location = New System.Drawing.Point(177, 142)
-        Me.Btn_Empresa2CompraMod.Name = "Btn_Empresa2CompraMod"
-        Me.Btn_Empresa2CompraMod.Size = New System.Drawing.Size(117, 28)
-        Me.Btn_Empresa2CompraMod.TabIndex = 137
-        Me.Btn_Empresa2CompraMod.Text = "Asignar"
-        Me.Btn_Empresa2CompraMod.UseVisualStyleBackColor = False
-        '
-        'Label16
-        '
-        Me.Label16.AutoSize = True
-        Me.Label16.BackColor = System.Drawing.Color.White
-        Me.Label16.ForeColor = System.Drawing.Color.Black
-        Me.Label16.Location = New System.Drawing.Point(13, 138)
-        Me.Label16.Name = "Label16"
-        Me.Label16.Size = New System.Drawing.Size(126, 19)
-        Me.Label16.TabIndex = 10
-        Me.Label16.Text = "Empresa 2 Compra"
-        '
-        'Label17
-        '
-        Me.Label17.AutoSize = True
-        Me.Label17.BackColor = System.Drawing.Color.White
-        Me.Label17.ForeColor = System.Drawing.Color.Black
-        Me.Label17.Location = New System.Drawing.Point(13, 83)
-        Me.Label17.Name = "Label17"
-        Me.Label17.Size = New System.Drawing.Size(112, 19)
-        Me.Label17.TabIndex = 6
-        Me.Label17.Text = "Empresa 1 Venta"
-        '
-        'Label18
-        '
-        Me.Label18.AutoSize = True
-        Me.Label18.BackColor = System.Drawing.Color.White
-        Me.Label18.ForeColor = System.Drawing.Color.Black
-        Me.Label18.Location = New System.Drawing.Point(13, 26)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(126, 19)
-        Me.Label18.TabIndex = 2
-        Me.Label18.Text = "Empresa 1 Compra"
-        '
-        'ConfgModalidad
-        '
-        Me.ConfgModalidad.AttachedControl = Me.SuperTabControlPanel5
-        Me.ConfgModalidad.GlobalItem = False
-        Me.ConfgModalidad.Name = "ConfgModalidad"
-        Me.ConfgModalidad.Text = "Modalidad"
-        Me.ConfgModalidad.Visible = False
-        '
-        'SuperTabControlPanel4
-        '
-        Me.SuperTabControlPanel4.Controls.Add(Me.GroupBox3)
-        Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
-        Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
-        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(737, 292)
-        Me.SuperTabControlPanel4.TabIndex = 0
-        Me.SuperTabControlPanel4.TabItem = Me.ConfEntidades
-        '
-        'GroupBox3
-        '
-        Me.GroupBox3.BackColor = System.Drawing.Color.White
-        Me.GroupBox3.Controls.Add(Me.Lbl_EmpresaVenta2)
-        Me.GroupBox3.Controls.Add(Me.Lbl_Empresa2Compra)
-        Me.GroupBox3.Controls.Add(Me.Lbl_Empresa1Venta)
-        Me.GroupBox3.Controls.Add(Me.Lbl_Empresa1Compra)
-        Me.GroupBox3.Controls.Add(Me.ButtonVenta2)
-        Me.GroupBox3.Controls.Add(Me.Label7)
-        Me.GroupBox3.Controls.Add(Me.ButtonCompra1)
-        Me.GroupBox3.Controls.Add(Me.ButtonVenta1)
-        Me.GroupBox3.Controls.Add(Me.ButtonCompra2)
-        Me.GroupBox3.Controls.Add(Me.Label8)
-        Me.GroupBox3.Controls.Add(Me.Label10)
-        Me.GroupBox3.Controls.Add(Me.Label12)
-        Me.GroupBox3.ForeColor = System.Drawing.Color.Black
-        Me.GroupBox3.Location = New System.Drawing.Point(14, 3)
-        Me.GroupBox3.Name = "GroupBox3"
-        Me.GroupBox3.Size = New System.Drawing.Size(708, 254)
-        Me.GroupBox3.TabIndex = 138
-        Me.GroupBox3.TabStop = False
-        Me.GroupBox3.Text = "Configuracion de entidades"
-        '
-        'Lbl_EmpresaVenta2
-        '
-        Me.Lbl_EmpresaVenta2.AutoSize = True
-        Me.Lbl_EmpresaVenta2.BackColor = System.Drawing.Color.White
-        Me.Lbl_EmpresaVenta2.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_EmpresaVenta2.Location = New System.Drawing.Point(379, 191)
-        Me.Lbl_EmpresaVenta2.Name = "Lbl_EmpresaVenta2"
-        Me.Lbl_EmpresaVenta2.Size = New System.Drawing.Size(0, 19)
-        Me.Lbl_EmpresaVenta2.TabIndex = 145
-        '
-        'Lbl_Empresa2Compra
-        '
-        Me.Lbl_Empresa2Compra.AutoSize = True
-        Me.Lbl_Empresa2Compra.BackColor = System.Drawing.Color.White
-        Me.Lbl_Empresa2Compra.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Empresa2Compra.Location = New System.Drawing.Point(379, 147)
-        Me.Lbl_Empresa2Compra.Name = "Lbl_Empresa2Compra"
-        Me.Lbl_Empresa2Compra.Size = New System.Drawing.Size(0, 19)
-        Me.Lbl_Empresa2Compra.TabIndex = 144
-        '
-        'Lbl_Empresa1Venta
-        '
-        Me.Lbl_Empresa1Venta.AutoSize = True
-        Me.Lbl_Empresa1Venta.BackColor = System.Drawing.Color.White
-        Me.Lbl_Empresa1Venta.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Empresa1Venta.Location = New System.Drawing.Point(379, 88)
-        Me.Lbl_Empresa1Venta.Name = "Lbl_Empresa1Venta"
-        Me.Lbl_Empresa1Venta.Size = New System.Drawing.Size(0, 19)
-        Me.Lbl_Empresa1Venta.TabIndex = 143
-        '
-        'Lbl_Empresa1Compra
-        '
-        Me.Lbl_Empresa1Compra.AutoSize = True
-        Me.Lbl_Empresa1Compra.BackColor = System.Drawing.Color.White
-        Me.Lbl_Empresa1Compra.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Empresa1Compra.Location = New System.Drawing.Point(379, 35)
-        Me.Lbl_Empresa1Compra.Name = "Lbl_Empresa1Compra"
-        Me.Lbl_Empresa1Compra.Size = New System.Drawing.Size(0, 19)
-        Me.Lbl_Empresa1Compra.TabIndex = 142
-        '
-        'ButtonVenta2
-        '
-        Me.ButtonVenta2.BackColor = System.Drawing.Color.White
-        Me.ButtonVenta2.ForeColor = System.Drawing.Color.Black
-        Me.ButtonVenta2.Location = New System.Drawing.Point(177, 195)
-        Me.ButtonVenta2.Name = "ButtonVenta2"
-        Me.ButtonVenta2.Size = New System.Drawing.Size(117, 28)
-        Me.ButtonVenta2.TabIndex = 141
-        Me.ButtonVenta2.Text = "Asignar"
-        Me.ButtonVenta2.UseVisualStyleBackColor = False
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.BackColor = System.Drawing.Color.White
-        Me.Label7.ForeColor = System.Drawing.Color.Black
-        Me.Label7.Location = New System.Drawing.Point(13, 191)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(112, 19)
-        Me.Label7.TabIndex = 140
-        Me.Label7.Text = "Empresa 2 Venta"
-        '
-        'ButtonCompra1
-        '
-        Me.ButtonCompra1.BackColor = System.Drawing.Color.White
-        Me.ButtonCompra1.ForeColor = System.Drawing.Color.Black
-        Me.ButtonCompra1.Location = New System.Drawing.Point(177, 26)
-        Me.ButtonCompra1.Name = "ButtonCompra1"
-        Me.ButtonCompra1.Size = New System.Drawing.Size(117, 28)
-        Me.ButtonCompra1.TabIndex = 139
-        Me.ButtonCompra1.Text = "Asignar"
-        Me.ButtonCompra1.UseVisualStyleBackColor = False
-        '
-        'ButtonVenta1
-        '
-        Me.ButtonVenta1.BackColor = System.Drawing.Color.White
-        Me.ButtonVenta1.ForeColor = System.Drawing.Color.Black
-        Me.ButtonVenta1.Location = New System.Drawing.Point(177, 83)
-        Me.ButtonVenta1.Name = "ButtonVenta1"
-        Me.ButtonVenta1.Size = New System.Drawing.Size(117, 28)
-        Me.ButtonVenta1.TabIndex = 138
-        Me.ButtonVenta1.Text = "Asignar"
-        Me.ButtonVenta1.UseVisualStyleBackColor = False
-        '
-        'ButtonCompra2
-        '
-        Me.ButtonCompra2.BackColor = System.Drawing.Color.White
-        Me.ButtonCompra2.ForeColor = System.Drawing.Color.Black
-        Me.ButtonCompra2.Location = New System.Drawing.Point(177, 142)
-        Me.ButtonCompra2.Name = "ButtonCompra2"
-        Me.ButtonCompra2.Size = New System.Drawing.Size(117, 28)
-        Me.ButtonCompra2.TabIndex = 137
-        Me.ButtonCompra2.Text = "Asignar"
-        Me.ButtonCompra2.UseVisualStyleBackColor = False
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.BackColor = System.Drawing.Color.White
-        Me.Label8.ForeColor = System.Drawing.Color.Black
-        Me.Label8.Location = New System.Drawing.Point(13, 138)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(126, 19)
-        Me.Label8.TabIndex = 10
-        Me.Label8.Text = "Empresa 2 Compra"
-        '
-        'Label10
-        '
-        Me.Label10.AutoSize = True
-        Me.Label10.BackColor = System.Drawing.Color.White
-        Me.Label10.ForeColor = System.Drawing.Color.Black
-        Me.Label10.Location = New System.Drawing.Point(13, 83)
-        Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(112, 19)
-        Me.Label10.TabIndex = 6
-        Me.Label10.Text = "Empresa 1 Venta"
-        '
-        'Label12
-        '
-        Me.Label12.AutoSize = True
-        Me.Label12.BackColor = System.Drawing.Color.White
-        Me.Label12.ForeColor = System.Drawing.Color.Black
-        Me.Label12.Location = New System.Drawing.Point(13, 26)
-        Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(126, 19)
-        Me.Label12.TabIndex = 2
-        Me.Label12.Text = "Empresa 1 Compra"
-        '
-        'ConfEntidades
-        '
-        Me.ConfEntidades.AttachedControl = Me.SuperTabControlPanel4
-        Me.ConfEntidades.GlobalItem = False
-        Me.ConfEntidades.Name = "ConfEntidades"
-        Me.ConfEntidades.Text = "Configuracion Entidades"
-        Me.ConfEntidades.Visible = False
-        '
-        'SuperTabControlPanel2
-        '
-        Me.SuperTabControlPanel2.Controls.Add(Me.GroupBox1)
-        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 31)
-        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(737, 261)
-        Me.SuperTabControlPanel2.TabIndex = 0
-        Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
-        '
-        'SuperTabItem2
-        '
-        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
-        Me.SuperTabItem2.GlobalItem = False
-        Me.SuperTabItem2.Name = "SuperTabItem2"
-        Me.SuperTabItem2.Text = "Datos de conexión"
+        Me.Empresas.Visible = False
         '
         'SuperTabControlPanel3
         '
@@ -935,37 +677,37 @@ Partial Class Frm_Configuracion
         Me.Grilla_Tareas.AllowUserToAddRows = False
         Me.Grilla_Tareas.AllowUserToDeleteRows = False
         Me.Grilla_Tareas.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle16.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Tareas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle16
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Tareas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.Grilla_Tareas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle17.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle17.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle17.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Tareas.DefaultCellStyle = DataGridViewCellStyle17
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Tareas.DefaultCellStyle = DataGridViewCellStyle8
         Me.Grilla_Tareas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Tareas.EnableHeadersVisualStyles = False
         Me.Grilla_Tareas.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Tareas.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Tareas.Name = "Grilla_Tareas"
         Me.Grilla_Tareas.ReadOnly = True
-        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle18.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle18.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Tareas.RowHeadersDefaultCellStyle = DataGridViewCellStyle18
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Tareas.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.Grilla_Tareas.RowHeadersWidth = 51
         Me.Grilla_Tareas.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
         Me.Grilla_Tareas.Size = New System.Drawing.Size(731, 205)
@@ -987,6 +729,136 @@ Partial Class Frm_Configuracion
         Me.SuperTabItem3.GlobalItem = False
         Me.SuperTabItem3.Name = "SuperTabItem3"
         Me.SuperTabItem3.Text = "Tareas"
+        '
+        'SuperTabControlPanel2
+        '
+        Me.SuperTabControlPanel2.Controls.Add(Me.GroupBox1)
+        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 31)
+        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(737, 261)
+        Me.SuperTabControlPanel2.TabIndex = 0
+        Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
+        '
+        'SuperTabItem2
+        '
+        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
+        Me.SuperTabItem2.GlobalItem = False
+        Me.SuperTabItem2.Name = "SuperTabItem2"
+        Me.SuperTabItem2.Text = "Datos de conexión"
+        '
+        'SuperTabControlPanel4
+        '
+        Me.SuperTabControlPanel4.Controls.Add(Me.Btn_Equivalencia)
+        Me.SuperTabControlPanel4.Controls.Add(Me.GroupPanel2)
+        Me.SuperTabControlPanel4.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel4.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel4.Name = "SuperTabControlPanel4"
+        Me.SuperTabControlPanel4.Size = New System.Drawing.Size(737, 292)
+        Me.SuperTabControlPanel4.TabIndex = 0
+        Me.SuperTabControlPanel4.TabItem = Me.Equivalencia
+        '
+        'Btn_Equivalencia
+        '
+        Me.Btn_Equivalencia.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Equivalencia.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Equivalencia.Location = New System.Drawing.Point(3, 235)
+        Me.Btn_Equivalencia.Name = "Btn_Equivalencia"
+        Me.Btn_Equivalencia.Size = New System.Drawing.Size(128, 23)
+        Me.Btn_Equivalencia.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Equivalencia.TabIndex = 191
+        Me.Btn_Equivalencia.Text = "Agregar Equivalencia"
+        '
+        'GroupPanel2
+        '
+        Me.GroupPanel2.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupPanel2.BackColor = System.Drawing.Color.White
+        Me.GroupPanel2.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel2.Controls.Add(Me.Data_Equivalencia)
+        Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
+        Me.GroupPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.GroupPanel2.Name = "GroupPanel2"
+        Me.GroupPanel2.Size = New System.Drawing.Size(737, 232)
+        '
+        '
+        '
+        Me.GroupPanel2.Style.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.GroupPanel2.Style.BackColorGradientAngle = 90
+        Me.GroupPanel2.Style.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.GroupPanel2.Style.BorderBottom = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderBottomWidth = 1
+        Me.GroupPanel2.Style.BorderColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBorder
+        Me.GroupPanel2.Style.BorderLeft = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderLeftWidth = 1
+        Me.GroupPanel2.Style.BorderRight = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderRightWidth = 1
+        Me.GroupPanel2.Style.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.GroupPanel2.Style.BorderTopWidth = 1
+        Me.GroupPanel2.Style.CornerDiameter = 4
+        Me.GroupPanel2.Style.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.GroupPanel2.Style.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Center
+        Me.GroupPanel2.Style.TextColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelText
+        Me.GroupPanel2.Style.TextLineAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Near
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseDown.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        '
+        '
+        '
+        Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.GroupPanel2.TabIndex = 190
+        Me.GroupPanel2.Text = "Equivalencias"
+        '
+        'Data_Equivalencia
+        '
+        Me.Data_Equivalencia.AllowUserToAddRows = False
+        Me.Data_Equivalencia.AllowUserToDeleteRows = False
+        Me.Data_Equivalencia.BackgroundColor = System.Drawing.Color.White
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Data_Equivalencia.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
+        Me.Data_Equivalencia.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Data_Equivalencia.DefaultCellStyle = DataGridViewCellStyle11
+        Me.Data_Equivalencia.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Data_Equivalencia.EnableHeadersVisualStyles = False
+        Me.Data_Equivalencia.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
+        Me.Data_Equivalencia.Location = New System.Drawing.Point(0, 0)
+        Me.Data_Equivalencia.Name = "Data_Equivalencia"
+        Me.Data_Equivalencia.ReadOnly = True
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Data_Equivalencia.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
+        Me.Data_Equivalencia.RowHeadersWidth = 51
+        Me.Data_Equivalencia.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect
+        Me.Data_Equivalencia.Size = New System.Drawing.Size(731, 205)
+        Me.Data_Equivalencia.TabIndex = 85
+        '
+        'Equivalencia
+        '
+        Me.Equivalencia.AttachedControl = Me.SuperTabControlPanel4
+        Me.Equivalencia.GlobalItem = False
+        Me.Equivalencia.Name = "Equivalencia"
+        Me.Equivalencia.Text = "Equivalencias"
+        Me.Equivalencia.Visible = False
         '
         'SuperTabItem1
         '
@@ -1275,6 +1147,22 @@ Partial Class Frm_Configuracion
         Me.LabelX17.TabIndex = 119
         Me.LabelX17.Text = "Vendedor"
         '
+        'Chk_Facturar
+        '
+        Me.Chk_Facturar.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Facturar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Facturar.CheckBoxImageChecked = CType(resources.GetObject("Chk_Facturar.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Facturar.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Facturar.Location = New System.Drawing.Point(405, 155)
+        Me.Chk_Facturar.Name = "Chk_Facturar"
+        Me.Chk_Facturar.Size = New System.Drawing.Size(100, 21)
+        Me.Chk_Facturar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Facturar.TabIndex = 125
+        Me.Chk_Facturar.Text = "Facturar/Boletear"
+        '
         'Txt_Vendedor
         '
         Me.Txt_Vendedor.BackColor = System.Drawing.Color.White
@@ -1381,40 +1269,33 @@ Partial Class Frm_Configuracion
         Me.AUX_btn.Tooltip = "Programación"
         Me.AUX_btn.Visible = False
         '
-        'Btn_Grabar
+        'LabelX9
         '
-        Me.Btn_Grabar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Grabar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Grabar.Image = CType(resources.GetObject("Btn_Grabar.Image"), System.Drawing.Image)
-        Me.Btn_Grabar.ImageAlt = CType(resources.GetObject("Btn_Grabar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Grabar.Name = "Btn_Grabar"
-        Me.Btn_Grabar.Tooltip = "Grabar conexiones"
-        '
-        'Btn_Eliminar_AUX
-        '
-        Me.Btn_Eliminar_AUX.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Eliminar_AUX.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Eliminar_AUX.Image = CType(resources.GetObject("Btn_Eliminar_AUX.Image"), System.Drawing.Image)
-        Me.Btn_Eliminar_AUX.ImageAlt = CType(resources.GetObject("Btn_Eliminar_AUX.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Eliminar_AUX.Name = "Btn_Eliminar_AUX"
-        Me.Btn_Eliminar_AUX.Tooltip = "Eliminar Servidor de correo de salida SMTP"
-        Me.Btn_Eliminar_AUX.Visible = False
-        '
-        'Chk_Facturar
-        '
-        Me.Chk_Facturar.BackColor = System.Drawing.Color.White
+        Me.LabelX9.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Chk_Facturar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Facturar.CheckBoxImageChecked = CType(resources.GetObject("Chk_Facturar.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Facturar.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Facturar.Location = New System.Drawing.Point(405, 155)
-        Me.Chk_Facturar.Name = "Chk_Facturar"
-        Me.Chk_Facturar.Size = New System.Drawing.Size(100, 21)
-        Me.Chk_Facturar.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Facturar.TabIndex = 125
-        Me.Chk_Facturar.Text = "Facturar/Boletear"
+        Me.LabelX9.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX9.ForeColor = System.Drawing.Color.Black
+        Me.LabelX9.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX9.Name = "LabelX9"
+        Me.LabelX9.Size = New System.Drawing.Size(313, 23)
+        Me.LabelX9.TabIndex = 15
+        Me.LabelX9.Text = "Nombre"
+        '
+        'Lbl_NombreF
+        '
+        Me.Lbl_NombreF.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Lbl_NombreF.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Lbl_NombreF.ForeColor = System.Drawing.Color.Black
+        Me.Lbl_NombreF.Location = New System.Drawing.Point(3, 32)
+        Me.Lbl_NombreF.Name = "Lbl_NombreF"
+        Me.Lbl_NombreF.Size = New System.Drawing.Size(137, 23)
+        Me.Lbl_NombreF.TabIndex = 16
+        Me.Lbl_NombreF.Text = "Nombre"
         '
         'Frm_Configuracion
         '
@@ -1440,18 +1321,17 @@ Partial Class Frm_Configuracion
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
         Me.SuperTabControlPanel6.ResumeLayout(False)
+        Me.GroupPanel4.ResumeLayout(False)
+        Me.TableLayoutPanel1.ResumeLayout(False)
         Me.GroupPanel3.ResumeLayout(False)
         Me.TableLayoutPanel2.ResumeLayout(False)
-        Me.SuperTabControlPanel5.ResumeLayout(False)
-        Me.GroupBox4.ResumeLayout(False)
-        Me.GroupBox4.PerformLayout()
-        Me.SuperTabControlPanel4.ResumeLayout(False)
-        Me.GroupBox3.ResumeLayout(False)
-        Me.GroupBox3.PerformLayout()
-        Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Grilla_Tareas, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SuperTabControlPanel2.ResumeLayout(False)
+        Me.SuperTabControlPanel4.ResumeLayout(False)
+        Me.GroupPanel2.ResumeLayout(False)
+        CType(Me.Data_Equivalencia, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -1506,36 +1386,6 @@ Partial Class Frm_Configuracion
     Friend WithEvents Btn_Programacion As DevComponents.DotNetBar.ButtonX
     Friend WithEvents AUX_btn As DevComponents.DotNetBar.ButtonX
     Friend WithEvents Btn_Eliminar_AUX As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents SuperTabControlPanel4 As DevComponents.DotNetBar.SuperTabControlPanel
-    Friend WithEvents GroupBox3 As GroupBox
-    Friend WithEvents ButtonVenta2 As Button
-    Friend WithEvents Label7 As Label
-    Friend WithEvents ButtonCompra1 As Button
-    Friend WithEvents ButtonVenta1 As Button
-    Friend WithEvents ButtonCompra2 As Button
-    Friend WithEvents Label8 As Label
-    Friend WithEvents Label10 As Label
-    Friend WithEvents Label12 As Label
-    Friend WithEvents ConfEntidades As DevComponents.DotNetBar.SuperTabItem
-    Friend WithEvents Lbl_EmpresaVenta2 As Label
-    Friend WithEvents Lbl_Empresa2Compra As Label
-    Friend WithEvents Lbl_Empresa1Venta As Label
-    Friend WithEvents Lbl_Empresa1Compra As Label
-    Friend WithEvents SuperTabControlPanel5 As DevComponents.DotNetBar.SuperTabControlPanel
-    Friend WithEvents GroupBox4 As GroupBox
-    Friend WithEvents Lbl_EMP2VEN As Label
-    Friend WithEvents Lbl_EMP2COM As Label
-    Friend WithEvents Lbl_EMP1VEN As Label
-    Friend WithEvents Lbl_EMP1COM As Label
-    Friend WithEvents Btn_Empresa2VentaMod As Button
-    Friend WithEvents Label15 As Label
-    Friend WithEvents Btn_Empresa1CompraMod As Button
-    Friend WithEvents Btn_Empresa1VentaMod As Button
-    Friend WithEvents Btn_Empresa2CompraMod As Button
-    Friend WithEvents Label16 As Label
-    Friend WithEvents Label17 As Label
-    Friend WithEvents Label18 As Label
-    Friend WithEvents ConfgModalidad As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents SuperTabControlPanel6 As DevComponents.DotNetBar.SuperTabControlPanel
     Friend WithEvents Empresas As DevComponents.DotNetBar.SuperTabItem
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
@@ -1546,4 +1396,15 @@ Partial Class Frm_Configuracion
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents SuperTabControlPanel4 As DevComponents.DotNetBar.SuperTabControlPanel
+    Friend WithEvents Equivalencia As DevComponents.DotNetBar.SuperTabItem
+    Friend WithEvents Btn_Equivalencia As DevComponents.DotNetBar.ButtonX
+    Friend WithEvents GroupPanel2 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents Data_Equivalencia As DevComponents.DotNetBar.Controls.DataGridViewX
+    Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents TableLayoutPanel1 As TableLayoutPanel
+    Friend WithEvents Txt_Funcionario As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX11 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Lbl_NombreF As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX9 As DevComponents.DotNetBar.LabelX
 End Class

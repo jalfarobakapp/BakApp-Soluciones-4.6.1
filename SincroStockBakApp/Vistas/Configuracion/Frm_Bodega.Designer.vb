@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class Frm_Entidad
+Partial Class Frm_Bodega
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
     'Form overrides dispose to clean up the component list.
@@ -22,40 +22,46 @@ Partial Class Frm_Entidad
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Entidad))
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Bodega))
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
+        Me.Btn_Guardar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Btn_BscEmp2 = New DevComponents.DotNetBar.ButtonX()
         Me.TableLayoutPanel4 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Txt_ModFCC = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Nom2 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX10 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_ModNVV = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Bod2 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX9 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_ModFCV = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Emp2 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Suc2 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX7 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Guardar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem2 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem3 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem4 = New DevComponents.DotNetBar.ButtonItem()
-        Me.Txt_ModOCC = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Btn_BscEmp1 = New DevComponents.DotNetBar.ButtonX()
         Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Txt_Nom1 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Bod1 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
+        Me.Txt_Emp1 = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_Suc1 = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
-        Me.Txt_EntidadVenta = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Txt_EntidadCompra = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX12 = New DevComponents.DotNetBar.LabelX()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
         Me.TableLayoutPanel4.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel2.SuspendLayout()
         Me.GroupPanel3.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
         Me.SuspendLayout()
         '
         'Bar1
@@ -73,15 +79,24 @@ Partial Class Frm_Entidad
         Me.Bar1.TabStop = False
         Me.Bar1.Text = "Bar1"
         '
+        'Btn_Guardar
+        '
+        Me.Btn_Guardar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Guardar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Guardar.Image = CType(resources.GetObject("Btn_Guardar.Image"), System.Drawing.Image)
+        Me.Btn_Guardar.Name = "Btn_Guardar"
+        Me.Btn_Guardar.Text = "Guardar"
+        '
         'GroupPanel4
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
         Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.Btn_BscEmp2)
         Me.GroupPanel4.Controls.Add(Me.TableLayoutPanel4)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel4.Location = New System.Drawing.Point(28, 181)
+        Me.GroupPanel4.Location = New System.Drawing.Point(28, 259)
         Me.GroupPanel4.Name = "GroupPanel4"
-        Me.GroupPanel4.Size = New System.Drawing.Size(612, 295)
+        Me.GroupPanel4.Size = New System.Drawing.Size(612, 227)
         '
         '
         '
@@ -111,7 +126,18 @@ Partial Class Frm_Entidad
         '
         Me.GroupPanel4.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel4.TabIndex = 101
-        Me.GroupPanel4.Text = "Modalidades"
+        Me.GroupPanel4.Text = "Empresa 02"
+        '
+        'Btn_BscEmp2
+        '
+        Me.Btn_BscEmp2.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_BscEmp2.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_BscEmp2.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
+        Me.Btn_BscEmp2.Location = New System.Drawing.Point(281, 163)
+        Me.Btn_BscEmp2.Name = "Btn_BscEmp2"
+        Me.Btn_BscEmp2.Size = New System.Drawing.Size(51, 40)
+        Me.Btn_BscEmp2.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_BscEmp2.TabIndex = 7
         '
         'TableLayoutPanel4
         '
@@ -119,12 +145,12 @@ Partial Class Frm_Entidad
         Me.TableLayoutPanel4.ColumnCount = 2
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
         Me.TableLayoutPanel4.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 457.0!))
-        Me.TableLayoutPanel4.Controls.Add(Me.Txt_ModFCC, 1, 4)
+        Me.TableLayoutPanel4.Controls.Add(Me.Txt_Nom2, 1, 4)
         Me.TableLayoutPanel4.Controls.Add(Me.LabelX10, 0, 4)
-        Me.TableLayoutPanel4.Controls.Add(Me.Txt_ModNVV, 1, 3)
+        Me.TableLayoutPanel4.Controls.Add(Me.Txt_Bod2, 1, 3)
         Me.TableLayoutPanel4.Controls.Add(Me.LabelX9, 0, 3)
-        Me.TableLayoutPanel4.Controls.Add(Me.Txt_ModOCC, 1, 1)
-        Me.TableLayoutPanel4.Controls.Add(Me.Txt_ModFCV, 1, 2)
+        Me.TableLayoutPanel4.Controls.Add(Me.Txt_Emp2, 1, 1)
+        Me.TableLayoutPanel4.Controls.Add(Me.Txt_Suc2, 1, 2)
         Me.TableLayoutPanel4.Controls.Add(Me.LabelX4, 0, 2)
         Me.TableLayoutPanel4.Controls.Add(Me.LabelX6, 0, 1)
         Me.TableLayoutPanel4.Controls.Add(Me.LabelX7, 1, 0)
@@ -143,24 +169,23 @@ Partial Class Frm_Entidad
         Me.TableLayoutPanel4.Size = New System.Drawing.Size(600, 160)
         Me.TableLayoutPanel4.TabIndex = 6
         '
-        'Txt_ModFCC
+        'Txt_Nom2
         '
-        Me.Txt_ModFCC.BackColor = System.Drawing.Color.White
+        Me.Txt_Nom2.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_ModFCC.Border.Class = "TextBoxBorder"
-        Me.Txt_ModFCC.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_ModFCC.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
-        Me.Txt_ModFCC.ButtonCustom.Visible = True
-        Me.Txt_ModFCC.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_ModFCC.ForeColor = System.Drawing.Color.Black
-        Me.Txt_ModFCC.Location = New System.Drawing.Point(146, 128)
-        Me.Txt_ModFCC.Name = "Txt_ModFCC"
-        Me.Txt_ModFCC.PreventEnterBeep = True
-        Me.Txt_ModFCC.ReadOnly = True
-        Me.Txt_ModFCC.Size = New System.Drawing.Size(451, 26)
-        Me.Txt_ModFCC.TabIndex = 18
+        Me.Txt_Nom2.Border.Class = "TextBoxBorder"
+        Me.Txt_Nom2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Nom2.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
+        Me.Txt_Nom2.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Nom2.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Nom2.Location = New System.Drawing.Point(146, 128)
+        Me.Txt_Nom2.Name = "Txt_Nom2"
+        Me.Txt_Nom2.PreventEnterBeep = True
+        Me.Txt_Nom2.ReadOnly = True
+        Me.Txt_Nom2.Size = New System.Drawing.Size(451, 26)
+        Me.Txt_Nom2.TabIndex = 18
         '
         'LabelX10
         '
@@ -174,26 +199,25 @@ Partial Class Frm_Entidad
         Me.LabelX10.Name = "LabelX10"
         Me.LabelX10.Size = New System.Drawing.Size(137, 23)
         Me.LabelX10.TabIndex = 17
-        Me.LabelX10.Text = "Modalidad FCC"
+        Me.LabelX10.Text = "Nombre"
         '
-        'Txt_ModNVV
+        'Txt_Bod2
         '
-        Me.Txt_ModNVV.BackColor = System.Drawing.Color.White
+        Me.Txt_Bod2.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_ModNVV.Border.Class = "TextBoxBorder"
-        Me.Txt_ModNVV.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_ModNVV.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
-        Me.Txt_ModNVV.ButtonCustom.Visible = True
-        Me.Txt_ModNVV.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_ModNVV.ForeColor = System.Drawing.Color.Black
-        Me.Txt_ModNVV.Location = New System.Drawing.Point(146, 96)
-        Me.Txt_ModNVV.Name = "Txt_ModNVV"
-        Me.Txt_ModNVV.PreventEnterBeep = True
-        Me.Txt_ModNVV.ReadOnly = True
-        Me.Txt_ModNVV.Size = New System.Drawing.Size(451, 26)
-        Me.Txt_ModNVV.TabIndex = 16
+        Me.Txt_Bod2.Border.Class = "TextBoxBorder"
+        Me.Txt_Bod2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Bod2.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
+        Me.Txt_Bod2.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Bod2.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Bod2.Location = New System.Drawing.Point(146, 96)
+        Me.Txt_Bod2.Name = "Txt_Bod2"
+        Me.Txt_Bod2.PreventEnterBeep = True
+        Me.Txt_Bod2.ReadOnly = True
+        Me.Txt_Bod2.Size = New System.Drawing.Size(451, 26)
+        Me.Txt_Bod2.TabIndex = 16
         '
         'LabelX9
         '
@@ -207,27 +231,44 @@ Partial Class Frm_Entidad
         Me.LabelX9.Name = "LabelX9"
         Me.LabelX9.Size = New System.Drawing.Size(137, 23)
         Me.LabelX9.TabIndex = 15
-        Me.LabelX9.Text = "Modalidad NVV"
+        Me.LabelX9.Text = "Bodega"
         '
-        'Txt_ModFCV
+        'Txt_Emp2
         '
-        Me.Txt_ModFCV.BackColor = System.Drawing.Color.White
+        Me.Txt_Emp2.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.Txt_ModFCV.Border.Class = "TextBoxBorder"
-        Me.Txt_ModFCV.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_ModFCV.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
-        Me.Txt_ModFCV.ButtonCustom.Visible = True
-        Me.Txt_ModFCV.ButtonCustom2.Image = CType(resources.GetObject("Txt_ModFCV.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_ModFCV.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_ModFCV.ForeColor = System.Drawing.Color.Black
-        Me.Txt_ModFCV.Location = New System.Drawing.Point(146, 64)
-        Me.Txt_ModFCV.Name = "Txt_ModFCV"
-        Me.Txt_ModFCV.PreventEnterBeep = True
-        Me.Txt_ModFCV.ReadOnly = True
-        Me.Txt_ModFCV.Size = New System.Drawing.Size(451, 26)
-        Me.Txt_ModFCV.TabIndex = 13
+        Me.Txt_Emp2.Border.Class = "TextBoxBorder"
+        Me.Txt_Emp2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Emp2.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
+        Me.Txt_Emp2.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Emp2.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Emp2.Location = New System.Drawing.Point(146, 32)
+        Me.Txt_Emp2.Name = "Txt_Emp2"
+        Me.Txt_Emp2.PreventEnterBeep = True
+        Me.Txt_Emp2.ReadOnly = True
+        Me.Txt_Emp2.Size = New System.Drawing.Size(451, 26)
+        Me.Txt_Emp2.TabIndex = 14
+        '
+        'Txt_Suc2
+        '
+        Me.Txt_Suc2.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Suc2.Border.Class = "TextBoxBorder"
+        Me.Txt_Suc2.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Suc2.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
+        Me.Txt_Suc2.ButtonCustom2.Image = CType(resources.GetObject("Txt_ModFCV.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Suc2.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Suc2.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Suc2.Location = New System.Drawing.Point(146, 64)
+        Me.Txt_Suc2.Name = "Txt_Suc2"
+        Me.Txt_Suc2.PreventEnterBeep = True
+        Me.Txt_Suc2.ReadOnly = True
+        Me.Txt_Suc2.Size = New System.Drawing.Size(451, 26)
+        Me.Txt_Suc2.TabIndex = 13
         '
         'LabelX4
         '
@@ -241,7 +282,7 @@ Partial Class Frm_Entidad
         Me.LabelX4.Name = "LabelX4"
         Me.LabelX4.Size = New System.Drawing.Size(137, 23)
         Me.LabelX4.TabIndex = 6
-        Me.LabelX4.Text = "Modalidad FCV"
+        Me.LabelX4.Text = "Sucursal"
         '
         'LabelX6
         '
@@ -255,7 +296,7 @@ Partial Class Frm_Entidad
         Me.LabelX6.Name = "LabelX6"
         Me.LabelX6.Size = New System.Drawing.Size(137, 23)
         Me.LabelX6.TabIndex = 4
-        Me.LabelX6.Text = "Modalidad OCC"
+        Me.LabelX6.Text = "Empresa"
         '
         'LabelX7
         '
@@ -269,7 +310,7 @@ Partial Class Frm_Entidad
         Me.LabelX7.Name = "LabelX7"
         Me.LabelX7.Size = New System.Drawing.Size(451, 23)
         Me.LabelX7.TabIndex = 2
-        Me.LabelX7.Text = "Nombre"
+        Me.LabelX7.Text = "Valor"
         '
         'LabelX8
         '
@@ -283,7 +324,7 @@ Partial Class Frm_Entidad
         Me.LabelX8.Name = "LabelX8"
         Me.LabelX8.Size = New System.Drawing.Size(137, 23)
         Me.LabelX8.TabIndex = 1
-        Me.LabelX8.Text = "Modalidad"
+        Me.LabelX8.Text = "Campo"
         '
         'Bar2
         '
@@ -298,14 +339,6 @@ Partial Class Frm_Entidad
         Me.Bar2.TabIndex = 103
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
-        '
-        'Btn_Guardar
-        '
-        Me.Btn_Guardar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Guardar.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Guardar.Image = CType(resources.GetObject("Btn_Guardar.Image"), System.Drawing.Image)
-        Me.Btn_Guardar.Name = "Btn_Guardar"
-        Me.Btn_Guardar.Text = "Guardar"
         '
         'Btn_Editar
         '
@@ -351,150 +384,16 @@ Partial Class Frm_Entidad
         Me.ButtonItem4.Tooltip = "Editar OT"
         Me.ButtonItem4.Visible = False
         '
-        'Txt_ModOCC
-        '
-        Me.Txt_ModOCC.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_ModOCC.Border.Class = "TextBoxBorder"
-        Me.Txt_ModOCC.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_ModOCC.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
-        Me.Txt_ModOCC.ButtonCustom.Visible = True
-        Me.Txt_ModOCC.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_ModOCC.ForeColor = System.Drawing.Color.Black
-        Me.Txt_ModOCC.Location = New System.Drawing.Point(146, 32)
-        Me.Txt_ModOCC.Name = "Txt_ModOCC"
-        Me.Txt_ModOCC.PreventEnterBeep = True
-        Me.Txt_ModOCC.ReadOnly = True
-        Me.Txt_ModOCC.Size = New System.Drawing.Size(451, 26)
-        Me.Txt_ModOCC.TabIndex = 14
-        '
-        'TableLayoutPanel2
-        '
-        Me.TableLayoutPanel2.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel2.ColumnCount = 2
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 457.0!))
-        Me.TableLayoutPanel2.Controls.Add(Me.Txt_EntidadCompra, 1, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.Txt_EntidadVenta, 1, 2)
-        Me.TableLayoutPanel2.Controls.Add(Me.LabelX5, 0, 2)
-        Me.TableLayoutPanel2.Controls.Add(Me.LabelX3, 0, 1)
-        Me.TableLayoutPanel2.Controls.Add(Me.LabelX2, 1, 0)
-        Me.TableLayoutPanel2.Controls.Add(Me.LabelX1, 0, 0)
-        Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
-        Me.TableLayoutPanel2.RowCount = 3
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel2.Size = New System.Drawing.Size(600, 95)
-        Me.TableLayoutPanel2.TabIndex = 5
-        '
-        'LabelX1
-        '
-        Me.LabelX1.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX1.ForeColor = System.Drawing.Color.Black
-        Me.LabelX1.Location = New System.Drawing.Point(3, 3)
-        Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(137, 23)
-        Me.LabelX1.TabIndex = 1
-        Me.LabelX1.Text = "Tipo Entidad"
-        '
-        'LabelX2
-        '
-        Me.LabelX2.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(146, 3)
-        Me.LabelX2.Name = "LabelX2"
-        Me.LabelX2.Size = New System.Drawing.Size(451, 23)
-        Me.LabelX2.TabIndex = 2
-        Me.LabelX2.Text = "Nombre"
-        '
-        'LabelX3
-        '
-        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(3, 32)
-        Me.LabelX3.Name = "LabelX3"
-        Me.LabelX3.Size = New System.Drawing.Size(137, 23)
-        Me.LabelX3.TabIndex = 4
-        Me.LabelX3.Text = "Entidad de compra"
-        '
-        'LabelX5
-        '
-        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(3, 64)
-        Me.LabelX5.Name = "LabelX5"
-        Me.LabelX5.Size = New System.Drawing.Size(137, 23)
-        Me.LabelX5.TabIndex = 6
-        Me.LabelX5.Text = "Entidad de Venta"
-        '
-        'Txt_EntidadVenta
-        '
-        Me.Txt_EntidadVenta.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_EntidadVenta.Border.Class = "TextBoxBorder"
-        Me.Txt_EntidadVenta.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_EntidadVenta.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
-        Me.Txt_EntidadVenta.ButtonCustom.Visible = True
-        Me.Txt_EntidadVenta.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_EntidadVenta.ForeColor = System.Drawing.Color.Black
-        Me.Txt_EntidadVenta.Location = New System.Drawing.Point(146, 64)
-        Me.Txt_EntidadVenta.Name = "Txt_EntidadVenta"
-        Me.Txt_EntidadVenta.PreventEnterBeep = True
-        Me.Txt_EntidadVenta.ReadOnly = True
-        Me.Txt_EntidadVenta.Size = New System.Drawing.Size(451, 26)
-        Me.Txt_EntidadVenta.TabIndex = 13
-        '
-        'Txt_EntidadCompra
-        '
-        Me.Txt_EntidadCompra.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_EntidadCompra.Border.Class = "TextBoxBorder"
-        Me.Txt_EntidadCompra.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_EntidadCompra.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
-        Me.Txt_EntidadCompra.ButtonCustom.Visible = True
-        Me.Txt_EntidadCompra.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_EntidadCompra.ForeColor = System.Drawing.Color.Black
-        Me.Txt_EntidadCompra.Location = New System.Drawing.Point(146, 32)
-        Me.Txt_EntidadCompra.Name = "Txt_EntidadCompra"
-        Me.Txt_EntidadCompra.PreventEnterBeep = True
-        Me.Txt_EntidadCompra.ReadOnly = True
-        Me.Txt_EntidadCompra.Size = New System.Drawing.Size(451, 26)
-        Me.Txt_EntidadCompra.TabIndex = 14
-        '
         'GroupPanel3
         '
         Me.GroupPanel3.BackColor = System.Drawing.Color.White
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel3.Controls.Add(Me.Btn_BscEmp1)
         Me.GroupPanel3.Controls.Add(Me.TableLayoutPanel2)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel3.Location = New System.Drawing.Point(28, 31)
+        Me.GroupPanel3.Location = New System.Drawing.Point(28, 18)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(612, 144)
+        Me.GroupPanel3.Size = New System.Drawing.Size(612, 227)
         '
         '
         '
@@ -524,9 +423,207 @@ Partial Class Frm_Entidad
         '
         Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel3.TabIndex = 104
-        Me.GroupPanel3.Text = "Entidades"
+        Me.GroupPanel3.Text = "Empresa 02"
         '
-        'Frm_Entidad
+        'Btn_BscEmp1
+        '
+        Me.Btn_BscEmp1.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_BscEmp1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_BscEmp1.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
+        Me.Btn_BscEmp1.Location = New System.Drawing.Point(281, 163)
+        Me.Btn_BscEmp1.Name = "Btn_BscEmp1"
+        Me.Btn_BscEmp1.Size = New System.Drawing.Size(51, 40)
+        Me.Btn_BscEmp1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_BscEmp1.TabIndex = 8
+        '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel2.ColumnCount = 2
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 457.0!))
+        Me.TableLayoutPanel2.Controls.Add(Me.Txt_Nom1, 1, 4)
+        Me.TableLayoutPanel2.Controls.Add(Me.LabelX1, 0, 4)
+        Me.TableLayoutPanel2.Controls.Add(Me.Txt_Bod1, 1, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.LabelX2, 0, 3)
+        Me.TableLayoutPanel2.Controls.Add(Me.Txt_Emp1, 1, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.Txt_Suc1, 1, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.LabelX3, 0, 2)
+        Me.TableLayoutPanel2.Controls.Add(Me.LabelX5, 0, 1)
+        Me.TableLayoutPanel2.Controls.Add(Me.LabelX11, 1, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.LabelX12, 0, 0)
+        Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 5
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle())
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(600, 160)
+        Me.TableLayoutPanel2.TabIndex = 6
+        '
+        'Txt_Nom1
+        '
+        Me.Txt_Nom1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Nom1.Border.Class = "TextBoxBorder"
+        Me.Txt_Nom1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Nom1.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
+        Me.Txt_Nom1.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Nom1.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Nom1.Location = New System.Drawing.Point(146, 128)
+        Me.Txt_Nom1.Name = "Txt_Nom1"
+        Me.Txt_Nom1.PreventEnterBeep = True
+        Me.Txt_Nom1.ReadOnly = True
+        Me.Txt_Nom1.Size = New System.Drawing.Size(451, 26)
+        Me.Txt_Nom1.TabIndex = 18
+        '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(3, 128)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(137, 23)
+        Me.LabelX1.TabIndex = 17
+        Me.LabelX1.Text = "Nombre"
+        '
+        'Txt_Bod1
+        '
+        Me.Txt_Bod1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Bod1.Border.Class = "TextBoxBorder"
+        Me.Txt_Bod1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Bod1.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
+        Me.Txt_Bod1.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Bod1.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Bod1.Location = New System.Drawing.Point(146, 96)
+        Me.Txt_Bod1.Name = "Txt_Bod1"
+        Me.Txt_Bod1.PreventEnterBeep = True
+        Me.Txt_Bod1.ReadOnly = True
+        Me.Txt_Bod1.Size = New System.Drawing.Size(451, 26)
+        Me.Txt_Bod1.TabIndex = 16
+        '
+        'LabelX2
+        '
+        Me.LabelX2.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(3, 96)
+        Me.LabelX2.Name = "LabelX2"
+        Me.LabelX2.Size = New System.Drawing.Size(137, 23)
+        Me.LabelX2.TabIndex = 15
+        Me.LabelX2.Text = "Bodega"
+        '
+        'Txt_Emp1
+        '
+        Me.Txt_Emp1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Emp1.Border.Class = "TextBoxBorder"
+        Me.Txt_Emp1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Emp1.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
+        Me.Txt_Emp1.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Emp1.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Emp1.Location = New System.Drawing.Point(146, 32)
+        Me.Txt_Emp1.Name = "Txt_Emp1"
+        Me.Txt_Emp1.PreventEnterBeep = True
+        Me.Txt_Emp1.ReadOnly = True
+        Me.Txt_Emp1.Size = New System.Drawing.Size(451, 26)
+        Me.Txt_Emp1.TabIndex = 14
+        '
+        'Txt_Suc1
+        '
+        Me.Txt_Suc1.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Suc1.Border.Class = "TextBoxBorder"
+        Me.Txt_Suc1.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Suc1.ButtonCustom.Image = Global.Sincroniza.Stock.Bakapp.My.Resources.Resources.button_filledcircle_find
+        Me.Txt_Suc1.ButtonCustom2.Image = CType(resources.GetObject("TextBoxX4.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_Suc1.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Suc1.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Suc1.Location = New System.Drawing.Point(146, 64)
+        Me.Txt_Suc1.Name = "Txt_Suc1"
+        Me.Txt_Suc1.PreventEnterBeep = True
+        Me.Txt_Suc1.ReadOnly = True
+        Me.Txt_Suc1.Size = New System.Drawing.Size(451, 26)
+        Me.Txt_Suc1.TabIndex = 13
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(3, 64)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(137, 23)
+        Me.LabelX3.TabIndex = 6
+        Me.LabelX3.Text = "Sucursal"
+        '
+        'LabelX5
+        '
+        Me.LabelX5.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(3, 32)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(137, 23)
+        Me.LabelX5.TabIndex = 4
+        Me.LabelX5.Text = "Empresa"
+        '
+        'LabelX11
+        '
+        Me.LabelX11.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX11.ForeColor = System.Drawing.Color.Black
+        Me.LabelX11.Location = New System.Drawing.Point(146, 3)
+        Me.LabelX11.Name = "LabelX11"
+        Me.LabelX11.Size = New System.Drawing.Size(451, 23)
+        Me.LabelX11.TabIndex = 2
+        Me.LabelX11.Text = "Valor"
+        '
+        'LabelX12
+        '
+        Me.LabelX12.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX12.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX12.ForeColor = System.Drawing.Color.Black
+        Me.LabelX12.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX12.Name = "LabelX12"
+        Me.LabelX12.Size = New System.Drawing.Size(137, 23)
+        Me.LabelX12.TabIndex = 1
+        Me.LabelX12.Text = "Campo"
+        '
+        'Frm_Bodega
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -542,7 +639,7 @@ Partial Class Frm_Entidad
         Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "Frm_Entidad"
+        Me.Name = "Frm_Bodega"
         Me.ShowInTaskbar = False
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Informacion de la empresa"
@@ -550,8 +647,8 @@ Partial Class Frm_Entidad
         Me.GroupPanel4.ResumeLayout(False)
         Me.TableLayoutPanel4.ResumeLayout(False)
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel2.ResumeLayout(False)
         Me.GroupPanel3.ResumeLayout(False)
+        Me.TableLayoutPanel2.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -584,22 +681,28 @@ Partial Class Frm_Entidad
     Public WithEvents ButtonItem3 As DevComponents.DotNetBar.ButtonItem
     Public WithEvents ButtonItem4 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents TableLayoutPanel4 As TableLayoutPanel
-    Friend WithEvents Txt_ModFCV As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_Suc2 As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX4 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX7 As DevComponents.DotNetBar.LabelX
     Friend WithEvents LabelX8 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Txt_ModNVV As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX9 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Txt_ModFCC As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_Nom2 As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX10 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents Txt_ModOCC As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
-    Friend WithEvents Txt_EntidadCompra As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents Txt_EntidadVenta As DevComponents.DotNetBar.Controls.TextBoxX
-    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
-    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Emp2 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_Bod2 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Btn_BscEmp2 As DevComponents.DotNetBar.ButtonX
     Friend WithEvents GroupPanel3 As DevComponents.DotNetBar.Controls.GroupPanel
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents Txt_Nom1 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Bod1 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Txt_Emp1 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Txt_Suc1 As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX11 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents LabelX12 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Btn_BscEmp1 As DevComponents.DotNetBar.ButtonX
 End Class

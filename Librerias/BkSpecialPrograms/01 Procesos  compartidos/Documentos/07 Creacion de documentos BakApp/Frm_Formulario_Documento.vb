@@ -19525,12 +19525,12 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
                 If _ReferenciaAutomatica Then
 
-                    Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,FEEMDO From MAEDDO Where IDMAEDDO = " & _TblDetalle.Rows(0).Item("Idmaeddo_Ori")
+                    Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,FEEMLI From MAEDDO Where IDMAEDDO = " & _TblDetalle.Rows(0).Item("Idmaeddo_Dori")
                     Dim _Row_DocOrigen As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                     Dim _Tido_Ref = _Row_DocOrigen.Item("TIDO")
                     Dim _Nudo_Ref = _Row_DocOrigen.Item("NUDO")
-                    Dim _Feemdo_Ref = _Row_DocOrigen.Item("FEEMDO")
+                    Dim _Feemdo_Ref = _Row_DocOrigen.Item("FEEMLI")
 
                     Fx_Insertar_Referencia_DTE(_Tido, "", _Tido_Ref, _Nudo_Ref, _Feemdo_Ref)
 

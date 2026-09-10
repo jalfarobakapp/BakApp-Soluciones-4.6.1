@@ -8344,6 +8344,7 @@
     <Content Include="01 Procesos  compartidos\Precios y Costos\01 Mantención Listas Random\Recursos Lista Precio\Leyenda ayuda lista de precios.txt" />
     <None Include="01 Procesos  compartidos\Productos\01 Crear Productos\Crea Producto clasic\Recursos\Sql\SqlQuery_Editar_Producto.sql" />
     <None Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Inf. Ult. Compra\Recursos\Sql\Ult_Compras_GRC _New.sql" />
+    <None Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Inf. Ult. Compra\Recursos\Sql\Ult_Compras_X_Productos.sql" />
     <Content Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Recursos\Sql\SQLQuery Calculo de cumplimiento de entregas por parte de un proveedor por Producto.sql" />
     <Content Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Recursos especiales\MAEERES_Hist.sql" />
     <Content Include="01 Procesos  compartidos\Remotas\Cadenas Remotas\Recursos\Sql\SQLQuery Reenviar Solicitud De Permiso.sql" />

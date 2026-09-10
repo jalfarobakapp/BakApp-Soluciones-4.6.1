@@ -90,27 +90,61 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Busca una cadena traducida similar a Declare @Fecha_Desde As Datetime,
-        '''		@Fecha_Hasta As Datetime,
-        '''        @Empresa As Char(2)
+        '''  Busca una cadena traducida similar a DECLARE @Fecha_Desde AS DATETIME,
+        '''        @Fecha_Hasta AS DATETIME,
+        '''        @Empresa     AS CHAR(2),
+        '''        @ListaPrecio AS VARCHAR(3);
         '''
-        '''Select @Fecha_Desde = &apos;#Fecha_Desde#&apos;,@Fecha_Hasta = &apos;#Fecha_Hasta#&apos;,@Empresa = &apos;#Empresa#&apos;
+        '''SELECT @Fecha_Desde = &apos;#Fecha_Desde#&apos;,
+        '''       @Fecha_Hasta = &apos;#Fecha_Hasta#&apos;,
+        '''       @Empresa     = &apos;#Empresa#&apos;,
+        '''       @ListaPrecio = &apos;#ListaPrecio#&apos;;
         '''
-        '''SELECT DISTINCT    Ddo.IDMAEEDO,
-        '''				   Ddo.IDMAEDDO,	
-        '''                   Ddo.TIDO, 
-        '''                   Ddo.NUDO, 
-        '''				   Ddo.SULIDO,
-        '''				   Ddo.BOSULIDO,
-        '''                   Ddo.FEEMLI As FECHA, 
-        '''                   Ddo.ENDO, 
-        '''                   Ddo.SUENDO, 
-        '''                   dbo.MAEEN.NOKOEN, 
-        '''                 [resto de la cadena truncado]&quot;;.
+        '''
+        '''
+        '''
+        '''SELECT DISTINCT
+        '''        Ddo.IDMAEEDO
+        '''       ,Ddo.IDMAEDDO
+        '''       ,Ddo.TIDO
+        '''       ,Ddo.NUDO
+        '''       ,Ddo.SULIDO
+        '''       ,Ddo.BOSULIDO
+        '''       ,Ddo.FEEMLI As &apos;FECHA&apos;
+        '''       ,Ddo.ENDO
+        '''       ,Ddo.SUEND [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Ult_Compras_GRC__New() As String
             Get
                 Return ResourceManager.GetString("Ult_Compras_GRC__New", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a DECLARE @Empresa     AS CHAR(2),
+        '''        @ListaPrecio AS VARCHAR(3),
+        '''		@Fecha_Desde AS DATETIME,
+        '''        @Fecha_Hasta AS DATETIME;
+        '''
+        '''-- Últimos 6 meses
+        '''SELECT @Fecha_Desde = @Fecha_Desde, -- DATEADD(MONTH,-12,GETDATE()),
+        '''       @Fecha_Hasta = @Fecha_Hasta, -- GETDATE(),
+        '''       @Empresa     = &apos;#Empresa#&apos;,
+        '''       @ListaPrecio = &apos;#ListaPrecio#&apos;;
+        '''
+        '''SELECT 
+        '''       Ult.EMPRESA	
+        '''       ,Ult.IDMAEEDO
+        '''       ,Ult.IDMAEDDO
+        '''       ,Ult.TIDO
+        '''       ,Ult.NUDO
+        '''       ,Ult.SULIDO
+        '''       ,Ult.BOSULIDO
+        '''     [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Ult_Compras_X_Productos() As String
+            Get
+                Return ResourceManager.GetString("Ult_Compras_X_Productos", resourceCulture)
             End Get
         End Property
     End Class

@@ -1,108 +1,119 @@
-DECLARE @Fecha_Desde AS DATETIME,
-        @Fecha_Hasta AS DATETIME,
-        @Empresa     AS CHAR(2),
-        @ListaPrecio AS VARCHAR(3);
+DECLARE @Empresa     AS CHAR(2),
+        @ListaPrecio AS VARCHAR(3),
+		@Fecha_Desde AS DATETIME,
+        @Fecha_Hasta AS DATETIME;
 
-SELECT @Fecha_Desde = '#Fecha_Desde#',
-       @Fecha_Hasta = '#Fecha_Hasta#',
+-- Últimos 6 meses
+SELECT @Fecha_Desde = '#Fecha_Desde#', -- DATEADD(MONTH,-12,GETDATE()),
+       @Fecha_Hasta = '#Fecha_Hasta#', -- GETDATE(),
        @Empresa     = '#Empresa#',
        @ListaPrecio = '#ListaPrecio#';
 
-SELECT DISTINCT
-        Ddo.IDMAEEDO
-       ,Ddo.IDMAEDDO
-       ,Ddo.TIDO
-       ,Ddo.NUDO
-       ,Ddo.SULIDO
-       ,Ddo.BOSULIDO
-       ,Ddo.FEEMLI As 'FECHA'
-       ,Ddo.ENDO
-       ,Ddo.SUENDO
-       ,MAEEN.NOKOEN
-       ,Ddo.TIPR
-       ,Ddo.PRCT
-       ,Ddo.KOPRCT
-       ,Ddo.UDTRPR
-       ,Ddo.RLUDPR
-       ,Ddo.CAPRCO1
-       ,Ddo.CAPRCO2
-       ,Ddo.UD01PR
-       ,Ddo.UD02PR
-       ,Ddo.NOKOPR
-       ,Ddo.PPPRNE
-       ,CAST(0 AS FLOAT)		As 'Precio_Neto_UN'
-	   ,CAST(0 AS FLOAT)		As 'Precio_Bruto_UN'
-       ,Ddo.PPPRNERE1		
-	   ,Ddo.PPPRNERE2
-	   ,Ddo.VANELI
-	   ,Ddo.VABRLI
+SELECT 
+       Ult.EMPRESA	
+       ,Ult.IDMAEEDO
+       ,Ult.IDMAEDDO
+       ,Ult.TIDO
+       ,Ult.NUDO
+       ,Ult.SULIDO
+       ,Ult.BOSULIDO
+       ,Ult.FEEMLI          AS 'FECHA'
+       ,Ult.ENDO
+       ,Ult.SUENDO
+       ,Mae.NOKOEN
+       ,Ult.TIPR
+       ,Ult.PRCT
+       ,Ult.UDTRPR
+       ,Ult.RLUDPR
+       ,Ult.CAPRCO1
+       ,Ult.CAPRCO2
+       ,Ult.UD01PR
+       ,Ult.UD02PR
+	   ,Mp.KOPR              AS 'KOPRCT'
+       ,Ult.NOKOPR
+       ,Ult.PPPRNE
+       ,CAST(0 AS FLOAT)    AS 'Precio_Neto_UN'
+       ,CAST(0 AS FLOAT)    AS 'Precio_Bruto_UN'
+       ,Ult.PPPRNERE1
+       ,Ult.PPPRNERE2
+       ,Ult.VANELI
+       ,Ult.VABRLI
        ,Mpen.PPUL01
        ,Mpen.PPUL02
        ,Mpen.PM
-       ,Fcc.TIDO                As 'TIDO_FCC'
-       ,Fcc.NUDO                As 'NUDO_FCC'
-	   ,ROUND(Ddo.POTENCIA,0)   AS 'Flete_Bruto'
-       ,CAST(0 AS FLOAT)        As 'Flete_Neto'
-       ,CAST(0 AS FLOAT)        As 'Costo_FleteBrutoAct'
-       ,CAST(0 AS FLOAT)        As 'Costo_FleteNetoAct'
-       ,CAST('' AS VARCHAR(13)) As 'CodigoOferta'
-       ,CAST('' AS VARCHAR(50)) As 'NombreOferta'
-       ,CAST(NULL AS DATETIME)  As 'FechaInicioOferta'
-       ,CAST(NULL AS DATETIME)  As 'FechaFinOferta'
-       ,CAST(0 AS BIT)          As 'OfertaActiva'
-       ,CAST(0 AS FLOAT)		AS 'MontoOferta_Neto'
-	   ,CAST(0 AS FLOAT)        As 'MontoOferta'
-              
-	   ,@ListaPrecio			As 'ListaPrecio'
-	   ,Cast('' As Char(1))		As MELT
-       ,CAST(0 AS FLOAT)        As 'Precio_ListaNeto'
-       ,CAST(0 AS FLOAT)        As 'Precio_ListaBruto'
-	   ,CAST(0 AS FLOAT)        As 'Margen_Lista_Valor'
-	   ,CAST(0 AS FLOAT)        As 'Margen_Lista_Porc'
-	   ,CAST(0 AS FLOAT)        As 'Markup_Lista_Porc'
-	   
-       -- NUEVOS CAMPOS DE IMPUESTOS
-       ,CAST(0 AS FLOAT)		AS 'IVA'
-       ,CAST(0 AS FLOAT)		AS 'IMP'
-       ,CAST(0 AS FLOAT)		AS 'IMPUESTOS'
-       
-       ,Isnull(Mp.FMPR,'')		As 'FMPR' 
-	   ,Isnull(Spf.NOKOFM,'')	As 'NOKOFM'
-	   ,Isnull(Mp.PFPR,'')		As 'PFPR'
-	   ,Isnull(Fm.NOKOPF,'')	As 'NOKOPF'
-	   ,Isnull(Mp.HFPR,'')		As 'HFPR'
-	   ,Isnull(Sbf.NOKOHF,'')	As 'NOKOHF'
-	   ,Isnull(Mp.MRPR,'')		As 'MRPR'
-	   ,Isnull(Mr.NOKOMR,'')	As 'NOKOMR'
-	   ,Isnull(Mp.KOFUPR,'')	As 'KOFUPR'
-	   ,Isnull(Jf.NOKOFU,'')	As 'NOKOFU'
-       ,ISNULL(Mp.ZONAPR,'')	As 'ZONAPR'
-	   ,ISNULL(Tz.NOKOCARAC,'')	As 'NOKOZOPR'
-	   ,ISNULL(Mp.CLALIBPR,'')	As 'CLALIBPR'
-	   ,ISNULL(Tc.NOKOCARAC,'')	As 'NOCLALIBPR'
-INTO #Tbl_Paso2
-FROM MAEDDO Ddo
-    Left Join MAEEN ON Ddo.ENDO = MAEEN.KOEN AND Ddo.SUENDO = MAEEN.SUEN
-        Left Join MAEPREM Mpen ON Mpen.KOPR = Ddo.KOPRCT AND Mpen.EMPRESA = @Empresa
-            Left Join MAEDDO Fcc ON Ddo.IDMAEDDO = Fcc.IDRST AND Fcc.TIDO = 'FCC'
-                Left Join MAEPR Mp On Mp.KOPR = Ddo.KOPRCT
-                    Left Join TABFM Spf On Spf.KOFM = Mp.FMPR
-                        Left Join TABPF Fm On Fm.KOFM = Mp.FMPR And Fm.KOPF = Mp.PFPR
-                            Left Join TABHF Sbf On Sbf.KOFM = Mp.FMPR And Sbf.KOPF = Mp.PFPR And Sbf.KOHF = Mp.HFPR
-                                Left Join TABMR Mr On Mr.KOMR = Mp.MRPR
-                                    Left Join TABFU Jf On Jf.KOFU = Mp.KOFUPR
-                                        Left Join TABCARAC Tz On Tz.KOCARAC = Mp.ZONAPR And Tz.KOTABLA = 'ZONAPRODUC'
-											Left Join TABCARAC Tc On Tc.KOCARAC = Mp.CLALIBPR And Tc.KOTABLA = 'CLALIBPR'
-WHERE Ddo.TIDO = 'GRC'
-  And Ddo.FEEMLI Between @Fecha_Desde And @Fecha_Hasta
-  --
-GROUP BY Ddo.IDMAEEDO, Ddo.IDMAEDDO, Ddo.NUDO, Ddo.ENDO, Ddo.SUENDO, MAEEN.NOKOEN,
-         Ddo.TIPR, Ddo.PRCT, Ddo.KOPRCT, Ddo.UDTRPR, Ddo.RLUDPR, Ddo.CAPRCO1,
-         Ddo.CAPRCO2, Ddo.UD01PR, Ddo.UD02PR, Ddo.PPPRNE, Ddo.NOKOPR, Ddo.FEEMLI,
-         Ddo.TIDO, Ddo.SULIDO, Ddo.BOSULIDO, Ddo.PPPRNERE1, Ddo.PPPRNERE2,Ddo.VANELI,Ddo.VABRLI,
-         Mpen.PPUL01, Mpen.PPUL02, Mpen.PM, Fcc.TIDO, Fcc.NUDO, Ddo.POTENCIA,
-         Mp.FMPR,Spf.NOKOFM,Mp.PFPR,Fm.NOKOPF,Mp.HFPR,Sbf.NOKOHF,
-		 Mp.MRPR,Mr.NOKOMR,Mp.KOFUPR,Jf.NOKOFU,Mp.ZONAPR,Tz.NOKOCARAC,Mp.CLALIBPR,Tc.NOKOCARAC;
+       ,Fcc.TIDO            AS 'TIDO_FCC'
+       ,Fcc.NUDO            AS 'NUDO_FCC'
+       ,ROUND(Ult.POTENCIA,0) AS 'Flete_Bruto'
+       ,CAST(0 AS FLOAT)    AS 'Flete_Neto'
+       ,CAST(0 AS FLOAT)    AS 'Costo_FleteBrutoAct'
+       ,CAST(0 AS FLOAT)    AS 'Costo_FleteNetoAct'
+       ,CAST('' AS VARCHAR(13)) AS 'CodigoOferta'
+       ,CAST('' AS VARCHAR(50)) AS 'NombreOferta'
+       ,CAST(NULL AS DATETIME)  AS 'FechaInicioOferta'
+       ,CAST(NULL AS DATETIME)  AS 'FechaFinOferta'
+       ,CAST(0 AS BIT)          AS 'OfertaActiva'
+       ,CAST(0 AS FLOAT)        AS 'MontoOferta_Neto'
+       ,CAST(0 AS FLOAT)        AS 'MontoOferta'
+
+       -- Nuevos campos
+       ,CAST(0 AS FLOAT) AS 'Margen_Oferta_Valor'
+       ,CAST(0 AS FLOAT) AS 'Margen_Oferta_Porc'
+       ,CAST(0 AS FLOAT) AS 'Markup_Oferta_Porc'
+
+       ,@ListaPrecio       AS 'ListaPrecio'
+       ,CAST('' AS CHAR(1)) AS MELT
+       ,CAST(0 AS FLOAT) AS 'Precio_ListaNeto'
+       ,CAST(0 AS FLOAT) AS 'Precio_ListaBruto'
+       ,CAST(0 AS FLOAT) AS 'Margen_Lista_Valor'
+       ,CAST(0 AS FLOAT) AS 'Margen_Lista_Porc'
+       ,CAST(0 AS FLOAT) AS 'Markup_Lista_Porc'
+
+       ,CAST(0 AS FLOAT) AS 'IVA'
+       ,CAST(0 AS FLOAT) AS 'IMP'
+       ,CAST(0 AS FLOAT) AS 'IMPUESTOS'
+
+       ,Mp.FMPR
+       ,Spf.NOKOFM
+       ,Mp.PFPR
+       ,Fm.NOKOPF
+       ,Mp.HFPR
+       ,Sbf.NOKOHF
+       ,Mp.MRPR
+       ,Mr.NOKOMR
+       ,Mp.KOFUPR
+       ,Jf.NOKOFU
+       ,Mp.ZONAPR
+       ,Tz.NOKOCARAC AS 'NOKOZOPR'
+       ,Mp.CLALIBPR
+       ,Tc.NOKOCARAC AS 'NOCLALIBPR'
+Into #Tbl_Paso2
+FROM MAEPR Mp
+
+   OUTER APPLY (
+        SELECT TOP 1 *
+        FROM MAEDDO D
+        WHERE D.KOPRCT = Mp.KOPR
+          AND D.TIDO = 'GRC' AND EMPRESA = @Empresa
+        ORDER BY D.FEEMLI DESC, D.IDMAEDDO DESC
+    ) Ult
+    LEFT JOIN MAEEN Mae ON Ult.ENDO = Mae.KOEN AND Ult.SUENDO = Mae.SUEN
+    LEFT JOIN MAEPREM Mpen ON Mpen.KOPR = Mp.KOPR AND Mpen.EMPRESA = @Empresa
+    LEFT JOIN MAEDDO Fcc ON Ult.IDMAEDDO = Fcc.IDRST AND Fcc.TIDO = 'FCC'
+    LEFT JOIN TABFM Spf ON Spf.KOFM = Mp.FMPR
+    LEFT JOIN TABPF Fm ON Fm.KOFM = Mp.FMPR AND Fm.KOPF = Mp.PFPR
+    LEFT JOIN TABHF Sbf ON Sbf.KOFM = Mp.FMPR AND Sbf.KOPF = Mp.PFPR AND Sbf.KOHF = Mp.HFPR
+    LEFT JOIN TABMR Mr ON Mr.KOMR = Mp.MRPR
+    LEFT JOIN TABFU Jf ON Jf.KOFU = Mp.KOFUPR
+    LEFT JOIN TABCARAC Tz ON Tz.KOCARAC = Mp.ZONAPR AND Tz.KOTABLA = 'ZONAPRODUC'
+    LEFT JOIN TABCARAC Tc ON Tc.KOCARAC = Mp.CLALIBPR AND Tc.KOTABLA = 'CLALIBPR'
+
+WHERE EXISTS (
+        SELECT 1
+        FROM MAEDDO V
+        WHERE V.KOPRCT = Mp.KOPR
+          AND V.TIDO IN ('BLV','FCV')
+          AND V.FEEMLI BETWEEN @Fecha_Desde AND @Fecha_Hasta
+);
 
 ---------------------------------------------------------
 -- IMPUESTOS (IVA + IMPUESTOS ESPECÍFICOS)
@@ -141,7 +152,6 @@ SET Flete_Neto =
                 ISNULL(Flete_Bruto,0) / (1 + IVA),
             5)
     END;
-
 
 ---------------------------------------------------------
 -- COSTO FLETE ACTUAL (CORREGIDO CON IMPUESTOS)
@@ -211,7 +221,6 @@ Update #Tbl_Paso2 Set Margen_Lista_Valor = Precio_ListaNeto - Precio_Neto_UN,
 			When ISNULL(Precio_ListaNeto,0)=0 THEN 0 
 			Else ROUND(((Precio_ListaNeto - Precio_Neto_UN)/Precio_ListaNeto)*100,2)/100 End)
 
-
 ---------------------------------------------------------
 -- OFERTAS ACTIVAS
 
@@ -262,6 +271,19 @@ SET MontoOferta_Neto =
         WHEN IMPUESTOS = 0 THEN MontoOferta
         ELSE ROUND(MontoOferta / (1 + (IMPUESTOS)), 5)
     END;
+-- New
+
+---------------------------------------------------------
+-- MARGENES SEGUN OFERTA
+---------------------------------------------------------
+
+Update #Tbl_Paso2 Set Margen_Oferta_Valor = MontoOferta_Neto - Precio_Neto_UN, 
+	Margen_Oferta_Porc = (
+		Case 
+			When ISNULL(MontoOferta_Neto,0)=0 THEN 0 
+			Else ROUND(((MontoOferta_Neto - Precio_Neto_UN)/MontoOferta_Neto)*100,2)/100 End)
+---
+
 
 SELECT 
     T2.*,
@@ -317,9 +339,9 @@ SELECT
 FROM #Tbl_Paso2 T2
 LEFT JOIN #Global_BaseBk#Zw_ListaLC_ValPro Lc
        ON T2.KOPRCT = Lc.Codigo
-      --AND (Lc.FechaModif <> '#Fecha_Hasta#' OR Lc.FechaModif IS NULL)
+      -- AND (Lc.FechaModif <> '20260909' OR Lc.FechaModif IS NULL)
       
-
+       
 CROSS APPLY (
     SELECT TOP 1
         Ddo.IDMAEEDO		AS 'IDMAEEDO_Ant',
@@ -351,6 +373,7 @@ CROSS APPLY (
     WHERE Ddo.TIDO = 'GRC'
       AND Ddo.KOPRCT = T2.KOPRCT
       AND Ddo.FEEMLI < T2.FECHA
+	  AND Ddo.EMPRESA = @Empresa
     ORDER BY Ddo.FEEMLI DESC
 ) AS GRC_Ant
 
@@ -382,10 +405,12 @@ CROSS APPLY (
     LEFT JOIN MAEPREM Mpen ON Mpen.KOPR = Ddo.KOPRCT AND Mpen.EMPRESA = @Empresa
     WHERE Ddo.TIDO IN ('FCV','BLV')
       AND Ddo.KOPRCT = T2.KOPRCT
-      AND Ddo.FEEMLI < T2.FECHA
+      --AND Ddo.FEEMLI < T2.FECHA
+      AND Ddo.FEEMLI BETWEEN @Fecha_Desde AND @Fecha_Hasta
     ORDER BY Ddo.FEEMLI DESC
 ) AS Venta_Ant
 --#Condicion#
+--Where ((Lc.FechaModif NOT BETWEEN @Fecha_Desde AND @Fecha_Hasta) Or (Lc.FechaModif IS NULL))
 
 ORDER BY T2.KOPRCT;
 
