@@ -56,6 +56,8 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
     Public Property ModoGRC As Boolean
     Public Property ModoProductos As Boolean
 
+    Private _LayoutGrillasInicializado As Boolean
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -84,12 +86,27 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
         ModoGRC = True
 
+        Sb_Color_Botones_Barra(Bar2)
+
+        Lbl_Empresa.Text = RazonEmpresa
+
     End Sub
 
     Private Sub Frm_PreciosLC_InfUltCompras_Mt_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
 
+        'If ModoProductos Then
+        '    Me.WindowState = FormWindowState.Normal
+        '    Me.StartPosition = FormStartPosition.CenterScreen
+        '    Me.Size = New Size(1040, 627)
+        'Else
+        '    Me.WindowState = FormWindowState.Maximized
+        'End If
+
         DFechaInicio.Value = Date.Now
         DFechaTermino.Value = Date.Now
+
+        Btn_VerInformeXProductos.Visible = Not ModoProductos
+        Btn_Procesar.Visible = Not ModoProductos
 
         Dim _Arr_GRCvsUltGR(,) As String = {{"", "Mostrar todo"},
                                    {"1", "Sin Diferencia"},
@@ -135,8 +152,6 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
         AddHandler Grilla.CellValueChanged, AddressOf Sb_Grilla_Seleccion_CellValueChanged
         AddHandler GrillaProdActualizados.CellValueChanged, AddressOf Sb_Grilla_Seleccion_CellValueChanged
-
-        Btn_VerInformeXProductos.Visible = Not ModoProductos
 
     End Sub
 
@@ -407,9 +422,7 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
         If ModoGRC Then
             Consulta_sql = My.Resources.Recursos_Lista_LC.Ult_Compras_GRC__New
-        End If
-
-        If ModoProductos Then
+        ElseIf ModoProductos Then
             Consulta_sql = My.Resources.Recursos_Lista_LC.Ult_Compras_X_Productos
         End If
 
@@ -720,6 +733,9 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             .Columns("NOCLALIBPR").Visible = True
             .Columns("NOKOZOPR").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            .ScrollBars = ScrollBars.Both
+            .AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
 
         End With
 
@@ -1578,7 +1594,25 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
     End Sub
 
     Private Sub Chk_QuitarSeleccionados_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_QuitarSeleccionados.CheckedChanged
+
+        If Chk_QuitarSeleccionados.Checked AndAlso Chk_MostrarSoloSeleccionados.Checked Then
+            Chk_MostrarSoloSeleccionados.Checked = False
+            Return
+        End If
+
         Sb_Aplicar_Filtros()
+
+    End Sub
+
+    Private Sub Chk_MostrarSoloSeleccionados_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_MostrarSoloSeleccionados.CheckedChanged
+
+        If Chk_MostrarSoloSeleccionados.Checked AndAlso Chk_QuitarSeleccionados.Checked Then
+            Chk_QuitarSeleccionados.Checked = False
+            Return
+        End If
+
+        Sb_Aplicar_Filtros()
+
     End Sub
 
     Private Sub Chk_GRCconFCC_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_GRCconFCC.CheckedChanged
@@ -2459,11 +2493,14 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             Return String.Empty
         End If
 
+        If Chk_MostrarSoloSeleccionados.Checked Then
+            Return NombreColSeleccion & " = True"
+        End If
+
         If Chk_QuitarSeleccionados.Checked Then
             Return NombreColSeleccion & " = False"
         End If
 
-        'Return NombreColSeleccion & " = True"
         Return String.Empty
 
     End Function
@@ -2735,9 +2772,62 @@ values
         End If
 
         Dim Fm As New Frm_PreciosLC_InfUltCompras_Mt
+        Fm.ModoGRC = False
         Fm.ModoProductos = True
+        Fm.WindowState = FormWindowState.Normal
+        Fm.StartPosition = FormStartPosition.CenterScreen
+        Fm.Size = New Size(1056, 666)
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
     End Sub
+
+    Private Sub Frm_PreciosLC_InfUltCompras_Mt_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+
+        If _LayoutGrillasInicializado Then
+            Return
+        End If
+
+        _LayoutGrillasInicializado = True
+
+        BeginInvoke(New MethodInvoker(AddressOf Sb_Inicializar_Layout_Grillas))
+
+    End Sub
+
+    Private Sub Sb_Inicializar_Layout_Grillas()
+
+        Dim _TabActual As Integer = TabControl1.SelectedTabIndex
+
+        Try
+            TabControl1.SelectedTabIndex = 0
+            Sb_Refrescar_Layout_Grilla(Grilla)
+
+            TabControl1.SelectedTabIndex = 1
+            Sb_Refrescar_Layout_Grilla(GrillaProdActualizados)
+
+        Finally
+            TabControl1.SelectedTabIndex = _TabActual
+        End Try
+
+    End Sub
+
+    Private Sub Sb_Refrescar_Layout_Grilla(_Grilla As DataGridView)
+
+        If IsNothing(_Grilla) Then
+            Return
+        End If
+
+        _Grilla.SuspendLayout()
+
+        Try
+            _Grilla.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None
+            _Grilla.ScrollBars = ScrollBars.Both
+            _Grilla.Refresh()
+            _Grilla.PerformLayout()
+        Finally
+            _Grilla.ResumeLayout()
+        End Try
+
+    End Sub
+
 End Class

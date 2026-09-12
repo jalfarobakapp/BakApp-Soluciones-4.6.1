@@ -41,8 +41,15 @@ SELECT DISTINCT
        ,Mpen.PM
        ,Fcc.TIDO                As 'TIDO_FCC'
        ,Fcc.NUDO                As 'NUDO_FCC'
-	   ,ROUND(Ddo.POTENCIA,0)   AS 'Flete_Bruto'
-       ,CAST(0 AS FLOAT)        As 'Flete_Neto'
+
+       ,ISNULL((
+                SELECT ROUND(SUM(CR.VALDCR) * 1.0 / NULLIF(Ddo.CAPRCO1,0),5)
+                FROM MAEDCR CR
+                WHERE CR.IDDDODCR = Ddo.IDMAEDDO
+        ),0) AS 'Flete_Neto'	  
+	   ,ROUND(Ddo.POTENCIA,0)   AS 'Potencia'
+	   ,CAST(0 AS FLOAT)	    AS 'Flete_Bruto'
+
        ,CAST(0 AS FLOAT)        As 'Costo_FleteBrutoAct'
        ,CAST(0 AS FLOAT)        As 'Costo_FleteNetoAct'
        ,CAST('' AS VARCHAR(13)) As 'CodigoOferta'
@@ -130,15 +137,15 @@ INNER JOIN MAEPR Mp ON Mp.KOPR = T.KOPRCT;
 
 
 ---------------------------------------------------------
--- FLETE NETO (CORREGIDO CON IMPUESTOS)
+-- FLETE BRUTO 
 ---------------------------------------------------------
 
 UPDATE #Tbl_Paso2
-SET Flete_Neto =
+SET Flete_Bruto =
     CASE 
-        WHEN IMPUESTOS = 0 THEN Flete_Bruto
+        WHEN IVA = 0 THEN Flete_Neto
         ELSE ROUND(
-                ISNULL(Flete_Bruto,0) / (1 + IVA),
+                ISNULL(Flete_Neto,0) * (1 + IVA),
             5)
     END;
 
@@ -193,11 +200,14 @@ INNER JOIN TABPP Pp
         ON Pp.KOLT = P.KOLT;
 
 ---------------------------------------------------------
--- PRECIO BRUTO REAL
+-- PRECIO NETO Y BRUTO REAL
+-- SE AGREGA EL VALOR DEL FLETE NETO AL NETO
 ---------------------------------------------------------
 
 UPDATE B
-SET Precio_Neto_UN = ROUND(B.VANELI/B.CAPRCO1,5), Precio_Bruto_UN = ROUND(B.VABRLI/B.CAPRCO1,5)
+SET 
+	Precio_Neto_UN = ROUND(B.VANELI/B.CAPRCO1,5)+Flete_Neto, 
+	Precio_Bruto_UN = ROUND(B.VABRLI/B.CAPRCO1,5)
 FROM #Tbl_Paso2 B
 
 
@@ -269,9 +279,9 @@ SELECT
     ISNULL(Lc.Mcosto,0) AS 'Mcosto',
 
     -- Diferencias GRC vs GRC anterior
-    ROUND((T2.Precio_Neto_UN - ISNULL(GRC_Ant.Precio_Neto_UN_Ant,0)),2) AS 'Dif_UCCValor',
-    CASE WHEN ISNULL(GRC_Ant.Precio_Neto_UN_Ant,0)=0 THEN 0
-         ELSE ROUND(((T2.Precio_Neto_UN - GRC_Ant.Precio_Neto_UN_Ant)/T2.Precio_Neto_UN)*100,2)/100
+    ROUND((T2.Precio_Neto_UN - (ISNULL(GRC_Ant.Precio_Neto_UN_Ant,0)+ISNULL(+GRC_Ant.Flete_Neto_Ant,0))),2) AS 'Dif_UCCValor',
+    CASE WHEN (ISNULL(GRC_Ant.Precio_Neto_UN_Ant,0)+ISNULL(+GRC_Ant.Flete_Neto_Ant,0))=0 THEN 0
+         ELSE ROUND(((T2.Precio_Neto_UN - (GRC_Ant.Precio_Neto_UN_Ant+GRC_Ant.Flete_Neto_Ant))/T2.Precio_Neto_UN)*100,2)/100
     END AS 'Dif_UCCPorc',
 
     -- Tiene FCC (solo GRC actual)
@@ -288,24 +298,24 @@ SELECT
 
 	ROUND((ISNULL(Venta_Ant.PPPRNERE1_Vta,0) - (T2.Precio_Neto_UN)),2) AS 'Margen_Valor',
     CASE WHEN ISNULL(Venta_Ant.PPPRNERE1_Vta,0)=0 THEN 0
-         ELSE ROUND(((Venta_Ant.PPPRNERE1_Vta - (T2.Precio_Neto_UN+T2.Flete_Neto))/Venta_Ant.PPPRNERE1_Vta)*100,2)/100
+         ELSE ROUND(((Venta_Ant.PPPRNERE1_Vta - (T2.Precio_Neto_UN))/Venta_Ant.PPPRNERE1_Vta)*100,2)/100
     END AS 'Margen_Porc',
     CASE WHEN ISNULL(T2.Precio_Neto_UN,0)+ISNULL(T2.Flete_Neto,0)=0 THEN 0
-         ELSE ROUND(((Venta_Ant.PPPRNERE1_Vta - (T2.Precio_Neto_UN+T2.Flete_Neto))/(T2.Precio_Neto_UN+T2.Flete_Neto))*100,2)/100
+         ELSE ROUND(((Venta_Ant.PPPRNERE1_Vta - (T2.Precio_Neto_UN))/(T2.Precio_Neto_UN))*100,2)/100
     END AS 'Markup_Porc',
 
 	CASE WHEN ISNULL(T2.MontoOferta_Neto,0)=0 THEN 0
 		ELSE ROUND((ISNULL(T2.MontoOferta_Neto,0) - (T2.Precio_Neto_UN)),2) 
 	END AS 'MargenOferta_Valor',
     CASE WHEN ISNULL(T2.MontoOferta_Neto,0)=0 THEN 0
-         ELSE ROUND(((T2.MontoOferta_Neto - (T2.Precio_Neto_UN+T2.Flete_Neto))/T2.MontoOferta_Neto)*100,2)/100
+         ELSE ROUND(((T2.MontoOferta_Neto - (T2.Precio_Neto_UN))/T2.MontoOferta_Neto)*100,2)/100
     END AS 'MargenOferta_Porc',
     CASE 
 		WHEN ISNULL(T2.MontoOferta_Neto,0)=0 THEN 0 
 		ELSE 
 			CASE 
 				WHEN ISNULL(T2.Precio_Neto_UN,0)+ISNULL(T2.Flete_Neto,0)=0 THEN 0
-				ELSE ROUND(((T2.MontoOferta_Neto - (T2.Precio_Neto_UN+T2.Flete_Neto))/(T2.Precio_Neto_UN+T2.Flete_Neto))*100,2)/100
+				ELSE ROUND(((T2.MontoOferta_Neto - (T2.Precio_Neto_UN))/(T2.Precio_Neto_UN))*100,2)/100
 			END 
 	END AS 'MarkupOferta_Porc',
     -- GRC anterior
@@ -334,6 +344,11 @@ CROSS APPLY (
         Ddo.PPPRNE			AS 'PPPRNE_Ant',
 		ROUND(Ddo.VANELI/Ddo.CAPRCO1,2) As 'Precio_Neto_UN_Ant',
 		ROUND(Ddo.VABRLI/Ddo.CAPRCO1,0) As 'Precio_Bruto_UN_Ant',
+        ISNULL((
+                SELECT ROUND(SUM(CR.VALDCR) * 1.0 / NULLIF(Ddo.CAPRCO1,0),5)
+                FROM MAEDCR CR
+                WHERE CR.IDDDODCR = Ddo.IDMAEDDO
+        ),0) AS 'Flete_Neto_Ant',
 		Ddo.VANELI			As 'VANELI_Ant',
 		Ddo.VABRLI			As 'VABRLI_Ant',
         Ddo.PPPRNERE1		AS 'PPPRNERE1_Ant',
