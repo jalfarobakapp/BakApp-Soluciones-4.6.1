@@ -85,20 +85,24 @@ Public Class Frm_Configuracion
         End If
 
         Txt_Vendedor.Tag = _Cl_ConfiguracionLocal.Configuracion.Vendedor
-        Txt_Vendedor.Text = _Cl_ConfiguracionLocal.Configuracion.NoVendedor
+        Txt_Vendedor.Text = If(_Cl_ConfiguracionLocal.Configuracion.NoVendedor, "")
 
         Txt_Responsable.Tag = _Cl_ConfiguracionLocal.Configuracion.Responsable
-        Txt_Responsable.Text = _Cl_ConfiguracionLocal.Configuracion.NomResponsable
+        Txt_Responsable.Text = If(_Cl_ConfiguracionLocal.Configuracion.NomResponsable, "")
 
-        Txt_RutaEtiquetas.Text = _Cl_ConfiguracionLocal.Configuracion.RutaEtiquetas
-        Cmb_DocEmitir.SelectedValue = _Cl_ConfiguracionLocal.Configuracion.DocEmitir
+        Txt_RutaEtiquetas.Text = If(_Cl_ConfiguracionLocal.Configuracion.RutaEtiquetas, "")
+        If _Cl_ConfiguracionLocal.Configuracion.DocEmitir IsNot Nothing Then
+            Cmb_DocEmitir.SelectedValue = _Cl_ConfiguracionLocal.Configuracion.DocEmitir
+        Else
+            Cmb_DocEmitir.SelectedIndex = -1 ' Lo deja en blanco / sin selección
+        End If
         Chk_Facturar.Checked = _Cl_ConfiguracionLocal.Configuracion.Facturar
 
         Txt_Concepto_R.Tag = _Cl_ConfiguracionLocal.Configuracion.Concepto_R
-        Txt_Concepto_R.Text = _Cl_ConfiguracionLocal.Configuracion.Concepto_R
+        Txt_Concepto_R.Text = If(_Cl_ConfiguracionLocal.Configuracion.Concepto_R, "")
 
         Txt_Concepto_D.Tag = _Cl_ConfiguracionLocal.Configuracion.Concepto_D
-        Txt_Concepto_D.Text = _Cl_ConfiguracionLocal.Configuracion.Concepto_D
+        Txt_Concepto_D.Text = If(_Cl_ConfiguracionLocal.Configuracion.Concepto_D, "")
 
         With _Cl_ConfiguracionLocal.Configuracion.Pago
             Txt_ModalidadPago.Tag = .Modalidad

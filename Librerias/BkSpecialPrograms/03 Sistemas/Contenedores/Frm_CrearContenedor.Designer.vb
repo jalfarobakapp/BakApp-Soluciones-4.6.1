@@ -138,7 +138,7 @@ Partial Class Frm_CrearContenedor
         Me.Txt_NombreContenedor.Location = New System.Drawing.Point(93, 32)
         Me.Txt_NombreContenedor.Name = "Txt_NombreContenedor"
         Me.Txt_NombreContenedor.PreventEnterBeep = True
-        Me.Txt_NombreContenedor.Size = New System.Drawing.Size(527, 22)
+        Me.Txt_NombreContenedor.Size = New System.Drawing.Size(527, 26)
         Me.Txt_NombreContenedor.TabIndex = 1
         '
         'LabelX1
@@ -168,12 +168,12 @@ Partial Class Frm_CrearContenedor
         Me.Txt_Contenedor.Location = New System.Drawing.Point(93, 3)
         Me.Txt_Contenedor.Name = "Txt_Contenedor"
         Me.Txt_Contenedor.PreventEnterBeep = True
-        Me.Txt_Contenedor.Size = New System.Drawing.Size(100, 22)
+        Me.Txt_Contenedor.Size = New System.Drawing.Size(100, 26)
         Me.Txt_Contenedor.TabIndex = 0
         '
         'Frm_CrearContenedor
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(653, 143)
         Me.Controls.Add(Me.GroupPanel1)

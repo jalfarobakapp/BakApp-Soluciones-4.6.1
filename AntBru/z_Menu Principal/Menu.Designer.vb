@@ -89,6 +89,8 @@ Partial Class Menu
         Me.Btn_CrucePagoMasivos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_EliminarDoc = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CrearFCV01a02 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CrearFCCdesdeOCC = New DevComponents.DotNetBar.ButtonItem()
+        Me.ButtonItem7 = New DevComponents.DotNetBar.ButtonItem()
         Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
@@ -112,7 +114,6 @@ Partial Class Menu
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
         Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_CrearFCCdesdeOCC = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -203,9 +204,10 @@ Partial Class Menu
         Me.Panel_Menu.ForeColor = System.Drawing.Color.Black
         Me.Panel_Menu.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.MnuEspecialOtros})
         Me.Panel_Menu.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Panel_Menu.Location = New System.Drawing.Point(3, 90)
+        Me.Panel_Menu.Location = New System.Drawing.Point(4, 111)
+        Me.Panel_Menu.Margin = New System.Windows.Forms.Padding(4)
         Me.Panel_Menu.Name = "Panel_Menu"
-        Me.Panel_Menu.Size = New System.Drawing.Size(868, 454)
+        Me.Panel_Menu.Size = New System.Drawing.Size(1157, 559)
         Me.Panel_Menu.TabIndex = 2
         Me.Panel_Menu.Text = "MetroTilePanel1"
         '
@@ -659,9 +661,10 @@ Partial Class Menu
         Me.Barra.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Barra.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnCambiarDeUsuario, Me.Btn_FichaFucnionario, Me.Btn_Actualizar_BakApp, Me.Btn_Prueba_Monto_Palabra, Me.Btn_CambioDeEmpresa, Me.BtnTeamviewer, Me.Btn_Cambio_Empresa, Me.Btn_Desconectar_Bases, Me.Btn_Permisos_Remotos, Me.BtnConfiguracion, Me.Btn_Cerrar_Sistema})
-        Me.Barra.Location = New System.Drawing.Point(0, 594)
+        Me.Barra.Location = New System.Drawing.Point(0, 740)
+        Me.Barra.Margin = New System.Windows.Forms.Padding(4)
         Me.Barra.Name = "Barra"
-        Me.Barra.Size = New System.Drawing.Size(845, 57)
+        Me.Barra.Size = New System.Drawing.Size(1127, 61)
         Me.Barra.Stretch = True
         Me.Barra.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Barra.TabIndex = 11
@@ -815,9 +818,10 @@ Partial Class Menu
         Me.Lbl_Info_Bakapp.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Info_Bakapp.Font = New System.Drawing.Font("Trebuchet MS", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Lbl_Info_Bakapp.ForeColor = System.Drawing.Color.DimGray
-        Me.Lbl_Info_Bakapp.Location = New System.Drawing.Point(551, 565)
+        Me.Lbl_Info_Bakapp.Location = New System.Drawing.Point(735, 695)
+        Me.Lbl_Info_Bakapp.Margin = New System.Windows.Forms.Padding(4)
         Me.Lbl_Info_Bakapp.Name = "Lbl_Info_Bakapp"
-        Me.Lbl_Info_Bakapp.Size = New System.Drawing.Size(297, 24)
+        Me.Lbl_Info_Bakapp.Size = New System.Drawing.Size(396, 30)
         Me.Lbl_Info_Bakapp.TabIndex = 13
         Me.Lbl_Info_Bakapp.Text = "<font color=""#A5A5A5"">© Bakapp / Soluciones de integración informática</font>"
         '
@@ -827,14 +831,14 @@ Partial Class Menu
         Me.ButtonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.ButtonX1.Image = CType(resources.GetObject("ButtonX1.Image"), System.Drawing.Image)
         Me.ButtonX1.ImageAlt = CType(resources.GetObject("ButtonX1.ImageAlt"), System.Drawing.Image)
-        Me.ButtonX1.Location = New System.Drawing.Point(489, 16)
+        Me.ButtonX1.Location = New System.Drawing.Point(652, 20)
+        Me.ButtonX1.Margin = New System.Windows.Forms.Padding(4)
         Me.ButtonX1.Name = "ButtonX1"
-        Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
+        Me.ButtonX1.Size = New System.Drawing.Size(179, 39)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP, Me.Btn_PDARMovil, Me.Btn_SobreStock, Me.Btn_CrucePagoMasivos, Me.Btn_EliminarDoc, Me.Btn_CrearFCV01a02, Me.Btn_CrearFCCdesdeOCC})
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP, Me.Btn_PDARMovil, Me.Btn_SobreStock, Me.Btn_CrucePagoMasivos, Me.Btn_EliminarDoc, Me.Btn_CrearFCV01a02, Me.Btn_CrearFCCdesdeOCC, Me.ButtonItem7})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
-        Me.ButtonX1.Visible = False
         '
         'Btn_Monisiones
         '
@@ -996,6 +1000,18 @@ Partial Class Menu
         Me.Btn_CrearFCV01a02.Name = "Btn_CrearFCV01a02"
         Me.Btn_CrearFCV01a02.Text = "Crear FCV desde empresa A a empresa B"
         '
+        'Btn_CrearFCCdesdeOCC
+        '
+        Me.Btn_CrearFCCdesdeOCC.GlobalItem = False
+        Me.Btn_CrearFCCdesdeOCC.Name = "Btn_CrearFCCdesdeOCC"
+        Me.Btn_CrearFCCdesdeOCC.Text = "FCC desde OCC"
+        '
+        'ButtonItem7
+        '
+        Me.ButtonItem7.GlobalItem = False
+        Me.ButtonItem7.Name = "ButtonItem7"
+        Me.ButtonItem7.Text = "FERIAS"
+        '
         'Tiempo_Actualizar_BakApp
         '
         Me.Tiempo_Actualizar_BakApp.Interval = 2000
@@ -1005,9 +1021,10 @@ Partial Class Menu
         Me.Menu_BakApp.AntiAlias = True
         Me.Menu_BakApp.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Menu_BakApp.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Menu_Extra})
-        Me.Menu_BakApp.Location = New System.Drawing.Point(273, 16)
+        Me.Menu_BakApp.Location = New System.Drawing.Point(364, 20)
+        Me.Menu_BakApp.Margin = New System.Windows.Forms.Padding(4)
         Me.Menu_BakApp.Name = "Menu_BakApp"
-        Me.Menu_BakApp.Size = New System.Drawing.Size(210, 25)
+        Me.Menu_BakApp.Size = New System.Drawing.Size(280, 29)
         Me.Menu_BakApp.Stretch = True
         Me.Menu_BakApp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Menu_BakApp.TabIndex = 52
@@ -1163,9 +1180,10 @@ Partial Class Menu
         Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX1.Font = New System.Drawing.Font("Century Gothic", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LabelX1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
-        Me.LabelX1.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX1.Location = New System.Drawing.Point(4, 4)
+        Me.LabelX1.Margin = New System.Windows.Forms.Padding(4)
         Me.LabelX1.Name = "LabelX1"
-        Me.LabelX1.Size = New System.Drawing.Size(245, 49)
+        Me.LabelX1.Size = New System.Drawing.Size(327, 60)
         Me.LabelX1.TabIndex = 53
         Me.LabelX1.Text = "<font color=""#349FCE""><b>MENU PRINCIPAL</b></font>"
         '
@@ -1185,9 +1203,10 @@ Partial Class Menu
         Me.Btn_Themas.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Themas.Image = CType(resources.GetObject("Btn_Themas.Image"), System.Drawing.Image)
         Me.Btn_Themas.ImageAlt = CType(resources.GetObject("Btn_Themas.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Themas.Location = New System.Drawing.Point(3, 557)
+        Me.Btn_Themas.Location = New System.Drawing.Point(4, 686)
+        Me.Btn_Themas.Margin = New System.Windows.Forms.Padding(4)
         Me.Btn_Themas.Name = "Btn_Themas"
-        Me.Btn_Themas.Size = New System.Drawing.Size(141, 32)
+        Me.Btn_Themas.Size = New System.Drawing.Size(188, 39)
         Me.Btn_Themas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Themas.TabIndex = 54
         Me.Btn_Themas.Text = "Apariencia (Themas)"
@@ -1201,9 +1220,10 @@ Partial Class Menu
         '
         Me.ReflectionLabel1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.ReflectionLabel1.ForeColor = System.Drawing.Color.Black
-        Me.ReflectionLabel1.Location = New System.Drawing.Point(687, 16)
+        Me.ReflectionLabel1.Location = New System.Drawing.Point(916, 20)
+        Me.ReflectionLabel1.Margin = New System.Windows.Forms.Padding(4)
         Me.ReflectionLabel1.Name = "ReflectionLabel1"
-        Me.ReflectionLabel1.Size = New System.Drawing.Size(142, 71)
+        Me.ReflectionLabel1.Size = New System.Drawing.Size(189, 87)
         Me.ReflectionLabel1.TabIndex = 18
         Me.ReflectionLabel1.Text = "<font size=""+20"" color=""#474747"">BakApp</font><font color=""#3F3F3F""></font>"
         '
@@ -1219,9 +1239,10 @@ Partial Class Menu
         Me.Metro_Bar_Color.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 651)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 801)
+        Me.Metro_Bar_Color.Margin = New System.Windows.Forms.Padding(4)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
-        Me.Metro_Bar_Color.Size = New System.Drawing.Size(845, 22)
+        Me.Metro_Bar_Color.Size = New System.Drawing.Size(1127, 27)
         Me.Metro_Bar_Color.TabIndex = 55
         Me.Metro_Bar_Color.Text = "MetroStatusBar1"
         '
@@ -1243,21 +1264,16 @@ Partial Class Menu
         '
         Me.Lbl_NombreEmpresaActiva.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_NombreEmpresaActiva.Font = New System.Drawing.Font("Arial", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Lbl_NombreEmpresaActiva.Location = New System.Drawing.Point(3, 49)
+        Me.Lbl_NombreEmpresaActiva.Location = New System.Drawing.Point(4, 60)
+        Me.Lbl_NombreEmpresaActiva.Margin = New System.Windows.Forms.Padding(4)
         Me.Lbl_NombreEmpresaActiva.Name = "Lbl_NombreEmpresaActiva"
-        Me.Lbl_NombreEmpresaActiva.Size = New System.Drawing.Size(620, 23)
+        Me.Lbl_NombreEmpresaActiva.Size = New System.Drawing.Size(827, 28)
         Me.Lbl_NombreEmpresaActiva.TabIndex = 56
         Me.Lbl_NombreEmpresaActiva.Text = "NOMBRE DE LA EMPRESA... ESTE ES EL NOMBRE DE LA EM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
-        'Btn_CrearFCCdesdeOCC
-        '
-        Me.Btn_CrearFCCdesdeOCC.GlobalItem = False
-        Me.Btn_CrearFCCdesdeOCC.Name = "Btn_CrearFCCdesdeOCC"
-        Me.Btn_CrearFCCdesdeOCC.Text = "FCC desde OCC"
-        '
         'Menu
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.Controls.Add(Me.Lbl_NombreEmpresaActiva)
         Me.Controls.Add(Me.Btn_Themas)
@@ -1269,9 +1285,10 @@ Partial Class Menu
         Me.Controls.Add(Me.Barra)
         Me.Controls.Add(Me.Panel_Menu)
         Me.Controls.Add(Me.Metro_Bar_Color)
-        Me.MinimumSize = New System.Drawing.Size(845, 633)
+        Me.Margin = New System.Windows.Forms.Padding(4)
+        Me.MinimumSize = New System.Drawing.Size(1127, 779)
         Me.Name = "Menu"
-        Me.Size = New System.Drawing.Size(845, 673)
+        Me.Size = New System.Drawing.Size(1127, 828)
         CType(Me.Barra, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Menu_BakApp, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -1363,4 +1380,5 @@ Partial Class Menu
     Friend WithEvents Lbl_NombreEmpresaActiva As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_CrearFCV01a02 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_CrearFCCdesdeOCC As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ButtonItem7 As DevComponents.DotNetBar.ButtonItem
 End Class

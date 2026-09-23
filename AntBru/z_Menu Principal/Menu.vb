@@ -1836,4 +1836,10 @@ Where Idmaeedo = {_Idmaeedo_FCV}"
 
     End Sub
 
+    Private Sub ButtonItem7_Click(sender As Object, e As EventArgs) Handles ButtonItem7.Click
+        Dim Fm_Pass As New Frm_Ferias
+        Fm_Pass.ShowDialog(Me)
+        Fm_Pass.Dispose()
+
+    End Sub
 End Class

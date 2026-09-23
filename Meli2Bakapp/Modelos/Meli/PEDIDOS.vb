@@ -18,4 +18,7 @@
     Public Property LAST_NAME As String
     Public Property DIRECCION As String
     Public Property COMUNA As String
+    Public Property DocEmitir As String = Nothing
+
+
 End Class
