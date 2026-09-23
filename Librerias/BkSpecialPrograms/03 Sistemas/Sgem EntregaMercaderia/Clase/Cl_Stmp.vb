@@ -282,6 +282,342 @@ Public Class Cl_Stmp
             _Mensaje_Stem.EsCorrecto = True
             _Mensaje_Stem.Detalle = "Documento grabado correctamente"
             _Mensaje_Stem.Mensaje = "Se crea Ticket Nro " & _Zw_Stmp_Enc.Numero & " - (" & _Zw_Stmp_Enc.Tido & "-" & _Zw_Stmp_Enc.Nudo & ")"
+            _Mensaje_Stem.Id = _Zw_Stmp_Enc.Id
+
+        Catch ex As Exception
+
+            _Mensaje_Stem.EsCorrecto = False
+            _Mensaje_Stem.Detalle = "Error al grabar"
+            _Mensaje_Stem.Mensaje = ex.Message
+            _Zw_Stmp_Enc.Id = 0
+
+            If Not IsNothing(myTrans) Then myTrans.Rollback()
+
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+        End Try
+
+        Return _Mensaje_Stem
+
+    End Function
+
+    Function Fx_Grabar_Nuevo_Tickets_CambiarBodegaSeaGarden2MeatGarden() As LsValiciones.Mensajes
+
+        Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+        Consulta_sql = String.Empty
+
+
+        Consulta_sql = "Select Top 1 EMPRESA As Empresa, SULIDO As Sucursal, BOSULIDO As Bodega From MAEDDO Where IDMAEEDO = " & _Zw_Stmp_Enc.Idmaeedo
+        Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _Empresa As String
+        Dim _Sucursal As String
+        Dim _Bodega As String
+
+        If Not IsNothing(_Row_Maeddo) Then
+
+            _Empresa = _Row_Maeddo.Item("Empresa")
+            _Sucursal = _Row_Maeddo.Item("Sucursal")
+            _Bodega = _Row_Maeddo.Item("Bodega")
+
+            If String.IsNullOrEmpty(_Empresa) Or String.IsNullOrEmpty(_Sucursal) Or String.IsNullOrEmpty(_Bodega) Then
+                Throw New ApplicationException("No se pudo obtener la empresa, sucursal o bodega de la nota de venta")
+            End If
+
+        Else
+            Throw New ApplicationException("No se encontró información de la nota de venta")
+        End If
+
+        Dim _Empresa_Ori As String = _Empresa
+        Dim _Sucursal_Ori As String = _Sucursal
+        Dim _Bodega_Ori As String = _Bodega
+
+        Dim EmpSucBod As String = _Empresa & ";" & _Sucursal & ";" & _Bodega
+
+        Consulta_sql = "Select Tabla, DescripcionTabla, CodigoTabla, NombreTabla" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_TablaDeCaracterizaciones" & vbCrLf &
+                           "Where Tabla = 'SEA2MEATGARDEN' And NombreTabla = '" & EmpSucBod & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row) Then
+            Throw New ApplicationException("No se encontró la caracterización para la empresa, sucursal y bodega: " & EmpSucBod)
+        End If
+
+        'Sb_ClonarNVV(_Idmaeedo)
+
+        Dim _ESB = _Row.Item("CodigoTabla").ToString.Split(";"c)
+
+        Dim _Empresa_Dest = _ESB(0).Trim
+        Dim _Sucursal_Dest = _ESB(1).Trim
+        Dim _Bodega_Dest = _ESB(2).Trim
+
+
+        Dim myTrans As SqlClient.SqlTransaction
+        Dim Comando As SqlClient.SqlCommand
+
+        Dim Cn2 As New SqlConnection
+        Dim SQL_ServerClass As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        SQL_ServerClass.Sb_Abrir_Conexion(Cn2)
+
+        Try
+
+            myTrans = Cn2.BeginTransaction()
+
+            With _Zw_Stmp_Enc
+
+                .Numero = Fx_NvoNro_Stmp()
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stmp_Enc (Empresa,Sucursal,Numero,CodFuncionario_Crea,Idmaeedo,Tido," &
+                               "Nudo,Endo,Suendo,FechaCreacion,Estado,Secueven,Facturar,DocEmitir,Fecha_Facturar,PagarAuto,Idmaedpce_Paga,CodFuncionario_Paga) Values " &
+                               "('" & .Empresa & "','" & .Sucursal & "','" & .Numero & "','" & .CodFuncionario_Crea & "'," & .Idmaeedo &
+                               ",'" & .Tido & "','" & .Nudo & "','" & .Endo & "','" & .Suendo & "','" & Format(.FechaCreacion, "yyyyMMdd HH:mm:ss") & "'" &
+                               ",'" & .Estado & "','" & .Secueven & "'," & Convert.ToInt32(.Facturar) & ",'" & .DocEmitir & "','" & Format(.Fecha_Facturar, "yyyyMMdd") & "'" &
+                               "," & Convert.ToInt32(.PagarAuto) & "," & .Idmaedpce_Paga & ",'" & .CodFuncionario_Paga & "')"
+
+                Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                Comando.Transaction = myTrans
+                Comando.ExecuteNonQuery()
+
+                'Imports System.Data
+                'Imports System.Data.SqlClient
+
+                Comando = New System.Data.SqlClient.SqlCommand("SELECT @@IDENTITY AS 'Identity'", Cn2)
+                Comando.Transaction = myTrans
+                Dim dfd1 As System.Data.SqlClient.SqlDataReader = Comando.ExecuteReader()
+                While dfd1.Read()
+                    .Id = dfd1("Identity")
+                End While
+                dfd1.Close()
+
+            End With
+
+            For Each _Fila As Zw_Stmp_Det In Zw_Stmp_Det
+
+                With _Fila
+
+                    .Id_Enc = _Zw_Stmp_Enc.Id
+
+                    If Not String.IsNullOrEmpty(.Codigo) Then
+
+                        Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Stmp_Det (Id_Enc,Idmaeedo,Idmaeddo,Codigo,Descripcion,Nulido,Udtrpr,RtuVariable,Rludpr" &
+                                       ",Caprco1_Ori,Caprco1_Real,Udpr,Ud01pr,Caprco2_Ori,Caprco2_Real,Ud02pr,Pickeado,EnProceso) Values " &
+                                       "(" & .Id_Enc & "," & .Idmaeedo & "," & .Idmaeddo & ",'" & .Codigo & "','" & .Descripcion & "'" &
+                                       ",'" & .Nulido & "'," & .Udtrpr & "," & De_Num_a_Tx_01(.RtuVariable, False, 5) & "," & De_Num_a_Tx_01(.Rludpr, False, 5) &
+                                       "," & De_Num_a_Tx_01(.Caprco1_Ori, False, 5) &
+                                       "," & De_Num_a_Tx_01(.Caprco1_Real, False, 5) &
+                                       ",'" & .Udpr & "'" &
+                                       ",'" & .Ud01pr & "'" &
+                                       "," & De_Num_a_Tx_01(.Caprco2_Ori, False, 5) &
+                                       "," & De_Num_a_Tx_01(.Caprco2_Real, False, 5) &
+                                       ",'" & .Ud02pr & "'" &
+                                       ",0," & Convert.ToInt32(.EnProceso) & ")"
+
+                        Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+                        Comando.Transaction = myTrans
+                        Comando.ExecuteNonQuery()
+
+                    End If
+
+                End With
+
+            Next
+
+
+            '            Consulta_sql = $"
+
+            'Declare @Idmaeedo Int = {_Zw_Stmp_Enc.Idmaeedo}
+
+            'Update MAEEDO Set EMPRESA = '{_Empresa_Dest}',SUDO = '{_Sucursal_Dest}' 
+            'Where IDMAEEDO = @Idmaeedo
+
+            'Update MAEDDO Set EMPRESA = '{_Empresa_Dest}',SULIDO = '{_Sucursal_Dest}',BOSULIDO = '{_Bodega_Dest}' 
+            'Where IDMAEEDO = @Idmaeedo
+
+            'Update {_Global_BaseBk}Zw_Despachos Set Empresa = '{_Empresa_Dest}',Sucursal = '{_Sucursal_Dest}',Bodega = '{_Bodega_Dest}' 
+            'Where Id_Despacho In (Select Id_Despacho From {_Global_BaseBk}Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))
+
+            'Update {_Global_BaseBk}Zw_Stmp_Enc Set Empresa = '{_Empresa_Dest}',Sucursal = '{_Sucursal_Dest}' 
+            'Where Idmaeedo = @Idmaeedo
+
+            'Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa_Ori = Empresa 
+            'Where Idmaeedo = @Idmaeedo
+
+            'Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Dest}' 
+            'Where Idmaeedo = @Idmaeedo
+
+            'UPDATE M
+            'SET 
+            '    M.STOCNV1 = M.STOCNV1 
+            '                + ISNULL(SUMAS.SumaCAPRCO1, 0)
+            '                - ISNULL(RESTAS.RestaCAPRCO1, 0),
+            '    M.STOCNV2 = M.STOCNV2 
+            '                + ISNULL(SUMAS.SumaCAPRCO2, 0)
+            '                - ISNULL(RESTAS.RestaCAPRCO2, 0)
+            'FROM MAEST M WITH (NOLOCK)
+
+            '-- SUMAS desde MAEDDO
+            'OUTER APPLY (
+            '    SELECT 
+            '        SUM(Ddo.CAPRCO1) AS SumaCAPRCO1,
+            '        SUM(Ddo.CAPRCO2) AS SumaCAPRCO2
+            '    FROM MAEDDO Ddo WITH (NOLOCK)
+            '    WHERE 
+            '        Ddo.EMPRESA = M.EMPRESA
+            '        AND Ddo.SULIDO = M.KOSU
+            '        AND Ddo.BOSULIDO = M.KOBO
+            '        AND Ddo.KOPRCT = M.KOPR
+            '        AND Ddo.IDMAEEDO = @Idmaeedo
+            ') SUMAS
+
+            '-- RESTAS desde MAEDDO vía Zw_Docu_Det
+            'OUTER APPLY (
+            '    SELECT 
+            '        SUM(Ddo2.CAPRCO1) AS RestaCAPRCO1,
+            '        SUM(Ddo2.CAPRCO2) AS RestaCAPRCO2
+            '    FROM {_Global_BaseBk}Zw_Docu_Det Det WITH (NOLOCK)
+            '    INNER JOIN MAEDDO Ddo2 WITH (NOLOCK)
+            '        ON Ddo2.IDMAEDDO = Det.Idmaeddo
+            '    WHERE 
+            '        Det.Idmaeedo = @Idmaeedo
+            '        AND Det.Empresa = M.EMPRESA
+            '        AND Det.Sucursal = M.KOSU
+            '        AND Det.Bodega = M.KOBO
+            '        AND Ddo2.KOPRCT = M.KOPR
+            ') RESTAS
+
+            'WHERE 
+            '    M.KOPR IN (
+            '        SELECT DISTINCT KOPRCT 
+            '        FROM MAEDDO 
+            '        WHERE IDMAEEDO = @Idmaeedo
+            '    )
+            '    AND M.KOBO IN ('{_Bodega_Ori}','{_Bodega_Dest}');
+
+            '"
+
+            Consulta_sql = $"
+DECLARE @Idmaeedo INT = {_Zw_Stmp_Enc.Idmaeedo};
+
+---------------------------------------------------------
+-- ACTUALIZACIONES DIRECTAS (sin cambios)
+---------------------------------------------------------
+
+UPDATE MAEEDO
+SET EMPRESA = '{_Empresa_Dest}',
+    SUDO = '{_Sucursal_Dest}'
+WHERE IDMAEEDO = @Idmaeedo;
+
+UPDATE MAEDDO
+SET EMPRESA = '{_Empresa_Dest}',
+    SULIDO = '{_Sucursal_Dest}',
+    BOSULIDO = '{_Bodega_Dest}'
+WHERE IDMAEEDO = @Idmaeedo;
+
+UPDATE {_Global_BaseBk}Zw_Despachos
+SET Empresa = '{_Empresa_Dest}',
+    Sucursal = '{_Sucursal_Dest}',
+    Bodega = '{_Bodega_Dest}'
+WHERE Id_Despacho IN (
+    SELECT Id_Despacho
+    FROM {_Global_BaseBk}Zw_Despachos_Doc
+    WHERE Idrst = @Idmaeedo
+      AND Archidrst = 'MAEEDO'
+);
+
+UPDATE {_Global_BaseBk}Zw_Stmp_Enc
+SET Empresa = '{_Empresa_Dest}',
+    Sucursal = '{_Sucursal_Dest}'
+WHERE Idmaeedo = @Idmaeedo;
+
+UPDATE {_Global_BaseBk}Zw_Docu_Ent
+SET Empresa_Ori = Empresa
+WHERE Idmaeedo = @Idmaeedo;
+
+UPDATE {_Global_BaseBk}Zw_Docu_Ent
+SET Empresa = '{_Empresa_Dest}'
+WHERE Idmaeedo = @Idmaeedo;
+
+---------------------------------------------------------
+-- PRECALCULAR SUMAS Y RESTAS UNA SOLA VEZ
+---------------------------------------------------------
+
+-- SUMAS desde MAEDDO
+WITH SUMAS AS (
+    SELECT 
+        Ddo.EMPRESA,
+        Ddo.SULIDO,
+        Ddo.BOSULIDO,
+        Ddo.KOPRCT,
+        SUM(Ddo.CAPRCO1) AS SumaCAPRCO1,
+        SUM(Ddo.CAPRCO2) AS SumaCAPRCO2
+    FROM MAEDDO Ddo WITH (NOLOCK)
+    WHERE Ddo.IDMAEEDO = @Idmaeedo
+    GROUP BY Ddo.EMPRESA, Ddo.SULIDO, Ddo.BOSULIDO, Ddo.KOPRCT
+),
+
+-- RESTAS desde Zw_Docu_Det + MAEDDO
+RESTAS AS (
+    SELECT 
+        Det.Empresa,
+        Det.Sucursal,
+        Det.Bodega,
+        Ddo2.KOPRCT,
+        SUM(Ddo2.CAPRCO1) AS RestaCAPRCO1,
+        SUM(Ddo2.CAPRCO2) AS RestaCAPRCO2
+    FROM {_Global_BaseBk}Zw_Docu_Det Det WITH (NOLOCK)
+    INNER JOIN MAEDDO Ddo2 WITH (NOLOCK)
+        ON Ddo2.IDMAEDDO = Det.Idmaeddo
+    WHERE Det.Idmaeedo = @Idmaeedo
+    GROUP BY Det.Empresa, Det.Sucursal, Det.Bodega, Ddo2.KOPRCT
+),
+
+-- PRODUCTOS INVOLUCRADOS
+PROD AS (
+    SELECT DISTINCT KOPRCT
+    FROM MAEDDO
+    WHERE IDMAEEDO = @Idmaeedo
+)
+
+---------------------------------------------------------
+-- UPDATE FINAL A MAEST (MUCHO MÁS EFICIENTE)
+---------------------------------------------------------
+
+UPDATE M
+SET 
+    M.STOCNV1 = M.STOCNV1 
+                + ISNULL(S.SumaCAPRCO1, 0)
+                - ISNULL(R.RestaCAPRCO1, 0),
+    M.STOCNV2 = M.STOCNV2 
+                + ISNULL(S.SumaCAPRCO2, 0)
+                - ISNULL(R.RestaCAPRCO2, 0)
+FROM MAEST M WITH (NOLOCK)
+INNER JOIN PROD P ON P.KOPRCT = M.KOPR
+LEFT JOIN SUMAS S 
+    ON S.EMPRESA = M.EMPRESA
+   AND S.SULIDO = M.KOSU
+   AND S.BOSULIDO = M.KOBO
+   AND S.KOPRCT = M.KOPR
+LEFT JOIN RESTAS R
+    ON R.Empresa = M.EMPRESA
+   AND R.Sucursal = M.KOSU
+   AND R.Bodega = M.KOBO
+   AND R.KOPRCT = M.KOPR
+WHERE M.KOBO IN ('{_Bodega_Ori}','{_Bodega_Dest}');
+"
+
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
+            myTrans.Commit()
+            SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
+
+            _Mensaje_Stem.EsCorrecto = True
+            _Mensaje_Stem.Detalle = "Documento grabado correctamente"
+            _Mensaje_Stem.Mensaje = "Se crea Ticket Nro " & _Zw_Stmp_Enc.Numero & " - (" & _Zw_Stmp_Enc.Tido & "-" & _Zw_Stmp_Enc.Nudo & ")"
+            _Mensaje_Stem.Id = _Zw_Stmp_Enc.Id
 
         Catch ex As Exception
 
@@ -719,6 +1055,191 @@ Public Class Cl_Stmp
         Return _Mensaje
 
     End Function
+
+
+    Function Fx_Crear_Ticket_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo As Integer,
+                                                               _Tido As String,
+                                                               _Nudo As String,
+                                                               _Facturar As Boolean,
+                                                               _FechaParaFacturar As DateTime,
+                                                               _TipoPago As String,
+                                                               _Picker As Boolean,
+                                                               _Empresa As String,
+                                                               _Sucursal As String,
+                                                               _CodFuncionario_Crea As String,
+                                                               _PagarAuto As Boolean,
+                                                               _Idmaedpce_Paga As Integer,
+                                                               _CodFuncionario_Paga As String) As LsValiciones.Mensajes
+
+        Dim _FechaServidor As DateTime = FechaDelServidor()
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Stmp_Enc Where Idmaeedo = " & _Idmaeedo & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If Not IsNothing(_Row) Then
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "El documento ya esta ingresado en el sistema de Ticket Picking (Ticket Nro: " & _Row.Item("Numero") & ")"
+            _Mensaje.Detalle = "Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            Return _Mensaje
+        End If
+
+        Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Ent",
+                                                       "Empresa = '" & _Empresa & "'" &
+                                                       " And Idmaeedo = " & _Idmaeedo &
+                                                       " And Tido = '" & _Tido & "'" &
+                                                       " And Nudo = '" & _Nudo & "'")
+
+        If _Reg = 0 Then
+
+            Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+            Dim _TipoEstacion As String = _Global_Row_EstacionBk.Item("TipoEstacion")
+
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad,Tido,Nudo," &
+                           "FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear)" & vbCrLf &
+                           "Select IDMAEEDO,'" & _NombreEquipo & "','" & _TipoEstacion & "',EMPRESA,'?',TIDO,NUDO,LAHORA,0,'',1" & vbCrLf &
+                           "From MAEEDO Where IDMAEEDO = " & _Idmaeedo & vbCrLf &
+                           "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable)" & vbCrLf &
+                           "Select IDMAEDDO,IDMAEEDO,TIDO,NUDO,KOPRCT,NOKOPR,0" & vbCrLf &
+                           "From MAEDDO Where IDMAEEDO = " & _Idmaeedo
+            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql)
+
+        End If
+
+        If _Picker Then
+            Consulta_sql = "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Pickear = 1 Where Idmaeedo = " & _Idmaeedo & " And Tido = '" & _Tido & "' And Nudo = '" & _Nudo & "'"
+            _Sql.Ej_consulta_IDU(Consulta_sql)
+        End If
+
+        Consulta_sql = "Select Edo.IDMAEEDO,Edo.EMPRESA,Edo.TIDO,Edo.NUDO,Edo.ENDO,Edo.SUENDO,Edo.SUDO,Edo.ESDO,Doc.Pickear,HabilitadaFac,FunAutorizaFac,Estaenwms" & vbCrLf &
+                       "From MAEEDO Edo" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Docu_Ent Doc On Edo.IDMAEEDO = Doc.Idmaeedo And Edo.TIDO = Doc.Tido And Edo.NUDO = Doc.Nudo" & vbCrLf &
+                       "Where IDMAEEDO = " & _Idmaeedo
+        Dim _Row_Documento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        If IsNothing(_Row_Documento) Then
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "No se encontro el registro en la tabla MAEEDO, Documento: " & _Row.Item("TIDO") & "-" & _Row.Item("NUDO")
+            _Mensaje.Detalle = "IDMAEEDO " & _Idmaeedo
+            Return _Mensaje
+        End If
+
+        If Not _Row_Documento.Item("Pickear") Then
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Este documento no esta marcado para ser Pickeado en la tabla Zw_Docu_Ent"
+            _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            Return _Mensaje
+        End If
+
+        If _Row_Documento.Item("ESDO") = "C" Then
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = $"Este documento {_Tido}-{_Nudo} se encuentra completamente cerrado"
+            _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+            Return _Mensaje
+        End If
+
+        Try
+            If Not _Global_Row_Configuracion_General.Item("Pickear_SinoEstaEnWMSIgualPickear") Then
+
+                If Not _Row_Documento.Item("Estaenwms") Then
+                    _Mensaje.EsCorrecto = False
+                    _Mensaje.Mensaje = "Este documento no esta ingresado en el WMS" & vbCrLf &
+                                       "Vuelva a intentarlo en 10 segundos y si no se encuentra informe de esta situación al personal de logística"
+                    _Mensaje.Detalle = "Documento: " & _Row_Documento.Item("TIDO") & "-" & _Row_Documento.Item("NUDO")
+                    Return _Mensaje
+                End If
+
+            End If
+        Catch ex As Exception
+
+        End Try
+
+        Dim _Row_Entidad As DataRow = Fx_Traer_Datos_Entidad(_Row_Documento.Item("ENDO"), _Row_Documento.Item("SUENDO"))
+        Dim _Cl_Stem As New Cl_Stmp
+
+        With _Cl_Stem.Zw_Stmp_Enc
+
+            .Empresa = _Empresa
+            .Sucursal = _Sucursal
+            .Idmaeedo = _Row_Documento.Item("IDMAEEDO")
+            .Tido = _Row_Documento.Item("TIDO")
+            .Nudo = _Row_Documento.Item("NUDO")
+            .Endo = _Row_Documento.Item("ENDO")
+            .Suendo = _Row_Documento.Item("SUENDO")
+            .CodFuncionario_Crea = _CodFuncionario_Crea
+            .FechaCreacion = _FechaServidor
+            .Estado = "INGRE" ' Ex PREPA
+            .Facturar = _Facturar
+            .Fecha_Facturar = _FechaParaFacturar
+            .TipoPago = _TipoPago
+
+            Try
+                .Secueven = _Row_Entidad.Item("SECUEVEN")
+            Catch ex As Exception
+                .Secueven = String.Empty
+
+                If _Facturar Then
+                    .Secueven = "NFG"
+                End If
+
+            End Try
+
+            If .Secueven.Contains("NG") Then .DocEmitir = "GDV"
+            If .Secueven.Contains("NB") Then .DocEmitir = "BLV"
+            If .Secueven.Contains("NF") Then .DocEmitir = "FCV"
+
+            If .Tido = "NVI" Then .DocEmitir = "GTI"
+
+            .PagarAuto = _PagarAuto
+            .Idmaedpce_Paga = _Idmaedpce_Paga
+            .CodFuncionario_Paga = _CodFuncionario_Paga
+
+        End With
+
+        Consulta_sql = "Select Ddo.*,Cast((Case When mp.NMARCA = '¡' Then 1 Else 0 End) As Bit) As RtuVariable" & vbCrLf &
+                       "From MAEDDO Ddo" & vbCrLf &
+                       "Left Join " & _Global_BaseBk & "Zw_Docu_Det ZDet On Ddo.IDMAEDDO = ZDet.Idmaeddo And Ddo.TIDO = ZDet.Tido And Ddo.NUDO = ZDet.Nudo" & vbCrLf &
+                       "Left Join MAEPR mp On mp.KOPR = Ddo.KOPRCT " & vbCrLf &
+                       "Where IDMAEEDO = " & _Row_Documento.Item("IDMAEEDO")
+        Dim _Tbl_Detalle As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+        For Each _Fila As DataRow In _Tbl_Detalle.Rows
+
+            Dim _Zw_Stmp_Det As New Zw_Stmp_Det
+
+            With _Zw_Stmp_Det
+
+                .Idmaeedo = _Fila.Item("IDMAEEDO")
+                .Idmaeddo = _Fila.Item("IDMAEDDO")
+                .Codigo = _Fila.Item("KOPRCT")
+                .Descripcion = _Fila.Item("NOKOPR")
+                .Nulido = _Fila.Item("NULIDO")
+                .Udtrpr = _Fila.Item("UDTRPR")
+                .Rludpr = _Fila.Item("RLUDPR")
+                .Caprco1_Ori = _Fila.Item("CAPRCO1")
+                .Caprco1_Real = 0
+                .Udpr = _Fila.Item("UD0" & .Udtrpr & "PR")
+                .Ud01pr = _Fila.Item("UD01PR")
+                .Caprco2_Ori = _Fila.Item("CAPRCO2")
+                .Caprco2_Real = 0
+                .Ud02pr = _Fila.Item("UD02PR")
+                .Pickeado = False
+                .EnProceso = True
+                .RtuVariable = _Fila.Item("RtuVariable")
+
+            End With
+
+            _Cl_Stem.Zw_Stmp_Det.Add(_Zw_Stmp_Det)
+
+        Next
+
+        _Mensaje = _Cl_Stem.Fx_Grabar_Nuevo_Tickets_CambiarBodegaSeaGarden2MeatGarden
+
+        Return _Mensaje
+
+    End Function
+
     Function Fx_Revisar_WMSVillar(_Idmaeedo As Integer,
                                   _Tido As String,
                                   _Nudo As String,

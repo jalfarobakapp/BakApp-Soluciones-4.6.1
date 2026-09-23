@@ -7,18 +7,13 @@ Public Class Frm_Crear_Entidad_Mt
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
 
-    'Dim _CreaNuevaEntidad As Boolean
-    'Dim CrearEntidad As Boolean
-    'Dim EditarEntidad As Boolean
-    'Dim _Grabar As Boolean
-    'Dim _Elimnar As Boolean
     Dim _Crear_Sucursal As Boolean
-    'Dim Pais, Ciudad, Comuna, Zona As String
+
     Dim TipoSuc As String = "P"
     Dim _Sql_BlocDesb_VtayCmp As String
     Dim _Sql_BlocDesb_Compra As String
     Dim _BlocDesb_VtayCmp, _BlocDesb_Compra As Boolean
-    'Dim _RowEntidad As DataRow
+
     Dim _Tbl_Maeencta As DataTable
     Dim _Tbl_Maeenmail As DataTable
     Dim _Cmb_TipoPago As New DataGridViewComboBoxColumn
@@ -29,7 +24,6 @@ Public Class Frm_Crear_Entidad_Mt
     Public Property Cl_Maeen_Ori As New Tablas_Entidades.Maeen
     Public Property Cl_Maeen_Edit As New Tablas_Entidades.Maeen
     Public Property Zw_Entidades As New Zw_Entidades
-
 
     Public Property CreaNuevaEntidad() As Boolean
     Public Property CrearEntidad() As Boolean
@@ -112,8 +106,6 @@ Public Class Frm_Crear_Entidad_Mt
         Else
             Cmb_Cobrador.SelectedValue = ""
         End If
-
-
 
         caract_combo(CmbxMoneda)
         Consulta_sql = "SELECT KOMO AS Padre,LTRIM(LTRIM(KOMO))+' '+NOKOMO AS Hijo FROM TABMO" ' WHERE SEMILLA = " & Actividad

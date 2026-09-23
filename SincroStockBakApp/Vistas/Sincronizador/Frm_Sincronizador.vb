@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports System.Security.Cryptography
+Imports System.Threading
 Imports BkSpecialPrograms
 Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
@@ -11,6 +13,7 @@ Public Class Frm_Sincronizador
     Dim _CL_ProcesaDatos As New Cl_ProcesaDatos
     Dim _Version As String
     Private _Ls_Programaciones As New List(Of Cl_NewProgramacion)
+    Public _Funcionario As String
 
     ' Memoria para registrar la última ejecución de cada tarea
     Private _DictUltimaEjecucion As New Dictionary(Of String, DateTime)
@@ -51,10 +54,20 @@ Public Class Frm_Sincronizador
 
         Timer_Limpiar.Interval = (1000 * 60) * 1   ' Limpieza del log cada 1 min
         Timer_AjustarFecha.Interval = (1000 * 60) * 30 ' Ajuste de fecha cada 30 min
-
+        _Global_EsDiablito = True
         Sb_Ejecutar_diablito()
     End Sub
+    Private Function HayEq() As Boolean
 
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_InterStock_Equivalencia Where Activo2  = 1"
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        If IsNothing(_Row) Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
     Sub Sb_Ejecutar_diablito()
         Try
             Dim _Mensaje As New LsValiciones.Mensajes
@@ -77,6 +90,7 @@ Public Class Frm_Sincronizador
             End If
 
             _Global_BaseBk = _Cl_ConfiguracionLocal.Configuracion.Global_BaseBk & ".dbo."
+            _CL_ProcesaDatos.Global_BaseBk = _Global_BaseBk
 
             ' SOLO SE CARGA LA CONEXIÓN 0 (Principal) YA QUE TODO ESTÁ EN EL MISMO SERVIDOR AHORA
             With _Cl_ConfiguracionLocal.Configuracion.Ls_Conexiones.Item(0)
@@ -102,6 +116,19 @@ Public Class Frm_Sincronizador
                         Empresa02.Numero = "02"
 
                         Sb_AddToLog("Entidades", "Filtros de empresas y modalidades cargados exitosamente.", Txt_Log)
+                        If miConfig.Funcionario IsNot Nothing Then
+                            _Funcionario = miConfig.Funcionario
+                        Else
+                            _Funcionario = String.Empty
+                        End If
+                        If String.IsNullOrEmpty(_Funcionario) Then
+                            Switch_Sincronizacion.Value = False
+                            Switch_Sincronizacion.Enabled = False
+                            CircularPgrs.IsRunning = False
+                            Sb_AddToLog("Entidades", "Advertencia: No se encontró un funcionario configurado en Entidades.json.", Txt_Log)
+                            MessageBoxEx.Show(Me, "Advertencia: No se encontró un funcionario configurado en Entidades.json.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                            Return
+                        End If
                     Else
                         Switch_Sincronizacion.Value = False
                         Switch_Sincronizacion.Enabled = False
@@ -148,15 +175,16 @@ Public Class Frm_Sincronizador
             Sb_AddToLog("Fechas", "Programaciones cargadas exitosamente (" & prog.Count & " tareas encontradas).", Txt_Log)
             ' ----------------------------------------------------
 
-            Switch_Sincronizacion.Value = True
-            Switch_Sincronizacion.Enabled = True
-
             CircularPgrs.IsRunning = True
             Dim _NombreEquipo = "DIEGO"
             Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
             Dim Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_EstacionesBkp Where NombreEquipo = '" & _NombreEquipo & "'"
             _Global_Row_EstacionBk = _Sql.Fx_Get_DataRow(Consulta_sql)
-            FUNCIONARIO = "RDF"
+
+
+            ' Seleccionar funcionario
+            FUNCIONARIO = _Funcionario
+            ' Seleccionar Funcionario
             Timer_Ejecutar.Interval = 1000 ' Configurado a 1 segundo (Ajustable)
             Timer_Ejecutar.Start()
             Timer_Limpiar.Start()
@@ -166,11 +194,58 @@ Public Class Frm_Sincronizador
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Stop)
         End Try
+        Sb_AddToLog("Sincronizador", "Testeando Cambio de empresas.", Txt_Log)
+
+        Try
+            Dim Modalidad As String = Empresa02.ModalidadNVV.Rows(0).Item("Codigo").ToString().Trim()
+            _CL_ProcesaDatos.CambioEmpresa("02", Modalidad)
+
+            Dim Modalidad2 As String = Empresa01.ModalidadNVV.Rows(0).Item("Codigo").ToString().Trim()
+            _CL_ProcesaDatos.CambioEmpresa("01", Modalidad2)
+        Catch ex As Exception
+
+            MessageBoxEx.Show(Me, "Ocurrio un error al intentar hacer cambio de empresas.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+            Switch_Sincronizacion.Value = False
+            Switch_Sincronizacion.Enabled = False
+            CircularPgrs.IsRunning = False
+
+            Sb_AddToLog("Sincronizador", "Testeando Cambio de empresas fallido.", Txt_Log)
+            Return
+        End Try
+
+        Sb_AddToLog("Sincronizador", "Testeando Cambio de empresas exitoso.", Txt_Log)
+
+        Sb_AddToLog("Sincronizador", "Buscando bodegas relacionadas en la base de datos.", Txt_Log)
+
+
+        Dim relaciona As Boolean = HayEq()
+        If relaciona Then
+            Sb_AddToLog("Sincronizador", "Bodegas relacionadas en la base de datos encontradas.", Txt_Log)
+
+        Else
+            MessageBoxEx.Show(Me, "No hay bodegas relacionadas en la base de datos.", "Atención", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+            Switch_Sincronizacion.Value = False
+            Switch_Sincronizacion.Enabled = False
+            CircularPgrs.IsRunning = False
+
+            Sb_AddToLog("Sincronizador", "No hay bodegas relacionadas en la base de datos.", Txt_Log)
+            Return
+        End If
+
+        Switch_Sincronizacion.Enabled = True
+        Switch_Sincronizacion.Value = True
+
+        Btn_Configuraciones.Enabled = False
+
+
 
     End Sub
 
     Private Sub Btn_Configuraciones_Click(sender As Object, e As EventArgs) Handles Btn_Configuraciones.Click
-        Timer_Ejecutar.Stop()
+        Switch_Sincronizacion.Enabled = False
+        Switch_Sincronizacion.Value = False
 
         Dim Fm As New Frm_Configuracion
         Fm.ShowDialog(Me)
@@ -258,45 +333,127 @@ Public Class Frm_Sincronizador
                     End If
                 End If
 
-                ' EJECUCIÓN FINAL:
                 If tocaEjecutar Then
                     ' Guardamos la hora exacta en la que se disparó para calcular el siguiente ciclo
                     _DictUltimaEjecucion(tarea.Nombre) = horaActual
 
                     Sb_AddToLog("Demonio", "Ejecutando tarea programada: [" & tarea.Nombre & "]", Txt_Log)
 
-                    Dim msg = _CL_ProcesaDatos.Fx_RellenarInterStock(Txt_Log)
+                    ' 1. Deshabilitamos los controles para bloquear la interacción del usuario
+                    Switch_Sincronizacion.Enabled = False
+                    Btn_Configuraciones.Enabled = False
+                    Btn_Limpiar.Enabled = False
+                    _Global_EsDiablito = True
+                    ' Aseguramos que el progreso siga girando visualmente
+                    CircularPgrs.IsRunning = True
 
-                    If msg.EsCorrecto Then
-                        Sb_AddToLog("Éxito", "Tarea [" & tarea.Nombre & "] finalizada: " & msg.Mensaje, Txt_Log)
-                    Else
+                    ' 2. Ejecutamos los procesos pesados en un hilo secundario configurado en STA
+                    Dim tcs As New TaskCompletionSource(Of Boolean)()
 
-                        Sb_AddToLog("Error", "Fallo en tarea [" & tarea.Nombre & "]: " & msg.Mensaje, Txt_Log)
-                        Exit For
+                    Dim hiloGenerador As New Thread(
+                Sub()
+                    Try
+                        ' --- PROCESO 1 ---
+                        _CL_ProcesaDatos.Empresa02 = Empresa02
+                        _CL_ProcesaDatos.Empresa01 = Empresa01
 
-                    End If
-                    Sb_AddToLog("Actualizando", "Iniciando la actualizacion de precios: ", Txt_Log)
+                        Dim msg = _CL_ProcesaDatos.Fx_RellenarInterStock(Txt_Log)
 
-                    Dim MensajePrecio As Mensajes
-                    MensajePrecio = _CL_ProcesaDatos.actualiza_precio()
-                    If MensajePrecio.EsCorrecto Then
-                        Sb_AddToLog("SincroStock", "Precios actualizados correctamente: " & MensajePrecio.Mensaje, Txt_Log)
-                    Else
+                        ' Volvemos al hilo de la UI para actualizar el log
+                        Me.Invoke(Sub()
+                                      If msg.EsCorrecto Then
+                                          Sb_AddToLog("Éxito", "Tarea [" & tarea.Nombre & "] finalizada: " & msg.Mensaje, Txt_Log)
+                                      Else
+                                          Sb_AddToLog("Error", "Fallo en tarea [" & tarea.Nombre & "]: " & msg.Mensaje, Txt_Log)
+                                      End If
+                                      Sb_AddToLog("Actualizando", "Iniciando la actualizacion de precios: ", Txt_Log)
+                                  End Sub)
 
-                        Sb_AddToLog("SincroStock", "Error al actualizar precios: " & MensajePrecio.Mensaje, Txt_Log)
-                        Exit For
+                        ' --- PROCESO 2 ---
+                        Dim MensajePrecio = _CL_ProcesaDatos.actualiza_precio()
 
-                    End If
+                        Me.Invoke(Sub()
+                                      If MensajePrecio.EsCorrecto Then
+                                          Sb_AddToLog("SincroStock", "Precios actualizados correctamente: " & MensajePrecio.Mensaje, Txt_Log)
+                                      Else
+                                          If MensajePrecio.Detalle = "No se encontraron documentos para procesar." Then
+                                              Sb_AddToLog("SincroStock ", MensajePrecio.Mensaje, Txt_Log)
+                                          Else
+                                              Sb_AddToLog("SincroStock", "Error al actualizar precios: " & MensajePrecio.Mensaje, Txt_Log)
+                                          End If
+                                      End If
+                                  End Sub)
 
-                    Dim r = _CL_ProcesaDatos.GenerarDocumentos(Txt_Log)
-                    If r.EsCorrecto Then
-                        Sb_AddToLog("SincroStock", "Documentos generados correctamente: " & r.Mensaje, Txt_Log)
-                    Else
+                        ' --- PROCESO 3 ---
+                        Dim r = _CL_ProcesaDatos.GenerarDocumentos(Txt_Log)
 
-                        Sb_AddToLog("SincroStock", "Error al generar documentos: " & r.Mensaje, Txt_Log)
-                        Exit For
+                        Me.Invoke(Sub()
+                                      If r.EsCorrecto Then
+                                          Sb_AddToLog("SincroStock", "Documentos generados correctamente: " & r.Mensaje, Txt_Log)
+                                      Else
+                                          Sb_AddToLog("SincroStock", "Error al generar documentos: " & r.Mensaje, Txt_Log)
+                                      End If
+                                  End Sub)
 
-                    End If
+                        '--- PROCESO 4 ---
+                        Dim r2 = _CL_ProcesaDatos.ContinuarProcesosInterrumpidos(Txt_Log)
+
+                        Me.Invoke(Sub()
+                                      If r2.EsCorrecto Then
+                                          Sb_AddToLog("SincroStock", "Procesos interrumpidos continuados correctamente: " & r2.Mensaje, Txt_Log)
+                                      Else
+                                          Sb_AddToLog("SincroStock", "Error al continuar procesos interrumpidos: " & r2.Mensaje, Txt_Log)
+                                      End If
+                                  End Sub)
+
+                        'Dim r3 = _CL_ProcesaDatos.Fx_RellenarInterStockCredito(Txt_Log)
+
+                        'Me.Invoke(Sub()
+                        '              If r3.EsCorrecto Then
+                        '                  Sb_AddToLog("SincroStock", "Proceso de rellenado de credito: " & r3.Mensaje, Txt_Log)
+                        '              Else
+                        '                  Sb_AddToLog("SincroStock", "Error al rellenar el credito: " & r3.Mensaje, Txt_Log)
+                        '              End If
+                        '          End Sub)
+
+
+
+                        'Dim r4 = _CL_ProcesaDatos.GenerarDocumentosCredito(Txt_Log)
+                        'Me.Invoke(Sub()
+                        '              If r4.EsCorrecto Then
+                        '                  Sb_AddToLog("SincroStock", "Documentos de credito creados correctamente: " & r4.Mensaje, Txt_Log)
+                        '              Else
+                        '                  Sb_AddToLog("SincroStock", "Error al crear documentos de credito: " & r4.Mensaje, Txt_Log)
+                        '              End If
+                        '          End Sub)
+
+
+                        ' Indicamos que el hilo terminó correctamente
+                        tcs.SetResult(True)
+
+                    Catch ex As Exception
+                        ' Capturamos cualquier error para que no muera el demonio en silencio
+                        tcs.SetException(ex)
+                    End Try
+                End Sub)
+
+                    ' ¡CRÍTICO! Configuramos el hilo para que soporte llamadas OLE/WinForms
+                    hiloGenerador.SetApartmentState(ApartmentState.STA)
+                    hiloGenerador.IsBackground = True
+                    hiloGenerador.Start()
+
+                    Try
+                        ' Esperamos a que el hilo termine sin bloquear la UI
+                        Await tcs.Task
+                    Catch ex As Exception
+                        ' Si ocurre un error fatal dentro del hilo STA, lo capturamos aquí
+                        Sb_AddToLog("Error Demonio", "Excepción crítica en proceso STA: " & ex.Message, Txt_Log)
+                    End Try
+
+                    ' 3. Volvemos a habilitar los controles una vez que termina el hilo secundario
+                    Switch_Sincronizacion.Enabled = True
+                    Btn_Configuraciones.Enabled = True
+                    Btn_Limpiar.Enabled = True
 
                     Exit For
                 End If
@@ -304,10 +461,12 @@ Public Class Frm_Sincronizador
 
         Catch ex As Exception
             Sb_AddToLog("Error Demonio", "Fallo general en ejecución: " & ex.Message, Txt_Log)
+        Finally
+            ' Colocar el reinicio del timer en un bloque Finally asegura que el ciclo se reanude
+            ' incluso si ocurre una excepción no controlada dentro del Try.
+            Timer_Ejecutar.Start()
         End Try
 
-        ' Reanudamos el reloj
-        Timer_Ejecutar.Start()
     End Sub
 
     Private Sub Ejecucion()
@@ -346,20 +505,52 @@ Public Class Frm_Sincronizador
 
     Private Sub Switch_Sincronizacion_ValueChanged(sender As Object, e As EventArgs) Handles Switch_Sincronizacion.ValueChanged
         If Timer_Ejecutar.Enabled Then
-            Timer_Ejecutar.Stop()
-            If Timer_Limpiar.Enabled Then
-                Timer_Limpiar.Stop()
-            End If
-            CircularPgrs.IsRunning = False
-            Sb_AddToLog("SincroStock", "Demonio de Sincronización detenido por el usuario.", Txt_Log)
-        Else
-            Timer_Ejecutar.Start()
-            If Timer_Limpiar.Enabled = False Then
-                Timer_Limpiar.Start()
+            If Switch_Sincronizacion.Value = False Then
+                Timer_Ejecutar.Stop()
+                If Timer_Limpiar.Enabled Then
+                    Timer_Limpiar.Stop()
+                End If
+                CircularPgrs.IsRunning = False
+
+                Btn_Configuraciones.Enabled = True
+                Sb_AddToLog("SincroStock", "Demonio de Sincronización detenido por el usuario.", Txt_Log)
+            Else
+                Timer_Ejecutar.Start()
+                If Timer_Limpiar.Enabled = False Then
+                    Timer_Limpiar.Start()
+                    Btn_Configuraciones.Enabled = False
+
+                End If
+                Btn_Configuraciones.Enabled = False
+
+                CircularPgrs.IsRunning = True
+
+                Sb_AddToLog("SincroStock", "Demonio de Sincronización reanudado por el usuario.", Txt_Log)
             End If
 
-            CircularPgrs.IsRunning = True
-            Sb_AddToLog("SincroStock", "Demonio de Sincronización reanudado por el usuario.", Txt_Log)
+        Else
+            If Switch_Sincronizacion.Value = False Then
+                Timer_Ejecutar.Stop()
+                If Timer_Limpiar.Enabled Then
+                    Timer_Limpiar.Stop()
+                End If
+                CircularPgrs.IsRunning = False
+
+                Btn_Configuraciones.Enabled = True
+                Sb_AddToLog("SincroStock", "Demonio de Sincronización detenido por el usuario.", Txt_Log)
+            Else
+                Timer_Ejecutar.Start()
+                If Timer_Limpiar.Enabled = False Then
+                    Timer_Limpiar.Start()
+                    Btn_Configuraciones.Enabled = False
+
+                End If
+                Btn_Configuraciones.Enabled = False
+
+                CircularPgrs.IsRunning = True
+
+                Sb_AddToLog("SincroStock", "Demonio de Sincronización reanudado por el usuario.", Txt_Log)
+            End If
         End If
     End Sub
 
@@ -382,6 +573,10 @@ Public Class Frm_Sincronizador
 
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
 
+
+    End Sub
+
+    Private Sub Frm_Sincronizador_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
 
     End Sub
 End Class

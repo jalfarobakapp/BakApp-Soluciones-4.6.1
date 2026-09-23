@@ -371,8 +371,9 @@ Public Class Frm_Filtro_Especial_Productos
             Case "Rdb_Zonas_Algunas"
 
                 _Tbl_Filtro = _Tbl_Filtro_Zonas
-                _Tabla_Fl = Enum_Tabla_Fl._Tabla_Zonas
+                _Tabla_Fl = Enum_Tabla_Fl._Tabla_Tabcarac
                 _Control_Todas = Rdb_Zonas_Todas
+                _Filtro_Extra_Zonas = "And KOTABLA = 'ZONAPRODUC'"
                 _Sql_Filtro_Condicion_Extra = _Filtro_Extra_Zonas
                 Btn_Zonas_Algunas.Visible = _Control.Checked
 

@@ -205,7 +205,7 @@ Public Class Frm_RecepXML_Cmp_ConfGral
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
-            Dim _Host As String = _Row_CuentaSMTP.Item("Host")
+            Dim _Host As String = _Row_CuentaSMTP.Item("Host_Entrada")
             Dim _User As String = _Row_CuentaSMTP.Item("Nombre_Usuario")
             Dim _Pass As String = _Row_CuentaSMTP.Item("Contrasena")
 

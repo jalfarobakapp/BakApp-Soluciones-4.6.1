@@ -303,7 +303,7 @@ Module Mod_Imprimir
                         If _Doc_Electronico Then
 
                             _Msj_Imprimir = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, True,
-                                                                  False, _Vista_Previa,
+                                                                  _Seleccionar_Impresora, _Vista_Previa,
                                                                   _Imp, _Subtido, _Accion_Imprimir)
 
                         End If
@@ -643,7 +643,7 @@ Module Mod_Imprimir
             _Mensaje.Icono = MessageBoxIcon.Stop
             _Mensaje.Detalle = "Imprimir documento IDMAEEDO = " & _Id
         Finally
-            If _Impresora_Seleccionada IsNot Nothing Then
+            If IsNothing(_Impresora_Seleccionada) Then
                 _Impresora_Seleccionada = String.Empty
             End If
         End Try

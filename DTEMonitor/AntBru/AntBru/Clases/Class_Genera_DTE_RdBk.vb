@@ -2439,7 +2439,7 @@ Public Class Class_Genera_DTE_RdBk
 
                     If Not Fx_Contiene_TpoDocRef(_TpoDocRef) Then
 
-                        _Errores.Add("Faltan los documentos de Referencia")
+                        _Errores.Add("Faltan los documentos de Referencia: " & _TpoDocRef)
 
                     End If
 
@@ -2809,49 +2809,86 @@ Public Class Class_Genera_DTE_RdBk
 
         Select Case _TpoDocRef
 
-            ' Case "30" ': factura
-            ' Case "32" ': factura de venta bienes y servicios no afectos o exentos de IVA 
-            ' Case "35" ': Boleta
-            ' Case "38" ': Boleta exenta
-            ' Case "45" ': factura de compra
-            ' Case "55" ': nota de débito
-            ' Case "60" ': nota de crédito
-            ' Case "103" ': Liquidación
-            ' Case "40" ': Liquidación Factura
-            ' Case "43" ': Liquidación-Factura Electrónica
-            ' Case "33" ': Factura Electrónica
-            ' Case "34" ': Factura No Afecta o Exenta Electrónica
-            ' Case "39" ': Boleta Electrónica
-            ' Case "41" ': Boleta Exenta Electrónica
-            ' Case "46" ': Factura de Compra Electrónica.
-            ' Case "56" ': Nota de Débito Electrónica
-            ' Case "61" ': Nota de Crédito Electrónica
-            ' Case "50" ': Guía de Despacho.
-            ' Case "52" ': Guía de Despacho Electrónica
-            ' Case "110" ': Factura de Exportación Electrónica
-            ' Case "111"  ' Nota de Débito de Exportación Electrónica
-            ' Case "112"  ' Nota de Crédito de Exportación Electrónica
-            ' Case "801"  ' Orden de Compra
-            ' Case "802"  ' Nota de pedido
-            ' Case "803"  ' Contrato
-            ' Case "804"  ' Resolución
-            ' Case "805"  ' Proceso ChileCompra
-            ' Case "806"  ' Ficha ChileCompra
-            ' Case "807"  ' DUS
-            ' Case "808"  ' B/ L(Conocimiento de embarque)
-            ' Case "809"  ' AWB(Air Will Bill)
-            ' Case "810"  ' MIC/ DTA
-            ' Case "811"  ' Carta de Porte
-            ' Case "812"  ' Resolución del SNA donde califica Servicios de Exportación
-            ' Case "813"  ' Pasaporte
-            ' Case "814"  ' Certificado de Depósito Bolsa Prod. Chile.
-            ' Case "815"  ' Vale de Prenda Bolsa Prod. Chile
-            ' Case "820"  ' Código de Inscripción en el Registro de Acuerdos con Plazo de Pago Excepcional
-
-            Case "30", "32", "35", "38", "55", "60", "40", "43", "33", "34", "39", "41", "46", "56",
-                 "61", "110", "111", "112"
+            Case "30" ': factura
                 Return True
-            Case Else
+            Case "32" ': factura de venta bienes y servicios no afectos o exentos de IVA 
+                Return True
+            Case "35" ': Boleta
+                Return True
+            Case "38" ': Boleta exenta
+                Return True
+            Case "45" ': factura de compra
+                Return True
+            Case "55" ': nota de débito
+                Return True
+            Case "60" ': nota de crédito
+                Return True
+            Case "103" ': Liquidación
+                Return True
+            Case "40" ': Liquidación Factura
+                Return True
+            Case "43" ': Liquidación-Factura Electrónica
+                Return True
+            Case "33" ': Factura Electrónica
+                Return True
+            Case "34" ': Factura No Afecta o Exenta Electrónica
+                Return True
+            Case "39" ': Boleta Electrónica
+                Return True
+            Case "41" ': Boleta Exenta Electrónica
+                Return True
+            Case "46" ': Factura de Compra Electrónica.
+                Return True
+            Case "56" ': Nota de Débito Electrónica
+                Return True
+            Case "61" ': Nota de Crédito Electrónica
+                Return True
+            Case "50" ': Guía de Despacho.
+                Return True
+            Case "52" ': Guía de Despacho Electrónica
+                Return True
+            Case "110" ': Factura de Exportación Electrónica
+                Return True
+            Case "111"  ' Nota de Débito de Exportación Electrónica
+                Return True
+            Case "112"  ' Nota de Crédito de Exportación Electrónica
+                Return True
+            Case "801"  ' Orden de Compra
+                Return True
+            Case "802"  ' Nota de pedido
+                Return True
+            Case "803"  ' Contrato
+                Return True
+            Case "804"  ' Resolución
+                Return True
+            Case "805"  ' Proceso ChileCompra
+                Return True
+            Case "806"  ' Ficha ChileCompra
+                Return True
+            Case "807"  ' DUS
+                Return True
+            Case "808"  ' B/ L(Conocimiento de embarque)
+                Return True
+            Case "809"  ' AWB(Air Will Bill)
+                Return True
+            Case "810"  ' MIC/ DTA
+                Return True
+            Case "811"  ' Carta de Porte
+                Return True
+            Case "812"  ' Resolución del SNA donde califica Servicios de Exportación
+                Return True
+            Case "813"  ' Pasaporte
+                Return True
+            Case "814"  ' Certificado de Depósito Bolsa Prod. Chile.
+                Return True
+            Case "815"  ' Vale de Prenda Bolsa Prod. Chile
+                Return True
+            Case "820"  ' Código de Inscripción en el Registro de Acuerdos con Plazo de Pago Excepcional
+                Return True
+                'Case "30", "32", "35", "38", "52", "55", "60", "40", "43", "33", "34", "39", "41", "46", "56",
+                '     "61", "110", "111", "112", "801"
+                '    Return True
+                'Case Else
                 Return False
         End Select
 

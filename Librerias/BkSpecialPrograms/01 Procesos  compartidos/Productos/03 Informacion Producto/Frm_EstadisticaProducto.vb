@@ -185,6 +185,7 @@ Public Class Frm_EstadisticaProducto
             _Row_Concepto = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             If Not IsNothing(_Row_Concepto) Then
+
                 _Es_Concepto = True
                 _Descripcion = _Row_Concepto.Item("NOKOCT")
 
@@ -210,7 +211,6 @@ Public Class Frm_EstadisticaProducto
             _Descripcion = Trim(_Row_Producto.Item("NOKOPR"))
 
         End If
-
 
 
         Dim series As Series = Grafico_Mov_Stock.Series.Add("Series3") 'Ingreso Stock: Compras , Ajustes, mov. internos
@@ -258,9 +258,7 @@ Public Class Frm_EstadisticaProducto
         series.MarkerSize = 8
         series.IsValueShownAsLabel = False 'True
 
-        'Dtp_Fecha_Moviminetos_Stock_Hasta.Value = FechaDelServidor()
         Chk_Stock_Minimo.Checked = False
-
 
 
         If Not String.IsNullOrEmpty(_Endo) Then

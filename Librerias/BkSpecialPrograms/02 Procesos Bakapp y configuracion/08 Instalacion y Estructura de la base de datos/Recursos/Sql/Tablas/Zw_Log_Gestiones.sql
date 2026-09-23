@@ -23,6 +23,7 @@ CREATE TABLE [dbo].[Zw_Log_Gestiones](
     [NroRemota]             [varchar](10)       NOT NULL DEFAULT (''),
     [Tido]                  [varchar](3)        NOT NULL DEFAULT (''),
     [Nudo]                  [varchar](10)       NOT NULL DEFAULT (''),
+    [Error_Log]             [bit]               NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Log_Gestiones] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

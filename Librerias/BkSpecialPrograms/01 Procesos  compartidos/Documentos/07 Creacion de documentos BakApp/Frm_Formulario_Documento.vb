@@ -4768,11 +4768,19 @@ Public Class Frm_Formulario_Documento
 
                     If CBool(_Idmaeddo_Dori) Then
 
-                        Dim Td, Nr As String
-                        Dim _Feemlipa As Date? = .Cells("Feemlipa").Value
-                        Td = .Cells("Tidopa").Value
-                        Nr = .Cells("Nudopa").Value
-                        _Desde = $" Desde: {Td} - {Nr} ({_Feemlipa?.ToString("dd/MM/yyyy")})"
+                        Dim Td As String = NuloPorNro(.Cells("Tidopa").Value, String.Empty)
+                        Dim Nr As String = NuloPorNro(.Cells("Nudopa").Value, String.Empty)
+                        Dim _Feemlipa As Date? = Nothing
+
+                        If .Cells("Feemlipa").Value IsNot Nothing AndAlso Not IsDBNull(.Cells("Feemlipa").Value) Then
+                            _Feemlipa = CType(.Cells("Feemlipa").Value, Date)
+                        End If
+
+                        _Desde = $" Desde: {Td} - {Nr}"
+
+                        If _Feemlipa.HasValue Then
+                            _Desde &= $" ({_Feemlipa.Value:dd/MM/yyyy})"
+                        End If
 
                     End If
 
@@ -19054,14 +19062,13 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
         If _Revisar_Stock_Disponible Then
 
-
             Dim _TieneBodEquivalente As Boolean = _Sql.Fx_Cuenta_Registros($"{_Global_BaseBk}Zw_InterStock_Equivalencia",
                                                   $"Bodega_A = '{_Bodega}' Or Bodega_B = '{_Bodega}' And Activo2 = 1")
 
             If _TieneBodEquivalente Then
-                _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans, False)
-            Else
                 _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans)
+            Else
+                _Stock_Disponible = Fx_Stock_Disponible(_Tido, ModEmpresa_Doc, _Sucursal, _Bodega, _Codigo, _UnTrans, "STFI" & _UnTrans, False, True)
             End If
 
 
@@ -19526,12 +19533,12 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
                 If _ReferenciaAutomatica Then
 
-                    Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,FEEMDO From MAEDDO Where IDMAEDDO = " & _TblDetalle.Rows(0).Item("Idmaeddo_Ori")
+                    Consulta_sql = "Select IDMAEEDO,TIDO,NUDO,FEEMLI From MAEDDO Where IDMAEDDO = " & _TblDetalle.Rows(0).Item("Idmaeddo_Dori")
                     Dim _Row_DocOrigen As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                     Dim _Tido_Ref = _Row_DocOrigen.Item("TIDO")
                     Dim _Nudo_Ref = _Row_DocOrigen.Item("NUDO")
-                    Dim _Feemdo_Ref = _Row_DocOrigen.Item("FEEMDO")
+                    Dim _Feemdo_Ref = _Row_DocOrigen.Item("FEEMLI")
 
                     Fx_Insertar_Referencia_DTE(_Tido, "", _Tido_Ref, _Nudo_Ref, _Feemdo_Ref)
 
@@ -20929,7 +20936,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                                          Optional _UsaCiaSeguro As Boolean = False,
                                                          Optional _CodEntidad_Cia As String = "",
                                                          Optional _CodSucEntidad_Cia As String = "",
-                                                         Optional Id_Enc_InterStock As Integer = 0)
+                                                         Optional Id_Enc_InterStock As Integer = 0,
+                                                         Optional EsAutomatico As Boolean = False)
 
         Try
 
@@ -21897,6 +21905,11 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                         _New_Fila.Cells("CantUd1").Value = _CantUd1_Dori
                         _New_Fila.Cells("CantUd2").Value = _CantUd2_Dori
 
+                        If EsAutomatico Then
+                            _New_Fila.Cells("CantUd1").Value = _Fila.Item("Cantidad")
+                            _New_Fila.Cells("CantUd2").Value = _Fila.Item("Cantidad2")
+                        End If
+
                         Dim _Nmarca As String = _RowProducto.Item("NMARCA")
 
                         If _Nmarca = "¡" Or _New_Fila.Cells("Rtu").Value <> _Fila.Item("RLUDPR") Then
@@ -21907,11 +21920,26 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                             _New_Fila.Cells("CantUd1").Value = _CantUd1_Dori
                             _New_Fila.Cells("CantUd2").Value = _CantUd2_Dori
 
+                            If EsAutomatico Then
+                                _New_Fila.Cells("CantUd1").Value = _Fila.Item("Cantidad")
+                                _New_Fila.Cells("CantUd2").Value = _Fila.Item("Cantidad2")
+                            End If
+
                         End If
 
-                        Dim _Nuimli As Integer = _Fila.Item("NUIMLI")
-                        Dim _Poimglli As Double = _Fila.Item("POIMGLLI")
-                        Dim _Vaimli As Double = _Fila.Item("VAIMLI")
+                        Dim _Nuimli As Integer
+                        Dim _Poimglli As Double
+                        Dim _Vaimli As Double
+
+                        Try
+                            _Nuimli = _Fila.Item("NUIMLI")
+                            _Poimglli = _Fila.Item("POIMGLLI")
+                            _Vaimli = _Fila.Item("VAIMLI")
+                        Catch ex As Exception
+                            _Nuimli = 0
+                            _Poimglli = 0
+                            _Vaimli = 0
+                        End Try
 
                         If _Poimglli <> 0 Then
                             _New_Fila.Cells("PorIla").Value = _Poimglli

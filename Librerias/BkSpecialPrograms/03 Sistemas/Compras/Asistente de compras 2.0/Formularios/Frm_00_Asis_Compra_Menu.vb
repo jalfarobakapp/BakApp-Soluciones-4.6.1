@@ -209,6 +209,7 @@ Public Class Frm_00_Asis_Compra_Menu
         Dim _Arr_Tipo_Compra(,) As String = {{"Nacional", "Nacional 1"},
                                              {"Nacional2", "Nacional 2"},
                                              {"Nacional3", "Nacional 3"},
+                                             {"Nacional4", "Nacional 4"},
                                              {"Exterior", "Comercio exterior"}}
         Sb_Llenar_Combos(_Arr_Tipo_Compra, Cmb_Tipo_de_compra)
         Cmb_Tipo_de_compra.SelectedValue = "Nacional"
@@ -550,10 +551,19 @@ Public Class Frm_00_Asis_Compra_Menu
                                              Chk_Mostrar_Solo_Stock_Critico.Name, Class_SQLite.Enum_Type._Boolean, Chk_Mostrar_Solo_Stock_Critico.Checked, _Actualizar)
         End If
 
+
+        '   Ticket Marcar ofertas 
+        _Sql.Sb_Parametro_Informe_Sql(Chk_MarcarOfertas, "Compras_Asistente",
+                                             Chk_MarcarOfertas.Name, Class_SQLite.Enum_Type._Boolean, Chk_MarcarOfertas.Checked, _Actualizar)
+
+        '   Ticket Sumar Stock físico + Stock en transito 
+        _Sql.Sb_Parametro_Informe_Sql(Chk_SumarStfisicoStTransito, "Compras_Asistente",
+                                             Chk_SumarStfisicoStTransito.Name, Class_SQLite.Enum_Type._Boolean, Chk_SumarStfisicoStTransito.Checked, _Actualizar)
+
+
         '   Ticket Procesar de Uno en Uno
         _Sql.Sb_Parametro_Informe_Sql(Chk_Procesar_Uno_A_Uno, "Compras_Asistente",
                                              Chk_Procesar_Uno_A_Uno.Name, Class_SQLite.Enum_Type._Boolean, Chk_Procesar_Uno_A_Uno.Checked, _Actualizar)
-
 
         _Filtro_Bodegas_Est_Vta_Todas = False 'True
 
@@ -2052,6 +2062,10 @@ Drop Table #Paso
         Fm.Auto_Correo_EnviarCorreosSoloCc = Rdb_OccProvEnviarCorreoSoloCc.Checked
         Fm.Auto_Correo_EnviarCorreosATodos = Rdb_OccProvEnviarCorreoTodos.Checked
         Fm.Auto_Correo_NoEnviarCorreos = Rdb_OccProvEnviarCorreoNoEnviar.Checked
+
+        Fm.Chk_MarcarOfertas.Checked = Chk_MarcarOfertas.Checked
+        Fm.Chk_SumarStfisicoStTransito.Checked = Chk_SumarStfisicoStTransito.Checked
+
 
         If Auto_GenerarAutomaticamenteNVI Then
 

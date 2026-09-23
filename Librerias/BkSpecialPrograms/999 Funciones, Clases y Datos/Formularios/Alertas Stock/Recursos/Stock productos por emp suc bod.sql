@@ -118,13 +118,15 @@ UPDATE P
 SET 
     -- Si la bodega principal tiene negativo, lo tratamos como 0 para el cálculo con equivalencia, 
     -- o sumamos únicamente los positivos equivalentes.
-    ST_FISICO = CASE WHEN ST_FISICO < 0 THEN 0 ELSE ST_FISICO END +
+    -- ST_FISICO = CASE WHEN ST_FISICO < 0 THEN 0 ELSE ST_FISICO END +
+    ST_FISICO = ST_FISICO +
         ISNULL((
             SELECT SUM(
-                    CASE 
-                        WHEN ISNULL(M.STFI2,0) < 0 THEN 0 
-                        ELSE ISNULL(M.STFI2,0) 
-                    END
+                    --CASE 
+                    --    WHEN ISNULL(M.STFI2,0) < 0 THEN 0 
+                    --    ELSE ISNULL(M.STFI2,0) 
+                    --END
+                    ISNULL(M.STFI2,0)
                   )
             FROM MAEST M
             INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
@@ -139,13 +141,15 @@ SET
             WHERE M.KOPR = @Codigo
         ),0),
 
-    ST_COMPROMETIDO = CASE WHEN ST_COMPROMETIDO < 0 THEN 0 ELSE ST_COMPROMETIDO END +
+    --ST_COMPROMETIDO = CASE WHEN ST_COMPROMETIDO < 0 THEN 0 ELSE ST_COMPROMETIDO END +
+    ST_COMPROMETIDO = ST_COMPROMETIDO +
         ISNULL((
             SELECT SUM(
-                    CASE 
-                        WHEN ISNULL(M.STOCNV2,0) < 0 THEN 0 
-                        ELSE ISNULL(M.STOCNV2,0) 
-                    END
+                    --CASE 
+                    --    WHEN ISNULL(M.STOCNV2,0) < 0 THEN 0 
+                    --    ELSE ISNULL(M.STOCNV2,0) 
+                    --END
+                    ISNULL(M.STOCNV2,0)
                   )
             FROM MAEST M
             INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E
@@ -160,13 +164,15 @@ SET
             WHERE M.KOPR = @Codigo
         ),0),
 
-    ST_COMPROMETIDO_BK = CASE WHEN ST_COMPROMETIDO_BK < 0 THEN 0 ELSE ST_COMPROMETIDO_BK END +
+    -- ST_COMPROMETIDO_BK = CASE WHEN ST_COMPROMETIDO_BK < 0 THEN 0 ELSE ST_COMPROMETIDO_BK END +
+    ST_COMPROMETIDO_BK = ST_COMPROMETIDO_BK +
         ISNULL((
             SELECT SUM(
-                    CASE 
-                        WHEN ISNULL(S.StComp2,0) < 0 THEN 0 
-                        ELSE ISNULL(S.StComp2,0) 
-                    END
+                    --CASE 
+                    --    WHEN ISNULL(S.StComp2,0) < 0 THEN 0 
+                    --    ELSE ISNULL(S.StComp2,0) 
+                    --END
+                    ISNULL(S.StComp2,0)
                   )
             FROM #Global_BaseBk#Zw_Prod_Stock S
             INNER JOIN #Global_BaseBk#Zw_InterStock_Equivalencia E

@@ -740,13 +740,13 @@ Public Class Frm_PreciosLC_Mt01
             Consulta_sql = "Delete " & _Global_BaseBk & "Zw_ListaLC_ValPro Where Codigo = '" & Txtcodigo.Text & "'"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
-            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_ListaLC_ValPro (Codigo,Mcosto,VproNeto,VproBruto,MgDigitado,ValDigitado,FechaModif,HoraModif) values" & vbCrLf &
+            Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_ListaLC_ValPro (Codigo,Mcosto,VproNeto,VproBruto,MgDigitado,ValDigitado,FechaModif,HoraModif,FechaHoraModif) values" & vbCrLf &
                            "('" & Txtcodigo.Text & "'," & De_Num_a_Tx_01(Mcosto, False, 5) &
                            "," & De_Num_a_Tx_01(NetoPropuesto, False, 5) &
                            "," & De_Num_a_Tx_01(BrutoPropuesto, False, 5) &
                            "," & TxtMargenDigitado.Text &
                            "," & De_Num_a_Tx_01(PrecioDigitado, 5) &
-                           ",(SELECT replace(convert(varchar, getdate(), 111), '/','')),(SELECT convert(varchar, getdate(), 108)))"
+                           ",(SELECT replace(convert(varchar, GetDate(), 111), '/','')),(SELECT convert(varchar, GetDate(), 108)),GetDate())"
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             Dim _Reg As Boolean = CBool(_Sql.Fx_Cuenta_Registros("PDIMEN", "CODIGO = '" & Txtcodigo.Text & "' And EMPRESA = '" & Mod_Empresa & "'"))

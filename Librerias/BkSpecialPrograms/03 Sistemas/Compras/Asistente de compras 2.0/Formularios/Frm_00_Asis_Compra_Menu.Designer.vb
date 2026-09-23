@@ -56,27 +56,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.BtnSeleccionarProductos = New DevComponents.DotNetBar.ButtonX()
         Me.Input_Productos_Ranking = New DevComponents.Editors.IntegerInput()
         Me.STabConfiguracion = New DevComponents.DotNetBar.SuperTabControl()
-        Me.SuperTabControlPanel6 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Panel_PMargen = New System.Windows.Forms.Panel()
-        Me.LabelX36 = New DevComponents.DotNetBar.LabelX()
-        Me.Rdb_LPMC_PPPPM = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rdb_LPMC_ListaCostos = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX35 = New DevComponents.DotNetBar.LabelX()
-        Me.Cmb_ListaPreciosCM = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.Input_FechaTopeBusquedaProveedores = New DevComponents.Editors.IntegerInput()
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
-        Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
-        Me.Chk_MostrarMargenesVenta = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Cmb_Documento_Compra = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Rd_Costo_Lista_Proveedor = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
-        Me.Cmb_Lista_de_costos = New DevComponents.DotNetBar.Controls.ComboBoxEx()
-        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
-        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
-        Me.Tab_Costos_OCC = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel4 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Chk_MarcarOfertas = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_SumarStfisicoStTransito = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_SoloProdBodExterna = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_Restar_Stock_Devengado = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_CompradoUltVezProveedor = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -116,6 +98,26 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Input_Tiempo_Reposicion = New DevComponents.Editors.IntegerInput()
         Me.Chk_IncluirUltCXprov = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Tab_Indicadores = New DevComponents.DotNetBar.SuperTabItem()
+        Me.SuperTabControlPanel6 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Panel_PMargen = New System.Windows.Forms.Panel()
+        Me.LabelX36 = New DevComponents.DotNetBar.LabelX()
+        Me.Rdb_LPMC_PPPPM = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rdb_LPMC_ListaCostos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX35 = New DevComponents.DotNetBar.LabelX()
+        Me.Cmb_ListaPreciosCM = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.Input_FechaTopeBusquedaProveedores = New DevComponents.Editors.IntegerInput()
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
+        Me.LabelX11 = New DevComponents.DotNetBar.LabelX()
+        Me.Chk_MostrarMargenesVenta = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Cmb_Documento_Compra = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.TableLayoutPanel7 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Rd_Costo_Lista_Proveedor = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.LabelX8 = New DevComponents.DotNetBar.LabelX()
+        Me.Cmb_Lista_de_costos = New DevComponents.DotNetBar.Controls.ComboBoxEx()
+        Me.LabelX4 = New DevComponents.DotNetBar.LabelX()
+        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
+        Me.Tab_Costos_OCC = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Dtp_Fecha_Vta_Desde = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Input_Ultimos_Meses_Vta_Promedio = New DevComponents.Editors.IntegerInput()
@@ -253,11 +255,6 @@ Partial Class Frm_00_Asis_Compra_Menu
         CType(Me.Input_Productos_Ranking, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.STabConfiguracion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.STabConfiguracion.SuspendLayout()
-        Me.SuperTabControlPanel6.SuspendLayout()
-        Me.Panel_PMargen.SuspendLayout()
-        CType(Me.Input_FechaTopeBusquedaProveedores, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Dtp_Fecha_Tope_Proveedores_Automaticos, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.TableLayoutPanel7.SuspendLayout()
         Me.SuperTabControlPanel4.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
         Me.Layaut_UlProdXProv.SuspendLayout()
@@ -267,6 +264,11 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.TableLayoutPanel5.SuspendLayout()
         CType(Me.Input_Dias_a_Abastecer, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Tiempo_Reposicion, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.SuperTabControlPanel6.SuspendLayout()
+        Me.Panel_PMargen.SuspendLayout()
+        CType(Me.Input_FechaTopeBusquedaProveedores, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.Dtp_Fecha_Tope_Proveedores_Automaticos, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TableLayoutPanel7.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         CType(Me.Dtp_Fecha_Vta_Desde, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Input_Ultimos_Meses_Vta_Promedio, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -824,9 +826,9 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.STabConfiguracion.ControlBox.MenuBox.Name = ""
         Me.STabConfiguracion.ControlBox.Name = ""
         Me.STabConfiguracion.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.STabConfiguracion.ControlBox.MenuBox, Me.STabConfiguracion.ControlBox.CloseBox})
-        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel6)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel3)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel4)
+        Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel6)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel1)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel2)
         Me.STabConfiguracion.Controls.Add(Me.SuperTabControlPanel8)
@@ -844,364 +846,11 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.STabConfiguracion.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tab_Indicadores, Me.Tab_Costos_OCC, Me.Tab_Excluir_Incluir, Me.Tab_CalVnta, Me.Tab_ConexionExterna, Me.Tab_Automatizacion, Me.SuperTabItem7, Me.SuperTabItem5})
         Me.STabConfiguracion.Text = "SuperTabControl2"
         '
-        'SuperTabControlPanel6
-        '
-        Me.SuperTabControlPanel6.CanvasColor = System.Drawing.Color.Empty
-        Me.SuperTabControlPanel6.Controls.Add(Me.Panel_PMargen)
-        Me.SuperTabControlPanel6.Controls.Add(Me.Input_FechaTopeBusquedaProveedores)
-        Me.SuperTabControlPanel6.Controls.Add(Me.Dtp_Fecha_Tope_Proveedores_Automaticos)
-        Me.SuperTabControlPanel6.Controls.Add(Me.LabelX11)
-        Me.SuperTabControlPanel6.Controls.Add(Me.Chk_MostrarMargenesVenta)
-        Me.SuperTabControlPanel6.Controls.Add(Me.Cmb_Documento_Compra)
-        Me.SuperTabControlPanel6.Controls.Add(Me.TableLayoutPanel7)
-        Me.SuperTabControlPanel6.Controls.Add(Me.LabelX4)
-        Me.SuperTabControlPanel6.Controls.Add(Me.LabelX3)
-        Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 27)
-        Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
-        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(802, 224)
-        Me.SuperTabControlPanel6.TabIndex = 0
-        Me.SuperTabControlPanel6.TabItem = Me.Tab_Costos_OCC
-        '
-        'Panel_PMargen
-        '
-        Me.Panel_PMargen.BackColor = System.Drawing.Color.Transparent
-        Me.Panel_PMargen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Panel_PMargen.Controls.Add(Me.LabelX36)
-        Me.Panel_PMargen.Controls.Add(Me.Rdb_LPMC_PPPPM)
-        Me.Panel_PMargen.Controls.Add(Me.Rdb_LPMC_ListaCostos)
-        Me.Panel_PMargen.Controls.Add(Me.LabelX35)
-        Me.Panel_PMargen.Controls.Add(Me.Cmb_ListaPreciosCM)
-        Me.Panel_PMargen.ForeColor = System.Drawing.Color.Black
-        Me.Panel_PMargen.Location = New System.Drawing.Point(389, 71)
-        Me.Panel_PMargen.Name = "Panel_PMargen"
-        Me.Panel_PMargen.Size = New System.Drawing.Size(400, 88)
-        Me.Panel_PMargen.TabIndex = 115
-        '
-        'LabelX36
-        '
-        Me.LabelX36.AutoSize = True
-        Me.LabelX36.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX36.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX36.ForeColor = System.Drawing.Color.Black
-        Me.LabelX36.Location = New System.Drawing.Point(14, 42)
-        Me.LabelX36.Name = "LabelX36"
-        Me.LabelX36.Size = New System.Drawing.Size(166, 17)
-        Me.LabelX36.TabIndex = 117
-        Me.LabelX36.Text = "Calcular Margen con costo desde:"
-        '
-        'Rdb_LPMC_PPPPM
-        '
-        Me.Rdb_LPMC_PPPPM.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Rdb_LPMC_PPPPM.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_LPMC_PPPPM.CheckBoxImageChecked = CType(resources.GetObject("Rdb_LPMC_PPPPM.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_LPMC_PPPPM.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_LPMC_PPPPM.FocusCuesEnabled = False
-        Me.Rdb_LPMC_PPPPM.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_LPMC_PPPPM.Location = New System.Drawing.Point(223, 61)
-        Me.Rdb_LPMC_PPPPM.Name = "Rdb_LPMC_PPPPM"
-        Me.Rdb_LPMC_PPPPM.Size = New System.Drawing.Size(108, 20)
-        Me.Rdb_LPMC_PPPPM.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_LPMC_PPPPM.TabIndex = 116
-        Me.Rdb_LPMC_PPPPM.Text = "Desde PPP (PM)"
-        '
-        'Rdb_LPMC_ListaCostos
-        '
-        Me.Rdb_LPMC_ListaCostos.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Rdb_LPMC_ListaCostos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_LPMC_ListaCostos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_LPMC_ListaCostos.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_LPMC_ListaCostos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rdb_LPMC_ListaCostos.Checked = True
-        Me.Rdb_LPMC_ListaCostos.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rdb_LPMC_ListaCostos.CheckValue = "Y"
-        Me.Rdb_LPMC_ListaCostos.FocusCuesEnabled = False
-        Me.Rdb_LPMC_ListaCostos.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_LPMC_ListaCostos.Location = New System.Drawing.Point(16, 61)
-        Me.Rdb_LPMC_ListaCostos.Name = "Rdb_LPMC_ListaCostos"
-        Me.Rdb_LPMC_ListaCostos.Size = New System.Drawing.Size(201, 20)
-        Me.Rdb_LPMC_ListaCostos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_LPMC_ListaCostos.TabIndex = 115
-        Me.Rdb_LPMC_ListaCostos.Text = "Desde lista de precios del proveedor"
-        '
-        'LabelX35
-        '
-        Me.LabelX35.AutoSize = True
-        Me.LabelX35.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX35.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX35.ForeColor = System.Drawing.Color.Black
-        Me.LabelX35.Location = New System.Drawing.Point(14, 8)
-        Me.LabelX35.Name = "LabelX35"
-        Me.LabelX35.Size = New System.Drawing.Size(161, 17)
-        Me.LabelX35.TabIndex = 113
-        Me.LabelX35.Text = "Lista de precios para ver Margen"
-        '
-        'Cmb_ListaPreciosCM
-        '
-        Me.Cmb_ListaPreciosCM.DisplayMember = "Text"
-        Me.Cmb_ListaPreciosCM.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.Cmb_ListaPreciosCM.ForeColor = System.Drawing.Color.Black
-        Me.Cmb_ListaPreciosCM.FormattingEnabled = True
-        Me.Cmb_ListaPreciosCM.ItemHeight = 16
-        Me.Cmb_ListaPreciosCM.Location = New System.Drawing.Point(178, 7)
-        Me.Cmb_ListaPreciosCM.Name = "Cmb_ListaPreciosCM"
-        Me.Cmb_ListaPreciosCM.Size = New System.Drawing.Size(210, 22)
-        Me.Cmb_ListaPreciosCM.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Cmb_ListaPreciosCM.TabIndex = 112
-        '
-        'Input_FechaTopeBusquedaProveedores
-        '
-        Me.Input_FechaTopeBusquedaProveedores.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Input_FechaTopeBusquedaProveedores.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Input_FechaTopeBusquedaProveedores.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Input_FechaTopeBusquedaProveedores.ButtonClear.Visible = True
-        Me.Input_FechaTopeBusquedaProveedores.FocusHighlightEnabled = True
-        Me.Input_FechaTopeBusquedaProveedores.ForeColor = System.Drawing.Color.Black
-        Me.Input_FechaTopeBusquedaProveedores.Location = New System.Drawing.Point(290, 161)
-        Me.Input_FechaTopeBusquedaProveedores.MaxValue = 24
-        Me.Input_FechaTopeBusquedaProveedores.MinValue = 1
-        Me.Input_FechaTopeBusquedaProveedores.Name = "Input_FechaTopeBusquedaProveedores"
-        Me.Input_FechaTopeBusquedaProveedores.ShowUpDown = True
-        Me.Input_FechaTopeBusquedaProveedores.Size = New System.Drawing.Size(53, 22)
-        Me.Input_FechaTopeBusquedaProveedores.TabIndex = 111
-        Me.Input_FechaTopeBusquedaProveedores.Value = 3
-        '
-        'Dtp_Fecha_Tope_Proveedores_Automaticos
-        '
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.BackgroundStyle.Class = "DateTimeInputBackground"
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.ButtonDropDown.Visible = True
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.ForeColor = System.Drawing.Color.Black
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.IsPopupCalendarOpen = False
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.Location = New System.Drawing.Point(13, 184)
-        '
-        '
-        '
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.ClearButtonVisible = True
-        '
-        '
-        '
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.DisplayMonth = New Date(2018, 10, 1, 0, 0, 0, 0)
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.MarkedDates = New Date(-1) {}
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
-        '
-        '
-        '
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.TodayButtonVisible = True
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.Name = "Dtp_Fecha_Tope_Proveedores_Automaticos"
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.Size = New System.Drawing.Size(80, 22)
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.TabIndex = 66
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.Value = New Date(2018, 10, 19, 11, 12, 43, 0)
-        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.Visible = False
-        '
-        'LabelX11
-        '
-        Me.LabelX11.AutoSize = True
-        Me.LabelX11.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX11.ForeColor = System.Drawing.Color.Black
-        Me.LabelX11.Location = New System.Drawing.Point(13, 161)
-        Me.LabelX11.Name = "LabelX11"
-        Me.LabelX11.Size = New System.Drawing.Size(271, 17)
-        Me.LabelX11.TabIndex = 52
-        Me.LabelX11.Text = "Meses fecha tope de busqueda de compra a proveedor"
-        '
-        'Chk_MostrarMargenesVenta
-        '
-        Me.Chk_MostrarMargenesVenta.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_MostrarMargenesVenta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_MostrarMargenesVenta.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarMargenesVenta.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_MostrarMargenesVenta.FocusCuesEnabled = False
-        Me.Chk_MostrarMargenesVenta.ForeColor = System.Drawing.Color.Black
-        Me.Chk_MostrarMargenesVenta.Location = New System.Drawing.Point(389, 44)
-        Me.Chk_MostrarMargenesVenta.Name = "Chk_MostrarMargenesVenta"
-        Me.Chk_MostrarMargenesVenta.Size = New System.Drawing.Size(163, 24)
-        Me.Chk_MostrarMargenesVenta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_MostrarMargenesVenta.TabIndex = 114
-        Me.Chk_MostrarMargenesVenta.Text = "Mostrar Margenes de venta"
-        '
-        'Cmb_Documento_Compra
-        '
-        Me.Cmb_Documento_Compra.DisplayMember = "Text"
-        Me.Cmb_Documento_Compra.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.Cmb_Documento_Compra.ForeColor = System.Drawing.Color.Black
-        Me.Cmb_Documento_Compra.FormattingEnabled = True
-        Me.Cmb_Documento_Compra.ItemHeight = 16
-        Me.Cmb_Documento_Compra.Location = New System.Drawing.Point(12, 69)
-        Me.Cmb_Documento_Compra.Name = "Cmb_Documento_Compra"
-        Me.Cmb_Documento_Compra.Size = New System.Drawing.Size(221, 22)
-        Me.Cmb_Documento_Compra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Cmb_Documento_Compra.TabIndex = 53
-        '
-        'TableLayoutPanel7
-        '
-        Me.TableLayoutPanel7.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel7.ColumnCount = 5
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.803922!))
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.84314!))
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.39216!))
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.96078!))
-        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 256.0!))
-        Me.TableLayoutPanel7.Controls.Add(Me.Rd_Costo_Lista_Proveedor, 2, 0)
-        Me.TableLayoutPanel7.Controls.Add(Me.Rd_Costo_Ultimo_Documento_Seleccionado, 1, 0)
-        Me.TableLayoutPanel7.Controls.Add(Me.LabelX8, 0, 0)
-        Me.TableLayoutPanel7.Controls.Add(Me.Cmb_Lista_de_costos, 3, 0)
-        Me.TableLayoutPanel7.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel7.Location = New System.Drawing.Point(9, 15)
-        Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
-        Me.TableLayoutPanel7.RowCount = 1
-        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel7.Size = New System.Drawing.Size(780, 26)
-        Me.TableLayoutPanel7.TabIndex = 50
-        '
-        'Rd_Costo_Lista_Proveedor
-        '
-        '
-        '
-        '
-        Me.Rd_Costo_Lista_Proveedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rd_Costo_Lista_Proveedor.CheckBoxImageChecked = CType(resources.GetObject("Rd_Costo_Lista_Proveedor.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rd_Costo_Lista_Proveedor.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rd_Costo_Lista_Proveedor.FocusCuesEnabled = False
-        Me.Rd_Costo_Lista_Proveedor.ForeColor = System.Drawing.Color.Black
-        Me.Rd_Costo_Lista_Proveedor.Location = New System.Drawing.Point(199, 3)
-        Me.Rd_Costo_Lista_Proveedor.Name = "Rd_Costo_Lista_Proveedor"
-        Me.Rd_Costo_Lista_Proveedor.Size = New System.Drawing.Size(88, 20)
-        Me.Rd_Costo_Lista_Proveedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rd_Costo_Lista_Proveedor.TabIndex = 55
-        Me.Rd_Costo_Lista_Proveedor.Text = "Desde L.Costos"
-        '
-        'Rd_Costo_Ultimo_Documento_Seleccionado
-        '
-        '
-        '
-        '
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.CheckBoxImageChecked = CType(resources.GetObject("Rd_Costo_Ultimo_Documento_Seleccionado.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Checked = True
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.CheckValue = "Y"
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.FocusCuesEnabled = False
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.ForeColor = System.Drawing.Color.Black
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Location = New System.Drawing.Point(54, 3)
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Name = "Rd_Costo_Ultimo_Documento_Seleccionado"
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Size = New System.Drawing.Size(139, 20)
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.TabIndex = 56
-        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Text = "Desde la última GRC/OCC/FCC"
-        '
-        'LabelX8
-        '
-        Me.LabelX8.AutoSize = True
-        '
-        '
-        '
-        Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX8.ForeColor = System.Drawing.Color.Black
-        Me.LabelX8.Location = New System.Drawing.Point(3, 3)
-        Me.LabelX8.Name = "LabelX8"
-        Me.LabelX8.Size = New System.Drawing.Size(41, 17)
-        Me.LabelX8.TabIndex = 51
-        Me.LabelX8.Text = "<b>Costos :</b>"
-        '
-        'Cmb_Lista_de_costos
-        '
-        Me.Cmb_Lista_de_costos.DisplayMember = "Text"
-        Me.Cmb_Lista_de_costos.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
-        Me.Cmb_Lista_de_costos.ForeColor = System.Drawing.Color.Black
-        Me.Cmb_Lista_de_costos.FormattingEnabled = True
-        Me.Cmb_Lista_de_costos.ItemHeight = 16
-        Me.Cmb_Lista_de_costos.Location = New System.Drawing.Point(305, 3)
-        Me.Cmb_Lista_de_costos.Name = "Cmb_Lista_de_costos"
-        Me.Cmb_Lista_de_costos.Size = New System.Drawing.Size(210, 22)
-        Me.Cmb_Lista_de_costos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Cmb_Lista_de_costos.TabIndex = 67
-        '
-        'LabelX4
-        '
-        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX4.ForeColor = System.Drawing.Color.Black
-        Me.LabelX4.Location = New System.Drawing.Point(12, 97)
-        Me.LabelX4.Name = "LabelX4"
-        Me.LabelX4.Size = New System.Drawing.Size(380, 49)
-        Me.LabelX4.TabIndex = 52
-        Me.LabelX4.Text = "<b>Fecha tope de búsqueda del precio mínimo según proveedor con el mejor precio." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Si no encuentra guías, traerá la última compra recepcionada del producto.</b>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) &
-    ""
-        '
-        'LabelX3
-        '
-        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(12, 47)
-        Me.LabelX3.Name = "LabelX3"
-        Me.LabelX3.Size = New System.Drawing.Size(135, 23)
-        Me.LabelX3.TabIndex = 54
-        Me.LabelX3.Text = "Documento seleccionado:"
-        '
-        'Tab_Costos_OCC
-        '
-        Me.Tab_Costos_OCC.AttachedControl = Me.SuperTabControlPanel6
-        Me.Tab_Costos_OCC.GlobalItem = False
-        Me.Tab_Costos_OCC.Name = "Tab_Costos_OCC"
-        Me.Tab_Costos_OCC.Text = "Costos para OCC"
-        '
         'SuperTabControlPanel4
         '
         Me.SuperTabControlPanel4.CanvasColor = System.Drawing.Color.Empty
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_MarcarOfertas)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_SumarStfisicoStTransito)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_SoloProdBodExterna)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_Restar_Stock_Devengado)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_CompradoUltVezProveedor)
@@ -1223,6 +872,40 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.SuperTabControlPanel4.Size = New System.Drawing.Size(802, 251)
         Me.SuperTabControlPanel4.TabIndex = 0
         Me.SuperTabControlPanel4.TabItem = Me.Tab_Excluir_Incluir
+        '
+        'Chk_MarcarOfertas
+        '
+        Me.Chk_MarcarOfertas.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_MarcarOfertas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MarcarOfertas.CheckBoxImageChecked = CType(resources.GetObject("Chk_MarcarOfertas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MarcarOfertas.FocusCuesEnabled = False
+        Me.Chk_MarcarOfertas.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MarcarOfertas.Location = New System.Drawing.Point(489, 117)
+        Me.Chk_MarcarOfertas.Name = "Chk_MarcarOfertas"
+        Me.Chk_MarcarOfertas.Size = New System.Drawing.Size(139, 20)
+        Me.Chk_MarcarOfertas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MarcarOfertas.TabIndex = 10020
+        Me.Chk_MarcarOfertas.Text = "Marcar ofertas"
+        '
+        'Chk_SumarStfisicoStTransito
+        '
+        Me.Chk_SumarStfisicoStTransito.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_SumarStfisicoStTransito.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_SumarStfisicoStTransito.CheckBoxImageChecked = CType(resources.GetObject("Chk_SumarStfisicoStTransito.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SumarStfisicoStTransito.FocusCuesEnabled = False
+        Me.Chk_SumarStfisicoStTransito.ForeColor = System.Drawing.Color.Black
+        Me.Chk_SumarStfisicoStTransito.Location = New System.Drawing.Point(489, 136)
+        Me.Chk_SumarStfisicoStTransito.Name = "Chk_SumarStfisicoStTransito"
+        Me.Chk_SumarStfisicoStTransito.Size = New System.Drawing.Size(289, 23)
+        Me.Chk_SumarStfisicoStTransito.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_SumarStfisicoStTransito.TabIndex = 10019
+        Me.Chk_SumarStfisicoStTransito.Text = "Sumar stock físico+transito (Stock actual)"
         '
         'Chk_SoloProdBodExterna
         '
@@ -1415,7 +1098,7 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.CheckBoxImageChecked = CType(resources.GetObject("Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.FocusCuesEnabled = False
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.ForeColor = System.Drawing.Color.Black
-        Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Location = New System.Drawing.Point(292, 142)
+        Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Location = New System.Drawing.Point(186, 152)
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Name = "Chk_No_Considera_Con_Stock_Pedido_OCC_NVI"
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Size = New System.Drawing.Size(233, 50)
         Me.Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -1866,6 +1549,361 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.Tab_Indicadores.GlobalItem = False
         Me.Tab_Indicadores.Name = "Tab_Indicadores"
         Me.Tab_Indicadores.Text = "Indicadores"
+        '
+        'SuperTabControlPanel6
+        '
+        Me.SuperTabControlPanel6.CanvasColor = System.Drawing.Color.Empty
+        Me.SuperTabControlPanel6.Controls.Add(Me.Panel_PMargen)
+        Me.SuperTabControlPanel6.Controls.Add(Me.Input_FechaTopeBusquedaProveedores)
+        Me.SuperTabControlPanel6.Controls.Add(Me.Dtp_Fecha_Tope_Proveedores_Automaticos)
+        Me.SuperTabControlPanel6.Controls.Add(Me.LabelX11)
+        Me.SuperTabControlPanel6.Controls.Add(Me.Chk_MostrarMargenesVenta)
+        Me.SuperTabControlPanel6.Controls.Add(Me.Cmb_Documento_Compra)
+        Me.SuperTabControlPanel6.Controls.Add(Me.TableLayoutPanel7)
+        Me.SuperTabControlPanel6.Controls.Add(Me.LabelX4)
+        Me.SuperTabControlPanel6.Controls.Add(Me.LabelX3)
+        Me.SuperTabControlPanel6.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel6.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel6.Name = "SuperTabControlPanel6"
+        Me.SuperTabControlPanel6.Size = New System.Drawing.Size(802, 251)
+        Me.SuperTabControlPanel6.TabIndex = 0
+        Me.SuperTabControlPanel6.TabItem = Me.Tab_Costos_OCC
+        '
+        'Panel_PMargen
+        '
+        Me.Panel_PMargen.BackColor = System.Drawing.Color.Transparent
+        Me.Panel_PMargen.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Panel_PMargen.Controls.Add(Me.LabelX36)
+        Me.Panel_PMargen.Controls.Add(Me.Rdb_LPMC_PPPPM)
+        Me.Panel_PMargen.Controls.Add(Me.Rdb_LPMC_ListaCostos)
+        Me.Panel_PMargen.Controls.Add(Me.LabelX35)
+        Me.Panel_PMargen.Controls.Add(Me.Cmb_ListaPreciosCM)
+        Me.Panel_PMargen.ForeColor = System.Drawing.Color.Black
+        Me.Panel_PMargen.Location = New System.Drawing.Point(389, 71)
+        Me.Panel_PMargen.Name = "Panel_PMargen"
+        Me.Panel_PMargen.Size = New System.Drawing.Size(400, 88)
+        Me.Panel_PMargen.TabIndex = 115
+        '
+        'LabelX36
+        '
+        Me.LabelX36.AutoSize = True
+        Me.LabelX36.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX36.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX36.ForeColor = System.Drawing.Color.Black
+        Me.LabelX36.Location = New System.Drawing.Point(14, 42)
+        Me.LabelX36.Name = "LabelX36"
+        Me.LabelX36.Size = New System.Drawing.Size(166, 17)
+        Me.LabelX36.TabIndex = 117
+        Me.LabelX36.Text = "Calcular Margen con costo desde:"
+        '
+        'Rdb_LPMC_PPPPM
+        '
+        Me.Rdb_LPMC_PPPPM.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Rdb_LPMC_PPPPM.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_LPMC_PPPPM.CheckBoxImageChecked = CType(resources.GetObject("Rdb_LPMC_PPPPM.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_LPMC_PPPPM.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_LPMC_PPPPM.FocusCuesEnabled = False
+        Me.Rdb_LPMC_PPPPM.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_LPMC_PPPPM.Location = New System.Drawing.Point(223, 61)
+        Me.Rdb_LPMC_PPPPM.Name = "Rdb_LPMC_PPPPM"
+        Me.Rdb_LPMC_PPPPM.Size = New System.Drawing.Size(108, 20)
+        Me.Rdb_LPMC_PPPPM.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_LPMC_PPPPM.TabIndex = 116
+        Me.Rdb_LPMC_PPPPM.Text = "Desde PPP (PM)"
+        '
+        'Rdb_LPMC_ListaCostos
+        '
+        Me.Rdb_LPMC_ListaCostos.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Rdb_LPMC_ListaCostos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_LPMC_ListaCostos.CheckBoxImageChecked = CType(resources.GetObject("Rdb_LPMC_ListaCostos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_LPMC_ListaCostos.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rdb_LPMC_ListaCostos.Checked = True
+        Me.Rdb_LPMC_ListaCostos.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rdb_LPMC_ListaCostos.CheckValue = "Y"
+        Me.Rdb_LPMC_ListaCostos.FocusCuesEnabled = False
+        Me.Rdb_LPMC_ListaCostos.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_LPMC_ListaCostos.Location = New System.Drawing.Point(16, 61)
+        Me.Rdb_LPMC_ListaCostos.Name = "Rdb_LPMC_ListaCostos"
+        Me.Rdb_LPMC_ListaCostos.Size = New System.Drawing.Size(201, 20)
+        Me.Rdb_LPMC_ListaCostos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_LPMC_ListaCostos.TabIndex = 115
+        Me.Rdb_LPMC_ListaCostos.Text = "Desde lista de precios del proveedor"
+        '
+        'LabelX35
+        '
+        Me.LabelX35.AutoSize = True
+        Me.LabelX35.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX35.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX35.ForeColor = System.Drawing.Color.Black
+        Me.LabelX35.Location = New System.Drawing.Point(14, 8)
+        Me.LabelX35.Name = "LabelX35"
+        Me.LabelX35.Size = New System.Drawing.Size(161, 17)
+        Me.LabelX35.TabIndex = 113
+        Me.LabelX35.Text = "Lista de precios para ver Margen"
+        '
+        'Cmb_ListaPreciosCM
+        '
+        Me.Cmb_ListaPreciosCM.DisplayMember = "Text"
+        Me.Cmb_ListaPreciosCM.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_ListaPreciosCM.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_ListaPreciosCM.FormattingEnabled = True
+        Me.Cmb_ListaPreciosCM.ItemHeight = 16
+        Me.Cmb_ListaPreciosCM.Location = New System.Drawing.Point(178, 7)
+        Me.Cmb_ListaPreciosCM.Name = "Cmb_ListaPreciosCM"
+        Me.Cmb_ListaPreciosCM.Size = New System.Drawing.Size(210, 22)
+        Me.Cmb_ListaPreciosCM.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_ListaPreciosCM.TabIndex = 112
+        '
+        'Input_FechaTopeBusquedaProveedores
+        '
+        Me.Input_FechaTopeBusquedaProveedores.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Input_FechaTopeBusquedaProveedores.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Input_FechaTopeBusquedaProveedores.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Input_FechaTopeBusquedaProveedores.ButtonClear.Visible = True
+        Me.Input_FechaTopeBusquedaProveedores.FocusHighlightEnabled = True
+        Me.Input_FechaTopeBusquedaProveedores.ForeColor = System.Drawing.Color.Black
+        Me.Input_FechaTopeBusquedaProveedores.Location = New System.Drawing.Point(290, 161)
+        Me.Input_FechaTopeBusquedaProveedores.MaxValue = 24
+        Me.Input_FechaTopeBusquedaProveedores.MinValue = 1
+        Me.Input_FechaTopeBusquedaProveedores.Name = "Input_FechaTopeBusquedaProveedores"
+        Me.Input_FechaTopeBusquedaProveedores.ShowUpDown = True
+        Me.Input_FechaTopeBusquedaProveedores.Size = New System.Drawing.Size(53, 22)
+        Me.Input_FechaTopeBusquedaProveedores.TabIndex = 111
+        Me.Input_FechaTopeBusquedaProveedores.Value = 3
+        '
+        'Dtp_Fecha_Tope_Proveedores_Automaticos
+        '
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.ButtonDropDown.Visible = True
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.IsPopupCalendarOpen = False
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.Location = New System.Drawing.Point(13, 184)
+        '
+        '
+        '
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.DisplayMonth = New Date(2018, 10, 1, 0, 0, 0, 0)
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.Name = "Dtp_Fecha_Tope_Proveedores_Automaticos"
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.Size = New System.Drawing.Size(80, 22)
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.TabIndex = 66
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.Value = New Date(2018, 10, 19, 11, 12, 43, 0)
+        Me.Dtp_Fecha_Tope_Proveedores_Automaticos.Visible = False
+        '
+        'LabelX11
+        '
+        Me.LabelX11.AutoSize = True
+        Me.LabelX11.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX11.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX11.ForeColor = System.Drawing.Color.Black
+        Me.LabelX11.Location = New System.Drawing.Point(13, 161)
+        Me.LabelX11.Name = "LabelX11"
+        Me.LabelX11.Size = New System.Drawing.Size(271, 17)
+        Me.LabelX11.TabIndex = 52
+        Me.LabelX11.Text = "Meses fecha tope de busqueda de compra a proveedor"
+        '
+        'Chk_MostrarMargenesVenta
+        '
+        Me.Chk_MostrarMargenesVenta.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_MostrarMargenesVenta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_MostrarMargenesVenta.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarMargenesVenta.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_MostrarMargenesVenta.FocusCuesEnabled = False
+        Me.Chk_MostrarMargenesVenta.ForeColor = System.Drawing.Color.Black
+        Me.Chk_MostrarMargenesVenta.Location = New System.Drawing.Point(389, 44)
+        Me.Chk_MostrarMargenesVenta.Name = "Chk_MostrarMargenesVenta"
+        Me.Chk_MostrarMargenesVenta.Size = New System.Drawing.Size(163, 24)
+        Me.Chk_MostrarMargenesVenta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_MostrarMargenesVenta.TabIndex = 114
+        Me.Chk_MostrarMargenesVenta.Text = "Mostrar Margenes de venta"
+        '
+        'Cmb_Documento_Compra
+        '
+        Me.Cmb_Documento_Compra.DisplayMember = "Text"
+        Me.Cmb_Documento_Compra.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Documento_Compra.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_Documento_Compra.FormattingEnabled = True
+        Me.Cmb_Documento_Compra.ItemHeight = 16
+        Me.Cmb_Documento_Compra.Location = New System.Drawing.Point(12, 69)
+        Me.Cmb_Documento_Compra.Name = "Cmb_Documento_Compra"
+        Me.Cmb_Documento_Compra.Size = New System.Drawing.Size(221, 22)
+        Me.Cmb_Documento_Compra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_Documento_Compra.TabIndex = 53
+        '
+        'TableLayoutPanel7
+        '
+        Me.TableLayoutPanel7.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel7.ColumnCount = 5
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 9.803922!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.84314!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.39216!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.96078!))
+        Me.TableLayoutPanel7.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 260.0!))
+        Me.TableLayoutPanel7.Controls.Add(Me.Rd_Costo_Lista_Proveedor, 2, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.Rd_Costo_Ultimo_Documento_Seleccionado, 1, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.LabelX8, 0, 0)
+        Me.TableLayoutPanel7.Controls.Add(Me.Cmb_Lista_de_costos, 3, 0)
+        Me.TableLayoutPanel7.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel7.Location = New System.Drawing.Point(9, 15)
+        Me.TableLayoutPanel7.Name = "TableLayoutPanel7"
+        Me.TableLayoutPanel7.RowCount = 1
+        Me.TableLayoutPanel7.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel7.Size = New System.Drawing.Size(780, 26)
+        Me.TableLayoutPanel7.TabIndex = 50
+        '
+        'Rd_Costo_Lista_Proveedor
+        '
+        '
+        '
+        '
+        Me.Rd_Costo_Lista_Proveedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rd_Costo_Lista_Proveedor.CheckBoxImageChecked = CType(resources.GetObject("Rd_Costo_Lista_Proveedor.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rd_Costo_Lista_Proveedor.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rd_Costo_Lista_Proveedor.FocusCuesEnabled = False
+        Me.Rd_Costo_Lista_Proveedor.ForeColor = System.Drawing.Color.Black
+        Me.Rd_Costo_Lista_Proveedor.Location = New System.Drawing.Point(197, 3)
+        Me.Rd_Costo_Lista_Proveedor.Name = "Rd_Costo_Lista_Proveedor"
+        Me.Rd_Costo_Lista_Proveedor.Size = New System.Drawing.Size(88, 20)
+        Me.Rd_Costo_Lista_Proveedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rd_Costo_Lista_Proveedor.TabIndex = 55
+        Me.Rd_Costo_Lista_Proveedor.Text = "Desde L.Costos"
+        '
+        'Rd_Costo_Ultimo_Documento_Seleccionado
+        '
+        '
+        '
+        '
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.CheckBoxImageChecked = CType(resources.GetObject("Rd_Costo_Ultimo_Documento_Seleccionado.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Checked = True
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.CheckValue = "Y"
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.FocusCuesEnabled = False
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.ForeColor = System.Drawing.Color.Black
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Location = New System.Drawing.Point(53, 3)
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Name = "Rd_Costo_Ultimo_Documento_Seleccionado"
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Size = New System.Drawing.Size(138, 20)
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.TabIndex = 56
+        Me.Rd_Costo_Ultimo_Documento_Seleccionado.Text = "Desde la última GRC/OCC/FCC"
+        '
+        'LabelX8
+        '
+        Me.LabelX8.AutoSize = True
+        '
+        '
+        '
+        Me.LabelX8.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX8.ForeColor = System.Drawing.Color.Black
+        Me.LabelX8.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX8.Name = "LabelX8"
+        Me.LabelX8.Size = New System.Drawing.Size(41, 17)
+        Me.LabelX8.TabIndex = 51
+        Me.LabelX8.Text = "<b>Costos :</b>"
+        '
+        'Cmb_Lista_de_costos
+        '
+        Me.Cmb_Lista_de_costos.DisplayMember = "Text"
+        Me.Cmb_Lista_de_costos.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed
+        Me.Cmb_Lista_de_costos.ForeColor = System.Drawing.Color.Black
+        Me.Cmb_Lista_de_costos.FormattingEnabled = True
+        Me.Cmb_Lista_de_costos.ItemHeight = 16
+        Me.Cmb_Lista_de_costos.Location = New System.Drawing.Point(303, 3)
+        Me.Cmb_Lista_de_costos.Name = "Cmb_Lista_de_costos"
+        Me.Cmb_Lista_de_costos.Size = New System.Drawing.Size(210, 22)
+        Me.Cmb_Lista_de_costos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Cmb_Lista_de_costos.TabIndex = 67
+        '
+        'LabelX4
+        '
+        Me.LabelX4.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX4.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX4.ForeColor = System.Drawing.Color.Black
+        Me.LabelX4.Location = New System.Drawing.Point(12, 97)
+        Me.LabelX4.Name = "LabelX4"
+        Me.LabelX4.Size = New System.Drawing.Size(380, 49)
+        Me.LabelX4.TabIndex = 52
+        Me.LabelX4.Text = "<b>Fecha tope de búsqueda del precio mínimo según proveedor con el mejor precio." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Si no encuentra guías, traerá la última compra recepcionada del producto.</b>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) &
+    ""
+        '
+        'LabelX3
+        '
+        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX3.ForeColor = System.Drawing.Color.Black
+        Me.LabelX3.Location = New System.Drawing.Point(12, 47)
+        Me.LabelX3.Name = "LabelX3"
+        Me.LabelX3.Size = New System.Drawing.Size(135, 23)
+        Me.LabelX3.TabIndex = 54
+        Me.LabelX3.Text = "Documento seleccionado:"
+        '
+        'Tab_Costos_OCC
+        '
+        Me.Tab_Costos_OCC.AttachedControl = Me.SuperTabControlPanel6
+        Me.Tab_Costos_OCC.GlobalItem = False
+        Me.Tab_Costos_OCC.Name = "Tab_Costos_OCC"
+        Me.Tab_Costos_OCC.Text = "Costos para OCC"
         '
         'SuperTabControlPanel1
         '
@@ -4135,14 +4173,6 @@ Partial Class Frm_00_Asis_Compra_Menu
         CType(Me.Input_Productos_Ranking, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.STabConfiguracion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.STabConfiguracion.ResumeLayout(False)
-        Me.SuperTabControlPanel6.ResumeLayout(False)
-        Me.SuperTabControlPanel6.PerformLayout()
-        Me.Panel_PMargen.ResumeLayout(False)
-        Me.Panel_PMargen.PerformLayout()
-        CType(Me.Input_FechaTopeBusquedaProveedores, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Dtp_Fecha_Tope_Proveedores_Automaticos, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.TableLayoutPanel7.ResumeLayout(False)
-        Me.TableLayoutPanel7.PerformLayout()
         Me.SuperTabControlPanel4.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.Layaut_UlProdXProv.ResumeLayout(False)
@@ -4155,6 +4185,14 @@ Partial Class Frm_00_Asis_Compra_Menu
         Me.TableLayoutPanel5.PerformLayout()
         CType(Me.Input_Dias_a_Abastecer, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_Tiempo_Reposicion, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.SuperTabControlPanel6.ResumeLayout(False)
+        Me.SuperTabControlPanel6.PerformLayout()
+        Me.Panel_PMargen.ResumeLayout(False)
+        Me.Panel_PMargen.PerformLayout()
+        CType(Me.Input_FechaTopeBusquedaProveedores, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.Dtp_Fecha_Tope_Proveedores_Automaticos, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TableLayoutPanel7.ResumeLayout(False)
+        Me.TableLayoutPanel7.PerformLayout()
         Me.SuperTabControlPanel1.ResumeLayout(False)
         CType(Me.Dtp_Fecha_Vta_Desde, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Input_Ultimos_Meses_Vta_Promedio, System.ComponentModel.ISupportInitialize).EndInit()
@@ -4406,4 +4444,6 @@ Partial Class Frm_00_Asis_Compra_Menu
     Friend WithEvents LabelX36 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Rdb_LPMC_PPPPM As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Rdb_LPMC_ListaCostos As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_MarcarOfertas As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_SumarStfisicoStTransito As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class
