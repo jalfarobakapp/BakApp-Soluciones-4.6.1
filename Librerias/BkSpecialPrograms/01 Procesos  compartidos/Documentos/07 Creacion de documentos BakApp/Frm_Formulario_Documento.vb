@@ -4768,11 +4768,19 @@ Public Class Frm_Formulario_Documento
 
                     If CBool(_Idmaeddo_Dori) Then
 
-                        Dim Td, Nr As String
-                        Dim _Feemlipa As Date? = .Cells("Feemlipa").Value
-                        Td = .Cells("Tidopa").Value
-                        Nr = .Cells("Nudopa").Value
-                        _Desde = $" Desde: {Td} - {Nr} ({_Feemlipa?.ToString("dd/MM/yyyy")})"
+                        Dim Td As String = NuloPorNro(.Cells("Tidopa").Value, String.Empty)
+                        Dim Nr As String = NuloPorNro(.Cells("Nudopa").Value, String.Empty)
+                        Dim _Feemlipa As Date? = Nothing
+
+                        If .Cells("Feemlipa").Value IsNot Nothing AndAlso Not IsDBNull(.Cells("Feemlipa").Value) Then
+                            _Feemlipa = CType(.Cells("Feemlipa").Value, Date)
+                        End If
+
+                        _Desde = $" Desde: {Td} - {Nr}"
+
+                        If _Feemlipa.HasValue Then
+                            _Desde &= $" ({_Feemlipa.Value:dd/MM/yyyy})"
+                        End If
 
                     End If
 

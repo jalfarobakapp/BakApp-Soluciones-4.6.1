@@ -928,6 +928,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_DocTom.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Docu_Det_Lote.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Ferias.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pda2NVV.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_PreVenta_StockProd.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Demonio_Conf_Correo.vb" />
@@ -1023,6 +1024,13 @@
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Ferias\Cl_Ferias.vb" />
+    <Compile Include="03 Sistemas\Ferias\Frm_Ferias.Designer.vb">
+      <DependentUpon>Frm_Ferias.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Ferias\Frm_Ferias.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\PDARandomMovil\Cl_PDARandomMovil.vb" />
@@ -5060,6 +5068,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_CrearContenedor.resx">
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Ferias\Frm_Ferias.resx">
+      <DependentUpon>Frm_Ferias.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\PDARandomMovil\Frm_PreVentasPDA.resx">
       <DependentUpon>Frm_PreVentasPDA.vb</DependentUpon>

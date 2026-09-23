@@ -26,6 +26,8 @@ Public Class Frm_GRI_FabXProducto
     Private _Ult_Tolva_Str As String
     Private _Ult_Lote As String
 
+    Private _FechaElabManual_Bl As Boolean
+
     Enum Enum_TipoFab
         Ninguno
         Saco
@@ -51,6 +53,9 @@ Public Class Frm_GRI_FabXProducto
         'AddHandler Txt_Cantidad.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         'AddHandler Txt_Cantidad.Validated, AddressOf Sb_Txt_Nros_Validated
         'AddHandler Txt_Cantidad.Enter, AddressOf Sb_Txt_Nros_Enter
+
+        _FechaElabManual_Bl = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
+                                                      "Valor", "Tabla = 'TARJA_FECHAEMIMANUAL' And CodigoTabla = 'FechaElabManual'",, False,, True)
 
         Sb_Parametros_Informe_Sql(False)
 
@@ -494,6 +499,11 @@ Public Class Frm_GRI_FabXProducto
         Dtp_Fecha_Ingreso.Enabled = False
         Btn_EditFechaGRI.Enabled = False
         Dtp_Fiot.Value = Nothing
+        Dtp_FechaElabManual.ValueObject = Nothing
+
+        LabelX20.Visible = _FechaElabManual_Bl
+        Dtp_FechaElabManual.Visible = _FechaElabManual_Bl
+
         Txt_Numot.ReadOnly = False
         Txt_Numot.Text = String.Empty
         Txt_Numot.ButtonCustom.Visible = False
@@ -607,6 +617,25 @@ Public Class Frm_GRI_FabXProducto
 
         Dim _Aceptar As Boolean
         Dim _NroLote As String
+
+        If _FechaElabManual_Bl Then
+
+            Dim _FechaElabManual As Date = Dtp_Fecha_Ingreso.Value.Date
+
+            If Not IsNothing(Dtp_FechaElabManual.ValueObject) Then
+                _FechaElabManual = Dtp_FechaElabManual.Value.Date
+            End If
+
+            _Aceptar = InputBox_Bk(Me, "Ingrese la fecha de elaboración", "Fecha elaboración", _FechaElabManual,
+                                   False,,, True, _Tipo_Imagen.Fecha,, _Tipo_Caracter.Fecha)
+
+            If Not _Aceptar Then
+                Return
+            End If
+
+            Dtp_FechaElabManual.Value = _FechaElabManual
+
+        End If
 
         Dim _NoPermitirEntradaDeTeclado As Boolean = CBool(_Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_TablaDeCaracterizaciones",
                                                           "Valor",
@@ -985,6 +1014,14 @@ Public Class Frm_GRI_FabXProducto
             Return
         End If
 
+        If _FechaElabManual_Bl Then
+            If IsNothing(Dtp_FechaElabManual.ValueObject) Then
+                MessageBoxEx.Show(Me, "Falta la fecha de elaboración manual", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Dtp_FechaElabManual.Focus()
+                Return
+            End If
+        End If
+
         If String.IsNullOrEmpty(Txt_NroLote.Text) Then
             MessageBoxEx.Show(Me, "Falta el numero de lote", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_NroLote.Focus()
@@ -1022,7 +1059,7 @@ Public Class Frm_GRI_FabXProducto
         End If
 
         If MessageBoxEx.Show(Me, "¿Confirma la grabación por " & _Cl_Tarja.Zw_Pdp_CPT_Tarja.CantidadTipo & " (" & _Cl_Tarja.Zw_Pdp_CPT_Tarja.Tipo & ") " & vbCrLf &
-                                "Equivalente a " & Txt_Cantidad.Text & " " & LabelX3.Text & "?",
+                             "Equivalente a " & Txt_Cantidad.Text & " " & LabelX3.Text & "?",
                              "Confirmar Grabación", MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Txt_Cantidad.Focus()
             Return
@@ -1081,6 +1118,12 @@ Public Class Frm_GRI_FabXProducto
         _Cl_Tarja.Zw_Pdp_CPT_Tarja.FechaElab = Dtp_Fecha_Ingreso.Value
         _Cl_Tarja.Zw_Pdp_CPT_Tarja.Observaciones = Txt_Observaciones.Text
         _Cl_Tarja.Zw_Pdp_CPT_Tarja.Udm = Cmb_Formato.Text
+
+        If IsNothing(Dtp_FechaElabManual.ValueObject) Then
+            _Cl_Tarja.Zw_Pdp_CPT_Tarja.FechaElabManual = Nothing
+        Else
+            _Cl_Tarja.Zw_Pdp_CPT_Tarja.FechaElabManual = Dtp_FechaElabManual.Value
+        End If
 
         If Cmb_Formato.SelectedValue = 1 Then
             _Cl_Tarja.Zw_Pdp_CPT_Tarja.Formato = 1

@@ -23,4 +23,5 @@
     Public Property Idpote As Integer
     Public Property Idpotl As Integer
     Public Property BodegaDesde As String
+    Public Property FechaElabManual As DateTime?
 End Class

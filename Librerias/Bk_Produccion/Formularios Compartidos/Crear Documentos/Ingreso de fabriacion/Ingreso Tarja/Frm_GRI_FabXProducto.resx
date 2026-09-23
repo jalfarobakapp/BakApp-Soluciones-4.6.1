@@ -330,6 +330,18 @@
         nEnDui6RCaYYAHu8RsbJ69zZAAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="Dtp_FechaElabManual.ButtonCustom.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAW5JREFUOE9j
+        8PL2ZfAGYR8/4rG3HwNIn6GhEQNDdk7+tZzcgr+kYpC+0LAIBgYQ5+/fv39IxSB9YWGRCAOePX+Ogv/+
+        /fv7wsWLf1JS0//090/8ExeX8AfERzEgHMmA8xcv/UXGIANA4rfv3PkTHhH198WLF5guIMYAEAYZgMyn
+        2IBPX74ureubJ+qTWke6AT9+/V61+sgdTsfqzSdsyjeGkGTAtx+/ls/ZdV3CpXZLlU35xhSb8o3nCRoA
+        C8Rbd+6tmL3zmoRj9eYLthWb/tmUb6yzLtvARlQ0Vtc1royvnQ3SfB6q+ZZN2UZpWWsiEtLHz19WNS/c
+        J2FfsRFZs4yadyEDAyMj/qRcUFS6rnbmVnHH6s3noJpv25RvlFHzgWoGAVB6BiVJUJwi44joBIbgwgkc
+        9mVrnWzKN76GapaF20wISBp5M9iUb0y0Kd94waZ8owtYM7LNhIBmcA3IgCU25Rtzrcs28MrbxmLVDADV
+        mWJ8yBlfRgAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="Btn_EditFechaGRI.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAW5JREFUOE9j

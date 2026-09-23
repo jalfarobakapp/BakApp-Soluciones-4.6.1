@@ -43,16 +43,24 @@ Public Class Cl_Tarja
 
                 .Nro_CPT = Fx_NvoNro_CPT()
 
-                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja (Empresa,Idmaeddo,Nro_CPT,Codigo,CodAlternativo,CodAlternativo_Pallet,Turno,Planta," &
-                               "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones,Tipo,CantidadTipo,CantidadFab,Descripcion_Kopral,Idpote,Idpotl,Tolva,BodegaDesde)" & vbCrLf &
-                               "Values ('" & .Empresa & "'," & .Idmaeddo & ",'" & .Nro_CPT & "','" & .Codigo & "','" & .CodAlternativo & "','" & .CodAlternativo_Pallet & "','" & .Turno &
-                               "','" & .Planta & "','" & .Udm & "','" & .Formato & "','" & .Lote & "','" & .FechaElab &
-                               "'," & .SacosXPallet & ",'" & .Analista & "','" & .Observaciones.Replace("'", "''") &
-                               "','" & .Tipo &
-                               "'," & De_Num_a_Tx_01(.CantidadTipo, False, 5) &
-                               "," & De_Num_a_Tx_01(.CantidadFab, False, 5) &
-                               ",'" & .Descripcion_Kopral & "'," & .Idpote & "," & .Idpotl & ",'" & .Tolva & "','" & .BodegaDesde & "')"
+                Dim _FechaElabManualSql As String
 
+                If .FechaElabManual.HasValue Then
+                    _FechaElabManualSql = "'" & Format(.FechaElabManual.Value, "yyyyMMdd") & "'"
+                Else
+                    _FechaElabManualSql = "Null"
+                End If
+
+                Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Pdp_CPT_Tarja (Empresa,Idmaeddo,Nro_CPT,Codigo,CodAlternativo,CodAlternativo_Pallet,Turno,Planta," &
+                   "Udm,Formato,Lote,FechaElab,SacosXPallet,Analista,Observaciones,Tipo,CantidadTipo,CantidadFab," &
+                   "Descripcion_Kopral,Idpote,Idpotl,Tolva,BodegaDesde,FechaElabManual)" & vbCrLf &
+                   "Values ('" & .Empresa & "'," & .Idmaeddo & ",'" & .Nro_CPT & "','" & .Codigo & "','" & .CodAlternativo & "','" & .CodAlternativo_Pallet & "','" & .Turno &
+                   "','" & .Planta & "','" & .Udm & "','" & .Formato & "','" & .Lote & "','" & .FechaElab &
+                   "'," & .SacosXPallet & ",'" & .Analista & "','" & .Observaciones.Replace("'", "''") &
+                   "','" & .Tipo &
+                   "'," & De_Num_a_Tx_01(.CantidadTipo, False, 5) &
+                   "," & De_Num_a_Tx_01(.CantidadFab, False, 5) &
+                   ",'" & .Descripcion_Kopral & "'," & .Idpote & "," & .Idpotl & ",'" & .Tolva & "','" & .BodegaDesde & "'," & _FechaElabManualSql & ")"
                 _Tipo = .Tipo
 
                 If _Tipo = "MAXI-SACO" Then

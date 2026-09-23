@@ -71,6 +71,11 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.Mts_Bar = New DevComponents.DotNetBar.Metro.MetroStatusBar()
         Me.Lbl_Empresa = New DevComponents.DotNetBar.LabelItem()
+        Me.BtnExportarExcel = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Exportar_Excel = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem10 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_Mnu_ExportarExcelVistaActual = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_ExportarExcelTodo = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Grilla_GRC_Ant, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -175,7 +180,7 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar, Me.Btn_Procesar, Me.Btn_VerInformeXProductos})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Actualizar, Me.Btn_Procesar, Me.Btn_VerInformeXProductos, Me.BtnExportarExcel})
         Me.Bar2.Location = New System.Drawing.Point(0, 564)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(1040, 41)
@@ -646,7 +651,7 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.DockSide = DevComponents.DotNetBar.eDockSide.Document
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual, Me.Menu_Contextual_Exportar_Excel})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(92, 52)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(319, 25)
@@ -824,6 +829,50 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
         Me.Lbl_Empresa.Name = "Lbl_Empresa"
         Me.Lbl_Empresa.Text = "LabelItem1"
         '
+        'BtnExportarExcel
+        '
+        Me.BtnExportarExcel.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.BtnExportarExcel.ForeColor = System.Drawing.Color.Black
+        Me.BtnExportarExcel.Image = CType(resources.GetObject("BtnExportarExcel.Image"), System.Drawing.Image)
+        Me.BtnExportarExcel.ImageAlt = CType(resources.GetObject("BtnExportarExcel.ImageAlt"), System.Drawing.Image)
+        Me.BtnExportarExcel.Name = "BtnExportarExcel"
+        Me.BtnExportarExcel.Text = "Exportar"
+        Me.BtnExportarExcel.Tooltip = "Exportar a excel (Vista actual)"
+        '
+        'Menu_Contextual_Exportar_Excel
+        '
+        Me.Menu_Contextual_Exportar_Excel.AutoExpandOnClick = True
+        Me.Menu_Contextual_Exportar_Excel.Name = "Menu_Contextual_Exportar_Excel"
+        Me.Menu_Contextual_Exportar_Excel.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem10, Me.Btn_Mnu_ExportarExcelVistaActual, Me.Btn_Mnu_ExportarExcelTodo})
+        Me.Menu_Contextual_Exportar_Excel.Text = "Opciones Exportar Excel"
+        '
+        'LabelItem10
+        '
+        Me.LabelItem10.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem10.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem10.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem10.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem10.Name = "LabelItem10"
+        Me.LabelItem10.PaddingBottom = 1
+        Me.LabelItem10.PaddingLeft = 10
+        Me.LabelItem10.PaddingTop = 1
+        Me.LabelItem10.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem10.Text = "Exportar lista"
+        '
+        'Btn_Mnu_ExportarExcelVistaActual
+        '
+        Me.Btn_Mnu_ExportarExcelVistaActual.Image = CType(resources.GetObject("Btn_Mnu_ExportarExcelVistaActual.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_ExportarExcelVistaActual.ImageAlt = CType(resources.GetObject("Btn_Mnu_ExportarExcelVistaActual.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_ExportarExcelVistaActual.Name = "Btn_Mnu_ExportarExcelVistaActual"
+        Me.Btn_Mnu_ExportarExcelVistaActual.Text = "Exportar vista actual"
+        '
+        'Btn_Mnu_ExportarExcelTodo
+        '
+        Me.Btn_Mnu_ExportarExcelTodo.Image = CType(resources.GetObject("Btn_Mnu_ExportarExcelTodo.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_ExportarExcelTodo.ImageAlt = CType(resources.GetObject("Btn_Mnu_ExportarExcelTodo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_ExportarExcelTodo.Name = "Btn_Mnu_ExportarExcelTodo"
+        Me.Btn_Mnu_ExportarExcelTodo.Text = "Exportar todo"
+        '
         'Frm_PreciosLC_InfUltCompras_Mt
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -898,4 +947,9 @@ Partial Class Frm_PreciosLC_InfUltCompras_Mt
     Friend WithEvents Chk_MostrarSoloSeleccionados As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Mts_Bar As DevComponents.DotNetBar.Metro.MetroStatusBar
     Friend WithEvents Lbl_Empresa As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents BtnExportarExcel As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_Exportar_Excel As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents LabelItem10 As DevComponents.DotNetBar.LabelItem
+    Friend WithEvents Btn_Mnu_ExportarExcelVistaActual As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_ExportarExcelTodo As DevComponents.DotNetBar.ButtonItem
 End Class

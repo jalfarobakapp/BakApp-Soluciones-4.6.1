@@ -108,11 +108,19 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
         Btn_VerInformeXProductos.Visible = Not ModoProductos
         Btn_Procesar.Visible = Not ModoProductos
 
+        'Dim _Arr_GRCvsUltGR(,) As String = {{"", "Mostrar todo"},
+        '                           {"1", "Sin Diferencia"},
+        '                           {"2", "Entre -3% y 3% (sin 0)"},
+        '                           {"3", ">= 3% Diferencia"},
+        '                           {"-3", "<= 3% Diferencia"}}
+        'Sb_Llenar_Combos(_Arr_GRCvsUltGR, Cmb_GRCvsUltGRC)
+        'Cmb_GRCvsUltGRC.SelectedValue = ""
+
         Dim _Arr_GRCvsUltGR(,) As String = {{"", "Mostrar todo"},
                                    {"1", "Sin Diferencia"},
-                                   {"2", "Entre -3% y 3% (sin 0)"},
-                                   {"3", ">= 3% Diferencia"},
-                                   {"-3", "<= 3% Diferencia"}}
+                                   {"2", "Entre -5% y 1% (sin 0)"},
+                                   {"3", "> 1% Diferencia"},
+                                   {"-3", "< 5% Diferencia"}}
         Sb_Llenar_Combos(_Arr_GRCvsUltGR, Cmb_GRCvsUltGRC)
         Cmb_GRCvsUltGRC.SelectedValue = ""
 
@@ -1138,7 +1146,8 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             'If TabControl1.SelectedTabIndex = 0 Then
 
             '_Condicion = $"Where (Lc.FechaModif <> '{Format(_Fecha_Hoy, "yyyyMMdd")}' OR Lc.FechaModif IS NULL)"
-            _Condicion = $"Where ((Lc.FechaModif NOT BETWEEN '{Format(DFechaInicio.Value, "yyyyMMdd")}' AND '{Format(DFechaTermino.Value, "yyyyMMdd")}') Or (Lc.FechaModif IS NULL))"
+            '_Condicion = $"Where ((Lc.FechaModif NOT BETWEEN '{Format(DFechaInicio.Value, "yyyyMMdd")}' AND '{Format(DFechaTermino.Value, "yyyyMMdd")}') Or (Lc.FechaModif IS NULL))"
+            _Condicion = $"Where ((Lc.FechaModif NOT BETWEEN @Fecha_Desde AND @Fecha_Hasta) Or (Lc.FechaModif IS NULL))"
 
             Sb_Actualizar_Grilla(Grilla,
                                  _Tbl_Lista_LC,
@@ -1146,7 +1155,8 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             'Else
 
             '_Condicion = $"Where Lc.FechaModif = '{Format(_Fecha_Hoy, "yyyyMMdd")}'"
-            _Condicion = $"Where Lc.FechaModif BETWEEN '{Format(DFechaInicio.Value, "yyyyMMdd")}' AND '{Format(DFechaTermino.Value, "yyyyMMdd")}'"
+            '_Condicion = $"Where Lc.FechaModif BETWEEN '{Format(DFechaInicio.Value, "yyyyMMdd")}' AND '{Format(DFechaTermino.Value, "yyyyMMdd")}'"
+            _Condicion = $"Where Lc.FechaModif BETWEEN @Fecha_Desde AND @Fecha_Hasta"
 
             Sb_Actualizar_Grilla(GrillaProdActualizados,
                                  _Tbl_Lista_LC_Actualizados,
@@ -1211,16 +1221,29 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
     Private Function Fx_Construir_Filtro_Porcentaje(_Campo As String,
                                                 _ValorCombo As String) As String
 
+        'Select Case _ValorCombo
+
+        '    Case "1"
+        '        Return "IsNull(" & _Campo & ", 0) = 0"
+        '    Case "2"
+        '        Return "IsNull(" & _Campo & ", 0) > -0.03 And IsNull(" & _Campo & ", 0) < 0.03 And IsNull(" & _Campo & ", 0) <> 0"
+        '    Case "3"
+        '        Return "IsNull(" & _Campo & ", 0) >= 0.03"
+        '    Case "-3"
+        '        Return "IsNull(" & _Campo & ", 0) <= -0.03"
+
+        'End Select
+
         Select Case _ValorCombo
 
             Case "1"
                 Return "IsNull(" & _Campo & ", 0) = 0"
             Case "2"
-                Return "IsNull(" & _Campo & ", 0) > -0.03 And IsNull(" & _Campo & ", 0) < 0.03 And IsNull(" & _Campo & ", 0) <> 0"
+                Return "IsNull(" & _Campo & ", 0) > -0.05 And IsNull(" & _Campo & ", 0) < 0.01 And IsNull(" & _Campo & ", 0) <> 0"
             Case "3"
-                Return "IsNull(" & _Campo & ", 0) >= 0.03"
+                Return "IsNull(" & _Campo & ", 0) >= 0.01"
             Case "-3"
-                Return "IsNull(" & _Campo & ", 0) <= -0.03"
+                Return "IsNull(" & _Campo & ", 0) <= -0.05"
 
         End Select
 
@@ -1244,6 +1267,8 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
     End Sub
 
     Private Sub Sb_Aplicar_Filtros()
+
+        Me.Cursor = Cursors.WaitCursor
 
         Dim _Grilla As DataGridView = Fx_Grilla_Activa()
         Dim _Tbl As DataTable = TryCast(_Grilla.DataSource, DataTable)
@@ -1298,6 +1323,8 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             Grilla_GRC_Ant.DataSource = Nothing
         End If
 
+        Me.Cursor = Cursors.Default
+
     End Sub
 
     Private Sub Cmb_GRCvsUltGRC_SelectedValueChanged(sender As Object, e As EventArgs) Handles Cmb_GRCvsUltGRC.SelectedValueChanged
@@ -1341,9 +1368,9 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
                 Dim _Dif_UCCPorc As Double = NuloPorNro(_Fila.Cells("Dif_UCCPorc").Value, 0) * 100
 
-                If _Dif_UCCPorc >= 3 Then
+                If _Dif_UCCPorc > 1 Then
                     _Fila.Cells("Dif_UCCPorc").Style.ForeColor = Rojo
-                ElseIf _Dif_UCCPorc <= -3 Then
+                ElseIf _Dif_UCCPorc < -5 Then
                     _Fila.Cells("Dif_UCCPorc").Style.ForeColor = Verde
                 Else
                     _Fila.Cells("Dif_UCCPorc").Style.ForeColor = Color.Black
@@ -1411,6 +1438,12 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
         Fm.Ls_SelSubFamilias = _Ls_SelSubFamilias
 
         Fm.Ls_SelArbol_Asociaciones = _Ls_SelArbol_Asociaciones
+
+        Fm.Btn_Bakapp_Algunas.Enabled = False
+        Fm.Rdb_Bakapp_Algunas.Enabled = False
+        Fm.Rdb_Bakapp_Todas.Enabled = False
+        Fm.LabelX6.Enabled = False
+        Fm.LabelX7.Enabled = False
 
         Fm.ShowDialog(Me)
 
@@ -2830,4 +2863,149 @@ values
 
     End Sub
 
+    Private Sub BtnExportarExcel_Click(sender As Object, e As EventArgs) Handles BtnExportarExcel.Click
+
+        ShowContextMenu(Menu_Contextual_Exportar_Excel)
+
+
+    End Sub
+
+
+    Private Function Fx_Obtener_Tabla_Excel_Desde_Grilla_Activa() As DataTable
+
+        Dim _Grilla As DataGridView = Fx_Grilla_Activa()
+
+        If IsNothing(_Grilla) Then
+            Return Nothing
+        End If
+
+        If _Grilla.Rows.Count = 0 Then
+            Return Nothing
+        End If
+
+        Dim _Tbl_Excel As New DataTable
+        Dim _ColumnasExportar As New List(Of DataGridViewColumn)
+
+        For _DisplayIndex As Integer = 0 To _Grilla.Columns.Count - 1
+
+            For Each _Columna As DataGridViewColumn In _Grilla.Columns
+
+                If _Columna.DisplayIndex <> _DisplayIndex Then
+                    Continue For
+                End If
+
+                If Not _Columna.Visible Then
+                    Continue For
+                End If
+
+                If _Columna.Name = NombreColSeleccion Then
+                    Continue For
+                End If
+
+                Dim _NombreColumna As String = _Columna.HeaderText.Trim
+
+                If String.IsNullOrWhiteSpace(_NombreColumna) Then
+                    _NombreColumna = _Columna.Name
+                End If
+
+                Dim _NombreBase As String = _NombreColumna
+                Dim _Contador As Integer = 1
+
+                While _Tbl_Excel.Columns.Contains(_NombreColumna)
+                    _Contador += 1
+                    _NombreColumna = _NombreBase & " (" & _Contador & ")"
+                End While
+
+                Dim _TipoDato As Type = GetType(String)
+
+                If Not IsNothing(_Columna.ValueType) Then
+                    _TipoDato = _Columna.ValueType
+                End If
+
+                _Tbl_Excel.Columns.Add(_NombreColumna, _TipoDato)
+                _ColumnasExportar.Add(_Columna)
+
+            Next
+
+        Next
+
+        For Each _FilaGrilla As DataGridViewRow In _Grilla.Rows
+
+            If _FilaGrilla.IsNewRow OrElse Not _FilaGrilla.Visible Then
+                Continue For
+            End If
+
+            Dim _NuevaFila As DataRow = _Tbl_Excel.NewRow()
+
+            For _Indice As Integer = 0 To _ColumnasExportar.Count - 1
+
+                Dim _Valor As Object = _FilaGrilla.Cells(_ColumnasExportar(_Indice).Name).Value
+
+                If IsNothing(_Valor) OrElse IsDBNull(_Valor) Then
+                    _NuevaFila(_Indice) = DBNull.Value
+                Else
+                    _NuevaFila(_Indice) = _Valor
+                End If
+
+            Next
+
+            _Tbl_Excel.Rows.Add(_NuevaFila)
+
+        Next
+
+        Return _Tbl_Excel
+
+    End Function
+
+    Private Function Fx_Obtener_Tabla_Excel_Todo() As DataTable
+
+        Dim _TblOrigen As DataTable = Fx_Tabla_Base_Activa()
+
+        If IsNothing(_TblOrigen) Then
+            Return Nothing
+        End If
+
+        If _TblOrigen.Rows.Count = 0 Then
+            Return Nothing
+        End If
+
+        Dim _TblExcel As DataTable = _TblOrigen.Copy()
+
+        If _TblExcel.Columns.Contains(NombreColSeleccion) Then
+            _TblExcel.Columns.Remove(NombreColSeleccion)
+        End If
+
+        If _TblExcel.Columns.Contains(NombreColFiltroProducto) Then
+            _TblExcel.Columns.Remove(NombreColFiltroProducto)
+        End If
+
+        Return _TblExcel
+
+    End Function
+
+    Private Sub Btn_Mnu_ExportarExcelVistaActual_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_ExportarExcelVistaActual.Click
+
+        Dim Tbl_Excel As DataTable = Fx_Obtener_Tabla_Excel_Desde_Grilla_Activa()
+        Dim _NombreArchivo As String = "InformeExcel"
+
+        If TabControl1.SelectedTabIndex = 1 Then
+            _NombreArchivo &= "_Actualizados"
+        End If
+
+        ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NombreArchivo)
+
+    End Sub
+
+    Private Sub Btn_Mnu_ExportarExcelTodo_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_ExportarExcelTodo.Click
+
+        Dim Tbl_Excel As DataTable = Fx_Obtener_Tabla_Excel_Todo()
+        Dim _NombreArchivo As String = "InformeExcel_Todo"
+
+        If TabControl1.SelectedTabIndex = 1 Then
+            _NombreArchivo &= "_Actualizados"
+        End If
+
+        ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NombreArchivo)
+
+    End Sub
 End Class

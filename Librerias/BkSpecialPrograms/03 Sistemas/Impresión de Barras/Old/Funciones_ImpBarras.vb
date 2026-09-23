@@ -1151,11 +1151,26 @@ Public Class Class_Imprimir_Barras
 
         Dim _TRJ_ETQ_Nro_CPT As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ><END>"
         Dim _TRJ_ETQ_Nro_CPT_FFHH1 As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ>" & _FechaStr.ToString.Trim & "<END>"
-        Dim _TRJ_FechaElab2 As String = FormatDateTime(_Row_Tarja.Item("FechaElab"), DateFormat.ShortDate)
+
+
+        Dim _TRJ_FechaElab2 As String = String.Empty
+        Dim _TRJ_FechaElabManual2 As String = String.Empty
+
+        If Not IsDBNull(_Row_Tarja.Item("FechaElab")) AndAlso Not IsNothing(_Row_Tarja.Item("FechaElab")) Then
+            _TRJ_FechaElab2 = FormatDateTime(CDate(_Row_Tarja.Item("FechaElab")), DateFormat.ShortDate)
+        End If
+
+        If Not IsDBNull(_Row_Tarja.Item("FechaElabManual")) AndAlso Not IsNothing(_Row_Tarja.Item("FechaElabManual")) Then
+            _TRJ_FechaElabManual2 = FormatDateTime(CDate(_Row_Tarja.Item("FechaElabManual")), DateFormat.ShortDate)
+        End If
+
+        _Texto = Replace(_Texto, "<TRJ_FechaElab2>", _TRJ_FechaElab2.Trim)
+        _Texto = Replace(_Texto, "<TRJ_FechaElabManual2>", _TRJ_FechaElabManual2.Trim)
 
         _Texto = Replace(_Texto, "<TRJ_ETQ_Nro_CPT>", _TRJ_ETQ_Nro_CPT.Trim)
         _Texto = Replace(_Texto, "<TRJ_ETQ_Nro_CPT_FFHH1>", _TRJ_ETQ_Nro_CPT_FFHH1.Trim)
         _Texto = Replace(_Texto, "<TRJ_FechaElab2>", _TRJ_FechaElab2.Trim)
+        _Texto = Replace(_Texto, "<TRJ_FechaElabManual2>", _TRJ_FechaElabManual2.Trim)
 
         Dim _Funciones As New List(Of String)
         Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
@@ -1325,11 +1340,26 @@ Public Class Class_Imprimir_Barras
 
         Dim _TRJ_ETQ_Nro_CPT As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ><END>"
         Dim _TRJ_ETQ_Nro_CPT_FFHH1 As String = "<TRJ>" & _Row_Tarja.Item("Nro_CPT") & "</TRJ>" & _FechaStr.ToString.Trim & "<END>"
-        Dim _TRJ_FechaElab2 As String = FormatDateTime(_Row_Tarja.Item("FechaElab"), DateFormat.ShortDate)
+        'Dim _TRJ_FechaElab2 As String = FormatDateTime(_Row_Tarja.Item("FechaElab"), DateFormat.ShortDate)
+
+
+
+        Dim _TRJ_FechaElab2 As String = String.Empty
+        Dim _TRJ_FechaElabManual2 As String = String.Empty
+
+        If Not IsDBNull(_Row_Tarja.Item("FechaElab")) AndAlso Not IsNothing(_Row_Tarja.Item("FechaElab")) Then
+            _TRJ_FechaElab2 = FormatDateTime(CDate(_Row_Tarja.Item("FechaElab")), DateFormat.ShortDate)
+        End If
+
+        If Not IsDBNull(_Row_Tarja.Item("FechaElabManual")) AndAlso Not IsNothing(_Row_Tarja.Item("FechaElabManual")) Then
+            _TRJ_FechaElabManual2 = FormatDateTime(CDate(_Row_Tarja.Item("FechaElabManual")), DateFormat.ShortDate)
+        End If
+
+        _Texto = Replace(_Texto, "<TRJ_FechaElab2>", _TRJ_FechaElab2.Trim)
+        _Texto = Replace(_Texto, "<TRJ_FechaElabManual2>", _TRJ_FechaElabManual2.Trim)
 
         _Texto = Replace(_Texto, "<TRJ_ETQ_Nro_CPT>", _TRJ_ETQ_Nro_CPT.Trim)
         _Texto = Replace(_Texto, "<TRJ_ETQ_Nro_CPT_FFHH1>", _TRJ_ETQ_Nro_CPT_FFHH1.Trim)
-        _Texto = Replace(_Texto, "<TRJ_FechaElab2>", _TRJ_FechaElab2.Trim)
 
         Dim _Funciones As New List(Of String)
         Sb_Llenar_Listado_Funciones(0, _Texto, _Funciones)
