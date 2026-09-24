@@ -292,6 +292,15 @@ Select * From {_Global_BaseBk}Zw_Ferias
         If MessageBox.Show(mensaje, "Advertencia de Eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button2) = DialogResult.Yes Then
 
             Try
+                ' 1. Validar si existen documentos
+                Dim sqlCheck As String = $"SELECT TOP 1 1 FROM {_Global_BaseBk}[Zw_Docu_Ent] WHERE [Id_Feria] = {idFeria}"
+                Dim dt As DataTable = _Sql.Fx_Get_DataTable(sqlCheck) ' Reemplaza con tu método para leer datos
+
+                If dt.Rows.Count > 0 Then
+                    ' Si hay datos, detenemos el proceso y avisamos
+                    MessageBox.Show("No se puede eliminar la feria porque ya tiene documentos asociados.", "Acción denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                    Return ' Salimos del sub/función
+                End If
                 ' 4. Ejecutar el DELETE
                 Dim query As String = $"DELETE FROM {_Global_BaseBk}[Zw_Ferias] 
                         WHERE [Id] = {idFeria} 
