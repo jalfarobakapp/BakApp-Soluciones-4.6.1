@@ -176,6 +176,7 @@
                 _Mensaje.Mensaje = $"Ya existe una feria registrada con el nombre '{nombre}'. Por favor, escriba un nombre distinto."
                 _Mensaje.EsCorrecto = False
                 _Mensaje.Icono = MessageBoxIcon.Error
+                Return _Mensaje
             End If
             ' Sentencia UPDATE apuntando al ID de la feria que estamos editando
             Dim query As String = $"
