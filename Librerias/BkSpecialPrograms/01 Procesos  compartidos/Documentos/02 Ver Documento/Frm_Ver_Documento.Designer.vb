@@ -163,6 +163,8 @@ Partial Class Frm_Ver_Documento
         Me.Txt_Importar_ArchivoSG = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_ArchivoSG_Carpeta_Lectura = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_ArchivoSG_Carpeta_Generados = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Feria = New DevComponents.DotNetBar.ButtonItem()
+        Me.Lbl_Feria = New DevComponents.DotNetBar.LabelItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GrillaDetalleDoc, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
@@ -1702,7 +1704,7 @@ Partial Class Frm_Ver_Documento
         Me.MStb_Barra.DragDropSupport = True
         Me.MStb_Barra.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MStb_Barra.ForeColor = System.Drawing.Color.Black
-        Me.MStb_Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Tido})
+        Me.MStb_Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Feria, Me.Lbl_Feria, Me.Lbl_Tido})
         Me.MStb_Barra.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MStb_Barra.Location = New System.Drawing.Point(0, 533)
         Me.MStb_Barra.Name = "MStb_Barra"
@@ -1775,6 +1777,17 @@ Partial Class Frm_Ver_Documento
         Me.Txt_ArchivoSG_Carpeta_Generados.Image = CType(resources.GetObject("Txt_ArchivoSG_Carpeta_Generados.Image"), System.Drawing.Image)
         Me.Txt_ArchivoSG_Carpeta_Generados.Name = "Txt_ArchivoSG_Carpeta_Generados"
         Me.Txt_ArchivoSG_Carpeta_Generados.Text = "Carpeta de destino de generacion de archivos"
+        '
+        'Btn_Feria
+        '
+        Me.Btn_Feria.Image = CType(resources.GetObject("Btn_Feria.Image"), System.Drawing.Image)
+        Me.Btn_Feria.Name = "Btn_Feria"
+        Me.Btn_Feria.Text = "ButtonItem1"
+        '
+        'Lbl_Feria
+        '
+        Me.Lbl_Feria.Name = "Lbl_Feria"
+        Me.Lbl_Feria.Text = "Venta Feria: FERIA LOS PEPINOS 2026"
         '
         'Frm_Ver_Documento
         '
@@ -1953,4 +1966,6 @@ Partial Class Frm_Ver_Documento
     Friend WithEvents Menu_Contextual_Orden_Despacho As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_VerOrdenDeDespacho As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_CrearOrdenDeDespacho As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Feria As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Lbl_Feria As DevComponents.DotNetBar.LabelItem
 End Class

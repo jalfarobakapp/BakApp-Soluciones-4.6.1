@@ -331,6 +331,8 @@ Public Class Frm_Ver_Documento
 
         Btn_Firmar_Documento_DTE.Visible = False
 
+        Lbl_Feria.Text = String.Empty
+
         Select Case _Tipo_Apertura
 
             Case Enum_Tipo_Apertura.Desde_Random_SQL
@@ -924,6 +926,22 @@ Public Class Frm_Ver_Documento
                     Btn_Eliminar_Anular.Visible = False
                 End If
             End If
+        End If
+
+        Btn_Feria.Visible = (_Tido = "COV" OrElse _Tido = "NVV" Or _Tido = "FCV")
+
+        Dim _Id_Feria As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Id_Feria", "Idmaeedo = " & _Idmaeedo, True, False)
+
+        If CBool(_Id_Feria) Then
+
+            Consulta_sql = $"Select * From {_Global_BaseBk}Zw_Ferias Where Id = {_Id_Feria}"
+
+            Dim _Row_Feria As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row_Feria) Then
+                Lbl_Feria.Text = $"Feria: {_Row_Feria.Item("NombreFeria").ToString.Trim}"
+            End If
+
         End If
 
         Me.Refresh()

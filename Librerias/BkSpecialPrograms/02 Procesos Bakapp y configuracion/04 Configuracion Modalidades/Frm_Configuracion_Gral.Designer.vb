@@ -60,6 +60,24 @@ Partial Class Frm_Configuracion_Gral
         Me.Cmb_TipoValor_Bruto_Neto = New DevComponents.DotNetBar.Controls.ComboBoxEx()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.Txt_ImpNoCobraVtaStr = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Chk_ImpNoCobraVta = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_ActivaTipoCompra = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Txt_Lista_Precios_Proveedores = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
+        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Btn_Asociar_Prod_Funcionarios = New DevComponents.DotNetBar.ButtonX()
+        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Usar_Validador_Prod_X_Compras = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Centro_Costo_Obligatorio_OCC = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Revisar_OCC_Pendientes_X_Productos = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Solicitar_Permiso_OCC_SOC = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.SpTab_Compras = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.TableLayoutPanel5 = New System.Windows.Forms.TableLayoutPanel()
         Me.Chk_NoCopiarCreditosSucEnt = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -179,22 +197,6 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_NVIQuedaSUDOSucRecibe = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_NVIQuedaSUDOSucEnvia = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.SpTab_Logistica = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel5 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.Chk_ActivaTipoCompra = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Txt_Lista_Precios_Proveedores = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.LabelX20 = New DevComponents.DotNetBar.LabelX()
-        Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
-        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Btn_Asociar_Prod_Funcionarios = New DevComponents.DotNetBar.ButtonX()
-        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Usar_Validador_Prod_X_Compras = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Centro_Costo_Obligatorio_OCC = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Revisar_OCC_Pendientes_X_Productos = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Chk_Solicitar_Permiso_OCC_SOC = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.SpTab_Compras = New DevComponents.DotNetBar.SuperTabItem()
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Numeraciones_Documento = New DevComponents.DotNetBar.ButtonItem()
@@ -202,8 +204,9 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfPuntosVta = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.Txt_ImpNoCobraVtaStr = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.Chk_ImpNoCobraVta = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_ObligaFeriaVta = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Txt_Feria = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX23 = New DevComponents.DotNetBar.LabelX()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -211,6 +214,8 @@ Partial Class Frm_Configuracion_Gral
         CType(Me.Input_Dias_Max_Fecha_Despacho, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel5.SuspendLayout()
+        Me.TableLayoutPanel1.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         Me.TableLayoutPanel5.SuspendLayout()
         Me.SuperTabControlPanel4.SuspendLayout()
@@ -228,8 +233,6 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel3.SuspendLayout()
         Me.SuperTabControlPanel9.SuspendLayout()
         Me.TableLayoutPanel7.SuspendLayout()
-        Me.SuperTabControlPanel5.SuspendLayout()
-        Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -905,10 +908,10 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel8)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
@@ -926,6 +929,308 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.TabIndex = 97
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SpTab_General, Me.SpTab_Compras, Me.SpTab_Ventas2, Me.SpTab_Ventas, Me.SpTab_Productos, Me.SuperTabItem1, Me.SpTab_DatosEmpresa, Me.SpTab_FincredPays, Me.SpTab_Logistica})
         Me.SuperTabControl1.Text = "SuperTabControl1"
+        '
+        'SuperTabControlPanel5
+        '
+        Me.SuperTabControlPanel5.Controls.Add(Me.Txt_ImpNoCobraVtaStr)
+        Me.SuperTabControlPanel5.Controls.Add(Me.Chk_ImpNoCobraVta)
+        Me.SuperTabControlPanel5.Controls.Add(Me.Chk_ActivaTipoCompra)
+        Me.SuperTabControlPanel5.Controls.Add(Me.Txt_Lista_Precios_Proveedores)
+        Me.SuperTabControlPanel5.Controls.Add(Me.LabelX20)
+        Me.SuperTabControlPanel5.Controls.Add(Me.TableLayoutPanel1)
+        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
+        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel5.TabIndex = 0
+        Me.SuperTabControlPanel5.TabItem = Me.SpTab_Compras
+        '
+        'Txt_ImpNoCobraVtaStr
+        '
+        Me.Txt_ImpNoCobraVtaStr.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_ImpNoCobraVtaStr.Border.Class = "TextBoxBorder"
+        Me.Txt_ImpNoCobraVtaStr.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_ImpNoCobraVtaStr.ButtonCustom.Image = CType(resources.GetObject("Txt_ImpNoCobraVtaStr.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_ImpNoCobraVtaStr.ButtonCustom.Visible = True
+        Me.Txt_ImpNoCobraVtaStr.ButtonCustom2.Image = CType(resources.GetObject("Txt_ImpNoCobraVtaStr.ButtonCustom2.Image"), System.Drawing.Image)
+        Me.Txt_ImpNoCobraVtaStr.ButtonCustom2.Visible = True
+        Me.Txt_ImpNoCobraVtaStr.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.Txt_ImpNoCobraVtaStr.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_ImpNoCobraVtaStr.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
+        Me.Txt_ImpNoCobraVtaStr.ForeColor = System.Drawing.Color.Black
+        Me.Txt_ImpNoCobraVtaStr.Location = New System.Drawing.Point(284, 287)
+        Me.Txt_ImpNoCobraVtaStr.Name = "Txt_ImpNoCobraVtaStr"
+        Me.Txt_ImpNoCobraVtaStr.ReadOnly = True
+        Me.Txt_ImpNoCobraVtaStr.Size = New System.Drawing.Size(290, 22)
+        Me.Txt_ImpNoCobraVtaStr.TabIndex = 142
+        Me.Txt_ImpNoCobraVtaStr.WatermarkText = "Indique el impuesto"
+        '
+        'Chk_ImpNoCobraVta
+        '
+        Me.Chk_ImpNoCobraVta.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_ImpNoCobraVta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ImpNoCobraVta.CheckBoxImageChecked = CType(resources.GetObject("Chk_ImpNoCobraVta.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ImpNoCobraVta.Enabled = False
+        Me.Chk_ImpNoCobraVta.FocusCuesEnabled = False
+        Me.Chk_ImpNoCobraVta.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ImpNoCobraVta.Location = New System.Drawing.Point(6, 287)
+        Me.Chk_ImpNoCobraVta.Name = "Chk_ImpNoCobraVta"
+        Me.Chk_ImpNoCobraVta.Size = New System.Drawing.Size(272, 22)
+        Me.Chk_ImpNoCobraVta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ImpNoCobraVta.TabIndex = 143
+        Me.Chk_ImpNoCobraVta.TabStop = False
+        Me.Chk_ImpNoCobraVta.Text = "Es agente retenedor, no aplicar impuesto en ventas"
+        '
+        'Chk_ActivaTipoCompra
+        '
+        Me.Chk_ActivaTipoCompra.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_ActivaTipoCompra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ActivaTipoCompra.CheckBoxImageChecked = CType(resources.GetObject("Chk_ActivaTipoCompra.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ActivaTipoCompra.FocusCuesEnabled = False
+        Me.Chk_ActivaTipoCompra.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ActivaTipoCompra.Location = New System.Drawing.Point(6, 245)
+        Me.Chk_ActivaTipoCompra.Name = "Chk_ActivaTipoCompra"
+        Me.Chk_ActivaTipoCompra.Size = New System.Drawing.Size(568, 25)
+        Me.Chk_ActivaTipoCompra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ActivaTipoCompra.TabIndex = 118
+        Me.Chk_ActivaTipoCompra.Text = "Editar Tipo de compra del producto según OC; obliga a ingresar Tipo de compra en " &
+    "OCC."
+        '
+        'Txt_Lista_Precios_Proveedores
+        '
+        Me.Txt_Lista_Precios_Proveedores.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Lista_Precios_Proveedores.Border.Class = "TextBoxBorder"
+        Me.Txt_Lista_Precios_Proveedores.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Lista_Precios_Proveedores.ButtonCustom.Visible = True
+        Me.Txt_Lista_Precios_Proveedores.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Lista_Precios_Proveedores.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Lista_Precios_Proveedores.Location = New System.Drawing.Point(170, 217)
+        Me.Txt_Lista_Precios_Proveedores.Name = "Txt_Lista_Precios_Proveedores"
+        Me.Txt_Lista_Precios_Proveedores.PreventEnterBeep = True
+        Me.Txt_Lista_Precios_Proveedores.ReadOnly = True
+        Me.Txt_Lista_Precios_Proveedores.Size = New System.Drawing.Size(236, 22)
+        Me.Txt_Lista_Precios_Proveedores.TabIndex = 89
+        '
+        'LabelX20
+        '
+        Me.LabelX20.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX20.ForeColor = System.Drawing.Color.Black
+        Me.LabelX20.Location = New System.Drawing.Point(6, 216)
+        Me.LabelX20.Name = "LabelX20"
+        Me.LabelX20.Size = New System.Drawing.Size(168, 23)
+        Me.LabelX20.TabIndex = 90
+        Me.LabelX20.Text = "Lista de costos para preveedores"
+        '
+        'TableLayoutPanel1
+        '
+        Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel1.ColumnCount = 1
+        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp, 0, 9)
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras, 0, 8)
+        Me.TableLayoutPanel1.Controls.Add(Me.Btn_Asociar_Prod_Funcionarios, 0, 3)
+        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII, 0, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial, 0, 1)
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Usar_Validador_Prod_X_Compras, 0, 2)
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor, 0, 7)
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Centro_Costo_Obligatorio_OCC, 0, 6)
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Revisar_OCC_Pendientes_X_Productos, 0, 5)
+        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Solicitar_Permiso_OCC_SOC, 0, 4)
+        Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 3)
+        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
+        Me.TableLayoutPanel1.RowCount = 10
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(571, 210)
+        Me.TableLayoutPanel1.TabIndex = 86
+        '
+        'Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp
+        '
+        '
+        '
+        '
+        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.CheckBoxImageChecked = CType(resources.GetObject("Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.FocusCuesEnabled = False
+        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Location = New System.Drawing.Point(3, 192)
+        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Name = "Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp"
+        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Size = New System.Drawing.Size(397, 15)
+        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.TabIndex = 117
+        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Text = "Actualizar lista de costos de Random desde Bakapp automáticamente"
+        '
+        'Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras
+        '
+        '
+        '
+        '
+        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.CheckBoxImageChecked = CType(resources.GetObject("Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.FocusCuesEnabled = False
+        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Location = New System.Drawing.Point(3, 171)
+        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Name = "Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras"
+        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Size = New System.Drawing.Size(397, 15)
+        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.TabIndex = 116
+        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Text = "Incorporar modo OCC y NVI en asistente de compras"
+        '
+        'Btn_Asociar_Prod_Funcionarios
+        '
+        Me.Btn_Asociar_Prod_Funcionarios.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_Asociar_Prod_Funcionarios.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_Asociar_Prod_Funcionarios.Image = CType(resources.GetObject("Btn_Asociar_Prod_Funcionarios.Image"), System.Drawing.Image)
+        Me.Btn_Asociar_Prod_Funcionarios.Location = New System.Drawing.Point(3, 66)
+        Me.Btn_Asociar_Prod_Funcionarios.Name = "Btn_Asociar_Prod_Funcionarios"
+        Me.Btn_Asociar_Prod_Funcionarios.Size = New System.Drawing.Size(199, 15)
+        Me.Btn_Asociar_Prod_Funcionarios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_Asociar_Prod_Funcionarios.TabIndex = 87
+        Me.Btn_Asociar_Prod_Funcionarios.Text = "Asociar productos por funcionarios"
+        '
+        'Rdb_Crear_FCC_Desde_GRC_Vinculado_SII
+        '
+        '
+        '
+        '
+        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.FocusCuesEnabled = False
+        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.ForeColor = System.Drawing.Color.Black
+        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Location = New System.Drawing.Point(3, 3)
+        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Name = "Rdb_Crear_FCC_Desde_GRC_Vinculado_SII"
+        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Size = New System.Drawing.Size(342, 15)
+        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.TabIndex = 81
+        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Text = "Crear FCC al grabar GRC vinculada en el SII"
+        '
+        'Chk_No_Solicitar_Permiso_Entidad_Preferencial
+        '
+        '
+        '
+        '
+        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.CheckBoxImageChecked = CType(resources.GetObject("Chk_No_Solicitar_Permiso_Entidad_Preferencial.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.FocusCuesEnabled = False
+        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.ForeColor = System.Drawing.Color.Black
+        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.Location = New System.Drawing.Point(3, 24)
+        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.Name = "Chk_No_Solicitar_Permiso_Entidad_Preferencial"
+        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.Size = New System.Drawing.Size(342, 15)
+        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.TabIndex = 82
+        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.Text = "No solicitar permiso a entidades preferenciales"
+        '
+        'Chk_Usar_Validador_Prod_X_Compras
+        '
+        '
+        '
+        '
+        Me.Chk_Usar_Validador_Prod_X_Compras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Usar_Validador_Prod_X_Compras.CheckBoxImageChecked = CType(resources.GetObject("Chk_Usar_Validador_Prod_X_Compras.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Usar_Validador_Prod_X_Compras.FocusCuesEnabled = False
+        Me.Chk_Usar_Validador_Prod_X_Compras.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Usar_Validador_Prod_X_Compras.Location = New System.Drawing.Point(3, 45)
+        Me.Chk_Usar_Validador_Prod_X_Compras.Name = "Chk_Usar_Validador_Prod_X_Compras"
+        Me.Chk_Usar_Validador_Prod_X_Compras.Size = New System.Drawing.Size(342, 15)
+        Me.Chk_Usar_Validador_Prod_X_Compras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Usar_Validador_Prod_X_Compras.TabIndex = 83
+        Me.Chk_Usar_Validador_Prod_X_Compras.Text = "Avisar a funcionario validador de códigos al generar OCC"
+        '
+        'Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor
+        '
+        '
+        '
+        '
+        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.CheckBoxImageChecked = CType(resources.GetObject("Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.FocusCuesEnabled = False
+        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.Location = New System.Drawing.Point(3, 150)
+        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.Name = "Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor"
+        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.Size = New System.Drawing.Size(397, 15)
+        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.TabIndex = 115
+        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.Text = "Alertar si costos de proveedores son distintos al costo de lista del documento"
+        '
+        'Chk_Centro_Costo_Obligatorio_OCC
+        '
+        '
+        '
+        '
+        Me.Chk_Centro_Costo_Obligatorio_OCC.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Centro_Costo_Obligatorio_OCC.CheckBoxImageChecked = CType(resources.GetObject("Chk_Centro_Costo_Obligatorio_OCC.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Centro_Costo_Obligatorio_OCC.FocusCuesEnabled = False
+        Me.Chk_Centro_Costo_Obligatorio_OCC.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Centro_Costo_Obligatorio_OCC.Location = New System.Drawing.Point(3, 129)
+        Me.Chk_Centro_Costo_Obligatorio_OCC.Name = "Chk_Centro_Costo_Obligatorio_OCC"
+        Me.Chk_Centro_Costo_Obligatorio_OCC.Size = New System.Drawing.Size(276, 15)
+        Me.Chk_Centro_Costo_Obligatorio_OCC.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Centro_Costo_Obligatorio_OCC.TabIndex = 95
+        Me.Chk_Centro_Costo_Obligatorio_OCC.Text = "Ingresar C.Costo en las compras obligatoriamente"
+        '
+        'Chk_Revisar_OCC_Pendientes_X_Productos
+        '
+        '
+        '
+        '
+        Me.Chk_Revisar_OCC_Pendientes_X_Productos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Revisar_OCC_Pendientes_X_Productos.CheckBoxImageChecked = CType(resources.GetObject("Chk_Revisar_OCC_Pendientes_X_Productos.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Revisar_OCC_Pendientes_X_Productos.FocusCuesEnabled = False
+        Me.Chk_Revisar_OCC_Pendientes_X_Productos.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Revisar_OCC_Pendientes_X_Productos.Location = New System.Drawing.Point(3, 108)
+        Me.Chk_Revisar_OCC_Pendientes_X_Productos.Name = "Chk_Revisar_OCC_Pendientes_X_Productos"
+        Me.Chk_Revisar_OCC_Pendientes_X_Productos.Size = New System.Drawing.Size(324, 14)
+        Me.Chk_Revisar_OCC_Pendientes_X_Productos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Revisar_OCC_Pendientes_X_Productos.TabIndex = 94
+        Me.Chk_Revisar_OCC_Pendientes_X_Productos.Text = "Revisar si hay OCC Pendientes antes de grabar una OCC"
+        '
+        'Chk_Solicitar_Permiso_OCC_SOC
+        '
+        '
+        '
+        '
+        Me.Chk_Solicitar_Permiso_OCC_SOC.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Solicitar_Permiso_OCC_SOC.CheckBoxImageChecked = CType(resources.GetObject("Chk_Solicitar_Permiso_OCC_SOC.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Solicitar_Permiso_OCC_SOC.FocusCuesEnabled = False
+        Me.Chk_Solicitar_Permiso_OCC_SOC.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Solicitar_Permiso_OCC_SOC.Location = New System.Drawing.Point(3, 87)
+        Me.Chk_Solicitar_Permiso_OCC_SOC.Name = "Chk_Solicitar_Permiso_OCC_SOC"
+        Me.Chk_Solicitar_Permiso_OCC_SOC.Size = New System.Drawing.Size(289, 15)
+        Me.Chk_Solicitar_Permiso_OCC_SOC.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Solicitar_Permiso_OCC_SOC.TabIndex = 84
+        Me.Chk_Solicitar_Permiso_OCC_SOC.Text = "Solictar permisos al grabar OCC"
+        '
+        'SpTab_Compras
+        '
+        Me.SpTab_Compras.AttachedControl = Me.SuperTabControlPanel5
+        Me.SpTab_Compras.GlobalItem = False
+        Me.SpTab_Compras.Name = "SpTab_Compras"
+        Me.SpTab_Compras.Text = "Compras"
         '
         'SuperTabControlPanel1
         '
@@ -1181,6 +1486,9 @@ Partial Class Frm_Configuracion_Gral
         '
         'SuperTabControlPanel4
         '
+        Me.SuperTabControlPanel4.Controls.Add(Me.LabelX23)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Txt_Feria)
+        Me.SuperTabControlPanel4.Controls.Add(Me.Chk_ObligaFeriaVta)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_PermiteVtaContadoCiaSeguro)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_SolictarCiaSeguro)
         Me.SuperTabControlPanel4.Controls.Add(Me.Chk_SelectOtrosClientesPedirPermiso)
@@ -1338,7 +1646,7 @@ Partial Class Frm_Configuracion_Gral
         Me.GroupPanel2.Controls.Add(Me.Chk_SoloprodEnDoc_CLALIBPR)
         Me.GroupPanel2.Controls.Add(Me.Chk_SoloprodEnDoc_Todos)
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel2.Location = New System.Drawing.Point(6, 286)
+        Me.GroupPanel2.Location = New System.Drawing.Point(6, 246)
         Me.GroupPanel2.Name = "GroupPanel2"
         Me.GroupPanel2.Size = New System.Drawing.Size(651, 67)
         '
@@ -2928,266 +3236,6 @@ Partial Class Frm_Configuracion_Gral
         Me.SpTab_Logistica.Name = "SpTab_Logistica"
         Me.SpTab_Logistica.Text = "Logística"
         '
-        'SuperTabControlPanel5
-        '
-        Me.SuperTabControlPanel5.Controls.Add(Me.Txt_ImpNoCobraVtaStr)
-        Me.SuperTabControlPanel5.Controls.Add(Me.Chk_ImpNoCobraVta)
-        Me.SuperTabControlPanel5.Controls.Add(Me.Chk_ActivaTipoCompra)
-        Me.SuperTabControlPanel5.Controls.Add(Me.Txt_Lista_Precios_Proveedores)
-        Me.SuperTabControlPanel5.Controls.Add(Me.LabelX20)
-        Me.SuperTabControlPanel5.Controls.Add(Me.TableLayoutPanel1)
-        Me.SuperTabControlPanel5.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel5.Location = New System.Drawing.Point(125, 0)
-        Me.SuperTabControlPanel5.Name = "SuperTabControlPanel5"
-        Me.SuperTabControlPanel5.Size = New System.Drawing.Size(667, 539)
-        Me.SuperTabControlPanel5.TabIndex = 0
-        Me.SuperTabControlPanel5.TabItem = Me.SpTab_Compras
-        '
-        'Chk_ActivaTipoCompra
-        '
-        Me.Chk_ActivaTipoCompra.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_ActivaTipoCompra.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_ActivaTipoCompra.CheckBoxImageChecked = CType(resources.GetObject("Chk_ActivaTipoCompra.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_ActivaTipoCompra.FocusCuesEnabled = False
-        Me.Chk_ActivaTipoCompra.ForeColor = System.Drawing.Color.Black
-        Me.Chk_ActivaTipoCompra.Location = New System.Drawing.Point(6, 245)
-        Me.Chk_ActivaTipoCompra.Name = "Chk_ActivaTipoCompra"
-        Me.Chk_ActivaTipoCompra.Size = New System.Drawing.Size(568, 25)
-        Me.Chk_ActivaTipoCompra.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_ActivaTipoCompra.TabIndex = 118
-        Me.Chk_ActivaTipoCompra.Text = "Editar Tipo de compra del producto según OC; obliga a ingresar Tipo de compra en " &
-    "OCC."
-        '
-        'Txt_Lista_Precios_Proveedores
-        '
-        Me.Txt_Lista_Precios_Proveedores.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_Lista_Precios_Proveedores.Border.Class = "TextBoxBorder"
-        Me.Txt_Lista_Precios_Proveedores.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_Lista_Precios_Proveedores.ButtonCustom.Visible = True
-        Me.Txt_Lista_Precios_Proveedores.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_Lista_Precios_Proveedores.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Lista_Precios_Proveedores.Location = New System.Drawing.Point(170, 217)
-        Me.Txt_Lista_Precios_Proveedores.Name = "Txt_Lista_Precios_Proveedores"
-        Me.Txt_Lista_Precios_Proveedores.PreventEnterBeep = True
-        Me.Txt_Lista_Precios_Proveedores.ReadOnly = True
-        Me.Txt_Lista_Precios_Proveedores.Size = New System.Drawing.Size(236, 22)
-        Me.Txt_Lista_Precios_Proveedores.TabIndex = 89
-        '
-        'LabelX20
-        '
-        Me.LabelX20.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX20.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX20.ForeColor = System.Drawing.Color.Black
-        Me.LabelX20.Location = New System.Drawing.Point(6, 216)
-        Me.LabelX20.Name = "LabelX20"
-        Me.LabelX20.Size = New System.Drawing.Size(168, 23)
-        Me.LabelX20.TabIndex = 90
-        Me.LabelX20.Text = "Lista de costos para preveedores"
-        '
-        'TableLayoutPanel1
-        '
-        Me.TableLayoutPanel1.BackColor = System.Drawing.Color.Transparent
-        Me.TableLayoutPanel1.ColumnCount = 1
-        Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp, 0, 9)
-        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras, 0, 8)
-        Me.TableLayoutPanel1.Controls.Add(Me.Btn_Asociar_Prod_Funcionarios, 0, 3)
-        Me.TableLayoutPanel1.Controls.Add(Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII, 0, 0)
-        Me.TableLayoutPanel1.Controls.Add(Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial, 0, 1)
-        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Usar_Validador_Prod_X_Compras, 0, 2)
-        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor, 0, 7)
-        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Centro_Costo_Obligatorio_OCC, 0, 6)
-        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Revisar_OCC_Pendientes_X_Productos, 0, 5)
-        Me.TableLayoutPanel1.Controls.Add(Me.Chk_Solicitar_Permiso_OCC_SOC, 0, 4)
-        Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 3)
-        Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-        Me.TableLayoutPanel1.RowCount = 10
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(571, 210)
-        Me.TableLayoutPanel1.TabIndex = 86
-        '
-        'Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp
-        '
-        '
-        '
-        '
-        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.CheckBoxImageChecked = CType(resources.GetObject("Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.FocusCuesEnabled = False
-        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Location = New System.Drawing.Point(3, 192)
-        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Name = "Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp"
-        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Size = New System.Drawing.Size(397, 15)
-        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.TabIndex = 117
-        Me.Chk_Actualizar_Lista_De_Costos_Random_Desde_Bakapp.Text = "Actualizar lista de costos de Random desde Bakapp automáticamente"
-        '
-        'Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras
-        '
-        '
-        '
-        '
-        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.CheckBoxImageChecked = CType(resources.GetObject("Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.FocusCuesEnabled = False
-        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Location = New System.Drawing.Point(3, 171)
-        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Name = "Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras"
-        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Size = New System.Drawing.Size(397, 15)
-        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.TabIndex = 116
-        Me.Chk_Incorporar_Modo_NVI_y_OCC_Asistente_Compras.Text = "Incorporar modo OCC y NVI en asistente de compras"
-        '
-        'Btn_Asociar_Prod_Funcionarios
-        '
-        Me.Btn_Asociar_Prod_Funcionarios.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
-        Me.Btn_Asociar_Prod_Funcionarios.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Asociar_Prod_Funcionarios.Image = CType(resources.GetObject("Btn_Asociar_Prod_Funcionarios.Image"), System.Drawing.Image)
-        Me.Btn_Asociar_Prod_Funcionarios.Location = New System.Drawing.Point(3, 66)
-        Me.Btn_Asociar_Prod_Funcionarios.Name = "Btn_Asociar_Prod_Funcionarios"
-        Me.Btn_Asociar_Prod_Funcionarios.Size = New System.Drawing.Size(199, 15)
-        Me.Btn_Asociar_Prod_Funcionarios.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Btn_Asociar_Prod_Funcionarios.TabIndex = 87
-        Me.Btn_Asociar_Prod_Funcionarios.Text = "Asociar productos por funcionarios"
-        '
-        'Rdb_Crear_FCC_Desde_GRC_Vinculado_SII
-        '
-        '
-        '
-        '
-        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.CheckBoxImageChecked = CType(resources.GetObject("Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.FocusCuesEnabled = False
-        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Location = New System.Drawing.Point(3, 3)
-        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Name = "Rdb_Crear_FCC_Desde_GRC_Vinculado_SII"
-        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Size = New System.Drawing.Size(342, 15)
-        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.TabIndex = 81
-        Me.Rdb_Crear_FCC_Desde_GRC_Vinculado_SII.Text = "Crear FCC al grabar GRC vinculada en el SII"
-        '
-        'Chk_No_Solicitar_Permiso_Entidad_Preferencial
-        '
-        '
-        '
-        '
-        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.CheckBoxImageChecked = CType(resources.GetObject("Chk_No_Solicitar_Permiso_Entidad_Preferencial.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.FocusCuesEnabled = False
-        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.ForeColor = System.Drawing.Color.Black
-        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.Location = New System.Drawing.Point(3, 24)
-        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.Name = "Chk_No_Solicitar_Permiso_Entidad_Preferencial"
-        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.Size = New System.Drawing.Size(342, 15)
-        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.TabIndex = 82
-        Me.Chk_No_Solicitar_Permiso_Entidad_Preferencial.Text = "No solicitar permiso a entidades preferenciales"
-        '
-        'Chk_Usar_Validador_Prod_X_Compras
-        '
-        '
-        '
-        '
-        Me.Chk_Usar_Validador_Prod_X_Compras.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Usar_Validador_Prod_X_Compras.CheckBoxImageChecked = CType(resources.GetObject("Chk_Usar_Validador_Prod_X_Compras.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Usar_Validador_Prod_X_Compras.FocusCuesEnabled = False
-        Me.Chk_Usar_Validador_Prod_X_Compras.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Usar_Validador_Prod_X_Compras.Location = New System.Drawing.Point(3, 45)
-        Me.Chk_Usar_Validador_Prod_X_Compras.Name = "Chk_Usar_Validador_Prod_X_Compras"
-        Me.Chk_Usar_Validador_Prod_X_Compras.Size = New System.Drawing.Size(342, 15)
-        Me.Chk_Usar_Validador_Prod_X_Compras.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Usar_Validador_Prod_X_Compras.TabIndex = 83
-        Me.Chk_Usar_Validador_Prod_X_Compras.Text = "Avisar a funcionario validador de códigos al generar OCC"
-        '
-        'Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor
-        '
-        '
-        '
-        '
-        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.CheckBoxImageChecked = CType(resources.GetObject("Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.FocusCuesEnabled = False
-        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.Location = New System.Drawing.Point(3, 150)
-        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.Name = "Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor"
-        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.Size = New System.Drawing.Size(397, 15)
-        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.TabIndex = 115
-        Me.Chk_Alerta_Costo_Lista_Distinto_Costo_Proveedor.Text = "Alertar si costos de proveedores son distintos al costo de lista del documento"
-        '
-        'Chk_Centro_Costo_Obligatorio_OCC
-        '
-        '
-        '
-        '
-        Me.Chk_Centro_Costo_Obligatorio_OCC.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Centro_Costo_Obligatorio_OCC.CheckBoxImageChecked = CType(resources.GetObject("Chk_Centro_Costo_Obligatorio_OCC.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Centro_Costo_Obligatorio_OCC.FocusCuesEnabled = False
-        Me.Chk_Centro_Costo_Obligatorio_OCC.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Centro_Costo_Obligatorio_OCC.Location = New System.Drawing.Point(3, 129)
-        Me.Chk_Centro_Costo_Obligatorio_OCC.Name = "Chk_Centro_Costo_Obligatorio_OCC"
-        Me.Chk_Centro_Costo_Obligatorio_OCC.Size = New System.Drawing.Size(276, 15)
-        Me.Chk_Centro_Costo_Obligatorio_OCC.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Centro_Costo_Obligatorio_OCC.TabIndex = 95
-        Me.Chk_Centro_Costo_Obligatorio_OCC.Text = "Ingresar C.Costo en las compras obligatoriamente"
-        '
-        'Chk_Revisar_OCC_Pendientes_X_Productos
-        '
-        '
-        '
-        '
-        Me.Chk_Revisar_OCC_Pendientes_X_Productos.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Revisar_OCC_Pendientes_X_Productos.CheckBoxImageChecked = CType(resources.GetObject("Chk_Revisar_OCC_Pendientes_X_Productos.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Revisar_OCC_Pendientes_X_Productos.FocusCuesEnabled = False
-        Me.Chk_Revisar_OCC_Pendientes_X_Productos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Revisar_OCC_Pendientes_X_Productos.Location = New System.Drawing.Point(3, 108)
-        Me.Chk_Revisar_OCC_Pendientes_X_Productos.Name = "Chk_Revisar_OCC_Pendientes_X_Productos"
-        Me.Chk_Revisar_OCC_Pendientes_X_Productos.Size = New System.Drawing.Size(324, 14)
-        Me.Chk_Revisar_OCC_Pendientes_X_Productos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Revisar_OCC_Pendientes_X_Productos.TabIndex = 94
-        Me.Chk_Revisar_OCC_Pendientes_X_Productos.Text = "Revisar si hay OCC Pendientes antes de grabar una OCC"
-        '
-        'Chk_Solicitar_Permiso_OCC_SOC
-        '
-        '
-        '
-        '
-        Me.Chk_Solicitar_Permiso_OCC_SOC.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_Solicitar_Permiso_OCC_SOC.CheckBoxImageChecked = CType(resources.GetObject("Chk_Solicitar_Permiso_OCC_SOC.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_Solicitar_Permiso_OCC_SOC.FocusCuesEnabled = False
-        Me.Chk_Solicitar_Permiso_OCC_SOC.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Solicitar_Permiso_OCC_SOC.Location = New System.Drawing.Point(3, 87)
-        Me.Chk_Solicitar_Permiso_OCC_SOC.Name = "Chk_Solicitar_Permiso_OCC_SOC"
-        Me.Chk_Solicitar_Permiso_OCC_SOC.Size = New System.Drawing.Size(289, 15)
-        Me.Chk_Solicitar_Permiso_OCC_SOC.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_Solicitar_Permiso_OCC_SOC.TabIndex = 84
-        Me.Chk_Solicitar_Permiso_OCC_SOC.Text = "Solictar permisos al grabar OCC"
-        '
-        'SpTab_Compras
-        '
-        Me.SpTab_Compras.AttachedControl = Me.SuperTabControlPanel5
-        Me.SpTab_Compras.GlobalItem = False
-        Me.SpTab_Compras.Name = "SpTab_Compras"
-        Me.SpTab_Compras.Text = "Compras"
-        '
         'Bar1
         '
         Me.Bar1.AntiAlias = True
@@ -3268,47 +3316,56 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
-        'Txt_ImpNoCobraVtaStr
+        'Chk_ObligaFeriaVta
         '
-        Me.Txt_ImpNoCobraVtaStr.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.Txt_ImpNoCobraVtaStr.Border.Class = "TextBoxBorder"
-        Me.Txt_ImpNoCobraVtaStr.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Txt_ImpNoCobraVtaStr.ButtonCustom.Image = CType(resources.GetObject("Txt_ImpNoCobraVtaStr.ButtonCustom.Image"), System.Drawing.Image)
-        Me.Txt_ImpNoCobraVtaStr.ButtonCustom.Visible = True
-        Me.Txt_ImpNoCobraVtaStr.ButtonCustom2.Image = CType(resources.GetObject("Txt_ImpNoCobraVtaStr.ButtonCustom2.Image"), System.Drawing.Image)
-        Me.Txt_ImpNoCobraVtaStr.ButtonCustom2.Visible = True
-        Me.Txt_ImpNoCobraVtaStr.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.Txt_ImpNoCobraVtaStr.DisabledBackColor = System.Drawing.Color.White
-        Me.Txt_ImpNoCobraVtaStr.FocusHighlightColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
-        Me.Txt_ImpNoCobraVtaStr.ForeColor = System.Drawing.Color.Black
-        Me.Txt_ImpNoCobraVtaStr.Location = New System.Drawing.Point(284, 287)
-        Me.Txt_ImpNoCobraVtaStr.Name = "Txt_ImpNoCobraVtaStr"
-        Me.Txt_ImpNoCobraVtaStr.ReadOnly = True
-        Me.Txt_ImpNoCobraVtaStr.Size = New System.Drawing.Size(290, 22)
-        Me.Txt_ImpNoCobraVtaStr.TabIndex = 142
-        Me.Txt_ImpNoCobraVtaStr.WatermarkText = "Indique el impuesto"
-        '
-        'Chk_ImpNoCobraVta
-        '
-        Me.Chk_ImpNoCobraVta.BackColor = System.Drawing.Color.Transparent
+        Me.Chk_ObligaFeriaVta.BackColor = System.Drawing.Color.Transparent
         '
         '
         '
-        Me.Chk_ImpNoCobraVta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_ImpNoCobraVta.CheckBoxImageChecked = CType(resources.GetObject("Chk_ImpNoCobraVta.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_ImpNoCobraVta.Enabled = False
-        Me.Chk_ImpNoCobraVta.FocusCuesEnabled = False
-        Me.Chk_ImpNoCobraVta.ForeColor = System.Drawing.Color.Black
-        Me.Chk_ImpNoCobraVta.Location = New System.Drawing.Point(6, 287)
-        Me.Chk_ImpNoCobraVta.Name = "Chk_ImpNoCobraVta"
-        Me.Chk_ImpNoCobraVta.Size = New System.Drawing.Size(272, 22)
-        Me.Chk_ImpNoCobraVta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_ImpNoCobraVta.TabIndex = 143
-        Me.Chk_ImpNoCobraVta.TabStop = False
-        Me.Chk_ImpNoCobraVta.Text = "Es agente retenedor, no aplicar impuesto en ventas"
+        Me.Chk_ObligaFeriaVta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ObligaFeriaVta.CheckBoxImageChecked = CType(resources.GetObject("Chk_ObligaFeriaVta.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ObligaFeriaVta.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_ObligaFeriaVta.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_ObligaFeriaVta.FocusCuesEnabled = False
+        Me.Chk_ObligaFeriaVta.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ObligaFeriaVta.Location = New System.Drawing.Point(6, 324)
+        Me.Chk_ObligaFeriaVta.Name = "Chk_ObligaFeriaVta"
+        Me.Chk_ObligaFeriaVta.Size = New System.Drawing.Size(266, 23)
+        Me.Chk_ObligaFeriaVta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ObligaFeriaVta.TabIndex = 137
+        Me.Chk_ObligaFeriaVta.Text = "Obligar a poner feria en venta COV/NVV/FCV "
+        '
+        'Txt_Feria
+        '
+        Me.Txt_Feria.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_Feria.Border.Class = "TextBoxBorder"
+        Me.Txt_Feria.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Feria.ButtonCustom.Visible = True
+        Me.Txt_Feria.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_Feria.Enabled = False
+        Me.Txt_Feria.ForeColor = System.Drawing.Color.Black
+        Me.Txt_Feria.Location = New System.Drawing.Point(253, 343)
+        Me.Txt_Feria.Name = "Txt_Feria"
+        Me.Txt_Feria.PreventEnterBeep = True
+        Me.Txt_Feria.ReadOnly = True
+        Me.Txt_Feria.Size = New System.Drawing.Size(404, 22)
+        Me.Txt_Feria.TabIndex = 138
+        '
+        'LabelX23
+        '
+        Me.LabelX23.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX23.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX23.ForeColor = System.Drawing.Color.Black
+        Me.LabelX23.Location = New System.Drawing.Point(83, 343)
+        Me.LabelX23.Name = "LabelX23"
+        Me.LabelX23.Size = New System.Drawing.Size(164, 19)
+        Me.LabelX23.TabIndex = 139
+        Me.LabelX23.Text = "Feria por defecto para modalidad"
         '
         'Frm_Configuracion_Gral
         '
@@ -3333,6 +3390,8 @@ Partial Class Frm_Configuracion_Gral
         CType(Me.Input_Dias_Max_Fecha_Despacho, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel5.ResumeLayout(False)
+        Me.TableLayoutPanel1.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.TableLayoutPanel5.ResumeLayout(False)
         Me.SuperTabControlPanel4.ResumeLayout(False)
@@ -3350,8 +3409,6 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.SuperTabControlPanel9.ResumeLayout(False)
         Me.TableLayoutPanel7.ResumeLayout(False)
-        Me.SuperTabControlPanel5.ResumeLayout(False)
-        Me.TableLayoutPanel1.ResumeLayout(False)
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
@@ -3537,4 +3594,7 @@ Partial Class Frm_Configuracion_Gral
     Friend WithEvents Chk_NoCopiarCreditosSucEnt As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Txt_ImpNoCobraVtaStr As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Chk_ImpNoCobraVta As DevComponents.DotNetBar.Controls.CheckBoxX
+    Public WithEvents Txt_Feria As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents Chk_ObligaFeriaVta As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents LabelX23 As DevComponents.DotNetBar.LabelX
 End Class

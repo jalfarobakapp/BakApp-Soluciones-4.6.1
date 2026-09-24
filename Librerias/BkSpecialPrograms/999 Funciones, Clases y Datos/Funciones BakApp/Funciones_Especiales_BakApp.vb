@@ -6908,6 +6908,7 @@ Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
             If _Resultado = eTaskDialogResult.Cancel Then
                 _Mensaje.EsCorrecto = False
                 _Mensaje.Cancelado = True
+                _Mensaje.DialogResult_Reps = DialogResult.Cancel
                 Return _Mensaje
             End If
 
@@ -6929,11 +6930,14 @@ Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
                 _Mensaje.EsCorrecto = True
 
                 If _Resultado = eTaskDialogResult.Yes Then
+                    _Mensaje.DialogResult_Reps = DialogResult.Yes
                     _Mensaje.Icono = eTaskDialogIcon.Information
                 ElseIf _Resultado = eTaskDialogResult.No Then
+                    _Mensaje.DialogResult_Reps = DialogResult.No
                     _Mensaje.Cerrar = False
                     _Mensaje.Icono = eTaskDialogIcon.Stop
                 Else
+                    _Mensaje.DialogResult_Reps = DialogResult.Cancel
                     _Mensaje.Icono = eTaskDialogIcon.Exclamation
                 End If
 
@@ -6942,6 +6946,7 @@ Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
         Else
             _Mensaje.Tag = eTaskDialogResult.Cancel
             _Mensaje.Cerrar = True
+            _Mensaje.DialogResult_Reps = DialogResult.None
         End If
 
         Return _Mensaje

@@ -540,6 +540,7 @@ Public Class Clase_Crear_Documento
                         _Contenedor = String.Empty
                         _Grupo = .Item("Grupo")
 
+
                         'If _Prct Then _Lincondesp = True
 
                         If _Koprct = "CORT56816" Then
@@ -1302,12 +1303,13 @@ Public Class Clase_Crear_Documento
                         End While
                         dfd1.Close()
 
+                        Dim _Id_Feria_d As Integer = NuloPorNro(.Item("Id_Feria"), 0)
 
                         Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Det (Idmaeddo,Idmaeedo,Tido,Nudo,Codigo,Descripcion,RtuVariable," &
-                                       "Empresa,Sucursal,Bodega,IdCont,Contenedor,Grupo) Values " &
+                                       "Empresa,Sucursal,Bodega,IdCont,Contenedor,Grupo,Id_Feria) Values " &
                                        "(" & _Idmaeddo & "," & _Idmaeedo & ",'" & _Tido & "','" & _Nudo & "','" & _Koprct & "','" & _Nokopr & "'" &
                                        "," & Convert.ToInt32(_RtuVariable) & ",'" & _Empresa & "','" & _Sulido & "','" & _Bosulido &
-                                       "'," & _IdCont & ",'" & _Contenedor & "','" & _Grupo & "')"
+                                       "'," & _IdCont & ",'" & _Contenedor & "','" & _Grupo & "'," & _Id_Feria_d & ")"
                         Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                         Comando.Transaction = myTrans
                         Comando.ExecuteNonQuery()
@@ -2261,6 +2263,9 @@ Public Class Clase_Crear_Documento
             Dim _CodSucEntidad_Cia As String = NuloPorNro(_Row_Encabezado.Item("CodSucEntidad_Cia"), "")
             Dim _Id_Despacho As Integer = NuloPorNro(_Row_Encabezado.Item("Id_Despacho"), 0)
 
+            Dim _Venta_Feria As Boolean = NuloPorNro(_Row_Encabezado.Item("Venta_Feria"), 0)
+            Dim _Id_Feria As Integer = NuloPorNro(_Row_Encabezado.Item("Id_Feria"), 0)
+
             'Dim _B2B As Boolean = NuloPorNro(_Row_Encabezado.Item("B2B"), False)
 
             If (_Tido = "NVV" OrElse _Tido = "NVI") OrElse (_Tido = "COV" And SobreStock) Then
@@ -2274,7 +2279,7 @@ Public Class Clase_Crear_Documento
             Consulta_sql = "Insert Into " & _Global_BaseBk & "Zw_Docu_Ent (Idmaeedo,NombreEquipo,TipoEstacion,Empresa,Modalidad," &
                            "Tido,Nudo,FechaHoraGrab,HabilitadaFac,FunAutorizaFac,Pickear,Customizable,PreVenta,PdaRMovil," &
                            "Idpdaenca,SobreStock,Empresa_Ori,LeyendaMorosidad,B2B,UsaCiaSeguro,CodEntidad_Cia,CodSucEntidad_Cia," &
-                           "Cn_TipoCompra,TipoCompra,Id_Despacho,Id_Enc_InterStock) Values " &
+                           "Cn_TipoCompra,TipoCompra,Id_Despacho,Id_Enc_InterStock,Venta_Feria,Id_Feria) Values " &
                            "(" & _Idmaeedo & ",'" & _NombreEquipo & "','" & _TipoEstacion & "','" & _Empresa & "','" & _Modalidad_Bk & "'" &
                            ",'" & _Tido & "','" & _Nudo & "',Getdate(),0,''," & Convert.ToInt32(_Pickear) &
                            "," & Convert.ToInt32(_Customizable) & "," & Convert.ToInt32(PreVenta) &
@@ -2282,7 +2287,7 @@ Public Class Clase_Crear_Documento
                            ",'" & _Empresa & "','" & _LeyendaMorosidad & "'," &
                            Convert.ToInt32(B2B) & "," & Convert.ToInt32(_UsaCiaSeguro) &
                            ",'" & _CodEntidad_Cia & "','" & _CodSucEntidad_Cia & "'," & _Cn_TipoCompra & ",'" & _TipoCompra & "'," &
-                           _Id_Despacho & "," & _Id_Enc_InterStock & ")"
+                           _Id_Despacho & "," & _Id_Enc_InterStock & "," & Convert.ToInt32(_Venta_Feria) & "," & _Id_Feria & ")"
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
@@ -3429,12 +3434,14 @@ Public Class Clase_Crear_Documento
         Dim _Customizable As Integer
         Dim _Pickear As Integer
         Dim _Grupo As String
+        Dim _Id_Feria_d As Integer
 
         Dim _UsaCiaSeguro As Integer
         Dim _CodEntidad_Cia As String
         Dim _CodSucEntidad_Cia As String
 
         Dim _Id_Despacho As Integer
+        Dim _Id_Feria As Integer
 
         Dim myTrans As SqlClient.SqlTransaction
         Dim Comando As SqlClient.SqlCommand
@@ -3585,6 +3592,7 @@ Public Class Clase_Crear_Documento
                 _CodEntidad_Cia = NuloPorNro(.Item("CodEntidad_Cia"), "")
                 _CodSucEntidad_Cia = NuloPorNro(.Item("CodSucEntidad_Cia"), "")
                 _Id_Despacho = NuloPorNro(.Item("Id_Despacho"), 0)
+                _Id_Feria = NuloPorNro(.Item("Id_Feria"), 0)
 
             End With
 
@@ -3801,6 +3809,7 @@ Public Class Clase_Crear_Documento
                         _Condicionado = Convert.ToUInt32(.Item("Condicionado"))
                         _DesacRazTransf = Convert.ToUInt32(.Item("DesacRazTransf"))
                         _Grupo = .Item("Grupo")
+                        _Id_Feria_d = .Item("Id_Feria")
 
                         If Not String.IsNullOrEmpty(Trim(_Tict)) Then
 
@@ -3879,7 +3888,7 @@ Public Class Clase_Crear_Documento
                                        "Centro_Costo,Proyecto,Tasadorig," &
                                        "Id_Oferta,Es_Padre_Oferta,Oferta,Padre_Oferta,Aplica_Oferta,Hijo_Oferta," &
                                        "Cantidad_Oferta,Porcdesc_Oferta,IdDet_Ori,Nmarca,RtuVariable,Espuntosvta," &
-                                       "ModFechVto,Condicionado,DesacRazTransf,Grupo) Values" & vbCrLf &
+                                       "ModFechVto,Condicionado,DesacRazTransf,Grupo,Id_Feria) Values" & vbCrLf &
                                        "(" & _Id_DocEnc & ",'" & _Empresa & "','" & _Sucursal_Linea & "','" & _Bodega_Linea & "'," & _UnTrans & "," & _Lincondest &
                                        ",'" & _NroLinea & "','" & _Codigo & "','" & _CodigoProv & "','" & _UdTrans &
                                        "'," & _Cantidad & ",'" & _TipoValor & "'," & _Precio & "," & _DescuentoPorc &
@@ -3907,7 +3916,7 @@ Public Class Clase_Crear_Documento
                                        "," & _Aplica_Oferta & "," & _Hijo_Oferta &
                                        "," & _Cantidad_Oferta & "," & _Porcdesc_Oferta & "," & Id_Linea &
                                        ",'" & _Nmarca & "'," & _RtuVariable & "," & _Espuntosvta & "," & _ModFechVto &
-                                       "," & _Condicionado & "," & _DesacRazTransf & ",'" & _Grupo & "')"
+                                       "," & _Condicionado & "," & _DesacRazTransf & ",'" & _Grupo & "'," & _Id_Feria_d & ")"
 
                         Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                         Comando.Transaction = myTrans
@@ -4146,6 +4155,7 @@ Public Class Clase_Crear_Documento
                            ",CodEntidad_Cia = '" & _CodEntidad_Cia & "'" & Environment.NewLine &
                            ",CodSucEntidad_Cia = '" & _CodSucEntidad_Cia & "'" & Environment.NewLine &
                            ",Id_Despacho = " & _Id_Despacho & Environment.NewLine &
+                           ",Id_Feria = " & _Id_Feria & Environment.NewLine &
                            "Where Id_DocEnc = " & _Id_DocEnc
 
             Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)

@@ -4,6 +4,7 @@
     Dim Consulta_sql As String
 
     Public Property ModoSeleccion As Boolean
+    Public Property Row_Feria As DataRow
 
     Public Sub New()
 
@@ -19,7 +20,7 @@
     End Sub
 
     Private Sub Frm_Ferias_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
+        Sb_Actualizar_Grilla()
     End Sub
 
     Sub Sb_Actualizar_Grilla()
@@ -47,10 +48,10 @@ Select * From {_Global_BaseBk}Zw_Ferias
             '.Columns("Id").DisplayIndex = _DisplayIndex
             '_DisplayIndex += 1
 
-            .Columns("NOKOPR").Width = 310
-            .Columns("NOKOPR").HeaderText = "Descripción"
-            .Columns("NOKOPR").Visible = True
-            .Columns("NOKOPR").DisplayIndex = _DisplayIndex
+            .Columns("NombreFeria").Width = 310
+            .Columns("NombreFeria").HeaderText = "Nombre Feria"
+            .Columns("NombreFeria").Visible = True
+            .Columns("NombreFeria").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("FechaInicio").HeaderText = "F.Inicio"
@@ -76,5 +77,21 @@ Select * From {_Global_BaseBk}Zw_Ferias
 
     Private Sub Grilla_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
+        If e.RowIndex < 0 Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla.Rows(e.RowIndex)
+
+        If _Fila Is Nothing OrElse _Fila.DataBoundItem Is Nothing Then
+            Row_Feria = Nothing
+            Return
+        End If
+
+        Row_Feria = CType(_Fila.DataBoundItem, DataRowView).Row
+        Me.DialogResult = DialogResult.OK
+        Me.Close()
+
     End Sub
+
 End Class

@@ -1737,6 +1737,9 @@ Public Class Frm_Formulario_Documento
             .Item("Id_Despacho") = 0
             .Item("Id_Enc_InterStock") = 0
 
+            .Item("Venta_Feria") = False
+            .Item("Id_Feria") = 0
+
             _TblEncabezado.Rows.Add(NewFila)
 
         End With
@@ -2795,6 +2798,8 @@ Public Class Frm_Formulario_Documento
 
             .Item("TieneLotes") = False
             .Item("NroLote") = String.Empty
+
+            .Item("Id_Feria") = 0
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -13354,6 +13359,8 @@ Public Class Frm_Formulario_Documento
             .Item("CodEntidad_Cia") = _TblEncabezado_StBy.Rows(0).Item("CodEntidad_Cia")
             .Item("CodSucEntidad_Cia") = _TblEncabezado_StBy.Rows(0).Item("CodSucEntidad_Cia")
             .Item("Id_Despacho") = _TblEncabezado_StBy.Rows(0).Item("Id_Despacho")
+            .Item("Venta_Feria") = _TblEncabezado_StBy.Rows(0).Item("Venta_Feria")
+            .Item("Id_Feria") = _TblEncabezado_StBy.Rows(0).Item("Id_Feria")
 
             LblMoneda.Tag = .Item("Moneda_Doc")
             LblMoneda.Text = .Item("Moneda_Doc")
@@ -13539,6 +13546,10 @@ Public Class Frm_Formulario_Documento
             _Row.Cells("ModFechVto").Value = _ModFechVto
             _Row.Cells("Condicionado").Value = _Condicionado
             _Row.Cells("DesacRazTransf").Value = _DesacRazTransf
+
+            Dim _Id_Feria As Integer = _Fila.Item("Id_Feria")
+
+            _Row.Cells("Id_Feria").Value = _Id_Feria
 
             Dim _RowProducto As DataRow
 
@@ -17171,6 +17182,10 @@ Public Class Frm_Formulario_Documento
             End If
 
             If Not Fx_Validar_Restricciones_Por_Tipo_Documento_Y_Relacion() Then
+                Return
+            End If
+
+            If Not Fx_Feria() Then
                 Return
             End If
 
@@ -22086,12 +22101,13 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
                     End If
 
-                    If SobreStock Then
 
-                        Consulta_sql = $"Select * From {_Global_BaseBk}Zw_Docu_Det Where Idmaeddo = {_Idmaeddo_Dori}"
-                        Dim _Row_Zw_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                    Consulta_sql = $"Select * From {_Global_BaseBk}Zw_Docu_Det Where Idmaeddo = {_Idmaeddo_Dori}"
+                    Dim _Row_Zw_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                        If Not IsNothing(_Row_Zw_Docu_Det) Then
+                    If Not IsNothing(_Row_Zw_Docu_Det) Then
+
+                        If SobreStock Then
 
                             _New_Fila.Cells("SobreStock").Value = True
                             _New_Fila.Cells("Id_SobreStock").Value = _Row_Zw_Docu_Det.Item("Id_SobreStock")
@@ -22100,6 +22116,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                             _New_Fila.Cells("Qty_SobreStock").Value = _Row_Zw_Docu_Det.Item("Qty_SobreStock")
 
                         End If
+
+                        _New_Fila.Cells("Id_Feria").Value = _Row_Zw_Docu_Det.Item("Id_Feria")
 
                     End If
 
@@ -31305,20 +31323,115 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
     End Function
 
-    'Private Sub Btn_ElimRecic_Doc_Click(sender As Object, e As EventArgs) Handles Btn_ElimRecic_Doc.Click
+    Function Fx_Feria() As Boolean
 
-    '    If Fx_Revisar_si_tiene_registros() Then
-    '        MessageBoxEx.Show(Me, "Existen datos en el documento, debe limpiar para poder usar esta opción",
-    '                          "Editar Vale transitorio", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-    '        Return
-    '    End If
+        If _Revision_Remota Then
+            Return True
+        End If
 
+        If (_Tido <> "COV" AndAlso _Tido <> "NVV" AndAlso _Tido <> "FCV") Or (_Tido = "COV" And Not SobreStock) Then
+            Return True
+        End If
 
-    '    If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00070", Nothing, "", "") Then
-    '        Sb_Buscar_Documento_Eliminar_Reciclar(_Tido, _Post_Venta)
-    '    End If
+        Dim _ObligaFeriaVta As Boolean
+        Dim _Id_Feria As Integer
 
-    'End Sub
+        _ObligaFeriaVta = _Global_Row_Configuracion_General.Item("ObligaFeriaVta")
+        _Id_Feria = _Global_Row_Configuracion_General.Item("Id_Feria")
+
+        _TblEncabezado.Rows(0).Item("Venta_Feria") = False
+        _TblEncabezado.Rows(0).Item("Id_Feria") = 0
+
+        For Each _Fila As DataRow In _TblDetalle.Rows
+            _Fila.Item("Id_Feria") = 0
+        Next
+
+        If Not _ObligaFeriaVta Then
+            _ObligaFeriaVta = _Global_Row_Configuracion_Estacion.Item("ObligaFeriaVta")
+            _Id_Feria = _Global_Row_Configuracion_Estacion.Item("Id_Feria")
+        End If
+
+        If Not _ObligaFeriaVta Then
+            Return True
+        End If
+
+        Dim _Msg1 = "Asociar FERIA a la venta"
+        Dim _Msg2 = vbCrLf & "¿Desea asociar una FERIA a esta venta?" & vbCrLf
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.ShieldHelp, "", True)
+
+        If _Mensaje.DialogResult_Reps <> DialogResult.Yes Then '_Mensaje.Resultado <> "Yes" Then
+            If _Mensaje.Cancelado Or _Mensaje.DialogResult_Reps = DialogResult.None Then
+                Return False
+            Else
+                MessageBoxEx.Show(Me, "Venta normal sin feria", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return True
+            End If
+        End If
+
+        Dim _Row_Feria As DataRow
+
+        If CBool(_Id_Feria) Then
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Ferias Where Id = " & _Id_Feria
+            _Row_Feria = _Sql.Fx_Get_DataRow(Consulta_sql)
+        End If
+
+        If Not IsNothing(_Row_Feria) Then
+
+            _Msg1 = "Asociar Feria: " & _Row_Feria.Item("NombreFeria") & " a la venta"
+            _Msg2 = vbCrLf & "¿Desea asociar una FERIA a esta venta?" & vbCrLf & vbCrLf & "Si (Confirma) - No (Seleccionar otra feria)"
+
+            _Mensaje = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.Help, "", True)
+
+            If _Mensaje.DialogResult_Reps = DialogResult.Cancel Or _Mensaje.DialogResult_Reps = DialogResult.None Then
+                Return False
+            End If
+
+            If _Mensaje.DialogResult_Reps = DialogResult.Yes Then
+
+                _TblEncabezado.Rows(0).Item("Venta_Feria") = True
+                _TblEncabezado.Rows(0).Item("Id_Feria") = _Row_Feria.Item("Id")
+
+                For Each _Fila As DataRow In _TblDetalle.Rows
+                    _Fila.Item("Id_Feria") = _Row_Feria.Item("Id")
+                Next
+
+                MessageBoxEx.Show(Me, "Feria: " & _Row_Feria.Item("NombreFeria"), "Feria seleccionada",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                Return True
+
+            End If
+
+        End If
+
+        Dim _DialogResult As DialogResult
+
+        Dim Fm As New Frm_Ferias
+        Fm.ShowDialog(Me)
+        _DialogResult = Fm.DialogResult
+        _Row_Feria = Fm.Row_Feria
+        Fm.Dispose()
+
+        If _DialogResult <> DialogResult.OK Then
+            MessageBoxEx.Show(Me, "No se selecciono ninguna feria para la venta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+
+        _TblEncabezado.Rows(0).Item("Venta_Feria") = True
+        _TblEncabezado.Rows(0).Item("Id_Feria") = _Row_Feria.Item("Id")
+
+        For Each _Fila As DataRow In _TblDetalle.Rows
+            _Fila.Item("Id_Feria") = _Row_Feria.Item("Id")
+        Next
+
+        MessageBoxEx.Show(Me, "Feria: " & _Row_Feria.Item("NombreFeria"), "Feria seleccionada",
+                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Return True
+    End Function
 
     Private Sub Btn_Imprimir_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir.Click
         If Not Fx_Revisar_si_tiene_registros() Then

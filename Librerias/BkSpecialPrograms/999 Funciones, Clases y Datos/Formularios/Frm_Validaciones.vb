@@ -243,6 +243,7 @@ Namespace LsValiciones
         Public Property ConsultaSQLEjecutada As String
         Public Property CodPermiso As String
         Public Property NecesitaPermiso As Boolean
+        Public Property DialogResult_Reps As DialogResult
     End Class
 
     Public Class Columnas

@@ -279,6 +279,9 @@ Public Class Frm_Configuracion_Gral
             Txt_ImpNoCobraVtaStr.Text = .Item("ImpNoCobraVtaStr") & " - " & _Sql.Fx_Trae_Dato("TABIM", "NOKOIM", $"KOIM = '{ .Item("ImpNoCobraVtaStr")}'").ToString.Trim
             Txt_ImpNoCobraVtaStr.Tag = .Item("ImpNoCobraVtaStr")
 
+            Chk_ObligaFeriaVta.Checked = .Item("ObligaFeriaVta")
+            'Txt_Feria.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Ferias", "NombreFeria", $"Id_Feria = { .Item("Id_Feria")}").ToString.Trim
+
         End With
 
         Chk_SolictarCiaSeguro.Enabled = _Modalidad_General
