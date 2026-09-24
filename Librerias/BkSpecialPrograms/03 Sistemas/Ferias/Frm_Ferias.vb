@@ -2,19 +2,33 @@
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
-
+    Dim IsMantencion As Boolean
     Public Property ModoSeleccion As Boolean
 
-    Public Sub New()
+    Public Sub New(Optional Mantencion As Boolean = False)
 
         ' Esta llamada es exigida por el diseñador.
         InitializeComponent()
+
+        Me.IsMantencion = Mantencion
+
+
+        If IsMantencion Then
+
+            BarEdit.Visible = True
+            Btn_Agregar.Visible = True
+            Btn_CambiarEstado.Visible = True
+            Btn_Eliminar.Visible = True
+            Btn_Editar.Visible = True
+        Else
+            Me.Text = "Selector de feria"
+        End If
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
-        Sb_Color_Botones_Barra(Bar1)
+        Sb_Color_Botones_Barra(BarEdit)
 
     End Sub
 
@@ -22,15 +36,19 @@
         Sb_Actualizar_Grilla()
         Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
-        Sb_Color_Botones_Barra(Bar1)
+        Sb_Color_Botones_Barra(BarEdit)
     End Sub
 
     Sub Sb_Actualizar_Grilla()
+        Dim _Condicion As String = "Where Activa = 1"
 
-        Dim _Condicion As String = String.Empty
+        If IsMantencion Then
+            _Condicion  = String.Empty
+
+        End If
 
         Consulta_sql = $"
-Select Id, NombreFeria, FechaInicio, FechaTermino, Activa From {_Global_BaseBk}Zw_Ferias
+Select * From {_Global_BaseBk}Zw_Ferias
 {_Condicion}
 "
 
@@ -45,11 +63,24 @@ Select Id, NombreFeria, FechaInicio, FechaTermino, Activa From {_Global_BaseBk}Z
             OcultarEncabezadoGrilla(Grilla, True)
 
             ' --- CONFIGURACIÓN DE COLUMNAS NORMALES ---
+
+
             .Columns("NombreFeria").Width = 310
-            .Columns("NombreFeria").HeaderText = "Descripción"
+            .Columns("NombreFeria").HeaderText = "Nombre"
+            .Columns("NombreFeria").ToolTipText = "Nombre de la feria"
+
             .Columns("NombreFeria").Visible = True
             .Columns("NombreFeria").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            .Columns("FechaFeria").Width = 70
+            .Columns("FechaFeria").HeaderText = "Fecha Feria"
+            .Columns("FechaFeria").ToolTipText = "Fecha de la feria"
+
+            .Columns("FechaFeria").Visible = True
+            .Columns("FechaFeria").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
 
             .Columns("FechaInicio").HeaderText = "F.Inicio"
             .Columns("FechaInicio").ToolTipText = "Fecha de inicio de las ventas por feria"
@@ -144,25 +175,31 @@ Select Id, NombreFeria, FechaInicio, FechaTermino, Activa From {_Global_BaseBk}Z
     End Sub
 
     Private Sub Grilla_CellContentDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles Grilla.CellContentDoubleClick
-        If e.RowIndex < 0 Then Return
+        If IsMantencion Then
 
-        Dim fila As DataGridViewRow = Grilla.Rows(e.RowIndex)
+            If e.RowIndex < 0 Then Return
 
-        Dim miFeria As New Zw_Feria()
-        miFeria.Id = Convert.ToInt32(fila.Cells("Id").Value)
-        miFeria.NombreFeria = fila.Cells("NombreFeria").Value.ToString()
-        miFeria.FechaInicio = Convert.ToDateTime(fila.Cells("FechaInicio").Value)
-        miFeria.FechaTermino = Convert.ToDateTime(fila.Cells("FechaTermino").Value)
-        miFeria.Activa = Convert.ToBoolean(fila.Cells("Activa").Value)
+            Dim fila As DataGridViewRow = Grilla.Rows(e.RowIndex)
 
-        Dim frm As New Frm_MantFeria(miFeria)
-        If frm.ShowDialog(Me) = DialogResult.OK Then
-            Sb_Actualizar_Grilla()
+            Dim miFeria As New Zw_Feria()
+            miFeria.Id = Convert.ToInt32(fila.Cells("Id").Value)
+            miFeria.NombreFeria = fila.Cells("NombreFeria").Value.ToString()
+            miFeria.FechaInicio = Convert.ToDateTime(fila.Cells("FechaInicio").Value)
+            miFeria.FechaTermino = Convert.ToDateTime(fila.Cells("FechaTermino").Value)
+            miFeria.Activa = Convert.ToBoolean(fila.Cells("Activa").Value)
+            Dim celdaFecha As Object = fila.Cells("FechaFeria").Value
 
+            miFeria.FechaFeria = If(IsDBNull(celdaFecha) OrElse celdaFecha Is Nothing, Date.Today, Convert.ToDateTime(celdaFecha))
+
+            Dim frm As New Frm_MantFeria(miFeria)
+            If frm.ShowDialog(Me) = DialogResult.OK Then
+                Sb_Actualizar_Grilla()
+
+            End If
         End If
     End Sub
 
-    Private Sub Btn_Grabar(sender As Object, e As EventArgs) Handles ButtonItem1.Click
+    Private Sub Btn_Grabar(sender As Object, e As EventArgs) Handles Btn_Editar.Click
         If Grilla.CurrentRow Is Nothing Then
             MessageBox.Show("Debe seleccionar una feria de la lista para editar.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
             Return
@@ -178,6 +215,7 @@ Select Id, NombreFeria, FechaInicio, FechaTermino, Activa From {_Global_BaseBk}Z
         miFeria.FechaInicio = Convert.ToDateTime(fila.Cells("FechaInicio").Value)
         miFeria.FechaTermino = Convert.ToDateTime(fila.Cells("FechaTermino").Value)
         miFeria.Activa = Convert.ToBoolean(fila.Cells("Activa").Value)
+        miFeria.FechaFeria = Convert.ToDateTime(fila.Cells("FechaFeria").Value)
 
         ' 4. Abrir el formulario y actualizar la grilla si se guardó
         Dim frm As New Frm_MantFeria(miFeria)
@@ -200,9 +238,20 @@ Select Id, NombreFeria, FechaInicio, FechaTermino, Activa From {_Global_BaseBk}Z
         Dim nombreFeria As String = fila.Cells("NombreFeria").Value.ToString()
         Dim estadoActual As Boolean = Convert.ToBoolean(fila.Cells("Activa").Value)
 
+        ' --- NUEVO: Capturar la fecha de término ---
+        ' NOTA: Asegúrate de que el nombre de la columna en la grilla coincida (puede ser "FechaHasta" o "FechaTermino")
+        Dim fechaHasta As DateTime = Convert.ToDateTime(fila.Cells("FechaTermino").Value)
+
         ' Determinar la acción a realizar
         Dim nuevoEstado As Integer = If(estadoActual, 0, 1)
         Dim textoAccion As String = If(estadoActual, "Desactivar", "Activar")
+
+        ' --- NUEVO: Validar si se puede activar ---
+        ' Si se quiere ACTIVAR (nuevoEstado = 1) y la FechaHasta es menor a la fecha actual (Date.Today)
+        If nuevoEstado = 1 AndAlso fechaHasta.Date < Date.Today Then
+            MessageBox.Show($"No es posible activar la feria '{nombreFeria}' porque su fecha de término ({fechaHasta.ToString("dd/MM/yyyy")}) ya ha pasado.", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            Return
+        End If
 
         ' 3. Mostrar Advertencia
         Dim mensaje As String = $"¿Está seguro que desea {textoAccion.ToUpper()} la feria '{nombreFeria}'?"
@@ -219,7 +268,6 @@ Select Id, NombreFeria, FechaInicio, FechaTermino, Activa From {_Global_BaseBk}Z
                 MessageBox.Show($"La feria se ha {textoAccion.ToLower()}do correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 Sb_Actualizar_Grilla()
-
 
             Catch ex As Exception
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
@@ -245,12 +293,20 @@ Select Id, NombreFeria, FechaInicio, FechaTermino, Activa From {_Global_BaseBk}Z
 
             Try
                 ' 4. Ejecutar el DELETE
-                Dim query As String = $"DELETE FROM {_Global_BaseBk}[Zw_Ferias] WHERE [Id] = {idFeria}"
+                Dim query As String = $"DELETE FROM {_Global_BaseBk}[Zw_Ferias] 
+                        WHERE [Id] = {idFeria} 
+                        AND NOT EXISTS (
+                            SELECT 1 
+                            FROM {_Global_BaseBk}[Zw_Docu_Ent] 
+                            WHERE [Id_Feria] = {idFeria}
+                        )"
 
                 If Not _Sql.Ej_consulta_IDU(query) Then
-                    Throw New System.Exception("Error al eliminar la feria." & vbCrLf & _Sql.Pro_Error)
+                    MessageBox.Show("No se pudo eliminar la feria. Es posible que ya tenga documentos asociados.", "Acción denegada", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+                Else
+                    MessageBox.Show("Feria eliminada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Sb_Actualizar_Grilla() ' Refrescar la grilla
                 End If
-
                 MessageBox.Show("La feria ha sido eliminada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
                 ' 5. AQUÍ: Llama a tu función para recargar la grilla para que la fila desaparezca

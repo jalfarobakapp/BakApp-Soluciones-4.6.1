@@ -24,6 +24,9 @@ Partial Class Frm_MantFeria
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_MantFeria))
         Me.Grupo_Fechas = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.TableLayoutPanel2 = New System.Windows.Forms.TableLayoutPanel()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Dtp_Feria = New DevComponents.Editors.DateTimeAdv.DateTimeInput()
         Me.Chk_Activa = New System.Windows.Forms.CheckBox()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Nombre = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -42,6 +45,8 @@ Partial Class Frm_MantFeria
         Me.ButtonItem5 = New DevComponents.DotNetBar.ButtonItem()
         Me.ButtonItem6 = New DevComponents.DotNetBar.ButtonItem()
         Me.Grupo_Fechas.SuspendLayout()
+        Me.TableLayoutPanel2.SuspendLayout()
+        CType(Me.Dtp_Feria, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
         CType(Me.Dtp_Fecha_01_Hasta, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dtp_Fecha_01_Desde, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -52,6 +57,7 @@ Partial Class Frm_MantFeria
         '
         Me.Grupo_Fechas.BackColor = System.Drawing.Color.White
         Me.Grupo_Fechas.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.Grupo_Fechas.Controls.Add(Me.TableLayoutPanel2)
         Me.Grupo_Fechas.Controls.Add(Me.Chk_Activa)
         Me.Grupo_Fechas.Controls.Add(Me.LabelX2)
         Me.Grupo_Fechas.Controls.Add(Me.Txt_Nombre)
@@ -59,7 +65,7 @@ Partial Class Frm_MantFeria
         Me.Grupo_Fechas.DisabledBackColor = System.Drawing.Color.Empty
         Me.Grupo_Fechas.Location = New System.Drawing.Point(12, 12)
         Me.Grupo_Fechas.Name = "Grupo_Fechas"
-        Me.Grupo_Fechas.Size = New System.Drawing.Size(412, 203)
+        Me.Grupo_Fechas.Size = New System.Drawing.Size(451, 216)
         '
         '
         '
@@ -91,6 +97,86 @@ Partial Class Frm_MantFeria
         Me.Grupo_Fechas.TabIndex = 92
         Me.Grupo_Fechas.Text = "Datos de la Feria"
         '
+        'TableLayoutPanel2
+        '
+        Me.TableLayoutPanel2.BackColor = System.Drawing.Color.Transparent
+        Me.TableLayoutPanel2.ColumnCount = 2
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 27.0!))
+        Me.TableLayoutPanel2.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.5!))
+        Me.TableLayoutPanel2.Controls.Add(Me.LabelX1, 0, 0)
+        Me.TableLayoutPanel2.Controls.Add(Me.Dtp_Feria, 1, 0)
+        Me.TableLayoutPanel2.ForeColor = System.Drawing.Color.Black
+        Me.TableLayoutPanel2.Location = New System.Drawing.Point(3, 19)
+        Me.TableLayoutPanel2.Name = "TableLayoutPanel2"
+        Me.TableLayoutPanel2.RowCount = 1
+        Me.TableLayoutPanel2.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.TableLayoutPanel2.Size = New System.Drawing.Size(197, 25)
+        Me.TableLayoutPanel2.TabIndex = 10
+        '
+        'LabelX1
+        '
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(3, 3)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(102, 19)
+        Me.LabelX1.TabIndex = 7
+        Me.LabelX1.Text = "Fecha de la feria"
+        '
+        'Dtp_Feria
+        '
+        '
+        '
+        '
+        Me.Dtp_Feria.BackgroundStyle.Class = "DateTimeInputBackground"
+        Me.Dtp_Feria.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Feria.ButtonDropDown.Shortcut = DevComponents.DotNetBar.eShortcut.AltDown
+        Me.Dtp_Feria.ButtonDropDown.Visible = True
+        Me.Dtp_Feria.ForeColor = System.Drawing.Color.Black
+        Me.Dtp_Feria.IsPopupCalendarOpen = False
+        Me.Dtp_Feria.Location = New System.Drawing.Point(112, 3)
+        '
+        '
+        '
+        Me.Dtp_Feria.MonthCalendar.AnnuallyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Feria.MonthCalendar.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Feria.MonthCalendar.CalendarDimensions = New System.Drawing.Size(1, 1)
+        Me.Dtp_Feria.MonthCalendar.ClearButtonVisible = True
+        '
+        '
+        '
+        Me.Dtp_Feria.MonthCalendar.CommandsBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground2
+        Me.Dtp_Feria.MonthCalendar.CommandsBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Feria.MonthCalendar.CommandsBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarBackground
+        Me.Dtp_Feria.MonthCalendar.CommandsBackgroundStyle.BorderTop = DevComponents.DotNetBar.eStyleBorderType.Solid
+        Me.Dtp_Feria.MonthCalendar.CommandsBackgroundStyle.BorderTopColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.BarDockedBorder
+        Me.Dtp_Feria.MonthCalendar.CommandsBackgroundStyle.BorderTopWidth = 1
+        Me.Dtp_Feria.MonthCalendar.CommandsBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Feria.MonthCalendar.DisplayMonth = New Date(2016, 7, 1, 0, 0, 0, 0)
+        Me.Dtp_Feria.MonthCalendar.FirstDayOfWeek = System.DayOfWeek.Monday
+        Me.Dtp_Feria.MonthCalendar.MarkedDates = New Date(-1) {}
+        Me.Dtp_Feria.MonthCalendar.MonthlyMarkedDates = New Date(-1) {}
+        '
+        '
+        '
+        Me.Dtp_Feria.MonthCalendar.NavigationBackgroundStyle.BackColor2SchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground2
+        Me.Dtp_Feria.MonthCalendar.NavigationBackgroundStyle.BackColorGradientAngle = 90
+        Me.Dtp_Feria.MonthCalendar.NavigationBackgroundStyle.BackColorSchemePart = DevComponents.DotNetBar.eColorSchemePart.PanelBackground
+        Me.Dtp_Feria.MonthCalendar.NavigationBackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Dtp_Feria.MonthCalendar.TodayButtonVisible = True
+        Me.Dtp_Feria.MonthCalendar.WeeklyMarkedDays = New System.DayOfWeek(-1) {}
+        Me.Dtp_Feria.Name = "Dtp_Feria"
+        Me.Dtp_Feria.Size = New System.Drawing.Size(77, 26)
+        Me.Dtp_Feria.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Dtp_Feria.TabIndex = 7
+        Me.Dtp_Feria.Value = New Date(2016, 7, 8, 16, 32, 31, 0)
+        '
         'Chk_Activa
         '
         Me.Chk_Activa.AutoSize = True
@@ -98,12 +184,14 @@ Partial Class Frm_MantFeria
         Me.Chk_Activa.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.Chk_Activa.Checked = True
         Me.Chk_Activa.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.Chk_Activa.Location = New System.Drawing.Point(3, 132)
+        Me.Chk_Activa.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Activa.Location = New System.Drawing.Point(3, 163)
         Me.Chk_Activa.Name = "Chk_Activa"
         Me.Chk_Activa.Size = New System.Drawing.Size(68, 23)
         Me.Chk_Activa.TabIndex = 9
         Me.Chk_Activa.Text = "Activa"
         Me.Chk_Activa.UseVisualStyleBackColor = False
+        Me.Chk_Activa.Visible = False
         '
         'LabelX2
         '
@@ -113,7 +201,7 @@ Partial Class Frm_MantFeria
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX2.ForeColor = System.Drawing.Color.Black
-        Me.LabelX2.Location = New System.Drawing.Point(6, 76)
+        Me.LabelX2.Location = New System.Drawing.Point(6, 123)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(102, 23)
         Me.LabelX2.TabIndex = 8
@@ -127,9 +215,10 @@ Partial Class Frm_MantFeria
         '
         Me.Txt_Nombre.Border.Class = "TextBoxBorder"
         Me.Txt_Nombre.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Nombre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Nombre.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Nombre.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Nombre.Location = New System.Drawing.Point(114, 73)
+        Me.Txt_Nombre.Location = New System.Drawing.Point(114, 120)
         Me.Txt_Nombre.Name = "Txt_Nombre"
         Me.Txt_Nombre.PreventEnterBeep = True
         Me.Txt_Nombre.Size = New System.Drawing.Size(286, 26)
@@ -148,7 +237,7 @@ Partial Class Frm_MantFeria
         Me.TableLayoutPanel1.Controls.Add(Me.Dtp_Fecha_01_Hasta, 3, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.Dtp_Fecha_01_Desde, 1, 0)
         Me.TableLayoutPanel1.ForeColor = System.Drawing.Color.Black
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 15)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(3, 71)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
@@ -166,7 +255,7 @@ Partial Class Frm_MantFeria
         Me.Lbl_FS_desde.Name = "Lbl_FS_desde"
         Me.Lbl_FS_desde.Size = New System.Drawing.Size(102, 19)
         Me.Lbl_FS_desde.TabIndex = 7
-        Me.Lbl_FS_desde.Text = "Inicio"
+        Me.Lbl_FS_desde.Text = "Inicio periodo"
         '
         'Lbl_FS_hasta
         '
@@ -179,7 +268,7 @@ Partial Class Frm_MantFeria
         Me.Lbl_FS_hasta.Name = "Lbl_FS_hasta"
         Me.Lbl_FS_hasta.Size = New System.Drawing.Size(116, 19)
         Me.Lbl_FS_hasta.TabIndex = 9
-        Me.Lbl_FS_hasta.Text = "Termino"
+        Me.Lbl_FS_hasta.Text = "Termino periodo"
         '
         'Dtp_Fecha_01_Hasta
         '
@@ -343,9 +432,9 @@ Partial Class Frm_MantFeria
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.ButtonItem5, Me.ButtonItem6})
-        Me.Bar1.Location = New System.Drawing.Point(0, 269)
+        Me.Bar1.Location = New System.Drawing.Point(0, 298)
         Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(436, 41)
+        Me.Bar1.Size = New System.Drawing.Size(475, 41)
         Me.Bar1.Stretch = True
         Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Bar1.TabIndex = 93
@@ -374,16 +463,22 @@ Partial Class Frm_MantFeria
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(436, 310)
+        Me.ClientSize = New System.Drawing.Size(475, 339)
         Me.Controls.Add(Me.Bar1)
         Me.Controls.Add(Me.Grupo_Fechas)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.MaximizeBox = False
+        Me.MinimizeBox = False
         Me.Name = "Frm_MantFeria"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Feria"
         Me.Grupo_Fechas.ResumeLayout(False)
         Me.Grupo_Fechas.PerformLayout()
+        Me.TableLayoutPanel2.ResumeLayout(False)
+        CType(Me.Dtp_Feria, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
         CType(Me.Dtp_Fecha_01_Hasta, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dtp_Fecha_01_Desde, System.ComponentModel.ISupportInitialize).EndInit()
@@ -410,4 +505,7 @@ Partial Class Frm_MantFeria
     Friend WithEvents ButtonItem6 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Chk_Activa As CheckBox
     Friend WithEvents LabelX2 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents TableLayoutPanel2 As TableLayoutPanel
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Dtp_Feria As DevComponents.Editors.DateTimeAdv.DateTimeInput
 End Class

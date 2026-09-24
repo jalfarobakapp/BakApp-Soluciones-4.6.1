@@ -114,6 +114,7 @@ Partial Class Menu
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
         Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
+        Me.FeriaEdit = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -836,7 +837,7 @@ Partial Class Menu
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(179, 39)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP, Me.Btn_PDARMovil, Me.Btn_SobreStock, Me.Btn_CrucePagoMasivos, Me.Btn_EliminarDoc, Me.Btn_CrearFCV01a02, Me.Btn_CrearFCCdesdeOCC, Me.ButtonItem7})
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP, Me.Btn_PDARMovil, Me.Btn_SobreStock, Me.Btn_CrucePagoMasivos, Me.Btn_EliminarDoc, Me.Btn_CrearFCV01a02, Me.Btn_CrearFCCdesdeOCC, Me.ButtonItem7, Me.FeriaEdit})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
         '
@@ -1271,6 +1272,12 @@ Partial Class Menu
         Me.Lbl_NombreEmpresaActiva.TabIndex = 56
         Me.Lbl_NombreEmpresaActiva.Text = "NOMBRE DE LA EMPRESA... ESTE ES EL NOMBRE DE LA EM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
+        'FeriaEdit
+        '
+        Me.FeriaEdit.GlobalItem = False
+        Me.FeriaEdit.Name = "FeriaEdit"
+        Me.FeriaEdit.Text = "Mantencion Ferias"
+        '
         'Menu
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -1381,4 +1388,5 @@ Partial Class Menu
     Friend WithEvents Btn_CrearFCV01a02 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_CrearFCCdesdeOCC As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents ButtonItem7 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents FeriaEdit As DevComponents.DotNetBar.ButtonItem
 End Class

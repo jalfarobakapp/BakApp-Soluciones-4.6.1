@@ -205,7 +205,6 @@
     <Content Include="briefcase-update.ico" />
     <Content Include="database-split-product.ico" />
     <Content Include="money-dollar-update.ico" />
-    <None Include="Resources\gromit.jpg" />
     <None Include="Resources\button-filledcircle-find.png" />
     <None Include="Resources\button-info.png" />
     <Content Include="shopping-bag-green-update.ico" />

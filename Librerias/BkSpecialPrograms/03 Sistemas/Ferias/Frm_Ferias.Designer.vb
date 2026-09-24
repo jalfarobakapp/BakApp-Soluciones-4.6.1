@@ -22,22 +22,22 @@ Partial Class Frm_Ferias
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Ferias))
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Menu_Contextual = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Grilla = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.Bar1 = New DevComponents.DotNetBar.Bar()
+        Me.BarEdit = New DevComponents.DotNetBar.Bar()
         Me.Btn_Agregar = New DevComponents.DotNetBar.ButtonItem()
-        Me.ButtonItem1 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Editar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CambiarEstado = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1.SuspendLayout()
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BarEdit, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'GroupPanel1
@@ -98,55 +98,56 @@ Partial Class Frm_Ferias
         '
         Me.Grilla.AllowUserToAddRows = False
         Me.Grilla.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla.EnableHeadersVisualStyles = False
         Me.Grilla.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla.Location = New System.Drawing.Point(0, 0)
         Me.Grilla.Name = "Grilla"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla.RowHeadersWidth = 51
         Me.Grilla.Size = New System.Drawing.Size(730, 321)
         Me.Grilla.StandardTab = True
         Me.Grilla.TabIndex = 30
         '
-        'Bar1
+        'BarEdit
         '
-        Me.Bar1.AntiAlias = True
-        Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Agregar, Me.ButtonItem1, Me.Btn_CambiarEstado, Me.Btn_Eliminar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 383)
-        Me.Bar1.Name = "Bar1"
-        Me.Bar1.Size = New System.Drawing.Size(760, 41)
-        Me.Bar1.Stretch = True
-        Me.Bar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
-        Me.Bar1.TabIndex = 36
-        Me.Bar1.TabStop = False
-        Me.Bar1.Text = "Bar2"
+        Me.BarEdit.AntiAlias = True
+        Me.BarEdit.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.BarEdit.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.BarEdit.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Agregar, Me.Btn_Editar, Me.Btn_CambiarEstado, Me.Btn_Eliminar})
+        Me.BarEdit.Location = New System.Drawing.Point(0, 383)
+        Me.BarEdit.Name = "BarEdit"
+        Me.BarEdit.Size = New System.Drawing.Size(760, 41)
+        Me.BarEdit.Stretch = True
+        Me.BarEdit.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
+        Me.BarEdit.TabIndex = 36
+        Me.BarEdit.TabStop = False
+        Me.BarEdit.Text = "Bar2"
+        Me.BarEdit.Visible = False
         '
         'Btn_Agregar
         '
@@ -157,15 +158,17 @@ Partial Class Frm_Ferias
         Me.Btn_Agregar.ImagePosition = DevComponents.DotNetBar.eImagePosition.Top
         Me.Btn_Agregar.Name = "Btn_Agregar"
         Me.Btn_Agregar.Tooltip = "Agregar"
+        Me.Btn_Agregar.Visible = False
         '
-        'ButtonItem1
+        'Btn_Editar
         '
-        Me.ButtonItem1.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.ButtonItem1.ForeColor = System.Drawing.Color.Black
-        Me.ButtonItem1.Image = CType(resources.GetObject("ButtonItem1.Image"), System.Drawing.Image)
-        Me.ButtonItem1.ImageAlt = CType(resources.GetObject("ButtonItem1.ImageAlt"), System.Drawing.Image)
-        Me.ButtonItem1.Name = "ButtonItem1"
-        Me.ButtonItem1.Tooltip = "Editar"
+        Me.Btn_Editar.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Editar.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Editar.Image = CType(resources.GetObject("Btn_Editar.Image"), System.Drawing.Image)
+        Me.Btn_Editar.ImageAlt = CType(resources.GetObject("Btn_Editar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Editar.Name = "Btn_Editar"
+        Me.Btn_Editar.Tooltip = "Editar"
+        Me.Btn_Editar.Visible = False
         '
         'Btn_CambiarEstado
         '
@@ -175,6 +178,7 @@ Partial Class Frm_Ferias
         Me.Btn_CambiarEstado.ImageAlt = CType(resources.GetObject("Btn_CambiarEstado.ImageAlt"), System.Drawing.Image)
         Me.Btn_CambiarEstado.Name = "Btn_CambiarEstado"
         Me.Btn_CambiarEstado.Tooltip = "Habilitar"
+        Me.Btn_CambiarEstado.Visible = False
         '
         'Btn_Eliminar
         '
@@ -184,6 +188,7 @@ Partial Class Frm_Ferias
         Me.Btn_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Eliminar.ImageAlt"), System.Drawing.Image)
         Me.Btn_Eliminar.Name = "Btn_Eliminar"
         Me.Btn_Eliminar.Tooltip = "Eliminar"
+        Me.Btn_Eliminar.Visible = False
         '
         'Frm_Ferias
         '
@@ -191,19 +196,21 @@ Partial Class Frm_Ferias
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(760, 424)
         Me.Controls.Add(Me.GroupPanel1)
-        Me.Controls.Add(Me.Bar1)
+        Me.Controls.Add(Me.BarEdit)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ForeColor = System.Drawing.Color.Black
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "Frm_Ferias"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Administrador de ferias"
         Me.GroupPanel1.ResumeLayout(False)
         CType(Me.Menu_Contextual, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Grilla, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BarEdit, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -211,9 +218,9 @@ Partial Class Frm_Ferias
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Menu_Contextual As DevComponents.DotNetBar.ContextMenuBar
     Friend WithEvents Grilla As DevComponents.DotNetBar.Controls.DataGridViewX
-    Friend WithEvents Bar1 As DevComponents.DotNetBar.Bar
+    Friend WithEvents BarEdit As DevComponents.DotNetBar.Bar
     Friend WithEvents Btn_CambiarEstado As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents ButtonItem1 As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Editar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Eliminar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Agregar As DevComponents.DotNetBar.ButtonItem
 End Class

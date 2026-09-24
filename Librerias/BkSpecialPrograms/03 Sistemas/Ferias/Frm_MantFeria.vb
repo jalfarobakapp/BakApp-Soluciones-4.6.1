@@ -28,8 +28,12 @@
             Dtp_Fecha_01_Desde.Value = _Feria_Editar.FechaInicio
             Dtp_Fecha_01_Hasta.Value = _Feria_Editar.FechaTermino
             Chk_Activa.Checked = _Feria_Editar.Activa
+            Dtp_Feria.Value = _Feria_Editar.FechaFeria
         Else
             Me.Text = "Crear Feria"
+            Dtp_Feria.Value = Date.Now.Date
+            Chk_Activa.Checked = True
+
             Dtp_Fecha_01_Desde.Value = Date.Now.Date
             Dtp_Fecha_01_Hasta.Value = Date.Now.Date
         End If
@@ -97,14 +101,40 @@
         Dim fechaDesde As Date = Dtp_Fecha_01_Desde.Value.Date
         Dim fechaHasta As Date = Dtp_Fecha_01_Hasta.Value.Date
         Dim activa As Boolean = Chk_Activa.Checked
+        Dim FechaFeria As Date = Dtp_Feria.Value.Date
+        Dim FechaHoy As Date = Date.Now.Date
 
         Try
+
+            Dim queryValidacion As String = $"SELECT [Id] FROM {_Global_BaseBk}[Zw_Ferias] WHERE [NombreFeria] = '{nombre.Replace("'", "''")}'"
+            Dim dtFeria As DataTable = _Sql.Fx_Get_DataTable(queryValidacion) ' Reemplaza con tu función que devuelva tablas
+
+            If dtFeria IsNot Nothing AndAlso dtFeria.Rows.Count > 0 Then
+                ' Si ya existe, detenemos el proceso y mostramos un mensaje claro
+                _Mensaje.Mensaje = $"Ya existe una feria registrada con el nombre '{nombre}'. Por favor, escriba un nombre distinto."
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Icono = MessageBoxIcon.Error
+                Return _Mensaje
+            End If
+
+
+
+
             Dim estadoActiva As Integer = If(activa, 1, 0)
             Dim query As String = $"
-                INSERT INTO {_Global_BaseBk}[Zw_Ferias]
-                           ([NombreFeria],[FechaCreacion],[FechaFeria],[FechaInicio],[FechaTermino],[Activa])
-                     VALUES
-                           ('{nombre.Replace("'", "''")}', GETDATE(), '{fechaDesde.ToString("yyyyMMdd")}', '{fechaDesde.ToString("yyyyMMdd")}', '{fechaHasta.ToString("yyyyMMdd")}', {estadoActiva})"
+    INSERT INTO {_Global_BaseBk}[Zw_Ferias] 
+               ([NombreFeria], [FechaCreacion], [FechaFeria], [FechaInicio], [FechaTermino], [Activa])
+    SELECT '{nombre.Replace("'", "''")}', 
+           '{FechaHoy.ToString("yyyyMMdd")}',
+           '{FechaFeria.ToString("yyyyMMdd")}', 
+           '{fechaDesde.ToString("yyyyMMdd")}', 
+           '{fechaHasta.ToString("yyyyMMdd")}', 
+           {estadoActiva}
+    WHERE NOT EXISTS (
+        SELECT 1 
+        FROM {_Global_BaseBk}[Zw_Ferias] 
+        WHERE [NombreFeria] = '{nombre.Replace("'", "''")}'
+    )"
 
             Dim id As Integer
             If Not _Sql.Ej_Insertar_Trae_Identity(query, id) Then
@@ -131,19 +161,31 @@
         Dim nombre As String = Txt_Nombre.Text.Trim()
         Dim fechaDesde As Date = Dtp_Fecha_01_Desde.Value.Date
         Dim fechaHasta As Date = Dtp_Fecha_01_Hasta.Value.Date
+        Dim FechaFeria As Date = Dtp_Feria.Value.Date
         Dim activa As Boolean = Chk_Activa.Checked
+        Dim FechaHoy As Date = Date.Now.Date
 
         Try
             Dim estadoActiva As Integer = If(activa, 1, 0)
+            ' 1. Validar si el nombre ya existe en OTRA feria (excluimos el ID actual)
+            Dim queryValidacion As String = $"SELECT [Id] FROM {_Global_BaseBk}[Zw_Ferias] WHERE [NombreFeria] = '{nombre.Replace("'", "''")}' AND [Id] <> {_Feria_Editar.Id}"
+            Dim dtFeria As DataTable = _Sql.Fx_Get_DataTable(queryValidacion) ' Ajusta el método según cómo devuelvas tablas en tu clase _Sql
 
+            If dtFeria IsNot Nothing AndAlso dtFeria.Rows.Count > 0 Then
+
+                _Mensaje.Mensaje = $"Ya existe una feria registrada con el nombre '{nombre}'. Por favor, escriba un nombre distinto."
+                _Mensaje.EsCorrecto = False
+                _Mensaje.Icono = MessageBoxIcon.Error
+            End If
             ' Sentencia UPDATE apuntando al ID de la feria que estamos editando
             Dim query As String = $"
                 UPDATE {_Global_BaseBk}[Zw_Ferias]
                    SET [NombreFeria] = '{nombre.Replace("'", "''")}'
+                      ,[FechaFeria] = '{FechaFeria.ToString("yyyyMMdd")}'
                       ,[FechaInicio] = '{fechaDesde.ToString("yyyyMMdd")}'
                       ,[FechaTermino] = '{fechaHasta.ToString("yyyyMMdd")}'
                       ,[Activa] = {estadoActiva}
-                 WHERE [Id] = {_Feria_Editar.Id}"
+                 WHERE [Id] = {_Feria_Editar.Id} "
 
             ' Usamos Ej_consulta_IDU (Insert/Delete/Update) estándar para ejecutar sentencias sin identity
             If Not _Sql.Ej_consulta_IDU(query) Then
@@ -173,10 +215,18 @@
     End Sub
     Private Sub CheckBox1_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Activa.CheckedChanged
     End Sub
+
+    Private Sub TableLayoutPanel2_Paint(sender As Object, e As PaintEventArgs) Handles TableLayoutPanel2.Paint
+
+    End Sub
 End Class
 Public Class Zw_Feria
 
     Public Property Id As Integer
+
+    Public Property FechaCreacion As Date
+
+    Public Property FechaFeria As Date
     Public Property NombreFeria As String
     Public Property FechaInicio As Date
     Public Property FechaTermino As Date
