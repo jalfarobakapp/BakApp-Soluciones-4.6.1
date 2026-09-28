@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing.Printing
 Imports System.IO
 Imports DevComponents.DotNetBar
+Imports MySql.Data.Authentication
 Imports PdfSharp
 Imports PdfSharp.Drawing
 Imports PdfSharp.Drawing.Layout
@@ -331,7 +332,7 @@ Public Class Frm_Ver_Documento
 
         Btn_Firmar_Documento_DTE.Visible = False
 
-        Lbl_Feria.Text = String.Empty
+        'Lbl_Feria.Text = String.Empty
 
         Select Case _Tipo_Apertura
 
@@ -582,7 +583,7 @@ Public Class Frm_Ver_Documento
 
             _Cl_Contenedor.Zw_Contenedor = _Cl_Contenedor.Fx_Llenar_Contenedor(_Idmaeedo, _Tido, _Nudo)
 
-            Btn_Contenedor.Visible = (_Tido = "OCC")
+            Btn_Contenedores.Enabled = (_Tido = "OCC")
 
         End If
 
@@ -928,21 +929,21 @@ Public Class Frm_Ver_Documento
             End If
         End If
 
-        Btn_Feria.Visible = (_Tido = "COV" OrElse _Tido = "NVV" Or _Tido = "FCV")
+        'Btn_Ferias.Visible = (_Tido = "COV" OrElse _Tido = "NVV" Or _Tido = "FCV")
 
-        Dim _Id_Feria As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Id_Feria", "Idmaeedo = " & _Idmaeedo, True, False)
+        'Dim _Id_Feria As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "Id_Feria", "Idmaeedo = " & _Idmaeedo, True, False)
 
-        If CBool(_Id_Feria) Then
+        'If CBool(_Id_Feria) Then
 
-            Consulta_sql = $"Select * From {_Global_BaseBk}Zw_Ferias Where Id = {_Id_Feria}"
+        '    Consulta_sql = $"Select * From {_Global_BaseBk}Zw_Ferias Where Id = {_Id_Feria}"
 
-            Dim _Row_Feria As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+        '    Dim _Row_Feria As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            If Not IsNothing(_Row_Feria) Then
-                Lbl_Feria.Text = $"Feria: {_Row_Feria.Item("NombreFeria").ToString.Trim}"
-            End If
+        '    If Not IsNothing(_Row_Feria) Then
+        '        Lbl_Feria.Text = $"Feria: {_Row_Feria.Item("NombreFeria").ToString.Trim}"
+        '    End If
 
-        End If
+        'End If
 
         Me.Refresh()
 
@@ -1238,7 +1239,7 @@ Public Class Frm_Ver_Documento
         Btn_Firmar_Documento_DTE.Visible = False
         Btn_Marcar_Baja_Rotacion.Visible = False
 
-        Btn_Contenedor.Visible = (_Tido = "OCC")
+        Btn_Contenedores.Enabled = (_Tido = "OCC")
 
         Me.Refresh()
 
@@ -2562,6 +2563,7 @@ Public Class Frm_Ver_Documento
 
         Dim _Fila As DataGridViewRow = GrillaDetalleDoc.Rows(GrillaDetalleDoc.CurrentRow.Index)
 
+        Dim _Idmaeddo As Integer = _Fila.Cells("IDMAEDDO").Value
         Dim _Tido = _TblEncabezado.Rows(0).Item("TIDO").ToString.Trim
         Dim _Descripcion As String = NuloPorNro(_Fila.Cells("NOKOPR").Value, "").ToString.Trim
         Dim _Lista = _Fila.Cells("LISTA").Value
@@ -2594,7 +2596,19 @@ Public Class Frm_Ver_Documento
             _Nudopa += $" ({_Feemlipa.ToString("dd/MM/yyyy")})"
         End If
 
-        LblDescripcion.Text = _Descripcion & ", Lista [" & _Lista & "]" & _Tidopa & _Nudopa & ", I.V.A. " & FormatNumber(_Vaivli, 2) & _Obs
+        Dim _Id_Feria As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Det", "Id_Feria", "Idmaeddo = " & _Idmaeddo)
+        Dim _Feria As String = String.Empty
+
+        If CBool(_Id_Feria) Then
+            _Feria = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Ferias", "NombreFeria", "Id = " & _Id_Feria)
+            If Not String.IsNullOrEmpty(_Feria) Then
+                _Feria = "<br/><b> *** Feria: " & _Feria & " *** </b>"
+            End If
+        End If
+
+        LblDescripcion.Text = "<b>" & _Descripcion & "</b>" &
+                      ", Lista [" & _Lista & "]" & _Tidopa & _Nudopa &
+                      ", I.V.A. " & FormatNumber(_Vaivli, 2) & _Obs & _Feria
 
     End Sub
 
@@ -5301,16 +5315,6 @@ Public Class Frm_Ver_Documento
 
     End Sub
 
-    Private Sub Btn_Contenedor_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor.Click
-
-        Btn_Contenedor_Asociar.Visible = Not CBool(_Cl_Contenedor.Zw_Contenedor.IdCont)
-        Btn_Contenedor_Quitar.Visible = CBool(_Cl_Contenedor.Zw_Contenedor.IdCont)
-        Btn_Contenedor_Ver.Visible = CBool(_Cl_Contenedor.Zw_Contenedor.IdCont)
-
-        ShowContextMenu(Menu_Contextual_Contenedor)
-
-    End Sub
-
     Private Sub Btn_Contenedor_Asociar_Click(sender As Object, e As EventArgs) Handles Btn_Contenedor_Asociar.Click
 
         If Not Fx_Tiene_Permiso(Me, "Doc00164") Then
@@ -5579,6 +5583,147 @@ Where Idmaeedo In (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where IDMAEDDO In {
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_Opciones_Especiales_Click(sender As Object, e As EventArgs) Handles Btn_Opciones_Especiales.Click
+
+        Btn_Contenedor_Asociar.Visible = Not CBool(_Cl_Contenedor.Zw_Contenedor.IdCont)
+        Btn_Contenedor_Quitar.Visible = CBool(_Cl_Contenedor.Zw_Contenedor.IdCont)
+        Btn_Contenedor_Ver.Visible = CBool(_Cl_Contenedor.Zw_Contenedor.IdCont)
+
+        ShowContextMenu(Menu_Contextual_Opciones_Especiales)
+
+    End Sub
+
+    Private Sub Btn_Feria_Asociar_Click(sender As Object, e As EventArgs) Handles Btn_Feria_Asociar.Click
+
+        Dim _Cl_Ferias As New Cl_Ferias
+        Dim _Msj As String = String.Empty
+
+        If Not _Cl_Ferias.Fx_Validar_Documento_Para_Asociar_Feria(_Idmaeedo, _Msj) Then
+            MessageBoxEx.Show(Me, _Msj, "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Tbl_Documentos As DataTable = _Cl_Ferias.Fx_Traer_Documentos_Para_Asociar_Feria(_Idmaeedo)
+
+        Dim _TieneFeria As Boolean = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Docu_Det", $"Idmaeedo = {_Idmaeedo} And Id_Feria <> 0")
+
+        If CBool(_TieneFeria) Then
+            MessageBoxEx.Show(Me, "Esta venta ya tiene una feria asociada", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _ObligaFeriaVta As Boolean
+        Dim _Id_Feria As Integer
+
+        _ObligaFeriaVta = _Global_Row_Configuracion_General.Item("ObligaFeriaVta")
+        _Id_Feria = _Global_Row_Configuracion_General.Item("Id_Feria")
+
+        '_TblEncabezado.Rows(0).Item("Venta_Feria") = False
+        '_TblEncabezado.Rows(0).Item("Id_Feria") = 0
+
+        'For Each _Fila As DataRow In _TblDetalle.Rows
+        '    _Fila.Item("Id_Feria") = 0
+        'Next
+
+        If Not _ObligaFeriaVta Then
+            _ObligaFeriaVta = _Global_Row_Configuracion_Estacion.Item("ObligaFeriaVta")
+            _Id_Feria = _Global_Row_Configuracion_Estacion.Item("Id_Feria")
+        End If
+
+
+        Dim _Msg1 = "Asociar FERIA a la venta"
+        Dim _Msg2 = vbCrLf & "¿Desea asociar una FERIA a esta venta?" & vbCrLf
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.ShieldHelp, "", True)
+
+        If _Mensaje.DialogResult_Reps <> DialogResult.Yes Then
+            If _Mensaje.Cancelado Or _Mensaje.DialogResult_Reps = DialogResult.None Then
+                Return
+            Else
+                MessageBoxEx.Show(Me, "Venta normal sin feria", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return
+            End If
+        End If
+
+        Dim _Row_Feria As DataRow
+
+        If CBool(_Id_Feria) Then
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Ferias Where Id = " & _Id_Feria
+            _Row_Feria = _Sql.Fx_Get_DataRow(Consulta_sql)
+        End If
+
+        If Not IsNothing(_Row_Feria) Then
+
+            _Msg1 = "Asociar Feria: " & _Row_Feria.Item("NombreFeria") & " a la venta"
+            _Msg2 = vbCrLf & "¿Desea asociar una FERIA a esta venta?" & vbCrLf & vbCrLf & "Si (Confirma) - No (Seleccionar otra feria)"
+
+            _Mensaje = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.Help, "", True)
+
+            If _Mensaje.DialogResult_Reps = DialogResult.Cancel Or _Mensaje.DialogResult_Reps = DialogResult.None Then
+                Return
+            End If
+
+            If _Mensaje.DialogResult_Reps = DialogResult.Yes Then
+
+                _TblEncabezado.Rows(0).Item("Venta_Feria") = True
+                _TblEncabezado.Rows(0).Item("Id_Feria") = _Row_Feria.Item("Id")
+
+                For Each _Fila As DataRow In _TblDetalle.Rows
+                    _Fila.Item("Id_Feria") = _Row_Feria.Item("Id")
+                Next
+
+                MessageBoxEx.Show(Me, "Feria: " & _Row_Feria.Item("NombreFeria"), "Feria seleccionada",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                Return
+
+            End If
+
+        End If
+
+        Dim _CantidadFeriasHabilitadas As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Ferias", "Activa = 1")
+
+        If _CantidadFeriasHabilitadas = 0 Then
+            MessageBoxEx.Show(Me,
+                      "No existen ferias habilitadas para asociar a la venta." & vbCrLf & vbCrLf &
+                      "Informe esta situación al administrador del sistema.",
+                      "Validación",
+                      MessageBoxButtons.OK,
+                      MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _DialogResult As DialogResult
+
+        Dim Fm As New Frm_Ferias
+        Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        _DialogResult = Fm.DialogResult
+        _Row_Feria = Fm.Row_Feria
+        Fm.Dispose()
+
+        If _DialogResult <> DialogResult.OK Then
+            MessageBoxEx.Show(Me, "No se selecciono ninguna feria para la venta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Consulta_sql = $"
+Update {_Global_BaseBk}Zw_Docu_Ent Set Venta_Feria = 1,Id_Feria = {_Id_Feria} 
+Where Idmaeedo = {_Idmaeedo}
+Update {_Global_BaseBk}Zw_Docu_Det Set Id_Feria = {_Id_Feria} 
+Where Idmaeedo = {_Idmaeedo}
+"
+        If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql, False) Then
+            MessageBoxEx.Show(Me, "Feria: " & _Row_Feria.Item("NombreFeria"), "Feria seleccionada",
+                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
+            MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
 
     End Sub
 

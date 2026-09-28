@@ -511,7 +511,6 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
-        '''
         '''CREATE TABLE [dbo].[Zw_Casi_DocTom](
         '''	[Id_DocEnc]      [int]         NOT NULL,
         '''	[CodFuncionario] [char](3)     NOT NULL DEFAULT (&apos;&apos;),
@@ -521,7 +520,7 @@ Namespace My.Resources
         ''' CONSTRAINT [PK_Zw_Casi_DocTom] PRIMARY KEY CLUSTERED 
         '''(
         '''	[Id_DocEnc] ASC
-        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMA [resto de la cadena truncado]&quot;;.
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Casi_DocTom() As String
             Get
@@ -2010,6 +2009,30 @@ Namespace My.Resources
         '''<summary>
         '''  Busca una cadena traducida similar a USE [#Base#]
         '''
+        '''CREATE TABLE [dbo].[Zw_Ferias](
+        '''	[Id]			[int] IDENTITY(1,1) NOT NULL,
+        '''	[NombreFeria]	[varchar](50) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FechaCreacion] [datetime] NULL,
+        '''	[FechaFeria]	[datetime] NULL,
+        '''	[FechaInicio]	[datetime] NULL,
+        '''	[FechaTermino]	[datetime] NULL,
+        '''	[Activa]		[bit] NOT NULL DEFAULT (0)
+        ''') ON [PRIMARY]
+        '''GO
+        '''
+        '''
+        '''
+        '''.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Ferias() As String
+            Get
+                Return ResourceManager.GetString("Zw_Ferias", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
         '''CREATE TABLE [dbo].[Zw_Fincred_Config](
         '''	[Id]				[int] IDENTITY(1,1) NOT NULL,
         '''	[Token]				[varchar](50)		NOT NULL DEFAULT (&apos;&apos;),
@@ -2256,8 +2279,8 @@ Namespace My.Resources
         '''	[Sucursal_B]	[varchar](3)	NULL        DEFAULT (&apos;&apos;),
         '''	[Bodega_B]		[varchar](3)	NOT NULL    DEFAULT (&apos;&apos;),
         '''	[Activo]		[bit]			NOT NULL    DEFAULT (0),
-        '''	[FechaCreacion] [datetime]      NULL
-        ''') O [resto de la cadena truncado]&quot;;.
+        '''	[FechaCreacion] [datetime]      NULL,
+        '''   [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_InterStock_Equivalencia() As String
             Get

@@ -4804,7 +4804,17 @@ Public Class Frm_Formulario_Documento
 
                     Dim _Centro_Costo As String = .Cells("Centro_Costo").Value.ToString.Trim
 
-                    LblDescripcion.Text = _Descripcion & " " & _Desde & " " & _Vendedor
+                    Dim _Id_Feria As Integer = NuloPorNro(.Cells("Id_Feria").Value, 0)
+                    Dim _Feria As String = String.Empty
+
+                    If CBool(_Id_Feria) Then
+                        _Feria = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Ferias", "NombreFeria", "Id = " & _Id_Feria)
+                        If Not String.IsNullOrEmpty(_Feria) Then
+                            _Feria = " *** Feria: " & _Feria & " *** "
+                        End If
+                    End If
+
+                    LblDescripcion.Text = _Descripcion & " " & _Desde & " " & _Vendedor.Trim & " " & _Feria.Trim
 
                     If Not String.IsNullOrEmpty(LblDescripcion.Text.Trim) And Not String.IsNullOrEmpty(_Centro_Costo) Then
                         LblDescripcion.Text += Space(5) & "(Cent.Costo: " & _Centro_Costo & ")"
@@ -31407,9 +31417,22 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
         End If
 
+        Dim _CantidadFeriasHabilitadas As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Ferias", "Activa = 1")
+
+        If _CantidadFeriasHabilitadas = 0 Then
+            MessageBoxEx.Show(Me,
+                      "No existen ferias habilitadas para asociar a la venta." & vbCrLf & vbCrLf &
+                      "Informe esta situación al administrador del sistema.",
+                      "Validación",
+                      MessageBoxButtons.OK,
+                      MessageBoxIcon.Stop)
+            Return False
+        End If
+
         Dim _DialogResult As DialogResult
 
         Dim Fm As New Frm_Ferias
+        Fm.ModoSeleccion = True
         Fm.ShowDialog(Me)
         _DialogResult = Fm.DialogResult
         _Row_Feria = Fm.Row_Feria

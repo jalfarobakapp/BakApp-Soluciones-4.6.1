@@ -312,4 +312,13 @@ Public Class Modulo_Programas_Especiales
 
     End Sub
 
+    Private Sub Btn_Ferias_Click(sender As Object, e As EventArgs) Handles Btn_Ferias.Click
+
+        If Not Fx_Tiene_Permiso(_Fm_Menu_Padre, "Feria0001") Then Return
+
+        Dim Fm As New Frm_Ferias
+        Fm.ShowDialog(_Fm_Menu_Padre)
+        Fm.Dispose()
+
+    End Sub
 End Class

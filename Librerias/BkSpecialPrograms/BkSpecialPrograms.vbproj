@@ -1033,6 +1033,12 @@
     <Compile Include="03 Sistemas\Ferias\Frm_Ferias.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Ferias\Frm_MantFeria.Designer.vb">
+      <DependentUpon>Frm_MantFeria.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Ferias\Frm_MantFeria.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\PDARandomMovil\Cl_PDARandomMovil.vb" />
     <Compile Include="03 Sistemas\PDARandomMovil\Frm_PreVentasPDA.Designer.vb">
       <DependentUpon>Frm_PreVentasPDA.vb</DependentUpon>
@@ -5072,6 +5078,9 @@
     <EmbeddedResource Include="03 Sistemas\Ferias\Frm_Ferias.resx">
       <DependentUpon>Frm_Ferias.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Ferias\Frm_MantFeria.resx">
+      <DependentUpon>Frm_MantFeria.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\PDARandomMovil\Frm_PreVentasPDA.resx">
       <DependentUpon>Frm_PreVentasPDA.vb</DependentUpon>
     </EmbeddedResource>
@@ -8383,6 +8392,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor_DocTom.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Det_Lote.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidad_CiaSeguro.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Ferias.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_InterStock_Det.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_InterStock_Enc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_InterStock_Equivalencia.sql" />

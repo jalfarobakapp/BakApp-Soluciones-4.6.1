@@ -17,6 +17,9 @@ Public Class Frm_Configuracion_Gral
 
     Dim _Union = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "UNION" & vbCrLf
 
+    Dim _CargandoFormulario As Boolean
+    Dim _ValidandoChkFeria As Boolean
+
     Public Sub New(_Row_Modalidad As DataRow, _Modalidad_General As Boolean)
 
         ' Esta llamada es exigida por el diseñador.
@@ -46,6 +49,8 @@ Public Class Frm_Configuracion_Gral
     End Sub
 
     Private Sub Frm_Configuracion_Gral_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+        _CargandoFormulario = True
 
         Btn_ConfPuntosVta.Visible = _Modalidad_General
 
@@ -280,7 +285,21 @@ Public Class Frm_Configuracion_Gral
             Txt_ImpNoCobraVtaStr.Tag = .Item("ImpNoCobraVtaStr")
 
             Chk_ObligaFeriaVta.Checked = .Item("ObligaFeriaVta")
-            'Txt_Feria.Text = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Ferias", "NombreFeria", $"Id_Feria = { .Item("Id_Feria")}").ToString.Trim
+
+            If CBool(.Item("Id_Feria")) And Chk_ObligaFeriaVta.Checked Then
+
+                Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Ferias Where Id = " & .Item("Id_Feria")
+                Dim _Row_Feria As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                If Not IsNothing(_Row_Feria) Then
+                    Txt_Feria.Text = _Row_Feria.Item("NombreFeria")
+                    Txt_Feria.Tag = _Row_Feria
+                End If
+
+            End If
+
+            Sb_Actualizar_Estado_Feria()
+
 
         End With
 
@@ -440,6 +459,10 @@ Public Class Frm_Configuracion_Gral
 
         End If
 
+        Sb_Actualizar_Estado_Feria()
+
+        _CargandoFormulario = False
+
     End Sub
 
     Private Sub Frm_Configuracion_Gral_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
@@ -558,6 +581,20 @@ Public Class Frm_Configuracion_Gral
 
         End If
 
+        If Not Fx_Validar_Obliga_Feria() Then
+            Return
+        End If
+
+        Dim _Id_Feria As Integer
+
+        If Not IsNothing(Txt_Feria.Tag) Then
+
+            Dim _Row_Feria As DataRow = CType(Txt_Feria.Tag, DataRow)
+
+            _Id_Feria = _Row_Feria.Item("Id")
+
+        End If
+
         Consulta_sql = "Update " & _Global_BaseBk & "Zw_Configuracion Set" & vbCrLf &
                        " Pr_Desc_Producto_Solo_Mayusculas = " & Convert.ToInt32(Chk_Pr_Desc_Producto_Solo_Mayusculas.Checked) & vbCrLf &
                        ",Pr_Creacion_Exigir_Precio = " & Convert.ToInt32(Chk_Pr_Creacion_Exigir_Precio.Checked) & vbCrLf &
@@ -662,6 +699,8 @@ Public Class Frm_Configuracion_Gral
                        ",NoCopiarCreditosSucEnt = " & Convert.ToInt32(Chk_NoCopiarCreditosSucEnt.Checked) & vbCrLf &
                        ",ImpNoCobraVta = " & Convert.ToInt32(Chk_ImpNoCobraVta.Checked) & vbCrLf &
                        ",ImpNoCobraVtaStr = '" & Txt_ImpNoCobraVtaStr.Tag & "'" & vbCrLf &
+                       ",ObligaFeriaVta = " & Convert.ToInt32(Chk_ObligaFeriaVta.Checked) & vbCrLf &
+                       ",Id_Feria = " & _Id_Feria & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
@@ -924,6 +963,44 @@ Public Class Frm_Configuracion_Gral
 
     End Sub
 
+    Private Sub Txt_Feria_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Feria.ButtonCustomClick
+
+        Dim _CantidadFeriasHabilitadas As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Ferias", "Activa = 1")
+
+        If _CantidadFeriasHabilitadas = 0 Then
+            MessageBoxEx.Show(Me,
+                      "No existen ferias habilitadas para asociar a la venta." & vbCrLf & vbCrLf &
+                      "Debe crear las ferias en programas especiales",
+                      "Validación",
+                      MessageBoxButtons.OK,
+                      MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _Row_Feria As DataRow
+        Dim _DialogResult As DialogResult
+
+        Dim Fm As New Frm_Ferias
+        Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        _DialogResult = Fm.DialogResult
+        _Row_Feria = Fm.Row_Feria
+        Fm.Dispose()
+
+        If _DialogResult <> DialogResult.OK Then
+            Return
+        End If
+
+        Txt_Feria.Text = _Row_Feria.Item("NombreFeria")
+        Txt_Feria.Tag = _Row_Feria
+
+    End Sub
+
+    Private Sub Txt_Feria_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Feria.ButtonCustom2Click
+        Txt_Feria.Text = String.Empty
+        Txt_Feria.Tag = Nothing
+    End Sub
+
     Sub Sb_Cargar_Combo()
 
         Dim _Arr_TipoValor_Bruto_Neto(,) As String = {{"N", "NETO"}, {"B", "BRUTO"}}
@@ -940,5 +1017,88 @@ Public Class Frm_Configuracion_Gral
         Cmb_Nodo_Raiz_Asociados.SelectedValue = "0"
 
     End Sub
+
+    Private Sub Sb_Limpiar_Feria()
+
+        Txt_Feria.Text = String.Empty
+        Txt_Feria.Tag = Nothing
+
+    End Sub
+
+    Private Sub Chk_ObligaFeriaVta_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_ObligaFeriaVta.CheckedChanged
+
+        If _CargandoFormulario OrElse _ValidandoChkFeria Then
+            Sb_Actualizar_Estado_Feria()
+            Return
+        End If
+
+        If Chk_ObligaFeriaVta.Checked AndAlso Not Fx_Existen_Ferias_Habilitadas() Then
+
+            _ValidandoChkFeria = True
+
+            MessageBoxEx.Show(Me,
+                          "No es posible activar esta opción porque no existen ferias habilitadas." & vbCrLf & vbCrLf &
+                          "Debe crear o habilitar al menos una feria e informar esta situación al administrador del sistema.",
+                          "Validación",
+                          MessageBoxButtons.OK,
+                          MessageBoxIcon.Stop)
+
+            Chk_ObligaFeriaVta.Checked = False
+
+            _ValidandoChkFeria = False
+
+        End If
+
+        Sb_Actualizar_Estado_Feria()
+
+    End Sub
+
+    Private Sub Sb_Actualizar_Estado_Feria()
+
+        Dim _Habilitar As Boolean = Chk_ObligaFeriaVta.Checked
+
+        Txt_Feria.Enabled = _Habilitar
+
+        If Not _Habilitar Then
+            Sb_Limpiar_Feria()
+        End If
+
+    End Sub
+
+    Private Function Fx_Existen_Ferias_Habilitadas() As Boolean
+
+        Dim _Cantidad As Integer =
+            _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Ferias", "Activa = 1")
+
+        Return _Cantidad > 0
+
+    End Function
+
+    Private Function Fx_Validar_Obliga_Feria() As Boolean
+
+        If Not Chk_ObligaFeriaVta.Checked Then
+            Return True
+        End If
+
+        If Fx_Existen_Ferias_Habilitadas() Then
+            Return True
+        End If
+
+        MessageBoxEx.Show(Me,
+                          "No existen ferias habilitadas." & vbCrLf & vbCrLf &
+                          "No es posible dejar esta opción activada." & vbCrLf &
+                          "Informe esta situación al administrador del sistema.",
+                          "Validación",
+                          MessageBoxButtons.OK,
+                          MessageBoxIcon.Stop)
+
+        Chk_ObligaFeriaVta.Checked = False
+        Sb_Actualizar_Estado_Feria()
+
+        SuperTabControl1.SelectedTabIndex = 2
+
+        Return False
+
+    End Function
 
 End Class

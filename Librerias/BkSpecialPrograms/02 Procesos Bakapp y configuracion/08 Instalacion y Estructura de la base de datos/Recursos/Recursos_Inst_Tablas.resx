@@ -949,4 +949,7 @@
   <data name="Zw_InterStock_Enc" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Sql\Tablas\Zw_InterStock_Enc.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
+  <data name="Zw_Ferias" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Sql\Tablas\Zw_Ferias.sql;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  </data>
 </root>

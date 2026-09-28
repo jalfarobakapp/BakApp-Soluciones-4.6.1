@@ -241,6 +241,7 @@ Public Class Class_Permiso_BakApp
         TICKET
         MODELAMIENTO
         SOBRESTOCK
+        FERIAS
     End Enum
 
     Sub Sb_Actualizar_Base_De_Permisos(_Formulario As Form, ByRef _Objeto As Object)
@@ -5250,6 +5251,35 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "EXPORTAR A EXCEL LISTADO DE PRODUCTOS SOBRE STOCK"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+        End Select
+
+#End Region
+
+#Region "FERIAS"
+
+        Select Case _CodPermiso
+
+            Case "Feria0001"
+                _DescripcionPermiso = "INGRESAR AL MANTENEDOR DE FERIAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.FERIAS, 6)
+                _NombreFamiliaPermiso = _Fml.FERIAS.ToString
+            Case "Feria0002"
+                _DescripcionPermiso = "CREAR FERIA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.FERIAS, 6)
+                _NombreFamiliaPermiso = _Fml.FERIAS.ToString
+            Case "Feria0003"
+                _DescripcionPermiso = "EDITAR FERIA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.FERIAS, 6)
+                _NombreFamiliaPermiso = _Fml.FERIAS.ToString
+            Case "Feria0004"
+                _DescripcionPermiso = "ELIMINAR FERIA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.FERIAS, 6)
+                _NombreFamiliaPermiso = _Fml.FERIAS.ToString
+            Case "Feria0005"
+                _DescripcionPermiso = "HABILITAR O DESHABILITAR FERIA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.FERIAS, 6)
+                _NombreFamiliaPermiso = _Fml.FERIAS.ToString
 
         End Select
 

@@ -106,7 +106,7 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
         DFechaTermino.Value = Date.Now
 
         Btn_VerInformeXProductos.Visible = Not ModoProductos
-        Btn_Procesar.Visible = Not ModoProductos
+        'Btn_Procesar.Visible = Not ModoProductos
 
         'Dim _Arr_GRCvsUltGR(,) As String = {{"", "Mostrar todo"},
         '                           {"1", "Sin Diferencia"},
@@ -130,6 +130,13 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
                                         {"3", "Mayor que"}}
         Sb_Llenar_Combos(_Arr_Margen, Cmb_Margen)
         Cmb_Margen.SelectedValue = ""
+        Input_Margen.Enabled = False
+
+        Dim _Arr_TipoMargen(,) As String = {{"Margen_Lista_Porc", "% Margen P.Lista"},
+                                            {"MargenOferta_Porc", "% Margen Oferta"},
+                                            {"Margen_Porc", "% Margen Ult.Vta."}}
+        Sb_Llenar_Combos(_Arr_TipoMargen, Cmb_TipoMargen)
+        Cmb_Margen.SelectedValue = "Margen_Lista_Porc"
         Input_Margen.Enabled = False
 
         caract_combo(Cmb_ListaPrecio)
@@ -1335,16 +1342,6 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
         Sb_Actualizar_Estado_Filtro_Margen()
     End Sub
 
-    Private Sub Input_Margen_ButtonCustomClick(sender As Object, e As EventArgs) Handles Input_Margen.ButtonCustomClick
-
-        If Not Input_Margen.Enabled Then
-            Return
-        End If
-
-        Sb_Aplicar_Filtros()
-
-    End Sub
-
     Private Sub Sb_Aplicar_Colores_Filas(_Grilla As DataGridView)
 
         If IsNothing(_Grilla) Then
@@ -2464,18 +2461,19 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             Return String.Empty
         End If
 
-        Dim _Margen As Integer = Input_Margen.Value
+        Dim _Margen As Double = Input_Margen.Value
+        Dim _MargenStr As String = Cmb_TipoMargen.SelectedValue
 
         Select Case _ValorCombo
 
             Case "1"
-                Return "(IsNull(Margen_Porc, 0) * 100) = " & _Margen
+                Return $"(IsNull({_MargenStr}, 0) * 100) = " & De_Num_a_Tx_01(_Margen, False, 2)
 
             Case "2"
-                Return "(IsNull(Margen_Porc, 0) * 100) < " & _Margen
+                Return $"(IsNull({_MargenStr}, 0) * 100) < " & De_Num_a_Tx_01(_Margen, False, 2)
 
             Case "3"
-                Return "(IsNull(Margen_Porc, 0) * 100) > " & _Margen
+                Return $"(IsNull({_MargenStr}, 0) * 100) > " & De_Num_a_Tx_01(_Margen, False, 2)
 
         End Select
 
@@ -2611,6 +2609,7 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
         End If
 
         Dim _Filtro As String = Generar_Filtro_IN_Lista2(_ListaFilasSeleccionadas, False, "'")
+        Dim _FechaHoraModif As DateTime = DFechaInicio.Value
 
         For Each _Codigo As String In _ListaFilasSeleccionadas
 
@@ -2623,7 +2622,7 @@ Set
 Procesada = 1,
 FechaModif = (SELECT replace(convert(varchar, GetDate(), 111), '/','')),
 HoraModif = (SELECT convert(varchar, GetDate(), 108)),
-FechaHoraModif = GetDate() 
+FechaHoraModif = '{ Format(_FechaHoraModif, "yyyyMMdd HH:mm")}' 
 Where Codigo = '{_Codigo}'"
             Else
                 Consulta_sql = $"
@@ -3007,5 +3006,13 @@ values
 
         ExportarTabla_JetExcel_Tabla(Tbl_Excel, Me, _NombreArchivo)
 
+    End Sub
+
+    Private Sub Input_Margen_ButtonCustomClick_1(sender As Object, e As EventArgs) Handles Input_Margen.ButtonCustomClick
+        If Not Input_Margen.Enabled Then
+            Return
+        End If
+
+        Sb_Aplicar_Filtros()
     End Sub
 End Class

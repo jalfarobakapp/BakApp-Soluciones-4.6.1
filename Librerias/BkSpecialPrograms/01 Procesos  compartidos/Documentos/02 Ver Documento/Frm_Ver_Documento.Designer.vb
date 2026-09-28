@@ -24,12 +24,12 @@ Partial Class Frm_Ver_Documento
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Ver_Documento))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar_Documentos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Observaciones = New DevComponents.DotNetBar.ButtonItem()
@@ -51,7 +51,7 @@ Partial Class Frm_Ver_Documento
         Me.Btn_InfFincred = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_HabilitarFacturacion = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_MarcarNVVCustomizable = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Contenedor = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Opciones_Especiales = New DevComponents.DotNetBar.ButtonItem()
         Me.GrillaDetalleDoc = New DevComponents.DotNetBar.Controls.DataGridViewX()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Chk_Pickear = New DevComponents.DotNetBar.Controls.CheckBoxX()
@@ -117,18 +117,21 @@ Partial Class Frm_Ver_Documento
         Me.LabelItem6 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Mnu_Anular_Reciclar = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_Anular = New DevComponents.DotNetBar.ButtonItem()
-        Me.Menu_Contextual_Contenedor = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Contenedor_Asociar = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Contenedor_Ver = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Contenedor_Quitar = New DevComponents.DotNetBar.ButtonItem()
-        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
-        Me.Btn_PreVenta = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_DTE_Hefesto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_Firmar_Documento_DTE_Hefesto = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_Reenvio_Correo_DTE_Hefesto = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_Orden_Despacho = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_VerOrdenDeDespacho = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_Mnu_CrearOrdenDeDespacho = New DevComponents.DotNetBar.ButtonItem()
+        Me.Menu_Contextual_Opciones_Especiales = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contenedores = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contenedor_Asociar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contenedor_Ver = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Contenedor_Quitar = New DevComponents.DotNetBar.ButtonItem()
+        Me.LabelItem1 = New DevComponents.DotNetBar.LabelItem()
+        Me.Btn_PreVenta = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Ferias = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Feria_Asociar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.LblTotalNeto = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel5 = New DevComponents.DotNetBar.Controls.GroupPanel()
@@ -163,8 +166,6 @@ Partial Class Frm_Ver_Documento
         Me.Txt_Importar_ArchivoSG = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_ArchivoSG_Carpeta_Lectura = New DevComponents.DotNetBar.ButtonItem()
         Me.Txt_ArchivoSG_Carpeta_Generados = New DevComponents.DotNetBar.ButtonItem()
-        Me.Btn_Feria = New DevComponents.DotNetBar.ButtonItem()
-        Me.Lbl_Feria = New DevComponents.DotNetBar.LabelItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GrillaDetalleDoc, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel2.SuspendLayout()
@@ -184,10 +185,10 @@ Partial Class Frm_Ver_Documento
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Documentos, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Enviar_documento_por_correo, Me.Btn_Traza_Documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Marcar_Baja_Rotacion, Me.Btn_Imprimir_Documento, Me.Btn_Cierre_Reactivacion_Documento, Me.Btn_Firmar_Documento_DTE, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Permisos_Asociados, Me.Btn_Ver_Orden_de_despacho, Me.Btn_Consolidar_Stock, Me.Btn_Eliminar_Anular, Me.Btn_CopiarDocOtrEmpresa, Me.Btn_CrearNVVdesdeOCCOtraEmpresa, Me.Btn_InfFincred, Me.Btn_HabilitarFacturacion, Me.Btn_MarcarNVVCustomizable, Me.Btn_Contenedor})
-        Me.Bar2.Location = New System.Drawing.Point(0, 492)
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Documentos, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Enviar_documento_por_correo, Me.Btn_Traza_Documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Marcar_Baja_Rotacion, Me.Btn_Imprimir_Documento, Me.Btn_Cierre_Reactivacion_Documento, Me.Btn_Firmar_Documento_DTE, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Permisos_Asociados, Me.Btn_Ver_Orden_de_despacho, Me.Btn_Consolidar_Stock, Me.Btn_Eliminar_Anular, Me.Btn_CopiarDocOtrEmpresa, Me.Btn_CrearNVVdesdeOCCOtraEmpresa, Me.Btn_InfFincred, Me.Btn_HabilitarFacturacion, Me.Btn_MarcarNVVCustomizable, Me.Btn_Opciones_Especiales})
+        Me.Bar2.Location = New System.Drawing.Point(0, 513)
         Me.Bar2.Name = "Bar2"
-        Me.Bar2.Size = New System.Drawing.Size(872, 41)
+        Me.Bar2.Size = New System.Drawing.Size(873, 41)
         Me.Bar2.Stretch = True
         Me.Bar2.Style = DevComponents.DotNetBar.eDotNetBarStyle.Metro
         Me.Bar2.TabIndex = 34
@@ -377,51 +378,52 @@ Partial Class Frm_Ver_Documento
         Me.Btn_MarcarNVVCustomizable.Tooltip = "Marcar nota de venta como CUSTOMIZABLE"
         Me.Btn_MarcarNVVCustomizable.Visible = False
         '
-        'Btn_Contenedor
+        'Btn_Opciones_Especiales
         '
-        Me.Btn_Contenedor.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Contenedor.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Contenedor.Image = CType(resources.GetObject("Btn_Contenedor.Image"), System.Drawing.Image)
-        Me.Btn_Contenedor.ImageAlt = CType(resources.GetObject("Btn_Contenedor.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Contenedor.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Center
-        Me.Btn_Contenedor.Name = "Btn_Contenedor"
-        Me.Btn_Contenedor.Tooltip = "Opciones especiales"
+        Me.Btn_Opciones_Especiales.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_Opciones_Especiales.ForeColor = System.Drawing.Color.Black
+        Me.Btn_Opciones_Especiales.Image = CType(resources.GetObject("Btn_Opciones_Especiales.Image"), System.Drawing.Image)
+        Me.Btn_Opciones_Especiales.ImageAlt = CType(resources.GetObject("Btn_Opciones_Especiales.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Opciones_Especiales.ItemAlignment = DevComponents.DotNetBar.eItemAlignment.Center
+        Me.Btn_Opciones_Especiales.Name = "Btn_Opciones_Especiales"
+        Me.Btn_Opciones_Especiales.Tooltip = "Opciones especiales"
+        Me.Btn_Opciones_Especiales.Visible = False
         '
         'GrillaDetalleDoc
         '
         Me.GrillaDetalleDoc.AllowUserToAddRows = False
         Me.GrillaDetalleDoc.AllowUserToDeleteRows = False
         Me.GrillaDetalleDoc.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaDetalleDoc.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaDetalleDoc.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
         Me.GrillaDetalleDoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GrillaDetalleDoc.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GrillaDetalleDoc.DefaultCellStyle = DataGridViewCellStyle8
         Me.GrillaDetalleDoc.EnableHeadersVisualStyles = False
         Me.GrillaDetalleDoc.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.GrillaDetalleDoc.Location = New System.Drawing.Point(0, 0)
         Me.GrillaDetalleDoc.Name = "GrillaDetalleDoc"
         Me.GrillaDetalleDoc.ReadOnly = True
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaDetalleDoc.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaDetalleDoc.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
         Me.GrillaDetalleDoc.Size = New System.Drawing.Size(848, 205)
         Me.GrillaDetalleDoc.StandardTab = True
         Me.GrillaDetalleDoc.TabIndex = 27
@@ -438,7 +440,7 @@ Partial Class Frm_Ver_Documento
         Me.GroupPanel2.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel2.Location = New System.Drawing.Point(8, 126)
         Me.GroupPanel2.Name = "GroupPanel2"
-        Me.GroupPanel2.Size = New System.Drawing.Size(857, 290)
+        Me.GroupPanel2.Size = New System.Drawing.Size(857, 306)
         '
         '
         '
@@ -483,7 +485,7 @@ Partial Class Frm_Ver_Documento
         Me.Chk_Pickear.FocusCuesEnabled = False
         Me.Chk_Pickear.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Chk_Pickear.ForeColor = System.Drawing.Color.Black
-        Me.Chk_Pickear.Location = New System.Drawing.Point(0, 244)
+        Me.Chk_Pickear.Location = New System.Drawing.Point(0, 260)
         Me.Chk_Pickear.Name = "Chk_Pickear"
         Me.Chk_Pickear.Size = New System.Drawing.Size(139, 20)
         Me.Chk_Pickear.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -500,9 +502,9 @@ Partial Class Frm_Ver_Documento
         Me.Lbl_Totaliza_Cantidades.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Totaliza_Cantidades.Font = New System.Drawing.Font("Courier New", 9.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Lbl_Totaliza_Cantidades.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Totaliza_Cantidades.Location = New System.Drawing.Point(235, 242)
+        Me.Lbl_Totaliza_Cantidades.Location = New System.Drawing.Point(145, 257)
         Me.Lbl_Totaliza_Cantidades.Name = "Lbl_Totaliza_Cantidades"
-        Me.Lbl_Totaliza_Cantidades.Size = New System.Drawing.Size(613, 23)
+        Me.Lbl_Totaliza_Cantidades.Size = New System.Drawing.Size(703, 23)
         Me.Lbl_Totaliza_Cantidades.TabIndex = 97
         Me.Lbl_Totaliza_Cantidades.Text = "."
         Me.Lbl_Totaliza_Cantidades.TextAlignment = System.Drawing.StringAlignment.Far
@@ -517,17 +519,17 @@ Partial Class Frm_Ver_Documento
         Me.LblDescripcion.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LblDescripcion.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.LblDescripcion.ForeColor = System.Drawing.Color.Black
-        Me.LblDescripcion.Location = New System.Drawing.Point(0, 207)
+        Me.LblDescripcion.Location = New System.Drawing.Point(0, 210)
         Me.LblDescripcion.Name = "LblDescripcion"
         Me.LblDescripcion.SingleLineColor = System.Drawing.SystemColors.Control
-        Me.LblDescripcion.Size = New System.Drawing.Size(848, 31)
+        Me.LblDescripcion.Size = New System.Drawing.Size(848, 44)
         Me.LblDescripcion.TabIndex = 77
         '
         'ContextMenuBar1
         '
         Me.ContextMenuBar1.AntiAlias = True
         Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Productos, Me.Menu_Contextual_Encabezado, Me.Menu_Contextual_Bodega, Me.Menu_Contextual_Vendedor, Me.Menu_Contextual_Correo, Me.Menu_Contextual_Imprimir_Vista_Previa, Me.Menu_Contextual_DTE, Me.Menu_Contextual_Info_Entidad, Me.Menu_Contextual_Eliminar_Anular, Me.Menu_Contextual_Contenedor, Me.Menu_Contextual_DTE_Hefesto, Me.Menu_Contextual_Orden_Despacho})
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_Productos, Me.Menu_Contextual_Encabezado, Me.Menu_Contextual_Bodega, Me.Menu_Contextual_Vendedor, Me.Menu_Contextual_Correo, Me.Menu_Contextual_Imprimir_Vista_Previa, Me.Menu_Contextual_DTE, Me.Menu_Contextual_Info_Entidad, Me.Menu_Contextual_Eliminar_Anular, Me.Menu_Contextual_DTE_Hefesto, Me.Menu_Contextual_Orden_Despacho, Me.Menu_Contextual_Opciones_Especiales})
         Me.ContextMenuBar1.Location = New System.Drawing.Point(15, 17)
         Me.ContextMenuBar1.Name = "ContextMenuBar1"
         Me.ContextMenuBar1.Size = New System.Drawing.Size(818, 47)
@@ -1014,54 +1016,6 @@ Partial Class Frm_Ver_Documento
         Me.Btn_Mnu_Anular.Name = "Btn_Mnu_Anular"
         Me.Btn_Mnu_Anular.Text = "Anular documento"
         '
-        'Menu_Contextual_Contenedor
-        '
-        Me.Menu_Contextual_Contenedor.AutoExpandOnClick = True
-        Me.Menu_Contextual_Contenedor.Name = "Menu_Contextual_Contenedor"
-        Me.Menu_Contextual_Contenedor.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Contenedor_Asociar, Me.Btn_Contenedor_Ver, Me.Btn_Contenedor_Quitar, Me.LabelItem1, Me.Btn_PreVenta})
-        Me.Menu_Contextual_Contenedor.Text = "Contenedor"
-        '
-        'Btn_Contenedor_Asociar
-        '
-        Me.Btn_Contenedor_Asociar.Image = CType(resources.GetObject("Btn_Contenedor_Asociar.Image"), System.Drawing.Image)
-        Me.Btn_Contenedor_Asociar.ImageAlt = CType(resources.GetObject("Btn_Contenedor_Asociar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Contenedor_Asociar.Name = "Btn_Contenedor_Asociar"
-        Me.Btn_Contenedor_Asociar.Text = "Asociar contenedor"
-        '
-        'Btn_Contenedor_Ver
-        '
-        Me.Btn_Contenedor_Ver.Image = CType(resources.GetObject("Btn_Contenedor_Ver.Image"), System.Drawing.Image)
-        Me.Btn_Contenedor_Ver.ImageAlt = CType(resources.GetObject("Btn_Contenedor_Ver.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Contenedor_Ver.Name = "Btn_Contenedor_Ver"
-        Me.Btn_Contenedor_Ver.Text = "Ver contenedor asociado"
-        '
-        'Btn_Contenedor_Quitar
-        '
-        Me.Btn_Contenedor_Quitar.Image = CType(resources.GetObject("Btn_Contenedor_Quitar.Image"), System.Drawing.Image)
-        Me.Btn_Contenedor_Quitar.ImageAlt = CType(resources.GetObject("Btn_Contenedor_Quitar.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Contenedor_Quitar.Name = "Btn_Contenedor_Quitar"
-        Me.Btn_Contenedor_Quitar.Text = "Quitar contenedor"
-        '
-        'LabelItem1
-        '
-        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
-        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
-        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
-        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
-        Me.LabelItem1.Name = "LabelItem1"
-        Me.LabelItem1.PaddingBottom = 1
-        Me.LabelItem1.PaddingLeft = 10
-        Me.LabelItem1.PaddingTop = 1
-        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
-        Me.LabelItem1.Text = "Pre-Venta"
-        '
-        'Btn_PreVenta
-        '
-        Me.Btn_PreVenta.Image = CType(resources.GetObject("Btn_PreVenta.Image"), System.Drawing.Image)
-        Me.Btn_PreVenta.ImageAlt = CType(resources.GetObject("Btn_PreVenta.ImageAlt"), System.Drawing.Image)
-        Me.Btn_PreVenta.Name = "Btn_PreVenta"
-        Me.Btn_PreVenta.Text = "Seleccionar productos para Pre-Venta"
-        '
         'Menu_Contextual_DTE_Hefesto
         '
         Me.Menu_Contextual_DTE_Hefesto.AutoExpandOnClick = True
@@ -1105,6 +1059,77 @@ Partial Class Frm_Ver_Documento
         Me.Btn_Mnu_CrearOrdenDeDespacho.Name = "Btn_Mnu_CrearOrdenDeDespacho"
         Me.Btn_Mnu_CrearOrdenDeDespacho.Text = "Crear orden de despacho"
         '
+        'Menu_Contextual_Opciones_Especiales
+        '
+        Me.Menu_Contextual_Opciones_Especiales.AutoExpandOnClick = True
+        Me.Menu_Contextual_Opciones_Especiales.Name = "Menu_Contextual_Opciones_Especiales"
+        Me.Menu_Contextual_Opciones_Especiales.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Contenedores, Me.Btn_Ferias})
+        Me.Menu_Contextual_Opciones_Especiales.Text = "Opciones Especiales"
+        '
+        'Btn_Contenedores
+        '
+        Me.Btn_Contenedores.Image = CType(resources.GetObject("Btn_Contenedores.Image"), System.Drawing.Image)
+        Me.Btn_Contenedores.ImageAlt = CType(resources.GetObject("Btn_Contenedores.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Contenedores.Name = "Btn_Contenedores"
+        Me.Btn_Contenedores.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Contenedor_Asociar, Me.Btn_Contenedor_Ver, Me.Btn_Contenedor_Quitar, Me.LabelItem1, Me.Btn_PreVenta})
+        Me.Btn_Contenedores.Text = "Contenedores"
+        '
+        'Btn_Contenedor_Asociar
+        '
+        Me.Btn_Contenedor_Asociar.Image = CType(resources.GetObject("Btn_Contenedor_Asociar.Image"), System.Drawing.Image)
+        Me.Btn_Contenedor_Asociar.ImageAlt = CType(resources.GetObject("Btn_Contenedor_Asociar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Contenedor_Asociar.Name = "Btn_Contenedor_Asociar"
+        Me.Btn_Contenedor_Asociar.Text = "Asociar contenedor"
+        '
+        'Btn_Contenedor_Ver
+        '
+        Me.Btn_Contenedor_Ver.Image = CType(resources.GetObject("Btn_Contenedor_Ver.Image"), System.Drawing.Image)
+        Me.Btn_Contenedor_Ver.ImageAlt = CType(resources.GetObject("Btn_Contenedor_Ver.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Contenedor_Ver.Name = "Btn_Contenedor_Ver"
+        Me.Btn_Contenedor_Ver.Text = "Ver contenedor asociado"
+        '
+        'Btn_Contenedor_Quitar
+        '
+        Me.Btn_Contenedor_Quitar.Image = CType(resources.GetObject("Btn_Contenedor_Quitar.Image"), System.Drawing.Image)
+        Me.Btn_Contenedor_Quitar.ImageAlt = CType(resources.GetObject("Btn_Contenedor_Quitar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Contenedor_Quitar.Name = "Btn_Contenedor_Quitar"
+        Me.Btn_Contenedor_Quitar.Text = "Quitar contenedor"
+        '
+        'LabelItem1
+        '
+        Me.LabelItem1.BackColor = System.Drawing.Color.FromArgb(CType(CType(221, Byte), Integer), CType(CType(231, Byte), Integer), CType(CType(238, Byte), Integer))
+        Me.LabelItem1.BorderSide = DevComponents.DotNetBar.eBorderSide.Bottom
+        Me.LabelItem1.BorderType = DevComponents.DotNetBar.eBorderType.SingleLine
+        Me.LabelItem1.ForeColor = System.Drawing.Color.FromArgb(CType(CType(0, Byte), Integer), CType(CType(21, Byte), Integer), CType(CType(110, Byte), Integer))
+        Me.LabelItem1.Name = "LabelItem1"
+        Me.LabelItem1.PaddingBottom = 1
+        Me.LabelItem1.PaddingLeft = 10
+        Me.LabelItem1.PaddingTop = 1
+        Me.LabelItem1.SingleLineColor = System.Drawing.Color.FromArgb(CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer), CType(CType(197, Byte), Integer))
+        Me.LabelItem1.Text = "Pre-Venta"
+        '
+        'Btn_PreVenta
+        '
+        Me.Btn_PreVenta.Image = CType(resources.GetObject("Btn_PreVenta.Image"), System.Drawing.Image)
+        Me.Btn_PreVenta.ImageAlt = CType(resources.GetObject("Btn_PreVenta.ImageAlt"), System.Drawing.Image)
+        Me.Btn_PreVenta.Name = "Btn_PreVenta"
+        Me.Btn_PreVenta.Text = "Seleccionar productos para Pre-Venta"
+        '
+        'Btn_Ferias
+        '
+        Me.Btn_Ferias.Image = CType(resources.GetObject("Btn_Ferias.Image"), System.Drawing.Image)
+        Me.Btn_Ferias.ImageAlt = CType(resources.GetObject("Btn_Ferias.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Ferias.Name = "Btn_Ferias"
+        Me.Btn_Ferias.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Feria_Asociar})
+        Me.Btn_Ferias.Text = "Feria"
+        '
+        'Btn_Feria_Asociar
+        '
+        Me.Btn_Feria_Asociar.Image = CType(resources.GetObject("Btn_Feria_Asociar.Image"), System.Drawing.Image)
+        Me.Btn_Feria_Asociar.ImageAlt = CType(resources.GetObject("Btn_Feria_Asociar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Feria_Asociar.Name = "Btn_Feria_Asociar"
+        Me.Btn_Feria_Asociar.Text = "Asociar feria"
+        '
         'GroupPanel4
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
@@ -1112,7 +1137,7 @@ Partial Class Frm_Ver_Documento
         Me.GroupPanel4.Controls.Add(Me.LblTotalNeto)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel4.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.GroupPanel4.Location = New System.Drawing.Point(392, 422)
+        Me.GroupPanel4.Location = New System.Drawing.Point(392, 438)
         Me.GroupPanel4.Name = "GroupPanel4"
         Me.GroupPanel4.Size = New System.Drawing.Size(110, 58)
         '
@@ -1169,7 +1194,7 @@ Partial Class Frm_Ver_Documento
         Me.GroupPanel5.Controls.Add(Me.LblTotalIva)
         Me.GroupPanel5.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel5.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.GroupPanel5.Location = New System.Drawing.Point(508, 422)
+        Me.GroupPanel5.Location = New System.Drawing.Point(508, 438)
         Me.GroupPanel5.Name = "GroupPanel5"
         Me.GroupPanel5.Size = New System.Drawing.Size(115, 58)
         '
@@ -1226,7 +1251,7 @@ Partial Class Frm_Ver_Documento
         Me.GroupPanel6.Controls.Add(Me.LblTotalBruto)
         Me.GroupPanel6.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel6.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.GroupPanel6.Location = New System.Drawing.Point(750, 422)
+        Me.GroupPanel6.Location = New System.Drawing.Point(750, 438)
         Me.GroupPanel6.Name = "GroupPanel6"
         Me.GroupPanel6.Size = New System.Drawing.Size(115, 58)
         '
@@ -1283,7 +1308,7 @@ Partial Class Frm_Ver_Documento
         Me.GroupPanel7.Controls.Add(Me.LblTotalImpuestos)
         Me.GroupPanel7.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel7.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.GroupPanel7.Location = New System.Drawing.Point(629, 422)
+        Me.GroupPanel7.Location = New System.Drawing.Point(629, 438)
         Me.GroupPanel7.Name = "GroupPanel7"
         Me.GroupPanel7.Size = New System.Drawing.Size(115, 58)
         '
@@ -1481,36 +1506,36 @@ Partial Class Frm_Ver_Documento
         Me.GrillaEncabezado.AllowUserToAddRows = False
         Me.GrillaEncabezado.AllowUserToDeleteRows = False
         Me.GrillaEncabezado.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaEncabezado.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        DataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaEncabezado.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle10
         Me.GrillaEncabezado.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.GrillaEncabezado.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        DataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.GrillaEncabezado.DefaultCellStyle = DataGridViewCellStyle11
         Me.GrillaEncabezado.EnableHeadersVisualStyles = False
         Me.GrillaEncabezado.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.GrillaEncabezado.Location = New System.Drawing.Point(3, 3)
         Me.GrillaEncabezado.Name = "GrillaEncabezado"
         Me.GrillaEncabezado.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!)
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.GrillaEncabezado.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Segoe UI", 8.25!)
+        DataGridViewCellStyle12.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.GrillaEncabezado.RowHeadersDefaultCellStyle = DataGridViewCellStyle12
         Me.GrillaEncabezado.RowHeadersVisible = False
         Me.GrillaEncabezado.RowTemplate.Height = 25
         Me.GrillaEncabezado.Size = New System.Drawing.Size(845, 39)
@@ -1539,7 +1564,7 @@ Partial Class Frm_Ver_Documento
         Me.Lbl_Nombre_Entidad_Fisica.BackgroundStyle.Class = "RibbonGalleryContainer"
         Me.Lbl_Nombre_Entidad_Fisica.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Nombre_Entidad_Fisica.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Nombre_Entidad_Fisica.Location = New System.Drawing.Point(904, 132)
+        Me.Lbl_Nombre_Entidad_Fisica.Location = New System.Drawing.Point(987, 142)
         Me.Lbl_Nombre_Entidad_Fisica.Name = "Lbl_Nombre_Entidad_Fisica"
         Me.Lbl_Nombre_Entidad_Fisica.Size = New System.Drawing.Size(254, 22)
         Me.Lbl_Nombre_Entidad_Fisica.TabIndex = 90
@@ -1552,7 +1577,7 @@ Partial Class Frm_Ver_Documento
         '
         Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(904, 116)
+        Me.LabelX3.Location = New System.Drawing.Point(987, 126)
         Me.LabelX3.Name = "LabelX3"
         Me.LabelX3.Size = New System.Drawing.Size(130, 14)
         Me.LabelX3.TabIndex = 80
@@ -1566,7 +1591,7 @@ Partial Class Frm_Ver_Documento
         Me.GroupPanel1.Controls.Add(Me.LblTotalAbonado)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Font = New System.Drawing.Font("Segoe UI", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.GroupPanel1.Location = New System.Drawing.Point(8, 422)
+        Me.GroupPanel1.Location = New System.Drawing.Point(8, 438)
         Me.GroupPanel1.Name = "GroupPanel1"
         Me.GroupPanel1.Size = New System.Drawing.Size(152, 58)
         '
@@ -1635,7 +1660,7 @@ Partial Class Frm_Ver_Documento
         Me.GroupPanel3.Controls.Add(Me.LblTotalSaldo)
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Font = New System.Drawing.Font("Segoe UI", 12.0!)
-        Me.GroupPanel3.Location = New System.Drawing.Point(169, 422)
+        Me.GroupPanel3.Location = New System.Drawing.Point(169, 438)
         Me.GroupPanel3.Name = "GroupPanel3"
         Me.GroupPanel3.Size = New System.Drawing.Size(117, 58)
         '
@@ -1704,11 +1729,11 @@ Partial Class Frm_Ver_Documento
         Me.MStb_Barra.DragDropSupport = True
         Me.MStb_Barra.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MStb_Barra.ForeColor = System.Drawing.Color.Black
-        Me.MStb_Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Feria, Me.Lbl_Feria, Me.Lbl_Tido})
+        Me.MStb_Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Tido})
         Me.MStb_Barra.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MStb_Barra.Location = New System.Drawing.Point(0, 533)
+        Me.MStb_Barra.Location = New System.Drawing.Point(0, 554)
         Me.MStb_Barra.Name = "MStb_Barra"
-        Me.MStb_Barra.Size = New System.Drawing.Size(872, 22)
+        Me.MStb_Barra.Size = New System.Drawing.Size(873, 22)
         Me.MStb_Barra.TabIndex = 138
         Me.MStb_Barra.Text = "MetroStatusBar1"
         '
@@ -1778,22 +1803,11 @@ Partial Class Frm_Ver_Documento
         Me.Txt_ArchivoSG_Carpeta_Generados.Name = "Txt_ArchivoSG_Carpeta_Generados"
         Me.Txt_ArchivoSG_Carpeta_Generados.Text = "Carpeta de destino de generacion de archivos"
         '
-        'Btn_Feria
-        '
-        Me.Btn_Feria.Image = CType(resources.GetObject("Btn_Feria.Image"), System.Drawing.Image)
-        Me.Btn_Feria.Name = "Btn_Feria"
-        Me.Btn_Feria.Text = "ButtonItem1"
-        '
-        'Lbl_Feria
-        '
-        Me.Lbl_Feria.Name = "Lbl_Feria"
-        Me.Lbl_Feria.Text = "Venta Feria: FERIA LOS PEPINOS 2026"
-        '
         'Frm_Ver_Documento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(872, 555)
+        Me.ClientSize = New System.Drawing.Size(873, 576)
         Me.Controls.Add(Me.Panel_Documento)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Lbl_Nombre_Entidad_Fisica)
@@ -1945,8 +1959,6 @@ Partial Class Frm_Ver_Documento
     Friend WithEvents Lbl_CusNVV As DevComponents.DotNetBar.LabelItem
     Friend WithEvents Btn_CusNVV As DevComponents.DotNetBar.ButtonItem
     Public WithEvents Btn_MarcarNVVCustomizable As DevComponents.DotNetBar.ButtonItem
-    Public WithEvents Btn_Contenedor As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Menu_Contextual_Contenedor As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Contenedor_Asociar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Contenedor_Ver As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Contenedor_Quitar As DevComponents.DotNetBar.ButtonItem
@@ -1966,6 +1978,9 @@ Partial Class Frm_Ver_Documento
     Friend WithEvents Menu_Contextual_Orden_Despacho As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_VerOrdenDeDespacho As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Mnu_CrearOrdenDeDespacho As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Btn_Feria As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents Lbl_Feria As DevComponents.DotNetBar.LabelItem
+    Public WithEvents Btn_Opciones_Especiales As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Menu_Contextual_Opciones_Especiales As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Contenedores As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Ferias As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Feria_Asociar As DevComponents.DotNetBar.ButtonItem
 End Class
