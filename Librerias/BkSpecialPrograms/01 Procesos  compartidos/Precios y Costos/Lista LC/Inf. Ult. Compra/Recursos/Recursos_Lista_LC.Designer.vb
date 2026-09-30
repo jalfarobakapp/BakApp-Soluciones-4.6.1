@@ -100,9 +100,6 @@ Namespace My.Resources
         '''       @Empresa     = &apos;#Empresa#&apos;,
         '''       @ListaPrecio = &apos;#ListaPrecio#&apos;;
         '''
-        '''
-        '''
-        '''
         '''SELECT DISTINCT
         '''        Ddo.IDMAEEDO
         '''       ,Ddo.IDMAEDDO
@@ -112,11 +109,65 @@ Namespace My.Resources
         '''       ,Ddo.BOSULIDO
         '''       ,Ddo.FEEMLI As &apos;FECHA&apos;
         '''       ,Ddo.ENDO
-        '''       ,Ddo.SUEND [resto de la cadena truncado]&quot;;.
+        '''       ,Ddo.SUENDO
+        '''    [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Ult_Compras_GRC__New() As String
             Get
                 Return ResourceManager.GetString("Ult_Compras_GRC__New", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a DECLARE @Fecha_Desde AS DATETIME,
+        '''        @Fecha_Hasta AS DATETIME,
+        '''        @Empresa     AS CHAR(2),
+        '''        @ListaPrecio AS VARCHAR(3);
+        '''
+        '''SELECT @Fecha_Desde = &apos;#Fecha_Desde#&apos;,
+        '''       @Fecha_Hasta = &apos;#Fecha_Hasta#&apos;,
+        '''       @Empresa     = &apos;#Empresa#&apos;,
+        '''       @ListaPrecio = &apos;#ListaPrecio#&apos;;
+        '''
+        '''SELECT
+        '''       Ddo.IDMAEEDO
+        '''       ,Ddo.IDMAEDDO
+        '''       ,Ddo.TIDO
+        '''       ,Ddo.NUDO
+        '''       ,Ddo.SULIDO
+        '''       ,Ddo.BOSULIDO
+        '''       ,Ddo.FEEMLI AS &apos;FECHA&apos;
+        '''       ,Ddo.ENDO
+        '''       ,Ddo.SUENDO
+        '''       ,Mae.N [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Ult_Compras_GRC__New2() As String
+            Get
+                Return ResourceManager.GetString("Ult_Compras_GRC__New2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a DECLARE @Fecha_Desde AS DATETIME,
+        '''        @Fecha_Hasta AS DATETIME,
+        '''        @Empresa     AS CHAR(2),
+        '''        @ListaPrecio AS VARCHAR(3);
+        '''
+        '''SELECT @Fecha_Desde = &apos;#Fecha_Desde#&apos;,
+        '''       @Fecha_Hasta = &apos;#Fecha_Hasta#&apos;,
+        '''       @Empresa     = &apos;#Empresa#&apos;,
+        '''       @ListaPrecio = &apos;#ListaPrecio#&apos;;
+        '''
+        '''---------------------------------------------------------
+        '''-- GRC SELECCIONADAS EN EL PERIODO
+        '''-- PRIMER FILTRO LIVIANO: SOLO IDS Y CAMPOS CLAVE
+        '''---------------------------------------------------------
+        '''
+        '''SELE [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Ult_Compras_GRC__New3() As String
+            Get
+                Return ResourceManager.GetString("Ult_Compras_GRC__New3", resourceCulture)
             End Get
         End Property
         
@@ -126,21 +177,20 @@ Namespace My.Resources
         '''		@Fecha_Desde AS DATETIME,
         '''        @Fecha_Hasta AS DATETIME;
         '''
-        '''-- Últimos 6 meses
-        '''SELECT @Fecha_Desde = @Fecha_Desde, -- DATEADD(MONTH,-12,GETDATE()),
-        '''       @Fecha_Hasta = @Fecha_Hasta, -- GETDATE(),
+        '''
+        '''
+        '''SELECT @Fecha_Desde = &apos;#Fecha_Desde#&apos;,
+        '''       @Fecha_Hasta = &apos;#Fecha_Hasta#&apos;,
         '''       @Empresa     = &apos;#Empresa#&apos;,
         '''       @ListaPrecio = &apos;#ListaPrecio#&apos;;
         '''
-        '''SELECT 
-        '''       Ult.EMPRESA	
-        '''       ,Ult.IDMAEEDO
-        '''       ,Ult.IDMAEDDO
-        '''       ,Ult.TIDO
-        '''       ,Ult.NUDO
-        '''       ,Ult.SULIDO
-        '''       ,Ult.BOSULIDO
-        '''     [resto de la cadena truncado]&quot;;.
+        '''---------------------------------------------------------
+        '''-- PRODUCTOS CON VENTA EN EL PERIODO
+        '''---------------------------------------------------------
+        '''
+        '''SELECT DISTINCT
+        '''       V.KOPRCT
+        '''INTO #ProductosConVen [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Ult_Compras_X_Productos() As String
             Get

@@ -3,122 +3,7 @@ DECLARE @Empresa     AS CHAR(2),
 		@Fecha_Desde AS DATETIME,
         @Fecha_Hasta AS DATETIME;
 
-/*
--- Últimos 6 meses
-SELECT @Fecha_Desde = '#Fecha_Desde#', -- DATEADD(MONTH,-12,GETDATE()),
-       @Fecha_Hasta = '#Fecha_Hasta#', -- GETDATE(),
-       @Empresa     = '#Empresa#',
-       @ListaPrecio = '#ListaPrecio#';
 
-SELECT 
-       Ult.EMPRESA	
-       ,Ult.IDMAEEDO
-       ,Ult.IDMAEDDO
-       ,Ult.TIDO
-       ,Ult.NUDO
-       ,Ult.SULIDO
-       ,Ult.BOSULIDO
-       ,Ult.FEEMLI          AS 'FECHA'
-       ,Ult.ENDO
-       ,Ult.SUENDO
-       ,Mae.NOKOEN
-       ,Ult.TIPR
-       ,Ult.PRCT
-       ,Ult.UDTRPR
-       ,Ult.RLUDPR
-       ,Ult.CAPRCO1
-       ,Ult.CAPRCO2
-       ,Ult.UD01PR
-       ,Ult.UD02PR
-	   ,Mp.KOPR              AS 'KOPRCT'
-       ,Ult.NOKOPR
-       ,Ult.PPPRNE
-       ,CAST(0 AS FLOAT)    AS 'Precio_Neto_UN'
-       ,CAST(0 AS FLOAT)    AS 'Precio_Bruto_UN'
-       ,Ult.PPPRNERE1
-       ,Ult.PPPRNERE2
-       ,Ult.VANELI
-       ,Ult.VABRLI
-       ,Mpen.PPUL01
-       ,Mpen.PPUL02
-       ,Mpen.PM
-       ,Fcc.TIDO            AS 'TIDO_FCC'
-       ,Fcc.NUDO            AS 'NUDO_FCC'
-       ,ISNULL((
-               SELECT ROUND(SUM(CR.VALDCR) * 1.0 / NULLIF(Ult.CAPRCO1,0),5)
-               FROM MAEDCR CR
-               WHERE CR.IDDDODCR = Ult.IDMAEDDO
-       ),0) AS 'Flete_Neto'
-       ,CAST(0 AS FLOAT)    AS 'Flete_Bruto'
-       ,CAST(0 AS FLOAT)    AS 'Costo_FleteBrutoAct'
-       ,CAST(0 AS FLOAT)    AS 'Costo_FleteNetoAct'
-       ,CAST('' AS VARCHAR(13)) AS 'CodigoOferta'
-       ,CAST('' AS VARCHAR(50)) AS 'NombreOferta'
-       ,CAST(NULL AS DATETIME)  AS 'FechaInicioOferta'
-       ,CAST(NULL AS DATETIME)  AS 'FechaFinOferta'
-       ,CAST(0 AS BIT)          AS 'OfertaActiva'
-       ,CAST(0 AS FLOAT)        AS 'MontoOferta_Neto'
-       ,CAST(0 AS FLOAT)        AS 'MontoOferta'
-
-       -- Nuevos campos
-       ,CAST(0 AS FLOAT) AS 'Margen_Oferta_Valor'
-       ,CAST(0 AS FLOAT) AS 'Margen_Oferta_Porc'
-       ,CAST(0 AS FLOAT) AS 'Markup_Oferta_Porc'
-
-       ,@ListaPrecio       AS 'ListaPrecio'
-       ,CAST('' AS CHAR(1)) AS MELT
-       ,CAST(0 AS FLOAT) AS 'Precio_ListaNeto'
-       ,CAST(0 AS FLOAT) AS 'Precio_ListaBruto'
-       ,CAST(0 AS FLOAT) AS 'Margen_Lista_Valor'
-       ,CAST(0 AS FLOAT) AS 'Margen_Lista_Porc'
-       ,CAST(0 AS FLOAT) AS 'Markup_Lista_Porc'
-
-       ,CAST(0 AS FLOAT) AS 'IVA'
-       ,CAST(0 AS FLOAT) AS 'IMP'
-       ,CAST(0 AS FLOAT) AS 'IMPUESTOS'
-
-       ,Mp.FMPR
-       ,Spf.NOKOFM
-       ,Mp.PFPR
-       ,Fm.NOKOPF
-       ,Mp.HFPR
-       ,Sbf.NOKOHF
-       ,Mp.MRPR
-       ,Mr.NOKOMR
-       ,Mp.KOFUPR
-       ,Jf.NOKOFU
-       ,Mp.ZONAPR
-       ,Tz.NOKOCARAC AS 'NOKOZOPR'
-       ,Mp.CLALIBPR
-       ,Tc.NOKOCARAC AS 'NOCLALIBPR'
-Into #Tbl_Paso2
-FROM MAEPR Mp WITH (NOLOCK)
-
-   OUTER APPLY (
-        SELECT TOP 1 *
-        FROM MAEDDO D WITH (NOLOCK)
-        WHERE D.KOPRCT = Mp.KOPR
-          AND D.TIDO = 'GRC' AND EMPRESA = @Empresa
-        ORDER BY D.FEEMLI DESC, D.IDMAEDDO DESC
-    ) Ult
-    LEFT JOIN MAEEN Mae WITH (NOLOCK) ON Ult.ENDO = Mae.KOEN AND Ult.SUENDO = Mae.SUEN
-    LEFT JOIN MAEPREM Mpen WITH (NOLOCK) ON Mpen.KOPR = Mp.KOPR AND Mpen.EMPRESA = @Empresa
-    LEFT JOIN MAEDDO Fcc WITH (NOLOCK) ON Ult.IDMAEDDO = Fcc.IDRST AND Fcc.TIDO = 'FCC'
-    LEFT JOIN TABFM Spf WITH (NOLOCK) ON Spf.KOFM = Mp.FMPR
-    LEFT JOIN TABPF Fm WITH (NOLOCK) ON Fm.KOFM = Mp.FMPR AND Fm.KOPF = Mp.PFPR
-    LEFT JOIN TABHF Sbf WITH (NOLOCK) ON Sbf.KOFM = Mp.FMPR AND Sbf.KOPF = Mp.PFPR AND Sbf.KOHF = Mp.HFPR
-    LEFT JOIN TABMR Mr WITH (NOLOCK) ON Mr.KOMR = Mp.MRPR
-    LEFT JOIN TABFU Jf WITH (NOLOCK) ON Jf.KOFU = Mp.KOFUPR
-    LEFT JOIN TABCARAC Tz WITH (NOLOCK) ON Tz.KOCARAC = Mp.ZONAPR AND Tz.KOTABLA = 'ZONAPRODUC'
-    LEFT JOIN TABCARAC Tc WITH (NOLOCK) ON Tc.KOCARAC = Mp.CLALIBPR AND Tc.KOTABLA = 'CLALIBPR'
-WHERE EXISTS (
-        SELECT 1 
-        FROM MAEDDO V WITH (NOLOCK)
-        WHERE V.KOPRCT = Mp.KOPR
-          AND V.TIDO IN ('BLV','FCV')
-          AND V.FEEMLI BETWEEN @Fecha_Desde AND @Fecha_Hasta
-);
-*/
 
 SELECT @Fecha_Desde = '#Fecha_Desde#',
        @Fecha_Hasta = '#Fecha_Hasta#',
@@ -593,14 +478,18 @@ CREATE CLUSTERED INDEX IX_Venta_Ant ON #Venta_Ant (KOPRCT_Join);
 
 SELECT
     T2.*,
-    CASE WHEN ISNULL(T2.RLUDPR,0) = 0 THEN 0
-         ELSE ROUND(ISNULL(T2.PPPRNERE2,0) / T2.RLUDPR,3)
+    CASE
+        WHEN ISNULL(T2.RLUDPR, 0) = 0 THEN 0
+        ELSE ROUND(ISNULL(T2.PPPRNERE2, 0) / T2.RLUDPR, 3)
     END AS 'Ult_Compra',
-    ISNULL(Lc.Mcosto,0) AS 'Mcosto',
+    ISNULL(Lc.Mcosto, 0) AS 'Mcosto',
+    ISNULL(NULLIF(Lcr.Estado, ''), 'Pendiente') AS 'Estado',
+    Lcr.FechaRev AS 'FechaProceso',
 
-    ROUND((T2.Precio_Neto_UN - ISNULL(GRC_Ant.Precio_Neto_UN_Ant,0)),2) AS 'Dif_UCCValor',
-    CASE WHEN ISNULL(GRC_Ant.Precio_Neto_UN_Ant,0) = 0 OR ISNULL(T2.Precio_Neto_UN,0) = 0 THEN 0
-         ELSE ROUND(((T2.Precio_Neto_UN - GRC_Ant.Precio_Neto_UN_Ant) / NULLIF(T2.Precio_Neto_UN,0)) * 100,2) / 100
+    ROUND((T2.Precio_Neto_UN - ISNULL(GRC_Ant.Precio_Neto_UN_Ant, 0)), 2) AS 'Dif_UCCValor',
+    CASE
+        WHEN ISNULL(GRC_Ant.Precio_Neto_UN_Ant, 0) = 0 OR ISNULL(T2.Precio_Neto_UN, 0) = 0 THEN 0
+        ELSE ROUND(((T2.Precio_Neto_UN - GRC_Ant.Precio_Neto_UN_Ant) / NULLIF(T2.Precio_Neto_UN, 0)) * 100, 2) / 100
     END AS 'Dif_UCCPorc',
 
     CASE
@@ -613,24 +502,28 @@ SELECT
         ELSE 'No'
     END AS TieneFCC_Ant,
 
-    ROUND((ISNULL(Venta_Ant.PPPRNERE1_Vta,0) - T2.Precio_Neto_UN),2) AS 'Margen_Valor',
-    CASE WHEN ISNULL(Venta_Ant.PPPRNERE1_Vta,0) = 0 THEN 0
-         ELSE ROUND(((Venta_Ant.PPPRNERE1_Vta - T2.Precio_Neto_UN) / Venta_Ant.PPPRNERE1_Vta) * 100,2) / 100
+    ROUND((ISNULL(Venta_Ant.PPPRNERE1_Vta, 0) - T2.Precio_Neto_UN), 2) AS 'Margen_Valor',
+    CASE
+        WHEN ISNULL(Venta_Ant.PPPRNERE1_Vta, 0) = 0 THEN 0
+        ELSE ROUND(((Venta_Ant.PPPRNERE1_Vta - T2.Precio_Neto_UN) / Venta_Ant.PPPRNERE1_Vta) * 100, 2) / 100
     END AS 'Margen_Porc',
-    CASE WHEN ISNULL(T2.Precio_Neto_UN,0) = 0 THEN 0
-         ELSE ROUND(((Venta_Ant.PPPRNERE1_Vta - T2.Precio_Neto_UN) / NULLIF(T2.Precio_Neto_UN,0)) * 100,2) / 100
+    CASE
+        WHEN ISNULL(T2.Precio_Neto_UN, 0) = 0 THEN 0
+        ELSE ROUND(((Venta_Ant.PPPRNERE1_Vta - T2.Precio_Neto_UN) / NULLIF(T2.Precio_Neto_UN, 0)) * 100, 2) / 100
     END AS 'Markup_Porc',
 
-    CASE WHEN ISNULL(T2.MontoOferta_Neto,0) = 0 THEN 0
-         ELSE ROUND((ISNULL(T2.MontoOferta_Neto,0) - T2.Precio_Neto_UN),2)
+    CASE
+        WHEN ISNULL(T2.MontoOferta_Neto, 0) = 0 THEN 0
+        ELSE ROUND((ISNULL(T2.MontoOferta_Neto, 0) - T2.Precio_Neto_UN), 2)
     END AS 'MargenOferta_Valor',
-    CASE WHEN ISNULL(T2.MontoOferta_Neto,0) = 0 THEN 0
-         ELSE ROUND(((T2.MontoOferta_Neto - T2.Precio_Neto_UN) / T2.MontoOferta_Neto) * 100,2) / 100
+    CASE
+        WHEN ISNULL(T2.MontoOferta_Neto, 0) = 0 THEN 0
+        ELSE ROUND(((T2.MontoOferta_Neto - T2.Precio_Neto_UN) / T2.MontoOferta_Neto) * 100, 2) / 100
     END AS 'MargenOferta_Porc',
     CASE
-        WHEN ISNULL(T2.MontoOferta_Neto,0) = 0 THEN 0
-        WHEN ISNULL(T2.Precio_Neto_UN,0) = 0 THEN 0
-        ELSE ROUND(((T2.MontoOferta_Neto - T2.Precio_Neto_UN) / NULLIF(T2.Precio_Neto_UN,0)) * 100,2) / 100
+        WHEN ISNULL(T2.MontoOferta_Neto, 0) = 0 THEN 0
+        WHEN ISNULL(T2.Precio_Neto_UN, 0) = 0 THEN 0
+        ELSE ROUND(((T2.MontoOferta_Neto - T2.Precio_Neto_UN) / NULLIF(T2.Precio_Neto_UN, 0)) * 100, 2) / 100
     END AS 'MarkupOferta_Porc',
 
     GRC_Ant.IDMAEEDO_Ant,
@@ -684,6 +577,9 @@ SELECT
 FROM #Tbl_Paso2 T2
 LEFT JOIN #Global_BaseBk#Zw_ListaLC_ValPro Lc WITH (NOLOCK)
        ON T2.KOPRCT = Lc.Codigo
+LEFT JOIN #Global_BaseBk#Zw_ListaLC_ValPro_Recep Lcr WITH (NOLOCK)
+       ON Lcr.Idmaeddo = T2.IDMAEDDO
+      AND Lcr.Idmaeedo = T2.IDMAEEDO
 INNER JOIN #GRC_Ant GRC_Ant
         ON GRC_Ant.KOPRCT_Join = T2.KOPRCT
 INNER JOIN #Venta_Ant Venta_Ant

@@ -105,6 +105,8 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
         DFechaInicio.Value = Date.Now
         DFechaTermino.Value = Date.Now
 
+        Sb_Configurar_Fechas_Segun_Modo()
+
         Btn_VerInformeXProductos.Visible = Not ModoProductos
         'Btn_Procesar.Visible = Not ModoProductos
 
@@ -138,6 +140,14 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
         Sb_Llenar_Combos(_Arr_TipoMargen, Cmb_TipoMargen)
         Cmb_Margen.SelectedValue = "Margen_Lista_Porc"
         Input_Margen.Enabled = False
+
+
+        Dim _Arr_Estado(,) As String = {{"", "Mostrar todo"},
+                                        {"Pendiente", "Pendiente"},
+                                        {"Procesado", "Procesado"},
+                                        {"Actualizado", "Actualizado"}}
+        Sb_Llenar_Combos(_Arr_Estado, Cmb_Estado)
+        Cmb_Estado.SelectedValue = ""
 
         caract_combo(Cmb_ListaPrecio)
         Consulta_sql = "SELECT '' AS Padre,'' AS Hijo " & vbCrLf & "Union" & vbCrLf &
@@ -436,7 +446,7 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
         Dim _Fecha_Hasta As String = Format(DFechaTermino.Value, "yyyyMMdd")
 
         If ModoGRC Then
-            Consulta_sql = My.Resources.Recursos_Lista_LC.Ult_Compras_GRC__New
+            Consulta_sql = My.Resources.Recursos_Lista_LC.Ult_Compras_GRC__New3
         ElseIf ModoProductos Then
             Consulta_sql = My.Resources.Recursos_Lista_LC.Ult_Compras_X_Productos
         End If
@@ -486,6 +496,19 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             .Columns("FECHA").HeaderText = "Fecha Doc."
             .Columns("FECHA").Visible = True
             .Columns("FECHA").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Estado").Width = 80
+            .Columns("Estado").HeaderText = "Estado"
+            .Columns("Estado").Visible = True
+            .Columns("Estado").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("FechaProceso").Width = 120
+            .Columns("FechaProceso").HeaderText = "Fecha proceso"
+            .Columns("FechaProceso").DefaultCellStyle.Format = "dd/MM/yyyy HH:mm"
+            .Columns("FechaProceso").Visible = True
+            .Columns("FechaProceso").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("TieneFCC").Width = 30
@@ -1163,11 +1186,11 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
             '_Condicion = $"Where Lc.FechaModif = '{Format(_Fecha_Hoy, "yyyyMMdd")}'"
             '_Condicion = $"Where Lc.FechaModif BETWEEN '{Format(DFechaInicio.Value, "yyyyMMdd")}' AND '{Format(DFechaTermino.Value, "yyyyMMdd")}'"
-            _Condicion = $"Where Lc.FechaModif BETWEEN @Fecha_Desde AND @Fecha_Hasta"
+            '_Condicion = $"Where Lc.FechaModif BETWEEN @Fecha_Desde AND @Fecha_Hasta"
 
-            Sb_Actualizar_Grilla(GrillaProdActualizados,
-                                 _Tbl_Lista_LC_Actualizados,
-                                 _Condicion)
+            'Sb_Actualizar_Grilla(GrillaProdActualizados,
+            '                     _Tbl_Lista_LC_Actualizados,
+            '                     _Condicion)
             'End If
 
             Sb_Aplicar_Filtros()
@@ -1197,7 +1220,6 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
     Private Sub Btn_Actualizar_Click(sender As Object, e As EventArgs) Handles Btn_Actualizar.Click
         _Forzar_Filtro_Productos_Sql = False
-        'TabControl1.SelectedTabIndex = 0
         Call Sb_Actualizar_Grillas()
     End Sub
 
@@ -1228,19 +1250,6 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
     Private Function Fx_Construir_Filtro_Porcentaje(_Campo As String,
                                                 _ValorCombo As String) As String
 
-        'Select Case _ValorCombo
-
-        '    Case "1"
-        '        Return "IsNull(" & _Campo & ", 0) = 0"
-        '    Case "2"
-        '        Return "IsNull(" & _Campo & ", 0) > -0.03 And IsNull(" & _Campo & ", 0) < 0.03 And IsNull(" & _Campo & ", 0) <> 0"
-        '    Case "3"
-        '        Return "IsNull(" & _Campo & ", 0) >= 0.03"
-        '    Case "-3"
-        '        Return "IsNull(" & _Campo & ", 0) <= -0.03"
-
-        'End Select
-
         Select Case _ValorCombo
 
             Case "1"
@@ -1258,8 +1267,21 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
     End Function
 
+    Private Function Fx_Construir_Filtro_Estado(_ValorCombo As String) As String
+
+        Select Case _ValorCombo
+
+            Case "Pendiente", "Procesado", "Actualizado"
+                Return $"IsNull(Estado, '') = '{_ValorCombo}'"
+
+        End Select
+
+        Return String.Empty
+
+    End Function
+
     Private Sub Sb_Agregar_Filtro(ByRef _Filtro As String,
-                              _Condicion As String)
+                                  _Condicion As String)
 
         If String.IsNullOrWhiteSpace(_Condicion) Then
             Return
@@ -1269,7 +1291,7 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             _Filtro &= " And "
         End If
 
-        _Filtro &= _Condicion
+        _Filtro &= "(" & _Condicion & ")"
 
     End Sub
 
@@ -1304,16 +1326,15 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
         Sb_Agregar_Filtro(_Filtro,
                           Fx_Construir_Filtro_Seleccion(_Tbl))
-
         Sb_Agregar_Filtro(_Filtro,
                           Fx_Construir_Filtro_GrcConFcc(_Tbl))
-
         Sb_Agregar_Filtro(_Filtro,
                           Fx_Construir_Filtro_Porcentaje("Dif_UCCPorc",
                                                          Fx_Obtener_Valor_Combo(Cmb_GRCvsUltGRC)))
-
         Sb_Agregar_Filtro(_Filtro,
                           Fx_Construir_Filtro_Margen())
+        Sb_Agregar_Filtro(_Filtro,
+                          Fx_Construir_Filtro_Estado(Fx_Obtener_Valor_Combo(Cmb_Estado)))
 
         If Not String.IsNullOrWhiteSpace(Txt_BuscaXProducto.Text) Then
             Dim _CodigoProducto As String = Txt_BuscaXProducto.Text.Trim.Replace("'", "''")
@@ -1646,7 +1667,25 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
     End Sub
 
     Private Sub Chk_GRCconFCC_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_GRCconFCC.CheckedChanged
+
+        If Chk_GRCconFCC.Checked AndAlso Chk_GRCsinFCC.Checked Then
+            Chk_GRCsinFCC.Checked = False
+            Return
+        End If
+
         Sb_Aplicar_Filtros()
+
+    End Sub
+
+    Private Sub Chk_GRCsinFCC_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_GRCsinFCC.CheckedChanged
+
+        If Chk_GRCsinFCC.Checked AndAlso Chk_GRCconFCC.Checked Then
+            Chk_GRCconFCC.Checked = False
+            Return
+        End If
+
+        Sb_Aplicar_Filtros()
+
     End Sub
 
     Private Sub Txt_BuscaXProducto_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_BuscaXProducto.ButtonCustomClick
@@ -2538,10 +2577,6 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
 
     Private Function Fx_Construir_Filtro_GrcConFcc(_Tbl As DataTable) As String
 
-        If Not Chk_GRCconFCC.Checked Then
-            Return String.Empty
-        End If
-
         If IsNothing(_Tbl) Then
             Return String.Empty
         End If
@@ -2550,10 +2585,24 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             Return String.Empty
         End If
 
-        Return "Convert(TieneFCC, 'System.String') = 'True' Or " &
-               "Convert(TieneFCC, 'System.String') = '1' Or " &
-               "Convert(TieneFCC, 'System.String') = 'S' Or " &
-               "Convert(TieneFCC, 'System.String') = 'SI'"
+        If Chk_GRCconFCC.Checked Then
+            Return "Convert(TieneFCC, 'System.String') = 'Si' Or " &
+                   "Convert(TieneFCC, 'System.String') = 'SI' Or " &
+                   "Convert(TieneFCC, 'System.String') = 'S' Or " &
+                   "Convert(TieneFCC, 'System.String') = 'True' Or " &
+                   "Convert(TieneFCC, 'System.String') = '1'"
+        End If
+
+        If Chk_GRCsinFCC.Checked Then
+            Return "Convert(TieneFCC, 'System.String') = 'No' Or " &
+                   "Convert(TieneFCC, 'System.String') = 'NO' Or " &
+                   "Convert(TieneFCC, 'System.String') = 'N' Or " &
+                   "Convert(TieneFCC, 'System.String') = 'False' Or " &
+                   "Convert(TieneFCC, 'System.String') = '0' Or " &
+                   "IsNull(Convert(TieneFCC, 'System.String'),'') = ''"
+        End If
+
+        Return String.Empty
 
     End Function
 
@@ -2608,68 +2657,76 @@ Public Class Frm_PreciosLC_InfUltCompras_Mt
             Return
         End If
 
-        Dim _Filtro As String = Generar_Filtro_IN_Lista2(_ListaFilasSeleccionadas, False, "'")
-        Dim _FechaHoraModif As DateTime = DFechaInicio.Value
-
-        For Each _Codigo As String In _ListaFilasSeleccionadas
-
-            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaLC_ValPro")
-
-            If CBool(_Reg) Then
-                Consulta_sql = $"
-Update {_Global_BaseBk}Zw_ListaLC_ValPro 
-Set 
-Procesada = 1,
-FechaModif = (SELECT replace(convert(varchar, GetDate(), 111), '/','')),
-HoraModif = (SELECT convert(varchar, GetDate(), 108)),
-FechaHoraModif = '{ Format(_FechaHoraModif, "yyyyMMdd HH:mm")}' 
-Where Codigo = '{_Codigo}'"
-            Else
-                Consulta_sql = $"
-Delete {_Global_BaseBk}Zw_ListaLC_ValPro Where Codigo = '{_Codigo}'
-Insert Into {_Global_BaseBk}Zw_ListaLC_ValPro (Codigo,Mcosto,VproNeto,VproBruto,MgDigitado,ValDigitado,FechaModif,HoraModif,FechaHoraModif) 
-values
-('{_Codigo}',0,0,0,0,0,(SELECT replace(convert(varchar, GetDate(), 111), '/','')),(SELECT convert(varchar, GetDate(), 108)),GetDate())"
-            End If
-
-            _Sql.Ej_consulta_IDU(Consulta_sql)
-
-        Next
-
-
         For Each _FilaOrigen As DataRow In _FilasSeleccionadas
-
-            Dim _NuevaFila As DataRow = _TblDestino.NewRow()
-
-            For Each _Columna As DataColumn In _TblOrigen.Columns
-
-                If _TblDestino.Columns.Contains(_Columna.ColumnName) Then
-                    _NuevaFila.Item(_Columna.ColumnName) = _FilaOrigen.Item(_Columna.ColumnName)
-                End If
-
-            Next
-
-            If _TblDestino.Columns.Contains(NombreColSeleccion) Then
-                _NuevaFila.Item(NombreColSeleccion) = False
-            End If
-
-            _TblDestino.Rows.Add(_NuevaFila)
-
+            Sb_Registrar_Recepcion_Procesada(_FilaOrigen, "Procesado")
         Next
 
-        For Each _FilaOrigen As DataRow In _FilasSeleccionadas
-            _TblOrigen.Rows.Remove(_FilaOrigen)
-        Next
+        ' Sb_Actualizar_Grillas()
 
-        Sb_Aplicar_Colores_Filas(Grilla)
-        Sb_Aplicar_Colores_Filas(GrillaProdActualizados)
+        '        Dim _Filtro As String = Generar_Filtro_IN_Lista2(_ListaFilasSeleccionadas, False, "'")
+        '        Dim _FechaHoraModif As DateTime = DFechaInicio.Value
 
-        If Grilla.Rows.Count Then
-            Grilla.ClearSelection()
-            Grilla.Rows(0).Selected = True
-        Else
-            Grilla_GRC_Ant.DataSource = Nothing
-        End If
+        '        For Each _Codigo As String In _ListaFilasSeleccionadas
+
+        '            Dim _Reg As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_ListaLC_ValPro")
+
+        '            If CBool(_Reg) Then
+        '                Consulta_sql = $"
+        'Declare @FechaModif datetime = '{ Format(_FechaHoraModif, "yyyyMMdd HH:mm")}'
+
+        'Update {_Global_BaseBk}Zw_ListaLC_ValPro 
+        'Set 
+        'Procesada = 1
+        ',FechaModif = replace(convert(varchar, @FechaModif, 111), '/','') --(SELECT replace(convert(varchar, GetDate(), 111), '/','')),
+        ',HoraModif = convert(varchar, @FechaModif, 108)  --(SELECT convert(varchar, GetDate(), 108)),
+        ',FechaHoraModif = Getdate() 
+        'Where Codigo = '{_Codigo}'"
+        '            Else
+        '                Consulta_sql = $"
+        'Delete {_Global_BaseBk}Zw_ListaLC_ValPro Where Codigo = '{_Codigo}'
+        'Insert Into {_Global_BaseBk}Zw_ListaLC_ValPro (Codigo,Mcosto,VproNeto,VproBruto,MgDigitado,ValDigitado,FechaModif,HoraModif,FechaHoraModif) 
+        'values
+        '('{_Codigo}',0,0,0,0,0,(SELECT replace(convert(varchar, @FechaModif, 111), '/','')),(SELECT convert(varchar, @FechaModif, 108)),GetDate())"
+        '            End If
+
+        '            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+        '        Next
+
+
+        'For Each _FilaOrigen As DataRow In _FilasSeleccionadas
+
+        '    Dim _NuevaFila As DataRow = _TblDestino.NewRow()
+
+        '    For Each _Columna As DataColumn In _TblOrigen.Columns
+
+        '        If _TblDestino.Columns.Contains(_Columna.ColumnName) Then
+        '            _NuevaFila.Item(_Columna.ColumnName) = _FilaOrigen.Item(_Columna.ColumnName)
+        '        End If
+
+        '    Next
+
+        '    If _TblDestino.Columns.Contains(NombreColSeleccion) Then
+        '        _NuevaFila.Item(NombreColSeleccion) = False
+        '    End If
+
+        '    _TblDestino.Rows.Add(_NuevaFila)
+
+        'Next
+
+        'For Each _FilaOrigen As DataRow In _FilasSeleccionadas
+        '    _TblOrigen.Rows.Remove(_FilaOrigen)
+        'Next
+
+        'Sb_Aplicar_Colores_Filas(Grilla)
+        'Sb_Aplicar_Colores_Filas(GrillaProdActualizados)
+
+        'If Grilla.Rows.Count Then
+        '    Grilla.ClearSelection()
+        '    Grilla.Rows(0).Selected = True
+        'Else
+        '    Grilla_GRC_Ant.DataSource = Nothing
+        'End If
 
     End Sub
 
@@ -2804,6 +2861,7 @@ values
         End If
 
         Dim Fm As New Frm_PreciosLC_InfUltCompras_Mt
+        Fm.Text = "PRODUCTOS VENDIDOS EN UN RANGO DE FECHA"
         Fm.ModoGRC = False
         Fm.ModoProductos = True
         Fm.WindowState = FormWindowState.Normal
@@ -3015,4 +3073,86 @@ values
 
         Sb_Aplicar_Filtros()
     End Sub
+
+    Private Sub Sb_Registrar_Recepcion_Procesada(_Fila As DataRow,
+                                             _Estado As String)
+
+        Dim _Idmaeedo As Integer = NuloPorNro(_Fila.Item("IDMAEEDO"), 0)
+        Dim _Idmaeddo As Integer = NuloPorNro(_Fila.Item("IDMAEDDO"), 0)
+        Dim _Tido As String = NuloPorNro(_Fila.Item("TIDO"), "").ToString.Trim
+        Dim _Nudo As String = NuloPorNro(_Fila.Item("NUDO"), "").ToString.Trim
+        Dim _Codigo As String = NuloPorNro(_Fila.Item("KOPRCT"), "").ToString.Trim
+
+        If _Fila.Item("Estado") <> "Pendiente" Then
+            Return
+        End If
+
+        Consulta_sql = $"
+IF EXISTS (SELECT 1
+           FROM {_Global_BaseBk}Zw_ListaLC_ValPro_Recep WITH (NOLOCK)
+           WHERE Idmaeddo = {_Idmaeddo})
+BEGIN
+    UPDATE {_Global_BaseBk}Zw_ListaLC_ValPro_Recep
+    SET FechaRev = GETDATE(),
+        Estado = '{_Estado}'
+    WHERE Idmaeddo = {_Idmaeddo}
+END
+ELSE
+BEGIN
+    INSERT INTO {_Global_BaseBk}Zw_ListaLC_ValPro_Recep
+           (Idmaeedo, Idmaeddo, Tido, Nudo, Codigo, FechaRev, Estado)
+    VALUES ({_Idmaeedo},
+            {_Idmaeddo},
+            '{_Tido}',
+            '{_Nudo}',
+            '{_Codigo}',
+            GETDATE(),
+            '{_Estado}')
+END"
+
+        If _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            _Fila.Item("Estado") = _Estado
+            _Fila.Item("FechaProceso") = FechaDelServidor()
+        End If
+
+    End Sub
+
+    Private Sub Cmb_Estado_SelectedValueChanged(sender As Object, e As EventArgs) Handles Cmb_Estado.SelectedValueChanged
+        Sb_Aplicar_Filtros()
+    End Sub
+
+    Private Sub Sb_Configurar_Fechas_Segun_Modo()
+
+        If ModoGRC Then
+            DFechaTermino.Value = DFechaInicio.Value
+            DFechaTermino.Enabled = False
+            Return
+        End If
+
+        DFechaTermino.Enabled = True
+
+    End Sub
+
+    Private Sub DFechaInicio_ValueChanged(sender As Object, e As EventArgs) Handles DFechaInicio.ValueChanged
+
+        If Not ModoGRC Then
+            Return
+        End If
+
+        DFechaTermino.Value = DFechaInicio.Value
+
+    End Sub
+
+    Private Sub DFechaTermino_ValueChanged(sender As Object, e As EventArgs) Handles DFechaTermino.ValueChanged
+
+        If Not ModoGRC Then
+            Return
+        End If
+
+        If DFechaTermino.Value <> DFechaInicio.Value Then
+            DFechaTermino.Value = DFechaInicio.Value
+        End If
+
+    End Sub
+
 End Class

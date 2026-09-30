@@ -31343,6 +31343,12 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
             Return True
         End If
 
+        For Each _Fila As DataRow In _TblDetalle.Rows
+            If CBool(_Fila.Item("Id_Feria")) And CBool(_Fila.Item("Idmaeddo_Dori")) Then
+                Return True
+            End If
+        Next
+
         Dim _ObligaFeriaVta As Boolean
         Dim _Id_Feria As Integer
 

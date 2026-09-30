@@ -300,7 +300,6 @@ Public Class Frm_Configuracion_Gral
 
             Sb_Actualizar_Estado_Feria()
 
-
         End With
 
         Chk_SolictarCiaSeguro.Enabled = _Modalidad_General
