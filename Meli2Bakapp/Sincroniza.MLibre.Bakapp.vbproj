@@ -86,6 +86,7 @@
     <Compile Include="Modelos\Bakapp\Zw_Demonio_NVVAutoDet.vb" />
     <Compile Include="Modelos\Conexion.vb" />
     <Compile Include="Modelos\Configuracion.vb" />
+    <Compile Include="Modelos\Entidad\Entidad_meli.vb" />
     <Compile Include="Modelos\Meli\Doc_MELI.vb" />
     <Compile Include="Modelos\Meli\PEDIDOS.vb" />
     <Compile Include="Modelos\Meli\PEDIDOS_DETALLE.vb" />
