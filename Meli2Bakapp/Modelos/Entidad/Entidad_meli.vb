@@ -204,7 +204,7 @@ Public Class Entidad_meli
             .Dias_a_Abastecer = 0
             .Tiempo_Reposicion_Dias_Meses = 0
             .Tiempo_Reposicion = 0
-            .FacAuto = False
+            .FacAuto = True
             .RevFincred = False
 
             .EmailCompras = Me.Entidad_Random.EMAILCOMER

@@ -438,11 +438,22 @@ WHERE
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
+#Region "Consulta original"
 
-            Consulta_sql = "Select Top " & _Top & " * From PEDIDOS" & vbCrLf &
-                           "Where REVBAKAPP = 0 And CONVERT(varchar, FECHA, 112) = '" & Format(_Fecha, "yyyyMMdd") & "'"
+            'Consulta_sql = "Select Top " & _Top & " * From PEDIDOS" & vbCrLf &
+            '               "Where REVBAKAPP = 0 And CONVERT(varchar, FECHA, 112) = '" & Format(_Fecha, "yyyyMMdd") & "'"
+            'Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
 
-            Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+#End Region
+
+#Region "Prueba"
+
+            Dim Consulta_prueba = "Select Top " & _Top & " * From PEDIDOS" & vbCrLf &
+                           "Where ID_MELI = '2000018720902782'"
+            Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_prueba)
+
+#End Region
+
 
             If Not CBool(_Tbl.Rows.Count) Then
                 _Mensaje.Detalle = "Sin registros"
@@ -620,13 +631,23 @@ WHERE
             _Top = 1000
         End If
 
+#Region "Original"
+        'Consulta_sql = "Select NudoOCC_Ori As Id_Meli,Idmaeedo_NVV As Idmaeedo" & vbCrLf &
+        '               "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto" & vbCrLf &
+        '               "Where NudoOCC_Ori+'.pdf' Not in (Select Nombre_Archivo From " & _Global_BaseBk & "Zw_Docu_Archivos) " &
+        '               "And CONVERT(varchar, Feemdo_NVV, 112) = '" & Format(_Fecha, "yyyyMMdd") & "'"
+
+        'Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
+#End Region
+
+#Region "Prueba"
         Consulta_sql = "Select NudoOCC_Ori As Id_Meli,Idmaeedo_NVV As Idmaeedo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto" & vbCrLf &
                        "Where NudoOCC_Ori+'.pdf' Not in (Select Nombre_Archivo From " & _Global_BaseBk & "Zw_Docu_Archivos) " &
-                       "And CONVERT(varchar, Feemdo_NVV, 112) = '" & Format(_Fecha, "yyyyMMdd") & "'"
+                       "And CONVERT(varchar, Feemdo_NVV, 112) = '" & Format(_Fecha, "yyyyMMdd") & "' and ID_MELI = '2000018720902782'"
 
         Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
-
+#End Region
         If Not CBool(_Tbl.Rows.Count) Then
             Sb_AddToLog("Adjuntar etiquetas", "Sin registros", Txt_Log)
             Return
@@ -687,13 +708,22 @@ WHERE
     Sub Sb_Revisar_Kit(Txt_Log As Object, _Fecha As Date, _Top As Integer)
 
         _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+#Region "Consulta original"
+        'Consulta_sql = "SELECT d.ID,d.ID_MELI,KOPR,REFERENCIA_MELI,CANTIDAD,NETO_UNITARIO,SUB_TOTAL" & vbCrLf &
+        '               "FROM PEDIDOS_DETALLE d" & vbCrLf &
+        '               "Inner Join PEDIDOS p On d.ID_MELI = p.ID_MELI" & vbCrLf &
+        '               "Where KOPR Like 'KT-%' And d.ES_KIT = 0 And CONVERT(varchar, FECHA, 112) = '" & Format(_Fecha, "yyyyMMdd") & "'"
 
+        'Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+#End Region
+#Region "Prueba"
         Consulta_sql = "SELECT d.ID,d.ID_MELI,KOPR,REFERENCIA_MELI,CANTIDAD,NETO_UNITARIO,SUB_TOTAL" & vbCrLf &
                        "FROM PEDIDOS_DETALLE d" & vbCrLf &
                        "Inner Join PEDIDOS p On d.ID_MELI = p.ID_MELI" & vbCrLf &
-                       "Where KOPR Like 'KT-%' And d.ES_KIT = 0 And CONVERT(varchar, FECHA, 112) = '" & Format(_Fecha, "yyyyMMdd") & "'"
+                       "Where KOPR Like 'KT-%' And d.ES_KIT = 0 And CONVERT(varchar, FECHA, 112) = '" & Format(_Fecha, "yyyyMMdd") & "' and ID_MELI = '2000018720902782'"
 
         Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+#End Region
 
         For Each _Fila As DataRow In _Tbl.Rows
 
@@ -1016,9 +1046,14 @@ WHERE
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
         _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
 
-        Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO = 0 And REVBAKAPP = 1"
+#Region "Original"
+        'Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO = 0 And REVBAKAPP = 1"
+        'Dim _Tbl_Pedidos As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+#End Region
+#Region "Prueba"
+        Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO = 0 And REVBAKAPP = 1 and ID_MELI = '2000018720902782'"
         Dim _Tbl_Pedidos As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
-
+#End Region
         If _Tbl_Pedidos.Rows.Count = 0 Then
             Return
         End If
@@ -1048,9 +1083,15 @@ WHERE
 
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
         _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
-
-        Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO <> 0 And ESTADO = 1"
+#Region "Original"
+        'Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO <> 0 And ESTADO = 1"
+        'Dim _Tbl_Pedidos As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+#End Region
+#Region "Prueba"
+        Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO <> 0 And ESTADO = 1 and ID_MELI = '2000018720902782'"
         Dim _Tbl_Pedidos As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+#End Region
+
 
         If _Tbl_Pedidos.Rows.Count = 0 Then
             Return
