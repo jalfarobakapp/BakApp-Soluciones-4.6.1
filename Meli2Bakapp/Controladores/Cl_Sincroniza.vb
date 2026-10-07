@@ -42,8 +42,11 @@ Public Class Cl_Sincroniza
                 .GIEN = Cliente.GIRO,
                 .PAEN = "CHI",
                 .DIEN = $"{Cliente.CALLE} {Cliente.NUMERO}",
-                .TIPOSUC = "C",
-                .TIEN = "P"
+                .TIPOSUC = "P",
+                .TIEN = "C",
+                .LCEN = "TABPP02C",
+                .LVEN = "TABPP01P",
+                .RECEPELECT = True
             }
             Dim Entidad_M As New Entidad_meli
             Entidad_M.Entidad_Random = aux
@@ -55,7 +58,7 @@ Public Class Cl_Sincroniza
             Dim Mensaje_ENT As Mensajes = Entidad_M.Fx_Crear_Entidad_Nueva()
             If Mensaje_ENT.Mensaje = "¡Entidad ya existe en la base de datos! No es posible crearla." Then
                 Consulta_sql = $"UPDATE CLIENTES_CREAR SET ESTADO = 1, KOEN = '{aux.KOEN}' WHERE ID = {Cliente.ID}"
-                _SqlMeli.Ej_consulta_IDU(Consulta_sql, False)
+            _SqlMeli.Ej_consulta_IDU(Consulta_sql, False)
                 Sb_AddToLog("Creando entidades", $"Entidad ya en base de datos, sincronizando KOEN =  {aux.KOEN}", Txt_Log)
 
                 Continue For
