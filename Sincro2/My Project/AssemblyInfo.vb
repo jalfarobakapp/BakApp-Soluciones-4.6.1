@@ -9,10 +9,10 @@ Imports System.Runtime.InteropServices
 
 ' Revisar los valores de los atributos del ensamblado
 
-<Assembly: AssemblyTitle("Shopify2Bakapp")>
-<Assembly: AssemblyDescription("Deamon diseñado para hacer copias de la informacion de las ventas hechas por e-comerce al sistema interno bakapp")>
+<Assembly: AssemblyTitle("SincroStock")>
+<Assembly: AssemblyDescription("Deamon diseñado para hacer una sincronizacion de stock InterEmpresa")>
 <Assembly: AssemblyCompany("Bakapp")>
-<Assembly: AssemblyProduct("Shopify2Bakapp")>
+<Assembly: AssemblyProduct("SincroStock")>
 <Assembly: AssemblyCopyright("Copyright ©  2026")>
 <Assembly: AssemblyTrademark("")>
 
@@ -29,6 +29,6 @@ Imports System.Runtime.InteropServices
 '      Revisión
 '
 
-<Assembly: AssemblyVersion("1.0.1.28")>
-<Assembly: AssemblyFileVersion("1.0.1.28")>
+<Assembly: AssemblyVersion("1.0.3.03")>
+<Assembly: AssemblyFileVersion("1.0.3.03")>
 <Assembly: NeutralResourcesLanguage("")>
