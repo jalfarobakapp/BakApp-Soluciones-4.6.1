@@ -993,8 +993,6 @@ Public Class Frm_Formulario_Documento
             Chk_Pickear.Enabled = True
         End If
 
-
-
         If _Revisando_Situacion_Comercial Or _Revision_Remota Or _Solo_Revisar_El_Documento Then
 
             Btn_Aceptar_Documento.Visible = _Revision_Remota
@@ -1740,6 +1738,8 @@ Public Class Frm_Formulario_Documento
             .Item("Venta_Feria") = False
             .Item("Id_Feria") = 0
 
+            .Item("TipoCarga") = 0
+
             _TblEncabezado.Rows.Add(NewFila)
 
         End With
@@ -1821,6 +1821,8 @@ Public Class Frm_Formulario_Documento
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00169", False, False, "", "", False, False, False) ' Cupo exedido y con morosidad de documentos
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00170", False, False, "", "", False, False, False) ' Venta sobre promedio de venta normar y con Morosidad
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00171", False, False, "", "", False, False, False) ' Vender sin asociar compañia de seguro cuando el cliente tiene compañia de seguro
+
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00176", False, False, "", "", False, False, False) ' Vender con CargaDirecta o CargaSemiDirecta
 
 
         '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
@@ -2800,6 +2802,7 @@ Public Class Frm_Formulario_Documento
             .Item("NroLote") = String.Empty
 
             .Item("Id_Feria") = 0
+            .Item("TipoCarga") = 0
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -13372,6 +13375,8 @@ Public Class Frm_Formulario_Documento
             .Item("Venta_Feria") = _TblEncabezado_StBy.Rows(0).Item("Venta_Feria")
             .Item("Id_Feria") = _TblEncabezado_StBy.Rows(0).Item("Id_Feria")
 
+            .Item("TipoCarga") = _TblEncabezado_StBy.Rows(0).Item("TipoCarga")
+
             LblMoneda.Tag = .Item("Moneda_Doc")
             LblMoneda.Text = .Item("Moneda_Doc")
 
@@ -13557,9 +13562,9 @@ Public Class Frm_Formulario_Documento
             _Row.Cells("Condicionado").Value = _Condicionado
             _Row.Cells("DesacRazTransf").Value = _DesacRazTransf
 
-            Dim _Id_Feria As Integer = _Fila.Item("Id_Feria")
+            _Row.Cells("Id_Feria").Value = _Fila.Item("Id_Feria")
+            _Row.Cells("TipoCarga").Value = _Fila.Item("TipoCarga")
 
-            _Row.Cells("Id_Feria").Value = _Id_Feria
 
             Dim _RowProducto As DataRow
 
@@ -17197,6 +17202,16 @@ Public Class Frm_Formulario_Documento
 
             If Not Fx_Feria() Then
                 Return
+            End If
+
+            If Chk_CargaDirecta.Checked Or Chk_CargaSemiDirecta.Checked Then
+                Dim _TipoCarga As Integer
+                If Chk_CargaDirecta.Checked Then _TipoCarga = 1
+                If Chk_CargaSemiDirecta.Checked Then _TipoCarga = 2
+                _TblEncabezado.Rows(0).Item("TipoCarga") = _TipoCarga
+                For Each _Fila As DataRow In _TblDetalle.Rows
+                    _Fila.Item("TipoCarga") = _TipoCarga
+                Next
             End If
 
 
@@ -22128,6 +22143,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                         End If
 
                         _New_Fila.Cells("Id_Feria").Value = _Row_Zw_Docu_Det.Item("Id_Feria")
+                        _New_Fila.Cells("TipoCarga").Value = _Row_Zw_Docu_Det.Item("TipoCarga")
 
                     End If
 
@@ -24959,7 +24975,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                     Fx_Autorizar_X_Descuentos(False)
                 End If
 
-            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102", "Doc00161", "Doc00169", "Doc00170", "Doc00171"
+            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102", "Doc00161", "Doc00169", "Doc00170", "Doc00171", "Doc00176"
 
                 If _Crear_Doc_Def_Al_Grabar Then
 
@@ -26736,6 +26752,14 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                     If PedirPermisoCiaSeguro Then
                         If Not Fx_Tiene_Permiso(Me, "Doc00171", FUNCIONARIO, False) Then
                             Sb_Revisar_Permiso("Doc00171", False, True)
+                        End If
+                    End If
+
+                    Dim _PedirPermisoCargasDirectaoSemiDirecta As Boolean = True
+
+                    If _PedirPermisoCargasDirectaoSemiDirecta Then
+                        If Not Fx_Tiene_Permiso(Me, "Doc00176", FUNCIONARIO, False) Then
+                            Sb_Revisar_Permiso("Doc00176", False, True)
                         End If
                     End If
 
@@ -33225,9 +33249,21 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
         Barra_Herramientas_Producto.Enabled = False
     End Sub
 
-    'Private Sub Frm_Formulario_Documento_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-    '    FormularioAbierto = False
-    'End Sub
+    Private Sub Chk_CargaDirecta_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_CargaDirecta.CheckedChanged
+
+        If Chk_CargaDirecta.Checked Then
+            Chk_CargaSemiDirecta.Checked = False
+        End If
+
+    End Sub
+
+    Private Sub Chk_CargaSemiDirecta_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_CargaSemiDirecta.CheckedChanged
+
+        If Chk_CargaSemiDirecta.Checked Then
+            Chk_CargaDirecta.Checked = False
+        End If
+
+    End Sub
 
 End Class
 

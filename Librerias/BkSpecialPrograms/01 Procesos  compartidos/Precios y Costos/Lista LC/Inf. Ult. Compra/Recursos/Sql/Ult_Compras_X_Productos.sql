@@ -15,11 +15,12 @@ SELECT @Fecha_Desde = '#Fecha_Desde#',
 ---------------------------------------------------------
 
 SELECT DISTINCT
-       V.KOPRCT
+       Ddo.KOPRCT
 INTO #ProductosConVenta
-FROM MAEDDO V WITH (NOLOCK)
-WHERE V.TIDO IN ('BLV','FCV')
-  AND V.FEEMLI BETWEEN @Fecha_Desde AND @Fecha_Hasta;
+FROM MAEDDO Ddo WITH (NOLOCK)
+WHERE Ddo.TIDO IN ('BLV','FCV')
+  AND Ddo.FEEMLI BETWEEN @Fecha_Desde AND @Fecha_Hasta
+  #Condicion_Productos#;
 
 CREATE CLUSTERED INDEX IX_ProductosConVenta ON #ProductosConVenta (KOPRCT);
 

@@ -31,7 +31,7 @@ Public Class Cl_ProcesaDatos
     m.NOKOEN, m.PAEN, m.CIEN, m.CMEN,
     e.EMPRESA, e.SUDO,
     o.OBDO, e.CAPRCO, o.OCDO,
-    o.TEXTO1, o.TEXTO2, o.TEXTO3,
+    o.TEXTO1, o.TEXTO2, o.TEXTO3, o.TEXTO4,
     d.BOSULIDO AS 'Bodega',
     e.KOFUDO As 'Funcionario',
     e.VABRDO  As 'Valor',
@@ -116,6 +116,7 @@ WHERE e.TIDO = 'NVV'
                          .TEXTO1 = row("TEXTO1").ToString().Trim(),
                          .TEXTO2 = row("TEXTO2").ToString().Trim(),
                          .TEXTO3 = row("TEXTO3").ToString().Trim(),
+                         .TEXTO4 = If(IsDBNull(row("TEXTO4")), Nothing, row("TEXTO4").ToString().Trim()),
                          .CodFuncionario = row("Funcionario").ToString().Trim(),
                          .Bodega = row("Bodega").ToString().Trim(),
                          .Valor = Convert.ToInt32(row("Valor")),
@@ -188,8 +189,8 @@ WHERE e.TIDO = 'NVV'
                         End If
                     Else
                         ' Si falló la transacción SQL interna
-                        Sb_Insertar_Log_Gestiones(NVV, $"Error al procesar documento {numeroDocumento}. Razón: {Respuesta_Tr.Detalle} - {Respuesta_Tr.Mensaje}", Txt_Log, 1)
-                        Sb_AddToLog("Demonio Despachos", $"Error al procesar documento {numeroDocumento}. Razón: {Respuesta_Tr.Detalle} - {Respuesta_Tr.Mensaje}", Txt_Log)
+                        Sb_Insertar_Log_Gestiones(NVV, $"Error al procesar documento {numeroDocumento}. Motivo: {Respuesta_Tr.Detalle}  -  {Respuesta_Tr.Mensaje}", Txt_Log, 1)
+                        Sb_AddToLog("Demonio Despachos", $"Error al procesar documento {numeroDocumento}. Motivo: {Respuesta_Tr.Detalle} - {Respuesta_Tr.Mensaje}", Txt_Log)
                     End If
 
                 Catch exDoc As Exception
@@ -231,7 +232,7 @@ WHERE e.TIDO = 'NVV'
     m.NOKOEN, m.PAEN, m.CIEN, m.CMEN,
     e.EMPRESA, e.SUDO,
     o.OBDO, e.CAPRCO, o.OCDO,
-    o.TEXTO1, o.TEXTO2, o.TEXTO3,
+    o.TEXTO1, o.TEXTO2, o.TEXTO3, o.TEXTO4,
     d.BOSULIDO AS 'Bodega',
     e.KOFUDO As 'Funcionario',
     e.VABRDO As 'Valor',
@@ -316,6 +317,7 @@ WHERE e.TIDO = 'NVV'
                          .TEXTO1 = row("TEXTO1").ToString().Trim(),
                          .TEXTO2 = row("TEXTO2").ToString().Trim(),
                          .TEXTO3 = row("TEXTO3").ToString().Trim(),
+                         .TEXTO4 = If(IsDBNull(row("TEXTO4")), Nothing, row("TEXTO4").ToString().Trim()),
                          .CodFuncionario = row("Funcionario").ToString().Trim(),
                          .Bodega = row("Bodega").ToString().Trim(),
                          .Valor = Convert.ToInt32(row("Valor")),
@@ -535,10 +537,12 @@ WHERE e.TIDO = 'NVV'
         End If
         Dim _Trans As String
 
-        If ObdoLimpio.Replace(" ", "").Contains("Direccióndeenvío:,,,") OrElse ObdoLimpio = ", , ," Then
+        If NVV.TEXTO4 = "RETIRO" Then
+
             _Tipo_Despacho = "RT"
             _Trans = ""
-        Else
+
+        ElseIf NVV.TEXTO4 = "DOMICILIO" Then
             _Tipo_Despacho = "DD"
             _Trans = "SEAGARDEN"
             Dim prefijo As String = "Dirección de envío:"
@@ -553,7 +557,17 @@ WHERE e.TIDO = 'NVV'
             If partes.Length > 1 Then _Comuna = partes(1).Trim().ToUpper().Replace("'", "''")
             If partes.Length > 2 Then _Ciudad = partes(2).Trim().ToUpper().Replace("'", "''")
             If partes.Length > 3 Then _Pais = partes(3).Trim().ToUpper().Replace("'", "''")
+
+        Else
+            Sb_AddToLog("Demonio Despachos", $"Error al generar el documento: {NVV.NUDO} (ID: {NVV.IDMAEEDO}): No hay tipo de despacho", Txt_Log)
+            Msg.EsCorrecto = False
+            Msg.Mensaje = $"No hay tipo de despacho en TEXTO4."
+            Msg.Detalle = "Error de formato: "
+
+            Return Msg
         End If
+
+
 
         Try
             Dim Consulta_Ultimo_Despacho As String = $"
@@ -1369,7 +1383,7 @@ ORDER BY Z.Id DESC"
                 Return _Mensaje
             End If
 
-            Sb_ClonarNVV(_Idmaeedo)
+            'Sb_ClonarNVV(_Idmaeedo)
 
             Dim _ESB = _Row.Item("CodigoTabla").ToString.Split(";"c)
 

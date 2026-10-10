@@ -25,6 +25,7 @@ Public Class Frm_Formulario_Permisos_Asociados_New
     Dim _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad As DataTable
     Dim _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad As DataTable
     Dim _Tbl_Funcionarios_X_15_SinCiaSeguro As DataTable
+    Dim _Tbl_Funcionarios_X_16_CargaDirectaSemiDirecta As DataTable
 
     Dim _Id_Enc As Integer
     Dim _Id_DocEnc As Integer
@@ -295,6 +296,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl = _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad
                 Case "Doc00171"
                     _Tbl = _Tbl_Funcionarios_X_15_SinCiaSeguro
+                Case "Doc00176"
+                    _Tbl = _Tbl_Funcionarios_X_16_CargaDirectaSemiDirecta
 
             End Select
 
@@ -481,6 +484,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                         _Tbl = _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad
                     Case "Doc00171"
                         _Tbl = _Tbl_Funcionarios_X_15_SinCiaSeguro
+                    Case "Doc00176"
+                        _Tbl = _Tbl_Funcionarios_X_16_CargaDirectaSemiDirecta
 
                 End Select
 
@@ -652,6 +657,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                 _Tbl = _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad
             Case "Doc00171"
                 _Tbl = _Tbl_Funcionarios_X_15_SinCiaSeguro
+            Case "Doc00176"
+                _Tbl = _Tbl_Funcionarios_X_16_CargaDirectaSemiDirecta
 
         End Select
 
@@ -690,6 +697,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad = _Tbl
                 Case "Doc00171"
                     _Tbl_Funcionarios_X_15_SinCiaSeguro = _Tbl
+                Case "Doc00176"
+                    _Tbl_Funcionarios_X_16_CargaDirectaSemiDirecta = _Tbl
 
             End Select
 
@@ -835,6 +844,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad = Nothing
                 Case "Doc00171"
                     _Tbl_Funcionarios_X_15_SinCiaSeguro = Nothing
+                Case "Doc00176"
+                    _Tbl_Funcionarios_X_16_CargaDirectaSemiDirecta = Nothing
 
             End Select
 

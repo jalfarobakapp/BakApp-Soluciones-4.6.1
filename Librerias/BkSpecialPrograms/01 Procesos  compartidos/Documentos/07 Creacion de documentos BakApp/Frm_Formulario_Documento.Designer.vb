@@ -249,6 +249,8 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Desbloquear_Visado = New DevComponents.DotNetBar.ButtonX()
         Me.Warning_Visado = New DevComponents.DotNetBar.Controls.WarningBox()
         Me.Chk_Pickear = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_CargaDirecta = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_CargaSemiDirecta = New DevComponents.DotNetBar.Controls.CheckBoxX()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel5.SuspendLayout()
         Me.GroupPanel7.SuspendLayout()
@@ -1331,7 +1333,7 @@ Partial Class Frm_Formulario_Documento
         Me.Barra.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Barra.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.BtnGrabar, Me.Btn_Limpiar, Me.Btn_Desde_COV_OCC, Me.Btn_Productos_Solicitados_Bodega, Me.Btn_Revisar_Situacion_Comercial, Me.Btn_Cambiar_Tipo_Documento, Me.Btn_Cadena_Remota, Me.Btn_Dejar_Doc_Stand_By, Me.Btn_Informe_Ventas_X_Vendedor, Me.Btn_Editar_Nota_de_venta, Me.Btn_Editar_Cotizacion, Me.Btn_Aceptar_Documento, Me.Btn_Rechazar_Documento, Me.Btn_Ver_Costos, Me.Btn_Mostrar_Margenes, Me.Btn_Observaciones, Me.Btn_Anotaciones_al_documento, Me.Btn_Archivos_Adjuntos, Me.Btn_Opciones_Especiales, Me.Btn_Imprimir, Me.Btn_Contenedor, Me.ButtonItem1, Me.Btn_Huella})
-        Me.Barra.Location = New System.Drawing.Point(0, 536)
+        Me.Barra.Location = New System.Drawing.Point(0, 563)
         Me.Barra.Name = "Barra"
         Me.Barra.Size = New System.Drawing.Size(935, 41)
         Me.Barra.Stretch = True
@@ -2055,7 +2057,7 @@ Partial Class Frm_Formulario_Documento
         Me.Table_Metodo_Costeo_Comercial.Controls.Add(Me.Rdb_Costo_Lista, 3, 0)
         Me.Table_Metodo_Costeo_Comercial.Controls.Add(Me.Cmb_Lista_Costo, 4, 0)
         Me.Table_Metodo_Costeo_Comercial.ForeColor = System.Drawing.Color.Black
-        Me.Table_Metodo_Costeo_Comercial.Location = New System.Drawing.Point(7, 439)
+        Me.Table_Metodo_Costeo_Comercial.Location = New System.Drawing.Point(7, 467)
         Me.Table_Metodo_Costeo_Comercial.Name = "Table_Metodo_Costeo_Comercial"
         Me.Table_Metodo_Costeo_Comercial.RowCount = 1
         Me.Table_Metodo_Costeo_Comercial.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
@@ -2163,7 +2165,7 @@ Partial Class Frm_Formulario_Documento
         Me.Table_Totales_Comerciales.Controls.Add(Me.Lblx_Sub_TNeto, 4, 0)
         Me.Table_Totales_Comerciales.Controls.Add(Me.Lbl_Total_Sub_Total_Neto, 4, 1)
         Me.Table_Totales_Comerciales.ForeColor = System.Drawing.Color.Black
-        Me.Table_Totales_Comerciales.Location = New System.Drawing.Point(7, 472)
+        Me.Table_Totales_Comerciales.Location = New System.Drawing.Point(7, 500)
         Me.Table_Totales_Comerciales.Name = "Table_Totales_Comerciales"
         Me.Table_Totales_Comerciales.RowCount = 2
         Me.Table_Totales_Comerciales.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 54.71698!))
@@ -2349,7 +2351,7 @@ Partial Class Frm_Formulario_Documento
         Me.Table_Totales_Documento.Controls.Add(Me.LblTotalBruto, 3, 1)
         Me.Table_Totales_Documento.Controls.Add(Me.LblTotalImpuestos, 2, 1)
         Me.Table_Totales_Documento.ForeColor = System.Drawing.Color.Black
-        Me.Table_Totales_Documento.Location = New System.Drawing.Point(482, 472)
+        Me.Table_Totales_Documento.Location = New System.Drawing.Point(482, 500)
         Me.Table_Totales_Documento.Name = "Table_Totales_Documento"
         Me.Table_Totales_Documento.RowCount = 2
         Me.Table_Totales_Documento.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 52.4776!))
@@ -2513,7 +2515,7 @@ Partial Class Frm_Formulario_Documento
         Me.MStb_Barra.ForeColor = System.Drawing.Color.Black
         Me.MStb_Barra.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Version, Me.Barra_Progreso, Me.Lbl_Progreso, Me.Lbl_InfoVtaAcumMes, Me.Lbl_DocActual})
         Me.MStb_Barra.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MStb_Barra.Location = New System.Drawing.Point(0, 577)
+        Me.MStb_Barra.Location = New System.Drawing.Point(0, 604)
         Me.MStb_Barra.Name = "MStb_Barra"
         Me.MStb_Barra.Size = New System.Drawing.Size(935, 22)
         Me.MStb_Barra.TabIndex = 137
@@ -2753,7 +2755,7 @@ Partial Class Frm_Formulario_Documento
         Me.Btn_Desbloquear_Visado.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
         Me.Btn_Desbloquear_Visado.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Btn_Desbloquear_Visado.Image = CType(resources.GetObject("Btn_Desbloquear_Visado.Image"), System.Drawing.Image)
-        Me.Btn_Desbloquear_Visado.Location = New System.Drawing.Point(816, 438)
+        Me.Btn_Desbloquear_Visado.Location = New System.Drawing.Point(816, 466)
         Me.Btn_Desbloquear_Visado.Name = "Btn_Desbloquear_Visado"
         Me.Btn_Desbloquear_Visado.Size = New System.Drawing.Size(110, 32)
         Me.Btn_Desbloquear_Visado.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -2767,7 +2769,7 @@ Partial Class Frm_Formulario_Documento
         Me.Warning_Visado.CloseButtonVisible = False
         Me.Warning_Visado.ForeColor = System.Drawing.Color.Black
         Me.Warning_Visado.Image = CType(resources.GetObject("Warning_Visado.Image"), System.Drawing.Image)
-        Me.Warning_Visado.Location = New System.Drawing.Point(482, 438)
+        Me.Warning_Visado.Location = New System.Drawing.Point(482, 466)
         Me.Warning_Visado.Name = "Warning_Visado"
         Me.Warning_Visado.OptionsText = "Ver permisos"
         Me.Warning_Visado.Size = New System.Drawing.Size(331, 33)
@@ -2794,12 +2796,52 @@ Partial Class Frm_Formulario_Documento
         Me.Chk_Pickear.TabIndex = 145
         Me.Chk_Pickear.Text = "Pickear documento"
         '
+        'Chk_CargaDirecta
+        '
+        Me.Chk_CargaDirecta.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CargaDirecta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CargaDirecta.BackgroundStyle.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Far
+        Me.Chk_CargaDirecta.CheckBoxImageChecked = CType(resources.GetObject("Chk_CargaDirecta.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CargaDirecta.FocusCuesEnabled = False
+        Me.Chk_CargaDirecta.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Chk_CargaDirecta.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CargaDirecta.Location = New System.Drawing.Point(7, 444)
+        Me.Chk_CargaDirecta.Name = "Chk_CargaDirecta"
+        Me.Chk_CargaDirecta.Size = New System.Drawing.Size(104, 17)
+        Me.Chk_CargaDirecta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CargaDirecta.TabIndex = 146
+        Me.Chk_CargaDirecta.Text = "Carga directa"
+        '
+        'Chk_CargaSemiDirecta
+        '
+        Me.Chk_CargaSemiDirecta.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_CargaSemiDirecta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_CargaSemiDirecta.BackgroundStyle.TextAlignment = DevComponents.DotNetBar.eStyleTextAlignment.Far
+        Me.Chk_CargaSemiDirecta.CheckBoxImageChecked = CType(resources.GetObject("Chk_CargaSemiDirecta.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_CargaSemiDirecta.FocusCuesEnabled = False
+        Me.Chk_CargaSemiDirecta.Font = New System.Drawing.Font("Segoe UI", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Chk_CargaSemiDirecta.ForeColor = System.Drawing.Color.Black
+        Me.Chk_CargaSemiDirecta.Location = New System.Drawing.Point(113, 444)
+        Me.Chk_CargaSemiDirecta.Name = "Chk_CargaSemiDirecta"
+        Me.Chk_CargaSemiDirecta.Size = New System.Drawing.Size(139, 17)
+        Me.Chk_CargaSemiDirecta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_CargaSemiDirecta.TabIndex = 147
+        Me.Chk_CargaSemiDirecta.Text = "Carga Semi-Directa"
+        '
         'Frm_Formulario_Documento
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(935, 599)
+        Me.ClientSize = New System.Drawing.Size(935, 626)
+        Me.Controls.Add(Me.Chk_CargaSemiDirecta)
+        Me.Controls.Add(Me.Chk_CargaDirecta)
         Me.Controls.Add(Me.Chk_Pickear)
         Me.Controls.Add(Me.Panel_Documento)
         Me.Controls.Add(Me.GroupPanel1)
@@ -3074,4 +3116,6 @@ Partial Class Frm_Formulario_Documento
     Friend WithEvents Btn_Contacto_Agregar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_Contacto_Quitar As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_CiasSeguro As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Chk_CargaDirecta As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_CargaSemiDirecta As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

@@ -858,6 +858,11 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_ListaLC_Programadas_Detalles"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaLC_Programadas_Detalles
 
+            Case "Zw_ListaLC_ValPro"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaLC_ValPro
+            Case "Zw_ListaLC_ValPro_Recep"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaLC_ValPro_Recep
+
             Case "Zw_Log_Gestiones"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Log_Gestiones
 

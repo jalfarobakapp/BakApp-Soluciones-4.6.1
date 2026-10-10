@@ -4025,7 +4025,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAADi
-        sgAAAk1TRnQBSQFMAgEBEAEAASgBDQEoAQ0BIAEAASABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAGA
+        sgAAAk1TRnQBSQFMAgEBEAEAAUgBDQFIAQ0BIAEAASABAAT/ASEBAAj/AUIBTQE2BwABNgMAASgDAAGA
         AwABoAMAAQEBAAEgBgABQAEB/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A
         /wD/AP8A/wD/AP8A/wD/AP8A/wD/AP8A/wClAAMSARgDSQGFA10B0QFIAUkBYgH2AUgBSQFiAfYDXgHS
@@ -4823,6 +4823,26 @@
 </value>
   </data>
   <data name="Chk_Pickear.CheckBoxImageChecked" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABGdBTUEAALGPC/xhBQAAAQdJREFUKFNj
+        YCAGMDEyMDIzo4tiB1xiggzOvXniPvNqvNQC7dGlUQGS4is+82p++8yriWXgFhNi0E/yZVULsGNgYGSE
+        K+YWByuW8JlXc9V3fu0/EAaxQYKSPvNqrvnMq6nQT/YFa4KaLOkzHyz+F6r4hse0MmkGn3k150GCPvNr
+        /vrMqykxygyCGXIdLA7B1z2mlUkJqcoyMHjPqwn2mVfzE2zK/FqQZBNIAZIzrnlMK5MUBCkGATV/Owaf
+        uUiaoKbC3IyiGAZAmrznVQf6zKv5geSMqx7TSiUwFMOAkrs5yD9+PvPBmq54TCsVx6kYBhRdzRh85lY7
+        EKUYBtj4uBlYONnRheEAAPQbg6iHWugPAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="Chk_CargaDirecta.CheckBoxImageChecked" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABGdBTUEAALGPC/xhBQAAAQdJREFUKFNj
+        YCAGMDEyMDIzo4tiB1xiggzOvXniPvNqvNQC7dGlUQGS4is+82p++8yriWXgFhNi0E/yZVULsGNgYGSE
+        K+YWByuW8JlXc9V3fu0/EAaxQYKSPvNqrvnMq6nQT/YFa4KaLOkzHyz+F6r4hse0MmkGn3k150GCPvNr
+        /vrMqykxygyCGXIdLA7B1z2mlUkJqcoyMHjPqwn2mVfzE2zK/FqQZBNIAZIzrnlMK5MUBCkGATV/Owaf
+        uUiaoKbC3IyiGAZAmrznVQf6zKv5geSMqx7TSiUwFMOAkrs5yD9+PvPBmq54TCsVx6kYBhRdzRh85lY7
+        EKUYBtj4uBlYONnRheEAAPQbg6iHWugPAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="Chk_CargaSemiDirecta.CheckBoxImageChecked" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABGdBTUEAALGPC/xhBQAAAQdJREFUKFNj
         YCAGMDEyMDIzo4tiB1xiggzOvXniPvNqvNQC7dGlUQGS4is+82p++8yriWXgFhNi0E/yZVULsGNgYGSE

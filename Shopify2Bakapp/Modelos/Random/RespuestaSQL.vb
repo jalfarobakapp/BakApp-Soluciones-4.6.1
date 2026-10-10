@@ -85,6 +85,9 @@
     ''' </summary>
     Public Property TEXTO3 As String
 
+    Public Property TEXTO4 As String = Nothing
+
+
     Public Property Bodega As String
 
     Public Property CodFuncionario As String

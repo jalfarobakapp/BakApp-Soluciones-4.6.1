@@ -2570,9 +2570,13 @@ Public Class Frm_Ver_Documento
         Dim _Tidopa As String = ", Desde " & _Fila.Cells("TIDOPA").Value.ToString.Trim & "-"
         Dim _Nudopa As String = _Fila.Cells("NUDOPA").Value.ToString.Trim
         Dim _Feemlipa As Date = NuloPorNro(_Fila.Cells("FEEMLIPA").Value, Nothing)
-        Dim _Obs = String.Empty
+        Dim _Obs As String = String.Empty
+        Dim _Feria As String = String.Empty
+        Dim _TipoCargaStr As String = String.Empty
 
         Dim _Vaivli As Double = _Fila.Cells("VAIVLI").Value
+
+        _Obs = "<br/>"
 
         If _Tido = "FCC" Then
 
@@ -2580,11 +2584,11 @@ Public Class Frm_Ver_Documento
 
             Select Case _Color
                 Case Color.Yellow
-                    _Obs = vbCrLf & "[Sin venta, Baja Rot. anual y no tiene hermanos con stock]" : _Descripcion = Trim(_Descripcion)
+                    _Obs += "[Sin venta, Baja Rot. anual y no tiene hermanos con stock]" : _Descripcion = Trim(_Descripcion)
                 Case Color.Orange
-                    _Obs = vbCrLf & "[Sin venta, Baja Rot. anual y tiene hermanos con stock]" : _Descripcion = Trim(_Descripcion)
+                    _Obs += "[Sin venta, Baja Rot. anual y tiene hermanos con stock]" : _Descripcion = Trim(_Descripcion)
                 Case Color.Violet
-                    _Obs = vbCrLf & "[Sin venta, Rev. stock hermanos]" : _Descripcion = Trim(_Descripcion)
+                    _Obs += "[Sin venta, Rev. stock hermanos]" : _Descripcion = Trim(_Descripcion)
             End Select
 
         End If
@@ -2596,19 +2600,32 @@ Public Class Frm_Ver_Documento
             _Nudopa += $" ({_Feemlipa.ToString("dd/MM/yyyy")})"
         End If
 
-        Dim _Id_Feria As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Det", "Id_Feria", "Idmaeddo = " & _Idmaeddo)
-        Dim _Feria As String = String.Empty
+        Consulta_sql = $"Select * From {_Global_BaseBk}Zw_Docu_Det Where Idmaeddo = {_Idmaeddo}"
+        Dim _Row_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        If CBool(_Id_Feria) Then
-            _Feria = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Ferias", "NombreFeria", "Id = " & _Id_Feria)
-            If Not String.IsNullOrEmpty(_Feria) Then
-                _Feria = "<br/><b> *** Feria: " & _Feria & " *** </b>"
+        If Not IsNothing(_Row_Docu_Det) Then
+
+            Dim _Id_Feria As Integer = _Row_Docu_Det.Item("Id_Feria")
+            Dim _TipoCarga As Integer = _Row_Docu_Det.Item("TipoCarga")
+
+            If CBool(_Id_Feria) Then
+                _Feria = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Ferias", "NombreFeria", "Id = " & _Id_Feria)
+                If Not String.IsNullOrEmpty(_Feria) Then
+                    _Feria = "<b> *** Feria: " & _Feria & " *** </b>"
+                    _Obs += _Feria
+                End If
             End If
+
+            If _TipoCarga = 1 Then _TipoCargaStr = " Carga Directa"
+            If _TipoCarga = 2 Then _TipoCargaStr = " Carga Semi-Directa"
+
+            _Obs += _TipoCargaStr
+
         End If
 
         LblDescripcion.Text = "<b>" & _Descripcion & "</b>" &
                       ", Lista [" & _Lista & "]" & _Tidopa & _Nudopa &
-                      ", I.V.A. " & FormatNumber(_Vaivli, 2) & _Obs & _Feria
+                      ", I.V.A. " & FormatNumber(_Vaivli, 2) & _Obs
 
     End Sub
 

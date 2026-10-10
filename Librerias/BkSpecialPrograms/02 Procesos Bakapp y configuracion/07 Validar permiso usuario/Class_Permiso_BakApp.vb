@@ -677,6 +677,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00173", _Objeto, _Formulario) ' Registrar GRI - GUIA DE RECEPCION INTERNA (AJUSTE)
         _SqlQuery += Fx_Insertar_Permiso("Doc00174", _Objeto, _Formulario) ' Registrar GDI - GUIA SALIDA DE BODEGA (AJUSTE)
         _SqlQuery += Fx_Insertar_Permiso("Doc00175", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00176", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -3006,6 +3007,10 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00175"
                 _DescripcionPermiso = "REGISTRAR GDI - GRI ESPECIAL"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00176"
+                _DescripcionPermiso = "VENDER CON CARGA DIRECTA O SEMI-DIRECTA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
