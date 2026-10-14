@@ -787,6 +787,9 @@ Public Class Clas_Estructura_Base_De_Datos
             Case "Zw_Estaciones_Ruta_PDF"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Estaciones_Ruta_PDF
 
+            Case "Zw_Ferias"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Ferias
+
             Case "Zw_Fincred_Config"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Fincred_Config
             Case "Zw_Fincred_Documentos"
@@ -854,6 +857,11 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaLC_Programadas
             Case "Zw_ListaLC_Programadas_Detalles"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaLC_Programadas_Detalles
+
+            Case "Zw_ListaLC_ValPro"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaLC_ValPro
+            Case "Zw_ListaLC_ValPro_Recep"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_ListaLC_ValPro_Recep
 
             Case "Zw_Log_Gestiones"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Log_Gestiones

@@ -993,8 +993,6 @@ Public Class Frm_Formulario_Documento
             Chk_Pickear.Enabled = True
         End If
 
-
-
         If _Revisando_Situacion_Comercial Or _Revision_Remota Or _Solo_Revisar_El_Documento Then
 
             Btn_Aceptar_Documento.Visible = _Revision_Remota
@@ -1737,6 +1735,11 @@ Public Class Frm_Formulario_Documento
             .Item("Id_Despacho") = 0
             .Item("Id_Enc_InterStock") = 0
 
+            .Item("Venta_Feria") = False
+            .Item("Id_Feria") = 0
+
+            .Item("TipoCarga") = 0
+
             _TblEncabezado.Rows.Add(NewFila)
 
         End With
@@ -1818,6 +1821,8 @@ Public Class Frm_Formulario_Documento
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00169", False, False, "", "", False, False, False) ' Cupo exedido y con morosidad de documentos
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00170", False, False, "", "", False, False, False) ' Venta sobre promedio de venta normar y con Morosidad
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00171", False, False, "", "", False, False, False) ' Vender sin asociar compañia de seguro cuando el cliente tiene compañia de seguro
+
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00176", False, False, "", "", False, False, False) ' Vender con CargaDirecta o CargaSemiDirecta
 
 
         '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
@@ -2795,6 +2800,9 @@ Public Class Frm_Formulario_Documento
 
             .Item("TieneLotes") = False
             .Item("NroLote") = String.Empty
+
+            .Item("Id_Feria") = 0
+            .Item("TipoCarga") = 0
 
             _TblDetalle.Rows.Add(NewFila)
 
@@ -4799,7 +4807,17 @@ Public Class Frm_Formulario_Documento
 
                     Dim _Centro_Costo As String = .Cells("Centro_Costo").Value.ToString.Trim
 
-                    LblDescripcion.Text = _Descripcion & " " & _Desde & " " & _Vendedor
+                    Dim _Id_Feria As Integer = NuloPorNro(.Cells("Id_Feria").Value, 0)
+                    Dim _Feria As String = String.Empty
+
+                    If CBool(_Id_Feria) Then
+                        _Feria = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Ferias", "NombreFeria", "Id = " & _Id_Feria)
+                        If Not String.IsNullOrEmpty(_Feria) Then
+                            _Feria = " *** Feria: " & _Feria & " *** "
+                        End If
+                    End If
+
+                    LblDescripcion.Text = _Descripcion & " " & _Desde & " " & _Vendedor.Trim & " " & _Feria.Trim
 
                     If Not String.IsNullOrEmpty(LblDescripcion.Text.Trim) And Not String.IsNullOrEmpty(_Centro_Costo) Then
                         LblDescripcion.Text += Space(5) & "(Cent.Costo: " & _Centro_Costo & ")"
@@ -13354,6 +13372,10 @@ Public Class Frm_Formulario_Documento
             .Item("CodEntidad_Cia") = _TblEncabezado_StBy.Rows(0).Item("CodEntidad_Cia")
             .Item("CodSucEntidad_Cia") = _TblEncabezado_StBy.Rows(0).Item("CodSucEntidad_Cia")
             .Item("Id_Despacho") = _TblEncabezado_StBy.Rows(0).Item("Id_Despacho")
+            .Item("Venta_Feria") = _TblEncabezado_StBy.Rows(0).Item("Venta_Feria")
+            .Item("Id_Feria") = _TblEncabezado_StBy.Rows(0).Item("Id_Feria")
+
+            .Item("TipoCarga") = _TblEncabezado_StBy.Rows(0).Item("TipoCarga")
 
             LblMoneda.Tag = .Item("Moneda_Doc")
             LblMoneda.Text = .Item("Moneda_Doc")
@@ -13539,6 +13561,10 @@ Public Class Frm_Formulario_Documento
             _Row.Cells("ModFechVto").Value = _ModFechVto
             _Row.Cells("Condicionado").Value = _Condicionado
             _Row.Cells("DesacRazTransf").Value = _DesacRazTransf
+
+            _Row.Cells("Id_Feria").Value = _Fila.Item("Id_Feria")
+            _Row.Cells("TipoCarga").Value = _Fila.Item("TipoCarga")
+
 
             Dim _RowProducto As DataRow
 
@@ -17172,6 +17198,20 @@ Public Class Frm_Formulario_Documento
 
             If Not Fx_Validar_Restricciones_Por_Tipo_Documento_Y_Relacion() Then
                 Return
+            End If
+
+            If Not Fx_Feria() Then
+                Return
+            End If
+
+            If Chk_CargaDirecta.Checked Or Chk_CargaSemiDirecta.Checked Then
+                Dim _TipoCarga As Integer
+                If Chk_CargaDirecta.Checked Then _TipoCarga = 1
+                If Chk_CargaSemiDirecta.Checked Then _TipoCarga = 2
+                _TblEncabezado.Rows(0).Item("TipoCarga") = _TipoCarga
+                For Each _Fila As DataRow In _TblDetalle.Rows
+                    _Fila.Item("TipoCarga") = _TipoCarga
+                Next
             End If
 
 
@@ -22086,12 +22126,13 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
                     End If
 
-                    If SobreStock Then
 
-                        Consulta_sql = $"Select * From {_Global_BaseBk}Zw_Docu_Det Where Idmaeddo = {_Idmaeddo_Dori}"
-                        Dim _Row_Zw_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+                    Consulta_sql = $"Select * From {_Global_BaseBk}Zw_Docu_Det Where Idmaeddo = {_Idmaeddo_Dori}"
+                    Dim _Row_Zw_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-                        If Not IsNothing(_Row_Zw_Docu_Det) Then
+                    If Not IsNothing(_Row_Zw_Docu_Det) Then
+
+                        If SobreStock Then
 
                             _New_Fila.Cells("SobreStock").Value = True
                             _New_Fila.Cells("Id_SobreStock").Value = _Row_Zw_Docu_Det.Item("Id_SobreStock")
@@ -22100,6 +22141,9 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                             _New_Fila.Cells("Qty_SobreStock").Value = _Row_Zw_Docu_Det.Item("Qty_SobreStock")
 
                         End If
+
+                        _New_Fila.Cells("Id_Feria").Value = _Row_Zw_Docu_Det.Item("Id_Feria")
+                        _New_Fila.Cells("TipoCarga").Value = _Row_Zw_Docu_Det.Item("TipoCarga")
 
                     End If
 
@@ -24931,7 +24975,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                     Fx_Autorizar_X_Descuentos(False)
                 End If
 
-            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102", "Doc00161", "Doc00169", "Doc00170", "Doc00171"
+            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102", "Doc00161", "Doc00169", "Doc00170", "Doc00171", "Doc00176"
 
                 If _Crear_Doc_Def_Al_Grabar Then
 
@@ -26708,6 +26752,14 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                     If PedirPermisoCiaSeguro Then
                         If Not Fx_Tiene_Permiso(Me, "Doc00171", FUNCIONARIO, False) Then
                             Sb_Revisar_Permiso("Doc00171", False, True)
+                        End If
+                    End If
+
+                    Dim _PedirPermisoCargasDirectaoSemiDirecta As Boolean = True
+
+                    If _PedirPermisoCargasDirectaoSemiDirecta Then
+                        If Not Fx_Tiene_Permiso(Me, "Doc00176", FUNCIONARIO, False) Then
+                            Sb_Revisar_Permiso("Doc00176", False, True)
                         End If
                     End If
 
@@ -31305,20 +31357,134 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
     End Function
 
-    'Private Sub Btn_ElimRecic_Doc_Click(sender As Object, e As EventArgs) Handles Btn_ElimRecic_Doc.Click
+    Function Fx_Feria() As Boolean
 
-    '    If Fx_Revisar_si_tiene_registros() Then
-    '        MessageBoxEx.Show(Me, "Existen datos en el documento, debe limpiar para poder usar esta opción",
-    '                          "Editar Vale transitorio", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-    '        Return
-    '    End If
+        If _Revision_Remota Then
+            Return True
+        End If
 
+        If (_Tido <> "COV" AndAlso _Tido <> "NVV" AndAlso _Tido <> "FCV") Or (_Tido = "COV" And Not SobreStock) Then
+            Return True
+        End If
 
-    '    If Fx_Agregar_Permiso_Otorgado_Al_Documento(Me, _TblPermisos, "Doc00070", Nothing, "", "") Then
-    '        Sb_Buscar_Documento_Eliminar_Reciclar(_Tido, _Post_Venta)
-    '    End If
+        For Each _Fila As DataRow In _TblDetalle.Rows
+            If CBool(_Fila.Item("Id_Feria")) And CBool(_Fila.Item("Idmaeddo_Dori")) Then
+                Return True
+            End If
+        Next
 
-    'End Sub
+        Dim _ObligaFeriaVta As Boolean
+        Dim _Id_Feria As Integer
+
+        _ObligaFeriaVta = _Global_Row_Configuracion_General.Item("ObligaFeriaVta")
+        _Id_Feria = _Global_Row_Configuracion_General.Item("Id_Feria")
+
+        _TblEncabezado.Rows(0).Item("Venta_Feria") = False
+        _TblEncabezado.Rows(0).Item("Id_Feria") = 0
+
+        For Each _Fila As DataRow In _TblDetalle.Rows
+            _Fila.Item("Id_Feria") = 0
+        Next
+
+        If Not _ObligaFeriaVta Then
+            _ObligaFeriaVta = _Global_Row_Configuracion_Estacion.Item("ObligaFeriaVta")
+            _Id_Feria = _Global_Row_Configuracion_Estacion.Item("Id_Feria")
+        End If
+
+        If Not _ObligaFeriaVta Then
+            Return True
+        End If
+
+        Dim _Msg1 = "Asociar FERIA a la venta"
+        Dim _Msg2 = vbCrLf & "¿Desea asociar una FERIA a esta venta?" & vbCrLf
+
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        _Mensaje = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.ShieldHelp, "", True)
+
+        If _Mensaje.DialogResult_Reps <> DialogResult.Yes Then '_Mensaje.Resultado <> "Yes" Then
+            If _Mensaje.Cancelado Or _Mensaje.DialogResult_Reps = DialogResult.None Then
+                Return False
+            Else
+                MessageBoxEx.Show(Me, "Venta normal sin feria", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                Return True
+            End If
+        End If
+
+        Dim _Row_Feria As DataRow
+
+        If CBool(_Id_Feria) Then
+            Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Ferias Where Id = " & _Id_Feria
+            _Row_Feria = _Sql.Fx_Get_DataRow(Consulta_sql)
+        End If
+
+        If Not IsNothing(_Row_Feria) Then
+
+            _Msg1 = "Asociar Feria: " & _Row_Feria.Item("NombreFeria") & " a la venta"
+            _Msg2 = vbCrLf & "¿Desea asociar una FERIA a esta venta?" & vbCrLf & vbCrLf & "Si (Confirma) - No (Seleccionar otra feria)"
+
+            _Mensaje = Fx_Confirmar_LecturaSINO(_Msg1, _Msg2, eTaskDialogIcon.Help, "", True)
+
+            If _Mensaje.DialogResult_Reps = DialogResult.Cancel Or _Mensaje.DialogResult_Reps = DialogResult.None Then
+                Return False
+            End If
+
+            If _Mensaje.DialogResult_Reps = DialogResult.Yes Then
+
+                _TblEncabezado.Rows(0).Item("Venta_Feria") = True
+                _TblEncabezado.Rows(0).Item("Id_Feria") = _Row_Feria.Item("Id")
+
+                For Each _Fila As DataRow In _TblDetalle.Rows
+                    _Fila.Item("Id_Feria") = _Row_Feria.Item("Id")
+                Next
+
+                MessageBoxEx.Show(Me, "Feria: " & _Row_Feria.Item("NombreFeria"), "Feria seleccionada",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                Return True
+
+            End If
+
+        End If
+
+        Dim _CantidadFeriasHabilitadas As Integer = _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_Ferias", "Activa = 1")
+
+        If _CantidadFeriasHabilitadas = 0 Then
+            MessageBoxEx.Show(Me,
+                      "No existen ferias habilitadas para asociar a la venta." & vbCrLf & vbCrLf &
+                      "Informe esta situación al administrador del sistema.",
+                      "Validación",
+                      MessageBoxButtons.OK,
+                      MessageBoxIcon.Stop)
+            Return False
+        End If
+
+        Dim _DialogResult As DialogResult
+
+        Dim Fm As New Frm_Ferias
+        Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        _DialogResult = Fm.DialogResult
+        _Row_Feria = Fm.Row_Feria
+        Fm.Dispose()
+
+        If _DialogResult <> DialogResult.OK Then
+            MessageBoxEx.Show(Me, "No se selecciono ninguna feria para la venta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return False
+        End If
+
+        _TblEncabezado.Rows(0).Item("Venta_Feria") = True
+        _TblEncabezado.Rows(0).Item("Id_Feria") = _Row_Feria.Item("Id")
+
+        For Each _Fila As DataRow In _TblDetalle.Rows
+            _Fila.Item("Id_Feria") = _Row_Feria.Item("Id")
+        Next
+
+        MessageBoxEx.Show(Me, "Feria: " & _Row_Feria.Item("NombreFeria"), "Feria seleccionada",
+                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Return True
+    End Function
 
     Private Sub Btn_Imprimir_Click(sender As Object, e As EventArgs) Handles Btn_Imprimir.Click
         If Not Fx_Revisar_si_tiene_registros() Then
@@ -33083,9 +33249,21 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
         Barra_Herramientas_Producto.Enabled = False
     End Sub
 
-    'Private Sub Frm_Formulario_Documento_Closed(sender As Object, e As EventArgs) Handles Me.Closed
-    '    FormularioAbierto = False
-    'End Sub
+    Private Sub Chk_CargaDirecta_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_CargaDirecta.CheckedChanged
+
+        If Chk_CargaDirecta.Checked Then
+            Chk_CargaSemiDirecta.Checked = False
+        End If
+
+    End Sub
+
+    Private Sub Chk_CargaSemiDirecta_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_CargaSemiDirecta.CheckedChanged
+
+        If Chk_CargaSemiDirecta.Checked Then
+            Chk_CargaDirecta.Checked = False
+        End If
+
+    End Sub
 
 End Class
 

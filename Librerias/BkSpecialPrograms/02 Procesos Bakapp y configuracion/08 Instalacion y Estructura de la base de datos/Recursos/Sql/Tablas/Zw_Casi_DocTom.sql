@@ -1,6 +1,5 @@
 USE [#Base#]
 
-
 CREATE TABLE [dbo].[Zw_Casi_DocTom](
 	[Id_DocEnc]      [int]         NOT NULL,
 	[CodFuncionario] [char](3)     NOT NULL DEFAULT (''),

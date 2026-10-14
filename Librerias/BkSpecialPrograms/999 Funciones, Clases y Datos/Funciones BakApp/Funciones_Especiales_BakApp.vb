@@ -6519,7 +6519,7 @@ Public Module Crear_Documentos_Desde_Otro
         Dim _ErrorLPC As String = Fx_ActualizarListaRandomDesdeBakApp(_Koen, _Suen, _Id_Padre)
 
         If String.IsNullOrEmpty(_ErrorLPC) Then
-            MessageBoxEx.Show(_Formulario, "Costos levantados correctamente en lista " & _Lista, "Actualización de costos del proveedor",
+            MessageBoxEx.Show(_Formulario, "Costos actualizados correctamente en lista " & _Lista, "Actualización de costos del proveedor",
                               MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
             MessageBoxEx.Show(_Formulario, _ErrorLPC, "Error al cargar lista de proveedor" & vbCrLf &
@@ -6558,22 +6558,16 @@ Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
 
             Next
 
-            Consulta_sql = "Insert Into TABRECPR (KOPR,RECARGO,KOEN,ECUARECAR)" & vbCrLf &
-                           "Select Codigo,Flete,Proveedor,'' From " & _Global_BaseBk & "Zw_ListaPreCosto" &
-                           vbCrLf &
-                           "Where Codigo Not In (Select KOPR From TABRECPR Where KOEN = '" & _CodProveedor & "') And Flete > 0 And Id_Padre = " & _Id_Padre &
-                           vbCrLf &
-                           vbCrLf &
-                           "--Update TABRECPR Set RECARGO = Flete" & vbCrLf &
-                           "--From " & _Global_BaseBk & "Zw_ListaPreCosto Tbp" & vbCrLf &
-                           "--Inner Join TABRECPR On KOEN = Tbp.Proveedor And KOPR = Tbp.Codigo And No_Usar = 0" &
-                           "--Where Id_Padre = " & _Id_Padre &
-                           vbCrLf &
-                           vbCrLf &
-                           "Update TABPRE Set PP01UD = CostoUd1,PP02UD = CostoUd2" & _Sql_Equivalentes & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_ListaPreCosto Tbp " & vbCrLf &
-                           "Inner Join TABPRE On KOLT = Tbp.Lista And KOPR = Tbp.Codigo And No_Usar = 0" & vbCrLf &
-                           "Where Id_Padre = " & _Id_Padre
+            Consulta_sql = $"
+Insert Into TABRECPR (KOPR,RECARGO,KOEN,ECUARECAR)
+Select Codigo,Flete,Proveedor,'' From {_Global_BaseBk}Zw_ListaPreCosto
+                           
+Where Codigo Not In (Select KOPR From TABRECPR Where KOEN = '{_CodProveedor}') And Flete > 0 And Id_Padre = {_Id_Padre}
+
+Update TABPRE Set PP01UD = CostoUd1,PP02UD = CostoUd2{_Sql_Equivalentes}
+From {_Global_BaseBk}Zw_ListaPreCosto Tbp 
+Inner Join TABPRE On KOLT = Tbp.Lista And KOPR = Tbp.Codigo And No_Usar = 0
+Where Id_Padre = {_Id_Padre}"
 
             If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
                 Throw New System.Exception(_Sql.Pro_Error)
@@ -6908,6 +6902,7 @@ Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
             If _Resultado = eTaskDialogResult.Cancel Then
                 _Mensaje.EsCorrecto = False
                 _Mensaje.Cancelado = True
+                _Mensaje.DialogResult_Reps = DialogResult.Cancel
                 Return _Mensaje
             End If
 
@@ -6929,11 +6924,14 @@ Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
                 _Mensaje.EsCorrecto = True
 
                 If _Resultado = eTaskDialogResult.Yes Then
+                    _Mensaje.DialogResult_Reps = DialogResult.Yes
                     _Mensaje.Icono = eTaskDialogIcon.Information
                 ElseIf _Resultado = eTaskDialogResult.No Then
+                    _Mensaje.DialogResult_Reps = DialogResult.No
                     _Mensaje.Cerrar = False
                     _Mensaje.Icono = eTaskDialogIcon.Stop
                 Else
+                    _Mensaje.DialogResult_Reps = DialogResult.Cancel
                     _Mensaje.Icono = eTaskDialogIcon.Exclamation
                 End If
 
@@ -6942,6 +6940,7 @@ Where Tabla_Bakapp = 'Zw_ListaPreCosto'"
         Else
             _Mensaje.Tag = eTaskDialogResult.Cancel
             _Mensaje.Cerrar = True
+            _Mensaje.DialogResult_Reps = DialogResult.None
         End If
 
         Return _Mensaje

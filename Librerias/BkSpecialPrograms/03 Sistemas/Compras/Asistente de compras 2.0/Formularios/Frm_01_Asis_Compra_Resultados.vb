@@ -2950,6 +2950,29 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
         If Rd_Costo_Lista_Proveedor.Checked Then
 
+
+
+            ' Cargar lista de costos del proveedor en lista de costos del Random
+            If _Global_Row_Configuracion_Estacion.Item("Actualizar_Lista_De_Costos_Random_Desde_Bakapp") Then
+
+                _Koen = _RowProveedor.Item("KOEN")
+                _Suen = _RowProveedor.Item("SUEN")
+
+                If Not Fx_Actualizar_Lista_De_Costos_Random_Desde_Bakapp(Me, _Koen, _Suen) Then
+                    MessageBoxEx.Show(Me, "No es posible realizar el proceso" & vbCrLf & vbCrLf &
+                                      "Para poder actualizar la información de la lista de costos del proveedor debe hacer lo siguiente:" & vbCrLf & vbCrLf &
+                                      "1.- Ir al menú de inicio" & vbCrLf &
+                                      "2.- Opción [PRECIOS Y COSTOS]" & vbCrLf &
+                                      "3.- Opción [LISTA DE PROVEEDORES]" & vbCrLf &
+                                      "4.- Buscar al proveedor" & vbCrLf &
+                                      "5.- Realizar la gestión de mantenimiento de lista de costos de ese proveedor" & vbCrLf &
+                                      " * Dejar una lista de costos vigente" & vbCrLf &
+                                      " * Fecha de vencimiento mayor a la fecha actual", "Información", MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                    Return
+                End If
+
+            End If
+
             Dim _Lista As String = Cmb_Lista_Costos.SelectedItem.Value
 
             Consulta_sql = "Select 0 As IDMAEEDO,Getdate() As FEEMDO,Getdate() As FEER,'N' As MEARDO" & vbCrLf &

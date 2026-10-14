@@ -241,6 +241,7 @@ Public Class Class_Permiso_BakApp
         TICKET
         MODELAMIENTO
         SOBRESTOCK
+        FERIAS
     End Enum
 
     Sub Sb_Actualizar_Base_De_Permisos(_Formulario As Form, ByRef _Objeto As Object)
@@ -676,6 +677,7 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00173", _Objeto, _Formulario) ' Registrar GRI - GUIA DE RECEPCION INTERNA (AJUSTE)
         _SqlQuery += Fx_Insertar_Permiso("Doc00174", _Objeto, _Formulario) ' Registrar GDI - GUIA SALIDA DE BODEGA (AJUSTE)
         _SqlQuery += Fx_Insertar_Permiso("Doc00175", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00176", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -3007,6 +3009,10 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "REGISTRAR GDI - GRI ESPECIAL"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00176"
+                _DescripcionPermiso = "VENDER CON CARGA DIRECTA O SEMI-DIRECTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 
         End Select
 
@@ -5250,6 +5256,35 @@ Public Class Class_Permiso_BakApp
                 _DescripcionPermiso = "EXPORTAR A EXCEL LISTADO DE PRODUCTOS SOBRE STOCK"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+
+        End Select
+
+#End Region
+
+#Region "FERIAS"
+
+        Select Case _CodPermiso
+
+            Case "Feria0001"
+                _DescripcionPermiso = "INGRESAR AL MANTENEDOR DE FERIAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.FERIAS, 6)
+                _NombreFamiliaPermiso = _Fml.FERIAS.ToString
+            Case "Feria0002"
+                _DescripcionPermiso = "CREAR FERIA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.FERIAS, 6)
+                _NombreFamiliaPermiso = _Fml.FERIAS.ToString
+            Case "Feria0003"
+                _DescripcionPermiso = "EDITAR FERIA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.FERIAS, 6)
+                _NombreFamiliaPermiso = _Fml.FERIAS.ToString
+            Case "Feria0004"
+                _DescripcionPermiso = "ELIMINAR FERIA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.FERIAS, 6)
+                _NombreFamiliaPermiso = _Fml.FERIAS.ToString
+            Case "Feria0005"
+                _DescripcionPermiso = "HABILITAR O DESHABILITAR FERIA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.FERIAS, 6)
+                _NombreFamiliaPermiso = _Fml.FERIAS.ToString
 
         End Select
 

@@ -47,6 +47,7 @@ Partial Class Modulo_Programas_Especiales
         Me.BtnSalir = New DevComponents.DotNetBar.ButtonItem()
         Me.BtnCambiarDeUsuario = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
+        Me.Btn_Ferias = New DevComponents.DotNetBar.Metro.MetroTileItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -78,7 +79,7 @@ Partial Class Modulo_Programas_Especiales
         Me.MnuEspecialOtros.FixedSize = New System.Drawing.Size(1000, 550)
         Me.MnuEspecialOtros.MultiLine = True
         Me.MnuEspecialOtros.Name = "MnuEspecialOtros"
-        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar, Me.Btn_Patentes_rvm, Me.Btn_SisComisiones, Me.Btn_Tickets, Me.Btn_Sgem})
+        Me.MnuEspecialOtros.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Demonio, Me.BtnSQL2Excel, Me.BtnDTE2PDF, Me.BtnCorreos_SMTP, Me.Btn_CRV_Control_Ruta_Vehiculos, Me.Btn_Etiquetas_De_Barra, Me.BtnCrearFormatos, Me.Btn_DTE_Respuestas_XML, Me.Btn_Precios_PrestaShop, Me.Btn_Huella, Me.Btn_Pocket_PC, Me.Btn_Archivador, Me.Btn_Cierre_Reactivacion_Documentos, Me.Btn_Habilitar_Nvv_Para_Facturar, Me.Btn_Patentes_rvm, Me.Btn_SisComisiones, Me.Btn_Tickets, Me.Btn_Sgem, Me.Btn_Ferias})
         '
         '
         '
@@ -618,6 +619,33 @@ Partial Class Modulo_Programas_Especiales
         Me.LabelX1.TabIndex = 40
         Me.LabelX1.Text = "<font color=""#349FCE""><b>PROGRAMAS ESPECIALES</b></font>"
         '
+        'Btn_Ferias
+        '
+        Me.Btn_Ferias.Image = CType(resources.GetObject("Btn_Ferias.Image"), System.Drawing.Image)
+        Me.Btn_Ferias.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_Ferias.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_Ferias.Name = "Btn_Ferias"
+        Me.Btn_Ferias.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_Ferias.Text = "<font size=""+4""><b>FERIAS</b></font><br/><font size=""-1"">Mantención de ferias par" &
+    "a ventas</font>"
+        Me.Btn_Ferias.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Blue
+        Me.Btn_Ferias.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_Ferias.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_Ferias.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_Ferias.TileStyle.BackColorGradientAngle = 45
+        Me.Btn_Ferias.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_Ferias.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(52, Byte), Integer), CType(CType(159, Byte), Integer), CType(CType(206, Byte), Integer))
+        Me.Btn_Ferias.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_Ferias.TileStyle.PaddingBottom = 4
+        Me.Btn_Ferias.TileStyle.PaddingLeft = 4
+        Me.Btn_Ferias.TileStyle.PaddingRight = 4
+        Me.Btn_Ferias.TileStyle.PaddingTop = 4
+        Me.Btn_Ferias.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_Ferias.TitleText = "BakApp"
+        '
         'Modulo_Programas_Especiales
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -655,4 +683,5 @@ Partial Class Modulo_Programas_Especiales
     Private WithEvents Btn_SisComisiones As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Tickets As DevComponents.DotNetBar.Metro.MetroTileItem
     Private WithEvents Btn_Sgem As DevComponents.DotNetBar.Metro.MetroTileItem
+    Private WithEvents Btn_Ferias As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

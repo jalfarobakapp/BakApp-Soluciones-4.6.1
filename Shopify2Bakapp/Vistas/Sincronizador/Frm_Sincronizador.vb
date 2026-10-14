@@ -32,7 +32,7 @@ Public Class Frm_Sincronizador
         Txt_Log.ReadOnly = True
         CircularPgrs.IsRunning = False
 
-        Timer_Limpiar.Interval = (1000 * 60) * 5   ' Limpieza del log cada 5 min
+        Timer_Limpiar.Interval = (1000 * 60) * 1   ' Limpieza del log cada 5 min
         Timer_AjustarFecha.Interval = (1000 * 60) * 30 ' Ajuste de fecha cada 30 min
 
         Sb_Ejecutar_diablito()

@@ -1153,6 +1153,18 @@ Public Class Class_Genera_DTE_RdBk
         Dim _CmnaRecep = Mid(Trim(_Row_Maeen_Receptor.Item("COMUNA")), 1, 20)
         Dim _CiudadRecep = Mid(Trim(_Row_Maeen_Receptor.Item("CIUDAD")), 1, 15)
 
+        If String.IsNullOrWhiteSpace(_CmnaRecep) Then
+            _CmnaRecep = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
+                                           "Ciudad",
+                                           $"CodEntidad = '{_Row_Maeen_Receptor.Item("KOEN")}' And CodSucEntidad = '{_Row_Maeen_Receptor.Item("SUEN")}'",, False).ToString.ToUpper
+        End If
+
+        If String.IsNullOrWhiteSpace(_CiudadRecep) Then
+            _CiudadRecep = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Entidades",
+                                             "Comuna",
+                                             $"CodEntidad = '{_Row_Maeen_Receptor.Item("KOEN")}' And CodSucEntidad = '{_Row_Maeen_Receptor.Item("SUEN")}'",, False).ToString.ToUpper
+        End If
+
         _RznSocRecep = Fx_LimpiarTextoXML(_RznSocRecep)
         _GiroRecep = Fx_LimpiarTextoXML(_GiroRecep)
         _DirRecep = Fx_LimpiarTextoXML(_DirRecep)
