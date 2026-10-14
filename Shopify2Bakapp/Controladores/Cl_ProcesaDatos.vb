@@ -1383,7 +1383,7 @@ ORDER BY Z.Id DESC"
                 Return _Mensaje
             End If
 
-            Sb_ClonarNVV(_Idmaeedo)
+            'Sb_ClonarNVV(_Idmaeedo)
 
             Dim _ESB = _Row.Item("CodigoTabla").ToString.Split(";"c)
 
