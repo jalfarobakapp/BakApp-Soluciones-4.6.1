@@ -8,6 +8,7 @@ Public Class Frm_Formulario_Documento
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
+    Dim RevisarListaSuperior As Boolean = True
 
     Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
@@ -473,16 +474,20 @@ Public Class Frm_Formulario_Documento
                    Optional Documento_Reciclado As Boolean = False,
                    Optional _Facturacion_Automatica As Boolean = False,
                    Optional _PreVenta As Boolean = False,
-                   Optional _SobreStock As Boolean = False)
+                   Optional _SobreStock As Boolean = False,
+                   Optional _RevisarListaSuperior As Boolean = True)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
+
+
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
         ModEmpresa_Doc = Mod_Empresa
         ModSucursal_Doc = Mod_Sucursal
         ModBodega_Doc = Mod_Bodega
         ModModalidad_Doc = Mod_Modalidad
+        RevisarListaSuperior = _RevisarListaSuperior
 
         PreVenta = _PreVenta
         SobreStock = _SobreStock
@@ -6471,11 +6476,14 @@ Public Class Frm_Formulario_Documento
 
 
         'Agregar Lista Superior
-        If _Tido = "NVV" AndAlso _Cl_DocListaSuperior.UsarVencListaPrecios AndAlso Not _Revisar_Notificacion_Automatica_Remota AndAlso Not (SobreStock) Then
-            _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpEntidad(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
-            _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpSuperior(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
-        End If
+        'Ports AQUI NO DEBE PASASR
+        If RevisarListaSuperior Then
 
+            If _Tido = "NVV" AndAlso _Cl_DocListaSuperior.UsarVencListaPrecios AndAlso Not _Revisar_Notificacion_Automatica_Remota AndAlso Not (SobreStock) Then
+                _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpEntidad(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
+                _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpSuperior(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
+            End If
+        End If
         If Not String.IsNullOrEmpty(_Oferta) And _Mostrar_Oferta Then
 
             _Fila.Cells("Oferta").Value = _Oferta

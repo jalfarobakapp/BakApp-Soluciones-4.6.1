@@ -1,6 +1,7 @@
 ﻿Imports Bk_Produccion
 Imports BkSpecialPrograms
 Imports BkSpecialPrograms.Frm_BkpPostBusquedaEspecial_Mt
+Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
 
 Public Class Menu
@@ -1836,4 +1837,55 @@ Where Idmaeedo = {_Idmaeedo_FCV}"
 
     End Sub
 
+    Private Sub Btn_Crear3NVV_Click(sender As Object, e As EventArgs) Handles Btn_Crear3NVV.Click
+        ' 1. Defines el número de documento origen que vas a pasar
+        Dim numeroDocOrigen As String = "SG00243078"
+        Dim idmaeedoOrigen As Integer = 896605
+        Dim NVV As New MultiNVV()
+
+        ' 2. Llamas a la función y guardas la lista de resultados
+        Dim listaResultados As List(Of Mensajes) = NVV.GeneraNVV(idmaeedoOrigen, numeroDocOrigen)
+
+        ' 3. Variables para llevar un conteo o controlar errores visualmente
+        Dim cantExitos As Integer = 0
+        Dim cantErrores As Integer = 0
+        Dim detalleErrores As String = ""
+
+        ' 4. Iteras sobre cada mensaje devuelto por la función
+        For Each resultado As Mensajes In listaResultados
+
+            If resultado.EsCorrecto Then
+                ' ¡Éxito! El documento se creó correctamente para esa clasificación
+                cantExitos += 1
+
+                ' Si necesitas obtener el número del nuevo documento generado, lo sacas del Tag:
+                Dim dtDocGenerado As DataTable = CType(resultado.Tag, DataTable)
+                Dim nudoNuevo As String = dtDocGenerado.Rows(0).Item("NUDO").ToString()
+
+                ' Aquí podrías hacer algo adicional con el nuevo NUDO si lo necesitas
+                ' Console.WriteLine($"Creado documento: {nudoNuevo}")
+            Else
+                ' Hubo un error al intentar crear el documento para una de las clasificaciones
+                cantErrores += 1
+                detalleErrores &= $"- {resultado.Mensaje} {resultado.Detalle}" & vbCrLf
+            End If
+
+        Next
+
+        ' 5. Le informas al usuario (o al log) el resumen del proceso
+        If cantErrores = 0 AndAlso cantExitos > 0 Then
+            MessageBox.Show($"Proceso finalizado. Se generaron {cantExitos} documento(s) correctamente.",
+                            "Generación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information)
+        ElseIf cantExitos > 0 AndAlso cantErrores > 0 Then
+            MessageBox.Show($"Proceso finalizado con advertencias." & vbCrLf &
+                            $"Se generaron {cantExitos} documentos." & vbCrLf &
+                            $"Fallaron {cantErrores} documentos." & vbCrLf &
+                            $"Detalles:" & vbCrLf & detalleErrores,
+                            "Generación Parcial", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        Else
+            MessageBox.Show($"No se pudo generar ningún documento." & vbCrLf &
+                            $"Detalles:" & vbCrLf & detalleErrores,
+                            "Error de Generación", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End If
+    End Sub
 End Class
