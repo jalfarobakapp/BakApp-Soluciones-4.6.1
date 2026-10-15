@@ -50,11 +50,12 @@ Public Class Cl_Sincroniza
             }
             Dim Entidad_M As New Entidad_meli
             Entidad_M.Entidad_Random = aux
-            Entidad_M.Fx_Generar_Zw_Entidades_Defecto()
-            Dim Aux_BakApp As New Entidad_meli.Zw_Entidades_Data
-            Aux_BakApp = Entidad_M.Entidad_Bakapp
-            Aux_BakApp.Comuna = Cliente.CIUDAD
-            Aux_BakApp.Ciudad = Cliente.STATE
+            Entidad_M.Entidad_Bakapp = Entidad_M.Fx_Generar_Zw_Entidades_Defecto()
+
+            Entidad_M.Entidad_Bakapp.Comuna = Cliente.CIUDAD
+            Entidad_M.Entidad_Bakapp.Ciudad = Cliente.STATE
+            Entidad_M.Entidad_Bakapp.FacAuto = True
+
             Dim Mensaje_ENT As Mensajes = Entidad_M.Fx_Crear_Entidad_Nueva()
             If Mensaje_ENT.Mensaje = "¡Entidad ya existe en la base de datos! No es posible crearla." Then
                 Consulta_sql = $"UPDATE CLIENTES_CREAR SET ESTADO = 1, KOEN = '{aux.KOEN}' WHERE ID = {Cliente.ID}"
