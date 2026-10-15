@@ -161,7 +161,7 @@ Public Class Cl_FacAuto_NVV
                        "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Nv" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Entidades Ent" & vbCrLf &
                        "On Nv.Endo_Ori = Ent.CodEntidad And Nv.Suendo_Ori = Ent.CodSucEntidad" & vbCrLf &
-                       "Where NVVGenerada = 1 And Facturar = 1 And Ent.FacAuto = 0"
+                       "Where NVVGenerada = 1 And Facturar = 1 And Ent.FacAuto = 0 And Nv.TipoOri <> 'MLIBRE'"
 
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf
@@ -172,7 +172,7 @@ Public Class Cl_FacAuto_NVV
                        "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Nv" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Entidades Ent" & vbCrLf &
                        "On Nv.Endo_Ori = Ent.CodEntidad And Nv.Suendo_Ori = Ent.CodSucEntidad " & vbCrLf &
-                       "Where NVVGenerada = 1 And Facturar = 1 And DocEmitir <> '' And EnvFacAutoBk = 0 And Ent.FacAuto = 1" & _CondicionSuc & vbCrLf &
+                       "Where NVVGenerada = 1 And Facturar = 1 And DocEmitir <> '' And EnvFacAutoBk = 0 And (Ent.FacAuto = 1 Or Nv.TipoOri = 'MLIBRE') " & _CondicionSuc & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set EnvFacAutoBk = 1" & vbCrLf &
                        "Where Idmaeedo_NVV In (Select Idmaeedo From #Paso)" & vbCrLf &

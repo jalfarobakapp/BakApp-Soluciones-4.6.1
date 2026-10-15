@@ -1125,6 +1125,19 @@ Public Class Frm_Formulario_Documento
                 Chk_Pickear.Visible = _Pickear
                 Chk_Pickear.Enabled = True
 
+                If _Tido <> "NVI" Then
+
+                    Dim _PedirPermisoCargasDirectaoSemiDirecta As Boolean = _Global_Row_Configuracion_General.Item("PedirPermisoCargasDirectaoSemiDirecta")
+
+                    If Not _PedirPermisoCargasDirectaoSemiDirecta Then
+                        _PedirPermisoCargasDirectaoSemiDirecta = _Global_Row_Configuracion_Estacion.Item("PedirPermisoCargasDirectaoSemiDirecta")
+                    End If
+
+                    Chk_CargaDirecta.Visible = _PedirPermisoCargasDirectaoSemiDirecta
+                    Chk_CargaSemiDirecta.Visible = _PedirPermisoCargasDirectaoSemiDirecta
+
+                End If
+
                 'If _Tido = "COV" And SobreStock Then
                 '    Chk_Pickear.Enabled = False
                 'End If
@@ -13380,6 +13393,16 @@ Public Class Frm_Formulario_Documento
             LblMoneda.Tag = .Item("Moneda_Doc")
             LblMoneda.Text = .Item("Moneda_Doc")
 
+            Chk_CargaDirecta.Enabled = False
+            Chk_CargaSemiDirecta.Enabled = False
+
+            If CBool(.Item("TipoCarga")) Then
+                If .Item("TipoCarga") = 1 Then Chk_CargaDirecta.Checked = True
+                If .Item("TipoCarga") = 2 Then Chk_CargaSemiDirecta.Checked = True
+                Chk_CargaDirecta.Visible = True
+                Chk_CargaSemiDirecta.Visible = True
+            End If
+
             Dim _Vamo As Double = 1
 
             If LblMoneda.Tag.ToString.Trim <> "$" Then
@@ -15010,6 +15033,9 @@ Public Class Frm_Formulario_Documento
             _Mod.Sb_Actualizar_Variables_Modalidad(ModModalidad_Doc)
 
             If Not IsNothing(_Global_Frm_Menu) Then _Global_Frm_Menu.Refresh()
+
+            Chk_CargaDirecta.Checked = False
+            Chk_CargaSemiDirecta.Checked = False
 
             Sb_Nuevo_Doc(_Cambiar_Tido)
             Sb_Botones_Activos(False, True)
@@ -26755,9 +26781,13 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                         End If
                     End If
 
-                    Dim _PedirPermisoCargasDirectaoSemiDirecta As Boolean = True
+                    Dim _PedirPermisoCargasDirectaoSemiDirecta As Boolean = _Global_Row_Configuracion_General.Item("PedirPermisoCargasDirectaoSemiDirecta")
 
-                    If _PedirPermisoCargasDirectaoSemiDirecta Then
+                    If Not _PedirPermisoCargasDirectaoSemiDirecta Then
+                        _PedirPermisoCargasDirectaoSemiDirecta = _Global_Row_Configuracion_Estacion.Item("PedirPermisoCargasDirectaoSemiDirecta")
+                    End If
+
+                    If _PedirPermisoCargasDirectaoSemiDirecta AndAlso (Chk_CargaDirecta.Checked Or Chk_CargaSemiDirecta.Checked) Then
                         If Not Fx_Tiene_Permiso(Me, "Doc00176", FUNCIONARIO, False) Then
                             Sb_Revisar_Permiso("Doc00176", False, True)
                         End If

@@ -292,13 +292,17 @@ Public Class Frm_Configuracion_Gral
                 Dim _Row_Feria As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
                 If Not IsNothing(_Row_Feria) Then
+
                     Txt_Feria.Text = _Row_Feria.Item("NombreFeria")
                     Txt_Feria.Tag = _Row_Feria
+
                 End If
 
             End If
 
             Sb_Actualizar_Estado_Feria()
+
+            Chk_PedirPermisoCargasDirectaoSemiDirecta.Checked = .Item("PedirPermisoCargasDirectaoSemiDirecta")
 
         End With
 
@@ -700,6 +704,7 @@ Public Class Frm_Configuracion_Gral
                        ",ImpNoCobraVtaStr = '" & Txt_ImpNoCobraVtaStr.Tag & "'" & vbCrLf &
                        ",ObligaFeriaVta = " & Convert.ToInt32(Chk_ObligaFeriaVta.Checked) & vbCrLf &
                        ",Id_Feria = " & _Id_Feria & vbCrLf &
+                       ",PedirPermisoCargasDirectaoSemiDirecta = " & Convert.ToInt32(Chk_PedirPermisoCargasDirectaoSemiDirecta.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
