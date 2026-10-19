@@ -1,5 +1,7 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Globalization
 Imports System.Security.Cryptography
+Imports System.Text
 Imports BkSpecialPrograms
 Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
@@ -16,6 +18,166 @@ Public Class Cl_Sincroniza
     Public Sub New()
 
     End Sub
+    Public Function SanearTexto(texto As String) As String
+        If String.IsNullOrWhiteSpace(texto) Then Return texto
+
+        ' 1. Corregir la codificación de ISO-8859-1 a UTF-8
+        Dim bytesLatin1 As Byte() = Encoding.GetEncoding("iso-8859-1").GetBytes(texto)
+        Dim textoCorregido As String = Encoding.UTF8.GetString(bytesLatin1)
+
+        ' 2. Remover tildes y diacríticos
+        Dim textoNormalizado As String = textoCorregido.Normalize(NormalizationForm.FormD)
+        Dim sb As New StringBuilder()
+
+        For Each c As Char In textoNormalizado
+            ' Filtramos los caracteres que no son marcas de acento
+            If CharUnicodeInfo.GetUnicodeCategory(c) <> UnicodeCategory.NonSpacingMark Then
+                sb.Append(c)
+            End If
+        Next
+
+        ' Devolvemos el string limpio y normalizado
+        Return sb.ToString().Normalize(NormalizationForm.FormC)
+    End Function
+    Public Sub Crear_Entidades(Txt_Log As Object)
+        _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+        Dim VerificarVinculos As LsValiciones.Mensajes = Fx_VerificarVinculos()
+        Dim _Mensaje As LsValiciones.Mensajes = Fx_TraeEntidades()
+        Dim ClientesXCrear As List(Of Entidad_meli.CLIENTES) = _Mensaje.Tag
+        If ClientesXCrear Is Nothing OrElse ClientesXCrear.Count = 0 Then
+            Return
+        End If
+        Dim Clientes_Random As List(Of Entidad_meli.Maeen_Data)
+        Sb_AddToLog("Creando entidades", $"Iniciando creación de entidades. Total entidades a crear: {ClientesXCrear.Count}", Txt_Log)
+        For Each Cliente As Entidad_meli.CLIENTES In ClientesXCrear
+            Dim rtenTemp As String = If(IsDBNull(Cliente.RTEN), Nothing, Convert.ToString(Cliente.RTEN).Trim())
+            If Not String.IsNullOrEmpty(rtenTemp) AndAlso rtenTemp.Length < 8 Then
+                rtenTemp = rtenTemp.PadLeft(8, "0"c)
+            Else
+                rtenTemp = rtenTemp
+            End If
+            Dim aux As New Entidad_meli.Maeen_Data With {
+                .KOEN = rtenTemp,
+                .RTEN = rtenTemp,
+                .NOKOEN = SanearTexto(Cliente.NOKOEN),
+                .GIEN = SanearTexto(Cliente.GIRO),
+                .PAEN = "CHI",
+                .DIEN = $"{SanearTexto(Cliente.CALLE)} {Cliente.NUMERO}",
+                .TIPOSUC = "P",
+                .TIEN = "C",
+                .LCEN = "TABPP02C",
+                .LVEN = "TABPP01P",
+                .RECEPELECT = True,
+                .CPEN = "CONTADO",
+                .TIPOEN = "0003"
+            }
+
+            Dim Entidad_M As New Entidad_meli
+            Entidad_M.Entidad_Random = aux
+            Entidad_M.Entidad_Bakapp = Entidad_M.Fx_Generar_Zw_Entidades_Defecto()
+
+            Entidad_M.Entidad_Bakapp.Comuna = SanearTexto(Cliente.CIUDAD)
+            Entidad_M.Entidad_Bakapp.Ciudad = SanearTexto(Cliente.STATE)
+            Entidad_M.Entidad_Bakapp.FacAuto = True
+
+            Dim Mensaje_ENT As Mensajes = Entidad_M.Fx_Crear_Entidad_Nueva()
+            If Mensaje_ENT.Mensaje = "¡Entidad ya existe en la base de datos! No es posible crearla." Then
+                Consulta_sql = $"UPDATE CLIENTES_CREAR SET ESTADO = 1, KOEN = '{aux.KOEN}' WHERE ID = {Cliente.ID}"
+            _SqlMeli.Ej_consulta_IDU(Consulta_sql, False)
+                Sb_AddToLog("Creando entidades", $"Entidad ya en base de datos, sincronizando KOEN =  {aux.KOEN}", Txt_Log)
+
+                Continue For
+            End If
+            If Mensaje_ENT.EsCorrecto Then
+                Consulta_sql = $"UPDATE CLIENTES_CREAR SET ESTADO = 1, KOEN = '{aux.KOEN}' WHERE ID = {Cliente.ID}"
+                _SqlMeli.Ej_consulta_IDU(Consulta_sql, False)
+                Sb_AddToLog("Creando entidades", $"Entidad creada KOEN =  {aux.KOEN}", Txt_Log)
+
+                Continue For
+
+            Else
+                Consulta_sql = $"UPDATE CLIENTES_CREAR SET ESTADO = 2 WHERE ID = {Cliente.ID}"
+                Sb_AddToLog("Creando entidades", $"Error al crear la entidad : {Mensaje_ENT.Mensaje}", Txt_Log)
+
+                _SqlMeli.Ej_consulta_IDU(Consulta_sql, False)
+                Continue For
+
+            End If
+
+        Next
+        Sb_AddToLog("Creando entidades", $"Proceso finalizado", Txt_Log)
+
+
+
+
+    End Sub
+    Private Function Fx_VerificarVinculos() As Mensajes
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+        Consulta_sql = $"
+UPDATE Destino
+SET 
+    Destino.KOEN = Origen.KOEN,
+    Destino.ESTADO = 1
+FROM CLIENTES Destino
+INNER JOIN CLIENTES Origen ON Destino.RTEN = Origen.RTEN
+WHERE 
+    Origen.ESTADO = 1 
+    AND Origen.KOEN IS NOT NULL
+    AND (Destino.ESTADO IS NULL OR Destino.ESTADO <> 1);
+"
+        _SqlMeli.Ej_consulta_IDU(Consulta_sql, False)
+        Return New LsValiciones.Mensajes With {.EsCorrecto = True, .Mensaje = "Vínculos verificados"}
+    End Function
+
+    Private Function Fx_TraeEntidades() As Mensajes
+        Dim _Mensaje As New LsValiciones.Mensajes
+        _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
+
+        Try
+            Consulta_sql = "Select * From CLIENTES_CREAR Where ESTADO = 0"
+            Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+            If Not CBool(_Tbl.Rows.Count) Then
+                _Mensaje.Detalle = "Sin registros"
+                Throw New System.Exception("No se encontraron registros en CLIENTES_CREAR")
+            End If
+            Dim _Ls_Entidades As New List(Of Entidad_meli.CLIENTES)
+            For Each _Row As DataRow In _Tbl.Rows
+                Dim _Entidad As New Entidad_meli.CLIENTES
+                With _Entidad
+                    .ID = Convert.ToInt32(_Row.Item("ID"))
+
+                    ' Campos numéricos que permiten nulos
+                    .ID_MP = If(IsDBNull(_Row.Item("ID_MP")), CType(Nothing, Integer?), Convert.ToInt32(_Row.Item("ID_MP")))
+                    .ESTADO = If(IsDBNull(_Row.Item("ESTADO")), CType(Nothing, Integer?), Convert.ToInt32(_Row.Item("ESTADO")))
+
+                    ' Campos de texto
+                    .NICK = If(IsDBNull(_Row.Item("NICK")), Nothing, Convert.ToString(_Row.Item("NICK")))
+                    .KOEN = If(IsDBNull(_Row.Item("KOEN")), Nothing, Convert.ToString(_Row.Item("KOEN")))
+                    .RTEN = If(IsDBNull(_Row.Item("RTEN")), Nothing, Convert.ToString(_Row.Item("RTEN")))
+                    .DV = If(IsDBNull(_Row.Item("DV")), Nothing, Convert.ToString(_Row.Item("DV")))
+                    .NOKOEN = If(IsDBNull(_Row.Item("NOKOEN")), Nothing, Convert.ToString(_Row.Item("NOKOEN")))
+                    .GIRO = If(IsDBNull(_Row.Item("GIRO")), Nothing, Convert.ToString(_Row.Item("GIRO")))
+                    .CIUDAD = If(IsDBNull(_Row.Item("CIUDAD")), Nothing, Convert.ToString(_Row.Item("CIUDAD")))
+                    .STATE = If(IsDBNull(_Row.Item("STATE")), Nothing, Convert.ToString(_Row.Item("STATE")))
+                    .CALLE = If(IsDBNull(_Row.Item("CALLE")), Nothing, Convert.ToString(_Row.Item("CALLE")))
+                    .NUMERO = If(IsDBNull(_Row.Item("NUMERO")), Nothing, Convert.ToString(_Row.Item("NUMERO")))
+                    .EMAIL = If(IsDBNull(_Row.Item("EMAIL")), Nothing, Convert.ToString(_Row.Item("EMAIL")))
+                End With
+                _Ls_Entidades.Add(_Entidad)
+            Next
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Id = 1
+            _Mensaje.Mensaje = "Registros encontrados"
+            _Mensaje.Tag = _Ls_Entidades
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Id = 0
+            _Mensaje.Mensaje = ex.Message
+        End Try
+        Return _Mensaje
+    End Function
+
 
     Sub Sb_Revisar_Pedidos(Txt_Log As Object, _Fecha As Date, _Top As Integer)
 
@@ -46,25 +208,17 @@ Public Class Cl_Sincroniza
                     Dim _Mensaje2 As LsValiciones.Mensajes = Fx_Grabar_Pedido(_PEDIDO, _PEDIDOS_DETALLE)
 
                     If _Mensaje2.EsCorrecto Then
-
                         _OBSERVACIONES = _Mensaje2.Mensaje
-
                         Sb_AddToLog("Sincronizando MELI", "Reisando documento: " & _Doc_MELI.PEDIDO.ID_MELI, Txt_Log)
-
                         Consulta_sql = "Update PEDIDOS Set REVBAKAPP = 1,FECHAREVBAKAPP = Getdate(),OBSERVACIONES = '" & _OBSERVACIONES & "' Where ID = " & _ID
                         _SqlMeli.Ej_consulta_IDU(Consulta_sql, False)
-
                     Else
-
                         _OBSERVACIONES = _Mensaje2.Mensaje
-
                         Consulta_sql = "Update PEDIDOS Set REVBAKAPP = 1,FECHAREVBAKAPP = Getdate(),OBSERVACIONES = '" & _OBSERVACIONES & "'" & vbCrLf &
                                        "Where ID = " & _ID
                         _SqlMeli.Ej_consulta_IDU(Consulta_sql, False)
-
                         Sb_AddToLog("Sincronizando MELI", "Error en documento ID: " & _ID & ", ID_MELI: " & _ID_MELI, Txt_Log)
                         Sb_AddToLog("Sincronizando MELI", _OBSERVACIONES, Txt_Log)
-
                     End If
 
                 Else
@@ -147,7 +301,15 @@ Public Class Cl_Sincroniza
                 .Texto9 = String.Empty
                 .Texto10 = String.Empty
                 .Facturar = ConfiguracionLocal.Facturar
-                .DocEmitir = ConfiguracionLocal.DocEmitir
+                .DocEmitir = If(IsNothing(_PEDIDO.DocEmitir), ConfiguracionLocal.DocEmitir, _PEDIDO.DocEmitir)
+                If (.DocEmitir = "Factura") Then
+                    .DocEmitir = "FCV"
+                ElseIf (.DocEmitir = "Boleta") Then
+                    .DocEmitir = "BLV"
+                Else
+                    .DocEmitir = ConfiguracionLocal.DocEmitir
+
+                End If
                 .CodFuncionario_Factura = ConfiguracionLocal.Responsable
                 .EnvFacAutoBk = 0
                 .Modalidad_Fac = ConfiguracionLocal.ModalidadFac
@@ -305,11 +467,22 @@ Public Class Cl_Sincroniza
         Dim _Mensaje As New LsValiciones.Mensajes
 
         Try
+#Region "Consulta original"
 
             Consulta_sql = "Select Top " & _Top & " * From PEDIDOS" & vbCrLf &
                            "Where REVBAKAPP = 0 And CONVERT(varchar, FECHA, 112) = '" & Format(_Fecha, "yyyyMMdd") & "'"
-
             Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+
+#End Region
+
+#Region "Prueba"
+
+            'Dim Consulta_prueba = "Select Top " & _Top & " * From PEDIDOS" & vbCrLf &
+            '               "Where ID_MELI = '2000018720902782'"
+            'Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_prueba)
+
+#End Region
+
 
             If Not CBool(_Tbl.Rows.Count) Then
                 _Mensaje.Detalle = "Sin registros"
@@ -405,6 +578,8 @@ Public Class Cl_Sincroniza
                 .LAST_NAME = NuloPorNro(_Row.Item("LAST_NAME"), "")
                 .DIRECCION = NuloPorNro(_Row.Item("DIRECCION"), "")
                 .COMUNA = NuloPorNro(_Row.Item("COMUNA"), "")
+                .DocEmitir = NuloPorNro(_Row.Item("TIPO_SALIDA"), "")
+
 
             End With
 
@@ -485,13 +660,23 @@ Public Class Cl_Sincroniza
             _Top = 1000
         End If
 
+#Region "Original"
         Consulta_sql = "Select NudoOCC_Ori As Id_Meli,Idmaeedo_NVV As Idmaeedo" & vbCrLf &
                        "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto" & vbCrLf &
                        "Where NudoOCC_Ori+'.pdf' Not in (Select Nombre_Archivo From " & _Global_BaseBk & "Zw_Docu_Archivos) " &
                        "And CONVERT(varchar, Feemdo_NVV, 112) = '" & Format(_Fecha, "yyyyMMdd") & "'"
 
         Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
+#End Region
 
+#Region "Prueba"
+        'Consulta_sql = "Select NudoOCC_Ori As Id_Meli,Idmaeedo_NVV As Idmaeedo" & vbCrLf &
+        '               "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto" & vbCrLf &
+        '               "Where NudoOCC_Ori+'.pdf' Not in (Select Nombre_Archivo From " & _Global_BaseBk & "Zw_Docu_Archivos) " &
+        '               "And CONVERT(varchar, Feemdo_NVV, 112) = '" & Format(_Fecha, "yyyyMMdd") & "' and ID_MELI = '2000018720902782'"
+
+        'Dim _Tbl As DataTable = _SqlRandom.Fx_Get_DataTable(Consulta_sql)
+#End Region
         If Not CBool(_Tbl.Rows.Count) Then
             Sb_AddToLog("Adjuntar etiquetas", "Sin registros", Txt_Log)
             Return
@@ -552,13 +737,22 @@ Public Class Cl_Sincroniza
     Sub Sb_Revisar_Kit(Txt_Log As Object, _Fecha As Date, _Top As Integer)
 
         _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
-
+#Region "Consulta original"
         Consulta_sql = "SELECT d.ID,d.ID_MELI,KOPR,REFERENCIA_MELI,CANTIDAD,NETO_UNITARIO,SUB_TOTAL" & vbCrLf &
                        "FROM PEDIDOS_DETALLE d" & vbCrLf &
                        "Inner Join PEDIDOS p On d.ID_MELI = p.ID_MELI" & vbCrLf &
                        "Where KOPR Like 'KT-%' And d.ES_KIT = 0 And CONVERT(varchar, FECHA, 112) = '" & Format(_Fecha, "yyyyMMdd") & "'"
 
         Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+#End Region
+#Region "Prueba"
+        'Consulta_sql = "SELECT d.ID,d.ID_MELI,KOPR,REFERENCIA_MELI,CANTIDAD,NETO_UNITARIO,SUB_TOTAL" & vbCrLf &
+        '               "FROM PEDIDOS_DETALLE d" & vbCrLf &
+        '               "Inner Join PEDIDOS p On d.ID_MELI = p.ID_MELI" & vbCrLf &
+        '               "Where KOPR Like 'KT-%' And d.ES_KIT = 0 And CONVERT(varchar, FECHA, 112) = '" & Format(_Fecha, "yyyyMMdd") & "' and  d.ID_MELI = '2000018720902782'"
+
+        'Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+#End Region
 
         For Each _Fila As DataRow In _Tbl.Rows
 
@@ -881,9 +1075,14 @@ Public Class Cl_Sincroniza
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
         _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
 
+#Region "Original"
         Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO = 0 And REVBAKAPP = 1"
         Dim _Tbl_Pedidos As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
-
+#End Region
+#Region "Prueba"
+        'Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO = 0 And REVBAKAPP = 1 and ID_MELI = '2000018720902782'"
+        'Dim _Tbl_Pedidos As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+#End Region
         If _Tbl_Pedidos.Rows.Count = 0 Then
             Return
         End If
@@ -913,9 +1112,15 @@ Public Class Cl_Sincroniza
 
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
         _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
-
+#Region "Original"
         Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO <> 0 And ESTADO = 1"
         Dim _Tbl_Pedidos As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+#End Region
+#Region "Prueba"
+        'Consulta_sql = "SELECT * From PEDIDOS Where IDMAEEDO <> 0 And ESTADO = 1 and ID_MELI = '2000018720902782'"
+        'Dim _Tbl_Pedidos As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
+#End Region
+
 
         If _Tbl_Pedidos.Rows.Count = 0 Then
             Return
@@ -992,6 +1197,16 @@ Public Class Cl_Sincroniza
                     End If
 
                 Else
+
+                    If _Mensaje.Mensaje = "Al parecer el documento ya fue pagado en el intertanto, se cancela la operación" Then
+
+                        Consulta_sql = "Update PEDIDOS_PAGOS Set IDMAEDPCE = 1,IDMAEDPCD = 1 Where ID = " & _ID
+
+                        If _SqlMeli.Ej_consulta_IDU(Consulta_sql, False) Then
+                            Sb_AddToLog("Pagar documento", _Mensaje.Mensaje, Txt_Log)
+                        End If
+
+                    End If
 
                     Consulta_sql = "Update PEDIDOS_PAGOS Set LOG_INFO = '" & _Mensaje.Mensaje & "' Where ID = " & _ID
 

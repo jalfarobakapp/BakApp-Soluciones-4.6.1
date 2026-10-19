@@ -110,6 +110,8 @@ Public Class Frm_Sincronizador
 
         With _Cl_Sincroniza
 
+            .Crear_Entidades(Txt_Log)
+
             .Sb_SincronizarPagos(Txt_Log)
             .Sb_ActualizarIDMAEEDO_NVV_DesdeBakappHaciaMLIBRE()
             .Sb_ActualizarIDMAEEDO_FCV_DesdeBakappHaciaMLIBRE()
@@ -136,4 +138,15 @@ Public Class Frm_Sincronizador
         Sb_AddToLog("Sincronizar", "Se actualiza la fecha: " & Dtp_FechaRevision.Value, Txt_Log)
     End Sub
 
+    Private Sub Switch_Sincronizacion_ValueChanged(sender As Object, e As EventArgs) Handles Switch_Sincronizacion.ValueChanged
+        If Timer_Ejecutar.Enabled Then
+            Timer_Ejecutar.Stop()
+            Sb_AddToLog("Sincronizar", "Sincronización detenida.", Txt_Log)
+            CircularPgrs.IsRunning = False
+        Else
+            Timer_Ejecutar.Start()
+            Sb_AddToLog("Sincronizar", "Sincronización en ejecución.", Txt_Log)
+            CircularPgrs.IsRunning = True
+        End If
+    End Sub
 End Class
