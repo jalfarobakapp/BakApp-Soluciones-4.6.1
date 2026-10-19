@@ -25,7 +25,8 @@ Public Class Frm_Formulario_Permisos_Asociados_New
     Dim _Tbl_Funcionarios_X_13_CupoExedidoConMorosidad As DataTable
     Dim _Tbl_Funcionarios_X_14_VentaMayorPromedioConMorosidad As DataTable
     Dim _Tbl_Funcionarios_X_15_SinCiaSeguro As DataTable
-    Dim _Tbl_Funcionarios_X_16_CargaDirectaSemiDirecta As DataTable
+    Dim _Tbl_Funcionarios_X_16_CargaDirecta As DataTable
+    Dim _Tbl_Funcionarios_X_17_CargaSemiDirecta As DataTable
 
     Dim _Id_Enc As Integer
     Dim _Id_DocEnc As Integer
@@ -297,7 +298,9 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                 Case "Doc00171"
                     _Tbl = _Tbl_Funcionarios_X_15_SinCiaSeguro
                 Case "Doc00176"
-                    _Tbl = _Tbl_Funcionarios_X_16_CargaDirectaSemiDirecta
+                    _Tbl = _Tbl_Funcionarios_X_16_CargaDirecta
+                Case "Doc00177"
+                    _Tbl = _Tbl_Funcionarios_X_17_CargaSemiDirecta
 
             End Select
 
@@ -485,7 +488,9 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                     Case "Doc00171"
                         _Tbl = _Tbl_Funcionarios_X_15_SinCiaSeguro
                     Case "Doc00176"
-                        _Tbl = _Tbl_Funcionarios_X_16_CargaDirectaSemiDirecta
+                        _Tbl = _Tbl_Funcionarios_X_16_CargaDirecta
+                    Case "Doc00177"
+                        _Tbl = _Tbl_Funcionarios_X_17_CargaSemiDirecta
 
                 End Select
 
@@ -658,7 +663,9 @@ Public Class Frm_Formulario_Permisos_Asociados_New
             Case "Doc00171"
                 _Tbl = _Tbl_Funcionarios_X_15_SinCiaSeguro
             Case "Doc00176"
-                _Tbl = _Tbl_Funcionarios_X_16_CargaDirectaSemiDirecta
+                _Tbl = _Tbl_Funcionarios_X_16_CargaDirecta
+            Case "Doc00177"
+                _Tbl = _Tbl_Funcionarios_X_17_CargaSemiDirecta
 
         End Select
 
@@ -698,7 +705,9 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                 Case "Doc00171"
                     _Tbl_Funcionarios_X_15_SinCiaSeguro = _Tbl
                 Case "Doc00176"
-                    _Tbl_Funcionarios_X_16_CargaDirectaSemiDirecta = _Tbl
+                    _Tbl_Funcionarios_X_16_CargaDirecta = _Tbl
+                Case "Doc00177"
+                    _Tbl_Funcionarios_X_17_CargaSemiDirecta = _Tbl
 
             End Select
 
@@ -845,7 +854,9 @@ Public Class Frm_Formulario_Permisos_Asociados_New
                 Case "Doc00171"
                     _Tbl_Funcionarios_X_15_SinCiaSeguro = Nothing
                 Case "Doc00176"
-                    _Tbl_Funcionarios_X_16_CargaDirectaSemiDirecta = Nothing
+                    _Tbl_Funcionarios_X_16_CargaDirecta = Nothing
+                Case "Doc00177"
+                    _Tbl_Funcionarios_X_17_CargaSemiDirecta = Nothing
 
             End Select
 

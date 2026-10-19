@@ -236,6 +236,8 @@ Public Class Frm_Ver_Documento
 
             Case Enum_Tipo_Apertura.Desde_Random_SQL
 
+                Btn_Opciones_Especiales.Visible = True
+
                 _Campo_Koen = "ENDO"
                 _Campo_Suen = "SUENDO"
 
@@ -928,6 +930,26 @@ Public Class Frm_Ver_Documento
                 End If
             End If
         End If
+
+        Dim _TipoCarga As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo, True, False)
+
+        Btn_SinCarga.Checked = False
+        Btn_CargaDirecta.Checked = False
+        Btn_CargaSemiDirecta.Checked = False
+
+        If _TipoCarga = 0 Then Btn_SinCarga.Checked = True
+        If _TipoCarga = 1 Then Btn_CargaDirecta.Checked = True
+        If _TipoCarga = 2 Then Btn_CargaSemiDirecta.Checked = True
+
+
+        Dim _PedirPermisoCargasDirectaoSemiDirecta As Boolean = _Global_Row_Configuracion_General.Item("PedirPermisoCargasDirectaoSemiDirecta")
+
+        If Not _PedirPermisoCargasDirectaoSemiDirecta Then
+            _PedirPermisoCargasDirectaoSemiDirecta = _Global_Row_Configuracion_Estacion.Item("PedirPermisoCargasDirectaoSemiDirecta")
+        End If
+
+        ' Permiso para grabar TipoCarga: Doc00176
+        Btn_TipoCarga.Enabled = _PedirPermisoCargasDirectaoSemiDirecta
 
         'Btn_Ferias.Visible = (_Tido = "COV" OrElse _Tido = "NVV" Or _Tido = "FCV")
 
@@ -5740,6 +5762,118 @@ Where Idmaeedo = {_Idmaeedo}
                           MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
             MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema!", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        End If
+
+    End Sub
+
+    Private Sub Btn_SinCarga_Click(sender As Object, e As EventArgs) Handles Btn_SinCarga.Click
+        Dim _TipoCarga_Old As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo, True, False)
+        If _TipoCarga_Old = 0 Then
+            MessageBoxEx.Show(Me, "El documento ya esta marcado como SIN CARGA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+        Sb_Cambiar_TipoCarga(_Idmaeedo, 0, _TipoCarga_Old)
+    End Sub
+
+    Private Sub Btn_CargaDirecta_Click(sender As Object, e As EventArgs) Handles Btn_CargaDirecta.Click
+        Dim _TipoCarga_Old As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo, True, False)
+        If _TipoCarga_Old = 1 Then
+            MessageBoxEx.Show(Me, "El documento ya tiene el tipo de carga CARGA DIRECTA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+        Sb_Cambiar_TipoCarga(_Idmaeedo, 1, _TipoCarga_Old)
+    End Sub
+
+    Private Sub Btn_CargaSemiDirecta_Click(sender As Object, e As EventArgs) Handles Btn_CargaSemiDirecta.Click
+        Dim _TipoCarga_Old As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo, True, False)
+        If _TipoCarga_Old = 2 Then
+            MessageBoxEx.Show(Me, "El documento ya tiene el tipo de carga CARGA SEMI DIRECTA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+        Sb_Cambiar_TipoCarga(_Idmaeedo, 2, _TipoCarga_Old)
+    End Sub
+
+    Sub Sb_Cambiar_TipoCarga(_Idmaeedo As Integer, _TipoCarga_New As Integer, _TipoCarga_Old As Integer)
+
+        Dim _Permiso As String = String.Empty
+        Dim _Tido As String = _TblEncabezado.Rows(0).Item("TIDO")
+
+        If _Tido <> "NVV" Then
+            MessageBoxEx.Show(Me, "Solo se puede marcar una Nota de Venta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Dim _TipoCarga_Str As String
+
+        If _TipoCarga_New = 0 Then
+            _Permiso = "Doc00178"
+            _TipoCarga_Str = "SIN CARGA"
+        End If
+
+        If _TipoCarga_New = 1 Then
+            _Permiso = "Doc00179"
+            _TipoCarga_Str = "CARGA DIRECTA"
+        End If
+
+        If _TipoCarga_New = 2 Then
+            _Permiso = "Doc00180"
+            _TipoCarga_Str = "CARGA SEMI-DIRECTA"
+        End If
+
+        If MessageBoxEx.Show(Me, $"¿Confirma el cambio de Tipo de Despacho a {_TipoCarga_Str}?",
+                             "Cambiar Tipo Despacho", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        If Not Fx_Tiene_Permiso(Me, _Permiso,,,,,,,,,,,,,,,,, _Idmaeedo) Then
+            Return
+        End If
+
+
+        Dim _Cl_TipoCarga As New Cl_TipoCarga_Documentos
+        Dim _Lista_Idmaeddo As List(Of Integer) = Nothing
+        Dim _Registros_Actualizados As Integer
+
+        Dim _Actualizado As Boolean =
+            _Cl_TipoCarga.Fx_Actualizar_TipoCarga_Desde_Nvv(_Idmaeedo,
+                                                            _TipoCarga_New,
+                                                            _Lista_Idmaeddo,
+                                                            _Registros_Actualizados)
+
+        If _Actualizado Then
+
+            MessageBoxEx.Show(Me, "Registros actualizados: " & _Registros_Actualizados & vbCrLf &
+                            "IDMAEDDO encontrados: " & String.Join(",", _Lista_Idmaeddo))
+
+        Else
+
+            MessageBox.Show(_Cl_TipoCarga.Pro_Error)
+
+        End If
+
+        Btn_SinCarga.Checked = False
+        Btn_CargaDirecta.Checked = False
+        Btn_CargaSemiDirecta.Checked = False
+
+        If _TipoCarga_New = 0 Then Btn_SinCarga.Checked = True
+        If _TipoCarga_New = 1 Then Btn_CargaDirecta.Checked = True
+        If _TipoCarga_New = 2 Then Btn_CargaSemiDirecta.Checked = True
+
+        If _Actualizado Then
+
+            GrillaDetalleDoc.Refresh()
+
+            If GrillaDetalleDoc.CurrentCell IsNot Nothing AndAlso
+       GrillaDetalleDoc.CurrentRow IsNot Nothing Then
+
+                GrillaDetalleDoc.Focus()
+
+                GrillaDetalleDoc_CellEnter(
+            GrillaDetalleDoc,
+            New DataGridViewCellEventArgs(
+                GrillaDetalleDoc.CurrentCell.ColumnIndex,
+                GrillaDetalleDoc.CurrentCell.RowIndex))
+            End If
         End If
 
     End Sub

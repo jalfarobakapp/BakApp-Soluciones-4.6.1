@@ -1835,7 +1835,8 @@ Public Class Frm_Formulario_Documento
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00170", False, False, "", "", False, False, False) ' Venta sobre promedio de venta normar y con Morosidad
         _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00171", False, False, "", "", False, False, False) ' Vender sin asociar compañia de seguro cuando el cliente tiene compañia de seguro
 
-        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00176", False, False, "", "", False, False, False) ' Vender con CargaDirecta o CargaSemiDirecta
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00176", False, False, "", "", False, False, False) ' Vender con CargaDirecta 
+        _Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00177", False, False, "", "", False, False, False) ' Vender con CargaSemiDirecta
 
 
         '_Cl_Permisos_Asociados.Fx_Incorporar_Permiso_Al_Documento(_Ds_Matriz_Documentos, "Doc00103", False, False, "", "", False, False, False) ' Morosidad por cheques protestados
@@ -25001,7 +25002,21 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                     Fx_Autorizar_X_Descuentos(False)
                 End If
 
-            Case "Bkp00015", "Bkp00019", "Bkp00033", "Bkp00057", "ODp00017", "Bkp00062", "Doc00098", "Doc00101", "Doc00102", "Doc00161", "Doc00169", "Doc00170", "Doc00171", "Doc00176"
+            Case "Bkp00015",
+                 "Bkp00019",
+                 "Bkp00033",
+                 "Bkp00057",
+                 "ODp00017",
+                 "Bkp00062",
+                 "Doc00098",
+                 "Doc00101",
+                 "Doc00102",
+                 "Doc00161",
+                 "Doc00169",
+                 "Doc00170",
+                 "Doc00171",
+                 "Doc00176",
+                 "Doc00177"
 
                 If _Crear_Doc_Def_Al_Grabar Then
 
@@ -26788,9 +26803,16 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                     End If
 
                     If _PedirPermisoCargasDirectaoSemiDirecta AndAlso (Chk_CargaDirecta.Checked Or Chk_CargaSemiDirecta.Checked) Then
-                        If Not Fx_Tiene_Permiso(Me, "Doc00176", FUNCIONARIO, False) Then
-                            Sb_Revisar_Permiso("Doc00176", False, True)
+
+                        Dim _Permiso_TipoCarga As String = String.Empty
+
+                        If Chk_CargaDirecta.Checked Then _Permiso_TipoCarga = "Doc00176"
+                        If Chk_CargaSemiDirecta.Checked Then _Permiso_TipoCarga = "Doc00177"
+
+                        If Not Fx_Tiene_Permiso(Me, _Permiso_TipoCarga, FUNCIONARIO, False) Then
+                            Sb_Revisar_Permiso(_Permiso_TipoCarga, False, True)
                         End If
+
                     End If
 
                 End If

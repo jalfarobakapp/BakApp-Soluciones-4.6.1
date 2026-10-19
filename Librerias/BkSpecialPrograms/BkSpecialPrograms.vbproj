@@ -4747,6 +4747,7 @@
     <Compile Include="999 Funciones, Clases y Datos\Formularios\Frm_Validaciones.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Cl_TipoCarga_Documentos.vb" />
     <Compile Include="999 Funciones, Clases y Datos\Funciones BakApp\Entidad\Recursos\Recursos_Entidad.Designer.vb">
       <DependentUpon>Recursos_Entidad.resx</DependentUpon>
       <AutoGen>True</AutoGen>
