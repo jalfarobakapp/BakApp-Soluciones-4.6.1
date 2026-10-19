@@ -182,6 +182,9 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Estaciones_Impresoras", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Estaciones_Ruta_PDF", _Modificar, Lbl_Eventos)
 
+            'FERIA
+            .Sb_Revisar_Tabla2(Me, "Zw_Ferias", _Modificar, Lbl_Eventos)
+
             'FINCRED
             .Sb_Revisar_Tabla2(Me, "Zw_Fincred_Config", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Fincred_Documentos", _Modificar, Lbl_Eventos)
@@ -212,7 +215,6 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Inv_Inventario", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Inv_Sector", _Modificar, Lbl_Eventos)
 
-
             .Sb_Revisar_Tabla2(Me, "Zw_Licencia", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Licencia_Mod", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Linea_Oferta", _Modificar, Lbl_Eventos)
@@ -222,6 +224,9 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_ListaPreGlobal", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_ListaPreProducto", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_ListaPreHistorico", _Modificar, Lbl_Eventos)
+
+            .Sb_Revisar_Tabla2(Me, "Zw_ListaLC_ValPro", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_ListaLC_ValPro_Recep", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_Log_Gestiones", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Lotes_Enc", _Modificar, Lbl_Eventos)

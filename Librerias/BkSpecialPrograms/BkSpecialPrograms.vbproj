@@ -1033,6 +1033,12 @@
     <Compile Include="03 Sistemas\Ferias\Frm_Ferias.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Ferias\Frm_MantFeria.Designer.vb">
+      <DependentUpon>Frm_MantFeria.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Ferias\Frm_MantFeria.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\PDARandomMovil\Cl_PDARandomMovil.vb" />
     <Compile Include="03 Sistemas\PDARandomMovil\Frm_PreVentasPDA.Designer.vb">
       <DependentUpon>Frm_PreVentasPDA.vb</DependentUpon>
@@ -5072,6 +5078,9 @@
     <EmbeddedResource Include="03 Sistemas\Ferias\Frm_Ferias.resx">
       <DependentUpon>Frm_Ferias.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Ferias\Frm_MantFeria.resx">
+      <DependentUpon>Frm_MantFeria.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\PDARandomMovil\Frm_PreVentasPDA.resx">
       <DependentUpon>Frm_PreVentasPDA.vb</DependentUpon>
     </EmbeddedResource>
@@ -8356,6 +8365,8 @@
     <None Include="01 Procesos  compartidos\Productos\01 Crear Productos\Crea Producto clasic\Recursos\Sql\SqlQuery_Editar_Producto.sql" />
     <None Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Inf. Ult. Compra\Recursos\Sql\Ult_Compras_GRC _New.sql" />
     <None Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Inf. Ult. Compra\Recursos\Sql\Ult_Compras_X_Productos.sql" />
+    <None Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Inf. Ult. Compra\Recursos\Sql\Ult_Compras_GRC _New2.sql" />
+    <None Include="01 Procesos  compartidos\Precios y Costos\Lista LC\Inf. Ult. Compra\Recursos\Sql\Ult_Compras_GRC _New3.sql" />
     <Content Include="01 Procesos  compartidos\Productos\03 Informacion Producto\Recursos\Sql\SQLQuery Calculo de cumplimiento de entregas por parte de un proveedor por Producto.sql" />
     <Content Include="01 Procesos  compartidos\Productos\21 Ofertas\Ofertas dinamicas\Recursos especiales\MAEERES_Hist.sql" />
     <Content Include="01 Procesos  compartidos\Remotas\Cadenas Remotas\Recursos\Sql\SQLQuery Reenviar Solicitud De Permiso.sql" />
@@ -8383,9 +8394,12 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor_DocTom.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Det_Lote.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidad_CiaSeguro.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Ferias.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_InterStock_Det.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_InterStock_Enc.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_InterStock_Equivalencia.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaLC_ValPro.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaLC_ValPro_Recep.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_PreVenta_StockProd.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Correos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CorreosEnvioRecepcion.sql" />

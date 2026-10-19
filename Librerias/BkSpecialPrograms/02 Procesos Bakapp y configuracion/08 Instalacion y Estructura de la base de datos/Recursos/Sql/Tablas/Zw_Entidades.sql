@@ -29,7 +29,10 @@ CREATE TABLE [dbo].[Zw_Entidades](
     [NoCobrarPallet]                [bit]           NOT NULL DEFAULT(0),
     [ImpNoCobraVta]                 [bit]           NOT NULL DEFAULT(0),
     [ImpNoCobraVtaStr]              [varchar](13)   NOT NULL DEFAULT(''),    
-    [EsCiaSeguro]                   [bit]           NOT NULL DEFAULT(0),    
+    [EsCiaSeguro]                   [bit]           NOT NULL DEFAULT(0),
+    [Pais]                          [varchar](30)   NOT NULL DEFAULT(''),    
+    [Ciudad]                        [varchar](50)   NOT NULL DEFAULT(''),    
+    [Comuna]                        [varchar](50)   NOT NULL DEFAULT(''),    
  CONSTRAINT [PK_Zw_Entidades] PRIMARY KEY CLUSTERED 
 (
 	[CodEntidad] ASC,
