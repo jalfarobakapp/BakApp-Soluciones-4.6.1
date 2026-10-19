@@ -1,5 +1,7 @@
 ﻿Imports System.Data.SqlClient
+Imports System.Globalization
 Imports System.Security.Cryptography
+Imports System.Text
 Imports BkSpecialPrograms
 Imports BkSpecialPrograms.LsValiciones
 Imports DevComponents.DotNetBar
@@ -16,7 +18,27 @@ Public Class Cl_Sincroniza
     Public Sub New()
 
     End Sub
+    Public Function SanearTexto(texto As String) As String
+        If String.IsNullOrWhiteSpace(texto) Then Return texto
 
+        ' 1. Corregir la codificación de ISO-8859-1 a UTF-8
+        Dim bytesLatin1 As Byte() = Encoding.GetEncoding("iso-8859-1").GetBytes(texto)
+        Dim textoCorregido As String = Encoding.UTF8.GetString(bytesLatin1)
+
+        ' 2. Remover tildes y diacríticos
+        Dim textoNormalizado As String = textoCorregido.Normalize(NormalizationForm.FormD)
+        Dim sb As New StringBuilder()
+
+        For Each c As Char In textoNormalizado
+            ' Filtramos los caracteres que no son marcas de acento
+            If CharUnicodeInfo.GetUnicodeCategory(c) <> UnicodeCategory.NonSpacingMark Then
+                sb.Append(c)
+            End If
+        Next
+
+        ' Devolvemos el string limpio y normalizado
+        Return sb.ToString().Normalize(NormalizationForm.FormC)
+    End Function
     Public Sub Crear_Entidades(Txt_Log As Object)
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
         _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
@@ -38,22 +60,25 @@ Public Class Cl_Sincroniza
             Dim aux As New Entidad_meli.Maeen_Data With {
                 .KOEN = rtenTemp,
                 .RTEN = rtenTemp,
-                .NOKOEN = Cliente.NOKOEN,
-                .GIEN = Cliente.GIRO,
+                .NOKOEN = SanearTexto(Cliente.NOKOEN),
+                .GIEN = SanearTexto(Cliente.GIRO),
                 .PAEN = "CHI",
-                .DIEN = $"{Cliente.CALLE} {Cliente.NUMERO}",
+                .DIEN = $"{SanearTexto(Cliente.CALLE)} {Cliente.NUMERO}",
                 .TIPOSUC = "P",
                 .TIEN = "C",
                 .LCEN = "TABPP02C",
                 .LVEN = "TABPP01P",
-                .RECEPELECT = True
+                .RECEPELECT = True,
+                .CPEN = "CONTADO",
+                .TIPOEN = "0003"
             }
+
             Dim Entidad_M As New Entidad_meli
             Entidad_M.Entidad_Random = aux
             Entidad_M.Entidad_Bakapp = Entidad_M.Fx_Generar_Zw_Entidades_Defecto()
 
-            Entidad_M.Entidad_Bakapp.Comuna = Cliente.CIUDAD
-            Entidad_M.Entidad_Bakapp.Ciudad = Cliente.STATE
+            Entidad_M.Entidad_Bakapp.Comuna = SanearTexto(Cliente.CIUDAD)
+            Entidad_M.Entidad_Bakapp.Ciudad = SanearTexto(Cliente.STATE)
             Entidad_M.Entidad_Bakapp.FacAuto = True
 
             Dim Mensaje_ENT As Mensajes = Entidad_M.Fx_Crear_Entidad_Nueva()
