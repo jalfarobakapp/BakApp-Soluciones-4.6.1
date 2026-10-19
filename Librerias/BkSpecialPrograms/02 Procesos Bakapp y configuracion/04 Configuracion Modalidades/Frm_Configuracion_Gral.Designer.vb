@@ -207,6 +207,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Btn_DocConceptosVsPagos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_ConfPuntosVta = New DevComponents.DotNetBar.ButtonItem()
         Me.CheckBoxX2 = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_PedirPermisoCargasDirectaoSemiDirecta = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.TableLayoutPanel3.SuspendLayout()
         CType(Me.Input_Monto_Max_CRV_FacMasiva, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel4.SuspendLayout()
@@ -241,6 +242,7 @@ Partial Class Frm_Configuracion_Gral
         Me.TableLayoutPanel3.BackColor = System.Drawing.Color.Transparent
         Me.TableLayoutPanel3.ColumnCount = 1
         Me.TableLayoutPanel3.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle())
+        Me.TableLayoutPanel3.Controls.Add(Me.Chk_PedirPermisoCargasDirectaoSemiDirecta, 0, 24)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_RevAutomaticaMorosidadClientes, 0, 23)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_LasNVVDebenSerHabilitadasParaFacturarCP, 0, 22)
         Me.TableLayoutPanel3.Controls.Add(Me.Chk_VendeUD2DesacUD1soloRTUD, 0, 21)
@@ -268,32 +270,33 @@ Partial Class Frm_Configuracion_Gral
         Me.TableLayoutPanel3.ForeColor = System.Drawing.Color.Black
         Me.TableLayoutPanel3.Location = New System.Drawing.Point(3, 3)
         Me.TableLayoutPanel3.Name = "TableLayoutPanel3"
-        Me.TableLayoutPanel3.RowCount = 24
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle())
-        Me.TableLayoutPanel3.Size = New System.Drawing.Size(657, 444)
+        Me.TableLayoutPanel3.RowCount = 25
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.0!))
+        Me.TableLayoutPanel3.Size = New System.Drawing.Size(657, 458)
         Me.TableLayoutPanel3.TabIndex = 85
         '
         'Chk_RevAutomaticaMorosidadClientes
@@ -308,7 +311,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_RevAutomaticaMorosidadClientes.ForeColor = System.Drawing.Color.Black
         Me.Chk_RevAutomaticaMorosidadClientes.Location = New System.Drawing.Point(3, 417)
         Me.Chk_RevAutomaticaMorosidadClientes.Name = "Chk_RevAutomaticaMorosidadClientes"
-        Me.Chk_RevAutomaticaMorosidadClientes.Size = New System.Drawing.Size(635, 21)
+        Me.Chk_RevAutomaticaMorosidadClientes.Size = New System.Drawing.Size(635, 12)
         Me.Chk_RevAutomaticaMorosidadClientes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_RevAutomaticaMorosidadClientes.TabIndex = 132
         Me.Chk_RevAutomaticaMorosidadClientes.Text = "Activar revisión automática de control de morosidad de clientes"
@@ -908,15 +911,15 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.ControlBox.MenuBox.Name = ""
         Me.SuperTabControl1.ControlBox.Name = ""
         Me.SuperTabControl1.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabControl1.ControlBox.MenuBox, Me.SuperTabControl1.ControlBox.CloseBox})
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel6)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel4)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel1)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel5)
-        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel8)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel2)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel3)
         Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel9)
+        Me.SuperTabControl1.Controls.Add(Me.SuperTabControlPanel7)
         Me.SuperTabControl1.ForeColor = System.Drawing.Color.Black
         Me.SuperTabControl1.Location = New System.Drawing.Point(12, 12)
         Me.SuperTabControl1.Name = "SuperTabControl1"
@@ -927,7 +930,7 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControl1.TabAlignment = DevComponents.DotNetBar.eTabStripAlignment.Left
         Me.SuperTabControl1.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.SuperTabControl1.TabIndex = 97
-        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SpTab_General, Me.SpTab_Compras, Me.SpTab_Ventas2, Me.SpTab_Ventas, Me.SpTab_Productos, Me.SuperTabItem1, Me.SpTab_DatosEmpresa, Me.SpTab_FincredPays, Me.SpTab_Logistica})
+        Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SpTab_General, Me.SpTab_Compras, Me.SpTab_Ventas2, Me.SpTab_Ventas, Me.SuperTabItem1, Me.SpTab_DatosEmpresa, Me.SpTab_FincredPays, Me.SpTab_Logistica, Me.SpTab_Productos})
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
         'SuperTabControlPanel4
@@ -1375,9 +1378,9 @@ Partial Class Frm_Configuracion_Gral
         Me.Chk_InhabilitarObsEnCOV.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_InhabilitarObsEnCOV.CheckBoxImageIndeterminate"), System.Drawing.Image)
         Me.Chk_InhabilitarObsEnCOV.FocusCuesEnabled = False
         Me.Chk_InhabilitarObsEnCOV.ForeColor = System.Drawing.Color.Black
-        Me.Chk_InhabilitarObsEnCOV.Location = New System.Drawing.Point(32, 453)
+        Me.Chk_InhabilitarObsEnCOV.Location = New System.Drawing.Point(32, 479)
         Me.Chk_InhabilitarObsEnCOV.Name = "Chk_InhabilitarObsEnCOV"
-        Me.Chk_InhabilitarObsEnCOV.Size = New System.Drawing.Size(525, 18)
+        Me.Chk_InhabilitarObsEnCOV.Size = New System.Drawing.Size(307, 18)
         Me.Chk_InhabilitarObsEnCOV.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_InhabilitarObsEnCOV.TabIndex = 130
         Me.Chk_InhabilitarObsEnCOV.Text = "Inhabilitar obsercaiones adicionales en cotizaciones (COV)"
@@ -1392,7 +1395,7 @@ Partial Class Frm_Configuracion_Gral
         Me.Input_Dias_Para_Hacer_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Input_Dias_Para_Hacer_NCV.ButtonFreeText.Shortcut = DevComponents.DotNetBar.eShortcut.F2
         Me.Input_Dias_Para_Hacer_NCV.ForeColor = System.Drawing.Color.Black
-        Me.Input_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(250, 477)
+        Me.Input_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(250, 503)
         Me.Input_Dias_Para_Hacer_NCV.Name = "Input_Dias_Para_Hacer_NCV"
         Me.Input_Dias_Para_Hacer_NCV.ShowUpDown = True
         Me.Input_Dias_Para_Hacer_NCV.Size = New System.Drawing.Size(58, 22)
@@ -1406,7 +1409,7 @@ Partial Class Frm_Configuracion_Gral
         '
         Me.Lbl_Dias_Para_Hacer_NCV.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Dias_Para_Hacer_NCV.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(6, 477)
+        Me.Lbl_Dias_Para_Hacer_NCV.Location = New System.Drawing.Point(6, 503)
         Me.Lbl_Dias_Para_Hacer_NCV.Name = "Lbl_Dias_Para_Hacer_NCV"
         Me.Lbl_Dias_Para_Hacer_NCV.Size = New System.Drawing.Size(248, 23)
         Me.Lbl_Dias_Para_Hacer_NCV.TabIndex = 92
@@ -1980,9 +1983,9 @@ Partial Class Frm_Configuracion_Gral
         Me.SuperTabControlPanel7.Controls.Add(Me.Cmb_Nodo_Raiz_Asociados)
         Me.SuperTabControlPanel7.Controls.Add(Me.LabelX15)
         Me.SuperTabControlPanel7.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(125, 0)
+        Me.SuperTabControlPanel7.Location = New System.Drawing.Point(132, 0)
         Me.SuperTabControlPanel7.Name = "SuperTabControlPanel7"
-        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(667, 539)
+        Me.SuperTabControlPanel7.Size = New System.Drawing.Size(660, 539)
         Me.SuperTabControlPanel7.TabIndex = 0
         Me.SuperTabControlPanel7.TabItem = Me.SpTab_Productos
         '
@@ -3370,6 +3373,23 @@ Partial Class Frm_Configuracion_Gral
         Me.CheckBoxX2.TabIndex = 117
         Me.CheckBoxX2.Text = "Ambiente de pruebas y certificación"
         '
+        'Chk_PedirPermisoCargasDirectaoSemiDirecta
+        '
+        '
+        '
+        '
+        Me.Chk_PedirPermisoCargasDirectaoSemiDirecta.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_PedirPermisoCargasDirectaoSemiDirecta.CheckBoxImageChecked = CType(resources.GetObject("Chk_PedirPermisoCargasDirectaoSemiDirecta.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_PedirPermisoCargasDirectaoSemiDirecta.CheckBoxImageIndeterminate = CType(resources.GetObject("Chk_PedirPermisoCargasDirectaoSemiDirecta.CheckBoxImageIndeterminate"), System.Drawing.Image)
+        Me.Chk_PedirPermisoCargasDirectaoSemiDirecta.FocusCuesEnabled = False
+        Me.Chk_PedirPermisoCargasDirectaoSemiDirecta.ForeColor = System.Drawing.Color.Black
+        Me.Chk_PedirPermisoCargasDirectaoSemiDirecta.Location = New System.Drawing.Point(3, 435)
+        Me.Chk_PedirPermisoCargasDirectaoSemiDirecta.Name = "Chk_PedirPermisoCargasDirectaoSemiDirecta"
+        Me.Chk_PedirPermisoCargasDirectaoSemiDirecta.Size = New System.Drawing.Size(635, 20)
+        Me.Chk_PedirPermisoCargasDirectaoSemiDirecta.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_PedirPermisoCargasDirectaoSemiDirecta.TabIndex = 133
+        Me.Chk_PedirPermisoCargasDirectaoSemiDirecta.Text = "Mostrar pedir permiso por Carga Directa o Semi-Directa"
+        '
         'Frm_Configuracion_Gral
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -3600,4 +3620,5 @@ Partial Class Frm_Configuracion_Gral
     Public WithEvents Txt_Feria As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Chk_ObligaFeriaVta As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents LabelX23 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Chk_PedirPermisoCargasDirectaoSemiDirecta As DevComponents.DotNetBar.Controls.CheckBoxX
 End Class

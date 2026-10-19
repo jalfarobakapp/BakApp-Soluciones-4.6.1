@@ -678,6 +678,10 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("Doc00174", _Objeto, _Formulario) ' Registrar GDI - GUIA SALIDA DE BODEGA (AJUSTE)
         _SqlQuery += Fx_Insertar_Permiso("Doc00175", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Doc00176", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00177", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00178", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00179", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Doc00180", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ope00001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ope00002", _Objeto, _Formulario)
@@ -3010,7 +3014,23 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
             Case "Doc00176"
-                _DescripcionPermiso = "VENDER CON CARGA DIRECTA O SEMI-DIRECTA"
+                _DescripcionPermiso = "VENDER CON CARGA DIRECTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00177"
+                _DescripcionPermiso = "VENDER CON CARGA SEMI-DIRECTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00178"
+                _DescripcionPermiso = "CAMBIAR TIPO DE CARGA DE NVV A SIN CARGA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00179"
+                _DescripcionPermiso = "CAMBIAR TIPO DE CARGA DE NVV A CARGA DIRECTA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
+                _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
+            Case "Doc00180"
+                _DescripcionPermiso = "CAMBIAR TIPO DE CARGA DE NVV A CARGA SEMI-DIRECTA"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DOCUMENTOS, 6)
                 _NombreFamiliaPermiso = _Fml.DOCUMENTOS.ToString
 

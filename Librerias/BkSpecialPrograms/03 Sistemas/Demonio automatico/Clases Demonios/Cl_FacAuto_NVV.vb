@@ -161,7 +161,7 @@ Public Class Cl_FacAuto_NVV
                        "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Nv" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Entidades Ent" & vbCrLf &
                        "On Nv.Endo_Ori = Ent.CodEntidad And Nv.Suendo_Ori = Ent.CodSucEntidad" & vbCrLf &
-                       "Where NVVGenerada = 1 And Facturar = 1 And Ent.FacAuto = 0"
+                       "Where NVVGenerada = 1 And Facturar = 1 And Ent.FacAuto = 0 And Nv.TipoOri <> 'MLIBRE'"
 
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
             Log_Registro += _Sql.Pro_Error & vbCrLf
@@ -172,7 +172,7 @@ Public Class Cl_FacAuto_NVV
                        "From " & _Global_BaseBk & "Zw_Demonio_NVVAuto Nv" & vbCrLf &
                        "Inner Join " & _Global_BaseBk & "Zw_Entidades Ent" & vbCrLf &
                        "On Nv.Endo_Ori = Ent.CodEntidad And Nv.Suendo_Ori = Ent.CodSucEntidad " & vbCrLf &
-                       "Where NVVGenerada = 1 And Facturar = 1 And DocEmitir <> '' And EnvFacAutoBk = 0 And Ent.FacAuto = 1" & _CondicionSuc & vbCrLf &
+                       "Where NVVGenerada = 1 And Facturar = 1 And DocEmitir <> '' And EnvFacAutoBk = 0 And (Ent.FacAuto = 1 Or Nv.TipoOri = 'MLIBRE') " & _CondicionSuc & vbCrLf &
                        vbCrLf &
                        "Update " & _Global_BaseBk & "Zw_Demonio_NVVAuto Set EnvFacAutoBk = 1" & vbCrLf &
                        "Where Idmaeedo_NVV In (Select Idmaeedo From #Paso)" & vbCrLf &
@@ -451,6 +451,8 @@ Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo
 
         Dim _IpEquipo As String = Fx_GetLocalIPAddress() 'Fx_Get_Ip()
 
+        'MessageBox.Show(_Formulario, "IP: " & _IpEquipo, "Facturación automática", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1, Facturando = 0" & vbCrLf &
                        "Where NombreEquipo = '" & Nombre_Equipo & "' And Facturando = 1 And IpEquipo = '" & _IpEquipo & "'"
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql, False) Then
@@ -497,6 +499,9 @@ Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo
                         Inner Join {_Global_BaseBk}Zw_Docu_Ent De On Fa.Idmaeedo_NVV = De.Idmaeedo
                         Where Facturar = 1"
         Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
+
+        'MessageBox.Show(_Formulario, "Cantidad de documentos a facturar: " & _Tbl_Doc_Facturar.Rows.Count,
+        '                "Facturación automática", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
             Log_Registro += _Sql.Pro_Error
