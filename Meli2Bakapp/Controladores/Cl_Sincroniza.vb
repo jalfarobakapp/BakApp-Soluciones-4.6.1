@@ -1198,6 +1198,16 @@ WHERE
 
                 Else
 
+                    If _Mensaje.Mensaje = "Al parecer el documento ya fue pagado en el intertanto, se cancela la operación" Then
+
+                        Consulta_sql = "Update PEDIDOS_PAGOS Set IDMAEDPCE = 1,IDMAEDPCD = 1 Where ID = " & _ID
+
+                        If _SqlMeli.Ej_consulta_IDU(Consulta_sql, False) Then
+                            Sb_AddToLog("Pagar documento", _Mensaje.Mensaje, Txt_Log)
+                        End If
+
+                    End If
+
                     Consulta_sql = "Update PEDIDOS_PAGOS Set LOG_INFO = '" & _Mensaje.Mensaje & "' Where ID = " & _ID
 
                     If _SqlMeli.Ej_consulta_IDU(Consulta_sql, False) Then
