@@ -1839,8 +1839,8 @@ Where Idmaeedo = {_Idmaeedo_FCV}"
 
     Private Sub Btn_Crear3NVV_Click(sender As Object, e As EventArgs) Handles Btn_Crear3NVV.Click
         ' 1. Defines el número de documento origen que vas a pasar
-        Dim numeroDocOrigen As String = "SG00243078"
-        Dim idmaeedoOrigen As Integer = 896605
+        Dim numeroDocOrigen As String = "SG00243079"
+        Dim idmaeedoOrigen As Integer = 896606
         Dim NVV As New MultiNVV()
 
         ' 2. Llamas a la función y guardas la lista de resultados

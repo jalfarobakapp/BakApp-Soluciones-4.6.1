@@ -91,8 +91,9 @@ Public Class MultiNVV
                     Fm_Post.Sb_Limpiar(Mod_Modalidad)
                     'Fm_Post.Pro_Nudo = Nudo_NVV
 
-                    Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Nothing, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True)
-                    _Mensaje = Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, False, _Mostrar_Mensaje:=False)
+                    Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Nothing, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True, _ConservaTrazabilidad:=True)
+                    _Mensaje = Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, False,
+                                                           _Mostrar_Mensaje:=False, _ConservaTrazabilidad:=True)
                     Fm_Post.Dispose()
 
                     ' Validar si grabó correctamente

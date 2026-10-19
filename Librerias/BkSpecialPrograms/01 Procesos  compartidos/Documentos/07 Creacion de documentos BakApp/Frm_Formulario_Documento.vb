@@ -19560,7 +19560,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                  Optional _Mostrar_Mensaje As Boolean = True,
                                  Optional _ConvertirAPesos As Boolean = False,
                                  Optional _ListaPrecios As String = "",
-                                 Optional _ReferenciaAutomatica As Boolean = False) As LsValiciones.Mensajes
+                                 Optional _ReferenciaAutomatica As Boolean = False,
+                                 Optional _ConservaTrazabilidad As Boolean = False) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -19708,7 +19709,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
             _TblEncabezado.Rows(0).Item("Es_ValeTransitorio") = 0
         End If
 
-        If _Tido = "OCC" Or _Tido = "COV" Or _Tido = "NVV" Then
+        If Not _ConservaTrazabilidad AndAlso (_Tido = "OCC" Or _Tido = "COV" Or _Tido = "NVV") Then
 
             For Each _Rw As DataRow In _Ds_Matriz_Documentos.Tables("Detalle_Doc").Rows
 
@@ -19925,7 +19926,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                                    _Origen_Modificado_Intertanto,
                                                    _Es_TLV,
                                                    _HoraAlFinalDelDia,
-                                                   _HoraAlPrincipioDelDia)
+                                                   _HoraAlPrincipioDelDia,
+                                                   _ConservaTrazabilidad)
 
             If Not _Mensaje.EsCorrecto Then
 
@@ -20985,7 +20987,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                                          Optional _CodEntidad_Cia As String = "",
                                                          Optional _CodSucEntidad_Cia As String = "",
                                                          Optional Id_Enc_InterStock As Integer = 0,
-                                                         Optional EsAutomatico As Boolean = False)
+                                                         Optional EsAutomatico As Boolean = False,
+                                                         Optional _ConservaTrazabilidad As Boolean = False)
 
         Try
 
@@ -21741,7 +21744,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                     _Feemlipa = Nothing
                 End Try
 
-                If _Tidopa = _Tido Then
+                If Not _ConservaTrazabilidad AndAlso _Tidopa = _Tido Then
                     _Idmaeddo_Dori = 0
                     _Idmaeedo_Dori = 0
                 End If
