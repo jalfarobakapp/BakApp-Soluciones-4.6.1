@@ -2344,9 +2344,15 @@ Public Class Clase_Crear_Documento
             End If
 
             If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "BLV" Or _Tido = "FCV" Or
-               _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "NCV" Or _Tido = "GRI" Or _Tido = "GDI" Then
+               _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "NCV" Or
+               _Tido = "GRI" Or _Tido = "GDI" Then
 
-                Consulta_sql = "Select * From MAEEDO Where EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                If RutEmpresa = "77988832-0" AndAlso (_Tido = "COV" Or _Tido = "NVV") Then
+                    Consulta_sql = "Select * From MAEEDO Where TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                Else
+                    Consulta_sql = "Select * From MAEEDO Where EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                End If
+
                 Comando = New SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
                 dfd1 = Comando.ExecuteReader()

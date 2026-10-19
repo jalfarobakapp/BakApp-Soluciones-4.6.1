@@ -308,36 +308,10 @@ Where Id_Despacho In (Select Id_Despacho From {_Global_BaseBk}Zw_Despachos_Doc W
 Update {_Global_BaseBk}Zw_Stmp_Enc Set Empresa = '{_Empresa_Ori}',Sucursal = '{_Sucursal_Ori}' Where Idmaeedo = @Idmaeedo
 Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo = @Idmaeedo
 
+Delete MAEEDO Where TIDO = '{_Tido}' And NUDO = '{_Nudo}' And ENDO = 'XXXXXXXXXX' And EMPRESA = '{_Empresa_Ori}'
+
 "
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql, False)
-
-            '            Consulta_Sql = "Declare @Idmaeedo Int = " & _Idmaeedo & vbCrLf &
-            '                           "Update MAEEDO Set EMPRESA = '" & _Empresa_Ori & "',SUDO = '" & _Sucursal_Ori & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
-            '                           "Update MAEDDO Set EMPRESA = '" & _Empresa_Ori & "',SULIDO = '" & _Sucursal_Ori & "',BOSULIDO = '" & _Bodega_Ori & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
-            '                           "Update " & _Global_BaseBk & "Zw_Despachos Set Empresa = '" & _Empresa_Ori & "',Sucursal = '" & _Sucursal_Ori & "',Bodega = '" & _Bodega_Ori &
-            '                                "' Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))" & vbCrLf &
-            '                           "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Empresa = '" & _Empresa_Ori & "',Sucursal = '" & _Sucursal_Ori & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
-            '                           "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa = '" & _Empresa_Ori & "' Where Idmaeedo = @Idmaeedo"
-
-            '            Consulta_Sql = $"
-            'Declare @Idmaeedo Int = {_Idmaeedo}
-
-            'Update MAEEDO Set EMPRESA = '{_Empresa_Ori}',SUDO = '{_Sucursal_Ori}' 
-            'Where IDMAEEDO = @Idmaeedo
-
-            'Update MAEDDO Set EMPRESA = '{_Empresa_Ori}',SULIDO = '{_Sucursal_Ori}',BOSULIDO = '{_Bodega_Ori}' 
-            'Where IDMAEEDO = @Idmaeedo
-
-            'Update {_Global_BaseBk}Zw_Despachos Set Empresa = '{_Empresa_Ori}',Sucursal = '{_Sucursal_Ori}',Bodega = '{_Bodega_Ori}' 
-            'Where Id_Despacho In (Select Id_Despacho From {_Global_BaseBk}Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))
-
-            'Update {_Global_BaseBk}Zw_Stmp_Enc Set Empresa = '{_Empresa_Ori}',Sucursal = '{_Sucursal_Ori}' Where Idmaeedo = @Idmaeedo
-            'Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo = @Idmaeedo"
-
-            '            'Clipboard.SetText(Consulta_Sql)
-
-            '            'MessageBox.Show(_Formulario, Consulta_Sql, "Actualizar empresa, sucursal y bodega de documentos", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            '            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Log_Registro += _Sql.Pro_Error & vbCrLf

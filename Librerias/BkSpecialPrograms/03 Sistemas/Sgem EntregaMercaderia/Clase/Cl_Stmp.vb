@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports System.Data.SqlClient
+Imports MySql.Data.Authentication
 
 Public Class Cl_Stmp
 
@@ -425,78 +426,6 @@ Public Class Cl_Stmp
             Next
 
 
-            '            Consulta_sql = $"
-
-            'Declare @Idmaeedo Int = {_Zw_Stmp_Enc.Idmaeedo}
-
-            'Update MAEEDO Set EMPRESA = '{_Empresa_Dest}',SUDO = '{_Sucursal_Dest}' 
-            'Where IDMAEEDO = @Idmaeedo
-
-            'Update MAEDDO Set EMPRESA = '{_Empresa_Dest}',SULIDO = '{_Sucursal_Dest}',BOSULIDO = '{_Bodega_Dest}' 
-            'Where IDMAEEDO = @Idmaeedo
-
-            'Update {_Global_BaseBk}Zw_Despachos Set Empresa = '{_Empresa_Dest}',Sucursal = '{_Sucursal_Dest}',Bodega = '{_Bodega_Dest}' 
-            'Where Id_Despacho In (Select Id_Despacho From {_Global_BaseBk}Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))
-
-            'Update {_Global_BaseBk}Zw_Stmp_Enc Set Empresa = '{_Empresa_Dest}',Sucursal = '{_Sucursal_Dest}' 
-            'Where Idmaeedo = @Idmaeedo
-
-            'Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa_Ori = Empresa 
-            'Where Idmaeedo = @Idmaeedo
-
-            'Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Dest}' 
-            'Where Idmaeedo = @Idmaeedo
-
-            'UPDATE M
-            'SET 
-            '    M.STOCNV1 = M.STOCNV1 
-            '                + ISNULL(SUMAS.SumaCAPRCO1, 0)
-            '                - ISNULL(RESTAS.RestaCAPRCO1, 0),
-            '    M.STOCNV2 = M.STOCNV2 
-            '                + ISNULL(SUMAS.SumaCAPRCO2, 0)
-            '                - ISNULL(RESTAS.RestaCAPRCO2, 0)
-            'FROM MAEST M WITH (NOLOCK)
-
-            '-- SUMAS desde MAEDDO
-            'OUTER APPLY (
-            '    SELECT 
-            '        SUM(Ddo.CAPRCO1) AS SumaCAPRCO1,
-            '        SUM(Ddo.CAPRCO2) AS SumaCAPRCO2
-            '    FROM MAEDDO Ddo WITH (NOLOCK)
-            '    WHERE 
-            '        Ddo.EMPRESA = M.EMPRESA
-            '        AND Ddo.SULIDO = M.KOSU
-            '        AND Ddo.BOSULIDO = M.KOBO
-            '        AND Ddo.KOPRCT = M.KOPR
-            '        AND Ddo.IDMAEEDO = @Idmaeedo
-            ') SUMAS
-
-            '-- RESTAS desde MAEDDO vía Zw_Docu_Det
-            'OUTER APPLY (
-            '    SELECT 
-            '        SUM(Ddo2.CAPRCO1) AS RestaCAPRCO1,
-            '        SUM(Ddo2.CAPRCO2) AS RestaCAPRCO2
-            '    FROM {_Global_BaseBk}Zw_Docu_Det Det WITH (NOLOCK)
-            '    INNER JOIN MAEDDO Ddo2 WITH (NOLOCK)
-            '        ON Ddo2.IDMAEDDO = Det.Idmaeddo
-            '    WHERE 
-            '        Det.Idmaeedo = @Idmaeedo
-            '        AND Det.Empresa = M.EMPRESA
-            '        AND Det.Sucursal = M.KOSU
-            '        AND Det.Bodega = M.KOBO
-            '        AND Ddo2.KOPRCT = M.KOPR
-            ') RESTAS
-
-            'WHERE 
-            '    M.KOPR IN (
-            '        SELECT DISTINCT KOPRCT 
-            '        FROM MAEDDO 
-            '        WHERE IDMAEEDO = @Idmaeedo
-            '    )
-            '    AND M.KOBO IN ('{_Bodega_Ori}','{_Bodega_Dest}');
-
-            '"
-
             Consulta_sql = $"
 DECLARE @Idmaeedo INT = {_Zw_Stmp_Enc.Idmaeedo};
 
@@ -610,6 +539,19 @@ WHERE M.KOBO IN ('{_Bodega_Ori}','{_Bodega_Dest}');
             Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
             Comando.Transaction = myTrans
             Comando.ExecuteNonQuery()
+
+            With _Zw_Stmp_Enc
+
+                Consulta_sql = "INSERT INTO MAEEDO ( EMPRESA,TIDO,NUDO,ENDO,SUENDO )" & vbCrLf &
+                               "VALUES ( '" & .Empresa & "','" & .Tido & "','" & .Nudo &
+                               "','XXXXXXXXXX','')"
+
+            End With
+
+            Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
 
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(Cn2)
