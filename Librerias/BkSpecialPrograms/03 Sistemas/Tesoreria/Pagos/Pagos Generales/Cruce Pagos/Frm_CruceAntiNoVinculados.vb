@@ -49,6 +49,8 @@ Public Class Frm_CruceAntiNoVinculados
         AddHandler Grilla_Maedpce.CurrentCellDirtyStateChanged, AddressOf Grilla_Maedpce_CurrentCellDirtyStateChanged
         AddHandler Grilla_Maedpce.CellValueChanged, AddressOf Grilla_Maedpce_CellValueChanged
 
+        AddHandler Grilla_Maedpce.CellFormatting, AddressOf Grilla_Maedpce_CellFormatting
+
         Sb_Actualizar_Grilla()
 
         'Dtp_FEmisionOtra.Value = Now.Date
@@ -72,6 +74,8 @@ Public Class Frm_CruceAntiNoVinculados
     c.ENDP,
     c.EMDP,
     ISNULL(e.NOKOEN,'') AS RAZON,   -- nombre del cliente
+	Case When Tf.KOFU IS Not Null Then Tf.KOFU Else Rtrim(Ltrim(Tf2.KOFU))+' !' End As 'Ven', 
+	Case When Tf.NOKOFU IS Not Null Then Tf.NOKOFU Else Rtrim(Ltrim(Tf2.NOKOFU))+' ¡Sugerido!' End As 'Vendedor', 
     c.SUEMDP,
     c.CUDP,
     c.NUCUDP,
@@ -110,21 +114,48 @@ Public Class Frm_CruceAntiNoVinculados
     Cast(0 As Bit) As PagoCruzado,
     Cast(0 As Bit) As CruzarPagoAuto,
     Cast(0 As Bit) As MatchExacto,
-    Cast(0 As Bit) As MatchParcial
+    Cast(0 As Bit) As MatchParcial,
+    Cast(Isnull(Blq.Bloqueado,0) As Bit) As 'Bloqueado',
+    Isnull(Blq.MotivoBloqueo,'') As 'MotivoBloqueo', 
+    Isnull(Blq.CodFuncionario,'') As 'CodFunBloquea',
+    Isnull(Blq.NombreEquipo,'') As 'NombreEquipoBloquea',
+    FechaBloqueo
+
 FROM MAEDPCE c WITH (NOLOCK)
 OUTER APPLY (
-    SELECT TOP 1 NOKOEN
+    SELECT TOP 1 NOKOEN,KOFUEN
     FROM MAEEN e WITH (NOLOCK)
     WHERE e.KOEN = c.ENDP
     ORDER BY e.KOEN -- aquí puedes cambiar el criterio de orden si quieres
 ) e
 Left Join MAEEDO Edo On Edo.IDMAEEDO = c.IDRSD And c.ARCHIRSD = 'MAEEDO'
 Left Join {_Global_BaseBk}Zw_TablaDeCaracterizaciones Tc On Tc.Tabla = 'TIDP_Cli' And Tc.CodigoTabla = c.TIDP
+Left Join MAEEN En On En.KOEN = Edo.ENDO And En.SUEN = Edo.SUENDO
+Left Join TABFU Tf On Tf.KOFU = En.KOFUEN
+Left Join TABFU Tf2 On Tf2.KOFU = e.KOFUEN
+Left Join {_Global_BaseBk}Zw_PagosBloqueados Blq On Blq.Idmaedpce = c.IDMAEDPCE
 WHERE IDMAEDPCE In {_Filtro_Idmaedpce}
 And (c.VADP-c.VAASDP) > 0
 Order By c.ENDP,c.FEEMDP"
 
         _Tbl_Maedpce = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+
+
+        Sb_AsegurarColumnasPlanCruce()
+
+        For Each _Fila As DataRow In _Tbl_Maedpce.Rows
+            _Fila.Item("ResumenFacturasCruce") = Convert.ToString(_Fila.Item("REFANTI"))
+
+            If Convert.ToBoolean(_Fila.Item("Bloqueado")) Then
+                _Fila.Item("Exclamacion") = True
+                _Fila.Item("Chk") = False
+                _Fila.Item("CruzarPagoAuto") = False
+                _Fila.Item("MatchExacto") = False
+                _Fila.Item("MatchParcial") = False
+                _Fila.Item("Observacion") = Convert.ToString(_Fila.Item("MotivoBloqueo"))
+            End If
+        Next
 
         Dim _DisplayIndex = 0
 
@@ -162,6 +193,13 @@ Order By c.ENDP,c.FEEMDP"
             .Columns("Exclamacion").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
+            .Columns("Bloqueado").HeaderText = "B!"
+            .Columns("Bloqueado").ToolTipText = "Pago bloqueado"
+            .Columns("Bloqueado").Width = 35
+            .Columns("Bloqueado").Visible = True
+            .Columns("Bloqueado").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
             .Columns("TIDP").HeaderText = "TD"
             .Columns("TIDP").Width = 30
             .Columns("TIDP").Visible = True
@@ -178,6 +216,12 @@ Order By c.ENDP,c.FEEMDP"
             .Columns("RAZON").Width = 190
             .Columns("RAZON").Visible = True
             .Columns("RAZON").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
+
+            .Columns("Ven").HeaderText = "Ven."
+            .Columns("Ven").Width = 40
+            .Columns("Ven").Visible = True
+            .Columns("Ven").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
             .Columns("FEEMDP").HeaderText = "F.Emisión"
@@ -230,11 +274,21 @@ Order By c.ENDP,c.FEEMDP"
             .Columns("SALDO_PG").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("REFANTI").HeaderText = "Referencia (REFANTI)"
-            .Columns("REFANTI").Width = 300
-            .Columns("REFANTI").Visible = True
-            .Columns("REFANTI").DisplayIndex = _DisplayIndex
+            '.Columns("REFANTI").HeaderText = "Referencia (REFANTI)"
+            '.Columns("REFANTI").Width = 300
+            '.Columns("REFANTI").Visible = True
+            '.Columns("REFANTI").DisplayIndex = _DisplayIndex
+            '_DisplayIndex += 1
+
+            .Columns("ResumenFacturasCruce").HeaderText = "Referencia / Facturas planificadas"
+            .Columns("ResumenFacturasCruce").Width = 300
+            .Columns("ResumenFacturasCruce").Visible = True
+            .Columns("ResumenFacturasCruce").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
+
+            If .Columns.Contains("ListaFacturasCruce") Then
+                .Columns("ListaFacturasCruce").Visible = False
+            End If
 
             .Columns("CruzarPagoAuto").HeaderText = "CPA"
             .Columns("CruzarPagoAuto").ToolTipText = "Cruzar pago automáticamente"
@@ -333,9 +387,15 @@ Order By c.ENDP,c.FEEMDP"
             Return
         End If
 
-        Consulta_Sql = $"Select Top 1 *,Isnull(NOKOFU,'') As Funcionario From {_Global_BaseBk}Zw_CrucePAuto_Tom 
+        Fx_PrepararCrucesMultiples()
+
+        Return
+
+        Consulta_Sql = $"
+Select Top 1 *,Isnull(NOKOFU,'') As Funcionario From {_Global_BaseBk}Zw_CrucePAuto_Tom 
 Left Join TABFU On KOFU = CodFuncionario
-Where NombreEquipo <> '{_NombreEquipo}'-- And CodFuncionario <> '{FUNCIONARIO}'"
+Where NombreEquipo <> '{_NombreEquipo}' And Empresa <> '{Mod_Empresa}'"
+
         Dim _Row_CruceTom As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
         If Not IsNothing(_Row_CruceTom) Then
@@ -344,16 +404,19 @@ Where NombreEquipo <> '{_NombreEquipo}'-- And CodFuncionario <> '{FUNCIONARIO}'"
             Dim _NombreEquipo2 = _Row_CruceTom.Item("NombreEquipo")
 
             MessageBoxEx.Show(Me, "El proceso se encuentra tomado por: " & _Funcionario & vbCrLf &
-                              "En el equipo: " & _NombreEquipo2,
+                              "En el equipo: " & _NombreEquipo2 & vbCrLf & vbCrLf &
+                              "Empresa: " & RazonEmpresa,
                               "No puede hacer gestión mientras esto este ocurriendo", MessageBoxButtons.OK, MessageBoxIcon.Warning)
 
             Return
 
         End If
 
-        Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_CrucePAuto_Tom" & vbCrLf &
-                       "Insert Into " & _Global_BaseBk & "Zw_CrucePAuto_Tom (CodFuncionario,FechaToma,NombreEquipo) " &
-                       "Values ('" & FUNCIONARIO & "',Getdate(),'" & _NombreEquipo & "')"
+        Consulta_Sql = $"
+Delete {_Global_BaseBk}Zw_CrucePAuto_Tom Where Empresa = '{Mod_Empresa}'
+Insert Into {_Global_BaseBk}Zw_CrucePAuto_Tom (CodFuncionario,FechaToma,NombreEquipo,Empresa) 
+Values ('{FUNCIONARIO}',Getdate(),'{_NombreEquipo}','{Mod_Empresa}')"
+
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
 
         Dim _Ls_MaeedoItem As New List(Of Cl_MaeedoItem)
@@ -428,6 +491,15 @@ Where NombreEquipo <> '{_NombreEquipo}'-- And CodFuncionario <> '{FUNCIONARIO}'"
                 If _CacheMaeedoPorEndp.ContainsKey(_Endp) Then
                     _Ls = _CacheMaeedoPorEndp(_Endp)
                 Else
+
+                    Dim _Condicion As String
+
+                    If Chk_SoloMatchFacVencidas.Checked Then
+                        _Condicion = " AND EDO.FE01VEDO < Getdate() "
+                    Else
+                        _Condicion = String.Empty
+                    End If
+
                     ' No está en caché: consultar BD y añadir al caché
                     Consulta_Sql = $"SELECT CAST(0 AS INT) AS ID,CAST(0 AS INT) AS ID_PADRE,CAST(0 AS INT) AS ID_PAGO,
        CAST(0 AS INT) AS IDMAEDPCE,
@@ -463,6 +535,7 @@ Where NombreEquipo <> '{_NombreEquipo}'-- And CodFuncionario <> '{FUNCIONARIO}'"
 		EDO.ESPGDO = 'P'  AND 
 		EDO.NUDONODEFI = 0  AND 
 		EDO.EMPRESA = '{Mod_Empresa}'
+        {_Condicion}
 ORDER BY Orden,FEVEDP"
 
                     Dim _Tbl_Maeedo As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
@@ -532,6 +605,10 @@ ORDER BY Orden,FEVEDP"
                                             _Fila("IDMAEEDO") = _Item.IdRst
                                             _Fila("MatchExacto") = True
                                         Else
+                                            If Chk_MarcarSoloMatchExactos.Checked Then
+                                                ' Si solo se quieren marcar match exactos, no marcar este como parcial
+                                                Continue For
+                                            End If
                                             ' No es match exacto (o se ha aplicado mas de un pago): marcar como parcial/no exacto
                                             partialMatches.Add(String.Format("Pago ID:{0}, ENDP:{1}, SaldoPago:{2} -> {3}-{4} (IDRST:{5})",
                                                                          _Idmaedpce, _Endp, FormatNumber(_Saldo_Pg, 2),
@@ -561,6 +638,11 @@ ORDER BY Orden,FEVEDP"
                                 Try
                                     ' Si el documento ya no tiene saldo, continuar
                                     If _Item.SaldoAct = 0 Then
+                                        Continue For
+                                    End If
+
+                                    If Chk_MarcarSoloMatchExactos.Checked Then
+                                        ' Si solo se quieren marcar match exactos, no marcar este como parcial
                                         Continue For
                                     End If
 
@@ -843,6 +925,8 @@ ORDER BY Orden,FEVEDP"
             Dim _Refanti = _Fila.Cells("Refanti").Value.ToString.Trim
             Dim _Tido_sd = _Fila.Cells("TIDO_SD").Value.ToString.Trim
             Dim _Nudo_sd = _Fila.Cells("NUDO_SD").Value.ToString.Trim
+            Dim _Vendedor = _Fila.Cells("Vendedor").Value.ToString.Trim
+            Dim _ResumenFacturasCruce = _Fila.Cells("ResumenFacturasCruce").Value.ToString.Trim
 
             Dim _Error As Boolean = _Fila.Cells("Error").Value
             Dim _Exclamacion As Boolean = _Fila.Cells("Exclamacion").Value
@@ -853,15 +937,37 @@ ORDER BY Orden,FEVEDP"
             Lbl_Tipo_Documento.Text = _Tidp & " - " & _Notidp
             Lbl_Banco_Cta_Cte.Text = _Nokoendp & ", Cta. Cte: " & _Cudp & ", Nro: " & _Nucudp & ", Monto: " & FormatCurrency(_Vadp, 0)
             Lbl_Referencia.Text = _Refanti
+            Lbl_Vendedor.Text = _Vendedor
+            Lbl_ResumenFacturasCruce.Text = _ResumenFacturasCruce
 
             If Not String.IsNullOrEmpty(_Tido_sd) Then
                 Lbl_Referencia.Text = _Refanti & ", " & _Tido_sd & "-" & _Nudo_sd
             End If
 
-            If Not String.IsNullOrEmpty(_Observacion) Then
+            Dim _Bloqueado As Boolean = Convert.ToBoolean(_Fila.Cells("Bloqueado").Value)
+            Dim _MotivoBloqueo As String = Convert.ToString(_Fila.Cells("MotivoBloqueo").Value).Trim()
 
-                If _Error Then Lbl_Informacion.Text = "Problemas: " & _Observacion
-                If _Exclamacion Then Lbl_Informacion.Text = "Reparos: " & _Observacion
+            If _Bloqueado Then
+                If String.IsNullOrWhiteSpace(_MotivoBloqueo) Then
+                    _MotivoBloqueo = "No se indicó el motivo del bloqueo."
+                End If
+
+                Lbl_Informacion.Text = "PAGO BLOQUEADO: " & _MotivoBloqueo
+
+                If Not String.IsNullOrWhiteSpace(_Observacion) AndAlso
+       Not String.Equals(_Observacion, _MotivoBloqueo, StringComparison.OrdinalIgnoreCase) Then
+                    Lbl_Informacion.Text &= vbCrLf & _Observacion
+                End If
+
+                Lbl_Informacion.ForeColor = Rojo
+            ElseIf Not String.IsNullOrEmpty(_Observacion) Then
+                If _Error Then
+                    Lbl_Informacion.Text = "Problemas: " & _Observacion
+                ElseIf _Exclamacion Then
+                    Lbl_Informacion.Text = "Reparos: " & _Observacion
+                Else
+                    Lbl_Informacion.Text = _Observacion
+                End If
 
                 Lbl_Informacion.ForeColor = Rojo
             Else
@@ -941,6 +1047,11 @@ ORDER BY Orden,FEVEDP"
         '        Return
         '    End If
         'End If
+
+        Fx_GrabarCrucesMultiplesDeGrilla()
+
+
+        Return
 
         Dim _Ls_Mensajes As New List(Of LsValiciones.Mensajes)
 
@@ -1199,14 +1310,51 @@ ORDER BY Orden,FEVEDP"
         Dim _Vaasdp As Double = _Fila.Cells("VAASDP").Value
         Dim _Vavudp As Double = _Fila.Cells("VAVUDP").Value
         Dim _Saldo_pg As Double = _Fila.Cells("SALDO_PG").Value
+        Dim _Bloqueado As Boolean = _Fila.Cells("Bloqueado").Value
+        Dim _MotivoBloqueo As String = Convert.ToString(_Fila.Cells("MotivoBloqueo").Value).Trim()
 
         Dim _Grabar As Boolean
+        Dim _ModoLectura As Boolean
+
+        If _Bloqueado Then
+
+            If String.IsNullOrWhiteSpace(_MotivoBloqueo) Then
+                _MotivoBloqueo = "No se indicó el motivo del bloqueo."
+            End If
+
+            MessageBoxEx.Show(Me, "No se puede gestionar este pago porque está bloqueado." &
+                      vbCrLf & _MotivoBloqueo,
+                      "Pago bloqueado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        Consulta_Sql = $"
+Select Top 1 *,Isnull(NOKOFU,'') As Funcionario From {_Global_BaseBk}Zw_CrucePAuto_Tom 
+Left Join TABFU On KOFU = CodFuncionario
+Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
+
+        Dim _Row_CruceTom As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
+        If Not IsNothing(_Row_CruceTom) Then
+
+            Dim _Funcionario = _Row_CruceTom.Item("Funcionario")
+            Dim _NombreEquipo2 = _Row_CruceTom.Item("NombreEquipo")
+
+            MessageBoxEx.Show(Me, "El proceso se encuentra tomado por: " & _Funcionario & vbCrLf &
+                              "En el equipo: " & _NombreEquipo2 & vbCrLf & vbCrLf &
+                              "Empresa: " & RazonEmpresa,
+                              "No puede hacer gestión mientras esto este ocurriendo", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+
+            _ModoLectura = True
+            'Return
+
+        End If
 
         Dim Fm As New Frm_Pagos_Generales(Frm_Pagos_Generales.Enum_Tipo_Pago.Clientes)
         Fm.Koen = _Koen
         Fm.BtnActualizarLista.Visible = False
         Fm.Cerrar_al_grabar = True
-        'Fm.ModoLectura = True
+        Fm.ModoLectura = _ModoLectura
         Fm.ShowDialog(Me)
         _Grabar = Fm.Grabar
         Fm.Dispose()
@@ -1261,6 +1409,26 @@ ORDER BY Orden,FEVEDP"
 
     End Sub
 
+    Private Sub Grilla_Maedpce_CellFormatting(
+    sender As Object,
+    e As DataGridViewCellFormattingEventArgs)
+
+        If e.RowIndex < 0 OrElse
+       Not Grilla_Maedpce.Columns.Contains("Bloqueado") Then
+            Return
+        End If
+
+        Dim _ValorBloqueado As Object =
+        Grilla_Maedpce.Rows(e.RowIndex).Cells("Bloqueado").Value
+
+        If _ValorBloqueado IsNot Nothing AndAlso
+       Not IsDBNull(_ValorBloqueado) AndAlso
+       Convert.ToBoolean(_ValorBloqueado) Then
+
+            e.CellStyle.ForeColor = Color.Gray
+            e.CellStyle.SelectionForeColor = Color.DimGray
+        End If
+    End Sub
     Private Sub Grilla_Maedpce_MouseDown(sender As Object, e As MouseEventArgs) Handles Grilla_Maedpce.MouseDown
 
         If e.Button = Windows.Forms.MouseButtons.Right Then
@@ -1278,6 +1446,7 @@ ORDER BY Orden,FEVEDP"
                     Dim _Idmaedpce As Boolean = _Fila.Cells("IDMAEDPCE").Value
                     Dim _Idrsd As Boolean = _Fila.Cells("IDRSD").Value
                     Dim _Endp As Boolean = Not String.IsNullOrEmpty(_Fila.Cells("ENDP").Value)
+                    Dim _Bloqueado As Boolean = _Fila.Cells("Bloqueado").Value
 
                     Dim _Cabeza = Grilla_Maedpce.Columns(Grilla_Maedpce.CurrentCell.ColumnIndex).Name
 
@@ -1286,6 +1455,9 @@ ORDER BY Orden,FEVEDP"
                     End If
 
                     If _Idmaedpce Then
+
+                        Btn_BloquearPago.Enabled = Not _Bloqueado
+                        Btn_DesbloquearPago.Enabled = _Bloqueado
 
                         Btn_Ver_Cta_Cte.Enabled = True
                         ShowContextMenu(Menu_Contextual_01)
@@ -1331,7 +1503,7 @@ ORDER BY Orden,FEVEDP"
             End If
 
             ' Asegurar que el DataGridView muestre la vista actualizada
-            Grilla_Maedpce.DataSource = _Tbl_Maedpce.DefaultView
+            'Grilla_Maedpce.DataSource = _Tbl_Maedpce.DefaultView
 
             ' Actualizar totales (la selección no cambia pero actualiza visualmente)
             Sb_Actualizar_Totales(False)
@@ -1433,7 +1605,7 @@ ORDER BY Orden,FEVEDP"
             End If
 
             ' Asegurar que el DataGridView muestre la vista actualizada
-            Grilla_Maedpce.DataSource = _Tbl_Maedpce.DefaultView
+            'Grilla_Maedpce.DataSource = _Tbl_Maedpce.DefaultView
 
             ' Actualizar totales visuales
             Sb_Actualizar_Totales(False)
@@ -1447,9 +1619,796 @@ ORDER BY Orden,FEVEDP"
     Private Sub Frm_CruceAntiNoVinculados_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
 
         Consulta_Sql = "Delete " & _Global_BaseBk & "Zw_CrucePAuto_Tom" & vbCrLf &
-                       $"Where NombreEquipo = '{_NombreEquipo}'"
+                       $"Where NombreEquipo = '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
         _Sql.Ej_consulta_IDU(Consulta_Sql, False)
 
     End Sub
 
+    Private Sub Chk_VerSoloSinMatch_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_VerSoloSinMatch.CheckedChanged
+        Try
+            If _Tbl_Maedpce Is Nothing Then
+                Return
+            End If
+
+            If Chk_VerSoloSinMatch.Checked Then
+                _Tbl_Maedpce.DefaultView.RowFilter = "MatchExacto = False AND MatchParcial = False"
+            Else
+                _Tbl_Maedpce.DefaultView.RowFilter = String.Empty
+            End If
+
+            'Grilla_Maedpce.DataSource = _Tbl_Maedpce.DefaultView
+            Sb_Actualizar_Totales(False)
+
+        Catch ex As Exception
+            MessageBoxEx.Show(Me, "Error al aplicar el filtro de registros sin match: " & ex.Message, "Error",
+                          MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+    End Sub
+
+    Private Sub Sb_AsegurarColumnasPlanCruce()
+        If _Tbl_Maedpce Is Nothing Then
+            Return
+        End If
+
+        If Not _Tbl_Maedpce.Columns.Contains("ListaFacturasCruce") Then
+            _Tbl_Maedpce.Columns.Add("ListaFacturasCruce", GetType(Object))
+        End If
+
+        If Not _Tbl_Maedpce.Columns.Contains("ResumenFacturasCruce") Then
+            _Tbl_Maedpce.Columns.Add("ResumenFacturasCruce", GetType(String))
+        End If
+
+        If Grilla_Maedpce.Columns.Contains("ListaFacturasCruce") Then
+            Grilla_Maedpce.Columns("ListaFacturasCruce").Visible = False
+        End If
+
+        If Grilla_Maedpce.Columns.Contains("ResumenFacturasCruce") Then
+            With Grilla_Maedpce.Columns("ResumenFacturasCruce")
+                .HeaderText = "Facturas planificadas"
+                .ToolTipText = "Documentos e importes que se intentarán cruzar"
+                .Visible = True
+                .Width = 260
+            End With
+        End If
+    End Sub
+
+    Private Function Fx_ObtenerSaldoDisponiblePago(_Idmaedpce As Integer) As Double
+        Consulta_Sql = $"SELECT ROUND(VADP - VAASDP, 2) AS SALDO_RESTANTE
+                     FROM MAEDPCE
+                     WHERE IDMAEDPCE = {_Idmaedpce}"
+
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+        If _Row Is Nothing OrElse IsDBNull(_Row.Item("SALDO_RESTANTE")) Then
+            Return 0
+        End If
+
+        Return Convert.ToDouble(_Row.Item("SALDO_RESTANTE"))
+    End Function
+
+    Private Function Fx_ResumenPlanCruce(
+        _Plan As List(Of Cl_FacturaCrucePlanificada)) As String
+
+        If _Plan Is Nothing OrElse _Plan.Count = 0 Then
+            Return String.Empty
+        End If
+
+        Dim _Resumen As New System.Text.StringBuilder()
+
+        For Each _Factura As Cl_FacturaCrucePlanificada In _Plan
+            If _Resumen.Length > 0 Then
+                _Resumen.Append(" | ")
+            End If
+
+            _Resumen.Append($"{_Factura.Tido}-{_Factura.Nudo}: {FormatCurrency(_Factura.MontoPlanificado, 0)}")
+        Next
+
+        Return _Resumen.ToString()
+    End Function
+
+    Private Function Fx_PrepararCrucesMultiples() As List(Of LsValiciones.Mensajes)
+        Dim _Resultados As New List(Of LsValiciones.Mensajes)
+        Dim _Exactos As New List(Of String)
+        Dim _Parciales As New List(Of String)
+        Dim _SinMatch As New List(Of String)
+        Dim _Errores As New List(Of String)
+        Dim _NoProcesables As Integer = 0
+
+        If _Tbl_Maedpce Is Nothing Then
+            MessageBoxEx.Show(Me, "No hay pagos para preparar.", "Cruce de pagos",
+                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+            Return _Resultados
+        End If
+
+        Sb_AsegurarColumnasPlanCruce()
+
+        ' Las reservas se comparten entre todos los pagos de esta preparación.
+        Dim _ReservadoPorFactura As New Dictionary(Of Integer, Double)
+        Dim _PagosProcesados As New HashSet(Of Integer)
+
+        For Each _Fila As DataRow In _Tbl_Maedpce.Rows
+            Dim _Resultado As LsValiciones.Mensajes =
+            Fx_PrepararPlanPago(_Fila, _ReservadoPorFactura, _PagosProcesados)
+
+            _Resultados.Add(_Resultado)
+
+            Dim _Idmaedpce As String = Convert.ToString(_Fila.Item("IDMAEDPCE"))
+            Dim _Endp As String = Convert.ToString(_Fila.Item("ENDP")).Trim()
+
+            If Not _Resultado.EsCorrecto Then
+                _Errores.Add($"Pago ID:{_Idmaedpce}, ENDP:{_Endp}: {_Resultado.Mensaje}")
+                Continue For
+            End If
+
+            If Convert.ToBoolean(_Fila.Item("CruzarPagoAuto")) Then
+                Dim _Detalle As String =
+                $"Pago ID:{_Idmaedpce}, ENDP:{_Endp}: " &
+                Convert.ToString(_Fila.Item("ResumenFacturasCruce"))
+
+                If Convert.ToBoolean(_Fila.Item("MatchExacto")) Then
+                    _Exactos.Add(_Detalle)
+                Else
+                    _Parciales.Add(_Detalle)
+                End If
+            ElseIf Convert.ToString(_Fila.Item("MODP")).Trim() <> "$" OrElse
+               Convert.ToBoolean(_Fila.Item("Exclamacion")) OrElse
+               String.IsNullOrEmpty(_Endp) Then
+                _NoProcesables += 1
+            Else
+                _SinMatch.Add($"Pago ID:{_Idmaedpce}, ENDP:{_Endp}")
+            End If
+        Next
+
+        Dim _Resumen As New System.Text.StringBuilder()
+        _Resumen.AppendLine("Preparación del cruce finalizada.")
+        _Resumen.AppendLine()
+        _Resumen.AppendLine($"Total de pagos revisados: {_Tbl_Maedpce.Rows.Count}")
+        _Resumen.AppendLine($"Matches exactos: {_Exactos.Count}")
+        _Resumen.AppendLine($"Matches parciales: {_Parciales.Count}")
+        _Resumen.AppendLine($"Sin match: {_SinMatch.Count}")
+        _Resumen.AppendLine($"No procesables: {_NoProcesables}")
+        _Resumen.AppendLine($"Con error: {_Errores.Count}")
+
+        'Sb_AgregarDetallesResumen(_Resumen, "Matches exactos", _Exactos, 50)
+        'Sb_AgregarDetallesResumen(_Resumen, "Matches parciales", _Parciales, 50)
+        'Sb_AgregarDetallesResumen(_Resumen, "Pagos sin match", _SinMatch, 50)
+        'Sb_AgregarDetallesResumen(_Resumen, "Errores", _Errores, 50)
+
+        Grilla_Maedpce.Refresh()
+        Btn_MatchDocumentos.Enabled = False
+
+        MessageBoxEx.Show(Me, _Resumen.ToString(), "Resumen del cruce de pagos",
+                      MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        Return _Resultados
+    End Function
+
+    Private Sub Sb_AgregarDetallesResumen(
+    _Resumen As System.Text.StringBuilder,
+    _Titulo As String,
+    _Detalles As List(Of String),
+    _MaximoDetalles As Integer)
+
+        If _Detalles Is Nothing OrElse _Detalles.Count = 0 Then
+            Return
+        End If
+
+        _Resumen.AppendLine()
+        _Resumen.AppendLine($"{_Titulo}:")
+
+        Dim _Cantidad As Integer = Math.Min(_Detalles.Count, _MaximoDetalles)
+
+        For _Indice As Integer = 0 To _Cantidad - 1
+            _Resumen.AppendLine(" - " & _Detalles(_Indice))
+        Next
+
+        If _Detalles.Count > _MaximoDetalles Then
+            _Resumen.AppendLine(
+            $" - Se omitieron {_Detalles.Count - _MaximoDetalles} detalle(s).")
+        End If
+    End Sub
+
+    Private Function Fx_PrepararPlanPago(
+        _FilaPago As DataRow,
+        _ReservadoPorFactura As Dictionary(Of Integer, Double),
+        _PagosProcesados As HashSet(Of Integer)) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+            If _FilaPago Is Nothing Then
+                Throw New InvalidOperationException("No se recibió la fila del pago.")
+            End If
+
+            Sb_AsegurarColumnasPlanCruce()
+
+            Dim _Plan As New List(Of Cl_FacturaCrucePlanificada)
+            Dim _Idmaedpce As Integer = Convert.ToInt32(_FilaPago.Item("IDMAEDPCE"))
+
+            _FilaPago.Item("ListaFacturasCruce") = _Plan
+            _FilaPago.Item("ResumenFacturasCruce") = Convert.ToString(_FilaPago.Item("REFANTI"))
+            _FilaPago.Item("CruzarPagoAuto") = False
+            _FilaPago.Item("MatchExacto") = False
+            _FilaPago.Item("MatchParcial") = False
+            _FilaPago.Item("IDMAEEDO") = 0
+
+            If Not _PagosProcesados.Add(_Idmaedpce) Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = $"El pago {_Idmaedpce} ya fue considerado en esta preparación."
+                Return _Mensaje
+            End If
+
+            Dim _Endp As String = Convert.ToString(_FilaPago.Item("ENDP")).Trim()
+            Dim _Modp As String = Convert.ToString(_FilaPago.Item("MODP")).Trim()
+
+            If String.IsNullOrEmpty(_Endp) Then
+                Throw New InvalidOperationException("El pago no tiene una entidad asociada.")
+            End If
+
+            If Not String.Equals(_Modp, "$", StringComparison.OrdinalIgnoreCase) Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = $"El pago {_Idmaedpce} no está expresado en pesos."
+                Return _Mensaje
+            End If
+
+            If Convert.ToBoolean(_FilaPago.Item("Exclamacion")) Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = $"El pago {_Idmaedpce} tiene una observación y no se procesó."
+                Return _Mensaje
+            End If
+
+            Dim _SaldoPago As Double = Fx_ObtenerSaldoDisponiblePago(_Idmaedpce)
+            Dim _SaldoInicial As Double = _SaldoPago
+
+            If _SaldoPago <= 0.01 Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = $"El pago {_Idmaedpce} no tiene saldo disponible."
+                Return _Mensaje
+            End If
+
+            Dim _EndpSql As String = _Endp.Replace("'", "''")
+            Dim _CondicionFecha As String = String.Empty
+
+            If Chk_SoloMatchFacVencidas.Checked Then
+                _CondicionFecha = " AND EDO.FE01VEDO < GETDATE() "
+            End If
+
+            Consulta_Sql = $"SELECT EDO.IDMAEEDO,
+                                EDO.TIDO,
+                                EDO.NUDO,
+                                ROUND(EDO.VABRDO - EDO.VAABDO, 2) AS SALDO_FACTURA
+                         FROM MAEEDO EDO
+                         WHERE EDO.ENDO = '{_EndpSql}'
+                           AND EDO.TIDO IN ('BLV','BSV','BLX','FCV','FDB','FDV','FDX','FDZ','FEV','FVL','FVT','FVX','FVZ',
+                                            'RIN','ESC','FEE','NCC','NCB')
+                           AND EDO.ESPGDO = 'P'
+                           AND EDO.NUDONODEFI = 0
+                           AND EDO.EMPRESA = '{Mod_Empresa}'
+                           AND ROUND(EDO.VABRDO - EDO.VAABDO, 2) > 0
+                           {_CondicionFecha}
+                         ORDER BY EDO.FE01VEDO, EDO.FEEMDO, EDO.IDMAEEDO"
+
+            Dim _Tbl_Facturas As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql)
+
+            If _Tbl_Facturas Is Nothing OrElse _Tbl_Facturas.Rows.Count = 0 Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = $"El pago {_Idmaedpce} no tiene facturas pendientes para cruzar."
+                Return _Mensaje
+            End If
+
+            Dim _FacturasUsadas As New HashSet(Of Integer)
+
+            If Chk_MarcarSoloMatchExactos.Checked Then
+                ' En modo exacto solo se reserva una factura que cubra exactamente el pago.
+                For Each _Factura As DataRow In _Tbl_Facturas.Rows
+                    Dim _IdFactura As Integer = Convert.ToInt32(_Factura.Item("IDMAEEDO"))
+                    Dim _SaldoFactura As Double = Convert.ToDouble(_Factura.Item("SALDO_FACTURA"))
+                    Dim _Reservado As Double = 0
+
+                    If _ReservadoPorFactura.ContainsKey(_IdFactura) Then
+                        _Reservado = _ReservadoPorFactura(_IdFactura)
+                    End If
+
+                    Dim _SaldoDisponibleFactura As Double = Math.Max(0, _SaldoFactura - _Reservado)
+
+                    If Math.Abs(_SaldoDisponibleFactura - _SaldoPago) <= 0.01 Then
+                        _Plan.Add(New Cl_FacturaCrucePlanificada With {
+                            .Idmaeedo = _IdFactura,
+                            .Tido = Convert.ToString(_Factura.Item("TIDO")),
+                            .Nudo = Convert.ToString(_Factura.Item("NUDO")),
+                            .SaldoFacturaAlPreparar = _SaldoFactura,
+                            .SaldoDisponibleAlPlanificar = _SaldoDisponibleFactura,
+                            .MontoPlanificado = _SaldoPago
+                        })
+
+                        _ReservadoPorFactura(_IdFactura) = _Reservado + _SaldoPago
+                        _SaldoPago = 0
+                        Exit For
+                    End If
+                Next
+            Else
+                While _SaldoPago > 0.01
+                    Dim _FacturaElegida As DataRow = Nothing
+                    Dim _SaldoDisponibleElegida As Double = 0
+
+                    ' Primero busca una factura cuyo saldo no reservado coincida con el pago restante.
+                    For Each _Factura As DataRow In _Tbl_Facturas.Rows
+                        Dim _IdFactura As Integer = Convert.ToInt32(_Factura.Item("IDMAEEDO"))
+                        Dim _SaldoFactura As Double = Convert.ToDouble(_Factura.Item("SALDO_FACTURA"))
+                        Dim _Reservado As Double = 0
+
+                        If _ReservadoPorFactura.ContainsKey(_IdFactura) Then
+                            _Reservado = _ReservadoPorFactura(_IdFactura)
+                        End If
+
+                        Dim _SaldoDisponibleFactura As Double = Math.Max(0, _SaldoFactura - _Reservado)
+
+                        If Not _FacturasUsadas.Contains(_IdFactura) AndAlso
+                           Math.Abs(_SaldoDisponibleFactura - _SaldoPago) <= 0.01 Then
+
+                            _FacturaElegida = _Factura
+                            _SaldoDisponibleElegida = _SaldoDisponibleFactura
+                            Exit For
+                        End If
+                    Next
+
+                    ' Si no hay exacta, reserva sobre la factura más antigua con saldo disponible.
+                    If _FacturaElegida Is Nothing Then
+                        For Each _Factura As DataRow In _Tbl_Facturas.Rows
+                            Dim _IdFactura As Integer = Convert.ToInt32(_Factura.Item("IDMAEEDO"))
+                            Dim _SaldoFactura As Double = Convert.ToDouble(_Factura.Item("SALDO_FACTURA"))
+                            Dim _Reservado As Double = 0
+
+                            If _ReservadoPorFactura.ContainsKey(_IdFactura) Then
+                                _Reservado = _ReservadoPorFactura(_IdFactura)
+                            End If
+
+                            Dim _SaldoDisponibleFactura As Double = Math.Max(0, _SaldoFactura - _Reservado)
+
+                            If Not _FacturasUsadas.Contains(_IdFactura) AndAlso
+                               _SaldoDisponibleFactura > 0.01 Then
+
+                                _FacturaElegida = _Factura
+                                _SaldoDisponibleElegida = _SaldoDisponibleFactura
+                                Exit For
+                            End If
+                        Next
+                    End If
+
+                    If _FacturaElegida Is Nothing Then
+                        Exit While
+                    End If
+
+                    Dim _IdFacturaElegida As Integer =
+                        Convert.ToInt32(_FacturaElegida.Item("IDMAEEDO"))
+
+                    Dim _MontoPlanificado As Double =
+                        Math.Round(Math.Min(_SaldoPago, _SaldoDisponibleElegida), 2)
+
+                    If _MontoPlanificado <= 0.01 Then
+                        Exit While
+                    End If
+
+                    _Plan.Add(New Cl_FacturaCrucePlanificada With {
+                        .Idmaeedo = _IdFacturaElegida,
+                        .Tido = Convert.ToString(_FacturaElegida.Item("TIDO")),
+                        .Nudo = Convert.ToString(_FacturaElegida.Item("NUDO")),
+                        .SaldoFacturaAlPreparar =
+                            Convert.ToDouble(_FacturaElegida.Item("SALDO_FACTURA")),
+                        .SaldoDisponibleAlPlanificar = _SaldoDisponibleElegida,
+                        .MontoPlanificado = _MontoPlanificado
+                    })
+
+                    _FacturasUsadas.Add(_IdFacturaElegida)
+
+                    If _ReservadoPorFactura.ContainsKey(_IdFacturaElegida) Then
+                        _ReservadoPorFactura(_IdFacturaElegida) += _MontoPlanificado
+                    Else
+                        _ReservadoPorFactura.Add(_IdFacturaElegida, _MontoPlanificado)
+                    End If
+
+                    _SaldoPago = Math.Round(_SaldoPago - _MontoPlanificado, 2)
+                End While
+            End If
+
+            If _Plan.Count = 0 Then
+                _Mensaje.EsCorrecto = True
+                _Mensaje.Mensaje = $"No se encontraron facturas disponibles para el pago {_Idmaedpce}."
+                Return _Mensaje
+            End If
+
+            Dim _EsExacto As Boolean =
+                _Plan.Count = 1 AndAlso
+                Math.Abs(_Plan(0).SaldoDisponibleAlPlanificar - _SaldoInicial) <= 0.01 AndAlso
+                Math.Abs(_Plan(0).MontoPlanificado - _SaldoInicial) <= 0.01
+
+            _FilaPago.Item("ListaFacturasCruce") = _Plan
+            _FilaPago.Item("ResumenFacturasCruce") = Fx_ResumenPlanCruce(_Plan)
+            _FilaPago.Item("IDMAEEDO") = _Plan(0).Idmaeedo
+            _FilaPago.Item("CruzarPagoAuto") = True
+            _FilaPago.Item("MatchExacto") = _EsExacto
+            _FilaPago.Item("MatchParcial") = Not _EsExacto
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje =
+                $"Pago {_Idmaedpce}: {_Plan.Count} factura(s) reservada(s)."
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+    End Function
+
+    Private Function Fx_GrabarCrucesMultiplesDeGrilla() As List(Of LsValiciones.Mensajes)
+        Dim _Resultados As New List(Of LsValiciones.Mensajes)
+
+        If _Tbl_Maedpce Is Nothing Then
+            Return _Resultados
+        End If
+
+        For Each _Fila As DataRow In _Tbl_Maedpce.Rows
+            If Convert.ToBoolean(_Fila.Item("Chk")) AndAlso
+               Convert.ToBoolean(_Fila.Item("CruzarPagoAuto")) Then
+
+                Dim _Mensaje As LsValiciones.Mensajes = Fx_GrabarListaFacturasCruce(_Fila)
+                _Resultados.Add(_Mensaje)
+            End If
+        Next
+
+        Sb_Actualizar_Totales(False)
+        Grilla_Maedpce.Refresh()
+
+        Return _Resultados
+    End Function
+
+    Private Function Fx_GrabarListaFacturasCruce(
+        _FilaPago As DataRow) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+            Dim _Plan As List(Of Cl_FacturaCrucePlanificada) =
+                TryCast(_FilaPago.Item("ListaFacturasCruce"),
+                        List(Of Cl_FacturaCrucePlanificada))
+
+            If _Plan Is Nothing OrElse _Plan.Count = 0 Then
+                Throw New InvalidOperationException("La fila no contiene facturas planificadas.")
+            End If
+
+            Dim _Idmaedpce As Integer = Convert.ToInt32(_FilaPago.Item("IDMAEDPCE"))
+            Dim _Pendientes As New List(Of Cl_FacturaCrucePlanificada)(_Plan)
+            Dim _DetalleErrores As New System.Text.StringBuilder()
+            Dim _Aplicaciones As Integer = 0
+            Dim _Errores As Integer = 0
+            Dim _SaldoAgotado As Boolean = False
+
+            For Each _Factura As Cl_FacturaCrucePlanificada In _Pendientes
+                Dim _SaldoPagoActual As Double = Fx_ObtenerSaldoDisponiblePago(_Idmaedpce)
+
+                If _SaldoPagoActual <= 0.01 Then
+                    _SaldoAgotado = True
+                    Exit For
+                End If
+
+                Dim _FilaTrabajo As DataRow = _FilaPago.Table.NewRow()
+                _FilaTrabajo.ItemArray = _FilaPago.ItemArray
+                _FilaTrabajo.Item("IDMAEEDO") = _Factura.Idmaeedo
+
+                Dim _ResultadoPago As LsValiciones.Mensajes =
+                    Fx_Pagar_DocumentosConMonto(_FilaTrabajo, _Factura.MontoPlanificado)
+
+                If _ResultadoPago.EsCorrecto Then
+                    _Plan.Remove(_Factura)
+                    _Aplicaciones += 1
+                Else
+                    _Errores += 1
+                    _DetalleErrores.AppendLine(
+                        $"{_Factura.Tido}-{_Factura.Nudo}: {_ResultadoPago.Mensaje}")
+                End If
+            Next
+
+            If _SaldoAgotado Then
+                ' No dejar facturas en el plan si el pago ya se consumió.
+                _Plan.Clear()
+            End If
+
+            _FilaPago.Item("ListaFacturasCruce") = _Plan
+
+            Dim _ResumenPlan As String = Fx_ResumenPlanCruce(_Plan)
+
+            If String.IsNullOrEmpty(_ResumenPlan) Then
+                _ResumenPlan = Convert.ToString(_FilaPago.Item("REFANTI"))
+            End If
+
+            _FilaPago.Item("ResumenFacturasCruce") = _ResumenPlan
+            _FilaPago.Item("CruzarPagoAuto") = (_Plan.Count > 0)
+            _FilaPago.Item("PagoCruzado") =
+                Convert.ToBoolean(_FilaPago.Item("PagoCruzado")) OrElse (_Aplicaciones > 0)
+            _FilaPago.Item("Error") = (_Errores > 0)
+            _FilaPago.Item("Observacion") = _DetalleErrores.ToString()
+
+            If _Plan.Count = 0 Then
+                _FilaPago.Item("Chk") = False
+                _FilaPago.Item("MatchExacto") = False
+                _FilaPago.Item("MatchParcial") = False
+            End If
+
+            _Mensaje.EsCorrecto = (_Errores = 0)
+            _Mensaje.Mensaje =
+                $"Facturas pagadas: {_Aplicaciones}. Saldo disponible: {FormatNumber(Fx_ObtenerSaldoDisponiblePago(_Idmaedpce), 2)}."
+
+            If _DetalleErrores.Length > 0 Then
+                _Mensaje.Mensaje &= vbCrLf & "No se pudieron pagar:" & vbCrLf &
+                                    _DetalleErrores.ToString()
+            End If
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = ex.Message
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+    End Function
+
+    Private Function Fx_Pagar_DocumentosConMonto(
+        _Fila As DataRow,
+        _MontoPlanificado As Double) As LsValiciones.Mensajes
+
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+            If _MontoPlanificado <= 0.01 Then
+                Throw New InvalidOperationException("El importe planificado no es válido.")
+            End If
+
+            Dim _Idmaeedo As Integer = Convert.ToInt32(_Fila.Item("IDMAEEDO"))
+            Dim _Idmaedpce As Integer = Convert.ToInt32(_Fila.Item("IDMAEDPCE"))
+
+            Consulta_Sql =
+                $"SELECT *, VABRDO - VAABDO AS TOTSALDO
+              FROM MAEEDO
+              WHERE IDMAEEDO = {_Idmaeedo}"
+
+            Dim _RowMaeedo As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+            If _RowMaeedo Is Nothing Then
+                Throw New InvalidOperationException(
+                    $"No se encontró la factura IDMAEEDO {_Idmaeedo}.")
+            End If
+
+            Dim _SaldoFacturaActual As Double =
+                Convert.ToDouble(_RowMaeedo.Item("TOTSALDO"))
+
+            If _SaldoFacturaActual <= 0.01 Then
+                Throw New InvalidOperationException(
+                    $"La factura {_RowMaeedo.Item("TIDO")}-{_RowMaeedo.Item("NUDO")} ya no tiene saldo.")
+            End If
+
+            Consulta_Sql =
+                $"SELECT TOP 1 * FROM MAEDPCE WHERE IDMAEDPCE = {_Idmaedpce}"
+
+            Dim _RowMaedpce As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+            If _RowMaedpce Is Nothing Then
+                Throw New InvalidOperationException(
+                    $"No se encontró el pago IDMAEDPCE {_Idmaedpce}.")
+            End If
+
+            Dim _SaldoPagoActual As Double =
+                Convert.ToDouble(_RowMaedpce.Item("VADP")) -
+                Convert.ToDouble(_RowMaedpce.Item("VAASDP"))
+
+            If _SaldoPagoActual <= 0.01 Then
+                Throw New InvalidOperationException("El pago ya no tiene saldo disponible.")
+            End If
+
+            ' Se limita por el plan y por los saldos actuales de factura y pago.
+            Dim _MontoAAplicar As Double =
+                Math.Round(
+                    Math.Min(
+                        _MontoPlanificado,
+                        Math.Min(_SaldoFacturaActual, _SaldoPagoActual)),
+                    2)
+
+            If _MontoAAplicar <= 0.01 Then
+                Throw New InvalidOperationException("No hay importe disponible para aplicar.")
+            End If
+
+            Dim _Maedpce As New MAEDPCE With {
+                .IDMAEDPCE = _RowMaedpce.Item("IDMAEDPCE"),
+                .TIDP = _RowMaedpce.Item("TIDP"),
+                .EMPRESA = _RowMaedpce.Item("EMPRESA"),
+                .ENDP = _RowMaedpce.Item("ENDP"),
+                .EMDP = _RowMaedpce.Item("EMDP"),
+                .SUEMDP = _RowMaedpce.Item("SUEMDP"),
+                .CUDP = _RowMaedpce.Item("CUDP"),
+                .NUCUDP = _RowMaedpce.Item("NUCUDP"),
+                .FEEMDP = _RowMaedpce.Item("FEEMDP"),
+                .FEVEDP = _RowMaedpce.Item("FEVEDP"),
+                .MODP = _RowMaedpce.Item("MODP"),
+                .TIMODP = _RowMaedpce.Item("TIMODP"),
+                .TAMODP = _RowMaedpce.Item("TAMODP"),
+                .VADP = _RowMaedpce.Item("VADP"),
+                .VAASDP = _MontoAAplicar,
+                .VAVUDP = 0,
+                .ESASDP = _RowMaedpce.Item("ESASDP"),
+                .ESPGDP = _RowMaedpce.Item("ESPGDP"),
+                .SUREDP = _RowMaedpce.Item("SUREDP"),
+                .CJREDP = _RowMaedpce.Item("CJREDP"),
+                .KOFUDP = _RowMaedpce.Item("KOFUDP"),
+                .REFANTI = "Cruce automático/Bakapp",
+                .KOTU = _RowMaedpce.Item("KOTU"),
+                .VAABDP = _RowMaedpce.Item("VAABDP"),
+                .CUOTAS = _RowMaedpce.Item("CUOTAS"),
+                .ARCHIRSD = NuloPorNro(_RowMaedpce.Item("ARCHIRSD"), ""),
+                .IDRSD = NuloPorNro(_RowMaedpce.Item("IDRSD"), 0),
+                .KOTNDP = _RowMaedpce.Item("KOTNDP"),
+                .SUTNDP = _RowMaedpce.Item("SUTNDP")
+            }
+
+            Dim _FechaAsignacion As Date
+
+            If Chk_Fecha_Asignacion.Checked Then
+                _FechaAsignacion = FechaDelServidor()
+            Else
+                _FechaAsignacion = Convert.ToDateTime(_RowMaedpce.Item("FEEMDP"))
+            End If
+
+            Dim _ClPagar As New Clas_Pagar()
+            Dim _ListaMaedpce As New List(Of MAEDPCE) From {_Maedpce}
+
+            _Mensaje =
+                _ClPagar.Fx_Pagar_Documento(
+                    _Idmaeedo,
+                    _ListaMaedpce,
+                    _FechaAsignacion)
+
+            If Not _Mensaje.EsCorrecto Then
+                Return _Mensaje
+            End If
+
+            ' El pago ya quedó grabado; un fallo de registro de gestión no debe provocar
+            ' que se intente pagar de nuevo la misma factura.
+            Try
+                Dim _Maedpcd As MAEDPCD = TryCast(_Mensaje.Tag, MAEDPCD)
+
+                If _Maedpcd IsNot Nothing Then
+                    Dim _Accion As String =
+                        $"Cruce automático: IDMAEDPCE {_Idmaedpce}, " &
+                        $"IDMAEDPCD {_Maedpcd.IDMAEDPCD}, " &
+                        $"Valor asignado {FormatNumber(_Maedpcd.VAASDP, 2)}"
+
+                    Fx_Add_Log_Gestion(_Funcionario:=FUNCIONARIO,
+                                       _Modalidad:=Mod_Modalidad,
+                                       _Archirst:="MAEEDO",
+                                       _Idrst:=_Idmaeedo,
+                                       _CodAccion:="",
+                                       _Accion:=_Accion,
+                                       _CodPermiso:="",
+                                       _Kopr:="",
+                                       _Koen:="",
+                                       _Suen:="",
+                                       _Es_Solicitud_Permiso:=False,
+                                       _Funcionario_Autoriza:=FUNCIONARIO,
+                                       _Tido:=Convert.ToString(_RowMaeedo.Item("TIDO")),
+                                       _Nudo:=Convert.ToString(_RowMaeedo.Item("NUDO")))
+                End If
+            Catch
+                ' El pago se grabó correctamente; el fallo del log no debe repetirlo.
+            End Try
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Mensaje = "Error al pagar la factura: " & ex.Message
+            _Mensaje.Tag = Nothing
+            _Mensaje.Detalle = "Cruzar pago"
+            _Mensaje.Icono = MessageBoxIcon.Error
+        End Try
+
+        Return _Mensaje
+    End Function
+
+    Private Class Cl_FacturaCrucePlanificada
+        Public Property Idmaeedo As Integer
+        Public Property Tido As String
+        Public Property Nudo As String
+        Public Property SaldoFacturaAlPreparar As Double
+        Public Property SaldoDisponibleAlPlanificar As Double
+        Public Property MontoPlanificado As Double
+    End Class
+
+    Private Sub Btn_DesbloquearPago_Click(sender As Object, e As EventArgs) Handles Btn_DesbloquearPago.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Maedpce.CurrentRow
+        Dim _Idmaedpce As Integer = Convert.ToInt32(_Fila.Cells("IDMAEDPCE").Value)
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+        Dim _CruzarPagoAuto As Boolean = _Fila.Cells("CruzarPagoAuto").Value
+
+        If Not Btn_MatchDocumentos.Enabled Then
+            MessageBoxEx.Show(Me, "Esta acción solo se puede hacer si es que no a procesado los pagos", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Not Fx_Tiene_Permiso(Me, "Pcli0005") Then
+            Return
+        End If
+
+        Dim _Aceptar As Boolean
+        Dim _MotivoBloqueo As String
+
+        _Aceptar = InputBox_Bk(Me, "Ingrese el motivo del desbloqueo del pago", "Desbloquear pago",
+                              _MotivoBloqueo, True, _Tipo_Mayus_Minus.Mayusculas, True, _Tipo_Mayus_Minus.Mayusculas, 200)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        Consulta_Sql = $"
+Delete {_Global_BaseBk}Zw_PagosBloqueados 
+Where Idmaedpce = {_Idmaedpce}"
+
+        If Not _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+            Return
+        End If
+
+        _Fila.Cells("Bloqueado").Value = False
+        _Fila.Cells("Exclamacion").Value = True
+        '_Fila.Cells("Chk").Value = False
+        '_Fila.Cells("CruzarPagoAuto").Value = False
+        '_Fila.Cells("MatchExacto").Value = False
+        '_Fila.Cells("MatchParcial").Value = False
+        _Fila.Cells("Observacion").Value = String.Empty
+    End Sub
+
+    Private Sub Btn_BloquearPago_Click(sender As Object, e As EventArgs) Handles Btn_BloquearPago.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Maedpce.CurrentRow
+        Dim _Idmaedpce As Integer = Convert.ToInt32(_Fila.Cells("IDMAEDPCE").Value)
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+        Dim _CruzarPagoAuto As Boolean = _Fila.Cells("CruzarPagoAuto").Value
+
+        If Not Btn_MatchDocumentos.Enabled Then
+            MessageBoxEx.Show(Me, "Esta acción solo se puede hacer si es que no a procesado los pagos", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Not Fx_Tiene_Permiso(Me, "Pcli0004") Then
+            Return
+        End If
+
+        Dim _Aceptar As Boolean
+        Dim _MotivoBloqueo As String
+
+        _Aceptar = InputBox_Bk(Me, "Ingrese el motivo del desbloqueo del pago", "Desbloquear pago",
+                              _MotivoBloqueo, True, _Tipo_Mayus_Minus.Mayusculas, True, _Tipo_Mayus_Minus.Mayusculas, 200)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        Consulta_Sql = $"
+Insert Into {_Global_BaseBk}Zw_PagosBloqueados (Idmaedpce, Bloqueado, Observaciones, CodFuncionario, NombreEquipo, FechaBloqueo) Values 
+({_Idmaedpce},1,'{_MotivoBloqueo}','{FUNCIONARIO}','{_NombreEquipo}',Getdate())"
+        If Not _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+            Return
+        End If
+
+        _Fila.Cells("Bloqueado").Value = True
+        _Fila.Cells("Exclamacion").Value = True
+        '_Fila.Cells("Chk").Value = False
+        '_Fila.Cells("CruzarPagoAuto").Value = False
+        '_Fila.Cells("MatchExacto").Value = False
+        '_Fila.Cells("MatchParcial").Value = False
+        _Fila.Cells("Observacion").Value = _MotivoBloqueo
+
+    End Sub
+
 End Class
+
+

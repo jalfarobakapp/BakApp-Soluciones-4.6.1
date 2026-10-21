@@ -941,7 +941,6 @@ Public Class Frm_Ver_Documento
         If _TipoCarga = 1 Then Btn_CargaDirecta.Checked = True
         If _TipoCarga = 2 Then Btn_CargaSemiDirecta.Checked = True
 
-
         Dim _PedirPermisoCargasDirectaoSemiDirecta As Boolean = _Global_Row_Configuracion_General.Item("PedirPermisoCargasDirectaoSemiDirecta")
 
         If Not _PedirPermisoCargasDirectaoSemiDirecta Then
@@ -5627,9 +5626,29 @@ Where Idmaeedo In (Select IDMAEEDO From MAEDDO WITH (NOLOCK) Where IDMAEDDO In {
 
     Private Sub Btn_Opciones_Especiales_Click(sender As Object, e As EventArgs) Handles Btn_Opciones_Especiales.Click
 
+        Dim _Fila As DataGridViewRow = GrillaDetalleDoc.CurrentRow
+        Dim _Idmaeddo As Integer = _Fila.Cells("IDMAEDDO").Value
+
+        Consulta_sql = $"Select Top 1 * From {_Global_BaseBk}Zw_Docu_Det Where Idmaeddo = {_Idmaeddo}"
+        Dim _Row_Docu_Det As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Dim _TipoCarga As Integer
+
+        If Not IsNothing(_Row_Docu_Det) Then
+            _TipoCarga = _Row_Docu_Det.Item("TipoCarga")
+        End If
+
         Btn_Contenedor_Asociar.Visible = Not CBool(_Cl_Contenedor.Zw_Contenedor.IdCont)
         Btn_Contenedor_Quitar.Visible = CBool(_Cl_Contenedor.Zw_Contenedor.IdCont)
         Btn_Contenedor_Ver.Visible = CBool(_Cl_Contenedor.Zw_Contenedor.IdCont)
+
+        Btn_SinCarga.Checked = False
+        Btn_CargaDirecta.Checked = False
+        Btn_CargaSemiDirecta.Checked = False
+
+        If _TipoCarga = 0 Then Btn_SinCarga.Checked = True
+        If _TipoCarga = 1 Then Btn_CargaDirecta.Checked = True
+        If _TipoCarga = 2 Then Btn_CargaSemiDirecta.Checked = True
 
         ShowContextMenu(Menu_Contextual_Opciones_Especiales)
 
@@ -5767,33 +5786,33 @@ Where Idmaeedo = {_Idmaeedo}
     End Sub
 
     Private Sub Btn_SinCarga_Click(sender As Object, e As EventArgs) Handles Btn_SinCarga.Click
-        Dim _TipoCarga_Old As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo, True, False)
-        If _TipoCarga_Old = 0 Then
-            MessageBoxEx.Show(Me, "El documento ya esta marcado como SIN CARGA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-        Sb_Cambiar_TipoCarga(_Idmaeedo, 0, _TipoCarga_Old)
+        'Dim _TipoCarga_Old As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo, True, False)
+        'If _TipoCarga_Old = 0 Then
+        '    MessageBoxEx.Show(Me, "El documento ya esta marcado como SIN CARGA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
+        Sb_Cambiar_TipoCarga(_Idmaeedo, 0)
     End Sub
 
     Private Sub Btn_CargaDirecta_Click(sender As Object, e As EventArgs) Handles Btn_CargaDirecta.Click
-        Dim _TipoCarga_Old As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo, True, False)
-        If _TipoCarga_Old = 1 Then
-            MessageBoxEx.Show(Me, "El documento ya tiene el tipo de carga CARGA DIRECTA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-        Sb_Cambiar_TipoCarga(_Idmaeedo, 1, _TipoCarga_Old)
+        'Dim _TipoCarga_Old As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo, True, False)
+        'If _TipoCarga_Old = 1 Then
+        '    MessageBoxEx.Show(Me, "El documento ya tiene el tipo de carga CARGA DIRECTA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
+        Sb_Cambiar_TipoCarga(_Idmaeedo, 1)
     End Sub
 
     Private Sub Btn_CargaSemiDirecta_Click(sender As Object, e As EventArgs) Handles Btn_CargaSemiDirecta.Click
-        Dim _TipoCarga_Old As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo, True, False)
-        If _TipoCarga_Old = 2 Then
-            MessageBoxEx.Show(Me, "El documento ya tiene el tipo de carga CARGA SEMI DIRECTA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
-        End If
-        Sb_Cambiar_TipoCarga(_Idmaeedo, 2, _TipoCarga_Old)
+        'Dim _TipoCarga_Old As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo, True, False)
+        'If _TipoCarga_Old = 2 Then
+        '    MessageBoxEx.Show(Me, "El documento ya tiene el tipo de carga CARGA SEMI DIRECTA", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+        '    Return
+        'End If
+        Sb_Cambiar_TipoCarga(_Idmaeedo, 2)
     End Sub
 
-    Sub Sb_Cambiar_TipoCarga(_Idmaeedo As Integer, _TipoCarga_New As Integer, _TipoCarga_Old As Integer)
+    Sub Sb_Cambiar_TipoCarga(_Idmaeedo As Integer, _TipoCarga_New As Integer)
 
         Dim _Permiso As String = String.Empty
         Dim _Tido As String = _TblEncabezado.Rows(0).Item("TIDO")
@@ -5802,6 +5821,8 @@ Where Idmaeedo = {_Idmaeedo}
             MessageBoxEx.Show(Me, "Solo se puede marcar una Nota de Venta", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
+
+        Dim _TipoCarga_Old As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo, True, False)
 
         Dim _TipoCarga_Str As String
 
@@ -5819,6 +5840,12 @@ Where Idmaeedo = {_Idmaeedo}
             _Permiso = "Doc00180"
             _TipoCarga_Str = "CARGA SEMI-DIRECTA"
         End If
+
+        If _TipoCarga_Old = _TipoCarga_New Then
+            MessageBoxEx.Show(Me, $"El documento ya esta marcado como {_TipoCarga_Str}", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
 
         If MessageBoxEx.Show(Me, $"¿Confirma el cambio de Tipo de Despacho a {_TipoCarga_Str}?",
                              "Cambiar Tipo Despacho", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) <> DialogResult.Yes Then
@@ -5842,8 +5869,7 @@ Where Idmaeedo = {_Idmaeedo}
 
         If _Actualizado Then
 
-            MessageBoxEx.Show(Me, "Registros actualizados: " & _Registros_Actualizados & vbCrLf &
-                            "IDMAEDDO encontrados: " & String.Join(",", _Lista_Idmaeddo))
+            MessageBoxEx.Show(Me, "Registros actualizados", "Cambio de tipo carga", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Else
 

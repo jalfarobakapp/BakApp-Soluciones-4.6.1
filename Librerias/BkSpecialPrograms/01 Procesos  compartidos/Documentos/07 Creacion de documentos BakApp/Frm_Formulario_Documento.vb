@@ -597,6 +597,9 @@ Public Class Frm_Formulario_Documento
             Me.Left += 10
         End If
 
+        Chk_CargaDirecta.Visible = False
+        Chk_CargaSemiDirecta.Visible = False
+
         Dim _Color_Totales As Color = Color.FromArgb(46, 46, 46)
         Dim _Color_LblTotales As Color = Color.FromArgb(46, 46, 46)
 
@@ -16245,6 +16248,14 @@ Public Class Frm_Formulario_Documento
                             _TblEncabezado.Rows(0).Item("NroDocumento") = _NroDocumento_Antes_De_Editar
 
                             If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "FCV" Or _Tido = "GDV" Or _Tido = "GDP" Then
+
+                                If RutEmpresa = "77988832-0" Then
+                                    Dim _Endo As String = _Sql.Fx_Trae_Dato("MAEEDO", "ENDO", $"IDMAEEDO = {_Idmaeedo}")
+                                    If _Endo.ToString.Trim = "XXXXXXXXXX" Then
+                                        MessageBoxEx.Show(Me, "Documento en transición por picking", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                        Return
+                                    End If
+                                End If
 
                                 Dim _Msj As LsValiciones.Mensajes = Fx_FuncionarioPuedeVerDocumentoGrupo(_Idmaeedo, FUNCIONARIO)
 

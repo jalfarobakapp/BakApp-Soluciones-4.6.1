@@ -4772,7 +4772,6 @@ Public Module Crear_Documentos_Desde_Otro
                 Dim _ImpresosaPredt As String = _Instance.PrinterName
                 Dim _Seleccionar_Impresora = True
 
-
                 Dim Chk_Imprimir_Predeterminada As New Command
                 Chk_Imprimir_Predeterminada.Visible = Not String.IsNullOrEmpty(_ImpresosaPredt.Trim)
                 Chk_Imprimir_Predeterminada.Checked = Not String.IsNullOrEmpty(_ImpresosaPredt.Trim)
@@ -4805,15 +4804,6 @@ Public Module Crear_Documentos_Desde_Otro
                     If Chk_Imprimir_Predeterminada.Checked Or Chk_Imprimir_Cambiar.Checked Then
 
                         _Seleccionar_Impresora = Chk_Imprimir_Cambiar.Checked
-
-                        'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(_Formulario, _NombreFormato, _Idmaeedo,
-                        '                                                False, _Seleccionar_Impresora, _ImpresosaPredt, False,
-                        '                                                0, False, _Subtido)
-
-                        'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                        '    MessageBoxEx.Show(_Formulario, _Imprime, "Problemas al Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop,
-                        '              MessageBoxDefaultButton.Button1, _Formulario.TopMost)
-                        'End If
 
                         Dim _Mensaje As LsValiciones.Mensajes
 

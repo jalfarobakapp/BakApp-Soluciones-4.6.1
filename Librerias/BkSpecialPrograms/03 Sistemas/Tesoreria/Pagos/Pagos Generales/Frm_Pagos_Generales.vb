@@ -154,6 +154,7 @@ Public Class Frm_Pagos_Generales
         If ModoLectura Then
             Me.Text += " (MODO SOLO LECTURA)"
             BtnGrabar.Enabled = False
+            Btn_Agregar_Pago.Enabled = False
         End If
 
     End Sub

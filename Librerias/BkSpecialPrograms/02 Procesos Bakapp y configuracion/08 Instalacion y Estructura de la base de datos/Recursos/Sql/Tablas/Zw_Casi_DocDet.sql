@@ -138,6 +138,7 @@ CREATE TABLE [dbo].[Zw_Casi_DocDet](
     [Precio_DigSobreStock]  [float]                 NOT NULL DEFAULT (0),
     [PqteComprometidoSol]   [float]                 NOT NULL DEFAULT (0),
     [Id_Feria]              [Int]			NOT NULL DEFAULT (0),
+    [TipoCarga]             [Int]			NOT NULL DEFAULT (0),
 ) ON [PRIMARY]
 
 

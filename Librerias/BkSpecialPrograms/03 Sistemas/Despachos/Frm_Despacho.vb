@@ -302,7 +302,7 @@ Public Class Frm_Despacho
 						Cast('' As Varchar(3)) As Nro_Sub_Hijo
                         Into #Paso_Det
                         From " & _Global_BaseBk & "Zw_Despachos_Doc_Det Det
-                        Where Id_Despacho = " & _Cl_Despacho.Id_Despacho & "
+                        Where Id_Despacho = " & _Cl_Despacho.Id_Despacho & " And Activo = 1
 
                         Update #Paso_Det Set Id_Despacho_Hijo = Isnull((Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc_Det Desp 
 										 Where Desp.Archirst = 'Id_Detalle' And Desp.Idrst = #Paso_Det.Id_Detalle),0)

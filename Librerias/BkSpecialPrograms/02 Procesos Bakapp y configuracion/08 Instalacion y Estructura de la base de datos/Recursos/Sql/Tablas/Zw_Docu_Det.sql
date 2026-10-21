@@ -25,6 +25,7 @@ CREATE TABLE [dbo].[Zw_Docu_Det](
     [Qty_SobreStockDv]      [float]			NOT NULL DEFAULT (0),
     [Id_Det_SincroStock]    [int]			NOT NULL DEFAULT (0),
     [Id_Feria]              [int]			NOT NULL DEFAULT (0),
+    [TipoCarga]             [Int]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Docu_Det] PRIMARY KEY CLUSTERED 
 (
 	[Idmaeddo] ASC,

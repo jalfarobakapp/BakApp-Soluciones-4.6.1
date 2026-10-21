@@ -302,6 +302,10 @@ Module Mod_Imprimir
 
                         If _Doc_Electronico Then
 
+                            If _Tido = "FCV" Then
+                                _Seleccionar_Impresora = False
+                            End If
+
                             _Msj_Imprimir = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _NombreFormato, True,
                                                                   _Seleccionar_Impresora, _Vista_Previa,
                                                                   _Imp, _Subtido, _Accion_Imprimir)
@@ -316,9 +320,6 @@ Module Mod_Imprimir
                     Dim _Tbl As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
 
                     For Each _Fila As DataRow In _Tbl.Rows
-
-                        '_LogError = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _Fila.Item("NombreFormato_Destino"), False,
-                        '              _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
 
                         _Msj_Imprimir = Fx_Imprimir_Documento(_Idmaeedo, _Tido, _Nudo, _Fila.Item("NombreFormato_Destino"), False,
                                       _Seleccionar_Impresora, _Vista_Previa, _Impresora, _Subtido)
