@@ -70,7 +70,8 @@ Public Class Cl_Sincroniza
                 .LVEN = "TABPP01P",
                 .RECEPELECT = True,
                 .CPEN = "CONTADO",
-                .TIPOEN = "0003"
+                .TIPOEN = "0003",
+                .NOKOENAMP = SanearTexto(Cliente.NOKOEN)
             }
 
             Dim Entidad_M As New Entidad_meli

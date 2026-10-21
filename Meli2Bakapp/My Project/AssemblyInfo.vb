@@ -9,8 +9,8 @@ Imports System.Runtime.InteropServices
 ' Revisar los valores de los atributos del ensamblado
 
 <Assembly: AssemblyTitle("Meli2Bakapp")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyDescription("Sincronizador de BakApp junto a mercado libre")>
+<Assembly: AssemblyCompany("BakApp")>
 <Assembly: AssemblyProduct("Meli2Bakapp")>
 <Assembly: AssemblyCopyright("Copyright ©  2024")>
 <Assembly: AssemblyTrademark("")>
@@ -28,5 +28,5 @@ Imports System.Runtime.InteropServices
 '      Revisión
 '
 
-<Assembly: AssemblyVersion("1.0.1.6")>
-<Assembly: AssemblyFileVersion("1.0.1.6")>
+<Assembly: AssemblyVersion("1.0.1.7")>
+<Assembly: AssemblyFileVersion("1.0.1.7")>
