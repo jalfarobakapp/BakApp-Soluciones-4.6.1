@@ -9969,7 +9969,7 @@ Drop Table #Paso"
 
             Chk_Quitar_Bloqueados_Compra.Checked = False
 
-            Call BtnProceso_Prov_Auto_Especial_Click(Nothing, Nothing)
+            Call Btn_CalcCantProveedoEstrellaStock_Click(Nothing, Nothing)
 
             BtnProceso_Prov_Auto.Enabled = False
 
