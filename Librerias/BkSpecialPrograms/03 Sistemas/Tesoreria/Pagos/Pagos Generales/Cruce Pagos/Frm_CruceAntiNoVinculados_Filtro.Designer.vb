@@ -234,7 +234,7 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
         Me.Bar1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Procesar})
-        Me.Bar1.Location = New System.Drawing.Point(0, 198)
+        Me.Bar1.Location = New System.Drawing.Point(0, 199)
         Me.Bar1.Name = "Bar1"
         Me.Bar1.Size = New System.Drawing.Size(629, 41)
         Me.Bar1.Stretch = True
@@ -423,7 +423,7 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
         Me.MetroStatusBar1.ForeColor = System.Drawing.Color.Black
         Me.MetroStatusBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Barra_Progreso, Me.Lbl_Status})
         Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 239)
+        Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 240)
         Me.MetroStatusBar1.Name = "MetroStatusBar1"
         Me.MetroStatusBar1.Size = New System.Drawing.Size(629, 22)
         Me.MetroStatusBar1.TabIndex = 206
@@ -499,7 +499,7 @@ Partial Class Frm_CruceAntiNoVinculados_Filtro
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(629, 261)
+        Me.ClientSize = New System.Drawing.Size(629, 262)
         Me.Controls.Add(Me.Input_MayorMenorQue)
         Me.Controls.Add(Me.Cmb_MayorMenorQue)
         Me.Controls.Add(Me.Chk_MayorMenorQue)

@@ -463,8 +463,22 @@ Public Class Frm_Fabricaciones
             Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim
             Dim _Observaciones As String
 
-            Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
-            Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _RowEntidad As DataRow
+
+            Dim _Rten = Split(RutEmpresa, "-")
+
+            Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & RutEmpresa & "' And TIPOSUC = 'P'"
+            _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowEntidad) Then
+                Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' AND RTEN = '" & _Rten(0) & "' And TIPOSUC = 'P'"
+                _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+            End If
+
+            If IsNothing(_RowEntidad) Then
+                Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' And TIPOSUC = 'P'"
+                _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+            End If
 
             Dim _FechaEmision As DateTime
 
@@ -483,7 +497,7 @@ Public Class Frm_Fabricaciones
             Dim Fm As New Frm_Formulario_Documento("GRI", csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_Documento.Guia_Recepcion_Interna,
                                                    False, False, False, False, False, False)
 
-            Fm.Pro_RowEntidad = _Row_Entidad
+            Fm.Pro_RowEntidad = _RowEntidad
             Fm.ForzarDecimalesEnUnidadesEnteras = True
             Fm.Sb_Crear_Documento_Interno_Con_Tabla3Potl(Me, _Tbl_Productos, _FechaEmision, "CODIGO", "Cantidad", "C_FABRIC", _Observaciones, False, False, 1)
             _Mensaje = Fm.Fx_Grabar_Documento(False)
@@ -536,8 +550,22 @@ Public Class Frm_Fabricaciones
             Dim _Koen As String = _Row_Configp.Item("RUT").ToString.Trim
             Dim _Observaciones As String
 
-            Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & _Koen & "'"
-            Dim _Row_Entidad As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Dim _RowEntidad As DataRow
+
+            Dim _Rten = Split(RutEmpresa, "-")
+
+            Consulta_sql = "Select Top 1 * From MAEEN Where KOEN = '" & RutEmpresa & "' And TIPOSUC = 'P'"
+            _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_RowEntidad) Then
+                Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' AND RTEN = '" & _Rten(0) & "' And TIPOSUC = 'P'"
+                _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+            End If
+
+            If IsNothing(_RowEntidad) Then
+                Consulta_sql = "Select Top 1 * From MAEEN Where KOEN LIKE '" & _Rten(0) & "%' And TIPOSUC = 'P'"
+                _RowEntidad = _Sql.Fx_Get_DataRow(Consulta_sql)
+            End If
 
             Dim _FechaEmision As DateTime
 
@@ -557,7 +585,7 @@ Public Class Frm_Fabricaciones
                                                       "Valor", "Tabla = 'TARJA_CONSSTOCK' And CodigoTabla = 'GDI'",, False,, True)
 
             Dim Cl_ArmaGDI As New Cl_ArmaGDIConsumo
-            _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Idpotl, _Cantidad, _Row_Entidad, _FechaEmision, _Observaciones_GDI, _ConsolidaStock)
+            _Mensaje = Cl_ArmaGDI.Fx_CrearGDI(Me, _Idpotl, _Cantidad, _RowEntidad, _FechaEmision, _Observaciones_GDI, _ConsolidaStock)
 
             If Not _Mensaje.EsCorrecto Then
                 Throw New System.Exception(_Mensaje.Mensaje)

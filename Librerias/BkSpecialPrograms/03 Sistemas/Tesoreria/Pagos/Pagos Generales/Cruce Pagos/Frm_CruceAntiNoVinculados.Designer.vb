@@ -24,9 +24,9 @@ Partial Class Frm_CruceAntiNoVinculados
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_CruceAntiNoVinculados))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Imagenes_20x20 = New System.Windows.Forms.ImageList(Me.components)
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
@@ -55,6 +55,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Btn_Ver_Cta_Cte = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_DesbloquearPago = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_BloquearPago = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_InfoBloqueo = New DevComponents.DotNetBar.ButtonItem()
         Me.Menu_Contextual_02 = New DevComponents.DotNetBar.ButtonItem()
         Me.LabelItem2 = New DevComponents.DotNetBar.LabelItem()
         Me.Btn_Doc_Asociado_Ver = New DevComponents.DotNetBar.ButtonItem()
@@ -81,6 +82,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Chk_SoloMatchFacVencidas = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_MarcarSoloMatchExactos = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_VerSoloSinMatch = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_Seleccionar_SinMatchExacto = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel3.SuspendLayout()
         Me.TableLayoutPanel1.SuspendLayout()
         Me.GroupPanel1.SuspendLayout()
@@ -487,7 +489,7 @@ Partial Class Frm_CruceAntiNoVinculados
         '
         Me.Menu_Contextual_01.AutoExpandOnClick = True
         Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
-        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Ver_Cta_Cte, Me.Btn_DesbloquearPago, Me.Btn_BloquearPago})
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.LabelItem1, Me.Btn_Ver_Cta_Cte, Me.Btn_DesbloquearPago, Me.Btn_BloquearPago, Me.Btn_InfoBloqueo})
         Me.Menu_Contextual_01.Text = "Opciones documento"
         '
         'LabelItem1
@@ -521,6 +523,14 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Btn_BloquearPago.Name = "Btn_BloquearPago"
         Me.Btn_BloquearPago.Text = "Bloquear pago"
         Me.Btn_BloquearPago.Tooltip = "Bloquear pago para ser utilizado"
+        '
+        'Btn_InfoBloqueo
+        '
+        Me.Btn_InfoBloqueo.Image = CType(resources.GetObject("Btn_InfoBloqueo.Image"), System.Drawing.Image)
+        Me.Btn_InfoBloqueo.ImageAlt = CType(resources.GetObject("Btn_InfoBloqueo.ImageAlt"), System.Drawing.Image)
+        Me.Btn_InfoBloqueo.Name = "Btn_InfoBloqueo"
+        Me.Btn_InfoBloqueo.Text = "Informacion de bloqueo"
+        Me.Btn_InfoBloqueo.Tooltip = "Bloquear pago para ser utilizado"
         '
         'Menu_Contextual_02
         '
@@ -605,36 +615,36 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Grilla_Maedpce.AllowUserToAddRows = False
         Me.Grilla_Maedpce.AllowUserToDeleteRows = False
         Me.Grilla_Maedpce.BackgroundColor = System.Drawing.Color.White
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Maedpce.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Maedpce.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla_Maedpce.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.White
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Maedpce.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Maedpce.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla_Maedpce.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Maedpce.EnableHeadersVisualStyles = False
         Me.Grilla_Maedpce.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Maedpce.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Maedpce.Name = "Grilla_Maedpce"
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Maedpce.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Maedpce.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla_Maedpce.Size = New System.Drawing.Size(1130, 321)
         Me.Grilla_Maedpce.StandardTab = True
         Me.Grilla_Maedpce.TabIndex = 53
@@ -709,7 +719,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Chk_MostrarSoloMatchExactos.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSoloMatchExactos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_MostrarSoloMatchExactos.FocusCuesEnabled = False
         Me.Chk_MostrarSoloMatchExactos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_MostrarSoloMatchExactos.Location = New System.Drawing.Point(266, 347)
+        Me.Chk_MostrarSoloMatchExactos.Location = New System.Drawing.Point(435, 347)
         Me.Chk_MostrarSoloMatchExactos.Name = "Chk_MostrarSoloMatchExactos"
         Me.Chk_MostrarSoloMatchExactos.Size = New System.Drawing.Size(129, 23)
         Me.Chk_MostrarSoloMatchExactos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -726,7 +736,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Chk_MostrarSoloSeleccionados.CheckBoxImageChecked = CType(resources.GetObject("Chk_MostrarSoloSeleccionados.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_MostrarSoloSeleccionados.FocusCuesEnabled = False
         Me.Chk_MostrarSoloSeleccionados.ForeColor = System.Drawing.Color.Black
-        Me.Chk_MostrarSoloSeleccionados.Location = New System.Drawing.Point(401, 347)
+        Me.Chk_MostrarSoloSeleccionados.Location = New System.Drawing.Point(570, 347)
         Me.Chk_MostrarSoloSeleccionados.Name = "Chk_MostrarSoloSeleccionados"
         Me.Chk_MostrarSoloSeleccionados.Size = New System.Drawing.Size(128, 23)
         Me.Chk_MostrarSoloSeleccionados.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -862,7 +872,7 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Chk_Fecha_Asignacion.ForeColor = System.Drawing.Color.Black
         Me.Chk_Fecha_Asignacion.Location = New System.Drawing.Point(911, 348)
         Me.Chk_Fecha_Asignacion.Name = "Chk_Fecha_Asignacion"
-        Me.Chk_Fecha_Asignacion.Size = New System.Drawing.Size(237, 23)
+        Me.Chk_Fecha_Asignacion.Size = New System.Drawing.Size(231, 23)
         Me.Chk_Fecha_Asignacion.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Fecha_Asignacion.TabIndex = 197
         Me.Chk_Fecha_Asignacion.Text = "Fecha de asignación del pago. Fecha actual"
@@ -875,14 +885,17 @@ Partial Class Frm_CruceAntiNoVinculados
         '
         Me.Chk_SoloMatchFacVencidas.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Chk_SoloMatchFacVencidas.CheckBoxImageChecked = CType(resources.GetObject("Chk_SoloMatchFacVencidas.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_SoloMatchFacVencidas.Checked = True
+        Me.Chk_SoloMatchFacVencidas.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.Chk_SoloMatchFacVencidas.CheckValue = "Y"
         Me.Chk_SoloMatchFacVencidas.FocusCuesEnabled = False
         Me.Chk_SoloMatchFacVencidas.ForeColor = System.Drawing.Color.Black
         Me.Chk_SoloMatchFacVencidas.Location = New System.Drawing.Point(12, 370)
         Me.Chk_SoloMatchFacVencidas.Name = "Chk_SoloMatchFacVencidas"
-        Me.Chk_SoloMatchFacVencidas.Size = New System.Drawing.Size(182, 21)
+        Me.Chk_SoloMatchFacVencidas.Size = New System.Drawing.Size(197, 21)
         Me.Chk_SoloMatchFacVencidas.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_SoloMatchFacVencidas.TabIndex = 198
-        Me.Chk_SoloMatchFacVencidas.Text = "Solo Match con facturas vencidas"
+        Me.Chk_SoloMatchFacVencidas.Text = "Solo Match a documentos vencidos"
         '
         'Chk_MarcarSoloMatchExactos
         '
@@ -894,12 +907,12 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Chk_MarcarSoloMatchExactos.CheckBoxImageChecked = CType(resources.GetObject("Chk_MarcarSoloMatchExactos.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_MarcarSoloMatchExactos.FocusCuesEnabled = False
         Me.Chk_MarcarSoloMatchExactos.ForeColor = System.Drawing.Color.Black
-        Me.Chk_MarcarSoloMatchExactos.Location = New System.Drawing.Point(200, 370)
+        Me.Chk_MarcarSoloMatchExactos.Location = New System.Drawing.Point(215, 370)
         Me.Chk_MarcarSoloMatchExactos.Name = "Chk_MarcarSoloMatchExactos"
         Me.Chk_MarcarSoloMatchExactos.Size = New System.Drawing.Size(153, 21)
         Me.Chk_MarcarSoloMatchExactos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_MarcarSoloMatchExactos.TabIndex = 199
-        Me.Chk_MarcarSoloMatchExactos.Text = "Marcar solo Match Exactos"
+        Me.Chk_MarcarSoloMatchExactos.Text = "Procesar solo Match Exactos"
         '
         'Chk_VerSoloSinMatch
         '
@@ -911,18 +924,36 @@ Partial Class Frm_CruceAntiNoVinculados
         Me.Chk_VerSoloSinMatch.CheckBoxImageChecked = CType(resources.GetObject("Chk_VerSoloSinMatch.CheckBoxImageChecked"), System.Drawing.Image)
         Me.Chk_VerSoloSinMatch.FocusCuesEnabled = False
         Me.Chk_VerSoloSinMatch.ForeColor = System.Drawing.Color.Black
-        Me.Chk_VerSoloSinMatch.Location = New System.Drawing.Point(531, 347)
+        Me.Chk_VerSoloSinMatch.Location = New System.Drawing.Point(704, 347)
         Me.Chk_VerSoloSinMatch.Name = "Chk_VerSoloSinMatch"
         Me.Chk_VerSoloSinMatch.Size = New System.Drawing.Size(116, 23)
         Me.Chk_VerSoloSinMatch.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_VerSoloSinMatch.TabIndex = 200
         Me.Chk_VerSoloSinMatch.Text = "Ver solo sin Match"
         '
+        'Chk_Seleccionar_SinMatchExacto
+        '
+        Me.Chk_Seleccionar_SinMatchExacto.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Chk_Seleccionar_SinMatchExacto.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_Seleccionar_SinMatchExacto.CheckBoxImageChecked = CType(resources.GetObject("Chk_Seleccionar_SinMatchExacto.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_Seleccionar_SinMatchExacto.FocusCuesEnabled = False
+        Me.Chk_Seleccionar_SinMatchExacto.ForeColor = System.Drawing.Color.Black
+        Me.Chk_Seleccionar_SinMatchExacto.Location = New System.Drawing.Point(264, 347)
+        Me.Chk_Seleccionar_SinMatchExacto.Name = "Chk_Seleccionar_SinMatchExacto"
+        Me.Chk_Seleccionar_SinMatchExacto.Size = New System.Drawing.Size(163, 23)
+        Me.Chk_Seleccionar_SinMatchExacto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_Seleccionar_SinMatchExacto.TabIndex = 201
+        Me.Chk_Seleccionar_SinMatchExacto.Text = "Seleccionar Sin Match Exacto"
+        '
         'Frm_CruceAntiNoVinculados
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1158, 637)
+        Me.Controls.Add(Me.Chk_Seleccionar_SinMatchExacto)
         Me.Controls.Add(Me.Chk_VerSoloSinMatch)
         Me.Controls.Add(Me.Chk_MarcarSoloMatchExactos)
         Me.Controls.Add(Me.Chk_SoloMatchFacVencidas)
@@ -1014,4 +1045,6 @@ Partial Class Frm_CruceAntiNoVinculados
     Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_DesbloquearPago As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_BloquearPago As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Chk_Seleccionar_SinMatchExacto As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_InfoBloqueo As DevComponents.DotNetBar.ButtonItem
 End Class

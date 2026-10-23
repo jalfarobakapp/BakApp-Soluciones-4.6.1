@@ -24,6 +24,7 @@ Public Class Frm_CruceAntiNoVinculados
     ' Totales
     Private _TotalAnticipos As Double = 0
     Private _TotalAnticiposCalculado As Boolean = False
+    Private _RevirtiendoChkSoloMatchFacVencidas As Boolean = False
 
     Public Sub New(_Filtro_Idmaedpce As String)
 
@@ -35,7 +36,7 @@ Public Class Frm_CruceAntiNoVinculados
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
-        Sb_Formato_Generico_Grilla(Grilla_Maedpce, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+        Sb_Formato_Generico_Grilla(Grilla_Maedpce, 18, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Both, True, False, False)
 
         Sb_Color_Botones_Barra(Bar1)
 
@@ -387,14 +388,10 @@ Order By c.ENDP,c.FEEMDP"
             Return
         End If
 
-        Fx_PrepararCrucesMultiples()
-
-        Return
-
         Consulta_Sql = $"
 Select Top 1 *,Isnull(NOKOFU,'') As Funcionario From {_Global_BaseBk}Zw_CrucePAuto_Tom 
 Left Join TABFU On KOFU = CodFuncionario
-Where NombreEquipo <> '{_NombreEquipo}' And Empresa <> '{Mod_Empresa}'"
+Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
 
         Dim _Row_CruceTom As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql)
 
@@ -407,7 +404,7 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa <> '{Mod_Empresa}'"
                               "En el equipo: " & _NombreEquipo2 & vbCrLf & vbCrLf &
                               "Empresa: " & RazonEmpresa,
                               "No puede hacer gestión mientras esto este ocurriendo", MessageBoxButtons.OK, MessageBoxIcon.Warning)
-
+            Btn_MatchDocumentos.Enabled = False
             Return
 
         End If
@@ -418,6 +415,10 @@ Insert Into {_Global_BaseBk}Zw_CrucePAuto_Tom (CodFuncionario,FechaToma,NombreEq
 Values ('{FUNCIONARIO}',Getdate(),'{_NombreEquipo}','{Mod_Empresa}')"
 
         _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql)
+
+        Fx_PrepararCrucesMultiples()
+
+        Return
 
         Dim _Ls_MaeedoItem As New List(Of Cl_MaeedoItem)
         Dim _Cl_MaeedoItem As New Cl_MaeedoItem
@@ -1314,18 +1315,13 @@ ORDER BY Orden,FEVEDP"
         Dim _MotivoBloqueo As String = Convert.ToString(_Fila.Cells("MotivoBloqueo").Value).Trim()
 
         Dim _Grabar As Boolean
-        Dim _ModoLectura As Boolean
+        Dim _ModoLectura As Boolean = True
 
-        If _Bloqueado Then
+        Dim _Mensaje As LsValiciones.Mensajes = Fx_RevisarPagoBloqueado(_Idmaedpce)
 
-            If String.IsNullOrWhiteSpace(_MotivoBloqueo) Then
-                _MotivoBloqueo = "No se indicó el motivo del bloqueo."
-            End If
-
-            MessageBoxEx.Show(Me, "No se puede gestionar este pago porque está bloqueado." &
-                      vbCrLf & _MotivoBloqueo,
-                      "Pago bloqueado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-            Return
+        If Not _Mensaje.EsCorrecto Then
+            MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Pago bloqueado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            'Return
         End If
 
         Consulta_Sql = $"
@@ -1458,6 +1454,7 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
 
                         Btn_BloquearPago.Enabled = Not _Bloqueado
                         Btn_DesbloquearPago.Enabled = _Bloqueado
+                        Btn_InfoBloqueo.Visible = _Bloqueado
 
                         Btn_Ver_Cta_Cte.Enabled = True
                         ShowContextMenu(Menu_Contextual_01)
@@ -2338,19 +2335,18 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
             Return
         End If
 
-        Dim _Aceptar As Boolean
-        Dim _MotivoBloqueo As String
 
-        _Aceptar = InputBox_Bk(Me, "Ingrese el motivo del desbloqueo del pago", "Desbloquear pago",
-                              _MotivoBloqueo, True, _Tipo_Mayus_Minus.Mayusculas, True, _Tipo_Mayus_Minus.Mayusculas, 200)
-
-        If Not _Aceptar Then
+        If MessageBoxEx.Show(Me, "¿Confirma el desbloque de este pago?", "Desbloquear pago", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
         End If
 
         Consulta_Sql = $"
 Delete {_Global_BaseBk}Zw_PagosBloqueados 
-Where Idmaedpce = {_Idmaedpce}"
+Where Idmaedpce = {_Idmaedpce}
+
+Update MAEDPCE Set REFANTI = ''
+Where IDMAEDPCE = {_Idmaedpce}
+"
 
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql) Then
             Return
@@ -2358,11 +2354,9 @@ Where Idmaedpce = {_Idmaedpce}"
 
         _Fila.Cells("Bloqueado").Value = False
         _Fila.Cells("Exclamacion").Value = True
-        '_Fila.Cells("Chk").Value = False
-        '_Fila.Cells("CruzarPagoAuto").Value = False
-        '_Fila.Cells("MatchExacto").Value = False
-        '_Fila.Cells("MatchParcial").Value = False
+        _Fila.Cells("MotivoBloqueo").Value = String.Empty
         _Fila.Cells("Observacion").Value = String.Empty
+
     End Sub
 
     Private Sub Btn_BloquearPago_Click(sender As Object, e As EventArgs) Handles Btn_BloquearPago.Click
@@ -2385,27 +2379,101 @@ Where Idmaedpce = {_Idmaedpce}"
         Dim _Aceptar As Boolean
         Dim _MotivoBloqueo As String
 
-        _Aceptar = InputBox_Bk(Me, "Ingrese el motivo del desbloqueo del pago", "Desbloquear pago",
-                              _MotivoBloqueo, True, _Tipo_Mayus_Minus.Mayusculas, True, _Tipo_Mayus_Minus.Mayusculas, 200)
+        _Aceptar = InputBox_Bk(Me, "Ingrese el motivo del bloqueo del pago", "Bloquear pago",
+                              _MotivoBloqueo, True, _Tipo_Mayus_Minus.Mayusculas, 200, True)
 
         If Not _Aceptar Then
             Return
         End If
 
         Consulta_Sql = $"
-Insert Into {_Global_BaseBk}Zw_PagosBloqueados (Idmaedpce, Bloqueado, Observaciones, CodFuncionario, NombreEquipo, FechaBloqueo) Values 
-({_Idmaedpce},1,'{_MotivoBloqueo}','{FUNCIONARIO}','{_NombreEquipo}',Getdate())"
+Insert Into {_Global_BaseBk}Zw_PagosBloqueados (Idmaedpce, Bloqueado, MotivoBloqueo, CodFuncionario, NombreEquipo, FechaBloqueo) Values 
+({_Idmaedpce},1,'{_MotivoBloqueo}','{FUNCIONARIO}','{_NombreEquipo}',Getdate())
+
+Update MAEDPCE Set REFANTI = '*** PAGO BLOQUEADO Desde BAKAPP ***'
+Where IDMAEDPCE = {_Idmaedpce}
+"
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql) Then
             Return
         End If
 
         _Fila.Cells("Bloqueado").Value = True
         _Fila.Cells("Exclamacion").Value = True
-        '_Fila.Cells("Chk").Value = False
-        '_Fila.Cells("CruzarPagoAuto").Value = False
-        '_Fila.Cells("MatchExacto").Value = False
-        '_Fila.Cells("MatchParcial").Value = False
         _Fila.Cells("Observacion").Value = _MotivoBloqueo
+        _Fila.Cells("MotivoBloqueo").Value = _MotivoBloqueo
+        _Fila.Cells("ResumenFacturasCruce").Value = "*** PAGO BLOQUEADO Desde BAKAPP ***"
+        _Fila.Cells("REFANTI").Value = "*** PAGO BLOQUEADO Desde BAKAPP ***"
+
+    End Sub
+
+    Private Sub Chk_SoloMatchFacVencidas_CheckedChanged(
+sender As Object,
+e As EventArgs) Handles Chk_SoloMatchFacVencidas.CheckedChanged
+
+        If _RevirtiendoChkSoloMatchFacVencidas OrElse
+       Chk_SoloMatchFacVencidas.Checked Then
+            Return
+        End If
+
+        If Fx_Tiene_Permiso(Me, "Pcli0006") Then
+            Return
+        End If
+
+        Try
+            _RevirtiendoChkSoloMatchFacVencidas = True
+            Chk_SoloMatchFacVencidas.Checked = True
+        Finally
+            _RevirtiendoChkSoloMatchFacVencidas = False
+        End Try
+    End Sub
+
+    Private Sub Chk_Seleccionar_SinMatchExacto_CheckedChanged(sender As Object, e As EventArgs) Handles Chk_Seleccionar_SinMatchExacto.CheckedChanged
+
+        Dim _HayFilasParaCruzar As Boolean = False
+
+        For Each _Fila As DataRow In _Tbl_Maedpce.Rows
+
+            If Chk_Seleccionar_SinMatchExacto.Checked Then
+                If _Fila.Item("CruzarPagoAuto") And _Fila.Item("MatchParcial") And Not _Fila.Item("Exclamacion") Then
+                    _Fila.Item("Chk") = True
+                    _HayFilasParaCruzar = True
+                Else
+                    _Fila.Item("Chk") = False
+                End If
+            Else
+                _Fila.Item("Chk") = Chk_Seleccionar_SinMatchExacto.Checked
+            End If
+
+        Next
+
+        If Chk_Seleccionar_SinMatchExacto.Checked AndAlso Not _HayFilasParaCruzar Then
+
+            If Not _HayFilasParaCruzar Then
+                MessageBoxEx.Show("No hay filas seleccionadas y marcadas para cruce automático. No se realizará ninguna acción.", "Validación",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error)
+                Chk_Seleccionar_SinMatchExacto.Checked = False
+                Chk_Seleccionar_Todo.Checked = False
+
+                ' Actualizar totales tras revertir la selección
+                Sb_Actualizar_Totales(False)
+
+                Return
+            End If
+
+        End If
+
+        ' Actualizar totales después de cambiar selección en bloque
+        Sb_Actualizar_Totales(False)
+
+    End Sub
+
+    Private Sub Btn_InfoBloqueo_Click(sender As Object, e As EventArgs) Handles Btn_InfoBloqueo.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Maedpce.CurrentRow
+        Dim _Idmaedpce As Integer = _Fila.Cells("IDMAEDPCE").Value
+
+        Dim _Mensaje As LsValiciones.Mensajes = Fx_RevisarPagoBloqueado(_Idmaedpce)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Pago bloqueado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
 
     End Sub
 

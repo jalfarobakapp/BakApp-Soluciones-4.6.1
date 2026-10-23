@@ -22595,6 +22595,12 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
             End If
 
+            If Chk_CargaDirecta.Visible And Chk_CargaSemiDirecta.Visible Then
+                Dim _TipoCarga As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo_Dorigen, True, False)
+                If _TipoCarga = 1 Then Chk_CargaDirecta.Checked = True
+                If _TipoCarga = 2 Then Chk_CargaSemiDirecta.Checked = True
+            End If
+
             Dim _Ven_Distinto As Boolean = False
 
             For Each _Fila As DataRow In _TblDetalle.Rows

@@ -62,7 +62,6 @@ Public Class Frm_CruceAntiNoVinculados_Filtro
         End If
 
         Dim Fm As New Frm_CruceAntiNoVinculados(_Mensaje.Tag)
-        'Fm.Lista_Idmaedpce = CType(_Mensaje.Tag, List(Of Integer))
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
@@ -296,4 +295,5 @@ Public Class Frm_CruceAntiNoVinculados_Filtro
         Cmb_MayorMenorQue.Enabled = Chk_MayorMenorQue.Checked
         Input_MayorMenorQue.Enabled = Chk_MayorMenorQue.Checked
     End Sub
+
 End Class
