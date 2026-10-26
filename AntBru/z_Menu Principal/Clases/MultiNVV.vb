@@ -6,7 +6,65 @@ Public Class MultiNVV
 
 
 
+    Public Function Proceso_MultiNvv(Id_Documento_Ori As String, Nudo_NVV As String) As Mensajes
+        Dim msgFinal As New Mensajes With {
+            .EsCorrecto = False,
+            .Mensaje = "Iniciando proceso...",
+            .Detalle = ""
+        }
 
+        Try
+            ' 1. Generar los documentos NVV a partir del documento origen
+            Dim listaResultados As List(Of Mensajes) = GeneraNVV(Id_Documento_Ori, Nudo_NVV)
+
+            ' 2. Analizar los resultados de la generación
+            Dim documentosGenerados As Integer = 0
+            Dim detalleErrores As String = ""
+
+            For Each resultado In listaResultados
+                If resultado.EsCorrecto Then
+                    documentosGenerados += 1
+                Else
+                    detalleErrores &= resultado.Detalle & vbCrLf
+                End If
+            Next
+
+            ' Si no se generó ningún documento, se interrumpe el proceso
+            If documentosGenerados = 0 Then
+                msgFinal.EsCorrecto = False
+                msgFinal.Mensaje = "No se logró generar ningún documento NVV."
+                msgFinal.Detalle = detalleErrores
+                Return msgFinal
+            End If
+            msgFinal.Tag = listaResultados
+            ' 3. Asociar los despachos y heredar datos a los documentos hijos creados
+            ' Convertimos Id_Documento_Ori a Integer ya que Asociar_despachos lo requiere numérico
+            Dim idMaeedoInt As Integer = CInt(Id_Documento_Ori)
+            Dim resultadoAsociacion As Mensajes = Asociar_despachos(Nudo_NVV, idMaeedoInt)
+
+            ' 4. Consolidar el resultado final
+            If Not resultadoAsociacion.EsCorrecto Then
+                msgFinal.EsCorrecto = False
+                msgFinal.Mensaje = $"Se generaron {documentosGenerados} documento(s), pero falló la asociación de despachos."
+                msgFinal.Detalle = resultadoAsociacion.Mensaje & vbCrLf & resultadoAsociacion.Detalle
+            Else
+                msgFinal.EsCorrecto = True
+                msgFinal.Mensaje = $"Proceso completado. Se generaron {documentosGenerados} documento(s) NVV y se asociaron los despachos correctamente."
+
+                ' Adjuntar advertencias si hubo errores parciales en la generación de algún documento
+                If Not String.IsNullOrEmpty(detalleErrores) Then
+                    msgFinal.Detalle = "El proceso finalizó con advertencias:" & vbCrLf & detalleErrores
+                End If
+            End If
+
+        Catch ex As Exception
+            msgFinal.EsCorrecto = False
+            msgFinal.Mensaje = "Error general al procesar múltiples NVV."
+            msgFinal.Detalle = ex.Message
+        End Try
+
+        Return msgFinal
+    End Function
 
     Public Function GeneraNVV(Id_Documento_Ori As String, Nudo_NVV As String) As List(Of Mensajes)
         ' Cambiamos el retorno a List(Of Mensajes) porque se pueden generar múltiples documentos
@@ -120,6 +178,234 @@ Public Class MultiNVV
         End Try
 
         Return listaMensajes
+    End Function
+
+    Function Asociar_despachos(Nudo As String, Idmaeedo As Integer) As Mensajes
+        Dim msg As New Mensajes
+        msg.EsCorrecto = False
+        msg.Detalle = "Error al asociar despachos y actualizar los documentos relacionados."
+        msg.Mensaje = "Error al asociar despachos y actualizar los documentos relacionados."
+        Dim SqlQuery As String = $"INSERT INTO {_Global_BaseBk}Zw_Despachos_Doc (
+    Id_Despacho, 
+    Nro_Despacho, 
+    Archidrst, 
+    Idrst, 
+    Tido, 
+    Nudo, 
+    CantC, 
+    CantD, 
+    CantE, 
+    CantR, 
+    CantDesp, 
+    Activo, 
+    Nudonodefi, 
+    Id_Documentos_Padre, 
+    Reasignado
+)
+SELECT 
+    DESP.Id_Despacho,
+    DESP.Nro_Despacho,
+    DESP.Archidrst,      -- Mantiene 'MAEEDO' del registro base (puedes cambiarlo a 'MAEDDO' si lo requieres)
+    MAE2.IDMAEEDO,       -- Nuevo Idrst: IDMAEDDO de cada detalle (MAE2)
+    DESP.Tido,
+    MAE2.NUDO,           -- Nuevo Nudo: Número de documento de cada detalle
+    EDO2.CAPRCO,         -- Nuevo CantC: CAPRCO del documento individual
+    DESP.CantD,
+    DESP.CantE,
+    DESP.CantR,
+    DESP.CantDesp,
+    1,
+    DESP.Nudonodefi,
+    DESP.Id_Documentos_Padre,
+    DESP.Reasignado
+FROM MAEDDO MAE
+INNER JOIN MAEDDO MAE2 ON MAE2.IDRST = MAE.IDMAEDDO
+INNER JOIN MAEEDO EDO2 ON EDO2.IDMAEEDO = MAE2.IDMAEEDO
+CROSS JOIN {_Global_BaseBk}Zw_Despachos_Doc DESP
+WHERE MAE.NUDO = '{Nudo}'
+  AND DESP.Nudo = '{Nudo}';
+
+Update {_Global_BaseBk}Zw_Despachos_Doc Set Activo = 0 where Nudo = '{Nudo}';"
+
+        Dim SqlQuery_2 = $"INSERT INTO {_Global_BaseBk}Zw_Despachos_Doc_Det (
+    [Id_Documentos], 
+    [Id_Despacho],
+    [Nro_Despacho],
+    [Empresa],
+    [Sucursal],
+    [Bodega],
+    [Idmaeedo],
+    [Idmaeddo],
+    [Tido],
+    [Nudo],
+    [Codigo],
+    [Descripcion],
+    [Untrans],
+    [UdTrans],
+    [Rtu],
+    [CantCUd1],
+    [CantCUd2],
+    [CantDUd1],
+    [CantDUd2],
+    [CantEUd1],
+    [CantEUd2],
+    [CantRUd1],
+    [CantRUd2],
+    [DespUd1],
+    [DespUd2],
+    [CodFuncionario_Desp],
+    [Archirst],
+    [Idrst],
+    [Activo]
+)
+SELECT 
+    DE.Id_Documentos,
+    DET.[Id_Despacho],
+    DET.[Nro_Despacho],
+    DET.[Empresa],
+    DET.[Sucursal],
+    DET.[Bodega],
+    MAE2.IDMAEEDO,       -- Nuevo Idmaeedo del detalle hijo
+    MAE2.IDMAEDDO,       -- Nuevo Idmaeddo del detalle hijo
+    DET.[Tido],
+    MAE2.NUDO,           -- Nuevo Nudo del detalle hijo
+    DET.[Codigo],        -- Mantiene el código original
+    DET.[Descripcion],   -- Mantiene la descripción original
+    MAE2.UDTRPR,
+    DET.[UdTrans],
+    MAE2.RLUDPR,
+    MAE2.CAPRCO1,        -- Nuevo CantCUd1 
+    MAE2.CAPRCO2,        -- Nuevo CantCUd2 
+    DET.[CantDUd1],
+    DET.[CantDUd2],
+    DET.[CantEUd1],
+    DET.[CantEUd2],
+    DET.[CantRUd1],
+    DET.[CantRUd2],
+    DET.[DespUd1],
+    DET.[DespUd2],
+    DET.[CodFuncionario_Desp],
+    DET.[Archirst],
+    DET.[Idrst],       
+    1
+FROM MAEDDO MAE
+INNER JOIN MAEDDO MAE2 ON MAE2.IDRST = MAE.IDMAEDDO
+INNER JOIN [{_Global_BaseBk}]Zw_Despachos_Doc_Det DET ON DET.Idmaeddo = MAE.IDMAEDDO
+INNER JOIN [{_Global_BaseBk}]Zw_Despachos_Doc DE on MAE2.IDMAEEDO = DE.Idrst
+WHERE MAE.NUDO = '{Nudo}';
+
+Update [{_Global_BaseBk}]Zw_Despachos_Doc_Det set Activo = 0 Where Nudo = '{Nudo}';"
+
+
+        Dim sqlQuery3 = $"UPDATE Hijo
+SET 
+    Hijo.HabilitadaFac = Padre.HabilitadaFac,
+    Hijo.FunAutorizaFac = Padre.FunAutorizaFac,
+    Hijo.FechaHoraAutoriza = Padre.FechaHoraAutoriza,
+    Hijo.Estaenwms = Padre.Estaenwms,
+    Hijo.Customizable = Padre.Customizable,
+    Hijo.PreVenta = Padre.PreVenta,
+    Hijo.IdCont = Padre.IdCont,
+    Hijo.Contenedor = Padre.Contenedor,
+    Hijo.SobreStock = Padre.SobreStock,
+    Hijo.PdaRMovil = Padre.PdaRMovil,
+    Hijo.Idpdaenca = Padre.Idpdaenca,
+    Hijo.Empresa_Ori = Padre.Empresa_Ori,
+    Hijo.Idmaeedo_Clon = Padre.Idmaeedo_Clon,
+    Hijo.LeyendaMorosidad = Padre.LeyendaMorosidad,
+    Hijo.B2B = Padre.B2B,
+    Hijo.UsaCiaSeguro = Padre.UsaCiaSeguro,
+    Hijo.CodEntidad_Cia = Padre.CodEntidad_Cia,
+    Hijo.CodSucEntidad_Cia = Padre.CodSucEntidad_Cia,
+    Hijo.Cn_TipoCompra = Padre.Cn_TipoCompra,
+    Hijo.TipoCompra = Padre.TipoCompra,
+    Hijo.Id_Despacho = Padre.Id_Despacho,
+    Hijo.Id_Enc_InterStock = Padre.Id_Enc_InterStock,
+    Hijo.Venta_Feria = Padre.Venta_Feria,
+    Hijo.Id_Feria = Padre.Id_Feria,
+    Hijo.TipoCarga = Padre.TipoCarga
+FROM {_Global_BaseBk}Zw_Docu_Ent Hijo
+CROSS JOIN (
+    SELECT * 
+    FROM [{_Global_BaseBk}]Zw_Docu_Ent 
+    WHERE Idmaeedo ={Idmaeedo}
+) Padre
+WHERE Hijo.Idmaeedo IN (
+    SELECT MAE2.IDMAEEDO 
+    FROM MAEDDO MAE 
+    INNER JOIN MAEDDO MAE2 ON MAE2.IDRST = MAE.IDMAEDDO 
+    WHERE MAE.IDMAEEDO = {Idmaeedo}
+);"
+
+        Dim SqlQuery4 = $"INSERT INTO {_Global_BaseBk}Zw_Docu_Det (
+    Idmaeddo, 
+    Idmaeedo, 
+    Tido, 
+    Nudo, 
+    Codigo, 
+    Descripcion, 
+    RtuVariable, 
+    Empresa, 
+    Sucursal, 
+    Bodega, 
+    IdCont, 
+    Contenedor, 
+    Grupo, 
+    SobreStock, 
+    Id_SobreStock, 
+    Moneda_SobreStock, 
+    Precio_SobreStock, 
+    Qty_SobreStock, 
+    Qty_SobreStockD, 
+    Qty_SobreStockE, 
+    Qty_SobreStockDv, 
+    Id_Det_SincroStock, 
+    Id_Feria, 
+    TipoCarga
+)
+SELECT 
+    MAE_Hijo.IDMAEDDO,       
+    MAE_Hijo.IDMAEEDO,       
+    MAE_Hijo.TIDO,           
+    MAE_Hijo.NUDO,           
+    Padre.Codigo,            
+    Padre.Descripcion, 
+    Padre.RtuVariable, 
+    Padre.Empresa, 
+    Padre.Sucursal, 
+    Padre.Bodega, 
+    Padre.IdCont, 
+    Padre.Contenedor, 
+    Padre.Grupo, 
+    Padre.SobreStock, 
+    Padre.Id_SobreStock, 
+    Padre.Moneda_SobreStock, 
+    Padre.Precio_SobreStock, 
+    Padre.Qty_SobreStock, 
+    Padre.Qty_SobreStockD, 
+    Padre.Qty_SobreStockE, 
+    Padre.Qty_SobreStockDv, 
+    Padre.Id_Det_SincroStock, 
+    Padre.Id_Feria, 
+    Padre.TipoCarga
+FROM MAEDDO MAE_Padre
+INNER JOIN MAEDDO MAE_Hijo ON MAE_Hijo.IDRST = MAE_Padre.IDMAEDDO
+INNER JOIN {_Global_BaseBk}Zw_Docu_Det Padre ON Padre.Idmaeddo = MAE_Padre.IDMAEDDO
+WHERE MAE_Padre.IDMAEEDO = {Idmaeedo};"
+
+        ' Concatenar todas las sentencias en un solo bloque de ejecución
+        Dim consultaCompleta As String = SqlQuery & vbCrLf & SqlQuery_2 & vbCrLf & sqlQuery3 & vbCrLf & SqlQuery4
+
+        ' Ejecutar el bloque completo
+        Dim result As Boolean = Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(consultaCompleta)
+
+        If Not result Then
+            msg.Mensaje = "Error en la transaccion"
+            Return msg
+        End If
+        msg.Mensaje = "Proceso de asociacion de despachos y actualizacion de documentos completado exitosamente."
+        msg.EsCorrecto = True
+        Return msg
     End Function
 End Class
 

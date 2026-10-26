@@ -1838,54 +1838,30 @@ Where Idmaeedo = {_Idmaeedo_FCV}"
     End Sub
 
     Private Sub Btn_Crear3NVV_Click(sender As Object, e As EventArgs) Handles Btn_Crear3NVV.Click
-        ' 1. Defines el número de documento origen que vas a pasar
-        Dim numeroDocOrigen As String = "SG00243079"
-        Dim idmaeedoOrigen As Integer = 896606
+        ' 1. Defines el número de documento origen y su ID
+        Dim numeroDocOrigen As String = "MG50000345"
+        Dim idmaeedoOrigen As String = "896700" ' Lo definimos como String según la firma de la función
         Dim NVV As New MultiNVV()
 
-        ' 2. Llamas a la función y guardas la lista de resultados
-        Dim listaResultados As List(Of Mensajes) = NVV.GeneraNVV(idmaeedoOrigen, numeroDocOrigen)
+        ' 2. Llamas a la nueva función centralizadora
+        ' Esto ejecutará GeneraNVV y luego Asociar_despachos
+        Dim resultadoFinal As Mensajes = NVV.Proceso_MultiNvv(idmaeedoOrigen, numeroDocOrigen)
 
-        ' 3. Variables para llevar un conteo o controlar errores visualmente
-        Dim cantExitos As Integer = 0
-        Dim cantErrores As Integer = 0
-        Dim detalleErrores As String = ""
+        ' 3. Evalúas el resultado final consolidado
+        If resultadoFinal.EsCorrecto Then
+            ' Éxito: Muestras el mensaje al usuario
+            Dim mensajeMostrar As String = resultadoFinal.Mensaje
 
-        ' 4. Iteras sobre cada mensaje devuelto por la función
-        For Each resultado As Mensajes In listaResultados
-
-            If resultado.EsCorrecto Then
-                ' ¡Éxito! El documento se creó correctamente para esa clasificación
-                cantExitos += 1
-
-                ' Si necesitas obtener el número del nuevo documento generado, lo sacas del Tag:
-                Dim dtDocGenerado As DataTable = CType(resultado.Tag, DataTable)
-                Dim nudoNuevo As String = dtDocGenerado.Rows(0).Item("NUDO").ToString()
-
-                ' Aquí podrías hacer algo adicional con el nuevo NUDO si lo necesitas
-                ' Console.WriteLine($"Creado documento: {nudoNuevo}")
-            Else
-                ' Hubo un error al intentar crear el documento para una de las clasificaciones
-                cantErrores += 1
-                detalleErrores &= $"- {resultado.Mensaje} {resultado.Detalle}" & vbCrLf
+            ' Si hubo advertencias (ej. se generaron algunos pero fallaron otros), se agregan
+            If Not String.IsNullOrEmpty(resultadoFinal.Detalle) Then
+                mensajeMostrar &= vbCrLf & vbCrLf & resultadoFinal.Detalle
             End If
 
-        Next
-
-        ' 5. Le informas al usuario (o al log) el resumen del proceso
-        If cantErrores = 0 AndAlso cantExitos > 0 Then
-            MessageBox.Show($"Proceso finalizado. Se generaron {cantExitos} documento(s) correctamente.",
-                            "Generación Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        ElseIf cantExitos > 0 AndAlso cantErrores > 0 Then
-            MessageBox.Show($"Proceso finalizado con advertencias." & vbCrLf &
-                            $"Se generaron {cantExitos} documentos." & vbCrLf &
-                            $"Fallaron {cantErrores} documentos." & vbCrLf &
-                            $"Detalles:" & vbCrLf & detalleErrores,
-                            "Generación Parcial", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+            MessageBox.Show(mensajeMostrar, "Proceso Completado", MessageBoxButtons.OK, MessageBoxIcon.Information)
         Else
-            MessageBox.Show($"No se pudo generar ningún documento." & vbCrLf &
-                            $"Detalles:" & vbCrLf & detalleErrores,
-                            "Error de Generación", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            ' Error: Falló la generación masiva o la asociación de despachos
+            MessageBox.Show(resultadoFinal.Mensaje & vbCrLf & vbCrLf & "Detalle: " & resultadoFinal.Detalle,
+                            "Error en el Proceso", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
 End Class
