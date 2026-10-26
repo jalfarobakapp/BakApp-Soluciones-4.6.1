@@ -78,8 +78,8 @@ Public Class Cl_Sincroniza
             Entidad_M.Entidad_Random = aux
             Entidad_M.Entidad_Bakapp = Entidad_M.Fx_Generar_Zw_Entidades_Defecto()
 
-            Entidad_M.Entidad_Bakapp.Comuna = SanearTexto(Cliente.CIUDAD)
-            Entidad_M.Entidad_Bakapp.Ciudad = SanearTexto(Cliente.STATE)
+            Entidad_M.Entidad_Bakapp.Comuna = (If(Cliente.CIUDAD Is Nothing, "", SanearTexto(Cliente.CIUDAD))).PadRight(20).Substring(0, 20)
+            Entidad_M.Entidad_Bakapp.Ciudad = (If(Cliente.STATE Is Nothing, "", SanearTexto(Cliente.STATE))).PadRight(20).Substring(0, 20)
             Entidad_M.Entidad_Bakapp.FacAuto = True
 
             Dim Mensaje_ENT As Mensajes = Entidad_M.Fx_Crear_Entidad_Nueva()
