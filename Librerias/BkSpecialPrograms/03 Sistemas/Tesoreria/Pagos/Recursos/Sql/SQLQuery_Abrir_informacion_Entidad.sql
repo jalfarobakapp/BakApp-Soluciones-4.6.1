@@ -205,5 +205,5 @@ WHERE
 	( DPCE.ESPGDP = 'P' OR DPCE.ESPGDP = 'R' )  AND 
 	DPCE.EMPRESA = @Empresa 	
 	
-ORDER BY Orden,FEVEDP
+ORDER BY Orden,NUDP --Orden,FEVEDP
 	

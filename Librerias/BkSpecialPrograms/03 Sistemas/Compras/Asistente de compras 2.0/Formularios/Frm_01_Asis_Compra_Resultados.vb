@@ -597,7 +597,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             .Columns("Rtu").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Stock_Fisico_Ud" & Ud).Width = 45
+            .Columns("Stock_Fisico_Ud" & Ud).Width = 50
             .Columns("Stock_Fisico_Ud" & Ud).HeaderText = "Stock actual"
             .Columns("Stock_Fisico_Ud" & Ud).DefaultCellStyle.Format = "##,###0.##"
             .Columns("Stock_Fisico_Ud" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -609,7 +609,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
             'If Not Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked Then
 
-            .Columns("StockPedidoUd" & Ud).Width = 45
+            .Columns("StockPedidoUd" & Ud).Width = 50
             .Columns("StockPedidoUd" & Ud).HeaderText = "Stock pedido OCC"
             .Columns("StockPedidoUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
             .Columns("StockPedidoUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -916,7 +916,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             .Columns("UD" & Ud).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Stock_Fisico_Ud" & Ud).Width = 45
+            .Columns("Stock_Fisico_Ud" & Ud).Width = 50
             .Columns("Stock_Fisico_Ud" & Ud).HeaderText = "Stock actual"
             .Columns("Stock_Fisico_Ud" & Ud).DefaultCellStyle.Format = "##,###0.##"
             .Columns("Stock_Fisico_Ud" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -928,7 +928,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
             If Not Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked Then
 
-                .Columns("StockPedidoUd" & Ud).Width = 45
+                .Columns("StockPedidoUd" & Ud).Width = 50
                 .Columns("StockPedidoUd" & Ud).HeaderText = "Stock pedido"
                 .Columns("StockPedidoUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
                 .Columns("StockPedidoUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -1273,7 +1273,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             .Columns("Rtu").DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("StockUd" & Ud).Width = 45
+            .Columns("StockUd" & Ud).Width = 50
             .Columns("StockUd" & Ud).HeaderText = "Stock actual"
             .Columns("StockUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
             .Columns("StockUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -1283,7 +1283,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             .Columns("StockUd" & Ud).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Stock_Devengado_Ud" & Ud).Width = 45
+            .Columns("Stock_Devengado_Ud" & Ud).Width = 50
             .Columns("Stock_Devengado_Ud" & Ud).HeaderText = "Stock dev."
             .Columns("Stock_Devengado_Ud" & Ud).DefaultCellStyle.Format = "##,###0.##"
             .Columns("Stock_Devengado_Ud" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -1596,7 +1596,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
             .Columns("UD" & Ud).DisplayIndex = _DisplayIndex
             _DisplayIndex += 1
 
-            .Columns("Stock_Fisico_Ud" & Ud).Width = 45
+            .Columns("Stock_Fisico_Ud" & Ud).Width = 50
             .Columns("Stock_Fisico_Ud" & Ud).HeaderText = "Stock actual"
             .Columns("Stock_Fisico_Ud" & Ud).DefaultCellStyle.Format = "##,###0.##"
             .Columns("Stock_Fisico_Ud" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -1608,7 +1608,7 @@ Select KOLT As Padre,KOLT+'-'+NOKOLT As Hijo From TABPP Where TILT = 'C'"
 
             If Not Chk_No_Considera_Con_Stock_Pedido_OCC_NVI.Checked Then
 
-                .Columns("StockPedidoUd" & Ud).Width = 45
+                .Columns("StockPedidoUd" & Ud).Width = 50
                 .Columns("StockPedidoUd" & Ud).HeaderText = "Stock pedido"
                 .Columns("StockPedidoUd" & Ud).DefaultCellStyle.Format = "##,###0.##"
                 .Columns("StockPedidoUd" & Ud).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -5201,6 +5201,27 @@ Update {_Nombre_Tbl_Paso_Informe} Set Costo_Flete = 0"
                 _Lc_Costo = "Costo_PPP"
             End If
 
+            If Chk_MarcarOfertas.Checked Then
+
+                Consulta_sql = $"
+                UPDATE {_Nombre_Tbl_Paso_Informe}
+                SET
+                    Precio_Ud1_Neto =
+                        CAST(
+                            MontoOferta / (1 + ((Iva + Ila) / 100.0))
+                            AS DECIMAL(18,8)
+                        ),
+                    Precio_Ud2_Neto =
+                        CAST(
+                            (MontoOferta / (1 + ((Iva + Ila) / 100.0))) * Rtu
+                            AS DECIMAL(18,8)
+                        )
+                WHERE OfertaActiva = 1;
+                "
+                _Sql.Ej_consulta_IDU(Consulta_sql)
+
+            End If
+
             Consulta_sql = $"
                 UPDATE {_Nombre_Tbl_Paso_Informe}
                 SET 
@@ -5217,6 +5238,7 @@ Update {_Nombre_Tbl_Paso_Informe} Set Costo_Flete = 0"
                                     (Precio_Ud1_Neto / {_Lc_Costo}) - 1
                                 , 5)
                         END;"
+
             _Sql.Ej_consulta_IDU(Consulta_sql)
 
             ' ------------------------------------------------------------------------------------------------------

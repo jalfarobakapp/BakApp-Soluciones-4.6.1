@@ -425,6 +425,11 @@ Delete MAEEDO Where TIDO = '{_Tido}' And NUDO = '{_Nudo}' And ENDO = 'XXXXXXXXXX
 
         Dim _IpEquipo As String = Fx_GetLocalIPAddress() 'Fx_Get_Ip()
 
+        '  SERVIDOR DE SIERRALTA
+
+        'Nombre_Equipo = "SERVIDOR"
+        '_IpEquipo = "192.168.1.101"
+
         'MessageBox.Show(_Formulario, "IP: " & _IpEquipo, "Facturación automática", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1, Facturando = 0" & vbCrLf &

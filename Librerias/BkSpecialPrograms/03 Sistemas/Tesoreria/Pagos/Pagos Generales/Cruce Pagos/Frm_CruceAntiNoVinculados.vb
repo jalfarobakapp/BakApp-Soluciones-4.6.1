@@ -1049,64 +1049,9 @@ ORDER BY Orden,FEVEDP"
         '    End If
         'End If
 
-        Fx_GrabarCrucesMultiplesDeGrilla()
-
-
-        Return
-
         Dim _Ls_Mensajes As New List(Of LsValiciones.Mensajes)
 
-        ' 1) Comprobar si hay al menos una fila seleccionada y marcada para cruce automático
-        Dim _HayFilasParaCruzar As Boolean = False
-
-        If _Tbl_Maedpce IsNot Nothing Then
-            For Each _FilaChk As DataRow In _Tbl_Maedpce.Rows
-                Try
-                    If _FilaChk.Item("Chk") AndAlso _FilaChk.Item("CruzarPagoAuto") Then
-                        _HayFilasParaCruzar = True
-                        Exit For
-                    End If
-                Catch ex As Exception
-                    ' Ignorar filas con datos inesperados y continuar la comprobación
-                End Try
-            Next
-        End If
-
-        ' 2) Si no hay filas que cumplan la condición, mostrar mensaje y salir del método
-        If Not _HayFilasParaCruzar Then
-            MessageBoxEx.Show("No hay filas seleccionadas y marcadas para cruce automático. No se realizará ninguna acción.", "Validación",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error)
-            Return
-        End If
-
-        ' 3) Proceder con el procesamiento de las filas que cumplan la condición
-        For Each _Fila As DataRow In _Tbl_Maedpce.Rows
-
-            If _Fila.Item("Chk") AndAlso _Fila.Item("CruzarPagoAuto") Then
-
-                Dim _Idmaedpce As Integer = _Fila.Item("IDMAEDPCE")
-                Dim _Idmaeedo As Integer = _Fila.Item("IDMAEEDO")
-
-                Dim _Mensaje As LsValiciones.Mensajes
-
-                _Mensaje = Fx_Pagar_Documentos(_Fila)
-
-                If _Mensaje.EsCorrecto Then
-                    _Fila.Item("Error") = False
-                    _Fila.Item("Exclamacion") = False
-                    _Fila.Item("Observacion") = String.Empty
-                    _Fila.Item("PagoCruzado") = True
-                Else
-                    _Fila.Item("Error") = True
-                    _Fila.Item("Exclamacion") = False
-                    _Fila.Item("Observacion") = _Mensaje.Mensaje
-                End If
-
-                _Ls_Mensajes.Add(_Mensaje)
-
-            End If
-
-        Next
+        _Ls_Mensajes = Fx_GrabarCrucesMultiplesDeGrilla()
 
         Dim ListaQr As LsValiciones.Mensajes = _Ls_Mensajes.FirstOrDefault(Function(p) p.EsCorrecto = False)
 
@@ -1127,6 +1072,83 @@ ORDER BY Orden,FEVEDP"
 
         ' Actualizar totales por si cambió algo relevante
         Sb_Actualizar_Totales(False)
+
+
+        Return
+
+        'Dim _Ls_Mensajes As New List(Of LsValiciones.Mensajes)
+
+        '' 1) Comprobar si hay al menos una fila seleccionada y marcada para cruce automático
+        'Dim _HayFilasParaCruzar As Boolean = False
+
+        'If _Tbl_Maedpce IsNot Nothing Then
+        '    For Each _FilaChk As DataRow In _Tbl_Maedpce.Rows
+        '        Try
+        '            If _FilaChk.Item("Chk") AndAlso _FilaChk.Item("CruzarPagoAuto") Then
+        '                _HayFilasParaCruzar = True
+        '                Exit For
+        '            End If
+        '        Catch ex As Exception
+        '            ' Ignorar filas con datos inesperados y continuar la comprobación
+        '        End Try
+        '    Next
+        'End If
+
+        '' 2) Si no hay filas que cumplan la condición, mostrar mensaje y salir del método
+        'If Not _HayFilasParaCruzar Then
+        '    MessageBoxEx.Show("No hay filas seleccionadas y marcadas para cruce automático. No se realizará ninguna acción.", "Validación",
+        '                    MessageBoxButtons.OK, MessageBoxIcon.Error)
+        '    Return
+        'End If
+
+        '' 3) Proceder con el procesamiento de las filas que cumplan la condición
+        'For Each _Fila As DataRow In _Tbl_Maedpce.Rows
+
+        '    If _Fila.Item("Chk") AndAlso _Fila.Item("CruzarPagoAuto") Then
+
+        '        Dim _Idmaedpce As Integer = _Fila.Item("IDMAEDPCE")
+        '        Dim _Idmaeedo As Integer = _Fila.Item("IDMAEEDO")
+
+        '        Dim _Mensaje As LsValiciones.Mensajes
+
+        '        _Mensaje = Fx_Pagar_Documentos(_Fila)
+
+        '        If _Mensaje.EsCorrecto Then
+        '            _Fila.Item("Error") = False
+        '            _Fila.Item("Exclamacion") = False
+        '            _Fila.Item("Observacion") = String.Empty
+        '            _Fila.Item("PagoCruzado") = True
+        '        Else
+        '            _Fila.Item("Error") = True
+        '            _Fila.Item("Exclamacion") = False
+        '            _Fila.Item("Observacion") = _Mensaje.Mensaje
+        '        End If
+
+        '        _Ls_Mensajes.Add(_Mensaje)
+
+        '    End If
+
+        'Next
+
+        'Dim ListaQr As LsValiciones.Mensajes = _Ls_Mensajes.FirstOrDefault(Function(p) p.EsCorrecto = False)
+
+        'If Not IsNothing(ListaQr) Then
+
+        '    MessageBoxEx.Show(Me, "Hay documentos con problemas", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+        'End If
+
+        'Dim Fmv As New Frm_Validaciones
+        'Fmv.ListaMensajes = _Ls_Mensajes
+        'Fmv.ShowDialog(Me)
+        'Fmv.Dispose()
+
+        'Btn_Grabar_Autorizacion.Enabled = False
+        'Btn_CruceDocParaPago.Enabled = False
+        'Btn_Actualizar.Enabled = False
+
+        '' Actualizar totales por si cambió algo relevante
+        'Sb_Actualizar_Totales(False)
 
     End Sub
 
@@ -1704,6 +1726,7 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
     End Function
 
     Private Function Fx_PrepararCrucesMultiples() As List(Of LsValiciones.Mensajes)
+
         Dim _Resultados As New List(Of LsValiciones.Mensajes)
         Dim _Exactos As New List(Of String)
         Dim _Parciales As New List(Of String)
@@ -1719,28 +1742,72 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
 
         Sb_AsegurarColumnasPlanCruce()
 
-        ' Las reservas se comparten entre todos los pagos de esta preparación.
+        ' Reservas compartidas entre ambas pasadas para no asignar dos veces el mismo saldo.
         Dim _ReservadoPorFactura As New Dictionary(Of Integer, Double)
-        Dim _PagosProcesados As New HashSet(Of Integer)
+        Dim _ResultadosPorPago As New Dictionary(Of Integer, LsValiciones.Mensajes)
+
+        ' Primera pasada: reservar todos los matches exactos antes de distribuir saldos parciales.
+        Dim _PagosProcesadosExactos As New HashSet(Of Integer)
 
         For Each _Fila As DataRow In _Tbl_Maedpce.Rows
             Dim _Resultado As LsValiciones.Mensajes =
-            Fx_PrepararPlanPago(_Fila, _ReservadoPorFactura, _PagosProcesados)
+                Fx_PrepararPlanPago(
+                    _Fila,
+                    _ReservadoPorFactura,
+                    _PagosProcesadosExactos,
+                    True)
 
-            _Resultados.Add(_Resultado)
+            Dim _Idmaedpce As Integer = Convert.ToInt32(_Fila.Item("IDMAEDPCE"))
+            _ResultadosPorPago(_Idmaedpce) = _Resultado
+        Next
 
-            Dim _Idmaedpce As String = Convert.ToString(_Fila.Item("IDMAEDPCE"))
+        ' Segunda pasada: distribuir el saldo de los pagos que no obtuvieron match exacto.
+        If Not Chk_MarcarSoloMatchExactos.Checked Then
+            Dim _PagosProcesadosParciales As New HashSet(Of Integer)
+
+            For Each _Fila As DataRow In _Tbl_Maedpce.Rows
+                If Convert.ToBoolean(_Fila.Item("CruzarPagoAuto")) Then
+                    Continue For
+                End If
+
+                If Convert.ToString(_Fila.Item("MODP")).Trim() <> "$" OrElse
+                   Convert.ToBoolean(_Fila.Item("Exclamacion")) OrElse
+                   String.IsNullOrWhiteSpace(Convert.ToString(_Fila.Item("ENDP"))) Then
+                    Continue For
+                End If
+
+                Dim _Resultado As LsValiciones.Mensajes =
+                    Fx_PrepararPlanPago(
+                        _Fila,
+                        _ReservadoPorFactura,
+                        _PagosProcesadosParciales,
+                        False)
+
+                Dim _Idmaedpce As Integer = Convert.ToInt32(_Fila.Item("IDMAEDPCE"))
+                _ResultadosPorPago(_Idmaedpce) = _Resultado
+            Next
+        End If
+
+        For Each _Fila As DataRow In _Tbl_Maedpce.Rows
+            Dim _Idmaedpce As Integer = Convert.ToInt32(_Fila.Item("IDMAEDPCE"))
+
+            If _ResultadosPorPago.ContainsKey(_Idmaedpce) Then
+                _Resultados.Add(_ResultadosPorPago(_Idmaedpce))
+            End If
+
             Dim _Endp As String = Convert.ToString(_Fila.Item("ENDP")).Trim()
 
-            If Not _Resultado.EsCorrecto Then
-                _Errores.Add($"Pago ID:{_Idmaedpce}, ENDP:{_Endp}: {_Resultado.Mensaje}")
+            If Not _ResultadosPorPago(_Idmaedpce).EsCorrecto Then
+                _Errores.Add(
+                    $"Pago ID:{_Idmaedpce}, ENDP:{_Endp}: " &
+                    _ResultadosPorPago(_Idmaedpce).Mensaje)
                 Continue For
             End If
 
             If Convert.ToBoolean(_Fila.Item("CruzarPagoAuto")) Then
                 Dim _Detalle As String =
-                $"Pago ID:{_Idmaedpce}, ENDP:{_Endp}: " &
-                Convert.ToString(_Fila.Item("ResumenFacturasCruce"))
+                    $"Pago ID:{_Idmaedpce}, ENDP:{_Endp}: " &
+                    Convert.ToString(_Fila.Item("ResumenFacturasCruce"))
 
                 If Convert.ToBoolean(_Fila.Item("MatchExacto")) Then
                     _Exactos.Add(_Detalle)
@@ -1748,8 +1815,8 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
                     _Parciales.Add(_Detalle)
                 End If
             ElseIf Convert.ToString(_Fila.Item("MODP")).Trim() <> "$" OrElse
-               Convert.ToBoolean(_Fila.Item("Exclamacion")) OrElse
-               String.IsNullOrEmpty(_Endp) Then
+                   Convert.ToBoolean(_Fila.Item("Exclamacion")) OrElse
+                   String.IsNullOrEmpty(_Endp) Then
                 _NoProcesables += 1
             Else
                 _SinMatch.Add($"Pago ID:{_Idmaedpce}, ENDP:{_Endp}")
@@ -1808,7 +1875,8 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
     Private Function Fx_PrepararPlanPago(
         _FilaPago As DataRow,
         _ReservadoPorFactura As Dictionary(Of Integer, Double),
-        _PagosProcesados As HashSet(Of Integer)) As LsValiciones.Mensajes
+        _PagosProcesados As HashSet(Of Integer),
+        Optional _ForzarSoloMatchExacto As Boolean = False) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -1895,7 +1963,10 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
 
             Dim _FacturasUsadas As New HashSet(Of Integer)
 
-            If Chk_MarcarSoloMatchExactos.Checked Then
+            Dim _SoloMatchExactos As Boolean =
+                Chk_MarcarSoloMatchExactos.Checked OrElse _ForzarSoloMatchExacto
+
+            If _SoloMatchExactos Then
                 ' En modo exacto solo se reserva una factura que cubra exactamente el pago.
                 For Each _Factura As DataRow In _Tbl_Facturas.Rows
                     Dim _IdFactura As Integer = Convert.ToInt32(_Factura.Item("IDMAEEDO"))
@@ -2046,11 +2117,15 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
             Return _Resultados
         End If
 
+        Dim _FacturasSaldadasEnProceso As New HashSet(Of Integer)
+
         For Each _Fila As DataRow In _Tbl_Maedpce.Rows
             If Convert.ToBoolean(_Fila.Item("Chk")) AndAlso
                Convert.ToBoolean(_Fila.Item("CruzarPagoAuto")) Then
 
-                Dim _Mensaje As LsValiciones.Mensajes = Fx_GrabarListaFacturasCruce(_Fila)
+                Dim _Mensaje As LsValiciones.Mensajes =
+                    Fx_GrabarListaFacturasCruce(_Fila, _FacturasSaldadasEnProceso)
+
                 _Resultados.Add(_Mensaje)
             End If
         Next
@@ -2062,7 +2137,8 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
     End Function
 
     Private Function Fx_GrabarListaFacturasCruce(
-        _FilaPago As DataRow) As LsValiciones.Mensajes
+        _FilaPago As DataRow,
+        _FacturasSaldadasEnProceso As HashSet(Of Integer)) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -2094,12 +2170,24 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
                 _FilaTrabajo.ItemArray = _FilaPago.ItemArray
                 _FilaTrabajo.Item("IDMAEEDO") = _Factura.Idmaeedo
 
+                If _FacturasSaldadasEnProceso.Contains(_Factura.Idmaeedo) Then
+                    _Plan.Remove(_Factura)
+                    _Errores += 1
+                    _DetalleErrores.AppendLine(
+                        $"{_Factura.Tido}-{_Factura.Nudo}: ya quedó saldada por otro pago de este proceso.")
+                    Continue For
+                End If
+
                 Dim _ResultadoPago As LsValiciones.Mensajes =
                     Fx_Pagar_DocumentosConMonto(_FilaTrabajo, _Factura.MontoPlanificado)
 
                 If _ResultadoPago.EsCorrecto Then
                     _Plan.Remove(_Factura)
                     _Aplicaciones += 1
+
+                    If Fx_ObtenerSaldoActualFactura(_Factura.Idmaeedo) <= 0.01 Then
+                        _FacturasSaldadasEnProceso.Add(_Factura.Idmaeedo)
+                    End If
                 Else
                     _Errores += 1
                     _DetalleErrores.AppendLine(
@@ -2149,6 +2237,20 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
         End Try
 
         Return _Mensaje
+    End Function
+
+    Private Function Fx_ObtenerSaldoActualFactura(_Idmaeedo As Integer) As Double
+        Consulta_Sql =
+            $"SELECT ROUND(VABRDO - VAABDO, 2) AS SALDO " &
+            $"FROM MAEEDO WHERE IDMAEEDO = {_Idmaeedo}"
+
+        Dim _Fila As DataRow = _Sql.Fx_Get_DataRow(Consulta_Sql, False)
+
+        If _Fila Is Nothing OrElse IsDBNull(_Fila.Item("SALDO")) Then
+            Return 0
+        End If
+
+        Return Convert.ToDouble(_Fila.Item("SALDO"))
     End Function
 
     Private Function Fx_Pagar_DocumentosConMonto(
@@ -2324,6 +2426,7 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
         Dim _Idmaedpce As Integer = Convert.ToInt32(_Fila.Cells("IDMAEDPCE").Value)
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
         Dim _CruzarPagoAuto As Boolean = _Fila.Cells("CruzarPagoAuto").Value
+        Dim _CodEntidad As String = _Fila.Cells("ENDP").Value
 
         If Not Btn_MatchDocumentos.Enabled Then
             MessageBoxEx.Show(Me, "Esta acción solo se puede hacer si es que no a procesado los pagos", "Validación",
@@ -2331,10 +2434,26 @@ Where NombreEquipo <> '{_NombreEquipo}' And Empresa = '{Mod_Empresa}'"
             Return
         End If
 
-        If Not Fx_Tiene_Permiso(Me, "Pcli0005") Then
+        Dim _Row_Usuario_Autoriza As DataRow
+        Dim _Row_Permiso As DataRow
+        Dim _Rows_Remota As DataRow
+        Dim _PermisoRemoto As Boolean
+        Dim _Id_Rem As Integer
+        Dim _NroRemota As String
+
+        If Not Fx_Tiene_Permiso(Me, "Pcli0005",
+                                _Rows_Usuario_Autoriza:=_Row_Usuario_Autoriza,
+                                _Grabar_Log:=False,
+                                _Row_Permiso:=_Row_Permiso,
+                                _Rows_Remota:=_Rows_Remota) Then
             Return
         End If
 
+        If Not IsNothing(_Rows_Remota) Then
+            _PermisoRemoto = True
+            _Id_Rem = _Rows_Info_Remota.Item("Id_Rem")
+            _NroRemota = _Rows_Info_Remota.Item("NroRemota")
+        End If
 
         If MessageBoxEx.Show(Me, "¿Confirma el desbloque de este pago?", "Desbloquear pago", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) <> DialogResult.Yes Then
             Return
@@ -2352,10 +2471,19 @@ Where IDMAEDPCE = {_Idmaedpce}
             Return
         End If
 
+        Dim _NombrePermiso As String = _Row_Permiso.Item("DescripcionPermiso")
+
+        Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEDPCE", _Idmaedpce, "", _NombrePermiso,
+                                                                 "Pcli0005", "", _CodEntidad, "",
+                                                                 True, _Row_Usuario_Autoriza.Item("KOFU"),
+                                                                 _PermisoRemoto, _Id_Rem, _NroRemota)
+
         _Fila.Cells("Bloqueado").Value = False
-        _Fila.Cells("Exclamacion").Value = True
+        _Fila.Cells("Exclamacion").Value = False
         _Fila.Cells("MotivoBloqueo").Value = String.Empty
         _Fila.Cells("Observacion").Value = String.Empty
+        _Fila.Cells("ResumenFacturasCruce").Value = String.Empty
+        _Fila.Cells("REFANTI").Value = String.Empty
 
     End Sub
 
@@ -2365,6 +2493,7 @@ Where IDMAEDPCE = {_Idmaedpce}
         Dim _Idmaedpce As Integer = Convert.ToInt32(_Fila.Cells("IDMAEDPCE").Value)
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
         Dim _CruzarPagoAuto As Boolean = _Fila.Cells("CruzarPagoAuto").Value
+        Dim _CodEntidad As String = _Fila.Cells("ENDP").Value
 
         If Not Btn_MatchDocumentos.Enabled Then
             MessageBoxEx.Show(Me, "Esta acción solo se puede hacer si es que no a procesado los pagos", "Validación",
@@ -2372,8 +2501,25 @@ Where IDMAEDPCE = {_Idmaedpce}
             Return
         End If
 
-        If Not Fx_Tiene_Permiso(Me, "Pcli0004") Then
+        Dim _Row_Usuario_Autoriza As DataRow
+        Dim _Row_Permiso As DataRow
+        Dim _Rows_Remota As DataRow
+        Dim _PermisoRemoto As Boolean
+        Dim _Id_Rem As Integer
+        Dim _NroRemota As String
+
+        If Not Fx_Tiene_Permiso(Me, "Pcli0004",
+                                _Rows_Usuario_Autoriza:=_Row_Usuario_Autoriza,
+                                _Grabar_Log:=False,
+                                _Row_Permiso:=_Row_Permiso,
+                                _Rows_Remota:=_Rows_Remota) Then
             Return
+        End If
+
+        If Not IsNothing(_Rows_Remota) Then
+            _PermisoRemoto = True
+            _Id_Rem = _Rows_Info_Remota.Item("Id_Rem")
+            _NroRemota = _Rows_Info_Remota.Item("NroRemota")
         End If
 
         Dim _Aceptar As Boolean
@@ -2396,6 +2542,13 @@ Where IDMAEDPCE = {_Idmaedpce}
         If Not _Sql.Ej_consulta_IDU(Consulta_Sql) Then
             Return
         End If
+
+        Dim _NombrePermiso As String = _Row_Permiso.Item("DescripcionPermiso") & $" (Motivo: {_MotivoBloqueo.ToString.Trim})"
+
+        Fx_Add_Log_Gestion(FUNCIONARIO, Mod_Modalidad, "MAEDPCE", _Idmaedpce, "", _NombrePermiso,
+                                                                 "Pcli0004", "", _CodEntidad, "",
+                                                                 True, _Row_Usuario_Autoriza.Item("KOFU"),
+                                                                 _PermisoRemoto, _Id_Rem, _NroRemota)
 
         _Fila.Cells("Bloqueado").Value = True
         _Fila.Cells("Exclamacion").Value = True
@@ -2474,6 +2627,18 @@ e As EventArgs) Handles Chk_SoloMatchFacVencidas.CheckedChanged
 
         Dim _Mensaje As LsValiciones.Mensajes = Fx_RevisarPagoBloqueado(_Idmaedpce)
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Pago bloqueado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+    End Sub
+
+    Private Sub Btn_Ver_Documento_Click(sender As Object, e As EventArgs) Handles Btn_Ver_Documento.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Maedpce.Rows(Grilla_Maedpce.CurrentRow.Index)
+
+        Dim _Idmaedpce As Integer = _Fila.Cells("IDMAEDPCE").Value
+
+        Dim Fm As New Frm_Pagos_Documentos_Pagados(_Idmaedpce)
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
 
     End Sub
 

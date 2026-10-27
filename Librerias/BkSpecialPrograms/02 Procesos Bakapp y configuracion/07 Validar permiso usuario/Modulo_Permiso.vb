@@ -24,7 +24,9 @@ Public Module Modulo_Permiso
                                      Optional ByRef _Solicitar_Permiso_Al_Final As Boolean = False,
                                      Optional _Descripcion_Adicionasl As String = "",
                                      Optional _Idmaeedo As Integer = 0,
-                                     Optional _PermitirPermisoBkp00039 As Boolean = False) As Boolean
+                                     Optional _PermitirPermisoBkp00039 As Boolean = False,
+                                     Optional ByRef _Row_Permiso As DataRow = Nothing,
+                                     Optional ByRef _Rows_Remota As DataRow = Nothing) As Boolean
 
         Dim _Permiso As Boolean = False
 
@@ -71,9 +73,10 @@ Public Module Modulo_Permiso
 
         End If
 
-        Dim Cl_Permiso As New Class_Permiso_BakApp
-        Dim _Row_Permiso As DataRow = Cl_Permiso.Fx_Row_Traer_Permiso_Sistema(_Codpermiso)
         Dim _NombrePermiso As String
+        Dim Cl_Permiso As New Class_Permiso_BakApp
+
+        _Row_Permiso = Cl_Permiso.Fx_Row_Traer_Permiso_Sistema(_Codpermiso)
 
         If Not IsNothing(_Row_Permiso) Then
 
@@ -177,6 +180,7 @@ Public Module Modulo_Permiso
                 _Solicitar_Permiso_Al_Final = Fm.Solicitar_Permiso_Al_Final
 
                 _Rows_Info_Remota = Fm.Pro_Rows_Info_Remota
+                _Rows_Remota = Fm.Pro_Rows_Info_Remota
 
                 If _Permiso Then
 

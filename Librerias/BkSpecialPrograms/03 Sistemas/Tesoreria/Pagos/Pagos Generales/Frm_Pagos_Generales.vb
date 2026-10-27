@@ -2691,10 +2691,10 @@ Public Class Frm_Pagos_Generales
 
                     Dim _Fila As DataGridViewRow = Grilla_Pagos.Rows(Grilla_Pagos.CurrentRow.Index)
 
-                    Dim _Idmaedpce As Boolean = _Fila.Cells("IDMAEDPCE").Value
+                    Dim _Idmaedpce As Integer = _Fila.Cells("IDMAEDPCE").Value
                     Dim _Idrsd As Boolean = _Fila.Cells("IDRSD").Value
                     Dim _Endp As Boolean = Not String.IsNullOrEmpty(_Fila.Cells("ENDP").Value)
-                    Dim _Bloqueado As Boolean = _Fila.Cells("Bloqueado").Value
+                    Dim _Bloqueado As Boolean
 
                     Dim _Cabeza = Grilla_Pagos.Columns(Grilla_Pagos.CurrentCell.ColumnIndex).Name
 
@@ -2702,7 +2702,14 @@ Public Class Frm_Pagos_Generales
                         Return
                     End If
 
-                    If _Idmaedpce Then
+                    If CBool(_Idmaedpce) Then
+
+                        'Consulta_sql = $"Select * From {_Global_BaseBk}Zw_PagosBloqueados Where Idmaedpce = {_Idmaedpce}"
+                        'Dim _Row_Zw_PagosBloqueados As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                        'If Not IsNothing(_Row_Zw_PagosBloqueados) Then
+                        _Bloqueado = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_PagosBloqueados", "Bloqueado", $"Idmaedpce = {_Idmaedpce}", _Es_Boolean:=True)
+                        'End If
 
                         Btn_BloquearPago.Enabled = Not _Bloqueado
                         Btn_DesbloquearPago.Enabled = _Bloqueado
@@ -2725,7 +2732,6 @@ Public Class Frm_Pagos_Generales
         Dim _Fila As DataGridViewRow = Grilla_Pagos.CurrentRow
         Dim _Idmaedpce As Integer = Convert.ToInt32(_Fila.Cells("IDMAEDPCE").Value)
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-        Dim _CruzarPagoAuto As Boolean = _Fila.Cells("CruzarPagoAuto").Value
 
         If Not Fx_Tiene_Permiso(Me, "Pcli0005") Then
             Return
@@ -2756,7 +2762,6 @@ Where IDMAEDPCE = {_Idmaedpce}
         Dim _Fila As DataGridViewRow = Grilla_Pagos.CurrentRow
         Dim _Idmaedpce As Integer = Convert.ToInt32(_Fila.Cells("IDMAEDPCE").Value)
         Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
-        Dim _CruzarPagoAuto As Boolean = _Fila.Cells("CruzarPagoAuto").Value
 
         If ModoLectura Then
             MessageBoxEx.Show(Me, "Esta acción solo se puede hacer si es que no a procesado los pagos", "Validación",
@@ -2793,4 +2798,13 @@ Where IDMAEDPCE = {_Idmaedpce}
 
     End Sub
 
+    Private Sub Btn_InfoBloqueo_Click(sender As Object, e As EventArgs) Handles Btn_InfoBloqueo.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Pagos.CurrentRow
+        Dim _Idmaedpce As Integer = _Fila.Cells("IDMAEDPCE").Value
+
+        Dim _Mensaje As LsValiciones.Mensajes = Fx_RevisarPagoBloqueado(_Idmaedpce)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Pago bloqueado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+    End Sub
 End Class
