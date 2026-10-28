@@ -10,6 +10,7 @@ Imports Newtonsoft.Json
 Public Class Cl_ProcesaDatos
     Dim _SqlRandom As Class_SQL
     Dim Consulta_sql As String
+    Dim Enviar_A_Pick As Boolean = True
     Public Property DirectorioActual As String
     Public Property NombreArchivo_Configuracion As String
     Public Property Configuracion As Configuracion
@@ -22,6 +23,8 @@ Public Class Cl_ProcesaDatos
     '' Busca NVVs de Shopify/B2B y las inyecta a las tablas de despacho de Bakapp.
     '' </summary>
     Sub Sb_Procesar_Despachos_ECommerce(Txt_Log As Object)
+        Enviar_A_Pick = Frm_Sincronizador.MiConfig.Picking
+
         Try
             _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
             '-----------------------------------------------------------------------------------------
@@ -153,39 +156,49 @@ WHERE e.TIDO = 'NVV'
 
                         Dim _Cl_Stmp As New Cl_Stmp
                         Dim _FechaParaFacturar As DateTime = DateTime.Now.AddDays(1)
+
+                        If NVV.TEXTO4 = "RETIRO" Then
+                            _FechaParaFacturar = DateTime.Now
+                        End If
                         Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
                         ' Validamos si el pago fue suficiente (1)
-                        If NVV.PagoSuficiente = 1 Then
-                            Sb_Insertar_Log_Gestiones(NVV, $"Iniciando la creación del ticket para enviar el documento {NVV.NUDO} (Pago validado).", Txt_Log)
-                            Sb_AddToLog("Demonio Despachos", $"Iniciando la creación del ticket para enviar el documento {NVV.NUDO} (Pago validado).", Txt_Log)
-                            'DESCOMENTAR
-                            _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(NVV.IDMAEEDO, NVV.TIDO, NVV.NUDO, True, _FechaParaFacturar, "R", False, NVV.EMPRESA, NVV.SUENDO, NVV.CodFuncionario, True, NVV.IDMAEDPCE, NVV.CodFuncionario)
+                        If Enviar_A_Pick Then
+                            Dim A = 0
+                            If NVV.PagoSuficiente = 1 Then
+                                Sb_Insertar_Log_Gestiones(NVV, $"Iniciando la creación del ticket para enviar el documento {NVV.NUDO} (Pago validado).", Txt_Log)
+                                Sb_AddToLog("Demonio Despachos", $"Iniciando la creación del ticket para enviar el documento {NVV.NUDO} (Pago validado).", Txt_Log)
+                                'DESCOMENTAR
+                                _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(NVV.IDMAEEDO, NVV.TIDO, NVV.NUDO, True, _FechaParaFacturar, "R", False, NVV.EMPRESA, NVV.SUENDO, NVV.CodFuncionario, True, NVV.IDMAEDPCE, NVV.CodFuncionario)
 
-                            If _Mensaje_Stem.EsCorrecto Then
-                                If NVV.EMPRESA = "02" Then
-                                    Sb_AddToLog("Demonio Despachos", $"se cambia momentaneamente la empresa para el documento {NVV.NUDO}!", Txt_Log)
-                                    Dim mensajeCambio As New LsValiciones.Mensajes
-                                    mensajeCambio = Fx_CambiarBodegaSeaGarden2MeatGarden(NVV.IDMAEEDO)
-                                    If mensajeCambio.EsCorrecto Then
-                                        Sb_Insertar_Log_Gestiones(NVV, $"La empresa del documento {NVV.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
-                                        Sb_AddToLog("Demonio Despachos", $"La empresa del documento {NVV.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
-                                    Else
-                                        Sb_Insertar_Log_Gestiones(NVV, $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
-                                        Sb_AddToLog("Demonio Despachos", $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
+                                If _Mensaje_Stem.EsCorrecto Then
+                                    If NVV.EMPRESA = "02" Then
+                                        Sb_AddToLog("Demonio Despachos", $"se cambia momentaneamente la empresa para el documento {NVV.NUDO}!", Txt_Log)
+                                        Dim mensajeCambio As New LsValiciones.Mensajes
+                                        mensajeCambio = Fx_CambiarBodegaSeaGarden2MeatGarden(NVV.IDMAEEDO)
+                                        If mensajeCambio.EsCorrecto Then
+                                            Sb_Insertar_Log_Gestiones(NVV, $"La empresa del documento {NVV.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
+                                            Sb_AddToLog("Demonio Despachos", $"La empresa del documento {NVV.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
+                                        Else
+                                            Sb_Insertar_Log_Gestiones(NVV, $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
+                                            Sb_AddToLog("Demonio Despachos", $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
+                                        End If
+
                                     End If
+                                    Sb_Insertar_Log_Gestiones(NVV, $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV.NUDO}", Txt_Log)
 
+                                    Sb_AddToLog("Demonio Despachos", $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV.NUDO}!", Txt_Log)
+                                Else
+                                    Sb_Insertar_Log_Gestiones(NVV, $"Error al crear ticket para el documento {NVV.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
+                                    Sb_AddToLog("Demonio Despachos", $"Error al crear ticket para el documento {NVV.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
                                 End If
-                                Sb_Insertar_Log_Gestiones(NVV, $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV.NUDO}", Txt_Log)
-
-                                Sb_AddToLog("Demonio Despachos", $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV.NUDO}!", Txt_Log)
                             Else
-                                Sb_Insertar_Log_Gestiones(NVV, $"Error al crear ticket para el documento {NVV.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
-                                Sb_AddToLog("Demonio Despachos", $"Error al crear ticket para el documento {NVV.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
+                                Sb_Insertar_Log_Gestiones(NVV, $"Se omite la creación de ticket para el documento {NVV.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
+                                Sb_AddToLog("Demonio Despachos", $"Se omite la creación de ticket para el documento {NVV.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
                             End If
                         Else
-                            Sb_Insertar_Log_Gestiones(NVV, $"Se omite la creación de ticket para el documento {NVV.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
-                            Sb_AddToLog("Demonio Despachos", $"Se omite la creación de ticket para el documento {NVV.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
+                            Sb_Insertar_Log_Gestiones(NVV, $"El documento {numeroDocumento} fue derivado a picking manual según la configuración del sistema.", Txt_Log, 0)
+                            Sb_AddToLog("Demonio Despachos", $"El documento {numeroDocumento} fue derivado a picking manual según la configuración del sistema.", Txt_Log)
                         End If
                     Else
                         ' Si falló la transacción SQL interna
@@ -224,6 +237,8 @@ WHERE e.TIDO = 'NVV'
     Public Sub PreCarga(Txt_Log As Object)
         'PreCarga cargar las notas de venta  que quedaron excluidas de pickeo
         Try
+            Enviar_A_Pick = Frm_Sincronizador.MiConfig.Picking
+
             _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
             '-----------------------------------------------------------------------------------------
             '1. BUSCAR NOTAS DE VENTA (NVV) DEL E-COMMERCE QUE NO TENGAN DESPACHO ASIGNADO
@@ -348,43 +363,52 @@ WHERE e.TIDO = 'NVV'
 
                     Dim _Cl_Stmp As New Cl_Stmp
                     Dim _FechaParaFacturar As DateTime = DateTime.Now.AddDays(1)
-                    Dim _Mensaje_Stem As New LsValiciones.Mensajes
 
-                    ' Validamos si el pago fue suficiente (1)
-                    If NVV2.PagoSuficiente = 1 Then
-                        Sb_Insertar_Log_Gestiones(NVV2, $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).", Txt_Log)
-                        Sb_AddToLog("Demonio Despachos", $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).", Txt_Log)
-                        'DESCOMENTAR
-                        _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(NVV2.IDMAEEDO, NVV2.TIDO, NVV2.NUDO, True, _FechaParaFacturar, "R", False, NVV2.EMPRESA, NVV2.SUENDO, NVV2.CodFuncionario, True, NVV2.IDMAEDPCE, NVV2.CodFuncionario)
-
-                        If _Mensaje_Stem.EsCorrecto Then
-                            Sb_Insertar_Log_Gestiones(NVV2, $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV2.NUDO}", Txt_Log)
-
-                            '
-                            Sb_AddToLog("Demonio Despachos", $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV2.NUDO}!", Txt_Log)
-                            If NVV2.EMPRESA = "02" Then
-                                Sb_AddToLog("Demonio Despachos", $"se cambia momentaneamente la empresa para el documento {NVV2.NUDO}!", Txt_Log)
-
-                                Dim mensajeCambio As New LsValiciones.Mensajes
-                                mensajeCambio = Fx_CambiarBodegaSeaGarden2MeatGarden(NVV2.IDMAEEDO)
-                                If mensajeCambio.EsCorrecto Then
-                                    Sb_Insertar_Log_Gestiones(NVV2, $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
-                                    Sb_AddToLog("Demonio Despachos", $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
-                                Else
-                                    Sb_Insertar_Log_Gestiones(NVV2, $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
-                                    Sb_AddToLog("Demonio Despachos", $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
-                                End If
-                            End If
-
-                        Else
-                            Sb_Insertar_Log_Gestiones(NVV2, $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
-                            Sb_AddToLog("Demonio Despachos", $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
-                        End If
-                    Else
-                        Sb_Insertar_Log_Gestiones(NVV2, $"Se omite la creación de ticket para el documento {NVV2.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
-                        Sb_AddToLog("Demonio Despachos", $"Se omite la creación de ticket para el documento {NVV2.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
+                    If NVV2.TEXTO4 = "RETIRO" Then
+                        _FechaParaFacturar = DateTime.Now
                     End If
 
+                    Dim _Mensaje_Stem As New LsValiciones.Mensajes
+                    If Enviar_A_Pick Then
+                        ' Validamos si el pago fue suficiente (1)
+                        Dim a = 0
+                        If NVV2.PagoSuficiente = 1 Then
+                            Sb_Insertar_Log_Gestiones(NVV2, $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).", Txt_Log)
+                            Sb_AddToLog("Demonio Despachos", $"Iniciando la creación del ticket para enviar el documento {NVV2.NUDO} (Pago validado).", Txt_Log)
+                            'DESCOMENTAR
+                            _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(NVV2.IDMAEEDO, NVV2.TIDO, NVV2.NUDO, True, _FechaParaFacturar, "R", False, NVV2.EMPRESA, NVV2.SUENDO, NVV2.CodFuncionario, True, NVV2.IDMAEDPCE, NVV2.CodFuncionario)
+
+                            If _Mensaje_Stem.EsCorrecto Then
+                                Sb_Insertar_Log_Gestiones(NVV2, $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV2.NUDO}", Txt_Log)
+
+                                '
+                                Sb_AddToLog("Demonio Despachos", $"El ticket de entrega de mercadería fue generado exitosamente para el documento {NVV2.NUDO}!", Txt_Log)
+                                If NVV2.EMPRESA = "02" Then
+                                    Sb_AddToLog("Demonio Despachos", $"se cambia momentaneamente la empresa para el documento {NVV2.NUDO}!", Txt_Log)
+
+                                    Dim mensajeCambio As New LsValiciones.Mensajes
+                                    mensajeCambio = Fx_CambiarBodegaSeaGarden2MeatGarden(NVV2.IDMAEEDO)
+                                    If mensajeCambio.EsCorrecto Then
+                                        Sb_Insertar_Log_Gestiones(NVV2, $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
+                                        Sb_AddToLog("Demonio Despachos", $"La empresa del documento {NVV2.NUDO} fue cambiada exitosamente a MeatGarden.", Txt_Log)
+                                    Else
+                                        Sb_Insertar_Log_Gestiones(NVV2, $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
+                                        Sb_AddToLog("Demonio Despachos", $"Error cambiando empresa: detalle : {mensajeCambio.Detalle} - {mensajeCambio.Mensaje}.", Txt_Log)
+                                    End If
+                                End If
+
+                            Else
+                                Sb_Insertar_Log_Gestiones(NVV2, $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
+                                Sb_AddToLog("Demonio Despachos", $"Error al crear ticket para el documento {NVV2.NUDO}. Detalle: {_Mensaje_Stem.Detalle} - {_Mensaje_Stem.Mensaje}", Txt_Log)
+                            End If
+                        Else
+                            Sb_Insertar_Log_Gestiones(NVV2, $"Se omite la creación de ticket para el documento {NVV2.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
+                            Sb_AddToLog("Demonio Despachos", $"Se omite la creación de ticket para el documento {NVV2.NUDO} porque el pago registrado no cubre el total o no existe.", Txt_Log)
+                        End If
+                    Else
+                        Sb_Insertar_Log_Gestiones(NVV2, $"El documento {numeroDocumento} fue derivado a picking manual según la configuración del sistema.", Txt_Log, 0)
+                        Sb_AddToLog("Demonio Despachos", $"El documento {numeroDocumento} fue derivado a picking manual según la configuración del sistema.", Txt_Log)
+                    End If
 
 
                 Catch exDoc As Exception

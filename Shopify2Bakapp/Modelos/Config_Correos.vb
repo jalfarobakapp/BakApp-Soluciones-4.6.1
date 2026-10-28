@@ -5,4 +5,6 @@
     Public Property Empresa2_Formato As String
     Public Property FechaModificacion As DateTime
     Public Property ClienteActivo As Integer
+    Public Property Picking As Integer
+
 End Class

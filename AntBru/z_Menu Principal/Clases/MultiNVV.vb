@@ -4,7 +4,8 @@ Imports BkSpecialPrograms.LsValiciones
 Public Class MultiNVV
     Dim Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
-
+    Private Mod_Modalidad_Ori As String
+    Private Mod_Empresa_Ori As String
 
     Public Function Proceso_MultiNvv(Id_Documento_Ori As String, Nudo_NVV As String) As Mensajes
         Dim msgFinal As New Mensajes With {
@@ -15,6 +16,24 @@ Public Class MultiNVV
 
         Try
             ' 1. Generar los documentos NVV a partir del documento origen
+            Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+            Mod_Empresa_Ori = Mod_Empresa
+            Mod_Modalidad_Ori = Mod_Modalidad
+
+            Dim Consulta_sql = $"Select top 1 Empresa,Modalidad  from {_Global_BaseBk}Zw_Docu_Ent where Idmaeedo = {Id_Documento_Ori}"
+            Dim _Row_OCC As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            If IsNothing(_Row_OCC) Then
+                Dim msgError As New Mensajes
+                msgError.EsCorrecto = False
+                msgError.Detalle = "No se encontro coincidencia del documento de origen"
+                Return msgError
+            End If
+            Dim CodEmpresa As String = _Row_OCC.Item("Empresa")
+            Dim Modalidad As String = _Row_OCC.Item("Modalidad")
+            CambioMod(CodEmpresa, Modalidad)
+
+
             Dim listaResultados As List(Of Mensajes) = GeneraNVV(Id_Documento_Ori, Nudo_NVV)
 
             ' 2. Analizar los resultados de la generación
@@ -47,6 +66,7 @@ Public Class MultiNVV
                 msgFinal.EsCorrecto = False
                 msgFinal.Mensaje = $"Se generaron {documentosGenerados} documento(s), pero falló la asociación de despachos."
                 msgFinal.Detalle = resultadoAsociacion.Mensaje & vbCrLf & resultadoAsociacion.Detalle
+
             Else
                 msgFinal.EsCorrecto = True
                 msgFinal.Mensaje = $"Proceso completado. Se generaron {documentosGenerados} documento(s) NVV y se asociaron los despachos correctamente."
@@ -56,16 +76,123 @@ Public Class MultiNVV
                     msgFinal.Detalle = "El proceso finalizó con advertencias:" & vbCrLf & detalleErrores
                 End If
             End If
-
+            sincronizar_permisos(Id_Documento_Ori)
         Catch ex As Exception
             msgFinal.EsCorrecto = False
             msgFinal.Mensaje = "Error general al procesar múltiples NVV."
             msgFinal.Detalle = ex.Message
         End Try
-
+        VolverA_Mod_Original()
         Return msgFinal
     End Function
+    Function sincronizar_permisos(Idmaeedo As Integer) As Mensajes
+        Dim msg As New Mensajes
+        msg.EsCorrecto = False
+        msg.Detalle = "Error al sincronizar los permisos y remotas."
+        msg.Mensaje = "Error al sincronizar los permisos y remotas."
 
+        Dim consultaCompleta As String = $"
+-- 1. Variables base
+DECLARE @Idmaeedo_Padre INT = {Idmaeedo};
+DECLARE @MaxRemota INT;
+
+SELECT @MaxRemota = ISNULL(MAX(CAST(SUBSTRING(NroRemota, 2, 10) AS INT)), 0) 
+FROM {_Global_BaseBk}Zw_Remotas 
+WHERE NroRemota LIKE 'R%';
+
+-- 2. Crear tabla temporal mapeando [Hijo] x [Cada Remota del Padre]
+CREATE TABLE #TempRemotas (
+    Idmaeedo_Hijo INT,
+    NroRemota_Padre VARCHAR(20),
+    NroRemota_Nuevo VARCHAR(20)
+);
+
+INSERT INTO #TempRemotas (Idmaeedo_Hijo, NroRemota_Padre, NroRemota_Nuevo)
+SELECT 
+    H.IDMAEEDO_Hijo,
+    P.NroRemota,
+    'R' + RIGHT('000000000' + CAST(@MaxRemota + ROW_NUMBER() OVER(ORDER BY H.IDMAEEDO_Hijo, P.NroRemota) AS VARCHAR(10)), 9)
+FROM 
+    (SELECT DISTINCT MAE2.IDMAEEDO AS IDMAEEDO_Hijo 
+     FROM MAEDDO MAE 
+     INNER JOIN MAEDDO MAE2 ON MAE2.IDRST = MAE.IDMAEDDO 
+     WHERE MAE.IDMAEEDO = @Idmaeedo_Padre) H
+CROSS JOIN 
+    (SELECT NroRemota 
+     FROM {_Global_BaseBk}Zw_Remotas 
+     WHERE Idmaeedo = @Idmaeedo_Padre) P;
+
+-- 3. INSERT Zw_Remotas
+INSERT INTO {_Global_BaseBk}Zw_Remotas (
+    Empresa, NroRemota, CodFuncionario_Solicita, CodFuncionario_Autoriza, CodPermiso, 
+    Descripcion_Adicional, Permiso_Otorgado, Otorga, Id_Casi_DocEnc, Fecha_Solicita, 
+    Fecha_Otorga, CodEntidad, CodSucEntidad, NomEntidad, TotalBruto, Espera_En_Linea, 
+    Eliminada, Observaciones, Id_Notificacion, Rev_Usuario_Solicita, Idmaeedo, RCadena, 
+    RCadena_Id_Enc, Padre_NroRemota, Crear_Doc_Def_Al_Grabar, Nro_RCadena, Permiso_Presencial, 
+    Monto_Aprobacion, NombreEquipo_Auto, Heredado, Id_Rem_Heredado
+)
+SELECT DISTINCT
+    Padre.Empresa, TMP.NroRemota_Nuevo, Padre.CodFuncionario_Solicita, Padre.CodFuncionario_Autoriza, 
+    Padre.CodPermiso, Padre.Descripcion_Adicional, Padre.Permiso_Otorgado, Padre.Otorga, 
+    Padre.Id_Casi_DocEnc, Padre.Fecha_Solicita, Padre.Fecha_Otorga, Padre.CodEntidad, 
+    Padre.CodSucEntidad, Padre.NomEntidad, Padre.TotalBruto, Padre.Espera_En_Linea, 
+    Padre.Eliminada, Padre.Observaciones, Padre.Id_Notificacion, Padre.Rev_Usuario_Solicita, 
+    TMP.Idmaeedo_Hijo, 
+    Padre.RCadena, Padre.RCadena_Id_Enc, Padre.Padre_NroRemota, Padre.Crear_Doc_Def_Al_Grabar, 
+    Padre.Nro_RCadena, Padre.Permiso_Presencial, Padre.Monto_Aprobacion, Padre.NombreEquipo_Auto, 
+    Padre.Heredado, Padre.Id_Rem_Heredado
+FROM #TempRemotas TMP
+INNER JOIN {_Global_BaseBk}Zw_Remotas Padre ON Padre.NroRemota = TMP.NroRemota_Padre;
+
+DROP TABLE #TempRemotas;
+"
+
+        Dim result As Boolean = Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(consultaCompleta)
+
+        If Not result Then
+            msg.Mensaje = "Error en la transaccion de sincronización de permisos"
+            Return msg
+        End If
+
+        msg.Mensaje = "Sincronización de permisos completada exitosamente."
+        msg.EsCorrecto = True
+        Return msg
+    End Function
+    Public Sub CambioMod(CodEmpresa As String, Modalidad As String)
+        Dim _Mod As New Clas_Modalidades
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+
+        Try
+
+
+            Mod_Empresa = CodEmpresa
+            Mod_Modalidad = Modalidad
+
+            Dim Consulta_sql = $"Select top 1 Cest.*,Cfgp.RAZON From CONFIEST Cest WITH (NOLOCK) Inner Join CONFIGP Cfgp On Cest.EMPRESA = Cfgp.EMPRESA Where MODALIDAD = '{Mod_Modalidad}' And Cest.EMPRESA = '{Mod_Empresa}'"
+            _Global_Row_Modalidad = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+            Mod_Empresa = _Global_Row_Modalidad.Item("EMPRESA")
+            Mod_Sucursal = _Global_Row_Modalidad.Item("ESUCURSAL")
+            Mod_Bodega = _Global_Row_Modalidad.Item("EBODEGA")
+            Mod_Caja = _Global_Row_Modalidad.Item("ECAJA")
+            Mod_ListaPrecioVenta = Mid(_Global_Row_Modalidad.Item("ELISTAVEN"), 6, 3)
+            Mod_ListaPrecioCosto = Mid(_Global_Row_Modalidad.Item("ELISTACOM"), 6, 3)
+
+            _Mod.Sb_Actualiza_Formatos_X_Modalidad()
+
+
+            _Mod.Sb_Actualizar_Variables_Modalidad(Mod_Modalidad)
+
+        Catch ex As Exception
+            Throw New Exception("Error durante el proceso de CambioEmpresa: " & ex.Message)
+        Finally
+            ' Si fuese necesario cerrar SQL, se haría aquí.
+        End Try
+
+    End Sub
+    Public Sub VolverA_Mod_Original()
+        CambioMod(Mod_Empresa_Ori, Mod_Modalidad_Ori)
+    End Sub
     Public Function GeneraNVV(Id_Documento_Ori As String, Nudo_NVV As String) As List(Of Mensajes)
         ' Cambiamos el retorno a List(Of Mensajes) porque se pueden generar múltiples documentos
 
@@ -290,11 +417,11 @@ SELECT
     1
 FROM MAEDDO MAE
 INNER JOIN MAEDDO MAE2 ON MAE2.IDRST = MAE.IDMAEDDO
-INNER JOIN [{_Global_BaseBk}]Zw_Despachos_Doc_Det DET ON DET.Idmaeddo = MAE.IDMAEDDO
-INNER JOIN [{_Global_BaseBk}]Zw_Despachos_Doc DE on MAE2.IDMAEEDO = DE.Idrst
+INNER JOIN {_Global_BaseBk}Zw_Despachos_Doc_Det DET ON DET.Idmaeddo = MAE.IDMAEDDO
+INNER JOIN {_Global_BaseBk}Zw_Despachos_Doc DE on MAE2.IDMAEEDO = DE.Idrst
 WHERE MAE.NUDO = '{Nudo}';
 
-Update [{_Global_BaseBk}]Zw_Despachos_Doc_Det set Activo = 0 Where Nudo = '{Nudo}';"
+Update {_Global_BaseBk}Zw_Despachos_Doc_Det set Activo = 0 Where Nudo = '{Nudo}';"
 
 
         Dim sqlQuery3 = $"UPDATE Hijo
@@ -327,7 +454,7 @@ SET
 FROM {_Global_BaseBk}Zw_Docu_Ent Hijo
 CROSS JOIN (
     SELECT * 
-    FROM [{_Global_BaseBk}]Zw_Docu_Ent 
+    FROM {_Global_BaseBk}Zw_Docu_Ent 
     WHERE Idmaeedo ={Idmaeedo}
 ) Padre
 WHERE Hijo.Idmaeedo IN (
@@ -337,59 +464,26 @@ WHERE Hijo.Idmaeedo IN (
     WHERE MAE.IDMAEEDO = {Idmaeedo}
 );"
 
-        Dim SqlQuery4 = $"INSERT INTO {_Global_BaseBk}Zw_Docu_Det (
-    Idmaeddo, 
-    Idmaeedo, 
-    Tido, 
-    Nudo, 
-    Codigo, 
-    Descripcion, 
-    RtuVariable, 
-    Empresa, 
-    Sucursal, 
-    Bodega, 
-    IdCont, 
-    Contenedor, 
-    Grupo, 
-    SobreStock, 
-    Id_SobreStock, 
-    Moneda_SobreStock, 
-    Precio_SobreStock, 
-    Qty_SobreStock, 
-    Qty_SobreStockD, 
-    Qty_SobreStockE, 
-    Qty_SobreStockDv, 
-    Id_Det_SincroStock, 
-    Id_Feria, 
-    TipoCarga
-)
-SELECT 
-    MAE_Hijo.IDMAEDDO,       
-    MAE_Hijo.IDMAEEDO,       
-    MAE_Hijo.TIDO,           
-    MAE_Hijo.NUDO,           
-    Padre.Codigo,            
-    Padre.Descripcion, 
-    Padre.RtuVariable, 
-    Padre.Empresa, 
-    Padre.Sucursal, 
-    Padre.Bodega, 
-    Padre.IdCont, 
-    Padre.Contenedor, 
-    Padre.Grupo, 
-    Padre.SobreStock, 
-    Padre.Id_SobreStock, 
-    Padre.Moneda_SobreStock, 
-    Padre.Precio_SobreStock, 
-    Padre.Qty_SobreStock, 
-    Padre.Qty_SobreStockD, 
-    Padre.Qty_SobreStockE, 
-    Padre.Qty_SobreStockDv, 
-    Padre.Id_Det_SincroStock, 
-    Padre.Id_Feria, 
-    Padre.TipoCarga
-FROM MAEDDO MAE_Padre
-INNER JOIN MAEDDO MAE_Hijo ON MAE_Hijo.IDRST = MAE_Padre.IDMAEDDO
+        Dim SqlQuery4 = $"UPDATE Hijo
+SET 
+    Hijo.RtuVariable = Padre.RtuVariable, 
+    Hijo.IdCont = Padre.IdCont, 
+    Hijo.Contenedor = Padre.Contenedor, 
+    Hijo.Grupo = Padre.Grupo, 
+    Hijo.SobreStock = Padre.SobreStock, 
+    Hijo.Id_SobreStock = Padre.Id_SobreStock, 
+    Hijo.Moneda_SobreStock = Padre.Moneda_SobreStock, 
+    Hijo.Precio_SobreStock = Padre.Precio_SobreStock, 
+    Hijo.Qty_SobreStock = Padre.Qty_SobreStock, 
+    Hijo.Qty_SobreStockD = Padre.Qty_SobreStockD, 
+    Hijo.Qty_SobreStockE = Padre.Qty_SobreStockE, 
+    Hijo.Qty_SobreStockDv = Padre.Qty_SobreStockDv, 
+    Hijo.Id_Det_SincroStock = Padre.Id_Det_SincroStock, 
+    Hijo.Id_Feria = Padre.Id_Feria, 
+    Hijo.TipoCarga = Padre.TipoCarga
+FROM {_Global_BaseBk}Zw_Docu_Det Hijo
+INNER JOIN MAEDDO MAE_Hijo ON MAE_Hijo.IDMAEDDO = Hijo.Idmaeddo
+INNER JOIN MAEDDO MAE_Padre ON MAE_Padre.IDMAEDDO = MAE_Hijo.IDRST
 INNER JOIN {_Global_BaseBk}Zw_Docu_Det Padre ON Padre.Idmaeddo = MAE_Padre.IDMAEDDO
 WHERE MAE_Padre.IDMAEEDO = {Idmaeedo};"
 

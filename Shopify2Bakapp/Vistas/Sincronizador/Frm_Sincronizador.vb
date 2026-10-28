@@ -10,6 +10,7 @@ Public Class Frm_Sincronizador
     ' Renombrado a Cl_GeneraDespachos para coincidir con la nueva clase
     Dim _Cl_GeneraDespachos As New Cl_GeneraDespachos
     Dim _Version As String
+    Public MiConfig As New Config_Correos
     Public Property _Global_BaseBk As String
     Public Property Correos As Config_Correos
     Public Sub New()
@@ -88,6 +89,7 @@ Public Class Frm_Sincronizador
                 Return
             End If
             Correos = _MsgCorreos.Tag
+            MiConfig = _MsgCorreos.Tag
             Sb_AddToLog("Configuración", "Configuración de correos cargada correctamente.", Txt_Log)
             Dtp_FechaRevision.Value = FechaDelServidor()
 

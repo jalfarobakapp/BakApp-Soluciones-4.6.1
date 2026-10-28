@@ -5,7 +5,6 @@ Imports Newtonsoft.Json
 Public Class Frm_Configuracion
 
     Private _Cl_ConfiguracionLocal As New Cl_ConfiguracionLocal
-
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -59,11 +58,14 @@ Public Class Frm_Configuracion
 
         Dim _MsgCorreos As LsValiciones.Mensajes
         _MsgCorreos = Fx_Cargar_Configuracion_JSON_Correos(False)
-
+        Frm_Sincronizador.MiConfig = _MsgCorreos.Tag
         ' Si el archivo no existe o hay error, mostramos la alerta tal como en las conexiones
         If Not _MsgCorreos.EsCorrecto Then
             MessageBoxEx.Show(Me, _MsgCorreos.Mensaje, "Validación Correos", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
+
+        Dim miConfig As Config_Correos = _MsgCorreos.Tag
+
     End Sub
 
     Private Sub Btn_ProbarConexionRd_Click(sender As Object, e As EventArgs) Handles Btn_ProbarConexionRd.Click
@@ -139,7 +141,26 @@ Public Class Frm_Configuracion
 
             If File.Exists(rutaArchivo) Then
                 Dim jsonString As String = File.ReadAllText(rutaArchivo)
-                Dim miConfig As Config_Correos = JsonConvert.DeserializeObject(Of Config_Correos)(jsonString)
+
+                ' 1. Parsear el texto a un JObject para poder inspeccionar las claves
+                Dim jObj As Newtonsoft.Json.Linq.JObject = Newtonsoft.Json.JsonConvert.DeserializeObject(Of Newtonsoft.Json.Linq.JObject)(jsonString)
+                Dim requiereActualizar As Boolean = False
+
+                ' 2. Verificar si el nuevo dato NO existe en el JSON
+                ' (Reemplaza "NombreDeTuNuevoDato" con el nombre real de tu variable)
+                If Not jObj.ContainsKey("Picking") Then
+                    jObj.Add("Picking", 0) ' Lo crea con valor 0
+                    requiereActualizar = True
+                End If
+
+                ' 3. Si faltaba el dato, guardamos los cambios en el archivo físico
+                If requiereActualizar Then
+                    jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(jObj, Newtonsoft.Json.Formatting.Indented)
+                    File.WriteAllText(rutaArchivo, jsonString)
+                End If
+
+                ' 4. Ahora sí, deserializamos a tu clase
+                Dim miConfig As Config_Correos = Newtonsoft.Json.JsonConvert.DeserializeObject(Of Config_Correos)(jsonString)
 
                 If miConfig IsNot Nothing Then
                     NombreCorreo_1.Text = miConfig.Empresa1_NombreCorreo
@@ -147,9 +168,14 @@ Public Class Frm_Configuracion
                     NombreCorreo_2.Text = miConfig.Empresa2_NombreCorreo
                     Formato_2.Text = miConfig.Empresa2_Formato
                     ClienteActivo.Value = miConfig.ClienteActivo
+                    Switch_picking.Value = miConfig.Picking
+
+                    ' TuControl_Nuevo.Value = miConfig.NombreDeTuNuevoDato
+
                     _Mensaje.EsCorrecto = True
                     _Mensaje.Mensaje = "Configuración de correos cargada correctamente."
                     _Mensaje.Detalle = "Carga exitosa"
+                    _Mensaje.Tag = miConfig
                     _Mensaje.Id = 1
                 End If
             End If
@@ -284,12 +310,15 @@ Public Class Frm_Configuracion
             .Empresa2_NombreCorreo = NombreCorreo_2.Text,
             .Empresa2_Formato = Formato_2.Text,
             .FechaModificacion = DateTime.Now,
-            .ClienteActivo = ClienteActivo.Value
+            .ClienteActivo = ClienteActivo.Value,
+            .Picking = Switch_picking.Value
         }
 
             Dim jsonString As String = JsonConvert.SerializeObject(miConfig, Formatting.Indented)
             Dim rutaArchivo As String = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CorreosEmpresa.json")
             File.WriteAllText(rutaArchivo, jsonString)
+            Frm_Sincronizador.MiConfig = miConfig
+
         Catch ex As Exception
             ' No detenemos el cierre del formulario, pero avisamos del error en el JSON
         End Try
@@ -369,6 +398,14 @@ Public Class Frm_Configuracion
     End Sub
 
     Private Sub ClienteActivo_ValueChanged(sender As Object, e As EventArgs) Handles ClienteActivo.ValueChanged
+
+    End Sub
+
+    Private Sub LabelX6_Click(sender As Object, e As EventArgs) Handles LabelX6.Click
+
+    End Sub
+
+    Private Sub SwitchButton1_ValueChanged(sender As Object, e As EventArgs) Handles Switch_picking.ValueChanged
 
     End Sub
 End Class

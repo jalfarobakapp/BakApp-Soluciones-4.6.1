@@ -24,7 +24,9 @@ Partial Class Frm_Configuracion
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Configuracion))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.ClienteActivo = New DevComponents.DotNetBar.Controls.SwitchButton()
         Me.TxtBakApp = New System.Windows.Forms.TextBox()
+        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.Btn_ProbarConexionRd = New DevComponents.DotNetBar.ButtonX()
         Me.Txt_Rd_Basededatos = New System.Windows.Forms.TextBox()
@@ -40,6 +42,8 @@ Partial Class Frm_Configuracion
         Me.Bar1 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.SuperTabControl1 = New DevComponents.DotNetBar.SuperTabControl()
+        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
+        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel3 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.Formato_2 = New System.Windows.Forms.TextBox()
@@ -54,8 +58,6 @@ Partial Class Frm_Configuracion
         Me.NombreCorreo_1 = New System.Windows.Forms.TextBox()
         Me.Label12 = New System.Windows.Forms.Label()
         Me.SuperTabItem3 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
-        Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabItem1 = New DevComponents.DotNetBar.SuperTabItem()
         Me.SuperTabControlPanel1 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.LabelX13 = New DevComponents.DotNetBar.LabelX()
@@ -79,22 +81,24 @@ Partial Class Frm_Configuracion
         Me.LabelX18 = New DevComponents.DotNetBar.LabelX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_RutaEtiquetas = New DevComponents.DotNetBar.Controls.TextBoxX()
-        Me.ClienteActivo = New DevComponents.DotNetBar.Controls.SwitchButton()
-        Me.LabelX5 = New DevComponents.DotNetBar.LabelX()
+        Me.Switch_picking = New DevComponents.DotNetBar.Controls.SwitchButton()
+        Me.LabelX6 = New DevComponents.DotNetBar.LabelX()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuperTabControl1.SuspendLayout()
+        Me.SuperTabControlPanel2.SuspendLayout()
         Me.SuperTabControlPanel3.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
-        Me.SuperTabControlPanel2.SuspendLayout()
         Me.SuperTabControlPanel1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
         Me.GroupBox1.BackColor = System.Drawing.Color.White
+        Me.GroupBox1.Controls.Add(Me.Switch_picking)
+        Me.GroupBox1.Controls.Add(Me.LabelX6)
         Me.GroupBox1.Controls.Add(Me.ClienteActivo)
         Me.GroupBox1.Controls.Add(Me.TxtBakApp)
         Me.GroupBox1.Controls.Add(Me.LabelX5)
@@ -118,6 +122,25 @@ Partial Class Frm_Configuracion
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Datos de conexión SQL RANDOM + BAKAPP"
         '
+        'ClienteActivo
+        '
+        Me.ClienteActivo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.ClienteActivo.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.ClienteActivo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.ClienteActivo.ForeColor = System.Drawing.Color.Black
+        Me.ClienteActivo.Location = New System.Drawing.Point(619, 49)
+        Me.ClienteActivo.Name = "ClienteActivo"
+        Me.ClienteActivo.OffText = "Desactivada"
+        Me.ClienteActivo.OnText = "Activa"
+        Me.ClienteActivo.Size = New System.Drawing.Size(89, 35)
+        Me.ClienteActivo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ClienteActivo.TabIndex = 184
+        Me.ClienteActivo.Value = True
+        Me.ClienteActivo.ValueObject = "Y"
+        '
         'TxtBakApp
         '
         Me.TxtBakApp.BackColor = System.Drawing.Color.White
@@ -126,6 +149,23 @@ Partial Class Frm_Configuracion
         Me.TxtBakApp.Name = "TxtBakApp"
         Me.TxtBakApp.Size = New System.Drawing.Size(207, 26)
         Me.TxtBakApp.TabIndex = 12
+        '
+        'LabelX5
+        '
+        Me.LabelX5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.LabelX5.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX5.ForeColor = System.Drawing.Color.Black
+        Me.LabelX5.Location = New System.Drawing.Point(363, 25)
+        Me.LabelX5.Name = "LabelX5"
+        Me.LabelX5.Size = New System.Drawing.Size(250, 77)
+        Me.LabelX5.TabIndex = 185
+        Me.LabelX5.Text = "Actualizar la lista de precios desde la ficha del cliente, con la ultima factura " &
+    "generada "
+        Me.LabelX5.WordWrap = True
         '
         'Label6
         '
@@ -303,6 +343,23 @@ Partial Class Frm_Configuracion
         Me.SuperTabControl1.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem2, Me.SuperTabItem3})
         Me.SuperTabControl1.Text = "SuperTabControl1"
         '
+        'SuperTabControlPanel2
+        '
+        Me.SuperTabControlPanel2.Controls.Add(Me.GroupBox1)
+        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 31)
+        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(737, 261)
+        Me.SuperTabControlPanel2.TabIndex = 0
+        Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
+        '
+        'SuperTabItem2
+        '
+        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
+        Me.SuperTabItem2.GlobalItem = False
+        Me.SuperTabItem2.Name = "SuperTabItem2"
+        Me.SuperTabItem2.Text = "Datos de conexión"
+        '
         'SuperTabControlPanel3
         '
         Me.SuperTabControlPanel3.Controls.Add(Me.GroupBox3)
@@ -454,23 +511,6 @@ Partial Class Frm_Configuracion
         Me.SuperTabItem3.GlobalItem = False
         Me.SuperTabItem3.Name = "SuperTabItem3"
         Me.SuperTabItem3.Text = "Configuración correo"
-        '
-        'SuperTabControlPanel2
-        '
-        Me.SuperTabControlPanel2.Controls.Add(Me.GroupBox1)
-        Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 31)
-        Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(737, 261)
-        Me.SuperTabControlPanel2.TabIndex = 0
-        Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
-        '
-        'SuperTabItem2
-        '
-        Me.SuperTabItem2.AttachedControl = Me.SuperTabControlPanel2
-        Me.SuperTabItem2.GlobalItem = False
-        Me.SuperTabItem2.Name = "SuperTabItem2"
-        Me.SuperTabItem2.Text = "Datos de conexión"
         '
         'SuperTabItem1
         '
@@ -866,41 +906,40 @@ Partial Class Frm_Configuracion
         Me.Txt_RutaEtiquetas.TabIndex = 122
         Me.Txt_RutaEtiquetas.WatermarkText = "Ruta de PDF"
         '
-        'ClienteActivo
+        'Switch_picking
         '
-        Me.ClienteActivo.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.ClienteActivo.BackColor = System.Drawing.Color.White
-        '
-        '
-        '
-        Me.ClienteActivo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.ClienteActivo.ForeColor = System.Drawing.Color.Black
-        Me.ClienteActivo.Location = New System.Drawing.Point(619, 49)
-        Me.ClienteActivo.Name = "ClienteActivo"
-        Me.ClienteActivo.OffText = "Desactivada"
-        Me.ClienteActivo.OnText = "Activa"
-        Me.ClienteActivo.Size = New System.Drawing.Size(89, 35)
-        Me.ClienteActivo.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ClienteActivo.TabIndex = 184
-        Me.ClienteActivo.Value = True
-        Me.ClienteActivo.ValueObject = "Y"
-        '
-        'LabelX5
-        '
-        Me.LabelX5.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.LabelX5.BackColor = System.Drawing.Color.White
+        Me.Switch_picking.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.Switch_picking.BackColor = System.Drawing.Color.White
         '
         '
         '
-        Me.LabelX5.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX5.ForeColor = System.Drawing.Color.Black
-        Me.LabelX5.Location = New System.Drawing.Point(363, 25)
-        Me.LabelX5.Name = "LabelX5"
-        Me.LabelX5.Size = New System.Drawing.Size(250, 77)
-        Me.LabelX5.TabIndex = 185
-        Me.LabelX5.Text = "Actualizar la lista de precios desde la ficha del cliente, con la ultima factura " &
-    "generada "
-        Me.LabelX5.WordWrap = True
+        Me.Switch_picking.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Switch_picking.ForeColor = System.Drawing.Color.Black
+        Me.Switch_picking.Location = New System.Drawing.Point(619, 159)
+        Me.Switch_picking.Name = "Switch_picking"
+        Me.Switch_picking.OffText = "Desactivada"
+        Me.Switch_picking.OnText = "Activa"
+        Me.Switch_picking.Size = New System.Drawing.Size(89, 35)
+        Me.Switch_picking.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Switch_picking.TabIndex = 186
+        Me.Switch_picking.Value = True
+        Me.Switch_picking.ValueObject = "Y"
+        '
+        'LabelX6
+        '
+        Me.LabelX6.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.LabelX6.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.LabelX6.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX6.ForeColor = System.Drawing.Color.Black
+        Me.LabelX6.Location = New System.Drawing.Point(363, 135)
+        Me.LabelX6.Name = "LabelX6"
+        Me.LabelX6.Size = New System.Drawing.Size(250, 77)
+        Me.LabelX6.TabIndex = 187
+        Me.LabelX6.Text = "Habilitar Picking"
+        Me.LabelX6.WordWrap = True
         '
         'Frm_Configuracion
         '
@@ -925,12 +964,12 @@ Partial Class Frm_Configuracion
         CType(Me.Bar1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.SuperTabControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.SuperTabControl1.ResumeLayout(False)
+        Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.SuperTabControlPanel3.ResumeLayout(False)
         Me.GroupBox3.ResumeLayout(False)
         Me.GroupBox3.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
-        Me.SuperTabControlPanel2.ResumeLayout(False)
         Me.SuperTabControlPanel1.ResumeLayout(False)
         Me.ResumeLayout(False)
 
@@ -993,4 +1032,6 @@ Partial Class Frm_Configuracion
     Friend WithEvents Label8 As Label
     Friend WithEvents ClienteActivo As DevComponents.DotNetBar.Controls.SwitchButton
     Friend WithEvents LabelX5 As DevComponents.DotNetBar.LabelX
+    Friend WithEvents Switch_picking As DevComponents.DotNetBar.Controls.SwitchButton
+    Friend WithEvents LabelX6 As DevComponents.DotNetBar.LabelX
 End Class
