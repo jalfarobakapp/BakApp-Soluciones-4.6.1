@@ -1,17 +1,15 @@
 ﻿Imports System.Collections
 Imports System.Data.SqlClient
 Imports System.IO
-Imports System.Security.Cryptography.X509Certificates
-Imports System.Text
+Imports System.IO.Compression
 Imports System.Threading
 Imports System.Xml
 Imports System.Xml.Schema
 Imports System.Xml.XPath
 Imports DevComponents.DotNetBar
-Imports HEFESTO.FIRMA.DOC.FORM
-Imports HEFESTO.FIRMA.DOCUMENTO
+Imports Hefesto.FIRMA.DOC.FORM
+Imports Hefesto.FIRMA.DOCUMENTO
 Imports HefestoCesionV12
-Imports System.IO.Compression
 
 
 Public Class Class_Genera_DTE_RdBk
@@ -1325,7 +1323,7 @@ Public Class Class_Genera_DTE_RdBk
 
         Dim _Transporte = String.Empty
 
-        If _Tido.ToString.Contains("G") Then
+        If _Tido.ToString.Contains("G") OrElse _Tido = "FCV" Then
 
             _Transporte = Fx_Transporte(_Idmaeedo)
 
@@ -1680,64 +1678,88 @@ Public Class Class_Genera_DTE_RdBk
         Consulta_sql = $"Select * From {_Global_BaseBk}Zw_Transporte_Dte Where Idmaeedo = {_Idmaeedo}"
         Dim _Rows As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-        If Not IsNothing(_Rows) Then
+        If IsNothing(_Rows) Then
+            Return _Transporte
+        End If
 
-            Dim _Patente As String = _Rows.Item("Patente").ToString.Trim
-            Dim _RUTTrans As String = _Rows.Item("RUTTrans").ToString.Trim
-            Dim _RUTChofer As String = _Rows.Item("RUTChofer").ToString.Trim
-            Dim _Chofer As String = _Rows.Item("Chofer").ToString.Trim
-            Dim _DirDest As String = _Rows.Item("DirDest").ToString.Trim
-            Dim _CmnaDest As String = _Rows.Item("CmnaDest").ToString.Trim
-            Dim _CiudadDest As String = _Rows.Item("CiudadDest").ToString.Trim
+        Dim _Patente As String = _Rows.Item("Patente").ToString.Trim
+        Dim _PatenteCarro As String = _Rows.Item("PatenteCarro").ToString.Trim
+        Dim _RUTTrans As String = _Rows.Item("RUTTrans").ToString.Trim
+        Dim _RUTChofer As String = _Rows.Item("RUTChofer").ToString.Trim
+        Dim _Chofer As String = _Rows.Item("Chofer").ToString.Trim
+        Dim _DirDest As String = _Rows.Item("DirDest").ToString.Trim
+        Dim _CmnaDest As String = _Rows.Item("CmnaDest").ToString.Trim
+        Dim _CiudadDest As String = _Rows.Item("CiudadDest").ToString.Trim
+        Dim _FchSalida As String = String.Empty
+        Dim _HraSalida As String = String.Empty
+        Dim _FchLlegada As String = String.Empty
+        Dim _FechaSlLe As String = String.Empty
 
-            _Patente = Fx_LimpiarTextoXML(_Patente)
-            _Chofer = Fx_LimpiarTextoXML(_Chofer)
-            _DirDest = Fx_LimpiarTextoXML(_DirDest)
-            _CmnaDest = Fx_LimpiarTextoXML(_CmnaDest)
-            _CiudadDest = Fx_LimpiarTextoXML(_CiudadDest)
+        Try
+            _FchSalida = Format(CDate(_Rows.Item("FchSalida").ToString.Trim), "yyyy-MM-dd")
+            _HraSalida = Format(CDate(_Rows.Item("HraSalida").ToString.Trim), "HH:mm:ss")
+            _FchLlegada = Format(CDate(_Rows.Item("FchLlegada").ToString.Trim), "yyyy-MM-dd")
 
-            If _RUTTrans = _RUTChofer Then
-                _RUTTrans = String.Empty
-            End If
+            _FechaSlLe = $"<FchSalida>{_FchSalida}</FchSalida>" & vbCrLf &
+                     $"<HraSalida>{_HraSalida}</HraSalida>" & vbCrLf &
+                     $"<FchLlegada>{_FchSalida}</FchLlegada>" & vbCrLf
 
-            If Not String.IsNullOrEmpty(_Patente) Then
-                _Patente = "<Patente>" & _Patente & "</Patente>" & vbCrLf
-            End If
-            If Not String.IsNullOrEmpty(_RUTTrans) Then
-                _RUTTrans = "<RUTTrans>" & _RUTTrans & "</RUTTrans>" & vbCrLf
-            End If
+        Catch ex As Exception
+            _FechaSlLe = String.Empty
+        End Try
 
-            If Not String.IsNullOrEmpty(_Chofer) Then
+        _Patente = Fx_LimpiarTextoXML(_Patente)
+        _PatenteCarro = Fx_LimpiarTextoXML(_PatenteCarro)
+        _Chofer = Fx_LimpiarTextoXML(_Chofer)
+        _DirDest = Fx_LimpiarTextoXML(_DirDest)
+        _CmnaDest = Fx_LimpiarTextoXML(_CmnaDest)
+        _CiudadDest = Fx_LimpiarTextoXML(_CiudadDest)
 
-                _Chofer = "<Chofer>" & vbCrLf &
-                           vbTab & "<RUTChofer>" & _RUTChofer & "</RUTChofer>" & vbCrLf &
-                           vbTab & "<NombreChofer>" & _Chofer & "</NombreChofer>" & vbCrLf &
-                           "</Chofer>" & vbCrLf
+        If _RUTTrans = _RUTChofer Then
+            _RUTTrans = String.Empty
+        End If
 
-            End If
+        If Not String.IsNullOrEmpty(_Patente) Then
+            _Patente = "<Patente>" & _Patente & "</Patente>" & vbCrLf
+        End If
+        If Not String.IsNullOrEmpty(_PatenteCarro) Then
+            _PatenteCarro = "<PatenteCarro>" & _PatenteCarro & "</PatenteCarro>" & vbCrLf
+        End If
 
-            If Not String.IsNullOrEmpty(_DirDest) Then
-                _DirDest = "<DirDest>" & _DirDest & "</DirDest>" & vbCrLf
-            End If
-            If Not String.IsNullOrEmpty(_CmnaDest) Then
-                _CmnaDest = "<CmnaDest>" & _CmnaDest & "</CmnaDest>" & vbCrLf
-            End If
-            If Not String.IsNullOrEmpty(_CiudadDest) Then
-                _CiudadDest = "<CiudadDest>" & _CiudadDest & "</CiudadDest>" & vbCrLf
-            End If
+        If Not String.IsNullOrEmpty(_RUTTrans) Then
+            _RUTTrans = "<RUTTrans>" & _RUTTrans & "</RUTTrans>" & vbCrLf
+        End If
 
+        If Not String.IsNullOrEmpty(_Chofer) Then
 
-            _Transporte = vbCrLf &
-              "<Transporte>" & vbCrLf &
-              _Patente &
-              _RUTTrans &
-              _Chofer &
-              _DirDest &
-              _CmnaDest &
-              _CiudadDest &
-              "</Transporte>"
+            _Chofer = "<Chofer>" & vbCrLf &
+                       vbTab & "<RUTChofer>" & _RUTChofer & "</RUTChofer>" & vbCrLf &
+                       vbTab & "<NombreChofer>" & _Chofer & "</NombreChofer>" & vbCrLf &
+                       "</Chofer>" & vbCrLf
 
         End If
+
+        If Not String.IsNullOrEmpty(_DirDest) Then
+            _DirDest = "<DirDest>" & _DirDest & "</DirDest>" & vbCrLf
+        End If
+        If Not String.IsNullOrEmpty(_CmnaDest) Then
+            _CmnaDest = "<CmnaDest>" & _CmnaDest & "</CmnaDest>" & vbCrLf
+        End If
+        If Not String.IsNullOrEmpty(_CiudadDest) Then
+            _CiudadDest = "<CiudadDest>" & _CiudadDest & "</CiudadDest>" & vbCrLf
+        End If
+
+        _Transporte = vbCrLf &
+          "<Transporte>" & vbCrLf &
+          _Patente &
+          _PatenteCarro &
+          _RUTTrans &
+          _Chofer &
+          _DirDest &
+          _CmnaDest &
+          _CiudadDest &
+          _FechaSlLe &
+          "</Transporte>"
 
         Return _Transporte
 

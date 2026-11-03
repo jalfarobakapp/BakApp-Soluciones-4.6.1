@@ -8,12 +8,16 @@ CREATE TABLE [dbo].[Zw_Transporte_Dte](
 	[Tido]			[char](3)		NOT NULL DEFAULT (''),
 	[Nudo]			[varchar](10)	NOT NULL DEFAULT (''),
 	[Patente]		[varchar](8)	NOT NULL DEFAULT (''),
+	[PatenteCarro]	[varchar](8)	NOT NULL DEFAULT (''),
 	[RUTTrans]		[varchar](10)	NOT NULL DEFAULT (''),
 	[Chofer]		[varchar](40)	NOT NULL DEFAULT (''),
 	[RUTChofer]		[varchar](10)	NOT NULL DEFAULT (''),
 	[DirDest]		[varchar](70)	NOT NULL DEFAULT (''),
 	[CmnaDest]		[varchar](20)	NOT NULL DEFAULT (''),
 	[CiudadDest]	[varchar](20)	NOT NULL DEFAULT (''),
+    [FchSalida]		[datetime]	    NULL,
+    [HraSalida]		[datetime]		NULL,
+    [FchLlegada]	[datetime]		NULL,
  CONSTRAINT [PK_Zw_Transporte_Dte] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

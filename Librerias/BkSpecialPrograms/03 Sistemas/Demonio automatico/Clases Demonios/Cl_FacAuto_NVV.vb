@@ -550,7 +550,19 @@ Delete MAEEDO Where TIDO = '{_Tido}' And NUDO = '{_Nudo}' And ENDO = 'XXXXXXXXXX
                 System.Windows.Forms.Application.DoEvents()
 
                 If String.IsNullOrEmpty(_DocEmitir) Then
+
                     _DocEmitir = "FCV"
+
+                    If RutEmpresa = "79514800-0" Then
+
+                        Dim _Endo As String = _Sql.Fx_Trae_Dato("MAEEDO", "ENDO", $"IDMAEEDO = {_Idmaeedo}", _Mostrar_Error:=False)
+
+                        If _Endo.ToString.Trim = "00000002" Or _Endo.ToString.Trim = "00000004" Then
+                            _DocEmitir = "BLV"
+                        End If
+
+                    End If
+
                 End If
 
 
@@ -1009,6 +1021,7 @@ Delete MAEEDO Where TIDO = '{_Tido}' And NUDO = '{_Nudo}' And ENDO = 'XXXXXXXXXX
                 If Not _Msj_Tsc.EsCorrecto Then
 
                     _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
+                    _Mensaje.Mensaje = _Msj_Tsc.Mensaje
                     Throw New System.Exception(_Mensaje.Mensaje)
 
                 End If
@@ -1252,15 +1265,18 @@ Delete MAEEDO Where TIDO = '{_Tido}' And NUDO = '{_Nudo}' And ENDO = 'XXXXXXXXXX
                                 .Id_Enc = _Row.Item("Id_Enc")
                                 .Empresa = _Row.Item("Empresa")
                                 .Patente = _Row.Item("Patente")
+                                .PatenteCarro = _Row.Item("PatenteCarro")
                                 .Chofer = _Row.Item("Chofer")
                                 .RUTChofer = _Row.Item("RUTChofer")
                                 .RUTTrans = _Row.Item("RUTTrans")
                                 .DirDest = _Row.Item("DirDest")
                                 .CiudadDest = _Row.Item("CiudadDest")
                                 .CmnaDest = _Row.Item("CmnaDest")
+                                .FchSalida = _Row.Item("FchSalida")
+                                .HraSalida = _Row.Item("HraSalida")
+                                .FchLlegada = _Row.Item("FchLlegada")
                             End With
                         End If
-
 
                         Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Docu_Ent Where Idmaeedo = {_Idmaeedo_Origen}"
 
