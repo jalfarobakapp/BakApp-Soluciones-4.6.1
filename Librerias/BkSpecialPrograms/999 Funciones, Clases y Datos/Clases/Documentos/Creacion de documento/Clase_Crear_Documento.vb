@@ -214,8 +214,7 @@ Public Class Clase_Crear_Documento
                                 Optional ByRef _Origen_Modificado_Intertanto As Boolean = False,
                                 Optional _Es_TLV As Boolean = False,
                                 Optional _HoraAlFinalDelDia As Boolean = False,
-                                Optional _HoraAlPrincipioDelDia As Boolean = False,
-                                Optional _ConservaTrazabilidad As Boolean = False) As LsValiciones.Mensajes
+                                Optional _HoraAlPrincipioDelDia As Boolean = False) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -1186,8 +1185,7 @@ Public Class Clase_Crear_Documento
 
                         End If
 
-                        If Not _ConservaTrazabilidad AndAlso
-                        (_Tido = "BLV" Or _Tido = "FCV" Or _Tido = "FCC" Or _Tido = "OCC" Or _Tido = "NVV" Or _Tido = "GDV" Or _Tido = "GRC" Or _Tido = "GTI") Then
+                        If (_Tido = "BLV" Or _Tido = "FCV" Or _Tido = "FCC" Or _Tido = "OCC" Or _Tido = "NVV" Or _Tido = "GDV" Or _Tido = "GRC" Or _Tido = "GTI") Then
 
                             If _Tidopa = "COV" Or _Tidopa = "NVV" Or _Tidopa = "OCC" Or _Tidopa = "OCI" Or _Tidopa = "NVI" Or _Tido = "GTI" Then
 

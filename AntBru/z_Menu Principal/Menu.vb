@@ -1839,8 +1839,8 @@ Where Idmaeedo = {_Idmaeedo_FCV}"
 
     Private Sub Btn_Crear3NVV_Click(sender As Object, e As EventArgs) Handles Btn_Crear3NVV.Click
         ' 1. Defines el número de documento origen y su ID
-        Dim numeroDocOrigen As String = "SG00243117"
-        Dim idmaeedoOrigen As String = "896699" ' Lo definimos como String según la Ffirma de la función
+        Dim numeroDocOrigen As String = "SG00243160"
+        Dim idmaeedoOrigen As String = "896795" ' Lo definimos como String según la Ffirma de la función
         Dim NVV As New MultiNVV()
 
         ' 2. Llamas a la nueva función centralizadora

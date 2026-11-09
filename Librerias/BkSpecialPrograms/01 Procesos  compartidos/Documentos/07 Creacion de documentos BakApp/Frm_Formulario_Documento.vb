@@ -19926,8 +19926,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                                    _Origen_Modificado_Intertanto,
                                                    _Es_TLV,
                                                    _HoraAlFinalDelDia,
-                                                   _HoraAlPrincipioDelDia,
-                                                   _ConservaTrazabilidad)
+                                                   _HoraAlPrincipioDelDia)
 
             If Not _Mensaje.EsCorrecto Then
 
