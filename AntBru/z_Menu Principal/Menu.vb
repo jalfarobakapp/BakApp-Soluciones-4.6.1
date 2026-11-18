@@ -1841,7 +1841,7 @@ Where Idmaeedo = {_Idmaeedo_FCV}"
         ' 1. Defines el número de documento origen y su ID
         Dim numeroDocOrigen As String = "SG00243160"
         Dim idmaeedoOrigen As String = "896795" ' Lo definimos como String según la Ffirma de la función
-        Dim NVV As New MultiNVV()
+        Dim NVV As New Cl_MultiNVV()
 
         ' 2. Llamas a la nueva función centralizadora
         ' Esto ejecutará GeneraNVV y luego Asociar_despachos

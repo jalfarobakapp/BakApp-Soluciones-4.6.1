@@ -1,14 +1,18 @@
 ﻿Imports BkSpecialPrograms
 Imports BkSpecialPrograms.LsValiciones
 
-Public Class MultiNVV
+
+Public Class Cl_MultiNVV
+
     Dim Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
     Private Mod_Modalidad_Ori As String
     Private Mod_Empresa_Ori As String
 
-    Public Function Proceso_MultiNvv(Id_Documento_Ori As String, Nudo_NVV As String) As Mensajes
-        Dim msgFinal As New Mensajes With {
+    Public Function Proceso_MultiNvv(Id_Documento_Ori As String,
+                                     Nudo_NVV As String,
+                                     Optional progreso As Action(Of Integer, Integer, String) = Nothing) As LsValiciones.Mensajes
+        Dim msgFinal As New LsValiciones.Mensajes With {
             .EsCorrecto = False,
             .Mensaje = "Iniciando proceso...",
             .Detalle = ""
@@ -24,7 +28,7 @@ Public Class MultiNVV
             Dim _Row_OCC As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
             If IsNothing(_Row_OCC) Then
-                Dim msgError As New Mensajes
+                Dim msgError As New LsValiciones.Mensajes
                 msgError.EsCorrecto = False
                 msgError.Detalle = "No se encontro coincidencia del documento de origen"
                 Return msgError
@@ -34,7 +38,7 @@ Public Class MultiNVV
             CambioMod(CodEmpresa, Modalidad)
 
 
-            Dim listaResultados As List(Of Mensajes) = GeneraNVV(Id_Documento_Ori, Nudo_NVV)
+            Dim listaResultados As List(Of LsValiciones.Mensajes) = GeneraNVV(Id_Documento_Ori, Nudo_NVV, progreso)
 
             ' 2. Analizar los resultados de la generación
             Dim documentosGenerados As Integer = 0
@@ -59,7 +63,7 @@ Public Class MultiNVV
             ' 3. Asociar los despachos y heredar datos a los documentos hijos creados
             ' Convertimos Id_Documento_Ori a Integer ya que Asociar_despachos lo requiere numérico
             Dim idMaeedoInt As Integer = CInt(Id_Documento_Ori)
-            Dim resultadoAsociacion As Mensajes = Asociar_despachos(Nudo_NVV, idMaeedoInt)
+            Dim resultadoAsociacion As LsValiciones.Mensajes = Asociar_despachos(Nudo_NVV, idMaeedoInt)
 
             ' 4. Consolidar el resultado final
             If Not resultadoAsociacion.EsCorrecto Then
@@ -85,8 +89,8 @@ Public Class MultiNVV
         VolverA_Mod_Original()
         Return msgFinal
     End Function
-    Function sincronizar_permisos(Idmaeedo As Integer) As Mensajes
-        Dim msg As New Mensajes
+    Function sincronizar_permisos(Idmaeedo As Integer) As LsValiciones.Mensajes
+        Dim msg As New LsValiciones.Mensajes
         msg.EsCorrecto = False
         msg.Detalle = "Error al sincronizar los permisos y remotas."
         msg.Mensaje = "Error al sincronizar los permisos y remotas."
@@ -194,7 +198,9 @@ DROP TABLE #TempRemotas;
         CambioMod(Mod_Empresa_Ori, Mod_Modalidad_Ori)
     End Sub
 
-    Public Function GeneraNVV(Id_Documento_Ori As String, Nudo_NVV As String) As List(Of Mensajes)
+    Public Function GeneraNVV(Id_Documento_Ori As String,
+                              Nudo_NVV As String,
+                              Optional progreso As Action(Of Integer, Integer, String) = Nothing) As List(Of Mensajes)
         ' Cambiamos el retorno a List(Of Mensajes) porque se pueden generar múltiples documentos
         Dim listaMensajes As New List(Of Mensajes)()
 
@@ -257,15 +263,27 @@ DROP TABLE #TempRemotas;
             Next
 
             ' Si por alguna razón SOLO hay productos vacíos, lo agregamos para que genere 1 documento
-            If listaClasif.Count = 0 AndAlso tieneVacios Then
-                listaClasif.Add("")
-                tieneVacios = False ' Lo reseteamos porque ya se evaluará como clasificación principal
+            If listaClasif.Count = 1 AndAlso tieneVacios Then
+                Dim msgError As New Mensajes With {.EsCorrecto = False, .Detalle = "No hay detalles válidos para procesar."}
+                listaMensajes.Add(msgError)
+                Return listaMensajes
+            End If
+
+            Dim totalDocumentos As Integer = listaClasif.Count
+
+            If progreso IsNot Nothing Then
+                progreso(0, totalDocumentos, "Preparando documentos...")
             End If
 
             ' 2. ITERAR POR CADA CLASIFICACIÓN DISTINTA Y CREAR UN DOCUMENTO
             For i As Integer = 0 To listaClasif.Count - 1
                 Dim _Clasificacion As String = listaClasif(i)
                 Dim _Mensaje As New Mensajes
+
+                If progreso IsNot Nothing Then
+                    progreso(i, totalDocumentos,
+             $"Creando documento {i + 1} de {totalDocumentos}...")
+                End If
 
                 Try
                     ' 3. ARMAR LA CONDICIÓN SQL DINÁMICA
@@ -311,7 +329,7 @@ DROP TABLE #TempRemotas;
                     ' Validar si grabó correctamente
                     If _Mensaje.EsCorrecto Then
                         Consulta_sql = $"SELECT * FROM MAEEDO WHERE IDMAEEDO = {_Mensaje.Id}"
-                        Dim _Docummento As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+                        Dim _Docummento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
                         _Mensaje.Tag = _Docummento
                     End If
@@ -323,6 +341,12 @@ DROP TABLE #TempRemotas;
 
                 ' Agregamos el resultado de esta clasificación a la lista maestra
                 listaMensajes.Add(_Mensaje)
+
+                If progreso IsNot Nothing Then
+                    progreso(i + 1, totalDocumentos,
+                             $"Procesados {i + 1} de {totalDocumentos} documentos.")
+                End If
+
             Next
 
         Catch ex As Exception
@@ -332,11 +356,12 @@ DROP TABLE #TempRemotas;
 
         Return listaMensajes
     End Function
-    Public Function GeneraNVV_Old(Id_Documento_Ori As String, Nudo_NVV As String) As List(Of Mensajes)
+    Public Function GeneraNVV_Old(Id_Documento_Ori As String,
+                              Nudo_NVV As String,
+                              Optional progreso As Action(Of Integer, Integer, String) = Nothing) As List(Of LsValiciones.Mensajes)
         ' Cambiamos el retorno a List(Of Mensajes) porque se pueden generar múltiples documentos
 
-
-        Dim listaMensajes As New List(Of Mensajes)()
+        Dim listaMensajes As New List(Of LsValiciones.Mensajes)()
 
         Dim _Tido = "NVV"
         Dim _CampoPrecio As String
@@ -356,7 +381,7 @@ DROP TABLE #TempRemotas;
         Dim _Row_OCC As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
         If IsNothing(_Row_OCC) Then
-            Dim msgError As New Mensajes
+            Dim msgError As New LsValiciones.Mensajes
             msgError.EsCorrecto = False
             msgError.Detalle = "No se encontro coincidencia del documento de origen"
             listaMensajes.Add(msgError)
@@ -375,26 +400,28 @@ DROP TABLE #TempRemotas;
 
             Dim dtClasificaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
-            If dtClasificaciones Is Nothing OrElse dtClasificaciones.Rows.Count = 0 Then
-                Dim msgError As New Mensajes With {.EsCorrecto = False, .Detalle = "No hay detalles válidos para procesar."}
+            If dtClasificaciones Is Nothing OrElse dtClasificaciones.Rows.Count <= 1 Then
+                Dim msgError As New LsValiciones.Mensajes With {.EsCorrecto = False, .Detalle = "No hay detalles válidos para procesar."}
                 listaMensajes.Add(msgError)
                 Return listaMensajes
             End If
-            Dim listaClasif As New List(Of String)()
-            Dim tieneVacios As Boolean = False
-            For Each rowClasif As DataRow In dtClasificaciones.Rows
-                Dim clasif As String = rowClasif("CLALIBPR").ToString().Trim()
-                If String.IsNullOrEmpty(clasif) Then
-                    tieneVacios = True
-                Else
-                    listaClasif.Add(clasif)
-                End If
-            Next
 
             ' 2. ITERAR POR CADA CLASIFICACIÓN DISTINTA Y CREAR UN DOCUMENTO
-            For Each rowClasif As DataRow In dtClasificaciones.Rows
+            Dim totalDocumentos As Integer = dtClasificaciones.Rows.Count
+
+            If progreso IsNot Nothing Then
+                progreso(0, totalDocumentos, "Preparando documentos...")
+            End If
+
+            For indice As Integer = 0 To totalDocumentos - 1
+                Dim rowClasif As DataRow = dtClasificaciones.Rows(indice)
                 Dim _Clasificacion As String = rowClasif("CLALIBPR").ToString().Trim()
-                Dim _Mensaje As New Mensajes
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                If progreso IsNot Nothing Then
+                    progreso(indice, totalDocumentos,
+                             $"Creando documento {indice + 1} de {totalDocumentos}...")
+                End If
 
                 Try
                     ' 3. ARMAR LA QUERY USANDO EL ID DINÁMICO Y LA CLASIFICACIÓN ACTUAL DEL BUCLE
@@ -433,10 +460,9 @@ DROP TABLE #TempRemotas;
                     ' Validar si grabó correctamente
                     If _Mensaje.EsCorrecto Then
                         Consulta_sql = $"SELECT * FROM MAEEDO WHERE IDMAEEDO = {_Mensaje.Id}"
-                        Dim _Docummento As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+                        Dim _Docummento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
                         _Mensaje.Tag = _Docummento
-                    Else
                     End If
 
                 Catch exLoop As Exception
@@ -446,18 +472,24 @@ DROP TABLE #TempRemotas;
 
                 ' Agregamos el resultado de esta clasificación a la lista maestra
                 listaMensajes.Add(_Mensaje)
+
+                If progreso IsNot Nothing Then
+                    progreso(indice + 1, totalDocumentos,
+                 $"Procesados {indice + 1} de {totalDocumentos} documentos.")
+                End If
+
             Next
 
         Catch ex As Exception
-            Dim msgError As New Mensajes With {.EsCorrecto = False, .Detalle = ex.Message}
+            Dim msgError As New LsValiciones.Mensajes With {.EsCorrecto = False, .Detalle = ex.Message}
             listaMensajes.Add(msgError)
         End Try
 
         Return listaMensajes
     End Function
 
-    Function Asociar_despachos(Nudo As String, Idmaeedo As Integer) As Mensajes
-        Dim msg As New Mensajes
+    Function Asociar_despachos(Nudo As String, Idmaeedo As Integer) As LsValiciones.Mensajes
+        Dim msg As New LsValiciones.Mensajes
         msg.EsCorrecto = False
         msg.Detalle = "Error al asociar despachos y actualizar los documentos relacionados."
         msg.Mensaje = "Error al asociar despachos y actualizar los documentos relacionados."
@@ -651,6 +683,12 @@ WHERE MAE_Padre.IDMAEEDO = {Idmaeedo};"
         Return msg
     End Function
 End Class
+
+
+
+
+
+
 
 
 
