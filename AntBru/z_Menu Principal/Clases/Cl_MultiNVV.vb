@@ -81,6 +81,13 @@ Public Class Cl_MultiNVV
                 End If
             End If
             sincronizar_permisos(Id_Documento_Ori)
+
+
+            Dim Cerrar_Doc As New Clas_Cerrar_Documento
+            Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEEDO = " & Id_Documento_Ori
+            Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+            Cerrar_Doc.Fx_Cerrar_Documento(Id_Documento_Ori, _Tbl_Origen)
+
         Catch ex As Exception
             msgFinal.EsCorrecto = False
             msgFinal.Mensaje = "Error general al procesar múltiples NVV."
@@ -251,16 +258,19 @@ DROP TABLE #TempRemotas;
             ' --- NUEVA LÓGICA DE AGRUPACIÓN ---
             Dim listaClasif As New List(Of String)()
             Dim tieneVacios As Boolean = False
-
+            Dim despachos = ""
             ' Separar los vacíos de las clasificaciones con nombre
             For Each rowClasif As DataRow In dtClasificaciones.Rows
                 Dim clasif As String = rowClasif("CLALIBPR").ToString().Trim()
-                If String.IsNullOrEmpty(clasif) Then
+                If clasif = "DESPACHOS" Then
+                    despachos = clasif
+                ElseIf String.IsNullOrEmpty(clasif) Then
                     tieneVacios = True
                 Else
                     listaClasif.Add(clasif)
                 End If
             Next
+
 
             ' Si por alguna razón SOLO hay productos vacíos, lo agregamos para que genere 1 documento
             If listaClasif.Count = 1 AndAlso tieneVacios Then
@@ -277,7 +287,14 @@ DROP TABLE #TempRemotas;
 
             ' 2. ITERAR POR CADA CLASIFICACIÓN DISTINTA Y CREAR UN DOCUMENTO
             For i As Integer = 0 To listaClasif.Count - 1
-                Dim _Clasificacion As String = listaClasif(i)
+                Dim _Clasificacion As String
+
+                If i = 0 AndAlso tieneVacios Then
+                    _Clasificacion = $"('{listaClasif(i)}' , '{despachos}', '          ')"
+
+                Else
+                    _Clasificacion = $"('{listaClasif(i)}' , '{despachos}')"
+                End If
                 Dim _Mensaje As New Mensajes
 
                 If progreso IsNot Nothing Then
@@ -288,12 +305,8 @@ DROP TABLE #TempRemotas;
                 Try
                     ' 3. ARMAR LA CONDICIÓN SQL DINÁMICA
                     Dim condicionClasificacion As String
+                    condicionClasificacion = $"Mp.CLALIBPR IN {_Clasificacion}"
                     ' Si es la primera iteración y existen vacíos, agrupamos ambos
-                    If i = 0 AndAlso tieneVacios Then
-                        condicionClasificacion = $"Mp.CLALIBPR IN ('{_Clasificacion}', '          ')"
-                    Else
-                        condicionClasificacion = $"Mp.CLALIBPR = '{_Clasificacion}'"
-                    End If
 
                     Consulta_sql = $"Declare @Idmaeedo Int = {Id_Documento_Ori}
 
@@ -316,6 +329,57 @@ DROP TABLE #TempRemotas;
 
                     ' Obtenemos el Dataset específico para esta clasificación
                     Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql, False)
+
+                    If _Ds_Maeedo_Origen IsNot Nothing AndAlso _Ds_Maeedo_Origen.Tables.Count > 1 Then
+
+                        Dim _Dt_SegundaTabla As DataTable = _Ds_Maeedo_Origen.Tables(1)
+                        Dim kilos_total As Double = 0
+                        Dim index_despacho As Integer = -1 ' -1 nos sirve para validar si realmente encontramos la fila
+
+                        If _Dt_SegundaTabla IsNot Nothing AndAlso _Dt_SegundaTabla.Rows.Count > 0 Then
+
+                            ' Usamos un For clásico para tener el control exacto del índice de la fila
+                            For Co As Integer = 0 To _Dt_SegundaTabla.Rows.Count - 1
+                                Dim row As DataRow = _Dt_SegundaTabla.Rows(Co)
+
+                                ' Si es la fila de despachos, guardamos el índice y saltamos a la siguiente
+                                If row("CLALIBPR").ToString().Trim() = "DESPACHOS" Then
+                                    index_despacho = Co
+                                    Continue For
+                                End If
+
+                                Dim kilos As Double = 0
+                                Dim cantidad As Double = 0
+
+                                If Not IsDBNull(row("PESOUBIC")) AndAlso IsNumeric(row("PESOUBIC")) Then
+                                    kilos = Convert.ToDouble(row("PESOUBIC"))
+                                End If
+
+                                If Not IsDBNull(row("Cantidad")) AndAlso IsNumeric(row("Cantidad")) Then
+                                    cantidad = Convert.ToDouble(row("Cantidad"))
+                                End If
+
+                                ' Acumula fila por fila (excluyendo la de DESPACHOS)
+                                kilos_total += (kilos * cantidad)
+                            Next
+
+                            ' Si encontramos la fila de despachos (índice distinto a -1), actualizamos sus valores
+                            If index_despacho <> -1 Then
+                                _Dt_SegundaTabla.Rows(index_despacho)("Cantidad") = kilos_total
+                                _Dt_SegundaTabla.Rows(index_despacho)("CantUd1_Dori") = kilos_total
+                                _Dt_SegundaTabla.Rows(index_despacho)("IDMAEEDO") = 0
+                                _Dt_SegundaTabla.Rows(index_despacho)("IDMAEDDO") = 0
+
+
+                                _Dt_SegundaTabla.Rows(index_despacho)("CantUd2_Dori") = kilos_total
+                                _Dt_SegundaTabla.Rows(index_despacho)("CAPRCO1") = kilos_total ' Asegúrate de que no sea CAPRCO1
+                                _Dt_SegundaTabla.Rows(index_despacho)("CAPRCO2") = kilos_total ' Asegúrate de que no sea CAPRCO2
+                            End If
+
+                        End If
+
+                    End If
+
 
                     ' Instanciamos el formulario y creamos el documento
                     Dim Fm_Post As New Frm_Formulario_Documento(_Tido, csGlobales.Enum_Tipo_Documento.Compra, False, _RevisarListaSuperior:=False)
@@ -667,6 +731,21 @@ INNER JOIN MAEDDO MAE_Hijo ON MAE_Hijo.IDMAEDDO = Hijo.Idmaeddo
 INNER JOIN MAEDDO MAE_Padre ON MAE_Padre.IDMAEDDO = MAE_Hijo.IDRST
 INNER JOIN {_Global_BaseBk}Zw_Docu_Det Padre ON Padre.Idmaeddo = MAE_Padre.IDMAEDDO
 WHERE MAE_Padre.IDMAEEDO = {Idmaeedo};"
+        Dim SqlQuery5 = $"INSERT INTO {_Global_BaseBk}Zw_Docu_Archivos (Idmaeedo, Nombre_Archivo, Archivo, Fecha, CodFuncionario)
+SELECT 
+    Hijos.IDMAEEDO,
+    Padre.Nombre_Archivo,
+    Padre.Archivo,
+    Padre.Fecha,
+    Padre.CodFuncionario
+FROM {_Global_BaseBk}Zw_Docu_Archivos Padre
+CROSS JOIN (
+    SELECT DISTINCT MAE2.IDMAEEDO 
+    FROM MAEDDO MAE 
+    INNER JOIN MAEDDO MAE2 ON MAE2.IDRST = MAE.IDMAEDDO 
+    WHERE MAE.IDMAEEDO = {Idmaeedo}
+) Hijos
+WHERE Padre.Idmaeedo = {Idmaeedo};"
 
         ' Concatenar todas las sentencias en un solo bloque de ejecución
         Dim consultaCompleta As String = SqlQuery & vbCrLf & SqlQuery_2 & vbCrLf & sqlQuery3 & vbCrLf & SqlQuery4
