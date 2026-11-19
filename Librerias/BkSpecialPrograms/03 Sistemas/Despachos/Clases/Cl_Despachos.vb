@@ -44,6 +44,7 @@ Public Class Cl_Despachos
             .ConfirmarLecturaDespacho = _Row.Item("ConfirmarLecturaDespacho")
             .Sucursal = _Row.Item("Sucursal")
             .NoObligadatosRetiraCliente = _Row.Item("NoObligadatosRetiraCliente")
+            .ObligaPonerProductoDespacho = _Row.Item("ObligaPonerProductoDespacho")
 
         End With
 
@@ -102,6 +103,7 @@ Public Class Cl_Despachos
                                ",Mostrar_Agencia = " & Convert.ToInt32(.Mostrar_Agencia) & vbCrLf &
                                ",ConfirmarLecturaDespacho = " & Convert.ToInt32(.ConfirmarLecturaDespacho) & vbCrLf &
                                ",NoObligadatosRetiraCliente = " & Convert.ToInt32(.NoObligadatosRetiraCliente) & vbCrLf &
+                               ",ObligaPonerProductoDespacho = " & Convert.ToInt32(.ObligaPonerProductoDespacho) & vbCrLf &
                                "Where Empresa = '" & .Empresa & "' And Sucursal = '" & .Sucursal & "'"
 
                 Comando = New SqlClient.SqlCommand(Consulta_sql, Cn2)

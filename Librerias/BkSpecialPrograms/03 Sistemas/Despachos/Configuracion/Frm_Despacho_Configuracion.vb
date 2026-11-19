@@ -57,6 +57,8 @@ Public Class Frm_Despacho_Configuracion
             Txt_Obs_Retira_Cliente.Text = .Obs_Retira_Cliente
 
             Chk_NoObligadatosRetiraCliente.Checked = .NoObligadatosRetiraCliente
+            Chk_ObligaPonerProductoDespacho.Checked = .ObligaPonerProductoDespacho
+            Btn_ObligaPonerProductoDespacho.Enabled = Chk_ObligaPonerProductoDespacho.Checked
 
         End With
 
@@ -74,6 +76,10 @@ Public Class Frm_Despacho_Configuracion
 
         Sb_Contar_Transportistas()
 
+    End Sub
+
+    Private Sub Chk_ObligaPonerProductoDespacho_CheckedChanged(sender As Object, e As CheckBoxChangeEventArgs) Handles Chk_ObligaPonerProductoDespacho.CheckedChanged
+        Btn_ObligaPonerProductoDespacho.Enabled = Chk_ObligaPonerProductoDespacho.Checked
     End Sub
 
     Sub Sb_Llenar_Combo_Estados()
@@ -400,6 +406,7 @@ Public Class Frm_Despacho_Configuracion
             .ConfirmarLecturaDespacho = Chk_ConfirmarLecturaDespacho.Checked
             .Obs_Retira_Cliente = Txt_Obs_Retira_Cliente.Text
             .NoObligadatosRetiraCliente = Chk_NoObligadatosRetiraCliente.Checked
+            .ObligaPonerProductoDespacho = Chk_ObligaPonerProductoDespacho.Checked
 
         End With
 
@@ -613,4 +620,13 @@ Public Class Frm_Despacho_Configuracion
 
         End If
     End Sub
+
+    Private Sub Btn_ObligaPonerProductoDespacho_Click(sender As Object, e As EventArgs) Handles Btn_ObligaPonerProductoDespacho.Click
+
+        Dim Fm As New Frm_Despacho_DespCm
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
 End Class

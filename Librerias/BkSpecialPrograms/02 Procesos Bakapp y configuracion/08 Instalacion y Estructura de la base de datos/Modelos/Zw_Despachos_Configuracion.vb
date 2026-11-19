@@ -13,4 +13,5 @@
     Public Property ConfirmarLecturaDespacho As Boolean
     Public Property Sucursal As String
     Public Property NoObligadatosRetiraCliente As Boolean
+    Public Property ObligaPonerProductoDespacho As Boolean
 End Class

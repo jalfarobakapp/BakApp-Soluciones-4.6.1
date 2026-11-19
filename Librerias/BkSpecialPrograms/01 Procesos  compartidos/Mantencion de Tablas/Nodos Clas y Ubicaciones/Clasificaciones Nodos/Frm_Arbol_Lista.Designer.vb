@@ -92,7 +92,7 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja.Location = New System.Drawing.Point(734, 268)
         Me.Tree_Bandeja.Name = "Tree_Bandeja"
         Me.Tree_Bandeja.SelectedImageIndex = 0
-        Me.Tree_Bandeja.Size = New System.Drawing.Size(549, 167)
+        Me.Tree_Bandeja.Size = New System.Drawing.Size(549, 169)
         Me.Tree_Bandeja.TabIndex = 179
         '
         'Imagenes_16x16
@@ -118,7 +118,7 @@ Partial Class Frm_Arbol_Lista
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Aceptar, Me.Btn_Grabar, Me.Btn_Actualizar, Me.Btn_Exportar_Excel})
-        Me.Bar2.Location = New System.Drawing.Point(0, 581)
+        Me.Bar2.Location = New System.Drawing.Point(0, 583)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(705, 41)
         Me.Bar2.Stretch = True
@@ -228,7 +228,7 @@ Partial Class Frm_Arbol_Lista
         Me.Metro_Bar_Color.ForeColor = System.Drawing.Color.Black
         Me.Metro_Bar_Color.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Estatus})
         Me.Metro_Bar_Color.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
-        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 622)
+        Me.Metro_Bar_Color.Location = New System.Drawing.Point(0, 624)
         Me.Metro_Bar_Color.Name = "Metro_Bar_Color"
         Me.Metro_Bar_Color.Size = New System.Drawing.Size(705, 22)
         Me.Metro_Bar_Color.TabIndex = 181
@@ -428,7 +428,7 @@ Partial Class Frm_Arbol_Lista
         Me.Tree_Bandeja_Adv.NodesConnector = Me.nodeConnector2
         Me.Tree_Bandeja_Adv.NodeStyle = Me.elementStyle7
         Me.Tree_Bandeja_Adv.PathSeparator = ";"
-        Me.Tree_Bandeja_Adv.Size = New System.Drawing.Size(683, 398)
+        Me.Tree_Bandeja_Adv.Size = New System.Drawing.Size(683, 400)
         Me.Tree_Bandeja_Adv.Styles.Add(Me.elementStyle7)
         Me.Tree_Bandeja_Adv.TabIndex = 183
         Me.Tree_Bandeja_Adv.Text = "advTree6"
@@ -445,6 +445,7 @@ Partial Class Frm_Arbol_Lista
         '
         'Txt_DescripcionDetallada
         '
+        Me.Txt_DescripcionDetallada.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.Txt_DescripcionDetallada.BackColor = System.Drawing.Color.White
         '
         '
@@ -453,7 +454,7 @@ Partial Class Frm_Arbol_Lista
         Me.Txt_DescripcionDetallada.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Txt_DescripcionDetallada.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_DescripcionDetallada.ForeColor = System.Drawing.Color.Black
-        Me.Txt_DescripcionDetallada.Location = New System.Drawing.Point(12, 479)
+        Me.Txt_DescripcionDetallada.Location = New System.Drawing.Point(12, 481)
         Me.Txt_DescripcionDetallada.Multiline = True
         Me.Txt_DescripcionDetallada.Name = "Txt_DescripcionDetallada"
         Me.Txt_DescripcionDetallada.PreventEnterBeep = True
@@ -464,11 +465,14 @@ Partial Class Frm_Arbol_Lista
         '
         'LabelX2
         '
+        Me.LabelX2.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
+        Me.LabelX2.BackColor = System.Drawing.Color.White
         '
         '
         '
         Me.LabelX2.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX2.Location = New System.Drawing.Point(12, 458)
+        Me.LabelX2.ForeColor = System.Drawing.Color.Black
+        Me.LabelX2.Location = New System.Drawing.Point(12, 460)
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(122, 23)
         Me.LabelX2.TabIndex = 185
@@ -478,7 +482,7 @@ Partial Class Frm_Arbol_Lista
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(705, 644)
+        Me.ClientSize = New System.Drawing.Size(705, 646)
         Me.Controls.Add(Me.Txt_DescripcionDetallada)
         Me.Controls.Add(Me.Menu_Contextual)
         Me.Controls.Add(Me.LabelX1)

@@ -17968,26 +17968,48 @@ Public Class Frm_Formulario_Documento
                     Else
 
                         If Not IsNothing(_Cl_Despacho) Then
+
                             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Chilexpress_Env Where IdDespacho = " & _Cl_Despacho.Id_Despacho
                             Dim _Row_Chilexpress As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                            Dim _EliminarUltFilaDespacho As Boolean
+                            Dim _Msj As String
 
                             If Not IsNothing(_Row_Chilexpress) Then
 
                                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Chilexpress_Env Where IdDespacho = " & _Cl_Despacho.Id_Despacho
                                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
+                                _Msj = "Este documento se encontraba con una cotización a Chilexpress." & vbCrLf &
+                                       "La orden se eliminara y si necesita volver hacer el despacho debe llenar nuevamente la solicitud." & vbCrLf &
+                                       "No esta permitido salir y volver al documento cuando hay una orden de Chilexpress en proceso"
+                                _EliminarUltFilaDespacho = True
+
+                            End If
+
+                            If Not IsNothing(_Cl_Despacho.Row_ProductoDespacho) Then
+
+                                _Msj = "Existe un despacho automático en proceso para este documento." & vbCrLf &
+                                       "Si requiere realizar nuevamente el despacho, deberá crear una nueva solicitud." & vbCrLf &
+                                       "No está permitido salir y volver a ingresar al documento mientras el despacho automático se encuentre en ejecución."
+                                _EliminarUltFilaDespacho = True
+
+                            End If
+
+                            If _EliminarUltFilaDespacho Then
+
                                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Despachos Where Id_Despacho = " & _Cl_Despacho.Id_Despacho
                                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                                _Cl_Despacho = Nothing
-
-                                MessageBoxEx.Show(Me, "Este documento se encontraba con una cotización a Chilexpress." & vbCrLf &
-                                              "La orden se eliminara y si necesita volver hacer el despacho debe llenar nuevamente la solicitud." & vbCrLf &
-                                              "No esta permitido salir y volver al documento cuando hay una orden de Chilexpress en proceso",
-                                              "Validacón Chilexpress", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                                 Dim _FilasEliminar As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.Rows.Count - 1)
                                 Sb_Eliminar_Fila(_FilasEliminar, True)
+
+                                _Cl_Despacho = Nothing
+
+                                MessageBoxEx.Show(Me, _Msj, "Validacón Despacho", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
                             End If
+
                         End If
 
                         Sb_EliminarFilaPuntos()
@@ -29230,6 +29252,9 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                "Where Empresa = '" & ModEmpresa_Doc & "'"
                 Dim _RowConfDesp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+                Dim _ObligaPonerProductoDespacho As Boolean = _RowConfDesp.Item("ObligaPonerProductoDespacho")
+
+
                 Dim Fm As New Frm_Desp_01_Ingreso
                 Fm.Ds_Matriz_Documentos = _Ds_Matriz_Documentos
                 Fm.Total_Venta_Neto = _Total_Venta_Neto
@@ -29238,6 +29263,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                 Fm.Netos_Minimo = _MinNetoDesp
                 Fm.Cl_Despacho = _Cl_Despacho
                 Fm.ConfirmarLecturaDespacho = _RowConfDesp.Item("ConfirmarLecturaDespacho")
+                Fm.ObligaPonerProductoDespacho = _ObligaPonerProductoDespacho
                 Fm.ShowDialog(Me)
                 _Grabar = Fm.Grabar
                 Fm.Dispose()
@@ -29321,6 +29347,83 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                         MessageBoxEx.Show(Me, "El servicio por despacho a Chilexpress se incorporo en el documento por un monto de " & FormatCurrency(_Costoenvio, 0),
                                           "Despacho por Chilexpress",
                                           MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    End If
+
+
+                    Dim _Tipo_Envio As String = _Cl_Despacho.Row_Despacho.Item("Tipo_Envio")
+
+                    If _ObligaPonerProductoDespacho AndAlso _Tipo_Envio = "DD" Then
+
+                        Dim _CodDespacho As String = _Cl_Despacho.Row_ProductoDespacho.Item("KOPR")
+
+                        Dim _Costoenvio As Double
+                        Dim _CantidadKilos As Double
+
+                        For Each _Row As DataRow In _TblDetalle.Rows
+
+                            Dim _Kopr As String = _Row.Item("Codigo")
+                            Dim _Kilos As Double = _Sql.Fx_Trae_Dato("MAEPR", "PESOUBIC", "KOPR = '" & _Kopr & "'")
+                            Dim _Cantidad As Double = _Row.Item("CantUd1")
+
+                            _CantidadKilos += _Kilos * _Cantidad
+
+                        Next
+
+                        Dim _RowProducto As DataRow = Fx_Buscar_Producto(_CodDespacho, False, False, Nothing, False)
+
+                        Sb_Nueva_Linea(_TblEncabezado.Rows(0).Item("ListaPrecios"))
+
+                        Dim _NewFila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1)
+
+                        Sb_Traer_Producto_Grilla(_NewFila, _RowProducto, False, _RevisarNMarca:=True)
+
+                        _NewFila.Cells("Cantidad").Value = _CantidadKilos
+
+                        Dim _PrecioLista As Double
+
+                        If ChkValores.Checked Then
+                            _PrecioLista = Math.Round(NuloPorNro(_NewFila.Cells("PrecioNetoUdLista").Value, 0), 0)
+                        Else
+                            _PrecioLista = NuloPorNro(_NewFila.Cells("PrecioBrutoUdLista").Value, 0)
+                        End If
+
+                        Dim _DescMaximo = NuloPorNro(_NewFila.Cells("DescMaximo").Value, 0)
+
+                        Dim _Id = _NewFila.Cells("Id").Value
+                        Dim _TblMaedtli As DataTable = Fx_Crea_Tabla_Con_Filtro(_Ds_Matriz_Documentos.Tables("Descuentos_Doc"), "Id = " & _Id, "Id")
+
+                        Sb_Procesar_Datos_De_Grilla(_NewFila, "Cantidad", True, True)
+
+                        If Not CBool(_TblMaedtli.Rows.Count) Then
+                            Sb_Traer_Descuentos_Seteados_Desde_Lista(_NewFila)
+                            _TblMaedtli = Fx_Crea_Tabla_Con_Filtro(_Ds_Matriz_Documentos.Tables("Descuentos_Doc"), "Id = " & _Id, "Id")
+                        End If
+
+                        Dim _Recargo_Valor As Double = _NewFila.Cells("Recargo_Valor").Value
+
+                        If CBool(_Recargo_Valor) Then
+                            Sb_Procesar_Datos_De_Grilla(_NewFila, "Cantidad", False, False)
+                        End If
+
+                        Dim _Tict = NuloPorNro(_NewFila.Cells("Tict").Value, "")
+
+                        If String.IsNullOrEmpty(_Tict) Then
+
+                            Dim _Idmaeedo_Dori As Integer = _NewFila.Cells("Idmaeedo_Dori").Value
+
+                            If _Idmaeedo_Dori = 0 Then
+                                Sb_Borrar_Conceptos_Descuento()
+                            Else
+                                Sb_Recalcular_Descuentos(_NewFila, False, False)
+                            End If
+
+                        End If
+
+                        MessageBoxEx.Show(Me, "El servicio por despacho se incorporo en el documento por un monto de " & FormatCurrency(_Costoenvio, 0),
+                                          "Cobro de despacho",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+
 
                     End If
 

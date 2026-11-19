@@ -825,9 +825,9 @@ Public Class Frm_Arbol_Lista
 
     Private Sub Btn_CrearClasificacion_Click(sender As Object, e As EventArgs) Handles Btn_CrearClasificacion.Click
 
-        If Not ModoConfiguracion Then
-            Return
-        End If
+        'If Not ModoConfiguracion Then
+        '    Return
+        'End If
 
         If Not Fx_Tiene_Permiso(Me, "Tbl00004") Then
             Return
@@ -855,8 +855,38 @@ Public Class Frm_Arbol_Lista
 
         Dim _Cl_Arbol_Asociaciones As Cl_Arbol_Asociaciones
 
-        Dim Fm As New Frm_Arbol_Asociacion_06_CrearEditar(0, _Codigo_Nodo, _Nodo_Raiz, _Clas_Unica_X_Producto, _Fullpath)
+        Dim _FiltroHijos As String = "Identificacdor_NodoPadre = " & _Codigo_Nodo
+
+        Dim _CantidadHijos As Integer =
+    _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TblArbol_Asociaciones", _FiltroHijos)
+
+        Dim _CantidadHijosPadre As Integer =
+    _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TblArbol_Asociaciones",
+                             _FiltroHijos & " And Es_Padre = 1")
+
+        Dim _TieneHijoSeleccionable As Boolean =
+    _Sql.Fx_Cuenta_Registros(_Global_BaseBk & "Zw_TblArbol_Asociaciones",
+                             _FiltroHijos & " And Es_Seleccionable = 1") > 0
+
+        Dim _PermitirCrearPadre As Boolean = True
+        Dim _PermitirCrearSeleccionable As Boolean = True
+
+        If _Clas_Unica_X_Producto Then
+
+            If _TieneHijoSeleccionable Then
+                _PermitirCrearPadre = False
+            ElseIf _CantidadHijos > 0 AndAlso _CantidadHijos = _CantidadHijosPadre Then
+                _PermitirCrearSeleccionable = False
+            End If
+
+        End If
+
+        Dim Fm As New Frm_Arbol_Asociacion_06_CrearEditar(
+    0, _Codigo_Nodo, _Nodo_Raiz, _Clas_Unica_X_Producto, _Fullpath)
+
         Fm.ModoEntidad = ModoEntidad
+        Fm.PermitirCrearPadre = _PermitirCrearPadre
+        Fm.PermitirCrearSeleccionable = _PermitirCrearSeleccionable
         Fm.ShowDialog(Me)
         _DialogResult = Fm.DialogResult
         _Cl_Arbol_Asociaciones = Fm.Cl_Arbol_Asociaciones
@@ -1292,9 +1322,9 @@ Public Class Frm_Arbol_Lista
         Dim _Nodo As AdvTree.Node = e.Node
         Tree_Bandeja_Adv.SelectedNode = _Nodo
 
-        If Not ModoConfiguracion Then
-            Return
-        End If
+        'If Not ModoConfiguracion Then
+        '    Return
+        'End If
 
         If e.Button = MouseButtons.Right Then
 
@@ -1361,8 +1391,7 @@ Public Class Frm_Arbol_Lista
 
     Private Sub Btn_Grabar_Click_1(sender As Object, e As EventArgs) Handles Btn_Grabar.Click
 
-        If ModoRadioButton AndAlso ObligaGrabarConSeleccion AndAlso
-       Not Fx_ValidarSeleccionPorRaiz() Then
+        If ModoRadioButton AndAlso ObligaGrabarConSeleccion AndAlso Not Fx_ValidarSeleccionPorRaiz() Then
             Return
         End If
 
@@ -1372,7 +1401,7 @@ Public Class Frm_Arbol_Lista
             'Else
             'Sb_Grabar_AsociacionesEntidad()
             'End If
-        ElseIf ModoProductos Then
+        Else
             Sb_Grabar_AsociacionesProducto()
         End If
 
@@ -1453,7 +1482,13 @@ Public Class Frm_Arbol_Lista
             Return
         End If
 
-        For Each _Nodo As AdvTree.Node In _NodosSeleccionados
+        Dim _NodosConPadres As List(Of AdvTree.Node) =
+        Fx_ObtenerNodosSeleccionadosConPadres(_NodosSeleccionados)
+
+        For Each _Nodo As AdvTree.Node In _NodosConPadres
+
+            Dim _Fila As DataRow = CType(_Nodo.Tag, DataRow)
+
             _ListaResultado.Add(New Zw_Entidades_Asociacion With {
             .CodEntidad = CodEntidad,
             .CodSucEntidad = CodSucEntidad,
@@ -1462,8 +1497,9 @@ Public Class Frm_Arbol_Lista
             .Para_filtro = True,
             .Nodo_origen = 0,
             .Clas_unica = _Clas_Unica_X_Producto,
-            .Codigo_Madre = CType(_Nodo.Tag, DataRow).Item("Codigo_Madre")
+            .Codigo_Madre = _Fila.Item("Codigo_Madre").ToString()
         })
+
         Next
 
         List_Zw_Entidades_Asociacion = _ListaResultado
@@ -1471,6 +1507,41 @@ Public Class Frm_Arbol_Lista
         Me.Close()
 
     End Sub
+
+    Private Function Fx_ObtenerNodosSeleccionadosConPadres(
+    _NodosSeleccionados As List(Of AdvTree.Node)) As List(Of AdvTree.Node)
+
+        Dim _NodosResultado As New List(Of AdvTree.Node)
+
+        For Each _NodoSeleccionado As AdvTree.Node In _NodosSeleccionados
+
+            Dim _NodoActual As AdvTree.Node = _NodoSeleccionado
+
+            While _NodoActual IsNot Nothing
+
+                Dim _Fila As DataRow = TryCast(_NodoActual.Tag, DataRow)
+
+                If _Fila Is Nothing Then
+                    Exit While
+                End If
+
+                If Not _NodosResultado.Contains(_NodoActual) Then
+                    _NodosResultado.Add(_NodoActual)
+                End If
+
+                If Convert.ToInt32(_Fila.Item("Identificacdor_NodoPadre")) = 0 Then
+                    Exit While
+                End If
+
+                _NodoActual = _NodoActual.Parent
+
+            End While
+
+        Next
+
+        Return _NodosResultado
+
+    End Function
 
     Private Sub Sb_Grabar_AsociacionesProducto()
 

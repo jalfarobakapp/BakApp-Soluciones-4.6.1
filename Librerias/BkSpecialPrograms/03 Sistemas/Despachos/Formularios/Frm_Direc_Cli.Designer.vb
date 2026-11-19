@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+ï»¿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Direc_Cli
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -151,7 +151,7 @@ Partial Class Frm_Direc_Cli
         '
         Me.GroupPanel2.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel2.TabIndex = 91
-        Me.GroupPanel2.Text = "Dirección de despacho"
+        Me.GroupPanel2.Text = "DirecciÃ³n de despacho"
         '
         'Btn_Traer_Datos_Transportista
         '
@@ -164,8 +164,8 @@ Partial Class Frm_Direc_Cli
         Me.Btn_Traer_Datos_Transportista.Size = New System.Drawing.Size(174, 22)
         Me.Btn_Traer_Datos_Transportista.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Traer_Datos_Transportista.TabIndex = 150
-        Me.Btn_Traer_Datos_Transportista.Text = "Utilizar dirección transportista"
-        Me.Btn_Traer_Datos_Transportista.Tooltip = "Utilizar datos de la dirección del transportista"
+        Me.Btn_Traer_Datos_Transportista.Text = "Utilizar direcciÃ³n transportista"
+        Me.Btn_Traer_Datos_Transportista.Tooltip = "Utilizar datos de la direcciÃ³n del transportista"
         '
         'Chk_Usar_HA
         '
@@ -180,7 +180,7 @@ Partial Class Frm_Direc_Cli
         Me.Chk_Usar_HA.Size = New System.Drawing.Size(379, 23)
         Me.Chk_Usar_HA.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Usar_HA.TabIndex = 149
-        Me.Chk_Usar_HA.Text = "Usar horario de atención"
+        Me.Chk_Usar_HA.Text = "Usar horario de atenciÃ³n"
         '
         'Txt_Nombre_Contacto
         '
@@ -227,7 +227,7 @@ Partial Class Frm_Direc_Cli
         Me.Chk_Por_Defecto.Size = New System.Drawing.Size(360, 23)
         Me.Chk_Por_Defecto.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Chk_Por_Defecto.TabIndex = 94
-        Me.Chk_Por_Defecto.Text = "Dirección de despacho por defecto"
+        Me.Chk_Por_Defecto.Text = "DirecciÃ³n de despacho por defecto"
         '
         'Txt_Comuna
         '
@@ -468,7 +468,7 @@ Partial Class Frm_Direc_Cli
         Me.LabelX5.Name = "LabelX5"
         Me.LabelX5.Size = New System.Drawing.Size(85, 19)
         Me.LabelX5.TabIndex = 30
-        Me.LabelX5.Text = "Dirección"
+        Me.LabelX5.Text = "DirecciÃ³n"
         '
         'LabelX1
         '
@@ -483,7 +483,7 @@ Partial Class Frm_Direc_Cli
         Me.LabelX1.Name = "LabelX1"
         Me.LabelX1.Size = New System.Drawing.Size(85, 19)
         Me.LabelX1.TabIndex = 91
-        Me.LabelX1.Text = "Teléfono"
+        Me.LabelX1.Text = "TelÃ©fono"
         '
         'GroupPanel1
         '
@@ -524,7 +524,7 @@ Partial Class Frm_Direc_Cli
         '
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 93
-        Me.GroupPanel1.Text = "Horarios de atención"
+        Me.GroupPanel1.Text = "Horarios de atenciÃ³n"
         '
         'Btn_Modificar_Horario
         '
@@ -538,7 +538,7 @@ Partial Class Frm_Direc_Cli
         Me.Btn_Modificar_Horario.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Modificar_Horario.TabIndex = 10
         Me.Btn_Modificar_Horario.Text = "Editar"
-        Me.Btn_Modificar_Horario.Tooltip = "Modificar horario de atención"
+        Me.Btn_Modificar_Horario.Tooltip = "Modificar horario de atenciÃ³n"
         '
         'Layauot_HA
         '
@@ -723,7 +723,7 @@ Partial Class Frm_Direc_Cli
         Me.LabelX10.Name = "LabelX10"
         Me.LabelX10.Size = New System.Drawing.Size(72, 18)
         Me.LabelX10.TabIndex = 2
-        Me.LabelX10.Text = "Mañana desde"
+        Me.LabelX10.Text = "MaÃ±ana desde"
         '
         'Dtp_HA_Manana_Hasta
         '

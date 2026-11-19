@@ -1028,6 +1028,12 @@
     <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="03 Sistemas\Despachos\Configuracion\Frm_Despacho_DespCm.Designer.vb">
+      <DependentUpon>Frm_Despacho_DespCm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Despachos\Configuracion\Frm_Despacho_DespCm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="03 Sistemas\Ferias\Cl_Ferias.vb" />
     <Compile Include="03 Sistemas\Ferias\Frm_Ferias.Designer.vb">
       <DependentUpon>Frm_Ferias.vb</DependentUpon>
@@ -5077,6 +5083,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_CrearContenedor.resx">
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Despachos\Configuracion\Frm_Despacho_DespCm.resx">
+      <DependentUpon>Frm_Despacho_DespCm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Ferias\Frm_Ferias.resx">
       <DependentUpon>Frm_Ferias.vb</DependentUpon>

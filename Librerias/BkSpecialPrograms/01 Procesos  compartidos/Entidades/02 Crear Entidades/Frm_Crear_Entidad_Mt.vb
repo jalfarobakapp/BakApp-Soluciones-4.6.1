@@ -699,6 +699,66 @@ Public Class Frm_Crear_Entidad_Mt
 
         End If
 
+        Dim _ObligaGrabarConSeleccion As Boolean = True
+
+        If _ObligaGrabarConSeleccion Then
+
+            If _List_Zw_Entidades_Asociacion.Count = 0 Then
+                TabControl1.SelectedTabIndex = 1
+                MessageBoxEx.Show(Me,
+                                  "Debe marcar al menos una clasificación de Bakapp.",
+                                  "Validación",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Stop)
+                Call Btn_ClasificacionesBakpp_Click(Nothing, Nothing)
+                Return
+            End If
+
+            Consulta_sql = $"Select Codigo_Nodo From {_Global_BaseBk}Zw_TblArbol_Asociaciones" & vbCrLf &
+                           "Where ParaEntidad = 1 And Identificacdor_NodoPadre = 0"
+
+            Dim _Tbl_Asociaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            If _Tbl_Asociaciones.Rows.Count > 0 Then
+
+                Dim _CodigosMarcados As New System.Collections.Generic.HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+
+                For Each _Fila As DataRow In _Tbl_Asociaciones.Rows
+
+                    Dim _Codigo_Nodo As String = _Fila.Item("Codigo_Nodo").ToString().Trim()
+
+                    For Each _Nodo As Zw_Entidades_Asociacion In _List_Zw_Entidades_Asociacion
+
+                        If String.Equals(If(_Nodo.Codigo_Nodo, String.Empty).Trim(),
+                                         _Codigo_Nodo,
+                                         StringComparison.OrdinalIgnoreCase) Then
+                            _CodigosMarcados.Add(_Codigo_Nodo)
+                            Exit For
+                        End If
+
+                    Next
+
+                Next
+
+                Dim _MinimoNodosMarcados As Integer = If(_Tbl_Asociaciones.Rows.Count > 1, 2, 1)
+
+                If _CodigosMarcados.Count < _MinimoNodosMarcados Then
+                    TabControl1.SelectedTabIndex = 1
+                    MessageBoxEx.Show(Me,
+                                      "Debe marcar al menos " & _MinimoNodosMarcados &
+                                      " nodo(s) de las clasificaciones requeridas.",
+                                      "Validación",
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Stop)
+                    Call Btn_ClasificacionesBakpp_Click(Nothing, Nothing)
+                    Return
+                End If
+
+            End If
+
+        End If
+
+
         TabControl1.Tabs(2).Visible = False
 
         Txt_Rten.Text = Replace(Txt_Rten.Text, ".", "")

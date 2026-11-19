@@ -97,7 +97,7 @@ Public Class Frm_Desp_01_Ingreso
 
     Public Property ConfirmarLecturaDespacho As Boolean
     Public Property DeshabilitarFecha As Boolean
-
+    Public Property ObligaPonerProductoDespacho As Boolean
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -1350,6 +1350,38 @@ Public Class Frm_Desp_01_Ingreso
             If Not Fx_Validar_Email(_Email) Then
                 _Row_Despacho.Item("Email") = String.Empty
                 _Email = String.Empty
+            End If
+
+            _Cl_Despacho.Row_ProductoDespacho = Nothing
+
+            If ObligaPonerProductoDespacho AndAlso Cmb_Tipo_Envio.SelectedValue = "DD" Then
+
+                Dim _EmpresaOri As String = _Cl_Despacho.Row_Despacho.Item("Empresa")
+                Dim _SucursalOri As String = _Cl_Despacho.Row_Despacho.Item("Sucursal")
+                Dim _CodPais As String = _Cl_Despacho.Row_Despacho.Item("CodPais")
+                Dim _CodCiudad As String = _Cl_Despacho.Row_Despacho.Item("CodCiudad")
+                Dim _CodComuna As String = _Cl_Despacho.Row_Despacho.Item("CodComuna")
+
+                Dim _CodDespacho As String = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Despachos_DespCm", "CodDespacho",
+                                                               $"Empresa = '{_EmpresaOri}' And Sucursal = '{_SucursalOri}' And Pais = '{_CodPais}' And Ciudad = '{_CodCiudad}' And Comuna = '{_CodComuna}'")
+
+                If String.IsNullOrEmpty(_CodDespacho) Then
+
+                    Dim _SucuarsalStr As String = _Sql.Fx_Trae_Dato("TABSU", "NOKOSU", $"EMPRESA = '{_EmpresaOri}' And KOSU = '{_SucursalOri}'")
+                    Dim _Ciudad_DesStr As String = _Sql.Fx_Trae_Dato("TABCI", "NOKOCI", $"KOPA = '{_CodPais}' And KOCI = '{_CodCiudad}'")
+                    Dim _Comuna_DesStr As String = _Sql.Fx_Trae_Dato("TABCM", "NOKOCM", $"KOPA = '{_CodPais}' And KOCI = '{_CodCiudad}' And KOCM = '{_CodComuna}'")
+
+                    MessageBoxEx.Show(Me, "No existe código de despacho para esta dirección" & vbCrLf &
+                                      $"Desde: {_SucuarsalStr.Trim}, Hasta: {_Ciudad_DesStr.Trim}-{_Comuna_DesStr.Trim}" & vbCrLf & vbCrLf &
+                                      "Informe esta situación a administrador del sistema", "Validación",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                    Return
+
+                End If
+
+                Consulta_Sql = $"Select KOPR,NOKOPR From MAEPR Where KOPR = '{_CodDespacho}'"
+                _Cl_Despacho.Row_ProductoDespacho = _Sql.Fx_Get_DataRow(Consulta_Sql)
+
             End If
 
             If Cmb_Tipo_Envio.SelectedValue = "RT" Then

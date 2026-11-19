@@ -13,6 +13,8 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
 
     Private _Clas_Unica_X_Producto As Boolean
     Public Property ModoEntidad As Boolean
+    Public Property PermitirCrearPadre As Boolean = True
+    Public Property PermitirCrearSeleccionable As Boolean = True
 
     Public Sub New(_Codigo_Nodo As Integer,
                    _Identificacdor_NodoPadre As Integer,
@@ -64,8 +66,18 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
         Txt_Codigo_Nodo.ButtonCustom.Visible = CBool(_Codigo_Nodo)
         Txt_Codigo_Madre.ButtonCustom.Visible = CBool(_Codigo_Nodo)
 
-        Rdb_Es_Padre.Enabled = Not CBool(_Codigo_Nodo)
-        Rdb_Es_Seleccionable.Enabled = Not CBool(_Codigo_Nodo)
+        Rdb_Es_Padre.Enabled = Not CBool(_Codigo_Nodo) AndAlso PermitirCrearPadre
+        Rdb_Es_Seleccionable.Enabled = Not CBool(_Codigo_Nodo) AndAlso PermitirCrearSeleccionable
+
+        If _Codigo_Nodo = 0 Then
+            If Not PermitirCrearPadre Then
+                Rdb_Es_Padre.Checked = False
+                Rdb_Es_Seleccionable.Checked = True
+            ElseIf Not PermitirCrearSeleccionable Then
+                Rdb_Es_Seleccionable.Checked = False
+                Rdb_Es_Padre.Checked = True
+            End If
+        End If
 
         Txt_Codigo_Madre.Enabled = _Clas_Unica_X_Producto
         Lbl_Codigo_Madre.Enabled = _Clas_Unica_X_Producto
@@ -87,9 +99,29 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
             Return
         End If
 
-        If _Clas_Unica_X_Producto AndAlso Rdb_Es_Seleccionable.Checked And String.IsNullOrEmpty(Txt_Codigo_Madre.Text) Then
+        Txt_Codigo_Madre.Text = Txt_Codigo_Madre.Text.Trim
+
+        If _Clas_Unica_X_Producto AndAlso String.IsNullOrEmpty(Txt_Codigo_Madre.Text) Then
             MessageBoxEx.Show(Me, "Falta el código Madre", "Validación Es Seleccionable", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_Codigo_Madre.Focus()
+            Return
+        End If
+
+        If _Clas_Unica_X_Producto AndAlso Txt_Codigo_Madre.Text.Contains(" ") Then
+            MessageBoxEx.Show(Me, "El código Madre no puede contener espacios en blanco", "Validación Es Seleccionable", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_Codigo_Madre.Focus()
+            Return
+        End If
+
+        If Rdb_Es_Padre.Checked AndAlso Not PermitirCrearPadre Then
+            MessageBoxEx.Show(Me, "Esta carpeta ya contiene nodos seleccionables; no se pueden crear nodos padre dentro de ella.",
+                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Rdb_Es_Seleccionable.Checked AndAlso Not PermitirCrearSeleccionable Then
+            MessageBoxEx.Show(Me, "Esta carpeta solo contiene nodos padre; solo se pueden crear nodos padre dentro de ella.",
+                      "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Return
         End If
 
