@@ -10,8 +10,9 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
     Dim _Nodo_Raiz As Integer
     Dim _Fullpath As String
     Public Property Cl_Arbol_Asociaciones As New Cl_Arbol_Asociaciones
-    Public Property Grabar As Boolean
+
     Private _Clas_Unica_X_Producto As Boolean
+    Public Property ModoEntidad As Boolean
 
     Public Sub New(_Codigo_Nodo As Integer,
                    _Identificacdor_NodoPadre As Integer,
@@ -51,6 +52,7 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
                 Txt_Descripcion.Text = .Descripcion
                 Rdb_Es_Seleccionable.Checked = .Es_Seleccionable
                 Rdb_Es_Padre.Checked = .Es_Padre
+                Txt_DescripcionDetallada.Text = .DescripcionDetallada
             End With
 
         End If
@@ -58,6 +60,12 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
         Lbl_Codigo_Nodo.Visible = CBool(_Codigo_Nodo)
         Txt_Codigo_Nodo.Visible = CBool(_Codigo_Nodo)
         Txt_Codigo_Madre.ReadOnly = CBool(_Codigo_Nodo)
+
+        Txt_Codigo_Nodo.ButtonCustom.Visible = CBool(_Codigo_Nodo)
+        Txt_Codigo_Madre.ButtonCustom.Visible = CBool(_Codigo_Nodo)
+
+        Rdb_Es_Padre.Enabled = Not CBool(_Codigo_Nodo)
+        Rdb_Es_Seleccionable.Enabled = Not CBool(_Codigo_Nodo)
 
         Txt_Codigo_Madre.Enabled = _Clas_Unica_X_Producto
         Lbl_Codigo_Madre.Enabled = _Clas_Unica_X_Producto
@@ -144,6 +152,9 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
             .Es_Seleccionable = Rdb_Es_Seleccionable.Checked
             .Es_Padre = Rdb_Es_Padre.Checked
             .Clas_Unica_X_Producto = _Clas_Unica_X_Producto
+            .Clas_Unica_X_Entidad = _Clas_Unica_X_Producto
+            .ParaEntidad = ModoEntidad
+            .DescripcionDetallada = Txt_DescripcionDetallada.Text
         End With
 
         Dim _Mensaje As New LsValiciones.Mensajes
@@ -153,7 +164,7 @@ Public Class Frm_Arbol_Asociacion_06_CrearEditar
         MessageBoxEx.Show(Me, _Mensaje.Mensaje, _Mensaje.Detalle, MessageBoxButtons.OK, _Mensaje.Icono)
 
         If _Mensaje.EsCorrecto Then
-            Grabar = True
+            Me.DialogResult = DialogResult.OK
             Me.Close()
         End If
 

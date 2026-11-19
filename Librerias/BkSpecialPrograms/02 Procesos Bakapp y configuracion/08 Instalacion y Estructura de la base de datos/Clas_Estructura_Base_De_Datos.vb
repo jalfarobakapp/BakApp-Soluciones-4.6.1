@@ -764,6 +764,8 @@ Public Class Clas_Estructura_Base_De_Datos
 
             Case "Zw_Entidades"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Entidades
+            Case "Zw_Entidades_Asociacion"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Entidades_Asociacion
             Case "Zw_Entidad_Cia_Seguros"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Entidad_Cia_Seguros
             Case "Zw_Entidad_CiaSeguro"
@@ -891,6 +893,10 @@ Public Class Clas_Estructura_Base_De_Datos
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pago_Prov_Autoriza_02_Det
             Case "Zw_Pago_Prov_Autoriza_02_Det_Eli"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Pago_Prov_Autoriza_02_Det_Eli
+
+            Case "Zw_PagosBloqueados"
+                Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_PagosBloqueados
+
             Case "Zw_Patentes_rvm"
                 Consulta_Sql = My.Resources.Recursos_Inst_Tablas.Zw_Patentes_rvm
             Case "Zw_Pdc_Mesones"

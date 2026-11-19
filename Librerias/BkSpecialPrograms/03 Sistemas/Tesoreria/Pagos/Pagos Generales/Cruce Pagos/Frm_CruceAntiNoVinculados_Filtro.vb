@@ -44,7 +44,6 @@ Public Class Frm_CruceAntiNoVinculados_Filtro
 
     Private Sub Btn_Procesar_Click(sender As Object, e As EventArgs) Handles Btn_Procesar.Click
 
-
         If Chk_MayorMenorQue.Checked AndAlso Cmb_MayorMenorQue.SelectedValue.ToString = "" Then
             MessageBoxEx.Show(Me, "Debe seleccionar una opción en el filtro 'Mayor/Menor que'", "Validación",
                               MessageBoxButtons.OK, MessageBoxIcon.Stop)

@@ -1,4 +1,4 @@
-<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Ôªø<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class Frm_Arbol_Asociacion_06_CrearEditar
     Inherits DevComponents.DotNetBar.Metro.MetroForm
 
@@ -25,7 +25,6 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Arbol_Asociacion_06_CrearEditar))
         Me.GroupPanel3 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Rdb_Es_Padre = New DevComponents.DotNetBar.Controls.CheckBoxX()
-        Me.LabelX3 = New DevComponents.DotNetBar.LabelX()
         Me.Rdb_Es_Seleccionable = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Codigo_Madre = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.Txt_Codigo_Nodo = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -37,6 +36,8 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.Btn_Grabar = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Txt_Fullpath = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.Txt_DescripcionDetallada = New DevComponents.DotNetBar.Controls.TextBoxX()
+        Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.GroupPanel3.SuspendLayout()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel1.SuspendLayout()
@@ -46,8 +47,9 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         '
         Me.GroupPanel3.BackColor = System.Drawing.Color.White
         Me.GroupPanel3.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel3.Controls.Add(Me.Txt_DescripcionDetallada)
+        Me.GroupPanel3.Controls.Add(Me.LabelX1)
         Me.GroupPanel3.Controls.Add(Me.Rdb_Es_Padre)
-        Me.GroupPanel3.Controls.Add(Me.LabelX3)
         Me.GroupPanel3.Controls.Add(Me.Rdb_Es_Seleccionable)
         Me.GroupPanel3.Controls.Add(Me.Txt_Codigo_Madre)
         Me.GroupPanel3.Controls.Add(Me.Txt_Codigo_Nodo)
@@ -58,7 +60,7 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.GroupPanel3.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel3.Location = New System.Drawing.Point(12, 12)
         Me.GroupPanel3.Name = "GroupPanel3"
-        Me.GroupPanel3.Size = New System.Drawing.Size(644, 196)
+        Me.GroupPanel3.Size = New System.Drawing.Size(644, 291)
         '
         '
         '
@@ -88,7 +90,7 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         '
         Me.GroupPanel3.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel3.TabIndex = 54
-        Me.GroupPanel3.Text = "ClasificaciÛn"
+        Me.GroupPanel3.Text = "Clasificaci√≥n"
         '
         'Rdb_Es_Padre
         '
@@ -101,29 +103,13 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.Rdb_Es_Padre.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Es_Padre.FocusCuesEnabled = False
         Me.Rdb_Es_Padre.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Es_Padre.Location = New System.Drawing.Point(107, 102)
+        Me.Rdb_Es_Padre.Location = New System.Drawing.Point(3, 124)
         Me.Rdb_Es_Padre.Name = "Rdb_Es_Padre"
-        Me.Rdb_Es_Padre.Size = New System.Drawing.Size(108, 27)
+        Me.Rdb_Es_Padre.Size = New System.Drawing.Size(549, 23)
         Me.Rdb_Es_Padre.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Es_Padre.TabIndex = 166
-        Me.Rdb_Es_Padre.Text = "Es Padre"
-        '
-        'LabelX3
-        '
-        Me.LabelX3.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.LabelX3.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.LabelX3.ForeColor = System.Drawing.Color.Black
-        Me.LabelX3.Location = New System.Drawing.Point(3, 135)
-        Me.LabelX3.Name = "LabelX3"
-        Me.LabelX3.Size = New System.Drawing.Size(632, 32)
-        Me.LabelX3.TabIndex = 165
-        Me.LabelX3.Text = "Es Seleccionable: permitir· la asociaciÛn de productos con la carpeta. " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Es Padre" &
-    ": actuar· como una categorÌa principal permitiendo la creaciÛn de subclasificaci" &
-    "ones dentro de ella."
-        Me.LabelX3.TextLineAlignment = System.Drawing.StringAlignment.Near
+        Me.Rdb_Es_Padre.Text = "Es Padre: actuar√° como una categor√≠a principal permitiendo la creaci√≥n de subclas" &
+    "ificaciones dentro de ella."
         '
         'Rdb_Es_Seleccionable
         '
@@ -136,12 +122,12 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.Rdb_Es_Seleccionable.CheckBoxStyle = DevComponents.DotNetBar.eCheckBoxStyle.RadioButton
         Me.Rdb_Es_Seleccionable.FocusCuesEnabled = False
         Me.Rdb_Es_Seleccionable.ForeColor = System.Drawing.Color.Black
-        Me.Rdb_Es_Seleccionable.Location = New System.Drawing.Point(3, 102)
+        Me.Rdb_Es_Seleccionable.Location = New System.Drawing.Point(3, 103)
         Me.Rdb_Es_Seleccionable.Name = "Rdb_Es_Seleccionable"
-        Me.Rdb_Es_Seleccionable.Size = New System.Drawing.Size(98, 27)
+        Me.Rdb_Es_Seleccionable.Size = New System.Drawing.Size(420, 26)
         Me.Rdb_Es_Seleccionable.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Es_Seleccionable.TabIndex = 164
-        Me.Rdb_Es_Seleccionable.Text = "Es seleccionable"
+        Me.Rdb_Es_Seleccionable.Text = "Es Seleccionable: Permitir√° la asociaci√≥n de registros con la carpeta."
         '
         'Txt_Codigo_Madre
         '
@@ -151,13 +137,16 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         '
         Me.Txt_Codigo_Madre.Border.Class = "TextBoxBorder"
         Me.Txt_Codigo_Madre.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Codigo_Madre.ButtonCustom.Image = CType(resources.GetObject("Txt_Codigo_Madre.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Codigo_Madre.ButtonCustom.Visible = True
         Me.Txt_Codigo_Madre.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.Txt_Codigo_Madre.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Codigo_Madre.ForeColor = System.Drawing.Color.Black
         Me.Txt_Codigo_Madre.Location = New System.Drawing.Point(90, 12)
+        Me.Txt_Codigo_Madre.MaxLength = 20
         Me.Txt_Codigo_Madre.Name = "Txt_Codigo_Madre"
         Me.Txt_Codigo_Madre.PreventEnterBeep = True
-        Me.Txt_Codigo_Madre.Size = New System.Drawing.Size(109, 22)
+        Me.Txt_Codigo_Madre.Size = New System.Drawing.Size(186, 22)
         Me.Txt_Codigo_Madre.TabIndex = 0
         '
         'Txt_Codigo_Nodo
@@ -168,13 +157,16 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         '
         Me.Txt_Codigo_Nodo.Border.Class = "TextBoxBorder"
         Me.Txt_Codigo_Nodo.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_Codigo_Nodo.ButtonCustom.Image = CType(resources.GetObject("Txt_Codigo_Nodo.ButtonCustom.Image"), System.Drawing.Image)
+        Me.Txt_Codigo_Nodo.ButtonCustom.Visible = True
         Me.Txt_Codigo_Nodo.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Codigo_Nodo.ForeColor = System.Drawing.Color.Black
-        Me.Txt_Codigo_Nodo.Location = New System.Drawing.Point(291, 11)
+        Me.Txt_Codigo_Nodo.Location = New System.Drawing.Point(415, 14)
+        Me.Txt_Codigo_Nodo.MaxLength = 20
         Me.Txt_Codigo_Nodo.Name = "Txt_Codigo_Nodo"
         Me.Txt_Codigo_Nodo.PreventEnterBeep = True
         Me.Txt_Codigo_Nodo.ReadOnly = True
-        Me.Txt_Codigo_Nodo.Size = New System.Drawing.Size(109, 22)
+        Me.Txt_Codigo_Nodo.Size = New System.Drawing.Size(108, 22)
         Me.Txt_Codigo_Nodo.TabIndex = 1
         '
         'Lbl_Codigo_Nodo
@@ -185,11 +177,11 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         '
         Me.Lbl_Codigo_Nodo.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.Lbl_Codigo_Nodo.ForeColor = System.Drawing.Color.Black
-        Me.Lbl_Codigo_Nodo.Location = New System.Drawing.Point(217, 12)
+        Me.Lbl_Codigo_Nodo.Location = New System.Drawing.Point(342, 12)
         Me.Lbl_Codigo_Nodo.Name = "Lbl_Codigo_Nodo"
         Me.Lbl_Codigo_Nodo.Size = New System.Drawing.Size(85, 23)
         Me.Lbl_Codigo_Nodo.TabIndex = 15
-        Me.Lbl_Codigo_Nodo.Text = "CÛdigo Nodo"
+        Me.Lbl_Codigo_Nodo.Text = "C√≥digo Nodo"
         '
         'Txt_Descripcion
         '
@@ -203,6 +195,7 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.Txt_Descripcion.DisabledBackColor = System.Drawing.Color.White
         Me.Txt_Descripcion.ForeColor = System.Drawing.Color.Black
         Me.Txt_Descripcion.Location = New System.Drawing.Point(90, 40)
+        Me.Txt_Descripcion.MaxLength = 500
         Me.Txt_Descripcion.Multiline = True
         Me.Txt_Descripcion.Name = "Txt_Descripcion"
         Me.Txt_Descripcion.PreventEnterBeep = True
@@ -221,7 +214,7 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.LabelX2.Name = "LabelX2"
         Me.LabelX2.Size = New System.Drawing.Size(68, 23)
         Me.LabelX2.TabIndex = 13
-        Me.LabelX2.Text = "DescripciÛn"
+        Me.LabelX2.Text = "Descripci√≥n"
         '
         'Lbl_Codigo_Madre
         '
@@ -235,7 +228,7 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.Lbl_Codigo_Madre.Name = "Lbl_Codigo_Madre"
         Me.Lbl_Codigo_Madre.Size = New System.Drawing.Size(86, 23)
         Me.Lbl_Codigo_Madre.TabIndex = 12
-        Me.Lbl_Codigo_Madre.Text = "CÛdigo Madre"
+        Me.Lbl_Codigo_Madre.Text = "C√≥digo Madre"
         '
         'Bar2
         '
@@ -243,7 +236,7 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar})
-        Me.Bar2.Location = New System.Drawing.Point(0, 289)
+        Me.Bar2.Location = New System.Drawing.Point(0, 388)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(668, 41)
         Me.Bar2.Stretch = True
@@ -265,11 +258,10 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         'GroupPanel1
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
-        Me.GroupPanel1.CanvasColor = System.Drawing.SystemColors.Control
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
         Me.GroupPanel1.Controls.Add(Me.Txt_Fullpath)
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
-        Me.GroupPanel1.Location = New System.Drawing.Point(12, 214)
+        Me.GroupPanel1.Location = New System.Drawing.Point(12, 309)
         Me.GroupPanel1.Name = "GroupPanel1"
         Me.GroupPanel1.Size = New System.Drawing.Size(644, 73)
         '
@@ -321,16 +313,50 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
         Me.Txt_Fullpath.Size = New System.Drawing.Size(632, 40)
         Me.Txt_Fullpath.TabIndex = 3
         '
+        'Txt_DescripcionDetallada
+        '
+        Me.Txt_DescripcionDetallada.BackColor = System.Drawing.Color.White
+        '
+        '
+        '
+        Me.Txt_DescripcionDetallada.Border.Class = "TextBoxBorder"
+        Me.Txt_DescripcionDetallada.Border.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Txt_DescripcionDetallada.DisabledBackColor = System.Drawing.Color.White
+        Me.Txt_DescripcionDetallada.ForeColor = System.Drawing.Color.Black
+        Me.Txt_DescripcionDetallada.Location = New System.Drawing.Point(90, 153)
+        Me.Txt_DescripcionDetallada.MaxLength = 2000
+        Me.Txt_DescripcionDetallada.Multiline = True
+        Me.Txt_DescripcionDetallada.Name = "Txt_DescripcionDetallada"
+        Me.Txt_DescripcionDetallada.PreventEnterBeep = True
+        Me.Txt_DescripcionDetallada.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
+        Me.Txt_DescripcionDetallada.Size = New System.Drawing.Size(545, 112)
+        Me.Txt_DescripcionDetallada.TabIndex = 167
+        '
+        'LabelX1
+        '
+        Me.LabelX1.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.LabelX1.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.LabelX1.ForeColor = System.Drawing.Color.Black
+        Me.LabelX1.Location = New System.Drawing.Point(3, 153)
+        Me.LabelX1.Name = "LabelX1"
+        Me.LabelX1.Size = New System.Drawing.Size(68, 33)
+        Me.LabelX1.TabIndex = 168
+        Me.LabelX1.Text = "Descripci√≥n<br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Detallada"
+        '
         'Frm_Arbol_Asociacion_06_CrearEditar
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(668, 330)
+        Me.ClientSize = New System.Drawing.Size(668, 429)
         Me.Controls.Add(Me.GroupPanel1)
         Me.Controls.Add(Me.Bar2)
         Me.Controls.Add(Me.GroupPanel3)
         Me.DoubleBuffered = True
         Me.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
@@ -354,9 +380,10 @@ Partial Class Frm_Arbol_Asociacion_06_CrearEditar
     Public WithEvents Txt_Codigo_Nodo As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
     Public WithEvents Btn_Grabar As DevComponents.DotNetBar.ButtonItem
-    Friend WithEvents LabelX3 As DevComponents.DotNetBar.LabelX
     Public WithEvents Rdb_Es_Seleccionable As DevComponents.DotNetBar.Controls.CheckBoxX
     Public WithEvents Rdb_Es_Padre As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents GroupPanel1 As DevComponents.DotNetBar.Controls.GroupPanel
     Public WithEvents Txt_Fullpath As DevComponents.DotNetBar.Controls.TextBoxX
+    Public WithEvents Txt_DescripcionDetallada As DevComponents.DotNetBar.Controls.TextBoxX
+    Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
 End Class

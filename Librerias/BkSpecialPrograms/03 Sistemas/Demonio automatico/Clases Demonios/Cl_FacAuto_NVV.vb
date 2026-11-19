@@ -477,6 +477,15 @@ Delete MAEEDO Where TIDO = '{_Tido}' And NUDO = '{_Nudo}' And ENDO = 'XXXXXXXXXX
                         Inner Join MAEEDO Edo On Edo.IDMAEEDO = Fa.Idmaeedo_NVV
                         Inner Join {_Global_BaseBk}Zw_Docu_Ent De On Fa.Idmaeedo_NVV = De.Idmaeedo
                         Where Facturar = 1"
+
+        'Consulta_Sql = $"
+        '                Select Top {CantDocFacturanXProceso} Fa.*,
+        '                Case De.Empresa_Ori When '' Then De.Empresa Else De.Empresa_Ori End As 'Empresa_Ori',Edo.EMPRESA As 'Empresa'   
+        '                From {_Global_BaseBk}Zw_Demonio_FacAuto Fa
+        '                Inner Join MAEEDO Edo On Edo.IDMAEEDO = Fa.Idmaeedo_NVV
+        '                Inner Join {_Global_BaseBk}Zw_Docu_Ent De On Fa.Idmaeedo_NVV = De.Idmaeedo
+        '                Where Fa.Id = 94949"
+
         Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         'MessageBox.Show(_Formulario, "Cantidad de documentos a facturar: " & _Tbl_Doc_Facturar.Rows.Count,
@@ -1272,9 +1281,9 @@ Delete MAEEDO Where TIDO = '{_Tido}' And NUDO = '{_Nudo}' And ENDO = 'XXXXXXXXXX
                                 .DirDest = _Row.Item("DirDest")
                                 .CiudadDest = _Row.Item("CiudadDest")
                                 .CmnaDest = _Row.Item("CmnaDest")
-                                .FchSalida = _Row.Item("FchSalida")
-                                .HraSalida = _Row.Item("HraSalida")
-                                .FchLlegada = _Row.Item("FchLlegada")
+                                .FchSalida = NuloPorNro(_Row.Item("FchSalida"), Nothing)
+                                .HraSalida = NuloPorNro(_Row.Item("HraSalida"), Nothing)
+                                .FchLlegada = NuloPorNro(_Row.Item("FchLlegada"), Nothing)
                             End With
                         End If
 

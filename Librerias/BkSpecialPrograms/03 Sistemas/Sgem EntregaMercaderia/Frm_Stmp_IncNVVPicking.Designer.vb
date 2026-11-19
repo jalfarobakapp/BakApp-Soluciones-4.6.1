@@ -79,6 +79,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Rdb_FechaFacFechaDespachoNVV = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_FactConFDespVencida = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Chk_NotfStockInsuficiente_Stmp = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.BarraProgreso = New DevComponents.DotNetBar.ProgressBarItem()
         CType(Me.Dtp_FechaParaFacturacion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
         CType(Me.Dtp_BuscaXFechaDespacho, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -874,7 +875,7 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.MetroStatusBar1.DragDropSupport = True
         Me.MetroStatusBar1.Font = New System.Drawing.Font("Segoe UI", 10.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.MetroStatusBar1.ForeColor = System.Drawing.Color.Black
-        Me.MetroStatusBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Status})
+        Me.MetroStatusBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Lbl_Status, Me.BarraProgreso})
         Me.MetroStatusBar1.LicenseKey = "F962CEC7-CD8F-4911-A9E9-CAB39962FC1F"
         Me.MetroStatusBar1.Location = New System.Drawing.Point(0, 644)
         Me.MetroStatusBar1.Name = "MetroStatusBar1"
@@ -1037,6 +1038,17 @@ Partial Class Frm_Stmp_IncNVVPicking
         Me.Chk_NotfStockInsuficiente_Stmp.Text = "Notificar stock insuficiente al enviar una NVV/NVI al Sistema de Entrega de Merca" &
     "dería."
         '
+        'BarraProgreso
+        '
+        '
+        '
+        '
+        Me.BarraProgreso.BackStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.BarraProgreso.ChunkGradientAngle = 0!
+        Me.BarraProgreso.MenuVisibility = DevComponents.DotNetBar.eMenuVisibility.VisibleAlways
+        Me.BarraProgreso.Name = "BarraProgreso"
+        Me.BarraProgreso.RecentlyUsed = False
+        '
         'Frm_Stmp_IncNVVPicking
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1135,4 +1147,5 @@ Partial Class Frm_Stmp_IncNVVPicking
     Friend WithEvents Rdb_FechaFacFechaDespachoNVV As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_FactConFDespVencida As DevComponents.DotNetBar.Controls.CheckBoxX
     Friend WithEvents Chk_NotfStockInsuficiente_Stmp As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents BarraProgreso As DevComponents.DotNetBar.ProgressBarItem
 End Class

@@ -873,6 +873,8 @@ Public Class Frm_Formulario_Documento
             End If
         End If
 
+        'SoloprodEnDoc_CLALIBPR = False
+
         Lbl_TipoVenta.Visible = SoloprodEnDoc_CLALIBPR
         Btn_CambiarTipoVenta.Visible = SoloprodEnDoc_CLALIBPR
 
@@ -20010,8 +20012,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                                    _Origen_Modificado_Intertanto,
                                                    _Es_TLV,
                                                    _HoraAlFinalDelDia,
-                                                   _HoraAlPrincipioDelDia,
-                                                    _ConservaTrazabilidad)
+                                                   _HoraAlPrincipioDelDia)
 
             If Not _Mensaje.EsCorrecto Then
 
@@ -31544,6 +31545,20 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
         End If
 
         If Not IsNothing(_Row_Feria) Then
+
+            Dim _NombreFeria As String = _Row_Feria.Item("NombreFeria").ToString.Trim
+            Dim _FechaTermino As DateTime = _Row_Feria.Item("FechaTermino")
+            Dim _Activa As Boolean = _Row_Feria.Item("Activa")
+
+            If _FechaTermino <= FechaDelServidor() Then
+                MessageBoxEx.Show(Me, $"La feria {_NombreFeria} tiene fecha de termino {_FechaTermino.ToShortDateString}", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return False
+            End If
+
+            If Not _Activa Then
+                MessageBoxEx.Show(Me, $"La feria {_NombreFeria} no esta activa {_FechaTermino.ToShortDateString}", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return False
+            End If
 
             _Msg1 = "Asociar Feria: " & _Row_Feria.Item("NombreFeria") & " a la venta"
             _Msg2 = vbCrLf & "¿Desea asociar una FERIA a esta venta?" & vbCrLf & vbCrLf & "Si (Confirma) - No (Seleccionar otra feria)"

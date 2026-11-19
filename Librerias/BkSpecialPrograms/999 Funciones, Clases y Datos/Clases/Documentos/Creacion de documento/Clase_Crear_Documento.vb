@@ -1186,8 +1186,7 @@ Public Class Clase_Crear_Documento
 
                         End If
 
-                        If Not _ConservaTrazabilidad AndAlso
-                        (_Tido = "BLV" Or _Tido = "FCV" Or _Tido = "FCC" Or _Tido = "OCC" Or _Tido = "NVV" Or _Tido = "GDV" Or _Tido = "GRC" Or _Tido = "GTI") Then
+                        If (_Tido = "BLV" Or _Tido = "FCV" Or _Tido = "FCC" Or _Tido = "OCC" Or _Tido = "NVV" Or _Tido = "GDV" Or _Tido = "GRC" Or _Tido = "GTI") Then
 
                             If _Tidopa = "COV" Or _Tidopa = "NVV" Or _Tidopa = "OCC" Or _Tidopa = "OCI" Or _Tidopa = "NVI" Or _Tido = "GTI" Then
 
@@ -2415,6 +2414,10 @@ Public Class Clase_Crear_Documento
                         Dim _FchSalida As String = Format(.FchSalida, "yyyyMMdd")
                         Dim _HraSalida As String = Format(.HraSalida, "HH:mm:ss")
                         Dim _FchLlegada As String = Format(.FchLlegada, "yyyyMMdd")
+
+                        If String.IsNullOrEmpty(_FchSalida) Then _FchSalida = "00010101"
+                        If String.IsNullOrEmpty(_HraSalida) Then _HraSalida = "00:00:00"
+                        If String.IsNullOrEmpty(_FchLlegada) Then _FchLlegada = "00010101"
 
                         If _FchSalida = "00010101" OrElse _HraSalida = "00:00:00" OrElse _FchLlegada = "00010101" Then
                             _FchSalida = $"Null"

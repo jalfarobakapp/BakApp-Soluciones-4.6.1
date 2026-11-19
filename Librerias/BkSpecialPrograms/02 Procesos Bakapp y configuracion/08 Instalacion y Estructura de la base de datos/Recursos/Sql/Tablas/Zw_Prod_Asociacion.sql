@@ -10,7 +10,8 @@ CREATE TABLE [dbo].[Zw_Prod_Asociacion](
 	[Clas_unica]			    [bit]				NOT NULL DEFAULT (0),
 	[Producto]				    [bit]				NOT NULL DEFAULT (0),
 	[Lect_Barras_IngrxCantidad]	[bit]				NOT NULL DEFAULT (0),    
-	[Stock_desde_WMS]       	[bit]				NOT NULL DEFAULT (0),    
+	[Stock_desde_WMS]       	[bit]				NOT NULL DEFAULT (0), 
+    [Codigo_Madre]			    [varchar](20)		NOT NULL DEFAULT (''),
  CONSTRAINT [PK_Zw_Prod_Asociacion] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

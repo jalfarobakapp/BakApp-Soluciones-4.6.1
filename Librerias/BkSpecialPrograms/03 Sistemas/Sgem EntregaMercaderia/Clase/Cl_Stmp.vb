@@ -308,7 +308,6 @@ Public Class Cl_Stmp
 
         Consulta_sql = String.Empty
 
-
         Consulta_sql = "Select Top 1 EMPRESA As Empresa, SULIDO As Sucursal, BOSULIDO As Bodega From MAEDDO Where IDMAEEDO = " & _Zw_Stmp_Enc.Idmaeedo
         Dim _Row_Maeddo As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 

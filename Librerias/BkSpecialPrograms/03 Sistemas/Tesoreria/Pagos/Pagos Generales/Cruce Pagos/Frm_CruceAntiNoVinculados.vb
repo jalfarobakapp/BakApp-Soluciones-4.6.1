@@ -164,7 +164,7 @@ Order By c.ENDP,c.FEEMDP"
 
             .DataSource = _Tbl_Maedpce
 
-            OcultarEncabezadoGrilla(Grilla_Maedpce, True)
+            OcultarEncabezadoGrilla(Grilla_Maedpce)
 
             '.Columns("Btn_Ico").HeaderText = ""
             '.Columns("Btn_Ico").Width = 35
@@ -1337,7 +1337,7 @@ ORDER BY Orden,FEVEDP"
         Dim _MotivoBloqueo As String = Convert.ToString(_Fila.Cells("MotivoBloqueo").Value).Trim()
 
         Dim _Grabar As Boolean
-        Dim _ModoLectura As Boolean = True
+        Dim _ModoLectura As Boolean = False
 
         Dim _Mensaje As LsValiciones.Mensajes = Fx_RevisarPagoBloqueado(_Idmaedpce)
 

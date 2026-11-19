@@ -457,20 +457,15 @@ Public Class Frm_MtCreaProd_01_IngBusqEspecial
 
             Clipboard.SetText(TxtCodigo.Text)
             Dim Fm As New Frm_Arbol_Lista(True)
+            Fm.ModoProductos = True
             Fm.Codigo_Heredado = TxtCodigo.Text
             Fm.ModoRadioButton = True
+            Fm.ObligaGrabarConSeleccion = True
             Fm.ShowDialog(Me)
             Fm.Dispose()
             Me.Cursor = Cursors.Default
 
             Sb_Actualizar_Grilla()
-
-            'Clipboard.SetText(TxtCodigo.Text)
-            'Dim Fm As New Frm_Arbol_Asociacion_02(False, 0, False, Frm_Arbol_Asociacion_02.Enum_Clasificacion.Unica, 0)
-            'Fm.Pro_Identificador_NodoPadre = 0
-            'Fm.Pro_Codigo_Heredado = TxtCodigo.Text
-            'Fm.ShowDialog(Me)
-            'Fm.Dispose()
 
         End If
 

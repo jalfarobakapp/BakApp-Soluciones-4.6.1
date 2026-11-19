@@ -98,4 +98,14 @@ Public Class Tablas_Clasificaciones_Ent
         End If
 
     End Sub
+
+    Private Sub Btn_ClasUnicas_Click(sender As Object, e As EventArgs) Handles Btn_ClasUnicas.Click
+
+        Dim Fm As New Frm_Arbol_Lista(True)
+        Fm.ModoEntidad = True
+        Fm.ModoConfiguracion = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
 End Class

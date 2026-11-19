@@ -778,7 +778,8 @@ Namespace My.Resources
         '''CREATE TABLE [dbo].[Zw_CrucePAuto_Tom](
         '''	[CodFuncionario]	[varchar](3)    NOT NULL DEFAULT (&apos;&apos;),
         '''	[FechaToma]			[datetime]      NULL,
-        '''	[NombreEquipo]		[varchar](50)   NOT NULL DEFAULT (&apos;&apos;)
+        '''	[NombreEquipo]		[varchar](50)   NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Empresa]           [char](2)       NOT NULL DEFAULT (&apos;&apos;)
         ''') ON [PRIMARY]
         '''
         '''
@@ -1834,6 +1835,26 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Entidades() As String
             Get
                 Return ResourceManager.GetString("Zw_Entidades", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_Entidades_Asociacion](
+        '''	[Id]					[int] IDENTITY(1,1) NOT NULL,
+        '''	[CodEntidad]			[varchar](8)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodSucEntidad]			[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Codigo_Nodo]			[varchar](20)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[DescripcionBusqueda]	[varchar](1000) NOT NULL DEFAULT (&apos;&apos;),
+        '''	[Para_filtro]			[bit]			NOT NULL DEFAULT (0),
+        '''	[Nodo_origen]			[int]			NOT NULL DEFAULT (0),
+        '''	[Clas_unica]			[bit]			NOT NULL DEFAULT (0),
+        '''	[Codigo_Madre]			[varchar](20)	NOT N [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_Entidades_Asociacion() As String
+            Get
+                Return ResourceManager.GetString("Zw_Entidades_Asociacion", resourceCulture)
             End Get
         End Property
         
@@ -3011,6 +3032,27 @@ Namespace My.Resources
         Friend Shared ReadOnly Property Zw_Pago_Prov_Autoriza_02_Det_Eli() As String
             Get
                 Return ResourceManager.GetString("Zw_Pago_Prov_Autoriza_02_Det_Eli", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Busca una cadena traducida similar a USE [#Base#]
+        '''
+        '''CREATE TABLE [dbo].[Zw_PagosBloqueados](
+        '''	[Idmaedpce]			[int]			NOT NULL DEFAULT (0),
+        '''	[Bloqueado]			[bit]			NOT NULL DEFAULT (0),
+        '''	[MotivoBloqueo]		[varchar](max)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[CodFuncionario]	[varchar](3)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[NombreEquipo]		[varchar](50)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[FechaBloqueo]		[datetime]		NULL,
+        ''' CONSTRAINT [PK_Zw_PagosBloqueados] PRIMARY KEY CLUSTERED 
+        '''(
+        '''	[Idmaedpce] ASC
+        ''')WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, AL [resto de la cadena truncado]&quot;;.
+        '''</summary>
+        Friend Shared ReadOnly Property Zw_PagosBloqueados() As String
+            Get
+                Return ResourceManager.GetString("Zw_PagosBloqueados", resourceCulture)
             End Get
         End Property
         
@@ -5544,9 +5586,9 @@ Namespace My.Resources
         '''	[Tido]			[char](3)		NOT NULL DEFAULT (&apos;&apos;),
         '''	[Nudo]			[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[Patente]		[varchar](8)	NOT NULL DEFAULT (&apos;&apos;),
+        '''	[PatenteCarro]	[varchar](8)	NOT NULL DEFAULT (&apos;&apos;),
         '''	[RUTTrans]		[varchar](10)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[Chofer]		[varchar](40)	NOT NULL DEFAULT (&apos;&apos;),
-        '''	[RUTChofer]		[varchar](10)	NOT NUL [resto de la cadena truncado]&quot;;.
+        '''	[Chofer]		[varchar](40)	NOT NU [resto de la cadena truncado]&quot;;.
         '''</summary>
         Friend Shared ReadOnly Property Zw_Transporte_Dte() As String
             Get

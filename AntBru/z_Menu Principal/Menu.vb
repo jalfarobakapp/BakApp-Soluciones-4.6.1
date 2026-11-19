@@ -1836,4 +1836,38 @@ Where Idmaeedo = {_Idmaeedo_FCV}"
 
     End Sub
 
+    Private Sub Btn_ClasUnicas_Ent_Click(sender As Object, e As EventArgs) Handles Btn_ClasUnicas_Ent.Click
+
+        Dim Fm As New Frm_Arbol_Lista(True)
+        Fm.ModoEntidad = True
+        Fm.ModoConfiguracion = True
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Btn_ClasEntidad_Click(sender As Object, e As EventArgs) Handles Btn_ClasEntidad.Click
+
+        Dim _RowEntidad As DataRow
+        Dim Fm As New Frm_BuscarEntidad_Mt(False)
+
+        Fm.Rdb_Clientes.Checked = True
+        Fm.Txtdescripcion.Text = String.Empty
+        Fm.PreguntaClientePuntos = False
+        Fm.ShowDialog(Me)
+        _RowEntidad = Fm.Pro_RowEntidad
+        Fm.Dispose()
+
+        'Clipboard.SetText(TxtCodigo.Text)
+        Dim Fm2 As New Frm_Arbol_Lista(True)
+        Fm2.ModoEntidad = True
+        Fm2.CodEntidad = _RowEntidad.Item("KOEN")
+        Fm2.CodSucEntidad = _RowEntidad.Item("SUEN")
+        Fm2.ModoRadioButton = True
+        Fm2.ShowDialog(Me)
+        Fm2.Dispose()
+        Me.Cursor = Cursors.Default
+
+
+    End Sub
 End Class

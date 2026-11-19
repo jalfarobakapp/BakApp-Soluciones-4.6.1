@@ -1,14 +1,18 @@
 ﻿Imports BkSpecialPrograms
 Imports BkSpecialPrograms.LsValiciones
 
+
 Public Class Cl_MultiNVV
+
     Dim Sql As New Class_SQL(Cadena_ConexionSQL_Server)
 
     Private Mod_Modalidad_Ori As String
     Private Mod_Empresa_Ori As String
 
-    Public Function Proceso_MultiNvv(Id_Documento_Ori As String, Nudo_NVV As String) As Mensajes
-        Dim msgFinal As New Mensajes With {
+    Public Function Proceso_MultiNvv(Id_Documento_Ori As String,
+                                     Nudo_NVV As String,
+                                     Optional progreso As Action(Of Integer, Integer, String) = Nothing) As LsValiciones.Mensajes
+        Dim msgFinal As New LsValiciones.Mensajes With {
             .EsCorrecto = False,
             .Mensaje = "Iniciando proceso...",
             .Detalle = ""
@@ -24,7 +28,7 @@ Public Class Cl_MultiNVV
             Dim _Row_OCC As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
             If IsNothing(_Row_OCC) Then
-                Dim msgError As New Mensajes
+                Dim msgError As New LsValiciones.Mensajes
                 msgError.EsCorrecto = False
                 msgError.Detalle = "No se encontro coincidencia del documento de origen"
                 Return msgError
@@ -34,7 +38,7 @@ Public Class Cl_MultiNVV
             CambioMod(CodEmpresa, Modalidad)
 
 
-            Dim listaResultados As List(Of Mensajes) = GeneraNVV(Id_Documento_Ori, Nudo_NVV)
+            Dim listaResultados As List(Of LsValiciones.Mensajes) = GeneraNVV(Id_Documento_Ori, Nudo_NVV, progreso)
 
             ' 2. Analizar los resultados de la generación
             Dim documentosGenerados As Integer = 0
@@ -59,7 +63,7 @@ Public Class Cl_MultiNVV
             ' 3. Asociar los despachos y heredar datos a los documentos hijos creados
             ' Convertimos Id_Documento_Ori a Integer ya que Asociar_despachos lo requiere numérico
             Dim idMaeedoInt As Integer = CInt(Id_Documento_Ori)
-            Dim resultadoAsociacion As Mensajes = Asociar_despachos(Nudo_NVV, idMaeedoInt)
+            Dim resultadoAsociacion As LsValiciones.Mensajes = Asociar_despachos(Nudo_NVV, idMaeedoInt)
 
             ' 4. Consolidar el resultado final
             If Not resultadoAsociacion.EsCorrecto Then
@@ -77,6 +81,13 @@ Public Class Cl_MultiNVV
                 End If
             End If
             sincronizar_permisos(Id_Documento_Ori)
+
+
+            Dim Cerrar_Doc As New Clas_Cerrar_Documento
+            Consulta_sql = "Select * From MAEDDO WITH (NOLOCK) Where IDMAEEDO = " & Id_Documento_Ori
+            Dim _Tbl_Origen As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+            Cerrar_Doc.Fx_Cerrar_Documento(Id_Documento_Ori, _Tbl_Origen)
+
         Catch ex As Exception
             msgFinal.EsCorrecto = False
             msgFinal.Mensaje = "Error general al procesar múltiples NVV."
@@ -85,8 +96,8 @@ Public Class Cl_MultiNVV
         VolverA_Mod_Original()
         Return msgFinal
     End Function
-    Function sincronizar_permisos(Idmaeedo As Integer) As Mensajes
-        Dim msg As New Mensajes
+    Function sincronizar_permisos(Idmaeedo As Integer) As LsValiciones.Mensajes
+        Dim msg As New LsValiciones.Mensajes
         msg.EsCorrecto = False
         msg.Detalle = "Error al sincronizar los permisos y remotas."
         msg.Mensaje = "Error al sincronizar los permisos y remotas."
@@ -193,10 +204,11 @@ DROP TABLE #TempRemotas;
     Public Sub VolverA_Mod_Original()
         CambioMod(Mod_Empresa_Ori, Mod_Modalidad_Ori)
     End Sub
-    Public Function GeneraNVV(Id_Documento_Ori As String, Nudo_NVV As String) As List(Of Mensajes)
+
+    Public Function GeneraNVV(Id_Documento_Ori As String,
+                              Nudo_NVV As String,
+                              Optional progreso As Action(Of Integer, Integer, String) = Nothing) As List(Of Mensajes)
         ' Cambiamos el retorno a List(Of Mensajes) porque se pueden generar múltiples documentos
-
-
         Dim listaMensajes As New List(Of Mensajes)()
 
         Dim _Tido = "NVV"
@@ -217,7 +229,223 @@ DROP TABLE #TempRemotas;
         Dim _Row_OCC As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
         If IsNothing(_Row_OCC) Then
-            Dim msgError As New Mensajes
+            Dim msgError As New Mensajes With {
+            .EsCorrecto = False,
+            .Detalle = "No se encontro coincidencia del documento de origen"
+        }
+            listaMensajes.Add(msgError)
+            Return listaMensajes
+        End If
+
+        Try
+            ' 1. OBTENER LOS TIPOS ÚNICOS DE CLALIBPR PRESENTES EN EL DETALLE DEL DOCUMENTO ORIGEN
+            Consulta_sql = $"
+            SELECT DISTINCT Mp.CLALIBPR 
+            FROM MAEDDO Ddo WITH (NOLOCK)
+            INNER JOIN MAEPR Mp On Mp.KOPR = Ddo.KOPRCT
+            Where TIDO = 'NVV' And NUDO = '{Nudo_NVV}'
+            AND (Ddo.ESLIDO<>'C' OR Ddo.ESFALI='I') 
+            AND Ddo.TICT = ''"
+
+            Dim dtClasificaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+
+            If dtClasificaciones Is Nothing OrElse dtClasificaciones.Rows.Count <= 1 Then
+                Dim msgError As New Mensajes With {.EsCorrecto = False, .Detalle = "No hay detalles válidos para procesar."}
+                listaMensajes.Add(msgError)
+                Return listaMensajes
+            End If
+
+            ' --- NUEVA LÓGICA DE AGRUPACIÓN ---
+            Dim listaClasif As New List(Of String)()
+            Dim tieneVacios As Boolean = False
+            Dim despachos = ""
+            ' Separar los vacíos de las clasificaciones con nombre
+            For Each rowClasif As DataRow In dtClasificaciones.Rows
+                Dim clasif As String = rowClasif("CLALIBPR").ToString().Trim()
+                If clasif = "DESPACHOS" Then
+                    despachos = clasif
+                ElseIf String.IsNullOrEmpty(clasif) Then
+                    tieneVacios = True
+                Else
+                    listaClasif.Add(clasif)
+                End If
+            Next
+
+
+            ' Si por alguna razón SOLO hay productos vacíos, lo agregamos para que genere 1 documento
+            If listaClasif.Count = 1 AndAlso tieneVacios Then
+                Dim msgError As New Mensajes With {.EsCorrecto = False, .Detalle = "No hay detalles válidos para procesar."}
+                listaMensajes.Add(msgError)
+                Return listaMensajes
+            End If
+
+            Dim totalDocumentos As Integer = listaClasif.Count
+
+            If progreso IsNot Nothing Then
+                progreso(0, totalDocumentos, "Preparando documentos...")
+            End If
+
+            ' 2. ITERAR POR CADA CLASIFICACIÓN DISTINTA Y CREAR UN DOCUMENTO
+            For i As Integer = 0 To listaClasif.Count - 1
+                Dim _Clasificacion As String
+
+                If i = 0 AndAlso tieneVacios Then
+                    _Clasificacion = $"('{listaClasif(i)}' , '{despachos}', '          ')"
+
+                Else
+                    _Clasificacion = $"('{listaClasif(i)}' , '{despachos}')"
+                End If
+                Dim _Mensaje As New Mensajes
+
+                If progreso IsNot Nothing Then
+                    progreso(i, totalDocumentos,
+             $"Creando documento {i + 1} de {totalDocumentos}...")
+                End If
+
+                Try
+                    ' 3. ARMAR LA CONDICIÓN SQL DINÁMICA
+                    Dim condicionClasificacion As String
+                    condicionClasificacion = $"Mp.CLALIBPR IN {_Clasificacion}"
+                    ' Si es la primera iteración y existen vacíos, agrupamos ambos
+
+                    Consulta_sql = $"Declare @Idmaeedo Int = {Id_Documento_Ori}
+
+                SELECT * FROM MAEEDO Where IDMAEEDO = @Idmaeedo
+
+                SELECT *, CASE WHEN UDTRPR = 1 THEN CAPRCO1-CAPREX1 ELSE CAPRCO2-CAPREX2 END AS 'Cantidad',
+                CAPRCO1-CAPREX1 AS 'CantUd1_Dori', CAPRCO2-CAPREX2 AS 'CantUd2_Dori',
+                PPPRNE AS 'Precio',
+                0 As Id_Oferta, '' As Oferta, 0 As Es_Padre_Oferta, 0 As Padre_Oferta, 0 As Hijo_Oferta,
+                0 As Cantidad_Oferta, 0 As Porcdesc_Oferta
+                FROM MAEDDO WITH (NOLOCK) 
+                Inner Join MAEPR Mp On Mp.KOPR = KOPRCT
+                Where IDMAEEDO = @Idmaeedo AND (ESLIDO<>'C' OR ESFALI='I') AND TICT = ''
+                And {condicionClasificacion}
+                ORDER BY IDMAEEDO, IDMAEDDO 
+
+                SELECT * FROM MAEIMLI Where IDMAEEDO = @Idmaeedo 
+                SELECT * FROM MAEDTLI Where IDMAEEDO = @Idmaeedo 
+                SELECT TOP 1 * FROM MAEEDOOB Where IDMAEEDO = @Idmaeedo"
+
+                    ' Obtenemos el Dataset específico para esta clasificación
+                    Dim _Ds_Maeedo_Origen As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql, False)
+
+                    If _Ds_Maeedo_Origen IsNot Nothing AndAlso _Ds_Maeedo_Origen.Tables.Count > 1 Then
+
+                        Dim _Dt_SegundaTabla As DataTable = _Ds_Maeedo_Origen.Tables(1)
+                        Dim kilos_total As Double = 0
+                        Dim index_despacho As Integer = -1 ' -1 nos sirve para validar si realmente encontramos la fila
+
+                        If _Dt_SegundaTabla IsNot Nothing AndAlso _Dt_SegundaTabla.Rows.Count > 0 Then
+
+                            ' Usamos un For clásico para tener el control exacto del índice de la fila
+                            For Co As Integer = 0 To _Dt_SegundaTabla.Rows.Count - 1
+                                Dim row As DataRow = _Dt_SegundaTabla.Rows(Co)
+
+                                ' Si es la fila de despachos, guardamos el índice y saltamos a la siguiente
+                                If row("CLALIBPR").ToString().Trim() = "DESPACHOS" Then
+                                    index_despacho = Co
+                                    Continue For
+                                End If
+
+                                Dim kilos As Double = 0
+                                Dim cantidad As Double = 0
+
+                                If Not IsDBNull(row("PESOUBIC")) AndAlso IsNumeric(row("PESOUBIC")) Then
+                                    kilos = Convert.ToDouble(row("PESOUBIC"))
+                                End If
+
+                                If Not IsDBNull(row("Cantidad")) AndAlso IsNumeric(row("Cantidad")) Then
+                                    cantidad = Convert.ToDouble(row("Cantidad"))
+                                End If
+
+                                ' Acumula fila por fila (excluyendo la de DESPACHOS)
+                                kilos_total += (kilos * cantidad)
+                            Next
+
+                            ' Si encontramos la fila de despachos (índice distinto a -1), actualizamos sus valores
+                            If index_despacho <> -1 Then
+                                _Dt_SegundaTabla.Rows(index_despacho)("Cantidad") = kilos_total
+                                _Dt_SegundaTabla.Rows(index_despacho)("CantUd1_Dori") = kilos_total
+                                _Dt_SegundaTabla.Rows(index_despacho)("IDMAEEDO") = 0
+                                _Dt_SegundaTabla.Rows(index_despacho)("IDMAEDDO") = 0
+
+
+                                _Dt_SegundaTabla.Rows(index_despacho)("CantUd2_Dori") = kilos_total
+                                _Dt_SegundaTabla.Rows(index_despacho)("CAPRCO1") = kilos_total ' Asegúrate de que no sea CAPRCO1
+                                _Dt_SegundaTabla.Rows(index_despacho)("CAPRCO2") = kilos_total ' Asegúrate de que no sea CAPRCO2
+                            End If
+
+                        End If
+
+                    End If
+
+
+                    ' Instanciamos el formulario y creamos el documento
+                    Dim Fm_Post As New Frm_Formulario_Documento(_Tido, csGlobales.Enum_Tipo_Documento.Compra, False, _RevisarListaSuperior:=False)
+                    Fm_Post.Sb_Limpiar(Mod_Modalidad)
+
+                    Fm_Post.Sb_Crear_Documento_Desde_Otros_Documentos(Nothing, _Ds_Maeedo_Origen, False, False, _Fecha_Emision, False, True, _ConservaTrazabilidad:=True)
+                    _Mensaje = Fm_Post.Fx_Grabar_Documento(False, csGlobales.Mod_Enum_Listados_Globales.Enum_Tipo_de_Grabacion.Nuevo_documento, False,
+                                                       _Mostrar_Mensaje:=False, _ConservaTrazabilidad:=True)
+                    Fm_Post.Dispose()
+
+                    ' Validar si grabó correctamente
+                    If _Mensaje.EsCorrecto Then
+                        Consulta_sql = $"SELECT * FROM MAEEDO WHERE IDMAEEDO = {_Mensaje.Id}"
+                        Dim _Docummento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+                        _Mensaje.Tag = _Docummento
+                    End If
+
+                Catch exLoop As Exception
+                    _Mensaje.EsCorrecto = False
+                    _Mensaje.Mensaje = exLoop.Message
+                End Try
+
+                ' Agregamos el resultado de esta clasificación a la lista maestra
+                listaMensajes.Add(_Mensaje)
+
+                If progreso IsNot Nothing Then
+                    progreso(i + 1, totalDocumentos,
+                             $"Procesados {i + 1} de {totalDocumentos} documentos.")
+                End If
+
+            Next
+
+        Catch ex As Exception
+            Dim msgError As New Mensajes With {.EsCorrecto = False, .Detalle = ex.Message}
+            listaMensajes.Add(msgError)
+        End Try
+
+        Return listaMensajes
+    End Function
+    Public Function GeneraNVV_Old(Id_Documento_Ori As String,
+                              Nudo_NVV As String,
+                              Optional progreso As Action(Of Integer, Integer, String) = Nothing) As List(Of LsValiciones.Mensajes)
+        ' Cambiamos el retorno a List(Of Mensajes) porque se pueden generar múltiples documentos
+
+        Dim listaMensajes As New List(Of LsValiciones.Mensajes)()
+
+        Dim _Tido = "NVV"
+        Dim _CampoPrecio As String
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim Consulta_sql As String
+
+        Dim _Fecha_Emision As DateTime? = DateTime.Now
+
+        If True Then
+            _CampoPrecio = "PPPRNE" ' Neto
+        Else
+            _CampoPrecio = "PPPRBR" ' Bruto
+        End If
+
+        ' Validamos si existe el documento de origen
+        Consulta_sql = $"Select * From MAEEDO Where IDMAEEDO = {Id_Documento_Ori}"
+        Dim _Row_OCC As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
+
+        If IsNothing(_Row_OCC) Then
+            Dim msgError As New LsValiciones.Mensajes
             msgError.EsCorrecto = False
             msgError.Detalle = "No se encontro coincidencia del documento de origen"
             listaMensajes.Add(msgError)
@@ -236,16 +464,28 @@ DROP TABLE #TempRemotas;
 
             Dim dtClasificaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
-            If dtClasificaciones Is Nothing OrElse dtClasificaciones.Rows.Count = 0 Then
-                Dim msgError As New Mensajes With {.EsCorrecto = False, .Detalle = "No hay detalles válidos para procesar."}
+            If dtClasificaciones Is Nothing OrElse dtClasificaciones.Rows.Count <= 1 Then
+                Dim msgError As New LsValiciones.Mensajes With {.EsCorrecto = False, .Detalle = "No hay detalles válidos para procesar."}
                 listaMensajes.Add(msgError)
                 Return listaMensajes
             End If
 
             ' 2. ITERAR POR CADA CLASIFICACIÓN DISTINTA Y CREAR UN DOCUMENTO
-            For Each rowClasif As DataRow In dtClasificaciones.Rows
+            Dim totalDocumentos As Integer = dtClasificaciones.Rows.Count
+
+            If progreso IsNot Nothing Then
+                progreso(0, totalDocumentos, "Preparando documentos...")
+            End If
+
+            For indice As Integer = 0 To totalDocumentos - 1
+                Dim rowClasif As DataRow = dtClasificaciones.Rows(indice)
                 Dim _Clasificacion As String = rowClasif("CLALIBPR").ToString().Trim()
-                Dim _Mensaje As New Mensajes
+                Dim _Mensaje As New LsValiciones.Mensajes
+
+                If progreso IsNot Nothing Then
+                    progreso(indice, totalDocumentos,
+                             $"Creando documento {indice + 1} de {totalDocumentos}...")
+                End If
 
                 Try
                     ' 3. ARMAR LA QUERY USANDO EL ID DINÁMICO Y LA CLASIFICACIÓN ACTUAL DEL BUCLE
@@ -284,10 +524,9 @@ DROP TABLE #TempRemotas;
                     ' Validar si grabó correctamente
                     If _Mensaje.EsCorrecto Then
                         Consulta_sql = $"SELECT * FROM MAEEDO WHERE IDMAEEDO = {_Mensaje.Id}"
-                        Dim _Docummento As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+                        Dim _Docummento As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql, False)
 
                         _Mensaje.Tag = _Docummento
-                    Else
                     End If
 
                 Catch exLoop As Exception
@@ -297,18 +536,24 @@ DROP TABLE #TempRemotas;
 
                 ' Agregamos el resultado de esta clasificación a la lista maestra
                 listaMensajes.Add(_Mensaje)
+
+                If progreso IsNot Nothing Then
+                    progreso(indice + 1, totalDocumentos,
+                 $"Procesados {indice + 1} de {totalDocumentos} documentos.")
+                End If
+
             Next
 
         Catch ex As Exception
-            Dim msgError As New Mensajes With {.EsCorrecto = False, .Detalle = ex.Message}
+            Dim msgError As New LsValiciones.Mensajes With {.EsCorrecto = False, .Detalle = ex.Message}
             listaMensajes.Add(msgError)
         End Try
 
         Return listaMensajes
     End Function
 
-    Function Asociar_despachos(Nudo As String, Idmaeedo As Integer) As Mensajes
-        Dim msg As New Mensajes
+    Function Asociar_despachos(Nudo As String, Idmaeedo As Integer) As LsValiciones.Mensajes
+        Dim msg As New LsValiciones.Mensajes
         msg.EsCorrecto = False
         msg.Detalle = "Error al asociar despachos y actualizar los documentos relacionados."
         msg.Mensaje = "Error al asociar despachos y actualizar los documentos relacionados."
@@ -486,6 +731,21 @@ INNER JOIN MAEDDO MAE_Hijo ON MAE_Hijo.IDMAEDDO = Hijo.Idmaeddo
 INNER JOIN MAEDDO MAE_Padre ON MAE_Padre.IDMAEDDO = MAE_Hijo.IDRST
 INNER JOIN {_Global_BaseBk}Zw_Docu_Det Padre ON Padre.Idmaeddo = MAE_Padre.IDMAEDDO
 WHERE MAE_Padre.IDMAEEDO = {Idmaeedo};"
+        Dim SqlQuery5 = $"INSERT INTO {_Global_BaseBk}Zw_Docu_Archivos (Idmaeedo, Nombre_Archivo, Archivo, Fecha, CodFuncionario)
+SELECT 
+    Hijos.IDMAEEDO,
+    Padre.Nombre_Archivo,
+    Padre.Archivo,
+    Padre.Fecha,
+    Padre.CodFuncionario
+FROM {_Global_BaseBk}Zw_Docu_Archivos Padre
+CROSS JOIN (
+    SELECT DISTINCT MAE2.IDMAEEDO 
+    FROM MAEDDO MAE 
+    INNER JOIN MAEDDO MAE2 ON MAE2.IDRST = MAE.IDMAEDDO 
+    WHERE MAE.IDMAEEDO = {Idmaeedo}
+) Hijos
+WHERE Padre.Idmaeedo = {Idmaeedo};"
 
         ' Concatenar todas las sentencias en un solo bloque de ejecución
         Dim consultaCompleta As String = SqlQuery & vbCrLf & SqlQuery_2 & vbCrLf & sqlQuery3 & vbCrLf & SqlQuery4
@@ -502,6 +762,11 @@ WHERE MAE_Padre.IDMAEEDO = {Idmaeedo};"
         Return msg
     End Function
 End Class
+
+
+
+
+
 
 
 
