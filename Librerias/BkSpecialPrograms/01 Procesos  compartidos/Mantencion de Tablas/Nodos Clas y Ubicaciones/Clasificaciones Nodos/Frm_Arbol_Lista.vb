@@ -1716,39 +1716,50 @@ Public Class Frm_Arbol_Lista
 
     'Private Sub Tree_Bandeja_Adv_AfterCheck(sender As Object, e As AdvTree.AdvTreeCellEventArgs) Handles Tree_Bandeja_Adv.AfterCheck
 
-    '    Dim _NodoSeleccionado As AdvTree.Node = e.Cell.Parent 'Tree_Bandeja_Adv.SelectedNode
-    '    Dim _Codigo_Nodo As Integer = _NodoSeleccionado.Name
-    '    Dim _Descripcion As String = _NodoSeleccionado.Text
-    '    'Dim _Es_Seleccionable As Boolean = _NodoSeleccionado.Tag
-    '    Dim _Checked As Boolean = _NodoSeleccionado.Checked
+    '    If _ProcesandoAfterCheck Then
+    '        Return
+    '    End If
 
-    '    If ModoCheckButton Or ModoRadioButton Then
+    '    _ProcesandoAfterCheck = True
 
-    '        If Not IsNothing(_NodoSeleccionado.Tag) AndAlso CType(_NodoSeleccionado.Tag, DataRow).Item("Es_Seleccionable") Then
+    '    Try
+    '        Dim _NodoSeleccionado As AdvTree.Node = e.Cell.Parent
 
-    '            If _NodoSeleccionado.Checked Then
-    '                _NodoSeleccionado.Parent.CheckState = CheckState.Indeterminate
-    '            Else
-    '                If Not RecorrerNodosYDetectarCheck(_NodoSeleccionado.Parent) Then
-    '                    _NodoSeleccionado.Parent.CheckState = CheckState.Unchecked
-    '                End If
-    '            End If
+    '        If ModoRadioButton AndAlso _NodoSeleccionado.Checked Then
+    '            Dim _RaizPrincipal As AdvTree.Node = Fx_ObtenerRaizPrincipal(_NodoSeleccionado)
+    '            Sb_DesmarcarNodosDeLaRaiz(_RaizPrincipal, _NodoSeleccionado)
+    '        End If
 
-    '        Else
+    '        If ModoCheckButton Or ModoRadioButton Then
 
-    '            If Not IsNothing(_NodoSeleccionado.Parent) Then
-    '                If _NodoSeleccionado.CheckState = CheckState.Indeterminate Then
-    '                    _NodoSeleccionado.Parent.CheckState = _NodoSeleccionado.CheckState
-    '                Else
+    '            If Not IsNothing(_NodoSeleccionado.Tag) AndAlso
+    '           CType(_NodoSeleccionado.Tag, DataRow).Item("Es_Seleccionable") Then
+
+    '                If _NodoSeleccionado.Checked Then
+    '                    If Not IsNothing(_NodoSeleccionado.Parent) Then
+    '                        _NodoSeleccionado.Parent.CheckState = CheckState.Indeterminate
+    '                    End If
+    '                ElseIf Not IsNothing(_NodoSeleccionado.Parent) Then
     '                    If Not RecorrerNodosYDetectarCheck(_NodoSeleccionado.Parent) Then
     '                        _NodoSeleccionado.Parent.CheckState = CheckState.Unchecked
     '                    End If
     '                End If
+
+    '            ElseIf Not IsNothing(_NodoSeleccionado.Parent) Then
+
+    '                If _NodoSeleccionado.CheckState = CheckState.Indeterminate Then
+    '                    _NodoSeleccionado.Parent.CheckState = CheckState.Indeterminate
+    '                ElseIf Not RecorrerNodosYDetectarCheck(_NodoSeleccionado.Parent) Then
+    '                    _NodoSeleccionado.Parent.CheckState = CheckState.Unchecked
+    '                End If
+
     '            End If
 
     '        End If
 
-    '    End If
+    '    Finally
+    '        _ProcesandoAfterCheck = False
+    '    End Try
 
     '    Me.Refresh()
 
@@ -1770,31 +1781,8 @@ Public Class Frm_Arbol_Lista
                 Sb_DesmarcarNodosDeLaRaiz(_RaizPrincipal, _NodoSeleccionado)
             End If
 
-            If ModoCheckButton Or ModoRadioButton Then
-
-                If Not IsNothing(_NodoSeleccionado.Tag) AndAlso
-               CType(_NodoSeleccionado.Tag, DataRow).Item("Es_Seleccionable") Then
-
-                    If _NodoSeleccionado.Checked Then
-                        If Not IsNothing(_NodoSeleccionado.Parent) Then
-                            _NodoSeleccionado.Parent.CheckState = CheckState.Indeterminate
-                        End If
-                    ElseIf Not IsNothing(_NodoSeleccionado.Parent) Then
-                        If Not RecorrerNodosYDetectarCheck(_NodoSeleccionado.Parent) Then
-                            _NodoSeleccionado.Parent.CheckState = CheckState.Unchecked
-                        End If
-                    End If
-
-                ElseIf Not IsNothing(_NodoSeleccionado.Parent) Then
-
-                    If _NodoSeleccionado.CheckState = CheckState.Indeterminate Then
-                        _NodoSeleccionado.Parent.CheckState = CheckState.Indeterminate
-                    ElseIf Not RecorrerNodosYDetectarCheck(_NodoSeleccionado.Parent) Then
-                        _NodoSeleccionado.Parent.CheckState = CheckState.Unchecked
-                    End If
-
-                End If
-
+            If ModoCheckButton OrElse ModoRadioButton Then
+                Sb_ActualizarEstadoPadres(_NodoSeleccionado.Parent)
             End If
 
         Finally
@@ -1802,6 +1790,34 @@ Public Class Frm_Arbol_Lista
         End Try
 
         Me.Refresh()
+
+    End Sub
+
+    Private Sub Sb_ActualizarEstadoPadres(_Nodo As AdvTree.Node)
+
+        Dim _NodoActual As AdvTree.Node = _Nodo
+
+        While _NodoActual IsNot Nothing
+
+            Dim _Fila As DataRow = TryCast(_NodoActual.Tag, DataRow)
+
+            If _Fila Is Nothing Then
+                Exit While
+            End If
+
+            If Fx_TieneSeleccionEnRama(_NodoActual) Then
+                _NodoActual.CheckState = CheckState.Indeterminate
+            Else
+                _NodoActual.CheckState = CheckState.Unchecked
+            End If
+
+            If Convert.ToInt32(_Fila.Item("Identificacdor_NodoPadre")) = 0 Then
+                Exit While
+            End If
+
+            _NodoActual = _NodoActual.Parent
+
+        End While
 
     End Sub
 

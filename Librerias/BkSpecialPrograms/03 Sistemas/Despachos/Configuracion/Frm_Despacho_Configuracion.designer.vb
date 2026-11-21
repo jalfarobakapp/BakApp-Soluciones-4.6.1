@@ -337,7 +337,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.Grupo_Tipo.Controls.Add(Me.Btn_Mant_Transportistas)
         Me.Grupo_Tipo.Controls.Add(Me.Btn_Mant_Tipo_Venta)
         Me.Grupo_Tipo.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Tipo.Location = New System.Drawing.Point(14, 378)
+        Me.Grupo_Tipo.Location = New System.Drawing.Point(14, 338)
         Me.Grupo_Tipo.Name = "Grupo_Tipo"
         Me.Grupo_Tipo.Size = New System.Drawing.Size(460, 94)
         '
@@ -457,7 +457,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(14, 14)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(460, 326)
+        Me.GroupPanel1.Size = New System.Drawing.Size(460, 318)
         '
         '
         '
@@ -781,8 +781,8 @@ Partial Class Frm_Despacho_Configuracion
         Me.Tabs.ControlBox.MenuBox.Name = ""
         Me.Tabs.ControlBox.Name = ""
         Me.Tabs.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tabs.ControlBox.MenuBox, Me.Tabs.ControlBox.CloseBox})
-        Me.Tabs.Controls.Add(Me.SuperTabControlPanel1)
         Me.Tabs.Controls.Add(Me.SuperTabControlPanel2)
+        Me.Tabs.Controls.Add(Me.SuperTabControlPanel1)
         Me.Tabs.ForeColor = System.Drawing.Color.Black
         Me.Tabs.Location = New System.Drawing.Point(12, 12)
         Me.Tabs.Name = "Tabs"
@@ -812,7 +812,7 @@ Partial Class Frm_Despacho_Configuracion
         '
         Me.Btn_Conf_Chilexpress.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Conf_Chilexpress.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Conf_Chilexpress.Location = New System.Drawing.Point(14, 507)
+        Me.Btn_Conf_Chilexpress.Location = New System.Drawing.Point(14, 478)
         Me.Btn_Conf_Chilexpress.Name = "Btn_Conf_Chilexpress"
         Me.Btn_Conf_Chilexpress.Size = New System.Drawing.Size(157, 23)
         Me.Btn_Conf_Chilexpress.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -824,7 +824,7 @@ Partial Class Frm_Despacho_Configuracion
         '
         Me.Btn_Conf_Imp_Letrero.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Conf_Imp_Letrero.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Conf_Imp_Letrero.Location = New System.Drawing.Point(14, 478)
+        Me.Btn_Conf_Imp_Letrero.Location = New System.Drawing.Point(14, 449)
         Me.Btn_Conf_Imp_Letrero.Name = "Btn_Conf_Imp_Letrero"
         Me.Btn_Conf_Imp_Letrero.Size = New System.Drawing.Size(157, 23)
         Me.Btn_Conf_Imp_Letrero.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -844,9 +844,9 @@ Partial Class Frm_Despacho_Configuracion
         Me.SuperTabControlPanel2.Controls.Add(Me.Btn_Correos)
         Me.SuperTabControlPanel2.Controls.Add(Me.GroupPanel2)
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 0)
+        Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(506, 573)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(506, 546)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
         '

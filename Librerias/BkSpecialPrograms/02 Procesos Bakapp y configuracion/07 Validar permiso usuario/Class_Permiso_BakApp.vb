@@ -1157,6 +1157,9 @@ Public Class Class_Permiso_BakApp
         _SqlQuery += Fx_Insertar_Permiso("ODp00017", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("ODp00018", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("ODp00019", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("ODp00020", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("ODp00021", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("ODp00022", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Com00001", _Objeto, _Formulario)
 
@@ -5116,6 +5119,21 @@ Public Class Class_Permiso_BakApp
 
             Case "ODp00019"
                 _DescripcionPermiso = "PODER MARCAR ENTREGA PALETIZADA"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DESPACHOS, 6)
+                _NombreFamiliaPermiso = _Fml.DESPACHOS.ToString
+
+            Case "ODp00020"
+                _DescripcionPermiso = "CREAR REGISTROS PARA COMUNAS A DESPACHAR CON SU CODIGO DE DESPACHO ASOCIADO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DESPACHOS, 6)
+                _NombreFamiliaPermiso = _Fml.DESPACHOS.ToString
+
+            Case "ODp00021"
+                _DescripcionPermiso = "CAMBIAR CODIGO DE DESPACHO ASOCIADO"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.DESPACHOS, 6)
+                _NombreFamiliaPermiso = _Fml.DESPACHOS.ToString
+
+            Case "ODp00022"
+                _DescripcionPermiso = "ELIMINAR REGISTRO DE COMUNAA A DESPACHAR CON SU CODIGO DE DESPACHO ASOCIADO"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.DESPACHOS, 6)
                 _NombreFamiliaPermiso = _Fml.DESPACHOS.ToString
 

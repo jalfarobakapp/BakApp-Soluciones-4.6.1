@@ -13,7 +13,7 @@ CREATE TABLE #Paso_Vista(
 
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('EMPRESA','EMPRESA','EMPRESA','Inf_Empresa') 
 
-Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('ENDO+SUENDO','RAZON','CLIENTES','Inf_Clientes')
+--Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('ENDO+SUENDO','RAZON','CLIENTES','Inf_Clientes')
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('SUDO','SUCURSAL','SUCURSAL EMISORA DOC. (Encabezado)','Inf_SucursalDoc') 
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('SULIDO','SUCURSALLIDO','SUCURSAL LINEA DOC. (Detalle)','Inf_Sucursales') 
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('BOSULIDO','BODEGA','BODEGA','Inf_Bodegas') 
@@ -29,22 +29,23 @@ Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('LV
 
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOLTPR','NOKOLTPR','LISTAS DE PRECIOS ASOC. DETALLE DOC.','Inf_ListaPr')                         
 
-Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOPRCT','NOKOPR','PRODUCTOS','Inf_Productos') 
+--Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOPRCT','NOKOPR','PRODUCTOS','Inf_Productos') 
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('FMPR','SUPER_FAMILIA','PRODUCTOS -> SUPER FAMILIAS','Inf_Super_Familias')                         
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('PFPR','FAMILIA','PRODUCTOS -> FAMILIAS','Inf_Familias')                         
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('HFPR','SUB_FAMILIA','PRODUCTOS -> SUB-FAMILIAS','Inf_SubFamilias')                         
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('MRPR','MARCA','PRODUCTOS -> MARCAS','Inf_Marcas')                         
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('RUPR','RUBRO_PR','PRODUCTOS -> RUBROS','Inf_Rubro_Pr')                         
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('CLALIBPR','CLAS_LIBRE','PRODUCTOS -> CLASIFICACION LIBRE','Inf_ClasLibre') 
---Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('CLAS_BAKAPP','CLASIFICACION_BAKAPP','Clasificación especial BakApp','Inf_Clas_Especial_Bk',15)                                                 
-Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('ZOPR','ZONA_PR','PRODUCTOS -> ZONAS','Inf_Zona_Pr')                         
 
+                                                
+Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('ZOPR','ZONA_PR','PRODUCTOS -> ZONAS','Inf_Zona_Pr')                         
 
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOFULIDO','VENDEDOR','VENDEDORES (DETALLE DEL DOCUMENTO)','Inf_Vendedores')                         
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOFUDO','FUNCIONARIO','RESPONSABLE DE DOCUMENTOS','Inf_Responzable')   
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOFUEN','VENDEDOR_ASIGNADO','VENDEDOR ASIGNADO AL CLIENTE','Inf_Vendedor_Asignado')                        
 
-Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('0','ARBOL_CLASIF','CLASIFICACIONES (BAKAPP)','Class_BakApp')                         
+Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('0','ARBOL_CLASIF','CLASIFICACIONES (BAKAPP) PRODUCTOS','Class_BakApp')                         
+Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('1','ARBOL_CLASIF','CLASIFICACIONES (BAKAPP) CLIENTES','Class_BakApp')                         
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('Mes+Ano','Mes_Ano','MES/AÑO','Inf_MesAno')                         
 
 Insert Into #Paso_Vista (CODIGO,DESCRIPCION,DESCRIPCION_VISTA,EXCEL) Values ('KOGRUDT','NOKOGRUDT','GRUPOS VENDEDOR DOCUMENTO','Inf_GrupoVendDoc') 

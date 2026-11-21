@@ -15,6 +15,8 @@ Public Class Frm_Despacho_DespCm
 
     Private Sub Frm_Despacho_DespCm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        AddHandler Grilla_Comunas.MouseDown, AddressOf Sb_Grilla_MouseDown
+
         Sb_Actualizar_Grilla()
 
     End Sub
@@ -75,6 +77,10 @@ Order By DCm.Pais,DCm.Ciudad,DCm.Comuna,DCm.CodDespacho
 
     Private Sub Btn_AgregarComuna_Click(sender As Object, e As EventArgs) Handles Btn_AgregarComuna.Click
 
+        If Not Fx_Tiene_Permiso(Me, "ODp00020") Then
+            Return
+        End If
+
         Dim _CodPais As String
         Dim _CodCiudad As String
         Dim _CodComuna As String
@@ -123,6 +129,117 @@ Insert Into {_Global_BaseBk}Zw_Despachos_DespCm (Empresa, Sucursal, Pais, Ciudad
 
         End If
 
+
+    End Sub
+
+    Private Sub Btn_Mnu_Editar_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Editar.Click
+
+        If Not Fx_Tiene_Permiso(Me, "ODp00021") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla_Comunas.CurrentRow
+
+        Dim _Id As Integer = _Fila.Cells("Id").Value
+        Dim _CodPais As String = _Fila.Cells("CodPais").Value
+        Dim _CodCiudad As String = _Fila.Cells("CodCiudad").Value
+        Dim _CodComuna As String = _Fila.Cells("CodComuna").Value
+        Dim _CodDespacho As String = _Fila.Cells("CodDespacho").Value
+
+        Dim _Filtrar As New Clas_Filtros_Random(Me)
+        Dim _Sql_Filtro_Condicion_Extra As String = $"And CLALIBPR = 'DESPACHOS' And KOPR <> '{_CodDespacho}'"
+        Dim _Row_Producto As DataRow
+
+        If _Filtrar.Fx_Filtrar(Nothing,
+                               Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra, False, False, True) Then
+
+            _Row_Producto = _Filtrar.Pro_Tbl_Filtro.Rows(0)
+
+            Dim _NewCodDespacho As String = _Row_Producto.Item("Codigo")
+            Dim _Descipcion As String = _Row_Producto.Item("Descripcion")
+
+            If _CodDespacho = _NewCodDespacho Then
+                MessageBoxEx.Show(Me, "Este producto ya esta asociado a esta comuna", "Validación",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return
+            End If
+
+            Consulta_Sql = $"
+Update {_Global_BaseBk}Zw_Despachos_DespCm
+Set 
+CodDespacho = '{_NewCodDespacho}'
+Where Id = {_Id}"
+
+            If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+
+                _Fila.Cells("CodDespcho").Value = _NewCodDespacho
+                _Fila.Cells("Descripcion").Value = _Descipcion
+
+                MessageBoxEx.Show(Me, "Código de despacho actualizado correctamente", "Cambiar código",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+            End If
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_Mnu_Eliminar_Click(sender As Object, e As EventArgs) Handles Btn_Mnu_Eliminar.Click
+
+        If Not Fx_Tiene_Permiso(Me, "ODp00022") Then
+            Return
+        End If
+
+        Dim _Fila As DataGridViewRow = Grilla_Comunas.CurrentRow
+
+        If _Fila Is Nothing Then
+            Return
+        End If
+
+        Dim _FilaDatos As DataRowView = TryCast(_Fila.DataBoundItem, DataRowView)
+        Dim _Id As Integer = Convert.ToInt32(_Fila.Cells("Id").Value)
+
+        If MessageBoxEx.Show(Me, "¿Confirma?", "Eliminar registro",
+                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Consulta_Sql = $"Delete From {_Global_BaseBk}Zw_Despachos_DespCm Where Id = {_Id}"
+
+        If _Sql.Ej_consulta_IDU(Consulta_Sql) Then
+
+            If _FilaDatos IsNot Nothing Then
+                _FilaDatos.Delete()
+            End If
+
+            MessageBoxEx.Show(Me, "Registro eliminado correctamente", "Eliminar registro",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+        End If
+
+    End Sub
+
+    Private Sub Sb_Grilla_MouseDown(sender As System.Object, e As System.Windows.Forms.MouseEventArgs)
+
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+
+            With sender
+
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+
+                    Dim _Fila As DataGridViewRow = Grilla_Comunas.CurrentRow
+
+                    ShowContextMenu(Menu_Contextual_01)
+
+                End If
+
+            End With
+
+        End If
 
     End Sub
 

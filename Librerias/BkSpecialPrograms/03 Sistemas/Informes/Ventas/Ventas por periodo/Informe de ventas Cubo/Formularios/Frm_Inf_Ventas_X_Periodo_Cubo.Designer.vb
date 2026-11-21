@@ -1172,6 +1172,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Btn_Filtrar_Clas_BakApp.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Btn_Filtrar_Clas_BakApp.TabIndex = 111
         Me.Btn_Filtrar_Clas_BakApp.Text = "Filtrar Clas. BakApp"
+        Me.Btn_Filtrar_Clas_BakApp.Visible = False
         '
         'Btn_Filtrar_Funcionarios
         '
@@ -1388,6 +1389,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Rdb_Ver_Clientes.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Ver_Clientes.TabIndex = 6
         Me.Rdb_Ver_Clientes.Text = "Clientes"
+        Me.Rdb_Ver_Clientes.Visible = False
         '
         'Rdb_Ver_documentos
         '
@@ -1404,6 +1406,7 @@ Partial Class Frm_Inf_Ventas_X_Periodo_Cubo
         Me.Rdb_Ver_documentos.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
         Me.Rdb_Ver_documentos.TabIndex = 5
         Me.Rdb_Ver_documentos.Text = "Documentos"
+        Me.Rdb_Ver_documentos.Visible = False
         '
         'Chk_Incluir_Conceptos
         '

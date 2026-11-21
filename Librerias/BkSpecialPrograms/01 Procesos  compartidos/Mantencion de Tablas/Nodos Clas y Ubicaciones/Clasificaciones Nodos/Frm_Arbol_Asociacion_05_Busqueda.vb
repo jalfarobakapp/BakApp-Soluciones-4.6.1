@@ -1,4 +1,4 @@
-﻿'Imports Lib_Bakapp_VarClassFunc
+﻿Imports System.Collections.Generic
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Arbol_Asociacion_05_Busqueda
@@ -26,7 +26,8 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
     Dim _Sql_Arbol As String
     Dim _Aceptar As Boolean
 
-    'Dim _Mostrar_Solo_Clas_Unicas As Boolean
+    Public Property ModoEntidades As Boolean
+    Public Property Mostrar_Hijos_Seleccionables() As Boolean
 
     Enum Enum_Tipo_De_Carpeta
         Clas_Unica_Hijos
@@ -106,7 +107,7 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
         InitializeComponent()
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
-        Sb_Formato_Generico_Grilla(Grilla, 18, New Font("Courier New", 9), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
+        Sb_Formato_Generico_Grilla(Grilla, 20, New Font("Courier New", 9), Color.AliceBlue, ScrollBars.Vertical, True, True, False)
 
         _Seleccionar_Varios = Seleccionar_Varios
         _Tipo_De_Carpeta_Mostrar = Tipo_De_Carpeta_Mostrar
@@ -259,7 +260,7 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
     End Function
 
-    Sub Sb_Actualizar_Grilla()
+    Sub Sb_Actualizar_Grilla_Old()
 
         Me.Cursor = Cursors.WaitCursor
 
@@ -365,6 +366,269 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
 
     End Sub
 
+    Private Sub Sb_Actualizar_Grilla()
+
+        Me.Cursor = Cursors.WaitCursor
+
+        Try
+            Dim _Solo_Hijos As Boolean = False
+            Dim _Solo_Padres As Boolean = False
+            Dim _Filtro_Clasificacion As String = String.Empty
+
+            Select Case _Tipo_De_Carpeta_Mostrar
+
+                Case Enum_Tipo_De_Carpeta.Clas_Unica_Hijos,
+                 Enum_Tipo_De_Carpeta.Clas_Unica_Padres,
+                 Enum_Tipo_De_Carpeta.Clas_Unica_Ambas
+
+                    _Filtro_Clasificacion = $"And ParaEntidad = {Convert.ToInt32(ModoEntidades)} And Clas_Unica_X_Producto = 1"
+
+                Case Enum_Tipo_De_Carpeta.Clas_Filtro_Hijos,
+                 Enum_Tipo_De_Carpeta.Clas_Filtro_Padres,
+                 Enum_Tipo_De_Carpeta.Clas_Filtro_Ambas
+
+                    _Filtro_Clasificacion = $"And ParaEntidad = {Convert.ToInt32(ModoEntidades)} And Clas_Unica_X_Producto = 0"
+
+                Case Enum_Tipo_De_Carpeta.Clas_Unica_Padres_Seleccion
+
+                    _Filtro_Clasificacion = $"And ParaEntidad = {Convert.ToInt32(ModoEntidades)} And Clas_Unica_X_Producto = 1 And Es_Seleccionable = 0"
+
+            End Select
+
+            Select Case _Tipo_De_Carpeta_Mostrar
+
+                Case Enum_Tipo_De_Carpeta.Clas_Unica_Hijos,
+                     Enum_Tipo_De_Carpeta.Clas_Filtro_Hijos
+                    _Solo_Hijos = True
+
+                Case Enum_Tipo_De_Carpeta.Clas_Unica_Padres,
+                     Enum_Tipo_De_Carpeta.Clas_Filtro_Padres,
+                     Enum_Tipo_De_Carpeta.Clas_Unica_Padres_Seleccion
+                    _Solo_Padres = True
+
+                Case Enum_Tipo_De_Carpeta.Clas_Unica_Ambas,
+                     Enum_Tipo_De_Carpeta.Clas_Filtro_Ambas,
+                     Enum_Tipo_De_Carpeta.Todas
+                    _Solo_Hijos = True
+                    _Solo_Padres = True
+
+            End Select
+
+            Consulta_sql = "Select Codigo_Nodo,Identificacdor_NodoPadre,Descripcion," & vbCrLf &
+                       "Es_Seleccionable,Clas_Unica_X_Producto,Nodo_Raiz" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones" & vbCrLf &
+                       "Where 1 > 0 " & _Filtro_Clasificacion & vbCrLf &
+                       "Order By Descripcion"
+
+            Dim _TblNodos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            If _TblNodos Is Nothing Then Return
+
+            Dim _HijosPorPadre As New Dictionary(Of Integer, List(Of DataRow))
+
+            For Each _Fila As DataRow In _TblNodos.Rows
+
+                Dim _IdPadre As Integer = Convert.ToInt32(_Fila("Identificacdor_NodoPadre"))
+                Dim _Hijos As List(Of DataRow) = Nothing
+
+                If Not _HijosPorPadre.TryGetValue(_IdPadre, _Hijos) Then
+                    _Hijos = New List(Of DataRow)
+                    _HijosPorPadre.Add(_IdPadre, _Hijos)
+                End If
+
+                _Hijos.Add(_Fila)
+
+            Next
+
+            Dim _CodigosSeleccionados As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+
+            If _Tbl_Nodos_Seleccionados IsNot Nothing Then
+                For Each _FilaSeleccionada As DataRow In _Tbl_Nodos_Seleccionados.Rows
+
+                    If _FilaSeleccionada.RowState = DataRowState.Deleted Then Continue For
+
+                    If Not IsDBNull(_FilaSeleccionada("Chk")) AndAlso
+                   Convert.ToBoolean(_FilaSeleccionada("Chk")) Then
+
+                        _CodigosSeleccionados.Add(
+                        _FilaSeleccionada("Codigo_Nodo").ToString().Trim())
+
+                    End If
+
+                Next
+            End If
+
+            Dim _FiltrarSeleccionados As Boolean =
+            Not _Seleccionar_Varios AndAlso
+            Not _Seleccionar_Todo AndAlso
+            _Tbl_Nodos_Seleccionados IsNot Nothing AndAlso
+            _Tbl_Nodos_Seleccionados.Rows.Count > 0
+
+            Dim _TblVista As New DataTable("TablaVista")
+
+            Dim _ColumnaId As DataColumn = _TblVista.Columns.Add("Id", GetType(Integer))
+            _ColumnaId.AutoIncrement = True
+            _ColumnaId.AutoIncrementSeed = 1
+            _ColumnaId.AutoIncrementStep = 1
+
+            _TblVista.Columns.Add("Chk", GetType(Boolean))
+
+            Dim _ColumnaCodigo As DataColumn =
+            _TblVista.Columns.Add("Codigo_Nodo", GetType(String))
+            _ColumnaCodigo.MaxLength = 10
+
+            _TblVista.Columns.Add("Identificacdor_NodoPadre", GetType(Integer))
+
+            Dim _ColumnaDescripcion As DataColumn =
+            _TblVista.Columns.Add("Descripcion", GetType(String))
+            _ColumnaDescripcion.MaxLength = 200
+
+            _TblVista.Columns.Add("Es_Padre", GetType(Boolean))
+            _TblVista.Columns.Add("Es_Seleccionable", GetType(Boolean))
+            _TblVista.Columns.Add("Clas_Unica_X_Producto", GetType(Boolean))
+            _TblVista.Columns.Add("Nodo_Raiz", GetType(Integer))
+
+            Dim _ColumnaFullPath As DataColumn =
+            _TblVista.Columns.Add("Full_Path", GetType(String))
+            _ColumnaFullPath.MaxLength = 500
+
+            Dim _ColumnaSemiPath As DataColumn =
+            _TblVista.Columns.Add("Semi_Path", GetType(String))
+            _ColumnaSemiPath.MaxLength = 500
+
+            _TblVista.Columns.Add("Nro_Padres", GetType(Integer))
+
+            Sb_Agregar_Hijos(
+            _Identificacdor_NodoPadre,
+            String.Empty,
+            0,
+            _HijosPorPadre,
+            _TblVista,
+            _Solo_Hijos,
+            _Solo_Padres,
+            _CodigosSeleccionados,
+            _FiltrarSeleccionados)
+
+            _Dv.Table = _TblVista
+            _Dv.Sort = "Clas_Unica_X_Producto ASC, Id ASC"
+            _Tbl_Vista_Informe = _TblVista
+
+            With Grilla
+
+                .DataSource = _Dv
+
+                OcultarEncabezadoGrilla(Grilla, True)
+
+                Grilla.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing
+                Grilla.ColumnHeadersHeight = 26
+
+                Dim _Wi As Integer = 0
+
+                If _Seleccionar_Varios Then
+                    .Columns("Chk").Width = 30
+                    .Columns("Chk").HeaderText = "Sel."
+                    .Columns("Chk").ReadOnly = False
+                    .Columns("Chk").Visible = True
+                    _Wi = 30
+                End If
+
+                Select Case _Tipo_De_Carpeta_Mostrar
+
+                    Case Enum_Tipo_De_Carpeta.Clas_Filtro_Hijos,
+                     Enum_Tipo_De_Carpeta.Clas_Filtro_Padres,
+                     Enum_Tipo_De_Carpeta.Clas_Unica_Hijos,
+                     Enum_Tipo_De_Carpeta.Clas_Unica_Padres
+
+                        .Columns("Full_Path").Width = 660 - _Wi
+                        .Columns("Full_Path").HeaderText = "Descripción"
+                        .Columns("Full_Path").ReadOnly = True
+                        .Columns("Full_Path").Visible = True
+
+                    Case Else
+
+                        .Columns("Semi_Path").Width = 660 - _Wi
+                        .Columns("Semi_Path").HeaderText = "Descripción"
+                        .Columns("Semi_Path").ReadOnly = True
+                        .Columns("Semi_Path").Visible = True
+
+                End Select
+
+            End With
+
+            Sb_Marcar_Grilla()
+
+        Finally
+            Me.Cursor = Cursors.Default
+        End Try
+
+    End Sub
+
+    Private Sub Sb_Agregar_Hijos(ByVal _CodigoNodoPadre As Integer,
+                             ByVal _FullPathPadre As String,
+                             ByVal _NroPadres As Integer,
+                             ByVal _HijosPorPadre As Dictionary(Of Integer, List(Of DataRow)),
+                             ByVal _TblVista As DataTable,
+                             ByVal _SoloHijos As Boolean,
+                             ByVal _SoloPadres As Boolean,
+                             ByVal _CodigosSeleccionados As HashSet(Of String),
+                             ByVal _FiltrarSeleccionados As Boolean)
+
+        Dim _Hijos As List(Of DataRow) = Nothing
+
+        If Not _HijosPorPadre.TryGetValue(_CodigoNodoPadre, _Hijos) Then Return
+
+        For Each _Fila As DataRow In _Hijos
+
+            Dim _CodigoNodo As String = _Fila("Codigo_Nodo").ToString().Trim()
+            Dim _Descripcion As String =
+            If(IsDBNull(_Fila("Descripcion")), String.Empty, _Fila("Descripcion").ToString())
+
+            Dim _EsSeleccionable As Boolean =
+            Convert.ToBoolean(_Fila("Es_Seleccionable"))
+
+            Dim _ClasUnica As Boolean =
+            Convert.ToBoolean(_Fila("Clas_Unica_X_Producto"))
+
+            Dim _AgregarFila As Boolean = (_SoloPadres OrElse (_SoloHijos AndAlso _EsSeleccionable)) AndAlso (Mostrar_Hijos_Seleccionables OrElse Not _EsSeleccionable)
+
+            If _AgregarFila AndAlso
+           (Not _FiltrarSeleccionados OrElse _CodigosSeleccionados.Contains(_CodigoNodo)) Then
+
+                Dim _NuevaFila As DataRow = _TblVista.NewRow()
+
+                _NuevaFila("Chk") =
+                _Seleccionar_Todo OrElse _CodigosSeleccionados.Contains(_CodigoNodo)
+                _NuevaFila("Codigo_Nodo") = _CodigoNodo
+                _NuevaFila("Identificacdor_NodoPadre") =
+                Convert.ToInt32(_Fila("Identificacdor_NodoPadre"))
+                _NuevaFila("Descripcion") = _Descripcion
+                _NuevaFila("Es_Padre") = _HijosPorPadre.ContainsKey(Convert.ToInt32(_CodigoNodo))
+                _NuevaFila("Es_Seleccionable") = _EsSeleccionable
+                _NuevaFila("Clas_Unica_X_Producto") = _ClasUnica
+                _NuevaFila("Nodo_Raiz") = Convert.ToInt32(_Fila("Nodo_Raiz"))
+                _NuevaFila("Full_Path") = _FullPathPadre & "\" & _Descripcion
+                _NuevaFila("Semi_Path") = Space((_NroPadres * 2) + 1) & _Descripcion
+                _NuevaFila("Nro_Padres") = _NroPadres
+
+                _TblVista.Rows.Add(_NuevaFila)
+
+            End If
+
+            Sb_Agregar_Hijos(
+            Convert.ToInt32(_CodigoNodo),
+            _FullPathPadre & "\" & _Descripcion,
+            _NroPadres + 1,
+            _HijosPorPadre,
+            _TblVista,
+            _SoloHijos,
+            _SoloPadres,
+            _CodigosSeleccionados,
+            _FiltrarSeleccionados)
+
+        Next
+
+    End Sub
+
     Sub Sb_Marcar_Grilla()
         For Each _Fila As DataGridViewRow In Grilla.Rows
             Sb_Marcar_Fila(_Fila)
@@ -419,6 +683,22 @@ Public Class Frm_Arbol_Asociacion_05_Busqueda
             End If
 
         End If
+
+        Dim _EsPadre As Boolean = Convert.ToBoolean(_Fila.Cells("Es_Padre").Value)
+
+        Dim _Estilo As FontStyle = If(_EsPadre, FontStyle.Bold, FontStyle.Regular)
+
+        If _Seleccionar_Varios AndAlso Convert.ToBoolean(_Fila.Cells("Es_Seleccionable").Value) Then
+            _Estilo = _Estilo Or FontStyle.Italic
+        End If
+
+        Dim _Tamano As Single = Grilla.Font.Size
+
+        If _Seleccionar_Varios Then
+            _Tamano = If(Convert.ToBoolean(_Fila.Cells("Es_Seleccionable").Value), 8.0F, 10.0F)
+        End If
+
+        _Fila.DefaultCellStyle.Font = New Font(Grilla.Font.FontFamily, _Tamano, _Estilo)
 
     End Sub
 

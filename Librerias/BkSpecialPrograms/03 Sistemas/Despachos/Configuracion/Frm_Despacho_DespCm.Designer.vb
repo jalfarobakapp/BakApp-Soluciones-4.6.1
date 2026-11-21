@@ -23,17 +23,21 @@ Partial Class Frm_Despacho_DespCm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Despacho_DespCm))
-        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
-        Me.Btn_Grabar_Configuracion = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_AgregarComuna = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel4 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.Grilla_Comunas = New DevComponents.DotNetBar.Controls.DataGridViewX()
-        Me.Btn_AgregarComuna = New DevComponents.DotNetBar.ButtonItem()
+        Me.ContextMenuBar1 = New DevComponents.DotNetBar.ContextMenuBar()
+        Me.Menu_Contextual_01 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Editar = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_Mnu_Eliminar = New DevComponents.DotNetBar.ButtonItem()
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupPanel4.SuspendLayout()
         CType(Me.Grilla_Comunas, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'Bar2
@@ -41,7 +45,7 @@ Partial Class Frm_Despacho_DespCm
         Me.Bar2.AntiAlias = True
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
-        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Configuracion, Me.Btn_AgregarComuna})
+        Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_AgregarComuna})
         Me.Bar2.Location = New System.Drawing.Point(0, 437)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(818, 41)
@@ -51,19 +55,20 @@ Partial Class Frm_Despacho_DespCm
         Me.Bar2.TabStop = False
         Me.Bar2.Text = "Bar2"
         '
-        'Btn_Grabar_Configuracion
+        'Btn_AgregarComuna
         '
-        Me.Btn_Grabar_Configuracion.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_Grabar_Configuracion.ForeColor = System.Drawing.Color.Black
-        Me.Btn_Grabar_Configuracion.Image = CType(resources.GetObject("Btn_Grabar_Configuracion.Image"), System.Drawing.Image)
-        Me.Btn_Grabar_Configuracion.ImageAlt = CType(resources.GetObject("Btn_Grabar_Configuracion.ImageAlt"), System.Drawing.Image)
-        Me.Btn_Grabar_Configuracion.Name = "Btn_Grabar_Configuracion"
-        Me.Btn_Grabar_Configuracion.Tooltip = "Configuración Impresora/salidas de impresión letrero"
+        Me.Btn_AgregarComuna.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
+        Me.Btn_AgregarComuna.ForeColor = System.Drawing.Color.Black
+        Me.Btn_AgregarComuna.Image = CType(resources.GetObject("Btn_AgregarComuna.Image"), System.Drawing.Image)
+        Me.Btn_AgregarComuna.ImageAlt = CType(resources.GetObject("Btn_AgregarComuna.ImageAlt"), System.Drawing.Image)
+        Me.Btn_AgregarComuna.Name = "Btn_AgregarComuna"
+        Me.Btn_AgregarComuna.Tooltip = "Configuración Impresora/salidas de impresión letrero"
         '
         'GroupPanel4
         '
         Me.GroupPanel4.BackColor = System.Drawing.Color.White
         Me.GroupPanel4.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel4.Controls.Add(Me.ContextMenuBar1)
         Me.GroupPanel4.Controls.Add(Me.Grilla_Comunas)
         Me.GroupPanel4.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel4.Location = New System.Drawing.Point(12, 12)
@@ -105,49 +110,74 @@ Partial Class Frm_Despacho_DespCm
         Me.Grilla_Comunas.AllowUserToAddRows = False
         Me.Grilla_Comunas.AllowUserToDeleteRows = False
         Me.Grilla_Comunas.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Comunas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Comunas.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.Grilla_Comunas.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Comunas.DefaultCellStyle = DataGridViewCellStyle5
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Comunas.DefaultCellStyle = DataGridViewCellStyle2
         Me.Grilla_Comunas.Dock = System.Windows.Forms.DockStyle.Fill
         Me.Grilla_Comunas.EnableHeadersVisualStyles = False
         Me.Grilla_Comunas.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Comunas.Location = New System.Drawing.Point(0, 0)
         Me.Grilla_Comunas.Name = "Grilla_Comunas"
         Me.Grilla_Comunas.ReadOnly = True
-        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Comunas.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Comunas.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
         Me.Grilla_Comunas.Size = New System.Drawing.Size(789, 392)
         Me.Grilla_Comunas.StandardTab = True
         Me.Grilla_Comunas.TabIndex = 27
         '
-        'Btn_AgregarComuna
+        'ContextMenuBar1
         '
-        Me.Btn_AgregarComuna.ButtonStyle = DevComponents.DotNetBar.eButtonStyle.ImageAndText
-        Me.Btn_AgregarComuna.ForeColor = System.Drawing.Color.Black
-        Me.Btn_AgregarComuna.Image = CType(resources.GetObject("Btn_AgregarComuna.Image"), System.Drawing.Image)
-        Me.Btn_AgregarComuna.ImageAlt = CType(resources.GetObject("Btn_AgregarComuna.ImageAlt"), System.Drawing.Image)
-        Me.Btn_AgregarComuna.Name = "Btn_AgregarComuna"
-        Me.Btn_AgregarComuna.Tooltip = "Configuración Impresora/salidas de impresión letrero"
+        Me.ContextMenuBar1.AntiAlias = True
+        Me.ContextMenuBar1.Font = New System.Drawing.Font("Segoe UI", 9.0!)
+        Me.ContextMenuBar1.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Menu_Contextual_01})
+        Me.ContextMenuBar1.Location = New System.Drawing.Point(329, 184)
+        Me.ContextMenuBar1.Name = "ContextMenuBar1"
+        Me.ContextMenuBar1.Size = New System.Drawing.Size(130, 25)
+        Me.ContextMenuBar1.Stretch = True
+        Me.ContextMenuBar1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.ContextMenuBar1.TabIndex = 125
+        Me.ContextMenuBar1.TabStop = False
+        Me.ContextMenuBar1.Text = "ContextMenuBar1"
+        '
+        'Menu_Contextual_01
+        '
+        Me.Menu_Contextual_01.AutoExpandOnClick = True
+        Me.Menu_Contextual_01.Name = "Menu_Contextual_01"
+        Me.Menu_Contextual_01.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Mnu_Editar, Me.Btn_Mnu_Eliminar})
+        Me.Menu_Contextual_01.Text = "Opciones"
+        '
+        'Btn_Mnu_Editar
+        '
+        Me.Btn_Mnu_Editar.Image = CType(resources.GetObject("Btn_Mnu_Editar.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Editar.Name = "Btn_Mnu_Editar"
+        Me.Btn_Mnu_Editar.Text = "Cambiar producto"
+        '
+        'Btn_Mnu_Eliminar
+        '
+        Me.Btn_Mnu_Eliminar.Image = CType(resources.GetObject("Btn_Mnu_Eliminar.Image"), System.Drawing.Image)
+        Me.Btn_Mnu_Eliminar.ImageAlt = CType(resources.GetObject("Btn_Mnu_Eliminar.ImageAlt"), System.Drawing.Image)
+        Me.Btn_Mnu_Eliminar.Name = "Btn_Mnu_Eliminar"
+        Me.Btn_Mnu_Eliminar.Text = "Eliminar comuna destino"
         '
         'Frm_Despacho_DespCm
         '
@@ -168,13 +198,17 @@ Partial Class Frm_Despacho_DespCm
         CType(Me.Bar2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupPanel4.ResumeLayout(False)
         CType(Me.Grilla_Comunas, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
 
     Friend WithEvents Bar2 As DevComponents.DotNetBar.Bar
-    Friend WithEvents Btn_Grabar_Configuracion As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents GroupPanel4 As DevComponents.DotNetBar.Controls.GroupPanel
     Friend WithEvents Grilla_Comunas As DevComponents.DotNetBar.Controls.DataGridViewX
     Friend WithEvents Btn_AgregarComuna As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents ContextMenuBar1 As DevComponents.DotNetBar.ContextMenuBar
+    Friend WithEvents Menu_Contextual_01 As DevComponents.DotNetBar.ButtonItem
+    Public WithEvents Btn_Mnu_Editar As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_Mnu_Eliminar As DevComponents.DotNetBar.ButtonItem
 End Class
