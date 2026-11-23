@@ -713,6 +713,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Cl_Arbol_Asociaciones.vb" />
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_04_Entidades_x_class.Designer.vb">
+      <DependentUpon>Frm_Arbol_Asociacion_04_Entidades_x_class.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_04_Entidades_x_class.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_06_CrearEditar.Designer.vb">
       <DependentUpon>Frm_Arbol_Asociacion_06_CrearEditar.vb</DependentUpon>
     </Compile>
@@ -4959,6 +4965,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Monedas\Frm_MonedasLista.resx">
       <DependentUpon>Frm_MonedasLista.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_04_Entidades_x_class.resx">
+      <DependentUpon>Frm_Arbol_Asociacion_04_Entidades_x_class.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_06_CrearEditar.resx">
       <DependentUpon>Frm_Arbol_Asociacion_06_CrearEditar.vb</DependentUpon>

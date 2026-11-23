@@ -1,5 +1,4 @@
 ﻿Imports System.Windows.Forms.DataVisualization.Charting
-'Imports BkSpecialPrograms.Frm_BkpPostBusquedaEspecial_Mt
 Imports DevComponents.DotNetBar
 
 Public Class Frm_Inf_Ventas_X_Periodo_Cubo
@@ -627,12 +626,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             'If Fx_Tiene_Permiso(Nothing, "NO00021",, False) Then
 
-            '_Filtro_Vendedores_Asignados_Todas = False
             _Filtro_Vendedores_Todas = False
-
-            'Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
-            '               "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
-            '_Tbl_Filtro_Vendedores_Asignados = _Sql.Fx_Get_DataTable(Consulta_sql)
 
             Consulta_sql = "Select Cast(1 As Bit) As Chk,KOFU As Codigo, NOKOFU as Descripcion" & vbCrLf &
                "From TABFU Where KOFU = '" & FUNCIONARIO & "'"
@@ -734,8 +728,11 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
         Super_Tab.SelectedTabIndex = 2
 
-        Btn_Atras.Enabled = False
-        Btn_Vista_Informe.Enabled = Btn_Atras.Enabled
+        'Btn_Atras.Enabled = False
+        'Btn_Vista_Informe.Enabled = Btn_Atras.Enabled
+
+        Txt_Vista_Informe.ButtonCustom.Enabled = True
+        Txt_Vista_Informe.ButtonCustom2.Enabled = False
 
         Dim _Row_Fechas As DataRow
 
@@ -1269,7 +1266,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             Sb_Marcar_Grafico_Barras(_Tbl_Informe.Rows(0).Item("CODIGO"))
             Sb_Imagenes_Filtros()
 
-            Btn_Atras.Enabled = _ARBOL_BAKAPP
+            'Btn_Atras.Enabled = _ARBOL_BAKAPP
+            Txt_Vista_Informe.ButtonCustom2.Enabled = _ARBOL_BAKAPP
 
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Error al generar informe", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -1286,7 +1284,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
     End Sub
 
-    Sub Sb_Actualizar_Grilla(_Actualizar_Datos_Informe As Boolean)
+    Sub Sb_Actualizar_Grilla(_Actualizar_Datos_Informe As Boolean,
+                             Optional _Codigo_Nodo_Sel As Integer = 0)
 
         Dim _Codigo As String
 
@@ -1385,12 +1384,31 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             Dim _ARBOL_BAKAPP As Boolean = _Row_Vista.Item("ARBOL_BAKAPP")
 
             If _ARBOL_BAKAPP Then
+
+                Dim _Row_Arbol As DataRow = CType(Txt_Vista_Informe.Tag, DataRow)
+
+                Dim _Codigo_Nodo As Integer = 0
+                Dim _Identificacdor_NodoPadre As Integer = 0
+                Dim _ArbolPadre As String = _Row_Vista.Item("DESCRIPCION_VISTA")
+
                 If _Codigo = 1 Then
                     _Codigo = 0
                 End If
-            End If
 
-            Txt_Vista_Informe.Text = _Row_Vista.Item("CODIGO") & " - " & _Row_Vista.Item("DESCRIPCION_VISTA")
+                If _Codigo_Nodo_Sel <> 0 Then
+                    _Codigo_Nodo = _Row_Arbol.Item("Codigo_Nodo")
+                    _Identificacdor_NodoPadre = _Row_Arbol.Item("Identificacdor_NodoPadre")
+                    _ArbolPadre = "...\" & _Row_Arbol.Item("ArbolPadre")
+                    If CBool(_Codigo_Nodo_Sel) Then
+                        _Codigo = _Codigo_Nodo_Sel
+                    End If
+                End If
+
+                Txt_Vista_Informe.Text = _ArbolPadre
+
+            Else
+                Txt_Vista_Informe.Text = _Row_Vista.Item("CODIGO") & " - " & _Row_Vista.Item("DESCRIPCION_VISTA")
+            End If
 
             Dim _Campo_Mostrar, _Cabecera_Mostrar, _Formato_Campo As String
 
@@ -1600,7 +1618,8 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
             Sb_Marcar_Grafico_Barras(_Tbl_Informe.Rows(0).Item("CODIGO"))
             Sb_Imagenes_Filtros()
 
-            Btn_Atras.Enabled = _ARBOL_BAKAPP
+            'Btn_Atras.Enabled = _ARBOL_BAKAPP
+            Txt_Vista_Informe.ButtonCustom2.Enabled = _ARBOL_BAKAPP
 
         Catch ex As Exception
             MessageBoxEx.Show(Me, ex.Message, "Error al generar informe", MessageBoxButtons.OK, MessageBoxIcon.Stop)
@@ -1628,6 +1647,30 @@ Public Class Frm_Inf_Ventas_X_Periodo_Cubo
 
             _SqlQuery = $"
 DECLARE @NodoPadre INT = {_NodoPadre}
+
+DECLARE @MostrarSinClasificar BIT = 0
+
+IF @NodoPadre = 0
+    SET @MostrarSinClasificar = 1
+
+IF EXISTS
+(
+    SELECT 1
+    FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones
+    WHERE Codigo_Nodo = @NodoPadre
+      AND Identificacdor_NodoPadre = 0
+)
+    SET @MostrarSinClasificar = 1
+
+IF EXISTS
+(
+    SELECT 1
+    FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones
+    WHERE Codigo_Nodo = @NodoPadre
+      AND Identificacdor_NodoPadre > 0
+)
+    SET @MostrarSinClasificar = 1
+
 
 ;WITH Ventas AS
 (
@@ -1661,21 +1704,108 @@ Clasificacion AS
         N.Codigo_Nodo,
         N.Descripcion
 
-    UNION ALL
+UNION ALL
 
-    SELECT
-        0 AS Codigo_Nodo,
-        'SIN CLASIFICAR' AS Descripcion,
-        SUM(V.TotalVenta) AS TOTAL
-    FROM Ventas V
-    WHERE @NodoPadre = 0
-      AND NOT EXISTS
-      (
+SELECT
+    0 AS Codigo_Nodo,
+    'SIN CLASIFICAR' AS Descripcion,
+
+    CASE
+
+        -- NIVEL 0
+        WHEN @NodoPadre = 0 THEN
+
+            (
+                SELECT SUM(V.TotalVenta)
+                FROM Ventas V
+                WHERE NOT EXISTS
+                (
+                    SELECT 1
+                    FROM {_Global_BaseBk}Zw_Prod_Asociacion PA
+                    WHERE PA.Codigo = V.KOPRCT
+                      AND PA.Para_filtro = 1
+                )
+            )
+
+        -- NIVEL 1 (RAICES)
+        WHEN EXISTS
+        (
             SELECT 1
-            FROM {_Global_BaseBk}Zw_Prod_Asociacion PA
-            WHERE PA.Codigo = V.KOPRCT
-              AND PA.Para_filtro = 1
-      )
+            FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones
+            WHERE Codigo_Nodo = @NodoPadre
+              AND Identificacdor_NodoPadre = 0
+        )
+        THEN
+
+            (
+                SELECT SUM(TotalVenta)
+                FROM Ventas
+            )
+            -
+            (
+                SELECT ISNULL(SUM(TOTAL),0)
+                FROM
+                (
+                    SELECT
+                        N.Codigo_Nodo,
+                        SUM(ISNULL(V.TotalVenta,0)) AS TOTAL
+                    FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones N
+
+                        LEFT JOIN {_Global_BaseBk}Zw_Prod_Asociacion PA
+                            ON PA.Codigo_Nodo = N.Codigo_Nodo
+
+                        LEFT JOIN Ventas V
+                            ON V.KOPRCT = PA.Codigo
+
+                    WHERE N.Identificacdor_NodoPadre = @NodoPadre
+                      AND N.Clas_Unica_X_Producto = 1
+                      AND N.ParaEntidad = 0
+
+                    GROUP BY N.Codigo_Nodo
+                ) X
+            )
+
+        -- NIVEL 2+
+        ELSE
+
+            (
+                SELECT SUM(V.TotalVenta)
+                FROM Ventas V
+                WHERE EXISTS
+                (
+                    SELECT 1
+                    FROM {_Global_BaseBk}Zw_Prod_Asociacion PA
+                    WHERE PA.Codigo = V.KOPRCT
+                      AND PA.Codigo_Nodo = @NodoPadre
+                )
+            )
+            -
+            (
+                SELECT ISNULL(SUM(TOTAL),0)
+                FROM
+                (
+                    SELECT
+                        N.Codigo_Nodo,
+                        SUM(ISNULL(V.TotalVenta,0)) AS TOTAL
+                    FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones N
+
+                        LEFT JOIN {_Global_BaseBk}Zw_Prod_Asociacion PA
+                            ON PA.Codigo_Nodo = N.Codigo_Nodo
+
+                        LEFT JOIN Ventas V
+                            ON V.KOPRCT = PA.Codigo
+
+                    WHERE N.Identificacdor_NodoPadre = @NodoPadre
+                      AND N.Clas_Unica_X_Producto = 1
+                      AND N.ParaEntidad = 0
+
+                    GROUP BY N.Codigo_Nodo
+                ) X
+            )
+
+    END AS TOTAL
+
+WHERE @MostrarSinClasificar = 1
 )
 
 SELECT
@@ -1709,6 +1839,32 @@ DROP TABLE #Paso1
 
             _SqlQuery = $"
 DECLARE @NodoPadre INT = {_NodoPadre}
+
+DECLARE @MostrarSinClasificar BIT = 0
+
+-- Nivel 0
+IF @NodoPadre = 0
+    SET @MostrarSinClasificar = 1
+
+-- Nivel 1 (Nodo raíz)
+IF EXISTS
+(
+    SELECT 1
+    FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones
+    WHERE Codigo_Nodo = @NodoPadre
+      AND Identificacdor_NodoPadre = 0
+)
+    SET @MostrarSinClasificar = 1
+
+-- Nivel 2+
+IF EXISTS
+(
+    SELECT 1
+    FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones
+    WHERE Codigo_Nodo = @NodoPadre
+      AND Identificacdor_NodoPadre > 0
+)
+    SET @MostrarSinClasificar = 1
 
 ;WITH Ventas AS
 (
@@ -1745,22 +1901,109 @@ Clasificacion AS
         N.Codigo_Nodo,
         N.Descripcion
 
-    UNION ALL
+UNION ALL
 
-    SELECT
-        0 AS Codigo_Nodo,
-        'SIN CLASIFICAR' AS Descripcion,
-        SUM(V.TotalVenta) AS TOTAL
-    FROM Ventas V
-    WHERE @NodoPadre = 0
-      AND NOT EXISTS
-      (
+SELECT
+    0,
+    'SIN CLASIFICAR',
+
+    CASE
+
+        -- NIVEL 0
+        WHEN @NodoPadre = 0 THEN
+
+            (
+                SELECT SUM(V.TotalVenta)
+                FROM Ventas V
+                WHERE NOT EXISTS
+                (
+                    SELECT 1
+                    FROM {_Global_BaseBk}Zw_Entidades_Asociacion EA
+                    WHERE EA.CodEntidad    = V.ENDO
+                      AND EA.CodSucEntidad = V.SUENDO
+                      AND EA.Para_filtro = 1
+                )
+            )
+
+        -- NIVEL 1 (RAICES)
+        WHEN EXISTS
+        (
             SELECT 1
-            FROM {_Global_BaseBk}Zw_Entidades_Asociacion EA
-            WHERE EA.CodEntidad    = V.ENDO
-              AND EA.CodSucEntidad = V.SUENDO
-              AND EA.Para_filtro = 1
-      )
+            FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones
+            WHERE Codigo_Nodo = @NodoPadre
+              AND Identificacdor_NodoPadre = 0
+        )
+        THEN
+
+            (
+                SELECT SUM(TotalVenta)
+                FROM Ventas
+            )
+            -
+            (
+                SELECT ISNULL(SUM(TOTAL),0)
+                FROM
+                (
+                    SELECT
+                        N.Codigo_Nodo,
+                        SUM(ISNULL(V.TotalVenta,0)) AS TOTAL
+                    FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones N
+
+                    LEFT JOIN {_Global_BaseBk}Zw_Entidades_Asociacion EA
+                        ON EA.Codigo_Nodo = N.Codigo_Nodo
+
+                    LEFT JOIN Ventas V
+                        ON V.ENDO = EA.CodEntidad
+                       AND V.SUENDO = EA.CodSucEntidad
+
+                    WHERE N.Identificacdor_NodoPadre = @NodoPadre
+                      AND N.ParaEntidad = 1
+                    GROUP BY N.Codigo_Nodo
+                ) X
+            )
+
+        -- NIVEL 2+
+        ELSE
+
+            (
+                SELECT SUM(V.TotalVenta)
+                FROM Ventas V
+                WHERE EXISTS
+                (
+                    SELECT 1
+                    FROM {_Global_BaseBk}Zw_Entidades_Asociacion EA
+                    WHERE EA.CodEntidad = V.ENDO
+                      AND EA.CodSucEntidad = V.SUENDO
+                      AND EA.Codigo_Nodo = @NodoPadre
+                )
+            )
+            -
+            (
+                SELECT ISNULL(SUM(TOTAL),0)
+                FROM
+                (
+                    SELECT
+                        N.Codigo_Nodo,
+                        SUM(ISNULL(V.TotalVenta,0)) AS TOTAL
+                    FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones N
+
+                    LEFT JOIN {_Global_BaseBk}Zw_Entidades_Asociacion EA
+                        ON EA.Codigo_Nodo = N.Codigo_Nodo
+
+                    LEFT JOIN Ventas V
+                        ON V.ENDO = EA.CodEntidad
+                       AND V.SUENDO = EA.CodSucEntidad
+
+                    WHERE N.Identificacdor_NodoPadre = @NodoPadre
+                      AND N.ParaEntidad = 1
+                    GROUP BY N.Codigo_Nodo
+                ) X
+            )
+
+    END AS TOTAL
+
+WHERE @MostrarSinClasificar = 1
+
 )
 
 SELECT
@@ -4416,33 +4659,109 @@ DROP TABLE #Paso1
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cod = _Fila.Cells("CODIGO").Value
 
+        'Dim _Filtro As String
+        'Dim _Vista_Informe As String = Convert.ToString(Cmb_Vista_Informe.SelectedValue)
+
+        'If _Vista_Informe = "0" OrElse _Vista_Informe = "1" Then
+
+        '    Dim _Row_Nodo As DataRow = CType(Txt_Vista_Informe.Tag, DataRow)
+        '    Dim _EsVistaEntidades As Boolean = _Vista_Informe = "1"
+        '    Dim _Tabla_Asociacion As String
+        '    Dim _Filtro_Registro_Asociacion As String
+        '    Dim _Para_Entidad As Integer
+
+        '    If _EsVistaEntidades Then
+        '        _Tabla_Asociacion = _Global_BaseBk & "Zw_Entidades_Asociacion"
+        '        _Filtro_Registro_Asociacion =
+        '            $"A.CodEntidad = {_Nombre_Tabla_Paso}.ENDO And A.CodSucEntidad = {_Nombre_Tabla_Paso}.SUENDO"
+        '        _Para_Entidad = 1
+        '    Else
+        '        _Tabla_Asociacion = _Global_BaseBk & "Zw_Prod_Asociacion"
+        '        _Filtro_Registro_Asociacion = $"A.Codigo = {_Nombre_Tabla_Paso}.KOPRCT"
+        '        _Para_Entidad = 0
+        '    End If
+
+        '    Select Case Convert.ToString(_Cod)
+        '        Case "-2"
+        '            _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '                "And KOPRCT Not In (Select KOPR From MAEPR)"
+
+        '        Case "-1"
+        '            _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '                "And KOPRCT In (Select KOPR From MAEPR Where KOPR Not In " &
+        '                "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Producto = 0))"
+
+        '        Case "0"
+        '            ' Continúa aquí el filtro SIN CLASIFICAR que ya tienes.
+        '            If IsNothing(_Row_Nodo) Then
+        '                ' Raíz: sin asociación a ningún nodo del tipo de clasificación actual.
+        '                _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '                    $"And NOT EXISTS" & vbCrLf &
+        '                    $"(" & vbCrLf &
+        '                    $"    Select 1" & vbCrLf &
+        '                    $"    From {_Tabla_Asociacion} A" & vbCrLf &
+        '                    $"    Inner Join {_Global_BaseBk}Zw_TblArbol_Asociaciones N On N.Codigo_Nodo = A.Codigo_Nodo" & vbCrLf &
+        '                    $"    Where {_Filtro_Registro_Asociacion}" & vbCrLf &
+        '                    $"      And N.ParaEntidad = {_Para_Entidad}" & vbCrLf &
+        '                    $")"
+        '            Else
+        '                Dim _Codigo_Nodo As Integer = CInt(_Row_Nodo.Item("Codigo_Nodo"))
+        '                Dim _Identificacdor_NodoPadre As Integer =
+        '                    CInt(_Row_Nodo.Item("Identificacdor_NodoPadre"))
+
+        '                Dim _Filtro_Sin_Hijos As String =
+        '                    $"And NOT EXISTS" & vbCrLf &
+        '                    $"(" & vbCrLf &
+        '                    $"    Select 1" & vbCrLf &
+        '                    $"    From {_Tabla_Asociacion} A" & vbCrLf &
+        '                    $"    Inner Join {_Global_BaseBk}Zw_TblArbol_Asociaciones H On H.Codigo_Nodo = A.Codigo_Nodo" & vbCrLf &
+        '                    $"    Where {_Filtro_Registro_Asociacion}" & vbCrLf &
+        '                    $"      And H.ParaEntidad = {_Para_Entidad}" & vbCrLf &
+        '                    $"      And H.Identificacdor_NodoPadre = {_Codigo_Nodo}" & vbCrLf &
+        '                    $")"
+
+        '                If (_Identificacdor_NodoPadre = 0) Then
+        '                    ' Categoría de primer nivel: excluir sus hijos, sin exigir asociación a la categoría.
+        '                    _Filtro = _SqlFiltro_Detalle & vbCrLf & _Filtro_Sin_Hijos
+        '                Else
+        '                    ' Nodo anidado: debe estar asociado al nodo actual y no a ninguno de sus hijos.
+        '                    Dim _Filtro_Padre As String =
+        '                        $"And EXISTS" & vbCrLf &
+        '                        $"(" & vbCrLf &
+        '                        $"    Select 1" & vbCrLf &
+        '                        $"    From {_Tabla_Asociacion} A" & vbCrLf &
+        '                        $"    Inner Join {_Global_BaseBk}Zw_TblArbol_Asociaciones N On N.Codigo_Nodo = A.Codigo_Nodo" & vbCrLf &
+        '                        $"    Where A.Codigo_Nodo = {_Codigo_Nodo}" & vbCrLf &
+        '                        $"      And N.ParaEntidad = {_Para_Entidad}" & vbCrLf &
+        '                        $"      And {_Filtro_Registro_Asociacion}" & vbCrLf &
+        '                        $")"
+
+        '                    _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '                        _Filtro_Padre & vbCrLf &
+        '                        _Filtro_Sin_Hijos
+        '                End If
+        '            End If
+
+        '        Case Else
+        '            _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '                $"And EXISTS" & vbCrLf &
+        '                $"(" & vbCrLf &
+        '                $"    Select 1" & vbCrLf &
+        '                $"    From {_Tabla_Asociacion} A" & vbCrLf &
+        '                $"    Inner Join {_Global_BaseBk}Zw_TblArbol_Asociaciones N On N.Codigo_Nodo = A.Codigo_Nodo" & vbCrLf &
+        '                $"    Where A.Codigo_Nodo = {_Cod}" & vbCrLf &
+        '                $"      And N.ParaEntidad = {_Para_Entidad}" & vbCrLf &
+        '                $"      And {_Filtro_Registro_Asociacion}" & vbCrLf &
+        '                $")"
+        '    End Select
+        'Else
+        '    _Filtro = _SqlFiltro_Detalle & vbCrLf & " And " & _Cp_Codigo & " = '" & _Cod & "'"
+        'End If
+
         Dim _Filtro As String
 
         If Cmb_Vista_Informe.SelectedValue = "0" OrElse Cmb_Vista_Informe.SelectedValue = "1" Then
-            Select Case _Cod
-                Case "-2"
-                    _Filtro = _SqlFiltro_Detalle & vbCrLf &
-                     "And KOPRCT Not In (Select KOPR From MAEPR)"
-                Case "-1"
-                    _Filtro = _SqlFiltro_Detalle & vbCrLf &
-                     "And KOPRCT In (Select KOPR From MAEPR Where KOPR Not In " &
-                     "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Producto = 0))"
-                Case Else
-                    If Cmb_Vista_Informe.SelectedValue = "0" Then
-                        _Filtro = _SqlFiltro_Detalle & vbCrLf &
-                                         "And KOPRCT In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = " & _Cod & ")"
-                    Else
-                        _Filtro = _SqlFiltro_Detalle & vbCrLf &
-                                 "And EXISTS" & vbCrLf &
-                                    "(" & vbCrLf &
-                                        "Select 1" & vbCrLf &
-                                        $"From {_Global_BaseBk}Zw_Entidades_Asociacion EA" & vbCrLf &
-                                        $"Where EA.Codigo_Nodo = {_Cod}" & vbCrLf &
-                                          $"And EA.CodEntidad = {_Nombre_Tabla_Paso}.ENDO" & vbCrLf &
-                                          $"And EA.CodSucEntidad = {_Nombre_Tabla_Paso}.SUENDO" & vbCrLf &
-                                    ")"
-                    End If
-            End Select
+            _Filtro = Fx_Filtro_Clasificacion_Informe(_Cod)
         Else
             _Filtro = _SqlFiltro_Detalle & vbCrLf & " And " & _Cp_Codigo & " = '" & _Cod & "'"
         End If
@@ -4452,35 +4771,19 @@ DROP TABLE #Paso1
         If _Filtro_Clas_BakApp_Todas Then
             _Filtro_Nodos = String.Empty
         Else
-
             _Filtro_Nodos = Generar_Filtro_IN(_Tbl_Filtro_Clas_BakApp, "", "Codigo_Nodo", False, False, "")
             _Filtro_Nodos = vbCrLf & "And KOPRCT In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion" & vbCrLf &
                             "Where Codigo_Nodo In " & _Filtro_Nodos & ")" & vbCrLf
-
         End If
-
-        '_Filtro += _Filtro_Nodos
 
         _Filtro += _Filtro_Nodos & vbCrLf & "And EMPRESA = '" & Mod_Empresa & "'"
 
         Dim Fm As New Frm_Inf_Ventas_X_Periodo_Sub_Informes_01(_Nombre_Tabla_Paso,
-                                                       _Filtro,
-                                                       Frm_Inf_Ventas_X_Periodo_Sub_Informes_01.Enum_Tipo_Informe.Inf_Clientes)
+                                                               _Filtro,
+                                                               Frm_Inf_Ventas_X_Periodo_Sub_Informes_01.Enum_Tipo_Informe.Inf_Clientes)
 
         Fm.ShowDialog(Me)
         Fm.Dispose()
-
-        'Dim _Texto = "Informe de ventas desde: " & FormatDateTime(Dtp_Fecha_Desde.Value, DateFormat.ShortDate) & Space(1) &
-        '             "Hasta: " & FormatDateTime(Dtp_Fecha_Hasta.Value, DateFormat.ShortDate)
-
-        'Dim Fm2 As New Frm_Inf_Ventas_X_Periodo_Sub_Informe_SuperGrid(_Nombre_Tabla_Paso, _Filtro, True, "")
-        'If CBool(Fm2.Pro_Ds_Informe.Tables(0).Rows.Count) Then
-        '    Fm2.Text = _Texto
-        '    Fm2.ShowDialog(Me)
-        'Else
-        '    MessageBoxEx.Show(Me, "No existe información", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
-        'End If
-        'Fm2.Dispose()
 
     End Sub
 
@@ -4497,24 +4800,43 @@ DROP TABLE #Paso1
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cod = _Fila.Cells("CODIGO").Value
 
+        'Dim _Filtro As String
+
+        'If Cmb_Vista_Informe.SelectedValue = "0" OrElse Cmb_Vista_Informe.SelectedValue = "1" Then
+        '    Select Case _Cod
+        '        Case "-2"
+        '            _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '             "And KOPRCT Not In (Select KOPR From MAEPR)"
+        '        Case "-1"
+        '            _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '             "And KOPRCT In (Select KOPR From MAEPR Where KOPR Not In " &
+        '             "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Producto = 0))"
+        '        Case Else
+        '            If Cmb_Vista_Informe.SelectedValue = "0" Then
+        '                _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '                                 "And KOPRCT In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = " & _Cod & ")"
+        '            Else
+        '                _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '                         "And EXISTS" & vbCrLf &
+        '                            "(" & vbCrLf &
+        '                                "Select 1" & vbCrLf &
+        '                                $"From {_Global_BaseBk}Zw_Entidades_Asociacion EA" & vbCrLf &
+        '                                $"Where EA.Codigo_Nodo = {_Cod}" & vbCrLf &
+        '                                  $"And EA.CodEntidad = {_Nombre_Tabla_Paso}.ENDO" & vbCrLf &
+        '                                  $"And EA.CodSucEntidad = {_Nombre_Tabla_Paso}.SUENDO" & vbCrLf &
+        '                            ")"
+        '            End If
+        '    End Select
+        'Else
+        '    _Filtro = _SqlFiltro_Detalle & vbCrLf & " And " & _Cp_Codigo & " = '" & _Cod & "'"
+        'End If
+
         Dim _Filtro As String
 
-        If Cmb_Vista_Informe.SelectedValue = "0" Then
-            Select Case _Cod
-                Case "-2"
-                    _Filtro = _SqlFiltro_Detalle & vbCrLf &
-                     "And KOPRCT Not In (Select KOPR From MAEPR)"
-                Case "-1"
-                    _Filtro = _SqlFiltro_Detalle & vbCrLf &
-                     "And KOPRCT In (Select KOPR From MAEPR Where KOPR Not In " &
-                     "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Producto = 0))"
-                Case Else
-                    _Filtro = _SqlFiltro_Detalle & vbCrLf &
-                                     "And KOPRCT In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = " & _Cod & ")"
-
-            End Select
+        If Cmb_Vista_Informe.SelectedValue = "0" OrElse Cmb_Vista_Informe.SelectedValue = "1" Then
+            _Filtro = Fx_Filtro_Clasificacion_Informe(_Cod)
         Else
-            _Filtro = _SqlFiltro_Detalle & vbCrLf & "And " & _Cp_Codigo & " = '" & _Cod & "'"
+            _Filtro = _SqlFiltro_Detalle & vbCrLf & " And " & _Cp_Codigo & " = '" & _Cod & "'"
         End If
 
         Dim _Filtro_Nodos As String
@@ -4553,24 +4875,43 @@ DROP TABLE #Paso1
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
         Dim _Cod = _Fila.Cells("CODIGO").Value
 
+        'Dim _Filtro As String
+
+        'If Cmb_Vista_Informe.SelectedValue = "0" OrElse Cmb_Vista_Informe.SelectedValue = "1" Then
+        '    Select Case _Cod
+        '        Case "-2"
+        '            _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '             "And KOPRCT Not In (Select KOPR From MAEPR)"
+        '        Case "-1"
+        '            _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '             "And KOPRCT In (Select KOPR From MAEPR Where KOPR Not In " &
+        '             "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Producto = 0))"
+        '        Case Else
+        '            If Cmb_Vista_Informe.SelectedValue = "0" Then
+        '                _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '                                 "And KOPRCT In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = " & _Cod & ")"
+        '            Else
+        '                _Filtro = _SqlFiltro_Detalle & vbCrLf &
+        '                         "And EXISTS" & vbCrLf &
+        '                            "(" & vbCrLf &
+        '                                "Select 1" & vbCrLf &
+        '                                $"From {_Global_BaseBk}Zw_Entidades_Asociacion EA" & vbCrLf &
+        '                                $"Where EA.Codigo_Nodo = {_Cod}" & vbCrLf &
+        '                                  $"And EA.CodEntidad = {_Nombre_Tabla_Paso}.ENDO" & vbCrLf &
+        '                                  $"And EA.CodSucEntidad = {_Nombre_Tabla_Paso}.SUENDO" & vbCrLf &
+        '                            ")"
+        '            End If
+        '    End Select
+        'Else
+        '    _Filtro = _SqlFiltro_Detalle & vbCrLf & " And " & _Cp_Codigo & " = '" & _Cod & "'"
+        'End If
+
         Dim _Filtro As String
 
-        If Cmb_Vista_Informe.SelectedValue = "0" Then
-            Select Case _Cod
-                Case "-2"
-                    _Filtro = _SqlFiltro_Detalle & vbCrLf &
-                     "And KOPRCT Not In (Select KOPR From MAEPR)"
-                Case "-1"
-                    _Filtro = _SqlFiltro_Detalle & vbCrLf &
-                     "And KOPRCT In (Select KOPR From MAEPR Where KOPR Not In " &
-                     "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Producto = 0))"
-                Case Else
-                    _Filtro = _SqlFiltro_Detalle & vbCrLf &
-                                     "And KOPRCT In (Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Codigo_Nodo = " & _Cod & ")"
-
-            End Select
+        If Cmb_Vista_Informe.SelectedValue = "0" OrElse Cmb_Vista_Informe.SelectedValue = "1" Then
+            _Filtro = Fx_Filtro_Clasificacion_Informe(_Cod)
         Else
-            _Filtro = _SqlFiltro_Detalle & vbCrLf & "And " & _Cp_Codigo & " = '" & _Cod & "'"
+            _Filtro = _SqlFiltro_Detalle & vbCrLf & " And " & _Cp_Codigo & " = '" & _Cod & "'"
         End If
 
         Dim _Filtro_Nodos As String
@@ -4598,51 +4939,108 @@ DROP TABLE #Paso1
     End Sub
 
 
-    Private Sub Btn_Vista_Informe_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Vista_Informe.Click
+    Private Function Fx_Filtro_Clasificacion_Informe(_Cod As Object) As String
 
-        Dim _ModoEntidades As Boolean = True
-        Dim _Mostrar_Hijos_Seleccionables As Boolean
+        Dim _EsVistaEntidades As Boolean = Convert.ToString(Cmb_Vista_Informe.SelectedValue) = "1"
+        Dim _Tabla_Asociacion As String
+        Dim _Filtro_Registro_Asociacion As String
+        Dim _Para_Entidad As Integer
 
-        If Cmb_Vista_Informe.SelectedValue = 0 Then
-            _ModoEntidades = False
-            _Mostrar_Hijos_Seleccionables = True
+        If _EsVistaEntidades Then
+            _Tabla_Asociacion = _Global_BaseBk & "Zw_Entidades_Asociacion"
+            _Filtro_Registro_Asociacion =
+                $"A.CodEntidad = {_Nombre_Tabla_Paso}.ENDO And A.CodSucEntidad = {_Nombre_Tabla_Paso}.SUENDO"
+            _Para_Entidad = 1
+        Else
+            _Tabla_Asociacion = _Global_BaseBk & "Zw_Prod_Asociacion"
+            _Filtro_Registro_Asociacion = $"A.Codigo = {_Nombre_Tabla_Paso}.KOPRCT"
+            _Para_Entidad = 0
         End If
 
-        Dim Fm As New Frm_Arbol_Asociacion_05_Busqueda(Frm_Arbol_Asociacion_05_Busqueda.Enum_Tipo_De_Carpeta.Clas_Unica_Ambas, False)
-        Fm.Pro_Seleccionar_Todo = _Filtro_Clas_BakApp_Todas
-        Fm.Pro_Tbl_Nodos_Seleccionados = _Tbl_Filtro_Clas_BakApp
-        Fm.ModoEntidades = _ModoEntidades
-        Fm.Mostrar_Hijos_Seleccionables = _Mostrar_Hijos_Seleccionables
-        Fm.ShowDialog(Me)
+        Select Case Convert.ToString(_Cod)
+            Case "-2"
+                Return _SqlFiltro_Detalle & vbCrLf &
+                    "And KOPRCT Not In (Select KOPR From MAEPR)"
 
-        If Fm.Pro_Aceptar Then
+            Case "-1"
+                Return _SqlFiltro_Detalle & vbCrLf &
+                    "And KOPRCT In (Select KOPR From MAEPR Where KOPR Not In " &
+                    "(Select Codigo From " & _Global_BaseBk & "Zw_Prod_Asociacion Where Producto = 0))"
 
-            Dim _Es_Seleccionable As Boolean = Fm.Pro_Row_Nodo_Seleccionado.Item("Es_Seleccionable")
-            Dim _Codigo_Nodo As Integer
+            Case "0"
+                Dim _Row_Nodo As DataRow = CType(Txt_Vista_Informe.Tag, DataRow)
 
-            If _Es_Seleccionable Then
-                _Codigo_Nodo = Fm.Pro_Row_Nodo_Seleccionado.Item("Identificacdor_NodoPadre")
-            Else
-                _Codigo_Nodo = Fm.Pro_Row_Nodo_Seleccionado.Item("Codigo_Nodo")
-            End If
+                If IsNothing(_Row_Nodo) Then
+                    ' Raíz: sin asociación a ningún nodo de este tipo de clasificación.
+                    Return _SqlFiltro_Detalle & vbCrLf &
+                        $"And NOT EXISTS" & vbCrLf &
+                        $"(" & vbCrLf &
+                        $"    Select 1" & vbCrLf &
+                        $"    From {_Tabla_Asociacion} A" & vbCrLf &
+                        $"    Inner Join {_Global_BaseBk}Zw_TblArbol_Asociaciones N On N.Codigo_Nodo = A.Codigo_Nodo" & vbCrLf &
+                        $"    Where {_Filtro_Registro_Asociacion}" & vbCrLf &
+                        $"      And N.ParaEntidad = {_Para_Entidad}" & vbCrLf &
+                        $")"
+                End If
 
-            Consulta_sql = "Select Codigo_Nodo as CODIGO,Descripcion As DESCRIPCION,Descripcion As DESCRIPCION_VISTA," &
-                          "Cast(1 As Bit) As ARBOL_BAKAPP,Identificacdor_NodoPadre As Nodo_Padre,Es_Seleccionable,*" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
-            _Row_Vista = _Sql.Fx_Get_DataRow(Consulta_sql)
+                Dim _Codigo_Nodo As Integer = CInt(_Row_Nodo.Item("Codigo_Nodo"))
+                Dim _Identificacdor_NodoPadre As Integer =
+                    CInt(_Row_Nodo.Item("Identificacdor_NodoPadre"))
 
-            Sb_Actualizar_Grilla(False)
+                Dim _Filtro_Sin_Hijos As String =
+                    $"And NOT EXISTS" & vbCrLf &
+                    $"(" & vbCrLf &
+                    $"    Select 1" & vbCrLf &
+                    $"    From {_Tabla_Asociacion} A" & vbCrLf &
+                    $"    Inner Join {_Global_BaseBk}Zw_TblArbol_Asociaciones H On H.Codigo_Nodo = A.Codigo_Nodo" & vbCrLf &
+                    $"    Where {_Filtro_Registro_Asociacion}" & vbCrLf &
+                    $"      And H.ParaEntidad = {_Para_Entidad}" & vbCrLf &
+                    $"      And H.Identificacdor_NodoPadre = {_Codigo_Nodo}" & vbCrLf &
+                    $")"
 
-        End If
-        Fm.Dispose()
+                If (_Identificacdor_NodoPadre = 0) Then
+                    ' Categoría de primer nivel: excluir sus hijos, sin exigir asociación a la categoría.
+                    Return _SqlFiltro_Detalle & vbCrLf & _Filtro_Sin_Hijos
+                End If
 
-    End Sub
+                ' Nodo anidado: debe estar asociado al nodo actual y no a ninguno de sus hijos.
+                Dim _Filtro_Padre As String =
+                    $"And EXISTS" & vbCrLf &
+                    $"(" & vbCrLf &
+                    $"    Select 1" & vbCrLf &
+                    $"    From {_Tabla_Asociacion} A" & vbCrLf &
+                    $"    Inner Join {_Global_BaseBk}Zw_TblArbol_Asociaciones N On N.Codigo_Nodo = A.Codigo_Nodo" & vbCrLf &
+                    $"    Where A.Codigo_Nodo = {_Codigo_Nodo}" & vbCrLf &
+                    $"      And N.ParaEntidad = {_Para_Entidad}" & vbCrLf &
+                    $"      And {_Filtro_Registro_Asociacion}" & vbCrLf &
+                    $")"
+
+                Return _SqlFiltro_Detalle & vbCrLf &
+                    _Filtro_Padre & vbCrLf &
+                    _Filtro_Sin_Hijos
+
+            Case Else
+                Return _SqlFiltro_Detalle & vbCrLf &
+                    $"And EXISTS" & vbCrLf &
+                    $"(" & vbCrLf &
+                    $"    Select 1" & vbCrLf &
+                    $"    From {_Tabla_Asociacion} A" & vbCrLf &
+                    $"    Inner Join {_Global_BaseBk}Zw_TblArbol_Asociaciones N On N.Codigo_Nodo = A.Codigo_Nodo" & vbCrLf &
+                    $"    Where A.Codigo_Nodo = {_Cod}" & vbCrLf &
+                    $"      And N.ParaEntidad = {_Para_Entidad}" & vbCrLf &
+                    $"      And {_Filtro_Registro_Asociacion}" & vbCrLf &
+                    $")"
+        End Select
+
+    End Function
 
     Private Sub Grilla_CellDoubleClick(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla.CellDoubleClick
 
         Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
 
         Dim _ARBOL_BAKAPP As Boolean = _Row_Vista.Item("ARBOL_BAKAPP")
+
+        'Txt_Vista_Informe.Tag = Nothing
 
         If _ARBOL_BAKAPP Then
 
@@ -4661,11 +5059,19 @@ DROP TABLE #Paso1
                                "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo
                 _Row_Nodo = _Sql.Fx_Get_DataRow(Consulta_sql)
                 _Es_Seleccionable = _Row_Nodo.Item("Es_Seleccionable")
+                Txt_Vista_Informe.Tag = Fx_Row_Nodo(_Codigo)
+
+                If _Es_Seleccionable Then
+                    Dim _Identificacdor_NodoPadre = CType(Txt_Vista_Informe.Tag, DataRow).Item("Identificacdor_NodoPadre")
+                    Txt_Vista_Informe.Tag = Fx_Row_Nodo(_Identificacdor_NodoPadre)
+                    _Codigo = _Identificacdor_NodoPadre
+                End If
+
             End If
 
             If Not _Es_Seleccionable Then
                 _Row_Vista = _Row_Nodo
-                Sb_Actualizar_Grilla(False)
+                Sb_Actualizar_Grilla(False, _Codigo)
             Else
                 ShowContextMenu(Menu_Contextual_Vista_Detalle)
                 'MessageBoxEx.Show(Me, "No existen más carpetas en esta selección", "Validación",
@@ -4676,22 +5082,85 @@ DROP TABLE #Paso1
 
     End Sub
 
-    Private Sub Sb_Cmb_Vista_Informe_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
+    Function Fx_Row_Nodo(_Codigo_Nodo As String) As DataRow
 
-        'If Cmb_Vista_Informe.SelectedValue.ToString.Contains("KOGRU") Then
-        '    MessageBoxEx.Show(Me, "Función en desarrollo", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        '    Cmb_Vista_Informe.SelectedValue = UltFiltroSeleccionado
-        '    Return
-        'End If
+        Consulta_sql = $"
+;WITH ArbolCompleto AS
+(
+    SELECT
+        Codigo_Nodo,
+        Identificacdor_NodoPadre,
+        Descripcion,
+        CAST(Descripcion AS VARCHAR(MAX)) AS Ruta
+    FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones
+    WHERE Identificacdor_NodoPadre = 0
+
+    UNION ALL
+
+    SELECT
+        H.Codigo_Nodo,
+        H.Identificacdor_NodoPadre,
+        H.Descripcion,
+        CAST(A.Ruta + '\' + H.Descripcion AS VARCHAR(MAX))
+    FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones H
+        INNER JOIN ArbolCompleto A
+            ON A.Codigo_Nodo = H.Identificacdor_NodoPadre
+)
+
+SELECT
+    H.Codigo_Nodo AS CODIGO,
+    H.Descripcion AS DESCRIPCION,
+    H.Descripcion AS DESCRIPCION_VISTA,
+    CAST(1 AS BIT) AS ARBOL_BAKAPP,
+    H.Identificacdor_NodoPadre AS Nodo_Padre,
+    H.Es_Seleccionable,
+
+    -- Padre inmediato
+    ISNULL(
+        CAST(P.Codigo_Nodo AS VARCHAR(20))
+        + ' - '
+        + P.Descripcion
+        + '\'
+        + H.Descripcion,
+        H.Descripcion
+    ) AS ArbolPadre,
+
+    -- Ruta completa
+    AC.Ruta AS RutaCompleta,
+
+    H.*
+FROM {_Global_BaseBk}Zw_TblArbol_Asociaciones H
+
+LEFT JOIN {_Global_BaseBk}Zw_TblArbol_Asociaciones P
+    ON P.Codigo_Nodo = H.Identificacdor_NodoPadre
+
+LEFT JOIN ArbolCompleto AC
+    ON AC.Codigo_Nodo = H.Codigo_Nodo
+
+WHERE H.Codigo_Nodo = {_Codigo_Nodo}
+
+OPTION (MAXRECURSION 32767);"
+
+        Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+        Return _Row
+
+    End Function
+
+    Private Sub Sb_Cmb_Vista_Informe_SelectedIndexChanged(sender As System.Object, e As System.EventArgs)
 
         _Row_Vista = Fx_Crea_Tabla_Con_Filtro(_Tbl_Vista_Informe,
                                               "CODIGO = '" & Cmb_Vista_Informe.SelectedValue & "'", "Id").Rows(0)
 
+        Txt_Vista_Informe.Tag = Nothing
+
         If Cmb_Vista_Informe.SelectedValue = "0" OrElse Cmb_Vista_Informe.SelectedValue = "1" Then
+
             _Row_Vista.Item("ARBOL_BAKAPP") = True
-            Btn_Vista_Informe.Enabled = True
+            Txt_Vista_Informe.ButtonCustom.Enabled = True
+
         Else
-            Btn_Vista_Informe.Enabled = False
+            Txt_Vista_Informe.ButtonCustom.Enabled = False
         End If
 
         UltFiltroSeleccionado = Cmb_Vista_Informe.SelectedValue
@@ -4700,29 +5169,30 @@ DROP TABLE #Paso1
 
     End Sub
 
-    Private Sub Btn_Atras_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Atras.Click
+    'Private Sub Btn_Atras_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Atras.Click
 
-        Dim _Nodo_Padre = _Row_Vista.Item("Nodo_Padre")
+    '    Dim _Nodo_Padre = _Row_Vista.Item("Nodo_Padre")
 
-        If CBool(_Nodo_Padre) Then
+    '    If CBool(_Nodo_Padre) Then
 
-            Consulta_sql = "Select Codigo_Nodo as CODIGO,Descripcion As DESCRIPCION,Descripcion As DESCRIPCION_VISTA," &
-                           "Cast(1 As Bit) As ARBOL_BAKAPP,*,Identificacdor_NodoPadre As Nodo_Padre" & vbCrLf &
-                           "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Nodo_Padre
-            _Row_Vista = _Sql.Fx_Get_DataRow(Consulta_sql)
+    '        Consulta_sql = "Select Codigo_Nodo as CODIGO,Descripcion As DESCRIPCION,Descripcion As DESCRIPCION_VISTA," &
+    '                       "Cast(1 As Bit) As ARBOL_BAKAPP,*,Identificacdor_NodoPadre As Nodo_Padre" & vbCrLf &
+    '                       "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Nodo_Padre
+    '        _Row_Vista = _Sql.Fx_Get_DataRow(Consulta_sql)
 
-            Sb_Actualizar_Grilla(False)
-        Else
-            Cmb_Vista_Informe.SelectedValue = "0"
-            _Row_Vista = Fx_Crea_Tabla_Con_Filtro(_Tbl_Vista_Informe,
-                                              "CODIGO = '" & Cmb_Vista_Informe.SelectedValue & "'", "Id").Rows(0)
-            _Row_Vista.Item("ARBOL_BAKAPP") = True
-            Sb_Actualizar_Grilla(False)
-            Btn_Atras.Enabled = False
+    '        Sb_Actualizar_Grilla(False)
+    '    Else
+    '        'Cmb_Vista_Informe.SelectedValue = "0"
+    '        _Row_Vista = Fx_Crea_Tabla_Con_Filtro(_Tbl_Vista_Informe,
+    '                                          "CODIGO = '" & Cmb_Vista_Informe.SelectedValue & "'", "Id").Rows(0)
+    '        _Row_Vista.Item("ARBOL_BAKAPP") = True
+    '        Sb_Actualizar_Grilla(False)
+    '        Txt_Vista_Informe.ButtonCustom2.Enabled = False
+    '        'Btn_Atras.Enabled = False
 
-        End If
+    '    End If
 
-    End Sub
+    'End Sub
 
     Private Sub Btn_Arbol_Asociaciones_Click(sender As System.Object, e As System.EventArgs) Handles Btn_Arbol_Asociaciones.Click
         If Fx_Tiene_Permiso(Me, "Tbl00002") Then
@@ -4746,6 +5216,7 @@ DROP TABLE #Paso1
             Dim Fm As New Frm_Arbol_Asociacion_05_Busqueda(Frm_Arbol_Asociacion_05_Busqueda.Enum_Tipo_De_Carpeta.Clas_Unica_Ambas, True)
             Fm.Pro_Seleccionar_Todo = _Filtro_Clas_BakApp_Todas
             Fm.Pro_Tbl_Nodos_Seleccionados = _Tbl_Filtro_Clas_BakApp
+            Fm.Mostrar_Hijos_Seleccionables = True
             Fm.ShowDialog(Me)
 
             If Fm.Pro_Aceptar Then
@@ -5749,6 +6220,75 @@ DROP TABLE #Paso1
         Fm_Post.Pro_SubTido = "STK"
         Fm_Post.ShowDialog(Me)
         Fm_Post.Dispose()
+
+    End Sub
+
+    Private Sub Txt_Vista_Informe_ButtonCustomClick(sender As Object, e As EventArgs) Handles Txt_Vista_Informe.ButtonCustomClick
+
+        Dim _ModoEntidades As Boolean = True
+        Dim _Mostrar_Hijos_Seleccionables As Boolean = True
+
+        If Cmb_Vista_Informe.SelectedValue = 0 Then
+            _ModoEntidades = False
+            '_Mostrar_Hijos_Seleccionables = True
+        End If
+
+        Dim Fm As New Frm_Arbol_Asociacion_05_Busqueda(Frm_Arbol_Asociacion_05_Busqueda.Enum_Tipo_De_Carpeta.Clas_Unica_Ambas, False)
+        Fm.Pro_Seleccionar_Todo = _Filtro_Clas_BakApp_Todas
+        Fm.Pro_Tbl_Nodos_Seleccionados = _Tbl_Filtro_Clas_BakApp
+        Fm.ModoEntidades = _ModoEntidades
+        Fm.Mostrar_Hijos_Seleccionables = _Mostrar_Hijos_Seleccionables
+        Fm.ShowDialog(Me)
+
+        If Fm.Pro_Aceptar Then
+
+            Dim _Es_Seleccionable As Boolean = Fm.Pro_Row_Nodo_Seleccionado.Item("Es_Seleccionable")
+            Dim _Codigo_Nodo As Integer
+
+            If _Es_Seleccionable Then
+                _Codigo_Nodo = Fm.Pro_Row_Nodo_Seleccionado.Item("Identificacdor_NodoPadre")
+            Else
+                _Codigo_Nodo = Fm.Pro_Row_Nodo_Seleccionado.Item("Codigo_Nodo")
+            End If
+
+            Consulta_sql = "Select Codigo_Nodo as CODIGO,Descripcion As DESCRIPCION,Descripcion As DESCRIPCION_VISTA," &
+                          "Cast(1 As Bit) As ARBOL_BAKAPP,Identificacdor_NodoPadre As Nodo_Padre,Es_Seleccionable,*" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Codigo_Nodo
+            _Row_Vista = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Txt_Vista_Informe.Tag = Fx_Row_Nodo(_Codigo_Nodo)
+            Sb_Actualizar_Grilla(False, _Codigo_Nodo)
+
+        End If
+        Fm.Dispose()
+
+    End Sub
+
+    Private Sub Txt_Vista_Informe_ButtonCustom2Click(sender As Object, e As EventArgs) Handles Txt_Vista_Informe.ButtonCustom2Click
+
+        Dim _Nodo_Padre = _Row_Vista.Item("Nodo_Padre")
+        Dim _Row_Arbol As DataRow = CType(Txt_Vista_Informe.Tag, DataRow)
+
+        Dim _Codigo_Nodo As Integer = _Row_Arbol.Item("Codigo_Nodo")
+        Dim _Identificacdor_NodoPadre As Integer = _Row_Arbol.Item("Identificacdor_NodoPadre")
+        Dim _ArbolPadre As String = _Row_Vista.Item("DESCRIPCION_VISTA")
+
+        If CBool(_Identificacdor_NodoPadre) Then
+
+            Consulta_sql = "Select Codigo_Nodo as CODIGO,Descripcion As DESCRIPCION,Descripcion As DESCRIPCION_VISTA," &
+                           "Cast(1 As Bit) As ARBOL_BAKAPP,*,Identificacdor_NodoPadre As Nodo_Padre" & vbCrLf &
+                           "From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Codigo_Nodo = " & _Identificacdor_NodoPadre
+            _Row_Vista = _Sql.Fx_Get_DataRow(Consulta_sql)
+            Txt_Vista_Informe.Tag = Fx_Row_Nodo(_Identificacdor_NodoPadre)
+            Sb_Actualizar_Grilla(False, _Identificacdor_NodoPadre)
+        Else
+            'Cmb_Vista_Informe.SelectedValue = "0"
+            _Row_Vista = Fx_Crea_Tabla_Con_Filtro(_Tbl_Vista_Informe,
+                                              "CODIGO = '" & Cmb_Vista_Informe.SelectedValue & "'", "Id").Rows(0)
+            _Row_Vista.Item("ARBOL_BAKAPP") = True
+            Sb_Actualizar_Grilla(False)
+            Txt_Vista_Informe.ButtonCustom2.Enabled = False
+            Txt_Vista_Informe.Tag = Nothing
+        End If
 
     End Sub
 

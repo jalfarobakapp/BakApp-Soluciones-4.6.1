@@ -25,6 +25,7 @@
         _Pdc_Operarios
         _Pdc_Operaciones
         _Conceptos
+        _Entidades2 = 100
     End Enum
 
     Dim _Formulario As Form

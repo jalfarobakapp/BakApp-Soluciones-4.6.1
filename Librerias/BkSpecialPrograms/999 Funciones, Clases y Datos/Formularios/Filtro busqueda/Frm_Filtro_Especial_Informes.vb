@@ -49,6 +49,7 @@ Public Class Frm_Filtro_Especial_Informes
         _Pdc_Operaciones
         _Conceptos
         _Lista_Precios_Ent
+        _Entidades2 = 100
     End Enum
 
     Dim _Ds_Filtros_Busqueda As New Ds_Filtros_Busqueda
@@ -57,6 +58,9 @@ Public Class Frm_Filtro_Especial_Informes
     Public _Viene_Con_Filtros As Boolean
 
     Dim _Tabla, _Campo, _Descripcion As String
+    Dim _SubCampo As String = String.Empty
+
+
 
     Public Property Pro_Filtrar() As Boolean
         Get
@@ -74,7 +78,7 @@ Public Class Frm_Filtro_Especial_Informes
             _TblFiltro = value
 
             If Not (_TblFiltro Is Nothing) Then
-                _Filtro_SQl = Generar_Filtro_IN(_TblFiltro, "", "Codigo", False, False, "'")
+                _Filtro_SQl = Fx_Generar_Filtro_IN(_TblFiltro, False)
             Else
                 _Filtro_SQl = "('')"
             End If
@@ -275,9 +279,13 @@ Public Class Frm_Filtro_Especial_Informes
 
             OcultarEncabezadoGrilla(Grilla, True)
 
+            Dim _DisplayIndex = 0
+
             .Columns("Chk").Width = 30
             .Columns("Chk").HeaderText = "Sel."
             .Columns("Chk").Visible = _Requiere_Seleccion
+            .Columns("Chk").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
             If _Seleccionar_Solo_Uno Then
                 .Columns("Chk").ReadOnly = _Seleccionar_Solo_Uno
@@ -291,13 +299,27 @@ Public Class Frm_Filtro_Especial_Informes
                 .Columns("Codigo").HeaderText = "Código"
                 .Columns("Codigo").ReadOnly = True
                 .Columns("Codigo").Visible = True
+                .Columns("Codigo").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
                 _Ancho_Descripcion -= 120
+            End If
+
+            If .Columns.Contains("SubCodigo") Then
+                .Columns("SubCodigo").Width = 90
+                .Columns("SubCodigo").HeaderText = "Sucursal"
+                .Columns("SubCodigo").ReadOnly = True
+                .Columns("SubCodigo").Visible = True
+                .Columns("SubCodigo").DisplayIndex = _DisplayIndex
+                _DisplayIndex += 1
+                _Ancho_Descripcion -= 90
             End If
 
             .Columns("Descripcion").Width = _Ancho_Descripcion
             .Columns("Descripcion").HeaderText = "Descripción"
             .Columns("Descripcion").Visible = True
             .Columns("Descripcion").ReadOnly = True
+            .Columns("Descripcion").DisplayIndex = _DisplayIndex
+            _DisplayIndex += 1
 
         End With
 
@@ -337,6 +359,7 @@ Public Class Frm_Filtro_Especial_Informes
     Sub Sb_Cargar_Datos()
 
         _Ds_Filtros_Busqueda.Clear()
+        _SubCampo = String.Empty
 
         Select Case _Tabla_a_Filtras
 
@@ -356,6 +379,8 @@ Public Class Frm_Filtro_Especial_Informes
                 _Tabla = "TABSU" : _Campo = "KOSU" : _Descripcion = "NOKOSU"
             Case _Tabla_Fl._Entidades
                 _Tabla = "MAEEN" : _Campo = "KOEN" : _Descripcion = "NOKOEN"
+            Case _Tabla_Fl._Entidades2
+                _Tabla = "MAEEN" : _Campo = "KOEN" : _SubCampo = "SUEN" : _Descripcion = "NOKOEN"
             Case _Tabla_Fl._Productos
                 _Tabla = "MAEPR" : _Campo = "KOPR" : _Descripcion = "NOKOPR"
             Case _Tabla_Fl._Tabla_Tabcarac
@@ -394,7 +419,8 @@ Public Class Frm_Filtro_Especial_Informes
 
         Dim _Vacia = InStr(_Filtro_SQl, "''") : Dim _V = 0 : If CBool(_Vacia) Then _V = 1
 
-        Dim _Union_Campo_Vacias As String = "Select " & _V & " As Chk,'' As Codigo, 'Vacias...' As Descripcion" & vbCrLf & "Union" & vbCrLf
+        'Dim _Union_Campo_Vacias As String = "Select " & _V & " As Chk,'' As Codigo, 'Vacias...' As Descripcion" & vbCrLf & "Union" & vbCrLf
+        Dim _Union_Campo_Vacias As String = Fx_Fila_Vacia_SQL(CStr(_V))
 
         Dim _Sin_Filtro As Boolean
 
@@ -413,23 +439,25 @@ Public Class Frm_Filtro_Especial_Informes
             If CBool(_TblFiltro.Rows.Count) Then
 
                 If _Filtrar_Todo Then
-                    Consulta_Sql = "Select 1 As Chk,'' As Codigo, 'Vacias...' As Descripcion" & vbCrLf & "Union" & vbCrLf &
-                                   "Select CAST( 1 AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion" & vbCrLf &
-                                   "From " & _Tabla & " WITH (NOLOCK)" & vbCrLf &
-                                   "Where 1 > 0" & vbCrLf &
-                                   _Condicion_Extra & vbCrLf &
-                                   _Orden_By
-                Else
-
                     Consulta_Sql = _Union_Campo_Vacias &
-                                   "Select CAST( 1 AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion From " & _Tabla & " WITH (NOLOCK)" & vbCrLf &
-                                   "Where " & _Campo & " IN " & _Filtro_SQl & vbCrLf &
-                                   _Condicion_Extra & vbCrLf &
-                                   "Union" & vbCrLf &
-                                   "Select CAST( 0 AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion From " & _Tabla & " WITH (NOLOCK)" & vbCrLf &
-                                   "Where " & _Campo & " not IN " & _Filtro_SQl & vbCrLf &
-                                   _Condicion_Extra & vbCrLf &
-                                   _Orden_By
+                   "Select CAST(1 AS bit) AS Chk," & Fx_Columnas_Codigo_SQL() &
+                   _Descripcion & " as Descripcion" & vbCrLf &
+                   "From " & _Tabla & " WITH (NOLOCK)" & vbCrLf &
+                   "Where 1 > 0" & vbCrLf &
+                   _Condicion_Extra & vbCrLf &
+                   _Orden_By
+                Else
+                    Consulta_Sql = _Union_Campo_Vacias &
+                   "Select CAST(1 AS bit) AS Chk," & Fx_Columnas_Codigo_SQL() &
+                   _Descripcion & " as Descripcion From " & _Tabla & " WITH (NOLOCK)" & vbCrLf &
+                   "Where " & Fx_Campo_Filtro() & " IN " & _Filtro_SQl & vbCrLf &
+                   _Condicion_Extra & vbCrLf &
+                   "Union" & vbCrLf &
+                   "Select CAST(0 AS bit) AS Chk," & Fx_Columnas_Codigo_SQL() &
+                   _Descripcion & " as Descripcion From " & _Tabla & " WITH (NOLOCK)" & vbCrLf &
+                   "Where " & Fx_Campo_Filtro() & " not IN " & _Filtro_SQl & vbCrLf &
+                   _Condicion_Extra & vbCrLf &
+                   _Orden_By
                 End If
 
                 _Viene_Con_Filtros = True
@@ -448,7 +476,7 @@ Public Class Frm_Filtro_Especial_Informes
             Dim _Chk = CInt(_Filtrar_Todo) * -1
 
             Consulta_Sql = _Union_Campo_Vacias &
-                           "Select CAST(" & _Chk & " AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion" & vbCrLf &
+                           "Select CAST(" & _Chk & " AS bit) AS Chk," & Fx_Columnas_Codigo_SQL() & _Descripcion & " as Descripcion" & vbCrLf &
                            "From " & _Tabla & " WITH (NOLOCK)" & vbCrLf &
                            "Where 1 > 0" & vbCrLf &
                            _Condicion_Extra & vbCrLf &
@@ -510,8 +538,7 @@ Public Class Frm_Filtro_Especial_Informes
 
     Private Sub BtnAceptar_Click(sender As System.Object, e As System.EventArgs) Handles BtnAceptar.Click
 
-        Dim _Union_Campo_Vacias As String = "Select 1 As Chk,'' As Codigo, 'Vacias...' As Descripcion" & vbCrLf &
-                                            "Union" & vbCrLf
+        Dim _Union_Campo_Vacias As String = Fx_Fila_Vacia_SQL("1")
 
         Consulta_Sql = "Select * from " & _Tabla & vbCrLf &
                        "Where " & _Campo & " = ''" & vbCrLf & _Condicion_Extra
@@ -526,14 +553,14 @@ Public Class Frm_Filtro_Especial_Informes
         If Chk_Seleccionar_Todos.Checked Then
 
             Consulta_Sql = _Union_Campo_Vacias &
-                           "Select CAST( 1 AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion " & vbCrLf &
+                           "Select CAST( 1 AS bit) AS Chk," & Fx_Columnas_Codigo_SQL() & _Descripcion & " as Descripcion " & vbCrLf &
                            "From " & _Tabla & vbCrLf &
                            "Where 1 > 0" & vbCrLf & _Condicion_Extra
             _TblFiltro = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
         Else
 
-            Dim _Filtrpo_SQl = Generar_Filtro_IN(_Dv.Table, "Chk", "Codigo", False, True, "'")
+            Dim _Filtrpo_SQl = Fx_Generar_Filtro_IN(_Dv.Table, True)
 
             Dim _Cuenta_Checkeados = 0
 
@@ -552,8 +579,9 @@ Public Class Frm_Filtro_Especial_Informes
                 End If
 
                 Consulta_Sql = _Union_Campo_Vacias &
-                               "Select CAST( 1 AS bit) AS Chk," & _Campo & " as Codigo," & _Descripcion & " as Descripcion From " & _Tabla & vbCrLf &
-                               "Where " & _Campo & " IN " & _Filtrpo_SQl & vbCrLf & _Condicion_Extra
+                               "Select CAST( 1 AS bit) AS Chk," & Fx_Columnas_Codigo_SQL() & _Descripcion & " as Descripcion From " & _Tabla & vbCrLf &
+                               "Where " & Fx_Campo_Filtro() & " IN " & _Filtrpo_SQl & vbCrLf &
+                               _Condicion_Extra
                 _TblFiltro = _Sql.Fx_Get_DataTable(Consulta_Sql)
 
                 If _Cuenta_Checkeados = _Dv.Table.Rows.Count Then 'Grilla.Rows.Count Then
@@ -1025,5 +1053,79 @@ Public Class Frm_Filtro_Especial_Informes
         _Dv.RowFilter = String.Format("Codigo Like '" & _Fl & "'", _Codigo)
 
     End Sub
+
+    Private Function Fx_Campo_Filtro() As String
+        If String.IsNullOrWhiteSpace(_SubCampo) Then
+            Return _Campo
+        End If
+
+        Return "(LTRIM(RTRIM(" & _Campo & ")) + '|' + LTRIM(RTRIM(" & _SubCampo & ")))"
+    End Function
+
+    Private Function Fx_Columnas_Codigo_SQL() As String
+        Dim columnas As String = _Campo & " as Codigo,"
+
+        If Not String.IsNullOrWhiteSpace(_SubCampo) Then
+            columnas &= _SubCampo & " as SubCodigo,"
+        End If
+
+        Return columnas
+    End Function
+
+    Private Function Fx_Fila_Vacia_SQL(Chk As String) As String
+        Dim subCodigo As String = String.Empty
+
+        If Not String.IsNullOrWhiteSpace(_SubCampo) Then
+            subCodigo = "'' As SubCodigo,"
+        End If
+
+        Return "Select " & Chk & " As Chk,'' As Codigo," & subCodigo &
+               "'Vacias...' As Descripcion" & vbCrLf & "Union" & vbCrLf
+    End Function
+
+    Private Function Fx_Generar_Filtro_IN(Tabla As DataTable,
+                                          SoloMarcados As Boolean) As String
+
+        If _Tabla_a_Filtras <> _Tabla_Fl._Entidades2 Then
+            If SoloMarcados Then
+                Return Generar_Filtro_IN(Tabla, "Chk", "Codigo", False, True, "'")
+            End If
+
+            Return Generar_Filtro_IN(Tabla, "", "Codigo", False, False, "'")
+        End If
+
+        If Tabla Is Nothing OrElse
+           Not Tabla.Columns.Contains("Codigo") OrElse
+           Not Tabla.Columns.Contains("SubCodigo") Then
+            Throw New InvalidOperationException(
+                "El filtro _Entidades2 requiere las columnas Codigo y SubCodigo.")
+        End If
+
+        Dim claves As New List(Of String)
+
+        For Each fila As DataRow In Tabla.Rows
+            If SoloMarcados Then
+                If Not Tabla.Columns.Contains("Chk") OrElse
+                   IsDBNull(fila("Chk")) OrElse
+                   Not Convert.ToBoolean(fila("Chk")) Then
+                    Continue For
+                End If
+            End If
+
+            Dim codigo As String = Convert.ToString(fila("Codigo")).Trim()
+            Dim subCodigo As String = Convert.ToString(fila("SubCodigo")).Trim()
+            Dim clave As String = (codigo & "|" & subCodigo).Replace("'", "''")
+
+            If Not claves.Contains(clave) Then
+                claves.Add(clave)
+            End If
+        Next
+
+        If claves.Count = 0 Then
+            Return "('')"
+        End If
+
+        Return "('" & String.Join("','", claves) & "')"
+    End Function
 
 End Class

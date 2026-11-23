@@ -615,6 +615,34 @@ Public Class Frm_Arbol_Lista
 
     End Sub
 
+    Sub Sb_VerEntidades_X_Class_X_Fila(_Nodo As Object)
+
+        Dim _Codigo_Nodo As String = _Nodo.Name
+        Dim _Descripcion As String = _Nodo.Text
+        Dim _Identificador_NodoPadre As Integer = _Nodo.Parent.Name
+        Dim _Es_Seleccionable = CType(_Nodo.Tag, DataRow).Item("Es_Seleccionable")
+        Dim _FullPath As String = _Nodo.FullPath
+
+        Dim Fm As New Frm_Arbol_Asociacion_04_Entidades_x_class(_Identificador_NodoPadre,
+                                                                _Codigo_Nodo,
+                                                                _Descripcion,
+                                                                _FullPath,
+                                                                _Es_Seleccionable,
+                                                                _Clas_Unica_X_Producto,
+                                                                False)
+        If ModoCheckButton Or ModoRadioButton Then
+            Fm.ModoSoloLectura = True
+        Else
+            Fm.ModoSoloLectura = Not _Es_Seleccionable
+        End If
+
+        Fm.Pro_Codigo_Heredado = Codigo_Heredado
+        Fm.Text = "Clasificación: (Cod. " & _Codigo_Nodo & ") " & _Descripcion
+        Fm.ShowDialog(Me)
+        Fm.Dispose()
+
+    End Sub
+
     Private Sub Tree_Bandeja_NodeMouseDoubleClick(sender As Object, e As TreeNodeMouseClickEventArgs) Handles Tree_Bandeja.NodeMouseDoubleClick
 
         Dim _Nodo As TreeNode = e.Node
@@ -735,7 +763,12 @@ Public Class Frm_Arbol_Lista
     Private Sub Btn_VerProductos_Click(sender As Object, e As EventArgs) Handles Btn_VerProductos.Click
 
         Dim _Nodo As AdvTree.Node = Tree_Bandeja_Adv.SelectedNode
-        Sb_VerProductos_X_Class_X_Fila(_Nodo)
+
+        If ModoEntidad Then
+            Sb_VerEntidades_X_Class_X_Fila(_Nodo)
+        Else
+            Sb_VerProductos_X_Class_X_Fila(_Nodo)
+        End If
 
     End Sub
 
@@ -1355,8 +1388,9 @@ Public Class Frm_Arbol_Lista
             End Try
 
             If ModoEntidad Then
-                Btn_VerProductos.Visible = False
-                LabelItem1.Visible = False
+                Btn_VerProductos.Text = "Ver entidades asociadas"
+                'Btn_VerProductos.Visible = False
+                'LabelItem1.Visible = False
             End If
 
             Btn_VerProductos.Enabled = _Es_Seleccionable
