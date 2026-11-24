@@ -287,54 +287,61 @@ Public Class Frm_Arbol_Asociacion_04_Entidades_x_class
     End Function
 
     Private Sub Btn_Btn_AgregarEntidades_Click(sender As Object, e As EventArgs) Handles Btn_AgregarEntidades.Click
-        If ModoSoloLectura OrElse Not Fx_Tiene_Permiso(Me, "Tbl00035") Then Return
+        If ModoSoloLectura OrElse Not Fx_Tiene_Permiso(Me, "Tbl00050") Then Return
 
         Try
-            Dim filtro As New Clas_Filtros_Random(Me)
-            filtro.Tabla = "MAEEN"
-            filtro.Campo = "KOEN"
-            filtro.Descripcion = "NOKOEN"
-            filtro.Pro_Descripcion_X_Defecto = _Codigo_Heredado
+            Dim _Filtro As New Clas_Filtros_Random(Me)
+            _Filtro.Tabla = "MAEEN"
+            _Filtro.Campo = "KOEN"
+            _Filtro.Descripcion = "NOKOEN"
+            _Filtro.Pro_Descripcion_X_Defecto = _Codigo_Heredado
 
-            Dim condicionExtra As String =
+            Dim _Nodo_Raiz As Integer = _Row_Nodo.Item("Nodo_Raiz")
+            Dim _Clas_Unica_X_Producto_Obligatorio = _Row_Nodo.Item("Clas_Unica_X_Producto")
+
+            If Not _Clas_Unica_X_Producto_Obligatorio Then
+                _Nodo_Raiz = _Codigo_Nodo
+            End If
+
+            Dim _CondicionExtra As String =
                 "And Not Exists (Select 1 From " & _Global_BaseBk & "Zw_Entidades_Asociacion A" & vbCrLf &
                 "Where A.CodEntidad = MAEEN.KOEN And A.CodSucEntidad = MAEEN.SUEN" & vbCrLf &
-                "And A.Codigo_Nodo = '" & _Codigo_Nodo & "' And A.Para_filtro = 1)"
+                "And A.Codigo_Nodo = '" & _Nodo_Raiz & "' And A.Para_filtro = 1)"
 
             Dim tablaFiltro As DataTable = Nothing
 
-            If Not filtro.Fx_Filtrar(tablaFiltro,
+            If Not _Filtro.Fx_Filtrar(tablaFiltro,
                                      Clas_Filtros_Random.Enum_Tabla_Fl._Entidades2,
-                                     condicionExtra, False, False) Then
+                                     _CondicionExtra, False, False) Then
                 Return
             End If
 
-            Dim claves As List(Of String()) = Fx_Obtener_Claves_Seleccionadas(filtro.Pro_Tbl_Filtro)
-            If claves.Count = 0 Then Return
+            Dim _Claves As List(Of String()) = Fx_Obtener_Claves_Seleccionadas(_Filtro.Pro_Tbl_Filtro)
+            If _Claves.Count = 0 Then Return
 
-            Dim nodos As List(Of Integer) = Fx_Lista_Nodos_Entidad()
-            Dim condicion As String = Fx_Condicion_Claves(claves)
-            Dim descripcion As String = Convert.ToString(_Row_Nodo("Descripcion")).Replace("'", "''")
-            Dim codigoMadre As String = Convert.ToString(_Row_Nodo("Codigo_Madre")).Replace("'", "''")
-            Dim sql As New System.Text.StringBuilder()
+            Dim _Nodos As List(Of Integer) = Fx_Lista_Nodos_Entidad()
+            Dim _Condicion As String = Fx_Condicion_Claves(_Claves)
+            Dim _Descripcion As String = Convert.ToString(_Row_Nodo("Descripcion")).Replace("'", "''")
+            Dim _CodigoMadre As String = Convert.ToString(_Row_Nodo("Codigo_Madre")).Replace("'", "''")
+            Dim _SqlQuery As New System.Text.StringBuilder()
 
-            For Each codigoNodo As Integer In nodos
-                sql.AppendLine("INSERT INTO " & _Global_BaseBk &
+            For Each codigoNodo As Integer In _Nodos
+                _SqlQuery.AppendLine("INSERT INTO " & _Global_BaseBk &
                                "Zw_Entidades_Asociacion " &
                                "(CodEntidad, CodSucEntidad, Codigo_Nodo, DescripcionBusqueda, " &
                                "Para_filtro, Nodo_origen, Clas_unica, Codigo_Madre)")
-                sql.AppendLine("SELECT E.KOEN, E.SUEN, '" & codigoNodo & "', '" & descripcion &
-                               "', 1, 0, 0, '" & codigoMadre & "'")
-                sql.AppendLine("FROM MAEEN E")
-                sql.AppendLine("WHERE " & condicion.Replace("CodEntidad", "E.KOEN").
+                _SqlQuery.AppendLine("SELECT E.KOEN, E.SUEN, '" & codigoNodo & "', '" & _Descripcion &
+                               "', 1, 0, 0, '" & _CodigoMadre & "'")
+                _SqlQuery.AppendLine("FROM MAEEN E")
+                _SqlQuery.AppendLine("WHERE " & _Condicion.Replace("CodEntidad", "E.KOEN").
                                Replace("CodSucEntidad", "E.SUEN"))
-                sql.AppendLine("And Not Exists (Select 1 From " & _Global_BaseBk &
+                _SqlQuery.AppendLine("And Not Exists (Select 1 From " & _Global_BaseBk &
                                "Zw_Entidades_Asociacion A")
-                sql.AppendLine("Where A.CodEntidad = E.KOEN And A.CodSucEntidad = E.SUEN")
-                sql.AppendLine("And A.Codigo_Nodo = '" & codigoNodo & "' And A.Para_filtro = 1)")
+                _SqlQuery.AppendLine("Where A.CodEntidad = E.KOEN And A.CodSucEntidad = E.SUEN")
+                _SqlQuery.AppendLine("And A.Codigo_Nodo = '" & codigoNodo & "' And A.Para_filtro = 1)")
             Next
 
-            If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(sql.ToString()) Then
+            If Not _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(_SqlQuery.ToString()) Then
                 MessageBoxEx.Show(Me, _Sql.Pro_Error, "Problema al grabar",
                                   MessageBoxButtons.OK, MessageBoxIcon.Stop)
                 Return
@@ -352,7 +359,7 @@ Public Class Frm_Arbol_Asociacion_04_Entidades_x_class
     End Sub
 
     Private Sub Sb_Quitar_Entidades(quitarTodos As Boolean, quitarUna As Boolean)
-        If ModoSoloLectura Then Return
+        If ModoSoloLectura OrElse Not Fx_Tiene_Permiso(Me, "Tbl00050") Then Return
 
         Dim claves As New List(Of String())()
 

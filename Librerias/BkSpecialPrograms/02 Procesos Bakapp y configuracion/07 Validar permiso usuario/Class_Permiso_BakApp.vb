@@ -1074,6 +1074,8 @@ Public Class Class_Permiso_BakApp
 
         _SqlQuery += Fx_Insertar_Permiso("Tbl00047", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Tbl00048", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Tbl00049", _Objeto, _Formulario)
+        _SqlQuery += Fx_Insertar_Permiso("Tbl00050", _Objeto, _Formulario)
 
         _SqlQuery += Fx_Insertar_Permiso("Ubic0001", _Objeto, _Formulario)
         _SqlQuery += Fx_Insertar_Permiso("Ubic0002", _Objeto, _Formulario)
@@ -4666,7 +4668,7 @@ Public Class Class_Permiso_BakApp
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TABLAS_SISTEMA, 6)
                 _NombreFamiliaPermiso = _Fml.TABLAS_SISTEMA.ToString
             Case "Tbl00030"
-                _DescripcionPermiso = "EDITAR TABLA DE CLASIFICACIONES BAKAPP"
+                _DescripcionPermiso = "EDITAR TABLA DE CLASIFICACIONES DE PRODUCTOS BAKAPP"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TABLAS_SISTEMA, 6)
                 _NombreFamiliaPermiso = _Fml.TABLAS_SISTEMA.ToString
             Case "Tbl00035"
@@ -4723,6 +4725,15 @@ Public Class Class_Permiso_BakApp
                 _NombreFamiliaPermiso = _Fml.TABLAS_SISTEMA.ToString
             Case "Tbl00048"
                 _DescripcionPermiso = "ELIMINAR PAISES, CIUDADES Y COMUNAS"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.TABLAS_SISTEMA, 6)
+                _NombreFamiliaPermiso = _Fml.TABLAS_SISTEMA.ToString
+
+            Case "Tbl00049"
+                _DescripcionPermiso = "EDITAR TABLA DE CLASIFICACIONES DE ENTIDADES BAKAPP"
+                _CodFamilia = Fx_Rellena_ceros(_Fml.TABLAS_SISTEMA, 6)
+                _NombreFamiliaPermiso = _Fml.TABLAS_SISTEMA.ToString
+            Case "Tbl00050"
+                _DescripcionPermiso = "AGREGAR O QUITAR ENTIDADES A LAS CLASIFICACIONES MASIVAMENTE"
                 _CodFamilia = Fx_Rellena_ceros(_Fml.TABLAS_SISTEMA, 6)
                 _NombreFamiliaPermiso = _Fml.TABLAS_SISTEMA.ToString
 
