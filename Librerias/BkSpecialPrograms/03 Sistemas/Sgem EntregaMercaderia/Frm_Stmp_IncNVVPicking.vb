@@ -789,6 +789,220 @@ Public Class Frm_Stmp_IncNVVPicking
 
         Dim _Cl_Stmp As New Cl_Stmp
 
+        Dim Fm_Espera As New Frm_Form_Esperar
+
+        Try
+
+            Fm_Espera.BarraCircular.IsRunning = True
+            Fm_Espera.Show()
+
+            For Each _Fila As DataRow In _Tbl_Documentos.Rows
+
+                Dim _Mensaje_Stem As New LsValiciones.Mensajes
+
+                Dim _Idmaeedo As Integer = _Fila.Item("Idmaeedo")
+                Dim _Tido As String = _Fila.Item("Tido")
+                Dim _Nudo As String = _Fila.Item("Nudo")
+                Dim _Pickear As Boolean = _Fila.Item("EnvPickeo")
+                Dim _Facturar As Boolean = _Fila.Item("Facturar")
+                Dim _Empresa As String = _Fila.Item("EMPRESA")
+                Dim _Sucursal As String = _Fila.Item("SUDO")
+                Dim _FechaParaFacturar As DateTime
+                Dim _PagarAuto As Boolean = Chk_Pagar_Documentos.Checked
+                Dim _Idmaedpce_Paga As Integer
+                Dim _CodFuncionario_Paga As String
+
+                If Not _Pickear Then
+                    Continue For
+                End If
+
+                If _PagarAuto Then
+
+                    _Idmaedpce_Paga = _Fila.Item("IDMAEDPCE")
+                    _CodFuncionario_Paga = FUNCIONARIO
+
+                    If Not CBool(_Idmaedpce_Paga) Then
+                        _PagarAuto = False
+                        _CodFuncionario_Paga = String.Empty
+                    End If
+
+                End If
+
+                _FechaParaFacturar = _Fila.Item("FechaParaFacturacion")
+
+                ' 1. Defines el número de documento origen y su ID
+                Dim numeroDocOrigen As String = _Nudo
+                Dim idmaeedoOrigen As String = _Idmaeedo ' Lo definimos como String según la Ffirma de la función
+                Dim _Cl_MultiNVV As New Cl_MultiNVV()
+
+                ' 2. Llamas a la nueva función centralizadora
+                ' Esto ejecutará GeneraNVV y luego Asociar_despachos
+
+                BarraProgreso.Minimum = 0
+                BarraProgreso.Value = 0
+                BarraProgreso.Style = ProgressBarStyle.Continuous
+
+                Dim progreso As Action(Of Integer, Integer, String) = Sub(actual, total, mensaje)
+                                                                          BarraProgreso.Maximum = Math.Max(total, 1)
+                                                                          BarraProgreso.Value = Math.Min(actual, BarraProgreso.Maximum)
+                                                                          Lbl_Status.Text = mensaje
+
+                                                                          ' Fuerza el repintado mientras el método síncrono sigue ejecutándose.
+                                                                          BarraProgreso.Refresh()
+                                                                          Lbl_Status.Refresh()
+                                                                      End Sub
+
+                Dim _Mensaje As LsValiciones.Mensajes = _Cl_MultiNVV.Proceso_MultiNvv(idmaeedoOrigen, numeroDocOrigen, progreso)
+
+                BarraProgreso.Minimum = 0
+                BarraProgreso.Value = 0
+
+                Lbl_Status.Text = "Status"
+
+                If _Mensaje.EsCorrecto Then
+
+                    Dim _LsHijos As List(Of LsValiciones.Mensajes) = _Mensaje.Tag
+
+                    Dim _Msj As New LsValiciones.Mensajes
+                    _Msj.EsCorrecto = True
+                    _Msj.Mensaje = $"Se crean documentos desde este documento {_Tido}-{_Nudo}"
+                    _Msj.Detalle = $"Se crean {_LsHijos.Count} Notas de venta adicionales"
+
+                    _Lista.Add(_Msj)
+
+                    Consulta_sql = $"Update {_Global_BaseBk}Zw_Docu_Ent Set Pickear = 0 Where Idmaeedo = {_Idmaeedo}"
+                    _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                    For Each _Hijo As LsValiciones.Mensajes In _LsHijos
+
+                        Dim _Row As DataRow = _Hijo.Tag
+
+                        _Idmaeedo = _Row.Item("IDMAEEDO")
+                        _Tido = _Row.Item("TIDO")
+                        _Nudo = _Row.Item("NUDO")
+                        _Empresa = _Row.Item("EMPRESA")
+                        _Sucursal = _Row.Item("SUDO")
+
+                        'Dim _Pickear As Boolean = _Fila.Item("EnvPickeo")
+                        'Dim _Facturar As Boolean = _Fila.Item("Facturar")
+
+                        If _Pickear Then
+
+                            Consulta_sql = $"Update {_Global_BaseBk}Zw_Docu_Ent Set Pickear = 1 Where Idmaeedo = {_Idmaeedo}"
+                            _Sql.Ej_consulta_IDU(Consulta_sql)
+
+                            If RutEmpresa = "77988832-0" Then
+
+                                _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo,
+                                                 _Tido,
+                                                 _Nudo,
+                                                 _Facturar,
+                                                 _FechaParaFacturar,
+                                                 "R",
+                                                 False,
+                                                 _Empresa,
+                                                 _Sucursal,
+                                                 FUNCIONARIO,
+                                                 _PagarAuto,
+                                                 _Idmaedpce_Paga,
+                                                 _CodFuncionario_Paga)
+
+                            Else
+
+                                _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Idmaeedo,
+                                                 _Tido,
+                                                 _Nudo,
+                                                 _Facturar,
+                                                 _FechaParaFacturar,
+                                                 "R",
+                                                 False,
+                                                 _Empresa,
+                                                 _Sucursal,
+                                                 FUNCIONARIO,
+                                                 _PagarAuto,
+                                                 _Idmaedpce_Paga,
+                                                 _CodFuncionario_Paga)
+
+                            End If
+
+                            _Lista.Add(_Mensaje_Stem)
+
+                        End If
+
+                    Next
+
+                Else
+
+                    If _Pickear Then
+
+                        If RutEmpresa = "77988832-0" Then
+
+                            _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo,
+                                             _Tido,
+                                             _Nudo,
+                                             _Facturar,
+                                             _FechaParaFacturar,
+                                             "R",
+                                             False,
+                                             _Empresa,
+                                             _Sucursal,
+                                             FUNCIONARIO,
+                                             _PagarAuto,
+                                             _Idmaedpce_Paga,
+                                             _CodFuncionario_Paga)
+
+                        Else
+
+                            _Mensaje_Stem = _Cl_Stmp.Fx_Crear_Ticket(_Idmaeedo,
+                                             _Tido,
+                                             _Nudo,
+                                             _Facturar,
+                                             _FechaParaFacturar,
+                                             "R",
+                                             False,
+                                             _Empresa,
+                                             _Sucursal,
+                                             FUNCIONARIO,
+                                             _PagarAuto,
+                                             _Idmaedpce_Paga,
+                                             _CodFuncionario_Paga)
+
+                        End If
+
+                        _Lista.Add(_Mensaje_Stem)
+
+                    End If
+
+                End If
+
+            Next
+
+        Catch ex As Exception
+        Finally
+
+            Fm_Espera.Close()
+            Fm_Espera.Dispose()
+            Fm_Espera = Nothing
+
+            Me.Enabled = True
+            BarraProgreso.Minimum = 0
+            BarraProgreso.Value = 0
+
+            Lbl_Status.Text = "Status"
+
+        End Try
+
+        Return _Lista
+
+    End Function
+
+    Function Fx_Enviar_NVVNVI_SisEntregaMercaderia_Old() As List(Of LsValiciones.Mensajes)
+
+        Dim _Lista As New List(Of LsValiciones.Mensajes)
+        Dim _FechaHoy As DateTime = FechaDelServidor()
+
+        Dim _Cl_Stmp As New Cl_Stmp
+
         For Each _Fila As DataRow In _Tbl_Documentos.Rows
 
             Dim _Mensaje_Stem As New LsValiciones.Mensajes
@@ -854,34 +1068,6 @@ Public Class Frm_Stmp_IncNVVPicking
                                          _CodFuncionario_Paga)
 
                 End If
-
-                'If _Mensaje_Stem.EsCorrecto Then
-
-                '    If RutEmpresa = "77988832-0" Then
-
-                '        'Dim _Mensaje_CBod As New LsValiciones.Mensajes
-
-                '        '_Mensaje_CBod = Fx_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo)
-
-                '        'If Not _Mensaje_CBod.EsCorrecto Then
-
-                '        '    Dim _Id_Enc As Integer = _Mensaje_Stem.Id
-                '        '    Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Stmp_Enc Where Id = " & _Id_Enc & vbCrLf &
-                '        '                   "Delete " & _Global_BaseBk & "Zw_Stmp_Det Where Id_Enc = " & _Id_Enc
-                '        '    _Sql.Ej_consulta_IDU(Consulta_sql)
-
-                '        '    _Lista.Add(_Mensaje_CBod)
-                '        '    Continue For
-
-                '        'End If
-
-                '    End If
-
-                'If _Mensaje_Stem.EsCorrecto Then
-                '    If RutEmpresa = "77988832-0" Then
-                '        Fx_CambiarBodegaSeaGarden2MeatGarden(_Idmaeedo)
-                '    End If
-                'End If
 
                 _Lista.Add(_Mensaje_Stem)
 

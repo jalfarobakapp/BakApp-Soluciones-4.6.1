@@ -4772,7 +4772,6 @@ Public Module Crear_Documentos_Desde_Otro
                 Dim _ImpresosaPredt As String = _Instance.PrinterName
                 Dim _Seleccionar_Impresora = True
 
-
                 Dim Chk_Imprimir_Predeterminada As New Command
                 Chk_Imprimir_Predeterminada.Visible = Not String.IsNullOrEmpty(_ImpresosaPredt.Trim)
                 Chk_Imprimir_Predeterminada.Checked = Not String.IsNullOrEmpty(_ImpresosaPredt.Trim)
@@ -4805,15 +4804,6 @@ Public Module Crear_Documentos_Desde_Otro
                     If Chk_Imprimir_Predeterminada.Checked Or Chk_Imprimir_Cambiar.Checked Then
 
                         _Seleccionar_Impresora = Chk_Imprimir_Cambiar.Checked
-
-                        'Dim _Imprime As String = Fx_Enviar_A_Imprimir_Documento(_Formulario, _NombreFormato, _Idmaeedo,
-                        '                                                False, _Seleccionar_Impresora, _ImpresosaPredt, False,
-                        '                                                0, False, _Subtido)
-
-                        'If Not String.IsNullOrEmpty(Trim(_Imprime)) Then
-                        '    MessageBoxEx.Show(_Formulario, _Imprime, "Problemas al Imprimir", MessageBoxButtons.OK, MessageBoxIcon.Stop,
-                        '              MessageBoxDefaultButton.Button1, _Formulario.TopMost)
-                        'End If
 
                         Dim _Mensaje As LsValiciones.Mensajes
 
@@ -8117,6 +8107,66 @@ Where Id_Padre = {_Id_Padre}"
         '        Return "21, 22, 23, 24, 25, 26"
         'End Select
 
+    End Function
+
+    Function Fx_RevisarPagoBloqueado(_Idmaedpce As Integer) As LsValiciones.Mensajes
+
+        Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
+        Dim _Mensaje As New LsValiciones.Mensajes
+
+        Try
+
+            Consulta_sql = $"Select TIDP,NUDP,NUCUDP From MAEDPCE Where IDMAEDPCE = {_Idmaedpce}"
+            Dim _Row_Maedpce As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If IsNothing(_Row_Maedpce) Then
+                Throw New System.Exception("No se encontró el registro del pago")
+            End If
+
+            Dim _Tidp As String = _Row_Maedpce.Item("TIDP")
+            Dim _Nudp As String = _Row_Maedpce.Item("NUDP")
+            Dim _Nucudp As String = _Row_Maedpce.Item("NUCUDP").ToString.Trim
+
+            Consulta_sql = $"
+Select Pb.*,Isnull(Tf.NOKOFU,'?????') As 'FuncBloquea' 
+From {_Global_BaseBk}Zw_PagosBloqueados Pb 
+Left Join TABFU Tf On Tf.KOFU = Pb.CodFuncionario
+Where Idmaedpce = {_Idmaedpce}"
+            Dim _Row_PagoBloqueado As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            If Not IsNothing(_Row_PagoBloqueado) Then
+
+                Dim _Bloqueado As Boolean = _Row_PagoBloqueado.Item("Bloqueado")
+                Dim _MotivoBloqueo As String = _Row_PagoBloqueado.Item("MotivoBloqueo")
+                Dim _CodFuncionario As String = _Row_PagoBloqueado.Item("CodFuncionario").ToString.Trim
+                Dim _FuncBloquea As String = _Row_PagoBloqueado.Item("FuncBloquea").ToString.Trim
+
+                If _Bloqueado Then
+
+                    If String.IsNullOrWhiteSpace(_MotivoBloqueo) Then
+                        _MotivoBloqueo = "No se indicó el motivo del bloqueo."
+                    End If
+
+                    Throw New System.Exception("No se puede gestionar este pago porque está bloqueado." & vbCrLf &
+                                      vbCrLf & _MotivoBloqueo & vbCrLf & vbCrLf &
+                                      "Tipo de documento: " & _Tidp & ", Numero Interno: " & _Nudp & ", Numero: " & _Nucudp & vbCrLf &
+                                      "Funcionario que bloquea: " & _CodFuncionario & " - " & _FuncBloquea)
+
+                End If
+
+            End If
+
+            _Mensaje.EsCorrecto = True
+            _Mensaje.Mensaje = "Pago no bloqueado"
+            _Mensaje.Icono = MessageBoxIcon.Information
+
+        Catch ex As Exception
+            _Mensaje.EsCorrecto = False
+            _Mensaje.Detalle = "Pago Bloqueado"
+            _Mensaje.Mensaje = ex.Message
+        End Try
+
+        Return _Mensaje
     End Function
 
 End Module

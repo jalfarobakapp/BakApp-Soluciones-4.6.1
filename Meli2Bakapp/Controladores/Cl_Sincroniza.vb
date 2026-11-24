@@ -1157,7 +1157,9 @@ WHERE
         _SqlRandom = New Class_SQL(Cadena_ConexionSQL_Server)
         _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
 
-        Consulta_sql = "Select Distinct Top 20 ID_MELI From PEDIDOS_PAGOS Where IDMAEDPCD = 0 --And IDMAEEDO_F = 1263840"
+        Consulta_sql = "Select Distinct Top 20 ID_MELI From PEDIDOS_PAGOS Where IDMAEDPCD = 0 -- And IDMAEEDO_F = 1263840"
+        'Consulta_sql = "Select Distinct Top 20 ID_MELI From PEDIDOS_PAGOS Where IDMAEEDO_F = 1368926"
+
         Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl.Rows
@@ -1170,7 +1172,7 @@ WHERE
                 Dim _ID As Integer = _Fl.ID
                 Dim _IDMAEEDO_F As Integer = _Fl.IDMAEEDO_F
                 Dim _ID_PAGO As String = _Fl.ID_PAGO
-                Dim _MONTO As Double = _Fl.MONTO
+                Dim _MONTO As Double = _SqlRandom.Fx_Trae_Dato("MAEEDO", "VABRDO", "IDMAEEDO = " & _IDMAEEDO_F) '_Fl.MONTO
                 Dim _TIPO_PAGO As String = _Fl.TIPO_PAGO
                 Dim _FECHA_PAGO As Date = _Fl.FECHA_PAGO
                 Dim _IDMAEDPCD As Integer = _Fl.IDMAEDPCD
@@ -1190,7 +1192,8 @@ WHERE
 
                     Dim _Maedpcd As MAEDPCD = _Mensaje.Tag
 
-                    Consulta_sql = "Update PEDIDOS_PAGOS Set IDMAEDPCE = " & _Maedpcd.IDMAEDPCE & ",IDMAEDPCD = " & _Maedpcd.IDMAEDPCD & " Where ID = " & _ID
+                    'Consulta_sql = "Update PEDIDOS_PAGOS Set IDMAEDPCE = " & _Maedpcd.IDMAEDPCE & ",IDMAEDPCD = " & _Maedpcd.IDMAEDPCD & " Where ID = " & _ID
+                    Consulta_sql = "Update PEDIDOS_PAGOS Set IDMAEDPCE = " & _Maedpcd.IDMAEDPCE & ",IDMAEDPCD = " & _Maedpcd.IDMAEDPCD & " Where ID_MELI = " & _ID_MELI
 
                     If _SqlMeli.Ej_consulta_IDU(Consulta_sql, False) Then
                         Sb_AddToLog("Pagar documento", _Mensaje.Mensaje, Txt_Log)
@@ -1228,7 +1231,7 @@ WHERE
 
         _SqlMeli = New Class_SQL(Cadena_ConexionSQL_Server_Meli)
 
-        Consulta_sql = "Select * From PEDIDOS_PAGOS Where ID_MELI = '" & _Id_Meli & "'"
+        Consulta_sql = "Select Top 1 * From PEDIDOS_PAGOS Where ID_MELI = '" & _Id_Meli & "'"
         Dim _Tbl As DataTable = _SqlMeli.Fx_Get_DataTable(Consulta_sql)
 
         For Each _Fila As DataRow In _Tbl.Rows

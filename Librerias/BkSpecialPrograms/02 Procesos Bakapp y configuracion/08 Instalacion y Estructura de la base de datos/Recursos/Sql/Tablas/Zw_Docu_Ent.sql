@@ -35,6 +35,7 @@ CREATE TABLE [dbo].[Zw_Docu_Ent](
     [Id_Enc_InterStock] [Int]			NOT NULL DEFAULT (0),
     [Venta_Feria]       [bit]           NOT NULL DEFAULT (0),
     [Id_Feria]          [Int]			NOT NULL DEFAULT (0),
+    [TipoCarga]             [Int]			NOT NULL DEFAULT (0),
  CONSTRAINT [PK_Zw_Docu_Ent] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC

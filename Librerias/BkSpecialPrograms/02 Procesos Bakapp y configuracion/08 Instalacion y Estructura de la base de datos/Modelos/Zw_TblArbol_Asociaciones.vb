@@ -9,4 +9,7 @@
     Public Property Clas_Unica_X_Producto As Boolean
     Public Property Nodo_Raiz As Integer
     Public Property Codigo_Madre As String
+    Public Property ParaEntidad As Boolean
+    Public Property Clas_Unica_X_Entidad As Boolean
+    Public Property DescripcionDetallada As String
 End Class

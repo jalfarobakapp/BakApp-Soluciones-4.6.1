@@ -32,6 +32,9 @@ Public Class Frm_Crear_Entidad_Mt
     Public Property Elimnar() As Boolean
     Public Property ClientePuntos As Boolean
 
+
+    Dim _List_Zw_Entidades_Asociacion As New List(Of Zw_Entidades_Asociacion)
+
     Public Sub New()
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
@@ -696,6 +699,66 @@ Public Class Frm_Crear_Entidad_Mt
 
         End If
 
+        Dim _ObligaGrabarConSeleccion As Boolean = True
+
+        If _ObligaGrabarConSeleccion Then
+
+            If _List_Zw_Entidades_Asociacion.Count = 0 Then
+                TabControl1.SelectedTabIndex = 1
+                MessageBoxEx.Show(Me,
+                                  "Debe marcar al menos una clasificación de Bakapp.",
+                                  "Validación",
+                                  MessageBoxButtons.OK,
+                                  MessageBoxIcon.Stop)
+                Call Btn_ClasificacionesBakpp_Click(Nothing, Nothing)
+                Return
+            End If
+
+            Consulta_sql = $"Select Codigo_Nodo From {_Global_BaseBk}Zw_TblArbol_Asociaciones" & vbCrLf &
+                           "Where ParaEntidad = 1 And Identificacdor_NodoPadre = 0"
+
+            Dim _Tbl_Asociaciones As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            If _Tbl_Asociaciones.Rows.Count > 0 Then
+
+                Dim _CodigosMarcados As New System.Collections.Generic.HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+
+                For Each _Fila As DataRow In _Tbl_Asociaciones.Rows
+
+                    Dim _Codigo_Nodo As String = _Fila.Item("Codigo_Nodo").ToString().Trim()
+
+                    For Each _Nodo As Zw_Entidades_Asociacion In _List_Zw_Entidades_Asociacion
+
+                        If String.Equals(If(_Nodo.Codigo_Nodo, String.Empty).Trim(),
+                                         _Codigo_Nodo,
+                                         StringComparison.OrdinalIgnoreCase) Then
+                            _CodigosMarcados.Add(_Codigo_Nodo)
+                            Exit For
+                        End If
+
+                    Next
+
+                Next
+
+                Dim _MinimoNodosMarcados As Integer = If(_Tbl_Asociaciones.Rows.Count > 1, 2, 1)
+
+                If _CodigosMarcados.Count < _MinimoNodosMarcados Then
+                    TabControl1.SelectedTabIndex = 1
+                    MessageBoxEx.Show(Me,
+                                      "Debe marcar al menos " & _MinimoNodosMarcados &
+                                      " nodo(s) de las clasificaciones requeridas.",
+                                      "Validación",
+                                      MessageBoxButtons.OK,
+                                      MessageBoxIcon.Stop)
+                    Call Btn_ClasificacionesBakpp_Click(Nothing, Nothing)
+                    Return
+                End If
+
+            End If
+
+        End If
+
+
         TabControl1.Tabs(2).Visible = False
 
         Txt_Rten.Text = Replace(Txt_Rten.Text, ".", "")
@@ -1188,6 +1251,32 @@ Public Class Frm_Crear_Entidad_Mt
                 End With
 
             End If
+
+            Dim _Tabla As String = _Global_BaseBk & "Zw_Entidades_Asociacion"
+
+            Consulta_sql = "Delete " & _Tabla & vbCrLf &
+            "Where CodEntidad = '" & _Koen & "'" & vbCrLf &
+            "And CodSucEntidad = '" & _Suen & "'" & vbCrLf &
+            "And Para_filtro = 1" & vbCrLf &
+            "And Codigo_Nodo In (Select Codigo_Nodo From " & _Global_BaseBk & "Zw_TblArbol_Asociaciones Where Clas_Unica_X_Producto = 1)" & vbCrLf
+
+            For Each _Nodo As Zw_Entidades_Asociacion In _List_Zw_Entidades_Asociacion
+
+                Dim _Codigo_Nodo As String = _Nodo.Codigo_Nodo
+                Dim _DescripcionBusqueda As String = _Nodo.DescripcionBusqueda
+                Dim _Codigo_Madre As String = _Nodo.Codigo_Madre
+
+                Consulta_sql &= "Insert Into " & _Tabla &
+                 " (CodEntidad,CodSucEntidad,Codigo_Nodo,DescripcionBusqueda,Para_filtro,Nodo_origen,Clas_unica,Codigo_Madre)" &
+                 " Values ('" & _Koen & "','" & _Suen & "','" &
+                 _Codigo_Nodo & "','" & _DescripcionBusqueda & "',1,0,1,'" & _Codigo_Madre & "');" & vbCrLf
+
+            Next
+
+            Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
+            Comando.Transaction = myTrans
+            Comando.ExecuteNonQuery()
+
 
             myTrans.Commit()
             SQL_ServerClass.Sb_Cerrar_Conexion(cn2)
@@ -1798,6 +1887,34 @@ Public Class Frm_Crear_Entidad_Mt
                 End With
 
             End If
+
+
+            Consulta_sql = "Select Id,CodEntidad,CodSucEntidad,Codigo_Nodo,DescripcionBusqueda,Para_filtro,Nodo_origen,Clas_unica,Codigo_Madre" & vbCrLf &
+                       "From " & _Global_BaseBk & "Zw_Entidades_Asociacion" & vbCrLf &
+                       "Where CodEntidad = '" & _Koen & "'" & vbCrLf &
+                       "And CodSucEntidad = '" & _Suen & "'" & vbCrLf &
+                       "And Para_filtro = 1"
+
+            Dim _TblEntidad As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql)
+
+            For Each _Row As DataRow In _TblEntidad.Rows
+
+                Dim _Asociacion As New Zw_Entidades_Asociacion With {
+                .Id = Convert.ToInt32(_Row.Item("Id")),
+                .CodEntidad = _Row.Item("CodEntidad").ToString(),
+                .CodSucEntidad = _Row.Item("CodSucEntidad").ToString(),
+                .Codigo_Nodo = _Row.Item("Codigo_Nodo").ToString(),
+                .DescripcionBusqueda = _Row.Item("DescripcionBusqueda").ToString(),
+                .Para_filtro = Convert.ToBoolean(_Row.Item("Para_filtro")),
+                .Nodo_origen = Convert.ToInt32(_Row.Item("Nodo_origen")),
+                .Clas_unica = Convert.ToBoolean(_Row.Item("Clas_unica")),
+                .Codigo_Madre = _Row.Item("Codigo_Nodo").ToString()
+            }
+
+                _List_Zw_Entidades_Asociacion.Add(_Asociacion)
+
+            Next
+
 
             Return True
 
@@ -2973,6 +3090,29 @@ Public Class Frm_Crear_Entidad_Mt
                           "Para modificar el crédito total debe agregar o eliminar compañías de seguros" & vbCrLf &
                           "asociadas a la entidad desde el botón ""Compañias de seguro asociadas a la entidad""",
                           "Crédito total", MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+    End Sub
+
+    Private Sub Btn_ClasificacionesBakpp_Click(sender As Object, e As EventArgs) Handles Btn_ClasificacionesBakpp.Click
+
+        Dim _DialogResult As DialogResult
+
+        Dim Fm As New Frm_Arbol_Lista(True)
+        Fm.List_Zw_Entidades_Asociacion = _List_Zw_Entidades_Asociacion
+        Fm.CodEntidad = Cl_Maeen_Edit.KOEN
+        Fm.CodSucEntidad = Cl_Maeen_Edit.SUEN
+        Fm.ModoEntidad = True
+        Fm.ModoRadioButton = True
+        Fm.ObligaGrabarConSeleccion = True
+        'Fm.ModoSeleccion = True
+        Fm.ShowDialog(Me)
+        _DialogResult = Fm.DialogResult
+
+        If Fm.DialogResult = DialogResult.OK Then
+            _List_Zw_Entidades_Asociacion = Fm.List_Zw_Entidades_Asociacion
+        End If
+
+        Fm.Dispose()
 
     End Sub
 

@@ -23,9 +23,9 @@ Partial Class Frm_Despacho_Configuracion
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Frm_Despacho_Configuracion))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.GroupPanel2 = New DevComponents.DotNetBar.Controls.GroupPanel()
         Me.LabelX2 = New DevComponents.DotNetBar.LabelX()
         Me.Cmb_Estados = New DevComponents.DotNetBar.Controls.ComboBoxEx()
@@ -51,6 +51,9 @@ Partial Class Frm_Despacho_Configuracion
         Me.Bar2 = New DevComponents.DotNetBar.Bar()
         Me.Btn_Grabar_Configuracion = New DevComponents.DotNetBar.ButtonItem()
         Me.GroupPanel1 = New DevComponents.DotNetBar.Controls.GroupPanel()
+        Me.Btn_ObligaPonerProductoDespacho = New DevComponents.DotNetBar.ButtonX()
+        Me.Chk_ObligaPonerProductoDespacho = New DevComponents.DotNetBar.Controls.CheckBoxX()
+        Me.Chk_NoObligadatosRetiraCliente = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.Txt_Obs_Retira_Cliente = New DevComponents.DotNetBar.Controls.TextBoxX()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Txt_Tipo_Venta = New DevComponents.DotNetBar.Controls.TextBoxX()
@@ -72,7 +75,6 @@ Partial Class Frm_Despacho_Configuracion
         Me.SuperTabControlPanel2 = New DevComponents.DotNetBar.SuperTabControlPanel()
         Me.Btn_Correos = New DevComponents.DotNetBar.ButtonX()
         Me.SuperTabItem2 = New DevComponents.DotNetBar.SuperTabItem()
-        Me.Chk_NoObligadatosRetiraCliente = New DevComponents.DotNetBar.Controls.CheckBoxX()
         Me.GroupPanel2.SuspendLayout()
         CType(Me.ContextMenuBar1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Grilla_Correos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -250,35 +252,35 @@ Partial Class Frm_Despacho_Configuracion
         Me.Grilla_Correos.AllowUserToAddRows = False
         Me.Grilla_Correos.AllowUserToDeleteRows = False
         Me.Grilla_Correos.BackgroundColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
-        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Correos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Correos.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle4
         Me.Grilla_Correos.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.Grilla_Correos.DefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.Grilla_Correos.DefaultCellStyle = DataGridViewCellStyle5
         Me.Grilla_Correos.EnableHeadersVisualStyles = False
         Me.Grilla_Correos.GridColor = System.Drawing.Color.FromArgb(CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer), CType(CType(170, Byte), Integer))
         Me.Grilla_Correos.Location = New System.Drawing.Point(3, 88)
         Me.Grilla_Correos.Name = "Grilla_Correos"
-        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black
-        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.Grilla_Correos.RowHeadersDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Black
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.Grilla_Correos.RowHeadersDefaultCellStyle = DataGridViewCellStyle6
         Me.Grilla_Correos.RowHeadersVisible = False
         Me.Grilla_Correos.RowTemplate.Height = 25
         Me.Grilla_Correos.Size = New System.Drawing.Size(488, 143)
@@ -335,7 +337,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.Grupo_Tipo.Controls.Add(Me.Btn_Mant_Transportistas)
         Me.Grupo_Tipo.Controls.Add(Me.Btn_Mant_Tipo_Venta)
         Me.Grupo_Tipo.DisabledBackColor = System.Drawing.Color.Empty
-        Me.Grupo_Tipo.Location = New System.Drawing.Point(14, 317)
+        Me.Grupo_Tipo.Location = New System.Drawing.Point(14, 338)
         Me.Grupo_Tipo.Name = "Grupo_Tipo"
         Me.Grupo_Tipo.Size = New System.Drawing.Size(460, 94)
         '
@@ -414,7 +416,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.Bar2.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.Bar2.Font = New System.Drawing.Font("Segoe UI", 9.0!)
         Me.Bar2.Items.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Grabar_Configuracion})
-        Me.Bar2.Location = New System.Drawing.Point(0, 526)
+        Me.Bar2.Location = New System.Drawing.Point(0, 591)
         Me.Bar2.Name = "Bar2"
         Me.Bar2.Size = New System.Drawing.Size(528, 41)
         Me.Bar2.Stretch = True
@@ -436,6 +438,8 @@ Partial Class Frm_Despacho_Configuracion
         '
         Me.GroupPanel1.BackColor = System.Drawing.Color.White
         Me.GroupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007
+        Me.GroupPanel1.Controls.Add(Me.Btn_ObligaPonerProductoDespacho)
+        Me.GroupPanel1.Controls.Add(Me.Chk_ObligaPonerProductoDespacho)
         Me.GroupPanel1.Controls.Add(Me.Chk_NoObligadatosRetiraCliente)
         Me.GroupPanel1.Controls.Add(Me.Txt_Obs_Retira_Cliente)
         Me.GroupPanel1.Controls.Add(Me.LabelX1)
@@ -453,7 +457,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.GroupPanel1.DisabledBackColor = System.Drawing.Color.Empty
         Me.GroupPanel1.Location = New System.Drawing.Point(14, 14)
         Me.GroupPanel1.Name = "GroupPanel1"
-        Me.GroupPanel1.Size = New System.Drawing.Size(460, 285)
+        Me.GroupPanel1.Size = New System.Drawing.Size(460, 318)
         '
         '
         '
@@ -484,6 +488,54 @@ Partial Class Frm_Despacho_Configuracion
         Me.GroupPanel1.StyleMouseOver.CornerType = DevComponents.DotNetBar.eCornerType.Square
         Me.GroupPanel1.TabIndex = 130
         Me.GroupPanel1.Text = "Configuración despacho por empresa"
+        '
+        'Btn_ObligaPonerProductoDespacho
+        '
+        Me.Btn_ObligaPonerProductoDespacho.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
+        Me.Btn_ObligaPonerProductoDespacho.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
+        Me.Btn_ObligaPonerProductoDespacho.Image = CType(resources.GetObject("Btn_ObligaPonerProductoDespacho.Image"), System.Drawing.Image)
+        Me.Btn_ObligaPonerProductoDespacho.ImageAlt = CType(resources.GetObject("Btn_ObligaPonerProductoDespacho.ImageAlt"), System.Drawing.Image)
+        Me.Btn_ObligaPonerProductoDespacho.Location = New System.Drawing.Point(281, 264)
+        Me.Btn_ObligaPonerProductoDespacho.Name = "Btn_ObligaPonerProductoDespacho"
+        Me.Btn_ObligaPonerProductoDespacho.Size = New System.Drawing.Size(170, 22)
+        Me.Btn_ObligaPonerProductoDespacho.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Btn_ObligaPonerProductoDespacho.TabIndex = 152
+        Me.Btn_ObligaPonerProductoDespacho.Text = "Productos despacho"
+        Me.Btn_ObligaPonerProductoDespacho.Tooltip = "Listado de comunas y productos de despacho asociados"
+        '
+        'Chk_ObligaPonerProductoDespacho
+        '
+        Me.Chk_ObligaPonerProductoDespacho.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_ObligaPonerProductoDespacho.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_ObligaPonerProductoDespacho.CheckBoxImageChecked = CType(resources.GetObject("Chk_ObligaPonerProductoDespacho.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_ObligaPonerProductoDespacho.FocusCuesEnabled = False
+        Me.Chk_ObligaPonerProductoDespacho.ForeColor = System.Drawing.Color.Black
+        Me.Chk_ObligaPonerProductoDespacho.Location = New System.Drawing.Point(3, 264)
+        Me.Chk_ObligaPonerProductoDespacho.Name = "Chk_ObligaPonerProductoDespacho"
+        Me.Chk_ObligaPonerProductoDespacho.Size = New System.Drawing.Size(272, 22)
+        Me.Chk_ObligaPonerProductoDespacho.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_ObligaPonerProductoDespacho.TabIndex = 151
+        Me.Chk_ObligaPonerProductoDespacho.Text = "Obliga a poner producto de despacho por comuna"
+        '
+        'Chk_NoObligadatosRetiraCliente
+        '
+        Me.Chk_NoObligadatosRetiraCliente.BackColor = System.Drawing.Color.Transparent
+        '
+        '
+        '
+        Me.Chk_NoObligadatosRetiraCliente.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
+        Me.Chk_NoObligadatosRetiraCliente.CheckBoxImageChecked = CType(resources.GetObject("Chk_NoObligadatosRetiraCliente.CheckBoxImageChecked"), System.Drawing.Image)
+        Me.Chk_NoObligadatosRetiraCliente.FocusCuesEnabled = False
+        Me.Chk_NoObligadatosRetiraCliente.ForeColor = System.Drawing.Color.Black
+        Me.Chk_NoObligadatosRetiraCliente.Location = New System.Drawing.Point(3, 195)
+        Me.Chk_NoObligadatosRetiraCliente.Name = "Chk_NoObligadatosRetiraCliente"
+        Me.Chk_NoObligadatosRetiraCliente.Size = New System.Drawing.Size(414, 15)
+        Me.Chk_NoObligadatosRetiraCliente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
+        Me.Chk_NoObligadatosRetiraCliente.TabIndex = 150
+        Me.Chk_NoObligadatosRetiraCliente.Text = "No obligar a poner datos en RETIRA CLIENTE"
         '
         'Txt_Obs_Retira_Cliente
         '
@@ -729,15 +781,15 @@ Partial Class Frm_Despacho_Configuracion
         Me.Tabs.ControlBox.MenuBox.Name = ""
         Me.Tabs.ControlBox.Name = ""
         Me.Tabs.ControlBox.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Tabs.ControlBox.MenuBox, Me.Tabs.ControlBox.CloseBox})
-        Me.Tabs.Controls.Add(Me.SuperTabControlPanel1)
         Me.Tabs.Controls.Add(Me.SuperTabControlPanel2)
+        Me.Tabs.Controls.Add(Me.SuperTabControlPanel1)
         Me.Tabs.ForeColor = System.Drawing.Color.Black
         Me.Tabs.Location = New System.Drawing.Point(12, 12)
         Me.Tabs.Name = "Tabs"
         Me.Tabs.ReorderTabsEnabled = True
         Me.Tabs.SelectedTabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
         Me.Tabs.SelectedTabIndex = 0
-        Me.Tabs.Size = New System.Drawing.Size(506, 508)
+        Me.Tabs.Size = New System.Drawing.Size(506, 573)
         Me.Tabs.TabFont = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Tabs.TabIndex = 131
         Me.Tabs.Tabs.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.SuperTabItem1, Me.SuperTabItem2})
@@ -752,7 +804,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.SuperTabControlPanel1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel1.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel1.Name = "SuperTabControlPanel1"
-        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(506, 481)
+        Me.SuperTabControlPanel1.Size = New System.Drawing.Size(506, 546)
         Me.SuperTabControlPanel1.TabIndex = 1
         Me.SuperTabControlPanel1.TabItem = Me.SuperTabItem1
         '
@@ -760,7 +812,7 @@ Partial Class Frm_Despacho_Configuracion
         '
         Me.Btn_Conf_Chilexpress.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Conf_Chilexpress.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Conf_Chilexpress.Location = New System.Drawing.Point(14, 446)
+        Me.Btn_Conf_Chilexpress.Location = New System.Drawing.Point(14, 478)
         Me.Btn_Conf_Chilexpress.Name = "Btn_Conf_Chilexpress"
         Me.Btn_Conf_Chilexpress.Size = New System.Drawing.Size(157, 23)
         Me.Btn_Conf_Chilexpress.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -772,7 +824,7 @@ Partial Class Frm_Despacho_Configuracion
         '
         Me.Btn_Conf_Imp_Letrero.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton
         Me.Btn_Conf_Imp_Letrero.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground
-        Me.Btn_Conf_Imp_Letrero.Location = New System.Drawing.Point(14, 417)
+        Me.Btn_Conf_Imp_Letrero.Location = New System.Drawing.Point(14, 449)
         Me.Btn_Conf_Imp_Letrero.Name = "Btn_Conf_Imp_Letrero"
         Me.Btn_Conf_Imp_Letrero.Size = New System.Drawing.Size(157, 23)
         Me.Btn_Conf_Imp_Letrero.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
@@ -794,7 +846,7 @@ Partial Class Frm_Despacho_Configuracion
         Me.SuperTabControlPanel2.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SuperTabControlPanel2.Location = New System.Drawing.Point(0, 27)
         Me.SuperTabControlPanel2.Name = "SuperTabControlPanel2"
-        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(506, 481)
+        Me.SuperTabControlPanel2.Size = New System.Drawing.Size(506, 546)
         Me.SuperTabControlPanel2.TabIndex = 0
         Me.SuperTabControlPanel2.TabItem = Me.SuperTabItem2
         '
@@ -817,28 +869,11 @@ Partial Class Frm_Despacho_Configuracion
         Me.SuperTabItem2.Name = "SuperTabItem2"
         Me.SuperTabItem2.Text = "Configuración correo automático"
         '
-        'Chk_NoObligadatosRetiraCliente
-        '
-        Me.Chk_NoObligadatosRetiraCliente.BackColor = System.Drawing.Color.Transparent
-        '
-        '
-        '
-        Me.Chk_NoObligadatosRetiraCliente.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square
-        Me.Chk_NoObligadatosRetiraCliente.CheckBoxImageChecked = CType(resources.GetObject("Chk_NoObligadatosRetiraCliente.CheckBoxImageChecked"), System.Drawing.Image)
-        Me.Chk_NoObligadatosRetiraCliente.FocusCuesEnabled = False
-        Me.Chk_NoObligadatosRetiraCliente.ForeColor = System.Drawing.Color.Black
-        Me.Chk_NoObligadatosRetiraCliente.Location = New System.Drawing.Point(3, 195)
-        Me.Chk_NoObligadatosRetiraCliente.Name = "Chk_NoObligadatosRetiraCliente"
-        Me.Chk_NoObligadatosRetiraCliente.Size = New System.Drawing.Size(414, 15)
-        Me.Chk_NoObligadatosRetiraCliente.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.Chk_NoObligadatosRetiraCliente.TabIndex = 150
-        Me.Chk_NoObligadatosRetiraCliente.Text = "No obligar a poner datos en RETIRA CLIENTE"
-        '
         'Frm_Despacho_Configuracion
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(528, 567)
+        Me.ClientSize = New System.Drawing.Size(528, 632)
         Me.Controls.Add(Me.Tabs)
         Me.Controls.Add(Me.Bar2)
         Me.DoubleBuffered = True
@@ -915,4 +950,6 @@ Partial Class Frm_Despacho_Configuracion
     Friend WithEvents Txt_Obs_Retira_Cliente As DevComponents.DotNetBar.Controls.TextBoxX
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Friend WithEvents Chk_NoObligadatosRetiraCliente As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Chk_ObligaPonerProductoDespacho As DevComponents.DotNetBar.Controls.CheckBoxX
+    Friend WithEvents Btn_ObligaPonerProductoDespacho As DevComponents.DotNetBar.ButtonX
 End Class

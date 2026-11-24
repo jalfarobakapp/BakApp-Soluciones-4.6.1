@@ -385,7 +385,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
                        "SUM(CAPRCO1) AS CANTIDAD,PPPRNE,SUM(VANELI) AS VANELI,SUM(VAIVLI) AS VAIVLI, SUM(VABRLI) AS VABRLI," &
                        "FMPR,SUPER_FAMILIA,PFPR,FAMILIA,HFPR,SUB_FAMILIA,MRPR,MARCA,RUPR,RUBRO_PR,CLALIBPR,CLAS_LIBRE,ZOPR,ZONA_PR" & vbCrLf &
                        "From " & _Nombre_Tabla_Paso & vbCrLf &
-                       "Where 1 > 0" & vbCrLf &
+                       "Where 1 > 0 And EMPRESA = '" & Mod_Empresa & "'" & vbCrLf &
                        "And KOPRCT+NOKOPR+TIDO+NUDO+VENDEDOR+SUPER_FAMILIA+FAMILIA+SUB_FAMILIA+MARCA+RUBRO_PR+CLAS_LIBRE+ZONA_PR Like '%" & _Cadena & "%'" & vbCrLf &
                        _SqlFiltro & vbCrLf &
                        "Group By IDMAEDDO,IDMAEEDO,KOPRCT,NOKOPR,TIDO,NUDO,SULIDO,BOSULIDO,FEEMDO,KOFULIDO,UD,PPPRNE,FMPR,SUPER_FAMILIA,PFPR,FAMILIA,HFPR,SUB_FAMILIA,MRPR,MARCA,RUPR,RUBRO_PR,CLALIBPR,CLAS_LIBRE,ZOPR,ZONA_PR"
@@ -394,7 +394,7 @@ Public Class Frm_Inf_Ventas_X_Periodo_Sub_Informes_01
         _SqlExcelVistaAltual = "Select KOPRCT As 'Código',NOKOPR As 'Descripción',TIDO As 'Td',NUDO As 'Número',FEEMDO As 'Fecha',KOFULIDO As 'Cod.',UD," &
                                "SUM(CAPRCO1) As 'Cantidad',PPPRNE As 'Precio Neto',SUM(VANELI) As Neto,SUM(VABRLI) As Bruto" & vbCrLf &
                                "From " & _Nombre_Tabla_Paso & vbCrLf &
-                               "Where 1 > 0" & vbCrLf &
+                               "Where 1 > 0 And EMPRESA = '" & Mod_Empresa & "'" & vbCrLf &
                                "And KOPRCT+NOKOPR+TIDO+NUDO+VENDEDOR+SUPER_FAMILIA+FAMILIA+SUB_FAMILIA+MARCA+RUBRO_PR+CLAS_LIBRE+ZONA_PR Like '%" & _Cadena & "%'" & vbCrLf &
                                _SqlFiltro & vbCrLf &
                                "Group By IDMAEDDO,IDMAEEDO,KOPRCT,NOKOPR,TIDO,NUDO,SULIDO,BOSULIDO,FEEMDO,KOFULIDO,UD,PPPRNE,FMPR,SUPER_FAMILIA,PFPR,FAMILIA,HFPR,SUB_FAMILIA,MRPR,MARCA,RUPR,RUBRO_PR,CLALIBPR,CLAS_LIBRE,ZOPR,ZONA_PR"

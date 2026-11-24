@@ -154,6 +154,7 @@ Public Class Frm_Pagos_Generales
         If ModoLectura Then
             Me.Text += " (MODO SOLO LECTURA)"
             BtnGrabar.Enabled = False
+            Btn_Agregar_Pago.Enabled = False
         End If
 
     End Sub
@@ -769,7 +770,51 @@ Public Class Frm_Pagos_Generales
             Dim _Saldo_DocPagar2 As Double = _Fila_Pagada.Cells("SALDO_ACT").Value
 
             Dim _Tidp As String = _Fila_Pago.Cells("TIDP").Value
+            Dim _Nudp As String = _Fila_Pago.Cells("NUDP").Value
+            Dim _Nucudp As String = _Fila_Pago.Cells("NUCUDP").Value.ToString.Trim
             Dim _Abono As Double = _Fila_Pagada.Cells("ABONO2").Value
+
+            Dim _Idmaedpce As Integer = _Fila_Pago.Cells("IDMAEDPCE").Value
+
+            Dim _Mensaje As LsValiciones.Mensajes = Fx_RevisarPagoBloqueado(_Idmaedpce)
+
+            If Not _Mensaje.EsCorrecto Then
+                MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Pago bloqueado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                e.Cancel = True
+                Return
+            End If
+
+            '            Consulta_sql = $"
+            'Select Pb.*,Isnull(Tf.NOKOFU,'?????') As 'FuncBloquea' 
+            'From {_Global_BaseBk}Zw_PagosBloqueados Pb 
+            'Left Join TABFU Tf On Tf.KOFU = Pb.CodFuncionario
+            'Where Idmaedpce = {_Idmaedpce}"
+            '            Dim _Row_PagoBloqueado As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+            '            If Not IsNothing(_Row_PagoBloqueado) Then
+
+            '                Dim _Bloqueado As Boolean = _Row_PagoBloqueado.Item("Bloqueado")
+            '                Dim _MotivoBloqueo As String = _Row_PagoBloqueado.Item("MotivoBloqueo")
+            '                Dim _CodFuncionario As String = _Row_PagoBloqueado.Item("CodFuncionario").ToString.Trim
+            '                Dim _FuncBloquea As String = _Row_PagoBloqueado.Item("FuncBloquea").ToString.Trim
+
+            '                If _Bloqueado Then
+
+            '                    If String.IsNullOrWhiteSpace(_MotivoBloqueo) Then
+            '                        _MotivoBloqueo = "No se indicó el motivo del bloqueo."
+            '                    End If
+
+            '                    MessageBoxEx.Show(Me, "No se puede gestionar este pago porque está bloqueado." & vbCrLf &
+            '                                      vbCrLf & _MotivoBloqueo & vbCrLf & vbCrLf &
+            '                                      "Tipo de documento: " & _Tidp & ", Numero Interno: " & _Nudp & ", Numero: " & _Nucudp & vbCrLf &
+            '                                      "Funcionario que bloquea: " & _CodFuncionario & " - " & _FuncBloquea,
+            '                                      "Pago bloqueado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            '                    e.Cancel = True
+            '                    Return
+
+            '                End If
+
+            '            End If
 
             If Not CBool(_Abono) Then
 
@@ -837,6 +882,7 @@ Public Class Frm_Pagos_Generales
         End Try
 
     End Sub
+
 
     Private Sub Grilla_Estado_de_Cuentas_CellEndEdit(sender As System.Object, e As System.Windows.Forms.DataGridViewCellEventArgs) Handles Grilla_Estado_de_Cuentas.CellEndEdit
         Try
@@ -2631,4 +2677,134 @@ Public Class Frm_Pagos_Generales
         Return False
     End Function
 
+    Private Sub Grilla_Pagos_MouseDown(sender As Object, e As MouseEventArgs) Handles Grilla_Pagos.MouseDown
+
+        If e.Button = Windows.Forms.MouseButtons.Right Then
+
+            With sender
+
+                Dim Hitest As DataGridView.HitTestInfo = .HitTest(e.X, e.Y)
+
+                If Hitest.Type = DataGridViewHitTestType.Cell Then
+
+                    .CurrentCell = .Rows(Hitest.RowIndex).Cells(Hitest.ColumnIndex)
+
+                    Dim _Fila As DataGridViewRow = Grilla_Pagos.Rows(Grilla_Pagos.CurrentRow.Index)
+
+                    Dim _Idmaedpce As Integer = _Fila.Cells("IDMAEDPCE").Value
+                    Dim _Idrsd As Boolean = _Fila.Cells("IDRSD").Value
+                    Dim _Endp As Boolean = Not String.IsNullOrEmpty(_Fila.Cells("ENDP").Value)
+                    Dim _Bloqueado As Boolean
+
+                    Dim _Cabeza = Grilla_Pagos.Columns(Grilla_Pagos.CurrentCell.ColumnIndex).Name
+
+                    If String.IsNullOrEmpty(_Fila.Cells("TIDP").Value) Then
+                        Return
+                    End If
+
+                    If CBool(_Idmaedpce) Then
+
+                        'Consulta_sql = $"Select * From {_Global_BaseBk}Zw_PagosBloqueados Where Idmaedpce = {_Idmaedpce}"
+                        'Dim _Row_Zw_PagosBloqueados As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                        'If Not IsNothing(_Row_Zw_PagosBloqueados) Then
+                        _Bloqueado = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_PagosBloqueados", "Bloqueado", $"Idmaedpce = {_Idmaedpce}", _Es_Boolean:=True)
+                        'End If
+
+                        Btn_BloquearPago.Enabled = Not _Bloqueado
+                        Btn_DesbloquearPago.Enabled = _Bloqueado
+                        Btn_InfoBloqueo.Visible = _Bloqueado
+
+                        ShowContextMenu(Menu_Contextual_01)
+
+                    End If
+
+                End If
+
+            End With
+
+        End If
+
+    End Sub
+
+    Private Sub Btn_DesbloquearPago_Click(sender As Object, e As EventArgs) Handles Btn_DesbloquearPago.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Pagos.CurrentRow
+        Dim _Idmaedpce As Integer = Convert.ToInt32(_Fila.Cells("IDMAEDPCE").Value)
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        If Not Fx_Tiene_Permiso(Me, "Pcli0005") Then
+            Return
+        End If
+
+        If MessageBoxEx.Show(Me, "¿Confirma el desbloque de este pago?", "Desbloquear pago",
+                             MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) <> DialogResult.Yes Then
+            Return
+        End If
+
+        Consulta_sql = $"
+Delete {_Global_BaseBk}Zw_PagosBloqueados 
+Where Idmaedpce = {_Idmaedpce}
+Update MAEDPCE Set REFANTI = ''
+Where IDMAEDPCE = {_Idmaedpce}
+"
+
+        If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            Return
+        End If
+
+        _Fila.Cells("REFANTI").Value = String.Empty
+
+    End Sub
+
+    Private Sub Btn_BloquearPago_Click(sender As Object, e As EventArgs) Handles Btn_BloquearPago.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Pagos.CurrentRow
+        Dim _Idmaedpce As Integer = Convert.ToInt32(_Fila.Cells("IDMAEDPCE").Value)
+        Dim _NombreEquipo As String = _Global_Row_EstacionBk.Item("NombreEquipo")
+
+        If ModoLectura Then
+            MessageBoxEx.Show(Me, "Esta acción solo se puede hacer si es que no a procesado los pagos", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Return
+        End If
+
+        If Not Fx_Tiene_Permiso(Me, "Pcli0004") Then
+            Return
+        End If
+
+        Dim _Aceptar As Boolean
+        Dim _MotivoBloqueo As String
+
+        _Aceptar = InputBox_Bk(Me, "Ingrese el motivo del bloqueo del pago", "Bloquear pago",
+                              _MotivoBloqueo, True, _Tipo_Mayus_Minus.Mayusculas, 200, True)
+
+        If Not _Aceptar Then
+            Return
+        End If
+
+        Consulta_sql = $"
+Insert Into {_Global_BaseBk}Zw_PagosBloqueados (Idmaedpce, Bloqueado, MotivoBloqueo, CodFuncionario, NombreEquipo, FechaBloqueo) Values 
+({_Idmaedpce},1,'{_MotivoBloqueo}','{FUNCIONARIO}','{_NombreEquipo}',Getdate())
+
+Update MAEDPCE Set REFANTI = '*** PAGO BLOQUEADO Desde BAKAPP ***'
+Where IDMAEDPCE = {_Idmaedpce}
+"
+        If Not _Sql.Ej_consulta_IDU(Consulta_sql) Then
+            Return
+        End If
+
+        _Fila.Cells("REFANTI").Value = "*** PAGO BLOQUEADO Desde BAKAPP ***"
+
+    End Sub
+
+    Private Sub Btn_InfoBloqueo_Click(sender As Object, e As EventArgs) Handles Btn_InfoBloqueo.Click
+
+        Dim _Fila As DataGridViewRow = Grilla_Pagos.CurrentRow
+        Dim _Idmaedpce As Integer = _Fila.Cells("IDMAEDPCE").Value
+
+        Dim _Mensaje As LsValiciones.Mensajes = Fx_RevisarPagoBloqueado(_Idmaedpce)
+        MessageBoxEx.Show(Me, _Mensaje.Mensaje, "Pago bloqueado", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
+    End Sub
 End Class

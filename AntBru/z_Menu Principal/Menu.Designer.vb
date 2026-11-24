@@ -89,6 +89,7 @@ Partial Class Menu
         Me.Btn_CrucePagoMasivos = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_EliminarDoc = New DevComponents.DotNetBar.ButtonItem()
         Me.Btn_CrearFCV01a02 = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_CrearFCCdesdeOCC = New DevComponents.DotNetBar.ButtonItem()
         Me.Tiempo_Actualizar_BakApp = New System.Windows.Forms.Timer(Me.components)
         Me.Menu_BakApp = New DevComponents.DotNetBar.ContextMenuBar()
         Me.Menu_Contextual_Menu_Extra = New DevComponents.DotNetBar.ButtonItem()
@@ -112,7 +113,10 @@ Partial Class Menu
         Me.Lbl_Estatus = New DevComponents.DotNetBar.LabelItem()
         Me.StyleManager1 = New DevComponents.DotNetBar.StyleManager(Me.components)
         Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
-        Me.Btn_CrearFCCdesdeOCC = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ClasificacionesBakapp = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ClasUnicas_Ent = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ClasDinam_Ent = New DevComponents.DotNetBar.ButtonItem()
+        Me.Btn_ClasEntidad = New DevComponents.DotNetBar.ButtonItem()
         MetroTileFrame1 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame2 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
         MetroTileFrame3 = New DevComponents.DotNetBar.Metro.MetroTileFrame()
@@ -831,7 +835,7 @@ Partial Class Menu
         Me.ButtonX1.Name = "ButtonX1"
         Me.ButtonX1.Size = New System.Drawing.Size(134, 32)
         Me.ButtonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled
-        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP, Me.Btn_PDARMovil, Me.Btn_SobreStock, Me.Btn_CrucePagoMasivos, Me.Btn_EliminarDoc, Me.Btn_CrearFCV01a02, Me.Btn_CrearFCCdesdeOCC})
+        Me.ButtonX1.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_Monisiones, Me.ButtonItem5, Me.Btn_IngresarGRIProduccion, Me.Btn_CrearNVVDesdeOCC, Me.Btn_PruebasFacturaElectronica, Me.Btn_Stem, Me.Btn_RevPesoVariable, Me.ButtonItem6, Me.Btn_PreVenta, Me.Btn_PagarDocumento, Me.Btn_GDI2GRI, Me.Btn_Rutas, Me.Btn_PPP, Me.Btn_PDARMovil, Me.Btn_SobreStock, Me.Btn_CrucePagoMasivos, Me.Btn_EliminarDoc, Me.Btn_CrearFCV01a02, Me.Btn_CrearFCCdesdeOCC, Me.Btn_ClasificacionesBakapp})
         Me.ButtonX1.TabIndex = 15
         Me.ButtonX1.Text = "Boton de pruebas"
         Me.ButtonX1.Visible = False
@@ -995,6 +999,12 @@ Partial Class Menu
         Me.Btn_CrearFCV01a02.GlobalItem = False
         Me.Btn_CrearFCV01a02.Name = "Btn_CrearFCV01a02"
         Me.Btn_CrearFCV01a02.Text = "Crear FCV desde empresa A a empresa B"
+        '
+        'Btn_CrearFCCdesdeOCC
+        '
+        Me.Btn_CrearFCCdesdeOCC.GlobalItem = False
+        Me.Btn_CrearFCCdesdeOCC.Name = "Btn_CrearFCCdesdeOCC"
+        Me.Btn_CrearFCCdesdeOCC.Text = "FCC desde OCC"
         '
         'Tiempo_Actualizar_BakApp
         '
@@ -1249,11 +1259,27 @@ Partial Class Menu
         Me.Lbl_NombreEmpresaActiva.TabIndex = 56
         Me.Lbl_NombreEmpresaActiva.Text = "NOMBRE DE LA EMPRESA... ESTE ES EL NOMBRE DE LA EM" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10)
         '
-        'Btn_CrearFCCdesdeOCC
+        'Btn_ClasificacionesBakapp
         '
-        Me.Btn_CrearFCCdesdeOCC.GlobalItem = False
-        Me.Btn_CrearFCCdesdeOCC.Name = "Btn_CrearFCCdesdeOCC"
-        Me.Btn_CrearFCCdesdeOCC.Text = "FCC desde OCC"
+        Me.Btn_ClasificacionesBakapp.GlobalItem = False
+        Me.Btn_ClasificacionesBakapp.Name = "Btn_ClasificacionesBakapp"
+        Me.Btn_ClasificacionesBakapp.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_ClasUnicas_Ent, Me.Btn_ClasDinam_Ent, Me.Btn_ClasEntidad})
+        Me.Btn_ClasificacionesBakapp.Text = "Clasificaciones Bakapp"
+        '
+        'Btn_ClasUnicas_Ent
+        '
+        Me.Btn_ClasUnicas_Ent.Name = "Btn_ClasUnicas_Ent"
+        Me.Btn_ClasUnicas_Ent.Text = "Clasificaciones Unicas"
+        '
+        'Btn_ClasDinam_Ent
+        '
+        Me.Btn_ClasDinam_Ent.Name = "Btn_ClasDinam_Ent"
+        Me.Btn_ClasDinam_Ent.Text = "Clasificaciones Dinamicas"
+        '
+        'Btn_ClasEntidad
+        '
+        Me.Btn_ClasEntidad.Name = "Btn_ClasEntidad"
+        Me.Btn_ClasEntidad.Text = "Clas Entidad"
         '
         'Menu
         '
@@ -1363,4 +1389,8 @@ Partial Class Menu
     Friend WithEvents Lbl_NombreEmpresaActiva As DevComponents.DotNetBar.LabelX
     Friend WithEvents Btn_CrearFCV01a02 As DevComponents.DotNetBar.ButtonItem
     Friend WithEvents Btn_CrearFCCdesdeOCC As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ClasificacionesBakapp As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ClasUnicas_Ent As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ClasDinam_Ent As DevComponents.DotNetBar.ButtonItem
+    Friend WithEvents Btn_ClasEntidad As DevComponents.DotNetBar.ButtonItem
 End Class

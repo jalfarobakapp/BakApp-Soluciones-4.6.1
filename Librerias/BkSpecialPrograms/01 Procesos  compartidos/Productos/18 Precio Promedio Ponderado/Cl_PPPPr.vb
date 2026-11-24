@@ -1,6 +1,4 @@
-﻿Imports System.Security.Claims
-
-Public Class Cl_PPPPr
+﻿Public Class Cl_PPPPr
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
@@ -138,7 +136,6 @@ Public Class Cl_PPPPr
             'Dim _Stock_Trans(1) As Double
             'Dim _Sttr1, _Sttr2 As Double      ' STOCK EN TRANSITO
 
-
             'Dim _Total_Stfi_x_Pm As Double = _Pm * (_Stfi1 + _Sttr1)
             '_Sum_Stock = _Stfi1 + _Sttr1
 
@@ -192,6 +189,10 @@ Public Class Cl_PPPPr
                 Dim _Lilg As String = _Fila.Item("LILG")
                 Dim _Timodo As String = _Fila.Item("TIMODO")
                 Dim _Tamodo As Double = _Fila.Item("TAMODO")
+                Dim _Tidodcr As String = _Fila.Item("TIDODCR").ToString.Trim
+                Dim _Idmaedcr As Integer = _Fila.Item("IDMAEDCR")
+                Dim _Valdcr As Double = _Fila.Item("VALDCR")
+                Dim _Nrodocpost As Boolean = _Fila.Item("NRODOCPOST")
 
                 Dim _Entrada As Double
                 Dim _Salida As Double
@@ -228,14 +229,14 @@ Public Class Cl_PPPPr
                 Dim _NewPPPRPR2 As Double = _Pm
 
                 If CBool(_Cantidad) AndAlso
-                    ((_Tido = "GDD") Or
-                    (_Tido = "GDI" And String.IsNullOrWhiteSpace(_Tidopa)) Or
-                    (_Tido = "GDP") Or
-                    (_Tido = "GDV") Or
-                    (_Tido = "NCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
-                    (_Tido = "FCV") Or
-                    (_Tido = "FDV") Or
-                    (_Tido = "BLV")) Then
+                ((_Tido = "GDD") Or
+                (_Tido = "GDI" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                (_Tido = "GDP") Or
+                (_Tido = "GDV") Or
+                (_Tido = "NCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                (_Tido = "FCV") Or
+                (_Tido = "FDV") Or
+                (_Tido = "BLV")) Then
 
                     _Cantidad = _Caprco1
                     _Salida = _Cantidad
@@ -255,15 +256,15 @@ Public Class Cl_PPPPr
                 End If
 
                 If CBool(_Cantidad) AndAlso
-                   ((_Tido = "GRC") Or
-                   (_Tido = "GRI" And String.IsNullOrWhiteSpace(_Tidopa)) Or
-                   (_Tido = "FCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
-                   (_Tido = "FCC" And _Tidopa = "OCC") Or
-                    _Tido = "BLC" Or
-                    _Tido = "GRD" Or
-                   (_Tido = "NCV" And String.IsNullOrWhiteSpace(_Tidopa)) Or
-                   (_Tido = "NCV" And CBool(_Cantidad)) Or
-                   (_Tido = "GDD" And String.IsNullOrWhiteSpace(_Tidopa))) Then
+                       ((_Tido = "GRC") Or
+                       (_Tido = "GRI" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                       (_Tido = "FCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                       (_Tido = "FCC" And _Tidopa = "OCC") Or
+                        _Tido = "BLC" Or
+                        _Tido = "GRD" Or
+                       (_Tido = "NCV" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                       (_Tido = "NCV" And CBool(_Cantidad)) Or
+                       (_Tido = "GDD" And String.IsNullOrWhiteSpace(_Tidopa))) Then
 
                     _Cantidad = _Caprco1
                     _Entrada = _Cantidad
@@ -311,33 +312,52 @@ Public Class Cl_PPPPr
                         _Costotrib = _Vaneli
                     End If
 
-                    '_Costotrib = Math.Round(_Costotrib, 0)
+                    If (_Nudo = "0180500581" Or _Nudo = "0182534824") And _Tidodcr = "" Then
+                        Dim SS = 0
+                        'Continue For
+                    End If
+
+                    If _Tidodcr = "DCR" Then
+                        _Costotrib = _Valdcr
+                    End If
 
                     _PrecioCompra = Math.Round(_Costotrib / _Cantidad, 5)
 
-                    Dim _PPP As Double = Fx_CalcularPrecioPromedioPonderado(Math.Round(_Saldo_Stock, 2), Pm, _Cantidad, _PrecioCompra)
-                    ' Dim _PPP2 As Double = CalcularPPP(Saldo_Stock, Pm, _Cantidad, _PrecioCompra)
+                    Dim _PPP As Double
 
-                    If _PPP > 0 Then
+                    If _Tidodcr = "DCR" Then
+
+                        _PPP = Fx_CalcularPrecioPromedioPonderadoDIM(_Saldo_Stock, _Pm, Math.Round(_Costotrib, 0))
+
                         _Pm = _PPP
+                        _NewPPPRPR2 = _Pm
+
+                        _Costotrib = Math.Round(_Costotrib)
+                        _V_Entrada = _Costotrib
+
+                        _Saldo_Valor += Math.Round(_V_Entrada, 5)
+
                     Else
-                        _Pm = _PrecioCompra
+
+                        _PPP = Fx_CalcularPrecioPromedioPonderado(Math.Round(_Saldo_Stock, 2), Pm, _Cantidad, _PrecioCompra)
+
+                        If _PPP > 0 Then
+                            _Pm = _PPP
+                        Else
+                            _Pm = _PrecioCompra
+                        End If
+
+                        _NewPPPRPR2 = _Pm
+
+                        _Costotrib = Math.Round(_Costotrib)
+                        _V_Entrada = _Costotrib
+
+                        _Saldo_Valor += Math.Round(_V_Entrada, 5)
+                        _Saldo_Stock += Math.Round(_Entrada, 3)
+
                     End If
 
-                    _NewPPPRPR2 = _Pm
-
-                    _Costotrib = Math.Round(_Costotrib)
-                    _V_Entrada = _Costotrib
-
-                    _Saldo_Valor += Math.Round(_V_Entrada, 5)
-                    _Saldo_Stock += Math.Round(_Entrada, 3)
-
                     Fepm = _Feemli
-
-                    'If _Tido = "NCV" Or _Tido = "GRD" Then
-                    '    _Pr_Pr_P = _Saldo_Valor / _Saldo_Stock
-                    '    _Pm = Math.Round(_Pr_Pr_P, 3)
-                    'End If
 
                 End If
 
@@ -390,8 +410,16 @@ Public Class Cl_PPPPr
                     _Costotrib = Math.Round(_Pm * _Cantidad)
                 End If
 
-                _SqlQuery += "Update MAEDDO Set PPPRPM = " & De_Num_a_Tx_01(_Pm, False, 5) & ",COSTOTRIB = " & De_Num_a_Tx_01(_Costotrib, False, 5) & Space(1) &
+                If CBool(_Idmaedcr) And _Tidodcr = "DCR" Then
+
+                    _SqlQuery += "UPDATE MAEDCR  SET PPPRPM = " & De_Num_a_Tx_01(_Pm, False, 5) & " ,COSTOTRIB = " & De_Num_a_Tx_01(_Costotrib, False, 5) & Space(1) &
+                                 "WHERE IDMAEDCR = " & _Idmaedcr & vbCrLf
+                Else
+
+                    _SqlQuery += "Update MAEDDO Set PPPRPM = " & De_Num_a_Tx_01(_Pm, False, 5) & ",COSTOTRIB = " & De_Num_a_Tx_01(_Costotrib, False, 5) & Space(1) &
                              "Where IDMAEDDO = " & _Idmaeddo & " AND ARPROD<>'COMON' AND ARPROD<>'CIFRS' -- Documento: " & _Tido & " - " & _Nudo & vbCrLf
+
+                End If
 
             Next
 
@@ -475,23 +503,9 @@ Public Class Cl_PPPPr
             Return 0 ' Para evitar división por cero
         End If
 
-        ''Dim precioPromedio As Double = (_TotalValorAnterior + _TotalValorCompra) / _TotalUnidades
-
-        'Dim _ST_AntD As Decimal = Convert.ToDecimal(Math.Round(_ST_Ant, 5))
-        'Dim _PPP_AntD As Decimal = Convert.ToDecimal(Math.Round(_PPP_Ant, 5))
-        'Dim _IngresoD As Decimal = Convert.ToDecimal(Math.Round(_Ingreso, 5))
-        'Dim _PrecioD As Decimal = Convert.ToDecimal(Math.Round(_Precio, 5))
-
-        'Dim Calculo1 As Decimal = Math.Round((_ST_AntD * _PPP_AntD + _IngresoD * _PrecioD), 5)
-        'Dim Calculo2 As Decimal = Math.Round(_ST_AntD / _IngresoD, 5)
-        'Dim PPP As Decimal = Math.Round(Calculo1 / Calculo2, 5)
-
-        'Dim _PPP2 = Convert.ToDouble(Calculo1) / Convert.ToDouble(Calculo2) ' 14179383.51264 / 2266.984
-
         Dim precioPromedioRd As Double = (_ST_Ant * _PPP_Ant + _Ingreso * _Precio) / (_ST_Ant + _Ingreso)
 
-        Return Math.Round(precioPromedioRd, 5) ' Redondeo a 2 decimales
-        'Return Math.Round(precioPromedio, 5) ' Redondeo a 2 decimales
+        Return Math.Round(precioPromedioRd, 5)
 
     End Function
 

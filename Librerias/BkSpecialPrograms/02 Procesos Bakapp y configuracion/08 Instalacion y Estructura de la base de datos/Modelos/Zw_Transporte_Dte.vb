@@ -13,4 +13,7 @@
     Public Property DirDest As String
     Public Property CmnaDest As String
     Public Property CiudadDest As String
+    Public Property FchSalida As DateTime?
+    Public Property HraSalida As DateTime?
+    Public Property FchLlegada As DateTime?
 End Class

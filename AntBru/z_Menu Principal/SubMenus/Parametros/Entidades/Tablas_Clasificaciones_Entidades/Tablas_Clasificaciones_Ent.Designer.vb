@@ -33,6 +33,7 @@ Partial Class Tablas_Clasificaciones_Ent
         Me.ContenedorTablas = New DevComponents.DotNetBar.ItemContainer()
         Me.Btn_AreaAct = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.Btn_PaCiCm = New DevComponents.DotNetBar.Metro.MetroTileItem()
+        Me.Btn_ClasUnicas = New DevComponents.DotNetBar.Metro.MetroTileItem()
         Me.MetroTilePanel1 = New DevComponents.DotNetBar.Metro.MetroTilePanel()
         Me.LabelX1 = New DevComponents.DotNetBar.LabelX()
         Me.Lbl_NombreEmpresaActiva = New DevComponents.DotNetBar.LabelX()
@@ -204,7 +205,7 @@ Partial Class Tablas_Clasificaciones_Ent
         Me.ContenedorTablas.FixedSize = New System.Drawing.Size(650, 350)
         Me.ContenedorTablas.MultiLine = True
         Me.ContenedorTablas.Name = "ContenedorTablas"
-        Me.ContenedorTablas.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_TiposEntidades, Me.Btn_ActEconomica, Me.Btn_TamanoEmpresa, Me.Btn_Cargo, Me.Btn_AreaAct, Me.Btn_Rubro, Me.Btn_PaCiCm})
+        Me.ContenedorTablas.SubItems.AddRange(New DevComponents.DotNetBar.BaseItem() {Me.Btn_TiposEntidades, Me.Btn_ActEconomica, Me.Btn_TamanoEmpresa, Me.Btn_Cargo, Me.Btn_AreaAct, Me.Btn_Rubro, Me.Btn_PaCiCm, Me.Btn_ClasUnicas})
         '
         '
         '
@@ -258,6 +259,28 @@ Partial Class Tablas_Clasificaciones_Ent
         Me.Btn_PaCiCm.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
         Me.Btn_PaCiCm.TileStyle.TextColor = System.Drawing.Color.White
         Me.Btn_PaCiCm.TitleText = "BakApp"
+        '
+        'Btn_ClasUnicas
+        '
+        Me.Btn_ClasUnicas.Image = CType(resources.GetObject("Btn_ClasUnicas.Image"), System.Drawing.Image)
+        Me.Btn_ClasUnicas.ImageIndent = New System.Drawing.Point(8, -10)
+        Me.Btn_ClasUnicas.ImageTextAlignment = System.Drawing.ContentAlignment.BottomRight
+        Me.Btn_ClasUnicas.Name = "Btn_ClasUnicas"
+        Me.Btn_ClasUnicas.SymbolColor = System.Drawing.Color.Empty
+        Me.Btn_ClasUnicas.Text = "<font size=""+4""><b>CLAS. UNICAS</b></font><br/><font size=""-1"">Mantención de clas" &
+    "ificaciones.<br/>" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Se puede clasificar solo una carpeta por producto</font>"
+        Me.Btn_ClasUnicas.TileColor = DevComponents.DotNetBar.Metro.eMetroTileColor.Olive
+        Me.Btn_ClasUnicas.TileSize = New System.Drawing.Size(200, 100)
+        '
+        '
+        '
+        Me.Btn_ClasUnicas.TileStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(161, Byte), Integer), CType(CType(176, Byte), Integer), CType(CType(91, Byte), Integer))
+        Me.Btn_ClasUnicas.TileStyle.BackColor2 = System.Drawing.Color.FromArgb(CType(CType(161, Byte), Integer), CType(CType(176, Byte), Integer), CType(CType(91, Byte), Integer))
+        Me.Btn_ClasUnicas.TileStyle.BorderColor = System.Drawing.Color.FromArgb(CType(CType(161, Byte), Integer), CType(CType(176, Byte), Integer), CType(CType(91, Byte), Integer))
+        Me.Btn_ClasUnicas.TileStyle.BorderColor2 = System.Drawing.Color.FromArgb(CType(CType(161, Byte), Integer), CType(CType(176, Byte), Integer), CType(CType(91, Byte), Integer))
+        Me.Btn_ClasUnicas.TileStyle.CornerType = DevComponents.DotNetBar.eCornerType.Rounded
+        Me.Btn_ClasUnicas.TileStyle.TextColor = System.Drawing.Color.White
+        Me.Btn_ClasUnicas.TitleText = "BakApp"
         '
         'MetroTilePanel1
         '
@@ -332,4 +355,5 @@ Partial Class Tablas_Clasificaciones_Ent
     Friend WithEvents LabelX1 As DevComponents.DotNetBar.LabelX
     Private WithEvents Btn_PaCiCm As DevComponents.DotNetBar.Metro.MetroTileItem
     Friend WithEvents Lbl_NombreEmpresaActiva As DevComponents.DotNetBar.LabelX
+    Private WithEvents Btn_ClasUnicas As DevComponents.DotNetBar.Metro.MetroTileItem
 End Class

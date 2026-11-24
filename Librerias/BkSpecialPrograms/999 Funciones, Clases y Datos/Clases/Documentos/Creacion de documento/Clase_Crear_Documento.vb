@@ -214,7 +214,8 @@ Public Class Clase_Crear_Documento
                                 Optional ByRef _Origen_Modificado_Intertanto As Boolean = False,
                                 Optional _Es_TLV As Boolean = False,
                                 Optional _HoraAlFinalDelDia As Boolean = False,
-                                Optional _HoraAlPrincipioDelDia As Boolean = False) As LsValiciones.Mensajes
+                                Optional _HoraAlPrincipioDelDia As Boolean = False,
+                                Optional _ConservaTrazabilidad As Boolean = False) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -1185,7 +1186,7 @@ Public Class Clase_Crear_Documento
 
                         End If
 
-                        If _Tido = "BLV" Or _Tido = "FCV" Or _Tido = "FCC" Or _Tido = "OCC" Or _Tido = "NVV" Or _Tido = "GDV" Or _Tido = "GRC" Or _Tido = "GTI" Then
+                        If (_Tido = "BLV" Or _Tido = "FCV" Or _Tido = "FCC" Or _Tido = "OCC" Or _Tido = "NVV" Or _Tido = "GDV" Or _Tido = "GRC" Or _Tido = "GTI") Then
 
                             If _Tidopa = "COV" Or _Tidopa = "NVV" Or _Tidopa = "OCC" Or _Tidopa = "OCI" Or _Tidopa = "NVI" Or _Tido = "GTI" Then
 
@@ -2344,9 +2345,15 @@ Public Class Clase_Crear_Documento
             End If
 
             If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "BLV" Or _Tido = "FCV" Or
-               _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "NCV" Or _Tido = "GRI" Or _Tido = "GDI" Then
+               _Tido = "GDV" Or _Tido = "GTI" Or _Tido = "GDP" Or _Tido = "NCV" Or
+               _Tido = "GRI" Or _Tido = "GDI" Then
 
-                Consulta_sql = "Select * From MAEEDO Where EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                If RutEmpresa = "77988832-0" AndAlso (_Tido = "COV" Or _Tido = "NVV") Then
+                    Consulta_sql = "Select * From MAEEDO Where TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                Else
+                    Consulta_sql = "Select * From MAEEDO Where EMPRESA = '" & _Empresa & "' And TIDO = '" & _Tido & "' And NUDO = '" & _Nudo & "'"
+                End If
+
                 Comando = New SqlCommand(Consulta_sql, cn2)
                 Comando.Transaction = myTrans
                 dfd1 = Comando.ExecuteReader()
@@ -2404,10 +2411,28 @@ Public Class Clase_Crear_Documento
                         .Tido = _Tido
                         .Nudo = _Nudo
 
+                        Dim _FchSalida As String = Format(.FchSalida, "yyyyMMdd")
+                        Dim _HraSalida As String = Format(.HraSalida, "HH:mm:ss")
+                        Dim _FchLlegada As String = Format(.FchLlegada, "yyyyMMdd")
+
+                        If String.IsNullOrEmpty(_FchSalida) Then _FchSalida = "00010101"
+                        If String.IsNullOrEmpty(_HraSalida) Then _HraSalida = "00:00:00"
+                        If String.IsNullOrEmpty(_FchLlegada) Then _FchLlegada = "00010101"
+
+                        If _FchSalida = "00010101" OrElse _HraSalida = "00:00:00" OrElse _FchLlegada = "00010101" Then
+                            _FchSalida = $"Null"
+                            _HraSalida = $"Null"
+                            _FchLlegada = $"Null"
+                        Else
+                            _FchSalida = $"'{_FchSalida}'"
+                            _HraSalida = $"'{_HraSalida}'"
+                            _FchLlegada = $"'{_FchLlegada}'"
+                        End If
+
                         Consulta_sql = $"Insert Into {_Global_BaseBk}Zw_Transporte_Dte (Empresa,Id_Enc,Idmaeedo,Tido,Nudo," &
-                                       "Patente,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest)" & vbCrLf &
-                                       $"Values ({ .Empresa},{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
-                                       $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}')"
+                                       "Patente,PatenteCarro,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest,FchSalida,HraSalida,FchLlegada)" & vbCrLf &
+                                       $"Values ('{ .Empresa}',{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .PatenteCarro}','{ .RUTTrans}','{ .Chofer}'" &
+                                       $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}',{_FchSalida},{_HraSalida},{_FchLlegada})"
                         Comando = New SqlClient.SqlCommand(Consulta_sql, cn2)
                         Comando.Transaction = myTrans
                         Comando.ExecuteNonQuery()

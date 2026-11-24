@@ -193,7 +193,7 @@ Public Class Clas_Despacho
         End Set
     End Property
 
-
+    Public Property Row_ProductoDespacho As DataRow
 
     ' Tablas :
     ' Zw_Despachos

@@ -8,6 +8,7 @@ Public Class Frm_Formulario_Documento
 
     Dim _Sql As New Class_SQL(Cadena_ConexionSQL_Server)
     Dim Consulta_sql As String
+    Dim RevisarListaSuperior As Boolean = True
 
     Dim _NombreEquipo = _Global_Row_EstacionBk.Item("NombreEquipo")
 
@@ -473,7 +474,8 @@ Public Class Frm_Formulario_Documento
                    Optional Documento_Reciclado As Boolean = False,
                    Optional _Facturacion_Automatica As Boolean = False,
                    Optional _PreVenta As Boolean = False,
-                   Optional _SobreStock As Boolean = False)
+                   Optional _SobreStock As Boolean = False,
+                   Optional _RevisarListaSuperior As Boolean = True)
 
         ' Llamada necesaria para el Diseñador de Windows Forms.
         InitializeComponent()
@@ -483,6 +485,7 @@ Public Class Frm_Formulario_Documento
         ModSucursal_Doc = Mod_Sucursal
         ModBodega_Doc = Mod_Bodega
         ModModalidad_Doc = Mod_Modalidad
+        RevisarListaSuperior = _RevisarListaSuperior
 
         PreVenta = _PreVenta
         SobreStock = _SobreStock
@@ -596,6 +599,9 @@ Public Class Frm_Formulario_Documento
             Me.Top += 10
             Me.Left += 10
         End If
+
+        Chk_CargaDirecta.Visible = False
+        Chk_CargaSemiDirecta.Visible = False
 
         Dim _Color_Totales As Color = Color.FromArgb(46, 46, 46)
         Dim _Color_LblTotales As Color = Color.FromArgb(46, 46, 46)
@@ -866,6 +872,8 @@ Public Class Frm_Formulario_Documento
                 SoloprodEnDoc_CLALIBPR = _Global_Row_Configuracion_Estacion.Item("SoloprodEnDoc_CLALIBPR")
             End If
         End If
+
+        'SoloprodEnDoc_CLALIBPR = False
 
         Lbl_TipoVenta.Visible = SoloprodEnDoc_CLALIBPR
         Btn_CambiarTipoVenta.Visible = SoloprodEnDoc_CLALIBPR
@@ -1255,6 +1263,9 @@ Public Class Frm_Formulario_Documento
 
         Chk_Redondear_Cero.Enabled = False
         _AvisoCambioRTUVariable = False
+
+        Chk_CargaDirecta.Checked = False
+        Chk_CargaSemiDirecta.Checked = False
 
         Btn_UtilizarDetalleOtroDoc.Tag = String.Empty
 
@@ -6485,9 +6496,12 @@ Public Class Frm_Formulario_Documento
 
 
         'Agregar Lista Superior
-        If _Tido = "NVV" AndAlso _Cl_DocListaSuperior.UsarVencListaPrecios AndAlso Not _Revisar_Notificacion_Automatica_Remota AndAlso Not (SobreStock) Then
-            _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpEntidad(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
-            _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpSuperior(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
+        If RevisarListaSuperior Then
+
+            If _Tido = "NVV" AndAlso _Cl_DocListaSuperior.UsarVencListaPrecios AndAlso Not _Revisar_Notificacion_Automatica_Remota AndAlso Not (SobreStock) Then
+                _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpEntidad(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
+                _Cl_DocListaSuperior.Sb_Insertar_NuevaLineaLpSuperior(_Fila.Index, _Codigo, _Cl_DocListaSuperior.ListaEntidad, _UnTrans, _Impuestos, _Valor_desde_Lista)
+            End If
         End If
 
         If Not String.IsNullOrEmpty(_Oferta) And _Mostrar_Oferta Then
@@ -13394,8 +13408,10 @@ Public Class Frm_Formulario_Documento
             LblMoneda.Tag = .Item("Moneda_Doc")
             LblMoneda.Text = .Item("Moneda_Doc")
 
-            Chk_CargaDirecta.Enabled = False
-            Chk_CargaSemiDirecta.Enabled = False
+            If _Tido <> "NVV" Then
+                Chk_CargaDirecta.Enabled = False
+                Chk_CargaSemiDirecta.Enabled = False
+            End If
 
             If CBool(.Item("TipoCarga")) Then
                 If .Item("TipoCarga") = 1 Then Chk_CargaDirecta.Checked = True
@@ -16246,6 +16262,14 @@ Public Class Frm_Formulario_Documento
 
                             If _Tido = "COV" Or _Tido = "NVV" Or _Tido = "FCV" Or _Tido = "GDV" Or _Tido = "GDP" Then
 
+                                If RutEmpresa = "77988832-0" Then
+                                    Dim _Endo As String = _Sql.Fx_Trae_Dato("MAEEDO", "ENDO", $"IDMAEEDO = {_Idmaeedo}")
+                                    If _Endo.ToString.Trim = "XXXXXXXXXX" Then
+                                        MessageBoxEx.Show(Me, "Documento en transición por picking", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                        Return
+                                    End If
+                                End If
+
                                 Dim _Msj As LsValiciones.Mensajes = Fx_FuncionarioPuedeVerDocumentoGrupo(_Idmaeedo, FUNCIONARIO)
 
                                 If Not _Msj.EsCorrecto Then
@@ -17868,6 +17892,42 @@ Public Class Frm_Formulario_Documento
                     End Try
 
 
+                    If _Tido = "FCV" OrElse _Tido = "GDP" OrElse _Tido = "GDV" OrElse _Tido = "GDD" Or _Tido = "GTI" Then
+
+                        Dim _PideTransportista As Boolean = True
+
+                        If _Tido = "FCV" Then
+
+                            If MessageBoxEx.Show(Me, "Desea agregar los datos del transporte", "Transportista",
+                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) <> DialogResult.Yes Then
+                                _PideTransportista = False
+                            End If
+
+                        End If
+
+                        If _PideTransportista Then
+
+                            Dim _Mensaje As New LsValiciones.Mensajes
+
+                            _Mensaje = Fx_AgregarDatosTransporte()
+
+                            If Not _Mensaje.EsCorrecto Then
+                                'If MessageBoxEx.Show(Me, _Mensaje.Detalle & vbCrLf & vbCrLf & "¿Confirma grabar el documento sin datos del transporte?",
+                                '                     "Validación",
+                                '                     MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+                                '    Return
+                                'End If
+                                MessageBoxEx.Show(Me, "Faltan los datos del transportista", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                                Return
+                            End If
+
+                            Zw_Transporte_Dte = _Mensaje.Tag
+
+                        End If
+
+                    End If
+
+
 
                     Dim Fm_Obs As New Frm_Formulario_Observaciones(_Ds_Matriz_Documentos, _RowEntidad, _Tipo_Documento, _Documento_Autorizado)
                     Fm_Obs.Btn_Grabar_Observaciones.Visible = False
@@ -17890,44 +17950,66 @@ Public Class Frm_Formulario_Documento
 
                     If _Grabar_Obs Then
 
-                        Dim _Mensaje As New LsValiciones.Mensajes
+                        'Dim _Mensaje As New LsValiciones.Mensajes
 
-                        _Mensaje = Fx_AgregarTransporteNVIparaGTI()
+                        '_Mensaje = Fx_AgregarDatosTransporte()
 
-                        If Not _Mensaje.EsCorrecto Then
-                            If MessageBoxEx.Show(Me, _Mensaje.Detalle & vbCrLf & vbCrLf & "¿Confirma grabar el documento sin datos del transporte?", "Validación",
-                                                 MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
-                                Return
-                            End If
-                        End If
+                        'If Not _Mensaje.EsCorrecto Then
+                        '    If MessageBoxEx.Show(Me, _Mensaje.Detalle & vbCrLf & vbCrLf & "¿Confirma grabar el documento sin datos del transporte?", "Validación",
+                        '                         MessageBoxButtons.YesNo, MessageBoxIcon.Stop) <> DialogResult.Yes Then
+                        '        Return
+                        '    End If
+                        'End If
 
-                        Zw_Transporte_Dte = _Mensaje.Tag
+                        'Zw_Transporte_Dte = _Mensaje.Tag
 
                         _Solicitar_Observaciones_Al_Grabar = False
 
                     Else
 
                         If Not IsNothing(_Cl_Despacho) Then
+
                             Consulta_sql = "Select * From " & _Global_BaseBk & "Zw_Chilexpress_Env Where IdDespacho = " & _Cl_Despacho.Id_Despacho
                             Dim _Row_Chilexpress As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
+
+                            Dim _EliminarUltFilaDespacho As Boolean
+                            Dim _Msj As String
 
                             If Not IsNothing(_Row_Chilexpress) Then
 
                                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Chilexpress_Env Where IdDespacho = " & _Cl_Despacho.Id_Despacho
                                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
+                                _Msj = "Este documento se encontraba con una cotización a Chilexpress." & vbCrLf &
+                                       "La orden se eliminara y si necesita volver hacer el despacho debe llenar nuevamente la solicitud." & vbCrLf &
+                                       "No esta permitido salir y volver al documento cuando hay una orden de Chilexpress en proceso"
+                                _EliminarUltFilaDespacho = True
+
+                            End If
+
+                            If Not IsNothing(_Cl_Despacho.Row_ProductoDespacho) Then
+
+                                _Msj = "Existe un despacho automático en proceso para este documento." & vbCrLf &
+                                       "Si requiere realizar nuevamente el despacho, deberá crear una nueva solicitud." & vbCrLf &
+                                       "No está permitido salir y volver a ingresar al documento mientras el despacho automático se encuentre en ejecución."
+                                _EliminarUltFilaDespacho = True
+
+                            End If
+
+                            If _EliminarUltFilaDespacho Then
+
                                 Consulta_sql = "Delete " & _Global_BaseBk & "Zw_Despachos Where Id_Despacho = " & _Cl_Despacho.Id_Despacho
                                 _Sql.Ej_consulta_IDU(Consulta_sql)
 
-                                _Cl_Despacho = Nothing
-
-                                MessageBoxEx.Show(Me, "Este documento se encontraba con una cotización a Chilexpress." & vbCrLf &
-                                              "La orden se eliminara y si necesita volver hacer el despacho debe llenar nuevamente la solicitud." & vbCrLf &
-                                              "No esta permitido salir y volver al documento cuando hay una orden de Chilexpress en proceso",
-                                              "Validacón Chilexpress", MessageBoxButtons.OK, MessageBoxIcon.Stop)
                                 Dim _FilasEliminar As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.Rows.Count - 1)
                                 Sb_Eliminar_Fila(_FilasEliminar, True)
+
+                                _Cl_Despacho = Nothing
+
+                                MessageBoxEx.Show(Me, _Msj, "Validacón Despacho", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+
                             End If
+
                         End If
 
                         Sb_EliminarFilaPuntos()
@@ -17952,17 +18034,17 @@ Public Class Frm_Formulario_Documento
                                    "And Edo.FEER = '" & _Feer & "' And Ddo.KOPRCT In " & _CodProductoDoc &
                                    " And Ddo.TIPR In ('FPN','FPS','FNP','FIN') And Edo.TIDO In ('FCV','NVV','GDV','BLV')"
 
-                            Consulta_sql = $"Select Count(*) As Detalle 
-From MAEDDO Ddo WITH (NOLOCK) 
-Inner Join MAEEDO Edo WITH (NOLOCK) On Edo.IDMAEEDO = Ddo.IDMAEEDO
-Inner Join {_Global_BaseBk}Zw_Docu_Ent Ent On Ent.Idmaeedo = Edo.IDMAEEDO
-Where Edo.ENDO = '{_RowEntidad.Item("KOEN")}' 
-And Edo.SUENDO = '{_RowEntidad.Item("SUEN")}' 
-And Edo.FEER = '{_Feer}' 
-And Ddo.KOPRCT In {_CodProductoDoc} 
-And Ddo.TIPR In ('FPN','FPS','FNP','FIN') 
-And (Ent.Tido In ('FCV','NVV','GDV','BLV') Or (Ent.Tido = 'COV' And Ent.SobreStock = 1))
-"
+                            Consulta_sql = $"
+                                            Select Count(*) As Detalle 
+                                            From MAEDDO Ddo WITH (NOLOCK) 
+                                            Inner Join MAEEDO Edo WITH (NOLOCK) On Edo.IDMAEEDO = Ddo.IDMAEEDO
+                                            Inner Join {_Global_BaseBk}Zw_Docu_Ent Ent On Ent.Idmaeedo = Edo.IDMAEEDO
+                                            Where Edo.ENDO = '{_RowEntidad.Item("KOEN")}' 
+                                            And Edo.SUENDO = '{_RowEntidad.Item("SUEN")}' 
+                                            And Edo.FEER = '{_Feer}' 
+                                            And Ddo.KOPRCT In {_CodProductoDoc} 
+                                            And Ddo.TIPR In ('FPN','FPS','FNP','FIN') 
+                                            And (Ent.Tido In ('FCV','NVV','GDV','BLV') Or (Ent.Tido = 'COV' And Ent.SobreStock = 1))"
 
                             Dim _Row As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
@@ -18525,29 +18607,28 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
     End Sub
 
-    Function Fx_AgregarTransporteNVIparaGTI() As LsValiciones.Mensajes
+    Function Fx_AgregarDatosTransporte() As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
-        If _Tido <> "GTI" Then
-            _Mensaje.EsCorrecto = True
-            _Mensaje.Tag = Nothing
-            Return _Mensaje
-        End If
+        'If _Tido <> "GTI" Then
+        '    _Mensaje.EsCorrecto = True
+        '    _Mensaje.Tag = Nothing
+        '    Return _Mensaje
+        'End If
 
         Dim _Zw_Transporte_Dte As New Zw_Transporte_Dte
 
-        Dim _AgregarTransporteNVIparaGTI As Boolean = (_Global_Row_Configuracion_General.Item("AgregarTransporteNVIparaGTI") Or
-                                                   _Global_Row_Configuracion_Estacion.Item("AgregarTransporteNVIparaGTI"))
+        'Dim _AgregarTransporteNVIparaGTI As Boolean = (_Global_Row_Configuracion_General.Item("AgregarTransporteNVIparaGTI") Or
+        '                                           _Global_Row_Configuracion_Estacion.Item("AgregarTransporteNVIparaGTI"))
 
-        If Not _AgregarTransporteNVIparaGTI Then
-            _Mensaje.EsCorrecto = True
-            _Mensaje.Tag = Nothing
-            Return _Mensaje
-        End If
+        'If Not _AgregarTransporteNVIparaGTI Then
+        '    _Mensaje.EsCorrecto = True
+        '    _Mensaje.Tag = Nothing
+        '    Return _Mensaje
+        'End If
 
         Try
-
 
             Dim _Grabar As Boolean
             Dim _Tiene_Transporte As Boolean = False
@@ -18562,6 +18643,10 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                 .Empresa = Mod_Empresa
 
             End With
+
+            If Not IsNothing(Zw_Transporte_Dte) Then
+                _Zw_Transporte_Dte = Zw_Transporte_Dte
+            End If
 
             Dim _Koen As String = _TblEncabezado.Rows(0).Item("CodEntidad")
             Dim _Suen As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
@@ -18586,7 +18671,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
                     ' Recortar a un máximo de 30 caracteres
                     If _Ciudad.Length > 20 Then _Ciudad = _Ciudad.Substring(0, 20)
-                    If _Comuna.Length > 20 Then _Ciudad = _Comuna.Substring(0, 20)
+                    If _Comuna.Length > 20 Then _Comuna = _Comuna.Substring(0, 20)
 
                     .CiudadDest = _Ciudad.Trim
                     .CmnaDest = _Comuna.Trim
@@ -18663,6 +18748,10 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                 .Empresa = Mod_Empresa
 
             End With
+
+            If Not IsNothing(Zw_Transporte_Dte) Then
+                _Zw_Transporte_Dte = Zw_Transporte_Dte
+            End If
 
             Dim _Koen As String = _TblEncabezado.Rows(0).Item("CodEntidad")
             Dim _Suen As String = _TblEncabezado.Rows(0).Item("CodSucEntidad")
@@ -19579,7 +19668,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                  Optional _Mostrar_Mensaje As Boolean = True,
                                  Optional _ConvertirAPesos As Boolean = False,
                                  Optional _ListaPrecios As String = "",
-                                 Optional _ReferenciaAutomatica As Boolean = False) As LsValiciones.Mensajes
+                                 Optional _ReferenciaAutomatica As Boolean = False,
+                                 Optional _ConservaTrazabilidad As Boolean = False) As LsValiciones.Mensajes
 
         Dim _Mensaje As New LsValiciones.Mensajes
 
@@ -19727,7 +19817,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
             _TblEncabezado.Rows(0).Item("Es_ValeTransitorio") = 0
         End If
 
-        If _Tido = "OCC" Or _Tido = "COV" Or _Tido = "NVV" Then
+        If Not _ConservaTrazabilidad AndAlso (_Tido = "OCC" Or _Tido = "COV" Or _Tido = "NVV") Then
 
             For Each _Rw As DataRow In _Ds_Matriz_Documentos.Tables("Detalle_Doc").Rows
 
@@ -21004,7 +21094,8 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                                          Optional _CodEntidad_Cia As String = "",
                                                          Optional _CodSucEntidad_Cia As String = "",
                                                          Optional Id_Enc_InterStock As Integer = 0,
-                                                         Optional EsAutomatico As Boolean = False)
+                                                         Optional EsAutomatico As Boolean = False,
+                                                         Optional _ConservaTrazabilidad As Boolean = False)
 
         Try
 
@@ -21760,11 +21851,10 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                     _Feemlipa = Nothing
                 End Try
 
-                If _Tidopa = _Tido Then
+                If Not _ConservaTrazabilidad AndAlso _Tidopa = _Tido Then
                     _Idmaeddo_Dori = 0
                     _Idmaeedo_Dori = 0
                 End If
-
 
                 'TIMOPPPR,MOPPPR,TAMOPPPR
                 Dim _Moneda_Det As String
@@ -22582,6 +22672,12 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
 
                 End If
 
+            End If
+
+            If Chk_CargaDirecta.Visible And Chk_CargaSemiDirecta.Visible Then
+                Dim _TipoCarga As Integer = _Sql.Fx_Trae_Dato(_Global_BaseBk & "Zw_Docu_Ent", "TipoCarga", "Idmaeedo = " & _Idmaeedo_Dorigen, True, False)
+                If _TipoCarga = 1 Then Chk_CargaDirecta.Checked = True
+                If _TipoCarga = 2 Then Chk_CargaSemiDirecta.Checked = True
             End If
 
             Dim _Ven_Distinto As Boolean = False
@@ -29156,6 +29252,9 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                "Where Empresa = '" & ModEmpresa_Doc & "'"
                 Dim _RowConfDesp As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
+                Dim _ObligaPonerProductoDespacho As Boolean = _RowConfDesp.Item("ObligaPonerProductoDespacho")
+
+
                 Dim Fm As New Frm_Desp_01_Ingreso
                 Fm.Ds_Matriz_Documentos = _Ds_Matriz_Documentos
                 Fm.Total_Venta_Neto = _Total_Venta_Neto
@@ -29164,6 +29263,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                 Fm.Netos_Minimo = _MinNetoDesp
                 Fm.Cl_Despacho = _Cl_Despacho
                 Fm.ConfirmarLecturaDespacho = _RowConfDesp.Item("ConfirmarLecturaDespacho")
+                Fm.ObligaPonerProductoDespacho = _ObligaPonerProductoDespacho
                 Fm.ShowDialog(Me)
                 _Grabar = Fm.Grabar
                 Fm.Dispose()
@@ -29247,6 +29347,83 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                         MessageBoxEx.Show(Me, "El servicio por despacho a Chilexpress se incorporo en el documento por un monto de " & FormatCurrency(_Costoenvio, 0),
                                           "Despacho por Chilexpress",
                                           MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                    End If
+
+
+                    Dim _Tipo_Envio As String = _Cl_Despacho.Row_Despacho.Item("Tipo_Envio")
+
+                    If _ObligaPonerProductoDespacho AndAlso _Tipo_Envio = "DD" Then
+
+                        Dim _CodDespacho As String = _Cl_Despacho.Row_ProductoDespacho.Item("KOPR")
+
+                        Dim _Costoenvio As Double
+                        Dim _CantidadKilos As Double
+
+                        For Each _Row As DataRow In _TblDetalle.Rows
+
+                            Dim _Kopr As String = _Row.Item("Codigo")
+                            Dim _Kilos As Double = _Sql.Fx_Trae_Dato("MAEPR", "PESOUBIC", "KOPR = '" & _Kopr & "'")
+                            Dim _Cantidad As Double = _Row.Item("CantUd1")
+
+                            _CantidadKilos += _Kilos * _Cantidad
+
+                        Next
+
+                        Dim _RowProducto As DataRow = Fx_Buscar_Producto(_CodDespacho, False, False, Nothing, False)
+
+                        Sb_Nueva_Linea(_TblEncabezado.Rows(0).Item("ListaPrecios"))
+
+                        Dim _NewFila As DataGridViewRow = Grilla_Detalle.Rows(Grilla_Detalle.RowCount - 1)
+
+                        Sb_Traer_Producto_Grilla(_NewFila, _RowProducto, False, _RevisarNMarca:=True)
+
+                        _NewFila.Cells("Cantidad").Value = _CantidadKilos
+
+                        Dim _PrecioLista As Double
+
+                        If ChkValores.Checked Then
+                            _PrecioLista = Math.Round(NuloPorNro(_NewFila.Cells("PrecioNetoUdLista").Value, 0), 0)
+                        Else
+                            _PrecioLista = NuloPorNro(_NewFila.Cells("PrecioBrutoUdLista").Value, 0)
+                        End If
+
+                        Dim _DescMaximo = NuloPorNro(_NewFila.Cells("DescMaximo").Value, 0)
+
+                        Dim _Id = _NewFila.Cells("Id").Value
+                        Dim _TblMaedtli As DataTable = Fx_Crea_Tabla_Con_Filtro(_Ds_Matriz_Documentos.Tables("Descuentos_Doc"), "Id = " & _Id, "Id")
+
+                        Sb_Procesar_Datos_De_Grilla(_NewFila, "Cantidad", True, True)
+
+                        If Not CBool(_TblMaedtli.Rows.Count) Then
+                            Sb_Traer_Descuentos_Seteados_Desde_Lista(_NewFila)
+                            _TblMaedtli = Fx_Crea_Tabla_Con_Filtro(_Ds_Matriz_Documentos.Tables("Descuentos_Doc"), "Id = " & _Id, "Id")
+                        End If
+
+                        Dim _Recargo_Valor As Double = _NewFila.Cells("Recargo_Valor").Value
+
+                        If CBool(_Recargo_Valor) Then
+                            Sb_Procesar_Datos_De_Grilla(_NewFila, "Cantidad", False, False)
+                        End If
+
+                        Dim _Tict = NuloPorNro(_NewFila.Cells("Tict").Value, "")
+
+                        If String.IsNullOrEmpty(_Tict) Then
+
+                            Dim _Idmaeedo_Dori As Integer = _NewFila.Cells("Idmaeedo_Dori").Value
+
+                            If _Idmaeedo_Dori = 0 Then
+                                Sb_Borrar_Conceptos_Descuento()
+                            Else
+                                Sb_Recalcular_Descuentos(_NewFila, False, False)
+                            End If
+
+                        End If
+
+                        MessageBoxEx.Show(Me, "El servicio por despacho se incorporo en el documento por un monto de " & FormatCurrency(_Costoenvio, 0),
+                                          "Cobro de despacho",
+                                          MessageBoxButtons.OK, MessageBoxIcon.Information)
+
 
                     End If
 
@@ -31471,6 +31648,20 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
         End If
 
         If Not IsNothing(_Row_Feria) Then
+
+            Dim _NombreFeria As String = _Row_Feria.Item("NombreFeria").ToString.Trim
+            Dim _FechaTermino As DateTime = _Row_Feria.Item("FechaTermino")
+            Dim _Activa As Boolean = _Row_Feria.Item("Activa")
+
+            If _FechaTermino <= FechaDelServidor() Then
+                MessageBoxEx.Show(Me, $"La feria {_NombreFeria} tiene fecha de termino {_FechaTermino.ToShortDateString}", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return False
+            End If
+
+            If Not _Activa Then
+                MessageBoxEx.Show(Me, $"La feria {_NombreFeria} no esta activa {_FechaTermino.ToShortDateString}", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                Return False
+            End If
 
             _Msg1 = "Asociar Feria: " & _Row_Feria.Item("NombreFeria") & " a la venta"
             _Msg2 = vbCrLf & "¿Desea asociar una FERIA a esta venta?" & vbCrLf & vbCrLf & "Si (Confirma) - No (Seleccionar otra feria)"

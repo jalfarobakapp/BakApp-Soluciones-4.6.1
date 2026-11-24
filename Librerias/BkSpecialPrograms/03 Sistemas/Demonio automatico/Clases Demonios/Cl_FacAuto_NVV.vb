@@ -308,36 +308,10 @@ Where Id_Despacho In (Select Id_Despacho From {_Global_BaseBk}Zw_Despachos_Doc W
 Update {_Global_BaseBk}Zw_Stmp_Enc Set Empresa = '{_Empresa_Ori}',Sucursal = '{_Sucursal_Ori}' Where Idmaeedo = @Idmaeedo
 Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo = @Idmaeedo
 
+Delete MAEEDO Where TIDO = '{_Tido}' And NUDO = '{_Nudo}' And ENDO = 'XXXXXXXXXX' And EMPRESA = '{_Empresa_Ori}'
+
 "
             _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql, False)
-
-            '            Consulta_Sql = "Declare @Idmaeedo Int = " & _Idmaeedo & vbCrLf &
-            '                           "Update MAEEDO Set EMPRESA = '" & _Empresa_Ori & "',SUDO = '" & _Sucursal_Ori & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
-            '                           "Update MAEDDO Set EMPRESA = '" & _Empresa_Ori & "',SULIDO = '" & _Sucursal_Ori & "',BOSULIDO = '" & _Bodega_Ori & "' Where IDMAEEDO = @Idmaeedo" & vbCrLf &
-            '                           "Update " & _Global_BaseBk & "Zw_Despachos Set Empresa = '" & _Empresa_Ori & "',Sucursal = '" & _Sucursal_Ori & "',Bodega = '" & _Bodega_Ori &
-            '                                "' Where Id_Despacho In (Select Id_Despacho From " & _Global_BaseBk & "Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))" & vbCrLf &
-            '                           "Update " & _Global_BaseBk & "Zw_Stmp_Enc Set Empresa = '" & _Empresa_Ori & "',Sucursal = '" & _Sucursal_Ori & "' Where Idmaeedo = @Idmaeedo" & vbCrLf &
-            '                           "Update " & _Global_BaseBk & "Zw_Docu_Ent Set Empresa = '" & _Empresa_Ori & "' Where Idmaeedo = @Idmaeedo"
-
-            '            Consulta_Sql = $"
-            'Declare @Idmaeedo Int = {_Idmaeedo}
-
-            'Update MAEEDO Set EMPRESA = '{_Empresa_Ori}',SUDO = '{_Sucursal_Ori}' 
-            'Where IDMAEEDO = @Idmaeedo
-
-            'Update MAEDDO Set EMPRESA = '{_Empresa_Ori}',SULIDO = '{_Sucursal_Ori}',BOSULIDO = '{_Bodega_Ori}' 
-            'Where IDMAEEDO = @Idmaeedo
-
-            'Update {_Global_BaseBk}Zw_Despachos Set Empresa = '{_Empresa_Ori}',Sucursal = '{_Sucursal_Ori}',Bodega = '{_Bodega_Ori}' 
-            'Where Id_Despacho In (Select Id_Despacho From {_Global_BaseBk}Zw_Despachos_Doc WHERE (Idrst = @Idmaeedo) AND (Archidrst = 'MAEEDO'))
-
-            'Update {_Global_BaseBk}Zw_Stmp_Enc Set Empresa = '{_Empresa_Ori}',Sucursal = '{_Sucursal_Ori}' Where Idmaeedo = @Idmaeedo
-            'Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo = @Idmaeedo"
-
-            '            'Clipboard.SetText(Consulta_Sql)
-
-            '            'MessageBox.Show(_Formulario, Consulta_Sql, "Actualizar empresa, sucursal y bodega de documentos", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            '            _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_Sql, False)
 
             If Not String.IsNullOrEmpty(_Sql.Pro_Error) Then
                 Log_Registro += _Sql.Pro_Error & vbCrLf
@@ -451,6 +425,11 @@ Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo
 
         Dim _IpEquipo As String = Fx_GetLocalIPAddress() 'Fx_Get_Ip()
 
+        '  SERVIDOR DE SIERRALTA
+
+        'Nombre_Equipo = "SERVIDOR"
+        '_IpEquipo = "192.168.1.101"
+
         'MessageBox.Show(_Formulario, "IP: " & _IpEquipo, "Facturación automática", MessageBoxButtons.OK, MessageBoxIcon.Information)
 
         Consulta_Sql = "Update " & _Global_BaseBk & "Zw_Demonio_FacAuto Set Facturar = 1, Facturando = 0" & vbCrLf &
@@ -498,6 +477,15 @@ Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo
                         Inner Join MAEEDO Edo On Edo.IDMAEEDO = Fa.Idmaeedo_NVV
                         Inner Join {_Global_BaseBk}Zw_Docu_Ent De On Fa.Idmaeedo_NVV = De.Idmaeedo
                         Where Facturar = 1"
+
+        'Consulta_Sql = $"
+        '                Select Top {CantDocFacturanXProceso} Fa.*,
+        '                Case De.Empresa_Ori When '' Then De.Empresa Else De.Empresa_Ori End As 'Empresa_Ori',Edo.EMPRESA As 'Empresa'   
+        '                From {_Global_BaseBk}Zw_Demonio_FacAuto Fa
+        '                Inner Join MAEEDO Edo On Edo.IDMAEEDO = Fa.Idmaeedo_NVV
+        '                Inner Join {_Global_BaseBk}Zw_Docu_Ent De On Fa.Idmaeedo_NVV = De.Idmaeedo
+        '                Where Fa.Id = 94949"
+
         Dim _Tbl_Doc_Facturar As DataTable = _Sql.Fx_Get_DataTable(Consulta_Sql, False)
 
         'MessageBox.Show(_Formulario, "Cantidad de documentos a facturar: " & _Tbl_Doc_Facturar.Rows.Count,
@@ -571,7 +559,19 @@ Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo
                 System.Windows.Forms.Application.DoEvents()
 
                 If String.IsNullOrEmpty(_DocEmitir) Then
+
                     _DocEmitir = "FCV"
+
+                    If RutEmpresa = "79514800-0" Then
+
+                        Dim _Endo As String = _Sql.Fx_Trae_Dato("MAEEDO", "ENDO", $"IDMAEEDO = {_Idmaeedo}", _Mostrar_Error:=False)
+
+                        If _Endo.ToString.Trim = "00000002" Or _Endo.ToString.Trim = "00000004" Then
+                            _DocEmitir = "BLV"
+                        End If
+
+                    End If
+
                 End If
 
 
@@ -1030,6 +1030,7 @@ Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo
                 If Not _Msj_Tsc.EsCorrecto Then
 
                     _Mensaje.ErrorDeConexionSQL = _Msj_Tsc.ErrorDeConexionSQL
+                    _Mensaje.Mensaje = _Msj_Tsc.Mensaje
                     Throw New System.Exception(_Mensaje.Mensaje)
 
                 End If
@@ -1273,15 +1274,18 @@ Update {_Global_BaseBk}Zw_Docu_Ent Set Empresa = '{_Empresa_Ori}' Where Idmaeedo
                                 .Id_Enc = _Row.Item("Id_Enc")
                                 .Empresa = _Row.Item("Empresa")
                                 .Patente = _Row.Item("Patente")
+                                .PatenteCarro = _Row.Item("PatenteCarro")
                                 .Chofer = _Row.Item("Chofer")
                                 .RUTChofer = _Row.Item("RUTChofer")
                                 .RUTTrans = _Row.Item("RUTTrans")
                                 .DirDest = _Row.Item("DirDest")
                                 .CiudadDest = _Row.Item("CiudadDest")
                                 .CmnaDest = _Row.Item("CmnaDest")
+                                .FchSalida = NuloPorNro(_Row.Item("FchSalida"), Nothing)
+                                .HraSalida = NuloPorNro(_Row.Item("HraSalida"), Nothing)
+                                .FchLlegada = NuloPorNro(_Row.Item("FchLlegada"), Nothing)
                             End With
                         End If
-
 
                         Consulta_Sql = $"Select * From {_Global_BaseBk}Zw_Docu_Ent Where Idmaeedo = {_Idmaeedo_Origen}"
 

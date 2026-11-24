@@ -530,6 +530,7 @@
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Formularios asistentes\Retiradores de mercaderia\Frm_Retirador_Mercaderia.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\MultiNVV\Cl_MultiNVV.vb" />
     <Compile Include="01 Procesos  compartidos\Documentos\07 Creacion de documentos BakApp\Recursos_Documento.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -712,6 +713,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Cl_Arbol_Asociaciones.vb" />
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_04_Entidades_x_class.Designer.vb">
+      <DependentUpon>Frm_Arbol_Asociacion_04_Entidades_x_class.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_04_Entidades_x_class.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_06_CrearEditar.Designer.vb">
       <DependentUpon>Frm_Arbol_Asociacion_06_CrearEditar.vb</DependentUpon>
     </Compile>
@@ -928,6 +935,7 @@
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Contenedor_DocTom.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Docu_Det_Lote.vb" />
+    <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Entidades_Asociacion.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Ferias.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_Pda2NVV.vb" />
     <Compile Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Modelos\Zw_PreVenta_StockProd.vb" />
@@ -1024,6 +1032,12 @@
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
     </Compile>
     <Compile Include="03 Sistemas\Contenedores\Frm_CrearContenedor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="03 Sistemas\Despachos\Configuracion\Frm_Despacho_DespCm.Designer.vb">
+      <DependentUpon>Frm_Despacho_DespCm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="03 Sistemas\Despachos\Configuracion\Frm_Despacho_DespCm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="03 Sistemas\Ferias\Cl_Ferias.vb" />
@@ -4952,6 +4966,9 @@
     <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Monedas\Frm_MonedasLista.resx">
       <DependentUpon>Frm_MonedasLista.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_04_Entidades_x_class.resx">
+      <DependentUpon>Frm_Arbol_Asociacion_04_Entidades_x_class.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Mantencion de Tablas\Nodos Clas y Ubicaciones\Clasificaciones Nodos\Frm_Arbol_Asociacion_06_CrearEditar.resx">
       <DependentUpon>Frm_Arbol_Asociacion_06_CrearEditar.vb</DependentUpon>
     </EmbeddedResource>
@@ -5075,6 +5092,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Contenedores\Frm_CrearContenedor.resx">
       <DependentUpon>Frm_CrearContenedor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="03 Sistemas\Despachos\Configuracion\Frm_Despacho_DespCm.resx">
+      <DependentUpon>Frm_Despacho_DespCm.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="03 Sistemas\Ferias\Frm_Ferias.resx">
       <DependentUpon>Frm_Ferias.vb</DependentUpon>
@@ -8394,6 +8414,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Contenedor_DocTom.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Docu_Det_Lote.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidades_Asociacion.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Entidad_CiaSeguro.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Ferias.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_InterStock_Det.sql" />
@@ -8401,6 +8422,7 @@
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_InterStock_Equivalencia.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaLC_ValPro.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_ListaLC_ValPro_Recep.sql" />
+    <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_PagosBloqueados.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_PreVenta_StockProd.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_Correos.sql" />
     <Content Include="02 Procesos Bakapp y configuracion\08 Instalacion y Estructura de la base de datos\Recursos\Sql\Tablas\Zw_CorreosEnvioRecepcion.sql" />

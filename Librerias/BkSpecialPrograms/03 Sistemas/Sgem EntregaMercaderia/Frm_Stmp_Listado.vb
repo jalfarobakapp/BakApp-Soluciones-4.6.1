@@ -2253,8 +2253,10 @@ Public Class Frm_Stmp_Listado
 
             _Msj = "La NVI se envió a generar guía al diablito."
 
-            Dim _AgregarTransporteNVIparaGTI As Boolean = (_Global_Row_Configuracion_General.Item("AgregarTransporteNVIparaGTI") Or
-                                                               _Global_Row_Configuracion_Estacion.Item("AgregarTransporteNVIparaGTI"))
+            'Dim _AgregarTransporteNVIparaGTI As Boolean = (_Global_Row_Configuracion_General.Item("AgregarTransporteNVIparaGTI") Or
+            '                                                   _Global_Row_Configuracion_Estacion.Item("AgregarTransporteNVIparaGTI"))
+
+            Dim _AgregarTransporteNVIparaGTI As Boolean = True
 
             If _AgregarTransporteNVIparaGTI Then
 
@@ -2270,9 +2272,9 @@ Public Class Frm_Stmp_Listado
                     If IsNothing(_Row_Td) Then
                         .Id = 0
                         .Id_Enc = _Id_Enc
-                        .Idmaeedo = 0
-                        .Tido = String.Empty
-                        .Nudo = String.Empty
+                        .Idmaeedo = _Idmaeedo
+                        .Tido = _Tido
+                        .Nudo = _Nudo
                         .Empresa = Mod_Empresa
                     Else
                         .Id = _Row_Td.Item("Id")
@@ -2282,9 +2284,13 @@ Public Class Frm_Stmp_Listado
                         .Nudo = _Row_Td.Item("Nudo")
                         .Empresa = _Row_Td.Item("Empresa")
                         .Patente = _Row_Td.Item("Patente")
+                        .PatenteCarro = _Row_Td.Item("PatenteCarro")
                         .RUTTrans = _Row_Td.Item("RUTTrans")
                         .RUTChofer = _Row_Td.Item("RUTChofer")
                         .Chofer = _Row_Td.Item("Chofer")
+                        .FchSalida = _Row_Td.Item("FchSalida")
+                        .HraSalida = _Row_Td.Item("HraSalida")
+                        .FchLlegada = _Row_Td.Item("FchLlegada")
                         _Tiene_Transporte = True
                     End If
 
@@ -2311,7 +2317,7 @@ Public Class Frm_Stmp_Listado
 
                         ' Recortar a un máximo de 30 caracteres
                         If _Ciudad.Length > 20 Then _Ciudad = _Ciudad.Substring(0, 20)
-                        If _Comuna.Length > 20 Then _Ciudad = _Comuna.Substring(0, 20)
+                        If _Comuna.Length > 20 Then _Comuna = _Comuna.Substring(0, 20)
 
                         .CiudadDest = _Ciudad.Trim
                         .CmnaDest = _Comuna.Trim
@@ -2338,22 +2344,45 @@ Public Class Frm_Stmp_Listado
                 _UltimoTransporte = ClonarTransporte(_Zw_Transporte_Dte)
 
                 _GrabarTransporte = True
+
                 With _Zw_Transporte_Dte
+
+
+                    Dim _FchSalida As String = Format(.FchSalida, "yyyyMMdd")
+                    Dim _HraSalida As String = Format(.HraSalida, "HH:mm:ss")
+                    Dim _FchLlegada As String = Format(.FchLlegada, "yyyyMMdd")
+
+                    If _FchSalida = "00010101" OrElse _HraSalida = "00:00:00" OrElse _FchLlegada = "00010101" Then
+                        _FchSalida = $"Null"
+                        _HraSalida = $"Null"
+                        _FchLlegada = $"Null"
+                    Else
+                        _FchSalida = $"'{_FchSalida}'"
+                        _HraSalida = $"'{_HraSalida}'"
+                        _FchLlegada = $"'{_FchLlegada}'"
+                    End If
+
 
                     If _Tiene_Transporte Then
                         _SqlQuery += vbCrLf & vbCrLf &
                                     $"Update {_Global_BaseBk}Zw_Transporte_Dte Set " &
                                     $"Patente = '{ .Patente}'" &
+                                    $"PatenteCarro = '{ .PatenteCarro}'" &
                                     $",RUTTrans = '{ .RUTTrans}'" &
                                     $",Chofer = '{ .Chofer}'" &
                                     $",RUTChofer = '{ .RUTChofer}'" & vbCrLf &
+                                    $"FchSalida = {_FchSalida}" & vbCrLf &
+                                    $"HraSalida = {_HraSalida}" & vbCrLf &
+                                    $"FchLlegada = {_FchLlegada}" & vbCrLf &
                                     $"Where Id = { .Id}"
                     Else
+
                         _SqlQuery += vbCrLf & vbCrLf &
-                                     "Insert Into " & _Global_BaseBk & "Zw_Transporte_Dte (Empresa,Id_Enc,Idmaeedo,Tido,Nudo," &
-                                     "Patente,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest)" & vbCrLf &
-                                    $"Values ('{ .Empresa}',{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .RUTTrans}','{ .Chofer}'" &
-                                    $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}')"
+                                    $"Insert Into {_Global_BaseBk}Zw_Transporte_Dte (Empresa,Id_Enc,Idmaeedo,Tido,Nudo," &
+                                    $"Patente,PatenteCarro,RUTTrans,Chofer,RUTChofer,DirDest,CmnaDest,CiudadDest,FchSalida,HraSalida,FchLlegada)" & vbCrLf &
+                                    $"Values ('{ .Empresa}',{ .Id_Enc},{ .Idmaeedo},'{ .Tido}','{ .Nudo}','{ .Patente}','{ .PatenteCarro}','{ .RUTTrans}','{ .Chofer}'" &
+                                    $",'{ .RUTChofer}','{ .DirDest}','{ .CmnaDest}','{ .CiudadDest}',{_FchSalida},{_HraSalida},{_FchLlegada})"
+
                     End If
 
                 End With

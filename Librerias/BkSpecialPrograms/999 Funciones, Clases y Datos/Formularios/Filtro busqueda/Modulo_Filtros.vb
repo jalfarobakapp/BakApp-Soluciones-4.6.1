@@ -19,6 +19,7 @@
         _Ciudades
         _Comunas
         _Otra
+        _Entidades2 = 100
     End Enum
 
 End Module

@@ -39,6 +39,7 @@ Public Class Cl_Arbol_Asociaciones
             .Clas_Unica_X_Producto = _Row.Item("Clas_Unica_X_Producto")
             .Nodo_Raiz = _Row.Item("Nodo_Raiz")
             .Codigo_Madre = _Row.Item("Codigo_Madre")
+            .DescripcionDetallada = _Row.Item("DescripcionDetallada")
 
         End With
 
@@ -103,6 +104,9 @@ Public Class Cl_Arbol_Asociaciones
                                ",Es_Padre = " & Convert.ToInt32(.Es_Padre) &
                                ",Es_Seleccionable = " & Convert.ToInt32(.Es_Seleccionable) & vbCrLf &
                                ",Clas_Unica_X_Producto = " & Convert.ToInt32(.Clas_Unica_X_Producto) & vbCrLf &
+                               ",ParaEntidad = " & Convert.ToInt32(.ParaEntidad) & vbCrLf &
+                               ",Clas_Unica_X_Entidad = " & Convert.ToInt32(.Clas_Unica_X_Entidad) & vbCrLf &
+                               ",DescripcionDetallada = '" & .DescripcionDetallada & "'" & vbCrLf &
                                "Where Codigo_Nodo = " & .Codigo_Nodo
 
                 Comando = New SqlClient.SqlCommand(Consulta_Sql, Cn2)

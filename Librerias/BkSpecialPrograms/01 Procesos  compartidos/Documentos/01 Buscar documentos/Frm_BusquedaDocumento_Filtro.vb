@@ -865,6 +865,13 @@ DELETE FROM #Paso WHERE Chk = 1"
                     Dim _Endo As String = _Tbl_Paso.Rows(0).Item("ENDO")
                     Dim _Suendo As String = _Tbl_Paso.Rows(0).Item("SUENDO")
 
+                    If RutEmpresa = "77988832-0" Then
+                        If _Endo.ToString.Trim = "XXXXXXXXXX" Then
+                            MessageBoxEx.Show(Me, "Documento en transición por picking", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+                            Return
+                        End If
+                    End If
+
                     Dim _Mensaje = MessageBoxEx.Show(Me, "Se encontro solo un registro, eliga su opción" & Environment.NewLine & Environment.NewLine &
                                                      "(Yes) Ver el documento inmediatamente" & Environment.NewLine &
                                                      "(No)  Ver listado " & Environment.NewLine &

@@ -2443,12 +2443,6 @@ Public Class Frm_BkpPostBusquedaEspecial_Mt
         Fm.ShowDialog(Me)
         Fm.Dispose()
 
-        'Dim Fm2 As New Frm_Arbol_Asociacion_01
-        'Fm2.Pro_CheckBoxes_Nodos = False
-        'Fm2.Pro_Codigo_Producto = _Codigo
-        'Fm2.ShowDialog(_Formulario)
-        'Fm2.Dispose()
-
     End Sub
 
     Sub Sb_Ver_Asociaciones_del_producto(_Formulario As Form, _Codigo As String)

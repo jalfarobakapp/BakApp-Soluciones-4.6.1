@@ -616,7 +616,7 @@ Values ('{_CodEntidad}','{_CodSucEntidad}','{_CodEntidad_Cia}','{_CodSucEntidad_
                                                              _CodEntidad_Cia,
                                                              _CodSucEntidad_Cia,
                                                              _NombreCia,
-                                                             _TotalUtilizado)
+                                                             0)
 
         If _NuevoMontoAsignado = 0 Then
             MessageBoxEx.Show(Me, "El monto asignado a la compañia de seguros no fue modificado", "Validación",

@@ -12,7 +12,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
 <Assembly: AssemblyProduct("Meli2Bakapp")>
-<Assembly: AssemblyCopyright("Copyright ©  2024")>
+<Assembly: AssemblyCopyright("Copyright ©  2026")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
@@ -28,5 +28,5 @@ Imports System.Runtime.InteropServices
 '      Revisión
 '
 
-<Assembly: AssemblyVersion("1.0.1.6")>
-<Assembly: AssemblyFileVersion("1.0.1.6")>
+<Assembly: AssemblyVersion("1.0.1.9")>
+<Assembly: AssemblyFileVersion("1.0.1.9")>

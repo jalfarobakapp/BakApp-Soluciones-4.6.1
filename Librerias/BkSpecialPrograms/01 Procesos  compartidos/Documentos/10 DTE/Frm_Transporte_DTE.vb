@@ -1,6 +1,4 @@
-﻿Imports System.Reflection
-Imports DevComponents.DotNetBar
-Imports Microsoft.Office.Interop.Outlook
+﻿Imports DevComponents.DotNetBar
 
 Public Class Frm_Transporte_DTE
 
@@ -11,7 +9,6 @@ Public Class Frm_Transporte_DTE
     Public Property UltimoTransporte As Zw_Transporte_Dte
 
     Public Property Grabar As Boolean
-
 
     Public Sub New()
 
@@ -26,9 +23,14 @@ Public Class Frm_Transporte_DTE
 
     Private Sub Frm_Transporte_DTE_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
+        Dtp_FchSalida.IsEmpty = True
+        Dtp_HraSalida.IsEmpty = True
+        Dtp_FchLlegada.IsEmpty = True
+
         With Zw_Transporte_Dte
 
             Txt_Patente.Text = If(.Patente, String.Empty)
+            Txt_PatenteCarro.Text = If(.PatenteCarro, String.Empty)
             Txt_RUTTrans.Text = If(.RUTTrans, String.Empty)
             Txt_Chofer.Text = If(.Chofer, String.Empty)
             Txt_RUTChofer.Text = If(.RUTChofer, String.Empty)
@@ -36,15 +38,17 @@ Public Class Frm_Transporte_DTE
             Txt_CmnaDest.Text = If(.CmnaDest, String.Empty)
             Txt_CiudadDest.Text = If(.CiudadDest, String.Empty)
 
+            Try
+                Dtp_FchSalida.Value = If(.FchSalida, String.Empty)
+                Dtp_HraSalida.Value = If(.HraSalida, String.Empty)
+                Dtp_FchLlegada.Value = If(.FchLlegada, String.Empty)
+            Catch ex As Exception
+                Dtp_FchSalida.IsEmpty = True
+                Dtp_HraSalida.IsEmpty = True
+                Dtp_FchLlegada.IsEmpty = True
+            End Try
+
         End With
-
-        Txt_DirDest.ReadOnly = True
-        Txt_CmnaDest.ReadOnly = True
-        Txt_CiudadDest.ReadOnly = True
-
-        Txt_DirDest.Enabled = False
-        Txt_CmnaDest.Enabled = False
-        Txt_CiudadDest.Enabled = False
 
         Me.ActiveControl = Txt_Patente
 
@@ -104,8 +108,15 @@ Public Class Frm_Transporte_DTE
             Return
         End If
 
+        If Not String.IsNullOrEmpty(Txt_PatenteCarro.Text.ToString.Trim) AndAlso Txt_PatenteCarro.Text.ToString.Trim.Length < 6 Then
+            MessageBoxEx.Show(Me, "La patente de carro debe tener al menos 6 caracteres.", "Validación",
+                              MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            Txt_PatenteCarro.Focus()
+            Return
+        End If
+
         If String.IsNullOrEmpty(Txt_RUTTrans.Text.Trim) Then
-            MessageBoxEx.Show(Me, "El Rut del Transportista no puede estar vacía", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
+            MessageBoxEx.Show(Me, "El Rut del Transportista no puede estar vacío", "Validación", MessageBoxButtons.OK, MessageBoxIcon.Stop)
             Txt_RUTTrans.Focus()
             Return
         End If
@@ -152,13 +163,75 @@ Public Class Frm_Transporte_DTE
             Return
         End If
 
+        Dim _Mensaje As LsValiciones.Mensajes
+
+        Dim tieneFechaSalida As Boolean = Not Dtp_FchSalida.IsEmpty
+        Dim tieneHoraSalida As Boolean = Not Dtp_HraSalida.IsEmpty
+        Dim tieneFechaLlegada As Boolean = Not Dtp_FchLlegada.IsEmpty
+        Dim cantidadDatosTransporte As Integer =
+                                                If(tieneFechaSalida, 1, 0) +
+                                                If(tieneHoraSalida, 1, 0) +
+                                                If(tieneFechaLlegada, 1, 0)
+
+        If cantidadDatosTransporte > 0 AndAlso cantidadDatosTransporte < 3 Then
+            MessageBoxEx.Show(Me,
+                      "Si informa fecha de salida, hora de salida o fecha de llegada, debe completar los tres datos.",
+                      "Validación",
+                      MessageBoxButtons.OK,
+                      MessageBoxIcon.Stop)
+
+            If Not tieneFechaSalida Then
+                Dtp_FchSalida.Focus()
+            ElseIf Not tieneHoraSalida Then
+                Dtp_HraSalida.Focus()
+            Else
+                Dtp_FchLlegada.Focus()
+            End If
+
+            Return
+        End If
+
+        If cantidadDatosTransporte = 3 Then
+            If Dtp_FchSalida.Value.Date < Date.Today Then
+                MessageBoxEx.Show(Me,
+                          "La fecha de salida no puede ser anterior a hoy.",
+                          "Validación",
+                          MessageBoxButtons.OK,
+                          MessageBoxIcon.Stop)
+                Dtp_FchSalida.Focus()
+                Return
+            End If
+
+            If Dtp_FchLlegada.Value.Date < Dtp_FchSalida.Value.Date Then
+                MessageBoxEx.Show(Me,
+                          "La fecha de llegada no puede ser anterior a la fecha de salida.",
+                          "Validación",
+                          MessageBoxButtons.OK,
+                          MessageBoxIcon.Stop)
+                Dtp_FchLlegada.Focus()
+                Return
+            End If
+        End If
+
+        If cantidadDatosTransporte = 0 Then
+            _Mensaje = Fx_Confirmar_LecturaSINO(
+        "¿Desea continuar sin informar los datos de salida y llegada?",
+        "Fecha de salida, hora de salida y fecha de llegada están vacías.",
+        eTaskDialogIcon.Help,,,, False)
+
+            If _Mensaje.Resultado <> "Yes" Then
+                Return
+            End If
+        End If
+
         Dim _Msg1 = "¿CONFIRMA LOS DATOS?"
-        Dim _Msg2 = vbCrLf & $"Patente: {Txt_Patente.Text}" & vbCrLf &
+        Dim _Msg2 = vbCrLf & $"Patente: {Txt_Patente.Text}" & IIf(Txt_PatenteCarro.Text.Trim <> String.Empty, $" Patente Carro: {Txt_PatenteCarro.Text}", String.Empty) & vbCrLf &
                     $"Rut Transporte: {Txt_RUTTrans.Text}" & vbCrLf &
+                    $"Patente Carro: {Txt_PatenteCarro.Text}" & vbCrLf &
                     $"Rut Chofer: {Txt_RUTChofer.Text}" & vbCrLf &
                     $"Nombre Chofer: {Txt_Chofer.Text}"
 
-        Dim _Mensaje As LsValiciones.Mensajes
+        _Mensaje = New LsValiciones.Mensajes
 
         ' Si los datos actuales son iguales a UltimoTransporte, no pedir confirmación.
         Dim skipConfirmation As Boolean = ValoresIgualesAUltimo()
@@ -174,12 +247,16 @@ Public Class Frm_Transporte_DTE
         With Zw_Transporte_Dte
 
             .Patente = Txt_Patente.Text
+            .PatenteCarro = Txt_PatenteCarro.Text
             .RUTTrans = Txt_RUTTrans.Text
             .Chofer = Txt_Chofer.Text
             .RUTChofer = Txt_RUTChofer.Text
             .DirDest = Txt_DirDest.Text
             .CmnaDest = Txt_CmnaDest.Text
             .CiudadDest = Txt_CiudadDest.Text
+            .FchSalida = If(Dtp_FchSalida.IsEmpty, Nothing, Dtp_FchSalida.Value)
+            .HraSalida = If(Dtp_HraSalida.IsEmpty, Nothing, Dtp_HraSalida.Value)
+            .FchLlegada = If(Dtp_FchLlegada.IsEmpty, Nothing, Dtp_FchLlegada.Value)
 
         End With
 
@@ -200,22 +277,31 @@ Public Class Frm_Transporte_DTE
         End If
 
         Dim patenteActual As String = If(Txt_Patente.Text, String.Empty).Trim()
+        Dim patenteCarroActual As String = If(Txt_PatenteCarro.Text, String.Empty).Trim()
         Dim rutTransActual As String = If(Txt_RUTTrans.Text, String.Empty).Trim()
         Dim rutChoferActual As String = If(Txt_RUTChofer.Text, String.Empty).Trim()
         Dim choferActual As String = If(Txt_Chofer.Text, String.Empty).Trim()
         Dim dirDestActual As String = If(Txt_DirDest.Text, String.Empty).Trim()
         Dim cmnaDestActual As String = If(Txt_CmnaDest.Text, String.Empty).Trim()
         Dim ciudadDestActual As String = If(Txt_CiudadDest.Text, String.Empty).Trim()
+        Dim fchSalidaActual As String = If(Dtp_FchSalida.IsEmpty, String.Empty, Dtp_FchSalida.Value.ToString("yyyy-MM-dd"))
+        Dim hraSalidaActual As String = If(Dtp_HraSalida.IsEmpty, String.Empty, Dtp_HraSalida.Value.ToString("HH:mm:ss"))
+        Dim fchLlegadaActual As String = If(Dtp_FchLlegada.IsEmpty, String.Empty, Dtp_FchLlegada.Value.ToString("yyyy-MM-dd"))
 
         Dim patenteUlt As String = If(UltimoTransporte.Patente, String.Empty).Trim()
+        Dim patenteCarroUlt As String = If(UltimoTransporte.PatenteCarro, String.Empty).Trim()
         Dim rutTransUlt As String = If(UltimoTransporte.RUTTrans, String.Empty).Trim()
         Dim rutChoferUlt As String = If(UltimoTransporte.RUTChofer, String.Empty).Trim()
         Dim choferUlt As String = If(UltimoTransporte.Chofer, String.Empty).Trim()
         Dim dirDestUlt As String = If(UltimoTransporte.DirDest, String.Empty).Trim()
         Dim cmnaDestUlt As String = If(UltimoTransporte.CmnaDest, String.Empty).Trim()
         Dim ciudadDestUlt As String = If(UltimoTransporte.CiudadDest, String.Empty).Trim()
+        Dim fchSalidaUlt As String = If(UltimoTransporte.FchSalida.HasValue, UltimoTransporte.FchSalida.Value.ToString("yyyy-MM-dd"), String.Empty)
+        Dim hraSalidaUlt As String = If(UltimoTransporte.HraSalida.HasValue, UltimoTransporte.HraSalida.Value.ToString("HH:mm:ss"), String.Empty)
+        Dim fchLlegadaUlt As String = If(UltimoTransporte.FchLlegada.HasValue, UltimoTransporte.FchLlegada.Value.ToString("yyyy-MM-dd"), String.Empty)
 
         Dim iguales As Boolean = String.Equals(patenteActual, patenteUlt, StringComparison.OrdinalIgnoreCase) AndAlso
+                                 String.Equals(patenteCarroActual, patenteCarroUlt, StringComparison.OrdinalIgnoreCase) AndAlso
                                  String.Equals(rutTransActual, rutTransUlt, StringComparison.OrdinalIgnoreCase) AndAlso
                                  String.Equals(rutChoferActual, rutChoferUlt, StringComparison.OrdinalIgnoreCase) AndAlso
                                  String.Equals(choferActual, choferUlt, StringComparison.OrdinalIgnoreCase)
@@ -243,5 +329,17 @@ Public Class Frm_Transporte_DTE
 
         Txt_Chofer.Focus()
 
+    End Sub
+
+    Private Sub Dtp_FchSalida_ButtonClearClick(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Dtp_FchSalida.ButtonClearClick
+        Dtp_FchSalida.IsEmpty = True
+    End Sub
+
+    Private Sub Dtp_HraSalida_ButtonClearClick(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Dtp_HraSalida.ButtonClearClick
+        Dtp_HraSalida.IsEmpty = True
+    End Sub
+
+    Private Sub Dtp_FchLlegada_ButtonClearClick(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Dtp_FchLlegada.ButtonClearClick
+        Dtp_FchLlegada.IsEmpty = True
     End Sub
 End Class

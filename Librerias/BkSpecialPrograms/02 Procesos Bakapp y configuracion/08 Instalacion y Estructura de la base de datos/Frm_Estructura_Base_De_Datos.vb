@@ -168,6 +168,8 @@ Public Class Frm_Estructura_Base_De_Datos
 
             .Sb_Revisar_Tabla2(Me, "Zw_Empresas", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades", _Modificar, Lbl_Eventos)
+            .Sb_Revisar_Tabla2(Me, "Zw_Entidades_Asociacion", _Modificar, Lbl_Eventos)
+
             .Sb_Revisar_Tabla2(Me, "Zw_Entidad_Cia_Seguros", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidad_CiaSeguro", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Entidades_ProdExcluidos", _Modificar, Lbl_Eventos)
@@ -242,6 +244,8 @@ Public Class Frm_Estructura_Base_De_Datos
             .Sb_Revisar_Tabla2(Me, "Zw_Negocios_02_Fun", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Negocios_03_Apr", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Negocios_04_Doc", _Modificar, Lbl_Eventos)
+
+            .Sb_Revisar_Tabla2(Me, "Zw_PagosBloqueados", _Modificar, Lbl_Eventos)
 
             .Sb_Revisar_Tabla2(Me, "Zw_Pago_Prov_Autoriza_01_Enc", _Modificar, Lbl_Eventos)
             .Sb_Revisar_Tabla2(Me, "Zw_Pago_Prov_Autoriza_02_Det", _Modificar, Lbl_Eventos)
