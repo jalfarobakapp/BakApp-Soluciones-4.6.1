@@ -941,11 +941,18 @@ Public Class Frm_Ver_Documento
         If _TipoCarga = 1 Then Btn_CargaDirecta.Checked = True
         If _TipoCarga = 2 Then Btn_CargaSemiDirecta.Checked = True
 
-        Dim _PedirPermisoCargasDirectaoSemiDirecta As Boolean = _Global_Row_Configuracion_General.Item("PedirPermisoCargasDirectaoSemiDirecta")
+        Dim _PedirPermisoCargasDirectaoSemiDirecta As Boolean
 
-        If Not _PedirPermisoCargasDirectaoSemiDirecta Then
-            _PedirPermisoCargasDirectaoSemiDirecta = _Global_Row_Configuracion_Estacion.Item("PedirPermisoCargasDirectaoSemiDirecta")
-        End If
+        Try
+            _PedirPermisoCargasDirectaoSemiDirecta = _Global_Row_Configuracion_General.Item("PedirPermisoCargasDirectaoSemiDirecta")
+
+            If Not _PedirPermisoCargasDirectaoSemiDirecta Then
+                _PedirPermisoCargasDirectaoSemiDirecta = _Global_Row_Configuracion_Estacion.Item("PedirPermisoCargasDirectaoSemiDirecta")
+            End If
+        Catch ex As Exception
+            _PedirPermisoCargasDirectaoSemiDirecta = False
+        End Try
+
 
         ' Permiso para grabar TipoCarga: Doc00176
         Btn_TipoCarga.Enabled = _PedirPermisoCargasDirectaoSemiDirecta
