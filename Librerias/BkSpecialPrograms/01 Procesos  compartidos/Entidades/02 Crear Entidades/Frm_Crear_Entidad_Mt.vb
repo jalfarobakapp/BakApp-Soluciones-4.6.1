@@ -699,9 +699,9 @@ Public Class Frm_Crear_Entidad_Mt
 
         End If
 
-        Dim _ObligaGrabarConSeleccion As Boolean = True
+        Dim _ObligaClasBakappEnEntidades As Boolean = _Global_Row_Configuracion_General.Item("ObligaClasBakappEnEntidades")
 
-        If _ObligaGrabarConSeleccion Then
+        If _ObligaClasBakappEnEntidades Then
 
             If _List_Zw_Entidades_Asociacion.Count = 0 Then
                 TabControl1.SelectedTabIndex = 1

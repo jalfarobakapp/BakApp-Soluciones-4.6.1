@@ -157,6 +157,7 @@ CREATE TABLE [dbo].[Zw_Configuracion](
 [ObligaFeriaVta]                                        [bit]           NOT NULL DEFAULT (0),
 [Id_Feria]                                              [int]           NOT NULL DEFAULT (0),
 [PedirPermisoCargasDirectaoSemiDirecta]                 [bit]           NOT NULL DEFAULT (0),
+[ObligaClasBakappEnEntidades]                           [bit]           NOT NULL DEFAULT (0),
 CONSTRAINT [PK_Zw_Configuracion] PRIMARY KEY CLUSTERED 
 (
 	[Empresa] ASC,

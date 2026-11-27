@@ -11,11 +11,14 @@ Public Class Frm_Despacho_DespCm
 
         ' Agregue cualquier inicialización después de la llamada a InitializeComponent().
 
+        Sb_Formato_Generico_Grilla(Grilla_Comunas, 20, New Font("Tahoma", 8), Color.AliceBlue, ScrollBars.Vertical, True, False, False)
+
     End Sub
 
     Private Sub Frm_Despacho_DespCm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         AddHandler Grilla_Comunas.MouseDown, AddressOf Sb_Grilla_MouseDown
+        AddHandler Grilla_Comunas.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
 
         Sb_Actualizar_Grilla()
 
@@ -26,7 +29,7 @@ Public Class Frm_Despacho_DespCm
         Dim _Condicion As String = String.Empty
 
         Consulta_Sql = $"
-Select Empresa, Sucursal,Ts.NOKOSU As SucursalStr,Pais,Ciudad,Ci.NOKOCI As 'CiudadStr',Comuna,Cm.NOKOCM As 'ComunaStr',
+Select Id,Empresa,Sucursal,Ts.NOKOSU As SucursalStr,Pais,Ciudad,Ci.NOKOCI As 'CiudadStr',Comuna,Cm.NOKOCM As 'ComunaStr',
 CodDespacho,Mp.NOKOPR As 'Descripcion'
 From {_Global_BaseBk}Zw_Despachos_DespCm DCm
     Inner Join TABSU Ts On Ts.EMPRESA = DCm.Empresa And Ts.KOSU = DCm.Sucursal
@@ -141,9 +144,6 @@ Insert Into {_Global_BaseBk}Zw_Despachos_DespCm (Empresa, Sucursal, Pais, Ciudad
         Dim _Fila As DataGridViewRow = Grilla_Comunas.CurrentRow
 
         Dim _Id As Integer = _Fila.Cells("Id").Value
-        Dim _CodPais As String = _Fila.Cells("CodPais").Value
-        Dim _CodCiudad As String = _Fila.Cells("CodCiudad").Value
-        Dim _CodComuna As String = _Fila.Cells("CodComuna").Value
         Dim _CodDespacho As String = _Fila.Cells("CodDespacho").Value
 
         Dim _Filtrar As New Clas_Filtros_Random(Me)

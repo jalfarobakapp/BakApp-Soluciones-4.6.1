@@ -329,13 +329,13 @@ Public Class Frm_Filtro_Especial_Informes
         End If
 
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
+        AddHandler Grilla.KeyDown, AddressOf Sb_Grilla_KeyDown
 
         If _Seleccionar_Solo_Uno Then
             Chk_Seleccionar_Todos.Visible = False
             Rdb_Mostrar_Solo_Tickeados.Visible = False
             Rdb_Mostrar_Todos.Visible = False
             BtnAceptar.Visible = False
-            AddHandler Grilla.KeyDown, AddressOf Sb_Grilla_KeyDown
         Else
             AddHandler Grilla.MouseUp, AddressOf Sb_Grilla_MouseUp
             AddHandler Chk_Seleccionar_Todos.CheckedChanged, AddressOf Sb_Chk_Seleccionar_Todos_CheckedChanged
@@ -793,19 +793,33 @@ Public Class Frm_Filtro_Especial_Informes
     End Sub
 
     Private Sub Sb_Grilla_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyValue = Keys.Enter Then
+        Select Case e.KeyCode
+            Case Keys.Space
+                If Grilla.Columns("Chk").Visible AndAlso
+                   Grilla.CurrentRow IsNot Nothing AndAlso
+                   Not Grilla.CurrentRow.IsNewRow Then
 
-            'SendKeys.Send("{LEFT}")
-            'e.Handled = True
-            Dim _Fila As DataGridViewRow = Grilla.Rows(Grilla.CurrentRow.Index)
+                    Dim _ValorActual As Boolean =
+                        If(IsDBNull(Grilla.CurrentRow.Cells("Chk").Value),
+                           False,
+                           CBool(Grilla.CurrentRow.Cells("Chk").Value))
 
-            _Fila.Cells("Chk").Value = True
-            Call BtnAceptar_Click(Nothing, Nothing)
+                    Grilla.CurrentRow.Cells("Chk").Value = Not _ValorActual
+                    Grilla.EndEdit()
+                End If
 
-            e.Handled = True
-            e.SuppressKeyPress = True
+                e.Handled = True
+                e.SuppressKeyPress = True
 
-        End If
+            Case Keys.Enter
+                If _Seleccionar_Solo_Uno AndAlso Grilla.CurrentRow IsNot Nothing Then
+                    Grilla.CurrentRow.Cells("Chk").Value = True
+                    Call BtnAceptar_Click(Nothing, Nothing)
+
+                    e.Handled = True
+                    e.SuppressKeyPress = True
+                End If
+        End Select
     End Sub
 
     Private Sub Btn_Exportar_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Exportar_Excel.Click

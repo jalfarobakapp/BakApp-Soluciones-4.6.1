@@ -28,6 +28,45 @@ Public Class Frm_Recalculo_PPPxProd
     Public Property MensajeFinal As String = String.Empty
     Public Property Empresa As String
 
+    Private _CodigosProductosAProcesar As List(Of String)
+    Private _SeIndicaronProductosAProcesar As Boolean
+
+    Public Property ProductosAProcesar As DataTable
+        Set(value As DataTable)
+            _SeIndicaronProductosAProcesar = True
+            _Tbl_Productos = Nothing
+
+            If value Is Nothing OrElse value.Rows.Count = 0 Then
+                Return
+            End If
+
+            If Not value.Columns.Contains("Codigo") Then
+                Throw New ArgumentException("La tabla debe incluir una columna llamada Codigo.")
+            End If
+
+            Dim _TablaProductos As New DataTable()
+            _TablaProductos.Columns.Add("Chk", GetType(Boolean))
+            _TablaProductos.Columns.Add("Codigo", GetType(String))
+
+            Dim _CodigosAgregados As New HashSet(Of String)(StringComparer.OrdinalIgnoreCase)
+
+            For Each _Fila As DataRow In value.Rows
+                Dim _Codigo As String = Convert.ToString(_Fila("Codigo")).Trim()
+
+                If Not String.IsNullOrWhiteSpace(_Codigo) AndAlso _CodigosAgregados.Add(_Codigo) Then
+                    _TablaProductos.Rows.Add(True, _Codigo)
+                End If
+            Next
+
+            If _TablaProductos.Rows.Count > 0 Then
+                _Tbl_Productos = _TablaProductos
+            End If
+        End Set
+        Get
+            Return _Tbl_Productos
+        End Get
+    End Property
+
     Public Sub New()
 
         ' Esta llamada es exigida por el diseñador.
@@ -76,8 +115,10 @@ Public Class Frm_Recalculo_PPPxProd
 
         If EjecutarProcesoTodosLosProductos Then
             _ProductosTodos = True
-            _EsEjecucionAutomatica = True
         End If
+
+        _EsEjecucionAutomatica = EjecutarProcesoTodosLosProductos OrElse
+                                 _SeIndicaronProductosAProcesar
 
         Chk_ModoPruebas.Checked = ModoPruebas
 
@@ -85,9 +126,9 @@ Public Class Frm_Recalculo_PPPxProd
 
         Sb_Actualizar_Grilla()
 
-        If EjecutarProcesoTodosLosProductos Then
+        If _EsEjecucionAutomatica Then
             Dim t As New Timer()
-            t.Interval = 2000 ' 2 segundos
+            t.Interval = 2000
             AddHandler t.Tick, Sub(s, ev)
                                    t.Stop()
                                    t.Dispose()
@@ -136,7 +177,7 @@ Public Class Frm_Recalculo_PPPxProd
                        "MAEPR.UD01PR,MAEPR.UD02PR,Cast(0 As Float) As Sum_Stock,Cast(0 As Float) As Stexistini,MAEPREM.PM As Pm2,MAEPREM.FEPM As Fepm2  " & vbCrLf &
                        "From MAEPR With ( Nolock )" & vbCrLf &
                        "Inner Join MAEPREM ON MAEPREM.KOPR=MAEPR.KOPR And MAEPREM.EMPRESA='" & Empresa & "'" & vbCrLf &
-                       "Where MAEPR.TIPR = 'FPN'" & vbCrLf &
+                       "Where MAEPR.TIPR In ('FPN','FIN')" & vbCrLf &
                        _Condicion
 
         Dim _Ds As DataSet = _Sql.Fx_Get_DataSet(Consulta_sql)
@@ -264,23 +305,39 @@ Public Class Frm_Recalculo_PPPxProd
 
     Private Sub Btn_TraerProductos_Click(sender As Object, e As EventArgs) Handles Btn_TraerProductos.Click
 
-        Dim _Sql_Filtro_Condicion_Extra = "And TIPR = 'FPN'"
+        'Dim _Sql_Filtro_Condicion_Extra = "And TIPR In ('FPN','FIN')"
 
-        Dim _Filtrar As New Clas_Filtros_Random(Me)
+        'Dim _Filtrar As New Clas_Filtros_Random(Me)
 
-        If _Filtrar.Fx_Filtrar(_Tbl_Productos,
-                               Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
-                               False, False) Then
+        'If _Filtrar.Fx_Filtrar(_Tbl_Productos,
+        '                       Clas_Filtros_Random.Enum_Tabla_Fl._Productos, _Sql_Filtro_Condicion_Extra,
+        '                       False, False) Then
 
-            _Tbl_Productos = _Filtrar.Pro_Tbl_Filtro
-            If _Filtrar.Pro_Filtro_Todas Then
-                _ProductosTodos = True
-                _Tbl_Productos = Nothing
-            End If
+        '    _Tbl_Productos = _Filtrar.Pro_Tbl_Filtro
+        '    If _Filtrar.Pro_Filtro_Todas Then
+        '        _ProductosTodos = True
+        '        _Tbl_Productos = Nothing
+        '    End If
 
-            Sb_Actualizar_Grilla()
+        '    Sb_Actualizar_Grilla()
 
+        'End If
+
+        Dim _Tbl As New DataTable
+        Dim _DialogResult As DialogResult
+
+        Dim Fm As New Frm_Recalculo_PPP_Selec_Prod
+        Fm.ShowDialog(Me)
+        _Tbl = Fm.Tbl_Productos
+        _DialogResult = Fm.DialogResult
+        Fm.Dispose()
+
+        If _DialogResult <> DialogResult.OK Then
+            Return
         End If
+
+        ProductosAProcesar = _Tbl
+        Sb_Actualizar_Grilla()
 
     End Sub
 
@@ -370,6 +427,16 @@ Public Class Frm_Recalculo_PPPxProd
 
             _Mensaje = Cl_Pm.Fx_RecalcularPPPxPR2(_Codigo, _Descripcion, _FechaTope, Progreso_XDetalle, _ActualizarPPP)
 
+            _UltTabla = _Mensaje.Tag ' Guardamos referencia solo si la necesitaremos luego
+
+            If productosSeleccionados.Count > 1 Then
+                _UltTabla = Nothing ' Liberamos la referencia si hay más de un producto, para no acumular memoria
+            End If
+
+            ' Liberar la referencia pesada del DataTable en el mensaje acumulado,
+            ' ya que _LsMensajes solo se usa para estadísticas/errores, no para el detalle
+            _Mensaje.Tag = Nothing
+
             _LsMensajes.Add(_Mensaje)
 
             fila.Cells("Estado").Value = If(_Mensaje.EsCorrecto, "Procesado", "Error")
@@ -378,8 +445,6 @@ Public Class Frm_Recalculo_PPPxProd
             fila.Cells("Sum_Stock").Value = Cl_Pm.Saldo_Stock
             'fila.Cells("Pm").Value = Cl_Pm.Pm
             fila.Cells("Fepm").Value = Cl_Pm.Fepm
-
-            _UltTabla = _Mensaje.Tag
 
             Progreso_XProducto.Value = i + 1
             Dim porcentaje As Integer = CInt(((i + 1) / productosSeleccionados.Count) * 100)
@@ -408,6 +473,11 @@ Public Class Frm_Recalculo_PPPxProd
                 Else
                     _LogLineas.Add(String.Format("OK: {0} - {1}", _Codigo, _Descripcion))
                 End If
+            End If
+
+            If (i + 1) Mod 50 = 0 Then
+                GC.Collect()
+                GC.WaitForPendingFinalizers()
             End If
 
             Application.DoEvents()

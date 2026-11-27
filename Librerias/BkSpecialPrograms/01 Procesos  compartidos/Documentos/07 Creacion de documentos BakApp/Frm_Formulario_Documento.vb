@@ -22407,7 +22407,7 @@ WHERE (X.PqteHabilitado - X.TotalFacturado) <= 0
                                             Dim _Idmaeedo_Dscto = _Fila_Dscto.Item("IDMAEEDO")
                                             Dim _Nulido_Dscto = _Fila_Dscto.Item("NULIDO")
 
-                                            If _Nulido = _Nulido_Dscto And (_Idmaeedo_Dori = _Idmaeedo_Dscto Or _Conservar_Nudo) Then
+                                            If _Nulido = _Nulido_Dscto And ((_Idmaeedo_Dori = _Idmaeedo_Dscto Or _Conservar_Nudo) Or (_ConservaTrazabilidad)) Then
 
                                                 _Podt = NuloPorNro(_Fila_Dscto.Item("PODT"), 0)
                                                 _Vadt = 0 ' NuloPorNro(_Fila_Dscto.Item("VADT"), 0)

@@ -193,19 +193,19 @@ Public Class Frm_Informe_Prox_Recep_Y_Comp_No_Desp_Documento_X_Productos
             .Columns("CAPRCO" & _Unidad).Width = 70
             .Columns("CAPRCO" & _Unidad).HeaderText = "Cant."
             .Columns("CAPRCO" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("CAPRCO" & _Unidad).DefaultCellStyle.Format = "###,##"
+            .Columns("CAPRCO" & _Unidad).DefaultCellStyle.Format = "###,##.##"
             .Columns("CAPRCO" & _Unidad).Visible = True
 
             .Columns("CAPREX" & _Unidad).Width = 70
             .Columns("CAPREX" & _Unidad).HeaderText = Mid(_Campo_Recep_Desp, 1, 5) & "."
             .Columns("CAPREX" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("CAPREX" & _Unidad).DefaultCellStyle.Format = "###,##"
+            .Columns("CAPREX" & _Unidad).DefaultCellStyle.Format = "###,##.##"
             .Columns("CAPREX" & _Unidad).Visible = True
 
             .Columns("SALDO_Ud" & _Unidad).Width = 70
             .Columns("SALDO_Ud" & _Unidad).HeaderText = "Pend."
             .Columns("SALDO_Ud" & _Unidad).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-            .Columns("SALDO_Ud" & _Unidad).DefaultCellStyle.Format = "###,##"
+            .Columns("SALDO_Ud" & _Unidad).DefaultCellStyle.Format = "###,##.##"
             .Columns("SALDO_Ud" & _Unidad).Visible = True
 
             .Columns("MODO").HeaderText = "TM."

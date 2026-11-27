@@ -303,6 +303,7 @@ Public Class Frm_Configuracion_Gral
             Sb_Actualizar_Estado_Feria()
 
             Chk_PedirPermisoCargasDirectaoSemiDirecta.Checked = .Item("PedirPermisoCargasDirectaoSemiDirecta")
+            Chk_ObligaClasBakappEnEntidades.Checked = .Item("ObligaClasBakappEnEntidades")
 
         End With
 
@@ -437,6 +438,8 @@ Public Class Frm_Configuracion_Gral
 
         Chk_ImpNoCobraVta.Enabled = _Modalidad_General
         Txt_ImpNoCobraVtaStr.Enabled = _Modalidad_General
+
+        Chk_ObligaClasBakappEnEntidades.Enabled = _Modalidad_General
 
         AddHandler Txt_Dias_Venci_Coti.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
         AddHandler Txt_ValorMinimoNVV.KeyPress, AddressOf Sb_Txt_KeyPress_Solo_Numeros_Enteros
@@ -705,6 +708,7 @@ Public Class Frm_Configuracion_Gral
                        ",ObligaFeriaVta = " & Convert.ToInt32(Chk_ObligaFeriaVta.Checked) & vbCrLf &
                        ",Id_Feria = " & _Id_Feria & vbCrLf &
                        ",PedirPermisoCargasDirectaoSemiDirecta = " & Convert.ToInt32(Chk_PedirPermisoCargasDirectaoSemiDirecta.Checked) & vbCrLf &
+                       ",ObligaClasBakappEnEntidades = " & Convert.ToInt32(Chk_ObligaClasBakappEnEntidades.Checked) & vbCrLf &
                        "Where Empresa = '" & Mod_Empresa & "' And Modalidad = '" & _Modalidad & "'"
 
         If _Sql.Fx_Eje_Condulta_Insert_Update_Delte_TRANSACCION(Consulta_sql) Then
