@@ -3674,6 +3674,8 @@ Public Module Crear_Documentos_Desde_Otro
         Select Case _Td
             Case 33
                 Return "FCV"
+            Case 34
+                Return "FVX"
             Case 39
                 Return "BLV"
             Case 52

@@ -3215,6 +3215,8 @@ Public Module Crear_Documentos_Desde_Otro
         Select Case _Tido
             Case "FCV"
                 Return 33
+            Case "FVX"
+                Return 34
             Case "FDV"
                 Return 56
             Case "BLV", "BSV"

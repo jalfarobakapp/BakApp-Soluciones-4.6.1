@@ -1187,7 +1187,7 @@ Public Class Class_Genera_DTE_RdBk
         Dim _Iva_Calculo As Double = Math.Round(_Vanedo * 0.19, 0)
         Dim _Vanedo_Calculo As Double = Math.Round(_Vabrdo / 1.19, 0)
 
-        If _Vaimdo = 0 Then
+        If _Vaimdo = 0 And _Vaivdo > 0 Then
             _Vaivdo = _Vabrdo - _Vanedo_Calculo
         End If
 
@@ -1227,41 +1227,51 @@ Public Class Class_Genera_DTE_RdBk
 
         Else '_Meardo = "N" Then
 
-            _Totales_Netos = "<MntNeto>#MntNeto#</MntNeto>" & vbCrLf &
-                             "<TasaIVA>#TasaIVA#</TasaIVA>" & vbCrLf &
-                             "<IVA>#IVA#</IVA>"
-            _IndServicio = String.Empty
-            _FormaDePago = String.Empty
+            If _Tido = "FVX" Then
 
-            If CBool(_Vaimdo) Then
+                _Totales_Netos = "<MntExe>#MntNeto#</MntExe>"
 
-                Dim _ImptoReten As String = String.Empty
+            Else
 
-                Consulta_sql = "Select Round(SUM(VAIMLI),0) As MontoImp,Isnull(Im.KOIMSII,'') As 'TipoImp',Im.POIM As 'TasaImp',Im.NOKOIM" & vbCrLf &
+                _Totales_Netos = "<MntNeto>#MntNeto#</MntNeto>" & vbCrLf &
+                 "<TasaIVA>#TasaIVA#</TasaIVA>" & vbCrLf &
+                 "<IVA>#IVA#</IVA>"
+
+                _IndServicio = String.Empty
+                _FormaDePago = String.Empty
+
+                If CBool(_Vaimdo) Then
+
+                    Dim _ImptoReten As String = String.Empty
+
+                    Consulta_sql = "Select Round(SUM(VAIMLI),0) As MontoImp,Isnull(Im.KOIMSII,'') As 'TipoImp',Im.POIM As 'TasaImp',Im.NOKOIM" & vbCrLf &
                                "From MAEDDO" & vbCrLf &
                                "Inner Join TABIMPR Imp On KOPR = KOPRCT" & vbCrLf &
                                "Inner Join TABIM Im On Imp.KOIM = Im.KOIM" & vbCrLf &
                                "Where IDMAEEDO = " & _Idmaeedo & vbCrLf &
                                "Group By KOIMSII,Im.NOKOIM,Im.POIM"
-                Dim _Tbl_Impuestos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
+                    Dim _Tbl_Impuestos As DataTable = _Sql.Fx_Get_DataTable(Consulta_sql, False)
 
-                For Each _Fl As DataRow In _Tbl_Impuestos.Rows
+                    For Each _Fl As DataRow In _Tbl_Impuestos.Rows
 
-                    Dim _TipoImp As String = _Fl.Item("TipoImp").ToString.Trim
-                    Dim _TasaImp As String = _Fl.Item("TasaImp").ToString.Trim
-                    Dim _MontoImp As String = _Fl.Item("MontoImp").ToString.Trim
+                        Dim _TipoImp As String = _Fl.Item("TipoImp").ToString.Trim
+                        Dim _TasaImp As String = _Fl.Item("TasaImp").ToString.Trim
+                        Dim _MontoImp As String = _Fl.Item("MontoImp").ToString.Trim
 
-                    _ImptoReten += vbCrLf & "<ImptoReten>" & vbCrLf &
+                        _ImptoReten += vbCrLf & "<ImptoReten>" & vbCrLf &
                                    "<TipoImp>" & _TipoImp & "</TipoImp>" & vbCrLf &
                                    "<TasaImp>" & _TasaImp & "</TasaImp>" & vbCrLf &
                                    "<MontoImp>" & _MontoImp & "</MontoImp>" & vbCrLf &
                                    "</ImptoReten>"
 
-                Next
+                    Next
 
-                _Totales_Netos += _ImptoReten
+                    _Totales_Netos += _ImptoReten
+
+                End If
 
             End If
+
 
 
             If _Tido = "FCV" And _Nuevo_RunMonitor Then

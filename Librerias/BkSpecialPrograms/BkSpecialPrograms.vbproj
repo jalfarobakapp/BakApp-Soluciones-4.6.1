@@ -843,6 +843,12 @@
     <Compile Include="01 Procesos  compartidos\Productos\18 Precio Promedio Ponderado\Frm_Recalculo_PPPxProd.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\18 Precio Promedio Ponderado\Frm_Recalculo_PPP_Selec_Prod.Designer.vb">
+      <DependentUpon>Frm_Recalculo_PPP_Selec_Prod.vb</DependentUpon>
+    </Compile>
+    <Compile Include="01 Procesos  compartidos\Productos\18 Precio Promedio Ponderado\Frm_Recalculo_PPP_Selec_Prod.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="01 Procesos  compartidos\Productos\19 Migrar productos entre empresas\Cl_Migrar_Producto.vb" />
     <Compile Include="01 Procesos  compartidos\Productos\19 Migrar productos entre empresas\Frm_Migrar_Productos.designer.vb">
       <DependentUpon>Frm_Migrar_Productos.vb</DependentUpon>
@@ -5028,6 +5034,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\18 Precio Promedio Ponderado\Frm_Recalculo_PPPxProd.resx">
       <DependentUpon>Frm_Recalculo_PPPxProd.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="01 Procesos  compartidos\Productos\18 Precio Promedio Ponderado\Frm_Recalculo_PPP_Selec_Prod.resx">
+      <DependentUpon>Frm_Recalculo_PPP_Selec_Prod.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="01 Procesos  compartidos\Productos\19 Migrar productos entre empresas\Frm_Migrar_Productos.resx">
       <DependentUpon>Frm_Migrar_Productos.vb</DependentUpon>

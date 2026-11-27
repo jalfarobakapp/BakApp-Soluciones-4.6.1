@@ -258,12 +258,14 @@ DROP TABLE #TempRemotas;
             ' --- NUEVA LÓGICA DE AGRUPACIÓN ---
             Dim listaClasif As New List(Of String)()
             Dim tieneVacios As Boolean = False
+            Dim tieneDespachos As Boolean = False
             Dim despachos = ""
             ' Separar los vacíos de las clasificaciones con nombre
             For Each rowClasif As DataRow In dtClasificaciones.Rows
                 Dim clasif As String = rowClasif("CLALIBPR").ToString().Trim()
                 If clasif = "DESPACHOS" Then
                     despachos = clasif
+                    tieneDespachos = True
                 ElseIf String.IsNullOrEmpty(clasif) Then
                     tieneVacios = True
                 Else
@@ -273,7 +275,7 @@ DROP TABLE #TempRemotas;
 
 
             ' Si por alguna razón SOLO hay productos vacíos, lo agregamos para que genere 1 documento
-            If listaClasif.Count = 1 AndAlso tieneVacios Then
+            If listaClasif.Count = 1 AndAlso (tieneVacios Or tieneDespachos) Then
                 Dim msgError As New Mensajes With {.EsCorrecto = False, .Detalle = "No hay detalles válidos para procesar."}
                 listaMensajes.Add(msgError)
                 Return listaMensajes

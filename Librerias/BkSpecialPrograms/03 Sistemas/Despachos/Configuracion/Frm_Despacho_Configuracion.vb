@@ -74,11 +74,13 @@ Public Class Frm_Despacho_Configuracion
         AddHandler Btn_Formato_GTI.Click, AddressOf Sb_Buscar_Formato
         AddHandler Btn_Formato_GDV.Click, AddressOf Sb_Buscar_Formato
 
+        AddHandler Chk_ObligaPonerProductoDespacho.CheckedChanged, AddressOf Chk_ObligaPonerProductoDespacho_CheckedChanged
+
         Sb_Contar_Transportistas()
 
     End Sub
 
-    Private Sub Chk_ObligaPonerProductoDespacho_CheckedChanged(sender As Object, e As CheckBoxChangeEventArgs) Handles Chk_ObligaPonerProductoDespacho.CheckedChanged
+    Private Sub Chk_ObligaPonerProductoDespacho_CheckedChanged(sender As Object, e As CheckBoxChangeEventArgs) 'Handles Chk_ObligaPonerProductoDespacho.CheckedChanged
         Btn_ObligaPonerProductoDespacho.Enabled = Chk_ObligaPonerProductoDespacho.Checked
     End Sub
 

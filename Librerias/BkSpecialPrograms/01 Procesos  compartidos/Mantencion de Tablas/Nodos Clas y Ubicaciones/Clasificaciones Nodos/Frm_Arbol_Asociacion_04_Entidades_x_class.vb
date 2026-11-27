@@ -99,7 +99,7 @@ Public Class Frm_Arbol_Asociacion_04_Entidades_x_class
                                    Color.AliceBlue, ScrollBars.Vertical, True, True, True)
         Grilla.RowHeadersWidth = 15
 
-        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_RowPostPaint
+        AddHandler Grilla.RowPostPaint, AddressOf Sb_Grilla_Detalle_RowPostPaint
         AddHandler Grilla.MouseDown, AddressOf Sb_Grilla_MouseDown
 
         If _Carpeta_Seleccionable Then
@@ -180,14 +180,6 @@ Public Class Frm_Arbol_Asociacion_04_Entidades_x_class
         End With
 
         Lbl_Estatus.Text = "Total de entidades: " & FormatNumber(Grilla.Rows.Count, 0)
-    End Sub
-
-    Private Sub Sb_Grilla_RowPostPaint(sender As Object, e As DataGridViewRowPostPaintEventArgs)
-        Dim row As DataGridViewRow = Grilla.Rows(e.RowIndex)
-
-        If row.Cells("Nuevo").Value IsNot DBNull.Value AndAlso CBool(row.Cells("Nuevo").Value) Then
-            row.DefaultCellStyle.BackColor = Color.LightGray
-        End If
     End Sub
 
     Private Sub Sb_Grilla_MouseDown(sender As Object, e As MouseEventArgs)

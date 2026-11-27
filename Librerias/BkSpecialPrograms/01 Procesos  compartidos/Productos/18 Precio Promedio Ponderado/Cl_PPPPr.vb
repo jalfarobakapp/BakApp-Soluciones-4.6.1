@@ -64,6 +64,7 @@
 
         Dim _Mensaje As New LsValiciones.Mensajes
         Dim _Fechinippp As DateTime
+        Dim _Dc As Integer = 5 ' Decimales para calculo de stock
 
         ' Detectar si _Progreso es una barra de progreso válida
         Dim _EsBarraProgreso As Boolean = False
@@ -90,7 +91,7 @@
                            "MAEPR.FMPR,MAEPR.PFPR,MAEPR.HFPR,MAEPR.MRPR,RUPR,MAEPR.RLUD" & vbCrLf &
                            "From MAEPR WITH ( NOLOCK )" & vbCrLf &
                            "Inner Join MAEPREM ON MAEPREM.KOPR=MAEPR.KOPR AND MAEPREM.EMPRESA='" & Empresa & "'" & vbCrLf &
-                           "Where MAEPR.TIPR = 'FPN' And MAEPR.KOPR = '" & _Codigo & "'"
+                           "Where MAEPR.TIPR In ('FPN','FIN') And MAEPR.KOPR = '" & _Codigo & "'"
             Dim _RowProducto As DataRow = _Sql.Fx_Get_DataRow(Consulta_sql)
 
             Dim _Msj As LsValiciones.Mensajes
@@ -142,7 +143,7 @@
                 _Saldo_Stock += Stock_Transito * -1
             End If
 
-            _Saldo_Stock = Math.Round(_Saldo_Stock, 2)
+            _Saldo_Stock = Math.Round(_Saldo_Stock, _Dc)
 
             _Total_Stfi_x_Pm = _Pm * _Saldo_Stock
 
@@ -200,9 +201,9 @@
                 Dim _Es_Din As Boolean = False
 
                 If _Tido.Contains("G") Then
-                    _Cantidad = Math.Round(_Caprco1, 2)
+                    _Cantidad = Math.Round(_Caprco1, _Dc)
                 Else
-                    _Cantidad = Math.Round(_Caprad1, 2)
+                    _Cantidad = Math.Round(_Caprad1, _Dc)
                 End If
 
                 Dim _VaneliCalc As Double = Math.Round(_Cantidad * _Ppprnere1, 0)
@@ -233,25 +234,26 @@
 
                 If CBool(_Cantidad) AndAlso
                 ((_Tido = "GDD") Or
-                (_Tido = "GDI" And String.IsNullOrWhiteSpace(_Tidopa)) Or
-                (_Tido = "GDP") Or
-                (_Tido = "GDV") Or
-                (_Tido = "NCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
-                (_Tido = "FCV") Or
-                (_Tido = "FDV") Or
-                (_Tido = "BLV") Or
-                (_Tido = "BLX") Or
-                (_Tido = "FVX")) Then
+                 (_Tido = "GAR" And _Cantidad < 0) Or
+                 (_Tido = "GDI" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                 (_Tido = "GDP") Or
+                 (_Tido = "GDV") Or
+                 (_Tido = "NCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
+                 (_Tido = "FCV") Or
+                 (_Tido = "FDV") Or
+                 (_Tido = "BLV") Or
+                 (_Tido = "BLX") Or
+                 (_Tido = "FVX")) Then
 
                     If _Tido = "GDD" Then
 
-                        _Cantidad = Math.Round(_Caprco1, 2)
+                        _Cantidad = Math.Round(_Caprco1, _Dc)
                         _Salida = _Cantidad
                         _V_Salida = Math.Round(_Salida * _Ppprnere1)
                         _Saldo_Valor -= Math.Round(_V_Salida, 5)
                         _Saldo_Stock -= _Salida
 
-                        _Saldo_Stock = Math.Round(_Saldo_Stock, 2)
+                        _Saldo_Stock = Math.Round(_Saldo_Stock, 3)
 
                         If _Saldo_Stock > 0 Then
                             _Pm = Math.Round(_Saldo_Valor / _Saldo_Stock, 5)
@@ -262,17 +264,25 @@
 
                     Else
 
-                        _Cantidad = Math.Round(_Caprco1, 2)
+                        _Cantidad = Math.Round(_Caprco1, _Dc)
+
+                        If _Tido = "GAR" Then
+                            _Cantidad = _Cantidad * -1
+                        End If
+
                         _Salida = _Cantidad
                         _V_Salida = Math.Round(_Salida * Pm)
                         _Saldo_Valor -= Math.Round(_V_Salida, 5)
                         _Saldo_Stock -= _Salida
 
-                        _Saldo_Stock = Math.Round(_Saldo_Stock, 2)
+                        _Saldo_Stock = Math.Round(_Saldo_Stock, 3)
                         _Costotrib = Math.Round(_Pm * _Cantidad, 0)
 
-                    End If
+                        If _Tido = "GAR" Then
+                            _Cantidad = Math.Round(_Caprco1, _Dc)
+                        End If
 
+                    End If
 
                 End If
 
@@ -290,6 +300,7 @@
 
                 If (CBool(_Cantidad) AndAlso
                     ((_Tido = "GRC") Or
+                     (_Tido = "GAR" And _Cantidad > 0) Or
                      (_Tido = "GRI" And String.IsNullOrWhiteSpace(_Tidopa)) Or
                      (_Tido = "FCC" And String.IsNullOrWhiteSpace(_Tidopa)) Or
                      (_Tido = "FCC" And _Tidopa = "OCC") Or
@@ -297,7 +308,7 @@
                      (_Tido = "GRD") Or
                      (_Tido = "NCV" And String.IsNullOrWhiteSpace(_Tidopa)) Or
                      (_Tido = "NCV" And CBool(_Cantidad)))) Or
-                   (_Tido = "GRI" And _Subtido = "AJU") Then
+                     (_Tido = "GRI" And _Subtido = "AJU") Then
 
                     _Cantidad = Math.Round(_Caprco1, 5)
                     _Entrada = _Cantidad

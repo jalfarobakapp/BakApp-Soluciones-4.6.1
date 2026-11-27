@@ -1412,14 +1412,16 @@ Public Class Frm_Arbol_Lista
         Dim _Nodo As AdvTree.Node = e.Node
         Dim nodoRaiz As AdvTree.Node = Tree_Bandeja_Adv.SelectedNode
 
-        'Dim todosLosNodos As List(Of TreeNode) = ObtenerDescendientes(nodoRaiz)
-
-        '' Uso:
-        'Dim nodosAnteriores As New List(Of TreeNode)
-        'RecorrerNodosAnteriores(nodoRaiz, nodosAnteriores)
-        '' La lista 'nodosAnteriores' ahora contiene los nodos anteriores al último nodo seleccionado.
         If CType(_Nodo.Tag, DataRow).Item("Es_Seleccionable") Then
-            Sb_VerProductos_X_Class_X_Fila(_Nodo)
+            'Sb_VerProductos_X_Class_X_Fila(_Nodo)
+            'Dim _Nodo As AdvTree.Node = Tree_Bandeja_Adv.SelectedNode
+
+            If ModoEntidad Then
+                Sb_VerEntidades_X_Class_X_Fila(_Nodo)
+            Else
+                Sb_VerProductos_X_Class_X_Fila(_Nodo)
+            End If
+
         End If
     End Sub
 

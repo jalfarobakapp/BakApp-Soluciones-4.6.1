@@ -178,29 +178,65 @@ Public Class Frm_Validaciones
 
     Private Sub Btn_Excel_Click(sender As Object, e As EventArgs) Handles Btn_Excel.Click
 
-        ' Crear un nuevo DataTable
-        Dim _Tbl As New DataTable()
+        '' Crear un nuevo DataTable
+        'Dim _Tbl As New DataTable()
 
-        ' Agregar columnas al DataTable basadas en las columnas del ListView
-        For Each column As ColumnHeader In Lv_ListaDeMensajes.Columns
-            _Tbl.Columns.Add(column.Text)
+        '' Agregar columnas al DataTable basadas en las columnas del ListView
+        'For Each column As ColumnHeader In Lv_ListaDeMensajes.Columns
+        '    _Tbl.Columns.Add(column.Text)
+        'Next
+
+        '' Iterar a través de los elementos del ListView y agregarlos al DataTable
+        'For Each item As ListViewItem In Lv_ListaDeMensajes.Items
+        '    ' Crear una nueva fila
+        '    Dim row As DataRow = _Tbl.NewRow()
+
+        '    ' Agregar los datos de cada subitem en la fila
+        '    For i As Integer = 0 To item.SubItems.Count - 1
+        '        row(i) = item.SubItems(i).Text
+        '    Next
+
+        '    ' Agregar la fila completa al DataTable
+        '    _Tbl.Rows.Add(row)
+        'Next
+
+        'ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Lista")
+
+        Dim cantidadColumnas As Integer = Lv_ListaDeMensajes.Columns.Count
+
+        For Each item As ListViewItem In Lv_ListaDeMensajes.Items
+            cantidadColumnas = Math.Max(cantidadColumnas, item.SubItems.Count)
         Next
 
-        ' Iterar a través de los elementos del ListView y agregarlos al DataTable
-        For Each item As ListViewItem In Lv_ListaDeMensajes.Items
-            ' Crear una nueva fila
-            Dim row As DataRow = _Tbl.NewRow()
+        Dim tabla As New DataTable()
 
-            ' Agregar los datos de cada subitem en la fila
+        For i As Integer = 0 To cantidadColumnas - 1
+            Dim nombre As String
+
+            If i < Lv_ListaDeMensajes.Columns.Count Then
+                nombre = Lv_ListaDeMensajes.Columns(i).Text
+            Else
+                nombre = "Columna " & (i + 1).ToString()
+            End If
+
+            If String.IsNullOrWhiteSpace(nombre) Then
+                nombre = "Columna " & (i + 1).ToString()
+            End If
+
+            tabla.Columns.Add(nombre)
+        Next
+
+        For Each item As ListViewItem In Lv_ListaDeMensajes.Items
+            Dim fila As DataRow = tabla.NewRow()
+
             For i As Integer = 0 To item.SubItems.Count - 1
-                row(i) = item.SubItems(i).Text
+                fila(i) = item.SubItems(i).Text
             Next
 
-            ' Agregar la fila completa al DataTable
-            _Tbl.Rows.Add(row)
+            tabla.Rows.Add(fila)
         Next
 
-        ExportarTabla_JetExcel_Tabla(_Tbl, Me, "Lista")
+        ExportarTabla_JetExcel_Tabla(tabla, Me, "Lista")
 
     End Sub
 End Class

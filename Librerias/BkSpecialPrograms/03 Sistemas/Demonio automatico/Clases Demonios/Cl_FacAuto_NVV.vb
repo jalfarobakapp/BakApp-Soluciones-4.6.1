@@ -454,22 +454,6 @@ Delete MAEEDO Where TIDO = '{_Tido}' And NUDO = '{_Nudo}' And ENDO = 'XXXXXXXXXX
             _Orden = "Order By CantItem"
         End If
 
-        '        Consulta_Sql = $"Select Top {CantDocFacturanXProceso} Fa.*,Case De.Empresa_Ori When '' Then De.Empresa Else De.Empresa_Ori End As 'Empresa_Ori',Edo.EMPRESA As 'Empresa'   
-        'From {_Global_BaseBk}Zw_Demonio_FacAuto Fa
-        'Inner Join MAEEDO Edo On Edo.IDMAEEDO = Fa.Idmaeedo_NVV
-        'Inner Join {_Global_BaseBk}Zw_Docu_Ent De On Fa.Idmaeedo_NVV = De.Idmaeedo
-        'Where Fa.Id = 68664"
-
-        'Consulta_Sql = $"
-        '                Insert Into {_Global_BaseBk}Zw_Demonio_FacAuto (NombreEquipo,Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac, 
-        '                Fecha_Facturar,Facturar,Facturando,Facturado,Idmaeedo_FCV,Nudo_Fcv,Fecha_Facturado,Informacion, 
-        '                DesdePickeo,Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,Pagada)
-        '                Select '' As NombreEquipo,Idmaeedo_NVV,Nudo_NVV,Modalidad_Fac,Fecha_Facturar,1, 
-        '                Facturando,Facturado,Idmaeedo_FCV,Nudo_Fcv,Fecha_Facturado,'' As Informacion,DesdePickeo, 
-        '                Id_Pickeo,DocEmitir,CerrarDespFact,CodFuncionario_Factura,Pagada
-        '                From {_Global_BaseBk}Zw_Demonio_FacAuto
-        '                Where ((Informacion Like '%interbloqueo%') Or (Informacion LIKE '% tiempo de espera%')) And ErrorGrabar = 1 And Idmaeedo_FCV = 0 -- And Fecha_Facturar = '{Format(_FechaEmision, "yyyyMMdd")}'"
-
         Consulta_Sql = $"
                         Select Top {CantDocFacturanXProceso} Fa.*,
                         Case De.Empresa_Ori When '' Then De.Empresa Else De.Empresa_Ori End As 'Empresa_Ori',Edo.EMPRESA As 'Empresa'   
@@ -1243,6 +1227,126 @@ Delete MAEEDO Where TIDO = '{_Tido}' And NUDO = '{_Nudo}' And ENDO = 'XXXXXXXXXX
                                        "Select * From MAEDTLI Where IDMAEEDO = " & _Idmaeedo_Origen & vbCrLf &
                                        vbCrLf &
                                        "Select TOP 1 * From MAEEDOOB Where IDMAEEDO = " & _Idmaeedo_Origen
+
+
+                        Consulta_Sql = $"
+Select * From MAEEDO Where IDMAEEDO = {_Idmaeedo_Origen}
+
+;WITH CTE_PESO_DESPACHO AS
+(
+    SELECT
+        D.IDMAEEDO,
+        SUM(
+            CASE D.PRCT
+                WHEN 0 THEN ISNULL(Det.Caprco1_Real,0)
+                ELSE ISNULL(D.CAPRCO1-D.CAPREX1,0)
+            END * ISNULL(Mp.PESOUBIC,0)
+        ) AS PesoTotal
+    FROM MAEDDO D WITH (NOLOCK)
+        LEFT JOIN {_Global_BaseBk}Zw_Stmp_Det Det
+            ON D.IDMAEDDO = Det.Idmaeddo
+        LEFT JOIN MAEPR Mp
+            ON Mp.KOPR = D.KOPRCT
+    WHERE D.IDMAEEDO = {_Idmaeedo_Origen}
+      AND D.TIPR <> 'SSN'
+      AND (D.ESLIDO <> 'C' OR D.ESFALI = 'I')
+    GROUP BY D.IDMAEEDO
+)
+
+SELECT DISTINCT
+       Ddo.*,
+
+       CASE
+
+           -- Línea DESPACHO
+           WHEN Ddo.TIPR = 'SSN'
+                AND EXISTS (
+                    SELECT 1
+                    FROM {_Global_BaseBk}Zw_Despachos_DespCm X
+                    WHERE X.CodDespacho = Ddo.KOPRCT
+                )
+           THEN ISNULL(Peso.PesoTotal,0)
+
+           -- SSN normales
+           WHEN Ddo.TIPR = 'SSN'
+           THEN CASE
+                    WHEN UDTRPR = 1
+                        THEN CAPRCO1-CAPREX1
+                    ELSE CAPRCO2-CAPREX2
+                END
+
+           -- Productos normales
+           ELSE
+               CASE PRCT
+                   WHEN 0
+                       THEN CASE
+                               WHEN UDTRPR = 1
+                                   THEN Det.Caprco1_Real
+                               ELSE Det.Caprco2_Real
+                            END
+                   ELSE CASE
+                            WHEN UDTRPR = 1
+                                THEN CAPRCO1-CAPREX1
+                            ELSE CAPRCO2-CAPREX2
+                        END
+               END
+       END AS Cantidad,
+
+       CASE PRCT
+            WHEN 0 THEN Det.Caprco1_Real
+            ELSE CAPRCO1-CAPREX1
+       END AS CantUd1_Pickea,
+
+       CASE PRCT
+            WHEN 0 THEN Det.Caprco2_Real
+            ELSE CAPRCO2-CAPREX2
+       END AS CantUd2_Pickea,
+
+       CAST(1 AS BIT) AS DesdePickeo,
+
+       CAPRCO1-CAPREX1 AS CantUd1_Dori,
+       CAPRCO2-CAPREX2 AS CantUd2_Dori,
+
+       {_CampoPrecio} AS Precio,
+       0 As Id_Oferta,
+       '' As Oferta,
+       0 As Es_Padre_Oferta,
+       0 As Padre_Oferta,
+       0 As Hijo_Oferta,
+       0 As Cantidad_Oferta,
+       0 As Porcdesc_Oferta,
+
+       ISNULL(Det.RtuVariable,0) As RtuVariable,
+       Dsp.CodDespacho,
+       Mp.PESOUBIC
+
+FROM MAEDDO Ddo WITH (NOLOCK)
+
+     LEFT JOIN {_Global_BaseBk}Zw_Stmp_Det Det
+        ON Ddo.IDMAEDDO = Det.Idmaeddo
+
+     LEFT JOIN {_Global_BaseBk}Zw_Despachos_DespCm Dsp
+        ON Dsp.CodDespacho = Ddo.KOPRCT
+
+     LEFT JOIN MAEPR Mp
+        ON Mp.KOPR = Ddo.KOPRCT
+
+     LEFT JOIN CTE_PESO_DESPACHO Peso
+        ON Peso.IDMAEEDO = Ddo.IDMAEEDO
+
+WHERE Ddo.IDMAEEDO = {_Idmaeedo_Origen}
+  AND (Ddo.ESLIDO <> 'C' OR Ddo.ESFALI = 'I')
+
+ORDER BY Ddo.IDMAEEDO,
+         Ddo.IDMAEDDO
+
+Select * From MAEIMLI Where IDMAEEDO = {_Idmaeedo_Origen}
+
+Select * From MAEDTLI Where IDMAEEDO = {_Idmaeedo_Origen}
+
+Select TOP 1 * From MAEEDOOB Where IDMAEEDO = {_Idmaeedo_Origen}
+"
+
 
                         'Falta revisar el campo SUBTIDO, ya que al parecer se guardan datos dependiendo del tipo de FCC por ejemplo si tiene derecho a credito fiscal
                         'Falta campo FECHATRIB = Fecha de ingreso
